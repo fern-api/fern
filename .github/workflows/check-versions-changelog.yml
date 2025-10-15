@@ -118,13 +118,31 @@ jobs:
           - Rust Generator: generators/rust/sdk/versions.yml
           - Swift Generator: generators/swift/sdk/versions.yml
 
-          For each component that has changes, please:
-          1. Determine if the changes warrant a changelog entry (focus on customer impact)
-          2. Classify the change type (feat, fix, chore, internal)
-          3. Provide a suggested changelog entry with specific details
-          4. Include information about feature flags, API changes, or usage examples where relevant
+          For each component that has changes, analyze the git diff and provide:
+          1. Whether the changes warrant a changelog entry (focus on customer impact)
+          2. The change type (feat, fix, chore, internal)
+          3. A detailed summary with specific examples
+          4. Information about feature flags, API changes, or usage examples
 
-          Please provide your analysis in a clear, structured format that can be easily understood by developers reviewing pull requests.
+          IMPORTANT: For each component that needs a changelog entry, provide the output in this EXACT format:
+
+          ## [COMPONENT_NAME] - [VERSIONS_FILE_PATH]
+          Recommendation: [add|improve|sufficient]
+          Reasoning: [explanation]
+
+          Suggested Entry:
+          ```yaml
+          - version: [INCREMENT_VERSION]
+            createdAt: "2025-10-15"
+            changelogEntry:
+              - type: [feat|fix|chore|internal]
+                summary: |
+                  [Detailed summary with specific examples]
+          ```
+
+          Where [INCREMENT_VERSION] should be a logical next version based on the change type.
+
+          Please provide concrete, actionable changelog entries that engineers can directly use.
           EOF
 
           # Use Claude Code to analyze the changes
@@ -133,75 +151,156 @@ jobs:
           # Save output for next step
           echo "analysis_file=analysis_output.md" >> $GITHUB_OUTPUT
 
-      - name: Post results
-        if: steps.changed-files.outputs.has_changes == 'true'
+      - name: Create PR code suggestions
+        if: steps.changed-files.outputs.has_changes == 'true' && github.event_name == 'pull_request'
         uses: actions/github-script@v7
         with:
           script: |
             const fs = require('fs');
             const analysisOutput = fs.readFileSync('analysis_output.md', 'utf8');
-            const isManualDispatch = '${{ github.event_name }}' === 'workflow_dispatch';
             const changedFiles = `${{ steps.changed-files.outputs.changed_files }}`.split('\n').filter(f => f.trim());
 
-            let outputBody = `## 📋 Versions.yml Changelog Check\n\n`;
+            // Parse Claude Code output to extract suggestions
+            const componentSections = analysisOutput.split('## ').filter(section => section.trim());
+            const suggestions = [];
 
-            if (isManualDispatch) {
-              outputBody += `🔧 **Manual Trigger**: Comparing \`${{ inputs.head_ref || 'HEAD' }}\` against \`${{ inputs.base_ref || 'main' }}\`\n\n`;
-            }
+            for (const section of componentSections) {
+              const lines = section.split('\n');
+              const headerMatch = lines[0].match(/^(.+) - (.+)$/);
 
-            outputBody += `🔍 **Analyzed TypeScript changes in:**\n`;
-            changedFiles.forEach(file => {
-              outputBody += `- \`${file}\`\n`;
-            });
+              if (!headerMatch) continue;
 
-            outputBody += `\n### 🤖 Claude Code Analysis:\n\n`;
-            outputBody += analysisOutput;
+              const componentName = headerMatch[1];
+              const versionsFile = headerMatch[2];
 
-            outputBody += `\n\n---\n`;
-            outputBody += `**Guidelines for good changelog entries:**\n`;
-            outputBody += `- Include specific details about what changed and why\n`;
-            outputBody += `- For new features: mention how to enable/use them\n`;
-            outputBody += `- For bug fixes: describe what was broken and how it's fixed\n`;
-            outputBody += `- For feature flags: provide enable/disable instructions\n`;
-            outputBody += `- Include code examples for API changes\n\n`;
-            outputBody += `*This analysis was performed by Claude Code and should be reviewed by a human.*`;
+              const recommendationMatch = section.match(/Recommendation: (.+)/);
+              const reasoningMatch = section.match(/Reasoning: (.+)/);
+              const yamlMatch = section.match(/```yaml\n([\s\S]*?)\n```/);
 
-            if (isManualDispatch) {
-              // For manual dispatch, log the output
-              console.log('='.repeat(80));
-              console.log('VERSIONS CHANGELOG CHECK RESULTS');
-              console.log('='.repeat(80));
-              console.log(outputBody);
-              console.log('='.repeat(80));
-            } else {
-              // For PR, post/update comment
-              const comments = await github.rest.issues.listComments({
-                owner: context.repo.owner,
-                repo: context.repo.repo,
-                issue_number: context.issue.number,
-              });
-
-              const botComment = comments.data.find(comment =>
-                comment.user.login === 'github-actions[bot]' &&
-                comment.body.includes('📋 Versions.yml Changelog Check')
-              );
-
-              if (botComment) {
-                await github.rest.issues.updateComment({
-                  owner: context.repo.owner,
-                  repo: context.repo.repo,
-                  comment_id: botComment.id,
-                  body: outputBody
-                });
-              } else {
-                await github.rest.issues.createComment({
-                  owner: context.repo.owner,
-                  repo: context.repo.repo,
-                  issue_number: context.issue.number,
-                  body: outputBody
+              if (recommendationMatch && recommendationMatch[1] === 'add' && yamlMatch) {
+                suggestions.push({
+                  component: componentName,
+                  file: versionsFile,
+                  reasoning: reasoningMatch ? reasoningMatch[1] : '',
+                  yamlEntry: yamlMatch[1]
                 });
               }
             }
+
+            console.log(`Found ${suggestions.length} suggestions to create`);
+
+            // Create PR suggestions for each versions.yml file that needs updates
+            for (const suggestion of suggestions) {
+              try {
+                // Read the current versions.yml file to determine where to insert
+                const { data: fileData } = await github.rest.repos.getContent({
+                  owner: context.repo.owner,
+                  repo: context.repo.repo,
+                  path: suggestion.file,
+                  ref: context.payload.pull_request.head.sha
+                });
+
+                const currentContent = Buffer.from(fileData.content, 'base64').toString('utf8');
+                const lines = currentContent.split('\n');
+
+                // Find the first version entry (after yaml-language-server comment)
+                let insertLine = 1;
+                for (let i = 0; i < lines.length; i++) {
+                  if (lines[i].match(/^- version:|^-\s+version:/)) {
+                    insertLine = i + 1;
+                    break;
+                  }
+                }
+
+                // Create the suggestion content (new entry + original content)
+                const suggestionContent = suggestion.yamlEntry + '\n\n' + currentContent;
+
+                // Post a review comment with the suggestion
+                await github.rest.pulls.createReviewComment({
+                  owner: context.repo.owner,
+                  repo: context.repo.repo,
+                  pull_number: context.payload.pull_request.number,
+                  body: "## 🤖 Suggested Changelog Entry for " + suggestion.component + "\n\nReasoning: " + suggestion.reasoning + "\n\nClick 'Accept suggestion' to add this entry to your versions.yml file:",
+                  commit_id: context.payload.pull_request.head.sha,
+                  path: suggestion.file,
+                  line: insertLine,
+                  side: 'RIGHT',
+                  start_line: 1,
+                  start_side: 'RIGHT'
+                });
+
+                console.log(`Created suggestion for ${suggestion.file}`);
+
+              } catch (error) {
+                console.error(`Failed to create suggestion for ${suggestion.file}:`, error.message);
+
+                // Fallback: create a regular comment with the suggestion
+                await github.rest.issues.createComment({
+                  owner: context.repo.owner,
+                  repo: context.repo.repo,
+                  issue_number: context.payload.pull_request.number,
+                  body: "## 📋 Suggested Changelog Entry for " + suggestion.component + "\n\n" +
+                        "File: `" + suggestion.file + "`\n" +
+                        "Reasoning: " + suggestion.reasoning + "\n\n" +
+                        "Suggested Entry:\n```yaml\n" + suggestion.yamlEntry + "\n```\n\n" +
+                        "Please add this entry to the top of your `" + suggestion.file + "` file."
+                });
+              }
+            }
+
+            // Create a summary comment
+            if (suggestions.length > 0) {
+              const filesList = changedFiles.map(file => "- `" + file + "`").join('\n');
+              const componentsList = suggestions.map(s => "- " + s.component + " (`" + s.file + "`): " + s.reasoning).join('\n');
+
+              const summaryBody = "## 📋 Versions.yml Changelog Check Results\n\n" +
+                "🔍 Analyzed TypeScript changes in:\n" + filesList + "\n\n" +
+                "### 🎯 Summary:\n" +
+                "- " + suggestions.length + " components need changelog entries\n" +
+                "- Code suggestions posted above for easy acceptance\n" +
+                "- Review the suggestions and click 'Accept suggestion' to apply them\n\n" +
+                "### 📝 Components that need updates:\n" + componentsList + "\n\n" +
+                "---\n" +
+                "Guidelines for good changelog entries:\n" +
+                "- Include specific details about what changed and why\n" +
+                "- For new features: mention how to enable/use them\n" +
+                "- For bug fixes: describe what was broken and how it's fixed\n" +
+                "- For feature flags: provide enable/disable instructions\n" +
+                "- Include code examples for API changes\n\n" +
+                "This analysis was performed by Claude Code. Review suggestions carefully before accepting.";
+
+              await github.rest.issues.createComment({
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                issue_number: context.payload.pull_request.number,
+                body: summaryBody
+              });
+            } else {
+              const filesList = changedFiles.map(file => "- `" + file + "`").join('\n');
+
+              await github.rest.issues.createComment({
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                issue_number: context.payload.pull_request.number,
+                body: "## 📋 Versions.yml Changelog Check Results\n\n" +
+                      "🔍 Analyzed TypeScript changes in:\n" + filesList + "\n\n" +
+                      "✅ No changelog entries needed - the changes appear to be internal/non-customer-facing.\n\n" +
+                      "This analysis was performed by Claude Code."
+              });
+            }
+
+      - name: Log results for manual dispatch
+        if: steps.changed-files.outputs.has_changes == 'true' && github.event_name == 'workflow_dispatch'
+        run: |
+          echo "==================================================================="
+          echo "VERSIONS CHANGELOG CHECK RESULTS (Manual Trigger)"
+          echo "==================================================================="
+          echo "📁 Changed files: ${{ steps.changed-files.outputs.changed_files }}"
+          echo ""
+          echo "🤖 Claude Code Analysis:"
+          cat analysis_output.md
+          echo ""
+          echo "==================================================================="
 
       - name: Skip for no changes
         if: steps.changed-files.outputs.has_changes == 'false'
