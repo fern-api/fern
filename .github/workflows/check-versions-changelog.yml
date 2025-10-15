@@ -36,6 +36,7 @@ permissions:
   contents: read
   pull-requests: write
   issues: read
+  id-token: write
 
 concurrency:
   group: ${{ github.workflow }}-${{ github.event.pull_request.number || github.run_id }}
@@ -117,6 +118,7 @@ jobs:
 
       - name: Analyze changes with Claude Code
         if: steps.changed-files.outputs.has_changes == 'true' && (github.event_name == 'workflow_dispatch' || github.event.pull_request.draft == false)
+        id: claude-analysis
         uses: anthropics/claude-code-action@v1
         with:
           prompt: |
@@ -183,10 +185,14 @@ jobs:
             Where [INCREMENT_VERSION] should be a logical next version based on the change type.
 
             Please provide concrete, actionable changelog entries that engineers can directly use.
-          github-token: ${{ secrets.GITHUB_TOKEN }}
-          claude-api-key: ${{ secrets.SWIMBURGER_ANTHROPIC_API_KEY }}
-          write-files: |
-            analysis_output.md
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          anthropic_api_key: ${{ secrets.SWIMBURGER_ANTHROPIC_API_KEY }}
+
+      - name: Save Claude analysis output
+        if: steps.changed-files.outputs.has_changes == 'true' && (github.event_name == 'workflow_dispatch' || github.event.pull_request.draft == false)
+        run: |
+          # Save Claude output to file for PR suggestions step
+          echo '${{ steps.claude-analysis.outputs.response }}' > analysis_output.md
 
       - name: Create PR code suggestions
         if: steps.changed-files.outputs.has_changes == 'true' && github.event_name == 'pull_request' && github.event.pull_request.draft == false
