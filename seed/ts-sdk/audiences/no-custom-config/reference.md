@@ -1,7 +1,5 @@
 # Reference
-
 ## FolderA Service
-
 <details><summary><code>client.folderA.service.<a href="/src/api/resources/folderA/resources/service/client/Client.ts">getDirectThread</a>() -> SeedAudiences.Response</code></summary>
 <dl>
 <dd>
@@ -16,8 +14,8 @@
 
 ```typescript
 await client.folderA.service.getDirectThread();
-```
 
+```
 </dd>
 </dl>
 </dd>
@@ -31,19 +29,19 @@ await client.folderA.service.getDirectThread();
 <dl>
 <dd>
 
-**requestOptions:** `Service.RequestOptions`
+**requestOptions:** `Service.RequestOptions` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
 
-</dd>
-</dl>
-</dd>
-</dl>
 
 </dd>
 </dl>
 </details>
 
 ## FolderD Service
-
 <details><summary><code>client.folderD.service.<a href="/src/api/resources/folderD/resources/service/client/Client.ts">getDirectThread</a>() -> SeedAudiences.Response</code></summary>
 <dl>
 <dd>
@@ -58,8 +56,8 @@ await client.folderA.service.getDirectThread();
 
 ```typescript
 await client.folderD.service.getDirectThread();
-```
 
+```
 </dd>
 </dl>
 </dd>
@@ -73,19 +71,19 @@ await client.folderD.service.getDirectThread();
 <dl>
 <dd>
 
-**requestOptions:** `Service.RequestOptions`
+**requestOptions:** `Service.RequestOptions` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
 
-</dd>
-</dl>
-</dd>
-</dl>
 
 </dd>
 </dl>
 </details>
 
 ## Foo
-
 <details><summary><code>client.foo.<a href="/src/api/resources/foo/client/Client.ts">find</a>({ ...params }) -> SeedAudiences.ImportingType</code></summary>
 <dl>
 <dd>
@@ -102,10 +100,10 @@ await client.folderD.service.getDirectThread();
 await client.foo.find({
     optionalString: "optionalString",
     publicProperty: "publicProperty",
-    privateProperty: 1,
+    privateProperty: 1
 });
-```
 
+```
 </dd>
 </dl>
 </dd>
@@ -119,20 +117,21 @@ await client.foo.find({
 <dl>
 <dd>
 
-**request:** `SeedAudiences.FindRequest`
-
+**request:** `SeedAudiences.FindRequest` 
+    
 </dd>
 </dl>
 
 <dl>
 <dd>
 
-**requestOptions:** `Foo.RequestOptions`
+**requestOptions:** `Foo.RequestOptions` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
 
-</dd>
-</dl>
-</dd>
-</dl>
 
 </dd>
 </dl>

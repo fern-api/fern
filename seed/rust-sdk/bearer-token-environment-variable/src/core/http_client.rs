@@ -44,6 +44,13 @@ impl HttpClient {
             request = request.query(&params);
         }
 
+        // Apply additional query parameters from options
+        if let Some(opts) = &options {
+            if !opts.additional_query_params.is_empty() {
+                request = request.query(&opts.additional_query_params);
+            }
+        }
+
         // Apply body if provided
         if let Some(body) = body {
             request = request.json(&body);

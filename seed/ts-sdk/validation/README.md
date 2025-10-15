@@ -27,7 +27,7 @@ await client.create({
     decimal: 2.2,
     even: 100,
     name: "fern",
-    shape: "SQUARE",
+    shape: "SQUARE"
 });
 ```
 
@@ -146,7 +146,10 @@ console.log(rawResponse.headers['X-My-Header']);
 
 ### Runtime Compatibility
 
+
 The SDK works in the following runtimes:
+
+
 
 - Node.js 18+
 - Vercel

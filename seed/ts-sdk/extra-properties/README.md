@@ -25,6 +25,8 @@ import { SeedExtraPropertiesClient } from "@fern/extra-properties";
 const client = new SeedExtraPropertiesClient({ environment: "YOUR_BASE_URL" });
 await client.user.createUser({
     name: "Alice",
+    age: 30,
+    location: "Wonderland"
 });
 ```
 
@@ -143,7 +145,10 @@ console.log(rawResponse.headers['X-My-Header']);
 
 ### Runtime Compatibility
 
+
 The SDK works in the following runtimes:
+
+
 
 - Node.js 18+
 - Vercel

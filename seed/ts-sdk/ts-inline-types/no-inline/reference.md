@@ -1,5 +1,4 @@
 # Reference
-
 <details><summary><code>client.<a href="/src/Client.ts">getUndiscriminatedUnion</a>({ ...params }) -> void</code></summary>
 <dl>
 <dd>
@@ -19,17 +18,17 @@ await client.getUndiscriminatedUnion({
         bar: {
             foo: "foo",
             ref: {
-                foo: "foo",
-            },
+                foo: "foo"
+            }
         },
         ref: {
-            foo: "foo",
-        },
+            foo: "foo"
+        }
     },
-    foo: "foo",
+    foo: "foo"
 });
-```
 
+```
 </dd>
 </dl>
 </dd>
@@ -43,23 +42,24 @@ await client.getUndiscriminatedUnion({
 <dl>
 <dd>
 
-**request:** `SeedObject.GetUndiscriminatedUnionRequest`
-
+**request:** `SeedObject.GetUndiscriminatedUnionRequest` 
+    
 </dd>
 </dl>
 
 <dl>
 <dd>
 
-**requestOptions:** `SeedObjectClient.RequestOptions`
+**requestOptions:** `SeedObjectClient.RequestOptions` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
 
-</dd>
-</dl>
-</dd>
-</dl>
 
 </dd>
 </dl>
 </details>
 
-##
+## 

@@ -55,9 +55,7 @@ export class HeadersService {
             } catch (error) {
                 if (error instanceof errors.SeedEnumError) {
                     console.warn(
-                        `Endpoint 'send' unexpectedly threw ${error.constructor.name}.` +
-                            ` If this was intentional, please add ${error.constructor.name} to` +
-                            " the endpoint's errors list in your Fern Definition.",
+                        `Endpoint 'send' unexpectedly threw ${error.constructor.name}. If this was intentional, please add ${error.constructor.name} to the endpoint's errors list in your Fern Definition.`,
                     );
                     await error.send(res);
                 } else {

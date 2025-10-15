@@ -16,4 +16,6 @@ export interface ReadmeSchema {
     features?: Record<string, FernDefinition.ReadmeEndpointSchema[]>;
     /** Supply custom sections as markdown to be included in the readme */
     customSections?: FernDefinition.ReadmeCustomSectionSchema[];
+    /** Controls whether usage examples show only required parameters (minimal) or all parameters (comprehensive). Defaults to comprehensive. */
+    exampleStyle?: FernDefinition.ExampleStyle;
 }

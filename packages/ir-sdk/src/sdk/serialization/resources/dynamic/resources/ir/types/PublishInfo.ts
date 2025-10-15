@@ -11,6 +11,7 @@ import { NpmPublishInfo } from "./NpmPublishInfo";
 import { NugetPublishInfo } from "./NugetPublishInfo";
 import { PypiPublishInfo } from "./PypiPublishInfo";
 import { RubyGemsPublishInfo } from "./RubyGemsPublishInfo";
+import { CratesPublishInfo } from "./CratesPublishInfo";
 
 export const PublishInfo: core.serialization.Schema<serializers.dynamic.PublishInfo.Raw, FernIr.dynamic.PublishInfo> =
     core.serialization
@@ -21,6 +22,7 @@ export const PublishInfo: core.serialization.Schema<serializers.dynamic.PublishI
             nuget: NugetPublishInfo,
             pypi: PypiPublishInfo,
             rubygems: RubyGemsPublishInfo,
+            crates: CratesPublishInfo,
         })
         .transform<FernIr.dynamic.PublishInfo>({
             transform: (value) => {
@@ -37,6 +39,8 @@ export const PublishInfo: core.serialization.Schema<serializers.dynamic.PublishI
                         return FernIr.dynamic.PublishInfo.pypi(value);
                     case "rubygems":
                         return FernIr.dynamic.PublishInfo.rubygems(value);
+                    case "crates":
+                        return FernIr.dynamic.PublishInfo.crates(value);
                     default:
                         return value as FernIr.dynamic.PublishInfo;
                 }
@@ -51,7 +55,8 @@ export declare namespace PublishInfo {
         | PublishInfo.Npm
         | PublishInfo.Nuget
         | PublishInfo.Pypi
-        | PublishInfo.Rubygems;
+        | PublishInfo.Rubygems
+        | PublishInfo.Crates;
 
     export interface Go extends GoPublishInfo.Raw {
         type: "go";
@@ -75,5 +80,9 @@ export declare namespace PublishInfo {
 
     export interface Rubygems extends RubyGemsPublishInfo.Raw {
         type: "rubygems";
+    }
+
+    export interface Crates extends CratesPublishInfo.Raw {
+        type: "crates";
     }
 }

@@ -1,4 +1,4 @@
-import { HttpResponseResolver, passthrough } from "msw";
+import { type HttpResponseResolver, passthrough } from "msw";
 
 /**
  * Creates a request matcher that validates if request headers match specified criteria

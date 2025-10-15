@@ -110,6 +110,9 @@ cd packages/cli/cli
 pnpm compile                   # Compile TypeScript
 pnpm test                      # Run CLI tests
 pnpm build                     # Build production CLI
+pnpm -w lint:biome             # Lint (from workspace root)
+pnpm -w check                  # Check (from workspace root)
+pnpm -w format                 # Format (from workspace root)
 ```
 
 ### Multi-Package Development

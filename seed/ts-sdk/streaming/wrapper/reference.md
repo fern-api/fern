@@ -1,7 +1,5 @@
 # Reference
-
 ## Dummy
-
 <details><summary><code>client.dummy.<a href="/src/api/resources/dummy/client/Client.ts">generateStream</a>({ ...params }) -> core.Stream<SeedStreaming.StreamResponse></code></summary>
 <dl>
 <dd>
@@ -16,13 +14,13 @@
 
 ```typescript
 const response = await client.dummy.generateStream({
-    num_events: 1,
+    num_events: 1
 });
 for await (const item of response) {
     console.log(item);
 }
-```
 
+```
 </dd>
 </dl>
 </dd>
@@ -36,20 +34,21 @@ for await (const item of response) {
 <dl>
 <dd>
 
-**request:** `SeedStreaming.GenerateStreamRequest`
-
+**request:** `SeedStreaming.GenerateStreamRequest` 
+    
 </dd>
 </dl>
 
 <dl>
 <dd>
 
-**requestOptions:** `Dummy.RequestOptions`
+**requestOptions:** `Dummy.RequestOptions` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
 
-</dd>
-</dl>
-</dd>
-</dl>
 
 </dd>
 </dl>
@@ -69,10 +68,10 @@ for await (const item of response) {
 
 ```typescript
 await client.dummy.generate({
-    num_events: 5,
+    num_events: 5
 });
-```
 
+```
 </dd>
 </dl>
 </dd>
@@ -86,20 +85,21 @@ await client.dummy.generate({
 <dl>
 <dd>
 
-**request:** `SeedStreaming.Generateequest`
-
+**request:** `SeedStreaming.Generateequest` 
+    
 </dd>
 </dl>
 
 <dl>
 <dd>
 
-**requestOptions:** `Dummy.RequestOptions`
+**requestOptions:** `Dummy.RequestOptions` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
 
-</dd>
-</dl>
-</dd>
-</dl>
 
 </dd>
 </dl>

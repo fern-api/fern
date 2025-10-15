@@ -73,9 +73,9 @@ When the API returns a non-success status code (4xx or 5xx response), an API exc
 ```java
 import com.seed.bytesUpload.core.SeedBytesUploadApiException;
 
-try {
+try{
     client.service().upload(...);
-} catch (SeedBytesUploadApiException e) {
+} catch (SeedBytesUploadApiException e){
     // Do something with the API exception...
 }
 ```

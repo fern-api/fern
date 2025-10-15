@@ -1,7 +1,5 @@
 # Reference
-
 ## Headers
-
 <details><summary><code>client.headers.<a href="/src/api/resources/headers/client/Client.ts">send</a>({ ...params }) -> SeedLiteral.SendResponse</code></summary>
 <dl>
 <dd>
@@ -16,10 +14,10 @@
 
 ```typescript
 await client.headers.send({
-    query: "What is the weather today",
+    query: "What is the weather today"
 });
-```
 
+```
 </dd>
 </dl>
 </dd>
@@ -33,27 +31,27 @@ await client.headers.send({
 <dl>
 <dd>
 
-**request:** `SeedLiteral.SendLiteralsInHeadersRequest`
-
+**request:** `SeedLiteral.SendLiteralsInHeadersRequest` 
+    
 </dd>
 </dl>
 
 <dl>
 <dd>
 
-**requestOptions:** `Headers.RequestOptions`
+**requestOptions:** `Headers.RequestOptions` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
 
-</dd>
-</dl>
-</dd>
-</dl>
 
 </dd>
 </dl>
 </details>
 
 ## Inlined
-
 <details><summary><code>client.inlined.<a href="/src/api/resources/inlined/client/Client.ts">send</a>({ ...params }) -> SeedLiteral.SendResponse</code></summary>
 <dl>
 <dd>
@@ -73,13 +71,13 @@ await client.inlined.send({
     maybeContext: "You're super wise",
     objectWithLiteral: {
         nestedLiteral: {
-            myLiteral: "How super cool",
-        },
+            myLiteral: "How super cool"
+        }
     },
-    query: "What is the weather today",
+    query: "What is the weather today"
 });
-```
 
+```
 </dd>
 </dl>
 </dd>
@@ -93,27 +91,27 @@ await client.inlined.send({
 <dl>
 <dd>
 
-**request:** `SeedLiteral.SendLiteralsInlinedRequest`
-
+**request:** `SeedLiteral.SendLiteralsInlinedRequest` 
+    
 </dd>
 </dl>
 
 <dl>
 <dd>
 
-**requestOptions:** `Inlined.RequestOptions`
+**requestOptions:** `Inlined.RequestOptions` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
 
-</dd>
-</dl>
-</dd>
-</dl>
 
 </dd>
 </dl>
 </details>
 
 ## Path
-
 <details><summary><code>client.path.<a href="/src/api/resources/path/client/Client.ts">send</a>(id) -> SeedLiteral.SendResponse</code></summary>
 <dl>
 <dd>
@@ -128,8 +126,8 @@ await client.inlined.send({
 
 ```typescript
 await client.path.send("123");
-```
 
+```
 </dd>
 </dl>
 </dd>
@@ -143,27 +141,27 @@ await client.path.send("123");
 <dl>
 <dd>
 
-**id:** `"123"`
-
+**id:** `"123"` 
+    
 </dd>
 </dl>
 
 <dl>
 <dd>
 
-**requestOptions:** `Path.RequestOptions`
+**requestOptions:** `Path.RequestOptions` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
 
-</dd>
-</dl>
-</dd>
-</dl>
 
 </dd>
 </dl>
 </details>
 
 ## Query
-
 <details><summary><code>client.query.<a href="/src/api/resources/query/client/Client.ts">send</a>({ ...params }) -> SeedLiteral.SendResponse</code></summary>
 <dl>
 <dd>
@@ -186,10 +184,10 @@ await client.query.send({
     optional_stream: false,
     alias_stream: false,
     alias_optional_stream: false,
-    query: "What is the weather today",
+    query: "What is the weather today"
 });
-```
 
+```
 </dd>
 </dl>
 </dd>
@@ -203,27 +201,27 @@ await client.query.send({
 <dl>
 <dd>
 
-**request:** `SeedLiteral.SendLiteralsInQueryRequest`
-
+**request:** `SeedLiteral.SendLiteralsInQueryRequest` 
+    
 </dd>
 </dl>
 
 <dl>
 <dd>
 
-**requestOptions:** `Query.RequestOptions`
+**requestOptions:** `Query.RequestOptions` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
 
-</dd>
-</dl>
-</dd>
-</dl>
 
 </dd>
 </dl>
 </details>
 
 ## Reference
-
 <details><summary><code>client.reference.<a href="/src/api/resources/reference/client/Client.ts">send</a>({ ...params }) -> SeedLiteral.SendResponse</code></summary>
 <dl>
 <dd>
@@ -243,17 +241,15 @@ await client.reference.send({
     context: "You're super wise",
     query: "What is the weather today",
     containerObject: {
-        nestedObjects: [
-            {
+        nestedObjects: [{
                 literal1: "literal1",
                 literal2: "literal2",
-                strProp: "strProp",
-            },
-        ],
-    },
+                strProp: "strProp"
+            }]
+    }
 });
-```
 
+```
 </dd>
 </dl>
 </dd>
@@ -267,20 +263,21 @@ await client.reference.send({
 <dl>
 <dd>
 
-**request:** `SeedLiteral.SendRequest`
-
+**request:** `SeedLiteral.SendRequest` 
+    
 </dd>
 </dl>
 
 <dl>
 <dd>
 
-**requestOptions:** `Reference.RequestOptions`
+**requestOptions:** `Reference.RequestOptions` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
 
-</dd>
-</dl>
-</dd>
-</dl>
 
 </dd>
 </dl>

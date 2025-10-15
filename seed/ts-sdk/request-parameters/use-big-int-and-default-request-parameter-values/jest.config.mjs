@@ -14,7 +14,6 @@ export default {
             testPathIgnorePatterns: ["/tests/wire/"],
             setupFilesAfterEnv: ["<rootDir>/tests/bigint.setup.ts"],
         },
-        ,
         {
             displayName: "wire",
             preset: "ts-jest",

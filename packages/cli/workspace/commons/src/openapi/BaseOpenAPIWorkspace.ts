@@ -21,6 +21,7 @@ export declare namespace BaseOpenAPIWorkspace {
         respectForwardCompatibleEnums: boolean | undefined;
         inlineAllOfSchemas: boolean | undefined;
         resolveAliases: generatorsYml.ResolveAliases | undefined;
+        groupEnvironmentsByHost: boolean | undefined;
     }
 
     export type Settings = Partial<OpenAPISettings>;
@@ -39,6 +40,7 @@ export abstract class BaseOpenAPIWorkspace extends AbstractAPIWorkspace<BaseOpen
     public respectForwardCompatibleEnums: boolean | undefined;
     public inlineAllOfSchemas: boolean | undefined;
     public resolveAliases: generatorsYml.ResolveAliases | undefined;
+    public groupEnvironmentsByHost: boolean | undefined;
     private converter: FernDefinitionConverter;
 
     constructor(args: BaseOpenAPIWorkspace.Args) {
@@ -55,6 +57,7 @@ export abstract class BaseOpenAPIWorkspace extends AbstractAPIWorkspace<BaseOpen
         this.respectForwardCompatibleEnums = args.respectForwardCompatibleEnums;
         this.inlineAllOfSchemas = args.inlineAllOfSchemas;
         this.resolveAliases = args.resolveAliases;
+        this.groupEnvironmentsByHost = args.groupEnvironmentsByHost;
         this.converter = new FernDefinitionConverter(args);
     }
 
@@ -118,6 +121,7 @@ export abstract class BaseOpenAPIWorkspaceSync extends AbstractAPIWorkspaceSync<
     public useBytesForBinaryResponse: boolean | undefined;
     public respectForwardCompatibleEnums: boolean | undefined;
     public resolveAliases: generatorsYml.ResolveAliases | undefined;
+    public groupEnvironmentsByHost: boolean | undefined;
     private converter: FernDefinitionConverter;
 
     constructor(args: BaseOpenAPIWorkspace.Args) {
@@ -129,6 +133,7 @@ export abstract class BaseOpenAPIWorkspaceSync extends AbstractAPIWorkspaceSync<
         this.useBytesForBinaryResponse = args.useBytesForBinaryResponse;
         this.respectForwardCompatibleEnums = args.respectForwardCompatibleEnums;
         this.resolveAliases = args.resolveAliases;
+        this.groupEnvironmentsByHost = args.groupEnvironmentsByHost;
         this.converter = new FernDefinitionConverter(args);
     }
 

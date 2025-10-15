@@ -1,5 +1,4 @@
 # Reference
-
 <details><summary><code>client.<a href="/src/Client.ts">createType</a>({ ...params }) -> SeedExamples.Identifier</code></summary>
 <dl>
 <dd>
@@ -14,8 +13,8 @@
 
 ```typescript
 await client.createType("primitive");
-```
 
+```
 </dd>
 </dl>
 </dd>
@@ -29,29 +28,28 @@ await client.createType("primitive");
 <dl>
 <dd>
 
-**request:** `SeedExamples.Type`
-
+**request:** `SeedExamples.Type` 
+    
 </dd>
 </dl>
 
 <dl>
 <dd>
 
-**requestOptions:** `SeedExamplesClient.RequestOptions`
+**requestOptions:** `SeedExamplesClient.RequestOptions` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
 
-</dd>
-</dl>
-</dd>
-</dl>
 
 </dd>
 </dl>
 </details>
 
-##
-
+## 
 ## File Notification Service
-
 <details><summary><code>client.file.notification.service.<a href="/src/api/resources/file/resources/notification/resources/service/client/Client.ts">getException</a>(notificationId) -> SeedExamples.Exception</code></summary>
 <dl>
 <dd>
@@ -66,8 +64,8 @@ await client.createType("primitive");
 
 ```typescript
 await client.file.notification.service.getException("notification-hsy129x");
-```
 
+```
 </dd>
 </dl>
 </dd>
@@ -81,27 +79,27 @@ await client.file.notification.service.getException("notification-hsy129x");
 <dl>
 <dd>
 
-**notificationId:** `string`
-
+**notificationId:** `string` 
+    
 </dd>
 </dl>
 
 <dl>
 <dd>
 
-**requestOptions:** `Service.RequestOptions`
+**requestOptions:** `Service.RequestOptions` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
 
-</dd>
-</dl>
-</dd>
-</dl>
 
 </dd>
 </dl>
 </details>
 
 ## File Service
-
 <details><summary><code>client.file.service.<a href="/src/api/resources/file/resources/service/client/Client.ts">getFile</a>(filename, { ...params }) -> SeedExamples.File_</code></summary>
 <dl>
 <dd>
@@ -115,7 +113,6 @@ await client.file.notification.service.getException("notification-hsy129x");
 <dd>
 
 This endpoint returns a file by its name.
-
 </dd>
 </dl>
 </dd>
@@ -131,10 +128,10 @@ This endpoint returns a file by its name.
 
 ```typescript
 await client.file.service.getFile("file.txt", {
-    "X-File-API-Version": "0.0.2",
+    "X-File-API-Version": "0.0.2"
 });
-```
 
+```
 </dd>
 </dl>
 </dd>
@@ -149,34 +146,34 @@ await client.file.service.getFile("file.txt", {
 <dd>
 
 **filename:** `string` — This is a filename
-
+    
 </dd>
 </dl>
 
 <dl>
 <dd>
 
-**request:** `SeedExamples.file.GetFileRequest`
-
+**request:** `SeedExamples.file.GetFileRequest` 
+    
 </dd>
 </dl>
 
 <dl>
 <dd>
 
-**requestOptions:** `Service.RequestOptions`
+**requestOptions:** `Service.RequestOptions` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
 
-</dd>
-</dl>
-</dd>
-</dl>
 
 </dd>
 </dl>
 </details>
 
 ## Health Service
-
 <details><summary><code>client.health.service.<a href="/src/api/resources/health/resources/service/client/Client.ts">check</a>(id) -> void</code></summary>
 <dl>
 <dd>
@@ -190,7 +187,6 @@ await client.file.service.getFile("file.txt", {
 <dd>
 
 This endpoint checks the health of a resource.
-
 </dd>
 </dl>
 </dd>
@@ -206,8 +202,8 @@ This endpoint checks the health of a resource.
 
 ```typescript
 await client.health.service.check("id-2sdx82h");
-```
 
+```
 </dd>
 </dl>
 </dd>
@@ -222,19 +218,20 @@ await client.health.service.check("id-2sdx82h");
 <dd>
 
 **id:** `string` — The id to check
-
+    
 </dd>
 </dl>
 
 <dl>
 <dd>
 
-**requestOptions:** `Service.RequestOptions`
+**requestOptions:** `Service.RequestOptions` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
 
-</dd>
-</dl>
-</dd>
-</dl>
 
 </dd>
 </dl>
@@ -253,7 +250,6 @@ await client.health.service.check("id-2sdx82h");
 <dd>
 
 This endpoint checks the health of the service.
-
 </dd>
 </dl>
 </dd>
@@ -269,8 +265,8 @@ This endpoint checks the health of the service.
 
 ```typescript
 await client.health.service.ping();
-```
 
+```
 </dd>
 </dl>
 </dd>
@@ -284,19 +280,19 @@ await client.health.service.ping();
 <dl>
 <dd>
 
-**requestOptions:** `Service.RequestOptions`
+**requestOptions:** `Service.RequestOptions` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
 
-</dd>
-</dl>
-</dd>
-</dl>
 
 </dd>
 </dl>
 </details>
 
 ## Service
-
 <details><summary><code>client.service.<a href="/src/api/resources/service/client/Client.ts">getMovie</a>(movieId) -> SeedExamples.Movie</code></summary>
 <dl>
 <dd>
@@ -311,8 +307,8 @@ await client.health.service.ping();
 
 ```typescript
 await client.service.getMovie("movie-c06a4ad7");
-```
 
+```
 </dd>
 </dl>
 </dd>
@@ -326,20 +322,21 @@ await client.service.getMovie("movie-c06a4ad7");
 <dl>
 <dd>
 
-**movieId:** `SeedExamples.MovieId`
-
+**movieId:** `SeedExamples.MovieId` 
+    
 </dd>
 </dl>
 
 <dl>
 <dd>
 
-**requestOptions:** `Service.RequestOptions`
+**requestOptions:** `Service.RequestOptions` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
 
-</dd>
-</dl>
-</dd>
-</dl>
 
 </dd>
 </dl>
@@ -367,17 +364,21 @@ await client.service.createMovie({
     type: "movie",
     tag: "tag-wf9as23d",
     metadata: {
-        actors: ["Christian Bale", "Florence Pugh", "Willem Dafoe"],
-        releaseDate: "2023-12-08",
-        ratings: {
-            rottenTomatoes: 97,
-            imdb: 7.6,
-        },
+        "actors": [
+            "Christian Bale",
+            "Florence Pugh",
+            "Willem Dafoe"
+        ],
+        "releaseDate": "2023-12-08",
+        "ratings": {
+            "rottenTomatoes": 97,
+            "imdb": 7.6
+        }
     },
-    revenue: 1000000,
+    revenue: 1000000
 });
-```
 
+```
 </dd>
 </dl>
 </dd>
@@ -391,20 +392,21 @@ await client.service.createMovie({
 <dl>
 <dd>
 
-**request:** `SeedExamples.Movie`
-
+**request:** `SeedExamples.Movie` 
+    
 </dd>
 </dl>
 
 <dl>
 <dd>
 
-**requestOptions:** `Service.RequestOptions`
+**requestOptions:** `Service.RequestOptions` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
 
-</dd>
-</dl>
-</dd>
-</dl>
 
 </dd>
 </dl>
@@ -426,10 +428,10 @@ await client.service.createMovie({
 await client.service.getMetadata({
     "X-API-Version": "0.0.1",
     shallow: false,
-    tag: "development",
+    tag: "development"
 });
-```
 
+```
 </dd>
 </dl>
 </dd>
@@ -443,20 +445,21 @@ await client.service.getMetadata({
 <dl>
 <dd>
 
-**request:** `SeedExamples.GetMetadataRequest`
-
+**request:** `SeedExamples.GetMetadataRequest` 
+    
 </dd>
 </dl>
 
 <dl>
 <dd>
 
-**requestOptions:** `Service.RequestOptions`
+**requestOptions:** `Service.RequestOptions` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
 
-</dd>
-</dl>
-</dd>
-</dl>
 
 </dd>
 </dl>
@@ -478,7 +481,7 @@ await client.service.getMetadata({
 await client.service.createBigEntity({
     castMember: {
         name: "name",
-        id: "id",
+        id: "id"
     },
     extendedMovie: {
         cast: ["cast", "cast"],
@@ -491,207 +494,165 @@ await client.service.createBigEntity({
         tag: "tag",
         book: "book",
         metadata: {
-            metadata: {
-                key: "value",
-            },
+            "metadata": {
+                "key": "value"
+            }
         },
-        revenue: 1000000,
+        revenue: 1000000
     },
     entity: {
         type: "primitive",
-        name: "name",
+        name: "name"
     },
     metadata: {
         type: "html",
-        value: "metadata",
+        value: "metadata"
     },
     commonMetadata: {
         id: "id",
         data: {
-            data: "data",
+            "data": "data"
         },
-        jsonString: "jsonString",
+        jsonString: "jsonString"
     },
     eventInfo: {
         type: "metadata",
         id: "id",
         data: {
-            data: "data",
+            "data": "data"
         },
-        jsonString: "jsonString",
+        jsonString: "jsonString"
     },
     data: {
         type: "string",
-        value: "data",
+        value: "data"
     },
     migration: {
         name: "name",
-        status: "RUNNING",
+        status: "RUNNING"
     },
     exception: {
         type: "generic",
         exceptionType: "exceptionType",
         exceptionMessage: "exceptionMessage",
-        exceptionStacktrace: "exceptionStacktrace",
+        exceptionStacktrace: "exceptionStacktrace"
     },
     test: {
         type: "and",
-        value: true,
+        value: true
     },
     node: {
         name: "name",
-        nodes: [
-            {
+        nodes: [{
                 name: "name",
-                nodes: [
-                    {
+                nodes: [{
                         name: "name",
                         nodes: [],
-                        trees: [],
-                    },
-                    {
+                        trees: []
+                    }, {
                         name: "name",
                         nodes: [],
-                        trees: [],
-                    },
-                ],
-                trees: [
-                    {
-                        nodes: [],
-                    },
-                    {
-                        nodes: [],
-                    },
-                ],
-            },
-            {
+                        trees: []
+                    }],
+                trees: [{
+                        nodes: []
+                    }, {
+                        nodes: []
+                    }]
+            }, {
                 name: "name",
-                nodes: [
-                    {
+                nodes: [{
                         name: "name",
                         nodes: [],
-                        trees: [],
-                    },
-                    {
+                        trees: []
+                    }, {
                         name: "name",
                         nodes: [],
-                        trees: [],
-                    },
-                ],
-                trees: [
-                    {
-                        nodes: [],
-                    },
-                    {
-                        nodes: [],
-                    },
-                ],
-            },
-        ],
-        trees: [
-            {
-                nodes: [
-                    {
+                        trees: []
+                    }],
+                trees: [{
+                        nodes: []
+                    }, {
+                        nodes: []
+                    }]
+            }],
+        trees: [{
+                nodes: [{
                         name: "name",
                         nodes: [],
-                        trees: [],
-                    },
-                    {
+                        trees: []
+                    }, {
                         name: "name",
                         nodes: [],
-                        trees: [],
-                    },
-                ],
-            },
-            {
-                nodes: [
-                    {
+                        trees: []
+                    }]
+            }, {
+                nodes: [{
                         name: "name",
                         nodes: [],
-                        trees: [],
-                    },
-                    {
+                        trees: []
+                    }, {
                         name: "name",
                         nodes: [],
-                        trees: [],
-                    },
-                ],
-            },
-        ],
+                        trees: []
+                    }]
+            }]
     },
     directory: {
         name: "name",
-        files: [
-            {
+        files: [{
                 name: "name",
-                contents: "contents",
-            },
-            {
+                contents: "contents"
+            }, {
                 name: "name",
-                contents: "contents",
-            },
-        ],
-        directories: [
-            {
+                contents: "contents"
+            }],
+        directories: [{
                 name: "name",
-                files: [
-                    {
+                files: [{
                         name: "name",
-                        contents: "contents",
-                    },
-                    {
+                        contents: "contents"
+                    }, {
                         name: "name",
-                        contents: "contents",
-                    },
-                ],
-                directories: [
-                    {
+                        contents: "contents"
+                    }],
+                directories: [{
                         name: "name",
                         files: [],
-                        directories: [],
-                    },
-                    {
+                        directories: []
+                    }, {
                         name: "name",
                         files: [],
-                        directories: [],
-                    },
-                ],
-            },
-            {
+                        directories: []
+                    }]
+            }, {
                 name: "name",
-                files: [
-                    {
+                files: [{
                         name: "name",
-                        contents: "contents",
-                    },
-                    {
+                        contents: "contents"
+                    }, {
                         name: "name",
-                        contents: "contents",
-                    },
-                ],
-                directories: [
-                    {
+                        contents: "contents"
+                    }],
+                directories: [{
                         name: "name",
                         files: [],
-                        directories: [],
-                    },
-                    {
+                        directories: []
+                    }, {
                         name: "name",
                         files: [],
-                        directories: [],
-                    },
-                ],
-            },
-        ],
+                        directories: []
+                    }]
+            }]
     },
     moment: {
         id: "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
         date: "2023-01-15",
-        datetime: "2024-01-15T09:30:00Z",
-    },
+        datetime: "2024-01-15T09:30:00Z"
+    }
 });
-```
 
+```
 </dd>
 </dl>
 </dd>
@@ -705,20 +666,21 @@ await client.service.createBigEntity({
 <dl>
 <dd>
 
-**request:** `SeedExamples.BigEntity`
-
+**request:** `SeedExamples.BigEntity` 
+    
 </dd>
 </dl>
 
 <dl>
 <dd>
 
-**requestOptions:** `Service.RequestOptions`
+**requestOptions:** `Service.RequestOptions` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
 
-</dd>
-</dl>
-</dd>
-</dl>
 
 </dd>
 </dl>
@@ -738,8 +700,8 @@ await client.service.createBigEntity({
 
 ```typescript
 await client.service.refreshToken(undefined);
-```
 
+```
 </dd>
 </dl>
 </dd>
@@ -753,20 +715,21 @@ await client.service.refreshToken(undefined);
 <dl>
 <dd>
 
-**request:** `SeedExamples.RefreshTokenRequest`
-
+**request:** `SeedExamples.RefreshTokenRequest` 
+    
 </dd>
 </dl>
 
 <dl>
 <dd>
 
-**requestOptions:** `Service.RequestOptions`
+**requestOptions:** `Service.RequestOptions` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
 
-</dd>
-</dl>
-</dd>
-</dl>
 
 </dd>
 </dl>

@@ -52,9 +52,9 @@ When the API returns a non-success status code (4xx or 5xx response), an API exc
 ```java
 import com.fern.sdk.core.SeedExhaustiveApiException;
 
-try {
+try{
     client.endpoints().container().getAndReturnListOfPrimitives(...);
-} catch (SeedExhaustiveApiException e) {
+} catch (SeedExhaustiveApiException e){
     // Do something with the API exception...
 }
 ```

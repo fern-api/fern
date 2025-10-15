@@ -25,7 +25,7 @@ import { SeedIdempotencyHeadersClient } from "@fern/idempotency-headers";
 const client = new SeedIdempotencyHeadersClient({ environment: "YOUR_BASE_URL", token: "YOUR_TOKEN" });
 await client.payment.create({
     amount: 1,
-    currency: "USD",
+    currency: "USD"
 });
 ```
 
@@ -144,7 +144,10 @@ console.log(rawResponse.headers['X-My-Header']);
 
 ### Runtime Compatibility
 
+
 The SDK works in the following runtimes:
+
+
 
 - Node.js 18+
 - Vercel

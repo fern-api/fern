@@ -36,7 +36,8 @@ export function convertIrToApiDefinition({
                     goSdk: undefined,
                     csharpSdk: undefined,
                     phpSdk: undefined,
-                    swiftSdk: undefined
+                    swiftSdk: undefined,
+                    rustSdk: undefined
                 },
                 playgroundConfig,
                 context

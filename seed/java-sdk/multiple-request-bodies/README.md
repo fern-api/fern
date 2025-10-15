@@ -93,9 +93,9 @@ When the API returns a non-success status code (4xx or 5xx response), an API exc
 ```java
 import com.seed.api.core.SeedApiApiException;
 
-try {
+try{
     client.uploadJsonDocument(...);
-} catch (SeedApiApiException e) {
+} catch (SeedApiApiException e){
     // Do something with the API exception...
 }
 ```

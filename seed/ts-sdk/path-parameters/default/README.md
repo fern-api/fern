@@ -25,7 +25,7 @@ import { SeedPathParametersClient } from "@fern/path-parameters";
 const client = new SeedPathParametersClient({ environment: "YOUR_BASE_URL" });
 await client.user.createUser({
     name: "name",
-    tags: ["tags", "tags"],
+    tags: ["tags", "tags"]
 });
 ```
 
@@ -144,7 +144,10 @@ console.log(rawResponse.headers['X-My-Header']);
 
 ### Runtime Compatibility
 
+
 The SDK works in the following runtimes:
+
+
 
 - Node.js 18+
 - Vercel

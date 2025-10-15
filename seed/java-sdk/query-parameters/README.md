@@ -161,9 +161,9 @@ When the API returns a non-success status code (4xx or 5xx response), an API exc
 ```java
 import com.seed.queryParameters.core.SeedQueryParametersApiException;
 
-try {
+try{
     client.user().getUsername(...);
-} catch (SeedQueryParametersApiException e) {
+} catch (SeedQueryParametersApiException e){
     // Do something with the API exception...
 }
 ```

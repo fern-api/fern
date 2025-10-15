@@ -4,10 +4,10 @@ exports.set = set;
 const Schema_1 = require("../../Schema");
 const getErrorMessageForIncorrectType_1 = require("../../utils/getErrorMessageForIncorrectType");
 const maybeSkipValidation_1 = require("../../utils/maybeSkipValidation");
-const list_1 = require("../list");
-const schema_utils_1 = require("../schema-utils");
+const index_1 = require("../list/index");
+const index_2 = require("../schema-utils/index");
 function set(schema) {
-    const listSchema = (0, list_1.list)(schema);
+    const listSchema = (0, index_1.list)(schema);
     const baseSchema = {
         parse: (raw, opts) => {
             const parsedList = listSchema.parse(raw, opts);
@@ -39,5 +39,5 @@ function set(schema) {
         },
         getType: () => Schema_1.SchemaType.SET,
     };
-    return Object.assign(Object.assign({}, (0, maybeSkipValidation_1.maybeSkipValidation)(baseSchema)), (0, schema_utils_1.getSchemaUtils)(baseSchema));
+    return Object.assign(Object.assign({}, (0, maybeSkipValidation_1.maybeSkipValidation)(baseSchema)), (0, index_2.getSchemaUtils)(baseSchema));
 }

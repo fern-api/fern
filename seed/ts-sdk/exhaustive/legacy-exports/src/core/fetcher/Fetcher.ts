@@ -123,7 +123,7 @@ export async function fetcherImpl<R = unknown>(args: Fetcher.Args): Promise<APIR
             };
         }
     } catch (error) {
-        if (args.abortSignal != null && args.abortSignal.aborted) {
+        if (args.abortSignal?.aborted) {
             return {
                 ok: false,
                 error: {

@@ -8,7 +8,8 @@ export type PublishTarget =
     | FernIr.PublishTarget.Postman
     | FernIr.PublishTarget.Npm
     | FernIr.PublishTarget.Maven
-    | FernIr.PublishTarget.Pypi;
+    | FernIr.PublishTarget.Pypi
+    | FernIr.PublishTarget.Crates;
 
 export namespace PublishTarget {
     export interface Postman extends FernIr.PostmanPublishTarget, _Utils {
@@ -27,6 +28,10 @@ export namespace PublishTarget {
         type: "pypi";
     }
 
+    export interface Crates extends FernIr.CratesPublishTarget, _Utils {
+        type: "crates";
+    }
+
     export interface _Utils {
         _visit: <_Result>(visitor: FernIr.PublishTarget._Visitor<_Result>) => _Result;
     }
@@ -36,6 +41,7 @@ export namespace PublishTarget {
         npm: (value: FernIr.NpmPublishTarget) => _Result;
         maven: (value: FernIr.MavenPublishTarget) => _Result;
         pypi: (value: FernIr.PypiPublishTarget) => _Result;
+        crates: (value: FernIr.CratesPublishTarget) => _Result;
         _other: (value: { type: string }) => _Result;
     }
 }
@@ -93,6 +99,19 @@ export const PublishTarget = {
         };
     },
 
+    crates: (value: FernIr.CratesPublishTarget): FernIr.PublishTarget.Crates => {
+        return {
+            ...value,
+            type: "crates",
+            _visit: function <_Result>(
+                this: FernIr.PublishTarget.Crates,
+                visitor: FernIr.PublishTarget._Visitor<_Result>,
+            ) {
+                return FernIr.PublishTarget._visit(this, visitor);
+            },
+        };
+    },
+
     _visit: <_Result>(value: FernIr.PublishTarget, visitor: FernIr.PublishTarget._Visitor<_Result>): _Result => {
         switch (value.type) {
             case "postman":
@@ -103,6 +122,8 @@ export const PublishTarget = {
                 return visitor.maven(value);
             case "pypi":
                 return visitor.pypi(value);
+            case "crates":
+                return visitor.crates(value);
             default:
                 return visitor._other(value as any);
         }

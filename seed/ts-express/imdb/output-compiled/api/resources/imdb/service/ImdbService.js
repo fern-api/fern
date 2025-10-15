@@ -48,8 +48,8 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.ImdbService = void 0;
 const express_1 = __importDefault(require("express"));
-const serializers = __importStar(require("../../../../serialization/index"));
 const errors = __importStar(require("../../../../errors/index"));
+const serializers = __importStar(require("../../../../serialization/index"));
 class ImdbService {
     constructor(methods, middleware = []) {
         this.methods = methods;
@@ -80,9 +80,7 @@ class ImdbService {
                 }
                 catch (error) {
                     if (error instanceof errors.SeedApiError) {
-                        console.warn(`Endpoint 'createMovie' unexpectedly threw ${error.constructor.name}.` +
-                            ` If this was intentional, please add ${error.constructor.name} to` +
-                            " the endpoint's errors list in your Fern Definition.");
+                        console.warn(`Endpoint 'createMovie' unexpectedly threw ${error.constructor.name}. If this was intentional, please add ${error.constructor.name} to the endpoint's errors list in your Fern Definition.`);
                         yield error.send(res);
                     }
                     else {
@@ -93,7 +91,7 @@ class ImdbService {
             }
             else {
                 res.status(422).json({
-                    errors: request.errors.map((error) => ["request", ...error.path].join(" -> ") + ": " + error.message),
+                    errors: request.errors.map((error) => `${["request", ...error.path].join(" -> ")}: ${error.message}`),
                 });
                 next(request.errors);
             }
@@ -117,9 +115,7 @@ class ImdbService {
                         case "MovieDoesNotExistError":
                             break;
                         default:
-                            console.warn(`Endpoint 'getMovie' unexpectedly threw ${error.constructor.name}.` +
-                                ` If this was intentional, please add ${error.constructor.name} to` +
-                                " the endpoint's errors list in your Fern Definition.");
+                            console.warn(`Endpoint 'getMovie' unexpectedly threw ${error.constructor.name}. If this was intentional, please add ${error.constructor.name} to the endpoint's errors list in your Fern Definition.`);
                     }
                     yield error.send(res);
                 }

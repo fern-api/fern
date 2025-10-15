@@ -7,6 +7,7 @@ import { buildQueryParameter } from "./buildQueryParameter";
 import { buildTypeReference } from "./buildTypeReference";
 import { buildWebsocketSessionExample } from "./buildWebsocketSessionExample";
 import { OpenApiIrConverterContext } from "./OpenApiIrConverterContext";
+import { generateWebsocketUrlId } from "./utils/generateUrlId";
 import { getNamespaceFromGroup } from "./utils/getNamespaceFromGroup";
 
 export function buildChannel({
@@ -19,10 +20,24 @@ export function buildChannel({
     /* The file the type declaration will be added to */
     declarationFile: RelativeFilePath;
 }): void {
+    const firstServer = channel.servers[0];
+    // Generate URL ID based on feature flag:
+    // - If groupEnvironmentsByHost is enabled, look up the collision-aware URL ID from the map
+    // - Otherwise, use simple server name for backward compatibility
+    const urlId =
+        firstServer != null
+            ? context.groupEnvironmentsByHost
+                ? (context.getUrlId(firstServer.url) ?? generateWebsocketUrlId(firstServer.name, firstServer.url, true))
+                : firstServer.name
+            : undefined;
+
+    context.logger.debug(
+        `[buildChannel] Channel path="${channel.path}", server name="${firstServer?.name}", server url="${firstServer?.url}", resolved urlId="${urlId}" (from collision map: ${context.getUrlId(firstServer?.url ?? "") != null})`
+    );
+
     const convertedChannel: RawSchemas.WebSocketChannelSchema = {
         path: channel.path,
-        // TODO: Channels can be associated with multiple servers, so we need to pick one at the moment.
-        url: channel.servers[0]?.name,
+        url: urlId,
         auth: false
     };
 

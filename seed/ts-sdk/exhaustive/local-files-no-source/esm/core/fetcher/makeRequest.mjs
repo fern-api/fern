@@ -11,7 +11,7 @@ import { anySignal, getTimeoutSignal } from "./signals.mjs";
 export const makeRequest = (fetchFn, url, method, headers, requestBody, timeoutMs, abortSignal, withCredentials, duplex) => __awaiter(void 0, void 0, void 0, function* () {
     const signals = [];
     // Add timeout signal
-    let timeoutAbortId = undefined;
+    let timeoutAbortId;
     if (timeoutMs != null) {
         const { signal, abortId } = getTimeoutSignal(timeoutMs);
         timeoutAbortId = abortId;
@@ -21,7 +21,7 @@ export const makeRequest = (fetchFn, url, method, headers, requestBody, timeoutM
     if (abortSignal != null) {
         signals.push(abortSignal);
     }
-    let newSignals = anySignal(signals);
+    const newSignals = anySignal(signals);
     const response = yield fetchFn(url, {
         method: method,
         headers,

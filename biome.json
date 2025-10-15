@@ -1,14 +1,16 @@
 {
-  "$schema": "https://biomejs.dev/schemas/2.1.1/schema.json",
+  "$schema": "https://biomejs.dev/schemas/2.2.5/schema.json",
+  "root": true,
   "vcs": {
     "enabled": false,
     "clientKind": "git",
     "useIgnoreFile": false
   },
   "files": {
-    "includes": ["**", "!seed/"],
+    "includes": ["**", "!!lib", "!!dist", "!!seed/", "!!generators/typescript/asIs/biome.json"],
     "ignoreUnknown": false,
-    "maxSize": 80000000
+    "maxSize": 80000000,
+    "experimentalScannerIgnores": ["seed", "asIs"]
   },
   "formatter": {
     "enabled": true,

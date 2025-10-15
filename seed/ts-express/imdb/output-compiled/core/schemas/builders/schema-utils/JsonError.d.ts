@@ -1,4 +1,4 @@
-import { ValidationError } from "../../Schema";
+import type { ValidationError } from "../../Schema";
 export declare class JsonError extends Error {
     readonly errors: ValidationError[];
     constructor(errors: ValidationError[]);

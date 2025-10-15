@@ -1,7 +1,5 @@
 # Reference
-
 ## Service
-
 <details><summary><code>client.service.<a href="/src/api/resources/service/client/Client.ts">getResource</a>(ResourceID) -> SeedMixedCase.Resource</code></summary>
 <dl>
 <dd>
@@ -16,8 +14,8 @@
 
 ```typescript
 await client.service.getResource("rsc-xyz");
-```
 
+```
 </dd>
 </dl>
 </dd>
@@ -31,20 +29,21 @@ await client.service.getResource("rsc-xyz");
 <dl>
 <dd>
 
-**ResourceID:** `string`
-
+**ResourceID:** `string` 
+    
 </dd>
 </dl>
 
 <dl>
 <dd>
 
-**requestOptions:** `Service.RequestOptions`
+**requestOptions:** `Service.RequestOptions` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
 
-</dd>
-</dl>
-</dd>
-</dl>
 
 </dd>
 </dl>
@@ -65,10 +64,10 @@ await client.service.getResource("rsc-xyz");
 ```typescript
 await client.service.listResources({
     page_limit: 10,
-    beforeDate: "2023-01-01",
+    beforeDate: "2023-01-01"
 });
-```
 
+```
 </dd>
 </dl>
 </dd>
@@ -82,20 +81,21 @@ await client.service.listResources({
 <dl>
 <dd>
 
-**request:** `SeedMixedCase.ListResourcesRequest`
-
+**request:** `SeedMixedCase.ListResourcesRequest` 
+    
 </dd>
 </dl>
 
 <dl>
 <dd>
 
-**requestOptions:** `Service.RequestOptions`
+**requestOptions:** `Service.RequestOptions` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
 
-</dd>
-</dl>
-</dd>
-</dl>
 
 </dd>
 </dl>

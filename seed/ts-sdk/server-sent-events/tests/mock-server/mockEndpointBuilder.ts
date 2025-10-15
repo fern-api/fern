@@ -1,4 +1,4 @@
-import { DefaultBodyType, HttpHandler, HttpResponse, HttpResponseResolver, http } from "msw";
+import { type DefaultBodyType, type HttpHandler, HttpResponse, type HttpResponseResolver, http } from "msw";
 
 import { url } from "../../src/core";
 import { toJson } from "../../src/core/json";

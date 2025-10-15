@@ -45,7 +45,7 @@
             "auth": null,
             "body": {
               "mode": "raw",
-              "raw": "{\n    \"_type\": \"CreateUserRequest\",\n    \"_version\": \"v1\",\n    \"name\": \"name\"\n}",
+              "raw": "{\n    \"name\": \"Alice\",\n    \"_type\": \"CreateUserRequest\",\n    \"_version\": \"v1\",\n    \"age\": 30,\n    \"location\": \"Wonderland\"\n}",
               "options": {
                 "raw": {
                   "language": "json"
@@ -54,6 +54,46 @@
             }
           },
           "response": [
+            {
+              "name": "Success",
+              "status": "OK",
+              "code": 200,
+              "originalRequest": {
+                "description": null,
+                "url": {
+                  "raw": "{{baseUrl}}/user",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "user"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "type": "text",
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "auth": null,
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n    \"name\": \"Alice\",\n    \"_type\": \"CreateUserRequest\",\n    \"_version\": \"v1\",\n    \"age\": 30,\n    \"location\": \"Wonderland\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "description": null,
+              "body": "{\n    \"name\": \"Alice\",\n    \"age\": 30,\n    \"location\": \"Wonderland\"\n}",
+              "_postman_previewlanguage": "json"
+            },
             {
               "name": "Success",
               "status": "OK",

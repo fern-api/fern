@@ -1,7 +1,7 @@
 {
     "endpoints": [
         {
-            "example_identifier": "3754d2db",
+            "example_identifier": "4d3da253",
             "id": {
                 "method": "GET",
                 "path": "/api/resources",
@@ -14,7 +14,7 @@
             }
         },
         {
-            "example_identifier": "4b8be04f",
+            "example_identifier": "5a5715c2",
             "id": {
                 "method": "GET",
                 "path": "/api/resources/{resourceId}",
@@ -27,7 +27,7 @@
             }
         },
         {
-            "example_identifier": "37532036",
+            "example_identifier": "a9a5867e",
             "id": {
                 "method": "POST",
                 "path": "/api/resources/search",
@@ -40,7 +40,7 @@
             }
         },
         {
-            "example_identifier": "2a023176",
+            "example_identifier": "d1569e89",
             "id": {
                 "method": "GET",
                 "path": "/api/users",
@@ -53,7 +53,7 @@
             }
         },
         {
-            "example_identifier": "8d967d3d",
+            "example_identifier": "a85c0b94",
             "id": {
                 "method": "GET",
                 "path": "/api/users/{userId}",
@@ -66,7 +66,7 @@
             }
         },
         {
-            "example_identifier": "93261eb0",
+            "example_identifier": "6b7b7836",
             "id": {
                 "method": "POST",
                 "path": "/api/users",
@@ -79,7 +79,7 @@
             }
         },
         {
-            "example_identifier": "9340cf26",
+            "example_identifier": "ef7a00ee",
             "id": {
                 "method": "PATCH",
                 "path": "/api/users/{userId}",
@@ -105,7 +105,7 @@
             }
         },
         {
-            "example_identifier": "ae7a2662",
+            "example_identifier": "337e0050",
             "id": {
                 "method": "GET",
                 "path": "/api/connections",
@@ -118,7 +118,7 @@
             }
         },
         {
-            "example_identifier": "c76f692f",
+            "example_identifier": "164f7ba",
             "id": {
                 "method": "GET",
                 "path": "/api/connections/{connectionId}",
@@ -131,7 +131,7 @@
             }
         },
         {
-            "example_identifier": "1c77cacf",
+            "example_identifier": "5ed5c4fe",
             "id": {
                 "method": "GET",
                 "path": "/api/clients",
@@ -144,7 +144,7 @@
             }
         },
         {
-            "example_identifier": "8a43926f",
+            "example_identifier": "64934716",
             "id": {
                 "method": "GET",
                 "path": "/api/clients/{clientId}",

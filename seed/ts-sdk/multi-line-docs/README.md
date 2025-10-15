@@ -25,7 +25,7 @@ import { SeedMultiLineDocsClient } from "@fern/multi-line-docs";
 const client = new SeedMultiLineDocsClient({ environment: "YOUR_BASE_URL" });
 await client.user.createUser({
     name: "name",
-    age: 1,
+    age: 1
 });
 ```
 
@@ -144,7 +144,10 @@ console.log(rawResponse.headers['X-My-Header']);
 
 ### Runtime Compatibility
 
+
 The SDK works in the following runtimes:
+
+
 
 - Node.js 18+
 - Vercel

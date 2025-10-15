@@ -1,6 +1,50 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
 - changelogEntry:
     - summary: |
+        Prevent accidental changes to doc sites by adding a confirmation prompt when generating docs for a production instance outside of common CI/CDs.
+        Bypass this prompt by adding a `--no-prompt` flag to the `fern generate` command.
+      type: feat
+  irVersion: 61
+  createdAt: "2025-10-14"
+  version: 0.90.1
+
+- changelogEntry:
+    - summary: |
+        Add Rust crates.io publishing support. Rust SDK now uses --version flag for Cargo.toml version.
+      type: feat
+  createdAt: "2025-10-14"
+  irVersion: 61
+  version: 0.90.0
+
+- changelogEntry:
+    - summary: |
+        Add `group-environments-by-host` setting for OpenAPI/AsyncAPI imports. When enabled, servers with the same hostname are grouped into unified environments regardless of protocol, allowing APIs with both REST and WebSocket endpoints to share environment configuration.
+      type: feat
+  createdAt: "2025-10-12"
+  irVersion: 61
+  version: 0.89.0
+
+- changelogEntry:
+    - summary: |
+        Patches `metadata.canonical-host` to be passed through to the docs generation.
+      type: fix
+  createdAt: "2025-10-11"
+  irVersion: 61
+  version: 0.88.4
+
+- changelogEntry:
+    - summary: |
+        Adds support for the following docs.yml features:
+        - `settings.use-javascript-as-typescript`: when set to `true`, will generate typescript code as javascript instead.
+        - `metadata.canonical-host`: sets the canonical host for the documentation site.
+        - `snippets.rust`: sets the rust snippet configuration.
+      type: fix
+  createdAt: "2025-10-11"
+  irVersion: 61
+  version: 0.88.3
+
+- changelogEntry:
+    - summary: |
         Use FDR instead of hardcoded values to determine which IR version to supply to the generator
       type: fix
   createdAt: "2025-10-10"

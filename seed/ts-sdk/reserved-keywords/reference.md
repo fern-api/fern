@@ -1,7 +1,5 @@
 # Reference
-
 ## Package
-
 <details><summary><code>client.package.<a href="/src/api/resources/package/client/Client.ts">test</a>({ ...params }) -> void</code></summary>
 <dl>
 <dd>
@@ -16,10 +14,10 @@
 
 ```typescript
 await client.package.test({
-    for: "for",
+    "for": "for"
 });
-```
 
+```
 </dd>
 </dl>
 </dd>
@@ -33,20 +31,21 @@ await client.package.test({
 <dl>
 <dd>
 
-**request:** `SeedNurseryApi.TestRequest`
-
+**request:** `SeedNurseryApi.TestRequest` 
+    
 </dd>
 </dl>
 
 <dl>
 <dd>
 
-**requestOptions:** `Package.RequestOptions`
+**requestOptions:** `Package.RequestOptions` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
 
-</dd>
-</dl>
-</dd>
-</dl>
 
 </dd>
 </dl>

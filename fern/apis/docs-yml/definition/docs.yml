@@ -15,6 +15,7 @@ types:
       - csharp
       - php
       - swift
+      - rust
       - nodets
       - nodejs
       - dotnet
@@ -508,11 +509,11 @@ types:
     properties:
       search-text: optional<string>
       disable-search: optional<boolean>
-      disable-feedback: optional<boolean>
       dark-mode-code: optional<boolean>
       default-search-filters: optional<boolean>
       http-snippets: optional<HttpSnippetsConfig>
       hide-404-page: optional<boolean>
+      use-javascript-as-typescript: optional<boolean>
 
   HttpSnippetsConfig:
     discriminated: false
@@ -868,6 +869,7 @@ types:
       csharp: optional<SnippetLanguageConfiguration>
       php: optional<SnippetLanguageConfiguration>
       swift: optional<SnippetLanguageConfiguration>
+      rust: optional<SnippetLanguageConfiguration>
 
   ColorsConfiguration:
     properties:
@@ -1094,6 +1096,7 @@ types:
       "twitter:site": optional<string>
       "twitter:url": optional<string>
       "twitter:card": optional<TwitterCardSetting>
+      canonical-host: optional<string>
 
   TwitterCardSetting:
     enum:

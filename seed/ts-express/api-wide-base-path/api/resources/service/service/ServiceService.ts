@@ -64,9 +64,7 @@ export class ServiceService {
             } catch (error) {
                 if (error instanceof errors.SeedApiWideBasePathError) {
                     console.warn(
-                        `Endpoint 'post' unexpectedly threw ${error.constructor.name}.` +
-                            ` If this was intentional, please add ${error.constructor.name} to` +
-                            " the endpoint's errors list in your Fern Definition.",
+                        `Endpoint 'post' unexpectedly threw ${error.constructor.name}. If this was intentional, please add ${error.constructor.name} to the endpoint's errors list in your Fern Definition.`,
                     );
                     await error.send(res);
                 } else {

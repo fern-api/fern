@@ -76,9 +76,9 @@ When the API returns a non-success status code (4xx or 5xx response), an API exc
 ```java
 import com.seed.unknownAsAny.core.SeedUnknownAsAnyApiException;
 
-try {
+try{
     client.unknown().post(...);
-} catch (SeedUnknownAsAnyApiException e) {
+} catch (SeedUnknownAsAnyApiException e){
     // Do something with the API exception...
 }
 ```

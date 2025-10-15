@@ -10,6 +10,7 @@ import { NpmRegistryConfigV2 } from "./NpmRegistryConfigV2";
 import { PypiRegistryConfig } from "./PypiRegistryConfig";
 import { RubyGemsRegistryConfig } from "./RubyGemsRegistryConfig";
 import { NugetRegistryConfig } from "./NugetRegistryConfig";
+import { CratesRegistryConfig } from "./CratesRegistryConfig";
 
 export const GeneratorRegistriesConfigV2: core.serialization.ObjectSchema<
     serializers.generatorExec.GeneratorRegistriesConfigV2.Raw,
@@ -20,6 +21,7 @@ export const GeneratorRegistriesConfigV2: core.serialization.ObjectSchema<
     pypi: PypiRegistryConfig,
     rubygems: RubyGemsRegistryConfig,
     nuget: NugetRegistryConfig,
+    crates: CratesRegistryConfig,
 });
 
 export declare namespace GeneratorRegistriesConfigV2 {
@@ -29,5 +31,6 @@ export declare namespace GeneratorRegistriesConfigV2 {
         pypi: PypiRegistryConfig.Raw;
         rubygems: RubyGemsRegistryConfig.Raw;
         nuget: NugetRegistryConfig.Raw;
+        crates: CratesRegistryConfig.Raw;
     }
 }

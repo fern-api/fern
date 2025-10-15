@@ -30,12 +30,12 @@ function getRetryDelayFromHeaders(response, retryAttempt) {
     if (retryAfter) {
         // Parse as number of seconds...
         const retryAfterSeconds = parseInt(retryAfter, 10);
-        if (!isNaN(retryAfterSeconds) && retryAfterSeconds > 0) {
+        if (!Number.isNaN(retryAfterSeconds) && retryAfterSeconds > 0) {
             return Math.min(retryAfterSeconds * 1000, MAX_RETRY_DELAY);
         }
         // ...or as an HTTP date; both are valid
         const retryAfterDate = new Date(retryAfter);
-        if (!isNaN(retryAfterDate.getTime())) {
+        if (!Number.isNaN(retryAfterDate.getTime())) {
             const delay = retryAfterDate.getTime() - Date.now();
             if (delay > 0) {
                 return Math.min(Math.max(delay, 0), MAX_RETRY_DELAY);
@@ -46,7 +46,7 @@ function getRetryDelayFromHeaders(response, retryAttempt) {
     const rateLimitReset = response.headers.get("X-RateLimit-Reset");
     if (rateLimitReset) {
         const resetTime = parseInt(rateLimitReset, 10);
-        if (!isNaN(resetTime)) {
+        if (!Number.isNaN(resetTime)) {
             // Assume Unix timestamp in epoch seconds
             const delay = resetTime * 1000 - Date.now();
             if (delay > 0) {

@@ -229,6 +229,13 @@ function getPublishConfig({
                 packageName
             });
             context.logger.debug(`Created PyPiPublishTarget: version ${version} package name: ${packageName}`);
+        } else if (generatorInvocation.language === "rust") {
+            // Use Crates publish target for Rust (Cargo/crates.io)
+            publishTarget = PublishTarget.crates({
+                version,
+                packageName
+            });
+            context.logger.debug(`Created CratesPublishTarget: version ${version} package name: ${packageName}`);
         } else if (generatorInvocation.language === "java") {
             const config = generatorInvocation.raw?.config;
 
@@ -368,5 +375,6 @@ const emptyReadmeConfig: FernIr.ReadmeConfig = {
     disabledFeatures: undefined,
     whiteLabel: undefined,
     customSections: undefined,
-    features: undefined
+    features: undefined,
+    exampleStyle: undefined
 };

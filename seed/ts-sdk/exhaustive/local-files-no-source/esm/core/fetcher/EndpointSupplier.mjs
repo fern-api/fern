@@ -7,7 +7,6 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
         step((generator = generator.apply(thisArg, _arguments || [])).next());
     });
 };
-import { Supplier } from "./Supplier.mjs";
 export const EndpointSupplier = {
     get: (supplier, arg) => __awaiter(void 0, void 0, void 0, function* () {
         if (typeof supplier === "function") {

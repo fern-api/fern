@@ -1,4 +1,4 @@
-import * as core from "../core/index.js";
+import type * as core from "../core/index.js";
 export declare class SeedExhaustiveError extends Error {
     readonly statusCode?: number;
     readonly body?: unknown;

@@ -96,9 +96,9 @@ When the API returns a non-success status code (4xx or 5xx response), an API exc
 ```java
 import com.seed.propertyAccess.core.SeedPropertyAccessApiException;
 
-try {
+try{
     client.createUser(...);
-} catch (SeedPropertyAccessApiException e) {
+} catch (SeedPropertyAccessApiException e){
     // Do something with the API exception...
 }
 ```

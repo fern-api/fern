@@ -73,9 +73,9 @@ When the API returns a non-success status code (4xx or 5xx response), an API exc
 ```java
 import com.seed.unions.core.SeedUnionsApiException;
 
-try {
+try{
     client.bigunion().get(...);
-} catch (SeedUnionsApiException e) {
+} catch (SeedUnionsApiException e){
     // Do something with the API exception...
 }
 ```
