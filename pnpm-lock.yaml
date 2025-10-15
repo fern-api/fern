@@ -17585,7 +17585,7 @@ snapshots:
 
   '@types/readable-stream@4.0.21':
     dependencies:
-      '@types/node': 18.15.3
+      '@types/node': 18.19.129
 
   '@types/semver@7.7.1': {}
 

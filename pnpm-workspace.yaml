@@ -7,3 +7,4 @@ packages:
   - "!packages/cli/cli/dist/local"
   - "!packages/cli/cli/dist/dev"
   - "!packages/cli/cli/dist/prod"
+  - "!packages/cli/cli/src/__test__/sdk-diff/__fixtures__/**"
