@@ -50,7 +50,6 @@ async fn main() {
 
 ```rust
 use seed_trace::prelude::*;
-use std::collections::HashMap;
 
 #[tokio::main]
 async fn main() {
@@ -107,9 +106,7 @@ async fn main() {
 <dd>
 
 ```rust
-use chrono::{DateTime, Utc};
 use seed_trace::prelude::*;
-use std::collections::HashMap;
 
 #[tokio::main]
 async fn main() {
@@ -172,7 +169,6 @@ async fn main() {
 
 ```rust
 use seed_trace::prelude::*;
-use std::collections::HashMap;
 
 #[tokio::main]
 async fn main() {
@@ -229,9 +225,7 @@ async fn main() {
 <dd>
 
 ```rust
-use chrono::{DateTime, Utc};
 use seed_trace::prelude::*;
-use std::collections::HashMap;
 
 #[tokio::main]
 async fn main() {
@@ -294,8 +288,6 @@ async fn main() {
 
 ```rust
 use seed_trace::prelude::*;
-use std::collections::{HashMap, HashSet};
-use uuid::Uuid;
 
 #[tokio::main]
 async fn main() {
@@ -457,8 +449,6 @@ async fn main() {
 
 ```rust
 use seed_trace::prelude::*;
-use std::collections::{HashMap, HashSet};
-use uuid::Uuid;
 
 #[tokio::main]
 async fn main() {
@@ -600,8 +590,6 @@ async fn main() {
 
 ```rust
 use seed_trace::prelude::*;
-use std::collections::{HashMap, HashSet};
-use uuid::Uuid;
 
 #[tokio::main]
 async fn main() {
@@ -759,8 +747,6 @@ async fn main() {
 
 ```rust
 use seed_trace::prelude::*;
-use std::collections::{HashMap, HashSet};
-use uuid::Uuid;
 
 #[tokio::main]
 async fn main() {
@@ -929,7 +915,6 @@ async fn main() {
 
 ```rust
 use seed_trace::prelude::*;
-use std::collections::HashSet;
 
 #[tokio::main]
 async fn main() {
@@ -1024,9 +1009,7 @@ Create a new playlist
 <dd>
 
 ```rust
-use chrono::{DateTime, Utc};
 use seed_trace::prelude::*;
-use std::collections::{HashMap, HashSet};
 
 #[tokio::main]
 async fn main() {
@@ -1325,7 +1308,6 @@ Updates a playlist
 
 ```rust
 use seed_trace::prelude::*;
-use std::collections::{HashMap, HashSet};
 
 #[tokio::main]
 async fn main() {
@@ -1488,7 +1470,6 @@ Creates a problem
 
 ```rust
 use seed_trace::prelude::*;
-use std::collections::{HashMap, HashSet};
 
 #[tokio::main]
 async fn main() {
@@ -1605,7 +1586,6 @@ Updates a problem
 
 ```rust
 use seed_trace::prelude::*;
-use std::collections::{HashMap, HashSet};
 
 #[tokio::main]
 async fn main() {
@@ -1805,7 +1785,6 @@ Returns default starter files for problem
 
 ```rust
 use seed_trace::prelude::*;
-use std::collections::{HashMap, HashSet};
 
 #[tokio::main]
 async fn main() {

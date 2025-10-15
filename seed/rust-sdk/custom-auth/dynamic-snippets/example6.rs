@@ -1,5 +1,4 @@
 use seed_custom_auth::prelude::*;
-use std::collections::HashMap;
 
 #[tokio::main]
 async fn main() {

@@ -65,7 +65,6 @@ async fn main() {
 <dd>
 
 ```rust
-use chrono::NaiveDate;
 use seed_mixed_case::prelude::*;
 
 #[tokio::main]

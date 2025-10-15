@@ -14,7 +14,6 @@
 
 ```rust
 use seed_pagination::prelude::*;
-use std::collections::HashMap;
 
 #[tokio::main]
 async fn main() {
@@ -231,7 +230,6 @@ async fn main() {
 
 ```rust
 use seed_pagination::prelude::*;
-use std::collections::HashMap;
 
 #[tokio::main]
 async fn main() {
@@ -470,7 +468,6 @@ the next page of results.
 
 ```rust
 use seed_pagination::prelude::*;
-use std::collections::HashMap;
 
 #[tokio::main]
 async fn main() {
@@ -693,7 +690,6 @@ paginated endpoint.
 
 ```rust
 use seed_pagination::prelude::*;
-use uuid::Uuid;
 
 #[tokio::main]
 async fn main() {
@@ -753,7 +749,6 @@ async fn main() {
 
 ```rust
 use seed_pagination::prelude::*;
-use uuid::Uuid;
 
 #[tokio::main]
 async fn main() {
@@ -1076,7 +1071,6 @@ async fn main() {
 
 ```rust
 use seed_pagination::prelude::*;
-use std::collections::HashMap;
 
 #[tokio::main]
 async fn main() {
@@ -1312,7 +1306,6 @@ the next page of results.
 
 ```rust
 use seed_pagination::prelude::*;
-use std::collections::HashMap;
 
 #[tokio::main]
 async fn main() {
@@ -1532,7 +1525,6 @@ paginated endpoint.
 
 ```rust
 use seed_pagination::prelude::*;
-use uuid::Uuid;
 
 #[tokio::main]
 async fn main() {
@@ -1591,7 +1583,6 @@ async fn main() {
 
 ```rust
 use seed_pagination::prelude::*;
-use uuid::Uuid;
 
 #[tokio::main]
 async fn main() {

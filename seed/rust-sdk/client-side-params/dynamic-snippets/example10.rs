@@ -1,5 +1,4 @@
 use seed_client_side_params::prelude::*;
-use std::collections::HashSet;
 
 #[tokio::main]
 async fn main() {

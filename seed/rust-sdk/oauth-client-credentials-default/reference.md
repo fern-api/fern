@@ -14,7 +14,6 @@
 
 ```rust
 use seed_oauth_client_credentials_default::prelude::*;
-use std::collections::HashMap;
 
 #[tokio::main]
 async fn main() {

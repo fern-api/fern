@@ -1,5 +1,4 @@
 use seed_oauth_client_credentials::prelude::*;
-use std::collections::HashMap;
 
 #[tokio::main]
 async fn main() {

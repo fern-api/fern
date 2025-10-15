@@ -54,11 +54,6 @@ export class EnumGenerator {
         return writer.toString();
     }
 
-    private writeUseStatements(writer: rust.Writer): void {
-        writer.writeLine("use serde::{Deserialize, Serialize};");
-        writer.writeLine("use std::fmt;");
-    }
-
     private generateEnumForTypeDeclaration(): rust.Enum {
         return rust.enum_({
             name: this.context.getUniqueTypeNameForDeclaration(this.typeDeclaration),

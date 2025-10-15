@@ -14,7 +14,6 @@
 
 ```rust
 use seed_server_sent_events::prelude::*;
-use std::collections::HashMap;
 
 #[tokio::main]
 async fn main() {

@@ -1,5 +1,4 @@
 use seed_alias_extends::prelude::*;
-use std::collections::HashMap;
 
 #[tokio::main]
 async fn main() {

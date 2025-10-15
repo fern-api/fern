@@ -28,7 +28,6 @@ Create a new organization.
 
 ```rust
 use seed_mixed_file_directory::prelude::*;
-use std::collections::HashMap;
 
 #[tokio::main]
 async fn main() {

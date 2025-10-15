@@ -1,5 +1,4 @@
 use seed_trace::prelude::*;
-use std::collections::HashMap;
 
 #[tokio::main]
 async fn main() {

@@ -28,7 +28,6 @@ Add a movie to the database using the movies/* /... path.
 
 ```rust
 use custom_imdb_sdk::prelude::*;
-use std::collections::HashMap;
 
 #[tokio::main]
 async fn main() {
