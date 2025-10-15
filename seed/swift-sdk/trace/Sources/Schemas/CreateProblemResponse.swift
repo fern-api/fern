@@ -1,8 +1,8 @@
 import Foundation
 
 public enum CreateProblemResponse: Codable, Hashable, Sendable {
-    case success(Success)
     case error(Error)
+    case success(Success)
 
     public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)

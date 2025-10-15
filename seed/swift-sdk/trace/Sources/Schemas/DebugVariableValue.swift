@@ -1,19 +1,19 @@
 import Foundation
 
 public enum DebugVariableValue: Codable, Hashable, Sendable {
-    case integerValue(IntegerValue)
-    case booleanValue(BooleanValue)
-    case doubleValue(DoubleValue)
-    case stringValue(StringValue)
-    case charValue(CharValue)
-    case mapValue(MapValue)
-    case listValue(ListValue)
     case binaryTreeNodeValue(BinaryTreeNodeValue)
-    case singlyLinkedListNodeValue(SinglyLinkedListNodeValue)
+    case booleanValue(BooleanValue)
+    case charValue(CharValue)
+    case doubleValue(DoubleValue)
     case doublyLinkedListNodeValue(DoublyLinkedListNodeValue)
-    case undefinedValue(UndefinedValue)
-    case nullValue(NullValue)
     case genericValue(GenericValue)
+    case integerValue(IntegerValue)
+    case listValue(ListValue)
+    case mapValue(MapValue)
+    case nullValue(NullValue)
+    case singlyLinkedListNodeValue(SinglyLinkedListNodeValue)
+    case stringValue(StringValue)
+    case undefinedValue(UndefinedValue)
 
     public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)

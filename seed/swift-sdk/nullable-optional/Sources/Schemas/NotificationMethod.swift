@@ -3,8 +3,8 @@ import Foundation
 /// Discriminated union for testing nullable unions
 public enum NotificationMethod: Codable, Hashable, Sendable {
     case email(Email)
-    case sms(Sms)
     case push(Push)
+    case sms(Sms)
 
     public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)

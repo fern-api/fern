@@ -79,12 +79,12 @@ public enum EventInfo: Codable, Hashable, Sendable {
 
     public struct Tag: Codable, Hashable, Sendable {
         public let type: String = "tag"
-        public let value: Tag
+        public let value: Examples.Tag
         /// Additional properties that are not explicitly defined in the schema
         public let additionalProperties: [String: JSONValue]
 
         public init(
-            value: Tag,
+            value: Examples.Tag,
             additionalProperties: [String: JSONValue] = .init()
         ) {
             self.value = value
@@ -93,7 +93,7 @@ public enum EventInfo: Codable, Hashable, Sendable {
 
         public init(from decoder: Decoder) throws {
             let container = try decoder.container(keyedBy: CodingKeys.self)
-            self.value = try container.decode(Tag.self, forKey: .value)
+            self.value = try container.decode(Examples.Tag.self, forKey: .value)
             self.additionalProperties = try decoder.decodeAdditionalProperties(using: CodingKeys.self)
         }
 

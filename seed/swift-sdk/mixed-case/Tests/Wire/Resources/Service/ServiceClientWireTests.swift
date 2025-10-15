@@ -129,7 +129,7 @@ import MixedCase
         ]
         let response = try await client.service.listResources(
             pageLimit: 10,
-            beforeDate: try! CalendarDate("2023-01-01")
+            beforeDate: CalendarDate("2023-01-01")!
         )
         try #require(response == expectedResponse)
     }
@@ -200,7 +200,7 @@ import MixedCase
         ]
         let response = try await client.service.listResources(
             pageLimit: 1,
-            beforeDate: try! CalendarDate("2023-01-15")
+            beforeDate: CalendarDate("2023-01-15")!
         )
         try #require(response == expectedResponse)
     }

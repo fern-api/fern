@@ -71,7 +71,7 @@ try await main()
 The SDK exports all request types as Swift structs. Simply import the SDK module to access them:
 
 ```swift
-import NullableApi
+import Nullable
 
 let request = Requests.CreateUserRequest(
     ...
@@ -120,7 +120,7 @@ The SDK allows you to customize the underlying `URLSession` used for HTTP reques
 
 ```swift
 import Foundation
-import NullableApi
+import Nullable
 
 let client = NullableClient(
     ...,

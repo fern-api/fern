@@ -1,8 +1,8 @@
 import Foundation
 
 public enum TestCaseImplementationReferenceType: Codable, Hashable, Sendable {
-    case templateId(TemplateId)
     case implementation(Implementation)
+    case templateId(TemplateId)
 
     public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
