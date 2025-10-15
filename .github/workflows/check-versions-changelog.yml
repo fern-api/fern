@@ -1,0 +1,282 @@
+name: Check Versions Changelog
+
+# This workflow checks if TypeScript changes in packages/ and generators/ directories
+# are properly reflected in the corresponding versions.yml changelog entries.
+# Requires ANTHROPIC_API_KEY secret to be configured in the repository.
+
+on:
+  pull_request:
+    types:
+      - opened
+      - synchronize
+      - reopened
+
+permissions:
+  contents: read
+  pull-requests: write
+  issues: read
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.event.pull_request.number }}
+  cancel-in-progress: true
+
+jobs:
+  check-versions-changelog:
+    runs-on: ubuntu-latest
+    if: github.event.pull_request.draft == false
+
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Install
+        uses: ./.github/actions/install
+
+      - name: Get changed TypeScript files in packages and generators
+        id: changed-files
+        run: |
+          # Get the base branch to compare against
+          git fetch origin ${{ github.event.pull_request.base.ref }}
+          BASE_SHA="${{ github.event.pull_request.base.sha }}"
+          HEAD_SHA="${{ github.event.pull_request.head.sha }}"
+
+          # Find changed TypeScript files in packages/ and generators/ directories (excluding tests and generated files)
+          CHANGED_TS_FILES=$(git diff --name-only --diff-filter=AMR "$BASE_SHA" "$HEAD_SHA" -- '*.ts' ':!*.test.ts' ':!*.spec.ts' ':!**/generated/**' ':!**/dist/**' | grep -E '^(packages/|generators/)' | head -20 || true)
+
+          echo "changed_files<<EOF" >> $GITHUB_OUTPUT
+          echo "$CHANGED_TS_FILES" >> $GITHUB_OUTPUT
+          echo "EOF" >> $GITHUB_OUTPUT
+
+          if [ -z "$CHANGED_TS_FILES" ] || [ "$CHANGED_TS_FILES" = "" ]; then
+            echo "has_changes=false" >> $GITHUB_OUTPUT
+            echo "No significant TypeScript changes found"
+          else
+            echo "has_changes=true" >> $GITHUB_OUTPUT
+            echo "Found changes in: $CHANGED_TS_FILES"
+          fi
+
+      - name: Determine which versions.yml files to check
+        id: version-files
+        if: steps.changed-files.outputs.has_changes == 'true'
+        run: |
+          CHANGED_FILES="${{ steps.changed-files.outputs.changed_files }}"
+          VERSION_FILES=""
+
+          # Map changed directories to their versions.yml files
+          while IFS= read -r file; do
+            if [[ "$file" == packages/cli/* ]]; then
+              VERSION_FILES="$VERSION_FILES packages/cli/cli/versions.yml"
+            elif [[ "$file" == generators/typescript/* ]]; then
+              VERSION_FILES="$VERSION_FILES generators/typescript/sdk/versions.yml"
+            elif [[ "$file" == generators/python/* ]]; then
+              VERSION_FILES="$VERSION_FILES generators/python/sdk/versions.yml"
+            elif [[ "$file" == generators/java/* ]]; then
+              VERSION_FILES="$VERSION_FILES generators/java/sdk/versions.yml"
+            elif [[ "$file" == generators/go/* ]]; then
+              VERSION_FILES="$VERSION_FILES generators/go/sdk/versions.yml"
+            elif [[ "$file" == generators/ruby-v2/* ]]; then
+              VERSION_FILES="$VERSION_FILES generators/ruby-v2/sdk/versions.yml"
+            elif [[ "$file" == generators/ruby/* ]]; then
+              VERSION_FILES="$VERSION_FILES generators/ruby/sdk/versions.yml"
+            elif [[ "$file" == generators/csharp/* ]]; then
+              VERSION_FILES="$VERSION_FILES generators/csharp/sdk/versions.yml"
+            elif [[ "$file" == generators/php/* ]]; then
+              VERSION_FILES="$VERSION_FILES generators/php/sdk/versions.yml"
+            elif [[ "$file" == generators/rust/* ]]; then
+              VERSION_FILES="$VERSION_FILES generators/rust/sdk/versions.yml"
+            elif [[ "$file" == generators/swift/* ]]; then
+              VERSION_FILES="$VERSION_FILES generators/swift/sdk/versions.yml"
+            fi
+          done <<< "$CHANGED_FILES"
+
+          # Remove duplicates and empty entries
+          VERSION_FILES=$(echo "$VERSION_FILES" | tr ' ' '\n' | sort -u | grep -v '^$' || true)
+
+          echo "version_files<<EOF" >> $GITHUB_OUTPUT
+          echo "$VERSION_FILES" >> $GITHUB_OUTPUT
+          echo "EOF" >> $GITHUB_OUTPUT
+
+      - name: Check versions.yml with LLM
+        if: steps.changed-files.outputs.has_changes == 'true'
+        id: llm-check
+        run: |
+          # Create a combined context file with changed code and current versions
+          cat > /tmp/analysis_context.md << 'EOF'
+          # PR Analysis Context
+
+          ## Changed TypeScript Files:
+          ```
+          ${{ steps.changed-files.outputs.changed_files }}
+          ```
+
+          ## Git Diff of Changed Files:
+          EOF
+
+          # Add actual diff content (limit to avoid token limits)
+          git diff ${{ github.event.pull_request.base.sha }} ${{ github.event.pull_request.head.sha }} -- ${{ steps.changed-files.outputs.changed_files }} | head -500 >> /tmp/analysis_context.md
+
+          # Add current versions.yml content if they exist
+          VERSION_FILES="${{ steps.version-files.outputs.version_files }}"
+          if [ -n "$VERSION_FILES" ]; then
+            echo "" >> /tmp/analysis_context.md
+            echo "## Current versions.yml Files:" >> /tmp/analysis_context.md
+            while IFS= read -r version_file; do
+              if [ -f "$version_file" ]; then
+                echo "" >> /tmp/analysis_context.md
+                echo "### $version_file:" >> /tmp/analysis_context.md
+                echo '```yaml' >> /tmp/analysis_context.md
+                head -50 "$version_file" >> /tmp/analysis_context.md
+                echo '```' >> /tmp/analysis_context.md
+              fi
+            done <<< "$VERSION_FILES"
+          fi
+
+          # Use Anthropic Claude API to analyze the changes
+          echo "Making API call to Claude..."
+          ANALYSIS_RESULT=$(curl -s -X POST "https://api.anthropic.com/v1/messages" \
+            -H "x-api-key: ${{ secrets.ANTHROPIC_API_KEY }}" \
+            -H "Content-Type: application/json" \
+            -H "anthropic-version: 2023-06-01" \
+            -d '{
+              "model": "claude-3-haiku-20240307",
+              "max_tokens": 2000,
+              "system": "You are an expert at analyzing code changes and determining if they warrant version changelog entries. You work for Fern, a company that builds API-first development tools including CLI tools and SDK generators.\n\nAnalyze the provided TypeScript code changes to determine if they represent significant changes that should be documented in versions.yml changelog entries. Focus on changes that would impact customers using Fern.\n\nFor each component (CLI or generator), determine:\n1. Whether the changes warrant a changelog entry\n2. What type of change it is (feat, fix, chore, internal)\n3. Suggested changelog entry text with specific details about new features, bug fixes, or improvements\n4. If feature flags are involved, include details on how to enable/disable them\n5. If APIs changed, provide before/after code examples\n6. Consider the customer impact - will users notice this change?\n\nProvide your response in JSON format with this structure:\n{\n  \"needs_changelog\": boolean,\n  \"components\": [\n    {\n      \"component\": \"string (e.g. '\''CLI'\'', '\''TypeScript Generator'\'')\",\n      \"versions_file\": \"string (path to versions.yml)\",\n      \"recommendation\": \"add|improve|sufficient\",\n      \"reasoning\": \"string\",\n      \"suggested_entry\": {\n        \"type\": \"feat|fix|chore|internal\",\n        \"summary\": \"string (detailed summary with examples if applicable)\"\n      }\n    }\n  ],\n  \"overall_feedback\": \"string\"\n}",
+              "messages": [
+                {
+                  "role": "user",
+                  "content": "'"$(cat /tmp/analysis_context.md | sed 's/"/\\"/g' | sed 's/$/\\n/' | tr -d '\n')"'"
+                }
+              ]
+            }')
+
+          echo "API Response received"
+          echo "$ANALYSIS_RESULT" | jq . || echo "Failed to parse API response as JSON"
+
+          # Extract and format the response (Claude API format)
+          if echo "$ANALYSIS_RESULT" | jq -e '.content[0].text' > /dev/null 2>&1; then
+            echo "$ANALYSIS_RESULT" | jq -r '.content[0].text' > /tmp/analysis_output.json
+          else
+            echo "Failed to extract content from Claude API response"
+            echo '{"needs_changelog": true, "components": [], "overall_feedback": "Failed to analyze changes due to API error - please manually review versions.yml files"}' > /tmp/analysis_output.json
+          fi
+
+          # Save the analysis result as output
+          echo "analysis<<EOF" >> $GITHUB_OUTPUT
+          cat /tmp/analysis_output.json >> $GITHUB_OUTPUT
+          echo "EOF" >> $GITHUB_OUTPUT
+
+      - name: Post PR comment
+        if: steps.changed-files.outputs.has_changes == 'true'
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const analysis = `${{ steps.llm-check.outputs.analysis }}`;
+
+            let parsedAnalysis;
+            try {
+              parsedAnalysis = JSON.parse(analysis);
+            } catch (e) {
+              console.error('Failed to parse analysis JSON:', e);
+              parsedAnalysis = {
+                needs_changelog: true,
+                components: [],
+                overall_feedback: "Failed to analyze changes - please manually review versions.yml files"
+              };
+            }
+
+            const changedFiles = `${{ steps.changed-files.outputs.changed_files }}`.split('\n').filter(f => f.trim());
+
+            let commentBody = `## 📋 Versions.yml Changelog Check\n\n`;
+
+            if (changedFiles.length === 0) {
+              commentBody += `✅ No significant TypeScript changes detected in packages/ or generators/ directories.\n`;
+            } else {
+              commentBody += `🔍 **Analyzed TypeScript changes in:**\n`;
+              changedFiles.forEach(file => {
+                commentBody += `- \`${file}\`\n`;
+              });
+
+              commentBody += `\n### Analysis Results:\n\n`;
+
+              if (parsedAnalysis.components && parsedAnalysis.components.length > 0) {
+                parsedAnalysis.components.forEach(component => {
+                  const icon = component.recommendation === 'sufficient' ? '✅' : component.recommendation === 'improve' ? '⚠️' : '❌';
+                  commentBody += `${icon} **${component.component}** (\`${component.versions_file}\`)\n`;
+                  commentBody += `   - **Recommendation:** ${component.recommendation}\n`;
+                  commentBody += `   - **Reasoning:** ${component.reasoning}\n`;
+
+                  if (component.suggested_entry) {
+                    commentBody += `   - **Suggested changelog entry:**\n`;
+                    commentBody += `     \`\`\`yaml\n`;
+                    commentBody += `     - type: ${component.suggested_entry.type}\n`;
+                    commentBody += `       summary: |\n`;
+                    component.suggested_entry.summary.split('\n').forEach(line => {
+                      commentBody += `         ${line}\n`;
+                    });
+                    commentBody += `     \`\`\`\n`;
+                  }
+                  commentBody += `\n`;
+                });
+              }
+
+              if (parsedAnalysis.overall_feedback) {
+                commentBody += `### 💡 Overall Feedback:\n${parsedAnalysis.overall_feedback}\n\n`;
+              }
+
+              commentBody += `---\n`;
+              commentBody += `**Guidelines for good changelog entries:**\n`;
+              commentBody += `- Include specific details about what changed and why\n`;
+              commentBody += `- For new features: mention how to enable/use them\n`;
+              commentBody += `- For bug fixes: describe what was broken and how it's fixed\n`;
+              commentBody += `- For feature flags: provide enable/disable instructions\n`;
+              commentBody += `- Include code examples for API changes\n\n`;
+              commentBody += `*This analysis was performed by Claude (Anthropic) and should be reviewed by a human.*`;
+            }
+
+            // Check if there's already a comment from this action
+            const comments = await github.rest.issues.listComments({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              issue_number: context.issue.number,
+            });
+
+            const botComment = comments.data.find(comment =>
+              comment.user.login === 'github-actions[bot]' &&
+              comment.body.includes('📋 Versions.yml Changelog Check')
+            );
+
+            if (botComment) {
+              // Update existing comment
+              await github.rest.issues.updateComment({
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                comment_id: botComment.id,
+                body: commentBody
+              });
+            } else {
+              // Create new comment
+              await github.rest.issues.createComment({
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                issue_number: context.issue.number,
+                body: commentBody
+              });
+            }
+
+            // Set job status based on analysis
+            if (parsedAnalysis.needs_changelog && parsedAnalysis.components) {
+              const needsAction = parsedAnalysis.components.some(c => c.recommendation === 'add');
+              if (needsAction) {
+                core.setFailed('Some components need changelog entries added to their versions.yml files');
+              } else {
+                console.log('All components have sufficient changelog coverage');
+              }
+            }
+
+      - name: Skip for no changes
+        if: steps.changed-files.outputs.has_changes == 'false'
+        run: |
+          echo "✅ No significant TypeScript changes detected in packages/ or generators/ directories."
+          echo "Skipping versions.yml changelog check."
