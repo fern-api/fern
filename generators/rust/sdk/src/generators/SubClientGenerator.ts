@@ -759,12 +759,16 @@ export class SubClientGenerator {
             rust.Type.reference(rust.reference({ name: "ApiError" }))
         );
 
+        // Use execute_bytes_request for binary responses (file downloads)
+        const isBinaryResponse = this.isBinaryResponse(endpoint);
+        const executeMethod = isBinaryResponse ? "execute_bytes_request" : "execute_request";
+
         return {
             name: endpoint.name.snakeCase.safeName,
             parameters,
             returnType: returnType.toString(),
             isAsync: true,
-            body: `self.http_client.execute_request(
+            body: `self.http_client.${executeMethod}(
             Method::${httpMethod},
             ${pathExpression},
             ${requestBody},
@@ -1228,6 +1232,22 @@ export class SubClientGenerator {
         }
 
         return rust.Type.tuple([]);
+    }
+
+    private isBinaryResponse(endpoint: HttpEndpoint): boolean {
+        if (!endpoint.response?.body) {
+            return false;
+        }
+
+        return endpoint.response.body._visit({
+            json: () => false,
+            fileDownload: () => true,
+            text: () => false,
+            bytes: () => true,
+            streaming: () => false,
+            streamParameter: () => false,
+            _other: () => false
+        });
     }
 
     // =============================================================================
