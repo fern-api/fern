@@ -3,6 +3,7 @@ import { CustomReadmeSectionSchema } from "./CustomReadmeSectionSchema";
 
 export const BaseRustCustomConfigSchema = z.object({
     crateName: z.string().optional(),
+    crateVersion: z.string().optional(),
     clientClassName: z.string().optional(),
     environmentEnumName: z.string().optional(),
     customReadmeSections: z.array(CustomReadmeSectionSchema).optional(),
