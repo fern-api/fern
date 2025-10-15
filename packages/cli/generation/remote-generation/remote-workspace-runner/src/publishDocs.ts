@@ -48,7 +48,8 @@ export async function publishDocs({
     preview,
     editThisPage,
     isPrivate = false,
-    disableTemplates = false
+    disableTemplates = false,
+    skipUpload = false
 }: {
     token: FernToken;
     organization: string;
@@ -62,6 +63,7 @@ export async function publishDocs({
     editThisPage: docsYml.RawSchemas.FernDocsConfig.EditThisPageConfig | undefined;
     isPrivate: boolean | undefined;
     disableTemplates: boolean | undefined;
+    skipUpload: boolean | undefined;
 }): Promise<void> {
     const fdr = createFdrService({ token: token.value });
     const authConfig: CjsFdrSdk.docs.v2.write.AuthConfig = isPrivate
@@ -129,12 +131,16 @@ export async function publishDocs({
                 if (startDocsRegisterResponse.ok) {
                     urlToOutput = startDocsRegisterResponse.body.previewUrl;
                     docsRegistrationId = startDocsRegisterResponse.body.docsRegistrationId;
-                    await uploadFiles(
-                        startDocsRegisterResponse.body.uploadUrls,
-                        docsWorkspace.absoluteFilePath,
-                        context,
-                        UPLOAD_FILE_BATCH_SIZE
-                    );
+                    if (skipUpload) {
+                        context.logger.debug("Skip-upload mode: skipping file uploads for docs preview");
+                    } else {
+                        await uploadFiles(
+                            startDocsRegisterResponse.body.uploadUrls,
+                            docsWorkspace.absoluteFilePath,
+                            context,
+                            UPLOAD_FILE_BATCH_SIZE
+                        );
+                    }
                     return convertToFilePathPairs(
                         startDocsRegisterResponse.body.uploadUrls,
                         docsWorkspace.absoluteFilePath
@@ -154,12 +160,16 @@ export async function publishDocs({
                 });
                 if (startDocsRegisterResponse.ok) {
                     docsRegistrationId = startDocsRegisterResponse.body.docsRegistrationId;
-                    await uploadFiles(
-                        startDocsRegisterResponse.body.uploadUrls,
-                        docsWorkspace.absoluteFilePath,
-                        context,
-                        UPLOAD_FILE_BATCH_SIZE
-                    );
+                    if (skipUpload) {
+                        context.logger.debug("Skip-upload mode: skipping file uploads for docs");
+                    } else {
+                        await uploadFiles(
+                            startDocsRegisterResponse.body.uploadUrls,
+                            docsWorkspace.absoluteFilePath,
+                            context,
+                            UPLOAD_FILE_BATCH_SIZE
+                        );
+                    }
                     return convertToFilePathPairs(
                         startDocsRegisterResponse.body.uploadUrls,
                         docsWorkspace.absoluteFilePath
@@ -195,12 +205,16 @@ export async function publishDocs({
                 context.logger.debug(`Registered API Definition ${response.body.apiDefinitionId}`);
 
                 if (response.body.dynamicIRs && dynamicIRsByLanguage) {
-                    await uploadDynamicIRs({
-                        dynamicIRs: dynamicIRsByLanguage,
-                        dynamicIRUploadUrls: response.body.dynamicIRs,
-                        context,
-                        apiId: response.body.apiDefinitionId
-                    });
+                    if (skipUpload) {
+                        context.logger.debug("Skip-upload mode: skipping dynamic IR uploads");
+                    } else {
+                        await uploadDynamicIRs({
+                            dynamicIRs: dynamicIRsByLanguage,
+                            dynamicIRUploadUrls: response.body.dynamicIRs,
+                            context,
+                            apiId: response.body.apiDefinitionId
+                        });
+                    }
                 }
 
                 return response.body.apiDefinitionId;
