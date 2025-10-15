@@ -96,13 +96,31 @@ jobs:
       - name: Analyze changes with Claude API
         if: steps.changed-files.outputs.has_changes == 'true' && (github.event_name == 'workflow_dispatch' || github.event.pull_request.draft == false)
         run: |
-          # Create analysis prompt
+          # Get the git diff for analysis
+          echo "Getting git diff for changed files..."
+
+          if [ "${{ github.event_name }}" = "workflow_dispatch" ]; then
+            BASE_REF="${{ inputs.base_ref || 'main' }}"
+            HEAD_REF="${{ inputs.head_ref || 'HEAD' }}"
+            GIT_DIFF=$(git diff "$BASE_REF" "$HEAD_REF" -- ${{ steps.changed-files.outputs.changed_files }} | head -2000)
+          else
+            BASE_SHA="${{ github.event.pull_request.base.sha }}"
+            HEAD_SHA="${{ github.event.pull_request.head.sha }}"
+            GIT_DIFF=$(git diff "$BASE_SHA" "$HEAD_SHA" -- ${{ steps.changed-files.outputs.changed_files }} | head -2000)
+          fi
+
+          # Create analysis prompt with actual diff content
           PROMPT="You are an expert at analyzing code changes for Fern, a company that builds API-first development tools including CLI tools and SDK generators.
 
           Please analyze the TypeScript changes in this repository and determine if they warrant entries in the corresponding versions.yml changelog files.
 
-          For context, here are the changed TypeScript files:
+          CHANGED FILES:
           ${{ steps.changed-files.outputs.changed_files }}
+
+          GIT DIFF CONTENT:
+          \`\`\`diff
+          $GIT_DIFF
+          \`\`\`
 
           The versions.yml files are located at:
           - CLI changes: packages/cli/cli/versions.yml
@@ -116,17 +134,31 @@ jobs:
           - Rust Generator: generators/rust/sdk/versions.yml
           - Swift Generator: generators/swift/sdk/versions.yml
 
-          For each component that has changes, analyze the git diff and provide:
-          1. Whether the changes warrant a changelog entry (focus on customer impact)
+          For each component that has changes, analyze the actual code differences and determine:
+          1. Whether the changes warrant a changelog entry (focus on customer impact - will users notice this change?)
           2. The change type (feat, fix, chore, internal)
-          3. A detailed summary with specific examples
+          3. A detailed summary with specific examples from the diff
           4. Information about feature flags, API changes, or usage examples
+
+          CUSTOMER IMPACT EXAMPLES:
+          - New features customers can use
+          - Bug fixes that solve customer problems
+          - Breaking changes that affect existing usage
+          - Configuration options customers can set
+          - Performance improvements customers will notice
+          - New error messages or validation
+
+          INTERNAL CHANGES (no changelog needed):
+          - Refactoring that doesn't change behavior
+          - Internal code organization
+          - Test-only changes
+          - Development tooling changes
 
           IMPORTANT: For each component that needs a changelog entry, provide the output in this EXACT format:
 
           ## [COMPONENT_NAME] - [VERSIONS_FILE_PATH]
           Recommendation: [add|improve|sufficient]
-          Reasoning: [explanation]
+          Reasoning: [explanation based on actual code changes]
 
           Suggested Entry:
           \`\`\`yaml
@@ -135,7 +167,7 @@ jobs:
             changelogEntry:
               - type: [feat|fix|chore|internal]
                 summary: |
-                  [Detailed summary with specific examples]
+                  [Detailed summary with specific examples from the diff]
           \`\`\`
 
           Where [INCREMENT_VERSION] should be a logical next version based on the change type.
