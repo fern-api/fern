@@ -330,16 +330,29 @@ export class NameRegistry {
         literalValue: string;
     }) {
         const parentSymbolId = typeof parentSymbol === "string" ? parentSymbol : parentSymbol.id;
-        let symbolName = LiteralEnum.generateName(literalValue);
-        if (symbolName === "CodingKeys") {
-            symbolName = `CodingKeysEnum`;
-        }
+
         const enumsByLiteralValue =
             this.nestedLiteralEnumSymbolsByParentSymbolId.get(parentSymbolId) ?? new Map<string, swift.Symbol>();
         const existingSymbol = enumsByLiteralValue.get(literalValue);
         if (existingSymbol) {
             return existingSymbol;
         }
+        const literalEnumSymbolsForParent = Array.from(enumsByLiteralValue.values());
+
+        const symbolName = (() => {
+            const ns = new Namespace({ reservedSymbolNames: ["CodingKeys"] });
+            literalEnumSymbolsForParent.forEach((s) => {
+                ns.registerSymbol(s.id, [s.name]);
+            });
+            const mainCandidate = LiteralEnum.generateName(literalValue);
+            return ns.registerSymbol(literalValue, [
+                mainCandidate,
+                `${mainCandidate}Literal`,
+                `${mainCandidate}Enum`,
+                `${mainCandidate}StringEnum`
+            ]);
+        })();
+
         const newSymbol = this.targetSymbolRegistry.registerNestedType({
             parentSymbol,
             symbolName,
