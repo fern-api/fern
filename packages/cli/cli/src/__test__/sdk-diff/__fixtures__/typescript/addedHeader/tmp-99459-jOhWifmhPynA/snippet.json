@@ -1,0 +1,38 @@
+{
+    "endpoints": [
+        {
+            "id": {
+                "path": "/movies/create-movie",
+                "method": "POST",
+                "identifier_override": "endpoint_imdb.createMovie"
+            },
+            "snippet": {
+                "type": "typescript",
+                "client": "import { SeedApiClient } from \"@fern/custom\";\n\nconst client = new SeedApiClient({ environment: \"YOUR_BASE_URL\" });\nawait client.imdb.createMovie({\n    \"x-service-header\": \"x-service-header\",\n    body: {\n        title: \"title\",\n        rating: 1.1\n    }\n});\n"
+            }
+        },
+        {
+            "id": {
+                "path": "/movies/{movieId}",
+                "method": "GET",
+                "identifier_override": "endpoint_imdb.getMovie"
+            },
+            "snippet": {
+                "type": "typescript",
+                "client": "import { SeedApiClient } from \"@fern/custom\";\n\nconst client = new SeedApiClient({ environment: \"YOUR_BASE_URL\" });\nawait client.imdb.getMovie(\"movieId\", {\n    \"x-service-header\": \"x-service-header\"\n});\n"
+            }
+        },
+        {
+            "id": {
+                "path": "/movies/",
+                "method": "GET",
+                "identifier_override": "endpoint_imdb.listMovies"
+            },
+            "snippet": {
+                "type": "typescript",
+                "client": "import { SeedApiClient } from \"@fern/custom\";\n\nconst client = new SeedApiClient({ environment: \"YOUR_BASE_URL\" });\nawait client.imdb.listMovies({\n    \"x-service-header\": \"x-service-header\"\n});\n"
+            }
+        }
+    ],
+    "types": {}
+}
