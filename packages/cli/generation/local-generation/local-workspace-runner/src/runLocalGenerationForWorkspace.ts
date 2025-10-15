@@ -9,6 +9,7 @@ import { FernIr, PublishTarget } from "@fern-api/ir-sdk";
 import { getDynamicGeneratorConfig } from "@fern-api/remote-workspace-runner";
 import { TaskContext } from "@fern-api/task-context";
 import { FernVenusApi } from "@fern-api/venus-api-sdk";
+import { computeSemanticVersion } from "@fern-api/api-workspace-commons";
 import {
     AbstractAPIWorkspace,
     getBaseOpenAPIWorkspaceSettingsFromGeneratorInvocation
@@ -60,6 +61,10 @@ export async function runLocalGenerationForWorkspace({
                     generatorInvocation: generatorInvocation
                 });
 
+                // grabs generator.yml > config > package_name
+                // const packageName = getPackageNameFromGeneratorConfig(generatorInvocation);
+                const packageName = generatorsYml.getPackageName({ generatorInvocation });
+
                 const intermediateRepresentation = generateIntermediateRepresentation({
                     workspace: fernWorkspace,
                     audiences: generatorGroup.audiences,
@@ -71,8 +76,8 @@ export async function runLocalGenerationForWorkspace({
                         disabled: generatorInvocation.disableExamples
                     },
                     readme: generatorInvocation.readme,
-                    version: version,
-                    packageName: generatorsYml.getPackageName({ generatorInvocation }),
+                    version: version ?? (await computeSemanticVersion({ packageName, generatorInvocation })),
+                    packageName,
                     context,
                     sourceResolver: new SourceResolverImpl(context, fernWorkspace),
                     dynamicGeneratorConfig
@@ -112,10 +117,6 @@ export async function runLocalGenerationForWorkspace({
                 }
 
                 // Set the publish config on the intermediateRepresentation if available
-
-                // grabs generator.yml > config > package_name
-                const packageName = getPackageNameFromGeneratorConfig(generatorInvocation);
-
                 const publishConfig = getPublishConfig({
                     generatorInvocation,
                     org: organization.ok ? organization.body : undefined,
