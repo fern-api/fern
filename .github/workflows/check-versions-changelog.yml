@@ -116,83 +116,93 @@ jobs:
           echo "$GIT_DIFF" >> $GITHUB_OUTPUT
           echo "EOF" >> $GITHUB_OUTPUT
 
-      - name: Analyze changes with Claude Code
-        if: steps.changed-files.outputs.has_changes == 'true' && (github.event_name == 'workflow_dispatch' || github.event.pull_request.draft == false)
-        id: claude-analysis
-        uses: anthropics/claude-code-action@v1
-        with:
-          prompt: |
-            You are an expert at analyzing code changes for Fern, a company that builds API-first development tools including CLI tools and SDK generators.
-
-            Please analyze the TypeScript changes in this repository and determine if they warrant entries in the corresponding versions.yml changelog files.
-
-            CHANGED FILES:
-            ${{ steps.changed-files.outputs.changed_files }}
-
-            GIT DIFF CONTENT:
-            ```diff
-            ${{ steps.git-diff.outputs.git_diff }}
-            ```
-
-            The versions.yml files are located at:
-            - CLI changes: packages/cli/cli/versions.yml
-            - TypeScript Generator: generators/typescript/sdk/versions.yml
-            - Python Generator: generators/python/sdk/versions.yml
-            - Java Generator: generators/java/sdk/versions.yml
-            - Go Generator: generators/go/sdk/versions.yml
-            - Ruby Generator: generators/ruby-v2/sdk/versions.yml
-            - C# Generator: generators/csharp/sdk/versions.yml
-            - PHP Generator: generators/php/sdk/versions.yml
-            - Rust Generator: generators/rust/sdk/versions.yml
-            - Swift Generator: generators/swift/sdk/versions.yml
-
-            For each component that has changes, analyze the actual code differences and determine:
-            1. Whether the changes warrant a changelog entry (focus on customer impact - will users notice this change?)
-            2. The change type (feat, fix, chore, internal)
-            3. A detailed summary with specific examples from the diff
-            4. Information about feature flags, API changes, or usage examples
-
-            CUSTOMER IMPACT EXAMPLES:
-            - New features customers can use
-            - Bug fixes that solve customer problems
-            - Breaking changes that affect existing usage
-            - Configuration options customers can set
-            - Performance improvements customers will notice
-            - New error messages or validation
-
-            INTERNAL CHANGES (no changelog needed):
-            - Refactoring that doesn't change behavior
-            - Internal code organization
-            - Test-only changes
-            - Development tooling changes
-
-            IMPORTANT: For each component that needs a changelog entry, provide the output in this EXACT format:
-
-            ## [COMPONENT_NAME] - [VERSIONS_FILE_PATH]
-            Recommendation: [add|improve|sufficient]
-            Reasoning: [explanation based on actual code changes]
-
-            Suggested Entry:
-            ```yaml
-            - version: [INCREMENT_VERSION]
-              createdAt: "2025-10-15"
-              changelogEntry:
-                - type: [feat|fix|chore|internal]
-                  summary: |
-                    [Detailed summary with specific examples from the diff]
-            ```
-
-            Where [INCREMENT_VERSION] should be a logical next version based on the change type.
-
-            Please provide concrete, actionable changelog entries that engineers can directly use.
-          github_token: ${{ secrets.GITHUB_TOKEN }}
-          anthropic_api_key: ${{ secrets.SWIMBURGER_ANTHROPIC_API_KEY }}
-
-      - name: Save Claude analysis output
+      - name: Install Claude Code CLI
         if: steps.changed-files.outputs.has_changes == 'true' && (github.event_name == 'workflow_dispatch' || github.event.pull_request.draft == false)
         run: |
-          # Save Claude output to file for PR suggestions step
-          echo '${{ steps.claude-analysis.outputs.response }}' > analysis_output.md
+          npm install -g @anthropic-ai/claude-code
+          claude --version
+
+      - name: Analyze changes with Claude Code CLI
+        if: steps.changed-files.outputs.has_changes == 'true' && (github.event_name == 'workflow_dispatch' || github.event.pull_request.draft == false)
+        env:
+          ANTHROPIC_API_KEY: ${{ secrets.SWIMBURGER_ANTHROPIC_API_KEY }}
+        run: |
+          # Create analysis prompt
+          cat > analysis_prompt.md << 'EOF'
+          You are an expert at analyzing code changes for Fern, a company that builds API-first development tools including CLI tools and SDK generators.
+
+          Please analyze the TypeScript changes in this repository and determine if they warrant entries in the corresponding versions.yml changelog files.
+
+          CHANGED FILES:
+          ${{ steps.changed-files.outputs.changed_files }}
+
+          GIT DIFF CONTENT:
+          ```diff
+          ${{ steps.git-diff.outputs.git_diff }}
+          ```
+
+          The versions.yml files are located at:
+          - CLI changes: packages/cli/cli/versions.yml
+          - TypeScript Generator: generators/typescript/sdk/versions.yml
+          - Python Generator: generators/python/sdk/versions.yml
+          - Java Generator: generators/java/sdk/versions.yml
+          - Go Generator: generators/go/sdk/versions.yml
+          - Ruby Generator: generators/ruby-v2/sdk/versions.yml
+          - C# Generator: generators/csharp/sdk/versions.yml
+          - PHP Generator: generators/php/sdk/versions.yml
+          - Rust Generator: generators/rust/sdk/versions.yml
+          - Swift Generator: generators/swift/sdk/versions.yml
+
+          For each component that has changes, analyze the actual code differences and determine:
+          1. Whether the changes warrant a changelog entry (focus on customer impact - will users notice this change?)
+          2. The change type (feat, fix, chore, internal)
+          3. A detailed summary with specific examples from the diff
+          4. Information about feature flags, API changes, or usage examples
+
+          CUSTOMER IMPACT EXAMPLES:
+          - New features customers can use
+          - Bug fixes that solve customer problems
+          - Breaking changes that affect existing usage
+          - Configuration options customers can set
+          - Performance improvements customers will notice
+          - New error messages or validation
+
+          INTERNAL CHANGES (no changelog needed):
+          - Refactoring that doesn't change behavior
+          - Internal code organization
+          - Test-only changes
+          - Development tooling changes
+
+          IMPORTANT: For each component that needs a changelog entry, provide the output in this EXACT format:
+
+          ## [COMPONENT_NAME] - [VERSIONS_FILE_PATH]
+          Recommendation: [add|improve|sufficient]
+          Reasoning: [explanation based on actual code changes]
+
+          Suggested Entry:
+          ```yaml
+          - version: [INCREMENT_VERSION]
+            createdAt: "2025-10-15"
+            changelogEntry:
+              - type: [feat|fix|chore|internal]
+                summary: |
+                  [Detailed summary with specific examples from the diff]
+          ```
+
+          Where [INCREMENT_VERSION] should be a logical next version based on the change type.
+
+          Please provide concrete, actionable changelog entries that engineers can directly use.
+          EOF
+
+          # Run Claude Code CLI analysis
+          echo "Running Claude Code analysis..."
+          claude --print "$(cat analysis_prompt.md)" > analysis_output.md
+
+          echo "✅ Claude Code analysis completed"
+
+          # Show analysis for debugging
+          echo "Analysis output:"
+          cat analysis_output.md
 
       - name: Create PR code suggestions
         if: steps.changed-files.outputs.has_changes == 'true' && github.event_name == 'pull_request' && github.event.pull_request.draft == false
