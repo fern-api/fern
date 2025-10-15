@@ -1,6 +1,6 @@
 import { noop } from "@fern-api/core-utils";
 import { swift } from "@fern-api/swift-codegen";
-import { TypeDeclaration, TypeReference } from "@fern-fern/ir-sdk/api";
+import { ObjectProperty, TypeDeclaration, TypeReference } from "@fern-fern/ir-sdk/api";
 
 import { NameRegistry } from "../project";
 
@@ -16,12 +16,10 @@ export function registerLiteralEnums({
     typeDeclaration.shape._visit({
         object: (otd) => {
             const allProperties = [...(otd.extendedProperties ?? []), ...otd.properties];
-            allProperties.forEach((property) => {
-                registerLiteralEnumsForTypeReference({
-                    parentSymbol,
-                    registry,
-                    typeReference: property.valueType
-                });
+            registerLiteralEnumsForObjectProperties({
+                parentSymbol,
+                registry,
+                properties: allProperties
             });
         },
         union: (utd) => {
@@ -52,6 +50,24 @@ export function registerLiteralEnums({
         alias: noop,
         enum: noop,
         _other: noop
+    });
+}
+
+export function registerLiteralEnumsForObjectProperties({
+    parentSymbol,
+    registry,
+    properties
+}: {
+    parentSymbol: swift.Symbol;
+    registry: NameRegistry;
+    properties: ObjectProperty[];
+}) {
+    properties.forEach((property) => {
+        registerLiteralEnumsForTypeReference({
+            parentSymbol,
+            registry,
+            typeReference: property.valueType
+        });
     });
 }
 

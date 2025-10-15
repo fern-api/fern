@@ -20,7 +20,7 @@ import {
 import { AsIsFileDefinition, SourceAsIsFiles, TestAsIsFiles } from "../AsIs";
 import { SwiftProject } from "../project";
 import { Referencer } from "./Referencer";
-import { registerLiteralEnums } from "./register-literal-enums";
+import { registerLiteralEnums, registerLiteralEnumsForObjectProperties } from "./register-literal-enums";
 import { inferCaseNameForTypeReference, registerUndiscriminatedUnionVariants } from "./register-undiscriminated-unions";
 
 export abstract class AbstractSwiftGeneratorContext<
@@ -90,9 +90,17 @@ export abstract class AbstractSwiftGeneratorContext<
         Object.entries(ir.services).forEach(([_, service]) => {
             service.endpoints.forEach((endpoint) => {
                 if (endpoint.requestBody?.type === "inlinedRequestBody") {
-                    nameRegistry.registerRequestTypeSymbol({
+                    const requestTypeSymbol = nameRegistry.registerRequestTypeSymbol({
                         endpointId: endpoint.id,
                         requestNamePascalCase: endpoint.requestBody.name.pascalCase.unsafeName
+                    });
+                    registerLiteralEnumsForObjectProperties({
+                        parentSymbol: requestTypeSymbol,
+                        registry: nameRegistry,
+                        properties: [
+                            ...(endpoint.requestBody.extendedProperties ?? []),
+                            ...endpoint.requestBody.properties
+                        ]
                     });
                 } else if (endpoint.requestBody?.type === "fileUpload") {
                     nameRegistry.registerRequestTypeSymbol({
