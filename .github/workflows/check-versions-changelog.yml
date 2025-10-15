@@ -1,6 +1,6 @@
 name: Check Versions Changelog
 
-# This workflow uses Claude Code to analyze TypeScript changes and provide
+# This workflow uses Claude (Anthropic API) to analyze TypeScript changes and provide
 # intelligent feedback on versions.yml changelog entries.
 # Requires SWIMBURGER_ANTHROPIC_API_KEY secret to be configured in the repository.
 #
@@ -44,7 +44,7 @@ concurrency:
 jobs:
   check-versions-changelog:
     runs-on: ubuntu-latest
-    if: github.event_name == 'workflow_dispatch' || (github.event_name == 'pull_request' && github.event.pull_request.draft == false)
+    if: github.event_name == 'workflow_dispatch' || github.event_name == 'pull_request'
 
     steps:
       - name: Checkout repo
@@ -52,15 +52,16 @@ jobs:
         with:
           fetch-depth: 0
 
-      - name: Install Claude Code
-        run: |
-          curl -fsSL https://claude.ai/install.sh | sh
-          echo "$HOME/.local/bin" >> $GITHUB_PATH
+      - name: Setup Node.js for API calls
+        uses: actions/setup-node@v4
+        with:
+          node-version: "18"
 
       - name: Get changed TypeScript files
         id: changed-files
         run: |
           echo "Event: ${{ github.event_name }}"
+          echo "Starting file detection logic..."
 
           if [ "${{ github.event_name }}" = "workflow_dispatch" ]; then
             echo "Using git diff for manual trigger"
@@ -92,14 +93,11 @@ jobs:
             echo "Found changes in: $CHANGED_TS_FILES"
           fi
 
-      - name: Analyze changes with Claude Code
-        if: steps.changed-files.outputs.has_changes == 'true'
-        env:
-          ANTHROPIC_API_KEY: ${{ secrets.SWIMBURGER_ANTHROPIC_API_KEY }}
+      - name: Analyze changes with Claude API
+        if: steps.changed-files.outputs.has_changes == 'true' && (github.event_name == 'workflow_dispatch' || github.event.pull_request.draft == false)
         run: |
           # Create analysis prompt
-          cat > analyze_prompt.md << 'EOF'
-          You are an expert at analyzing code changes for Fern, a company that builds API-first development tools including CLI tools and SDK generators.
+          PROMPT="You are an expert at analyzing code changes for Fern, a company that builds API-first development tools including CLI tools and SDK generators.
 
           Please analyze the TypeScript changes in this repository and determine if they warrant entries in the corresponding versions.yml changelog files.
 
@@ -131,28 +129,54 @@ jobs:
           Reasoning: [explanation]
 
           Suggested Entry:
-          ```yaml
+          \`\`\`yaml
           - version: [INCREMENT_VERSION]
-            createdAt: "2025-10-15"
+            createdAt: \"2025-10-15\"
             changelogEntry:
               - type: [feat|fix|chore|internal]
                 summary: |
                   [Detailed summary with specific examples]
-          ```
+          \`\`\`
 
           Where [INCREMENT_VERSION] should be a logical next version based on the change type.
 
-          Please provide concrete, actionable changelog entries that engineers can directly use.
-          EOF
+          Please provide concrete, actionable changelog entries that engineers can directly use."
 
-          # Use Claude Code to analyze the changes
-          claude analyze_prompt.md > analysis_output.md
+          # Use Anthropic API to analyze the changes
+          echo "Making API call to Claude..."
+          ANALYSIS_RESULT=$(curl -s -X POST "https://api.anthropic.com/v1/messages" \
+            -H "x-api-key: ${{ secrets.SWIMBURGER_ANTHROPIC_API_KEY }}" \
+            -H "Content-Type: application/json" \
+            -H "anthropic-version: 2023-06-01" \
+            -d "{
+              \"model\": \"claude-3-haiku-20240307\",
+              \"max_tokens\": 2000,
+              \"system\": \"You are an expert at analyzing code changes and determining if they warrant version changelog entries. You work for Fern, a company that builds API-first development tools including CLI tools and SDK generators. Focus on changes that would impact customers using Fern.\",
+              \"messages\": [
+                {
+                  \"role\": \"user\",
+                  \"content\": \"$PROMPT\"
+                }
+              ]
+            }")
+
+          echo "API Response received"
+
+          # Extract and save the response
+          if echo "$ANALYSIS_RESULT" | jq -e '.content[0].text' > /dev/null 2>&1; then
+            echo "$ANALYSIS_RESULT" | jq -r '.content[0].text' > analysis_output.md
+            echo "✅ Successfully extracted analysis from Claude API response"
+          else
+            echo "❌ Failed to extract content from Claude API response"
+            echo "Raw response: $ANALYSIS_RESULT"
+            echo "No analysis available due to API error - please manually review versions.yml files" > analysis_output.md
+          fi
 
           # Save output for next step
           echo "analysis_file=analysis_output.md" >> $GITHUB_OUTPUT
 
       - name: Create PR code suggestions
-        if: steps.changed-files.outputs.has_changes == 'true' && github.event_name == 'pull_request'
+        if: steps.changed-files.outputs.has_changes == 'true' && github.event_name == 'pull_request' && github.event.pull_request.draft == false
         uses: actions/github-script@v7
         with:
           script: |
@@ -267,7 +291,7 @@ jobs:
                 "- For bug fixes: describe what was broken and how it's fixed\n" +
                 "- For feature flags: provide enable/disable instructions\n" +
                 "- Include code examples for API changes\n\n" +
-                "This analysis was performed by Claude Code. Review suggestions carefully before accepting.";
+                "This analysis was performed by Claude (Anthropic). Review suggestions carefully before accepting.";
 
               await github.rest.issues.createComment({
                 owner: context.repo.owner,
@@ -285,7 +309,7 @@ jobs:
                 body: "## 📋 Versions.yml Changelog Check Results\n\n" +
                       "🔍 Analyzed TypeScript changes in:\n" + filesList + "\n\n" +
                       "✅ No changelog entries needed - the changes appear to be internal/non-customer-facing.\n\n" +
-                      "This analysis was performed by Claude Code."
+                      "This analysis was performed by Claude (Anthropic)."
               });
             }
 
@@ -297,7 +321,7 @@ jobs:
           echo "==================================================================="
           echo "📁 Changed files: ${{ steps.changed-files.outputs.changed_files }}"
           echo ""
-          echo "🤖 Claude Code Analysis:"
+          echo "🤖 Claude API Analysis:"
           cat analysis_output.md
           echo ""
           echo "==================================================================="
