@@ -106,7 +106,9 @@ function createHttpEndpoint(name: string, queryParams: QueryParameter[] = []): H
         pagination: undefined,
         v2Examples: undefined,
         transport: undefined,
-        source: undefined
+        source: undefined,
+        security: undefined,
+        retries: undefined
     } as HttpEndpoint;
 }
 

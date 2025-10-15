@@ -174,10 +174,15 @@ export abstract class AbstractRustGeneratorContext<
 
     /**
      * Get the crate version from --version flag or use default
-     * Priority: 1) publishConfig.publishTarget.version (from --version flag), 2) default "0.1.0"
+     * Priority: 1) customConfig.crateVersion, 2) publishConfig.publishTarget.version, 3) default "0.1.0"
      */
     public getCrateVersion(): string {
-        // Try to get version from publishConfig (set via --version flag)
+        // Priority 1: Check customConfig.packageVersion (explicitly set in generators.yml) and for --local generation
+        if (this.customConfig.crateVersion != null) {
+            return this.customConfig.crateVersion;
+        }
+
+        // Priority 2: Try to get version from publishConfig (set via output.location = crates) for remote generation
         if (this.ir.publishConfig != null) {
             let publishTarget;
 
@@ -188,15 +193,13 @@ export abstract class AbstractRustGeneratorContext<
                 publishTarget = this.ir.publishConfig.publishTarget;
             }
 
-            // Check for pypi type (used for Rust until IR SDK has dedicated crates type)
             if (publishTarget != null) {
-                if (publishTarget.type === "pypi" && publishTarget.version != null) {
+                if (publishTarget.type === "crates" && publishTarget.version != null) {
                     return publishTarget.version;
                 }
             }
         }
-
-        // Default version if --version flag not provided
+        // Default version if no version specified
         return "0.1.0";
     }
 
