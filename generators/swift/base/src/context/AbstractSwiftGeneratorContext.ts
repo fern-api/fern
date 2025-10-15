@@ -20,6 +20,7 @@ import {
 import { AsIsFileDefinition, SourceAsIsFiles, TestAsIsFiles } from "../AsIs";
 import { SwiftProject } from "../project";
 import { Referencer } from "./Referencer";
+import { registerDiscriminatedUnionVariants } from "./register-discriminated-unions";
 import { registerLiteralEnums, registerLiteralEnumsForObjectProperties } from "./register-literal-enums";
 import { inferCaseNameForTypeReference, registerUndiscriminatedUnionVariants } from "./register-undiscriminated-unions";
 
@@ -84,7 +85,12 @@ export abstract class AbstractSwiftGeneratorContext<
                 typeDeclaration,
                 context: this
             });
-            // TODO(kafkas): Register discriminated union variant symbols
+            registerDiscriminatedUnionVariants({
+                parentSymbol: schemaTypeSymbol,
+                registry: nameRegistry,
+                typeDeclaration,
+                context: this
+            });
         });
         nameRegistry.registerRequestsContainerSymbol();
         Object.entries(ir.services).forEach(([_, service]) => {

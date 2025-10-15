@@ -12,6 +12,13 @@ type UndiscriminatedUnionVariant = {
     docsContent: string | undefined;
 };
 
+type DiscriminatedUnionVariant = {
+    caseName: string;
+    symbolName: string;
+    swiftType: swift.TypeReference;
+    docsContent: string | undefined;
+};
+
 export class NameRegistry {
     public static create(): NameRegistry {
         return new NameRegistry();
@@ -26,6 +33,7 @@ export class NameRegistry {
     private readonly requestTypeSymbols: swift.Symbol[];
     private readonly subClientSymbols: swift.Symbol[];
     private readonly nestedLiteralEnumSymbolsByParentSymbolId: Map<string, Map<string, swift.Symbol>>;
+    private readonly discriminatedUnionVariantsByParentSymbolId: Map<string, DiscriminatedUnionVariant[]>;
     private readonly undiscriminatedUnionVariantsByParentSymbolId: Map<string, UndiscriminatedUnionVariant[]>;
 
     private constructor() {
@@ -38,6 +46,7 @@ export class NameRegistry {
         this.requestTypeSymbols = [];
         this.subClientSymbols = [];
         this.nestedLiteralEnumSymbolsByParentSymbolId = new Map();
+        this.discriminatedUnionVariantsByParentSymbolId = new Map();
         this.undiscriminatedUnionVariantsByParentSymbolId = new Map();
     }
 
@@ -392,6 +401,39 @@ export class NameRegistry {
             }));
     }
 
+    public registerDiscriminatedUnionVariants({
+        parentSymbol,
+        variants
+    }: {
+        parentSymbol: swift.Symbol | string;
+        variants: DiscriminatedUnionVariant[];
+    }) {
+        const parentSymbolId = typeof parentSymbol === "string" ? parentSymbol : parentSymbol.id;
+        const sortedVariants = [...variants].sort((a, b) => a.caseName.localeCompare(b.caseName));
+        this.discriminatedUnionVariantsByParentSymbolId.set(parentSymbolId, sortedVariants);
+        return sortedVariants;
+    }
+
+    public getDiscriminatedUnionVariantSymbolOrThrow(
+        parentSymbol: swift.Symbol | string,
+        caseName: string
+    ): swift.Symbol {
+        const parentSymbolId = typeof parentSymbol === "string" ? parentSymbol : parentSymbol.id;
+        const variants = this.discriminatedUnionVariantsByParentSymbolId.get(parentSymbolId) ?? [];
+        const variant = variants.find((v) => v.caseName === caseName);
+        assertDefined(
+            variant,
+            `Discriminated union variant symbol not found for case name "${caseName}" in parent symbol "${parentSymbolId}"`
+        );
+        const symbolId = this.targetSymbolRegistry.inferSymbolIdForNestedType(parentSymbolId, variant.symbolName);
+        return swift.Symbol.create(symbolId, variant.symbolName, { type: "struct" });
+    }
+
+    public getAllDiscriminatedUnionVariantsOrThrow(parentSymbol: swift.Symbol | string): DiscriminatedUnionVariant[] {
+        const parentSymbolId = typeof parentSymbol === "string" ? parentSymbol : parentSymbol.id;
+        return this.discriminatedUnionVariantsByParentSymbolId.get(parentSymbolId) ?? [];
+    }
+
     public registerUndiscriminatedUnionVariants({
         parentSymbol,
         variants
@@ -401,8 +443,17 @@ export class NameRegistry {
     }) {
         const parentSymbolId = typeof parentSymbol === "string" ? parentSymbol : parentSymbol.id;
         const distinctVariants = uniqWith(variants, (a, b) => a.caseName === b.caseName);
+        distinctVariants.sort((a, b) => a.caseName.localeCompare(b.caseName));
         this.undiscriminatedUnionVariantsByParentSymbolId.set(parentSymbolId, distinctVariants);
         return distinctVariants;
+    }
+
+    public getAllUndiscriminatedUnionVariantsOrThrow(
+        parentSymbol: swift.Symbol | string
+    ): UndiscriminatedUnionVariant[] {
+        const parentSymbolId = typeof parentSymbol === "string" ? parentSymbol : parentSymbol.id;
+        const variants = this.undiscriminatedUnionVariantsByParentSymbolId.get(parentSymbolId) ?? [];
+        return variants;
     }
 
     public registerWireTestSuiteSymbol(subclientName: string) {
@@ -414,14 +465,6 @@ export class NameRegistry {
         const symbolName = this.testModuleNamespace.getWireTestSuiteNameOrThrow(subclientName);
         const symbolId = this.targetSymbolRegistry.inferSymbolIdForTestModuleType(symbolName);
         return this.targetSymbolRegistry.getSymbolByIdOrThrow(symbolId);
-    }
-
-    public getAllUndiscriminatedUnionVariantsOrThrow(
-        parentSymbol: swift.Symbol | string
-    ): UndiscriminatedUnionVariant[] {
-        const parentSymbolId = typeof parentSymbol === "string" ? parentSymbol : parentSymbol.id;
-        const variants = this.undiscriminatedUnionVariantsByParentSymbolId.get(parentSymbolId) ?? [];
-        return variants.sort((a, b) => a.caseName.localeCompare(b.caseName));
     }
 
     public referenceFromSourceModuleScope(symbol: swift.Symbol | string) {
