@@ -1,4 +1,5 @@
 import { assertDefined } from "@fern-api/core-utils";
+import { Referencer } from "@fern-api/swift-base";
 import { LiteralEnum, swift } from "@fern-api/swift-codegen";
 import { EndpointSnippetGenerator } from "@fern-api/swift-dynamic-snippets";
 import { dynamic, ExampleEndpointCall, ExampleTypeReference, HttpEndpoint } from "@fern-fern/ir-sdk/api";
@@ -7,6 +8,7 @@ import { convertDynamicEndpointSnippetRequest } from "../../utils/convertEndpoin
 
 export declare namespace WireTestFunctionGenerator {
     interface Args {
+        parentSymbol: swift.Symbol;
         endpoint: HttpEndpoint;
         endpointSnippetGenerator: EndpointSnippetGenerator;
         dynamicIr: dynamic.DynamicIntermediateRepresentation;
@@ -15,24 +17,28 @@ export declare namespace WireTestFunctionGenerator {
 }
 
 export class WireTestFunctionGenerator {
+    private readonly parentSymbol: swift.Symbol;
     private readonly endpoint: HttpEndpoint;
     private readonly endpointSnippetGenerator: EndpointSnippetGenerator;
     private readonly dynamicIr: dynamic.DynamicIntermediateRepresentation;
     private readonly sdkGeneratorContext: SdkGeneratorContext;
-
     private readonly exampleEndpointCallsById: Record<string, ExampleEndpointCall>;
+    private readonly referencer: Referencer;
 
     public constructor({
+        parentSymbol,
         endpoint,
         endpointSnippetGenerator,
         dynamicIr,
         sdkGeneratorContext
     }: WireTestFunctionGenerator.Args) {
+        this.parentSymbol = parentSymbol;
         this.endpoint = endpoint;
         this.endpointSnippetGenerator = endpointSnippetGenerator;
         this.dynamicIr = dynamicIr;
         this.sdkGeneratorContext = sdkGeneratorContext;
         this.exampleEndpointCallsById = this.buildExampleEndpointCallsById(endpoint);
+        this.referencer = this.sdkGeneratorContext.createReferencer(this.parentSymbol);
     }
 
     private get dynamicEndpoint() {
@@ -106,7 +112,7 @@ export class WireTestFunctionGenerator {
                     this.generateClientDeclaration(endpointExample),
                     swift.Statement.constantDeclaration({
                         unsafeName: "expectedResponse",
-                        value: this.generateExampleResponse(exampleTypeRef)
+                        value: this.generateExampleResponse(exampleTypeRef, this.parentSymbol)
                     }),
                     this.generateEndpointMethodCallStatement(endpointExample),
                     swift.Statement.expressionStatement(
@@ -130,8 +136,7 @@ export class WireTestFunctionGenerator {
                     unsafeName: `${this.endpoint.name.camelCase.unsafeName}${endpointExampleIdx + 1}`,
                     async: true,
                     throws: true,
-                    // TODO(kafkas): This shouldn't be unqualified.
-                    returnType: swift.TypeReference.symbol("Void"),
+                    returnType: this.referencer.referenceSwiftType("Void"),
                     body: swift.CodeBlock.withStatements(statements)
                 });
             })
@@ -168,7 +173,10 @@ export class WireTestFunctionGenerator {
         });
     }
 
-    private generateExampleResponse(exampleTypeRef: ExampleTypeReference): swift.Expression {
+    private generateExampleResponse(
+        exampleTypeRef: ExampleTypeReference,
+        fromScope: swift.Symbol | string
+    ): swift.Expression {
         return exampleTypeRef.shape._visit({
             container: (exampleContainer) =>
                 exampleContainer._visit({
@@ -195,8 +203,8 @@ export class WireTestFunctionGenerator {
                     map: (mapContainer) => {
                         return swift.Expression.dictionaryLiteral({
                             entries: mapContainer.map.map((kvPair) => [
-                                this.generateExampleResponse(kvPair.key),
-                                this.generateExampleResponse(kvPair.value)
+                                this.generateExampleResponse(kvPair.key, fromScope),
+                                this.generateExampleResponse(kvPair.value, fromScope)
                             ]),
                             multiline: true
                         });
@@ -208,12 +216,12 @@ export class WireTestFunctionGenerator {
                         }
                         return swift.Expression.methodCall({
                             target: swift.Expression.reference(
-                                `Nullable<${this.getSwiftTypeReferenceForExampleTypeReference(nullableContainer.nullable).toString()}>`
+                                `Nullable<${this.getSwiftTypeReferenceForExampleTypeReference(nullableContainer.nullable, fromScope).toString()}>`
                             ),
                             methodName: "value",
                             arguments_: [
                                 swift.functionArgument({
-                                    value: this.generateExampleResponse(nullableContainer.nullable)
+                                    value: this.generateExampleResponse(nullableContainer.nullable, fromScope)
                                 })
                             ]
                         });
@@ -237,14 +245,16 @@ export class WireTestFunctionGenerator {
                                   unsafeName: "Optional",
                                   arguments_: [
                                       swift.functionArgument({
-                                          value: this.generateExampleResponse(optionalContainer.optional)
+                                          value: this.generateExampleResponse(optionalContainer.optional, fromScope)
                                       })
                                   ]
                               });
                     },
                     list: (listContainer) => {
                         return swift.Expression.arrayLiteral({
-                            elements: listContainer.list.map((element) => this.generateExampleResponse(element)),
+                            elements: listContainer.list.map((element) =>
+                                this.generateExampleResponse(element, fromScope)
+                            ),
                             multiline: true
                         });
                     },
@@ -282,7 +292,7 @@ export class WireTestFunctionGenerator {
                 const symbol = this.sdkGeneratorContext.project.nameRegistry.getSchemaTypeSymbolOrThrow(typeId);
                 return exampleNamedType.shape._visit({
                     alias: (exampleAliasType) => {
-                        return this.generateExampleResponse(exampleAliasType.value);
+                        return this.generateExampleResponse(exampleAliasType.value, fromScope);
                     },
                     enum: (exampleEnumType) => {
                         return swift.Expression.enumCaseShorthand(exampleEnumType.value.name.camelCase.unsafeName);
@@ -299,7 +309,7 @@ export class WireTestFunctionGenerator {
                                     ) {
                                         return null;
                                     }
-                                    const exampleResponse = this.generateExampleResponse(property.value);
+                                    const exampleResponse = this.generateExampleResponse(property.value, fromScope);
                                     return swift.functionArgument({
                                         label: property.name.name.camelCase.unsafeName,
                                         value: exampleResponse
@@ -337,7 +347,8 @@ export class WireTestFunctionGenerator {
                                                             return null;
                                                         }
                                                         const exampleResponse = this.generateExampleResponse(
-                                                            property.value
+                                                            property.value,
+                                                            fromScope
                                                         );
                                                         return swift.functionArgument({
                                                             label: property.name.name.camelCase.unsafeName,
@@ -351,7 +362,7 @@ export class WireTestFunctionGenerator {
                                     ],
                                     multiline: true
                                 }),
-                            singleProperty: (exampleTypeRef) => this.generateExampleResponse(exampleTypeRef),
+                            singleProperty: (exampleTypeRef) => this.generateExampleResponse(exampleTypeRef, fromScope),
                             _other: () =>
                                 swift.Expression.contextualMethodCall({
                                     methodName:
@@ -363,14 +374,15 @@ export class WireTestFunctionGenerator {
                     },
                     undiscriminatedUnion: (exampleUnionType) => {
                         const swiftType = this.getSwiftTypeReferenceForExampleTypeReference(
-                            exampleUnionType.singleUnionType
+                            exampleUnionType.singleUnionType,
+                            fromScope
                         );
                         return swift.Expression.methodCall({
                             target: swift.Expression.reference(symbol.name),
                             methodName: this.sdkGeneratorContext.inferCaseNameForTypeReference(symbol, swiftType),
                             arguments_: [
                                 swift.functionArgument({
-                                    value: this.generateExampleResponse(exampleUnionType.singleUnionType)
+                                    value: this.generateExampleResponse(exampleUnionType.singleUnionType, fromScope)
                                 })
                             ],
                             multiline: true
@@ -386,17 +398,22 @@ export class WireTestFunctionGenerator {
         });
     }
 
-    // TODO(kafkas): Revisit this when implementing the test target. It should import the source target.
-    private getSwiftTypeReferenceForExampleTypeReference(typeReference: ExampleTypeReference): swift.TypeReference {
-        const moduleSymbol = this.sdkGeneratorContext.project.nameRegistry.getRegisteredTestModuleSymbolOrThrow();
-        const referencer = this.sdkGeneratorContext.createReferencer(moduleSymbol);
+    public getSwiftTypeReferenceForExampleTypeReferenceFromTestModuleScope(
+        typeReference: ExampleTypeReference
+    ): swift.TypeReference {
+        const symbol = this.sdkGeneratorContext.project.nameRegistry.getRegisteredTestModuleSymbolOrThrow();
+        return this.getSwiftTypeReferenceForExampleTypeReference(typeReference, symbol);
+    }
+
+    private getSwiftTypeReferenceForExampleTypeReference(
+        typeReference: ExampleTypeReference,
+        fromScope: swift.Symbol | string
+    ): swift.TypeReference {
         return typeReference.shape._visit({
             container: (exampleContainer) => {
                 return exampleContainer._visit({
-                    literal: () => {
-                        // TODO(kafkas): Implement this
-                        return referencer.referenceAsIsType("JSONValue");
-                    },
+                    // TODO(kafkas): Implement this
+                    literal: () => this.referencer.referenceAsIsType("JSONValue"),
                     map: (exampleMapContainer) =>
                         swift.TypeReference.dictionary(
                             this.sdkGeneratorContext.getSwiftTypeReferenceFromTestModuleScope(
@@ -406,7 +423,7 @@ export class WireTestFunctionGenerator {
                                 exampleMapContainer.valueType
                             )
                         ),
-                    set: () => referencer.referenceAsIsType("JSONValue"),
+                    set: () => this.referencer.referenceAsIsType("JSONValue"),
                     nullable: (exampleNullableContainer) =>
                         swift.TypeReference.nullable(
                             this.sdkGeneratorContext.getSwiftTypeReferenceFromTestModuleScope(
@@ -425,35 +442,35 @@ export class WireTestFunctionGenerator {
                                 exampleListContainer.itemType
                             )
                         ),
-                    _other: () => referencer.referenceAsIsType("JSONValue")
+                    _other: () => this.referencer.referenceAsIsType("JSONValue")
                 });
             },
             primitive: (examplePrimitive) => {
                 return examplePrimitive._visit({
-                    string: () => referencer.referenceSwiftType("String"),
-                    boolean: () => referencer.referenceSwiftType("Bool"),
-                    integer: () => referencer.referenceSwiftType("Int"),
-                    uint: () => referencer.referenceSwiftType("UInt"),
-                    uint64: () => referencer.referenceSwiftType("UInt64"),
-                    long: () => referencer.referenceSwiftType("Int64"),
-                    float: () => referencer.referenceSwiftType("Float"),
-                    double: () => referencer.referenceSwiftType("Double"),
-                    bigInteger: () => referencer.referenceSwiftType("String"),
-                    date: () => referencer.referenceAsIsType("CalendarDate"),
-                    datetime: () => referencer.referenceFoundationType("Date"),
-                    base64: () => referencer.referenceSwiftType("String"),
-                    uuid: () => referencer.referenceFoundationType("UUID"),
-                    _other: () => referencer.referenceAsIsType("JSONValue")
+                    string: () => this.referencer.referenceSwiftType("String"),
+                    boolean: () => this.referencer.referenceSwiftType("Bool"),
+                    integer: () => this.referencer.referenceSwiftType("Int"),
+                    uint: () => this.referencer.referenceSwiftType("UInt"),
+                    uint64: () => this.referencer.referenceSwiftType("UInt64"),
+                    long: () => this.referencer.referenceSwiftType("Int64"),
+                    float: () => this.referencer.referenceSwiftType("Float"),
+                    double: () => this.referencer.referenceSwiftType("Double"),
+                    bigInteger: () => this.referencer.referenceSwiftType("String"),
+                    date: () => this.referencer.referenceAsIsType("CalendarDate"),
+                    datetime: () => this.referencer.referenceFoundationType("Date"),
+                    base64: () => this.referencer.referenceSwiftType("String"),
+                    uuid: () => this.referencer.referenceFoundationType("UUID"),
+                    _other: () => this.referencer.referenceAsIsType("JSONValue")
                 });
             },
             named: (exampleNamedType) => {
                 const symbol = this.sdkGeneratorContext.project.nameRegistry.getSchemaTypeSymbolOrThrow(
                     exampleNamedType.typeName.typeId
                 );
-                return referencer.referenceType(symbol.id);
+                return this.referencer.referenceType(symbol.id);
             },
-            unknown: () => referencer.referenceAsIsType("JSONValue"),
-            _other: () => referencer.referenceAsIsType("JSONValue")
+            unknown: () => this.referencer.referenceAsIsType("JSONValue"),
+            _other: () => this.referencer.referenceAsIsType("JSONValue")
         });
     }
 

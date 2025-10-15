@@ -586,7 +586,7 @@ export class SdkGeneratorCLI extends AbstractSwiftGeneratorCli<SdkCustomConfigSc
             const subClientSymbol = context.project.nameRegistry.getSubClientSymbolOrThrow(subpackageId);
             const testSuiteSymbol = context.project.nameRegistry.getWireTestSuiteSymbolOrThrow(subClientSymbol.name);
             const testSuiteGenerator = new WireTestSuiteGenerator({
-                suiteName: testSuiteSymbol.name,
+                symbol: testSuiteSymbol,
                 subclientName: subClientSymbol.name,
                 packageOrSubpackage: subpackage,
                 sdkGeneratorContext: context
