@@ -28,7 +28,7 @@ export class UndiscriminatedUnionGenerator {
         this.context = context;
     }
 
-    private getDistinctMembers() {
+    private getAllVariants() {
         return this.context.project.nameRegistry.getAllUndiscriminatedUnionVariantsOrThrow(this.symbol);
     }
 
@@ -49,11 +49,11 @@ export class UndiscriminatedUnionGenerator {
     }
 
     private generateCasesForTypeDeclaration(): swift.EnumWithAssociatedValues.Case[] {
-        return this.getDistinctMembers().map((member) => {
+        return this.getAllVariants().map((variant) => {
             return {
-                unsafeName: member.caseName,
-                associatedValue: [member.swiftType],
-                docs: member.docsContent ? swift.docComment({ summary: member.docsContent }) : undefined
+                unsafeName: variant.caseName,
+                associatedValue: [variant.swiftType],
+                docs: variant.docsContent ? swift.docComment({ summary: variant.docsContent }) : undefined
             };
         });
     }
@@ -89,7 +89,7 @@ export class UndiscriminatedUnionGenerator {
     }
 
     private generateIfStatementForDecodingAttempts(): swift.Statement {
-        const distinctMembers = this.getDistinctMembers();
+        const distinctMembers = this.getAllVariants();
         const memberDecodeAttempts = distinctMembers.map((member) => {
             const decodeStatement = swift.Statement.constantDeclaration({
                 unsafeName: "value",
@@ -159,7 +159,7 @@ export class UndiscriminatedUnionGenerator {
     }
 
     private generateEncodeMethod(): swift.Method {
-        const distinctMembers = this.getDistinctMembers();
+        const distinctMembers = this.getAllVariants();
         return swift.method({
             unsafeName: "encode",
             accessLevel: swift.AccessLevel.Public,

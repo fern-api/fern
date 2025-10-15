@@ -32,6 +32,10 @@ export class DiscriminatedUnionGenerator {
         return this.generateEnumForTypeDeclaration();
     }
 
+    private getAllVariants() {
+        return this.context.project.nameRegistry.getAllDiscriminatedUnionVariantsOrThrow(this.symbol);
+    }
+
     private generateEnumForTypeDeclaration(): swift.EnumWithAssociatedValues {
         return swift.enumWithAssociatedValues({
             name: this.symbol.name,
@@ -46,15 +50,11 @@ export class DiscriminatedUnionGenerator {
     }
 
     private generateCasesForTypeDeclaration(): swift.EnumWithAssociatedValues.Case[] {
-        return this.unionTypeDeclaration.types.map((singleUnionType) => {
-            const caseName = EnumWithAssociatedValues.sanitizeToCamelCase(singleUnionType.discriminantValue.wireValue);
-            const structName = EnumWithAssociatedValues.sanitizeToPascalCase(
-                singleUnionType.discriminantValue.wireValue
-            );
+        return this.getAllVariants().map((variant) => {
             return {
-                unsafeName: caseName,
-                associatedValue: [swift.Type.custom(structName)],
-                docs: singleUnionType.docs ? swift.docComment({ summary: singleUnionType.docs }) : undefined
+                unsafeName: variant.caseName,
+                associatedValue: [variant.swiftType],
+                docs: variant.docsContent ? swift.docComment({ summary: variant.docsContent }) : undefined
             };
         });
     }
@@ -242,14 +242,13 @@ export class DiscriminatedUnionGenerator {
 
     private generateNestedTypesForTypeDeclaration(): (swift.Struct | swift.EnumWithRawValues)[] {
         const variantStructs = this.unionTypeDeclaration.types.map((singleUnionType) => {
-            // TODO(kafkas): This is not correct. We need to track nested types in the registry.
-            const variantSymbolName = singleUnionType.discriminantValue.name.pascalCase.unsafeName;
-            const variantSymbolId = `${this.symbol.id}.${variantSymbolName}`;
-
             const constantPropertyDefinitions: StructGenerator.ConstantPropertyDefinition[] = [];
             const dataPropertyDefinitions: StructGenerator.DataPropertyDefinition[] = [];
-
-            const referencer = this.context.createReferencer(variantSymbolId);
+            const variantSymbol = this.context.project.nameRegistry.getDiscriminatedUnionVariantSymbolOrThrow(
+                this.symbol,
+                singleUnionType.discriminantValue.name.camelCase.unsafeName
+            );
+            const referencer = this.context.createReferencer(variantSymbol);
 
             if (singleUnionType.shape.propertiesType === "singleProperty") {
                 constantPropertyDefinitions.push({
@@ -286,7 +285,7 @@ export class DiscriminatedUnionGenerator {
             }
 
             return new StructGenerator({
-                symbol: swift.Symbol.create(variantSymbolId, variantSymbolName, { type: "struct" }),
+                symbol: variantSymbol,
                 constantPropertyDefinitions,
                 dataPropertyDefinitions,
                 additionalProperties: true,
