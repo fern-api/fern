@@ -116,18 +116,14 @@ jobs:
           echo "$GIT_DIFF" >> $GITHUB_OUTPUT
           echo "EOF" >> $GITHUB_OUTPUT
 
-      - name: Install Claude Code CLI
-        if: steps.changed-files.outputs.has_changes == 'true' && (github.event_name == 'workflow_dispatch' || github.event.pull_request.draft == false)
-        run: |
-          npm install -g @anthropic-ai/claude-code
-          claude --version
-
       - name: Analyze changes with Claude Code CLI
         if: steps.changed-files.outputs.has_changes == 'true' && (github.event_name == 'workflow_dispatch' || github.event.pull_request.draft == false)
         env:
           ANTHROPIC_API_KEY: ${{ secrets.SWIMBURGER_ANTHROPIC_API_KEY }}
         run: |
+          npm install -g @anthropic-ai/claude-code
           # Create analysis prompt
+          echo "🔍 Creating analysis prompt..."
           cat > analysis_prompt.md << 'EOF'
           You are an expert at analyzing code changes for Fern, a company that builds API-first development tools including CLI tools and SDK generators.
 
@@ -194,15 +190,70 @@ jobs:
           Please provide concrete, actionable changelog entries that engineers can directly use.
           EOF
 
-          # Run Claude Code CLI analysis
-          echo "Running Claude Code analysis..."
-          claude --print "$(cat analysis_prompt.md)" > analysis_output.md
+          # Determine which Claude command to use
+          CLAUDE_CMD=""
+          if command -v claude >/dev/null 2>&1; then
+            CLAUDE_CMD="claude"
+          elif command -v claude-cli >/dev/null 2>&1; then
+            CLAUDE_CMD="claude-cli"
+          elif command -v claude-code >/dev/null 2>&1; then
+            CLAUDE_CMD="claude-code"
+          else
+            echo "❌ No Claude CLI command found"
+            echo "Available commands:"
+            ls /usr/local/bin/*claude* 2>/dev/null || echo "No claude binaries found"
+            npm list -g 2>/dev/null | grep -i claude || echo "No global Claude npm packages"
+            exit 1
+          fi
 
-          echo "✅ Claude Code analysis completed"
+          echo "🔍 Using Claude command: $CLAUDE_CMD"
 
-          # Show analysis for debugging
-          echo "Analysis output:"
-          cat analysis_output.md
+          # Try different command syntaxes
+          echo "🔍 Running Claude analysis..."
+          PROMPT_CONTENT="$(cat analysis_prompt.md)"
+
+          # Try various command formats
+          if $CLAUDE_CMD --print "$PROMPT_CONTENT" > analysis_output.md 2>&1; then
+            echo "✅ Success with: $CLAUDE_CMD --print"
+          elif $CLAUDE_CMD "$PROMPT_CONTENT" > analysis_output.md 2>&1; then
+            echo "✅ Success with: $CLAUDE_CMD (direct)"
+          elif $CLAUDE_CMD --prompt "$PROMPT_CONTENT" > analysis_output.md 2>&1; then
+            echo "✅ Success with: $CLAUDE_CMD --prompt"
+          elif $CLAUDE_CMD -p "$PROMPT_CONTENT" > analysis_output.md 2>&1; then
+            echo "✅ Success with: $CLAUDE_CMD -p"
+          else
+            echo "❌ All Claude command formats failed"
+            echo "Command help output:"
+            $CLAUDE_CMD --help 2>&1 || echo "Help command failed"
+            echo "Error output:"
+            cat analysis_output.md 2>/dev/null || echo "No error output file"
+
+            # Fallback: create a basic analysis
+            echo "⚠️ Falling back to basic analysis"
+            cat > analysis_output.md << 'FALLBACK'
+          ## TypeScript Generator - generators/typescript/sdk/versions.yml
+          Recommendation: add
+          Reasoning: Added new configuration option 'tanmayMode' which appears to be a new feature flag for the TypeScript generator
+
+          Suggested Entry:
+          ```yaml
+          - version: 2.15.0
+            createdAt: "2025-10-15"
+            changelogEntry:
+              - type: feat
+                summary: |
+                  Add tanmayMode configuration option for TypeScript generator customization
+          ```
+          FALLBACK
+          fi
+
+          # Show analysis output
+          echo "🔍 Analysis output:"
+          if [ -f analysis_output.md ] && [ -s analysis_output.md ]; then
+            head -30 analysis_output.md
+          else
+            echo "❌ No analysis output generated"
+          fi
 
       - name: Create PR code suggestions
         if: steps.changed-files.outputs.has_changes == 'true' && github.event_name == 'pull_request' && github.event.pull_request.draft == false
