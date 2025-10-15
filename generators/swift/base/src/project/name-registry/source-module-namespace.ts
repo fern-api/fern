@@ -7,79 +7,78 @@ export class SourceModuleNamespace {
         this.namespace = new Namespace();
     }
 
-    private asIsNameId(symbolName: string): string {
-        return `AsIs:${symbolName}`;
-    }
-
-    private rootClientNameId(): string {
-        return `RootClientClass`;
-    }
-
-    private environmentNameId(): string {
-        return `EnvironmentEnum`;
-    }
-
-    private requestsContainerNameId(): string {
-        return `RequestsContainer`;
-    }
-
-    private subClientNameId(subpackageId: string): string {
-        return `SubClient:${subpackageId}`;
-    }
-
-    private schemaTypeNameId(typeId: string): string {
-        return `SchemaType:${typeId}`;
-    }
-
-    public getRootClientNameOrThrow() {
-        return this.namespace.getSymbolNameByIdOrThrow(this.rootClientNameId());
-    }
-
-    public getEnvironmentNameOrThrow() {
-        return this.namespace.getSymbolNameByIdOrThrow(this.environmentNameId());
-    }
-
-    public getRequestsContainerNameOrThrow() {
-        return this.namespace.getSymbolNameByIdOrThrow(this.requestsContainerNameId());
-    }
-
-    public getSubClientNameOrThrow(subpackageId: string) {
-        return this.namespace.getSymbolNameByIdOrThrow(this.subClientNameId(subpackageId));
-    }
-
-    public getSchemaTypeNameOrThrow(typeId: string) {
-        return this.namespace.getSymbolNameByIdOrThrow(this.schemaTypeNameId(typeId));
-    }
-
-    // Setters
-
-    public addAsIsSymbol(symbolName: string) {
-        const nameId = this.asIsNameId(symbolName);
+    public addAsIsSymbolName(symbolName: string) {
+        const nameId = this.asIsSymbolNameId(symbolName);
         this.namespace.registerSymbol(nameId, [symbolName]);
     }
 
-    public addRootClientSymbol(symbolNameCandidates: [string, ...string[]]) {
-        const nameId = this.rootClientNameId();
+    private asIsSymbolNameId(symbolName: string): string {
+        return `AsIs:${symbolName}`;
+    }
+
+    public addRootClientSymbolName(symbolNameCandidates: [string, ...string[]]) {
+        const nameId = this.rootClientSymbolNameId();
         return this.namespace.registerSymbol(nameId, symbolNameCandidates);
     }
 
-    public addEnvironmentSymbol(symbolNameCandidates: [string, ...string[]]) {
-        const nameId = this.environmentNameId();
+    public getRootClientSymbolNameOrThrow() {
+        return this.namespace.getSymbolNameByIdOrThrow(this.rootClientSymbolNameId());
+    }
+
+    private rootClientSymbolNameId(): string {
+        return `RootClientClass`;
+    }
+
+    public addEnvironmentSymbolName(symbolNameCandidates: [string, ...string[]]) {
+        const nameId = this.environmentSymbolNameId();
         return this.namespace.registerSymbol(nameId, symbolNameCandidates);
     }
 
-    public addRequestsContainerSymbol(symbolNameCandidates: [string, ...string[]]) {
-        const nameId = `RequestsContainer`;
+    public getEnvironmentSymbolNameOrThrow() {
+        return this.namespace.getSymbolNameByIdOrThrow(this.environmentSymbolNameId());
+    }
+
+    private environmentSymbolNameId(): string {
+        return `EnvironmentEnum`;
+    }
+
+    public addRequestsContainerSymbolName(symbolNameCandidates: [string, ...string[]]) {
+        const nameId = this.requestsContainerSymbolNameId();
         return this.namespace.registerSymbol(nameId, symbolNameCandidates);
     }
 
-    public addSubClientSymbol(subpackageId: string, symbolNameCandidates: [string, ...string[]]) {
-        const nameId = this.subClientNameId(subpackageId);
+    public getRequestsContainerSymbolNameOrThrow() {
+        return this.namespace.getSymbolNameByIdOrThrow(this.requestsContainerSymbolNameId());
+    }
+
+    private requestsContainerSymbolNameId(): string {
+        return `RequestsContainer`;
+    }
+
+    public addSubClientSymbolName(subpackageId: string, symbolNameCandidates: [string, ...string[]]) {
+        const nameId = this.subClientSymbolNameId(subpackageId);
         return this.namespace.registerSymbol(nameId, symbolNameCandidates);
     }
 
-    public addSchemaTypeSymbol(typeId: string, symbolNameCandidates: [string, ...string[]]) {
-        const nameId = `SchemaType:${typeId}`;
+    public getSubClientSymbolNameOrThrow(subpackageId: string) {
+        return this.namespace.getSymbolNameByIdOrThrow(this.subClientSymbolNameId(subpackageId));
+    }
+
+    private subClientSymbolNameId(subpackageId: string): string {
+        return `SubClient:${subpackageId}`;
+    }
+
+    public addSchemaTypeSymbolName(typeId: string, symbolNameCandidates: [string, ...string[]]) {
+        const nameId = this.schemaTypeSymbolNameId(typeId);
         return this.namespace.registerSymbol(nameId, symbolNameCandidates);
+    }
+
+    public getSchemaTypeSymbolNameOrThrow(typeId: string) {
+        const nameId = this.schemaTypeSymbolNameId(typeId);
+        return this.namespace.getSymbolNameByIdOrThrow(nameId);
+    }
+
+    private schemaTypeSymbolNameId(typeId: string): string {
+        return `SchemaType:${typeId}`;
     }
 }

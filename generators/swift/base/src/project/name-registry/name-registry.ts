@@ -83,7 +83,7 @@ export class NameRegistry {
         asIsSymbols.forEach((asIsSymbol) => {
             const symbolName = asIsSymbol.name;
             this.targetSymbolRegistry.registerSourceModuleType(symbolName, asIsSymbol.shape);
-            this.sourceModuleNamespace.addAsIsSymbol(symbolName);
+            this.sourceModuleNamespace.addAsIsSymbolName(symbolName);
             const symbolId = this.targetSymbolRegistry.inferSymbolIdForSourceModuleType(symbolName);
             const symbol = swift.Symbol.create(symbolId, symbolName, asIsSymbol.shape);
             this.sourceAsIsSymbolsByName.set(symbolName, symbol);
@@ -153,12 +153,12 @@ export class NameRegistry {
         if (typeof configClientClassName === "string") {
             candidates.unshift(configClientClassName);
         }
-        const symbolName = this.sourceModuleNamespace.addRootClientSymbol(candidates);
+        const symbolName = this.sourceModuleNamespace.addRootClientSymbolName(candidates);
         return this.targetSymbolRegistry.registerSourceModuleType(symbolName, { type: "class" });
     }
 
     public getRootClientSymbolOrThrow(): swift.Symbol {
-        const symbolName = this.sourceModuleNamespace.getRootClientNameOrThrow();
+        const symbolName = this.sourceModuleNamespace.getRootClientSymbolNameOrThrow();
         const symbolId = this.targetSymbolRegistry.inferSymbolIdForSourceModuleType(symbolName);
         return this.targetSymbolRegistry.getSymbolByIdOrThrow(symbolId);
     }
@@ -182,18 +182,18 @@ export class NameRegistry {
         if (typeof configEnvironmentEnumName === "string") {
             candidates.unshift(configEnvironmentEnumName);
         }
-        const symbolName = this.sourceModuleNamespace.addEnvironmentSymbol(candidates);
+        const symbolName = this.sourceModuleNamespace.addEnvironmentSymbolName(candidates);
         return this.targetSymbolRegistry.registerSourceModuleType(symbolName, { type: "enum-with-raw-values" });
     }
 
     public getEnvironmentSymbolOrThrow(): swift.Symbol {
-        const symbolName = this.sourceModuleNamespace.getEnvironmentNameOrThrow();
+        const symbolName = this.sourceModuleNamespace.getEnvironmentSymbolNameOrThrow();
         const symbolId = this.targetSymbolRegistry.inferSymbolIdForSourceModuleType(symbolName);
         return this.targetSymbolRegistry.getSymbolByIdOrThrow(symbolId);
     }
 
     public registerRequestsContainerSymbol(): swift.Symbol {
-        const symbolName = this.sourceModuleNamespace.addRequestsContainerSymbol([
+        const symbolName = this.sourceModuleNamespace.addRequestsContainerSymbolName([
             "Requests",
             "RequestTypes",
             "InlineRequests"
@@ -202,7 +202,7 @@ export class NameRegistry {
     }
 
     public getRequestsContainerSymbolOrThrow(): swift.Symbol {
-        const symbolName = this.sourceModuleNamespace.getRequestsContainerNameOrThrow();
+        const symbolName = this.sourceModuleNamespace.getRequestsContainerSymbolNameOrThrow();
         const symbolId = this.targetSymbolRegistry.inferSymbolIdForSourceModuleType(symbolName);
         return this.targetSymbolRegistry.getSymbolByIdOrThrow(symbolId);
     }
@@ -285,7 +285,7 @@ export class NameRegistry {
                 subpackageNamePascalCase +
                 "Client"
         );
-        const symbolName = this.sourceModuleNamespace.addSubClientSymbol(subpackageId, [
+        const symbolName = this.sourceModuleNamespace.addSubClientSymbolName(subpackageId, [
             `${subpackageNamePascalCase}Client`,
             ...fallbackCandidates
         ]);
@@ -295,7 +295,7 @@ export class NameRegistry {
     }
 
     public getSubClientSymbolOrThrow(subpackageId: string): swift.Symbol {
-        const symbolName = this.sourceModuleNamespace.getSubClientNameOrThrow(subpackageId);
+        const symbolName = this.sourceModuleNamespace.getSubClientSymbolNameOrThrow(subpackageId);
         const symbolId = this.targetSymbolRegistry.inferSymbolIdForSourceModuleType(symbolName);
         return this.targetSymbolRegistry.getSymbolByIdOrThrow(symbolId);
     }
@@ -316,7 +316,7 @@ export class NameRegistry {
         typeDeclarationNamePascalCase: string,
         shape: swift.TypeSymbolShape
     ): swift.Symbol {
-        const symbolName = this.sourceModuleNamespace.addSchemaTypeSymbol(typeId, [
+        const symbolName = this.sourceModuleNamespace.addSchemaTypeSymbolName(typeId, [
             typeDeclarationNamePascalCase,
             `${typeDeclarationNamePascalCase}Type`,
             `${typeDeclarationNamePascalCase}Model`,
@@ -326,7 +326,7 @@ export class NameRegistry {
     }
 
     public getSchemaTypeSymbolOrThrow(typeId: string): swift.Symbol {
-        const symbolName = this.sourceModuleNamespace.getSchemaTypeNameOrThrow(typeId);
+        const symbolName = this.sourceModuleNamespace.getSchemaTypeSymbolNameOrThrow(typeId);
         const symbolId = this.targetSymbolRegistry.inferSymbolIdForSourceModuleType(symbolName);
         return this.targetSymbolRegistry.getSymbolByIdOrThrow(symbolId);
     }

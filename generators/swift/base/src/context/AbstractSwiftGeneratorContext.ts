@@ -60,7 +60,9 @@ export abstract class AbstractSwiftGeneratorContext<
             configEnvironmentEnumName: this.customConfig.environmentEnumName,
             apiNamePascalCase: ir.apiName.pascalCase.unsafeName
         });
-        Object.entries(ir.types).forEach(([typeId, typeDeclaration]) => {
+
+        // Must first register top-level symbols
+        const registeredSchemaTypes = Object.entries(ir.types).map(([typeId, typeDeclaration]) => {
             const symbolShape: swift.TypeSymbolShape = typeDeclaration.shape._visit<swift.TypeSymbolShape>({
                 alias: () => ({ type: "struct" }),
                 enum: () => ({ type: "enum-with-raw-values" }),
@@ -74,25 +76,31 @@ export abstract class AbstractSwiftGeneratorContext<
                 typeDeclaration.name.name.pascalCase.unsafeName,
                 symbolShape
             );
+            return { typeDeclaration, registeredSymbol: schemaTypeSymbol };
+        });
+
+        registeredSchemaTypes.forEach(({ typeDeclaration, registeredSymbol }) => {
             registerLiteralEnums({
-                parentSymbol: schemaTypeSymbol,
+                parentSymbol: registeredSymbol,
                 registry: nameRegistry,
                 typeDeclaration
             });
             registerUndiscriminatedUnionVariants({
-                parentSymbol: schemaTypeSymbol,
+                parentSymbol: registeredSymbol,
                 registry: nameRegistry,
                 typeDeclaration,
                 context: this
             });
             registerDiscriminatedUnionVariants({
-                parentSymbol: schemaTypeSymbol,
+                parentSymbol: registeredSymbol,
                 registry: nameRegistry,
                 typeDeclaration,
                 context: this
             });
         });
+
         nameRegistry.registerRequestsContainerSymbol();
+
         Object.entries(ir.services).forEach(([_, service]) => {
             service.endpoints.forEach((endpoint) => {
                 if (endpoint.requestBody?.type === "inlinedRequestBody") {
