@@ -99,16 +99,6 @@ export abstract class AbstractSwiftGeneratorContext<
                         endpointId: endpoint.id,
                         requestNamePascalCase: endpoint.requestBody.name.pascalCase.unsafeName
                     });
-                } else if (endpoint.requestBody?.type === "reference") {
-                    nameRegistry.registerRequestTypeSymbol({
-                        endpointId: endpoint.id,
-                        requestNamePascalCase: "ReferenceRequest"
-                    });
-                } else if (endpoint.requestBody?.type === "bytes") {
-                    nameRegistry.registerRequestTypeSymbol({
-                        endpointId: endpoint.id,
-                        requestNamePascalCase: "BytesRequest"
-                    });
                 }
             });
         });
