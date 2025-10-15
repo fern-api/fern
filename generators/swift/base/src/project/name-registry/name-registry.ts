@@ -411,6 +411,13 @@ export class NameRegistry {
         const parentSymbolId = typeof parentSymbol === "string" ? parentSymbol : parentSymbol.id;
         const sortedVariants = [...variants].sort((a, b) => a.caseName.localeCompare(b.caseName));
         this.discriminatedUnionVariantsByParentSymbolId.set(parentSymbolId, sortedVariants);
+        sortedVariants.forEach((variant) => {
+            this.targetSymbolRegistry.registerNestedType({
+                parentSymbol,
+                symbolName: variant.symbolName,
+                shape: { type: "struct" }
+            });
+        });
         return sortedVariants;
     }
 
