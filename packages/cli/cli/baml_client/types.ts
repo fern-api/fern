@@ -51,6 +51,7 @@ export enum VersionBump {
   MAJOR = "MAJOR",
   MINOR = "MINOR",
   PATCH = "PATCH",
+  NO_CHANGE = "NO_CHANGE",
 }
 
 export interface DiffAnalysisResult {

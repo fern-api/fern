@@ -30,7 +30,7 @@ export default class TypeBuilder {
     DiffAnalysisResult: ClassViewer<'DiffAnalysisResult', "headline" | "description" | "version_bump" | "breaking_changes">;
     
     
-    VersionBump: EnumViewer<'VersionBump', "MAJOR" | "MINOR" | "PATCH">;
+    VersionBump: EnumViewer<'VersionBump', "MAJOR" | "MINOR" | "PATCH" | "NO_CHANGE">;
     
 
     constructor() {
@@ -50,7 +50,7 @@ export default class TypeBuilder {
         
         
         this.VersionBump = this.tb.enumViewer("VersionBump", [
-          "MAJOR","MINOR","PATCH",
+          "MAJOR","MINOR","PATCH","NO_CHANGE",
         ]);
         
     }

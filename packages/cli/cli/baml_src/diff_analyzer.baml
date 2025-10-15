@@ -6,6 +6,7 @@ enum VersionBump {
   MAJOR
   MINOR
   PATCH
+  NO_CHANGE
 }
 
 // The result of analyzing an SDK diff
@@ -29,33 +30,35 @@ function AnalyzeSdkDiff(git_diff: string) -> DiffAnalysisResult {
 
   prompt #"
     You are an expert software engineer analyzing changes to an SDK (Software Development Kit).
-    Your task is to analyze the git diff provided and produce:
-    1. A semantic commit message with a conventional commits headline
-    2. A detailed description of the changes
-    3. A version bump recommendation (MAJOR, MINOR, or PATCH)
 
-    Guidelines for version bumps:
-    - MAJOR: Breaking changes that affect existing API contracts (removed functions, changed signatures, removed parameters)
-    - MINOR: New features or additions that are backward compatible (new functions, new parameters with defaults)
-    - PATCH: Bug fixes, documentation updates, internal refactoring that doesn't change the public API
+    Analyze the provided git diff and return a structured response with these exact fields:
+    - headline: A semantic commit message in conventional commits format (e.g., "feat: Add user authentication")
+    - description: A detailed markdown-formatted description of what changed and why it matters
+    - version_bump: One of: MAJOR, MINOR, PATCH, or NO_CHANGE
+    - breaking_changes: An array of breaking changes (empty array if none)
 
-    Guidelines for commit message headlines:
-    - Use conventional commits format: <type>: <description>
-    - Types: feat (new feature), fix (bug fix), docs (documentation), refactor (code refactoring), test (tests)
-    - Keep it under 72 characters
-    - Be specific and descriptive
+    Version Bump Guidelines:
+    - MAJOR: Breaking changes (removed/renamed functions, changed signatures, removed parameters)
+    - MINOR: New features that are backward compatible (new functions, new optional parameters)
+    - PATCH: Bug fixes, documentation, internal refactoring (no public API changes)
+    - NO_CHANGE: Only metadata, comments, or whitespace changes (no functional changes)
 
-    Guidelines for descriptions:
+    Commit Headline Guidelines:
+    - Format: <type>: <description>
+    - Types: feat, fix, docs, refactor, test, chore
+    - Keep under 72 characters
+    - Be specific and action-oriented
+
+    Description Guidelines:
     - Use markdown formatting
-    - Explain what changed and why it matters to SDK users
-    - Include migration notes for breaking changes
-    - Highlight new capabilities for features
+    - Explain WHAT changed and WHY it matters to SDK users
+    - For breaking changes: include migration instructions
+    - For new features: highlight new capabilities
+    - For NO_CHANGE: explain that only non-functional changes were made
 
-    Git Diff to Analyze:
-    ---
+    Git Diff:
     {{ git_diff }}
-    ---
 
-    Analyze this diff and provide your assessment.
+    Return your analysis in the required structured format.
   "#
 }

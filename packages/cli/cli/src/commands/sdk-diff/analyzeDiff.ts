@@ -20,9 +20,9 @@ export interface SdkDiffAnalysis {
     description: string;
 
     /**
-     * Recommended version bump (major/minor/patch)
+     * Recommended version bump (major/minor/patch/no_change)
      */
-    versionBump: "major" | "minor" | "patch";
+    versionBump: "major" | "minor" | "patch" | "no_change";
 
     /**
      * List of breaking changes (if any)
@@ -67,7 +67,7 @@ export async function analyzeSdkDiff(gitDiff: string): Promise<SdkDiffAnalysis> 
 /**
  * Maps BAML VersionBump enum to lowercase version bump string
  */
-function mapVersionBump(bump: VersionBump): "major" | "minor" | "patch" {
+function mapVersionBump(bump: VersionBump): "major" | "minor" | "patch" | "no_change" {
     switch (bump) {
         case "MAJOR":
             return "major";
@@ -75,6 +75,8 @@ function mapVersionBump(bump: VersionBump): "major" | "minor" | "patch" {
             return "minor";
         case "PATCH":
             return "patch";
+        case "NO_CHANGE":
+            return "no_change";
         default:
             throw new Error(`Unknown version bump: ${bump}`);
     }

@@ -18,7 +18,7 @@ const execAsync = promisify(exec);
 export interface SdkDiffResult {
     headline: string;
     description: string;
-    versionBump: "major" | "minor" | "patch";
+    versionBump: "major" | "minor" | "patch" | "no_change";
     breakingChanges: string[];
 }
 
@@ -62,7 +62,7 @@ export async function sdkDiffCommand({
         return {
             headline: "chore: No changes detected",
             description: "The two SDK directories are identical.",
-            versionBump: "patch",
+            versionBump: "no_change",
             breakingChanges: []
         };
     }
@@ -98,14 +98,45 @@ async function generateDiff(fromPath: string, toPath: string): Promise<string> {
                 encoding: "utf-8"
             }
         );
-        return stdout;
+        return filterDiff(stdout);
     } catch (error: any) {
         // git diff --no-index returns exit code 1 when there are differences
         // This is expected behavior, so we check if stdout contains the diff
         if (error.code === 1 && error.stdout) {
-            return error.stdout;
+            return filterDiff(error.stdout);
         }
         // For other errors, throw
         throw new Error(`Failed to generate diff: ${error.message}`);
     }
+}
+
+/**
+ * Filters out unwanted files from git diff output
+ * Removes .git directories, node_modules, and other non-code files
+ */
+function filterDiff(diff: string): string {
+    const lines = diff.split('\n');
+    const filteredLines: string[] = [];
+    let skipCurrentFile = false;
+
+    for (const line of lines) {
+        // Check if this is a diff header for a new file
+        if (line.startsWith('diff --git')) {
+            // Check if the file path contains patterns we want to exclude
+            skipCurrentFile =
+                line.includes('/.git/') ||
+                line.includes('/node_modules/') ||
+                line.includes('/.DS_Store') ||
+                line.includes('.git/') ||
+                line.endsWith('.git');
+
+            if (!skipCurrentFile) {
+                filteredLines.push(line);
+            }
+        } else if (!skipCurrentFile) {
+            filteredLines.push(line);
+        }
+    }
+
+    return filteredLines.join('\n');
 }
