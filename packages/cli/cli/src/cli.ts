@@ -163,6 +163,7 @@ async function tryRunCli(cliContext: CliContext) {
         .recommendCommands();
 
     addDiffCommand(cli, cliContext);
+    addSmartDiffCommand(cli, cliContext);
     addInitCommand(cli, cliContext);
     addTokenCommand(cli, cliContext);
     addAddCommand(cli, cliContext);
@@ -412,10 +413,10 @@ function addDiffCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext) {
 }
 
 function addSmartDiffCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext) {
-
     cli.command(
         "smart-diff",
-        "Diff two versions of an SDK",
+        // "Diff two versions of an SDK",
+        false,
         (yargs) =>
             yargs
                 .option("from", {
@@ -439,8 +440,9 @@ function addSmartDiffCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext
                 "changelog": "This is where the changelog message will go",
                 "version": "This is where the version will go",
             }
+            cliContext.logger.info(JSON.stringify(results));
         }
-    );
+    ).hide("smart-diff");
 }
 
 function addTokenCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext) {
