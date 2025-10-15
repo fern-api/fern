@@ -28,6 +28,7 @@ import { addGeneratorCommands, addGetOrganizationCommand } from "./cliV2";
 import { addGeneratorToWorkspaces } from "./commands/add-generator/addGeneratorToWorkspaces";
 import { diff } from "./commands/diff/diff";
 import { previewDocsWorkspace } from "./commands/docs-dev/devDocsWorkspace";
+import { sdkDiffCommand } from "./commands/sdk-diff/sdkDiffCommand";
 import { generateOpenAPIForWorkspaces } from "./commands/export/generateOpenAPIForWorkspaces";
 import { formatWorkspaces } from "./commands/format/formatWorkspaces";
 import { GenerationMode, generateAPIWorkspaces } from "./commands/generate/generateAPIWorkspaces";
@@ -163,6 +164,7 @@ async function tryRunCli(cliContext: CliContext) {
         .recommendCommands();
 
     addDiffCommand(cli, cliContext);
+    addSdkDiffCommand(cli, cliContext);
     addInitCommand(cli, cliContext);
     addTokenCommand(cli, cliContext);
     addAddCommand(cli, cliContext);
@@ -407,6 +409,57 @@ function addDiffCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext) {
             }
             const code = result.bump === "major" ? 1 : 0;
             await cliContext.exit({ code });
+        }
+    );
+}
+
+function addSdkDiffCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext) {
+    cli.command(
+        "sdk-diff <from-dir> <to-dir>",
+        false,
+        (yargs) =>
+            yargs
+                .positional("from-dir", {
+                    type: "string",
+                    demandOption: true,
+                    description: "Path to the directory containing the previous version of the SDK"
+                })
+                .positional("to-dir", {
+                    type: "string",
+                    demandOption: true,
+                    description: "Path to the directory containing the next version of the SDK"
+                })
+                .option("json", {
+                    boolean: true,
+                    default: false,
+                    description: "Output result as JSON"
+                }),
+        async (argv) => {
+            await cliContext.instrumentPostHogEvent({
+                command: "fern sdk-diff"
+            });
+
+            const result = await sdkDiffCommand({
+                context: cliContext,
+                fromDir: argv.fromDir,
+                toDir: argv.toDir
+            });
+
+            if (argv.json) {
+                // Output as JSON
+                cliContext.logger.info(JSON.stringify(result, null, 2));
+            } else {
+                // Output as formatted text
+                cliContext.logger.info("\n" + result.headline);
+                cliContext.logger.info("\n" + result.description);
+                cliContext.logger.info(`\nVersion Bump: ${result.versionBump}`);
+                if (result.breakingChanges.length > 0) {
+                    cliContext.logger.info("\nBreaking Changes:");
+                    result.breakingChanges.forEach((change) => {
+                        cliContext.logger.info(`  - ${change}`);
+                    });
+                }
+            }
         }
     );
 }

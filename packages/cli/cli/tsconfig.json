@@ -3,9 +3,9 @@
   "compilerOptions": {
     "composite": true,
     "outDir": "lib",
-    "rootDir": "src"
+    "rootDir": "."
   },
-  "include": ["./src/**/*"],
+  "include": ["./src/**/*", "./baml_client/**/*"],
   "references": [
     {
       "path": "../workspace/loader"

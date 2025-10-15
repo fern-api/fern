@@ -26,11 +26,14 @@
     "fern:local": "./dist/cli.cjs",
     "fern:prod": "./dist/cli.cjs"
   },
-  "files": ["lib"],
+  "files": [
+    "lib"
+  ],
   "scripts": {
+    "baml-generate": "baml-cli generate --from baml_src",
     "clean": "rm -rf ./lib && tsc --build --clean",
-    "compile": "tsc --build",
-    "compile:debug": "tsc --build --sourceMap",
+    "compile": "pnpm baml-generate && tsc --build",
+    "compile:debug": "pnpm baml-generate && tsc --build --sourceMap",
     "depcheck": "depcheck",
     "dist:cli:dev": "pnpm compile && node build.dev.cjs",
     "dist:cli:local": "pnpm compile && node build.local.cjs",
@@ -131,5 +134,8 @@
     "vitest": "^2.1.9",
     "yaml": "^2.4.5",
     "yargs": "^17.4.1"
+  },
+  "dependencies": {
+    "@boundaryml/baml": "^0.211.2"
   }
 }
