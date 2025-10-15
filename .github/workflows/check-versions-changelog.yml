@@ -3,6 +3,11 @@ name: Check Versions Changelog
 # This workflow checks if TypeScript changes in packages/ and generators/ directories
 # are properly reflected in the corresponding versions.yml changelog entries.
 # Requires ANTHROPIC_API_KEY secret to be configured in the repository.
+#
+# Manual Trigger Usage:
+# - base_ref: Branch to compare against (default: 'main')
+# - head_ref: Branch/commit to compare (default: 'HEAD')
+# - file_pattern: Custom file pattern override (e.g., 'packages/cli/**/*.ts')
 
 on:
   pull_request:
@@ -10,6 +15,22 @@ on:
       - opened
       - synchronize
       - reopened
+  workflow_dispatch:
+    inputs:
+      base_ref:
+        description: "Base branch/ref to compare against"
+        required: false
+        default: "main"
+        type: string
+      head_ref:
+        description: "Head branch/ref to compare"
+        required: false
+        default: "HEAD"
+        type: string
+      file_pattern:
+        description: "File pattern to check (optional, overrides auto-detection)"
+        required: false
+        type: string
 
 permissions:
   contents: read
@@ -17,13 +38,13 @@ permissions:
   issues: read
 
 concurrency:
-  group: ${{ github.workflow }}-${{ github.event.pull_request.number }}
+  group: ${{ github.workflow }}-${{ github.event.pull_request.number || github.run_id }}
   cancel-in-progress: true
 
 jobs:
   check-versions-changelog:
     runs-on: ubuntu-latest
-    if: github.event.pull_request.draft == false
+    if: github.event_name == 'workflow_dispatch' || (github.event_name == 'pull_request' && github.event.pull_request.draft == false)
 
     steps:
       - name: Checkout repo
@@ -37,13 +58,34 @@ jobs:
       - name: Get changed TypeScript files in packages and generators
         id: changed-files
         run: |
-          # Get the base branch to compare against
-          git fetch origin ${{ github.event.pull_request.base.ref }}
-          BASE_SHA="${{ github.event.pull_request.base.sha }}"
-          HEAD_SHA="${{ github.event.pull_request.head.sha }}"
+          echo "Event: ${{ github.event_name }}"
 
-          # Find changed TypeScript files in packages/ and generators/ directories (excluding tests and generated files)
-          CHANGED_TS_FILES=$(git diff --name-only --diff-filter=AMR "$BASE_SHA" "$HEAD_SHA" -- '*.ts' ':!*.test.ts' ':!*.spec.ts' ':!**/generated/**' ':!**/dist/**' | grep -E '^(packages/|generators/)' | head -20 || true)
+          # Handle manual dispatch with git diff
+          if [ "${{ github.event_name }}" = "workflow_dispatch" ]; then
+            echo "Using git diff for manual trigger"
+            BASE_REF="${{ inputs.base_ref || 'main' }}"
+            HEAD_REF="${{ inputs.head_ref || 'HEAD' }}"
+
+            git fetch origin "$BASE_REF" || echo "Could not fetch $BASE_REF"
+
+            if [ -n "${{ inputs.file_pattern }}" ]; then
+              # Use custom file pattern if provided
+              CHANGED_TS_FILES=$(git diff --name-only --diff-filter=AMR "$BASE_REF" "$HEAD_REF" -- '${{ inputs.file_pattern }}' | grep -E '\.ts$' | grep -E '^(packages/|generators/)' | head -20 || true)
+            else
+              # Default pattern
+              CHANGED_TS_FILES=$(git diff --name-only --diff-filter=AMR "$BASE_REF" "$HEAD_REF" -- '*.ts' ':!*.test.ts' ':!*.spec.ts' ':!**/generated/**' ':!**/dist/**' | grep -E '^(packages/|generators/)' | head -20 || true)
+            fi
+
+          # Handle pull request trigger
+          else
+            echo "Using pull request context"
+            git fetch origin ${{ github.event.pull_request.base.ref }}
+            BASE_SHA="${{ github.event.pull_request.base.sha }}"
+            HEAD_SHA="${{ github.event.pull_request.head.sha }}"
+
+            # Find changed TypeScript files in packages/ and generators/ directories (excluding tests and generated files)
+            CHANGED_TS_FILES=$(git diff --name-only --diff-filter=AMR "$BASE_SHA" "$HEAD_SHA" -- '*.ts' ':!*.test.ts' ':!*.spec.ts' ':!**/generated/**' ':!**/dist/**' | grep -E '^(packages/|generators/)' | head -20 || true)
+          fi
 
           echo "changed_files<<EOF" >> $GITHUB_OUTPUT
           echo "$CHANGED_TS_FILES" >> $GITHUB_OUTPUT
@@ -167,12 +209,13 @@ jobs:
           cat /tmp/analysis_output.json >> $GITHUB_OUTPUT
           echo "EOF" >> $GITHUB_OUTPUT
 
-      - name: Post PR comment
+      - name: Post PR comment or output summary
         if: steps.changed-files.outputs.has_changes == 'true'
         uses: actions/github-script@v7
         with:
           script: |
             const analysis = `${{ steps.llm-check.outputs.analysis }}`;
+            const isManualDispatch = '${{ github.event_name }}' === 'workflow_dispatch';
 
             let parsedAnalysis;
             try {
@@ -188,81 +231,93 @@ jobs:
 
             const changedFiles = `${{ steps.changed-files.outputs.changed_files }}`.split('\n').filter(f => f.trim());
 
-            let commentBody = `## 📋 Versions.yml Changelog Check\n\n`;
+            let outputBody = `## 📋 Versions.yml Changelog Check\n\n`;
+
+            if (isManualDispatch) {
+              outputBody += `🔧 **Manual Trigger**: Comparing \`${{ inputs.head_ref || 'HEAD' }}\` against \`${{ inputs.base_ref || 'main' }}\`\n\n`;
+            }
 
             if (changedFiles.length === 0) {
-              commentBody += `✅ No significant TypeScript changes detected in packages/ or generators/ directories.\n`;
+              outputBody += `✅ No significant TypeScript changes detected in packages/ or generators/ directories.\n`;
             } else {
-              commentBody += `🔍 **Analyzed TypeScript changes in:**\n`;
+              outputBody += `🔍 **Analyzed TypeScript changes in:**\n`;
               changedFiles.forEach(file => {
-                commentBody += `- \`${file}\`\n`;
+                outputBody += `- \`${file}\`\n`;
               });
 
-              commentBody += `\n### Analysis Results:\n\n`;
+              outputBody += `\n### Analysis Results:\n\n`;
 
               if (parsedAnalysis.components && parsedAnalysis.components.length > 0) {
                 parsedAnalysis.components.forEach(component => {
                   const icon = component.recommendation === 'sufficient' ? '✅' : component.recommendation === 'improve' ? '⚠️' : '❌';
-                  commentBody += `${icon} **${component.component}** (\`${component.versions_file}\`)\n`;
-                  commentBody += `   - **Recommendation:** ${component.recommendation}\n`;
-                  commentBody += `   - **Reasoning:** ${component.reasoning}\n`;
+                  outputBody += `${icon} **${component.component}** (\`${component.versions_file}\`)\n`;
+                  outputBody += `   - **Recommendation:** ${component.recommendation}\n`;
+                  outputBody += `   - **Reasoning:** ${component.reasoning}\n`;
 
                   if (component.suggested_entry) {
-                    commentBody += `   - **Suggested changelog entry:**\n`;
-                    commentBody += `     \`\`\`yaml\n`;
-                    commentBody += `     - type: ${component.suggested_entry.type}\n`;
-                    commentBody += `       summary: |\n`;
+                    outputBody += `   - **Suggested changelog entry:**\n`;
+                    outputBody += `     \`\`\`yaml\n`;
+                    outputBody += `     - type: ${component.suggested_entry.type}\n`;
+                    outputBody += `       summary: |\n`;
                     component.suggested_entry.summary.split('\n').forEach(line => {
-                      commentBody += `         ${line}\n`;
+                      outputBody += `         ${line}\n`;
                     });
-                    commentBody += `     \`\`\`\n`;
+                    outputBody += `     \`\`\`\n`;
                   }
-                  commentBody += `\n`;
+                  outputBody += `\n`;
                 });
               }
 
               if (parsedAnalysis.overall_feedback) {
-                commentBody += `### 💡 Overall Feedback:\n${parsedAnalysis.overall_feedback}\n\n`;
+                outputBody += `### 💡 Overall Feedback:\n${parsedAnalysis.overall_feedback}\n\n`;
               }
 
-              commentBody += `---\n`;
-              commentBody += `**Guidelines for good changelog entries:**\n`;
-              commentBody += `- Include specific details about what changed and why\n`;
-              commentBody += `- For new features: mention how to enable/use them\n`;
-              commentBody += `- For bug fixes: describe what was broken and how it's fixed\n`;
-              commentBody += `- For feature flags: provide enable/disable instructions\n`;
-              commentBody += `- Include code examples for API changes\n\n`;
-              commentBody += `*This analysis was performed by Claude (Anthropic) and should be reviewed by a human.*`;
+              outputBody += `---\n`;
+              outputBody += `**Guidelines for good changelog entries:**\n`;
+              outputBody += `- Include specific details about what changed and why\n`;
+              outputBody += `- For new features: mention how to enable/use them\n`;
+              outputBody += `- For bug fixes: describe what was broken and how it's fixed\n`;
+              outputBody += `- For feature flags: provide enable/disable instructions\n`;
+              outputBody += `- Include code examples for API changes\n\n`;
+              outputBody += `*This analysis was performed by Claude (Anthropic) and should be reviewed by a human.*`;
             }
 
-            // Check if there's already a comment from this action
-            const comments = await github.rest.issues.listComments({
-              owner: context.repo.owner,
-              repo: context.repo.repo,
-              issue_number: context.issue.number,
-            });
-
-            const botComment = comments.data.find(comment =>
-              comment.user.login === 'github-actions[bot]' &&
-              comment.body.includes('📋 Versions.yml Changelog Check')
-            );
-
-            if (botComment) {
-              // Update existing comment
-              await github.rest.issues.updateComment({
-                owner: context.repo.owner,
-                repo: context.repo.repo,
-                comment_id: botComment.id,
-                body: commentBody
-              });
+            // Handle PR comments vs manual dispatch output
+            if (isManualDispatch) {
+              // For manual dispatch, just log the output
+              console.log('='.repeat(80));
+              console.log('VERSIONS CHANGELOG CHECK RESULTS');
+              console.log('='.repeat(80));
+              console.log(outputBody);
+              console.log('='.repeat(80));
             } else {
-              // Create new comment
-              await github.rest.issues.createComment({
+              // For PR, post/update comment as before
+              const comments = await github.rest.issues.listComments({
                 owner: context.repo.owner,
                 repo: context.repo.repo,
                 issue_number: context.issue.number,
-                body: commentBody
               });
+
+              const botComment = comments.data.find(comment =>
+                comment.user.login === 'github-actions[bot]' &&
+                comment.body.includes('📋 Versions.yml Changelog Check')
+              );
+
+              if (botComment) {
+                await github.rest.issues.updateComment({
+                  owner: context.repo.owner,
+                  repo: context.repo.repo,
+                  comment_id: botComment.id,
+                  body: outputBody
+                });
+              } else {
+                await github.rest.issues.createComment({
+                  owner: context.repo.owner,
+                  repo: context.repo.repo,
+                  issue_number: context.issue.number,
+                  body: outputBody
+                });
+              }
             }
 
             // Set job status based on analysis
