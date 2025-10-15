@@ -20,9 +20,9 @@ A full reference for this library is available [here](./reference.md).
 Instantiate and use the client with the following:
 
 ```typescript
-import { SeedExhaustiveClient } from "@fern/exhaustive";
+import { TanmaySaysSeedExhaustiveClient } from "@fern/exhaustive";
 
-const client = new SeedExhaustiveClient({ environment: "YOUR_BASE_URL", token: "YOUR_TOKEN" });
+const client = new TanmaySaysSeedExhaustiveClient({ environment: "YOUR_BASE_URL", token: "YOUR_TOKEN" });
 await client.endpoints.container.getAndReturnListOfPrimitives(["string", "string"]);
 ```
 
@@ -159,9 +159,9 @@ The SDK provides a way for you to customize the underlying HTTP client / Fetch f
 unsupported environment, this provides a way for you to break glass and ensure the SDK works.
 
 ```typescript
-import { SeedExhaustiveClient } from "@fern/exhaustive";
+import { TanmaySaysSeedExhaustiveClient } from "@fern/exhaustive";
 
-const client = new SeedExhaustiveClient({
+const client = new TanmaySaysSeedExhaustiveClient({
     ...
     fetcher: // provide your implementation here
 });

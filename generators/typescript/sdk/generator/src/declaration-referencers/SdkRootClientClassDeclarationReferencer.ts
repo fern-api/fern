@@ -21,6 +21,9 @@ export class SdkRootClientClassDeclarationReferencer extends AbstractSdkClientCl
     }
 
     public getExportedName(): string {
+        if(this.tanmayMode) {
+            return `TanmaySays${this.namespaceExport}Client`;
+        }
         return `${this.namespaceExport}Client`;
     }
 

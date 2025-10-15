@@ -1,7 +1,7 @@
 ```typescript
-import { SeedExhaustiveClient } from "@fern/exhaustive";
+import { TanmaySaysSeedExhaustiveClient } from "@fern/exhaustive";
 
-const client = new SeedExhaustiveClient({ environment: "YOUR_BASE_URL", token: "YOUR_TOKEN" });        
+const client = new TanmaySaysSeedExhaustiveClient({ environment: "YOUR_BASE_URL", token: "YOUR_TOKEN" });        
 await client.endpoints.container.getAndReturnListOfPrimitives(
 	{
 		[
@@ -15,9 +15,9 @@ await client.endpoints.container.getAndReturnListOfPrimitives(
 
 
 ```typescript
-import { SeedExhaustiveClient } from "@fern/exhaustive";
+import { TanmaySaysSeedExhaustiveClient } from "@fern/exhaustive";
 
-const client = new SeedExhaustiveClient({ environment: "YOUR_BASE_URL", token: "YOUR_TOKEN" });        
+const client = new TanmaySaysSeedExhaustiveClient({ environment: "YOUR_BASE_URL", token: "YOUR_TOKEN" });        
 await client.endpoints.container.getAndReturnListOfObjects(
 	{
 		[
@@ -35,9 +35,9 @@ await client.endpoints.container.getAndReturnListOfObjects(
 
 
 ```typescript
-import { SeedExhaustiveClient } from "@fern/exhaustive";
+import { TanmaySaysSeedExhaustiveClient } from "@fern/exhaustive";
 
-const client = new SeedExhaustiveClient({ environment: "YOUR_BASE_URL", token: "YOUR_TOKEN" });        
+const client = new TanmaySaysSeedExhaustiveClient({ environment: "YOUR_BASE_URL", token: "YOUR_TOKEN" });        
 await client.endpoints.container.getAndReturnSetOfPrimitives(
 	{
 		[
@@ -50,9 +50,9 @@ await client.endpoints.container.getAndReturnSetOfPrimitives(
 
 
 ```typescript
-import { SeedExhaustiveClient } from "@fern/exhaustive";
+import { TanmaySaysSeedExhaustiveClient } from "@fern/exhaustive";
 
-const client = new SeedExhaustiveClient({ environment: "YOUR_BASE_URL", token: "YOUR_TOKEN" });        
+const client = new TanmaySaysSeedExhaustiveClient({ environment: "YOUR_BASE_URL", token: "YOUR_TOKEN" });        
 await client.endpoints.container.getAndReturnSetOfObjects(
 	{
 		[
@@ -67,9 +67,9 @@ await client.endpoints.container.getAndReturnSetOfObjects(
 
 
 ```typescript
-import { SeedExhaustiveClient } from "@fern/exhaustive";
+import { TanmaySaysSeedExhaustiveClient } from "@fern/exhaustive";
 
-const client = new SeedExhaustiveClient({ environment: "YOUR_BASE_URL", token: "YOUR_TOKEN" });        
+const client = new TanmaySaysSeedExhaustiveClient({ environment: "YOUR_BASE_URL", token: "YOUR_TOKEN" });        
 await client.endpoints.container.getAndReturnMapPrimToPrim(
 	{
 		{
@@ -82,9 +82,9 @@ await client.endpoints.container.getAndReturnMapPrimToPrim(
 
 
 ```typescript
-import { SeedExhaustiveClient } from "@fern/exhaustive";
+import { TanmaySaysSeedExhaustiveClient } from "@fern/exhaustive";
 
-const client = new SeedExhaustiveClient({ environment: "YOUR_BASE_URL", token: "YOUR_TOKEN" });        
+const client = new TanmaySaysSeedExhaustiveClient({ environment: "YOUR_BASE_URL", token: "YOUR_TOKEN" });        
 await client.endpoints.container.getAndReturnMapOfPrimToObject(
 	{
 		{
@@ -99,9 +99,9 @@ await client.endpoints.container.getAndReturnMapOfPrimToObject(
 
 
 ```typescript
-import { SeedExhaustiveClient } from "@fern/exhaustive";
+import { TanmaySaysSeedExhaustiveClient } from "@fern/exhaustive";
 
-const client = new SeedExhaustiveClient({
+const client = new TanmaySaysSeedExhaustiveClient({
   environment: "YOUR_BASE_URL",
   token: "YOUR_TOKEN",
 });
@@ -113,9 +113,9 @@ await client.endpoints.container.getAndReturnOptional({
 
 
 ```typescript
-import { SeedExhaustiveClient } from "@fern/exhaustive";
+import { TanmaySaysSeedExhaustiveClient } from "@fern/exhaustive";
 
-const client = new SeedExhaustiveClient({
+const client = new TanmaySaysSeedExhaustiveClient({
   environment: "YOUR_BASE_URL",
   token: "YOUR_TOKEN",
 });
@@ -141,9 +141,9 @@ await client.endpoints.contentType.postJsonPatchContentType({
 
 
 ```typescript
-import { SeedExhaustiveClient } from "@fern/exhaustive";
+import { TanmaySaysSeedExhaustiveClient } from "@fern/exhaustive";
 
-const client = new SeedExhaustiveClient({
+const client = new TanmaySaysSeedExhaustiveClient({
   environment: "YOUR_BASE_URL",
   token: "YOUR_TOKEN",
 });
@@ -169,9 +169,9 @@ await client.endpoints.contentType.postJsonPatchContentWithCharsetType({
 
 
 ```typescript
-import { SeedExhaustiveClient } from "@fern/exhaustive";
+import { TanmaySaysSeedExhaustiveClient } from "@fern/exhaustive";
 
-const client = new SeedExhaustiveClient({
+const client = new TanmaySaysSeedExhaustiveClient({
   environment: "YOUR_BASE_URL",
   token: "YOUR_TOKEN",
 });
@@ -181,9 +181,9 @@ undefined;
 
 
 ```typescript
-import { SeedExhaustiveClient } from "@fern/exhaustive";
+import { TanmaySaysSeedExhaustiveClient } from "@fern/exhaustive";
 
-const client = new SeedExhaustiveClient({
+const client = new TanmaySaysSeedExhaustiveClient({
   environment: "YOUR_BASE_URL",
   token: "YOUR_TOKEN",
 });
@@ -193,9 +193,9 @@ await client.endpoints.httpMethods.testGet("id");
 
 
 ```typescript
-import { SeedExhaustiveClient } from "@fern/exhaustive";
+import { TanmaySaysSeedExhaustiveClient } from "@fern/exhaustive";
 
-const client = new SeedExhaustiveClient({
+const client = new TanmaySaysSeedExhaustiveClient({
   environment: "YOUR_BASE_URL",
   token: "YOUR_TOKEN",
 });
@@ -207,9 +207,9 @@ await client.endpoints.httpMethods.testPost({
 
 
 ```typescript
-import { SeedExhaustiveClient } from "@fern/exhaustive";
+import { TanmaySaysSeedExhaustiveClient } from "@fern/exhaustive";
 
-const client = new SeedExhaustiveClient({
+const client = new TanmaySaysSeedExhaustiveClient({
   environment: "YOUR_BASE_URL",
   token: "YOUR_TOKEN",
 });
@@ -221,9 +221,9 @@ await client.endpoints.httpMethods.testPut("id", {
 
 
 ```typescript
-import { SeedExhaustiveClient } from "@fern/exhaustive";
+import { TanmaySaysSeedExhaustiveClient } from "@fern/exhaustive";
 
-const client = new SeedExhaustiveClient({
+const client = new TanmaySaysSeedExhaustiveClient({
   environment: "YOUR_BASE_URL",
   token: "YOUR_TOKEN",
 });
@@ -249,9 +249,9 @@ await client.endpoints.httpMethods.testPatch("id", {
 
 
 ```typescript
-import { SeedExhaustiveClient } from "@fern/exhaustive";
+import { TanmaySaysSeedExhaustiveClient } from "@fern/exhaustive";
 
-const client = new SeedExhaustiveClient({
+const client = new TanmaySaysSeedExhaustiveClient({
   environment: "YOUR_BASE_URL",
   token: "YOUR_TOKEN",
 });
@@ -261,9 +261,9 @@ await client.endpoints.httpMethods.testDelete("id");
 
 
 ```typescript
-import { SeedExhaustiveClient } from "@fern/exhaustive";
+import { TanmaySaysSeedExhaustiveClient } from "@fern/exhaustive";
 
-const client = new SeedExhaustiveClient({
+const client = new TanmaySaysSeedExhaustiveClient({
   environment: "YOUR_BASE_URL",
   token: "YOUR_TOKEN",
 });
@@ -289,9 +289,9 @@ await client.endpoints.object.getAndReturnWithOptionalField({
 
 
 ```typescript
-import { SeedExhaustiveClient } from "@fern/exhaustive";
+import { TanmaySaysSeedExhaustiveClient } from "@fern/exhaustive";
 
-const client = new SeedExhaustiveClient({
+const client = new TanmaySaysSeedExhaustiveClient({
   environment: "YOUR_BASE_URL",
   token: "YOUR_TOKEN",
 });
@@ -303,9 +303,9 @@ await client.endpoints.object.getAndReturnWithRequiredField({
 
 
 ```typescript
-import { SeedExhaustiveClient } from "@fern/exhaustive";
+import { TanmaySaysSeedExhaustiveClient } from "@fern/exhaustive";
 
-const client = new SeedExhaustiveClient({
+const client = new TanmaySaysSeedExhaustiveClient({
   environment: "YOUR_BASE_URL",
   token: "YOUR_TOKEN",
 });
@@ -321,9 +321,9 @@ await client.endpoints.object.getAndReturnWithMapOfMap({
 
 
 ```typescript
-import { SeedExhaustiveClient } from "@fern/exhaustive";
+import { TanmaySaysSeedExhaustiveClient } from "@fern/exhaustive";
 
-const client = new SeedExhaustiveClient({
+const client = new TanmaySaysSeedExhaustiveClient({
   environment: "YOUR_BASE_URL",
   token: "YOUR_TOKEN",
 });
@@ -352,9 +352,9 @@ await client.endpoints.object.getAndReturnNestedWithOptionalField({
 
 
 ```typescript
-import { SeedExhaustiveClient } from "@fern/exhaustive";
+import { TanmaySaysSeedExhaustiveClient } from "@fern/exhaustive";
 
-const client = new SeedExhaustiveClient({
+const client = new TanmaySaysSeedExhaustiveClient({
   environment: "YOUR_BASE_URL",
   token: "YOUR_TOKEN",
 });
@@ -383,9 +383,9 @@ await client.endpoints.object.getAndReturnNestedWithRequiredField("string", {
 
 
 ```typescript
-import { SeedExhaustiveClient } from "@fern/exhaustive";
+import { TanmaySaysSeedExhaustiveClient } from "@fern/exhaustive";
 
-const client = new SeedExhaustiveClient({ environment: "YOUR_BASE_URL", token: "YOUR_TOKEN" });        
+const client = new TanmaySaysSeedExhaustiveClient({ environment: "YOUR_BASE_URL", token: "YOUR_TOKEN" });        
 await client.endpoints.object.getAndReturnNestedWithRequiredFieldAsList(
 	{
 		[
@@ -433,9 +433,9 @@ await client.endpoints.object.getAndReturnNestedWithRequiredFieldAsList(
 
 
 ```typescript
-import { SeedExhaustiveClient } from "@fern/exhaustive";
+import { TanmaySaysSeedExhaustiveClient } from "@fern/exhaustive";
 
-const client = new SeedExhaustiveClient({
+const client = new TanmaySaysSeedExhaustiveClient({
   environment: "YOUR_BASE_URL",
   token: "YOUR_TOKEN",
 });
@@ -445,9 +445,9 @@ await client.endpoints.params.getWithPath("param");
 
 
 ```typescript
-import { SeedExhaustiveClient } from "@fern/exhaustive";
+import { TanmaySaysSeedExhaustiveClient } from "@fern/exhaustive";
 
-const client = new SeedExhaustiveClient({
+const client = new TanmaySaysSeedExhaustiveClient({
   environment: "YOUR_BASE_URL",
   token: "YOUR_TOKEN",
 });
@@ -457,9 +457,9 @@ await client.endpoints.params.getWithInlinePath("param");
 
 
 ```typescript
-import { SeedExhaustiveClient } from "@fern/exhaustive";
+import { TanmaySaysSeedExhaustiveClient } from "@fern/exhaustive";
 
-const client = new SeedExhaustiveClient({
+const client = new TanmaySaysSeedExhaustiveClient({
   environment: "YOUR_BASE_URL",
   token: "YOUR_TOKEN",
 });
@@ -472,9 +472,9 @@ await client.endpoints.params.getWithQuery({
 
 
 ```typescript
-import { SeedExhaustiveClient } from "@fern/exhaustive";
+import { TanmaySaysSeedExhaustiveClient } from "@fern/exhaustive";
 
-const client = new SeedExhaustiveClient({
+const client = new TanmaySaysSeedExhaustiveClient({
   environment: "YOUR_BASE_URL",
   token: "YOUR_TOKEN",
 });
@@ -487,9 +487,9 @@ await client.endpoints.params.getWithAllowMultipleQuery({
 
 
 ```typescript
-import { SeedExhaustiveClient } from "@fern/exhaustive";
+import { TanmaySaysSeedExhaustiveClient } from "@fern/exhaustive";
 
-const client = new SeedExhaustiveClient({
+const client = new TanmaySaysSeedExhaustiveClient({
   environment: "YOUR_BASE_URL",
   token: "YOUR_TOKEN",
 });
@@ -501,9 +501,9 @@ await client.endpoints.params.getWithPathAndQuery("param", {
 
 
 ```typescript
-import { SeedExhaustiveClient } from "@fern/exhaustive";
+import { TanmaySaysSeedExhaustiveClient } from "@fern/exhaustive";
 
-const client = new SeedExhaustiveClient({
+const client = new TanmaySaysSeedExhaustiveClient({
   environment: "YOUR_BASE_URL",
   token: "YOUR_TOKEN",
 });
@@ -515,9 +515,9 @@ await client.endpoints.params.getWithInlinePathAndQuery("param", {
 
 
 ```typescript
-import { SeedExhaustiveClient } from "@fern/exhaustive";
+import { TanmaySaysSeedExhaustiveClient } from "@fern/exhaustive";
 
-const client = new SeedExhaustiveClient({ environment: "YOUR_BASE_URL", token: "YOUR_TOKEN" });        
+const client = new TanmaySaysSeedExhaustiveClient({ environment: "YOUR_BASE_URL", token: "YOUR_TOKEN" });        
 await client.endpoints.params.modifyWithPath(
 	"param",
 	{
@@ -529,9 +529,9 @@ await client.endpoints.params.modifyWithPath(
 
 
 ```typescript
-import { SeedExhaustiveClient } from "@fern/exhaustive";
+import { TanmaySaysSeedExhaustiveClient } from "@fern/exhaustive";
 
-const client = new SeedExhaustiveClient({ environment: "YOUR_BASE_URL", token: "YOUR_TOKEN" });        
+const client = new TanmaySaysSeedExhaustiveClient({ environment: "YOUR_BASE_URL", token: "YOUR_TOKEN" });        
 await client.endpoints.params.modifyWithInlinePath(
 	"param",
 	{
@@ -543,9 +543,9 @@ await client.endpoints.params.modifyWithInlinePath(
 
 
 ```typescript
-import { SeedExhaustiveClient } from "@fern/exhaustive";
+import { TanmaySaysSeedExhaustiveClient } from "@fern/exhaustive";
 
-const client = new SeedExhaustiveClient({ environment: "YOUR_BASE_URL", token: "YOUR_TOKEN" });        
+const client = new TanmaySaysSeedExhaustiveClient({ environment: "YOUR_BASE_URL", token: "YOUR_TOKEN" });        
 await client.endpoints.primitive.getAndReturnString(
 	{
 		"string"
@@ -556,9 +556,9 @@ await client.endpoints.primitive.getAndReturnString(
 
 
 ```typescript
-import { SeedExhaustiveClient } from "@fern/exhaustive";
+import { TanmaySaysSeedExhaustiveClient } from "@fern/exhaustive";
 
-const client = new SeedExhaustiveClient({ environment: "YOUR_BASE_URL", token: "YOUR_TOKEN" });        
+const client = new TanmaySaysSeedExhaustiveClient({ environment: "YOUR_BASE_URL", token: "YOUR_TOKEN" });        
 await client.endpoints.primitive.getAndReturnInt(
 	{
 		1
@@ -569,9 +569,9 @@ await client.endpoints.primitive.getAndReturnInt(
 
 
 ```typescript
-import { SeedExhaustiveClient } from "@fern/exhaustive";
+import { TanmaySaysSeedExhaustiveClient } from "@fern/exhaustive";
 
-const client = new SeedExhaustiveClient({ environment: "YOUR_BASE_URL", token: "YOUR_TOKEN" });        
+const client = new TanmaySaysSeedExhaustiveClient({ environment: "YOUR_BASE_URL", token: "YOUR_TOKEN" });        
 await client.endpoints.primitive.getAndReturnLong(
 	{
 		1000000
@@ -582,9 +582,9 @@ await client.endpoints.primitive.getAndReturnLong(
 
 
 ```typescript
-import { SeedExhaustiveClient } from "@fern/exhaustive";
+import { TanmaySaysSeedExhaustiveClient } from "@fern/exhaustive";
 
-const client = new SeedExhaustiveClient({ environment: "YOUR_BASE_URL", token: "YOUR_TOKEN" });        
+const client = new TanmaySaysSeedExhaustiveClient({ environment: "YOUR_BASE_URL", token: "YOUR_TOKEN" });        
 await client.endpoints.primitive.getAndReturnDouble(
 	{
 		1.1
@@ -595,9 +595,9 @@ await client.endpoints.primitive.getAndReturnDouble(
 
 
 ```typescript
-import { SeedExhaustiveClient } from "@fern/exhaustive";
+import { TanmaySaysSeedExhaustiveClient } from "@fern/exhaustive";
 
-const client = new SeedExhaustiveClient({ environment: "YOUR_BASE_URL", token: "YOUR_TOKEN" });        
+const client = new TanmaySaysSeedExhaustiveClient({ environment: "YOUR_BASE_URL", token: "YOUR_TOKEN" });        
 await client.endpoints.primitive.getAndReturnBool(
 	{
 		true
@@ -608,9 +608,9 @@ await client.endpoints.primitive.getAndReturnBool(
 
 
 ```typescript
-import { SeedExhaustiveClient } from "@fern/exhaustive";
+import { TanmaySaysSeedExhaustiveClient } from "@fern/exhaustive";
 
-const client = new SeedExhaustiveClient({ environment: "YOUR_BASE_URL", token: "YOUR_TOKEN" });        
+const client = new TanmaySaysSeedExhaustiveClient({ environment: "YOUR_BASE_URL", token: "YOUR_TOKEN" });        
 await client.endpoints.primitive.getAndReturnDatetime(
 	{
 		"2024-01-15T09:30:00Z"
@@ -621,9 +621,9 @@ await client.endpoints.primitive.getAndReturnDatetime(
 
 
 ```typescript
-import { SeedExhaustiveClient } from "@fern/exhaustive";
+import { TanmaySaysSeedExhaustiveClient } from "@fern/exhaustive";
 
-const client = new SeedExhaustiveClient({ environment: "YOUR_BASE_URL", token: "YOUR_TOKEN" });        
+const client = new TanmaySaysSeedExhaustiveClient({ environment: "YOUR_BASE_URL", token: "YOUR_TOKEN" });        
 await client.endpoints.primitive.getAndReturnDate(
 	{
 		"2023-01-15"
@@ -634,9 +634,9 @@ await client.endpoints.primitive.getAndReturnDate(
 
 
 ```typescript
-import { SeedExhaustiveClient } from "@fern/exhaustive";
+import { TanmaySaysSeedExhaustiveClient } from "@fern/exhaustive";
 
-const client = new SeedExhaustiveClient({ environment: "YOUR_BASE_URL", token: "YOUR_TOKEN" });        
+const client = new TanmaySaysSeedExhaustiveClient({ environment: "YOUR_BASE_URL", token: "YOUR_TOKEN" });        
 await client.endpoints.primitive.getAndReturnUuid(
 	{
 		"d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32"
@@ -647,9 +647,9 @@ await client.endpoints.primitive.getAndReturnUuid(
 
 
 ```typescript
-import { SeedExhaustiveClient } from "@fern/exhaustive";
+import { TanmaySaysSeedExhaustiveClient } from "@fern/exhaustive";
 
-const client = new SeedExhaustiveClient({ environment: "YOUR_BASE_URL", token: "YOUR_TOKEN" });        
+const client = new TanmaySaysSeedExhaustiveClient({ environment: "YOUR_BASE_URL", token: "YOUR_TOKEN" });        
 await client.endpoints.primitive.getAndReturnBase64(
 	{
 		"SGVsbG8gd29ybGQh"
@@ -660,9 +660,9 @@ await client.endpoints.primitive.getAndReturnBase64(
 
 
 ```typescript
-import { SeedExhaustiveClient } from "@fern/exhaustive";
+import { TanmaySaysSeedExhaustiveClient } from "@fern/exhaustive";
 
-const client = new SeedExhaustiveClient({
+const client = new TanmaySaysSeedExhaustiveClient({
   environment: "YOUR_BASE_URL",
   token: "YOUR_TOKEN",
 });
@@ -672,9 +672,9 @@ await client.endpoints.put.add("id");
 
 
 ```typescript
-import { SeedExhaustiveClient } from "@fern/exhaustive";
+import { TanmaySaysSeedExhaustiveClient } from "@fern/exhaustive";
 
-const client = new SeedExhaustiveClient({ environment: "YOUR_BASE_URL", token: "YOUR_TOKEN" });        
+const client = new TanmaySaysSeedExhaustiveClient({ environment: "YOUR_BASE_URL", token: "YOUR_TOKEN" });        
 await client.endpoints.union.getAndReturnUnion(
 	{
 		{ 
@@ -689,9 +689,9 @@ await client.endpoints.union.getAndReturnUnion(
 
 
 ```typescript
-import { SeedExhaustiveClient } from "@fern/exhaustive";
+import { TanmaySaysSeedExhaustiveClient } from "@fern/exhaustive";
 
-const client = new SeedExhaustiveClient({
+const client = new TanmaySaysSeedExhaustiveClient({
   environment: "YOUR_BASE_URL",
   token: "YOUR_TOKEN",
 });
@@ -701,9 +701,9 @@ await client.endpoints.urls.withMixedCase();
 
 
 ```typescript
-import { SeedExhaustiveClient } from "@fern/exhaustive";
+import { TanmaySaysSeedExhaustiveClient } from "@fern/exhaustive";
 
-const client = new SeedExhaustiveClient({
+const client = new TanmaySaysSeedExhaustiveClient({
   environment: "YOUR_BASE_URL",
   token: "YOUR_TOKEN",
 });
@@ -713,9 +713,9 @@ await client.endpoints.urls.noEndingSlash();
 
 
 ```typescript
-import { SeedExhaustiveClient } from "@fern/exhaustive";
+import { TanmaySaysSeedExhaustiveClient } from "@fern/exhaustive";
 
-const client = new SeedExhaustiveClient({
+const client = new TanmaySaysSeedExhaustiveClient({
   environment: "YOUR_BASE_URL",
   token: "YOUR_TOKEN",
 });
@@ -725,9 +725,9 @@ await client.endpoints.urls.withEndingSlash();
 
 
 ```typescript
-import { SeedExhaustiveClient } from "@fern/exhaustive";
+import { TanmaySaysSeedExhaustiveClient } from "@fern/exhaustive";
 
-const client = new SeedExhaustiveClient({
+const client = new TanmaySaysSeedExhaustiveClient({
   environment: "YOUR_BASE_URL",
   token: "YOUR_TOKEN",
 });
@@ -737,9 +737,9 @@ await client.endpoints.urls.withUnderscores();
 
 
 ```typescript
-import { SeedExhaustiveClient } from "@fern/exhaustive";
+import { TanmaySaysSeedExhaustiveClient } from "@fern/exhaustive";
 
-const client = new SeedExhaustiveClient({
+const client = new TanmaySaysSeedExhaustiveClient({
   environment: "YOUR_BASE_URL",
   token: "YOUR_TOKEN",
 });
@@ -769,9 +769,9 @@ await client.inlinedRequests.postWithObjectBodyandResponse({
 
 
 ```typescript
-import { SeedExhaustiveClient } from "@fern/exhaustive";
+import { TanmaySaysSeedExhaustiveClient } from "@fern/exhaustive";
 
-const client = new SeedExhaustiveClient({
+const client = new TanmaySaysSeedExhaustiveClient({
   environment: "YOUR_BASE_URL",
   token: "YOUR_TOKEN",
 });
@@ -801,9 +801,9 @@ await client.inlinedRequests.postWithObjectBodyandResponse({
 
 
 ```typescript
-import { SeedExhaustiveClient } from "@fern/exhaustive";
+import { TanmaySaysSeedExhaustiveClient } from "@fern/exhaustive";
 
-const client = new SeedExhaustiveClient({ environment: "YOUR_BASE_URL", token: "YOUR_TOKEN" });        
+const client = new TanmaySaysSeedExhaustiveClient({ environment: "YOUR_BASE_URL", token: "YOUR_TOKEN" });        
 await client.noAuth.postWithNoAuth(
 	{
 		{"key":"value"}
@@ -814,9 +814,9 @@ await client.noAuth.postWithNoAuth(
 
 
 ```typescript
-import { SeedExhaustiveClient } from "@fern/exhaustive";
+import { TanmaySaysSeedExhaustiveClient } from "@fern/exhaustive";
 
-const client = new SeedExhaustiveClient({ environment: "YOUR_BASE_URL", token: "YOUR_TOKEN" });        
+const client = new TanmaySaysSeedExhaustiveClient({ environment: "YOUR_BASE_URL", token: "YOUR_TOKEN" });        
 await client.noAuth.postWithNoAuth(
 	{
 		{"key":"value"}
@@ -827,9 +827,9 @@ await client.noAuth.postWithNoAuth(
 
 
 ```typescript
-import { SeedExhaustiveClient } from "@fern/exhaustive";
+import { TanmaySaysSeedExhaustiveClient } from "@fern/exhaustive";
 
-const client = new SeedExhaustiveClient({
+const client = new TanmaySaysSeedExhaustiveClient({
   environment: "YOUR_BASE_URL",
   token: "YOUR_TOKEN",
 });
@@ -839,9 +839,9 @@ await client.noReqBody.getWithNoRequestBody();
 
 
 ```typescript
-import { SeedExhaustiveClient } from "@fern/exhaustive";
+import { TanmaySaysSeedExhaustiveClient } from "@fern/exhaustive";
 
-const client = new SeedExhaustiveClient({
+const client = new TanmaySaysSeedExhaustiveClient({
   environment: "YOUR_BASE_URL",
   token: "YOUR_TOKEN",
 });
@@ -851,9 +851,9 @@ await client.noReqBody.postWithNoRequestBody();
 
 
 ```typescript
-import { SeedExhaustiveClient } from "@fern/exhaustive";
+import { TanmaySaysSeedExhaustiveClient } from "@fern/exhaustive";
 
-const client = new SeedExhaustiveClient({ environment: "YOUR_BASE_URL", token: "YOUR_TOKEN" });        
+const client = new TanmaySaysSeedExhaustiveClient({ environment: "YOUR_BASE_URL", token: "YOUR_TOKEN" });        
 await client.reqWithHeaders.getWithCustomHeader(
 	{
 		X-TEST-ENDPOINT-HEADER: "X-TEST-ENDPOINT-HEADER",

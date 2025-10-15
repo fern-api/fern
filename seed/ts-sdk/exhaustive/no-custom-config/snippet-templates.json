@@ -13,9 +13,9 @@
         "snippetTemplate": {
             "clientInstantiation": {
                 "imports": [
-                    "import { SeedExhaustiveClient } from \"@fern/exhaustive\";"
+                    "import { TanmaySaysSeedExhaustiveClient } from \"@fern/exhaustive\";"
                 ],
-                "templateString": "const client = new SeedExhaustiveClient($FERN_INPUT);",
+                "templateString": "const client = new TanmaySaysSeedExhaustiveClient($FERN_INPUT);",
                 "isOptional": false,
                 "inputDelimiter": ",",
                 "templateInputs": [
@@ -123,9 +123,9 @@
         "snippetTemplate": {
             "clientInstantiation": {
                 "imports": [
-                    "import { SeedExhaustiveClient } from \"@fern/exhaustive\";"
+                    "import { TanmaySaysSeedExhaustiveClient } from \"@fern/exhaustive\";"
                 ],
-                "templateString": "const client = new SeedExhaustiveClient($FERN_INPUT);",
+                "templateString": "const client = new TanmaySaysSeedExhaustiveClient($FERN_INPUT);",
                 "isOptional": false,
                 "inputDelimiter": ",",
                 "templateInputs": [
@@ -246,9 +246,9 @@
         "snippetTemplate": {
             "clientInstantiation": {
                 "imports": [
-                    "import { SeedExhaustiveClient } from \"@fern/exhaustive\";"
+                    "import { TanmaySaysSeedExhaustiveClient } from \"@fern/exhaustive\";"
                 ],
-                "templateString": "const client = new SeedExhaustiveClient($FERN_INPUT);",
+                "templateString": "const client = new TanmaySaysSeedExhaustiveClient($FERN_INPUT);",
                 "isOptional": false,
                 "inputDelimiter": ",",
                 "templateInputs": [
@@ -356,9 +356,9 @@
         "snippetTemplate": {
             "clientInstantiation": {
                 "imports": [
-                    "import { SeedExhaustiveClient } from \"@fern/exhaustive\";"
+                    "import { TanmaySaysSeedExhaustiveClient } from \"@fern/exhaustive\";"
                 ],
-                "templateString": "const client = new SeedExhaustiveClient($FERN_INPUT);",
+                "templateString": "const client = new TanmaySaysSeedExhaustiveClient($FERN_INPUT);",
                 "isOptional": false,
                 "inputDelimiter": ",",
                 "templateInputs": [
@@ -479,9 +479,9 @@
         "snippetTemplate": {
             "clientInstantiation": {
                 "imports": [
-                    "import { SeedExhaustiveClient } from \"@fern/exhaustive\";"
+                    "import { TanmaySaysSeedExhaustiveClient } from \"@fern/exhaustive\";"
                 ],
-                "templateString": "const client = new SeedExhaustiveClient($FERN_INPUT);",
+                "templateString": "const client = new TanmaySaysSeedExhaustiveClient($FERN_INPUT);",
                 "isOptional": false,
                 "inputDelimiter": ",",
                 "templateInputs": [
@@ -602,9 +602,9 @@
         "snippetTemplate": {
             "clientInstantiation": {
                 "imports": [
-                    "import { SeedExhaustiveClient } from \"@fern/exhaustive\";"
+                    "import { TanmaySaysSeedExhaustiveClient } from \"@fern/exhaustive\";"
                 ],
-                "templateString": "const client = new SeedExhaustiveClient($FERN_INPUT);",
+                "templateString": "const client = new TanmaySaysSeedExhaustiveClient($FERN_INPUT);",
                 "isOptional": false,
                 "inputDelimiter": ",",
                 "templateInputs": [
@@ -738,9 +738,9 @@
         "snippetTemplate": {
             "clientInstantiation": {
                 "imports": [
-                    "import { SeedExhaustiveClient } from \"@fern/exhaustive\";"
+                    "import { TanmaySaysSeedExhaustiveClient } from \"@fern/exhaustive\";"
                 ],
-                "templateString": "const client = new SeedExhaustiveClient($FERN_INPUT);",
+                "templateString": "const client = new TanmaySaysSeedExhaustiveClient($FERN_INPUT);",
                 "isOptional": false,
                 "inputDelimiter": ",",
                 "templateInputs": [
@@ -850,9 +850,9 @@
         "snippetTemplate": {
             "clientInstantiation": {
                 "imports": [
-                    "import { SeedExhaustiveClient } from \"@fern/exhaustive\";"
+                    "import { TanmaySaysSeedExhaustiveClient } from \"@fern/exhaustive\";"
                 ],
-                "templateString": "const client = new SeedExhaustiveClient($FERN_INPUT);",
+                "templateString": "const client = new TanmaySaysSeedExhaustiveClient($FERN_INPUT);",
                 "isOptional": false,
                 "inputDelimiter": ",",
                 "templateInputs": [
@@ -1200,9 +1200,9 @@
         "snippetTemplate": {
             "clientInstantiation": {
                 "imports": [
-                    "import { SeedExhaustiveClient } from \"@fern/exhaustive\";"
+                    "import { TanmaySaysSeedExhaustiveClient } from \"@fern/exhaustive\";"
                 ],
-                "templateString": "const client = new SeedExhaustiveClient($FERN_INPUT);",
+                "templateString": "const client = new TanmaySaysSeedExhaustiveClient($FERN_INPUT);",
                 "isOptional": false,
                 "inputDelimiter": ",",
                 "templateInputs": [
@@ -1550,9 +1550,9 @@
         "snippetTemplate": {
             "clientInstantiation": {
                 "imports": [
-                    "import { SeedExhaustiveClient } from \"@fern/exhaustive\";"
+                    "import { TanmaySaysSeedExhaustiveClient } from \"@fern/exhaustive\";"
                 ],
-                "templateString": "const client = new SeedExhaustiveClient($FERN_INPUT);",
+                "templateString": "const client = new TanmaySaysSeedExhaustiveClient($FERN_INPUT);",
                 "isOptional": false,
                 "inputDelimiter": ",",
                 "templateInputs": [
@@ -1653,9 +1653,9 @@
         "snippetTemplate": {
             "clientInstantiation": {
                 "imports": [
-                    "import { SeedExhaustiveClient } from \"@fern/exhaustive\";"
+                    "import { TanmaySaysSeedExhaustiveClient } from \"@fern/exhaustive\";"
                 ],
-                "templateString": "const client = new SeedExhaustiveClient($FERN_INPUT);",
+                "templateString": "const client = new TanmaySaysSeedExhaustiveClient($FERN_INPUT);",
                 "isOptional": false,
                 "inputDelimiter": ",",
                 "templateInputs": [
@@ -1753,9 +1753,9 @@
         "snippetTemplate": {
             "clientInstantiation": {
                 "imports": [
-                    "import { SeedExhaustiveClient } from \"@fern/exhaustive\";"
+                    "import { TanmaySaysSeedExhaustiveClient } from \"@fern/exhaustive\";"
                 ],
-                "templateString": "const client = new SeedExhaustiveClient($FERN_INPUT);",
+                "templateString": "const client = new TanmaySaysSeedExhaustiveClient($FERN_INPUT);",
                 "isOptional": false,
                 "inputDelimiter": ",",
                 "templateInputs": [
@@ -1865,9 +1865,9 @@
         "snippetTemplate": {
             "clientInstantiation": {
                 "imports": [
-                    "import { SeedExhaustiveClient } from \"@fern/exhaustive\";"
+                    "import { TanmaySaysSeedExhaustiveClient } from \"@fern/exhaustive\";"
                 ],
-                "templateString": "const client = new SeedExhaustiveClient($FERN_INPUT);",
+                "templateString": "const client = new TanmaySaysSeedExhaustiveClient($FERN_INPUT);",
                 "isOptional": false,
                 "inputDelimiter": ",",
                 "templateInputs": [
@@ -2005,9 +2005,9 @@
         "snippetTemplate": {
             "clientInstantiation": {
                 "imports": [
-                    "import { SeedExhaustiveClient } from \"@fern/exhaustive\";"
+                    "import { TanmaySaysSeedExhaustiveClient } from \"@fern/exhaustive\";"
                 ],
-                "templateString": "const client = new SeedExhaustiveClient($FERN_INPUT);",
+                "templateString": "const client = new TanmaySaysSeedExhaustiveClient($FERN_INPUT);",
                 "isOptional": false,
                 "inputDelimiter": ",",
                 "templateInputs": [
@@ -2383,9 +2383,9 @@
         "snippetTemplate": {
             "clientInstantiation": {
                 "imports": [
-                    "import { SeedExhaustiveClient } from \"@fern/exhaustive\";"
+                    "import { TanmaySaysSeedExhaustiveClient } from \"@fern/exhaustive\";"
                 ],
-                "templateString": "const client = new SeedExhaustiveClient($FERN_INPUT);",
+                "templateString": "const client = new TanmaySaysSeedExhaustiveClient($FERN_INPUT);",
                 "isOptional": false,
                 "inputDelimiter": ",",
                 "templateInputs": [
@@ -2483,9 +2483,9 @@
         "snippetTemplate": {
             "clientInstantiation": {
                 "imports": [
-                    "import { SeedExhaustiveClient } from \"@fern/exhaustive\";"
+                    "import { TanmaySaysSeedExhaustiveClient } from \"@fern/exhaustive\";"
                 ],
-                "templateString": "const client = new SeedExhaustiveClient($FERN_INPUT);",
+                "templateString": "const client = new TanmaySaysSeedExhaustiveClient($FERN_INPUT);",
                 "isOptional": false,
                 "inputDelimiter": ",",
                 "templateInputs": [
@@ -2833,9 +2833,9 @@
         "snippetTemplate": {
             "clientInstantiation": {
                 "imports": [
-                    "import { SeedExhaustiveClient } from \"@fern/exhaustive\";"
+                    "import { TanmaySaysSeedExhaustiveClient } from \"@fern/exhaustive\";"
                 ],
-                "templateString": "const client = new SeedExhaustiveClient($FERN_INPUT);",
+                "templateString": "const client = new TanmaySaysSeedExhaustiveClient($FERN_INPUT);",
                 "isOptional": false,
                 "inputDelimiter": ",",
                 "templateInputs": [
@@ -2945,9 +2945,9 @@
         "snippetTemplate": {
             "clientInstantiation": {
                 "imports": [
-                    "import { SeedExhaustiveClient } from \"@fern/exhaustive\";"
+                    "import { TanmaySaysSeedExhaustiveClient } from \"@fern/exhaustive\";"
                 ],
-                "templateString": "const client = new SeedExhaustiveClient($FERN_INPUT);",
+                "templateString": "const client = new TanmaySaysSeedExhaustiveClient($FERN_INPUT);",
                 "isOptional": false,
                 "inputDelimiter": ",",
                 "templateInputs": [
@@ -3105,9 +3105,9 @@
         "snippetTemplate": {
             "clientInstantiation": {
                 "imports": [
-                    "import { SeedExhaustiveClient } from \"@fern/exhaustive\";"
+                    "import { TanmaySaysSeedExhaustiveClient } from \"@fern/exhaustive\";"
                 ],
-                "templateString": "const client = new SeedExhaustiveClient($FERN_INPUT);",
+                "templateString": "const client = new TanmaySaysSeedExhaustiveClient($FERN_INPUT);",
                 "isOptional": false,
                 "inputDelimiter": ",",
                 "templateInputs": [
@@ -3483,9 +3483,9 @@
         "snippetTemplate": {
             "clientInstantiation": {
                 "imports": [
-                    "import { SeedExhaustiveClient } from \"@fern/exhaustive\";"
+                    "import { TanmaySaysSeedExhaustiveClient } from \"@fern/exhaustive\";"
                 ],
-                "templateString": "const client = new SeedExhaustiveClient($FERN_INPUT);",
+                "templateString": "const client = new TanmaySaysSeedExhaustiveClient($FERN_INPUT);",
                 "isOptional": false,
                 "inputDelimiter": ",",
                 "templateInputs": [
@@ -3889,9 +3889,9 @@
         "snippetTemplate": {
             "clientInstantiation": {
                 "imports": [
-                    "import { SeedExhaustiveClient } from \"@fern/exhaustive\";"
+                    "import { TanmaySaysSeedExhaustiveClient } from \"@fern/exhaustive\";"
                 ],
-                "templateString": "const client = new SeedExhaustiveClient($FERN_INPUT);",
+                "templateString": "const client = new TanmaySaysSeedExhaustiveClient($FERN_INPUT);",
                 "isOptional": false,
                 "inputDelimiter": ",",
                 "templateInputs": [
@@ -4278,9 +4278,9 @@
         "snippetTemplate": {
             "clientInstantiation": {
                 "imports": [
-                    "import { SeedExhaustiveClient } from \"@fern/exhaustive\";"
+                    "import { TanmaySaysSeedExhaustiveClient } from \"@fern/exhaustive\";"
                 ],
-                "templateString": "const client = new SeedExhaustiveClient($FERN_INPUT);",
+                "templateString": "const client = new TanmaySaysSeedExhaustiveClient($FERN_INPUT);",
                 "isOptional": false,
                 "inputDelimiter": ",",
                 "templateInputs": [
@@ -4378,9 +4378,9 @@
         "snippetTemplate": {
             "clientInstantiation": {
                 "imports": [
-                    "import { SeedExhaustiveClient } from \"@fern/exhaustive\";"
+                    "import { TanmaySaysSeedExhaustiveClient } from \"@fern/exhaustive\";"
                 ],
-                "templateString": "const client = new SeedExhaustiveClient($FERN_INPUT);",
+                "templateString": "const client = new TanmaySaysSeedExhaustiveClient($FERN_INPUT);",
                 "isOptional": false,
                 "inputDelimiter": ",",
                 "templateInputs": [
@@ -4478,9 +4478,9 @@
         "snippetTemplate": {
             "clientInstantiation": {
                 "imports": [
-                    "import { SeedExhaustiveClient } from \"@fern/exhaustive\";"
+                    "import { TanmaySaysSeedExhaustiveClient } from \"@fern/exhaustive\";"
                 ],
-                "templateString": "const client = new SeedExhaustiveClient($FERN_INPUT);",
+                "templateString": "const client = new TanmaySaysSeedExhaustiveClient($FERN_INPUT);",
                 "isOptional": false,
                 "inputDelimiter": ",",
                 "templateInputs": [
@@ -4594,9 +4594,9 @@
         "snippetTemplate": {
             "clientInstantiation": {
                 "imports": [
-                    "import { SeedExhaustiveClient } from \"@fern/exhaustive\";"
+                    "import { TanmaySaysSeedExhaustiveClient } from \"@fern/exhaustive\";"
                 ],
-                "templateString": "const client = new SeedExhaustiveClient($FERN_INPUT);",
+                "templateString": "const client = new TanmaySaysSeedExhaustiveClient($FERN_INPUT);",
                 "isOptional": false,
                 "inputDelimiter": ",",
                 "templateInputs": [
@@ -4710,9 +4710,9 @@
         "snippetTemplate": {
             "clientInstantiation": {
                 "imports": [
-                    "import { SeedExhaustiveClient } from \"@fern/exhaustive\";"
+                    "import { TanmaySaysSeedExhaustiveClient } from \"@fern/exhaustive\";"
                 ],
-                "templateString": "const client = new SeedExhaustiveClient($FERN_INPUT);",
+                "templateString": "const client = new TanmaySaysSeedExhaustiveClient($FERN_INPUT);",
                 "isOptional": false,
                 "inputDelimiter": ",",
                 "templateInputs": [
@@ -4838,9 +4838,9 @@
         "snippetTemplate": {
             "clientInstantiation": {
                 "imports": [
-                    "import { SeedExhaustiveClient } from \"@fern/exhaustive\";"
+                    "import { TanmaySaysSeedExhaustiveClient } from \"@fern/exhaustive\";"
                 ],
-                "templateString": "const client = new SeedExhaustiveClient($FERN_INPUT);",
+                "templateString": "const client = new TanmaySaysSeedExhaustiveClient($FERN_INPUT);",
                 "isOptional": false,
                 "inputDelimiter": ",",
                 "templateInputs": [
@@ -4966,9 +4966,9 @@
         "snippetTemplate": {
             "clientInstantiation": {
                 "imports": [
-                    "import { SeedExhaustiveClient } from \"@fern/exhaustive\";"
+                    "import { TanmaySaysSeedExhaustiveClient } from \"@fern/exhaustive\";"
                 ],
-                "templateString": "const client = new SeedExhaustiveClient($FERN_INPUT);",
+                "templateString": "const client = new TanmaySaysSeedExhaustiveClient($FERN_INPUT);",
                 "isOptional": false,
                 "inputDelimiter": ",",
                 "templateInputs": [
@@ -5093,9 +5093,9 @@
         "snippetTemplate": {
             "clientInstantiation": {
                 "imports": [
-                    "import { SeedExhaustiveClient } from \"@fern/exhaustive\";"
+                    "import { TanmaySaysSeedExhaustiveClient } from \"@fern/exhaustive\";"
                 ],
-                "templateString": "const client = new SeedExhaustiveClient($FERN_INPUT);",
+                "templateString": "const client = new TanmaySaysSeedExhaustiveClient($FERN_INPUT);",
                 "isOptional": false,
                 "inputDelimiter": ",",
                 "templateInputs": [
@@ -5220,9 +5220,9 @@
         "snippetTemplate": {
             "clientInstantiation": {
                 "imports": [
-                    "import { SeedExhaustiveClient } from \"@fern/exhaustive\";"
+                    "import { TanmaySaysSeedExhaustiveClient } from \"@fern/exhaustive\";"
                 ],
-                "templateString": "const client = new SeedExhaustiveClient($FERN_INPUT);",
+                "templateString": "const client = new TanmaySaysSeedExhaustiveClient($FERN_INPUT);",
                 "isOptional": false,
                 "inputDelimiter": ",",
                 "templateInputs": [
@@ -5319,9 +5319,9 @@
         "snippetTemplate": {
             "clientInstantiation": {
                 "imports": [
-                    "import { SeedExhaustiveClient } from \"@fern/exhaustive\";"
+                    "import { TanmaySaysSeedExhaustiveClient } from \"@fern/exhaustive\";"
                 ],
-                "templateString": "const client = new SeedExhaustiveClient($FERN_INPUT);",
+                "templateString": "const client = new TanmaySaysSeedExhaustiveClient($FERN_INPUT);",
                 "isOptional": false,
                 "inputDelimiter": ",",
                 "templateInputs": [
@@ -5418,9 +5418,9 @@
         "snippetTemplate": {
             "clientInstantiation": {
                 "imports": [
-                    "import { SeedExhaustiveClient } from \"@fern/exhaustive\";"
+                    "import { TanmaySaysSeedExhaustiveClient } from \"@fern/exhaustive\";"
                 ],
-                "templateString": "const client = new SeedExhaustiveClient($FERN_INPUT);",
+                "templateString": "const client = new TanmaySaysSeedExhaustiveClient($FERN_INPUT);",
                 "isOptional": false,
                 "inputDelimiter": ",",
                 "templateInputs": [
@@ -5517,9 +5517,9 @@
         "snippetTemplate": {
             "clientInstantiation": {
                 "imports": [
-                    "import { SeedExhaustiveClient } from \"@fern/exhaustive\";"
+                    "import { TanmaySaysSeedExhaustiveClient } from \"@fern/exhaustive\";"
                 ],
-                "templateString": "const client = new SeedExhaustiveClient($FERN_INPUT);",
+                "templateString": "const client = new TanmaySaysSeedExhaustiveClient($FERN_INPUT);",
                 "isOptional": false,
                 "inputDelimiter": ",",
                 "templateInputs": [
@@ -5616,9 +5616,9 @@
         "snippetTemplate": {
             "clientInstantiation": {
                 "imports": [
-                    "import { SeedExhaustiveClient } from \"@fern/exhaustive\";"
+                    "import { TanmaySaysSeedExhaustiveClient } from \"@fern/exhaustive\";"
                 ],
-                "templateString": "const client = new SeedExhaustiveClient($FERN_INPUT);",
+                "templateString": "const client = new TanmaySaysSeedExhaustiveClient($FERN_INPUT);",
                 "isOptional": false,
                 "inputDelimiter": ",",
                 "templateInputs": [
@@ -5715,9 +5715,9 @@
         "snippetTemplate": {
             "clientInstantiation": {
                 "imports": [
-                    "import { SeedExhaustiveClient } from \"@fern/exhaustive\";"
+                    "import { TanmaySaysSeedExhaustiveClient } from \"@fern/exhaustive\";"
                 ],
-                "templateString": "const client = new SeedExhaustiveClient($FERN_INPUT);",
+                "templateString": "const client = new TanmaySaysSeedExhaustiveClient($FERN_INPUT);",
                 "isOptional": false,
                 "inputDelimiter": ",",
                 "templateInputs": [
@@ -5814,9 +5814,9 @@
         "snippetTemplate": {
             "clientInstantiation": {
                 "imports": [
-                    "import { SeedExhaustiveClient } from \"@fern/exhaustive\";"
+                    "import { TanmaySaysSeedExhaustiveClient } from \"@fern/exhaustive\";"
                 ],
-                "templateString": "const client = new SeedExhaustiveClient($FERN_INPUT);",
+                "templateString": "const client = new TanmaySaysSeedExhaustiveClient($FERN_INPUT);",
                 "isOptional": false,
                 "inputDelimiter": ",",
                 "templateInputs": [
@@ -5913,9 +5913,9 @@
         "snippetTemplate": {
             "clientInstantiation": {
                 "imports": [
-                    "import { SeedExhaustiveClient } from \"@fern/exhaustive\";"
+                    "import { TanmaySaysSeedExhaustiveClient } from \"@fern/exhaustive\";"
                 ],
-                "templateString": "const client = new SeedExhaustiveClient($FERN_INPUT);",
+                "templateString": "const client = new TanmaySaysSeedExhaustiveClient($FERN_INPUT);",
                 "isOptional": false,
                 "inputDelimiter": ",",
                 "templateInputs": [
@@ -6012,9 +6012,9 @@
         "snippetTemplate": {
             "clientInstantiation": {
                 "imports": [
-                    "import { SeedExhaustiveClient } from \"@fern/exhaustive\";"
+                    "import { TanmaySaysSeedExhaustiveClient } from \"@fern/exhaustive\";"
                 ],
-                "templateString": "const client = new SeedExhaustiveClient($FERN_INPUT);",
+                "templateString": "const client = new TanmaySaysSeedExhaustiveClient($FERN_INPUT);",
                 "isOptional": false,
                 "inputDelimiter": ",",
                 "templateInputs": [
@@ -6111,9 +6111,9 @@
         "snippetTemplate": {
             "clientInstantiation": {
                 "imports": [
-                    "import { SeedExhaustiveClient } from \"@fern/exhaustive\";"
+                    "import { TanmaySaysSeedExhaustiveClient } from \"@fern/exhaustive\";"
                 ],
-                "templateString": "const client = new SeedExhaustiveClient($FERN_INPUT);",
+                "templateString": "const client = new TanmaySaysSeedExhaustiveClient($FERN_INPUT);",
                 "isOptional": false,
                 "inputDelimiter": ",",
                 "templateInputs": [
@@ -6211,9 +6211,9 @@
         "snippetTemplate": {
             "clientInstantiation": {
                 "imports": [
-                    "import { SeedExhaustiveClient } from \"@fern/exhaustive\";"
+                    "import { TanmaySaysSeedExhaustiveClient } from \"@fern/exhaustive\";"
                 ],
-                "templateString": "const client = new SeedExhaustiveClient($FERN_INPUT);",
+                "templateString": "const client = new TanmaySaysSeedExhaustiveClient($FERN_INPUT);",
                 "isOptional": false,
                 "inputDelimiter": ",",
                 "templateInputs": [
@@ -6415,9 +6415,9 @@
         "snippetTemplate": {
             "clientInstantiation": {
                 "imports": [
-                    "import { SeedExhaustiveClient } from \"@fern/exhaustive\";"
+                    "import { TanmaySaysSeedExhaustiveClient } from \"@fern/exhaustive\";"
                 ],
-                "templateString": "const client = new SeedExhaustiveClient($FERN_INPUT);",
+                "templateString": "const client = new TanmaySaysSeedExhaustiveClient($FERN_INPUT);",
                 "isOptional": false,
                 "inputDelimiter": ",",
                 "templateInputs": [
@@ -6486,9 +6486,9 @@
         "snippetTemplate": {
             "clientInstantiation": {
                 "imports": [
-                    "import { SeedExhaustiveClient } from \"@fern/exhaustive\";"
+                    "import { TanmaySaysSeedExhaustiveClient } from \"@fern/exhaustive\";"
                 ],
-                "templateString": "const client = new SeedExhaustiveClient($FERN_INPUT);",
+                "templateString": "const client = new TanmaySaysSeedExhaustiveClient($FERN_INPUT);",
                 "isOptional": false,
                 "inputDelimiter": ",",
                 "templateInputs": [
@@ -6557,9 +6557,9 @@
         "snippetTemplate": {
             "clientInstantiation": {
                 "imports": [
-                    "import { SeedExhaustiveClient } from \"@fern/exhaustive\";"
+                    "import { TanmaySaysSeedExhaustiveClient } from \"@fern/exhaustive\";"
                 ],
-                "templateString": "const client = new SeedExhaustiveClient($FERN_INPUT);",
+                "templateString": "const client = new TanmaySaysSeedExhaustiveClient($FERN_INPUT);",
                 "isOptional": false,
                 "inputDelimiter": ",",
                 "templateInputs": [
@@ -6628,9 +6628,9 @@
         "snippetTemplate": {
             "clientInstantiation": {
                 "imports": [
-                    "import { SeedExhaustiveClient } from \"@fern/exhaustive\";"
+                    "import { TanmaySaysSeedExhaustiveClient } from \"@fern/exhaustive\";"
                 ],
-                "templateString": "const client = new SeedExhaustiveClient($FERN_INPUT);",
+                "templateString": "const client = new TanmaySaysSeedExhaustiveClient($FERN_INPUT);",
                 "isOptional": false,
                 "inputDelimiter": ",",
                 "templateInputs": [
@@ -6699,9 +6699,9 @@
         "snippetTemplate": {
             "clientInstantiation": {
                 "imports": [
-                    "import { SeedExhaustiveClient } from \"@fern/exhaustive\";"
+                    "import { TanmaySaysSeedExhaustiveClient } from \"@fern/exhaustive\";"
                 ],
-                "templateString": "const client = new SeedExhaustiveClient($FERN_INPUT);",
+                "templateString": "const client = new TanmaySaysSeedExhaustiveClient($FERN_INPUT);",
                 "isOptional": false,
                 "inputDelimiter": ",",
                 "templateInputs": [
@@ -7081,9 +7081,9 @@
         "snippetTemplate": {
             "clientInstantiation": {
                 "imports": [
-                    "import { SeedExhaustiveClient } from \"@fern/exhaustive\";"
+                    "import { TanmaySaysSeedExhaustiveClient } from \"@fern/exhaustive\";"
                 ],
-                "templateString": "const client = new SeedExhaustiveClient($FERN_INPUT);",
+                "templateString": "const client = new TanmaySaysSeedExhaustiveClient($FERN_INPUT);",
                 "isOptional": false,
                 "inputDelimiter": ",",
                 "templateInputs": [
@@ -7180,9 +7180,9 @@
         "snippetTemplate": {
             "clientInstantiation": {
                 "imports": [
-                    "import { SeedExhaustiveClient } from \"@fern/exhaustive\";"
+                    "import { TanmaySaysSeedExhaustiveClient } from \"@fern/exhaustive\";"
                 ],
-                "templateString": "const client = new SeedExhaustiveClient($FERN_INPUT);",
+                "templateString": "const client = new TanmaySaysSeedExhaustiveClient($FERN_INPUT);",
                 "isOptional": false,
                 "inputDelimiter": ",",
                 "templateInputs": [
@@ -7251,9 +7251,9 @@
         "snippetTemplate": {
             "clientInstantiation": {
                 "imports": [
-                    "import { SeedExhaustiveClient } from \"@fern/exhaustive\";"
+                    "import { TanmaySaysSeedExhaustiveClient } from \"@fern/exhaustive\";"
                 ],
-                "templateString": "const client = new SeedExhaustiveClient($FERN_INPUT);",
+                "templateString": "const client = new TanmaySaysSeedExhaustiveClient($FERN_INPUT);",
                 "isOptional": false,
                 "inputDelimiter": ",",
                 "templateInputs": [
@@ -7322,9 +7322,9 @@
         "snippetTemplate": {
             "clientInstantiation": {
                 "imports": [
-                    "import { SeedExhaustiveClient } from \"@fern/exhaustive\";"
+                    "import { TanmaySaysSeedExhaustiveClient } from \"@fern/exhaustive\";"
                 ],
-                "templateString": "const client = new SeedExhaustiveClient($FERN_INPUT);",
+                "templateString": "const client = new TanmaySaysSeedExhaustiveClient($FERN_INPUT);",
                 "isOptional": false,
                 "inputDelimiter": ",",
                 "templateInputs": [
