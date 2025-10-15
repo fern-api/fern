@@ -1,14 +1,12 @@
 from typing import Optional
 
 from fern_python.codegen import AST
-from fern_python.codegen.ast.dependency.dependency import DependencyCompatibility
 
 HTTPX_MODULE = AST.Module.external(
     module_path=("httpx",),
     dependency=AST.Dependency(
         name="httpx",
-        version="0.21.2",
-        compatibility=DependencyCompatibility.GREATER_THAN_OR_EQUAL,
+        version=">=0.21.2",
     ),
 )
 
