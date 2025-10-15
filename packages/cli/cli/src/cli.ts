@@ -411,6 +411,38 @@ function addDiffCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext) {
     );
 }
 
+function addSmartDiffCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext) {
+
+    cli.command(
+        "smart-diff",
+        "Diff two versions of an SDK",
+        (yargs) =>
+            yargs
+                .option("from", {
+                    string: true,
+                    demandOption: true,
+                    description: "Path to a directory that container the previous version of the sdk"
+                })
+                .option("to", {
+                    string: true,
+                    demandOption: true,
+                    description: "Path to a directory that container the new version of the sdk"
+                })
+                .option("language", {
+                    string: true,
+                    demandOption: true,
+                    description: "The language of the SDK"
+                }),
+        async (argv) => {
+            cliContext.logger.info(`Diffing ${argv.from} and ${argv.to} for language ${argv.language}`);
+            const results = {
+                "changelog": "This is where the changelog message will go",
+                "version": "This is where the version will go",
+            }
+        }
+    );
+}
+
 function addTokenCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext) {
     cli.command(
         "token",
