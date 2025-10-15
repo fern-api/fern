@@ -3,7 +3,7 @@
 import type * as core from "../../../../../core/index.js";
 
 export interface InlineTypeRequest {
-    file: core.file.Uploadable.FileLike;
+    file: core.file.Uploadable;
     request: InlineTypeRequest.Request;
 }
 

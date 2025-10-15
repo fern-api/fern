@@ -3,6 +3,6 @@
 import type * as core from "../../../../../core/index.js";
 
 export interface OptionalArgsRequest {
-    imageFile?: core.file.Uploadable.FileLike | undefined;
+    imageFile?: core.file.Uploadable | undefined;
     request?: unknown;
 }

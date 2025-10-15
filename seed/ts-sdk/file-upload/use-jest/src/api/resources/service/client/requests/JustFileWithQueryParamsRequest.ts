@@ -8,5 +8,5 @@ export interface JustFileWithQueryParamsRequest {
     maybeInteger?: number;
     listOfStrings: string | string[];
     optionalListOfStrings?: string | string[];
-    file: core.file.Uploadable.FileLike;
+    file: core.file.Uploadable;
 }
