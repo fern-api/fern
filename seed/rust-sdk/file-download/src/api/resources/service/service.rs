@@ -23,7 +23,7 @@ impl ServiceClient {
         options: Option<RequestOptions>,
     ) -> Result<Vec<u8>, ApiError> {
         self.http_client
-            .execute_request(Method::POST, "", None, None, options)
+            .execute_bytes_request(Method::POST, "", None, None, options)
             .await
     }
 }
