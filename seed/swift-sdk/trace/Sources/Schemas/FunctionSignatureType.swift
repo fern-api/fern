@@ -1,8 +1,8 @@
 import Foundation
 
 public enum FunctionSignatureType: Codable, Hashable, Sendable {
-    case void(Void)
     case nonVoid(NonVoid)
+    case void(Void)
     /// Useful when specifying custom grading for a testcase where actualResult is defined.
     case voidThatTakesActualResult(VoidThatTakesActualResult)
 
@@ -26,7 +26,7 @@ public enum FunctionSignatureType: Codable, Hashable, Sendable {
         }
     }
 
-    public func encode(to encoder: Encoder) throws -> Void {
+    public func encode(to encoder: Encoder) throws -> Swift.Void {
         switch self {
         case .void(let data):
             try data.encode(to: encoder)
@@ -57,7 +57,7 @@ public enum FunctionSignatureType: Codable, Hashable, Sendable {
             self.additionalProperties = try decoder.decodeAdditionalProperties(using: CodingKeys.self)
         }
 
-        public func encode(to encoder: Encoder) throws -> Void {
+        public func encode(to encoder: Encoder) throws -> Swift.Void {
             var container = encoder.container(keyedBy: CodingKeys.self)
             try encoder.encodeAdditionalProperties(self.additionalProperties)
             try container.encode(self.type, forKey: .type)
@@ -95,7 +95,7 @@ public enum FunctionSignatureType: Codable, Hashable, Sendable {
             self.additionalProperties = try decoder.decodeAdditionalProperties(using: CodingKeys.self)
         }
 
-        public func encode(to encoder: Encoder) throws -> Void {
+        public func encode(to encoder: Encoder) throws -> Swift.Void {
             var container = encoder.container(keyedBy: CodingKeys.self)
             try encoder.encodeAdditionalProperties(self.additionalProperties)
             try container.encode(self.type, forKey: .type)
@@ -136,7 +136,7 @@ public enum FunctionSignatureType: Codable, Hashable, Sendable {
             self.additionalProperties = try decoder.decodeAdditionalProperties(using: CodingKeys.self)
         }
 
-        public func encode(to encoder: Encoder) throws -> Void {
+        public func encode(to encoder: Encoder) throws -> Swift.Void {
             var container = encoder.container(keyedBy: CodingKeys.self)
             try encoder.encodeAdditionalProperties(self.additionalProperties)
             try container.encode(self.type, forKey: .type)

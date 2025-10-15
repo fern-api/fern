@@ -1,9 +1,9 @@
 import Foundation
 
 public enum TestSubmissionStatus: Codable, Hashable, Sendable {
-    case stopped(Stopped)
     case errored(Errored)
     case running(Running)
+    case stopped(Stopped)
     case testCaseIdToState(TestCaseIdToState)
 
     public init(from decoder: Decoder) throws {

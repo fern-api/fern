@@ -1,17 +1,17 @@
 import Foundation
 
 public enum VariableValue: Codable, Hashable, Sendable {
-    case integerValue(IntegerValue)
-    case booleanValue(BooleanValue)
-    case doubleValue(DoubleValue)
-    case stringValue(StringValue)
-    case charValue(CharValue)
-    case mapValue(MapValue)
-    case listValue(ListValue)
     case binaryTreeValue(BinaryTreeValue)
-    case singlyLinkedListValue(SinglyLinkedListValue)
+    case booleanValue(BooleanValue)
+    case charValue(CharValue)
+    case doubleValue(DoubleValue)
     case doublyLinkedListValue(DoublyLinkedListValue)
+    case integerValue(IntegerValue)
+    case listValue(ListValue)
+    case mapValue(MapValue)
     case nullValue(NullValue)
+    case singlyLinkedListValue(SinglyLinkedListValue)
+    case stringValue(StringValue)
 
     public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)

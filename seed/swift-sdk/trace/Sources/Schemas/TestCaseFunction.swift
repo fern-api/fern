@@ -1,8 +1,8 @@
 import Foundation
 
 public enum TestCaseFunction: Codable, Hashable, Sendable {
-    case withActualResult(WithActualResult)
     case custom(Custom)
+    case withActualResult(WithActualResult)
 
     public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)

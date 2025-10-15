@@ -2,9 +2,9 @@ import Foundation
 
 /// Example of an discriminated union
 public enum UserOrAdminDiscriminated: Codable, Hashable, Sendable {
-    case user(User)
     case admin(Admin)
     case empty(Empty)
+    case user(User)
 
     public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
@@ -95,12 +95,12 @@ public enum UserOrAdminDiscriminated: Codable, Hashable, Sendable {
 
     public struct Admin: Codable, Hashable, Sendable {
         public let type: String = "admin"
-        public let admin: Admin
+        public let admin: PropertyAccess.Admin
         /// Additional properties that are not explicitly defined in the schema
         public let additionalProperties: [String: JSONValue]
 
         public init(
-            admin: Admin,
+            admin: PropertyAccess.Admin,
             additionalProperties: [String: JSONValue] = .init()
         ) {
             self.admin = admin
@@ -109,7 +109,7 @@ public enum UserOrAdminDiscriminated: Codable, Hashable, Sendable {
 
         public init(from decoder: Decoder) throws {
             let container = try decoder.container(keyedBy: CodingKeys.self)
-            self.admin = try container.decode(Admin.self, forKey: .admin)
+            self.admin = try container.decode(PropertyAccess.Admin.self, forKey: .admin)
             self.additionalProperties = try decoder.decodeAdditionalProperties(using: CodingKeys.self)
         }
 

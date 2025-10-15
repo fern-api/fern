@@ -3,26 +3,26 @@ import Foundation
 public enum CodeExecutionUpdate: Codable, Hashable, Sendable {
     /// Statuses if an executor for the session isn't ready (Before RunningResponse).
     case buildingExecutor(BuildingExecutor)
-    /// Sent once a test submission is executing.
-    case running(Running)
     /// Sent if a submission cannot be run (i.e. Compile Error).
     case errored(Errored)
-    /// Sent if a submission is stopped.
-    case stopped(Stopped)
+    /// Sent once a submission is graded and fully recorded.
+    case finished(Finished)
     /// Graded testcases without trace information.
     case graded(Graded)
     /// Graded submission for v2 problems.
     case gradedV2(GradedV2)
-    /// Workspace run without trace information.
-    case workspaceRan(WorkspaceRan)
-    /// Gives progress about what is being recorded.
-    case recording(Recording)
-    /// Graded testcases with trace information.
-    case recorded(Recorded)
     /// Sent if an invalid request is sent for a submission.
     case invalidRequest(InvalidRequest)
-    /// Sent once a submission is graded and fully recorded.
-    case finished(Finished)
+    /// Graded testcases with trace information.
+    case recorded(Recorded)
+    /// Gives progress about what is being recorded.
+    case recording(Recording)
+    /// Sent once a test submission is executing.
+    case running(Running)
+    /// Sent if a submission is stopped.
+    case stopped(Stopped)
+    /// Workspace run without trace information.
+    case workspaceRan(WorkspaceRan)
 
     public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)

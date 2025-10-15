@@ -1,10 +1,10 @@
 import Foundation
 
 public enum WorkspaceSubmissionStatus: Codable, Hashable, Sendable {
-    case stopped(Stopped)
     case errored(Errored)
-    case running(Running)
     case ran(Ran)
+    case running(Running)
+    case stopped(Stopped)
     case traced(Traced)
 
     public init(from decoder: Decoder) throws {

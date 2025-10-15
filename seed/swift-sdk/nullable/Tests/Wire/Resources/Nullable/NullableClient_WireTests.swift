@@ -1,6 +1,6 @@
 import Foundation
 import Testing
-import NullableApi
+import Nullable
 
 @Suite("NullableClient_ Wire Tests") struct NullableClient_WireTests {
     @Test func getUsers1() async throws -> Void {

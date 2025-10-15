@@ -1,9 +1,9 @@
 import Foundation
 
 public enum FieldValue: Codable, Hashable, Sendable {
-    case primitiveValue(PrimitiveValue)
-    case objectValue(ObjectValue)
     case containerValue(ContainerValue)
+    case objectValue(ObjectValue)
+    case primitiveValue(PrimitiveValue)
 
     public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
@@ -38,12 +38,12 @@ public enum FieldValue: Codable, Hashable, Sendable {
 
     public struct PrimitiveValue: Codable, Hashable, Sendable {
         public let type: String = "primitive_value"
-        public let value: PrimitiveValue
+        public let value: Api.PrimitiveValue
         /// Additional properties that are not explicitly defined in the schema
         public let additionalProperties: [String: JSONValue]
 
         public init(
-            value: PrimitiveValue,
+            value: Api.PrimitiveValue,
             additionalProperties: [String: JSONValue] = .init()
         ) {
             self.value = value
@@ -52,7 +52,7 @@ public enum FieldValue: Codable, Hashable, Sendable {
 
         public init(from decoder: Decoder) throws {
             let container = try decoder.container(keyedBy: CodingKeys.self)
-            self.value = try container.decode(PrimitiveValue.self, forKey: .value)
+            self.value = try container.decode(Api.PrimitiveValue.self, forKey: .value)
             self.additionalProperties = try decoder.decodeAdditionalProperties(using: CodingKeys.self)
         }
 
@@ -99,12 +99,12 @@ public enum FieldValue: Codable, Hashable, Sendable {
 
     public struct ContainerValue: Codable, Hashable, Sendable {
         public let type: String = "container_value"
-        public let value: ContainerValue
+        public let value: Api.ContainerValue
         /// Additional properties that are not explicitly defined in the schema
         public let additionalProperties: [String: JSONValue]
 
         public init(
-            value: ContainerValue,
+            value: Api.ContainerValue,
             additionalProperties: [String: JSONValue] = .init()
         ) {
             self.value = value
@@ -113,7 +113,7 @@ public enum FieldValue: Codable, Hashable, Sendable {
 
         public init(from decoder: Decoder) throws {
             let container = try decoder.container(keyedBy: CodingKeys.self)
-            self.value = try container.decode(ContainerValue.self, forKey: .value)
+            self.value = try container.decode(Api.ContainerValue.self, forKey: .value)
             self.additionalProperties = try decoder.decodeAdditionalProperties(using: CodingKeys.self)
         }
 

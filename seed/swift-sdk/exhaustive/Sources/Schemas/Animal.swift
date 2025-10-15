@@ -1,8 +1,8 @@
 import Foundation
 
 public enum Animal: Codable, Hashable, Sendable {
-    case dog(Dog)
     case cat(Cat)
+    case dog(Dog)
 
     public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)

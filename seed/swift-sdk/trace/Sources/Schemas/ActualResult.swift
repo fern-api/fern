@@ -1,9 +1,9 @@
 import Foundation
 
 public enum ActualResult: Codable, Hashable, Sendable {
-    case value(Value)
     case exception(Exception)
     case exceptionV2(ExceptionV2)
+    case value(Value)
 
     public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
@@ -118,12 +118,12 @@ public enum ActualResult: Codable, Hashable, Sendable {
 
     public struct ExceptionV2: Codable, Hashable, Sendable {
         public let type: String = "exceptionV2"
-        public let value: ExceptionV2
+        public let value: Trace.ExceptionV2
         /// Additional properties that are not explicitly defined in the schema
         public let additionalProperties: [String: JSONValue]
 
         public init(
-            value: ExceptionV2,
+            value: Trace.ExceptionV2,
             additionalProperties: [String: JSONValue] = .init()
         ) {
             self.value = value
@@ -132,7 +132,7 @@ public enum ActualResult: Codable, Hashable, Sendable {
 
         public init(from decoder: Decoder) throws {
             let container = try decoder.container(keyedBy: CodingKeys.self)
-            self.value = try container.decode(ExceptionV2.self, forKey: .value)
+            self.value = try container.decode(Trace.ExceptionV2.self, forKey: .value)
             self.additionalProperties = try decoder.decodeAdditionalProperties(using: CodingKeys.self)
         }
 

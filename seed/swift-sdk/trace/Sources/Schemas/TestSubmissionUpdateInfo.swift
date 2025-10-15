@@ -1,12 +1,12 @@
 import Foundation
 
 public enum TestSubmissionUpdateInfo: Codable, Hashable, Sendable {
-    case running(Running)
-    case stopped(Stopped)
     case errored(Errored)
+    case finished(Finished)
     case gradedTestCase(GradedTestCase)
     case recordedTestCase(RecordedTestCase)
-    case finished(Finished)
+    case running(Running)
+    case stopped(Stopped)
 
     public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)

@@ -1,16 +1,16 @@
 import Foundation
 
 public enum VariableType: Codable, Hashable, Sendable {
-    case integerType(IntegerType)
-    case doubleType(DoubleType)
+    case binaryTreeType(BinaryTreeType)
     case booleanType(BooleanType)
-    case stringType(StringType)
     case charType(CharType)
+    case doubleType(DoubleType)
+    case doublyLinkedListType(DoublyLinkedListType)
+    case integerType(IntegerType)
     case listType(ListType)
     case mapType(MapType)
-    case binaryTreeType(BinaryTreeType)
     case singlyLinkedListType(SinglyLinkedListType)
-    case doublyLinkedListType(DoublyLinkedListType)
+    case stringType(StringType)
 
     public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)

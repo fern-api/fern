@@ -2,10 +2,10 @@ import Foundation
 
 public enum ErrorInfo: Codable, Hashable, Sendable {
     case compileError(CompileError)
-    /// If the submission cannot be executed and throws a runtime error before getting to any of the testcases.
-    case runtimeError(RuntimeError)
     /// If the trace backend encounters an unexpected error.
     case internalError(InternalError)
+    /// If the submission cannot be executed and throws a runtime error before getting to any of the testcases.
+    case runtimeError(RuntimeError)
 
     public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)

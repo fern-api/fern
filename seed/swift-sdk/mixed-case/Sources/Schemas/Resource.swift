@@ -1,8 +1,8 @@
 import Foundation
 
 public enum Resource: Codable, Hashable, Sendable {
-    case user(User)
     case organization(Organization)
+    case user(User)
 
     public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
