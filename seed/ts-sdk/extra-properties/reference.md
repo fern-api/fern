@@ -16,7 +16,7 @@
 
 ```typescript
 await client.user.createUser({
-    name: "name",
+    name: "Alice",
 });
 ```
 

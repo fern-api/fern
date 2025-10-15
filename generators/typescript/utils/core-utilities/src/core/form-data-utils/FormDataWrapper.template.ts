@@ -44,10 +44,12 @@ export interface CrossPlatformFormData {
 
 export async function newFormData(): Promise<CrossPlatformFormData> {
     let formdata: CrossPlatformFormData;
-    if (RUNTIME.type === "node" && RUNTIME.parsedVersion != null && RUNTIME.parsedVersion >= 18) {
-        formdata = new Node18FormData();
-    } else if (RUNTIME.type === "node") {
-        formdata = new Node16FormData();
+    if (RUNTIME.type === "node") {
+        if (RUNTIME.parsedVersion != null && RUNTIME.parsedVersion >= 18) {
+            formdata = new Node18FormData();
+        } else {
+            formdata = new Node16FormData();
+        }
     } else {
         formdata = new WebFormData();
     }

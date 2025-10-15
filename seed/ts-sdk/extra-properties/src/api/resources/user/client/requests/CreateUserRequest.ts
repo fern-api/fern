@@ -3,7 +3,7 @@
 /**
  * @example
  *     {
- *         name: "name"
+ *         name: "Alice"
  *     }
  */
 export interface CreateUserRequest {

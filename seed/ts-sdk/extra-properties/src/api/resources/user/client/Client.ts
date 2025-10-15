@@ -25,7 +25,7 @@ export class User {
      *
      * @example
      *     await client.user.createUser({
-     *         name: "name"
+     *         name: "Alice"
      *     })
      */
     public createUser(
