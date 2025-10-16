@@ -72,7 +72,7 @@ export abstract class AbstractGeneratorAgent<GeneratorContext extends AbstractGe
     }): Promise<string> {
         const readmeConfig = this.getReadmeConfig({
             context,
-            remote: this.getRemote(),
+            remote: this.getRemote(context),
             featureConfig: await this.readFeatureConfig(),
             endpointSnippets
         });
