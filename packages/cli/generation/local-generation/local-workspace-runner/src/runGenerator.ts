@@ -204,6 +204,12 @@ export async function writeFilesToDiskAndRunGenerator({
         runner
     });
 
+    await writeFernMetadata({
+        outputDirectory: absolutePathToTmpOutputDirectory,
+        generatorInvocation,
+        context
+    });
+
     const taskHandler = new LocalTaskHandler({
         context,
         absolutePathToLocalOutput,
@@ -263,4 +269,42 @@ function getSourceConfig(workspace: FernWorkspace): SourceConfig {
 
 function getDockerDestinationForSource(source: IdentifiableSource): string {
     return `${DOCKER_SOURCES_DIRECTORY}/${source.id}`;
+}
+
+function getCliVersion(): string {
+    return process.env.CLI_VERSION ?? "unknown";
+}
+
+interface FernMetadata {
+    cliVersion: string;
+    generatorName: string;
+    generatorVersion: string;
+    generatorsYml?: {
+        config?: unknown;
+    };
+}
+
+async function writeFernMetadata({
+    outputDirectory,
+    generatorInvocation,
+    context
+}: {
+    outputDirectory: AbsoluteFilePath;
+    generatorInvocation: generatorsYml.GeneratorInvocation;
+    context: TaskContext;
+}): Promise<void> {
+    const cliVersion = getCliVersion();
+
+    const metadata: FernMetadata = {
+        cliVersion,
+        generatorName: generatorInvocation.name,
+        generatorVersion: generatorInvocation.version,
+        generatorsYml: {
+            config: generatorInvocation.config
+        }
+    };
+
+    const metadataPath = join(outputDirectory, ".fern.metadata.json");
+    await writeFile(metadataPath, JSON.stringify(metadata, null, 2));
+    context.logger.debug(`Wrote Fern metadata to: ${metadataPath}`);
 }
