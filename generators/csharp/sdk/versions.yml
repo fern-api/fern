@@ -1,4 +1,12 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 2.4.3
+  changelogEntry:
+    - type: fix
+      summary: |
+        Fix incomplete handling for boolean type.
+  createdAt: "2025-10-16"
+  irVersion: 61
+
 - version: 2.4.2
   changelogEntry:
     - type: fix
