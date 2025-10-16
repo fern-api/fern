@@ -9,21 +9,21 @@ import type { BaseClientOptions, BaseRequestOptions } from "./BaseClient.js";
 import { mergeHeaders } from "./core/headers.js";
 import * as core from "./core/index.js";
 
-export declare namespace SeedExhaustiveClient {
+export declare namespace TanmaySaysSeedExhaustiveClient {
     export interface Options extends BaseClientOptions {}
 
     export interface RequestOptions extends BaseRequestOptions {}
 }
 
-export class SeedExhaustiveClient {
-    protected readonly _options: SeedExhaustiveClient.Options;
+export class TanmaySaysSeedExhaustiveClient {
+    protected readonly _options: TanmaySaysSeedExhaustiveClient.Options;
     protected _endpoints: Endpoints | undefined;
     protected _inlinedRequests: InlinedRequests | undefined;
     protected _noAuth: NoAuth | undefined;
     protected _noReqBody: NoReqBody | undefined;
     protected _reqWithHeaders: ReqWithHeaders | undefined;
 
-    constructor(_options: SeedExhaustiveClient.Options) {
+    constructor(_options: TanmaySaysSeedExhaustiveClient.Options) {
         this._options = {
             ..._options,
             headers: mergeHeaders(

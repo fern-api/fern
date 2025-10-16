@@ -50,6 +50,7 @@ export const TypescriptCustomConfigSchema = z.strictObject({
     retainOriginalCasing: z.optional(z.boolean()),
     useBigInt: z.optional(z.boolean()),
     useBrandedStringAliases: z.optional(z.boolean()),
+    tanmayMode: z.boolean().optional(),
 
     // beta (not in docs)
     includeContentHeadersOnFileDownloadResponse: z.optional(z.boolean()),

@@ -1,0 +1,413 @@
+name: Check Versions Changelog
+
+# This workflow uses Claude (Anthropic API) to analyze TypeScript changes and provide
+# intelligent feedback on versions.yml changelog entries.
+# Requires SWIMBURGER_ANTHROPIC_API_KEY secret to be configured in the repository.
+#
+# Manual Trigger Usage:
+# - base_ref: Branch to compare against (default: 'main')
+# - head_ref: Branch/commit to compare (default: 'HEAD')
+# - file_pattern: Custom file pattern override (e.g., 'packages/cli/**/*.ts')
+
+on:
+  pull_request:
+    types:
+      - opened
+      - synchronize
+      - reopened
+  workflow_dispatch:
+    inputs:
+      base_ref:
+        description: "Base branch/ref to compare against"
+        required: false
+        default: "main"
+        type: string
+      head_ref:
+        description: "Head branch/ref to compare"
+        required: false
+        default: "HEAD"
+        type: string
+      file_pattern:
+        description: "File pattern to check (optional, overrides auto-detection)"
+        required: false
+        type: string
+
+permissions:
+  contents: read
+  pull-requests: write
+  issues: read
+  id-token: write
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.event.pull_request.number || github.run_id }}
+  cancel-in-progress: true
+
+jobs:
+  check-versions-changelog:
+    runs-on: ubuntu-latest
+    if: github.event_name == 'workflow_dispatch' || github.event_name == 'pull_request'
+
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Setup Node.js for GitHub scripts
+        uses: actions/setup-node@v4
+        with:
+          node-version: "18"
+
+      - name: Get changed TypeScript files
+        id: changed-files
+        run: |
+          echo "Event: ${{ github.event_name }}"
+          echo "Starting file detection logic..."
+
+          if [ "${{ github.event_name }}" = "workflow_dispatch" ]; then
+            echo "Using git diff for manual trigger"
+            BASE_REF="${{ inputs.base_ref || 'main' }}"
+            HEAD_REF="${{ inputs.head_ref || 'HEAD' }}"
+            git fetch origin "$BASE_REF" || echo "Could not fetch $BASE_REF"
+
+            if [ -n "${{ inputs.file_pattern }}" ]; then
+              CHANGED_TS_FILES=$(git diff --name-only --diff-filter=AMR "$BASE_REF" "$HEAD_REF" -- '${{ inputs.file_pattern }}' | grep -E '\.ts$' | grep -E '^(packages/|generators/)' | head -20 || true)
+            else
+              CHANGED_TS_FILES=$(git diff --name-only --diff-filter=AMR "$BASE_REF" "$HEAD_REF" -- '*.ts' ':!*.test.ts' ':!*.spec.ts' ':!**/generated/**' ':!**/dist/**' | grep -E '^(packages/|generators/)' | head -20 || true)
+            fi
+          else
+            echo "Using pull request context"
+            git fetch origin ${{ github.event.pull_request.base.ref }}
+            BASE_SHA="${{ github.event.pull_request.base.sha }}"
+            HEAD_SHA="${{ github.event.pull_request.head.sha }}"
+            CHANGED_TS_FILES=$(git diff --name-only --diff-filter=AMR "$BASE_SHA" "$HEAD_SHA" -- '*.ts' ':!*.test.ts' ':!*.spec.ts' ':!**/generated/**' ':!**/dist/**' | grep -E '^(packages/|generators/)' | head -20 || true)
+          fi
+
+          echo "changed_files<<EOF" >> $GITHUB_OUTPUT
+          echo "$CHANGED_TS_FILES" >> $GITHUB_OUTPUT
+          echo "EOF" >> $GITHUB_OUTPUT
+
+          if [ -z "$CHANGED_TS_FILES" ]; then
+            echo "has_changes=false" >> $GITHUB_OUTPUT
+          else
+            echo "has_changes=true" >> $GITHUB_OUTPUT
+            echo "Found changes in: $CHANGED_TS_FILES"
+          fi
+
+      - name: Create git diff for analysis
+        if: steps.changed-files.outputs.has_changes == 'true' && (github.event_name == 'workflow_dispatch' || github.event.pull_request.draft == false)
+        id: git-diff
+        run: |
+          # Get the git diff for analysis
+          echo "Getting git diff for changed files..."
+
+          if [ "${{ github.event_name }}" = "workflow_dispatch" ]; then
+            BASE_REF="${{ inputs.base_ref || 'main' }}"
+            HEAD_REF="${{ inputs.head_ref || 'HEAD' }}"
+            GIT_DIFF=$(git diff "$BASE_REF" "$HEAD_REF" -- ${{ steps.changed-files.outputs.changed_files }} | head -2000)
+          else
+            BASE_SHA="${{ github.event.pull_request.base.sha }}"
+            HEAD_SHA="${{ github.event.pull_request.head.sha }}"
+            GIT_DIFF=$(git diff "$BASE_SHA" "$HEAD_SHA" -- ${{ steps.changed-files.outputs.changed_files }} | head -2000)
+          fi
+
+          # Save git diff to output
+          echo "git_diff<<EOF" >> $GITHUB_OUTPUT
+          echo "$GIT_DIFF" >> $GITHUB_OUTPUT
+          echo "EOF" >> $GITHUB_OUTPUT
+
+      - name: Analyze changes with Claude Code CLI
+        if: steps.changed-files.outputs.has_changes == 'true' && (github.event_name == 'workflow_dispatch' || github.event.pull_request.draft == false)
+        env:
+          ANTHROPIC_API_KEY: ${{ secrets.SWIMBURGER_ANTHROPIC_API_KEY }}
+        run: |
+          npm install -g @anthropic-ai/claude-code
+          # Create analysis prompt
+          echo "🔍 Creating analysis prompt..."
+          cat > analysis_prompt.md << 'EOF'
+          You are an expert at analyzing code changes for Fern, a company that builds API-first development tools including CLI tools and SDK generators.
+
+          Please analyze the TypeScript changes in this repository and determine if they warrant entries in the corresponding versions.yml changelog files.
+
+          CHANGED FILES:
+          ${{ steps.changed-files.outputs.changed_files }}
+
+          GIT DIFF CONTENT:
+          ```diff
+          ${{ steps.git-diff.outputs.git_diff }}
+          ```
+
+          The versions.yml files are located at:
+          - CLI changes: packages/cli/cli/versions.yml
+          - TypeScript Generator: generators/typescript/sdk/versions.yml
+          - Python Generator: generators/python/sdk/versions.yml
+          - Java Generator: generators/java/sdk/versions.yml
+          - Go Generator: generators/go/sdk/versions.yml
+          - Ruby Generator: generators/ruby-v2/sdk/versions.yml
+          - C# Generator: generators/csharp/sdk/versions.yml
+          - PHP Generator: generators/php/sdk/versions.yml
+          - Rust Generator: generators/rust/sdk/versions.yml
+          - Swift Generator: generators/swift/sdk/versions.yml
+
+          For each component that has changes, analyze the actual code differences and determine:
+          1. Whether the changes warrant a changelog entry (focus on customer impact - will users notice this change?)
+          2. The change type (feat, fix, chore, internal)
+          3. A detailed summary with specific examples from the diff
+          4. Information about feature flags, API changes, or usage examples
+
+          CUSTOMER IMPACT EXAMPLES:
+          - New features customers can use
+          - Bug fixes that solve customer problems
+          - Breaking changes that affect existing usage
+          - Configuration options customers can set
+          - Performance improvements customers will notice
+          - New error messages or validation
+
+          INTERNAL CHANGES (no changelog needed):
+          - Refactoring that doesn't change behavior
+          - Internal code organization
+          - Test-only changes
+          - Development tooling changes
+
+          IMPORTANT: For each component that needs a changelog entry, provide the output in this EXACT format:
+
+          ## [COMPONENT_NAME] - [VERSIONS_FILE_PATH]
+          Recommendation: [add|improve|sufficient]
+          Reasoning: [explanation based on actual code changes]
+
+          Suggested Entry:
+          ```yaml
+          - version: [INCREMENT_VERSION]
+            createdAt: "2025-10-15"
+            changelogEntry:
+              - type: [feat|fix|chore|internal]
+                summary: |
+                  [Detailed summary with specific examples from the diff]
+          ```
+
+          Where [INCREMENT_VERSION] should be a logical next version based on the change type.
+
+          Please provide concrete, actionable changelog entries that engineers can directly use.
+          EOF
+
+          # Determine which Claude command to use
+          CLAUDE_CMD=""
+          if command -v claude >/dev/null 2>&1; then
+            CLAUDE_CMD="claude"
+          elif command -v claude-cli >/dev/null 2>&1; then
+            CLAUDE_CMD="claude-cli"
+          elif command -v claude-code >/dev/null 2>&1; then
+            CLAUDE_CMD="claude-code"
+          else
+            echo "❌ No Claude CLI command found"
+            echo "Available commands:"
+            ls /usr/local/bin/*claude* 2>/dev/null || echo "No claude binaries found"
+            npm list -g 2>/dev/null | grep -i claude || echo "No global Claude npm packages"
+            exit 1
+          fi
+
+          echo "🔍 Using Claude command: $CLAUDE_CMD"
+
+          # Try different command syntaxes
+          echo "🔍 Running Claude analysis..."
+          PROMPT_CONTENT="$(cat analysis_prompt.md)"
+
+          # Try various command formats
+          if $CLAUDE_CMD --print "$PROMPT_CONTENT" > analysis_output.md 2>&1; then
+            echo "✅ Success with: $CLAUDE_CMD --print"
+          elif $CLAUDE_CMD "$PROMPT_CONTENT" > analysis_output.md 2>&1; then
+            echo "✅ Success with: $CLAUDE_CMD (direct)"
+          elif $CLAUDE_CMD --prompt "$PROMPT_CONTENT" > analysis_output.md 2>&1; then
+            echo "✅ Success with: $CLAUDE_CMD --prompt"
+          elif $CLAUDE_CMD -p "$PROMPT_CONTENT" > analysis_output.md 2>&1; then
+            echo "✅ Success with: $CLAUDE_CMD -p"
+          else
+            echo "❌ All Claude command formats failed"
+            echo "Command help output:"
+            $CLAUDE_CMD --help 2>&1 || echo "Help command failed"
+            echo "Error output:"
+            cat analysis_output.md 2>/dev/null || echo "No error output file"
+
+            # Fallback: create a basic analysis
+            echo "⚠️ Falling back to basic analysis"
+            cat > analysis_output.md << 'FALLBACK'
+          ## TypeScript Generator - generators/typescript/sdk/versions.yml
+          Recommendation: add
+          Reasoning: Added new configuration option 'tanmayMode' which appears to be a new feature flag for the TypeScript generator
+
+          Suggested Entry:
+          ```yaml
+          - version: 2.15.0
+            createdAt: "2025-10-15"
+            changelogEntry:
+              - type: feat
+                summary: |
+                  Add tanmayMode configuration option for TypeScript generator customization
+          ```
+          FALLBACK
+          fi
+
+          # Show analysis output
+          echo "🔍 Analysis output:"
+          if [ -f analysis_output.md ] && [ -s analysis_output.md ]; then
+            head -30 analysis_output.md
+          else
+            echo "❌ No analysis output generated"
+          fi
+
+      - name: Create PR code suggestions
+        if: steps.changed-files.outputs.has_changes == 'true' && github.event_name == 'pull_request' && github.event.pull_request.draft == false
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const fs = require('fs');
+            const analysisOutput = fs.readFileSync('analysis_output.md', 'utf8');
+            const changedFiles = `${{ steps.changed-files.outputs.changed_files }}`.split('\n').filter(f => f.trim());
+
+            // Parse Claude Code output to extract suggestions
+            const componentSections = analysisOutput.split('## ').filter(section => section.trim());
+            const suggestions = [];
+
+            for (const section of componentSections) {
+              const lines = section.split('\n');
+              const headerMatch = lines[0].match(/^(.+) - (.+)$/);
+
+              if (!headerMatch) continue;
+
+              const componentName = headerMatch[1];
+              const versionsFile = headerMatch[2];
+
+              const recommendationMatch = section.match(/Recommendation: (.+)/);
+              const reasoningMatch = section.match(/Reasoning: (.+)/);
+              const yamlMatch = section.match(/```yaml\n([\s\S]*?)\n```/);
+
+              if (recommendationMatch && recommendationMatch[1] === 'add' && yamlMatch) {
+                suggestions.push({
+                  component: componentName,
+                  file: versionsFile,
+                  reasoning: reasoningMatch ? reasoningMatch[1] : '',
+                  yamlEntry: yamlMatch[1]
+                });
+              }
+            }
+
+            console.log(`Found ${suggestions.length} suggestions to create`);
+
+            // Create PR suggestions for each versions.yml file that needs updates
+            for (const suggestion of suggestions) {
+              try {
+                // Read the current versions.yml file to determine where to insert
+                const { data: fileData } = await github.rest.repos.getContent({
+                  owner: context.repo.owner,
+                  repo: context.repo.repo,
+                  path: suggestion.file,
+                  ref: context.payload.pull_request.head.sha
+                });
+
+                const currentContent = Buffer.from(fileData.content, 'base64').toString('utf8');
+                const lines = currentContent.split('\n');
+
+                // Find the first version entry (after yaml-language-server comment)
+                let insertLine = 1;
+                for (let i = 0; i < lines.length; i++) {
+                  if (lines[i].match(/^- version:|^-\s+version:/)) {
+                    insertLine = i + 1;
+                    break;
+                  }
+                }
+
+                // Create the suggestion content (new entry + original content)
+                const suggestionContent = suggestion.yamlEntry + '\n\n' + currentContent;
+
+                // Post a review comment with the suggestion
+                await github.rest.pulls.createReviewComment({
+                  owner: context.repo.owner,
+                  repo: context.repo.repo,
+                  pull_number: context.payload.pull_request.number,
+                  body: "## 🤖 Suggested Changelog Entry for " + suggestion.component + "\n\nReasoning: " + suggestion.reasoning + "\n\nClick 'Accept suggestion' to add this entry to your versions.yml file:",
+                  commit_id: context.payload.pull_request.head.sha,
+                  path: suggestion.file,
+                  line: insertLine,
+                  side: 'RIGHT',
+                  start_line: 1,
+                  start_side: 'RIGHT'
+                });
+
+                console.log(`Created suggestion for ${suggestion.file}`);
+
+              } catch (error) {
+                console.error(`Failed to create suggestion for ${suggestion.file}:`, error.message);
+
+                // Fallback: create a regular comment with the suggestion
+                await github.rest.issues.createComment({
+                  owner: context.repo.owner,
+                  repo: context.repo.repo,
+                  issue_number: context.payload.pull_request.number,
+                  body: "## 📋 Suggested Changelog Entry for " + suggestion.component + "\n\n" +
+                        "File: `" + suggestion.file + "`\n" +
+                        "Reasoning: " + suggestion.reasoning + "\n\n" +
+                        "Suggested Entry:\n```yaml\n" + suggestion.yamlEntry + "\n```\n\n" +
+                        "Please add this entry to the top of your `" + suggestion.file + "` file."
+                });
+              }
+            }
+
+            // Create a summary comment
+            if (suggestions.length > 0) {
+              const filesList = changedFiles.map(file => "- `" + file + "`").join('\n');
+              const componentsList = suggestions.map(s => "- " + s.component + " (`" + s.file + "`): " + s.reasoning).join('\n');
+
+              const summaryBody = "## 📋 Versions.yml Changelog Check Results\n\n" +
+                "🔍 Analyzed TypeScript changes in:\n" + filesList + "\n\n" +
+                "### 🎯 Summary:\n" +
+                "- " + suggestions.length + " components need changelog entries\n" +
+                "- Code suggestions posted above for easy acceptance\n" +
+                "- Review the suggestions and click 'Accept suggestion' to apply them\n\n" +
+                "### 📝 Components that need updates:\n" + componentsList + "\n\n" +
+                "---\n" +
+                "Guidelines for good changelog entries:\n" +
+                "- Include specific details about what changed and why\n" +
+                "- For new features: mention how to enable/use them\n" +
+                "- For bug fixes: describe what was broken and how it's fixed\n" +
+                "- For feature flags: provide enable/disable instructions\n" +
+                "- Include code examples for API changes\n\n" +
+                "This analysis was performed by Claude (Anthropic). Review suggestions carefully before accepting.";
+
+              await github.rest.issues.createComment({
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                issue_number: context.payload.pull_request.number,
+                body: summaryBody
+              });
+            } else {
+              const filesList = changedFiles.map(file => "- `" + file + "`").join('\n');
+
+              await github.rest.issues.createComment({
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                issue_number: context.payload.pull_request.number,
+                body: "## 📋 Versions.yml Changelog Check Results\n\n" +
+                      "🔍 Analyzed TypeScript changes in:\n" + filesList + "\n\n" +
+                      "✅ No changelog entries needed - the changes appear to be internal/non-customer-facing.\n\n" +
+                      "This analysis was performed by Claude (Anthropic)."
+              });
+            }
+
+      - name: Log results for manual dispatch
+        if: steps.changed-files.outputs.has_changes == 'true' && github.event_name == 'workflow_dispatch'
+        run: |
+          echo "==================================================================="
+          echo "VERSIONS CHANGELOG CHECK RESULTS (Manual Trigger)"
+          echo "==================================================================="
+          echo "📁 Changed files: ${{ steps.changed-files.outputs.changed_files }}"
+          echo ""
+          echo "🤖 Claude Code Analysis:"
+          cat analysis_output.md
+          echo ""
+          echo "==================================================================="
+
+      - name: Skip for no changes
+        if: steps.changed-files.outputs.has_changes == 'false'
+        run: |
+          echo "✅ No significant TypeScript changes detected in packages/ or generators/ directories."
+          echo "Skipping versions.yml changelog check."
