@@ -3,9 +3,9 @@ export function getOrganizationNameValidationError(organizationName: string): st
         return "Organization name cannot be empty";
     }
 
-    const validOrganizationNamePattern = /^[a-z0-9-]+$/;
+    const validOrganizationNamePattern = /^[a-z0-9][a-z0-9-]*[a-z0-9]$|^[a-z0-9]$/;
     if (!validOrganizationNamePattern.test(organizationName)) {
-        return "Organization name must contain only lowercase letters, numbers, and hyphens";
+        return "Organization name must contain only lowercase letters, numbers, and hyphens, and cannot start or end with a hyphen";
     }
 
     return undefined;
