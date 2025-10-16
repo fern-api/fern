@@ -9,10 +9,10 @@ import { ModuleSymbol, SymbolGraph, TypeSymbolShape } from "./symbol-graph";
  * with built-in support for Swift standard library and Foundation framework types.
  * It assumes that the Foundation module is imported throughout the target module.
  */
-export class TargetSymbolRegistry {
-    public static create(): TargetSymbolRegistry {
-        const { graph, swiftSymbol, foundationSymbol } = TargetSymbolRegistry.createGraph();
-        return new TargetSymbolRegistry(graph, swiftSymbol, foundationSymbol);
+export class SymbolRegistry {
+    public static create(): SymbolRegistry {
+        const { graph, swiftSymbol, foundationSymbol } = SymbolRegistry.createGraph();
+        return new SymbolRegistry(graph, swiftSymbol, foundationSymbol);
     }
 
     private static createGraph(): {
