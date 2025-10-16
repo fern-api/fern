@@ -107,6 +107,18 @@ export class RootClientGenerator extends FileGenerator<RubyFile, SdkCustomConfig
                                 : undefined,
                         docs: undefined
                     });
+                case "header":
+                    return ruby.parameters.keyword({
+                        name: scheme.name.name.snakeCase.safeName,
+                        type: ruby.Type.string(),
+                        initializer:
+                            scheme.headerEnvVar != null
+                                ? ruby.codeblock((writer) => {
+                                      writer.write(`ENV.fetch("${scheme.headerEnvVar}", nil)`);
+                                  })
+                                : undefined,
+                        docs: undefined
+                    });
                 default:
                     return undefined;
             }
@@ -138,6 +150,17 @@ export class RootClientGenerator extends FileGenerator<RubyFile, SdkCustomConfig
                         value: ruby.TypeLiteral.string(`Bearer #{${TOKEN_PARAMETER_NAME}}`)
                     });
                     break;
+                case "header": {
+                    const headerParamName = header.name.name.snakeCase.safeName;
+                    const headerName = header.name.wireValue;
+                    const headerValue =
+                        header.prefix != null ? `${header.prefix} #{${headerParamName}}` : `#{${headerParamName}}`;
+                    headers.push({
+                        key: ruby.TypeLiteral.string(headerName),
+                        value: ruby.TypeLiteral.string(headerValue)
+                    });
+                    break;
+                }
                 default:
                     break;
             }
