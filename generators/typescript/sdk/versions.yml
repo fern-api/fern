@@ -3,7 +3,7 @@
   changelogEntry:
     - summary: |
         Fix ts local github generation to match remote generation.
-      type: feat
+      type: fix
   createdAt: "2025-10-16"
   irVersion: 60
 
