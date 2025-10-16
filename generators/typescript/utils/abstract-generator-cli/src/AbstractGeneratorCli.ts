@@ -11,9 +11,9 @@ import { assertNever } from "@fern-api/core-utils";
 import { AbsoluteFilePath, join, RelativeFilePath } from "@fern-api/fs-utils";
 import { CONSOLE_LOGGER, createLogger, Logger, LogLevel } from "@fern-api/logger";
 import { createLoggingExecutable } from "@fern-api/logging-execa";
-import { serialization } from "@fern-fern/ir-sdk";
+import { FernIr, serialization } from "@fern-fern/ir-sdk";
 import { IntermediateRepresentation } from "@fern-fern/ir-sdk/api";
-import { constructNpmPackage, NpmPackage, PersistedTypescriptProject } from "@fern-typescript/commons";
+import { constructNpmPackage, constructNpmPackageFromArgs, constructNpmPackageArgs, NpmPackage,PersistedTypescriptProject } from "@fern-typescript/commons";
 import { GeneratorContext } from "@fern-typescript/contexts";
 import { writeFile } from "fs/promises";
 import tmp from "tmp-promise";
@@ -72,10 +72,19 @@ export abstract class AbstractGeneratorCli<CustomConfig> {
             });
             const customConfig = this.parseCustomConfig(config.customConfig, logger);
 
-            const npmPackage = constructNpmPackage({
-                generatorConfig: config,
-                isPackagePrivate: this.isPackagePrivate(customConfig)
+            const ir = await parseIR({
+                absolutePathToIR: AbsoluteFilePath.of(config.irFilepath),
+                parse: serialization.IntermediateRepresentation.parse
             });
+
+            const npmPackage = ir.selfHosted
+                ? constructNpmPackageFromArgs(
+                      npmPackageInfoFromPublishConfig(ir.publishConfig, this.isPackagePrivate(customConfig))
+                  )
+                : constructNpmPackage({
+                      generatorConfig: config,
+                      isPackagePrivate: this.isPackagePrivate(customConfig)
+                  });
 
             await generatorNotificationService.sendUpdate(
                 FernGeneratorExec.GeneratorUpdate.initV2({
@@ -89,11 +98,6 @@ export abstract class AbstractGeneratorCli<CustomConfig> {
                 github: (github) => github.version,
                 publish: (publish) => publish.version,
                 _other: () => undefined
-            });
-
-            const ir = await parseIR({
-                absolutePathToIR: AbsoluteFilePath.of(config.irFilepath),
-                parse: serialization.IntermediateRepresentation.parse
             });
 
             const generatorContext = new GeneratorContextImpl(logger, version);
@@ -286,6 +290,54 @@ export abstract class AbstractGeneratorCli<CustomConfig> {
             mode: ir.publishConfig?.type === "github" ? ir.publishConfig.mode : undefined
         };
     }
+}
+
+function npmPackageInfoFromPublishConfig(
+    publishConfig: FernIr.PublishingConfig | undefined,
+    isPackagePrivate: boolean
+): constructNpmPackageArgs {
+    return (
+        publishConfig?._visit({
+            github: (publishConfig) => {
+                return {
+                    ...npmInfoFromPublishTarget(publishConfig.target),
+                    repoUrl: publishConfig.uri,
+                    publishInfo: undefined,
+                    // TODO: add licence config
+                    licenceConfig: undefined,
+                    isPackagePrivate
+                };
+            },
+            direct: () => {
+                return { isPackagePrivate };
+            },
+            filesystem: () => {
+                return { isPackagePrivate };
+            },
+            _other: () => {
+                return { isPackagePrivate };
+            }
+        }) ?? { isPackagePrivate }
+    );
+}
+
+function npmInfoFromPublishTarget(
+    target?: FernIr.PublishTarget
+): { packageName?: string; version?: string } | undefined {
+    return (
+        target?._visit({
+            npm: (value) => {
+                return {
+                    packageName: value.packageName,
+                    version: value.version
+                };
+            },
+            postman: () => undefined,
+            maven: () => undefined,
+            pypi: () => undefined,
+            _other: () => undefined
+        }) ?? undefined
+    );
 }
 
 class GeneratorContextImpl implements GeneratorContext {

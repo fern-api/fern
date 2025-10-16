@@ -1,3 +1,4 @@
+import { computeSemanticVersion } from "@fern-api/api-workspace-commons";
 import { FernToken, getAccessToken } from "@fern-api/auth";
 import { SourceResolverImpl } from "@fern-api/cli-source-resolver";
 import { fernConfigJson, GeneratorInvocation, generatorsYml } from "@fern-api/configuration";
@@ -9,7 +10,6 @@ import { FernIr, PublishTarget } from "@fern-api/ir-sdk";
 import { getDynamicGeneratorConfig } from "@fern-api/remote-workspace-runner";
 import { TaskContext } from "@fern-api/task-context";
 import { FernVenusApi } from "@fern-api/venus-api-sdk";
-import { computeSemanticVersion } from "@fern-api/api-workspace-commons";
 import {
     AbstractAPIWorkspace,
     getBaseOpenAPIWorkspaceSettingsFromGeneratorInvocation
@@ -62,8 +62,14 @@ export async function runLocalGenerationForWorkspace({
                 });
 
                 // grabs generator.yml > config > package_name
-                // const packageName = getPackageNameFromGeneratorConfig(generatorInvocation);
-                const packageName = generatorsYml.getPackageName({ generatorInvocation });
+                const packageName = getPackageNameFromGeneratorConfig(generatorInvocation);
+                // const packageName = generatorsYml.getPackageName({ generatorInvocation });
+                // Log params to this function
+                context.logger.debug("runLocalGenerationForWorkspace packageName", packageName || "undefined");
+                context.logger.debug(
+                    "runLocalGenerationForWorkspace generatorInvocation",
+                    JSON.stringify(generatorInvocation)
+                );
 
                 const intermediateRepresentation = generateIntermediateRepresentation({
                     workspace: fernWorkspace,

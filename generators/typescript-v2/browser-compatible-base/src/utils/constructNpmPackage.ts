@@ -1,6 +1,32 @@
 import { FernGeneratorExec } from "@fern-fern/generator-exec-sdk";
 
 import { type NpmPackage } from "../NpmPackage";
+import { PublishInfo } from "../PublishInfo";
+
+export interface constructNpmPackageArgs {
+    packageName?: string;
+    version?: string;
+    repoUrl?: string;
+    publishInfo?: PublishInfo;
+    licenseConfig?: FernGeneratorExec.LicenseConfig;
+    isPackagePrivate: boolean;
+}
+
+export function constructNpmPackageFromArgs(args: constructNpmPackageArgs): NpmPackage | undefined {
+    const { packageName, version, repoUrl, publishInfo, licenseConfig, isPackagePrivate } = args;
+    if (packageName == null || version == null) {
+        return undefined;
+    }
+
+    return {
+        packageName,
+        version,
+        private: isPackagePrivate,
+        publishInfo,
+        license: licenseFromLicenseConfig(licenseConfig),
+        repoUrl: getRepoUrlFromUrl(repoUrl)
+    };
+}
 
 export function constructNpmPackage({
     generatorConfig,
@@ -50,7 +76,10 @@ export function constructNpmPackage({
     }
 }
 
-function getRepoUrlFromUrl(repoUrl: string): string {
+function getRepoUrlFromUrl(repoUrl: string | undefined): string | undefined {
+    if (repoUrl == null) {
+        return undefined;
+    }
     if (repoUrl.startsWith("https://github.com/")) {
         return `github:${removeGitSuffix(repoUrl).replace("https://github.com/", "")}`;
     }
@@ -83,4 +112,12 @@ function removeGitSuffix(repoUrl: string): string {
         return repoUrl.slice(0, -4);
     }
     return repoUrl;
+}
+
+function licenseFromLicenseConfig(licenseConfig: FernGeneratorExec.LicenseConfig | undefined): string | undefined {
+    return licenseConfig?._visit({
+        basic: (basic) => basic.id,
+        custom: (custom) => `See ${custom.filename}`,
+        _other: () => undefined
+    });
 }
