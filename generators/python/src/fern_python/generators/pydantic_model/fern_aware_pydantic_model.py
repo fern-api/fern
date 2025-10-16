@@ -292,7 +292,14 @@ class FernAwarePydanticModel:
             ):
                 self._pydantic_model.add_partial_class()
             self._get_validators_generator().add_validators()
-        if self._model_contains_forward_refs or self._force_update_forward_refs:
+        
+        type_id_for_circular_check = self._type_id_for_forward_ref()
+        is_in_circular_cluster = (
+            type_id_for_circular_check is not None 
+            and self._context.is_in_circular_cluster(type_id_for_circular_check)
+        )
+        
+        if (self._model_contains_forward_refs or self._force_update_forward_refs) and not is_in_circular_cluster:
             self._pydantic_model.update_forward_refs()
 
         # Acknowledge forward refs for extended models as well

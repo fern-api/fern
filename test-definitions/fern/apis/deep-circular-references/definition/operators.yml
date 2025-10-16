@@ -1,0 +1,70 @@
+types:
+  # Boolean operators (AND/OR) that can contain comparison operators
+  AndOperator:
+    properties:
+      children: list<AndOperatorChild>
+
+  AndOperatorChild:
+    union:
+      and_operator: AndOperator
+      or_operator: OrOperator
+      eq_operator: EqualsOperator
+      gt_operator: GreaterThanOperator
+      boolean_literal: boolean
+
+  OrOperator:
+    properties:
+      children: list<OrOperatorChild>
+
+  OrOperatorChild:
+    union:
+      and_operator: AndOperator
+      or_operator: OrOperator
+      eq_operator: EqualsOperator
+      gt_operator: GreaterThanOperator
+      boolean_literal: boolean
+
+  # Comparison operators that can have boolean operators on left/right
+  EqualsOperator:
+    properties:
+      left: EqualsOperatorLeft
+      right: EqualsOperatorRight
+
+  EqualsOperatorLeft:
+    union:
+      and_operator: AndOperator
+      or_operator: OrOperator
+      eq_operator: EqualsOperator
+      gt_operator: GreaterThanOperator
+      number_literal: double
+      string_literal: string
+
+  EqualsOperatorRight:
+    union:
+      and_operator: AndOperator
+      or_operator: OrOperator
+      eq_operator: EqualsOperator
+      gt_operator: GreaterThanOperator
+      number_literal: double
+      string_literal: string
+
+  GreaterThanOperator:
+    properties:
+      left: GreaterThanOperatorLeft
+      right: GreaterThanOperatorRight
+
+  GreaterThanOperatorLeft:
+    union:
+      and_operator: AndOperator
+      or_operator: OrOperator
+      eq_operator: EqualsOperator
+      gt_operator: GreaterThanOperator
+      number_literal: double
+
+  GreaterThanOperatorRight:
+    union:
+      and_operator: AndOperator
+      or_operator: OrOperator
+      eq_operator: EqualsOperator
+      gt_operator: GreaterThanOperator
+      number_literal: double

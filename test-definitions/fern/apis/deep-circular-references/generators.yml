@@ -1,0 +1,14 @@
+default-group: local
+groups:
+  local:
+    generators:
+      - name: fernapi/fern-python-sdk
+        version: 6.1.0
+        output:
+          location: local-file-system
+          path: ../../../../generators/python/tests/utils/generated_types
+        config:
+          client:
+            class_name: DeepCircularClient
+          pydantic_config:
+            version: "v2"

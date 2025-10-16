@@ -9,6 +9,7 @@ from .type_reference_to_type_hint_converter import TypeReferenceToTypeHintConver
 from fern_python.codegen import AST, Filepath
 from fern_python.declaration_referencer import AbstractDeclarationReferencer
 from fern_python.generators.pydantic_model.custom_config import UnionNamingVersions
+from fern_python.generators.pydantic_model.circular_dependency_detector import CircularDependencyDetector
 from ordered_set import OrderedSet
 
 import fern.ir.resources as ir_types
@@ -58,6 +59,11 @@ class PydanticGeneratorContextImpl(PydanticGeneratorContext):
         self._types_with_union_self_referencing_members: Dict[ir_types.TypeId, OrderedSet[ir_types.TypeId]] = (
             defaultdict(OrderedSet)
         )
+
+        self._circular_detector = CircularDependencyDetector(ir)
+        self._types_in_circular_clusters: Set[ir_types.TypeId] = set()
+        for cluster in self._circular_detector.get_all_circular_clusters():
+            self._types_in_circular_clusters.update(cluster)
 
         for id, type in self.ir.types.items():
             ordered_reference_types = OrderedSet(list(sorted(type.referenced_types)))
@@ -168,6 +174,9 @@ class PydanticGeneratorContextImpl(PydanticGeneratorContext):
 
     def does_circularly_reference_itself(self, type_id: ir_types.TypeId) -> bool:
         return self.does_type_reference_other_type(type_id, type_id)
+
+    def is_in_circular_cluster(self, type_id: ir_types.TypeId) -> bool:
+        return type_id in self._types_in_circular_clusters
 
     # This map goes from every non union type to a list of referenced types that circularly reference themselves
     def get_non_union_self_referencing_dependencies_from_types(
