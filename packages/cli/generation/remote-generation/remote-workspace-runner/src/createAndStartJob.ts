@@ -245,7 +245,13 @@ async function createJob({
                 );
             },
             insufficientPermissions: () => {
-                return context.failAndThrow("Insufficient permissions.");
+                return context.failAndThrow(
+                    "You do not have permission to run this generator. Please check that:\n" +
+                        "  1. You are logged in with the correct account (run 'fern login')\n" +
+                        "  2. Your organization has access to this generator\n" +
+                        "  3. You have the necessary permissions in your organization\n\n" +
+                        "If you believe this is an error, please contact support@buildwithfern.com"
+                );
             },
             orgNotConfiguredForWhitelabel: () => {
                 return context.failAndThrow(
