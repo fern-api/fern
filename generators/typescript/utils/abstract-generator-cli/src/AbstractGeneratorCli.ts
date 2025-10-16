@@ -13,7 +13,13 @@ import { CONSOLE_LOGGER, createLogger, Logger, LogLevel } from "@fern-api/logger
 import { createLoggingExecutable } from "@fern-api/logging-execa";
 import { FernIr, serialization } from "@fern-fern/ir-sdk";
 import { IntermediateRepresentation } from "@fern-fern/ir-sdk/api";
-import { constructNpmPackage, constructNpmPackageFromArgs, constructNpmPackageArgs, NpmPackage,PersistedTypescriptProject } from "@fern-typescript/commons";
+import {
+    constructNpmPackage,
+    constructNpmPackageArgs,
+    constructNpmPackageFromArgs,
+    NpmPackage,
+    PersistedTypescriptProject
+} from "@fern-typescript/commons";
 import { GeneratorContext } from "@fern-typescript/contexts";
 import { writeFile } from "fs/promises";
 import tmp from "tmp-promise";
@@ -308,7 +314,7 @@ function npmPackageInfoFromPublishConfig(
                     isPackagePrivate
                 };
             },
-            direct: () => {
+            direct: (publishConfig) => {
                 return { isPackagePrivate };
             },
             filesystem: () => {

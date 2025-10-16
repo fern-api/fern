@@ -13,6 +13,8 @@ import {
 } from "@fern-typescript/commons";
 import { GeneratorContext } from "@fern-typescript/contexts";
 import { SdkGenerator } from "@fern-typescript/sdk-generator";
+import fs from "fs/promises";
+import path from "path";
 
 import { SdkCustomConfig } from "./custom-config/SdkCustomConfig";
 import { SdkCustomConfigSchema } from "./custom-config/schema/SdkCustomConfigSchema";
@@ -258,8 +260,6 @@ export class SdkGeneratorCli extends AbstractGeneratorCli<SdkCustomConfig> {
             // For custom licenses, we need to get the license content from the source file
             // The CLI should have read the license file content and made it available
             // For now, we'll read the license file from the original location
-            const fs = await import("fs/promises");
-            const path = await import("path");
 
             try {
                 // The license file path is relative to the fern config directory

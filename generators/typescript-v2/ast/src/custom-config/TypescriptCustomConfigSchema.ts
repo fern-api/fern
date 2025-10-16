@@ -61,10 +61,7 @@ export const TypescriptCustomConfigSchema = z.strictObject({
 
     // deprecated
     timeoutInSeconds: z.optional(z.union([z.literal("infinity"), z.number()])),
-    includeApiReference: z.optional(z.boolean()),
-
-    // internal - license name extracted from custom license file
-    _fernLicenseName: z.optional(z.string())
+    includeApiReference: z.optional(z.boolean())
 });
 
 export type TypescriptCustomConfigSchema = z.infer<typeof TypescriptCustomConfigSchema>;
