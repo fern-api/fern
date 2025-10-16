@@ -3,6 +3,7 @@ import { ruby } from "@fern-api/ruby-ast";
 import { FileGenerator, RubyFile } from "@fern-api/ruby-base";
 import { FernIr } from "@fern-fern/ir-sdk";
 import { Subpackage } from "@fern-fern/ir-sdk/api";
+import { snakeCase } from "lodash-es";
 import { SdkCustomConfigSchema } from "../SdkCustomConfig";
 import { SdkGeneratorContext } from "../SdkGeneratorContext";
 import { astNodeToCodeBlockWithComments } from "../utils/astNodeToCodeBlockWithComments";
@@ -109,7 +110,7 @@ export class RootClientGenerator extends FileGenerator<RubyFile, SdkCustomConfig
                     });
                 case "header":
                     return ruby.parameters.keyword({
-                        name: scheme.name.name.snakeCase.safeName,
+                        name: snakeCase(scheme.name.wireValue),
                         type: ruby.Type.string(),
                         initializer:
                             scheme.headerEnvVar != null
@@ -151,7 +152,7 @@ export class RootClientGenerator extends FileGenerator<RubyFile, SdkCustomConfig
                     });
                     break;
                 case "header": {
-                    const headerParamName = header.name.name.snakeCase.safeName;
+                    const headerParamName = snakeCase(header.name.wireValue);
                     const headerName = header.name.wireValue;
                     const headerValue =
                         header.prefix != null ? `${header.prefix} #{${headerParamName}}` : `#{${headerParamName}}`;
