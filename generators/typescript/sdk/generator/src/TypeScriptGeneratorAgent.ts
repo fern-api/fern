@@ -61,8 +61,6 @@ export class TypeScriptGeneratorAgent extends AbstractGeneratorAgent<SdkContext>
     }
 
     public getGitHubConfig(args: AbstractGeneratorAgent.GitHubConfigArgs<SdkContext>): RawGithubConfig {
-        args.context.logger.info(`jsklan-test: Getting GitHub config for ${this.publishConfig?.type}`);
-        args.context.logger.info(`jsklan-test: GitHub config: ${JSON.stringify(this.publishConfig)}`);
         return {
             sourceDirectory: "fern/output",
             type: this.publishConfig?.type,

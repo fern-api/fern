@@ -122,26 +122,23 @@ export abstract class AbstractGeneratorAgent<GeneratorContext extends AbstractGe
         return loaded;
     }
 
-    private getRemote(): FernGeneratorCli.Remote | undefined {
+    private getRemote(context: GeneratorContext): FernGeneratorCli.Remote | undefined {
         const outputMode = this.config.output.mode.type === "github" ? this.config.output.mode : undefined;
-        if (outputMode?.repoUrl != null) {
-            // Convert short format (owner/repo) to full GitHub URL if needed
-            const repoUrl = this.normalizeRepoUrl(outputMode.repoUrl);
-
-            // For remote generation, use installationToken if available
-            if (outputMode.installationToken != null) {
-                return FernGeneratorCli.Remote.github({
-                    repoUrl,
-                    installationToken: outputMode.installationToken
-                });
-            }
-            // For local generation, create remote config for README URL construction
-            // even without installationToken (it will be used only for URL construction)
+        if (outputMode?.repoUrl != null && outputMode?.installationToken != null) {
             return FernGeneratorCli.Remote.github({
-                repoUrl,
-                installationToken: "" // Empty token - only used for README URL construction
+                repoUrl: outputMode.repoUrl,
+                installationToken: outputMode.installationToken
             });
         }
+
+        const githubConfig = this.getGitHubConfig({ context });
+        if (githubConfig.uri != null && githubConfig.token != null) {
+            return FernGeneratorCli.Remote.github({
+                repoUrl: this.normalizeRepoUrl(githubConfig.uri),
+                installationToken: githubConfig.token
+            });
+        }
+
         return undefined;
     }
 
