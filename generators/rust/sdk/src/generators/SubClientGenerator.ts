@@ -1165,7 +1165,9 @@ export class SubClientGenerator {
                     );
                     pathParams.push(paramName);
                 }
-            } else {
+            }
+            // Always append tail if present (can exist alongside pathParameter)
+            if (part.tail) {
                 path += part.tail;
             }
         });
