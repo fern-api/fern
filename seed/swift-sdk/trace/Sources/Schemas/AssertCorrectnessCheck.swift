@@ -1,8 +1,8 @@
 import Foundation
 
 public enum AssertCorrectnessCheck: Codable, Hashable, Sendable {
-    case deepEquality(DeepEquality)
     case custom(Custom)
+    case deepEquality(DeepEquality)
 
     public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)

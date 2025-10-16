@@ -2,16 +2,36 @@ import { readFile } from "node:fs/promises";
 import { join } from "node:path";
 import { entries } from "@fern-api/core-utils";
 import { RelativeFilePath } from "@fern-api/fs-utils";
+import { swift } from "@fern-api/swift-codegen";
+
+export type AsIsSymbolName =
+    | "JSONValue"
+    | "CalendarDate"
+    | "HTTP"
+    | "HTTPClient"
+    | "MultipartFormData"
+    | "MultipartFormDataConvertible"
+    | "MultipartFormField"
+    | "QueryParameter"
+    | "EncodableValue"
+    | "Serde"
+    | "StringKey"
+    | "APIErrorResponse"
+    | "ClientConfig"
+    | "ClientError"
+    | "FormFile"
+    | "Nullable"
+    | "RequestOptions";
 
 /**
  * Configuration specification for a static Swift file that gets included as-is in the generated SDK.
  * This serves as the raw configuration that gets transformed into a fully resolved {@link AsIsFileDefinition}
  * during the build process.
  */
-interface AsIsFileSpec {
+interface AsIsFileSpec<SymbolName extends string> {
     relativePathToDir: string;
     filenameWithoutExtension: string;
-    symbolNames?: string[];
+    symbols?: { name: SymbolName; shape: swift.TypeSymbolShape }[];
 }
 
 /**
@@ -31,10 +51,9 @@ export interface AsIsFileDefinition {
     directory: RelativeFilePath;
 
     /**
-     * The names of Swift symbols (classes, structs, enums, protocols, etc.)
-     * that this file introduces to the project namespace.
+     * The symbols (classes, structs, enums, protocols, etc.) that this file introduces to the project namespace.
      */
-    symbolNames: string[];
+    symbols: { name: string; shape: swift.TypeSymbolShape }[];
 
     /**
      * Asynchronously loads the contents of the Swift file from disk.
@@ -56,32 +75,32 @@ const SourceAsIsFileSpecs = {
     Http: {
         relativePathToDir: "Core/Networking",
         filenameWithoutExtension: "HTTP",
-        symbolNames: ["HTTP"]
+        symbols: [{ name: "HTTP", shape: { type: "enum-container" } }]
     },
     HttpClient: {
         relativePathToDir: "Core/Networking",
         filenameWithoutExtension: "HTTPClient",
-        symbolNames: ["HTTPClient"]
+        symbols: [{ name: "HTTPClient", shape: { type: "class" } }]
     },
     MultipartFormData: {
         relativePathToDir: "Core/Networking",
         filenameWithoutExtension: "MultipartFormData",
-        symbolNames: ["MultipartFormData"]
+        symbols: [{ name: "MultipartFormData", shape: { type: "class" } }]
     },
     MultipartFormDataConvertible: {
         relativePathToDir: "Core/Networking",
         filenameWithoutExtension: "MultipartFormDataConvertible",
-        symbolNames: ["MultipartFormDataConvertible"]
+        symbols: [{ name: "MultipartFormDataConvertible", shape: { type: "protocol" } }]
     },
     MultipartFormField: {
         relativePathToDir: "Core/Networking",
         filenameWithoutExtension: "MultipartFormField",
-        symbolNames: ["MultipartFormField"]
+        symbols: [{ name: "MultipartFormField", shape: { type: "enum-with-associated-values" } }]
     },
     QueryParameter: {
         relativePathToDir: "Core/Networking",
         filenameWithoutExtension: "QueryParameter",
-        symbolNames: ["QueryParameter"]
+        symbols: [{ name: "QueryParameter", shape: { type: "enum-with-associated-values" } }]
     },
     // Core/Serde
     DecoderPlusAdditionalProperties: {
@@ -91,7 +110,7 @@ const SourceAsIsFileSpecs = {
     EncodableValue: {
         relativePathToDir: "Core/Serde",
         filenameWithoutExtension: "EncodableValue",
-        symbolNames: ["EncodableValue"]
+        symbols: [{ name: "EncodableValue", shape: { type: "struct" } }]
     },
     EncoderPlusAdditionalProperties: {
         relativePathToDir: "Core/Serde",
@@ -112,19 +131,19 @@ const SourceAsIsFileSpecs = {
     Serde: {
         relativePathToDir: "Core/Serde",
         filenameWithoutExtension: "Serde",
-        symbolNames: ["Serde"]
+        symbols: [{ name: "Serde", shape: { type: "class" } }]
     },
     StringKey: {
         relativePathToDir: "Core/Serde",
         filenameWithoutExtension: "StringKey",
-        symbolNames: ["StringKey"]
+        symbols: [{ name: "StringKey", shape: { type: "struct" } }]
     },
 
     // Core
     CalendarDate: {
         relativePathToDir: "Core",
         filenameWithoutExtension: "CalendarDate",
-        symbolNames: ["CalendarDate"]
+        symbols: [{ name: "CalendarDate", shape: { type: "struct" } }]
     },
     DataPlusString: {
         relativePathToDir: "Core",
@@ -139,39 +158,39 @@ const SourceAsIsFileSpecs = {
     APIErrorResponse: {
         relativePathToDir: "Public",
         filenameWithoutExtension: "APIErrorResponse",
-        symbolNames: ["APIErrorResponse"]
+        symbols: [{ name: "APIErrorResponse", shape: { type: "struct" } }]
     },
     ClientConfig: {
         relativePathToDir: "Public",
         filenameWithoutExtension: "ClientConfig",
-        symbolNames: ["ClientConfig"]
+        symbols: [{ name: "ClientConfig", shape: { type: "class" } }]
     },
     ClientError: {
         relativePathToDir: "Public",
         filenameWithoutExtension: "ClientError",
-        symbolNames: ["ClientError"]
+        symbols: [{ name: "ClientError", shape: { type: "enum-with-associated-values" } }]
     },
     FormFile: {
         relativePathToDir: "Public",
         filenameWithoutExtension: "FormFile",
-        symbolNames: ["FormFile"]
+        symbols: [{ name: "FormFile", shape: { type: "struct" } }]
     },
     JsonValue: {
         relativePathToDir: "Public",
         filenameWithoutExtension: "JSONValue",
-        symbolNames: ["JSONValue"]
+        symbols: [{ name: "JSONValue", shape: { type: "enum-with-associated-values" } }]
     },
     Nullable: {
         relativePathToDir: "Public",
         filenameWithoutExtension: "Nullable",
-        symbolNames: ["Nullable"]
+        symbols: [{ name: "Nullable", shape: { type: "enum-with-associated-values" } }]
     },
     RequestOptions: {
         relativePathToDir: "Public",
         filenameWithoutExtension: "RequestOptions",
-        symbolNames: ["RequestOptions"]
+        symbols: [{ name: "RequestOptions", shape: { type: "struct" } }]
     }
-} satisfies Record<string, AsIsFileSpec>;
+} satisfies Record<string, AsIsFileSpec<AsIsSymbolName>>;
 
 /**
  * Union type of all available static file identifiers.
@@ -215,11 +234,11 @@ function createSourceAsIsFiles(): SourceAsIsFileDefinitionsById {
     const result = {} as SourceAsIsFileDefinitionsById;
 
     for (const [key, spec] of entries(SourceAsIsFileSpecs)) {
-        const { relativePathToDir, filenameWithoutExtension, symbolNames } = spec as AsIsFileSpec;
+        const { relativePathToDir, filenameWithoutExtension, symbols } = spec as AsIsFileSpec<AsIsSymbolName>;
         result[key] = {
             filenameWithoutExtension,
             directory: RelativeFilePath.of(relativePathToDir),
-            symbolNames: symbolNames ?? [],
+            symbols: symbols ?? [],
             loadContents: () => {
                 const absolutePath = join(__dirname, "asIs", "Sources", filenameWithoutExtension + ".swift");
                 return readFile(absolutePath, "utf-8");
@@ -235,9 +254,9 @@ const TestAsIsFileSpecs = {
     WireStub: {
         relativePathToDir: "Wire/Utilities",
         filenameWithoutExtension: "WireStub",
-        symbolNames: ["WireStub"]
+        symbols: [{ name: "WireStub", shape: { type: "class" } }]
     }
-} satisfies Record<string, AsIsFileSpec>;
+} satisfies Record<string, AsIsFileSpec<string>>;
 
 export type TestAsIsFileId = keyof typeof TestAsIsFileSpecs;
 
@@ -251,11 +270,11 @@ function createTestAsIsFiles(): TestAsIsFileDefinitionsById {
     const result = {} as TestAsIsFileDefinitionsById;
 
     for (const [key, spec] of entries(TestAsIsFileSpecs)) {
-        const { relativePathToDir, filenameWithoutExtension, symbolNames } = spec as AsIsFileSpec;
+        const { relativePathToDir, filenameWithoutExtension, symbols } = spec as AsIsFileSpec<string>;
         result[key] = {
             filenameWithoutExtension,
             directory: RelativeFilePath.of(relativePathToDir),
-            symbolNames: symbolNames ?? [],
+            symbols: symbols ?? [],
             loadContents: () => {
                 const absolutePath = join(__dirname, "asIs", "Tests", filenameWithoutExtension + ".swift");
                 return readFile(absolutePath, "utf-8");

@@ -1,13 +1,13 @@
 import { assertNever, noop } from "@fern-api/core-utils";
+import { Referencer } from "@fern-api/swift-base";
 import { sanitizeSelf, swift } from "@fern-api/swift-codegen";
 import { ObjectProperty, TypeId, UnionTypeDeclaration } from "@fern-fern/ir-sdk/api";
-
 import { StructGenerator } from "../helpers/struct-generator/StructGenerator";
 import { ModelGeneratorContext } from "../ModelGeneratorContext";
 
 export declare namespace DiscriminatedUnionGenerator {
     interface Args {
-        name: string;
+        symbol: swift.Symbol;
         unionTypeDeclaration: UnionTypeDeclaration;
         docsContent?: string;
         context: ModelGeneratorContext;
@@ -15,25 +15,31 @@ export declare namespace DiscriminatedUnionGenerator {
 }
 
 export class DiscriminatedUnionGenerator {
-    private readonly name: string;
+    private readonly symbol: swift.Symbol;
     private readonly unionTypeDeclaration: UnionTypeDeclaration;
     private readonly docsContent?: string;
     private readonly context: ModelGeneratorContext;
+    private readonly referencer: Referencer;
 
-    public constructor({ name, unionTypeDeclaration, docsContent, context }: DiscriminatedUnionGenerator.Args) {
-        this.name = name;
+    public constructor({ symbol, unionTypeDeclaration, docsContent, context }: DiscriminatedUnionGenerator.Args) {
+        this.symbol = symbol;
         this.unionTypeDeclaration = unionTypeDeclaration;
         this.docsContent = docsContent;
         this.context = context;
+        this.referencer = context.createReferencer(symbol);
     }
 
     public generate(): swift.EnumWithAssociatedValues {
         return this.generateEnumForTypeDeclaration();
     }
 
+    private getAllVariants() {
+        return this.context.project.nameRegistry.getAllDiscriminatedUnionVariantsOrThrow(this.symbol);
+    }
+
     private generateEnumForTypeDeclaration(): swift.EnumWithAssociatedValues {
         return swift.enumWithAssociatedValues({
-            name: this.name,
+            name: this.symbol.name,
             accessLevel: swift.AccessLevel.Public,
             conformances: [swift.Protocol.Codable, swift.Protocol.Hashable, swift.Protocol.Sendable],
             cases: this.generateCasesForTypeDeclaration(),
@@ -45,11 +51,11 @@ export class DiscriminatedUnionGenerator {
     }
 
     private generateCasesForTypeDeclaration(): swift.EnumWithAssociatedValues.Case[] {
-        return this.unionTypeDeclaration.types.map((singleUnionType) => {
+        return this.getAllVariants().map((variant) => {
             return {
-                unsafeName: singleUnionType.discriminantValue.name.camelCase.unsafeName,
-                associatedValue: [swift.Type.custom(singleUnionType.discriminantValue.name.pascalCase.unsafeName)],
-                docs: singleUnionType.docs ? swift.docComment({ summary: singleUnionType.docs }) : undefined
+                unsafeName: variant.caseName,
+                associatedValue: [variant.swiftType],
+                docs: variant.docsContent ? swift.docComment({ summary: variant.docsContent }) : undefined
             };
         });
     }
@@ -84,7 +90,7 @@ export class DiscriminatedUnionGenerator {
                         arguments_: [
                             swift.functionArgument({
                                 value: swift.Expression.memberAccess({
-                                    target: swift.Type.string(),
+                                    target: this.referencer.referenceSwiftType("String"),
                                     memberName: "self"
                                 })
                             }),
@@ -170,7 +176,7 @@ export class DiscriminatedUnionGenerator {
                 swift.functionParameter({
                     argumentLabel: "from",
                     unsafeName: "decoder",
-                    type: swift.Type.custom("Decoder")
+                    type: this.referencer.referenceSwiftType("Decoder")
                 })
             ],
             body: swift.CodeBlock.withStatements(bodyStatements)
@@ -189,11 +195,11 @@ export class DiscriminatedUnionGenerator {
                 swift.functionParameter({
                     argumentLabel: "to",
                     unsafeName: "encoder",
-                    type: swift.Type.custom("Encoder")
+                    type: this.referencer.referenceSwiftType("Encoder")
                 })
             ],
             throws: true,
-            returnType: swift.Type.void(),
+            returnType: this.referencer.referenceSwiftType("Void"),
             body: swift.CodeBlock.withStatements([
                 swift.Statement.switch({
                     target: swift.Expression.rawValue("self"),
@@ -231,12 +237,17 @@ export class DiscriminatedUnionGenerator {
         const variantStructs = this.unionTypeDeclaration.types.map((singleUnionType) => {
             const constantPropertyDefinitions: StructGenerator.ConstantPropertyDefinition[] = [];
             const dataPropertyDefinitions: StructGenerator.DataPropertyDefinition[] = [];
+            const variantSymbol = this.context.project.nameRegistry.getDiscriminatedUnionVariantSymbolOrThrow(
+                this.symbol,
+                singleUnionType.discriminantValue.name.camelCase.unsafeName
+            );
+            const referencer = this.context.createReferencer(variantSymbol);
 
             if (singleUnionType.shape.propertiesType === "singleProperty") {
                 constantPropertyDefinitions.push({
                     unsafeName: sanitizeSelf(this.unionTypeDeclaration.discriminant.name.camelCase.unsafeName),
                     rawName: this.unionTypeDeclaration.discriminant.wireValue,
-                    type: swift.Type.string(),
+                    type: referencer.referenceSwiftType("String"),
                     value: swift.Expression.stringLiteral(singleUnionType.discriminantValue.wireValue)
                 });
                 dataPropertyDefinitions.push({
@@ -249,7 +260,7 @@ export class DiscriminatedUnionGenerator {
                 constantPropertyDefinitions.push({
                     unsafeName: sanitizeSelf(this.unionTypeDeclaration.discriminant.name.camelCase.unsafeName),
                     rawName: this.unionTypeDeclaration.discriminant.wireValue,
-                    type: swift.Type.string(),
+                    type: referencer.referenceSwiftType("String"),
                     value: swift.Expression.stringLiteral(singleUnionType.discriminantValue.wireValue)
                 });
                 dataPropertyDefinitions.push(
@@ -267,7 +278,7 @@ export class DiscriminatedUnionGenerator {
             }
 
             return new StructGenerator({
-                name: singleUnionType.discriminantValue.name.pascalCase.unsafeName,
+                symbol: variantSymbol,
                 constantPropertyDefinitions,
                 dataPropertyDefinitions,
                 additionalProperties: true,

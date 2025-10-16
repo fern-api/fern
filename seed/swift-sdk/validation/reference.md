@@ -61,7 +61,7 @@ try await main()
 </dl>
 </details>
 
-<details><summary><code>client.<a href="/Sources/ValidationClient.swift">get</a>(decimal: Double, even: Int, name: String, requestOptions: RequestOptions?) -> Type</code></summary>
+<details><summary><code>client.<a href="/Sources/ValidationClient.swift">get</a>(decimal: Swift.Double, even: Int, name: String, requestOptions: RequestOptions?) -> Type</code></summary>
 <dl>
 <dd>
 
@@ -102,7 +102,7 @@ try await main()
 <dl>
 <dd>
 
-**decimal:** `Double` 
+**decimal:** `Swift.Double` 
     
 </dd>
 </dl>

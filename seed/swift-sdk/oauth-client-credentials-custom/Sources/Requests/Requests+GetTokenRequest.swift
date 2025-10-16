@@ -56,12 +56,12 @@ extension Requests {
             try container.encodeIfPresent(self.scope, forKey: .scope)
         }
 
-        public enum HttpsApiExampleCom: String, Codable, Hashable, CaseIterable, Sendable {
-            case httpsApiExampleCom = "https://api.example.com"
-        }
-
         public enum ClientCredentials: String, Codable, Hashable, CaseIterable, Sendable {
             case clientCredentials = "client_credentials"
+        }
+
+        public enum HttpsApiExampleCom: String, Codable, Hashable, CaseIterable, Sendable {
+            case httpsApiExampleCom = "https://api.example.com"
         }
 
         /// Keys for encoding/decoding struct properties.

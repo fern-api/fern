@@ -2,8 +2,8 @@ import Foundation
 
 public enum ProblemDescriptionBoard: Codable, Hashable, Sendable {
     case html(Html)
-    case variable(Variable)
     case testCaseId(TestCaseId)
+    case variable(Variable)
 
     public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)

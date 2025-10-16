@@ -1,12 +1,12 @@
 import Foundation
 
 public enum SubmissionResponse: Codable, Hashable, Sendable {
-    case serverInitialized(ServerInitialized)
-    case problemInitialized(ProblemInitialized)
-    case workspaceInitialized(WorkspaceInitialized)
-    case serverErrored(ServerErrored)
     case codeExecutionUpdate(CodeExecutionUpdate)
+    case problemInitialized(ProblemInitialized)
+    case serverErrored(ServerErrored)
+    case serverInitialized(ServerInitialized)
     case terminated(Terminated)
+    case workspaceInitialized(WorkspaceInitialized)
 
     public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
@@ -171,12 +171,12 @@ public enum SubmissionResponse: Codable, Hashable, Sendable {
 
     public struct CodeExecutionUpdate: Codable, Hashable, Sendable {
         public let type: String = "codeExecutionUpdate"
-        public let value: CodeExecutionUpdate
+        public let value: Trace.CodeExecutionUpdate
         /// Additional properties that are not explicitly defined in the schema
         public let additionalProperties: [String: JSONValue]
 
         public init(
-            value: CodeExecutionUpdate,
+            value: Trace.CodeExecutionUpdate,
             additionalProperties: [String: JSONValue] = .init()
         ) {
             self.value = value
@@ -185,7 +185,7 @@ public enum SubmissionResponse: Codable, Hashable, Sendable {
 
         public init(from decoder: Decoder) throws {
             let container = try decoder.container(keyedBy: CodingKeys.self)
-            self.value = try container.decode(CodeExecutionUpdate.self, forKey: .value)
+            self.value = try container.decode(Trace.CodeExecutionUpdate.self, forKey: .value)
             self.additionalProperties = try decoder.decodeAdditionalProperties(using: CodingKeys.self)
         }
 

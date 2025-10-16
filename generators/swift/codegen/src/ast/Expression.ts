@@ -2,7 +2,7 @@ import { assertNever } from "@fern-api/core-utils";
 import { escapeReservedKeyword } from "../syntax";
 import { AstNode, Writer } from "./core";
 import { FunctionArgument } from "./FunctionArgument";
-import { Type } from "./Type";
+import { TypeReference } from "./TypeReference";
 
 /**
  * A reference to a variable or constant.
@@ -14,7 +14,7 @@ type Reference = {
 
 type MemberAccess = {
     type: "member-access";
-    target: Expression | Type;
+    target: Expression | TypeReference;
     optionalChain?: true;
     memberName: string;
 };
@@ -325,10 +325,10 @@ export class Expression extends AstNode {
                 writer.write(`try! Date("${this.internalExpression.isoString}", strategy: .iso8601)`);
                 break;
             case "calendar-date-literal":
-                writer.write(`try! CalendarDate("${this.internalExpression.isoString}")`);
+                writer.write(`CalendarDate("${this.internalExpression.isoString}")!`);
                 break;
             case "uuid-literal":
-                writer.write(`UUID(uuidString: "${this.internalExpression.value}")`);
+                writer.write(`UUID(uuidString: "${this.internalExpression.value}")!`);
                 break;
             case "dictionary-literal":
                 this.writeDictionaryLiteral(writer, this.internalExpression);

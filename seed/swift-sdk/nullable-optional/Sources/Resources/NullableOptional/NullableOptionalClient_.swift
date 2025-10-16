@@ -140,9 +140,9 @@ public final class NullableOptionalClient_: Sendable {
             method: .get,
             path: "/api/users/filter",
             queryParams: [
-                "role": role.wrappedValue.map { .string($0) }, 
-                "status": status.map { .string($0.rawValue) }, 
-                "secondaryRole": secondaryRole?.wrappedValue.map { .string($0) }
+                "role": role.wrappedValue.map { .unknown($0) }, 
+                "status": status.map { .unknown($0.rawValue) }, 
+                "secondaryRole": secondaryRole?.wrappedValue.map { .unknown($0) }
             ],
             requestOptions: requestOptions,
             responseType: [UserResponse].self

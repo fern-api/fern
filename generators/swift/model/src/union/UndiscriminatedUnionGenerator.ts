@@ -1,12 +1,12 @@
 import { assertDefined } from "@fern-api/core-utils";
+import { Referencer } from "@fern-api/swift-base";
 import { swift } from "@fern-api/swift-codegen";
 import { UndiscriminatedUnionTypeDeclaration } from "@fern-fern/ir-sdk/api";
-import { uniqWith } from "lodash-es";
 import { ModelGeneratorContext } from "../ModelGeneratorContext";
 
 export declare namespace UndiscriminatedUnionGenerator {
     interface Args {
-        name: string;
+        symbol: swift.Symbol;
         typeDeclaration: UndiscriminatedUnionTypeDeclaration;
         docsContent?: string;
         context: ModelGeneratorContext;
@@ -14,16 +14,22 @@ export declare namespace UndiscriminatedUnionGenerator {
 }
 
 export class UndiscriminatedUnionGenerator {
-    private readonly name: string;
+    private readonly symbol: swift.Symbol;
     private readonly typeDeclaration: UndiscriminatedUnionTypeDeclaration;
     private readonly docsContent?: string;
     private readonly context: ModelGeneratorContext;
+    private readonly referencer: Referencer;
 
-    public constructor({ name, typeDeclaration, docsContent, context }: UndiscriminatedUnionGenerator.Args) {
-        this.name = name;
+    public constructor({ symbol, typeDeclaration, docsContent, context }: UndiscriminatedUnionGenerator.Args) {
+        this.referencer = context.createReferencer(symbol);
+        this.symbol = symbol;
         this.typeDeclaration = typeDeclaration;
         this.docsContent = docsContent;
         this.context = context;
+    }
+
+    private getAllVariants() {
+        return this.context.project.nameRegistry.getAllUndiscriminatedUnionVariantsOrThrow(this.symbol);
     }
 
     public generate(): swift.EnumWithAssociatedValues {
@@ -32,7 +38,7 @@ export class UndiscriminatedUnionGenerator {
 
     private generateEnumForTypeDeclaration(): swift.EnumWithAssociatedValues {
         return swift.enumWithAssociatedValues({
-            name: this.name,
+            name: this.symbol.name,
             accessLevel: swift.AccessLevel.Public,
             conformances: [swift.Protocol.Codable, swift.Protocol.Hashable, swift.Protocol.Sendable],
             cases: this.generateCasesForTypeDeclaration(),
@@ -43,11 +49,11 @@ export class UndiscriminatedUnionGenerator {
     }
 
     private generateCasesForTypeDeclaration(): swift.EnumWithAssociatedValues.Case[] {
-        return this.getDistinctMembers().map((member) => {
+        return this.getAllVariants().map((variant) => {
             return {
-                unsafeName: member.swiftType.toCaseName(),
-                associatedValue: [member.swiftType],
-                docs: member.docsContent ? swift.docComment({ summary: member.docsContent }) : undefined
+                unsafeName: variant.caseName,
+                associatedValue: [variant.swiftType],
+                docs: variant.docsContent ? swift.docComment({ summary: variant.docsContent }) : undefined
             };
         });
     }
@@ -64,7 +70,7 @@ export class UndiscriminatedUnionGenerator {
                 swift.functionParameter({
                     argumentLabel: "from",
                     unsafeName: "decoder",
-                    type: swift.Type.custom("Decoder")
+                    type: this.referencer.referenceSwiftType("Decoder")
                 })
             ],
             body: swift.CodeBlock.withStatements([
@@ -83,7 +89,7 @@ export class UndiscriminatedUnionGenerator {
     }
 
     private generateIfStatementForDecodingAttempts(): swift.Statement {
-        const distinctMembers = this.getDistinctMembers();
+        const distinctMembers = this.getAllVariants();
         const memberDecodeAttempts = distinctMembers.map((member) => {
             const decodeStatement = swift.Statement.constantDeclaration({
                 unsafeName: "value",
@@ -105,7 +111,7 @@ export class UndiscriminatedUnionGenerator {
             });
             const selfAssignment = swift.Statement.selfAssignment(
                 swift.Expression.contextualMethodCall({
-                    methodName: member.swiftType.toCaseName(),
+                    methodName: member.caseName,
                     arguments_: [
                         swift.functionArgument({
                             value: swift.Expression.reference("value")
@@ -126,7 +132,6 @@ export class UndiscriminatedUnionGenerator {
                     }),
                     swift.functionArgument({
                         label: "debugDescription",
-                        // TODO(kafkas): Add more descriptive error message. We can perhaps try to decode as JSONValue and add the result to the error message.
                         value: swift.Expression.stringLiteral(`Unexpected value.`)
                     })
                 ],
@@ -154,7 +159,7 @@ export class UndiscriminatedUnionGenerator {
     }
 
     private generateEncodeMethod(): swift.Method {
-        const distinctMembers = this.getDistinctMembers();
+        const distinctMembers = this.getAllVariants();
         return swift.method({
             unsafeName: "encode",
             accessLevel: swift.AccessLevel.Public,
@@ -162,11 +167,11 @@ export class UndiscriminatedUnionGenerator {
                 swift.functionParameter({
                     argumentLabel: "to",
                     unsafeName: "encoder",
-                    type: swift.Type.custom("Encoder")
+                    type: this.referencer.referenceSwiftType("Encoder")
                 })
             ],
             throws: true,
-            returnType: swift.Type.void(),
+            returnType: this.referencer.referenceSwiftType("Void"),
             body: swift.CodeBlock.withStatements([
                 swift.Statement.variableDeclaration({
                     unsafeName: "container",
@@ -180,7 +185,7 @@ export class UndiscriminatedUnionGenerator {
                     cases: distinctMembers.map((member) => {
                         return {
                             pattern: swift.Pattern.enumCaseValueBinding({
-                                caseName: member.swiftType.toCaseName(),
+                                caseName: member.caseName,
                                 referenceName: "value",
                                 declarationType: swift.DeclarationType.Let
                             }),
@@ -204,13 +209,5 @@ export class UndiscriminatedUnionGenerator {
                 })
             ])
         });
-    }
-
-    private getDistinctMembers(): { swiftType: swift.Type; docsContent?: string }[] {
-        const members = this.typeDeclaration.members.map((member) => ({
-            docsContent: member.docs,
-            swiftType: this.context.getSwiftTypeForTypeReference(member.type)
-        }));
-        return uniqWith(members, (a, b) => a.swiftType.equals(b.swiftType));
     }
 }

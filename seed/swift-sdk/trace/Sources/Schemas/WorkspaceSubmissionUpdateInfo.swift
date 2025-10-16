@@ -1,13 +1,13 @@
 import Foundation
 
 public enum WorkspaceSubmissionUpdateInfo: Codable, Hashable, Sendable {
-    case running(Running)
+    case errored(Errored)
+    case finished(Finished)
     case ran(Ran)
+    case running(Running)
     case stopped(Stopped)
     case traced(Traced)
     case tracedV2(TracedV2)
-    case errored(Errored)
-    case finished(Finished)
 
     public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)

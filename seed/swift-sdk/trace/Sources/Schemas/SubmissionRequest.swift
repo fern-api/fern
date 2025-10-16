@@ -3,9 +3,9 @@ import Foundation
 public enum SubmissionRequest: Codable, Hashable, Sendable {
     case initializeProblemRequest(InitializeProblemRequest)
     case initializeWorkspaceRequest(InitializeWorkspaceRequest)
+    case stop(Stop)
     case submitV2(SubmitV2)
     case workspaceSubmit(WorkspaceSubmit)
-    case stop(Stop)
 
     public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)

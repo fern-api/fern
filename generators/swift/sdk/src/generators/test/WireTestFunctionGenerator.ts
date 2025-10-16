@@ -1,4 +1,5 @@
 import { assertDefined } from "@fern-api/core-utils";
+import { Referencer } from "@fern-api/swift-base";
 import { LiteralEnum, swift } from "@fern-api/swift-codegen";
 import { EndpointSnippetGenerator } from "@fern-api/swift-dynamic-snippets";
 import { dynamic, ExampleEndpointCall, ExampleTypeReference, HttpEndpoint } from "@fern-fern/ir-sdk/api";
@@ -7,6 +8,7 @@ import { convertDynamicEndpointSnippetRequest } from "../../utils/convertEndpoin
 
 export declare namespace WireTestFunctionGenerator {
     interface Args {
+        parentSymbol: swift.Symbol;
         endpoint: HttpEndpoint;
         endpointSnippetGenerator: EndpointSnippetGenerator;
         dynamicIr: dynamic.DynamicIntermediateRepresentation;
@@ -15,24 +17,28 @@ export declare namespace WireTestFunctionGenerator {
 }
 
 export class WireTestFunctionGenerator {
+    private readonly parentSymbol: swift.Symbol;
     private readonly endpoint: HttpEndpoint;
     private readonly endpointSnippetGenerator: EndpointSnippetGenerator;
     private readonly dynamicIr: dynamic.DynamicIntermediateRepresentation;
     private readonly sdkGeneratorContext: SdkGeneratorContext;
-
     private readonly exampleEndpointCallsById: Record<string, ExampleEndpointCall>;
+    private readonly referencer: Referencer;
 
     public constructor({
+        parentSymbol,
         endpoint,
         endpointSnippetGenerator,
         dynamicIr,
         sdkGeneratorContext
     }: WireTestFunctionGenerator.Args) {
+        this.parentSymbol = parentSymbol;
         this.endpoint = endpoint;
         this.endpointSnippetGenerator = endpointSnippetGenerator;
         this.dynamicIr = dynamicIr;
         this.sdkGeneratorContext = sdkGeneratorContext;
         this.exampleEndpointCallsById = this.buildExampleEndpointCallsById(endpoint);
+        this.referencer = this.sdkGeneratorContext.createReferencer(this.parentSymbol);
     }
 
     private get dynamicEndpoint() {
@@ -106,7 +112,7 @@ export class WireTestFunctionGenerator {
                     this.generateClientDeclaration(endpointExample),
                     swift.Statement.constantDeclaration({
                         unsafeName: "expectedResponse",
-                        value: this.generateExampleResponse(exampleTypeRef)
+                        value: this.generateExampleResponse(exampleTypeRef, this.parentSymbol)
                     }),
                     this.generateEndpointMethodCallStatement(endpointExample),
                     swift.Statement.expressionStatement(
@@ -130,7 +136,7 @@ export class WireTestFunctionGenerator {
                     unsafeName: `${this.endpoint.name.camelCase.unsafeName}${endpointExampleIdx + 1}`,
                     async: true,
                     throws: true,
-                    returnType: swift.Type.void(),
+                    returnType: this.referencer.referenceSwiftType("Void"),
                     body: swift.CodeBlock.withStatements(statements)
                 });
             })
@@ -167,7 +173,10 @@ export class WireTestFunctionGenerator {
         });
     }
 
-    private generateExampleResponse(exampleTypeRef: ExampleTypeReference): swift.Expression {
+    private generateExampleResponse(
+        exampleTypeRef: ExampleTypeReference,
+        fromScope: swift.Symbol | string
+    ): swift.Expression {
         return exampleTypeRef.shape._visit({
             container: (exampleContainer) =>
                 exampleContainer._visit({
@@ -194,25 +203,25 @@ export class WireTestFunctionGenerator {
                     map: (mapContainer) => {
                         return swift.Expression.dictionaryLiteral({
                             entries: mapContainer.map.map((kvPair) => [
-                                this.generateExampleResponse(kvPair.key),
-                                this.generateExampleResponse(kvPair.value)
+                                this.generateExampleResponse(kvPair.key, fromScope),
+                                this.generateExampleResponse(kvPair.value, fromScope)
                             ]),
                             multiline: true
                         });
                     },
-                    set: () => swift.Expression.arrayLiteral({}), // TODO(kafkas): Set is not supported yet
+                    set: () => swift.Expression.arrayLiteral({}),
                     nullable: (nullableContainer) => {
                         if (nullableContainer.nullable == null) {
                             return swift.Expression.enumCaseShorthand("null");
                         }
                         return swift.Expression.methodCall({
                             target: swift.Expression.reference(
-                                `Nullable<${this.getSwiftTypeForExampleTypeReference(nullableContainer.nullable).toString()}>`
+                                `Nullable<${this.getSwiftTypeReferenceForExampleTypeReference(nullableContainer.nullable, fromScope).toString()}>`
                             ),
                             methodName: "value",
                             arguments_: [
                                 swift.functionArgument({
-                                    value: this.generateExampleResponse(nullableContainer.nullable)
+                                    value: this.generateExampleResponse(nullableContainer.nullable, fromScope)
                                 })
                             ]
                         });
@@ -224,7 +233,7 @@ export class WireTestFunctionGenerator {
                                   arguments_: [
                                       swift.functionArgument({
                                           value: swift.Expression.memberAccess({
-                                              target: this.sdkGeneratorContext.getSwiftTypeForTypeReference(
+                                              target: this.sdkGeneratorContext.getSwiftTypeReferenceFromTestModuleScope(
                                                   optionalContainer.valueType
                                               ),
                                               memberName: "null"
@@ -236,14 +245,16 @@ export class WireTestFunctionGenerator {
                                   unsafeName: "Optional",
                                   arguments_: [
                                       swift.functionArgument({
-                                          value: this.generateExampleResponse(optionalContainer.optional)
+                                          value: this.generateExampleResponse(optionalContainer.optional, fromScope)
                                       })
                                   ]
                               });
                     },
                     list: (listContainer) => {
                         return swift.Expression.arrayLiteral({
-                            elements: listContainer.list.map((element) => this.generateExampleResponse(element)),
+                            elements: listContainer.list.map((element) =>
+                                this.generateExampleResponse(element, fromScope)
+                            ),
                             multiline: true
                         });
                     },
@@ -259,7 +270,6 @@ export class WireTestFunctionGenerator {
                     long: (value) => swift.Expression.numberLiteral(value),
                     float: (value) => swift.Expression.numberLiteral(value),
                     double: (value) => swift.Expression.numberLiteral(value),
-                    // TODO(kafkas): Bigints are not supported yet
                     bigInteger: (value) => swift.Expression.stringLiteral(value),
                     date: (value) => swift.Expression.calendarDateLiteral(value),
                     datetime: (value) => {
@@ -279,18 +289,17 @@ export class WireTestFunctionGenerator {
                 }),
             named: (exampleNamedType) => {
                 const { typeId } = exampleNamedType.typeName;
-                const symbolName =
-                    this.sdkGeneratorContext.project.srcSymbolRegistry.getSchemaTypeSymbolOrThrow(typeId);
+                const symbol = this.sdkGeneratorContext.project.nameRegistry.getSchemaTypeSymbolOrThrow(typeId);
                 return exampleNamedType.shape._visit({
                     alias: (exampleAliasType) => {
-                        return this.generateExampleResponse(exampleAliasType.value);
+                        return this.generateExampleResponse(exampleAliasType.value, fromScope);
                     },
                     enum: (exampleEnumType) => {
                         return swift.Expression.enumCaseShorthand(exampleEnumType.value.name.camelCase.unsafeName);
                     },
                     object: (exampleObjectType) => {
                         return swift.Expression.structInitialization({
-                            unsafeName: symbolName,
+                            unsafeName: symbol.name,
                             arguments_: exampleObjectType.properties
                                 .map((property) => {
                                     if (
@@ -300,7 +309,7 @@ export class WireTestFunctionGenerator {
                                     ) {
                                         return null;
                                     }
-                                    const exampleResponse = this.generateExampleResponse(property.value);
+                                    const exampleResponse = this.generateExampleResponse(property.value, fromScope);
                                     return swift.functionArgument({
                                         label: property.name.name.camelCase.unsafeName,
                                         value: exampleResponse
@@ -338,7 +347,8 @@ export class WireTestFunctionGenerator {
                                                             return null;
                                                         }
                                                         const exampleResponse = this.generateExampleResponse(
-                                                            property.value
+                                                            property.value,
+                                                            fromScope
                                                         );
                                                         return swift.functionArgument({
                                                             label: property.name.name.camelCase.unsafeName,
@@ -352,7 +362,7 @@ export class WireTestFunctionGenerator {
                                     ],
                                     multiline: true
                                 }),
-                            singleProperty: (exampleTypeRef) => this.generateExampleResponse(exampleTypeRef),
+                            singleProperty: (exampleTypeRef) => this.generateExampleResponse(exampleTypeRef, fromScope),
                             _other: () =>
                                 swift.Expression.contextualMethodCall({
                                     methodName:
@@ -363,13 +373,16 @@ export class WireTestFunctionGenerator {
                         });
                     },
                     undiscriminatedUnion: (exampleUnionType) => {
-                        const swiftType = this.getSwiftTypeForExampleTypeReference(exampleUnionType.singleUnionType);
+                        const swiftType = this.getSwiftTypeReferenceForExampleTypeReference(
+                            exampleUnionType.singleUnionType,
+                            fromScope
+                        );
                         return swift.Expression.methodCall({
-                            target: swift.Expression.reference(symbolName),
-                            methodName: swiftType.toCaseName(),
+                            target: swift.Expression.reference(symbol.name),
+                            methodName: this.sdkGeneratorContext.inferCaseNameForTypeReference(symbol, swiftType),
                             arguments_: [
                                 swift.functionArgument({
-                                    value: this.generateExampleResponse(exampleUnionType.singleUnionType)
+                                    value: this.generateExampleResponse(exampleUnionType.singleUnionType, fromScope)
                                 })
                             ],
                             multiline: true
@@ -385,62 +398,79 @@ export class WireTestFunctionGenerator {
         });
     }
 
-    private getSwiftTypeForExampleTypeReference(typeReference: ExampleTypeReference): swift.Type {
+    public getSwiftTypeReferenceForExampleTypeReferenceFromTestModuleScope(
+        typeReference: ExampleTypeReference
+    ): swift.TypeReference {
+        const symbol = this.sdkGeneratorContext.project.nameRegistry.getRegisteredTestModuleSymbolOrThrow();
+        return this.getSwiftTypeReferenceForExampleTypeReference(typeReference, symbol);
+    }
+
+    private getSwiftTypeReferenceForExampleTypeReference(
+        typeReference: ExampleTypeReference,
+        fromScope: swift.Symbol | string
+    ): swift.TypeReference {
         return typeReference.shape._visit({
             container: (exampleContainer) => {
                 return exampleContainer._visit({
-                    literal: () => {
-                        // TODO(kafkas): Implement this
-                        return swift.Type.jsonValue();
-                    },
+                    // TODO(kafkas): Implement this
+                    literal: () => this.referencer.referenceAsIsType("JSONValue"),
                     map: (exampleMapContainer) =>
-                        swift.Type.dictionary(
-                            this.sdkGeneratorContext.getSwiftTypeForTypeReference(exampleMapContainer.keyType),
-                            this.sdkGeneratorContext.getSwiftTypeForTypeReference(exampleMapContainer.valueType)
+                        swift.TypeReference.dictionary(
+                            this.sdkGeneratorContext.getSwiftTypeReferenceFromTestModuleScope(
+                                exampleMapContainer.keyType
+                            ),
+                            this.sdkGeneratorContext.getSwiftTypeReferenceFromTestModuleScope(
+                                exampleMapContainer.valueType
+                            )
                         ),
-                    set: () => swift.Type.jsonValue(), // TODO(kafkas): Set is not supported yet
+                    set: () => this.referencer.referenceAsIsType("JSONValue"),
                     nullable: (exampleNullableContainer) =>
-                        swift.Type.nullable(
-                            this.sdkGeneratorContext.getSwiftTypeForTypeReference(exampleNullableContainer.valueType)
+                        swift.TypeReference.nullable(
+                            this.sdkGeneratorContext.getSwiftTypeReferenceFromTestModuleScope(
+                                exampleNullableContainer.valueType
+                            )
                         ),
                     optional: (exampleOptionalContainer) =>
-                        swift.Type.optional(
-                            this.sdkGeneratorContext.getSwiftTypeForTypeReference(exampleOptionalContainer.valueType)
+                        swift.TypeReference.optional(
+                            this.sdkGeneratorContext.getSwiftTypeReferenceFromTestModuleScope(
+                                exampleOptionalContainer.valueType
+                            )
                         ),
                     list: (exampleListContainer) =>
-                        swift.Type.array(
-                            this.sdkGeneratorContext.getSwiftTypeForTypeReference(exampleListContainer.itemType)
+                        swift.TypeReference.array(
+                            this.sdkGeneratorContext.getSwiftTypeReferenceFromTestModuleScope(
+                                exampleListContainer.itemType
+                            )
                         ),
-                    _other: () => swift.Type.jsonValue()
+                    _other: () => this.referencer.referenceAsIsType("JSONValue")
                 });
             },
             primitive: (examplePrimitive) => {
                 return examplePrimitive._visit({
-                    string: () => swift.Type.string(),
-                    boolean: () => swift.Type.bool(),
-                    integer: () => swift.Type.int(),
-                    uint: () => swift.Type.uint(),
-                    uint64: () => swift.Type.uint64(),
-                    long: () => swift.Type.int64(),
-                    float: () => swift.Type.float(),
-                    double: () => swift.Type.double(),
-                    bigInteger: () => swift.Type.string(), // TODO(kafkas): Bigints are not supported yet
-                    date: () => swift.Type.calendarDate(),
-                    datetime: () => swift.Type.date(),
-                    base64: () => swift.Type.string(),
-                    uuid: () => swift.Type.uuid(),
-                    _other: () => swift.Type.jsonValue()
+                    string: () => this.referencer.referenceSwiftType("String"),
+                    boolean: () => this.referencer.referenceSwiftType("Bool"),
+                    integer: () => this.referencer.referenceSwiftType("Int"),
+                    uint: () => this.referencer.referenceSwiftType("UInt"),
+                    uint64: () => this.referencer.referenceSwiftType("UInt64"),
+                    long: () => this.referencer.referenceSwiftType("Int64"),
+                    float: () => this.referencer.referenceSwiftType("Float"),
+                    double: () => this.referencer.referenceSwiftType("Double"),
+                    bigInteger: () => this.referencer.referenceSwiftType("String"),
+                    date: () => this.referencer.referenceAsIsType("CalendarDate"),
+                    datetime: () => this.referencer.referenceFoundationType("Date"),
+                    base64: () => this.referencer.referenceSwiftType("String"),
+                    uuid: () => this.referencer.referenceFoundationType("UUID"),
+                    _other: () => this.referencer.referenceAsIsType("JSONValue")
                 });
             },
             named: (exampleNamedType) => {
-                const symbolName = this.sdkGeneratorContext.project.srcSymbolRegistry.getSchemaTypeSymbolOrThrow(
+                const symbol = this.sdkGeneratorContext.project.nameRegistry.getSchemaTypeSymbolOrThrow(
                     exampleNamedType.typeName.typeId
                 );
-                // TODO(kafkas): Handle nested types (inline literals etc.)
-                return swift.Type.custom(symbolName);
+                return this.referencer.referenceType(symbol.id);
             },
-            unknown: () => swift.Type.jsonValue(),
-            _other: () => swift.Type.jsonValue()
+            unknown: () => this.referencer.referenceAsIsType("JSONValue"),
+            _other: () => this.referencer.referenceAsIsType("JSONValue")
         });
     }
 

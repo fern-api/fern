@@ -12,7 +12,7 @@ public final class FooClient: Sendable {
             method: .post,
             path: "/",
             queryParams: [
-                "optionalString": .string(optionalString.rawValue)
+                "optionalString": optionalString.map { .string($0) }
             ],
             body: request,
             requestOptions: requestOptions,

@@ -3,7 +3,7 @@ import { camelCase, lowerFirst, upperFirst } from "lodash-es";
 
 import { AstNode, Writer } from "./core";
 
-const BuiltinType = {
+const SwiftType = {
     String: {
         type: "string",
         symbolName: "String"
@@ -40,13 +40,14 @@ const BuiltinType = {
         type: "void",
         symbolName: "Void"
     },
+    // TODO(kafkas): Any doesn't seem to be under the Swift scope i.e. Swift.Any is not valid so we probably wanna move this.
     Any: {
         type: "any",
         symbolName: "Any"
     }
 } as const;
 
-type BuiltinType = (typeof BuiltinType)[keyof typeof BuiltinType];
+type SwiftType = (typeof SwiftType)[keyof typeof SwiftType];
 
 export const FoundationType = {
     Data: {
@@ -121,7 +122,7 @@ type JsonValue = {
 };
 
 type InternalType =
-    | BuiltinType
+    | SwiftType
     | FoundationType
     | Tuple
     | Array_
@@ -414,52 +415,52 @@ export class Type extends AstNode {
         }
     }
 
-    public static primitiveSymbolNames(): string[] {
-        return values(BuiltinType).map((primitive) => primitive.symbolName);
+    public static primitiveSymbolNames() {
+        return values(SwiftType).map((primitive) => primitive.symbolName);
     }
 
-    public static foundationSymbolNames(): string[] {
+    public static foundationSymbolNames() {
         return values(FoundationType).map((foundation) => foundation.symbolName);
     }
 
     public static string(): Type {
-        return new this(BuiltinType.String);
+        return new this(SwiftType.String);
     }
 
     public static bool(): Type {
-        return new this(BuiltinType.Bool);
+        return new this(SwiftType.Bool);
     }
 
     public static int(): Type {
-        return new this(BuiltinType.Int);
+        return new this(SwiftType.Int);
     }
 
     public static uint(): Type {
-        return new this(BuiltinType.UInt);
+        return new this(SwiftType.UInt);
     }
 
     public static uint64(): Type {
-        return new this(BuiltinType.UInt64);
+        return new this(SwiftType.UInt64);
     }
 
     public static int64(): Type {
-        return new this(BuiltinType.Int64);
+        return new this(SwiftType.Int64);
     }
 
     public static float(): Type {
-        return new this(BuiltinType.Float);
+        return new this(SwiftType.Float);
     }
 
     public static double(): Type {
-        return new this(BuiltinType.Double);
+        return new this(SwiftType.Double);
     }
 
     public static void(): Type {
-        return new this(BuiltinType.Void);
+        return new this(SwiftType.Void);
     }
 
     public static any(): Type {
-        return new this(BuiltinType.Any);
+        return new this(SwiftType.Any);
     }
 
     public static data(): Type {

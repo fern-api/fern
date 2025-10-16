@@ -49,7 +49,7 @@ import UndiscriminatedUnions
             Key.keyType(
                 .value
             ): "exampleValue", 
-            Key.json(
+            Key.jsonValue(
                 .default
             ): "exampleDefault"
         ]
