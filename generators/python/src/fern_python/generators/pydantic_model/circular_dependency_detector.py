@@ -1,6 +1,6 @@
 from __future__ import annotations
 
-from typing import Dict, List, Set, TYPE_CHECKING
+from typing import TYPE_CHECKING, Dict, List, Set
 
 if TYPE_CHECKING:
     import fern.ir.resources as ir_types

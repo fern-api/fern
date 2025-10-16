@@ -66,6 +66,14 @@ fixtures:
         pydantic_config:
           version: v2
       outputFolder: no-custom-config
+    - customConfig:
+        pydantic_config:
+          version: v1
+      outputFolder: pydantic-v1
+    - customConfig:
+        pydantic_config:
+          version: v1_on_v2
+      outputFolder: pydantic-v1-on-v2
   file-download:
     - customConfig:
         use_inheritance_for_extended_models: false

@@ -1,26 +1,26 @@
 from __future__ import annotations
 
-from typing import TYPE_CHECKING, Literal, Tuple, Set
+from typing import TYPE_CHECKING, Literal, Set, Tuple
 
 if TYPE_CHECKING:
     from ..context.pydantic_generator_context import PydanticGeneratorContext
 
+import fern.ir.resources as ir_types
 from ..context.pydantic_generator_context_impl import PydanticGeneratorContextImpl
+from .circular_dependency_detector import CircularDependencyDetector
 from .custom_config import PydanticModelCustomConfig
 from .type_declaration_handler import (
     TypeDeclarationHandler,
     TypeDeclarationSnippetGeneratorBuilder,
 )
 from .type_declaration_referencer import TypeDeclarationReferencer
-from .circular_dependency_detector import CircularDependencyDetector
+from fern.generator_exec.config import GeneratorConfig
+
 from fern_python.cli.abstract_generator import AbstractGenerator
-from fern_python.codegen import Project, Filepath, AST
+from fern_python.codegen import Filepath, Project
 from fern_python.generator_exec_wrapper import GeneratorExecWrapper
 from fern_python.generators.pydantic_model.model_utilities import can_be_fern_model
 from fern_python.snippet import SnippetRegistry, SnippetWriter
-
-import fern.ir.resources as ir_types
-from fern.generator_exec.config import GeneratorConfig
 
 
 class PydanticModelGenerator(AbstractGenerator):
