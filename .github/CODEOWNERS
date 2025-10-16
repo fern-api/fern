@@ -1,15 +1,15 @@
 # Specific rules for generators
-generators/go/* @dsinghvi @tjb9dc
-generators/go-v2/* @dsinghvi @tjb9dc
+generators/go/* @musicpulpite @tjb9dc
+generators/go-v2/* @musicpulpite @tjb9dc
 generators/php/* @dsinghvi @tjb9dc
 generators/commons/* @Swimburger @tjb9dc
-generators/csharp/* @Swimburger @tjb9dc
+generators/csharp/* @fearthecowboy @Swimburger @tjb9dc
 generators/typescript/* @Swimburger @tjb9dc
 generators/typescript-v2/* @Swimburger @tjb9dc
 generators/java/* @tstanmay13 @tjb9dc
-generators/python/* @dsinghvi @tjb9dc
-generators/python-v2/* @dsinghvi @tjb9dc
-generators/ruby/* @dsinghvi @tjb9dc
+generators/python/* @tjb9dc
+generators/python-v2/* @tjb9dc
+generators/ruby/* @tjb9dc
 generators/swift/* @kafkas @tjb9dc
 generators/postman/* @dsinghvi @tjb9dc
 generators/openapi/* @dsinghvi @tjb9dc
