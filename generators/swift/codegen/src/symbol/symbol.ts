@@ -1,4 +1,4 @@
-import { TypeSymbolShape } from "./target-symbol-registry";
+import { TypeSymbolShape } from "./symbol-registry";
 
 export type SwiftTypeSymbolName =
     | "String"
