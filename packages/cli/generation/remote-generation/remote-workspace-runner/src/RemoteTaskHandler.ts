@@ -8,7 +8,7 @@ import axios from "axios";
 import chalk from "chalk";
 import decompress from "decompress";
 import { createWriteStream } from "fs";
-import { mkdir, rm } from "fs/promises";
+import { mkdir, rm, writeFile } from "fs/promises";
 import path from "path";
 import { pipeline } from "stream/promises";
 import terminalLink from "terminal-link";
@@ -101,7 +101,8 @@ export class RemoteTaskHandler {
                         await downloadFilesForTask({
                             s3PreSignedReadUrl: finishedStatus.s3PreSignedReadUrlV2,
                             absolutePathToLocalOutput,
-                            context: this.context
+                            context: this.context,
+                            generatorInvocation: this.generatorInvocation
                         });
                     }
                 }
@@ -152,16 +153,24 @@ export class RemoteTaskHandler {
 async function downloadFilesForTask({
     s3PreSignedReadUrl,
     absolutePathToLocalOutput,
-    context
+    context,
+    generatorInvocation
 }: {
     s3PreSignedReadUrl: string;
     absolutePathToLocalOutput: AbsoluteFilePath;
     context: InteractiveTaskContext;
+    generatorInvocation: generatorsYml.GeneratorInvocation;
 }) {
     try {
         await downloadZipForTask({
             s3PreSignedReadUrl,
             absolutePathToLocalOutput
+        });
+
+        await writeFernMetadata({
+            outputDirectory: absolutePathToLocalOutput,
+            generatorInvocation,
+            context
         });
 
         context.logger.info(chalk.green(`Downloaded to ${absolutePathToLocalOutput}`));
@@ -208,4 +217,42 @@ function convertLogLevel(logLevel: FernFiddle.LogLevel): LogLevel {
         default:
             return LogLevel.Info;
     }
+}
+
+function getCliVersion(): string {
+    return process.env.CLI_VERSION ?? "unknown";
+}
+
+interface FernMetadata {
+    cliVersion: string;
+    generatorName: string;
+    generatorVersion: string;
+    generatorsYml?: {
+        config?: unknown;
+    };
+}
+
+async function writeFernMetadata({
+    outputDirectory,
+    generatorInvocation,
+    context
+}: {
+    outputDirectory: AbsoluteFilePath;
+    generatorInvocation: generatorsYml.GeneratorInvocation;
+    context: InteractiveTaskContext;
+}): Promise<void> {
+    const cliVersion = getCliVersion();
+
+    const metadata: FernMetadata = {
+        cliVersion,
+        generatorName: generatorInvocation.name,
+        generatorVersion: generatorInvocation.version,
+        generatorsYml: {
+            config: generatorInvocation.config
+        }
+    };
+
+    const metadataPath = join(outputDirectory, RelativeFilePath.of(".fern.metadata.json"));
+    await writeFile(metadataPath, JSON.stringify(metadata, null, 2));
+    context.logger.debug(`Wrote Fern metadata to: ${metadataPath}`);
 }
