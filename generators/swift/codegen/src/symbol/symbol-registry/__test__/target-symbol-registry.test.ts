@@ -1,10 +1,10 @@
-import { TargetSymbolRegistry } from "../target-symbol-registry";
+import { SymbolRegistry } from "../symbol-registry";
 
-describe("TargetSymbolRegistry", () => {
+describe("SymbolRegistry", () => {
     describe("for no name collisions with Swift types", () => {
         describe("correctly resolves type reference to Swift type", () => {
             it("from module scope", () => {
-                const registry = TargetSymbolRegistry.create();
+                const registry = SymbolRegistry.create();
                 const moduleSymbol = registry.registerSourceModule("Acme");
 
                 registry.registerSourceModuleType("User", { type: "struct" });
@@ -19,7 +19,7 @@ describe("TargetSymbolRegistry", () => {
             });
 
             it("from a custom type scope", () => {
-                const registry = TargetSymbolRegistry.create();
+                const registry = SymbolRegistry.create();
                 registry.registerSourceModule("Acme");
 
                 const userSymbol = registry.registerSourceModuleType("User", { type: "struct" });
@@ -34,7 +34,7 @@ describe("TargetSymbolRegistry", () => {
             });
 
             it("from a nested custom type scope", () => {
-                const registry = TargetSymbolRegistry.create();
+                const registry = SymbolRegistry.create();
                 registry.registerSourceModule("Acme");
 
                 const userSymbol = registry.registerSourceModuleType("User", { type: "struct" });
@@ -57,7 +57,7 @@ describe("TargetSymbolRegistry", () => {
     describe("for a top level type name collision with a Swift type", () => {
         describe("correctly resolves type reference to custom type", () => {
             it("from module scope", () => {
-                const registry = TargetSymbolRegistry.create();
+                const registry = SymbolRegistry.create();
                 const moduleSymbol = registry.registerSourceModule("Acme");
 
                 registry.registerSourceModuleType("User", { type: "struct" });
@@ -72,7 +72,7 @@ describe("TargetSymbolRegistry", () => {
             });
 
             it("from a custom type scope", () => {
-                const registry = TargetSymbolRegistry.create();
+                const registry = SymbolRegistry.create();
                 registry.registerSourceModule("Acme");
 
                 const userSymbol = registry.registerSourceModuleType("User", { type: "struct" });
@@ -87,7 +87,7 @@ describe("TargetSymbolRegistry", () => {
             });
 
             it("from a nested custom type scope", () => {
-                const registry = TargetSymbolRegistry.create();
+                const registry = SymbolRegistry.create();
                 registry.registerSourceModule("Acme");
 
                 const userSymbol = registry.registerSourceModuleType("User", { type: "struct" });
@@ -110,7 +110,7 @@ describe("TargetSymbolRegistry", () => {
 
         describe("correctly resolves type reference to Swift type", () => {
             it("from module scope", () => {
-                const registry = TargetSymbolRegistry.create();
+                const registry = SymbolRegistry.create();
                 const moduleSymbol = registry.registerSourceModule("Acme");
 
                 registry.registerSourceModuleType("User", { type: "struct" });
@@ -125,7 +125,7 @@ describe("TargetSymbolRegistry", () => {
             });
 
             it("from a custom type scope", () => {
-                const registry = TargetSymbolRegistry.create();
+                const registry = SymbolRegistry.create();
                 registry.registerSourceModule("Acme");
 
                 const userSymbol = registry.registerSourceModuleType("User", { type: "struct" });
@@ -140,7 +140,7 @@ describe("TargetSymbolRegistry", () => {
             });
 
             it("from a nested custom type scope", () => {
-                const registry = TargetSymbolRegistry.create();
+                const registry = SymbolRegistry.create();
                 registry.registerSourceModule("Acme");
 
                 const userSymbol = registry.registerSourceModuleType("User", { type: "struct" });
@@ -164,7 +164,7 @@ describe("TargetSymbolRegistry", () => {
     describe("for a nested type name collision with a Foundation type", () => {
         describe("correctly resolves type reference to custom type", () => {
             it("from module scope", () => {
-                const registry = TargetSymbolRegistry.create();
+                const registry = SymbolRegistry.create();
                 const moduleSymbol = registry.registerSourceModule("Acme");
                 registry.registerSourceModuleType("User", { type: "struct" });
                 const postSymbol = registry.registerSourceModuleType("Post", { type: "struct" });
@@ -181,7 +181,7 @@ describe("TargetSymbolRegistry", () => {
             });
 
             it("from a custom type scope", () => {
-                const registry = TargetSymbolRegistry.create();
+                const registry = SymbolRegistry.create();
                 registry.registerSourceModule("Acme");
                 const userSymbol = registry.registerSourceModuleType("User", { type: "struct" });
                 const postSymbol = registry.registerSourceModuleType("Post", { type: "struct" });
@@ -198,7 +198,7 @@ describe("TargetSymbolRegistry", () => {
             });
 
             it("from a sibling custom type scope", () => {
-                const registry = TargetSymbolRegistry.create();
+                const registry = SymbolRegistry.create();
                 registry.registerSourceModule("Acme");
                 registry.registerSourceModuleType("User", { type: "struct" });
                 const postSymbol = registry.registerSourceModuleType("Post", { type: "struct" });
@@ -220,7 +220,7 @@ describe("TargetSymbolRegistry", () => {
             });
 
             it("from a nested custom type in a different scope", () => {
-                const registry = TargetSymbolRegistry.create();
+                const registry = SymbolRegistry.create();
                 registry.registerSourceModule("Acme");
                 const userSymbol = registry.registerSourceModuleType("User", { type: "struct" });
                 const emailSymbolId = registry.registerNestedType({
@@ -244,7 +244,7 @@ describe("TargetSymbolRegistry", () => {
 
         describe("correctly resolves type reference to Foundation type", () => {
             it("from module scope", () => {
-                const registry = TargetSymbolRegistry.create();
+                const registry = SymbolRegistry.create();
                 const moduleSymbol = registry.registerSourceModule("Acme");
                 registry.registerSourceModuleType("User", { type: "struct" });
                 const postSymbol = registry.registerSourceModuleType("Post", { type: "struct" });
@@ -261,7 +261,7 @@ describe("TargetSymbolRegistry", () => {
             });
 
             it("from a custom type scope", () => {
-                const registry = TargetSymbolRegistry.create();
+                const registry = SymbolRegistry.create();
                 registry.registerSourceModule("Acme");
                 const userSymbol = registry.registerSourceModuleType("User", { type: "struct" });
                 const postSymbol = registry.registerSourceModuleType("Post", { type: "struct" });
@@ -278,7 +278,7 @@ describe("TargetSymbolRegistry", () => {
             });
 
             it("from a sibling custom type scope", () => {
-                const registry = TargetSymbolRegistry.create();
+                const registry = SymbolRegistry.create();
                 registry.registerSourceModule("Acme");
                 registry.registerSourceModuleType("User", { type: "struct" });
                 const postSymbol = registry.registerSourceModuleType("Post", { type: "struct" });
@@ -300,7 +300,7 @@ describe("TargetSymbolRegistry", () => {
             });
 
             it("from a nested custom type in a different scope", () => {
-                const registry = TargetSymbolRegistry.create();
+                const registry = SymbolRegistry.create();
                 registry.registerSourceModule("Acme");
                 const userSymbol = registry.registerSourceModuleType("User", { type: "struct" });
                 const emailSymbol = registry.registerNestedType({
