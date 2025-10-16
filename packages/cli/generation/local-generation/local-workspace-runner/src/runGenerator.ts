@@ -6,7 +6,8 @@ import { TaskContext } from "@fern-api/task-context";
 import { FernWorkspace, IdentifiableSource } from "@fern-api/workspace-loader";
 import { FernGeneratorExec } from "@fern-fern/generator-exec-sdk";
 import { GeneratorConfig } from "@fern-fern/generator-exec-sdk/serialization";
-import { mkdir, writeFile } from "fs/promises";
+import { readFile as fsReadFile, mkdir, writeFile } from "fs/promises";
+import * as yaml from "js-yaml";
 import * as path from "path";
 import { join } from "path";
 import tmp, { DirectoryResult } from "tmp-promise";
@@ -204,6 +205,12 @@ export async function writeFilesToDiskAndRunGenerator({
         runner
     });
 
+    await writeFernMetadata({
+        outputDirectory: absolutePathToTmpOutputDirectory,
+        generatorInvocation,
+        context
+    });
+
     const taskHandler = new LocalTaskHandler({
         context,
         absolutePathToLocalOutput,
@@ -263,4 +270,53 @@ function getSourceConfig(workspace: FernWorkspace): SourceConfig {
 
 function getDockerDestinationForSource(source: IdentifiableSource): string {
     return `${DOCKER_SOURCES_DIRECTORY}/${source.id}`;
+}
+
+async function getCliVersion(): Promise<string> {
+    try {
+        const versionsYmlPath = path.join(__dirname, "../../../../../../cli/versions.yml");
+        const versionsYmlContent = await fsReadFile(versionsYmlPath, "utf-8");
+        const versions = yaml.load(versionsYmlContent) as Array<{ version: string }>;
+
+        if (versions && versions.length > 0 && versions[0]?.version) {
+            return versions[0].version;
+        }
+    } catch (error) {
+        // Intentionally empty - fallback to "unknown" version if file cannot be read
+    }
+    return "unknown";
+}
+
+interface FernMetadata {
+    cliVersion: string;
+    generatorName: string;
+    generatorVersion: string;
+    generatorsYml?: {
+        config?: unknown;
+    };
+}
+
+async function writeFernMetadata({
+    outputDirectory,
+    generatorInvocation,
+    context
+}: {
+    outputDirectory: AbsoluteFilePath;
+    generatorInvocation: generatorsYml.GeneratorInvocation;
+    context: TaskContext;
+}): Promise<void> {
+    const cliVersion = await getCliVersion();
+
+    const metadata: FernMetadata = {
+        cliVersion,
+        generatorName: generatorInvocation.name,
+        generatorVersion: generatorInvocation.version,
+        generatorsYml: {
+            config: generatorInvocation.config
+        }
+    };
+
+    const metadataPath = join(outputDirectory, ".fern.metadata.json");
+    await writeFile(metadataPath, JSON.stringify(metadata, null, 2));
+    context.logger.debug(`Wrote Fern metadata to: ${metadataPath}`);
 }

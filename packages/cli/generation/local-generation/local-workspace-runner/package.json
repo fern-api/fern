@@ -63,12 +63,14 @@
     "@fern-fern/generator-exec-sdk": "^0.0.1167",
     "chalk": "^5.3.0",
     "decompress": "^4.2.1",
+    "js-yaml": "^4.1.0",
     "prettier2": "npm:prettier@^2.7.1",
     "tmp-promise": "^3.0.3"
   },
   "devDependencies": {
     "@fern-api/configs": "workspace:*",
     "@types/decompress": "^4.2.7",
+    "@types/js-yaml": "^4.0.5",
     "@types/node": "18.15.3",
     "@types/prettier2": "npm:@types/prettier@^2.7.3",
     "depcheck": "^1.4.7",
