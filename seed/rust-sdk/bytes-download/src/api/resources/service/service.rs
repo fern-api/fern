@@ -12,13 +12,19 @@ impl ServiceClient {
         })
     }
 
+    pub async fn simple(&self, options: Option<RequestOptions>) -> Result<(), ApiError> {
+        self.http_client
+            .execute_request(Method::POST, "snippet", None, None, options)
+            .await
+    }
+
     pub async fn download(
         &self,
         id: &String,
         options: Option<RequestOptions>,
     ) -> Result<Vec<u8>, ApiError> {
         self.http_client
-            .execute_request(
+            .execute_bytes_request(
                 Method::GET,
                 &format!("download-content/{}", id),
                 None,

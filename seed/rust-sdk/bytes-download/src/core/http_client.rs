@@ -44,6 +44,13 @@ impl HttpClient {
             request = request.query(&params);
         }
 
+        // Apply additional query parameters from options
+        if let Some(opts) = &options {
+            if !opts.additional_query_params.is_empty() {
+                request = request.query(&opts.additional_query_params);
+            }
+        }
+
         // Apply body if provided
         if let Some(body) = body {
             request = request.json(&body);
@@ -164,5 +171,49 @@ impl HttpClient {
     {
         let text = response.text().await.map_err(ApiError::Network)?;
         serde_json::from_str(&text).map_err(ApiError::Serialization)
+    }
+
+    /// Execute a request and return raw bytes (for file downloads)
+    pub async fn execute_bytes_request(
+        &self,
+        method: Method,
+        path: &str,
+        body: Option<serde_json::Value>,
+        query_params: Option<Vec<(String, String)>>,
+        options: Option<RequestOptions>,
+    ) -> Result<Vec<u8>, ApiError> {
+        let url = join_url(&self.config.base_url, path);
+        let mut request = self.client.request(method, &url);
+
+        // Apply query parameters if provided
+        if let Some(params) = query_params {
+            request = request.query(&params);
+        }
+
+        // Apply additional query parameters from options
+        if let Some(opts) = &options {
+            if !opts.additional_query_params.is_empty() {
+                request = request.query(&opts.additional_query_params);
+            }
+        }
+
+        // Apply body if provided
+        if let Some(body) = body {
+            request = request.json(&body);
+        }
+
+        // Build the request
+        let mut req = request.build().map_err(|e| ApiError::Network(e))?;
+
+        // Apply authentication and headers
+        self.apply_auth_headers(&mut req, &options)?;
+        self.apply_custom_headers(&mut req, &options)?;
+
+        // Execute with retries
+        let response = self.execute_with_retries(req, &options).await?;
+
+        // Return raw bytes without JSON parsing
+        let bytes = response.bytes().await.map_err(ApiError::Network)?;
+        Ok(bytes.to_vec())
     }
 }
