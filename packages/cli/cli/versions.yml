@@ -1,6 +1,14 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
 - changelogEntry:
     - summary: |
+        Fix ts local github generation to match remote generation.
+      type: feat
+  irVersion: 61
+  createdAt: "2025-10-16"
+  version: 0.92.1
+
+- changelogEntry:
+    - summary: |
         For debugging purposes, generating a docs preview via `fern generate --docs --preview`, it is now possible to specify `--skip-upload` to 
         skip the asset uploading step.
       type: feat
