@@ -561,6 +561,11 @@ function addGenerateCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext)
                     boolean: true,
                     description: "Prompt for confirmation before generating (use --no-prompt to skip)",
                     default: true
+                })
+                .option("skip-upload", {
+                    boolean: true,
+                    description: "Skip asset upload step and generate fake links for preview",
+                    default: false
                 }),
         async (argv) => {
             if (argv.api != null && argv.docs != null) {
@@ -568,6 +573,12 @@ function addGenerateCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext)
             }
             if (argv.local && argv.preview) {
                 return cliContext.failWithoutThrowing("The --local flag is incompatible with --preview.");
+            }
+            if (argv.skipUpload && !argv.preview) {
+                return cliContext.failWithoutThrowing("The --skip-upload flag can only be used with --preview.");
+            }
+            if (argv.skipUpload && argv.docs == null) {
+                return cliContext.failWithoutThrowing("The --skip-upload flag can only be used with --docs.");
             }
             if (argv.api != null) {
                 return await generateAPIWorkspaces({
@@ -611,7 +622,8 @@ function addGenerateCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext)
                     brokenLinks: argv.brokenLinks,
                     strictBrokenLinks: argv.strictBrokenLinks,
                     disableTemplates: argv.disableSnippets,
-                    noPrompt: !argv.prompt
+                    noPrompt: !argv.prompt,
+                    skipUpload: argv.skipUpload
                 });
             }
             // default to loading api workspace to preserve legacy behavior

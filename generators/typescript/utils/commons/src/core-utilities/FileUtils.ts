@@ -19,7 +19,7 @@ export const MANIFEST: CoreUtility.Manifest = {
     pathInCoreUtilities: { nameOnDisk: "file", exportDeclaration: { namespaceExport: "file" } },
     dependsOn: [],
     getFilesPatterns: () => ({
-        patterns: ["src/core/file/**", "tests/unit/file/**"]
+        patterns: ["src/core/file/**", "tests/unit/file/**", "tests/unit/test-file.txt"]
     })
 };
 

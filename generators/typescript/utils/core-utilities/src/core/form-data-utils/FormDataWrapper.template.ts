@@ -1,6 +1,7 @@
-<% if (formDataSupport === "Node16") { %>
+import { toJson } from "../../core/json";
 import { RUNTIME } from "../runtime/index";
-
+import { toMultipartDataPart, type Uploadable } from "../../core/file/index";
+<% if (formDataSupport === "Node16") { %>
 <% if (streamType === "wrapper") { %>
 export async function toReadableStream(encoder: import("form-data-encoder").FormDataEncoder): Promise<import("readable-stream").Readable> {
   return (await import("readable-stream")).Readable.from(encoder)
@@ -31,36 +32,24 @@ interface FormDataRequest<Body> {
     duplex?: "half";
 }
 
-function isNamedValue(value: unknown): value is { name: string } {
-    return typeof value === "object" && value != null && "name" in value;
-}
-function isPathedValue(value: unknown): value is { path: unknown } {
-    return typeof value === "object" && value != null && "path" in value;
-}
-
-function getLastPathSegment(pathStr: string): string {
-    const lastForwardSlash = pathStr.lastIndexOf("/");
-    const lastBackSlash = pathStr.lastIndexOf("\\");
-    const lastSlashIndex = Math.max(lastForwardSlash, lastBackSlash);
-    return lastSlashIndex >= 0 ? pathStr.substring(lastSlashIndex + 1) : pathStr;
-}
-
 export interface CrossPlatformFormData {
     setup(): Promise<void>;
 
     append(key: string, value: unknown): void;
 
-    appendFile(key: string, value: unknown, fileName?: string): Promise<void>;
+    appendFile(key: string, value: Uploadable): Promise<void>;
 
     getRequest(): MaybePromise<FormDataRequest<unknown>>;
 }
 
 export async function newFormData(): Promise<CrossPlatformFormData> {
     let formdata: CrossPlatformFormData;
-    if (RUNTIME.type === "node" && RUNTIME.parsedVersion != null && RUNTIME.parsedVersion >= 18) {
-        formdata = new Node18FormData();
-    } else if (RUNTIME.type === "node") {
-        formdata = new Node16FormData();
+    if (RUNTIME.type === "node") {
+        if (RUNTIME.parsedVersion != null && RUNTIME.parsedVersion >= 18) {
+            formdata = new Node18FormData();
+        } else {
+            formdata = new Node16FormData();
+        }
     } else {
         formdata = new WebFormData();
     }
@@ -70,7 +59,7 @@ export async function newFormData(): Promise<CrossPlatformFormData> {
 
 export type Node18FormDataFd =
     | {
-          append(name: string, value: unknown, fileName?: string): void;
+          append(name: string, value: unknown, filename?: string): void;
       }
     | undefined;
 
@@ -88,31 +77,18 @@ export class Node18FormData implements CrossPlatformFormData {
         this.fd?.append(key, value);
     }
 
-    private getFileName(value: any, filename?: string): string | undefined {
-        if (filename != null) {
-            return filename;
-        }
-        if (isNamedValue(value)) {
-            return value.name;
-        }
-        if (isPathedValue(value) && value.path) {
-            return getLastPathSegment(value.path.toString());
-        }
-        return undefined;
-    }
+    public async appendFile(key: string, value: Uploadable): Promise<void> {
+        const { data, filename } = await toMultipartDataPart(value);
 
-    public async appendFile(key: string, value: unknown, fileName?: string): Promise<void> {
-        fileName = this.getFileName(value, fileName);
-
-        if (value instanceof Blob) {
-            this.fd?.append(key, value, fileName);
+        if (data instanceof Blob) {
+            this.fd?.append(key, data, filename);
         } else {
             this.fd?.append(key, {
                 type: undefined,
-                name: fileName,
+                name: filename,
                 [Symbol.toStringTag]: "File",
                 stream() {
-                    return value;
+                    return data;
                 }
             });
         }
@@ -162,33 +138,20 @@ export class Node16FormData implements CrossPlatformFormData {
         this.fd?.append(key, value);
     }
 
-    private getFileName(value: any, filename?: string): string | undefined {
-        if (filename != null) {
-            return filename;
-        }
-        if (isNamedValue(value)) {
-            return value.name;
-        }
-        if (isPathedValue(value) && value.path) {
-            return getLastPathSegment(value.path.toString());
-        }
-        return undefined;
-    }
-
-    public async appendFile(key: string, value: unknown, fileName?: string): Promise<void> {
-        fileName = this.getFileName(value, fileName);
+    public async appendFile(key: string, value: Uploadable): Promise<void> {
+        const { data, filename } = await toMultipartDataPart(value);
 
         let bufferedValue;
-        if (value instanceof Blob) {
-            bufferedValue = Buffer.from(await (value as any).arrayBuffer());
+        if (data instanceof Blob) {
+            bufferedValue = Buffer.from(await (data as any).arrayBuffer());
         } else {
-            bufferedValue = value;
+            bufferedValue = data;
         }
 
-        if (fileName == null) {
+        if (filename == null) {
             this.fd?.append(key, bufferedValue);
         } else {
-            this.fd?.append(key, bufferedValue, { filename: fileName });
+            this.fd?.append(key, bufferedValue, { filename });
         }
     }
 
@@ -200,7 +163,7 @@ export class Node16FormData implements CrossPlatformFormData {
     }
 }
 
-export type WebFormDataFd = { append(name: string, value: string | Blob, fileName?: string): void } | undefined;
+export type WebFormDataFd = { append(name: string, value: string | Blob, filename?: string): void } | undefined;
 
 /**
  * Form Data Implementation for Web
@@ -216,60 +179,70 @@ export class WebFormData implements CrossPlatformFormData {
         this.fd?.append(key, value);
     }
 
-    private getFileName(value: any, filename?: string): string | undefined {
-        if (filename != null) {
-            return filename;
-        }
-        if (isNamedValue(value)) {
-            return value.name;
-        }
-        if (isPathedValue(value) && value.path) {
-            return getLastPathSegment(value.path.toString());
-        }
-        return undefined;
-    }
+    public async appendFile(key: string, value: Uploadable): Promise<void> {
+        const { data, filename, contentType } = await toMultipartDataPart(value);
 
-    public async appendFile(key: string, value: any, fileName?: string): Promise<void> {
-        fileName = this.getFileName(value, fileName);
-
-        if (value instanceof Blob) {
-            this.fd?.append(key, value, fileName);
+        if (data instanceof Blob) {
+            this.fd?.append(key, data, filename);
             return;
         }
-        this.fd?.append(key, new Blob([value]), fileName);
+        this.fd?.append(key, await convertToBlob(data, contentType), filename);
     }
 
     public getRequest(): FormDataRequest<WebFormDataFd> {
         return {
             body: this.fd,
-            headers: {}
+            headers: {},
         };
     }
 }
 <% } else { %>
-import { toJson } from "../../core/json";
-import { RUNTIME } from "../runtime/index";
 
-type NamedValue = {
-    name: string;
-} & unknown;
+interface FormDataRequest<Body> {
+    body: Body;
+    headers: Record<string, string>;
+    duplex?: "half";
+}
 
-type PathedValue = {
-    path: string | { toString(): string };
-} & unknown;
+export async function newFormData(): Promise<FormDataWrapper> {
+    return new FormDataWrapper();
+}
+
+export class FormDataWrapper {
+    private fd: FormData = new FormData();
+
+    public async setup(): Promise<void> {
+        // noop
+    }
+
+    public append(key: string, value: unknown): void {
+        this.fd.append(key, String(value));
+    }
+
+    public async appendFile(key: string, value: Uploadable): Promise<void> {
+        const { data, filename, contentType } = await toMultipartDataPart(value);
+        const blob = await convertToBlob(data, contentType);
+        if (filename) {
+            this.fd.append(key, blob, filename);
+        } else {
+            this.fd.append(key, blob);
+        }
+    }
+
+    public getRequest(): FormDataRequest<FormData> {
+        return {
+            body: this.fd,
+            headers: {},
+            duplex: "half" as const,
+        };
+    }
+}
+<% } %>
 
 type StreamLike = {
     read?: () => unknown;
     pipe?: (dest: unknown) => unknown;
 } & unknown;
-
-function isNamedValue(value: unknown): value is NamedValue {
-    return typeof value === "object" && value != null && "name" in value;
-}
-
-function isPathedValue(value: unknown): value is PathedValue {
-    return typeof value === "object" && value != null && "path" in value;
-}
 
 function isStreamLike(value: unknown): value is StreamLike {
     return typeof value === "object" && value != null && ("read" in value || "pipe" in value);
@@ -285,19 +258,6 @@ function isBuffer(value: unknown): value is Buffer {
 
 function isArrayBufferView(value: unknown): value is ArrayBufferView {
     return ArrayBuffer.isView(value);
-}
-
-interface FormDataRequest<Body> {
-    body: Body;
-    headers: Record<string, string>;
-    duplex?: "half";
-}
-
-function getLastPathSegment(pathStr: string): string {
-    const lastForwardSlash = pathStr.lastIndexOf("/");
-    const lastBackSlash = pathStr.lastIndexOf("\\");
-    const lastSlashIndex = Math.max(lastForwardSlash, lastBackSlash);
-    return lastSlashIndex >= 0 ? pathStr.substring(lastSlashIndex + 1) : pathStr;
 }
 
 async function streamToBuffer(stream: unknown): Promise<Buffer> {
@@ -338,87 +298,40 @@ async function streamToBuffer(stream: unknown): Promise<Buffer> {
         return Buffer.from(result);
     }
 
-    throw new Error("Unsupported stream type: " + typeof stream + ". Expected Node.js Readable stream or Web ReadableStream.");
+    throw new Error(
+        "Unsupported stream type: " + typeof stream + ". Expected Node.js Readable stream or Web ReadableStream.",
+    );
 }
 
-export async function newFormData(): Promise<FormDataWrapper> {
-    return new FormDataWrapper();
+async function convertToBlob(value: unknown, contentType?: string): Promise<Blob> {
+    if (isStreamLike(value) || isReadableStream(value)) {
+        const buffer = await streamToBuffer(value);
+        return new Blob([buffer], { type: contentType });
+    }
+
+    if (value instanceof Blob) {
+        return value;
+    }
+
+    if (isBuffer(value)) {
+        return new Blob([value], { type: contentType });
+    }
+
+    if (value instanceof ArrayBuffer) {
+        return new Blob([value], { type: contentType });
+    }
+
+    if (isArrayBufferView(value)) {
+        return new Blob([value], { type: contentType });
+    }
+
+    if (typeof value === "string") {
+        return new Blob([value], { type: contentType });
+    }
+
+    if (typeof value === "object" && value !== null) {
+        return new Blob([toJson(value)], { type: contentType ?? "application/json" });
+    }
+
+    return new Blob([String(value)], { type: contentType });
 }
-
-export class FormDataWrapper {
-    private fd: FormData = new FormData();
-
-    public async setup(): Promise<void> {
-        // noop
-    }
-
-    public append(key: string, value: unknown): void {
-        this.fd.append(key, String(value));
-    }
-
-    private getFileName(value: unknown, filename?: string): string | undefined {
-        if (filename != null) {
-            return filename;
-        }
-        if (isNamedValue(value)) {
-            return value.name;
-        }
-        if (isPathedValue(value) && value.path) {
-            return getLastPathSegment(value.path.toString());
-        }
-        return undefined;
-    }
-
-    private async convertToBlob(value: unknown): Promise<Blob> {
-        if (isStreamLike(value) || isReadableStream(value)) {
-            const buffer = await streamToBuffer(value);
-            return new Blob([buffer]);
-        }
-
-        if (value instanceof Blob) {
-            return value;
-        }
-
-        if (isBuffer(value)) {
-            return new Blob([value]);
-        }
-
-        if (value instanceof ArrayBuffer) {
-            return new Blob([value]);
-        }
-
-        if (isArrayBufferView(value)) {
-            return new Blob([value]);
-        }
-
-        if (typeof value === "string") {
-            return new Blob([value]);
-        }
-
-        if (typeof value === "object" && value !== null) {
-            return new Blob([toJson(value)], { type: "application/json" });
-        }
-
-        return new Blob([String(value)]);
-    }
-
-    public async appendFile(key: string, value: unknown, fileName?: string): Promise<void> {
-        fileName = this.getFileName(value, fileName);
-        const blob = await this.convertToBlob(value);
-
-        if (fileName) {
-            this.fd.append(key, blob, fileName);
-        } else {
-            this.fd.append(key, blob);
-        }
-    }
-
-    public getRequest(): FormDataRequest<FormData> {
-        return {
-            body: this.fd,
-            headers: {},
-            duplex: "half" as const,
-        };
-    }
-}
-<% } %>

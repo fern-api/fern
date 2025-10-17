@@ -1909,8 +1909,8 @@ importers:
         specifier: workspace:*
         version: link:../codegen
       '@fern-fern/ir-sdk':
-        specifier: ^59.7.0
-        version: 59.7.0
+        specifier: ^61.4.0
+        version: 61.4.0
       lodash-es:
         specifier: ^4.17.21
         version: 4.17.21
@@ -2026,8 +2026,8 @@ importers:
         specifier: ^0.0.1167
         version: 0.0.1167
       '@fern-fern/ir-sdk':
-        specifier: ^59.7.0
-        version: 59.7.0
+        specifier: ^61.4.0
+        version: 61.4.0
       '@types/node':
         specifier: 18.15.3
         version: 18.15.3
@@ -2087,8 +2087,8 @@ importers:
         specifier: ^0.0.1167
         version: 0.0.1167
       '@fern-fern/ir-sdk':
-        specifier: ^59.7.0
-        version: 59.7.0
+        specifier: ^61.4.0
+        version: 61.4.0
       '@types/node':
         specifier: 18.15.3
         version: 18.15.3
@@ -7744,7 +7744,7 @@ importers:
     devDependencies:
       vitest:
         specifier: ^2.1.9
-        version: 2.1.9(@types/node@18.19.129)(jsdom@20.0.3)(msw@2.11.3(@types/node@18.19.129)(typescript@5.8.3))(sass@1.93.2)(terser@5.44.0)
+        version: 2.1.9(@types/node@18.19.129)(jsdom@20.0.3)(msw@2.11.3(@types/node@18.19.129)(typescript@5.9.2))(sass@1.93.2)(terser@5.44.0)
 
   packages/core:
     dependencies:
@@ -9435,6 +9435,9 @@ packages:
 
   '@fern-fern/ir-sdk@61.2.0':
     resolution: {integrity: sha512-QbFRDUsD4II/psRlsv/pXXWZJ90euRfG6htQAOpGwQ5wGSXJVFHwrzVwq0oumRPjqnQrBS6JnhhZbcQjtCgteg==}
+
+  '@fern-fern/ir-sdk@61.4.0':
+    resolution: {integrity: sha512-tnnFqg3HSUh+dzrT9gKJP20QxXnv6qio468+6Opj9TiCeKCBCRL/n1heeG9+XJ3cbAeZsS8GC/1G4Jk07tAcEg==}
 
   '@fern-fern/ir-v1-model@0.0.2':
     resolution: {integrity: sha512-Rho6qXYfRoB1sAISFS4V7vttVFN0ypoaztmbfKKNFmSTNVOyLN++e2xNZ+Aw9ckE5ZZmfMXK9v4+dnFReWVzvA==}
@@ -16523,6 +16526,16 @@ snapshots:
     transitivePeerDependencies:
       - encoding
 
+  '@fern-fern/ir-sdk@61.4.0':
+    dependencies:
+      form-data: 4.0.4
+      formdata-node: 6.0.3
+      node-fetch: 2.7.0
+      qs: 6.13.0
+      readable-stream: 4.7.0
+    transitivePeerDependencies:
+      - encoding
+
   '@fern-fern/ir-v1-model@0.0.2': {}
 
   '@fern-fern/ir-v10-model@0.0.1': {}
@@ -17669,6 +17682,15 @@ snapshots:
       magic-string: 0.30.19
     optionalDependencies:
       msw: 2.11.3(@types/node@18.19.129)(typescript@5.8.3)
+      vite: 5.4.20(@types/node@18.19.129)(sass@1.93.2)(terser@5.44.0)
+
+  '@vitest/mocker@2.1.9(msw@2.11.3(@types/node@18.19.129)(typescript@5.9.2))(vite@5.4.20(@types/node@18.19.129)(sass@1.93.2)(terser@5.44.0))':
+    dependencies:
+      '@vitest/spy': 2.1.9
+      estree-walker: 3.0.3
+      magic-string: 0.30.19
+    optionalDependencies:
+      msw: 2.11.3(@types/node@18.19.129)(typescript@5.9.2)
       vite: 5.4.20(@types/node@18.19.129)(sass@1.93.2)(terser@5.44.0)
 
   '@vitest/pretty-format@2.1.9':
@@ -20952,6 +20974,33 @@ snapshots:
       - '@types/node'
     optional: true
 
+  msw@2.11.3(@types/node@18.19.129)(typescript@5.9.2):
+    dependencies:
+      '@bundled-es-modules/cookie': 2.0.1
+      '@bundled-es-modules/statuses': 1.0.1
+      '@inquirer/confirm': 5.1.18(@types/node@18.19.129)
+      '@mswjs/interceptors': 0.39.7
+      '@open-draft/deferred-promise': 2.2.0
+      '@types/cookie': 0.6.0
+      '@types/statuses': 2.0.6
+      graphql: 16.11.0
+      headers-polyfill: 4.0.3
+      is-node-process: 1.2.0
+      outvariant: 1.4.3
+      path-to-regexp: 6.3.0
+      picocolors: 1.1.1
+      rettime: 0.7.0
+      strict-event-emitter: 0.5.1
+      tough-cookie: 6.0.0
+      type-fest: 4.41.0
+      until-async: 3.0.2
+      yargs: 17.7.2
+    optionalDependencies:
+      typescript: 5.9.2
+    transitivePeerDependencies:
+      - '@types/node'
+    optional: true
+
   multimatch@5.0.0:
     dependencies:
       '@types/minimatch': 3.0.5
@@ -23111,6 +23160,42 @@ snapshots:
     dependencies:
       '@vitest/expect': 2.1.9
       '@vitest/mocker': 2.1.9(msw@2.11.3(@types/node@18.19.129)(typescript@5.8.3))(vite@5.4.20(@types/node@18.19.129)(sass@1.93.2)(terser@5.44.0))
+      '@vitest/pretty-format': 2.1.9
+      '@vitest/runner': 2.1.9
+      '@vitest/snapshot': 2.1.9
+      '@vitest/spy': 2.1.9
+      '@vitest/utils': 2.1.9
+      chai: 5.3.3
+      debug: 4.4.3
+      expect-type: 1.2.2
+      magic-string: 0.30.19
+      pathe: 1.1.2
+      std-env: 3.9.0
+      tinybench: 2.9.0
+      tinyexec: 0.3.2
+      tinypool: 1.1.1
+      tinyrainbow: 1.2.0
+      vite: 5.4.20(@types/node@18.19.129)(sass@1.93.2)(terser@5.44.0)
+      vite-node: 2.1.9(@types/node@18.19.129)(sass@1.93.2)(terser@5.44.0)
+      why-is-node-running: 2.3.0
+    optionalDependencies:
+      '@types/node': 18.19.129
+      jsdom: 20.0.3
+    transitivePeerDependencies:
+      - less
+      - lightningcss
+      - msw
+      - sass
+      - sass-embedded
+      - stylus
+      - sugarss
+      - supports-color
+      - terser
+
+  vitest@2.1.9(@types/node@18.19.129)(jsdom@20.0.3)(msw@2.11.3(@types/node@18.19.129)(typescript@5.9.2))(sass@1.93.2)(terser@5.44.0):
+    dependencies:
+      '@vitest/expect': 2.1.9
+      '@vitest/mocker': 2.1.9(msw@2.11.3(@types/node@18.19.129)(typescript@5.9.2))(vite@5.4.20(@types/node@18.19.129)(sass@1.93.2)(terser@5.44.0))
       '@vitest/pretty-format': 2.1.9
       '@vitest/runner': 2.1.9
       '@vitest/snapshot': 2.1.9
