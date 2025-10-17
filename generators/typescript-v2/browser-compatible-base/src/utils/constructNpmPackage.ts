@@ -37,13 +37,16 @@ export function constructNpmPackage({
                 private: isPackagePrivate,
                 publishInfo: undefined,
                 repoUrl: getRepoUrlFromUrl(outputMode.repoUrl),
-                license: generatorConfig.license?._visit({
-                    basic: (basic) => basic.id,
-                    custom: (custom) => `See ${custom.filename}`,
-                    _other: () => {
-                        return undefined;
-                    }
-                })
+                license:
+                    generatorConfig.license != null
+                        ? FernGeneratorExec.LicenseConfig._visit(generatorConfig.license, {
+                              basic: (basic: FernGeneratorExec.BasicLicense) => basic.id,
+                              custom: (custom: FernGeneratorExec.CustomLicense) => `See ${custom.filename}`,
+                              _other: () => {
+                                  return undefined;
+                              }
+                          })
+                        : undefined
             };
         default:
             throw new Error(`Encountered unknown output mode: ${outputMode}`);
