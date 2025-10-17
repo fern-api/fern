@@ -51,9 +51,9 @@ jobs:
             # rust-sdk
           ]
         include:
-        - concurrency-count-override: 8
-          sdk-name: python-sdk
-        
+          - concurrency-count-override: 8
+            sdk-name: python-sdk
+
     steps:
       # Note: this step is meant for when running on ubuntu-latest
       - name: Remove Bloat
@@ -63,7 +63,7 @@ jobs:
           # this might remove tools that are actually needed,
           # if set to "true" but frees about 6 GB
           tool-cache: false
-          
+
           # all of these default to true, but feel free to set to
           # "false" if necessary for your workflow
           android: true
@@ -99,14 +99,21 @@ jobs:
       - name: Save Seed Test Log to File
         id: save-seed-test-log-to-file
         run: |
-          # Default to 16 concurrent fixtures if not overridden. In the case of python-sdk, 
+          # Default to 16 concurrent fixtures if not overridden. In the case of python-sdk,
           # the virtual environments take up too much space so this needs to be limited
           pnpm seed:local test --generator ${{ matrix.sdk-name }} --parallel ${{ matrix.concurrency-count-override || 16 }} --allow-unexpected-failures > ${{ matrix.sdk-name }}-seed-test-log.txt
 
-      # CHRISM - consideration
-      # - name: Cleanup Virtualenvs
-      #     run: |
-      #       find . -name "fern-*" -type d | head -10 | xargs rm -rf
+      - name: Cleanup Virtualenvs
+        if: always() # Run even if tests fail
+        run: |
+          echo "Cleaning up Poetry virtualenvs to free disk space..."
+          # Remove Poetry virtualenv cache
+          rm -rf ~/.cache/pypoetry/virtualenvs/*
+          # Also clean any local .venv directories
+          find . -name ".venv" -type d -exec rm -rf {} + 2>/dev/null || true
+          # Clean poetry cache
+          poetry cache clear --all pypi 2>/dev/null || true
+          echo "Virtualenv cleanup completed"
 
       - name: Upload Seed Test Log as Artifact
         uses: actions/upload-artifact@v4
@@ -134,8 +141,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        sdk-name:
-          [
+        sdk-name: [
             # CHRISM - temp
             python-sdk
             # ruby-model,
