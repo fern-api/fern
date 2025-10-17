@@ -3,7 +3,7 @@ import {
     FernGeneratorExec
 } from "@fern-api/browser-compatible-base-generator";
 import { FernIr } from "@fern-api/dynamic-ir-sdk";
-import { BasePhpCustomConfigSchema, php } from "@fern-api/php-codegen";
+import { BasePhpCustomConfigSchema, php, PHP_RESERVED_KEYWORDS } from "@fern-api/php-codegen";
 import { camelCase, upperFirst } from "lodash-es";
 
 import { DynamicTypeLiteralMapper } from "./DynamicTypeLiteralMapper";
@@ -64,21 +64,6 @@ export class DynamicSnippetsGeneratorContext extends AbstractDynamicSnippetsGene
 
     public getClassName(name: FernIr.Name): string {
         const className = name.pascalCase.safeName;
-
-        // PHP reserved keywords (case-insensitive) that cannot be used as class names
-        // Source: https://www.php.net/manual/en/reserved.keywords.php
-        const PHP_RESERVED_KEYWORDS = new Set([
-            "abstract", "and", "array", "as", "break", "callable", "case", "catch",
-            "class", "clone", "const", "continue", "declare", "default", "die", "do",
-            "echo", "else", "elseif", "empty", "enddeclare", "endfor", "endforeach",
-            "endif", "endswitch", "endwhile", "eval", "exit", "extends", "final",
-            "finally", "fn", "for", "foreach", "function", "global", "goto", "if",
-            "implements", "include", "include_once", "instanceof", "insteadof",
-            "interface", "isset", "list", "match", "namespace", "new", "or", "print",
-            "private", "protected", "public", "readonly", "require", "require_once",
-            "return", "static", "switch", "throw", "trait", "try", "unset", "use",
-            "var", "while", "xor", "yield", "yield_from", "__halt_compiler"
-        ]);
 
         // Check if the class name is a reserved keyword (case-insensitive)
         if (PHP_RESERVED_KEYWORDS.has(className.toLowerCase())) {
