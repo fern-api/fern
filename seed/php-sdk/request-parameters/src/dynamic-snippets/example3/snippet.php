@@ -11,5 +11,9 @@ $client = new SeedClient(
     ],
 );
 $client->user->createUsernameOptional(
-    new CreateUsernameBodyOptionalProperties([]),
+    new CreateUsernameBodyOptionalProperties([
+        'username' => 'username',
+        'password' => 'password',
+        'name' => 'test',
+    ]),
 );
