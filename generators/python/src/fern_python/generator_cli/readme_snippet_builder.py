@@ -274,7 +274,9 @@ client.{endpoint.endpoint_package_path}{endpoint.method_name}({"..., " if has_pa
                         ),
                     )
                 )
-                writer.write_line("logger.info(pager.response.headers)  # access the response headers for the first page")
+                writer.write_line(
+                    "logger.info(pager.response.headers)  # access the response headers for the first page"
+                )
                 writer.write_node(
                     AST.ForStatement(
                         target="item",
