@@ -3,7 +3,7 @@ using System.Threading.Tasks;
 
 namespace Usage;
 
-public class Example2
+public class Example3
 {
     public async Task Do() {
         var client = new SeedRequestParametersClient(
@@ -13,7 +13,11 @@ public class Example2
         );
 
         await client.User.CreateUsernameOptionalAsync(
-            new CreateUsernameBodyOptionalProperties()
+            new CreateUsernameBodyOptionalProperties {
+                Username = "username",
+                Password = "password",
+                Name = "test"
+            }
         );
     }
 

@@ -99,6 +99,46 @@ await client.User.CreateUsernameWithReferencedTypeAsync(
 </dl>
 </details>
 
+<details><summary><code>client.User.<a href="/src/SeedRequestParameters/User/UserClient.cs">CreateUsernameOptionalAsync</a>(CreateUsernameBodyOptionalProperties? { ... })</code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```csharp
+await client.User.CreateUsernameOptionalAsync(new CreateUsernameBodyOptionalProperties());
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**request:** `CreateUsernameBodyOptionalProperties?` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
 <details><summary><code>client.User.<a href="/src/SeedRequestParameters/User/UserClient.cs">GetUsernameAsync</a>(GetUsersRequest { ... }) -> User</code></summary>
 <dl>
 <dd>
