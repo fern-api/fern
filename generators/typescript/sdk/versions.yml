@@ -2,7 +2,7 @@
 - version: 3.9.3
   changelogEntry:
     - summary: |
-        Fix a compilation error when a path parameters is nullable or optional.
+        Fix a compilation error when a path parameter is nullable or optional.
       type: fix
   createdAt: "2025-10-17"
   irVersion: 60
