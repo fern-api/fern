@@ -45,7 +45,7 @@ export class PathParam {
             url: core.url.join(
                 (await core.Supplier.get(this._options.baseUrl)) ??
                     (await core.Supplier.get(this._options.environment)),
-                `path/${encodeURIComponent(operand)}/${encodeURIComponent(operandOrColor)}`,
+                `path/${core.url.encodePathParam(operand)}/${core.url.encodePathParam(operandOrColor)}`,
             ),
             method: "POST",
             headers: _headers,

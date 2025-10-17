@@ -120,7 +120,7 @@ export class Payment {
             url: core.url.join(
                 (await core.Supplier.get(this._options.baseUrl)) ??
                     (await core.Supplier.get(this._options.environment)),
-                `/payment/${encodeURIComponent(paymentId)}`,
+                `/payment/${core.url.encodePathParam(paymentId)}`,
             ),
             method: "DELETE",
             headers: _headers,

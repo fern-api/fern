@@ -1,4 +1,12 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 3.9.3
+  changelogEntry:
+    - summary: |
+        Fix a compilation error when a path parameters is nullable or optional.
+      type: fix
+  createdAt: "2025-10-17"
+  irVersion: 60
+
 - version: 3.9.2
   changelogEntry:
     - summary: |
