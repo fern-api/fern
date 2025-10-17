@@ -245,7 +245,10 @@ async function createJob({
                 );
             },
             insufficientPermissions: () => {
-                return context.failAndThrow("Insufficient permissions.");
+                return context.failAndThrow(
+                    "You do not have permission to run this generator. Please run 'fern login' to ensure you are logged in with the correct account.\n\n" +
+                        "If you believe this is an error, please contact support@buildwithfern.com"
+                );
             },
             orgNotConfiguredForWhitelabel: () => {
                 return context.failAndThrow(
@@ -253,7 +256,10 @@ async function createJob({
                 );
             },
             _other: (content) => {
-                return context.failAndThrow("Failed to create job", content);
+                context.logger.debug(`Failed to create job: ${JSON.stringify(content)}`);
+                return context.failAndThrow(
+                    "Failed to create job. Please try again or contact support@buildwithfern.com for assistance."
+                );
             }
         });
     }

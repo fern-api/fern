@@ -44,9 +44,14 @@ export class ModelGeneratorCli extends AbstractRustGeneratorCli<ModelCustomConfi
     }
 
     protected async generate(context: ModelGeneratorContext): Promise<void> {
+        context.logger.debug(
+            `Starting model generation for ${context.ir.apiName.pascalCase.safeName} (crate: ${context.getCrateName()}@${context.getCrateVersion()})`
+        );
+
         const files: RustFile[] = [];
 
         // Generate lib.rs
+        context.logger.debug("Generating lib.rs entry point...");
         const libContent = this.generateLibRs(context);
         const libFile = new RustFile({
             filename: "lib.rs",
@@ -57,23 +62,32 @@ export class ModelGeneratorCli extends AbstractRustGeneratorCli<ModelCustomConfi
 
         // Generate models using the new generator system FIRST
         // This populates the generatedFilenames Set with all type filenames
+        const typeCount = Object.keys(context.ir.types).length;
+        const serviceCount = Object.keys(context.ir.services).length;
+        context.logger.debug(`Generating ${typeCount} type model(s) and ${serviceCount} service model(s)...`);
         const modelFiles = generateModels({ context });
+        context.logger.debug(`Generated ${modelFiles.length} model file(s)`);
         files.push(...modelFiles);
 
         // Generate mod.rs for types directory AFTER models
         // This ensures we use the correct filenames (with _type suffix if there were collisions)
+        context.logger.debug("Generating types/mod.rs module file...");
         const typesModFile = this.generateTypesModFile(context);
         files.push(typesModFile);
 
+        context.logger.debug(
+            `Persisting ${files.length} file(s) to ${context.project.absolutePathToOutputDirectory}...`
+        );
         context.project.addSourceFiles(...files);
         await context.project.persist();
+        context.logger.debug("File persistence complete");
 
-        context.logger.info("=== RUNNING rustfmt ===");
+        context.logger.debug("Formatting Rust code with rustfmt...");
         await formatRustCode({
             outputDir: context.project.absolutePathToOutputDirectory,
             logger: context.logger
         });
-        context.logger.info("=== RUSTFMT COMPLETE ===");
+        context.logger.debug("Code formatting complete");
     }
 
     private generateLibRs(context: ModelGeneratorContext): string {
