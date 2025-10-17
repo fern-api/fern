@@ -20,17 +20,62 @@ export async function createOrganizationIfDoesNotExist({
     if (getOrganizationResponse.ok) {
         return false;
     }
-    // if failed response, assume organization does not exist
+
+    if (!getOrganizationResponse.ok) {
+        const error = getOrganizationResponse.error;
+        if (error.error === "UnauthorizedError") {
+            context.failAndThrow(
+                "Failed to check if organization exists: Unauthorized. Please verify your credentials."
+            );
+        } else if (error.error === undefined && error.content != null) {
+            const fetcherError = error.content;
+            if (fetcherError.reason === "timeout") {
+                context.failAndThrow(
+                    "Failed to check if organization exists: Request timed out. Please check your internet connection and try again."
+                );
+            } else if (fetcherError.reason === "unknown") {
+                context.failAndThrow(
+                    `Failed to check if organization exists: Network error. ${fetcherError.errorMessage}\nPlease check your internet connection and try again.`
+                );
+            }
+        }
+    }
 
     const validationError = getOrganizationNameValidationError(organization);
     if (validationError != null) {
         context.failAndThrow(validationError);
     }
+
     const createOrganizationResponse = await venus.organization.create({
         organizationId: FernVenusApi.OrganizationId(organization)
     });
+
     if (!createOrganizationResponse.ok) {
-        context.failAndThrow(`Failed to create organization: ${organization}`, createOrganizationResponse.error);
+        const error = createOrganizationResponse.error;
+
+        if (error.error === "UnauthorizedError") {
+            context.failAndThrow("Failed to create organization: Unauthorized. Please verify your credentials.");
+        } else if (error.error === "OrganizationAlreadyExistsError") {
+            return false;
+        } else if (error.error === undefined && error.content != null) {
+            const fetcherError = error.content;
+            if (fetcherError.reason === "timeout") {
+                context.failAndThrow(
+                    "Failed to create organization: Request timed out. Please check your internet connection and try again."
+                );
+            } else if (fetcherError.reason === "unknown") {
+                context.failAndThrow(
+                    `Failed to create organization: Network error. ${fetcherError.errorMessage}\nPlease check your internet connection and try again.`
+                );
+            } else {
+                context.failAndThrow(
+                    `Failed to create organization: ${organization}`,
+                    createOrganizationResponse.error
+                );
+            }
+        } else {
+            context.failAndThrow(`Failed to create organization: ${organization}`, createOrganizationResponse.error);
+        }
     }
     return true;
 }
