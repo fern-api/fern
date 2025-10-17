@@ -261,7 +261,7 @@ impl HttpClient {
     ///
     /// # Examples
     ///
-    /// **Option 1: Collect all bytes into memory (AWS SDK style)**
+    /// **Option 1: Collect all bytes into memory**
     /// ```no_run
     /// let stream = client.execute_stream_request(
     ///     Method::GET,
@@ -274,7 +274,7 @@ impl HttpClient {
     /// let bytes = stream.collect().await?;
     /// ```
     ///
-    /// **Option 2: Process chunks with try_next() (AWS SDK style)**
+    /// **Option 2: Process chunks with try_next()**
     /// ```no_run
     /// let mut stream = client.execute_stream_request(
     ///     Method::GET,
