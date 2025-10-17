@@ -150,7 +150,7 @@ export class RustProject extends AbstractProject<AbstractRustGeneratorContext<Ba
       - name: Set up Rust
         uses: actions-rust-lang/setup-rust-toolchain@v1
 
-      - name: Publish to crates.io
+      - name: Publish
         env:
           CARGO_REGISTRY_TOKEN: \${{ secrets.CARGO_REGISTRY_TOKEN }}
         run: cargo publish`;
