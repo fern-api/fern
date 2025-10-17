@@ -42,6 +42,16 @@ describe("User", () => {
         expect(response).toEqual(undefined);
     });
 
+    test("createUsernameOptional", async () => {
+        const server = mockServerPool.createServer();
+        const client = new SeedRequestParametersClient({ environment: server.baseUrl });
+
+        server.mockEndpoint().post("/user/username-optional").respondWith().statusCode(200).build();
+
+        const response = await client.user.createUsernameOptional();
+        expect(response).toEqual(undefined);
+    });
+
     test("getUsername", async () => {
         const server = mockServerPool.createServer();
         const client = new SeedRequestParametersClient({ environment: server.baseUrl });

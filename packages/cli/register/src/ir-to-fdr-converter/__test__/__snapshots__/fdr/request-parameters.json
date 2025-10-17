@@ -91,6 +91,52 @@
           }
         ]
       }
+    },
+    "type_user:CreateUsernameBodyOptionalProperties": {
+      "name": "CreateUsernameBodyOptionalProperties",
+      "shape": {
+        "type": "object",
+        "extends": [],
+        "properties": [
+          {
+            "key": "username",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          {
+            "key": "password",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          {
+            "key": "name",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "type": "string",
+                  "default": "test"
+                }
+              }
+            }
+          }
+        ]
+      }
     }
   },
   "subpackages": {
@@ -280,6 +326,65 @@
               },
               "responseStatusCode": 204,
               "codeSamples": []
+            }
+          ]
+        },
+        {
+          "auth": false,
+          "method": "POST",
+          "id": "createUsernameOptional",
+          "originalEndpointId": "endpoint_user.createUsernameOptional",
+          "name": "Create Username Optional",
+          "path": {
+            "pathParameters": [],
+            "parts": [
+              {
+                "type": "literal",
+                "value": "/user"
+              },
+              {
+                "type": "literal",
+                "value": "/username-optional"
+              }
+            ]
+          },
+          "queryParameters": [],
+          "headers": [],
+          "request": {
+            "type": {
+              "type": "json",
+              "contentType": "application/json",
+              "shape": {
+                "type": "reference",
+                "value": {
+                  "type": "optional",
+                  "itemType": {
+                    "type": "nullable",
+                    "itemType": {
+                      "type": "id",
+                      "value": "type_user:CreateUsernameBodyOptionalProperties"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "requestsV2": {},
+          "responsesV2": {},
+          "errorsV2": [],
+          "examples": [
+            {
+              "name": "empty-object",
+              "path": "/user/username-optional",
+              "pathParameters": {},
+              "queryParameters": {},
+              "headers": {},
+              "requestBody": {},
+              "requestBodyV3": {
+                "type": "json",
+                "value": {}
+              },
+              "responseStatusCode": 204
             }
           ]
         },
@@ -561,7 +666,8 @@
       "types": [
         "type_user:User",
         "type_user:NestedUser",
-        "type_user:CreateUsernameBody"
+        "type_user:CreateUsernameBody",
+        "type_user:CreateUsernameBodyOptionalProperties"
       ],
       "subpackages": []
     }

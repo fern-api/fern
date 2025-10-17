@@ -107,7 +107,6 @@ fixtures:
       outputFolder: readme-config
 
 allowedFailures:
-  - bytes-download
   - circular-references
   - circular-references-advanced
   - empty-clients

@@ -14,6 +14,13 @@ types:
       name:
         type: string
         default: "test"
+  CreateUsernameBodyOptionalProperties:
+    properties:
+      username: optional<string>
+      password: optional<string>
+      name:
+        type: optional<string>
+        default: "test"
 
 service:
   base-path: /user
@@ -43,6 +50,14 @@ service:
         query-parameters:
           tags:
             type: list<string>
+    # test for TS SDK generator which omits optional empty objects in static examples
+    createUsernameOptional:
+      path: /username-optional
+      method: POST
+      request: optional<nullable<CreateUsernameBodyOptionalProperties>>
+      examples:
+        - name: empty-object
+          request: {}
     getUsername:
       path: ""
       method: GET

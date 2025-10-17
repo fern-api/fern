@@ -171,6 +171,72 @@ export class User {
     }
 
     /**
+     * @param {SeedRequestParameters.CreateUsernameBodyOptionalProperties | null} request
+     * @param {User.RequestOptions} requestOptions - Request-specific configuration.
+     *
+     * @example
+     *     await client.user.createUsernameOptional()
+     */
+    public createUsernameOptional(
+        request?: SeedRequestParameters.CreateUsernameBodyOptionalProperties | null,
+        requestOptions?: User.RequestOptions,
+    ): core.HttpResponsePromise<void> {
+        return core.HttpResponsePromise.fromPromise(this.__createUsernameOptional(request, requestOptions));
+    }
+
+    private async __createUsernameOptional(
+        request?: SeedRequestParameters.CreateUsernameBodyOptionalProperties | null,
+        requestOptions?: User.RequestOptions,
+    ): Promise<core.WithRawResponse<void>> {
+        const _headers: core.Fetcher.Args["headers"] = mergeHeaders(this._options?.headers, requestOptions?.headers);
+        const _response = await core.fetcher({
+            url: core.url.join(
+                (await core.Supplier.get(this._options.baseUrl)) ??
+                    (await core.Supplier.get(this._options.environment)),
+                "/user/username-optional",
+            ),
+            method: "POST",
+            headers: _headers,
+            contentType: "application/json",
+            queryParameters: requestOptions?.queryParams,
+            requestType: "json",
+            body: request != null ? request : undefined,
+            timeoutMs: (requestOptions?.timeoutInSeconds ?? this._options?.timeoutInSeconds ?? 60) * 1000,
+            maxRetries: requestOptions?.maxRetries ?? this._options?.maxRetries,
+            abortSignal: requestOptions?.abortSignal,
+        });
+        if (_response.ok) {
+            return { data: undefined, rawResponse: _response.rawResponse };
+        }
+
+        if (_response.error.reason === "status-code") {
+            throw new errors.SeedRequestParametersError({
+                statusCode: _response.error.statusCode,
+                body: _response.error.body,
+                rawResponse: _response.rawResponse,
+            });
+        }
+
+        switch (_response.error.reason) {
+            case "non-json":
+                throw new errors.SeedRequestParametersError({
+                    statusCode: _response.error.statusCode,
+                    body: _response.error.rawBody,
+                    rawResponse: _response.rawResponse,
+                });
+            case "timeout":
+                throw new errors.SeedRequestParametersTimeoutError(
+                    "Timeout exceeded when calling POST /user/username-optional.",
+                );
+            case "unknown":
+                throw new errors.SeedRequestParametersError({
+                    message: _response.error.errorMessage,
+                    rawResponse: _response.rawResponse,
+                });
+        }
+    }
+
+    /**
      * @param {SeedRequestParameters.GetUsersRequest} request
      * @param {User.RequestOptions} requestOptions - Request-specific configuration.
      *

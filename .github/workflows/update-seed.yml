@@ -1451,6 +1451,8 @@ jobs:
           branch: update-${{ matrix.sdk-name }}-seed
           body: "Auto-generated PR, triggered by GitHub event: ${{ github.event_name }} from branch: ${{ github.ref_name }}.\nGitHub workflow run: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}"
           delete-branch: true
+          add-paths: |
+            seed/**
           labels: |
             seed
             language/${{ matrix.language-name }}
