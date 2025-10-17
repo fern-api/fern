@@ -1,17 +1,8 @@
 import { FernGeneratorExec, FernGeneratorExecClient } from "@fern-fern/generator-exec-sdk";
-import {
-    ExitStatusUpdate,
-    GeneratorConfig,
-    GeneratorUpdate,
-    GithubOutputMode,
-    LogLevel
-} from "@fern-fern/generator-exec-sdk/api";
-import * as GeneratorExecParsing from "@fern-fern/generator-exec-sdk/serialization";
 
 import { AbstractGeneratorNotificationService } from "./AbstractGeneratorNotificationService";
 
-export { GeneratorExecParsing, ExitStatusUpdate, GeneratorUpdate, LogLevel, FernGeneratorExec };
-export type { GeneratorConfig, GithubOutputMode };
+export { FernGeneratorExec };
 
 export class GeneratorNotificationService implements AbstractGeneratorNotificationService {
     private client: FernGeneratorExecClient | undefined;
@@ -19,9 +10,9 @@ export class GeneratorNotificationService implements AbstractGeneratorNotificati
     private buffer: FernGeneratorExec.GeneratorUpdate[] = [];
 
     constructor(environment: FernGeneratorExec.GeneratorEnvironment) {
-        if (environment.type === "remote") {
+        if (environment._type === "remote") {
             this.client = new FernGeneratorExecClient({
-                environment: environment.coordinatorUrlV2
+                environment: environment.coordinatorUrl ?? environment.coordinatorUrlV2
             });
 
             this.taskId = environment.id;
