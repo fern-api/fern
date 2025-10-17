@@ -2,11 +2,11 @@ use crate::api::*;
 use crate::{ApiError, ClientConfig, HttpClient, QueryBuilder, RequestOptions};
 use reqwest::Method;
 
-pub struct InlineUsersInlineUsersClient {
+pub struct InlineUsersClient2 {
     pub http_client: HttpClient,
 }
 
-impl InlineUsersInlineUsersClient {
+impl InlineUsersClient2 {
     pub fn new(config: ClientConfig) -> Result<Self, ApiError> {
         Ok(Self {
             http_client: HttpClient::new(config.clone())?,

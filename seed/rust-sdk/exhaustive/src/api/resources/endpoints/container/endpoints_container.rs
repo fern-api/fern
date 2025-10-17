@@ -3,11 +3,11 @@ use crate::{ApiError, ClientConfig, HttpClient, RequestOptions};
 use reqwest::Method;
 use std::collections::{HashMap, HashSet};
 
-pub struct EndpointsContainerClient {
+pub struct ContainerClient {
     pub http_client: HttpClient,
 }
 
-impl EndpointsContainerClient {
+impl ContainerClient {
     pub fn new(config: ClientConfig) -> Result<Self, ApiError> {
         Ok(Self {
             http_client: HttpClient::new(config.clone())?,

@@ -40,10 +40,10 @@ export class SdkGeneratorContext extends AbstractRustGeneratorContext<SdkCustomC
             .filter((subpackage) => subpackage.service != null || subpackage.hasEndpointsInTree);
 
         if (subpackages.length === 1 && subpackages[0] != null) {
-            // Single service - use the sub-client name
-            return `${subpackages[0].name.pascalCase.safeName}Client`;
+            // Single service - use the sub-client name (now from registry)
+            return this.getUniqueClientNameForSubpackage(subpackages[0]);
         } else {
-            // Multiple services or no subpackages - use the root client name (which now uses clientClassName config)
+            // Multiple services or no subpackages - use the root client name (now from registry)
             return this.getClientName();
         }
     }

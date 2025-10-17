@@ -2,6 +2,7 @@ import { assertDefined, SymbolRegistry } from "@fern-api/core-utils";
 
 const FILENAME_ID_PREFIX = "filename_id:";
 const TYPENAME_ID_PREFIX = "typename_id:";
+const CLIENTNAME_ID_PREFIX = "clientname_id:";
 
 /**
  * Registry for managing unique filenames and type names across all Rust generated files.
@@ -29,6 +30,7 @@ export class RustFilenameRegistry {
 
     private readonly filenameRegistry: SymbolRegistry;
     private readonly typenameRegistry: SymbolRegistry;
+    private readonly clientNameRegistry: SymbolRegistry;
 
     private constructor(reservedFilenames: string[]) {
         // Use underscore-suffix strategy: collision → file_type → file_type_ → file_type__
@@ -39,6 +41,12 @@ export class RustFilenameRegistry {
 
         // Type names use numbered-suffix strategy: ListUsersRequest → ListUsersRequest2 → ListUsersRequest3
         this.typenameRegistry = new SymbolRegistry({
+            reservedSymbolNames: [],
+            conflictResolutionStrategy: "numbered-suffix"
+        });
+
+        // Client names use numbered-suffix strategy: BasicAuthClient → BasicAuthClient2 → BasicAuthClient3
+        this.clientNameRegistry = new SymbolRegistry({
             reservedSymbolNames: [],
             conflictResolutionStrategy: "numbered-suffix"
         });
@@ -120,6 +128,16 @@ export class RustFilenameRegistry {
         return this.typenameRegistry.registerSymbol(this.getQueryRequestTypeNameId(endpointId), [baseTypeName]);
     }
 
+    /**
+     * Register client name for a subpackage or root client
+     * @param clientId - Unique identifier for the client (subpackage ID or "root")
+     * @param baseClientName - Base client name in PascalCase
+     * @returns The registered unique client name
+     */
+    public registerClientName(clientId: string, baseClientName: string): string {
+        return this.clientNameRegistry.registerSymbol(this.getClientNameId(clientId), [baseClientName]);
+    }
+
     // =====================================
     // Retrieval Methods (called during file generation phase)
     // =====================================
@@ -196,6 +214,27 @@ export class RustFilenameRegistry {
         return typename;
     }
 
+    /**
+     * Get registered client name for a subpackage or root client
+     * @param clientId - Unique identifier for the client (subpackage ID or "root")
+     * @returns The unique client name
+     * @throws Error if client name not registered
+     */
+    public getClientNameOrThrow(clientId: string): string {
+        const clientName = this.clientNameRegistry.getSymbolNameById(this.getClientNameId(clientId));
+        assertDefined(clientName, `Client name not found for client ${clientId}`);
+        return clientName;
+    }
+
+    /**
+     * Get registered client name for a subpackage or root client (graceful)
+     * @param clientId - Unique identifier for the client (subpackage ID or "root")
+     * @returns The unique client name or undefined if not registered
+     */
+    public getClientNameOrUndefined(clientId: string): string | undefined {
+        return this.clientNameRegistry.getSymbolNameById(this.getClientNameId(clientId));
+    }
+
     // =====================================
     // Private Helper Methods
     // =====================================
@@ -222,5 +261,9 @@ export class RustFilenameRegistry {
 
     private getSchemaTypeTypeNameId(typeId: string): string {
         return `${TYPENAME_ID_PREFIX}schema_type_${typeId}`;
+    }
+
+    private getClientNameId(clientId: string): string {
+        return `${CLIENTNAME_ID_PREFIX}${clientId}`;
     }
 }

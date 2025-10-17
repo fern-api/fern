@@ -1,10 +1,10 @@
 use crate::{ApiError, ClientConfig, HttpClient};
 
-pub struct TypesUnionClient {
+pub struct UnionClient2 {
     pub http_client: HttpClient,
 }
 
-impl TypesUnionClient {
+impl UnionClient2 {
     pub fn new(config: ClientConfig) -> Result<Self, ApiError> {
         Ok(Self {
             http_client: HttpClient::new(config.clone())?,

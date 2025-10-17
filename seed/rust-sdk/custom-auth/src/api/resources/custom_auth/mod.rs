@@ -1,2 +1,2 @@
 pub mod custom_auth;
-pub use custom_auth::CustomAuthClient;
+pub use custom_auth::CustomAuthClient2;

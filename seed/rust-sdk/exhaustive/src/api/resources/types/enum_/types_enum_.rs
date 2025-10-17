@@ -1,10 +1,10 @@
 use crate::{ApiError, ClientConfig, HttpClient};
 
-pub struct TypesEnumClient {
+pub struct EnumClient2 {
     pub http_client: HttpClient,
 }
 
-impl TypesEnumClient {
+impl EnumClient2 {
     pub fn new(config: ClientConfig) -> Result<Self, ApiError> {
         Ok(Self {
             http_client: HttpClient::new(config.clone())?,

@@ -1,2 +1,2 @@
 pub mod types;
-pub use types::TypesClient;
+pub use types::TypesClient2;

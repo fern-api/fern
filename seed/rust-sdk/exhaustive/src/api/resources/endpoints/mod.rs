@@ -1,52 +1,52 @@
 use crate::{ApiError, ClientConfig, HttpClient};
 
 pub mod container;
-pub use container::EndpointsContainerClient;
+pub use container::ContainerClient;
 pub mod content_type;
-pub use content_type::EndpointsContentTypeClient;
+pub use content_type::ContentTypeClient;
 pub mod enum_;
-pub use enum_::EndpointsEnumClient;
+pub use enum_::EnumClient;
 pub mod http_methods;
-pub use http_methods::EndpointsHttpMethodsClient;
+pub use http_methods::HttpMethodsClient;
 pub mod object;
-pub use object::EndpointsObjectClient;
+pub use object::ObjectClient;
 pub mod params;
-pub use params::EndpointsParamsClient;
+pub use params::ParamsClient;
 pub mod primitive;
-pub use primitive::EndpointsPrimitiveClient;
+pub use primitive::PrimitiveClient;
 pub mod put;
-pub use put::EndpointsPutClient;
+pub use put::PutClient;
 pub mod union_;
-pub use union_::EndpointsUnionClient;
+pub use union_::UnionClient;
 pub mod urls;
-pub use urls::EndpointsUrlsClient;
+pub use urls::UrlsClient;
 pub struct EndpointsClient {
     pub http_client: HttpClient,
-    pub container: EndpointsContainerClient,
-    pub content_type: EndpointsContentTypeClient,
-    pub enum_: EndpointsEnumClient,
-    pub http_methods: EndpointsHttpMethodsClient,
-    pub object: EndpointsObjectClient,
-    pub params: EndpointsParamsClient,
-    pub primitive: EndpointsPrimitiveClient,
-    pub put: EndpointsPutClient,
-    pub union_: EndpointsUnionClient,
-    pub urls: EndpointsUrlsClient,
+    pub container: ContainerClient,
+    pub content_type: ContentTypeClient,
+    pub enum_: EnumClient,
+    pub http_methods: HttpMethodsClient,
+    pub object: ObjectClient,
+    pub params: ParamsClient,
+    pub primitive: PrimitiveClient,
+    pub put: PutClient,
+    pub union_: UnionClient,
+    pub urls: UrlsClient,
 }
 impl EndpointsClient {
     pub fn new(config: ClientConfig) -> Result<Self, ApiError> {
         Ok(Self {
             http_client: HttpClient::new(config.clone())?,
-            container: EndpointsContainerClient::new(config.clone())?,
-            content_type: EndpointsContentTypeClient::new(config.clone())?,
-            enum_: EndpointsEnumClient::new(config.clone())?,
-            http_methods: EndpointsHttpMethodsClient::new(config.clone())?,
-            object: EndpointsObjectClient::new(config.clone())?,
-            params: EndpointsParamsClient::new(config.clone())?,
-            primitive: EndpointsPrimitiveClient::new(config.clone())?,
-            put: EndpointsPutClient::new(config.clone())?,
-            union_: EndpointsUnionClient::new(config.clone())?,
-            urls: EndpointsUrlsClient::new(config.clone())?,
+            container: ContainerClient::new(config.clone())?,
+            content_type: ContentTypeClient::new(config.clone())?,
+            enum_: EnumClient::new(config.clone())?,
+            http_methods: HttpMethodsClient::new(config.clone())?,
+            object: ObjectClient::new(config.clone())?,
+            params: ParamsClient::new(config.clone())?,
+            primitive: PrimitiveClient::new(config.clone())?,
+            put: PutClient::new(config.clone())?,
+            union_: UnionClient::new(config.clone())?,
+            urls: UrlsClient::new(config.clone())?,
         })
     }
 }

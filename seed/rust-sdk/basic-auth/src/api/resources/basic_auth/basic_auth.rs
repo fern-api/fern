@@ -1,11 +1,11 @@
 use crate::{ApiError, ClientConfig, HttpClient, RequestOptions};
 use reqwest::Method;
 
-pub struct BasicAuthClient {
+pub struct BasicAuthClient2 {
     pub http_client: HttpClient,
 }
 
-impl BasicAuthClient {
+impl BasicAuthClient2 {
     pub fn new(config: ClientConfig) -> Result<Self, ApiError> {
         Ok(Self {
             http_client: HttpClient::new(config.clone())?,
