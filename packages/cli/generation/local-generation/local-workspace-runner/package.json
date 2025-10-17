@@ -59,7 +59,7 @@
     "@fern-api/typescript-dynamic-snippets": "workspace:*",
     "@fern-api/venus-api-sdk": "0.17.3-3-gf696595",
     "@fern-api/workspace-loader": "workspace:*",
-    "@fern-fern/fiddle-sdk": "0.0.656",
+    "@fern-fern/fiddle-sdk": "0.0.665",
     "@fern-fern/generator-exec-sdk": "^0.0.1169",
     "chalk": "^5.3.0",
     "decompress": "^4.2.1",
