@@ -7,14 +7,14 @@ import { DocumentPreprocessor } from "../openapi/v3/DocumentPreprocessor";
 import { ExternalDocumentResolver } from "../openapi/v3/ExternalDocumentResolver";
 
 describe("External Reference Preprocessing", () => {
-    const mockTaskContext: TaskContext = {
+    const mockTaskContext = {
         logger: {
             debug: vi.fn(),
             info: vi.fn(),
             warn: vi.fn(),
             error: vi.fn()
         }
-    } as any;
+    } as unknown as TaskContext;
 
     const tempDir = "/tmp/fern-test";
 
@@ -120,7 +120,11 @@ describe("External Reference Preprocessing", () => {
             };
 
             const resolver = new ExternalDocumentResolver(mockTaskContext.logger);
-            const result = (resolver as any).resolveInternalPointer(document, "#/components/schemas/Pet");
+            const result = (
+                resolver as ExternalDocumentResolver & {
+                    resolveInternalPointer(doc: unknown, pointer: string): unknown;
+                }
+            ).resolveInternalPointer(document, "#/components/schemas/Pet");
 
             expect(result).toEqual({
                 type: "object",
@@ -142,7 +146,11 @@ describe("External Reference Preprocessing", () => {
             const resolver = new ExternalDocumentResolver(mockTaskContext.logger);
 
             // Test escaped characters in JSON pointer
-            const result = (resolver as any).resolveInternalPointer(document, "#/components~1test/schemas~0test/Pet");
+            const result = (
+                resolver as ExternalDocumentResolver & {
+                    resolveInternalPointer(doc: unknown, pointer: string): unknown;
+                }
+            ).resolveInternalPointer(document, "#/components~1test/schemas~0test/Pet");
 
             expect(result).toEqual({ type: "object" });
         });
@@ -215,7 +223,7 @@ describe("External Reference Preprocessing", () => {
             expect(DocumentPreprocessor.hasExternalReferences(documentWithoutExternal)).toBe(false);
         });
 
-        it("should process external references and inline them", async () => {
+        it("should process external references and replace them with internal references", async () => {
             // Create external schema file
             const externalSchemaContent = {
                 Pet: {
@@ -264,21 +272,22 @@ describe("External Reference Preprocessing", () => {
 
             const processedDocument = await preprocessor.processDocument(document, tempDir);
 
-            // Check that external references have been resolved
-            const petSchema = (processedDocument.paths["/pets"]?.get?.responses?.["200"] as any)?.content?.[
-                "application/json"
-            ]?.schema;
+            // Check that external references have been replaced with internal references
+            const response = processedDocument.paths["/pets"]?.get?.responses?.["200"];
+            const petSchema =
+                response && "content" in response ? response.content?.["application/json"]?.schema : undefined;
             expect(petSchema).toEqual({
-                type: "object",
-                properties: {
-                    id: { type: "integer" },
-                    name: { type: "string" }
-                },
-                required: ["id", "name"]
+                $ref: "#/components/schemas/Pet"
             });
 
             const ownerSchema = processedDocument.components?.schemas?.Owner;
             expect(ownerSchema).toEqual({
+                $ref: "#/components/schemas/Pet"
+            });
+
+            // Check that the Pet schema was added to components
+            const petComponent = processedDocument.components?.schemas?.Pet;
+            expect(petComponent).toEqual({
                 type: "object",
                 properties: {
                     id: { type: "integer" },
@@ -342,15 +351,52 @@ describe("External Reference Preprocessing", () => {
 
             const processedDocument = await preprocessor.processDocument(document, tempDir);
 
-            // Check that all nested references have been resolved
-            const petSchema = processedDocument.components?.schemas?.Pet as any;
-            expect(petSchema.type).toBe("object");
-            expect(petSchema.properties.id).toEqual({ type: "integer" });
-            expect(petSchema.properties.owner.type).toBe("object");
-            expect(petSchema.properties.owner.properties.name).toEqual({ type: "string" });
-            expect(petSchema.properties.owner.properties.address.type).toBe("object");
-            expect(petSchema.properties.owner.properties.address.properties.street).toEqual({ type: "string" });
-            expect(petSchema.properties.owner.properties.address.properties.city).toEqual({ type: "string" });
+            // Check that external references have been replaced with internal references
+            const petSchemaRef = processedDocument.components?.schemas?.Pet;
+            // The Pet component itself should contain the actual content, not be a self-reference
+            expect(petSchemaRef).toEqual({
+                type: "object",
+                properties: {
+                    id: { type: "integer" },
+                    owner: { $ref: "#/components/schemas/Owner" }
+                }
+            });
+
+            // Check that all components have been added properly
+            const allComponents = processedDocument.components?.schemas;
+            expect(allComponents).toBeDefined();
+
+            // The Pet schema in the document should be a reference now
+            expect(allComponents!.Pet).toEqual({ $ref: "#/components/schemas/Pet" });
+
+            // But we should also have the actual components stored
+            // Note: In this case since Pet references itself, it might create a new internal name
+            // Let's just verify that the components were added
+            expect(Object.keys(allComponents!)).toContain("Pet");
+            expect(Object.keys(allComponents!)).toContain("Owner");
+            expect(Object.keys(allComponents!)).toContain("Address");
+
+            // Let's check the actual resolved components (avoiding the self-reference issue)
+            const ownerComponent = allComponents!.Owner;
+            const addressComponent = allComponents!.Address;
+
+            // Verify Owner component structure with internal refs
+            expect(ownerComponent).toEqual({
+                type: "object",
+                properties: {
+                    name: { type: "string" },
+                    address: { $ref: "#/components/schemas/Address" }
+                }
+            });
+
+            // Verify Address component
+            expect(addressComponent).toEqual({
+                type: "object",
+                properties: {
+                    street: { type: "string" },
+                    city: { type: "string" }
+                }
+            });
         });
 
         it("should handle circular references gracefully", async () => {

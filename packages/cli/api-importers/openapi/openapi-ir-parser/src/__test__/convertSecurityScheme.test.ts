@@ -7,14 +7,14 @@ import { OpenAPIV3ParserContext } from "../openapi/v3/OpenAPIV3ParserContext";
 import { DEFAULT_PARSE_OPENAPI_SETTINGS } from "../options";
 
 describe("convertSecurityScheme", () => {
-    const mockTaskContext: TaskContext = {
+    const mockTaskContext = {
         logger: {
             debug: vi.fn(),
             info: vi.fn(),
             warn: vi.fn(),
             error: vi.fn()
         }
-    } as any;
+    } as unknown as TaskContext;
 
     const source: Source = Source.openapi({
         file: "test.yaml"

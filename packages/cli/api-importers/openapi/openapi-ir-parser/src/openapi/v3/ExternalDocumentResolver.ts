@@ -4,6 +4,31 @@ import * as yaml from "js-yaml";
 import { OpenAPIV3 } from "openapi-types";
 import * as path from "path";
 
+// Type for any value that might contain a $ref property
+type OpenAPIValue =
+    | OpenAPIV3.Document
+    | OpenAPIV3.ComponentsObject
+    | OpenAPIV3.SchemaObject
+    | OpenAPIV3.ReferenceObject
+    | OpenAPIV3.ResponseObject
+    | OpenAPIV3.ParameterObject
+    | OpenAPIV3.RequestBodyObject
+    | OpenAPIV3.HeaderObject
+    | OpenAPIV3.SecuritySchemeObject
+    | OpenAPIV3.LinkObject
+    | OpenAPIV3.CallbackObject
+    | OpenAPIV3.ExampleObject
+    | OpenAPIV3.PathItemObject
+    | OpenAPIV3.OperationObject
+    | OpenAPIV3.MediaTypeObject
+    | string
+    | number
+    | boolean
+    | null
+    | undefined
+    | Array<OpenAPIValue>
+    | Record<string, OpenAPIValue>;
+
 export interface ExternalReferenceInfo {
     /** The document URL/path (without the internal pointer) */
     documentUrl: string;
@@ -77,7 +102,7 @@ export class ExternalDocumentResolver {
     /**
      * Resolve a reference to get the referenced content
      */
-    public async resolveReference(ref: string, currentBaseUrl?: string): Promise<any> {
+    public async resolveReference(ref: string, currentBaseUrl?: string): Promise<OpenAPIValue> {
         const refInfo = this.parseReference(ref, currentBaseUrl);
 
         // Check for circular references
@@ -175,7 +200,7 @@ export class ExternalDocumentResolver {
 
     private parseDocument(content: string, isJson: boolean): OpenAPIV3.Document {
         try {
-            let document: any;
+            let document: unknown;
             if (isJson) {
                 document = JSON.parse(content);
             } else {
@@ -184,14 +209,15 @@ export class ExternalDocumentResolver {
             }
 
             // Log document parsing to help track where OpenAPI version errors might come from
+            const documentRecord = document as Record<string, unknown>;
             this.logger.debug(
-                `Parsed external document - OpenAPI version: ${document?.openapi || document?.swagger || "unknown"}`
+                `Parsed external document - OpenAPI version: ${documentRecord?.openapi || documentRecord?.swagger || "unknown"}`
             );
 
             // Log a warning if this is an OpenAPI v2 document that might cause issues elsewhere
-            if (document?.swagger) {
+            if (documentRecord?.swagger) {
                 this.logger.warn(
-                    `External document appears to be OpenAPI v2 (swagger: ${document.swagger}), this may cause version compatibility issues in downstream processing`
+                    `External document appears to be OpenAPI v2 (swagger: ${documentRecord.swagger}), this may cause version compatibility issues in downstream processing`
                 );
             }
 
@@ -201,7 +227,7 @@ export class ExternalDocumentResolver {
         }
     }
 
-    private resolveInternalPointer(document: any, pointer: string): any {
+    private resolveInternalPointer(document: OpenAPIValue, pointer: string): OpenAPIValue {
         if (!pointer.startsWith("#/")) {
             throw new Error(`Invalid JSON pointer: ${pointer}`);
         }
@@ -211,7 +237,7 @@ export class ExternalDocumentResolver {
             .split("/")
             .map((key) => key.replace(/~1/g, "/").replace(/~0/g, "~"));
 
-        let current = document;
+        let current: OpenAPIValue = document;
         for (const key of keys) {
             if (current == null || typeof current !== "object") {
                 throw new Error(`Cannot resolve pointer ${pointer}: path not found`);
@@ -224,7 +250,7 @@ export class ExternalDocumentResolver {
                 }
                 current = current[index];
             } else {
-                current = current[key];
+                current = (current as Record<string, OpenAPIValue>)[key];
             }
         }
 
