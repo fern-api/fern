@@ -71,7 +71,9 @@ export class Enum extends AstNode {
             writer.write(`case ${member.name}`);
             if (member.value != null) {
                 if (typeof member.value === "string") {
-                    writer.write(` = "${member.value}"`);
+                    // Escape backslashes and double quotes in the string value
+                    const escapedValue = member.value.replace(/\\/g, "\\\\").replace(/"/g, '\\"');
+                    writer.write(` = "${escapedValue}"`);
                 } else {
                     writer.write(` = ${member.value}`);
                 }
