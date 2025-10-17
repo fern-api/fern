@@ -24,19 +24,13 @@ export async function createOrganizationIfDoesNotExist({
     if (!getOrganizationResponse.ok) {
         const error = getOrganizationResponse.error;
         if (error.error === "UnauthorizedError") {
-            context.failAndThrow(
-                "Failed to check if organization exists: Unauthorized. Please verify your credentials."
-            );
+            context.failAndThrow("Failed to check if organization exists: Unauthorized");
         } else if (error.error === undefined && error.content != null) {
             const fetcherError = error.content;
             if (fetcherError.reason === "timeout") {
-                context.failAndThrow(
-                    "Failed to check if organization exists: Request timed out. Please check your internet connection and try again."
-                );
+                context.failAndThrow("Failed to check if organization exists: Request timed out");
             } else if (fetcherError.reason === "unknown") {
-                context.failAndThrow(
-                    `Failed to check if organization exists: Network error. ${fetcherError.errorMessage}\nPlease check your internet connection and try again.`
-                );
+                context.failAndThrow(`Failed to check if organization exists: ${fetcherError.errorMessage}`);
             }
         }
     }
@@ -54,19 +48,15 @@ export async function createOrganizationIfDoesNotExist({
         const error = createOrganizationResponse.error;
 
         if (error.error === "UnauthorizedError") {
-            context.failAndThrow("Failed to create organization: Unauthorized. Please verify your credentials.");
+            context.failAndThrow("Failed to create organization: Unauthorized");
         } else if (error.error === "OrganizationAlreadyExistsError") {
             return false;
         } else if (error.error === undefined && error.content != null) {
             const fetcherError = error.content;
             if (fetcherError.reason === "timeout") {
-                context.failAndThrow(
-                    "Failed to create organization: Request timed out. Please check your internet connection and try again."
-                );
+                context.failAndThrow("Failed to create organization: Request timed out");
             } else if (fetcherError.reason === "unknown") {
-                context.failAndThrow(
-                    `Failed to create organization: Network error. ${fetcherError.errorMessage}\nPlease check your internet connection and try again.`
-                );
+                context.failAndThrow(`Failed to create organization: ${fetcherError.errorMessage}`);
             } else {
                 context.failAndThrow(
                     `Failed to create organization: ${organization}`,
