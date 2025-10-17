@@ -1,3 +1,4 @@
+import { computeSemanticVersion } from "@fern-api/api-workspace-commons";
 import { FernToken, getAccessToken } from "@fern-api/auth";
 import { SourceResolverImpl } from "@fern-api/cli-source-resolver";
 import { fernConfigJson, GeneratorInvocation, generatorsYml } from "@fern-api/configuration";
@@ -6,6 +7,7 @@ import { ContainerRunner, replaceEnvVariables } from "@fern-api/core-utils";
 import { AbsoluteFilePath, join, RelativeFilePath } from "@fern-api/fs-utils";
 import { generateIntermediateRepresentation } from "@fern-api/ir-generator";
 import { FernIr, PublishTarget } from "@fern-api/ir-sdk";
+import { getDynamicGeneratorConfig } from "@fern-api/remote-workspace-runner";
 import { TaskContext } from "@fern-api/task-context";
 import { FernVenusApi } from "@fern-api/venus-api-sdk";
 import {
@@ -53,6 +55,22 @@ export async function runLocalGenerationForWorkspace({
                     getBaseOpenAPIWorkspaceSettingsFromGeneratorInvocation(generatorInvocation)
                 );
 
+                const dynamicGeneratorConfig = getDynamicGeneratorConfig({
+                    apiName: fernWorkspace.definition.rootApiFile.contents.name,
+                    organization: projectConfig.organization,
+                    generatorInvocation: generatorInvocation
+                });
+
+                // grabs generator.yml > config > package_name
+                const packageName = getPackageNameFromGeneratorConfig(generatorInvocation);
+                // const packageName = generatorsYml.getPackageName({ generatorInvocation });
+                // Log params to this function
+                context.logger.debug("runLocalGenerationForWorkspace packageName", packageName || "undefined");
+                context.logger.debug(
+                    "runLocalGenerationForWorkspace generatorInvocation",
+                    JSON.stringify(generatorInvocation)
+                );
+
                 const intermediateRepresentation = generateIntermediateRepresentation({
                     workspace: fernWorkspace,
                     audiences: generatorGroup.audiences,
@@ -64,10 +82,11 @@ export async function runLocalGenerationForWorkspace({
                         disabled: generatorInvocation.disableExamples
                     },
                     readme: generatorInvocation.readme,
-                    version: version,
-                    packageName: generatorsYml.getPackageName({ generatorInvocation }),
+                    version: version ?? (await computeSemanticVersion({ packageName, generatorInvocation })),
+                    packageName,
                     context,
-                    sourceResolver: new SourceResolverImpl(context, fernWorkspace)
+                    sourceResolver: new SourceResolverImpl(context, fernWorkspace),
+                    dynamicGeneratorConfig
                 });
 
                 const venus = createVenusService({ token: token?.value });
@@ -104,10 +123,6 @@ export async function runLocalGenerationForWorkspace({
                 }
 
                 // Set the publish config on the intermediateRepresentation if available
-
-                // grabs generator.yml > config > package_name
-                const packageName = getPackageNameFromGeneratorConfig(generatorInvocation);
-
                 const publishConfig = getPublishConfig({
                     generatorInvocation,
                     org: organization.ok ? organization.body : undefined,

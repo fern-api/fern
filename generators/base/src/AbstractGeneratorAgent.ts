@@ -72,7 +72,7 @@ export abstract class AbstractGeneratorAgent<GeneratorContext extends AbstractGe
     }): Promise<string> {
         const readmeConfig = this.getReadmeConfig({
             context,
-            remote: this.getRemote(),
+            remote: this.getRemote(context),
             featureConfig: await this.readFeatureConfig(),
             endpointSnippets
         });
@@ -122,7 +122,7 @@ export abstract class AbstractGeneratorAgent<GeneratorContext extends AbstractGe
         return loaded;
     }
 
-    private getRemote(): FernGeneratorCli.Remote | undefined {
+    private getRemote(context: GeneratorContext): FernGeneratorCli.Remote | undefined {
         const outputMode = this.config.output.mode.type === "github" ? this.config.output.mode : undefined;
         if (outputMode?.repoUrl != null && outputMode?.installationToken != null) {
             return FernGeneratorCli.Remote.github({
@@ -130,7 +130,31 @@ export abstract class AbstractGeneratorAgent<GeneratorContext extends AbstractGe
                 installationToken: outputMode.installationToken
             });
         }
+
+        const githubConfig = this.getGitHubConfig({ context });
+        if (githubConfig.uri != null && githubConfig.token != null) {
+            return FernGeneratorCli.Remote.github({
+                repoUrl: this.normalizeRepoUrl(githubConfig.uri),
+                installationToken: githubConfig.token
+            });
+        }
+
         return undefined;
+    }
+
+    private normalizeRepoUrl(repoUrl: string): string {
+        // If it's already a full URL, return as-is
+        if (repoUrl.startsWith("https://")) {
+            return repoUrl;
+        }
+
+        // If it's in owner/repo format, convert to full GitHub URL
+        if (repoUrl.match(/^[a-zA-Z0-9_-]+\/[a-zA-Z0-9_-]+$/)) {
+            return `https://github.com/${repoUrl}`;
+        }
+
+        // Default: assume it's a GitHub URL and add prefix
+        return `https://github.com/${repoUrl}`;
     }
 
     private async getFeaturesConfig(): Promise<string> {

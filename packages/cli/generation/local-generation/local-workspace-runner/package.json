@@ -51,6 +51,7 @@
     "@fern-api/logging-execa": "workspace:*",
     "@fern-api/php-dynamic-snippets": "workspace:*",
     "@fern-api/python-dynamic-snippets": "workspace:*",
+    "@fern-api/remote-workspace-runner": "workspace:*",
     "@fern-api/ruby-dynamic-snippets": "workspace:*",
     "@fern-api/rust-dynamic-snippets": "workspace:*",
     "@fern-api/sdk": "0.12.3",
