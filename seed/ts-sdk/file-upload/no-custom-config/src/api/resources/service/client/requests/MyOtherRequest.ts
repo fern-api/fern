@@ -6,10 +6,10 @@ import type * as SeedFileUpload from "../../../../index.js";
 export interface MyOtherRequest {
     maybe_string?: string;
     integer: number;
-    file: core.file.Uploadable.FileLike;
-    file_list: core.file.Uploadable.FileLike[];
-    maybe_file?: core.file.Uploadable.FileLike | undefined;
-    maybe_file_list?: core.file.Uploadable.FileLike[] | undefined;
+    file: core.file.Uploadable;
+    file_list: core.file.Uploadable[];
+    maybe_file?: core.file.Uploadable | undefined;
+    maybe_file_list?: core.file.Uploadable[] | undefined;
     maybe_integer?: number;
     optional_list_of_strings?: string[];
     list_of_objects: SeedFileUpload.MyObject[];

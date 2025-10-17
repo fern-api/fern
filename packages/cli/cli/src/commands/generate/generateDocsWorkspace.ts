@@ -18,7 +18,8 @@ export async function generateDocsWorkspace({
     brokenLinks,
     strictBrokenLinks,
     disableTemplates,
-    noPrompt
+    noPrompt,
+    skipUpload
 }: {
     project: Project;
     cliContext: CliContext;
@@ -28,6 +29,7 @@ export async function generateDocsWorkspace({
     strictBrokenLinks: boolean;
     disableTemplates: boolean | undefined;
     noPrompt?: boolean;
+    skipUpload: boolean | undefined;
 }): Promise<void> {
     const docsWorkspace = project.docsWorkspaces;
     if (docsWorkspace == null) {
@@ -106,7 +108,8 @@ export async function generateDocsWorkspace({
             token,
             instanceUrl: instance,
             preview,
-            disableTemplates
+            disableTemplates,
+            skipUpload
         });
     });
 }

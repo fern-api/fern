@@ -1759,7 +1759,7 @@ export class SubClientGenerator {
         // If there's a propertyPath (nested properties), add them first
         if (property.propertyPath && Array.isArray(property.propertyPath)) {
             property.propertyPath.forEach((pathItem) => {
-                path.push(pathItem.originalName);
+                path.push(pathItem.name.originalName);
             });
         }
 

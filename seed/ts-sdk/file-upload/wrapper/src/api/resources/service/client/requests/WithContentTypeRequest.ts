@@ -4,7 +4,7 @@ import type * as core from "../../../../../core/index.js";
 import type * as SeedFileUpload from "../../../../index.js";
 
 export interface WithContentTypeRequest {
-    file: core.file.Uploadable.FileLike;
+    file: core.file.Uploadable;
     foo: string;
     bar: SeedFileUpload.MyObject;
     foo_bar?: SeedFileUpload.MyObject;
