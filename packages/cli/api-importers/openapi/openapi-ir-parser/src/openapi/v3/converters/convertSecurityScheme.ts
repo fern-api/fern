@@ -5,6 +5,7 @@ import { getExtension } from "../../../getExtension";
 import { convertEnum } from "../../../schema/convertEnum";
 import { convertSchemaWithExampleToSchema } from "../../../schema/utils/convertSchemaWithExampleToSchema";
 import { isReferenceObject } from "../../../schema/utils/isReferenceObject";
+import { AbstractOpenAPIV3ParserContext } from "../AbstractOpenAPIV3ParserContext";
 import { OpenAPIExtension } from "../extensions/extensions";
 import { FernOpenAPIExtension } from "../extensions/fernExtensions";
 import { getBasicSecuritySchemeNames } from "../extensions/getBasicSecuritySchemeNames";
@@ -17,10 +18,17 @@ import {
 export function convertSecurityScheme(
     securityScheme: OpenAPIV3.SecuritySchemeObject | OpenAPIV3.ReferenceObject,
     source: Source,
-    taskContext: TaskContext
+    taskContext: TaskContext,
+    context?: AbstractOpenAPIV3ParserContext
 ): SecurityScheme | undefined {
     if (isReferenceObject(securityScheme)) {
-        throw new Error(`Converting referenced security schemes is unsupported: ${JSON.stringify(securityScheme)}`);
+        if (context == null) {
+            throw new Error(
+                `Converting referenced security schemes requires context: ${JSON.stringify(securityScheme)}`
+            );
+        }
+        const resolvedSecurityScheme = context.resolveSecuritySchemeReference(securityScheme);
+        return convertSecuritySchemeHelper(resolvedSecurityScheme, source, taskContext);
     }
     return convertSecuritySchemeHelper(securityScheme, source, taskContext);
 }

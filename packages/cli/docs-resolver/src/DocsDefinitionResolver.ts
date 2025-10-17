@@ -511,7 +511,7 @@ export class DocsDefinitionResolver {
             return this.apiWorkspaces[0];
         }
         const errorMessage = apiSection.apiName
-            ? `Failed to load API Definition '${apiSection.apiName}' referenced in docs`
+            ? `Failed to load API Definition '${apiSection.apiName}' referenced in docs ${this.apiWorkspaces.map((workspace) => workspace.workspaceName).join(", ")}`
             : "Failed to load API Definition referenced in docs";
         throw new Error(errorMessage);
     }
