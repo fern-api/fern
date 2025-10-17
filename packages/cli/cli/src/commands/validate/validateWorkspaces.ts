@@ -41,7 +41,7 @@ export async function validateWorkspaces({
 
     await Promise.all(
         project.apiWorkspaces.map(async (workspace) => {
-            if (workspace.generatorsConfiguration?.groups.length === 0 && workspace.type != "fern") {
+            if (workspace.type != "fern") {
                 return;
             }
 
