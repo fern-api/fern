@@ -4772,8 +4772,8 @@ importers:
         specifier: workspace:*
         version: link:../workspace/loader
       '@fern-fern/fiddle-sdk':
-        specifier: 0.0.656
-        version: 0.0.656
+        specifier: 0.0.665
+        version: 0.0.665
       '@fern-fern/generators-sdk':
         specifier: 0.114.0-5745f9e74
         version: 0.114.0-5745f9e74
@@ -5033,8 +5033,8 @@ importers:
         specifier: 0.139.31-66c809cb8
         version: 0.139.31-66c809cb8
       '@fern-fern/fiddle-sdk':
-        specifier: 0.0.656
-        version: 0.0.656
+        specifier: 0.0.665
+        version: 0.0.665
       zod:
         specifier: ^3.22.3
         version: 3.25.76
@@ -5076,8 +5076,8 @@ importers:
         specifier: 0.139.31-66c809cb8
         version: 0.139.31-66c809cb8
       '@fern-fern/fiddle-sdk':
-        specifier: 0.0.656
-        version: 0.0.656
+        specifier: 0.0.665
+        version: 0.0.665
       '@fern-fern/generators-sdk':
         specifier: 0.114.0-5745f9e74
         version: 0.114.0-5745f9e74
@@ -6297,8 +6297,8 @@ importers:
         specifier: workspace:*
         version: link:../../../workspace/loader
       '@fern-fern/fiddle-sdk':
-        specifier: 0.0.656
-        version: 0.0.656
+        specifier: 0.0.665
+        version: 0.0.665
       '@fern-fern/generator-exec-sdk':
         specifier: ^0.0.1167
         version: 0.0.1167
@@ -6445,8 +6445,8 @@ importers:
         specifier: 0.139.31-66c809cb8
         version: 0.139.31-66c809cb8
       '@fern-fern/fiddle-sdk':
-        specifier: 0.0.656
-        version: 0.0.656
+        specifier: 0.0.665
+        version: 0.0.665
       axios:
         specifier: ^1.12.0
         version: 1.12.2
@@ -7100,8 +7100,8 @@ importers:
         specifier: workspace:*
         version: link:../../api-importers/v3-importer-commons
       '@fern-fern/fiddle-sdk':
-        specifier: 0.0.656
-        version: 0.0.656
+        specifier: 0.0.665
+        version: 0.0.665
       '@open-rpc/meta-schema':
         specifier: ^1.14.9
         version: 1.14.9
@@ -7762,8 +7762,8 @@ importers:
         specifier: ^0.0.5297
         version: 0.0.5297
       '@fern-fern/fiddle-sdk':
-        specifier: 0.0.656
-        version: 0.0.656
+        specifier: 0.0.665
+        version: 0.0.665
       '@fern-fern/generators-sdk':
         specifier: 0.114.0-5745f9e74
         version: 0.114.0-5745f9e74
@@ -7871,8 +7871,8 @@ importers:
         specifier: workspace:*
         version: link:../cli/workspace/loader
       '@fern-fern/fiddle-sdk':
-        specifier: 0.0.656
-        version: 0.0.656
+        specifier: 0.0.665
+        version: 0.0.665
       '@fern-fern/generators-sdk':
         specifier: 0.114.0-5745f9e74
         version: 0.114.0-5745f9e74
@@ -9119,8 +9119,9 @@ packages:
   '@fern-fern/fdr-test-sdk@0.0.5297':
     resolution: {integrity: sha512-jrZUZ6oIA64LHtrv77xEq0X7qJhT9xRMGWhKcLjIUArMsD7h6KMWUHVdoB/1MP0Mz/uL/E2xmM31SOgJicpIcA==}
 
-  '@fern-fern/fiddle-sdk@0.0.656':
-    resolution: {integrity: sha512-53pgetTxQfvi/QJSn+Zma1GOHnTmfAAdYI8NYCjAMwhVoLm4pKyle/4yrwczjP9tmwKkRi8/DI4SZ9ByYjSoxQ==}
+  '@fern-fern/fiddle-sdk@0.0.665':
+    resolution: {integrity: sha512-ap2DlUqGCWvAwlQ40aZQZcis2Ev7L12c/lBZDKwVBBLdbJC035sePXEafrifrYrOoVfMnyb9P0JJJW3axzehjQ==}
+    engines: {node: '>=18.0.0'}
 
   '@fern-fern/generator-cli-sdk@0.1.5':
     resolution: {integrity: sha512-MxpF+9FumNR9q4tVnmpLgizRPCuT78u4s9oJCxAIJg3ocBMcv9t5w74BJLZdeoR6dtPPOLKcGjfIDIYimq7Ztg==}
@@ -15991,15 +15992,7 @@ snapshots:
     transitivePeerDependencies:
       - encoding
 
-  '@fern-fern/fiddle-sdk@0.0.656':
-    dependencies:
-      form-data: 4.0.0
-      js-base64: 3.7.2
-      node-fetch: 2.7.0
-      qs: 6.13.0
-      url-join: 5.0.0
-    transitivePeerDependencies:
-      - encoding
+  '@fern-fern/fiddle-sdk@0.0.665': {}
 
   '@fern-fern/generator-cli-sdk@0.1.5':
     dependencies:
