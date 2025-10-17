@@ -6,6 +6,10 @@ on:
     - cron: "0 5 * * *"
   # Runs when triggered manually to do so
   workflow_dispatch:
+  # CHRISM - temp
+  push:
+    branches:
+      - mallinson/remove-bloat
 
 # Cancel previous workflows when another is triggered
 concurrency:
@@ -20,31 +24,51 @@ jobs:
       fail-fast: false # Let all tests run and cascade errors, will only PR generator updates that passed
       matrix:
         sdk-name: [
-            ruby-model,
-            ruby-sdk,
-            ruby-sdk-v2,
-            pydantic,
-            # python-sdk, Turned off until Python is no longer hangings
-            fastapi,
-            openapi,
-            postman,
-            java-sdk,
-            java-model,
-            java-spring,
-            ts-sdk,
-            ts-express,
-            go-fiber,
-            go-model,
-            go-sdk,
-            csharp-model,
-            csharp-sdk,
-            php-model,
-            php-sdk,
-            swift-sdk,
-            rust-model,
-            rust-sdk
+            # CHRISM - temp
+            python-sdk
+            # ruby-model,
+            # ruby-sdk,
+            # ruby-sdk-v2,
+            # pydantic,
+            # python-sdk,
+            # fastapi,
+            # openapi,
+            # postman,
+            # java-sdk,
+            # java-model,
+            # java-spring,
+            # ts-sdk,
+            # ts-express,
+            # go-fiber,
+            # go-model,
+            # go-sdk,
+            # csharp-model,
+            # csharp-sdk,
+            # php-model,
+            # php-sdk,
+            # swift-sdk,
+            # rust-model,
+            # rust-sdk
           ]
     steps:
+      # Note: this step is meant for when running on ubuntu-latest
+      - name: Remove Bloat
+        if: ${{ matrix.sdk-name == "python-sdk" && runner.os == "Linux" }}
+        uses: jlumbroso/free-disk-space@main
+        with:
+          # this might remove tools that are actually needed,
+          # if set to "true" but frees about 6 GB
+          tool-cache: false
+          
+          # all of these default to true, but feel free to set to
+          # "false" if necessary for your workflow
+          android: true
+          dotnet: true
+          haskell: true
+          large-packages: true
+          docker-images: true
+          swap-storage: true
+
       - name: Checkout Repo
         uses: actions/checkout@v4
 
@@ -101,29 +125,31 @@ jobs:
       matrix:
         sdk-name:
           [
-            ruby-model,
-            ruby-sdk,
-            ruby-sdk-v2,
-            pydantic,
-            python-sdk,
-            fastapi,
-            openapi,
-            postman,
-            java-sdk,
-            java-model,
-            java-spring,
-            ts-sdk,
-            ts-express,
-            go-fiber,
-            go-model,
-            go-sdk,
-            csharp-model,
-            csharp-sdk,
-            php-model,
-            php-sdk,
-            swift-sdk,
-            rust-model,
-            rust-sdk
+            # CHRISM - temp
+            python-sdk
+            # ruby-model,
+            # ruby-sdk,
+            # ruby-sdk-v2,
+            # pydantic,
+            # python-sdk,
+            # fastapi,
+            # openapi,
+            # postman,
+            # java-sdk,
+            # java-model,
+            # java-spring,
+            # ts-sdk,
+            # ts-express,
+            # go-fiber,
+            # go-model,
+            # go-sdk,
+            # csharp-model,
+            # csharp-sdk,
+            # php-model,
+            # php-sdk,
+            # swift-sdk,
+            # rust-model,
+            # rust-sdk
           ]
         include:
           - number-of-groups-override: 14 # java-sdk override since this one is taking a while
@@ -270,9 +296,10 @@ jobs:
           pull-request-number: ${{ steps.cpr.outputs.pull-request-number }}
           merge-method: squash
 
-      - name: Approve PR
-        if: steps.cpr.outputs.pull-request-operation == 'created'
-        uses: ./.github/actions/auto-approve
-        with:
-          approver-gh-token: ${{ secrets.PR_BOT_GH_PAT }}
-          pull-request-number: ${{ steps.cpr.outputs.pull-request-number }}
+      # CHRISM - temp
+      # - name: Approve PR
+      #   if: steps.cpr.outputs.pull-request-operation == 'created'
+      #   uses: ./.github/actions/auto-approve
+      #   with:
+      #     approver-gh-token: ${{ secrets.PR_BOT_GH_PAT }}
+      #     pull-request-number: ${{ steps.cpr.outputs.pull-request-number }}
