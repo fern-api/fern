@@ -96,7 +96,7 @@ SeedPaginationClient client = SeedPaginationClient
 
 ## Pagination
 
-Paginated requests will return an Iterable<T>, which can be used to loop through the underlying items, or stream them. You can also call 
+Paginated requests will return an Iterable<T>, which can be used to loop through the underlying items, or stream them. The SDK handles auto-pagination automatically. You can also call 
 `nextPage` to perform the pagination manually
 
 ```java
@@ -130,7 +130,7 @@ for (
 // Access pagination metadata
 response.getResponse().ifPresent(r -> {
     String cursor = r.getNext();
-    // Use cursor for stateless pagination
+    // Access pagination metadata (auto-pagination handles pagination automatically)
 });
 ```
 

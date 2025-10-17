@@ -445,7 +445,7 @@ export class ReadmeSnippetBuilder extends AbstractReadmeSnippetBuilder {
             writer.writeLine("response.getResponse().ifPresent(r -> {");
             writer.indent();
             writer.writeLine("String cursor = r.getNext();");
-            writer.writeLine("// Use cursor for stateless pagination");
+            writer.writeLine("// Access pagination metadata (auto-pagination handles pagination automatically)");
             writer.dedent();
             writer.writeLine("});");
         });
