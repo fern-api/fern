@@ -40,6 +40,27 @@ export class LocalScriptRunner extends ScriptRunner {
         // No containers to stop for local execution
     }
 
+    public async cleanup({ taskContext, id }: { taskContext: TaskContext; id: string }): Promise<void> {
+        if (this.skipScripts) {
+            return;
+        }
+
+        taskContext.logger.debug(`Cleaning up fixture ${id} (local execution)`);
+
+        // For local execution, clean up Poetry virtualenvs in the output directory
+        // This is less critical since local runs use temporary directories that are cleaned up anyway
+        // But we can still clean up Poetry caches to free space
+        try {
+            await loggingExeca(taskContext.logger, "poetry", ["cache", "clear", "--all", "pypi"], {
+                doNotPipeOutput: false,
+                reject: false
+            });
+            taskContext.logger.debug(`Successfully cleaned up Poetry cache for fixture ${id}`);
+        } catch (error) {
+            taskContext.logger.warn(`Cleanup warning for fixture ${id}: ${error}`);
+        }
+    }
+
     protected async initialize(): Promise<void> {
         // No initialization needed for local execution
     }
