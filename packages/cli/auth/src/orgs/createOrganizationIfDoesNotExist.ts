@@ -26,12 +26,18 @@ export async function createOrganizationIfDoesNotExist({
         if (error.error === "UnauthorizedError") {
             context.failAndThrow("Failed to check if organization exists: Unauthorized");
         } else if (error.error === undefined && error.content != null) {
+            // Handle network-level errors from the fetcher
+            // fetcherError.reason can be: "status-code" | "non-json" | "timeout" | "unknown"
             const fetcherError = error.content;
             if (fetcherError.reason === "timeout") {
+                // Network timeout - fail fast with clear message
                 context.failAndThrow("Failed to check if organization exists: Request timed out");
             } else if (fetcherError.reason === "unknown") {
+                // Other network errors (e.g., DNS failures, connection refused) - fail fast
                 context.failAndThrow(`Failed to check if organization exists: ${fetcherError.errorMessage}`);
             }
+            // For "status-code" and "non-json" errors, we continue to attempt org creation
+            // since these indicate server responses rather than connectivity issues
         }
     }
 
@@ -50,14 +56,19 @@ export async function createOrganizationIfDoesNotExist({
         if (error.error === "UnauthorizedError") {
             context.failAndThrow("Failed to create organization: Unauthorized");
         } else if (error.error === "OrganizationAlreadyExistsError") {
+            // Organization already exists (possibly created by another process) - treat as success
             return false;
         } else if (error.error === undefined && error.content != null) {
+            // Handle network-level errors from the fetcher
             const fetcherError = error.content;
             if (fetcherError.reason === "timeout") {
+                // Network timeout - fail fast with clear message
                 context.failAndThrow("Failed to create organization: Request timed out");
             } else if (fetcherError.reason === "unknown") {
+                // Other network errors (e.g., DNS failures, connection refused) - fail fast
                 context.failAndThrow(`Failed to create organization: ${fetcherError.errorMessage}`);
             } else {
+                // For "status-code" and "non-json" errors, report the full error
                 context.failAndThrow(
                     `Failed to create organization: ${organization}`,
                     createOrganizationResponse.error
