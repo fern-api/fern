@@ -3482,8 +3482,8 @@ importers:
         specifier: 61.2.0
         version: 61.2.0
       '@fern-fern/snippet-sdk':
-        specifier: ^0.0.6434
-        version: 0.0.6434
+        specifier: ^0.0.6540
+        version: 0.0.6540
       '@fern-typescript/commons':
         specifier: workspace:*
         version: link:../../utils/commons
@@ -9343,8 +9343,9 @@ packages:
   '@fern-fern/postman-sdk@0.1.1':
     resolution: {integrity: sha512-wjeVDbw6xvsBe6I/uwZ1P0ZhzjpEAyzY9M0iQXEuZoYo5wsea3SeTCrqOub3jV0WDia0PFFacfpoV0U/sD7yIQ==}
 
-  '@fern-fern/snippet-sdk@0.0.6434':
-    resolution: {integrity: sha512-xqt1EHBHOVAAqpo4u/YFetvjRnhabLvxrcnL26DJrbqXj9UY0DWqlzRAOX6QBgisncZKnQKU1+10r7pKdf5g3Q==}
+  '@fern-fern/snippet-sdk@0.0.6540':
+    resolution: {integrity: sha512-0nDgLfmpiS8H7MpS+cjhMBZoNMPQnDB0Roae96hwKGPIO63iEw8AiHyYn4bbiGgZxQ+tBuQpUBKmWMvViBsu7Q==}
+    engines: {node: '>=18.0.0'}
 
   '@humanwhocodes/config-array@0.13.0':
     resolution: {integrity: sha512-DZLEEqFWQFiyK6h5YIeynKx7JlvCYWL0cImfSRXZ9l4Sg2efkFGTuFf6vzXjK1cq6IYkU+Eg/JizXw+TD2vRNw==}
@@ -16247,15 +16248,7 @@ snapshots:
     transitivePeerDependencies:
       - encoding
 
-  '@fern-fern/snippet-sdk@0.0.6434':
-    dependencies:
-      form-data: 4.0.0
-      js-base64: 3.7.2
-      node-fetch: 2.7.0
-      qs: 6.13.0
-      url-join: 5.0.0
-    transitivePeerDependencies:
-      - encoding
+  '@fern-fern/snippet-sdk@0.0.6540': {}
 
   '@humanwhocodes/config-array@0.13.0':
     dependencies:
