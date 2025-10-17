@@ -37,19 +37,24 @@ export function constructNpmPackage({
                 private: isPackagePrivate,
                 publishInfo: undefined,
                 repoUrl: getRepoUrlFromUrl(outputMode.repoUrl),
-                license:
-                    generatorConfig.license != null
-                        ? FernGeneratorExec.LicenseConfig._visit(generatorConfig.license, {
-                              basic: (basic: FernGeneratorExec.BasicLicense) => basic.id,
-                              custom: (custom: FernGeneratorExec.CustomLicense) => `See ${custom.filename}`,
-                              _other: () => {
-                                  return undefined;
-                              }
-                          })
-                        : undefined
+                license: getLicense(generatorConfig.license)
             };
         default:
             throw new Error(`Encountered unknown output mode: ${outputMode}`);
+    }
+}
+
+function getLicense(license: FernGeneratorExec.LicenseConfig | undefined): string | undefined {
+    if (license == null) {
+        return undefined;
+    }
+    switch (license.type) {
+        case "basic":
+            return license.id;
+        case "custom":
+            return `See ${license.filename}`;
+        default:
+            return undefined;
     }
 }
 
