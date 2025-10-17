@@ -50,6 +50,10 @@ jobs:
             # rust-model,
             # rust-sdk
           ]
+        include:
+        - concurrency-count-override: 8
+          sdk-name: python-sdk
+        
     steps:
       # Note: this step is meant for when running on ubuntu-latest
       - name: Remove Bloat
@@ -95,7 +99,14 @@ jobs:
       - name: Save Seed Test Log to File
         id: save-seed-test-log-to-file
         run: |
-          pnpm seed:local test --generator ${{ matrix.sdk-name }} --parallel 16 --allow-unexpected-failures > ${{ matrix.sdk-name }}-seed-test-log.txt
+          # Default to 16 concurrent fixtures if not overridden. In the case of python-sdk, 
+          # the virtual environments take up too much space so this needs to be limited
+          pnpm seed:local test --generator ${{ matrix.sdk-name }} --parallel ${{ matrix.concurrency-count-override || 16 }} --allow-unexpected-failures > ${{ matrix.sdk-name }}-seed-test-log.txt
+
+      # CHRISM - consideration
+      # - name: Cleanup Virtualenvs
+      #     run: |
+      #       find . -name "fern-*" -type d | head -10 | xargs rm -rf
 
       - name: Upload Seed Test Log as Artifact
         uses: actions/upload-artifact@v4
