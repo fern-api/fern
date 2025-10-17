@@ -82,8 +82,8 @@ export class DynamicSnippetsGeneratorContext extends AbstractDynamicSnippetsGene
 
         // Check if the class name is a reserved keyword (case-insensitive)
         if (PHP_RESERVED_KEYWORDS.has(className.toLowerCase())) {
-            // Prefix with the root namespace name to avoid collision
-            return `${this.rootNamespace}${className}`;
+            // Add trailing underscore to avoid collision
+            return `${className}_`;
         }
 
         return className;
