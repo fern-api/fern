@@ -31,6 +31,15 @@ public final class UserClient: Sendable {
         )
     }
 
+    public func createUsernameOptional(request: Nullable<CreateUsernameBodyOptionalProperties>?, requestOptions: RequestOptions? = nil) async throws -> Void {
+        return try await httpClient.performRequest(
+            method: .post,
+            path: "/user/username-optional",
+            body: request,
+            requestOptions: requestOptions
+        )
+    }
+
     public func getUsername(limit: Int, id: UUID, date: CalendarDate, deadline: Date, bytes: String, user: User, userList: [User], optionalDeadline: Date? = nil, keyValue: [String: String], optionalString: String? = nil, nestedUser: NestedUser, optionalUser: User? = nil, excludeUser: User, filter: String, longParam: Int64, bigIntParam: String, requestOptions: RequestOptions? = nil) async throws -> User {
         return try await httpClient.performRequest(
             method: .get,
