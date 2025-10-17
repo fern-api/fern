@@ -2,7 +2,6 @@ import {
     AbstractGeneratorContext,
     AbstractGeneratorNotificationService,
     FernGeneratorExec,
-    GeneratorExecParsing,
     GeneratorNotificationService,
     NopGeneratorNotificationService
 } from "@fern-api/browser-compatible-base-generator";
@@ -27,11 +26,10 @@ export abstract class AbstractGeneratorCli<
             ? new NopGeneratorNotificationService()
             : new GeneratorNotificationService(config.environment);
         try {
-            await generatorNotificationService.sendUpdate(
-                FernGeneratorExec.GeneratorUpdate.initV2({
-                    publishingToRegistry: "MAVEN"
-                })
-            );
+            await generatorNotificationService.sendUpdate({
+                _type: "initV2",
+                publishingToRegistry: "MAVEN"
+            });
             const ir = await this.parseIntermediateRepresentation(config.irFilepath);
             const customConfig = this.parseCustomConfigOrThrow(config.customConfig);
             const context = this.constructContext({
@@ -53,17 +51,20 @@ export abstract class AbstractGeneratorCli<
                 default:
                     assertNever(config.output.mode);
             }
-            await generatorNotificationService.sendUpdate(
-                FernGeneratorExec.GeneratorUpdate.exitStatusUpdate(FernGeneratorExec.ExitStatusUpdate.successful({}))
-            );
-        } catch (e) {
-            await generatorNotificationService.sendUpdate(
-                FernGeneratorExec.GeneratorUpdate.exitStatusUpdate(
-                    FernGeneratorExec.ExitStatusUpdate.error({
-                        message: e instanceof Error ? e.message : "Encountered error"
-                    })
-                )
-            );
+            await generatorNotificationService.sendUpdate({
+                _type: "exitStatusUpdate",
+                exitStatusUpdate: {
+                    _type: "successful"
+                }
+            });
+        } catch (e: any) {
+            await generatorNotificationService.sendUpdate({
+                _type: "exitStatusUpdate",
+                exitStatusUpdate: {
+                    _type: "error",
+                    message: e instanceof Error ? e.message : "Encountered error"
+                }
+            });
             throw e;
         }
     }
@@ -125,13 +126,5 @@ async function getGeneratorConfig(): Promise<FernGeneratorExec.GeneratorConfig> 
     console.log(`Reading ${pathToConfig}`);
     const rawConfigString = rawConfig.toString();
     console.log(`Contents are ${rawConfigString}`);
-    const validatedConfig = await GeneratorExecParsing.GeneratorConfig.parse(JSON.parse(rawConfigString), {
-        unrecognizedObjectKeys: "passthrough"
-    });
-    if (!validatedConfig.ok) {
-        throw new Error(
-            `The generator config failed to pass validation. ${validatedConfig.errors.map((e) => (typeof e === "object" ? JSON.stringify(e) : String(e))).join(", ")}`
-        );
-    }
-    return validatedConfig.value;
+    return JSON.parse(rawConfigString) as FernGeneratorExec.GeneratorConfig;
 }
