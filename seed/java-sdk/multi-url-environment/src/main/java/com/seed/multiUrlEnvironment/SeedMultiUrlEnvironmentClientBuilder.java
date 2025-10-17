@@ -19,7 +19,7 @@ public class SeedMultiUrlEnvironmentClientBuilder {
 
     private String token = null;
 
-    private Environment environment = Environment.PRODUCTION;
+    private Environment environment = Environment.Production;
 
     private OkHttpClient httpClient;
 
