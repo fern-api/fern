@@ -11,7 +11,7 @@ Add this to your `Cargo.toml`:
 
 ```toml
 [dependencies]
-seed_unions = "0.1.0"
+seed_unions = "0.0.1"
 ```
 
 Or install via cargo:

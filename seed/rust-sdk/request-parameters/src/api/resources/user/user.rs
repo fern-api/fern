@@ -49,6 +49,22 @@ impl UserClient {
             .await
     }
 
+    pub async fn create_username_optional(
+        &self,
+        request: &Option<Option<CreateUsernameBodyOptionalProperties>>,
+        options: Option<RequestOptions>,
+    ) -> Result<(), ApiError> {
+        self.http_client
+            .execute_request(
+                Method::POST,
+                "/user/username-optional",
+                Some(serde_json::to_value(request).unwrap_or_default()),
+                None,
+                options,
+            )
+            .await
+    }
+
     pub async fn get_username(
         &self,
         request: &GetUsernameQueryRequest,
