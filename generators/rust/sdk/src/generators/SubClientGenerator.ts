@@ -132,6 +132,7 @@ export class SubClientGenerator {
         const typeAnalysis = this.analyzeRequiredImports();
         const hasSubClients = this.hasSubClients();
         const endpointsUseCustomTypes = this.endpointsUseCustomTypes();
+        const hasBinaryEndpoints = this.hasBinaryEndpoints();
 
         // Build base crate imports conditionally
         const crateItems = ["ClientConfig", "ApiError", "HttpClient"];
@@ -139,6 +140,11 @@ export class SubClientGenerator {
         // Only add RequestOptions if we have endpoints that use it
         if (hasEndpoints) {
             crateItems.push("RequestOptions");
+        }
+
+        // Add ByteStream if we have binary endpoints (file downloads)
+        if (hasBinaryEndpoints) {
+            crateItems.push("ByteStream");
         }
 
         if (hasQueryParams) {
@@ -431,6 +437,11 @@ export class SubClientGenerator {
     private hasQueryParameters(): boolean {
         const endpoints = this.service?.endpoints || [];
         return endpoints.some((endpoint) => endpoint.queryParameters.length > 0);
+    }
+
+    private hasBinaryEndpoints(): boolean {
+        const endpoints = this.service?.endpoints || [];
+        return endpoints.some((endpoint) => this.isBinaryResponse(endpoint));
     }
 
     private analyzeRequiredImports(): ImportAnalysis {
@@ -759,12 +770,16 @@ export class SubClientGenerator {
             rust.Type.reference(rust.reference({ name: "ApiError" }))
         );
 
+        // Use streaming for binary responses (returns ByteStream)
+        const isBinaryResponse = this.isBinaryResponse(endpoint);
+        const executeMethod = isBinaryResponse ? "execute_stream_request" : "execute_request";
+
         return {
             name: endpoint.name.snakeCase.safeName,
             parameters,
             returnType: returnType.toString(),
             isAsync: true,
-            body: `self.http_client.execute_request(
+            body: `self.http_client.${executeMethod}(
             Method::${httpMethod},
             ${pathExpression},
             ${requestBody},
@@ -1161,7 +1176,9 @@ export class SubClientGenerator {
                     );
                     pathParams.push(paramName);
                 }
-            } else {
+            }
+            // Always append tail if present (can exist alongside pathParameter)
+            if (part.tail) {
                 path += part.tail;
             }
         });
@@ -1216,18 +1233,32 @@ export class SubClientGenerator {
                     }
                     return rust.Type.reference(rust.reference({ name: "Value", module: "serde_json" }));
                 },
-                fileDownload: () => rust.Type.vec(rust.Type.primitive(rust.PrimitiveType.U8)),
+                fileDownload: () => rust.Type.reference(rust.reference({ name: "ByteStream" })),
                 text: () => rust.Type.primitive(rust.PrimitiveType.String),
-                bytes: () => rust.Type.vec(rust.Type.primitive(rust.PrimitiveType.U8)),
-                streaming: () => {
-                    return rust.Type.reference(rust.reference({ name: "Value", module: "serde_json" }));
-                },
+                bytes: () => rust.Type.reference(rust.reference({ name: "ByteStream" })),
+                streaming: () => rust.Type.reference(rust.reference({ name: "Value", module: "serde_json" })),
                 streamParameter: () => rust.Type.reference(rust.reference({ name: "Value", module: "serde_json" })),
                 _other: () => rust.Type.reference(rust.reference({ name: "Value", module: "serde_json" }))
             });
         }
 
         return rust.Type.tuple([]);
+    }
+
+    private isBinaryResponse(endpoint: HttpEndpoint): boolean {
+        if (!endpoint.response?.body) {
+            return false;
+        }
+
+        return endpoint.response.body._visit({
+            json: () => false,
+            fileDownload: () => true,
+            text: () => false,
+            bytes: () => true,
+            streaming: () => false,
+            streamParameter: () => false,
+            _other: () => false
+        });
     }
 
     // =============================================================================
@@ -1808,9 +1839,9 @@ export class SubClientGenerator {
         if (endpoint.response?.body) {
             return endpoint.response.body._visit({
                 json: () => "JSON response from the API",
-                fileDownload: () => "Downloaded file as bytes",
+                fileDownload: () => "Streaming file download (use .into_bytes() to collect or stream chunks)",
                 text: () => "Text response",
-                bytes: () => "Raw bytes response",
+                bytes: () => "Streaming byte response (use .into_bytes() to collect or stream chunks)",
                 streaming: () => "Streaming response",
                 streamParameter: () => "Stream parameter response",
                 _other: () => "API response"

@@ -24,7 +24,7 @@ impl ServiceClient {
             .execute_request(
                 Method::POST,
                 &format!(
-                    "/test/{}{}{}{}",
+                    "/test/{}/{}/{}/{}",
                     path_param, service_param, endpoint_param, resource_param
                 ),
                 None,
