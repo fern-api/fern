@@ -1,7 +1,7 @@
 import { AbstractGeneratorContext, FernGeneratorExec, GeneratorNotificationService } from "@fern-api/base-generator";
 import { assertNever } from "@fern-api/core-utils";
 import { RelativeFilePath } from "@fern-api/fs-utils";
-import { BasePhpCustomConfigSchema, getSafeClassName, GLOBAL_NAMESPACE, php, SELF } from "@fern-api/php-codegen";
+import { BasePhpCustomConfigSchema, GLOBAL_NAMESPACE, getSafeClassName, php, SELF } from "@fern-api/php-codegen";
 import {
     FernFilepath,
     IntermediateRepresentation,
