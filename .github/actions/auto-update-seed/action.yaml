@@ -40,7 +40,6 @@ runs:
         generator-name: ${{ inputs.generator-name }}
         generator-path: ${{ inputs.generator-path }}
         fixtures-to-run: ${{ inputs.fixtures-to-run }}
-        validate-git-diff: false
         allow-unexpected-failures: ${{ inputs.allow-unexpected-failures }}
         skip-scripts: ${{ inputs.skip-scripts }}
         cache-disabled: ${{ inputs.cache-disabled }}
