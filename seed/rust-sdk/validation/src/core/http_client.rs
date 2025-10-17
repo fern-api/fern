@@ -1,10 +1,90 @@
 use crate::{join_url, ApiError, ClientConfig, RequestOptions};
+use futures::{Stream, StreamExt};
 use reqwest::{
     header::{HeaderName, HeaderValue},
     Client, Method, Request, Response,
 };
 use serde::de::DeserializeOwned;
-use std::str::FromStr;
+use std::{
+    pin::Pin,
+    str::FromStr,
+    task::{Context, Poll},
+};
+
+/// A streaming byte stream for downloading files efficiently
+pub struct ByteStream {
+    content_length: Option<u64>,
+    inner: Pin<Box<dyn Stream<Item = Result<bytes::Bytes, reqwest::Error>> + Send>>,
+}
+
+impl ByteStream {
+    /// Create a new ByteStream from a Response
+    pub(crate) fn new(response: Response) -> Self {
+        let content_length = response.content_length();
+        let stream = response.bytes_stream();
+
+        Self {
+            content_length,
+            inner: Box::pin(stream),
+        }
+    }
+
+    /// Collect the entire stream into a `Vec<u8>`
+    ///
+    /// This consumes the stream and buffers all data into memory.
+    /// For large files, prefer using `try_next()` to process chunks incrementally.
+    ///
+    /// # Example
+    /// ```no_run
+    /// let stream = client.download_file().await?;
+    /// let bytes = stream.collect().await?;
+    /// ```
+    pub async fn collect(mut self) -> Result<Vec<u8>, ApiError> {
+        let mut result = Vec::new();
+        while let Some(chunk) = self.inner.next().await {
+            result.extend_from_slice(&chunk.map_err(ApiError::Network)?);
+        }
+        Ok(result)
+    }
+
+    /// Get the next chunk from the stream
+    ///
+    /// Returns `Ok(Some(bytes))` if a chunk is available,
+    /// `Ok(None)` if the stream is finished, or an error.
+    ///
+    /// # Example
+    /// ```no_run
+    /// let mut stream = client.download_file().await?;
+    /// while let Some(chunk) = stream.try_next().await? {
+    ///     process_chunk(&chunk);
+    /// }
+    /// ```
+    pub async fn try_next(&mut self) -> Result<Option<bytes::Bytes>, ApiError> {
+        match self.inner.next().await {
+            Some(Ok(bytes)) => Ok(Some(bytes)),
+            Some(Err(e)) => Err(ApiError::Network(e)),
+            None => Ok(None),
+        }
+    }
+
+    /// Get the content length from response headers if available
+    pub fn content_length(&self) -> Option<u64> {
+        self.content_length
+    }
+}
+
+impl Stream for ByteStream {
+    type Item = Result<bytes::Bytes, ApiError>;
+
+    fn poll_next(mut self: Pin<&mut Self>, cx: &mut Context<'_>) -> Poll<Option<Self::Item>> {
+        match self.inner.as_mut().poll_next(cx) {
+            Poll::Ready(Some(Ok(bytes))) => Poll::Ready(Some(Ok(bytes))),
+            Poll::Ready(Some(Err(e))) => Poll::Ready(Some(Err(ApiError::Network(e)))),
+            Poll::Ready(None) => Poll::Ready(None),
+            Poll::Pending => Poll::Pending,
+        }
+    }
+}
 
 /// Internal HTTP client that handles requests with authentication and retries
 #[derive(Clone)]
@@ -173,15 +253,70 @@ impl HttpClient {
         serde_json::from_str(&text).map_err(ApiError::Serialization)
     }
 
-    /// Execute a request and return raw bytes (for file downloads)
-    pub async fn execute_bytes_request(
+
+    /// Execute a request and return a streaming response (for large file downloads)
+    ///
+    /// This method returns a `ByteStream` that can be used to download large files
+    /// efficiently without loading the entire content into memory. The stream can be
+    /// consumed chunk by chunk, written directly to disk, or collected into bytes.
+    ///
+    /// # Examples
+    ///
+    /// **Option 1: Collect all bytes into memory (AWS SDK style)**
+    /// ```no_run
+    /// let stream = client.execute_stream_request(
+    ///     Method::GET,
+    ///     "/file",
+    ///     None,
+    ///     None,
+    ///     None,
+    /// ).await?;
+    ///
+    /// let bytes = stream.collect().await?;
+    /// ```
+    ///
+    /// **Option 2: Process chunks with try_next() (AWS SDK style)**
+    /// ```no_run
+    /// let mut stream = client.execute_stream_request(
+    ///     Method::GET,
+    ///     "/large-file",
+    ///     None,
+    ///     None,
+    ///     None,
+    /// ).await?;
+    ///
+    /// while let Some(chunk) = stream.try_next().await? {
+    ///     process_chunk(&chunk);
+    /// }
+    /// ```
+    ///
+    /// **Option 3: Stream with futures::Stream trait**
+    /// ```no_run
+    /// use futures::StreamExt;
+    ///
+    /// let stream = client.execute_stream_request(
+    ///     Method::GET,
+    ///     "/large-file",
+    ///     None,
+    ///     None,
+    ///     None,
+    /// ).await?;
+    ///
+    /// let mut file = tokio::fs::File::create("output.mp4").await?;
+    /// let mut stream = std::pin::pin!(stream);
+    /// while let Some(chunk) = stream.next().await {
+    ///     let chunk = chunk?;
+    ///     tokio::io::AsyncWriteExt::write_all(&mut file, &chunk).await?;
+    /// }
+    /// ```
+    pub async fn execute_stream_request(
         &self,
         method: Method,
         path: &str,
         body: Option<serde_json::Value>,
         query_params: Option<Vec<(String, String)>>,
         options: Option<RequestOptions>,
-    ) -> Result<Vec<u8>, ApiError> {
+    ) -> Result<ByteStream, ApiError> {
         let url = join_url(&self.config.base_url, path);
         let mut request = self.client.request(method, &url);
 
@@ -212,8 +347,7 @@ impl HttpClient {
         // Execute with retries
         let response = self.execute_with_retries(req, &options).await?;
 
-        // Return raw bytes without JSON parsing
-        let bytes = response.bytes().await.map_err(ApiError::Network)?;
-        Ok(bytes.to_vec())
+        // Return streaming response
+        Ok(ByteStream::new(response))
     }
 }
