@@ -6,7 +6,8 @@ export default defineConfig({
         include: ["**/*.{test,spec}.ts"],
         server: {
             deps: {
-                fallbackCJS: true
+                fallbackCJS: true,
+                inline: [/@fern-api\/docs-parsers/, /@fern-api\/ui-core-utils/]
             }
         },
         maxConcurrency: 10,

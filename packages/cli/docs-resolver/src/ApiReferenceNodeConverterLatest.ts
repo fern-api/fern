@@ -4,7 +4,7 @@ import { FdrAPI, FernNavigation } from "@fern-api/fdr-sdk";
 import { AbsoluteFilePath } from "@fern-api/fs-utils";
 import { OSSWorkspace } from "@fern-api/lazy-fern-workspace";
 import { TaskContext } from "@fern-api/task-context";
-import { titleCase, visitDiscriminatedUnion } from "@fern-api/ui-core-utils";
+import { titleCase, visitDiscriminatedUnion } from "@fern-api/core-utils";
 import { DocsWorkspace } from "@fern-api/workspace-loader";
 import { kebabCase } from "lodash-es";
 import urlJoin from "url-join";

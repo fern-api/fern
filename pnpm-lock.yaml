@@ -5512,9 +5512,6 @@ importers:
       '@fern-api/task-context':
         specifier: workspace:*
         version: link:../task-context
-      '@fern-api/ui-core-utils':
-        specifier: 0.129.4-b6c699ad2
-        version: 0.129.4-b6c699ad2
       '@fern-fern/fdr-cjs-sdk':
         specifier: 0.139.31-66c809cb8
         version: 0.139.31-66c809cb8
@@ -9386,9 +9383,6 @@ packages:
 
   '@fern-api/ui-core-utils@0.0.0':
     resolution: {integrity: sha512-8T3YLd+n8z5Vs+WNRIwH6PUW31ZC4/lkRD5G2+qyBcdePfOVYV3CHp3eiUrSSArOr0SJmzN/mQwPm3iAaey7nw==}
-
-  '@fern-api/ui-core-utils@0.129.4-b6c699ad2':
-    resolution: {integrity: sha512-V1jfV4u5fhpWEoLqCIA1QtRGpRR0NXyk68VGEHmEsezwA/gNF4587MJp5FWN59YsZmRt2hozODnp/umJ/iwkPg==}
 
   '@fern-api/ui-core-utils@0.139.31-66c809cb8':
     resolution: {integrity: sha512-2qnV4AX5hSPI5/bZk0MuVfr9VLmi6Ki50U0IlzhqmEAB8ZDellVLOdvnIf/8oG/aVS36TQYJdZ7tVylmwFKFbw==}
@@ -16386,14 +16380,6 @@ snapshots:
 
   '@fern-api/ui-core-utils@0.0.0':
     dependencies:
-      strip-ansi: 7.1.2
-      title: 3.5.3
-      ua-parser-js: 1.0.41
-
-  '@fern-api/ui-core-utils@0.129.4-b6c699ad2':
-    dependencies:
-      date-fns: 4.1.0
-      date-fns-tz: 3.2.0(date-fns@4.1.0)
       strip-ansi: 7.1.2
       title: 3.5.3
       ua-parser-js: 1.0.41
