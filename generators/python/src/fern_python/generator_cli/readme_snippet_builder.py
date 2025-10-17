@@ -177,6 +177,10 @@ client.{endpoint.endpoint_package_path}{endpoint.method_name}({"..., " if has_pa
 
                     def _get_error_writer(current_endpoint: EndpointMetadata) -> AST.CodeWriterFunction:
                         def _error_writer(writer: AST.NodeWriter) -> None:
+                            writer.write_line("import logging")
+                            writer.write_newline_if_last_line_not()
+                            writer.write_line("logger = logging.getLogger(__name__)")
+                            writer.write_newline_if_last_line_not()
                             writer.write_line("try:")
                             with writer.indent():
                                 writer.write_line(
@@ -186,8 +190,8 @@ client.{endpoint.endpoint_package_path}{endpoint.method_name}({"..., " if has_pa
                             writer.write_node(AST.TypeHint(self._api_error_reference))
                             writer.write_line(" as e:")
                             with writer.indent():
-                                writer.write_line("print(e.status_code)")
-                                writer.write_line("print(e.body)")
+                                writer.write_line("logger.error(e.status_code)")
+                                writer.write_line("logger.error(e.body)")
 
                         return _error_writer
 
@@ -204,6 +208,10 @@ client.{endpoint.endpoint_package_path}{endpoint.method_name}({"..., " if has_pa
 
     def _build_access_raw_response_data_snippets(self) -> List[str]:
         def write(writer: AST.NodeWriter) -> None:
+            writer.write_line("import logging")
+            writer.write_newline_if_last_line_not()
+            writer.write_line("logger = logging.getLogger(__name__)")
+            writer.write_newline_if_last_line_not()
             writer.write_node(
                 AST.VariableDeclaration(
                     name="client",
@@ -252,8 +260,8 @@ client.{endpoint.endpoint_package_path}{endpoint.method_name}({"..., " if has_pa
                         ),
                     )
                 )
-                writer.write_line("print(response.headers)  # access the response headers")
-                writer.write_line("print(response.data)  # access the underlying object")
+                writer.write_line("logger.info(response.headers)  # access the response headers")
+                writer.write_line("logger.info(response.data)  # access the underlying object")
 
             if pagination_endpoint_id and (
                 endpoint := self._endpoint_metadata.get_endpoint_metadata(pagination_endpoint_id)
@@ -266,12 +274,12 @@ client.{endpoint.endpoint_package_path}{endpoint.method_name}({"..., " if has_pa
                         ),
                     )
                 )
-                writer.write_line("print(pager.response.headers)  # access the response headers for the first page")
+                writer.write_line("logger.info(pager.response.headers)  # access the response headers for the first page")
                 writer.write_node(
                     AST.ForStatement(
                         target="item",
                         iterable="pager",
-                        body=[AST.Expression("print(item)  # access the underlying object(s)")],
+                        body=[AST.Expression("logger.info(item)  # access the underlying object(s)")],
                     )
                 )
                 writer.write_newline_if_last_line_not()
@@ -281,12 +289,12 @@ client.{endpoint.endpoint_package_path}{endpoint.method_name}({"..., " if has_pa
                         iterable="pager.iter_pages()",
                         body=[
                             AST.Expression(
-                                "print(page.response.headers)  # access the response headers for each page\n"
+                                "logger.info(page.response.headers)  # access the response headers for each page\n"
                             ),
                             AST.ForStatement(
                                 target="item",
                                 iterable="page",
-                                body=[AST.Expression("print(item)  # access the underlying object(s)")],
+                                body=[AST.Expression("logger.info(item)  # access the underlying object(s)")],
                             ),
                         ],
                     )
@@ -307,11 +315,11 @@ client.{endpoint.endpoint_package_path}{endpoint.method_name}({"..., " if has_pa
                             )
                         ],
                         body=[
-                            AST.Expression("print(response.headers)  # access the response headers\n"),
+                            AST.Expression("logger.info(response.headers)  # access the response headers\n"),
                             AST.ForStatement(
                                 target="chunk",
                                 iterable="response.data",
-                                body=[AST.Expression("print(chunk)  # access the underlying object(s)")],
+                                body=[AST.Expression("logger.info(chunk)  # access the underlying object(s)")],
                             ),
                         ],
                     )
