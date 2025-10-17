@@ -5,6 +5,9 @@
         Match the logic in wire test generation where the static example generation omits the request parameter for empty objects when optional.
         This fixes some wire tests that were failing due to mismatched request bodies.
       type: fix
+    - summary: |
+        Return `undefined` when passing in `undefined` to `toJson` when `useBigInt` is enabled.
+      type: fix
   createdAt: "2025-10-17"
   irVersion: 60
 
