@@ -8,7 +8,8 @@ export interface RustFormatterOptions {
 
 export async function formatRustCode({ outputDir, logger }: RustFormatterOptions): Promise<void> {
     return new Promise((resolve) => {
-        logger.debug(`Running rustfmt in directory: ${outputDir}`);
+        logger.debug(`Running rustfmt (edition 2021) on all .rs files in: ${outputDir}`);
+        logger.debug("Command: rustfmt --edition=2021 --config-path=rustfmt.toml **/*.rs");
 
         // Run rustfmt with the configuration file on all Rust files
         const rustfmt = spawn("rustfmt", ["--edition=2021", "--config-path=rustfmt.toml", "**/*.rs"], {
@@ -30,23 +31,25 @@ export async function formatRustCode({ outputDir, logger }: RustFormatterOptions
 
         rustfmt.on("close", (code: number | null) => {
             if (code === 0) {
-                logger.info("rustfmt completed successfully");
+                logger.debug("rustfmt formatting completed successfully");
                 if (stdout.trim()) {
-                    logger.debug(`rustfmt stdout: ${stdout.trim()}`);
+                    logger.debug(`rustfmt output: ${stdout.trim()}`);
                 }
             } else {
-                logger.warn(`rustfmt exited with code ${code}`);
+                logger.warn(`rustfmt exited with non-zero code ${code} (formatting may have failed)`);
                 if (stderr.trim()) {
                     logger.warn(`rustfmt stderr: ${stderr.trim()}`);
                 }
+                logger.debug("Note: Generation will continue despite formatting errors");
             }
             // Always resolve - don't fail generation if formatting fails
             resolve();
         });
 
         rustfmt.on("error", (error: Error) => {
-            logger.warn(`rustfmt error: ${error.message}`);
-            logger.debug("rustfmt may not be installed or available in PATH");
+            logger.warn(`Failed to run rustfmt: ${error.message}`);
+            logger.debug("Possible causes: rustfmt not installed, not in PATH, or permission issues");
+            logger.debug("Tip: Install rustfmt with 'rustup component add rustfmt'");
             // Always resolve - don't fail generation if formatting fails
             resolve();
         });

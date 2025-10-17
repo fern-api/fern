@@ -1,8 +1,17 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
-- version: 3.9.1
+
+- version: 3.9.2
   changelogEntry:
     - summary: |
         Fix ts local github generation to match remote generation.
+      type: fix
+  createdAt: "2025-10-17"
+  irVersion: 60
+
+- version: 3.9.1
+  changelogEntry:
+    - summary: |
+        Improve the performance of JSON serialization and parsing when `useBigInt` is enabled.
       type: fix
   createdAt: "2025-10-16"
   irVersion: 60
