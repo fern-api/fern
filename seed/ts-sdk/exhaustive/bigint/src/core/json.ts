@@ -43,7 +43,7 @@ const BIGINT_REGEX = new RegExp(`"(-?\\d+)${BIGINT_MARKER.replace(/[#]/g, "\\$&"
 export const toJson = (
     data: unknown,
     replacer?: (key: string, value: unknown) => unknown,
-    space?: string | number,
+    space?: string | number
 ): string => {
     // Use native JSON.stringify with a custom replacer for BigInt
     const preliminaryJSON = JSON.stringify(
@@ -54,8 +54,11 @@ export const toJson = (
             }
             return replacer ? replacer(key, value) : value;
         },
-        space,
+        space
     );
+    if (preliminaryJSON == null) {
+        return preliminaryJSON;
+    }
 
     // Strip quotes around numbers with marker: "123#bigint#" → 123
     return preliminaryJSON.replace(BIGINT_REGEX, "$1");
@@ -70,7 +73,7 @@ export const toJson = (
 
 export function fromJson<T = unknown>(
     json: string,
-    reviver?: (this: unknown, key: string, value: unknown) => unknown,
+    reviver?: (this: unknown, key: string, value: unknown) => unknown
 ): T {
     let i = 0;
     const len = json.length;
