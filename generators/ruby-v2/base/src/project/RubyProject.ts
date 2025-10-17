@@ -374,6 +374,7 @@ class CustomGemfile {
         `;
     }
 }
+
 declare namespace Rakefile {
     interface Args {
         context: AbstractRubyGeneratorContext<BaseRubyCustomConfigSchema>;
