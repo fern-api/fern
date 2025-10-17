@@ -1,7 +1,10 @@
+import logging
 from typing import Dict, List, Optional, Tuple
 
 import generatorcli
 from fern_python.codegen import AST
+
+logger = logging.getLogger(__name__)
 from fern_python.external_dependencies.httpx import HttpX
 from fern_python.generators.sdk.client_generator.endpoint_metadata_collector import (
     EndpointMetadata,
@@ -96,7 +99,7 @@ class ReadmeSnippetBuilder:
                 return [self._endpoint_snippet_map[endpoint_id].sync_client for endpoint_id in usage_endpoint_ids]
             return [self._endpoint_snippet_map[self._default_endpoint_id].sync_client]
         except Exception as e:
-            print(f"Failed to generate usage snippets with exception {e}")
+            logger.error(f"Failed to generate usage snippets with exception {e}")
             return []
 
     def _build_snippets_for_feature(self, feature_id: generatorcli.feature.FeatureId) -> List[str]:
@@ -160,7 +163,7 @@ client.{endpoint.endpoint_package_path}{endpoint.method_name}({"..., " if has_pa
 
             return retry_snippets
         except Exception as e:
-            print(f"Failed to generage timeout snippets with exception {e}")
+            logger.error(f"Failed to generate timeout snippets with exception {e}")
             return []
 
     def _build_exception_handling_snippets(self) -> List[str]:
@@ -199,7 +202,7 @@ client.{endpoint.endpoint_package_path}{endpoint.method_name}({"..., " if has_pa
 
             return retry_snippets
         except Exception as e:
-            print(f"Failed to generage exception handling snippets with exception {e}")
+            logger.error(f"Failed to generate exception handling snippets with exception {e}")
             return []
 
     def _build_access_raw_response_data_snippets(self) -> List[str]:
@@ -339,7 +342,7 @@ client.{endpoint.endpoint_package_path}{endpoint.method_name}({"..., " if has_pa
 
             return retry_snippets
         except Exception as e:
-            print(f"Failed to generage retries snippets with exception {e}")
+            logger.error(f"Failed to generate retries snippets with exception {e}")
             return []
 
     def _build_custom_client_snippets(self) -> str:
@@ -371,21 +374,21 @@ client.{endpoint.endpoint_package_path}{endpoint.method_name}({"..., " if has_pa
 
             return client_instantiation_str
         except Exception as e:
-            print(f"Failed to generage custom client snippets with exception {e}")
+            logger.error(f"Failed to generate custom client snippets with exception {e}")
             return ""
 
     def _build_streaming_snippets(self) -> List[str]:
         try:
             return self._build_snippets_for_feature(ReadmeSnippetBuilder.STREAMING_FEATURE_ID)
         except Exception as e:
-            print(f"Failed to generage streaming snippets with exception {e}")
+            logger.error(f"Failed to generate streaming snippets with exception {e}")
             return []
 
     def _build_pagination_snippets(self) -> List[str]:
         try:
             return self._build_snippets_for_feature(ReadmeSnippetBuilder.PAGINATION_FEATURE_ID)
         except Exception as e:
-            print(f"Failed to generage pagination snippets with exception {e}")
+            logger.error(f"Failed to generate pagination snippets with exception {e}")
             return []
 
     def _build_websocket_snippets(self) -> List[str]:
@@ -399,7 +402,7 @@ client.{endpoint.endpoint_package_path}{endpoint.method_name}({"..., " if has_pa
                 self._get_websocket_snippet(is_async=True, subpackage=subpackage, websocket_channel=websocket_channel)
             )
         except Exception as e:
-            print(f"Failed to generage websocket snippets with exception {e}")
+            logger.error(f"Failed to generate websocket snippets with exception {e}")
             return []
         return websocket_snippets
 
@@ -470,7 +473,7 @@ client.{endpoint.endpoint_package_path}{endpoint.method_name}({"..., " if has_pa
                 return [async_client]
             return []
         except Exception as e:
-            print(f"Failed to generage async client snippets with exception {e}")
+            logger.error(f"Failed to generage async client snippets with exception {e}")
             return []
 
     def _build_endpoint_feature_map(
