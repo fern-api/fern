@@ -9973,8 +9973,8 @@ packages:
     resolution: {integrity: sha512-iz6KzZ7u95Fzy9Nt2L8cG88lGRMr/qy1Q36ih/XVzMIlPDMYwaNLE/ENhqmIzgPrlNWiYJkwmveEetvxAgFBJw==}
     engines: {node: '>= 20'}
 
-  '@octokit/oauth-app@8.0.2':
-    resolution: {integrity: sha512-Oln8yKrDIDKnp49GUCSqda+XZyocmNapumjA0JdTpRfwMpmFMnh3bCOtSgb3X/kHfdtT7Q9ihFeN1djn58forg==}
+  '@octokit/oauth-app@8.0.3':
+    resolution: {integrity: sha512-jnAjvTsPepyUaMu9e69hYBuozEPgYqP4Z3UnpmvoIzHDpf8EXDGvTY1l1jK0RsZ194oRd+k6Hm13oRU8EoDFwg==}
     engines: {node: '>= 20'}
 
   '@octokit/oauth-authorization-url@8.0.0':
@@ -10310,8 +10310,8 @@ packages:
     resolution: {integrity: sha512-hq9s/qlTIJ2KYjs9MDt/ALvO7g/xIfGsVr2kjuNYLC52TieBkKAIQr7Fhk7jiQfmRXLQawY4nVgc/7wvxHow0g==}
     deprecated: This is a stub types definition. ajv provides its own type definitions, so you do not need this installed.
 
-  '@types/aws-lambda@8.10.155':
-    resolution: {integrity: sha512-wd1XgoL0gy/ybo7WozUKQBd+IOgUkdfG6uUGI0fQOTEq06FBFdO7tmPDSxgjkFkl8GlfApvk5TvqZlAl0g+Lbg==}
+  '@types/aws-lambda@8.10.156':
+    resolution: {integrity: sha512-LElQP+QliVWykC7OF8dNr04z++HJCMO2lF7k9HuKoSDARqhcjHq8MzbrRwujCSDeBHIlvaimbuY/tVZL36KXFQ==}
 
   '@types/axios@0.14.4':
     resolution: {integrity: sha512-9JgOaunvQdsQ/qW2OPmE5+hCeUB52lQSolecrFrthct55QekhmXEwT203s20RL+UHtCQc15y3VXpby9E7Kkh/g==}
@@ -17166,7 +17166,7 @@ snapshots:
       ignore: 5.3.2
       minimatch: 9.0.3
       nx: 21.6.2
-      semver: 7.7.2
+      semver: 7.7.3
       tslib: 2.8.1
       yargs-parser: 21.1.1
 
@@ -17197,7 +17197,7 @@ snapshots:
       ora: 5.3.0
       picocolors: 1.1.1
       picomatch: 4.0.2
-      semver: 7.7.2
+      semver: 7.7.3
       source-map-support: 0.5.19
       tinyglobby: 0.2.15
       tslib: 2.8.1
@@ -17247,7 +17247,7 @@ snapshots:
       enquirer: 2.3.6
       nx: 21.6.2
       picomatch: 4.0.2
-      semver: 7.7.2
+      semver: 7.7.3
       tslib: 2.8.1
       yargs-parser: 21.1.1
     transitivePeerDependencies:
@@ -17260,7 +17260,7 @@ snapshots:
       '@octokit/auth-app': 8.1.1
       '@octokit/auth-unauthenticated': 7.0.2
       '@octokit/core': 7.0.5
-      '@octokit/oauth-app': 8.0.2
+      '@octokit/oauth-app': 8.0.3
       '@octokit/plugin-paginate-rest': 13.2.0(@octokit/core@7.0.5)
       '@octokit/types': 15.0.0
       '@octokit/webhooks': 14.1.3
@@ -17327,7 +17327,7 @@ snapshots:
       '@octokit/types': 15.0.0
       universal-user-agent: 7.0.3
 
-  '@octokit/oauth-app@8.0.2':
+  '@octokit/oauth-app@8.0.3':
     dependencies:
       '@octokit/auth-oauth-app': 9.0.2
       '@octokit/auth-oauth-user': 6.0.1
@@ -17335,7 +17335,7 @@ snapshots:
       '@octokit/core': 7.0.5
       '@octokit/oauth-authorization-url': 8.0.0
       '@octokit/oauth-methods': 6.0.1
-      '@types/aws-lambda': 8.10.155
+      '@types/aws-lambda': 8.10.156
       universal-user-agent: 7.0.3
 
   '@octokit/oauth-authorization-url@8.0.0': {}
@@ -17504,7 +17504,7 @@ snapshots:
       extract-zip: 2.0.1
       progress: 2.0.3
       proxy-agent: 6.5.0
-      semver: 7.7.2
+      semver: 7.7.3
       tar-fs: 3.1.1
       yargs: 17.7.2
     transitivePeerDependencies:
@@ -17629,7 +17629,7 @@ snapshots:
     dependencies:
       ajv: 8.17.1
 
-  '@types/aws-lambda@8.10.155': {}
+  '@types/aws-lambda@8.10.156': {}
 
   '@types/axios@0.14.4':
     dependencies:
@@ -17935,7 +17935,7 @@ snapshots:
       fast-glob: 3.3.3
       is-glob: 4.0.3
       minimatch: 9.0.5
-      semver: 7.7.2
+      semver: 7.7.3
       ts-api-utils: 2.1.0(typescript@5.8.3)
       typescript: 5.8.3
     transitivePeerDependencies:
@@ -18789,7 +18789,7 @@ snapshots:
       cspell-lib: 8.19.4
       fast-json-stable-stringify: 2.1.0
       file-entry-cache: 9.1.0
-      semver: 7.7.2
+      semver: 7.7.3
       tinyglobby: 0.2.15
 
   css-functions-list@3.2.3: {}
@@ -18965,7 +18965,7 @@ snapshots:
       require-package-name: 2.0.1
       resolve: 1.22.10
       resolve-from: 5.0.0
-      semver: 7.7.3
+      semver: 7.7.2
       yargs: 16.2.0
     transitivePeerDependencies:
       - supports-color
@@ -21370,7 +21370,7 @@ snapshots:
     dependencies:
       hosted-git-info: 4.1.0
       is-core-module: 2.16.1
-      semver: 7.7.2
+      semver: 7.7.3
       validate-npm-package-license: 3.0.4
 
   normalize-path@3.0.0: {}
@@ -21379,7 +21379,7 @@ snapshots:
     dependencies:
       hosted-git-info: 7.0.2
       proc-log: 3.0.0
-      semver: 7.7.2
+      semver: 7.7.3
       validate-npm-package-name: 5.0.1
 
   npm-run-path@2.0.2:
@@ -21420,7 +21420,7 @@ snapshots:
       open: 8.4.2
       ora: 5.3.0
       resolve.exports: 2.0.3
-      semver: 7.7.2
+      semver: 7.7.3
       string-width: 4.2.3
       tar-stream: 2.2.0
       tmp: 0.2.5
@@ -21498,7 +21498,7 @@ snapshots:
     dependencies:
       '@octokit/app': 16.1.1
       '@octokit/core': 7.0.5
-      '@octokit/oauth-app': 8.0.2
+      '@octokit/oauth-app': 8.0.3
       '@octokit/plugin-paginate-graphql': 6.0.0(@octokit/core@7.0.5)
       '@octokit/plugin-paginate-rest': 13.2.0(@octokit/core@7.0.5)
       '@octokit/plugin-rest-endpoint-methods': 16.1.0(@octokit/core@7.0.5)
@@ -22457,7 +22457,7 @@ snapshots:
       detect-newline: 4.0.1
       git-hooks-list: 4.1.1
       is-plain-obj: 4.1.0
-      semver: 7.7.2
+      semver: 7.7.3
       sort-object-keys: 1.1.3
       tinyglobby: 0.2.15
 
@@ -23517,7 +23517,7 @@ snapshots:
   vscode-languageclient@7.0.0:
     dependencies:
       minimatch: 3.1.2
-      semver: 7.7.2
+      semver: 7.7.3
       vscode-languageserver-protocol: 3.16.0
 
   vscode-languageserver-protocol@3.16.0:
