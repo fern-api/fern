@@ -1,7 +1,6 @@
 import { DEFAULT_OPENAPI_BUNDLE_OPTIONS } from "@fern-api/api-workspace-commons";
 import { AbsoluteFilePath } from "@fern-api/fs-utils";
 import { bundle, Source } from "@redocly/openapi-core";
-import { logger } from "@redocly/openapi-core/lib/logger";
 import { OpenAPI } from "openapi-types";
 
 import { OpenAPIRefResolver } from "../loaders/OpenAPIRefResolver";
@@ -15,20 +14,6 @@ export async function parseOpenAPI({
     absolutePathToOpenAPIOverrides?: AbsoluteFilePath;
     parsed?: OpenAPI.Document;
 }): Promise<OpenAPI.Document> {
-    const originalInfo = logger.info.bind(logger);
-    const originalWarn = logger.warn.bind(logger);
-    const originalError = logger.error.bind(logger);
-
-    logger.info = () => {
-        void 0;
-    };
-    logger.warn = () => {
-        void 0;
-    };
-    logger.error = () => {
-        void 0;
-    };
-
     try {
         const result =
             parsed != null
@@ -46,9 +31,9 @@ export async function parseOpenAPI({
                       externalRefResolver: new OpenAPIRefResolver(absolutePathToOpenAPIOverrides)
                   });
         return result.bundle.parsed;
-    } finally {
-        logger.info = originalInfo;
-        logger.warn = originalWarn;
-        logger.error = originalError;
+    } catch (error) {
+        throw new Error(
+            `Failed to parse OpenAPI spec at ${absolutePathToOpenAPI}. Error from Redocly bundler: ${error instanceof Error ? error.message : String(error)}`
+        );
     }
 }
