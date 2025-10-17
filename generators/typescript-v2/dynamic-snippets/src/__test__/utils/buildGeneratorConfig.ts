@@ -27,7 +27,9 @@ const DEFAULT_CONFIG: FernGeneratorExec.GeneratorConfig = {
     },
     organization: "acme",
     workspaceName: "acme",
-    environment: FernGeneratorExec.GeneratorEnvironment.local(),
+    environment: {
+        _type: "local"
+    } as FernGeneratorExec.GeneratorEnvironment,
     whitelabel: false,
     writeUnitTests: false,
     generateOauthClients: false,
