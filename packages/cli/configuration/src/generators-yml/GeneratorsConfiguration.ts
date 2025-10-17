@@ -168,34 +168,40 @@ export function getPackageName({
     if (generatorInvocation.language === "go") {
         return getGoPackageName(generatorInvocation);
     }
-    return generatorInvocation.outputMode._visit<string | undefined>({
-        downloadFiles: () => undefined,
-        github: (val) =>
-            val.publishInfo?._visit<string | undefined>({
-                maven: (val) => val.coordinate,
-                npm: (val) => val.packageName,
-                pypi: (val) => val.packageName,
-                postman: () => undefined,
-                rubygems: (val) => val.packageName,
-                nuget: (val) => val.packageName,
-                crates: (val) => val.packageName,
-                _other: () => undefined
-            }),
-        githubV2: (val) =>
-            val.publishInfo?._visit<string | undefined>({
-                maven: (val) => val.coordinate,
-                npm: (val) => val.packageName,
-                pypi: (val) => val.packageName,
-                postman: () => undefined,
-                rubygems: (val) => val.packageName,
-                nuget: (val) => val.packageName,
-                crates: (val) => val.packageName,
-                _other: () => undefined
-            }),
-        publish: () => undefined,
-        publishV2: () => undefined,
-        _other: () => undefined
-    });
+    
+    const outputMode = generatorInvocation.outputMode;
+    switch (outputMode.type) {
+        case "github": {
+            const publishInfo = outputMode.publishInfo;
+            if (publishInfo == null) {
+                return undefined;
+            }
+            switch (publishInfo.type) {
+                case "maven":
+                    return publishInfo.coordinate;
+                case "npm":
+                    return publishInfo.packageName;
+                case "pypi":
+                    return publishInfo.packageName;
+                case "rubygems":
+                    return publishInfo.packageName;
+                case "nuget":
+                    return publishInfo.packageName;
+                case "crates":
+                    return publishInfo.packageName;
+                case "postman":
+                default:
+                    return undefined;
+            }
+        }
+        case "githubV2":
+            return undefined;
+        case "downloadFiles":
+        case "publish":
+        case "publishV2":
+        default:
+            return undefined;
+    }
 }
 
 /**
@@ -203,12 +209,18 @@ export function getPackageName({
  * of the GitHub repository.
  */
 function getGoPackageName(generatorInvocation: GeneratorInvocation): string | undefined {
-    return generatorInvocation.outputMode._visit<string | undefined>({
-        downloadFiles: () => undefined,
-        github: (val) => `github.com/${val.owner}/${val.repo}`,
-        githubV2: (val) => `github.com/${val.owner}/${val.repo}`,
-        publish: () => undefined,
-        publishV2: () => undefined,
-        _other: () => undefined
-    });
+    const outputMode = generatorInvocation.outputMode;
+    switch (outputMode.type) {
+        case "github":
+            return `github.com/${outputMode.owner}/${outputMode.repo}`;
+        case "githubV2":
+            return "owner" in outputMode && "repo" in outputMode
+                ? `github.com/${outputMode.owner}/${outputMode.repo}`
+                : undefined;
+        case "downloadFiles":
+        case "publish":
+        case "publishV2":
+        default:
+            return undefined;
+    }
 }
