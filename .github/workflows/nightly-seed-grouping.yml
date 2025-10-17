@@ -53,7 +53,7 @@ jobs:
     steps:
       # Note: this step is meant for when running on ubuntu-latest
       - name: Remove Bloat
-        if: ${{ matrix.sdk-name == "python-sdk" && runner.os == "Linux" }}
+        if: ${{ matrix.sdk-name == 'python-sdk' && runner.os == 'Linux' }}
         uses: jlumbroso/free-disk-space@main
         with:
           # this might remove tools that are actually needed,
