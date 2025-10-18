@@ -11,8 +11,4 @@ export declare namespace Pageable {
     }
 }
 
-export class Pageable<R, T> extends Page<T> {
-    constructor(args: Pageable.Args<R, T>) {
-        super(args as any);
-    }
-}
+export class Pageable<R, T> extends Page<T, R> {}
