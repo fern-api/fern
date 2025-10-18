@@ -35,7 +35,7 @@ export async function checkIfPathnameExists({
         destination: string;
         permanent?: boolean;
     }[];
-    baseUrl: {
+    baseUrl?: {
         domain: string;
         basePath?: string;
     };

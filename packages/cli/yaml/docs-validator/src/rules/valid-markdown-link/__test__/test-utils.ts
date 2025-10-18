@@ -4,6 +4,37 @@
 
 import { AbsoluteFilePath } from "@fern-api/fs-utils";
 import { DocsWorkspace } from "@fern-api/workspace-loader";
+import { RuleViolation } from "../../../Rule";
+
+interface MockApiWorkspace {
+    name: string;
+    absoluteFilePath: AbsoluteFilePath;
+    toFernWorkspace: () => Promise<{
+        workspaceName: string;
+        absoluteFilePath: AbsoluteFilePath;
+        definition: {
+            services: Record<string, {
+                endpoints: Record<string, {
+                    id: string;
+                    description: string;
+                    method: string;
+                    path: string;
+                }>;
+            }>;
+        };
+    }>;
+}
+
+interface MockNavigationNode {
+    type: string;
+    slug: string;
+    title: string;
+    content: {
+        type: string;
+        path: string;
+    };
+    children: MockNavigationNode[];
+}
 
 /**
  * Creates a mock docs workspace for testing
@@ -57,20 +88,13 @@ export function createMockDocsWorkspace(): DocsWorkspace {
                 }
             ]
         },
-        files: new Map([
-            ["overview.md", { type: "markdownFile", content: "# Overview\n\nThis is the overview page." }],
-            [
-                "docs/getting-started.md",
-                { type: "markdownFile", content: "# Getting Started\n\nGetting started content." }
-            ]
-        ])
-    } as any;
+    };
 }
 
 /**
  * Creates a mock API workspace for testing
  */
-export function createMockApiWorkspace(): any {
+export function createMockApiWorkspace(): MockApiWorkspace {
     return {
         name: "test-api",
         absoluteFilePath: AbsoluteFilePath.of("/test/api-workspace"),
@@ -124,7 +148,7 @@ Final content.
 /**
  * Mock navigation node structure
  */
-export function createMockNavigationNode(slug: string, title: string, children?: any[]): any {
+export function createMockNavigationNode(slug: string, title: string, children?: MockNavigationNode[]): MockNavigationNode {
     return {
         type: "page",
         slug,
@@ -140,7 +164,7 @@ export function createMockNavigationNode(slug: string, title: string, children?:
 /**
  * Helper to create violation expectation patterns
  */
-export function expectViolation(violations: any[], pattern: string, shouldExist: boolean = true): void {
+export function expectViolation(violations: RuleViolation[], pattern: string, shouldExist: boolean = true): void {
     const found = violations.some((v) => v.message.includes(pattern));
     if (shouldExist && !found) {
         throw new Error(

@@ -119,7 +119,7 @@ Mixed: \`inline [code](/inline-code)\` and [regular](/regular) link.
                 instanceUrls: ["https://docs.example.com"]
             });
 
-            const links = result.pathnamesToCheck.map((p) => p.pathname);
+        const links = result.pathnamesToCheck.map((p) => p.pathname);
 
             // Should find regular links
             expect(links).toContain("/outside");
@@ -461,7 +461,7 @@ describe("Implementation Gap Analysis - checkIfPathnameExists", () => {
                     pageSlugs: mockVisitableSlugs,
                     absoluteFilePathsToSlugs: mockAbsoluteFilePathsToSlugs,
                     redirects: mockRedirects,
-                    baseUrl: baseUrl as any
+                    baseUrl: baseUrl
                 });
 
                 // Should handle different base URL configurations
