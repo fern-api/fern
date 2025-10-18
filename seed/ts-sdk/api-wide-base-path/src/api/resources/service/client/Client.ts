@@ -49,7 +49,7 @@ export class Service {
             url: core.url.join(
                 (await core.Supplier.get(this._options.baseUrl)) ??
                     (await core.Supplier.get(this._options.environment)),
-                `/test/${encodeURIComponent(this._options.pathParam)}/${encodeURIComponent(serviceParam)}/${encodeURIComponent(endpointParam)}/${encodeURIComponent(resourceParam)}`,
+                `/test/${core.url.encodePathParam(this._options.pathParam)}/${core.url.encodePathParam(serviceParam)}/${core.url.encodePathParam(endpointParam)}/${core.url.encodePathParam(resourceParam)}`,
             ),
             method: "POST",
             headers: _headers,
