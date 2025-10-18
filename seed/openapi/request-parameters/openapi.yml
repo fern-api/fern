@@ -58,6 +58,25 @@ paths:
           application/json:
             schema:
               $ref: '#/components/schemas/CreateUsernameBody'
+  /user/username-optional:
+    post:
+      operationId: user_createUsernameOptional
+      tags:
+        - User
+      parameters: []
+      responses:
+        '204':
+          description: ''
+      requestBody:
+        required: false
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreateUsernameBodyOptionalProperties'
+              nullable: true
+            examples:
+              empty-object:
+                value: {}
   /user:
     get:
       operationId: user_getUsername
@@ -209,4 +228,17 @@ components:
         - username
         - password
         - name
+    CreateUsernameBodyOptionalProperties:
+      title: CreateUsernameBodyOptionalProperties
+      type: object
+      properties:
+        username:
+          type: string
+          nullable: true
+        password:
+          type: string
+          nullable: true
+        name:
+          type: string
+          nullable: true
   securitySchemes: {}

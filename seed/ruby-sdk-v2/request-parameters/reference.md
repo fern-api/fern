@@ -117,6 +117,46 @@ client.user.create_username_with_referenced_type(tags: ['tags', 'tags']);
 </dl>
 </details>
 
+<details><summary><code>client.user.create_username_optional(request) -> </code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```ruby
+client.user.create_username_optional({});
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**request:** `Seed::User::Types::CreateUsernameBodyOptionalProperties` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
 <details><summary><code>client.user.get_username() -> Seed::User::Types::User</code></summary>
 <dl>
 <dd>

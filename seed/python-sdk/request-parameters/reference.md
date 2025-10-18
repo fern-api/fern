@@ -166,6 +166,63 @@ client.user.create_username_with_referenced_type(
 </dl>
 </details>
 
+<details><summary><code>client.user.<a href="src/seed/user/client.py">create_username_optional</a>(...)</code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+from seed import SeedRequestParameters
+from seed.user import CreateUsernameBodyOptionalProperties
+
+client = SeedRequestParameters(
+    base_url="https://yourhost.com/path/to/api",
+)
+client.user.create_username_optional(
+    request=CreateUsernameBodyOptionalProperties(),
+)
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**request:** `typing.Optional[CreateUsernameBodyOptionalProperties]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
 <details><summary><code>client.user.<a href="src/seed/user/client.py">get_username</a>(...)</code></summary>
 <dl>
 <dd>
