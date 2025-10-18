@@ -1,11 +1,14 @@
 from __future__ import annotations
 
 import errno
+import logging
 import os
 from types import TracebackType
 from typing import Optional, Type
 
 from . import AST
+
+logger = logging.getLogger(__name__)
 
 TAB_LENGTH = 4
 DEFAULT_LINE_LENGTH = 120
@@ -115,7 +118,7 @@ class WriterImpl(AST.Writer):
             except black.report.NothingChanged:
                 pass
             except Exception as e:
-                print("Failed to format", e)
+                logger.warning(f"Failed to format: {e}")
                 pass
 
         if self._should_include_header:

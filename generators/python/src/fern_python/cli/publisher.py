@@ -1,3 +1,4 @@
+import logging as stdlib_logging
 import subprocess
 from typing import Dict, List, Optional
 
@@ -5,6 +6,8 @@ from fern_python.generator_exec_wrapper import GeneratorExecWrapper
 
 from fern.generator_exec import logging
 from fern.generator_exec.config import GeneratorConfig, GeneratorPublishConfig
+
+logger = stdlib_logging.getLogger(__name__)
 
 
 class Publisher:
@@ -113,9 +116,11 @@ class Publisher:
                 check=True,
                 env=env,
             )
-            print(f"Ran command: {' '.join(command)}")
-            print(completed_command.stdout)
-            print(completed_command.stderr)
+            logger.info(f"Ran command: {' '.join(command)}")
+            if completed_command.stdout:
+                logger.info(completed_command.stdout.decode('utf-8') if isinstance(completed_command.stdout, bytes) else completed_command.stdout)
+            if completed_command.stderr:
+                logger.error(completed_command.stderr.decode('utf-8') if isinstance(completed_command.stderr, bytes) else completed_command.stderr)
         except subprocess.CalledProcessError as e:
             self._generator_exec_wrapper.send_update(
                 logging.GeneratorUpdate.factory.log(
@@ -125,7 +130,9 @@ class Publisher:
                     )
                 )
             )
-            print(f"Failed to run command: {' '.join(command)}")
-            print(e.stdout)
-            print(e.stderr)
+            logger.error(f"Failed to run command: {' '.join(command)}")
+            if e.stdout:
+                logger.error(e.stdout.decode('utf-8') if isinstance(e.stdout, bytes) else e.stdout)
+            if e.stderr:
+                logger.error(e.stderr.decode('utf-8') if isinstance(e.stderr, bytes) else e.stderr)
             raise Exception("Failed to run command", safe_command)

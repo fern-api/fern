@@ -1,4 +1,5 @@
 import json
+import logging
 import os
 import uuid
 from typing import Literal, Optional, Sequence, Tuple, Union, cast
@@ -49,6 +50,8 @@ from fern_python.utils import build_snippet_writer
 import fern.ir.resources as ir_types
 from fern.generator_exec import GeneratorUpdate, LogLevel, LogUpdate, Snippets
 from fern.generator_exec.config import GeneratorConfig
+
+logger = logging.getLogger(__name__)
 
 
 class SdkGenerator(AbstractGenerator):
@@ -285,9 +288,9 @@ class SdkGenerator(AbstractGenerator):
                 project=project,
             )
 
-        # Print the output mode
+        # Log the output mode
         output_mode = generator_config.output.mode.get_as_union().type
-        print(f"Output mode: {output_mode}")
+        logger.info(f"Output mode: {output_mode}")
 
         generator_cli = GeneratorCli(
             organization=generator_config.organization,
