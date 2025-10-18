@@ -328,7 +328,8 @@ jobs:
       - name: Checkout repo
         uses: actions/checkout@v4
         with:
-          token: ${{ secrets.FERN_GITHUB_PAT }}
+          sparse-checkout: |
+            .github/actions/
 
       - name: Update seed
         uses: ./.github/actions/auto-update-seed
@@ -360,7 +361,8 @@ jobs:
       - name: Checkout repo
         uses: actions/checkout@v4
         with:
-          token: ${{ secrets.FERN_GITHUB_PAT }}
+          sparse-checkout: |
+            .github/actions/
 
       - name: Update seed
         uses: ./.github/actions/auto-update-seed
@@ -392,7 +394,8 @@ jobs:
       - name: Checkout repo
         uses: actions/checkout@v4
         with:
-          token: ${{ secrets.FERN_GITHUB_PAT }}
+          sparse-checkout: |
+            .github/actions/
 
       - name: Update seed
         uses: ./.github/actions/auto-update-seed
@@ -424,7 +427,8 @@ jobs:
       - name: Checkout repo
         uses: actions/checkout@v4
         with:
-          token: ${{ secrets.FERN_GITHUB_PAT }}
+          sparse-checkout: |
+            .github/actions/
 
       - name: Update seed
         uses: ./.github/actions/auto-update-seed
@@ -456,7 +460,8 @@ jobs:
       - name: Checkout repo
         uses: actions/checkout@v4
         with:
-          token: ${{ secrets.FERN_GITHUB_PAT }}
+          sparse-checkout: |
+            .github/actions/
 
       - name: Update seed
         uses: ./.github/actions/auto-update-seed
@@ -488,7 +493,8 @@ jobs:
       - name: Checkout repo
         uses: actions/checkout@v4
         with:
-          token: ${{ secrets.FERN_GITHUB_PAT }}
+          sparse-checkout: |
+            .github/actions/
 
       - name: Update seed
         uses: ./.github/actions/auto-update-seed
@@ -520,7 +526,8 @@ jobs:
       - name: Checkout repo
         uses: actions/checkout@v4
         with:
-          token: ${{ secrets.FERN_GITHUB_PAT }}
+          sparse-checkout: |
+            .github/actions/
 
       - name: Update seed
         uses: ./.github/actions/auto-update-seed
@@ -552,7 +559,8 @@ jobs:
       - name: Checkout repo
         uses: actions/checkout@v4
         with:
-          token: ${{ secrets.FERN_GITHUB_PAT }}
+          sparse-checkout: |
+            .github/actions/
 
       - name: Update seed
         uses: ./.github/actions/auto-update-seed
@@ -584,7 +592,8 @@ jobs:
       - name: Checkout repo
         uses: actions/checkout@v4
         with:
-          token: ${{ secrets.FERN_GITHUB_PAT }}
+          sparse-checkout: |
+            .github/actions/
 
       - name: Update seed
         uses: ./.github/actions/auto-update-seed
@@ -616,7 +625,8 @@ jobs:
       - name: Checkout repo
         uses: actions/checkout@v4
         with:
-          token: ${{ secrets.FERN_GITHUB_PAT }}
+          sparse-checkout: |
+            .github/actions/
 
       - name: Update seed
         uses: ./.github/actions/auto-update-seed
@@ -648,7 +658,8 @@ jobs:
       - name: Checkout repo
         uses: actions/checkout@v4
         with:
-          token: ${{ secrets.FERN_GITHUB_PAT }}
+          sparse-checkout: |
+            .github/actions/
 
       - name: Update seed
         uses: ./.github/actions/auto-update-seed
@@ -680,7 +691,8 @@ jobs:
       - name: Checkout repo
         uses: actions/checkout@v4
         with:
-          token: ${{ secrets.FERN_GITHUB_PAT }}
+          sparse-checkout: |
+            .github/actions/
 
       - name: Update seed
         uses: ./.github/actions/auto-update-seed
@@ -712,7 +724,8 @@ jobs:
       - name: Checkout repo
         uses: actions/checkout@v4
         with:
-          token: ${{ secrets.FERN_GITHUB_PAT }}
+          sparse-checkout: |
+            .github/actions/
 
       - name: Update seed
         uses: ./.github/actions/auto-update-seed
@@ -744,7 +757,8 @@ jobs:
       - name: Checkout repo
         uses: actions/checkout@v4
         with:
-          token: ${{ secrets.FERN_GITHUB_PAT }}
+          sparse-checkout: |
+            .github/actions/
 
       - name: Update seed
         uses: ./.github/actions/auto-update-seed
@@ -776,7 +790,8 @@ jobs:
       - name: Checkout repo
         uses: actions/checkout@v4
         with:
-          token: ${{ secrets.FERN_GITHUB_PAT }}
+          sparse-checkout: |
+            .github/actions/
 
       - name: Update seed
         uses: ./.github/actions/auto-update-seed
@@ -808,7 +823,8 @@ jobs:
       - name: Checkout repo
         uses: actions/checkout@v4
         with:
-          token: ${{ secrets.FERN_GITHUB_PAT }}
+          sparse-checkout: |
+            .github/actions/
 
       - name: Update seed
         uses: ./.github/actions/auto-update-seed
@@ -840,7 +856,8 @@ jobs:
       - name: Checkout repo
         uses: actions/checkout@v4
         with:
-          token: ${{ secrets.FERN_GITHUB_PAT }}
+          sparse-checkout: |
+            .github/actions/
 
       - name: Update seed
         uses: ./.github/actions/auto-update-seed
@@ -872,7 +889,8 @@ jobs:
       - name: Checkout repo
         uses: actions/checkout@v4
         with:
-          token: ${{ secrets.FERN_GITHUB_PAT }}
+          sparse-checkout: |
+            .github/actions/
 
       - name: Update seed
         uses: ./.github/actions/auto-update-seed
@@ -904,7 +922,8 @@ jobs:
       - name: Checkout repo
         uses: actions/checkout@v4
         with:
-          token: ${{ secrets.FERN_GITHUB_PAT }}
+          sparse-checkout: |
+            .github/actions/
 
       - name: Update seed
         uses: ./.github/actions/auto-update-seed
@@ -936,7 +955,8 @@ jobs:
       - name: Checkout repo
         uses: actions/checkout@v4
         with:
-          token: ${{ secrets.FERN_GITHUB_PAT }}
+          sparse-checkout: |
+            .github/actions/
 
       - name: Update seed
         uses: ./.github/actions/auto-update-seed
@@ -968,7 +988,8 @@ jobs:
       - name: Checkout repo
         uses: actions/checkout@v4
         with:
-          token: ${{ secrets.FERN_GITHUB_PAT }}
+          sparse-checkout: |
+            .github/actions/
 
       - name: Update seed
         uses: ./.github/actions/auto-update-seed
@@ -1000,7 +1021,8 @@ jobs:
       - name: Checkout repo
         uses: actions/checkout@v4
         with:
-          token: ${{ secrets.FERN_GITHUB_PAT }}
+          sparse-checkout: |
+            .github/actions/
 
       - name: Update seed
         uses: ./.github/actions/auto-update-seed
@@ -1032,7 +1054,8 @@ jobs:
       - name: Checkout repo
         uses: actions/checkout@v4
         with:
-          token: ${{ secrets.FERN_GITHUB_PAT }}
+          sparse-checkout: |
+            .github/actions/
 
       - name: Update seed
         uses: ./.github/actions/auto-update-seed
