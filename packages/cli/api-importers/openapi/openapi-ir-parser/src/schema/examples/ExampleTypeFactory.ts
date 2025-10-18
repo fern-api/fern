@@ -836,7 +836,13 @@ export class ExampleTypeFactory {
         while (schema.type === "reference") {
             const resolvedSchema = this.schemas[schema.schema];
             if (resolvedSchema == null) {
-                throw new Error(`Unexpected error: Failed to resolve schema reference: ${schema.schema}`);
+                // Provide more context about what references are available for debugging
+                const availableRefs = Object.keys(this.schemas).slice(0, 10); // Show first 10 for context
+                const isExternalRef = schema.schema.includes("#") || schema.schema.includes("/");
+                const errorMessage = isExternalRef
+                    ? `Failed to resolve schema reference: ${schema.schema}. This appears to be an external reference that was not resolved during document preprocessing.`
+                    : `Failed to resolve schema reference: ${schema.schema}. Available references: ${availableRefs.join(", ")}${Object.keys(this.schemas).length > 10 ? "..." : ""}`;
+                throw new Error(`Unexpected error: ${errorMessage}`);
             }
             schema = resolvedSchema;
         }

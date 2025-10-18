@@ -91,9 +91,27 @@ export async function generateIr({
             openApi = await preprocessor.processDocument(openApi, source.type === "openapi" ? source.file : undefined);
             taskContext.logger.info("External references resolved successfully.");
         } catch (error) {
-            taskContext.logger.warn(
-                `Failed to resolve some external references: ${error instanceof Error ? error.message : String(error)}`
-            );
+            const errorMessage = `Failed to resolve external references: ${error instanceof Error ? error.message : String(error)}`;
+            taskContext.logger.error(errorMessage);
+
+            // Check if there are still unresolved external references
+            const remainingExternalRefs = DocumentPreprocessor.collectExternalReferences(openApi);
+            if (remainingExternalRefs.length > 0) {
+                taskContext.logger.error(
+                    `Document still contains ${remainingExternalRefs.length} unresolved external references: ${remainingExternalRefs.join(", ")}`
+                );
+                taskContext.logger.error(
+                    "This will likely cause 'Failed to resolve schema reference' errors during example generation."
+                );
+                throw new Error(
+                    `${errorMessage}. Document contains unresolved external references that will cause schema resolution failures.`
+                );
+            } else {
+                // If no external references remain, continue with a warning
+                taskContext.logger.warn(
+                    "External reference preprocessing failed, but no unresolved references remain in document."
+                );
+            }
         }
     }
 

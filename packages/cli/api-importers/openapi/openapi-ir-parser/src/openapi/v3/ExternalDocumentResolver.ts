@@ -5,7 +5,7 @@ import { OpenAPIV3 } from "openapi-types";
 import * as path from "path";
 
 // Type for any value that might contain a $ref property
-type OpenAPIValue =
+export type OpenAPIValue =
     | OpenAPIV3.Document
     | OpenAPIV3.ComponentsObject
     | OpenAPIV3.SchemaObject
@@ -26,8 +26,8 @@ type OpenAPIValue =
     | boolean
     | null
     | undefined
-    | Array<OpenAPIValue>
-    | Record<string, OpenAPIValue>;
+    | OpenAPIValue[]
+    | { [key: string]: OpenAPIValue };
 
 export interface ExternalReferenceInfo {
     /** The document URL/path (without the internal pointer) */
@@ -180,8 +180,27 @@ export class ExternalDocumentResolver {
             const contentType = response.headers.get("content-type") || "";
             const text = await response.text();
 
-            return this.parseDocument(text, contentType.includes("json"));
+            const document = this.parseDocument(text, contentType.includes("json"));
+
+            // Log domain library info for debugging
+            if (url.includes("swaggerhub.com") || url.includes("cdn.com")) {
+                this.logger.debug(`Successfully fetched shared domain library: ${url}`);
+                if (document.components) {
+                    const componentSummary = Object.entries(document.components)
+                        .map(([type, components]) => `${type}: [${Object.keys(components || {}).join(", ")}]`)
+                        .join("; ");
+                    this.logger.debug(`Shared domain components: ${componentSummary}`);
+                }
+            }
+
+            return document;
         } catch (error) {
+            // Enhanced error logging for shared domain libraries
+            if (url.includes("swaggerhub.com") || url.includes("cdn.com")) {
+                this.logger.error(
+                    `Failed to fetch shared domain library ${url}: ${error instanceof Error ? error.message : String(error)}`
+                );
+            }
             throw new Error(`Failed to fetch ${url}: ${error instanceof Error ? error.message : String(error)}`);
         }
     }
@@ -227,7 +246,7 @@ export class ExternalDocumentResolver {
         }
     }
 
-    private resolveInternalPointer(document: OpenAPIValue, pointer: string): OpenAPIValue {
+    public resolveInternalPointer(document: OpenAPIValue, pointer: string): OpenAPIValue {
         if (!pointer.startsWith("#/")) {
             throw new Error(`Invalid JSON pointer: ${pointer}`);
         }
