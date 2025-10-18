@@ -3,7 +3,7 @@
 namespace Seed\Core\Types;
 
 use Attribute;
-// Forcing updates
+
 #[Attribute(Attribute::TARGET_PROPERTY)]
 class ArrayType
 {

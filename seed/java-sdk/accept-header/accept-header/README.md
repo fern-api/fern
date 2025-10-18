@@ -4,7 +4,7 @@
 [![Maven Central](https://img.shields.io/maven-central/v/com.fern/accept-header)](https://central.sonatype.com/artifact/com.fern/accept-header)
 
 The Seed Java library provides convenient access to the Seed APIs from Java.
-// Forcing updates
+
 ## Installation
 
 ### Gradle
