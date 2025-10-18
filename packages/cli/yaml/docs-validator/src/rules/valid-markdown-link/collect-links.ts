@@ -22,6 +22,15 @@ const MDX_NODE_TYPES = [
     "mdxjsEsm"
 ] as const;
 
+// Safe URL decoding that preserves the original string if decoding fails
+function safeDecodeURIComponent(str: string): string {
+    try {
+        return decodeURIComponent(str);
+    } catch {
+        return str;
+    }
+}
+
 interface HastLink {
     href: string;
     sourceFilepath?: AbsoluteFilePath;
@@ -118,7 +127,9 @@ export function collectLinksAndSources({
             if (node.type === "element") {
                 const href = node.properties.href;
                 if (typeof href === "string") {
-                    links.push({ href, sourceFilepath: absoluteFilepath, position: node.position });
+                    // Decode URL-encoded Unicode characters to preserve them in their original form
+                    const decodedHref = safeDecodeURIComponent(href);
+                    links.push({ href: decodedHref, sourceFilepath: absoluteFilepath, position: node.position });
                 }
 
                 const src = node.properties.src;
@@ -138,7 +149,9 @@ export function collectLinksAndSources({
                     href: (attr) => {
                         const href = extractSingleLiteral(attr.value);
                         if (typeof href === "string") {
-                            links.push({ href, sourceFilepath: absoluteFilepath, position });
+                            // Decode URL-encoded Unicode characters to preserve them in their original form
+                            const decodedHref = safeDecodeURIComponent(href);
+                            links.push({ href: decodedHref, sourceFilepath: absoluteFilepath, position });
                         }
                     }
                 });
@@ -171,8 +184,10 @@ export function collectLinksAndSources({
                 // NOTE: this collects links if they are in the form of <a href="...">
                 // if they're in the form of <a href={"..."} /> or <a {...{ href: "..." }} />, they will be ignored
                 if (typeof href === "string") {
+                    // Decode URL-encoded Unicode characters to preserve them in their original form
+                    const decodedHref = safeDecodeURIComponent(href);
                     links.push({
-                        href,
+                        href: decodedHref,
                         sourceFilepath: absoluteFilepath,
                         position: node.position
                     });

@@ -5,8 +5,8 @@ import { RuleViolation } from "../../Rule";
 import { safeCollectLinksAndSources } from "./collect-links";
 import { stripAnchorsAndSearchParams } from "./url-utils";
 
-// this should match any link that starts with a protocol (e.g. http://, https://, mailto:, etc.)
-const EXTERNAL_LINK_PATTERN = /^(?:[a-z+]+:)/gi;
+// this should match any link that starts with a protocol (e.g. http://, https://, mailto:, etc.) or is protocol-relative (//example.com)
+const EXTERNAL_LINK_PATTERN = /^(?:[a-z+]+:|\/\/)/gi;
 
 export interface PathnameToCheck {
     markdown: boolean;
@@ -86,7 +86,15 @@ export function collectPathnamesToCheck(
             return;
         }
 
-        const pathname = stripAnchorsAndSearchParams(link.href);
+        // Handle fragment-only links (like #fragment) specially
+        let pathname: string;
+        if (link.href.startsWith("#")) {
+            // For fragment-only links, keep the full href as the pathname
+            pathname = link.href;
+        } else {
+            // For other links, strip anchors and search params
+            pathname = stripAnchorsAndSearchParams(link.href);
+        }
 
         // empty "" is actually a valid path, so we don't need to check it
         if (pathname.trim() === "") {
