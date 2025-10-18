@@ -2,6 +2,6 @@
 
 # isort: skip_file
 
-from .resources import CreateUsernameBody, NestedUser, User, user
+from .resources import CreateUsernameBody, CreateUsernameBodyOptionalProperties, NestedUser, User, user
 
-__all__ = ["CreateUsernameBody", "NestedUser", "User", "user"]
+__all__ = ["CreateUsernameBody", "CreateUsernameBodyOptionalProperties", "NestedUser", "User", "user"]

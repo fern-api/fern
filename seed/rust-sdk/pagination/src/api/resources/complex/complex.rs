@@ -22,7 +22,7 @@ impl ComplexClient {
         self.http_client
             .execute_request(
                 Method::POST,
-                &format!("{}", index),
+                &format!("{}/conversations/search", index),
                 Some(serde_json::to_value(request).unwrap_or_default()),
                 None,
                 options,

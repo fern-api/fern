@@ -3,7 +3,8 @@
 # isort: skip_file
 
 from .create_username_body import CreateUsernameBody
+from .create_username_body_optional_properties import CreateUsernameBodyOptionalProperties
 from .nested_user import NestedUser
 from .user import User
 
-__all__ = ["CreateUsernameBody", "NestedUser", "User"]
+__all__ = ["CreateUsernameBody", "CreateUsernameBodyOptionalProperties", "NestedUser", "User"]

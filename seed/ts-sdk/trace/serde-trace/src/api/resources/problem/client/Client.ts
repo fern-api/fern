@@ -287,7 +287,7 @@ export class Problem {
                 (await core.Supplier.get(this._options.baseUrl)) ??
                     (await core.Supplier.get(this._options.environment)) ??
                     environments.SeedTraceEnvironment.Prod,
-                `/problem-crud/update/${encodeURIComponent(serializers.ProblemId.jsonOrThrow(problemId, { omitUndefined: true }))}`,
+                `/problem-crud/update/${core.url.encodePathParam(serializers.ProblemId.jsonOrThrow(problemId, { omitUndefined: true }))}`,
             ),
             method: "POST",
             headers: _headers,
@@ -375,7 +375,7 @@ export class Problem {
                 (await core.Supplier.get(this._options.baseUrl)) ??
                     (await core.Supplier.get(this._options.environment)) ??
                     environments.SeedTraceEnvironment.Prod,
-                `/problem-crud/delete/${encodeURIComponent(serializers.ProblemId.jsonOrThrow(problemId, { omitUndefined: true }))}`,
+                `/problem-crud/delete/${core.url.encodePathParam(serializers.ProblemId.jsonOrThrow(problemId, { omitUndefined: true }))}`,
             ),
             method: "DELETE",
             headers: _headers,

@@ -16,7 +16,7 @@ impl PathParamClient {
     pub async fn send(&self, operand: &Operand, operand_or_color: &ColorOrOperand, options: Option<RequestOptions>) -> Result<(), ApiError> {
         self.http_client.execute_request(
             Method::POST,
-            &format!("path/{}{}", operand, operand_or_color),
+            &format!("path/{}/{}", operand, operand_or_color),
             None,
             None,
             options,
