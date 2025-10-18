@@ -11,6 +11,10 @@ inputs:
   fixtures-to-run:
     description: The fixtures to run, as JSON
     required: true
+  skip-scripts:
+    description: Whether to skip running scripts during seed generation
+    required: false
+    default: "false"
   job-index:
     description: The index of the job (when parallelized in a matrix strategy)
     required: true
@@ -61,6 +65,7 @@ runs:
         generator-name: ${{ inputs.sdk-name }}
         generator-path: ${{ inputs.generator-path }}
         fixtures-to-run: ${{ steps.json-to-string.outputs.as-string }}
+        skip-scripts: ${{ inputs.skip-scripts }}
 
     - name: Handle Seed Leftover Tests
       if: ${{ steps.json-to-string.outputs.as-string == 'leftovers' }}

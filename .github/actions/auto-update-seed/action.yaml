@@ -15,9 +15,8 @@ inputs:
     required: false
     default: "false"
   fixtures-to-run:
-    description: Specific fixtures to run. If not supplied, will run all fixtures. Note - for multiple fixtures at once, separate by space, not comma.
-    required: false
-    default: ""
+    description: The fixtures to run, as JSON
+    required: true
   allow-unexpected-failures:
     description: Whether to allow unexpected failures during seed generation
     required: false
@@ -34,15 +33,16 @@ inputs:
 runs:
   using: "composite"
   steps:
-    - name: Run seed
-      uses: ./.github/actions/cached-seed
+    - name: Run All Seed Tests
+      uses: ./.github/actions/run-seed-process
       with:
-        generator-name: ${{ inputs.generator-name }}
+        sdk-name: ${{ inputs.generator-name }}
         generator-path: ${{ inputs.generator-path }}
         fixtures-to-run: ${{ inputs.fixtures-to-run }}
+        job-index: ${{ strategy.job-index }}
+        collect-metrics: false
         allow-unexpected-failures: ${{ inputs.allow-unexpected-failures }}
         skip-scripts: ${{ inputs.skip-scripts }}
-        cache-disabled: ${{ inputs.cache-disabled }}
 
     # Add changes first to simplify git diff checks, no changes will NOT error here
     - name: Check for changes
