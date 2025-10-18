@@ -43,6 +43,9 @@ export async function checkIfPathnameExists({
     pathname = removeTrailingSlash(pathname);
     const slugs = absoluteFilepath != null ? (absoluteFilePathsToSlugs.get(absoluteFilepath) ?? []) : [];
 
+    // Guard against undefined baseUrl to prevent crashes
+    const safeBaseUrl = baseUrl || { domain: "localhost", basePath: undefined };
+
     // base case: empty pathname is valid
     if (pathname.trim() === "") {
         return true;
@@ -52,10 +55,16 @@ export async function checkIfPathnameExists({
 
     // if the pathname starts with `/`, it must either be a slug or a file in the current workspace
     if (pathname.startsWith("/")) {
+        // Handle edge case of root path "/"
+        if (pathname === "/") {
+            // Root path "/" is generally valid in most contexts
+            return true;
+        }
+
         // only check slugs if the file is expected to be a markdown file
-        let redirectedPath = withoutAnchors(withRedirects(pathname, baseUrl, redirects));
+        let redirectedPath = withoutAnchors(withRedirects(pathname, safeBaseUrl, redirects));
         for (let redirectCount = 0; redirectCount < 5; ++redirectCount) {
-            const nextRedirectPath = withoutAnchors(withRedirects(redirectedPath, baseUrl, redirects));
+            const nextRedirectPath = withoutAnchors(withRedirects(redirectedPath, safeBaseUrl, redirects));
             if (redirectedPath === nextRedirectPath) {
                 break;
             }
@@ -66,7 +75,19 @@ export async function checkIfPathnameExists({
             return true;
         }
 
-        const absolutePath = join(workspaceAbsoluteFilePath, RelativeFilePath.of(removeLeadingSlash(pathname)));
+        const pathnameWithoutLeadingSlash = removeLeadingSlash(pathname);
+        // Handle edge case of empty string after removing leading slash
+        if (pathnameWithoutLeadingSlash === "") {
+            return true;
+        }
+
+        // Handle edge case of multiple slashes (e.g. "//" -> "/" -> still absolute)
+        if (pathnameWithoutLeadingSlash.startsWith("/")) {
+            // Multiple leading slashes like "//" or "///" - treat as root
+            return true;
+        }
+
+        const absolutePath = join(workspaceAbsoluteFilePath, RelativeFilePath.of(pathnameWithoutLeadingSlash));
 
         if (await doesPathExist(absolutePath, "file")) {
             return true;
@@ -102,8 +123,8 @@ export async function checkIfPathnameExists({
     // if that fails, we need to check if the path exists against all of the slugs for the current file
     const brokenSlugs: string[] = [];
     for (const slug of slugs) {
-        const url = new URL(`/${slug}`, wrapWithHttps(baseUrl.domain));
-        const targetSlug = withRedirects(new URL(pathname, url).pathname, baseUrl, redirects);
+        const url = new URL(`/${slug}`, wrapWithHttps(safeBaseUrl.domain));
+        const targetSlug = withRedirects(new URL(pathname, url).pathname, safeBaseUrl, redirects);
         if (!pageSlugs.has(removeLeadingSlash(targetSlug))) {
             brokenSlugs.push(slug);
         }

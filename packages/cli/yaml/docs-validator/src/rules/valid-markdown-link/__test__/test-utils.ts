@@ -10,42 +10,33 @@ import { DocsWorkspace } from "@fern-api/workspace-loader";
  */
 export function createMockDocsWorkspace(): DocsWorkspace {
     return {
+        type: "docs",
+        workspaceName: "test-workspace",
         absoluteFilePath: AbsoluteFilePath.of("/test/workspace"),
+        absoluteFilepathToDocsConfig: AbsoluteFilePath.of("/test/workspace/docs.yml"),
         config: {
-            root: {
-                type: "section",
-                title: "Root",
-                contents: [
-                    {
-                        type: "page",
-                        title: "Overview",
-                        slug: "overview",
-                        content: {
-                            type: "markdownFile",
-                            path: "overview.md"
-                        }
-                    },
-                    {
-                        type: "section",
-                        title: "Docs",
-                        slug: "docs",
-                        contents: [
-                            {
-                                type: "page",
-                                title: "Getting Started",
-                                slug: "getting-started",
-                                content: {
-                                    type: "markdownFile",
-                                    path: "docs/getting-started.md"
-                                }
-                            }
-                        ]
-                    }
-                ]
-            },
             instances: [
                 {
                     url: "https://test.docs.buildwithfern.com"
+                }
+            ],
+            navigation: [
+                {
+                    page: "Overview",
+                    path: "overview.md"
+                },
+                {
+                    section: "Docs",
+                    contents: [
+                        {
+                            page: "Getting Started",
+                            path: "docs/getting-started.md"
+                        }
+                    ]
+                },
+                {
+                    api: "API Reference",
+                    apiName: "test-api"
                 }
             ],
             redirects: [
