@@ -1,9 +1,8 @@
 import { docsYml } from "@fern-api/configuration-loader";
-import { isNonNullish } from "@fern-api/core-utils";
+import { isNonNullish, titleCase, visitDiscriminatedUnion } from "@fern-api/core-utils";
 import { APIV1Read, FernNavigation } from "@fern-api/fdr-sdk";
 import { AbsoluteFilePath } from "@fern-api/fs-utils";
 import { TaskContext } from "@fern-api/task-context";
-import { titleCase, visitDiscriminatedUnion } from "@fern-api/core-utils";
 import { DocsWorkspace, FernWorkspace } from "@fern-api/workspace-loader";
 import { camelCase, kebabCase } from "lodash-es";
 import urlJoin from "url-join";
