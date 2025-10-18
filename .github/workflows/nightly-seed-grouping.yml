@@ -287,13 +287,14 @@ jobs:
           echo "PR was not created or updated, likely due to no diff for seed group files"
           echo "PR Operation: ${{ steps.cpr.outputs.pull-request-operation }}. Note: if operation is blank then there were no changes and create-pull-request GitHub Action exited silently and early."
 
-      - name: Enable Pull Request Automerge
-        if: steps.cpr.outputs.pull-request-operation == 'created'
-        uses: peter-evans/enable-pull-request-automerge@v3
-        with:
-          token: ${{ secrets.FERN_GITHUB_PAT }}
-          pull-request-number: ${{ steps.cpr.outputs.pull-request-number }}
-          merge-method: squash
+      # CHRISM - temp
+      # - name: Enable Pull Request Automerge
+      #   if: steps.cpr.outputs.pull-request-operation == 'created'
+      #   uses: peter-evans/enable-pull-request-automerge@v3
+      #   with:
+      #     token: ${{ secrets.FERN_GITHUB_PAT }}
+      #     pull-request-number: ${{ steps.cpr.outputs.pull-request-number }}
+      #     merge-method: squash
 
       # CHRISM - temp
       # - name: Approve PR
