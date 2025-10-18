@@ -13,14 +13,20 @@ interface MockApiWorkspace {
         workspaceName: string;
         absoluteFilePath: AbsoluteFilePath;
         definition: {
-            services: Record<string, {
-                endpoints: Record<string, {
-                    id: string;
-                    description: string;
-                    method: string;
-                    path: string;
-                }>;
-            }>;
+            services: Record<
+                string,
+                {
+                    endpoints: Record<
+                        string,
+                        {
+                            id: string;
+                            description: string;
+                            method: string;
+                            path: string;
+                        }
+                    >;
+                }
+            >;
         };
     }>;
 }
@@ -87,7 +93,7 @@ export function createMockDocsWorkspace(): DocsWorkspace {
                     permanent: true
                 }
             ]
-        },
+        }
     };
 }
 
@@ -148,7 +154,11 @@ Final content.
 /**
  * Mock navigation node structure
  */
-export function createMockNavigationNode(slug: string, title: string, children?: MockNavigationNode[]): MockNavigationNode {
+export function createMockNavigationNode(
+    slug: string,
+    title: string,
+    children?: MockNavigationNode[]
+): MockNavigationNode {
     return {
         type: "page",
         slug,
