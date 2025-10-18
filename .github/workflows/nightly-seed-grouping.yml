@@ -55,24 +55,6 @@ jobs:
             sdk-name: python-sdk
 
     steps:
-      # Note: this step is meant for when running on ubuntu-latest
-      - name: Remove Bloat
-        if: ${{ matrix.sdk-name == 'python-sdk' && runner.os == 'Linux' }}
-        uses: jlumbroso/free-disk-space@main
-        with:
-          # this might remove tools that are actually needed,
-          # if set to "true" but frees about 6 GB
-          tool-cache: false
-
-          # all of these default to true, but feel free to set to
-          # "false" if necessary for your workflow
-          android: true
-          dotnet: true
-          haskell: true
-          large-packages: true
-          docker-images: true
-          swap-storage: true
-
       - name: Checkout Repo
         uses: actions/checkout@v4
 
@@ -101,7 +83,7 @@ jobs:
         run: |
           # Default to 16 concurrent fixtures if not overridden. In the case of python-sdk,
           # the virtual environments take up too much space so this needs to be limited
-          pnpm seed:local test --generator ${{ matrix.sdk-name }} --parallel ${{ matrix.concurrency-count-override || 16 }} --allow-unexpected-failures > ${{ matrix.sdk-name }}-seed-test-log.txt
+          pnpm seed:local test --generator ${{ matrix.sdk-name }} --parallel 16 --allow-unexpected-failures > ${{ matrix.sdk-name }}-seed-test-log.txt
 
       - name: Cleanup Virtualenvs
         if: always() # Run even if tests fail
