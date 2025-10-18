@@ -1,6 +1,5 @@
 import { RelativeFilePath } from "@fern-api/fs-utils";
 import { FernGeneratorExec } from "@fern-fern/generator-exec-sdk";
-import { BasicLicense, CustomLicense } from "@fern-fern/generator-exec-sdk/api";
 import { FernFilepath } from "@fern-fern/ir-sdk/api";
 import { camelCase, snakeCase, upperFirst } from "lodash-es";
 
@@ -85,17 +84,19 @@ export function generateGemspec(
     hasFileBasedDependencies = false,
     hasEndpoints = false
 ): GeneratedRubyFile {
-    const license = licenseConfig?._visit({
-        basic: (l: BasicLicense) => {
-            return { licenseType: l.id, licenseFilePath: "LICENSE" };
-        },
-        custom: (l: CustomLicense) => {
-            return { licenseFilePath: l.filename };
-        },
-        _other: () => {
-            throw new Error("Unknown license configuration provided.");
+    let license: { licenseType?: string; licenseFilePath: string } | undefined;
+    if (licenseConfig != null) {
+        switch (licenseConfig.type) {
+            case "basic":
+                license = { licenseType: licenseConfig.id, licenseFilePath: "LICENSE" };
+                break;
+            case "custom":
+                license = { licenseFilePath: licenseConfig.filename };
+                break;
+            default:
+                throw new Error("Unknown license configuration provided.");
         }
-    });
+    }
     const gemspec = new Gemspec({
         clientName,
         gemName,

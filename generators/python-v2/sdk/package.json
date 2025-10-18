@@ -43,7 +43,7 @@
     "@fern-api/logger": "workspace:*",
     "@fern-api/python-base": "workspace:*",
     "@fern-fern/generator-cli-sdk": "^0.1.5",
-    "@fern-fern/generator-exec-sdk": "^0.0.1167",
+    "@fern-fern/generator-exec-sdk": "^0.0.1169",
     "@fern-fern/ir-sdk": "60.3.0",
     "@types/node": "18.15.3",
     "depcheck": "^1.4.7",

@@ -12,9 +12,13 @@ const DEFAULT_CONFIG: FernGeneratorExec.GeneratorConfig = {
     irFilepath: "<placeholder>",
     output: {
         path: "<placeholder>",
-        mode: FernGeneratorExec.OutputMode.publish({
+        mode: {
+            type: "publish",
             version: "1.0.0",
-            publishTarget: FernGeneratorExec.GeneratorPublishTarget.npm(NPM_CONFIG),
+            publishTarget: {
+                type: "npm",
+                ...NPM_CONFIG
+            },
             registries: {
                 npm: NPM_CONFIG
                 // biome-ignore lint/suspicious/noExplicitAny: allow
@@ -23,11 +27,13 @@ const DEFAULT_CONFIG: FernGeneratorExec.GeneratorConfig = {
                 npm: NPM_CONFIG
                 // biome-ignore lint/suspicious/noExplicitAny: allow
             } as any
-        })
+        } as FernGeneratorExec.OutputMode
     },
     organization: "acme",
     workspaceName: "acme",
-    environment: FernGeneratorExec.GeneratorEnvironment.local(),
+    environment: {
+        _type: "local"
+    } as FernGeneratorExec.GeneratorEnvironment,
     whitelabel: false,
     writeUnitTests: false,
     generateOauthClients: false,

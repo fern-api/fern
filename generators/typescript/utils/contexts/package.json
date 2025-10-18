@@ -34,7 +34,7 @@
     "@fern-api/base-generator": "workspace:*",
     "@fern-api/logger": "workspace:*",
     "@fern-fern/ir-sdk": "61.2.0",
-    "@fern-fern/generator-exec-sdk": "^0.0.1167",
+    "@fern-fern/generator-exec-sdk": "^0.0.1169",
     "@fern-typescript/commons": "workspace:*",
     "@fern-api/core-utils": "workspace:*",
     "ts-morph": "^15.1.0"

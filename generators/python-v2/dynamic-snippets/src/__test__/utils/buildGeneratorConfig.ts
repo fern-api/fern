@@ -13,20 +13,26 @@ const DEFAULT_CONFIG: FernGeneratorExec.GeneratorConfig = {
     irFilepath: "<placeholder>",
     output: {
         path: "<placeholder>",
-        mode: FernGeneratorExec.OutputMode.publish({
+        mode: {
+            type: "publish",
             version: "1.0.0",
-            publishTarget: FernGeneratorExec.GeneratorPublishTarget.pypi(PYPI),
+            publishTarget: {
+                type: "pypi",
+                ...PYPI
+            },
             // biome-ignore lint/suspicious/noExplicitAny: allow
             registries: {} as any,
             registriesV2: {
                 pypi: PYPI
                 // biome-ignore lint/suspicious/noExplicitAny: allow
             } as any
-        })
+        } as FernGeneratorExec.OutputMode
     },
     organization: "acme",
     workspaceName: "api",
-    environment: FernGeneratorExec.GeneratorEnvironment.local(),
+    environment: {
+        _type: "local"
+    } as FernGeneratorExec.GeneratorEnvironment,
     whitelabel: false,
     writeUnitTests: false,
     generateOauthClients: false,

@@ -22,23 +22,33 @@ export abstract class AbstractGeneratorContext {
             CONSOLE_LOGGER.log(level, ...message);
 
             try {
-                generatorNotificationService.bufferUpdate(
-                    FernGeneratorExec.GeneratorUpdate.log({
-                        message: message.join(" "),
-                        level: LOG_LEVEL_CONVERSIONS[level]
-                    })
-                );
+                generatorNotificationService.bufferUpdate({
+                    _type: "log",
+                    message: message.join(" "),
+                    level: LOG_LEVEL_CONVERSIONS[level]
+                });
             } catch (e) {
                 // biome-ignore lint/suspicious/noConsole: allow console
                 console.warn("Encountered error when sending update", e);
             }
         });
 
-        this.version = config?.output?.mode?._visit({
-            downloadFiles: () => undefined,
-            github: (github) => github.version,
-            publish: (publish) => publish.version,
-            _other: () => undefined
-        });
+        const outputMode = config?.output?.mode;
+        if (outputMode == null) {
+            this.version = undefined;
+        } else {
+            switch (outputMode.type) {
+                case "github":
+                    this.version = outputMode.version;
+                    break;
+                case "publish":
+                    this.version = outputMode.version;
+                    break;
+                case "downloadFiles":
+                default:
+                    this.version = undefined;
+                    break;
+            }
+        }
     }
 }

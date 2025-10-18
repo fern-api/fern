@@ -22,10 +22,10 @@ export abstract class AbstractReadmeSnippetBuilder {
             }
             defaultEndpoint = firstEndpoint;
         }
-        if (defaultEndpoint.id.identifierOverride == null) {
+        if (defaultEndpoint.id.identifier_override == null) {
             throw new Error("Internal error; all endpoints must define an endpoint id to generate README.md");
         }
-        return defaultEndpoint.id.identifierOverride;
+        return defaultEndpoint.id.identifier_override;
     }
 
     /**

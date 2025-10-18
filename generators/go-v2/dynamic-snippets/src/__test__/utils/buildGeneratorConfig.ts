@@ -6,14 +6,17 @@ const DEFAULT_CONFIG: FernGeneratorExec.GeneratorConfig = {
     irFilepath: "<placeholder>",
     output: {
         path: "<placeholder>",
-        mode: FernGeneratorExec.OutputMode.github({
+        mode: {
+            type: "github",
             version: "v1.0.0",
             repoUrl: "https://github.com/acme/acme-go"
-        })
+        } as FernGeneratorExec.OutputMode
     },
     organization: "acme",
     workspaceName: "acme",
-    environment: FernGeneratorExec.GeneratorEnvironment.local(),
+    environment: {
+        _type: "local"
+    } as FernGeneratorExec.GeneratorEnvironment,
     whitelabel: false,
     writeUnitTests: false,
     generateOauthClients: false,
