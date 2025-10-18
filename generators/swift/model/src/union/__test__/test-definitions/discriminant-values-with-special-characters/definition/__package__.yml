@@ -1,0 +1,13 @@
+# yaml-language-server: $schema=https://raw.githubusercontent.com/fern-api/fern/main/fern.schema.json
+
+types:
+  UnionWithSpecialCharacters:
+    union:
+      abc: UnionVariant
+      "a b c": UnionVariant
+      "123abc": UnionVariant
+      "123-abc": UnionVariant
+
+  UnionVariant:
+    properties:
+      some_value: string
