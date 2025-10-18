@@ -33,26 +33,16 @@ inputs:
 runs:
   using: "composite"
   steps:
-    # Format for seed tests
-    - name: JSON to String
-      id: json-to-string
-      shell: bash
-      run: |
-        json_data='${{ inputs.fixtures-to-run }}'
-        # Convert JSON array to space-separated string
-        string_result=$(echo "$json_data" | jq -r '.[]' | tr '\n' ' ' | sed 's/ $//')
-        echo "Generated string: '$string_result'"
-        echo "as-string=$string_result" >> $GITHUB_OUTPUT
-
-    - name: Run seed
-      uses: ./.github/actions/cached-seed
+    - name: Run All Seed Tests
+      uses: ./.github/actions/run-seed-process
       with:
-        generator-name: ${{ inputs.generator-name }}
+        sdk-name: ${{ inputs.generator-name }}
         generator-path: ${{ inputs.generator-path }}
         fixtures-to-run: ${{ inputs.fixtures-to-run }}
+        job-index: ${{ strategy.job-index }}
+        collect-metrics: false
         allow-unexpected-failures: ${{ inputs.allow-unexpected-failures }}
         skip-scripts: ${{ inputs.skip-scripts }}
-        cache-disabled: ${{ inputs.cache-disabled }}
 
     # Add changes first to simplify git diff checks, no changes will NOT error here
     - name: Check for changes
