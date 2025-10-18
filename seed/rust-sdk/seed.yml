@@ -51,7 +51,6 @@ fixtures:
   imdb:
     - customConfig:
         clientName: ImdbClient
-        enablePublishWorkflow: true
       outputFolder: imdb
     - customConfig:
         crateName: custom_imdb_sdk

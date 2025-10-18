@@ -134,7 +134,8 @@ export class RustProject extends AbstractProject<AbstractRustGeneratorContext<Ba
     }
 
     private generatePublishWorkflow(): string {
-        if (!this.context.customConfig.enablePublishWorkflow) {
+        // Only include publish workflow when publishConfig is set
+        if (this.context.publishConfig == null) {
             return "";
         }
 
