@@ -14,20 +14,26 @@ export async function parseOpenAPI({
     absolutePathToOpenAPIOverrides?: AbsoluteFilePath;
     parsed?: OpenAPI.Document;
 }): Promise<OpenAPI.Document> {
-    const result =
-        parsed != null
-            ? await bundle({
-                  ...DEFAULT_OPENAPI_BUNDLE_OPTIONS,
-                  doc: {
-                      source: new Source(absolutePathToOpenAPI, "<openapi>"),
-                      parsed
-                  },
-                  externalRefResolver: new OpenAPIRefResolver(absolutePathToOpenAPIOverrides)
-              })
-            : await bundle({
-                  ...DEFAULT_OPENAPI_BUNDLE_OPTIONS,
-                  ref: absolutePathToOpenAPI,
-                  externalRefResolver: new OpenAPIRefResolver(absolutePathToOpenAPIOverrides)
-              });
-    return result.bundle.parsed;
+    try {
+        const result =
+            parsed != null
+                ? await bundle({
+                      ...DEFAULT_OPENAPI_BUNDLE_OPTIONS,
+                      doc: {
+                          source: new Source(absolutePathToOpenAPI, "<openapi>"),
+                          parsed
+                      },
+                      externalRefResolver: new OpenAPIRefResolver(absolutePathToOpenAPIOverrides)
+                  })
+                : await bundle({
+                      ...DEFAULT_OPENAPI_BUNDLE_OPTIONS,
+                      ref: absolutePathToOpenAPI,
+                      externalRefResolver: new OpenAPIRefResolver(absolutePathToOpenAPIOverrides)
+                  });
+        return result.bundle.parsed;
+    } catch (error) {
+        throw new Error(
+            `Failed to parse OpenAPI spec at ${absolutePathToOpenAPI}. Error from Redocly bundler: ${error instanceof Error ? error.message : String(error)}`
+        );
+    }
 }
