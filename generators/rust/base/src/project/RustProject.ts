@@ -97,6 +97,9 @@ export class RustProject extends AbstractProject<AbstractRustGeneratorContext<Ba
         content = content.replace(/\{\{EXTRA_DEPENDENCIES\}\}/g, this.generateExtraDependencies());
         content = content.replace(/\{\{EXTRA_DEV_DEPENDENCIES\}\}/g, this.generateExtraDevDependencies());
 
+        // Replace CI/CD template variables
+        content = content.replace(/\{\{PUBLISH_WORKFLOW\}\}/g, this.generatePublishWorkflow());
+
         return content;
     }
 
@@ -128,6 +131,30 @@ export class RustProject extends AbstractProject<AbstractRustGeneratorContext<Ba
             result += `${name} = "${version}"\n`;
         }
         return result;
+    }
+
+    private generatePublishWorkflow(): string {
+        // Only include publish workflow when publishConfig is set
+        if (this.context.publishConfig == null) {
+            return "";
+        }
+
+        return `
+  publish:
+    needs: [check, compile, test]
+    if: github.event_name == 'push' && contains(github.ref, 'refs/tags/')
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v4
+
+      - name: Set up Rust
+        uses: actions-rust-lang/setup-rust-toolchain@v1
+
+      - name: Publish
+        env:
+          CARGO_REGISTRY_TOKEN: \${{ secrets.CARGO_REGISTRY_TOKEN }}
+        run: cargo publish`;
     }
 
     private objectToToml(obj: unknown): string {

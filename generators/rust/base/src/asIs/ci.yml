@@ -41,3 +41,4 @@ jobs:
 
       - name: Test
         run: cargo test
+{{PUBLISH_WORKFLOW}}
