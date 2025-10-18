@@ -22,7 +22,7 @@ import { validateCliRelease } from "./commands/validate/validateCliChangelog";
 import { validateGenerator } from "./commands/validate/validateGeneratorChangelog";
 import { GeneratorWorkspace, loadGeneratorWorkspaces } from "./loadGeneratorWorkspaces";
 import { Semaphore } from "./Semaphore";
-
+// Forcing updates
 void tryRunCli();
 
 export async function tryRunCli(): Promise<void> {
