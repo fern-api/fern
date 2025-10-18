@@ -15,9 +15,8 @@ inputs:
     required: false
     default: "false"
   fixtures-to-run:
-    description: Specific fixtures to run. If not supplied, will run all fixtures. Note - for multiple fixtures at once, separate by space, not comma.
-    required: false
-    default: ""
+    description: The fixtures to run, as JSON
+    required: true
   allow-unexpected-failures:
     description: Whether to allow unexpected failures during seed generation
     required: false
@@ -34,6 +33,17 @@ inputs:
 runs:
   using: "composite"
   steps:
+    # Format for seed tests
+    - name: JSON to String
+      id: json-to-string
+      shell: bash
+      run: |
+        json_data='${{ inputs.fixtures-to-run }}'
+        # Convert JSON array to space-separated string
+        string_result=$(echo "$json_data" | jq -r '.[]' | tr '\n' ' ' | sed 's/ $//')
+        echo "Generated string: '$string_result'"
+        echo "as-string=$string_result" >> $GITHUB_OUTPUT
+
     - name: Run seed
       uses: ./.github/actions/cached-seed
       with:
