@@ -309,7 +309,6 @@ jobs:
             echo "$BASH_VAR" | jq .
           fi
 
-
   ruby-model-seed-update:
     runs-on: ubuntu-latest
     timeout-minutes: 60
