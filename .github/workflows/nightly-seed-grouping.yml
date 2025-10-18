@@ -6,6 +6,10 @@ on:
     - cron: "0 5 * * *"
   # Runs when triggered manually to do so
   workflow_dispatch:
+  # CHRISM - temp
+  push:
+    branches:
+      - mallinson/remove-bloat
 
 # Cancel previous workflows when another is triggered
 concurrency:
@@ -20,30 +24,36 @@ jobs:
       fail-fast: false # Let all tests run and cascade errors, will only PR generator updates that passed
       matrix:
         sdk-name: [
-            ruby-model,
-            ruby-sdk,
-            ruby-sdk-v2,
-            pydantic,
-            # python-sdk, Turned off until Python is no longer hangings
-            fastapi,
-            openapi,
-            postman,
-            java-sdk,
-            java-model,
-            java-spring,
-            ts-sdk,
-            ts-express,
-            go-fiber,
-            go-model,
-            go-sdk,
-            csharp-model,
-            csharp-sdk,
-            php-model,
-            php-sdk,
-            swift-sdk,
-            rust-model,
-            rust-sdk
+            # CHRISM - temp
+            python-sdk
+            # ruby-model,
+            # ruby-sdk,
+            # ruby-sdk-v2,
+            # pydantic,
+            # python-sdk,
+            # fastapi,
+            # openapi,
+            # postman,
+            # java-sdk,
+            # java-model,
+            # java-spring,
+            # ts-sdk,
+            # ts-express,
+            # go-fiber,
+            # go-model,
+            # go-sdk,
+            # csharp-model,
+            # csharp-sdk,
+            # php-model,
+            # php-sdk,
+            # swift-sdk,
+            # rust-model,
+            # rust-sdk
           ]
+        include:
+          - concurrency-count-override: 8
+            sdk-name: python-sdk
+
     steps:
       - name: Checkout Repo
         uses: actions/checkout@v4
@@ -71,7 +81,21 @@ jobs:
       - name: Save Seed Test Log to File
         id: save-seed-test-log-to-file
         run: |
+          # Default to 16 concurrent fixtures if not overridden. In the case of python-sdk,
+          # the virtual environments take up too much space so this needs to be limited
           pnpm seed:local test --generator ${{ matrix.sdk-name }} --parallel 16 --allow-unexpected-failures > ${{ matrix.sdk-name }}-seed-test-log.txt
+
+      - name: Cleanup Virtualenvs
+        if: always() && !cancelled() # Run even if tests fail
+        run: |
+          echo "Cleaning up Poetry virtualenvs to free disk space..."
+          # Remove Poetry virtualenv cache
+          rm -rf ~/.cache/pypoetry/virtualenvs/*
+          # Also clean any local .venv directories
+          find . -name ".venv" -type d -exec rm -rf {} + 2>/dev/null || true
+          # Clean poetry cache
+          poetry cache clear --all pypi 2>/dev/null || true
+          echo "Virtualenv cleanup completed"
 
       - name: Upload Seed Test Log as Artifact
         uses: actions/upload-artifact@v4
@@ -94,36 +118,37 @@ jobs:
   build-seed-groups:
     runs-on: ubuntu-latest
     timeout-minutes: 3
-    if: always() && (needs.run-seed-test.result == 'success' || needs.run-seed-test.result == 'failure')
+    if: always() && !cancelled() && (needs.run-seed-test.result == 'success' || needs.run-seed-test.result == 'failure')
     needs: [run-seed-test]
     strategy:
       fail-fast: false
       matrix:
-        sdk-name:
-          [
-            ruby-model,
-            ruby-sdk,
-            ruby-sdk-v2,
-            pydantic,
-            python-sdk,
-            fastapi,
-            openapi,
-            postman,
-            java-sdk,
-            java-model,
-            java-spring,
-            ts-sdk,
-            ts-express,
-            go-fiber,
-            go-model,
-            go-sdk,
-            csharp-model,
-            csharp-sdk,
-            php-model,
-            php-sdk,
-            swift-sdk,
-            rust-model,
-            rust-sdk
+        sdk-name: [
+            # CHRISM - temp
+            python-sdk
+            # ruby-model,
+            # ruby-sdk,
+            # ruby-sdk-v2,
+            # pydantic,
+            # python-sdk,
+            # fastapi,
+            # openapi,
+            # postman,
+            # java-sdk,
+            # java-model,
+            # java-spring,
+            # ts-sdk,
+            # ts-express,
+            # go-fiber,
+            # go-model,
+            # go-sdk,
+            # csharp-model,
+            # csharp-sdk,
+            # php-model,
+            # php-sdk,
+            # swift-sdk,
+            # rust-model,
+            # rust-sdk
           ]
         include:
           - number-of-groups-override: 14 # java-sdk override since this one is taking a while
@@ -171,7 +196,7 @@ jobs:
   pr-seed-group-files:
     runs-on: ubuntu-latest
     timeout-minutes: 10
-    if: always() && (needs.build-seed-groups.result == 'success' || needs.build-seed-groups.result == 'failure')
+    if: always() && !cancelled() && (needs.build-seed-groups.result == 'success' || needs.build-seed-groups.result == 'failure')
     needs: [build-seed-groups]
     steps:
       - name: Checkout Repo
@@ -262,17 +287,19 @@ jobs:
           echo "PR was not created or updated, likely due to no diff for seed group files"
           echo "PR Operation: ${{ steps.cpr.outputs.pull-request-operation }}. Note: if operation is blank then there were no changes and create-pull-request GitHub Action exited silently and early."
 
-      - name: Enable Pull Request Automerge
-        if: steps.cpr.outputs.pull-request-operation == 'created'
-        uses: peter-evans/enable-pull-request-automerge@v3
-        with:
-          token: ${{ secrets.FERN_GITHUB_PAT }}
-          pull-request-number: ${{ steps.cpr.outputs.pull-request-number }}
-          merge-method: squash
+      # CHRISM - temp
+      # - name: Enable Pull Request Automerge
+      #   if: steps.cpr.outputs.pull-request-operation == 'created'
+      #   uses: peter-evans/enable-pull-request-automerge@v3
+      #   with:
+      #     token: ${{ secrets.FERN_GITHUB_PAT }}
+      #     pull-request-number: ${{ steps.cpr.outputs.pull-request-number }}
+      #     merge-method: squash
 
-      - name: Approve PR
-        if: steps.cpr.outputs.pull-request-operation == 'created'
-        uses: ./.github/actions/auto-approve
-        with:
-          approver-gh-token: ${{ secrets.PR_BOT_GH_PAT }}
-          pull-request-number: ${{ steps.cpr.outputs.pull-request-number }}
+      # CHRISM - temp
+      # - name: Approve PR
+      #   if: steps.cpr.outputs.pull-request-operation == 'created'
+      #   uses: ./.github/actions/auto-approve
+      #   with:
+      #     approver-gh-token: ${{ secrets.PR_BOT_GH_PAT }}
+      #     pull-request-number: ${{ steps.cpr.outputs.pull-request-number }}

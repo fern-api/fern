@@ -4,7 +4,8 @@ on:
   push:
     branches:
       - main
-  pull_request:
+  # CHRISM TEMP
+  # pull_request:
 
 # Cancel previous workflows on previous push
 concurrency:

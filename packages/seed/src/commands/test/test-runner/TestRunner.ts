@@ -263,6 +263,14 @@ export abstract class TestRunner {
             scriptStopwatch.stop();
             metrics.compileTime = scriptStopwatch.duration();
 
+            // Clean up virtualenvs after script execution (success or failure)
+            try {
+                await this.scriptRunner?.cleanup({ taskContext, id });
+            } catch (cleanupError) {
+                taskContext.logger.warn(`Cleanup failed for fixture ${id}: ${cleanupError}`);
+                // Don't fail the test due to cleanup issues
+            }
+
             if (scriptResponse?.type === "failure") {
                 return {
                     type: "failure",

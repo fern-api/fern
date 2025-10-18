@@ -51,6 +51,44 @@ class Publisher:
             safe_command="poetry install",
         )
 
+    def cleanup_virtualenvs(self) -> None:
+        """Remove Poetry virtualenvs to free up disk space"""
+        try:
+            # Get virtualenv info to identify which one was created
+            env_info_result = subprocess.run(
+                ["poetry", "env", "info", "--path"],
+                stdout=subprocess.PIPE,
+                stderr=subprocess.PIPE,
+                cwd=self._generator_config.output.path,
+                check=False,  # Don't fail if no venv exists
+                text=True
+            )
+
+            if env_info_result.returncode == 0 and env_info_result.stdout.strip():
+                venv_path = env_info_result.stdout.strip()
+                print(f"Removing virtualenv at: {venv_path}")
+
+                # Remove the specific virtualenv
+                self._run_command(
+                    command=["poetry", "env", "remove", "--all"],
+                    safe_command="poetry env remove --all",
+                )
+                print("Virtualenv cleanup completed successfully")
+            else:
+                print("No virtualenv found to clean up")
+
+        except Exception as e:
+            # Don't fail the entire generation process if cleanup fails
+            print(f"Warning: Virtualenv cleanup failed: {e}")
+            self._generator_exec_wrapper.send_update(
+                logging.GeneratorUpdate.factory.log(
+                    logging.LogUpdate(
+                        level=logging.LogLevel.DEBUG,
+                        message=f"Virtualenv cleanup warning: {e}"
+                    )
+                )
+            )
+
     def publish_package(
         self,
         *,

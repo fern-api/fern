@@ -51,6 +51,47 @@ export class DockerScriptRunner extends ScriptRunner {
         }
     }
 
+    public async cleanup({ taskContext, id }: { taskContext: TaskContext; id: string }): Promise<void> {
+        if (this.skipScripts) {
+            return;
+        }
+
+        const workDir = id.replace(":", "_");
+
+        for (const script of this.scripts) {
+            taskContext.logger.debug(`Cleaning up fixture ${id} in container ${script.containerId}`);
+
+            // Clean up the fixture directory and any virtualenvs
+            const cleanupCommands = [
+                `rm -rf /${workDir}`,
+                // Clean up Poetry virtualenvs created during this fixture's execution
+                `find . -name '.venv*' -type d -exec rm -rf {} + 2>/dev/null || true`,
+                // Clean up any virtualenvs in the Poetry cache for this specific project
+                `rm -rf ./*-py* 2>/dev/null || true`,
+                // Clean up Poetry cache
+                `poetry cache clear --all pypi 2>/dev/null || true`
+            ];
+
+            const cleanupScript = cleanupCommands.join(" && ");
+
+            const cleanupCommand = await loggingExeca(
+                taskContext.logger,
+                "docker",
+                ["exec", script.containerId, "/bin/sh", "-c", cleanupScript],
+                {
+                    doNotPipeOutput: false,
+                    reject: false // Don't fail if cleanup has issues
+                }
+            );
+
+            if (cleanupCommand.failed) {
+                taskContext.logger.warn(`Cleanup warning for fixture ${id}: ${cleanupCommand.stderr}`);
+            } else {
+                taskContext.logger.debug(`Successfully cleaned up fixture ${id}`);
+            }
+        }
+    }
+
     protected async initialize(): Promise<void> {
         await this.startContainers(this.context);
     }

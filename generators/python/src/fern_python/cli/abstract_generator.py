@@ -140,11 +140,13 @@ class AbstractGenerator(ABC):
             publisher.run_poetry_install()
             publisher.run_ruff_check_fix()
             publisher.run_ruff_format()
+            publisher.cleanup_virtualenvs()  # Clean up virtualenv after all operations
         elif output_mode_union.type == "publish":
             publisher.run_poetry_install()
             publisher.run_ruff_check_fix()
             publisher.run_ruff_format()
             publisher.publish_package(publish_config=output_mode_union)
+            publisher.cleanup_virtualenvs()  # Clean up virtualenv after all operations
 
         self.postrun(
             generator_exec_wrapper=generator_exec_wrapper,
@@ -197,6 +199,7 @@ class AbstractGenerator(ABC):
             generator_config=generator_config,
         )
         publisher.publish_package(publish_config=publish_config)
+        publisher.cleanup_virtualenvs()  # Clean up virtualenv after publishing
 
     def _write_files_for_github_repo(
         self, project: Project, output_mode: GithubOutputMode, write_unit_tests: bool
