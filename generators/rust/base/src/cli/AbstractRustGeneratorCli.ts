@@ -1,5 +1,4 @@
 import { AbstractGeneratorCli } from "@fern-api/base-generator";
-import { AbsoluteFilePath } from "@fern-api/fs-utils";
 import { BaseRustCustomConfigSchema } from "@fern-api/rust-codegen";
 import { IntermediateRepresentation } from "@fern-fern/ir-sdk/api";
 import * as IrSerialization from "@fern-fern/ir-sdk/serialization";
@@ -18,9 +17,9 @@ export abstract class AbstractRustGeneratorCli<
         // Ensure auth schemes have required 'key' field for IR v60+ compatibility
         // This handles cases where the CLI's OpenAPI converter doesn't provide the key
         if (irJson && typeof irJson === "object" && "auth" in irJson) {
-            const auth = irJson.auth as any;
+            const auth = irJson.auth as Record<string, unknown>;
             if (auth && auth.schemes && Array.isArray(auth.schemes)) {
-                auth.schemes = auth.schemes.map((scheme: any, index: number) => {
+                auth.schemes = auth.schemes.map((scheme: Record<string, unknown>, index: number) => {
                     if (!scheme.key) {
                         // Use the auth type as the key, or generate a default one
                         return {
