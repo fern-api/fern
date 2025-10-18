@@ -6,7 +6,7 @@ import {
 export function assertValidSemVerOrThrow(version: string): void {
     SemVer.fromString(version);
 }
-
+// force test
 // TODO: Current version comparison logic for prerelease/RC versions:
 //
 // We currently allow feature-level changes (major/minor/patch) when comparing RC versions,
