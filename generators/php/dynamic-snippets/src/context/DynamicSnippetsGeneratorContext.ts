@@ -3,7 +3,7 @@ import {
     FernGeneratorExec
 } from "@fern-api/browser-compatible-base-generator";
 import { FernIr } from "@fern-api/dynamic-ir-sdk";
-import { BasePhpCustomConfigSchema, php } from "@fern-api/php-codegen";
+import { BasePhpCustomConfigSchema, getSafeClassName, php } from "@fern-api/php-codegen";
 import { camelCase, upperFirst } from "lodash-es";
 
 import { DynamicTypeLiteralMapper } from "./DynamicTypeLiteralMapper";
@@ -63,7 +63,7 @@ export class DynamicSnippetsGeneratorContext extends AbstractDynamicSnippetsGene
     }
 
     public getClassName(name: FernIr.Name): string {
-        return name.pascalCase.safeName;
+        return getSafeClassName(name.pascalCase.safeName);
     }
 
     public getRootClientClassName(): string {
