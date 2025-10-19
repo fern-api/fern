@@ -69,6 +69,9 @@ export class SdkGeneratorCLI extends AbstractSwiftGeneratorCli<SdkCustomConfigSc
     protected async generate(context: SdkGeneratorContext): Promise<void> {
         await this.generateSourceFiles(context);
         await Promise.all([this.generateRootFiles(context), this.generateTestFiles(context)]);
+        if (context.config.output.mode.type === "github") {
+            await this.generateGithubWorkflow(context);
+        }
         await context.project.persist();
     }
 
@@ -110,6 +113,43 @@ export class SdkGeneratorCLI extends AbstractSwiftGeneratorCli<SdkCustomConfigSc
         } catch (e) {
             throw new Error(`Failed to generate reference.md: ${extractErrorMessage(e)}`);
         }
+    }
+
+    private async generateGithubWorkflow(context: SdkGeneratorContext): Promise<void> {
+        const workflowContent = `name: ci
+
+on: [push]
+
+jobs:
+  compile:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v4
+
+      - name: Set up Swift
+        uses: swift-actions/setup-swift@v2
+        with:
+          swift-version: "6.0"
+
+      - name: Compile
+        run: swift build
+
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v4
+
+      - name: Set up Swift
+        uses: swift-actions/setup-swift@v2
+        with:
+          swift-version: "6.0"
+
+      - name: Test
+        run: swift test
+`;
+        context.project.addRootFiles(new File("ci.yml", RelativeFilePath.of(".github/workflows"), workflowContent));
     }
 
     private generateSnippets(context: SdkGeneratorContext) {
