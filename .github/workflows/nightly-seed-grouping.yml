@@ -9,7 +9,7 @@ on:
   # CHRISM - temp
   push:
     branches:
-      - mallinson/remove-bloat
+      - mallinson/postscript-stage-testing
 
 # Cancel previous workflows when another is triggered
 concurrency:
