@@ -264,13 +264,13 @@ export abstract class TestRunner {
             metrics.compileTime = scriptStopwatch.duration();
 
             // CHRISM - is this already covered?
-            // // Clean up virtualenvs after script execution (success or failure)
-            // try {
-            //     await this.scriptRunner?.cleanup({ taskContext, id, outputDir });
-            // } catch (cleanupError) {
-            //     taskContext.logger.warn(`Cleanup failed for fixture ${id}: ${cleanupError}`);
-            //     // Don't fail the test due to cleanup issues
-            // }
+            // Clean up virtualenvs after script execution (success or failure)
+            try {
+                await this.scriptRunner?.cleanup({ taskContext, id, outputDir });
+            } catch (cleanupError) {
+                taskContext.logger.warn(`Cleanup failed for fixture ${id}: ${cleanupError}`);
+                // Don't fail the test due to cleanup issues
+            }
 
             if (scriptResponse?.type === "failure") {
                 return {
