@@ -44,10 +44,6 @@ jobs:
             rust-model,
             rust-sdk
           ]
-        include:
-          - concurrency-count-override: 8
-            sdk-name: python-sdk
-
     steps:
       - name: Checkout Repo
         uses: actions/checkout@v4
@@ -75,8 +71,6 @@ jobs:
       - name: Save Seed Test Log to File
         id: save-seed-test-log-to-file
         run: |
-          # Default to 16 concurrent fixtures if not overridden. In the case of python-sdk,
-          # the virtual environments take up too much space so this needs to be limited
           pnpm seed:local test --generator ${{ matrix.sdk-name }} --parallel 16 --allow-unexpected-failures > ${{ matrix.sdk-name }}-seed-test-log.txt
 
       - name: Upload Seed Test Log as Artifact

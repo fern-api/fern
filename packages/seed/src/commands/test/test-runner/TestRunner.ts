@@ -262,6 +262,7 @@ export abstract class TestRunner {
 
             scriptStopwatch.stop();
             metrics.compileTime = scriptStopwatch.duration();
+            
             if (scriptResponse?.type === "failure") {
                 return {
                     type: "failure",
