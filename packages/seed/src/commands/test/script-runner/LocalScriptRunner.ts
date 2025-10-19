@@ -40,25 +40,39 @@ export class LocalScriptRunner extends ScriptRunner {
         // No containers to stop for local execution
     }
 
-    public async cleanup({ taskContext, id }: { taskContext: TaskContext; id: string }): Promise<void> {
+    public async cleanup({
+        taskContext,
+        id,
+        outputDir
+    }: {
+        taskContext: TaskContext;
+        id: string;
+        outputDir?: AbsoluteFilePath;
+    }): Promise<void> {
         if (this.skipScripts) {
             return;
         }
 
         taskContext.logger.debug(`Cleaning up fixture ${id} (local execution)`);
 
-        // For local execution, clean up Poetry virtualenvs in the output directory
-        // This is less critical since local runs use temporary directories that are cleaned up anyway
-        // But we can still clean up Poetry caches to free space
-        try {
-            await loggingExeca(taskContext.logger, "poetry", ["cache", "clear", "--all", "pypi"], {
-                doNotPipeOutput: false,
-                reject: false
-            });
-            taskContext.logger.debug(`Successfully cleaned up Poetry cache for fixture ${id}`);
-        } catch (error) {
-            taskContext.logger.warn(`Cleanup warning for fixture ${id}: ${error}`);
-        }
+        const postScripts = this.workspace.workspaceConfig.postScripts ?? [];
+
+        if (postScripts.length > 0) {
+            // Run configured postScripts
+            for (const script of postScripts) {
+                const result = await this.runScript({
+                    taskContext,
+                    script,
+                    id,
+                    outputDir: outputDir ?? AbsoluteFilePath.of(process.cwd())
+                });
+                if (result.type === "failure") {
+                    taskContext.logger.warn(
+                        `PostScript failed for fixture ${id}: ${result.message ?? "Unknown error"}`
+                    );
+                }
+            }
+        } 
     }
 
     protected async initialize(): Promise<void> {

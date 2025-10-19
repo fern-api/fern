@@ -43,52 +43,66 @@ export class DockerScriptRunner extends ScriptRunner {
         return { type: "success" };
     }
 
-    public async stop(): Promise<void> {
-        for (const script of this.scripts) {
-            await loggingExeca(this.context.logger, "docker", ["kill", script.containerId], {
-                doNotPipeOutput: false
-            });
-        }
-    }
-
-    public async cleanup({ taskContext, id }: { taskContext: TaskContext; id: string }): Promise<void> {
+    public async cleanup({
+        taskContext,
+        id,
+        outputDir
+    }: {
+        taskContext: TaskContext;
+        id: string;
+        outputDir?: AbsoluteFilePath;
+    }): Promise<void> {
         if (this.skipScripts) {
             return;
         }
 
-        const workDir = id.replace(":", "_");
+        await this.startContainersFn;
 
-        for (const script of this.scripts) {
-            taskContext.logger.debug(`Cleaning up fixture ${id} in container ${script.containerId}`);
+        const postScripts = this.workspace.workspaceConfig.postScripts ?? [];
 
-            // Clean up the fixture directory and any virtualenvs
-            const cleanupCommands = [
-                `rm -rf /${workDir}`,
-                // Clean up Poetry virtualenvs created during this fixture's execution
-                `find . -name '.venv*' -type d -exec rm -rf {} + 2>/dev/null || true`,
-                // Clean up any virtualenvs in the Poetry cache for this specific project
-                `rm -rf ./*-py* 2>/dev/null || true`,
-                // Clean up Poetry cache
-                `poetry cache clear --all pypi 2>/dev/null || true`
-            ];
+        if (postScripts.length > 0 && this.scripts.length > 0) {
+            // Run configured postScripts using existing script containers (avoids setup overhead)
+            for (let i = 0; i < postScripts.length && i < this.scripts.length; i++) {
+                const postScript = postScripts[i];
+                const containerToUse = this.scripts[i];
 
-            const cleanupScript = cleanupCommands.join(" && ");
-
-            const cleanupCommand = await loggingExeca(
-                taskContext.logger,
-                "docker",
-                ["exec", script.containerId, "/bin/sh", "-c", cleanupScript],
-                {
-                    doNotPipeOutput: false,
-                    reject: false // Don't fail if cleanup has issues
+                if (!postScript || !containerToUse) {
+                    taskContext.logger.warn(`Skipping postScript ${i}: missing postScript or container`);
+                    continue;
                 }
-            );
 
-            if (cleanupCommand.failed) {
-                taskContext.logger.warn(`Cleanup warning for fixture ${id}: ${cleanupCommand.stderr}`);
-            } else {
-                taskContext.logger.debug(`Successfully cleaned up fixture ${id}`);
+                taskContext.logger.debug(
+                    `Running postScript cleanup for fixture ${id} in container ${containerToUse.containerId}`
+                );
+
+                // Execute postScript commands directly without file copying overhead
+                const postScriptCommands = postScript.commands.join(" && ");
+
+                const cleanupCommand = await loggingExeca(
+                    taskContext.logger,
+                    "docker",
+                    ["exec", containerToUse.containerId, "/bin/sh", "-c", postScriptCommands],
+                    {
+                        doNotPipeOutput: false,
+                        reject: false // Don't fail if cleanup has issues
+                    }
+                );
+
+                if (cleanupCommand.failed) {
+                    taskContext.logger.warn(`PostScript failed for fixture ${id}: ${cleanupCommand.stderr}`);
+                } else {
+                    taskContext.logger.debug(`PostScript completed for fixture ${id}`);
+                }
             }
+        } 
+    }
+
+    public async stop(): Promise<void> {
+        // Stop script containers (postScripts reuse these containers)
+        for (const script of this.scripts) {
+            await loggingExeca(this.context.logger, "docker", ["kill", script.containerId], {
+                doNotPipeOutput: false
+            });
         }
     }
 
@@ -116,10 +130,11 @@ export class DockerScriptRunner extends ScriptRunner {
         await writeFile(scriptFile.path, ["set -e", `cd /${workDir}/generated`, ...script.commands].join("\n"));
 
         // Move scripts and generated files into the container
+        // Use mkdir -p to avoid failing if directory already exists (e.g., during cleanup)
         const mkdirCommand = await loggingExeca(
             taskContext.logger,
             "docker",
-            ["exec", containerId, "mkdir", `/${workDir}`],
+            ["exec", containerId, "mkdir", "-p", `/${workDir}`],
             {
                 doNotPipeOutput: false,
                 reject: false
@@ -191,7 +206,9 @@ export class DockerScriptRunner extends ScriptRunner {
     private async startContainers(context: TaskContext): Promise<void> {
         const absoluteFilePathToFernCli = await this.buildFernCli(context);
         const cliVolumeBind = `${absoluteFilePathToFernCli}:/fern`;
+
         // Start running a docker container for each script instance
+        // Note: postScripts reuse existing script containers
         for (const script of this.workspace.workspaceConfig.scripts ?? []) {
             const startSeedCommand = await loggingExeca(
                 context.logger,

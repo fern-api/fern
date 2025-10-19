@@ -22,6 +22,7 @@ export interface SeedWorkspaceConfiguration {
     customFixtureConfig?: FernSeedConfig.FixtureConfigurations;
     fixtures?: Record<string, FernSeedConfig.FixtureConfigurations[]>;
     scripts?: FernSeedConfig.DockerScriptConfig[];
+    postScripts?: FernSeedConfig.DockerScriptConfig[];
     /**
      * List any fixtures that are okay to fail. For normal fixtures
      * just list the fixture name. For configured fixture list {fixture}:{outputFolder}.

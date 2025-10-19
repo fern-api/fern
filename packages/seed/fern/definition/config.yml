@@ -38,6 +38,7 @@ types:
       fixtures:
         type: optional<map<string, list<FixtureConfigurations>>>
       scripts: optional<list<DockerScriptConfig>>
+      postScripts: optional<list<DockerScriptConfig>>
       allowedFailures:
         type: optional<list<string>>
         docs: |

@@ -37,7 +37,15 @@ export abstract class ScriptRunner {
 
     public abstract run({ taskContext, id, outputDir }: ScriptRunner.RunArgs): Promise<ScriptRunner.RunResponse>;
     public abstract stop(): Promise<void>;
-    public abstract cleanup({ taskContext, id }: { taskContext: TaskContext; id: string }): Promise<void>;
+    public abstract cleanup({
+        taskContext,
+        id,
+        outputDir
+    }: {
+        taskContext: TaskContext;
+        id: string;
+        outputDir?: AbsoluteFilePath;
+    }): Promise<void>;
 
     protected abstract initialize(): Promise<void>;
 }
