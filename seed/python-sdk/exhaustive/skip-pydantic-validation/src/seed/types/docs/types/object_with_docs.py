@@ -38,7 +38,7 @@ class ObjectWithDocs(UncheckedBaseModel):
     - ** /: Javadoc comment end
     
     Doxygen (C++):
-    - \: Used for Doxygen commands
+    - \\: Used for Doxygen commands
     - @: Alternative command prefix
     - <: >: XML/HTML tags
     - &: HTML entities

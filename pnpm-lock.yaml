@@ -2155,6 +2155,9 @@ importers:
       lodash-es:
         specifier: ^4.17.21
         version: 4.17.21
+      number-to-words:
+        specifier: 1.2.4
+        version: 1.2.4
       zod:
         specifier: ^3.25.75
         version: 3.25.76
@@ -2168,6 +2171,9 @@ importers:
       '@types/node':
         specifier: 18.15.3
         version: 18.15.3
+      '@types/number-to-words':
+        specifier: 1.2.3
+        version: 1.2.3
       depcheck:
         specifier: ^1.4.7
         version: 1.4.7
@@ -10331,6 +10337,9 @@ packages:
   '@types/normalize-package-data@2.4.4':
     resolution: {integrity: sha512-37i+OaWTh9qeK4LSHPsyRC7NahnGotNuZvjLSgcPzblpHB3rrCJxAOgI5gCdKm7coonsaX1Of0ILiTcnZjbfxA==}
 
+  '@types/number-to-words@1.2.3':
+    resolution: {integrity: sha512-ruSA/QZ6JQofoEEN2zKmN9oihZmrCBgcw0zEzN0UA9Mw0pU5remTddZmrbHjsa99qz12Uxl82x+XkVpHu87oXw==}
+
   '@types/object-hash@3.0.6':
     resolution: {integrity: sha512-fOBV8C1FIu2ELinoILQ+ApxcUKz4ngq+IWUYrxSGjXzzjUALijilampwkMgEtJ+h2njAW3pi853QpzNVCHB73w==}
 
@@ -13163,6 +13172,9 @@ packages:
   npm-run-path@4.0.1:
     resolution: {integrity: sha512-S48WzZW777zhNIrn7gxOlISNAqi9ZC/uQFnRdbeIHhZhCA6UqpkOT8T1G7BvfdgP4Er8gF4sUbaS0i7QvIfCWw==}
     engines: {node: '>=8'}
+
+  number-to-words@1.2.4:
+    resolution: {integrity: sha512-/fYevVkXRcyBiZDg6yzZbm0RuaD6i0qRfn8yr+6D0KgBMOndFPxuW10qCHpzs50nN8qKuv78k8MuotZhcVX6Pw==}
 
   nwsapi@2.2.22:
     resolution: {integrity: sha512-ujSMe1OWVn55euT1ihwCI1ZcAaAU3nxUiDwfDQldc51ZXaB9m2AyOn6/jh1BLe2t/G8xd6uKG1UBF2aZJeg2SQ==}
@@ -17488,6 +17500,8 @@ snapshots:
 
   '@types/normalize-package-data@2.4.4': {}
 
+  '@types/number-to-words@1.2.3': {}
+
   '@types/object-hash@3.0.6': {}
 
   '@types/parse-json@4.0.2': {}
@@ -21075,6 +21089,8 @@ snapshots:
   npm-run-path@4.0.1:
     dependencies:
       path-key: 3.1.1
+
+  number-to-words@1.2.4: {}
 
   nwsapi@2.2.22:
     optional: true

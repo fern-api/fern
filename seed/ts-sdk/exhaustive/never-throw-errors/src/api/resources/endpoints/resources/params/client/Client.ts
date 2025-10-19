@@ -47,7 +47,7 @@ export class Params {
             url: core.url.join(
                 (await core.Supplier.get(this._options.baseUrl)) ??
                     (await core.Supplier.get(this._options.environment)),
-                `/params/path/${encodeURIComponent(param)}`,
+                `/params/path/${core.url.encodePathParam(param)}`,
             ),
             method: "GET",
             headers: _headers,
@@ -112,7 +112,7 @@ export class Params {
             url: core.url.join(
                 (await core.Supplier.get(this._options.baseUrl)) ??
                     (await core.Supplier.get(this._options.environment)),
-                `/params/path/${encodeURIComponent(param)}`,
+                `/params/path/${core.url.encodePathParam(param)}`,
             ),
             method: "GET",
             headers: _headers,
@@ -330,7 +330,7 @@ export class Params {
             url: core.url.join(
                 (await core.Supplier.get(this._options.baseUrl)) ??
                     (await core.Supplier.get(this._options.environment)),
-                `/params/path-query/${encodeURIComponent(param)}`,
+                `/params/path-query/${core.url.encodePathParam(param)}`,
             ),
             method: "GET",
             headers: _headers,
@@ -400,7 +400,7 @@ export class Params {
             url: core.url.join(
                 (await core.Supplier.get(this._options.baseUrl)) ??
                     (await core.Supplier.get(this._options.environment)),
-                `/params/path-query/${encodeURIComponent(param)}`,
+                `/params/path-query/${core.url.encodePathParam(param)}`,
             ),
             method: "GET",
             headers: _headers,
@@ -463,7 +463,7 @@ export class Params {
             url: core.url.join(
                 (await core.Supplier.get(this._options.baseUrl)) ??
                     (await core.Supplier.get(this._options.environment)),
-                `/params/path/${encodeURIComponent(param)}`,
+                `/params/path/${core.url.encodePathParam(param)}`,
             ),
             method: "PUT",
             headers: _headers,
@@ -532,7 +532,7 @@ export class Params {
             url: core.url.join(
                 (await core.Supplier.get(this._options.baseUrl)) ??
                     (await core.Supplier.get(this._options.environment)),
-                `/params/path/${encodeURIComponent(param)}`,
+                `/params/path/${core.url.encodePathParam(param)}`,
             ),
             method: "PUT",
             headers: _headers,

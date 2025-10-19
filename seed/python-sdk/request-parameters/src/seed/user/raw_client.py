@@ -12,6 +12,7 @@ from ..core.http_response import AsyncHttpResponse, HttpResponse
 from ..core.pydantic_utilities import parse_obj_as
 from ..core.request_options import RequestOptions
 from ..core.serialization import convert_and_respect_annotation_metadata
+from .types.create_username_body_optional_properties import CreateUsernameBodyOptionalProperties
 from .types.nested_user import NestedUser
 from .types.user import User
 
@@ -110,6 +111,41 @@ class RawUserClient:
                 "password": password,
                 "name": name,
             },
+            request_options=request_options,
+            omit=OMIT,
+        )
+        try:
+            if 200 <= _response.status_code < 300:
+                return HttpResponse(response=_response, data=None)
+            _response_json = _response.json()
+        except JSONDecodeError:
+            raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
+        raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
+
+    def create_username_optional(
+        self,
+        *,
+        request: typing.Optional[CreateUsernameBodyOptionalProperties] = None,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> HttpResponse[None]:
+        """
+        Parameters
+        ----------
+        request : typing.Optional[CreateUsernameBodyOptionalProperties]
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        HttpResponse[None]
+        """
+        _response = self._client_wrapper.httpx_client.request(
+            "user/username-optional",
+            method="POST",
+            json=convert_and_respect_annotation_metadata(
+                object_=request, annotation=typing.Optional[CreateUsernameBodyOptionalProperties], direction="write"
+            ),
             request_options=request_options,
             omit=OMIT,
         )
@@ -322,6 +358,41 @@ class AsyncRawUserClient:
                 "password": password,
                 "name": name,
             },
+            request_options=request_options,
+            omit=OMIT,
+        )
+        try:
+            if 200 <= _response.status_code < 300:
+                return AsyncHttpResponse(response=_response, data=None)
+            _response_json = _response.json()
+        except JSONDecodeError:
+            raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
+        raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
+
+    async def create_username_optional(
+        self,
+        *,
+        request: typing.Optional[CreateUsernameBodyOptionalProperties] = None,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> AsyncHttpResponse[None]:
+        """
+        Parameters
+        ----------
+        request : typing.Optional[CreateUsernameBodyOptionalProperties]
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        AsyncHttpResponse[None]
+        """
+        _response = await self._client_wrapper.httpx_client.request(
+            "user/username-optional",
+            method="POST",
+            json=convert_and_respect_annotation_metadata(
+                object_=request, annotation=typing.Optional[CreateUsernameBodyOptionalProperties], direction="write"
+            ),
             request_options=request_options,
             omit=OMIT,
         )

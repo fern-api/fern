@@ -56,6 +56,9 @@ export const toJson = (
         },
         space,
     );
+    if (preliminaryJSON == null) {
+        return preliminaryJSON;
+    }
 
     // Strip quotes around numbers with marker: "123#bigint#" → 123
     return preliminaryJSON.replace(BIGINT_REGEX, "$1");

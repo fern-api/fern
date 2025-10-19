@@ -1,4 +1,4 @@
-use crate::{ApiError, ClientConfig, HttpClient, RequestOptions};
+use crate::{ApiError, ByteStream, ClientConfig, HttpClient, RequestOptions};
 use reqwest::Method;
 
 pub struct ServiceClient {
@@ -12,13 +12,19 @@ impl ServiceClient {
         })
     }
 
+    pub async fn simple(&self, options: Option<RequestOptions>) -> Result<(), ApiError> {
+        self.http_client
+            .execute_request(Method::POST, "snippet", None, None, options)
+            .await
+    }
+
     pub async fn download(
         &self,
         id: &String,
         options: Option<RequestOptions>,
-    ) -> Result<Vec<u8>, ApiError> {
+    ) -> Result<ByteStream, ApiError> {
         self.http_client
-            .execute_request(
+            .execute_stream_request(
                 Method::GET,
                 &format!("download-content/{}", id),
                 None,

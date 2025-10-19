@@ -1,6 +1,24 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
 - changelogEntry:
     - summary: |
+        Turns HTTP snippets on by default in docs generation. 
+
+        To turn HTTP snippets off, set `settings.http-snippets: false` in the `docs.yml` file. You can also specify an explicit list of snippets to include. 
+
+        ```docs.yml
+        # this will only generate typescript and python snippets, no curl
+        settings:
+          http-snippets:
+            - typescript
+            - python
+        ```
+      type: feat
+  irVersion: 61
+  createdAt: "2025-10-15"
+  version: 0.93.0
+
+- changelogEntry:
+    - summary: |
         For debugging purposes, generating a docs preview via `fern generate --docs --preview`, it is now possible to specify `--skip-upload` to 
         skip the asset uploading step.
       type: feat

@@ -1,149 +1,149 @@
 {
-  "totalTestTimeSeconds": 12961,
+  "totalTestTimeSeconds": 12894,
   "groups": [
     {
       "fixtures": [
         "client-side-params:no-custom-config",
-        "any-auth",
-        "empty-clients",
-        "single-url-environment-default:with-custom-config",
-        "objects-with-imports",
-        "inferred-auth-implicit-no-expiry",
-        "oauth-client-credentials-with-variables",
-        "unions",
-        "mixed-file-directory",
-        "simple-fhir"
+        "accept-header",
+        "idempotency-headers",
+        "single-url-environment-default:no-custom-config",
+        "literals-unions",
+        "inferred-auth-implicit",
+        "mixed-case",
+        "trace",
+        "query-parameters"
       ],
-      "groupTotalTimeSeconds": 1309
+      "groupTotalTimeSeconds": 1275
     },
     {
       "fixtures": [
         "client-side-params:with-custom-config",
         "error-property",
-        "license",
-        "single-url-environment-no-default",
-        "public-object",
-        "oauth-client-credentials-custom",
-        "mixed-case",
-        "request-parameters",
-        "examples:readme-config",
-        "property-access"
+        "imdb",
+        "object",
+        "oauth-client-credentials-environment-variables",
+        "streaming-parameter",
+        "api-wide-base-path",
+        "multi-url-environment",
+        "examples:no-custom-config",
+        "enum"
       ],
-      "groupTotalTimeSeconds": 1309
+      "groupTotalTimeSeconds": 1302
     },
     {
       "fixtures": [
         "errors",
-        "bearer-token-environment-variable",
-        "websocket",
-        "single-url-environment-default:no-custom-config",
-        "literals-unions",
-        "inferred-auth-implicit",
-        "inferred-auth-explicit",
-        "multi-url-environment",
-        "circular-references-advanced"
-      ],
-      "groupTotalTimeSeconds": 1285
-    },
-    {
-      "fixtures": [
-        "basic-auth",
-        "alias",
-        "file-download",
-        "http-head",
-        "object",
-        "oauth-client-credentials-default",
-        "path-parameters",
-        "circular-references",
-        "examples:no-custom-config"
-      ],
-      "groupTotalTimeSeconds": 1306
-    },
-    {
-      "fixtures": [
-        "content-type",
-        "basic-auth-environment-variables",
-        "validation",
-        "idempotency-headers",
-        "oauth-client-credentials-environment-variables",
-        "pagination:custom-pager",
-        "plain-text",
-        "query-parameters-openapi-as-objects",
-        "query-parameters"
-      ],
-      "groupTotalTimeSeconds": 1286
-    },
-    {
-      "fixtures": [
-        "pagination-custom",
-        "extends",
+        "bytes-download",
         "websocket-bearer-auth",
-        "simple-api",
+        "single-url-environment-no-default",
         "oauth-client-credentials-nested-root",
-        "folders",
-        "api-wide-base-path",
-        "trace",
-        "reserved-keywords",
-        "audiences"
+        "inferred-auth-explicit",
+        "inferred-auth-implicit-no-expiry",
+        "variables",
+        "circular-references",
+        "reserved-keywords"
       ],
-      "groupTotalTimeSeconds": 1307
+      "groupTotalTimeSeconds": 1302
     },
     {
       "fixtures": [
         "file-upload",
-        "alias-extends",
-        "accept-header",
-        "server-sent-event-examples",
-        "oauth-client-credentials",
+        "basic-auth-environment-variables",
+        "bytes-upload",
+        "license",
+        "oauth-client-credentials-default",
         "pagination:custom-pager-with-exception-handler",
-        "exhaustive",
-        "undiscriminated-unions",
-        "literal"
-      ],
-      "groupTotalTimeSeconds": 1284
-    },
-    {
-      "fixtures": [
-        "version",
-        "multi-line-docs",
-        "imdb",
-        "unknown",
-        "optional",
-        "response-property",
-        "auth-environment-variables",
-        "query-parameters-openapi",
-        "enum"
-      ],
-      "groupTotalTimeSeconds": 1284
-    },
-    {
-      "fixtures": [
-        "extra-properties",
-        "version-no-default",
-        "bytes-download",
-        "required-nullable",
-        "multiple-request-bodies",
-        "websocket-inferred-auth",
-        "streaming-parameter",
+        "path-parameters",
         "multi-url-environment-no-default",
-        "streaming",
-        "cross-package-type-names"
+        "circular-references-advanced"
       ],
-      "groupTotalTimeSeconds": 1307
+      "groupTotalTimeSeconds": 1279
+    },
+    {
+      "fixtures": [
+        "content-type",
+        "alias-extends",
+        "websocket",
+        "http-head",
+        "public-object",
+        "folders",
+        "exhaustive",
+        "query-parameters-openapi",
+        "examples:readme-config",
+        "audiences"
+      ],
+      "groupTotalTimeSeconds": 1301
     },
     {
       "fixtures": [
         "package-yml",
         "custom-auth",
-        "bytes-upload",
+        "validation",
+        "empty-clients",
+        "optional",
+        "objects-with-imports",
+        "undiscriminated-unions",
+        "mixed-file-directory"
+      ],
+      "groupTotalTimeSeconds": 1275
+    },
+    {
+      "fixtures": [
+        "extra-properties",
+        "basic-auth",
+        "bearer-token-environment-variable",
         "server-sent-events",
-        "no-environment",
+        "oauth-client-credentials",
+        "websocket-inferred-auth",
+        "oauth-client-credentials-custom",
+        "oauth-client-credentials-with-variables",
+        "request-parameters"
+      ],
+      "groupTotalTimeSeconds": 1282
+    },
+    {
+      "fixtures": [
+        "any-auth",
+        "version",
+        "multi-line-docs",
+        "required-nullable",
+        "multiple-request-bodies",
         "pagination:no-custom-config",
         "nullable",
-        "variables",
+        "query-parameters-openapi-as-objects",
+        "property-access",
+        "simple-fhir"
+      ],
+      "groupTotalTimeSeconds": 1299
+    },
+    {
+      "fixtures": [
+        "extends",
+        "version-no-default",
+        "unknown",
+        "simple-api",
+        "no-environment",
+        "response-property",
+        "auth-environment-variables",
+        "unions",
+        "literal",
+        "cross-package-type-names"
+      ],
+      "groupTotalTimeSeconds": 1301
+    },
+    {
+      "fixtures": [
+        "alias",
+        "pagination-custom",
+        "file-download",
+        "server-sent-event-examples",
+        "single-url-environment-default:with-custom-config",
+        "pagination:custom-pager",
+        "plain-text",
+        "streaming",
         "nullable-optional"
       ],
-      "groupTotalTimeSeconds": 1284
+      "groupTotalTimeSeconds": 1278
     }
   ]
 }

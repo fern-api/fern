@@ -150,6 +150,65 @@ try await main()
 </dl>
 </details>
 
+<details><summary><code>client.user.<a href="/Sources/Resources/User/UserClient.swift">createUsernameOptional</a>(request: Nullable<CreateUsernameBodyOptionalProperties>?, requestOptions: RequestOptions?) -> Void</code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```swift
+import Foundation
+import RequestParameters
+
+private func main() async throws {
+    let client = RequestParametersClient()
+
+    _ = try await client.user.createUsernameOptional(request: .value(CreateUsernameBodyOptionalProperties(
+
+    )))
+}
+
+try await main()
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**request:** `Nullable<CreateUsernameBodyOptionalProperties>?` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**requestOptions:** `RequestOptions?` — Additional options for configuring the request, such as custom headers or timeout settings.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
 <details><summary><code>client.user.<a href="/Sources/Resources/User/UserClient.swift">getUsername</a>(limit: Int, id: UUID, date: CalendarDate, deadline: Date, bytes: String, user: User, userList: [User], optionalDeadline: Date?, keyValue: [String: String], optionalString: String?, nestedUser: NestedUser, optionalUser: User?, excludeUser: User, filter: String, longParam: Int64, bigIntParam: String, requestOptions: RequestOptions?) -> User</code></summary>
 <dl>
 <dd>

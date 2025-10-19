@@ -22,7 +22,7 @@ impl OrganizationsClient {
         self.http_client
             .execute_request(
                 Method::GET,
-                &format!("/{}{}", tenant_id, organization_id),
+                &format!("/{}/organizations/{}/", tenant_id, organization_id),
                 None,
                 None,
                 options,
@@ -40,7 +40,10 @@ impl OrganizationsClient {
         self.http_client
             .execute_request(
                 Method::GET,
-                &format!("/{}{}{}", tenant_id, organization_id, user_id),
+                &format!(
+                    "/{}/organizations/{}/users/{}",
+                    tenant_id, organization_id, user_id
+                ),
                 None,
                 None,
                 options,
@@ -58,7 +61,7 @@ impl OrganizationsClient {
         self.http_client
             .execute_request(
                 Method::GET,
-                &format!("/{}{}", tenant_id, organization_id),
+                &format!("/{}/organizations/{}/search", tenant_id, organization_id),
                 None,
                 QueryBuilder::new()
                     .int("limit", request.limit.clone())
