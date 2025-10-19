@@ -19,7 +19,8 @@ jobs:
     strategy:
       fail-fast: false # Let all tests run and cascade errors, will only PR generator updates that passed
       matrix:
-        sdk-name: [
+        sdk-name:
+          [
             ruby-model,
             ruby-sdk,
             ruby-sdk-v2,
@@ -99,7 +100,8 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        sdk-name: [
+        sdk-name:
+          [
             ruby-model,
             ruby-sdk,
             ruby-sdk-v2,

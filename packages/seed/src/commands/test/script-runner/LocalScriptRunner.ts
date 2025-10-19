@@ -72,7 +72,7 @@ export class LocalScriptRunner extends ScriptRunner {
                     );
                 }
             }
-        } 
+        }
     }
 
     protected async initialize(): Promise<void> {

@@ -94,7 +94,7 @@ export class DockerScriptRunner extends ScriptRunner {
                     taskContext.logger.debug(`PostScript completed for fixture ${id}`);
                 }
             }
-        } 
+        }
     }
 
     public async stop(): Promise<void> {
