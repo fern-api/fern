@@ -373,10 +373,6 @@ export class DocumentPreprocessor {
         const allInternalRefs = new Set<string>();
         this.collectInternalReferences(document, allInternalRefs);
 
-        this.logger.debug(
-            `Found ${allInternalRefs.size} internal references in document: ${Array.from(allInternalRefs).join(", ")}`
-        );
-
         // Get all available components for debugging
         const availableComponents = new Map<string, string[]>();
         for (const [sectionName, section] of Object.entries(document.components)) {
