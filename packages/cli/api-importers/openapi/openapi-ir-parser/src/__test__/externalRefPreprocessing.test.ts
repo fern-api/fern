@@ -1,6 +1,3 @@
-// biome-ignore lint/style/noNonNullAssertion: Test file with intentional non-null assertions
-// biome-ignore lint/suspicious/noExplicitAny: Test file with intentional any types for mocking
-// biome-ignore lint/suspicious/noEmptyBlockStatements: Test file with intentional empty blocks for mocking
 import { TaskContext } from "@fern-api/task-context";
 import fs from "fs/promises";
 import { OpenAPIV3 } from "openapi-types";
@@ -712,8 +709,8 @@ describe("External Reference Preprocessing", () => {
             const resolver = new ExternalDocumentResolver(mockTaskContext.logger, { baseUrl: tempDir });
             const preprocessor = new DocumentPreprocessor(resolver, mockTaskContext.logger);
 
-            // biome-ignore lint/suspicious/noExplicitAny: Test mock
             // Mock isDomainReference to treat our test file as a domain
+            // biome-ignore lint/suspicious/noExplicitAny: Test mock
             (preprocessor as any).isDomainReference = (url: string) => url.includes("test-domain.yml");
 
             const processedDocument = await preprocessor.processDocument(document, tempDir);
@@ -812,7 +809,9 @@ describe("External Reference Preprocessing", () => {
 
             // Test that circular reference resolution doesn't cause stack overflow
             const context = new (class extends AbstractOpenAPIV3ParserContext {
+                // biome-ignore lint/suspicious/noEmptyBlockStatements: Test mock
                 markSchemaAsReferencedByNonRequest() {}
+                // biome-ignore lint/suspicious/noEmptyBlockStatements: Test mock
                 markSchemaAsReferencedByRequest() {}
                 getReferencedSchemas() {
                     return new Set<string>();
@@ -820,7 +819,9 @@ describe("External Reference Preprocessing", () => {
                 getDummy() {
                     return this;
                 }
+                // biome-ignore lint/suspicious/noEmptyBlockStatements: Test mock
                 markReferencedByDiscriminatedUnion() {}
+                // biome-ignore lint/suspicious/noEmptyBlockStatements: Test mock
                 markSchemaWithDiscriminantValue() {}
                 getDiscriminatedUnionMetadata() {
                     return undefined;
@@ -828,6 +829,7 @@ describe("External Reference Preprocessing", () => {
                 getReferencesFromDiscriminatedUnion() {
                     return undefined;
                 }
+                // biome-ignore lint/suspicious/noEmptyBlockStatements: Test mock
                 excludeSchema() {}
                 isSchemaExcluded() {
                     return false;
@@ -843,15 +845,16 @@ describe("External Reference Preprocessing", () => {
                     audiences: [],
                     convertToSnakeCase: false,
                     skipValidation: false,
-                    // biome-ignore lint/suspicious/noExplicitAny: Test mock
                     asyncApiNaming: undefined,
                     omitUndefinedProperties: false
+                    // biome-ignore lint/suspicious/noExplicitAny: Test mock
                 } as any,
                 source: {
-                    // biome-ignore lint/suspicious/noExplicitAny: Test mock
                     type: "openapi",
                     file: "test.yml",
+                    // biome-ignore lint/suspicious/noEmptyBlockStatements: Test mock
                     _visit: () => {}
+                    // biome-ignore lint/suspicious/noExplicitAny: Test mock
                 } as any,
                 namespace: undefined
             });
@@ -894,7 +897,9 @@ describe("External Reference Preprocessing", () => {
 
             // Test that circular schema resolution doesn't cause stack overflow
             const context = new (class extends AbstractOpenAPIV3ParserContext {
+                // biome-ignore lint/suspicious/noEmptyBlockStatements: Test mock
                 markSchemaAsReferencedByNonRequest() {}
+                // biome-ignore lint/suspicious/noEmptyBlockStatements: Test mock
                 markSchemaAsReferencedByRequest() {}
                 getReferencedSchemas() {
                     return new Set<string>();
@@ -902,7 +907,9 @@ describe("External Reference Preprocessing", () => {
                 getDummy() {
                     return this;
                 }
+                // biome-ignore lint/suspicious/noEmptyBlockStatements: Test mock
                 markReferencedByDiscriminatedUnion() {}
+                // biome-ignore lint/suspicious/noEmptyBlockStatements: Test mock
                 markSchemaWithDiscriminantValue() {}
                 getDiscriminatedUnionMetadata() {
                     return undefined;
@@ -910,6 +917,7 @@ describe("External Reference Preprocessing", () => {
                 getReferencesFromDiscriminatedUnion() {
                     return undefined;
                 }
+                // biome-ignore lint/suspicious/noEmptyBlockStatements: Test mock
                 excludeSchema() {}
                 isSchemaExcluded() {
                     return false;
@@ -927,11 +935,14 @@ describe("External Reference Preprocessing", () => {
                     skipValidation: false,
                     asyncApiNaming: undefined,
                     omitUndefinedProperties: false
+                    // biome-ignore lint/suspicious/noExplicitAny: Test mock
                 } as any,
                 source: {
                     type: "openapi",
                     file: "test.yml",
+                    // biome-ignore lint/suspicious/noEmptyBlockStatements: Test mock
                     _visit: () => {}
+                    // biome-ignore lint/suspicious/noExplicitAny: Test mock
                 } as any,
                 namespace: undefined
             });
@@ -1048,7 +1059,9 @@ describe("External Reference Preprocessing", () => {
             // Since we import all components, the shared domain's IdempotencyKey should overwrite the local reference
             // This means the final schema should be the actual shared domain definition, not a circular reference
             const context = new (class extends AbstractOpenAPIV3ParserContext {
+                // biome-ignore lint/suspicious/noEmptyBlockStatements: Test mock
                 markSchemaAsReferencedByNonRequest() {}
+                // biome-ignore lint/suspicious/noEmptyBlockStatements: Test mock
                 markSchemaAsReferencedByRequest() {}
                 getReferencedSchemas() {
                     return new Set<string>();
@@ -1056,7 +1069,9 @@ describe("External Reference Preprocessing", () => {
                 getDummy() {
                     return this;
                 }
+                // biome-ignore lint/suspicious/noEmptyBlockStatements: Test mock
                 markReferencedByDiscriminatedUnion() {}
+                // biome-ignore lint/suspicious/noEmptyBlockStatements: Test mock
                 markSchemaWithDiscriminantValue() {}
                 getDiscriminatedUnionMetadata() {
                     return undefined;
@@ -1064,6 +1079,7 @@ describe("External Reference Preprocessing", () => {
                 getReferencesFromDiscriminatedUnion() {
                     return undefined;
                 }
+                // biome-ignore lint/suspicious/noEmptyBlockStatements: Test mock
                 excludeSchema() {}
                 isSchemaExcluded() {
                     return false;
@@ -1081,11 +1097,14 @@ describe("External Reference Preprocessing", () => {
                     skipValidation: false,
                     asyncApiNaming: undefined,
                     omitUndefinedProperties: false
+                    // biome-ignore lint/suspicious/noExplicitAny: Test mock
                 } as any,
                 source: {
                     type: "openapi",
                     file: "test.yml",
+                    // biome-ignore lint/suspicious/noEmptyBlockStatements: Test mock
                     _visit: () => {}
+                    // biome-ignore lint/suspicious/noExplicitAny: Test mock
                 } as any,
                 namespace: undefined
             });

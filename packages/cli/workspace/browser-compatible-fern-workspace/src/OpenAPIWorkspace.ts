@@ -2,7 +2,7 @@ import { BaseOpenAPIWorkspace, BaseOpenAPIWorkspaceSync } from "@fern-api/api-wo
 import { generatorsYml } from "@fern-api/configuration";
 import { OpenApiIntermediateRepresentation } from "@fern-api/openapi-ir";
 import { parse } from "@fern-api/openapi-ir-parser";
-import { AbsoluteFilePath } from "@fern-api/path-utils";
+import { AbsoluteFilePath, RelativeFilePath } from "@fern-api/path-utils";
 import { TaskContext } from "@fern-api/task-context";
 import { OpenAPI } from "openapi-types";
 
@@ -31,7 +31,7 @@ export declare namespace OpenAPIWorkspace {
     export type Settings = BaseOpenAPIWorkspace.Settings;
 }
 
-export class OpenAPIWorkspace extends BaseOpenAPIWorkspaceSync {
+export class OpenAPIWorkspace extends BaseOpenAPIWorkspace {
     private spec: OpenAPIWorkspace.Spec;
     private loader: InMemoryOpenAPILoader;
 
@@ -61,9 +61,11 @@ export class OpenAPIWorkspace extends BaseOpenAPIWorkspaceSync {
 
     public async getOpenAPIIr(
         {
-            context
+            context,
+            relativePathToDependency
         }: {
             context: TaskContext;
+            relativePathToDependency?: RelativeFilePath;
         },
         options?: OpenAPIWorkspace.Settings
     ): Promise<OpenApiIntermediateRepresentation> {
