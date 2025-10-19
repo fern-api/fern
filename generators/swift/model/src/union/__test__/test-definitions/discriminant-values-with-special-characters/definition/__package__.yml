@@ -3,10 +3,28 @@
 types:
   UnionWithSpecialCharacters:
     union:
+      # Simple valid case
       abc: UnionVariant
+      # Case with spaces
       "a b c": UnionVariant
+      # Cases starting with numbers
+      "1abc": UnionVariant
+      "12abc": UnionVariant
       "123abc": UnionVariant
+      "007agent": UnionVariant
+      # Case with special characters
       "123-abc": UnionVariant
+      "data@point": UnionVariant
+      "user#name": UnionVariant
+      "snake_case_value": UnionVariant
+      "kebab-case-value": UnionVariant
+      # Edge cases
+      "!@#$%special": UnionVariant
+      "  leading-spaces": UnionVariant
+      "UPPERCASE": UnionVariant
+      "camelCase": UnionVariant
+      "PascalCase": UnionVariant
+      "mixed123Values456": UnionVariant
 
   UnionVariant:
     properties:
