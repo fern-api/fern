@@ -1,3 +1,6 @@
+// biome-ignore lint/style/noNonNullAssertion: Test file with intentional non-null assertions
+// biome-ignore lint/suspicious/noExplicitAny: Test file with intentional any types for mocking (important-comment)
+// biome-ignore lint/suspicious/noEmptyBlockStatements: Test file with intentional empty blocks for mocking
 import { TaskContext } from "@fern-api/task-context";
 import fs from "fs/promises";
 import { OpenAPIV3 } from "openapi-types";
@@ -360,7 +363,7 @@ describe("External Reference Preprocessing", () => {
             expect(allComponents).toBeDefined();
 
             // The Pet schema in the document should now be resolved (not a reference) since we import all components
-            expect(allComponents!.Pet).toEqual({
+            expect(allComponents?.Pet).toEqual({
                 type: "object",
                 properties: {
                     id: { type: "integer" },
@@ -376,8 +379,8 @@ describe("External Reference Preprocessing", () => {
             expect(Object.keys(allComponents!)).toContain("Address");
 
             // Let's check the actual resolved components (avoiding the self-reference issue)
-            const ownerComponent = allComponents!.Owner;
-            const addressComponent = allComponents!.Address;
+            const ownerComponent = allComponents?.Owner;
+            const addressComponent = allComponents?.Address;
 
             // Verify Owner component structure with internal refs
             expect(ownerComponent).toEqual({
