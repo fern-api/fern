@@ -197,7 +197,7 @@ export class ExternalDocumentResolver {
         } catch (error) {
             // Enhanced error logging for shared domain libraries
             if (url.includes("swaggerhub.com") || url.includes("cdn.com")) {
-                this.logger.error(
+                this.logger.debug(
                     `Failed to fetch shared domain library ${url}: ${error instanceof Error ? error.message : String(error)}`
                 );
             }
@@ -235,7 +235,7 @@ export class ExternalDocumentResolver {
 
             // Log a warning if this is an OpenAPI v2 document that might cause issues elsewhere
             if (documentRecord?.swagger) {
-                this.logger.warn(
+                this.logger.debug(
                     `External document appears to be OpenAPI v2 (swagger: ${documentRecord.swagger}), this may cause version compatibility issues in downstream processing`
                 );
             }

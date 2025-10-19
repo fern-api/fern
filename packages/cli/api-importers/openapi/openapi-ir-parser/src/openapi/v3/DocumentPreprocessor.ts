@@ -124,14 +124,14 @@ export class DocumentPreprocessor {
                     // Only mark as successfully resolved if we successfully imported the component
                     this.seenReferences.add(ref);
                 } catch (error) {
-                    this.logger.warn(
+                    this.logger.debug(
                         `External reference ${ref} points to non-existent component: ${error instanceof Error ? error.message : String(error)}`
                     );
                     // Don't add to seenReferences - leave the external reference as-is
                 }
             }
         } catch (error) {
-            this.logger.warn(
+            this.logger.debug(
                 `Failed to resolve external reference ${ref}: ${error instanceof Error ? error.message : String(error)}`
             );
             // Don't add to seenReferences - leave the external reference as-is
@@ -162,7 +162,7 @@ export class DocumentPreprocessor {
             // e.g., "#/components/schemas/Pet" -> componentType: "schemas", name: "Pet"
             const pathParts = internalPointer.substring(2).split("/"); // Remove "#/" and split
             if (pathParts.length < 3 || !pathParts[1] || !pathParts[2]) {
-                this.logger.warn(`Invalid component pointer format: ${internalPointer}`);
+                this.logger.debug(`Invalid component pointer format: ${internalPointer}`);
                 return;
             }
             componentType = pathParts[1] as keyof OpenAPIV3.ComponentsObject;
@@ -171,11 +171,11 @@ export class DocumentPreprocessor {
             // e.g., "#/Pet" -> componentType: "schemas", name: "Pet" (default to schemas)
             componentName = internalPointer.substring(2); // Remove "#/"
             if (!componentName) {
-                this.logger.warn(`Invalid simple component pointer format: ${internalPointer}`);
+                this.logger.debug(`Invalid simple component pointer format: ${internalPointer}`);
                 return;
             }
         } else {
-            this.logger.warn(`Cannot add component with invalid pointer: ${internalPointer}`);
+            this.logger.debug(`Cannot add component with invalid pointer: ${internalPointer}`);
             return;
         }
 
@@ -550,7 +550,7 @@ export class DocumentPreprocessor {
             }
         }
 
-        this.logger.warn(
+        this.logger.debug(
             `Could not resolve schema reference ${originalRef}. Tried variations: ${variations.join(", ")}. Available: ${availableSchemas.join(", ")}`
         );
     }
@@ -618,7 +618,7 @@ export class DocumentPreprocessor {
                 if (typeof schema === "object" && schema && "$ref" in schema) {
                     const ref = schema.$ref as string;
                     if (ref === `#/components/schemas/${componentName}`) {
-                        this.logger.warn(
+                        this.logger.debug(
                             `Circular reference detected: parameter ${componentName} has schema that references itself. Skipping adaptation.`
                         );
                         return null;
@@ -640,7 +640,7 @@ export class DocumentPreprocessor {
         if (typeof component === "object" && component && "$ref" in component) {
             const ref = component.$ref as string;
             if (ref === `#/components/${targetType}/${componentName}`) {
-                this.logger.warn(
+                this.logger.debug(
                     `Circular reference detected: component ${componentName} references itself. Skipping direct copy.`
                 );
                 return null;

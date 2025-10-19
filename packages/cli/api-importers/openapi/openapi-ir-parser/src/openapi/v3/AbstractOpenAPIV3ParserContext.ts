@@ -105,7 +105,7 @@ export abstract class AbstractOpenAPIV3ParserContext implements SchemaParserCont
     public resolveSchemaReference(schema: OpenAPIV3.ReferenceObject): OpenAPIV3.SchemaObject {
         // Check for circular references
         if (this.resolutionStack.has(schema.$ref)) {
-            this.logger.warn(
+            this.logger.debug(
                 `Circular reference detected in schema resolution: ${schema.$ref}. Chain: ${Array.from(this.resolutionStack).join(" -> ")} -> ${schema.$ref}`
             );
             return {
@@ -151,7 +151,7 @@ export abstract class AbstractOpenAPIV3ParserContext implements SchemaParserCont
                 }
             }
             if (resolvedSchema == null) {
-                this.logger.warn(`Encountered undefined reference: ${schema.$ref}`);
+                this.logger.debug(`Encountered undefined reference: ${schema.$ref}`);
                 return {
                     "x-fern-type": "unknown"
                     // biome-ignore lint/suspicious/noExplicitAny: allow explicit any
@@ -174,7 +174,7 @@ export abstract class AbstractOpenAPIV3ParserContext implements SchemaParserCont
     public resolveParameterReference(parameter: OpenAPIV3.ReferenceObject): OpenAPIV3.ParameterObject {
         // Check for circular references
         if (this.resolutionStack.has(parameter.$ref)) {
-            this.logger.warn(
+            this.logger.debug(
                 `Circular reference detected in parameter resolution: ${parameter.$ref}. Chain: ${Array.from(this.resolutionStack).join(" -> ")} -> ${parameter.$ref}`
             );
             return {
@@ -214,7 +214,7 @@ export abstract class AbstractOpenAPIV3ParserContext implements SchemaParserCont
     public resolveRequestBodyReference(requestBody: OpenAPIV3.ReferenceObject): OpenAPIV3.RequestBodyObject {
         // Check for circular references
         if (this.resolutionStack.has(requestBody.$ref)) {
-            this.logger.warn(
+            this.logger.debug(
                 `Circular reference detected in request body resolution: ${requestBody.$ref}. Chain: ${Array.from(this.resolutionStack).join(" -> ")} -> ${requestBody.$ref}`
             );
             return {
@@ -253,7 +253,7 @@ export abstract class AbstractOpenAPIV3ParserContext implements SchemaParserCont
     public resolveResponseReference(response: OpenAPIV3.ReferenceObject): OpenAPIV3.ResponseObject {
         // Check for circular references
         if (this.resolutionStack.has(response.$ref)) {
-            this.logger.warn(
+            this.logger.debug(
                 `Circular reference detected in response resolution: ${response.$ref}. Chain: ${Array.from(this.resolutionStack).join(" -> ")} -> ${response.$ref}`
             );
             return {
@@ -291,7 +291,7 @@ export abstract class AbstractOpenAPIV3ParserContext implements SchemaParserCont
     public resolveExampleReference(example: OpenAPIV3.ReferenceObject): OpenAPIV3.ExampleObject {
         // Check for circular references
         if (this.resolutionStack.has(example.$ref)) {
-            this.logger.warn(
+            this.logger.debug(
                 `Circular reference detected in example resolution: ${example.$ref}. Chain: ${Array.from(this.resolutionStack).join(" -> ")} -> ${example.$ref}`
             );
             return {
@@ -329,7 +329,7 @@ export abstract class AbstractOpenAPIV3ParserContext implements SchemaParserCont
     public resolveSecuritySchemeReference(securityScheme: OpenAPIV3.ReferenceObject): OpenAPIV3.SecuritySchemeObject {
         // Check for circular references
         if (this.resolutionStack.has(securityScheme.$ref)) {
-            this.logger.warn(
+            this.logger.debug(
                 `Circular reference detected in security scheme resolution: ${securityScheme.$ref}. Chain: ${Array.from(this.resolutionStack).join(" -> ")} -> ${securityScheme.$ref}`
             );
             return {
