@@ -553,6 +553,7 @@ describe("External Reference Preprocessing", () => {
 
             // The reference should be converted to internal
             expect(processedDocument.paths["/test"]?.get?.responses?.["200"]).toBeDefined();
+            // biome-ignore lint/suspicious/noExplicitAny: Test file type assertion
             const responseSchema = (processedDocument.paths["/test"]?.get?.responses?.["200"] as any)?.content?.[
                 "application/json"
             ]?.schema;
@@ -604,6 +605,7 @@ describe("External Reference Preprocessing", () => {
             const resolver = new ExternalDocumentResolver(mockTaskContext.logger, { baseUrl: tempDir });
             const preprocessor = new DocumentPreprocessor(resolver, mockTaskContext.logger);
 
+            // biome-ignore lint/suspicious/noExplicitAny: Test mock
             // Mock isDomainReference to treat our test file as a domain
             (preprocessor as any).isDomainReference = (url: string) => url.includes("test-domain.yml");
 
@@ -734,10 +736,12 @@ describe("External Reference Preprocessing", () => {
                     audiences: [],
                     convertToSnakeCase: false,
                     skipValidation: false,
+                    // biome-ignore lint/suspicious/noExplicitAny: Test mock
                     asyncApiNaming: undefined,
                     omitUndefinedProperties: false
                 } as any,
                 source: {
+                    // biome-ignore lint/suspicious/noExplicitAny: Test mock
                     type: "openapi",
                     file: "test.yml",
                     _visit: () => {}
