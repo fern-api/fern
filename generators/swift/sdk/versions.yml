@@ -1,5 +1,13 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
 
+- version: 0.18.2
+  changelogEntry:
+    - type: fix
+      summary: |
+        Fixed a bug where nullable query parameters were not accessed correctly in endpoint methods.
+  createdAt: "2025-10-19"
+  irVersion: 59
+
 - version: 0.18.1
   changelogEntry:
     - type: fix
