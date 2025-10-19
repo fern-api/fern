@@ -374,9 +374,9 @@ describe("External Reference Preprocessing", () => {
             // But we should also have the actual components stored
             // Note: In this case since Pet references itself, it might create a new internal name
             // Let's just verify that the components were added
-            expect(Object.keys(allComponents!)).toContain("Pet");
-            expect(Object.keys(allComponents!)).toContain("Owner");
-            expect(Object.keys(allComponents!)).toContain("Address");
+            expect(Object.keys(allComponents ?? {})).toContain("Pet");
+            expect(Object.keys(allComponents ?? {})).toContain("Owner");
+            expect(Object.keys(allComponents ?? {})).toContain("Address");
 
             // Let's check the actual resolved components (avoiding the self-reference issue)
             const ownerComponent = allComponents?.Owner;
