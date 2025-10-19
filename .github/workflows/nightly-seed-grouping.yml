@@ -85,18 +85,6 @@ jobs:
           # the virtual environments take up too much space so this needs to be limited
           pnpm seed:local test --generator ${{ matrix.sdk-name }} --parallel 16 --allow-unexpected-failures > ${{ matrix.sdk-name }}-seed-test-log.txt
 
-      - name: Cleanup Virtualenvs
-        if: always() && !cancelled() # Run even if tests fail
-        run: |
-          echo "Cleaning up Poetry virtualenvs to free disk space..."
-          # Remove Poetry virtualenv cache
-          rm -rf ~/.cache/pypoetry/virtualenvs/*
-          # Also clean any local .venv directories
-          find . -name ".venv" -type d -exec rm -rf {} + 2>/dev/null || true
-          # Clean poetry cache
-          poetry cache clear --all pypi 2>/dev/null || true
-          echo "Virtualenv cleanup completed"
-
       - name: Upload Seed Test Log as Artifact
         uses: actions/upload-artifact@v4
         with:
