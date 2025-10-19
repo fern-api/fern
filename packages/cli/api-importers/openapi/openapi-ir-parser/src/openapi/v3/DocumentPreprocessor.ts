@@ -121,6 +121,31 @@ export class DocumentPreprocessor {
                     const resolvedComponent = await this.resolver.resolveReference(ref, baseUrl);
                     this.addSpecificComponent(document, refInfo.internalPointer, resolvedComponent);
                     this.collectExternalReferences(resolvedComponent);
+
+                    // Also import any internal components from the external document that this component references
+                    const internalRefs = this.collectInternalReferencesFromValue(resolvedComponent);
+                    if (internalRefs.size > 0 && externalDoc.components) {
+                        this.logger.debug(
+                            `Component ${refInfo.internalPointer} has ${internalRefs.size} internal references, importing referenced components from external document`
+                        );
+                        for (const internalRef of internalRefs) {
+                            const componentName = this.extractComponentNameFromRef(internalRef);
+                            const componentType = this.extractComponentTypeFromRef(internalRef);
+                            if (componentName && componentType && externalDoc.components[componentType]) {
+                                const externalComponentSection = externalDoc.components[componentType] as Record<
+                                    string,
+                                    OpenAPIValue
+                                >;
+                                const referencedComponent = externalComponentSection[componentName];
+                                if (referencedComponent) {
+                                    this.addSpecificComponent(document, internalRef, referencedComponent);
+                                    // Recursively collect external references from the referenced component
+                                    this.collectExternalReferences(referencedComponent);
+                                }
+                            }
+                        }
+                    }
+
                     // Only mark as successfully resolved if we successfully imported the component
                     this.seenReferences.add(ref);
                 } catch (error) {
@@ -418,6 +443,34 @@ export class DocumentPreprocessor {
                 Object.values(value).forEach((val) => this.collectInternalReferences(val, refs));
             }
         }
+    }
+
+    private collectInternalReferencesFromValue(value: OpenAPIValue): Set<string> {
+        const refs = new Set<string>();
+        this.collectInternalReferences(value, refs);
+        return refs;
+    }
+
+    private extractComponentNameFromRef(ref: string): string | null {
+        if (!ref.startsWith("#/components/")) {
+            return null;
+        }
+        const parts = ref.substring(13).split("/");
+        if (parts.length < 2 || !parts[1]) {
+            return null;
+        }
+        return parts[1];
+    }
+
+    private extractComponentTypeFromRef(ref: string): keyof OpenAPIV3.ComponentsObject | null {
+        if (!ref.startsWith("#/components/")) {
+            return null;
+        }
+        const parts = ref.substring(13).split("/");
+        if (parts.length < 1 || !parts[0]) {
+            return null;
+        }
+        return parts[0] as keyof OpenAPIV3.ComponentsObject;
     }
 
     /**

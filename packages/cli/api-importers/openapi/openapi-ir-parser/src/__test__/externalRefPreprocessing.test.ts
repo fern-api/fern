@@ -473,8 +473,115 @@ describe("External Reference Preprocessing", () => {
             // The original reference should be preserved
             expect(processedDocument.components?.schemas?.Pet).toEqual({ $ref: "./nonexistent.yaml#/Pet" });
 
-            // Should have logged a warning
-            expect(mockTaskContext.logger.warn).toHaveBeenCalled();
+            // Should have logged a debug message
+            expect(mockTaskContext.logger.debug).toHaveBeenCalled();
+        });
+
+        it("should handle nested external references with internal dependencies", async () => {
+            // Create doc2 with schema C
+            const doc2Content = {
+                openapi: "3.0.0",
+                info: { title: "Doc2", version: "1.0.0" },
+                components: {
+                    schemas: {
+                        SchemaC: {
+                            type: "object",
+                            properties: {
+                                id: { type: "string" },
+                                value: { type: "number" }
+                            }
+                        }
+                    }
+                }
+            };
+
+            const doc2Path = path.join(tempDir, "doc2.yaml");
+            await fs.writeFile(doc2Path, JSON.stringify(doc2Content));
+
+            // Create doc1 with schema B that:
+            const doc1Content = {
+                openapi: "3.0.0",
+                info: { title: "Doc1", version: "1.0.0" },
+                components: {
+                    schemas: {
+                        SchemaB: {
+                            type: "object",
+                            properties: {
+                                internal: { $ref: "#/components/schemas/InternalComponent" },
+                                external: { $ref: `${doc2Path}#/components/schemas/SchemaC` }
+                            }
+                        },
+                        InternalComponent: {
+                            type: "object",
+                            properties: {
+                                name: { type: "string" }
+                            }
+                        }
+                    }
+                }
+            };
+
+            const doc1Path = path.join(tempDir, "doc1.yaml");
+            await fs.writeFile(doc1Path, JSON.stringify(doc1Content));
+
+            // Create main schema A that has an external ref to schema B in doc1
+            const document: OpenAPIV3.Document = {
+                openapi: "3.0.0",
+                info: { title: "Main API", version: "1.0.0" },
+                paths: {
+                    "/test": {
+                        get: {
+                            responses: {
+                                "200": {
+                                    description: "Success",
+                                    content: {
+                                        "application/json": {
+                                            schema: {
+                                                type: "object",
+                                                properties: {
+                                                    data: { $ref: `${doc1Path}#/components/schemas/SchemaB` }
+                                                }
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                components: {}
+            };
+
+            const resolver = new ExternalDocumentResolver(mockTaskContext.logger, {
+                baseUrl: tempDir
+            });
+            const preprocessor = new DocumentPreprocessor(resolver, mockTaskContext.logger, undefined);
+
+            const processedDocument = await preprocessor.processDocument(document, tempDir);
+
+            // All schemas should be imported and available
+            expect(processedDocument.components?.schemas?.SchemaB).toBeDefined();
+            expect(processedDocument.components?.schemas?.InternalComponent).toBeDefined();
+            expect(processedDocument.components?.schemas?.SchemaC).toBeDefined();
+
+            expect(processedDocument.components?.schemas?.SchemaB).toEqual({
+                type: "object",
+                properties: {
+                    internal: { $ref: "#/components/schemas/InternalComponent" },
+                    external: { $ref: "#/components/schemas/SchemaC" }
+                }
+            });
+
+            // The main document's reference should be converted to internal
+            const response = processedDocument.paths["/test"]?.get?.responses?.["200"];
+            const schema =
+                response && "content" in response ? response.content?.["application/json"]?.schema : undefined;
+            expect(schema).toEqual({
+                type: "object",
+                properties: {
+                    data: { $ref: "#/components/schemas/SchemaB" }
+                }
+            });
         });
     });
 
