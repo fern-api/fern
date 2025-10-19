@@ -282,7 +282,7 @@ export class EndpointMethodGenerator {
                                             arguments_: [
                                                 swift.functionArgument({
                                                     value:
-                                                        swiftType.nonOptionalType === "custom"
+                                                        swiftType.nonOptional().nonNullableType === "custom"
                                                             ? swift.Expression.memberAccess({
                                                                   target: swift.Expression.reference("$0"),
                                                                   memberName: "rawValue"
