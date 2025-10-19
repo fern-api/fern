@@ -1,7 +1,7 @@
 import { assertNever, noop } from "@fern-api/core-utils";
 import { Referencer } from "@fern-api/swift-base";
 import { sanitizeSelf, swift } from "@fern-api/swift-codegen";
-import { ObjectProperty, TypeId, UnionTypeDeclaration } from "@fern-fern/ir-sdk/api";
+import { UnionTypeDeclaration } from "@fern-fern/ir-sdk/api";
 import { StructGenerator } from "../helpers/struct-generator/StructGenerator";
 import { ModelGeneratorContext } from "../ModelGeneratorContext";
 
@@ -255,7 +255,9 @@ export class DiscriminatedUnionGenerator {
                     type: singleUnionType.shape.type
                 });
             } else if (singleUnionType.shape.propertiesType === "samePropertiesAsObject") {
-                const variantProperties = this.getPropertiesOfVariant(singleUnionType.shape.typeId);
+                const variantProperties = this.context.getPropertiesOfDiscriminatedUnionVariant(
+                    singleUnionType.shape.typeId
+                );
                 constantPropertyDefinitions.push({
                     unsafeName: sanitizeSelf(this.unionTypeDeclaration.discriminant.name.camelCase.unsafeName),
                     rawName: this.unionTypeDeclaration.discriminant.wireValue,
@@ -287,18 +289,6 @@ export class DiscriminatedUnionGenerator {
         });
 
         return [...variantStructs, this.generateCodingKeysEnum()];
-    }
-
-    private getPropertiesOfVariant(typeId: TypeId): ObjectProperty[] {
-        const typeDeclaration = this.context.getTypeDeclarationOrThrow(typeId);
-        return typeDeclaration.shape._visit({
-            alias: () => [],
-            enum: () => [],
-            object: (otd) => [...(otd.extendedProperties ?? []), ...otd.properties],
-            union: () => [],
-            undiscriminatedUnion: () => [],
-            _other: () => []
-        });
     }
 
     private generateCodingKeysEnum(): swift.EnumWithRawValues {

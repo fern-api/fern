@@ -1,17 +1,20 @@
 import { noop } from "@fern-api/core-utils";
-import { swift } from "@fern-api/swift-codegen";
+import { BaseSwiftCustomConfigSchema, swift } from "@fern-api/swift-codegen";
 import { ObjectProperty, TypeDeclaration, TypeReference } from "@fern-fern/ir-sdk/api";
 
 import { NameRegistry } from "../project";
+import { AbstractSwiftGeneratorContext } from "./AbstractSwiftGeneratorContext";
 
 export function registerLiteralEnums({
     parentSymbol,
     registry,
-    typeDeclaration
+    typeDeclaration,
+    context
 }: {
     parentSymbol: swift.Symbol;
     registry: NameRegistry;
     typeDeclaration: TypeDeclaration;
+    context: AbstractSwiftGeneratorContext<BaseSwiftCustomConfigSchema>;
 }) {
     typeDeclaration.shape._visit({
         object: (otd) => {
@@ -24,12 +27,27 @@ export function registerLiteralEnums({
         },
         union: (utd) => {
             utd.types.forEach((type) => {
+                const variantSymbol = registry.getDiscriminatedUnionVariantSymbolOrThrow(
+                    parentSymbol,
+                    type.discriminantValue.wireValue
+                );
                 type.shape._visit({
                     noProperties: noop,
-                    samePropertiesAsObject: noop,
+                    samePropertiesAsObject: (declaredTypeName) => {
+                        const variantProperties = context.getPropertiesOfDiscriminatedUnionVariant(
+                            declaredTypeName.typeId
+                        );
+                        variantProperties.forEach((property) => {
+                            registerLiteralEnumsForTypeReference({
+                                parentSymbol: variantSymbol,
+                                registry,
+                                typeReference: property.valueType
+                            });
+                        });
+                    },
                     singleProperty: (p) => {
                         registerLiteralEnumsForTypeReference({
-                            parentSymbol,
+                            parentSymbol: variantSymbol,
                             registry,
                             typeReference: p.type
                         });

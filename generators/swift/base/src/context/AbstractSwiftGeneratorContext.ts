@@ -7,6 +7,7 @@ import {
     HttpEndpoint,
     HttpService,
     IntermediateRepresentation,
+    ObjectProperty,
     Package,
     PrimitiveTypeV1,
     ServiceId,
@@ -80,10 +81,11 @@ export abstract class AbstractSwiftGeneratorContext<
         });
 
         registeredSchemaTypes.forEach(({ typeDeclaration, registeredSymbol }) => {
-            registerLiteralEnums({
+            registerDiscriminatedUnionVariants({
                 parentSymbol: registeredSymbol,
                 registry: nameRegistry,
-                typeDeclaration
+                typeDeclaration,
+                context: this
             });
             registerUndiscriminatedUnionVariants({
                 parentSymbol: registeredSymbol,
@@ -91,7 +93,7 @@ export abstract class AbstractSwiftGeneratorContext<
                 typeDeclaration,
                 context: this
             });
-            registerDiscriminatedUnionVariants({
+            registerLiteralEnums({
                 parentSymbol: registeredSymbol,
                 registry: nameRegistry,
                 typeDeclaration,
@@ -187,6 +189,18 @@ export abstract class AbstractSwiftGeneratorContext<
         const typeDeclaration = this.ir.types[typeId];
         assertDefined(typeDeclaration, `Type declaration with the id '${typeId}' not found`);
         return typeDeclaration;
+    }
+
+    public getPropertiesOfDiscriminatedUnionVariant(typeId: TypeId): ObjectProperty[] {
+        const typeDeclaration = this.getTypeDeclarationOrThrow(typeId);
+        return typeDeclaration.shape._visit({
+            alias: () => [],
+            enum: () => [],
+            object: (otd) => [...(otd.extendedProperties ?? []), ...otd.properties],
+            union: () => [],
+            undiscriminatedUnion: () => [],
+            _other: () => []
+        });
     }
 
     public getHttpServiceOrThrow(serviceId: ServiceId): HttpService {
