@@ -1,5 +1,5 @@
 // biome-ignore lint/style/noNonNullAssertion: Test file with intentional non-null assertions
-// biome-ignore lint/suspicious/noExplicitAny: Test file with intentional any types for mocking (important-comment)
+// biome-ignore lint/suspicious/noExplicitAny: Test file with intentional any types for mocking
 // biome-ignore lint/suspicious/noEmptyBlockStatements: Test file with intentional empty blocks for mocking
 import { TaskContext } from "@fern-api/task-context";
 import fs from "fs/promises";
