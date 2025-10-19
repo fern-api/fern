@@ -6,10 +6,6 @@ on:
     - cron: "0 5 * * *"
   # Runs when triggered manually to do so
   workflow_dispatch:
-  # CHRISM - temp
-  push:
-    branches:
-      - mallinson/postscript-stage-testing
 
 # Cancel previous workflows when another is triggered
 concurrency:
@@ -24,31 +20,29 @@ jobs:
       fail-fast: false # Let all tests run and cascade errors, will only PR generator updates that passed
       matrix:
         sdk-name: [
-            # CHRISM - temp
-            python-sdk
-            # ruby-model,
-            # ruby-sdk,
-            # ruby-sdk-v2,
-            # pydantic,
-            # python-sdk,
-            # fastapi,
-            # openapi,
-            # postman,
-            # java-sdk,
-            # java-model,
-            # java-spring,
-            # ts-sdk,
-            # ts-express,
-            # go-fiber,
-            # go-model,
-            # go-sdk,
-            # csharp-model,
-            # csharp-sdk,
-            # php-model,
-            # php-sdk,
-            # swift-sdk,
-            # rust-model,
-            # rust-sdk
+            ruby-model,
+            ruby-sdk,
+            ruby-sdk-v2,
+            pydantic,
+            python-sdk,
+            fastapi,
+            openapi,
+            postman,
+            java-sdk,
+            java-model,
+            java-spring,
+            ts-sdk,
+            ts-express,
+            go-fiber,
+            go-model,
+            go-sdk,
+            csharp-model,
+            csharp-sdk,
+            php-model,
+            php-sdk,
+            swift-sdk,
+            rust-model,
+            rust-sdk
           ]
         include:
           - concurrency-count-override: 8
@@ -112,31 +106,29 @@ jobs:
       fail-fast: false
       matrix:
         sdk-name: [
-            # CHRISM - temp
-            python-sdk
-            # ruby-model,
-            # ruby-sdk,
-            # ruby-sdk-v2,
-            # pydantic,
-            # python-sdk,
-            # fastapi,
-            # openapi,
-            # postman,
-            # java-sdk,
-            # java-model,
-            # java-spring,
-            # ts-sdk,
-            # ts-express,
-            # go-fiber,
-            # go-model,
-            # go-sdk,
-            # csharp-model,
-            # csharp-sdk,
-            # php-model,
-            # php-sdk,
-            # swift-sdk,
-            # rust-model,
-            # rust-sdk
+            ruby-model,
+            ruby-sdk,
+            ruby-sdk-v2,
+            pydantic,
+            python-sdk,
+            fastapi,
+            openapi,
+            postman,
+            java-sdk,
+            java-model,
+            java-spring,
+            ts-sdk,
+            ts-express,
+            go-fiber,
+            go-model,
+            go-sdk,
+            csharp-model,
+            csharp-sdk,
+            php-model,
+            php-sdk,
+            swift-sdk,
+            rust-model,
+            rust-sdk
           ]
         include:
           - number-of-groups-override: 14 # java-sdk override since this one is taking a while
@@ -275,19 +267,17 @@ jobs:
           echo "PR was not created or updated, likely due to no diff for seed group files"
           echo "PR Operation: ${{ steps.cpr.outputs.pull-request-operation }}. Note: if operation is blank then there were no changes and create-pull-request GitHub Action exited silently and early."
 
-      # CHRISM - temp
-      # - name: Enable Pull Request Automerge
-      #   if: steps.cpr.outputs.pull-request-operation == 'created'
-      #   uses: peter-evans/enable-pull-request-automerge@v3
-      #   with:
-      #     token: ${{ secrets.FERN_GITHUB_PAT }}
-      #     pull-request-number: ${{ steps.cpr.outputs.pull-request-number }}
-      #     merge-method: squash
+      - name: Enable Pull Request Automerge
+        if: steps.cpr.outputs.pull-request-operation == 'created'
+        uses: peter-evans/enable-pull-request-automerge@v3
+        with:
+          token: ${{ secrets.FERN_GITHUB_PAT }}
+          pull-request-number: ${{ steps.cpr.outputs.pull-request-number }}
+          merge-method: squash
 
-      # CHRISM - temp
-      # - name: Approve PR
-      #   if: steps.cpr.outputs.pull-request-operation == 'created'
-      #   uses: ./.github/actions/auto-approve
-      #   with:
-      #     approver-gh-token: ${{ secrets.PR_BOT_GH_PAT }}
-      #     pull-request-number: ${{ steps.cpr.outputs.pull-request-number }}
+      - name: Approve PR
+        if: steps.cpr.outputs.pull-request-operation == 'created'
+        uses: ./.github/actions/auto-approve
+        with:
+          approver-gh-token: ${{ secrets.PR_BOT_GH_PAT }}
+          pull-request-number: ${{ steps.cpr.outputs.pull-request-number }}

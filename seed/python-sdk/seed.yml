@@ -356,7 +356,6 @@ postScripts:
     commands:
       - "find . -name '.venv*' -type d -exec rm -rf {} + 2>/dev/null || true"
       - "rm -rf ./*-py* 2>/dev/null || true"
-      # - "poetry cache clear --all pypi 2>/dev/null || true" # CHRISM - need poetry cleanup?
       - "echo 'Virtual environment cleanup completed'"
 
 allowedFailures:
