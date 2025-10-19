@@ -1,6 +1,6 @@
 import { camelCase } from "lodash-es";
 
-import { pascalCase } from "./pascal-case";
+import { pascalCase } from "../pascal-case";
 
 /**
  * Generates a safe name for a string literal enum from the literal value.
