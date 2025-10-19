@@ -1,4 +1,4 @@
-import { camelCase } from "lodash-es";
+import { camelCase, upperFirst } from "lodash-es";
 import { toWords } from "number-to-words";
 
 import { pascalCase } from "../pascal-case";
@@ -28,7 +28,8 @@ export function sanitizeForIdentifier(originalValue: string): string {
 
     // Convert leading numbers to words first
     if (/^\d/.test(sanitizedValue)) {
-        sanitizedValue = convertLeadingNumberToWords(sanitizedValue);
+        const result = convertLeadingNumberToWords(sanitizedValue);
+        sanitizedValue = result.numberAsWords + upperFirst(result.rest);
     }
 
     const isAlreadyValid = /^[a-zA-Z][a-zA-Z0-9]*$/.test(sanitizedValue);
@@ -51,11 +52,11 @@ export function sanitizeForIdentifier(originalValue: string): string {
     return sanitizedValue;
 }
 
-function convertLeadingNumberToWords(value: string): string {
+function convertLeadingNumberToWords(value: string): { numberAsWords: string; rest: string } {
     // Extract leading digits
     const match = value.match(/^(\d+)/);
     if (!match || !match[1]) {
-        return value;
+        return { numberAsWords: "", rest: value };
     }
 
     const leadingNumber = match[1];
@@ -63,10 +64,8 @@ function convertLeadingNumberToWords(value: string): string {
 
     try {
         // Convert the number to words and remove spaces/hyphens
-        const numberAsWords = toWords(parseInt(leadingNumber, 10))
-            .replace(/[\s-]+/g, "")
-            .toLowerCase();
-        return numberAsWords + rest;
+        const numberAsWords = toWords(parseInt(leadingNumber, 10));
+        return { numberAsWords, rest };
     } catch {
         // If conversion fails, fall back to digit-by-digit
         const digitWords: Record<string, string> = {
@@ -85,6 +84,6 @@ function convertLeadingNumberToWords(value: string): string {
             .split("")
             .map((digit) => digitWords[digit] || digit)
             .join("");
-        return words + rest;
+        return { numberAsWords: words, rest };
     }
 }

@@ -1,17 +1,18 @@
 public enum UnionWithSpecialCharacters: Codable, Hashable, Sendable {
     case abc(Abc)
-    case aBc(ABc)
-    case oneabc(Oneabc)
-    case twelveabc(Twelveabc)
-    case onehundredtwentythreeabc(Onehundredtwentythreeabc)
-    case sevenagent(Sevenagent)
-    case onehundredtwentythreeAbc(OnehundredtwentythreeAbc)
+    case oneAbc(OneAbc)
+    case twelveAbc(TwelveAbc)
+    case oneHundredTwentyThreeAbc(OneHundredTwentyThreeAbc)
+    case sevenAgent(SevenAgent)
+    case abcdEfgh(AbcdEfgh)
     case dataPoint(DataPoint)
     case userName(UserName)
     case snakeCaseValue(SnakeCaseValue)
     case kebabCaseValue(KebabCaseValue)
     case special(Special)
     case leadingSpaces(LeadingSpaces)
+    case trailingSpaces(TrailingSpaces)
+    case spacesInTheMiddle(SpacesInTheMiddle)
     case uppercase(Uppercase)
     case camelCase(CamelCase)
     case pascalCase(PascalCase)
@@ -23,18 +24,16 @@ public enum UnionWithSpecialCharacters: Codable, Hashable, Sendable {
         switch discriminant {
         case "abc":
             self = .abc(try Abc(from: decoder))
-        case "a b c":
-            self = .aBc(try ABc(from: decoder))
         case "1abc":
-            self = .oneabc(try Oneabc(from: decoder))
+            self = .oneAbc(try OneAbc(from: decoder))
         case "12abc":
-            self = .twelveabc(try Twelveabc(from: decoder))
+            self = .twelveAbc(try TwelveAbc(from: decoder))
         case "123abc":
-            self = .onehundredtwentythreeabc(try Onehundredtwentythreeabc(from: decoder))
+            self = .oneHundredTwentyThreeAbc(try OneHundredTwentyThreeAbc(from: decoder))
         case "007agent":
-            self = .sevenagent(try Sevenagent(from: decoder))
-        case "123-abc":
-            self = .onehundredtwentythreeAbc(try OnehundredtwentythreeAbc(from: decoder))
+            self = .sevenAgent(try SevenAgent(from: decoder))
+        case "abcd-efgh":
+            self = .abcdEfgh(try AbcdEfgh(from: decoder))
         case "data@point":
             self = .dataPoint(try DataPoint(from: decoder))
         case "user#name":
@@ -47,6 +46,10 @@ public enum UnionWithSpecialCharacters: Codable, Hashable, Sendable {
             self = .special(try Special(from: decoder))
         case "  leading-spaces":
             self = .leadingSpaces(try LeadingSpaces(from: decoder))
+        case "trailing-spaces ":
+            self = .trailingSpaces(try TrailingSpaces(from: decoder))
+        case "spaces in the middle":
+            self = .spacesInTheMiddle(try SpacesInTheMiddle(from: decoder))
         case "UPPERCASE":
             self = .uppercase(try Uppercase(from: decoder))
         case "camelCase":
@@ -69,17 +72,15 @@ public enum UnionWithSpecialCharacters: Codable, Hashable, Sendable {
         switch self {
         case .abc(let data):
             try data.encode(to: encoder)
-        case .aBc(let data):
+        case .oneAbc(let data):
             try data.encode(to: encoder)
-        case .oneabc(let data):
+        case .twelveAbc(let data):
             try data.encode(to: encoder)
-        case .twelveabc(let data):
+        case .oneHundredTwentyThreeAbc(let data):
             try data.encode(to: encoder)
-        case .onehundredtwentythreeabc(let data):
+        case .sevenAgent(let data):
             try data.encode(to: encoder)
-        case .sevenagent(let data):
-            try data.encode(to: encoder)
-        case .onehundredtwentythreeAbc(let data):
+        case .abcdEfgh(let data):
             try data.encode(to: encoder)
         case .dataPoint(let data):
             try data.encode(to: encoder)
@@ -92,6 +93,10 @@ public enum UnionWithSpecialCharacters: Codable, Hashable, Sendable {
         case .special(let data):
             try data.encode(to: encoder)
         case .leadingSpaces(let data):
+            try data.encode(to: encoder)
+        case .trailingSpaces(let data):
+            try data.encode(to: encoder)
+        case .spacesInTheMiddle(let data):
             try data.encode(to: encoder)
         case .uppercase(let data):
             try data.encode(to: encoder)
@@ -138,41 +143,7 @@ public enum UnionWithSpecialCharacters: Codable, Hashable, Sendable {
         }
     }
 
-    public struct ABc: Codable, Hashable, Sendable {
-        public let type: String = "a b c"
-        public let someValue: String
-        /// Additional properties that are not explicitly defined in the schema
-        public let additionalProperties: [String: JSONValue]
-
-        public init(
-            someValue: String,
-            additionalProperties: [String: JSONValue] = .init()
-        ) {
-            self.someValue = someValue
-            self.additionalProperties = additionalProperties
-        }
-
-        public init(from decoder: Decoder) throws {
-            let container = try decoder.container(keyedBy: CodingKeys.self)
-            self.someValue = try container.decode(String.self, forKey: .someValue)
-            self.additionalProperties = try decoder.decodeAdditionalProperties(using: CodingKeys.self)
-        }
-
-        public func encode(to encoder: Encoder) throws -> Void {
-            var container = encoder.container(keyedBy: CodingKeys.self)
-            try encoder.encodeAdditionalProperties(self.additionalProperties)
-            try container.encode(self.type, forKey: .type)
-            try container.encode(self.someValue, forKey: .someValue)
-        }
-
-        /// Keys for encoding/decoding struct properties.
-        enum CodingKeys: String, CodingKey, CaseIterable {
-            case type
-            case someValue = "some_value"
-        }
-    }
-
-    public struct Oneabc: Codable, Hashable, Sendable {
+    public struct OneAbc: Codable, Hashable, Sendable {
         public let type: String = "1abc"
         public let someValue: String
         /// Additional properties that are not explicitly defined in the schema
@@ -206,7 +177,7 @@ public enum UnionWithSpecialCharacters: Codable, Hashable, Sendable {
         }
     }
 
-    public struct Twelveabc: Codable, Hashable, Sendable {
+    public struct TwelveAbc: Codable, Hashable, Sendable {
         public let type: String = "12abc"
         public let someValue: String
         /// Additional properties that are not explicitly defined in the schema
@@ -240,7 +211,7 @@ public enum UnionWithSpecialCharacters: Codable, Hashable, Sendable {
         }
     }
 
-    public struct Onehundredtwentythreeabc: Codable, Hashable, Sendable {
+    public struct OneHundredTwentyThreeAbc: Codable, Hashable, Sendable {
         public let type: String = "123abc"
         public let someValue: String
         /// Additional properties that are not explicitly defined in the schema
@@ -274,7 +245,7 @@ public enum UnionWithSpecialCharacters: Codable, Hashable, Sendable {
         }
     }
 
-    public struct Sevenagent: Codable, Hashable, Sendable {
+    public struct SevenAgent: Codable, Hashable, Sendable {
         public let type: String = "007agent"
         public let someValue: String
         /// Additional properties that are not explicitly defined in the schema
@@ -308,8 +279,8 @@ public enum UnionWithSpecialCharacters: Codable, Hashable, Sendable {
         }
     }
 
-    public struct OnehundredtwentythreeAbc: Codable, Hashable, Sendable {
-        public let type: String = "123-abc"
+    public struct AbcdEfgh: Codable, Hashable, Sendable {
+        public let type: String = "abcd-efgh"
         public let someValue: String
         /// Additional properties that are not explicitly defined in the schema
         public let additionalProperties: [String: JSONValue]
@@ -514,6 +485,74 @@ public enum UnionWithSpecialCharacters: Codable, Hashable, Sendable {
 
     public struct LeadingSpaces: Codable, Hashable, Sendable {
         public let type: String = "  leading-spaces"
+        public let someValue: String
+        /// Additional properties that are not explicitly defined in the schema
+        public let additionalProperties: [String: JSONValue]
+
+        public init(
+            someValue: String,
+            additionalProperties: [String: JSONValue] = .init()
+        ) {
+            self.someValue = someValue
+            self.additionalProperties = additionalProperties
+        }
+
+        public init(from decoder: Decoder) throws {
+            let container = try decoder.container(keyedBy: CodingKeys.self)
+            self.someValue = try container.decode(String.self, forKey: .someValue)
+            self.additionalProperties = try decoder.decodeAdditionalProperties(using: CodingKeys.self)
+        }
+
+        public func encode(to encoder: Encoder) throws -> Void {
+            var container = encoder.container(keyedBy: CodingKeys.self)
+            try encoder.encodeAdditionalProperties(self.additionalProperties)
+            try container.encode(self.type, forKey: .type)
+            try container.encode(self.someValue, forKey: .someValue)
+        }
+
+        /// Keys for encoding/decoding struct properties.
+        enum CodingKeys: String, CodingKey, CaseIterable {
+            case type
+            case someValue = "some_value"
+        }
+    }
+
+    public struct TrailingSpaces: Codable, Hashable, Sendable {
+        public let type: String = "trailing-spaces "
+        public let someValue: String
+        /// Additional properties that are not explicitly defined in the schema
+        public let additionalProperties: [String: JSONValue]
+
+        public init(
+            someValue: String,
+            additionalProperties: [String: JSONValue] = .init()
+        ) {
+            self.someValue = someValue
+            self.additionalProperties = additionalProperties
+        }
+
+        public init(from decoder: Decoder) throws {
+            let container = try decoder.container(keyedBy: CodingKeys.self)
+            self.someValue = try container.decode(String.self, forKey: .someValue)
+            self.additionalProperties = try decoder.decodeAdditionalProperties(using: CodingKeys.self)
+        }
+
+        public func encode(to encoder: Encoder) throws -> Void {
+            var container = encoder.container(keyedBy: CodingKeys.self)
+            try encoder.encodeAdditionalProperties(self.additionalProperties)
+            try container.encode(self.type, forKey: .type)
+            try container.encode(self.someValue, forKey: .someValue)
+        }
+
+        /// Keys for encoding/decoding struct properties.
+        enum CodingKeys: String, CodingKey, CaseIterable {
+            case type
+            case someValue = "some_value"
+        }
+    }
+
+    public struct SpacesInTheMiddle: Codable, Hashable, Sendable {
+        public let type: String = "spaces in the middle"
         public let someValue: String
         /// Additional properties that are not explicitly defined in the schema
         public let additionalProperties: [String: JSONValue]
