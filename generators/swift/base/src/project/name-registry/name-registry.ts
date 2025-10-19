@@ -15,6 +15,7 @@ type UndiscriminatedUnionVariant = {
 type DiscriminatedUnionVariant = {
     caseName: string;
     symbolName: string;
+    discriminantWireValue: string;
     swiftType: swift.TypeReference;
     docsContent: string | undefined;
 };
@@ -423,14 +424,14 @@ export class NameRegistry {
 
     public getDiscriminatedUnionVariantSymbolOrThrow(
         parentSymbol: swift.Symbol | string,
-        caseName: string
+        discriminantWireValue: string
     ): swift.Symbol {
         const parentSymbolId = typeof parentSymbol === "string" ? parentSymbol : parentSymbol.id;
         const variants = this.discriminatedUnionVariantsByParentSymbolId.get(parentSymbolId) ?? [];
-        const variant = variants.find((v) => v.caseName === caseName);
+        const variant = variants.find((v) => v.discriminantWireValue === discriminantWireValue);
         assertDefined(
             variant,
-            `Discriminated union variant symbol not found for case name "${caseName}" in parent symbol "${parentSymbolId}"`
+            `Discriminated union variant symbol not found for discriminant wire value "${discriminantWireValue}" in parent symbol "${parentSymbolId}"`
         );
         const symbolId = this.symbolRegistry.inferSymbolIdForNestedType(parentSymbolId, variant.symbolName);
         return swift.Symbol.create(symbolId, variant.symbolName, { type: "struct" });

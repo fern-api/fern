@@ -1,4 +1,5 @@
 import { resolve } from "node:path";
+import { swift } from "@fern-api/swift-codegen";
 import { ModelGeneratorContext } from "../../ModelGeneratorContext";
 import { createSampleGeneratorContext } from "../../test-utils/createSampleGeneratorContext";
 import { DiscriminatedUnionGenerator } from "../DiscriminatedUnionGenerator";
@@ -29,10 +30,13 @@ describe("DiscriminatedUnionGenerator", () => {
         const context = await createSampleGeneratorContext(
             pathToDefinition("discriminant-values-with-special-characters")
         );
+        const moduleName = "DiscriminantValuesWithSpecialCharacters";
         const unionName = "UnionWithSpecialCharacters";
         const declaration = getUnionTypeDeclarationOrThrow(context, unionName);
         const generator = new DiscriminatedUnionGenerator({
-            name: unionName,
+            symbol: swift.Symbol.create(`${moduleName}.${unionName}`, unionName, {
+                type: "enum-with-associated-values"
+            }),
             unionTypeDeclaration: declaration,
             context
         });

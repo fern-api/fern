@@ -1,5 +1,5 @@
 import { noop } from "@fern-api/core-utils";
-import { BaseSwiftCustomConfigSchema, swift } from "@fern-api/swift-codegen";
+import { BaseSwiftCustomConfigSchema, EnumWithAssociatedValues, swift } from "@fern-api/swift-codegen";
 import { TypeDeclaration } from "@fern-fern/ir-sdk/api";
 import { NameRegistry } from "../project";
 import type { AbstractSwiftGeneratorContext } from ".";
@@ -17,10 +17,17 @@ export function registerDiscriminatedUnionVariants({
     typeDeclaration.shape._visit({
         union: (utd) => {
             const variants = utd.types.map((singleUnionType) => {
+                const symbolName = EnumWithAssociatedValues.sanitizeToPascalCase(
+                    singleUnionType.discriminantValue.name.pascalCase.unsafeName
+                );
+                const caseName = EnumWithAssociatedValues.sanitizeToCamelCase(
+                    singleUnionType.discriminantValue.name.camelCase.unsafeName
+                );
                 return {
-                    swiftType: swift.TypeReference.symbol(singleUnionType.discriminantValue.name.pascalCase.unsafeName),
-                    caseName: singleUnionType.discriminantValue.name.camelCase.unsafeName,
-                    symbolName: singleUnionType.discriminantValue.name.pascalCase.unsafeName,
+                    swiftType: swift.TypeReference.symbol(symbolName),
+                    caseName: caseName,
+                    symbolName,
+                    discriminantWireValue: singleUnionType.discriminantValue.wireValue,
                     docsContent: singleUnionType.docs
                 };
             });

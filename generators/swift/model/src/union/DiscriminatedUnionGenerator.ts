@@ -1,5 +1,6 @@
 import { assertNever, noop } from "@fern-api/core-utils";
-import { EnumWithAssociatedValues, sanitizeSelf, swift } from "@fern-api/swift-codegen";
+import { Referencer } from "@fern-api/swift-base";
+import { sanitizeSelf, swift } from "@fern-api/swift-codegen";
 import { ObjectProperty, TypeId, UnionTypeDeclaration } from "@fern-fern/ir-sdk/api";
 import { StructGenerator } from "../helpers/struct-generator/StructGenerator";
 import { ModelGeneratorContext } from "../ModelGeneratorContext";
@@ -105,24 +106,18 @@ export class DiscriminatedUnionGenerator {
             }),
             swift.Statement.switch({
                 target: swift.Expression.reference("discriminant"),
-                cases: this.unionTypeDeclaration.types.map((singleUnionType) => {
-                    const caseName = EnumWithAssociatedValues.sanitizeToCamelCase(
-                        singleUnionType.discriminantValue.wireValue
-                    );
-                    const structName = EnumWithAssociatedValues.sanitizeToPascalCase(
-                        singleUnionType.discriminantValue.wireValue
-                    );
+                cases: this.getAllVariants().map((variant) => {
                     return {
-                        pattern: swift.Expression.stringLiteral(singleUnionType.discriminantValue.wireValue),
+                        pattern: swift.Expression.stringLiteral(variant.discriminantWireValue),
                         body: [
                             swift.Statement.selfAssignment(
                                 swift.Expression.contextualMethodCall({
-                                    methodName: caseName,
+                                    methodName: variant.caseName,
                                     arguments_: [
                                         swift.functionArgument({
                                             value: swift.Expression.try(
                                                 swift.Expression.structInitialization({
-                                                    unsafeName: structName,
+                                                    unsafeName: variant.symbolName,
                                                     arguments_: [
                                                         swift.functionArgument({
                                                             label: "from",
@@ -207,13 +202,10 @@ export class DiscriminatedUnionGenerator {
             body: swift.CodeBlock.withStatements([
                 swift.Statement.switch({
                     target: swift.Expression.rawValue("self"),
-                    cases: this.unionTypeDeclaration.types.map((singleUnionType) => {
-                        const caseName = EnumWithAssociatedValues.sanitizeToCamelCase(
-                            singleUnionType.discriminantValue.wireValue
-                        );
+                    cases: this.getAllVariants().map((variant) => {
                         return {
                             pattern: swift.Pattern.enumCaseValueBinding({
-                                caseName: caseName,
+                                caseName: variant.caseName,
                                 referenceName: "data",
                                 declarationType: swift.DeclarationType.Let
                             }),
@@ -246,7 +238,7 @@ export class DiscriminatedUnionGenerator {
             const dataPropertyDefinitions: StructGenerator.DataPropertyDefinition[] = [];
             const variantSymbol = this.context.project.nameRegistry.getDiscriminatedUnionVariantSymbolOrThrow(
                 this.symbol,
-                singleUnionType.discriminantValue.name.camelCase.unsafeName
+                singleUnionType.discriminantValue.wireValue
             );
             const referencer = this.context.createReferencer(variantSymbol);
 
