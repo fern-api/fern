@@ -31,7 +31,7 @@ impl PlaylistClient {
         self.http_client
             .execute_request(
                 Method::POST,
-                &format!("/v2/playlist/{}", service_param),
+                &format!("/v2/playlist/{}/create", service_param),
                 Some(serde_json::to_value(request).unwrap_or_default()),
                 QueryBuilder::new()
                     .datetime("datetime", request.datetime.clone())
@@ -63,7 +63,7 @@ impl PlaylistClient {
         self.http_client
             .execute_request(
                 Method::GET,
-                &format!("/v2/playlist/{}", service_param),
+                &format!("/v2/playlist/{}/all", service_param),
                 None,
                 QueryBuilder::new()
                     .int("limit", request.limit.clone())
@@ -98,7 +98,7 @@ impl PlaylistClient {
         self.http_client
             .execute_request(
                 Method::GET,
-                &format!("/v2/playlist/{}{}", service_param, playlist_id.0),
+                &format!("/v2/playlist/{}/{}", service_param, playlist_id.0),
                 None,
                 None,
                 options,
@@ -125,7 +125,7 @@ impl PlaylistClient {
         self.http_client
             .execute_request(
                 Method::PUT,
-                &format!("/v2/playlist/{}{}", service_param, playlist_id.0),
+                &format!("/v2/playlist/{}/{}", service_param, playlist_id.0),
                 Some(serde_json::to_value(request).unwrap_or_default()),
                 None,
                 options,
@@ -151,7 +151,7 @@ impl PlaylistClient {
         self.http_client
             .execute_request(
                 Method::DELETE,
-                &format!("/v2/playlist/{}{}", service_param, playlist_id.0),
+                &format!("/v2/playlist/{}/{}", service_param, playlist_id.0),
                 None,
                 None,
                 options,

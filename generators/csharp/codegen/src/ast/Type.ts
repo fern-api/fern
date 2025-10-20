@@ -964,6 +964,7 @@ export function convertReadOnlyPrimitiveTypes(readOnlyMemoryTypeNames: string[])
                 return PrimitiveTypeV1.Uint64;
             case "string":
                 return PrimitiveTypeV1.String;
+            case "boolean":
             case "bool":
                 return PrimitiveTypeV1.Boolean;
             case "float":

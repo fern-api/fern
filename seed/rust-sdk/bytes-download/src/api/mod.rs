@@ -1,3 +1,3 @@
 pub mod resources;
 
-pub use resources::BytesDownloadClient;
+pub use resources::{BytesDownloadClient, ServiceClient};

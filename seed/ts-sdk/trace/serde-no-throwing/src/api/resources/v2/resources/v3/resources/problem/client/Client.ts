@@ -211,7 +211,7 @@ export class Problem {
                 (await core.Supplier.get(this._options.baseUrl)) ??
                     (await core.Supplier.get(this._options.environment)) ??
                     environments.SeedTraceEnvironment.Prod,
-                `/problems-v2/problem-info/${encodeURIComponent(serializers.ProblemId.jsonOrThrow(problemId, { omitUndefined: true }))}`,
+                `/problems-v2/problem-info/${core.url.encodePathParam(serializers.ProblemId.jsonOrThrow(problemId, { omitUndefined: true }))}`,
             ),
             method: "GET",
             headers: _headers,
@@ -292,7 +292,7 @@ export class Problem {
                 (await core.Supplier.get(this._options.baseUrl)) ??
                     (await core.Supplier.get(this._options.environment)) ??
                     environments.SeedTraceEnvironment.Prod,
-                `/problems-v2/problem-info/${encodeURIComponent(serializers.ProblemId.jsonOrThrow(problemId, { omitUndefined: true }))}/version/${encodeURIComponent(problemVersion)}`,
+                `/problems-v2/problem-info/${core.url.encodePathParam(serializers.ProblemId.jsonOrThrow(problemId, { omitUndefined: true }))}/version/${core.url.encodePathParam(problemVersion)}`,
             ),
             method: "GET",
             headers: _headers,

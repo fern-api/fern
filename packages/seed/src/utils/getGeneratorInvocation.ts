@@ -148,11 +148,14 @@ function getGithubPublishInfo({
                 packageName: `Fern${fixtureName}`,
                 registryUrl: ""
             });
+        case "rust":
+            return FernFiddle.GithubPublishInfo.crates({
+                packageName: `fern_${fixtureName}`,
+                registryUrl: ""
+            });
         case "swift":
             return undefined;
         case "php":
-            return undefined;
-        case "rust":
             return undefined;
         default:
             assertNever(language);

@@ -141,7 +141,7 @@ export abstract class TestRunner {
                 );
             }
             const taskContext = this.taskContextFactory.create(`${this.generator.workspaceName}:${id}`);
-            const outputFolder = configuration?.outputFolder ?? fixture;
+            const outputFolder = configuration?.outputFolder ?? "";
             if (!outputDir) {
                 outputDir =
                     configuration == null

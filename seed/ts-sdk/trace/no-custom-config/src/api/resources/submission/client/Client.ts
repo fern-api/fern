@@ -56,7 +56,7 @@ export class Submission {
                 (await core.Supplier.get(this._options.baseUrl)) ??
                     (await core.Supplier.get(this._options.environment)) ??
                     environments.SeedTraceEnvironment.Prod,
-                `/sessions/create-session/${encodeURIComponent(language)}`,
+                `/sessions/create-session/${core.url.encodePathParam(language)}`,
             ),
             method: "POST",
             headers: _headers,
@@ -129,7 +129,7 @@ export class Submission {
                 (await core.Supplier.get(this._options.baseUrl)) ??
                     (await core.Supplier.get(this._options.environment)) ??
                     environments.SeedTraceEnvironment.Prod,
-                `/sessions/${encodeURIComponent(sessionId)}`,
+                `/sessions/${core.url.encodePathParam(sessionId)}`,
             ),
             method: "GET",
             headers: _headers,
@@ -203,7 +203,7 @@ export class Submission {
                 (await core.Supplier.get(this._options.baseUrl)) ??
                     (await core.Supplier.get(this._options.environment)) ??
                     environments.SeedTraceEnvironment.Prod,
-                `/sessions/stop/${encodeURIComponent(sessionId)}`,
+                `/sessions/stop/${core.url.encodePathParam(sessionId)}`,
             ),
             method: "DELETE",
             headers: _headers,

@@ -286,6 +286,7 @@ export class RawClient {
                 case "long":
                 case "uint":
                 case "ulong":
+                case "boolean":
                 case "bool":
                 case "float":
                 case "double":

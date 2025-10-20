@@ -1,5 +1,26 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
 
+- version: 0.8.1
+  createdAt: "2025-10-20"
+  changelogEntry:
+    - type: chore
+      summary: auto-generate publish workflow based on publishConfig
+  irVersion: 61
+
+- version: 0.8.0
+  createdAt: "2025-10-17"
+  changelogEntry:
+    - type: feat
+      summary: Add file download support with ByteStream
+  irVersion: 61
+
+- version: 0.7.3
+  createdAt: "2025-10-17"
+  changelogEntry:
+    - type: chore
+      summary: enable show log only on --log-level debug
+  irVersion: 61
+
 - version: 0.7.2
   createdAt: "2025-10-15"
   changelogEntry:

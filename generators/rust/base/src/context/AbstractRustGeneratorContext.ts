@@ -16,6 +16,7 @@ export abstract class AbstractRustGeneratorContext<
     CustomConfig extends BaseRustCustomConfigSchema
 > extends AbstractGeneratorContext {
     public readonly project: RustProject;
+    public publishConfig: FernGeneratorExec.CratesGithubPublishInfo | undefined;
 
     public constructor(
         public readonly ir: IntermediateRepresentation,
@@ -24,6 +25,19 @@ export abstract class AbstractRustGeneratorContext<
         public readonly generatorNotificationService: GeneratorNotificationService
     ) {
         super(config, generatorNotificationService);
+
+        // Extract publish config from output mode
+        config.output.mode._visit<void>({
+            github: (github) => {
+                if (github.publishInfo?.type === "crates") {
+                    this.publishConfig = github.publishInfo;
+                }
+            },
+            publish: () => undefined,
+            downloadFiles: () => undefined,
+            _other: () => undefined
+        });
+
         this.project = new RustProject({
             context: this,
             crateName: this.getCrateName(),
@@ -182,7 +196,21 @@ export abstract class AbstractRustGeneratorContext<
             return this.customConfig.crateVersion;
         }
 
-        // Priority 2: Try to get version from publishConfig (set via output.location = crates) for remote generation
+        // Priority 2: Check version from output mode (same as TypeScript generator)
+        // This picks up the --version flag from the CLI
+
+        const versionFromOutputMode = this.config.output?.mode._visit({
+            downloadFiles: () => undefined,
+            github: (github) => github.version,
+            publish: (publish) => publish.version,
+            _other: () => undefined
+        });
+
+        if (versionFromOutputMode != null) {
+            return versionFromOutputMode;
+        }
+
+        // Priority 3: Try to get version from publishConfig (set via output.location = crates) for remote generation
         if (this.ir.publishConfig != null) {
             let publishTarget;
 

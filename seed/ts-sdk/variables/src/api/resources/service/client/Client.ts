@@ -34,7 +34,7 @@ export class Service {
             url: core.url.join(
                 (await core.Supplier.get(this._options.baseUrl)) ??
                     (await core.Supplier.get(this._options.environment)),
-                `/${encodeURIComponent(this._options.rootVariable)}`,
+                `/${core.url.encodePathParam(this._options.rootVariable)}`,
             ),
             method: "POST",
             headers: _headers,

@@ -47,24 +47,24 @@ impl QueryBuilder {
     }
 
     /// Add a datetime parameter
-    pub fn datetime(mut self, key: &str, value: Option<DateTime<Utc>>) -> Self {
-        if let Some(v) = value {
+    pub fn datetime(mut self, key: &str, value: impl Into<Option<DateTime<Utc>>>) -> Self {
+        if let Some(v) = value.into() {
             self.params.push((key.to_string(), v.to_rfc3339()));
         }
         self
     }
 
     /// Add a UUID parameter (converts to string)
-    pub fn uuid(mut self, key: &str, value: Option<uuid::Uuid>) -> Self {
-        if let Some(v) = value {
+    pub fn uuid(mut self, key: &str, value: impl Into<Option<uuid::Uuid>>) -> Self {
+        if let Some(v) = value.into() {
             self.params.push((key.to_string(), v.to_string()));
         }
         self
     }
 
     /// Add a date parameter (converts NaiveDate to DateTime<Utc>)
-    pub fn date(mut self, key: &str, value: Option<chrono::NaiveDate>) -> Self {
-        if let Some(v) = value {
+    pub fn date(mut self, key: &str, value: impl Into<Option<chrono::NaiveDate>>) -> Self {
+        if let Some(v) = value.into() {
             // Convert NaiveDate to DateTime<Utc> at start of day
             let datetime = v.and_hms_opt(0, 0, 0).unwrap().and_utc();
             self.params.push((key.to_string(), datetime.to_rfc3339()));
