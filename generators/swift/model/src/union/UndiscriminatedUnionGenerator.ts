@@ -2,6 +2,7 @@ import { assertDefined } from "@fern-api/core-utils";
 import { Referencer } from "@fern-api/swift-base";
 import { swift } from "@fern-api/swift-codegen";
 import { UndiscriminatedUnionTypeDeclaration } from "@fern-fern/ir-sdk/api";
+import { LiteralEnumGenerator } from "../literal";
 import { ModelGeneratorContext } from "../ModelGeneratorContext";
 
 export declare namespace UndiscriminatedUnionGenerator {
@@ -44,6 +45,7 @@ export class UndiscriminatedUnionGenerator {
             cases: this.generateCasesForTypeDeclaration(),
             initializers: this.generateInitializers(),
             methods: this.generateMethods(),
+            nestedTypes: this.generateNestedTypes(),
             docs: this.docsContent ? swift.docComment({ summary: this.docsContent }) : undefined
         });
     }
@@ -209,5 +211,19 @@ export class UndiscriminatedUnionGenerator {
                 })
             ])
         });
+    }
+
+    private generateNestedTypes(): (swift.Struct | swift.EnumWithRawValues)[] {
+        const nestedTypes: (swift.Struct | swift.EnumWithRawValues)[] = [];
+        this.context.project.nameRegistry
+            .getAllNestedLiteralEnumSymbolsOrThrow(this.symbol)
+            .forEach(({ symbol, literalValue }) => {
+                const literalEnumGenerator = new LiteralEnumGenerator({
+                    name: symbol.name,
+                    literalValue
+                });
+                nestedTypes.push(literalEnumGenerator.generate());
+            });
+        return nestedTypes;
     }
 }
