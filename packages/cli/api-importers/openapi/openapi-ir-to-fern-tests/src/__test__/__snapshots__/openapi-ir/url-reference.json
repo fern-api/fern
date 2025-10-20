@@ -218,6 +218,114 @@
         },
         "type": "object"
       },
+      "Category": {
+        "allOf": [],
+        "properties": [
+          {
+            "conflict": {},
+            "generatedName": "categoryId",
+            "key": "id",
+            "schema": {
+              "generatedName": "CategoryId",
+              "value": {
+                "schema": {
+                  "type": "int64"
+                },
+                "generatedName": "CategoryId",
+                "groupName": [],
+                "type": "primitive"
+              },
+              "groupName": [],
+              "type": "optional"
+            },
+            "audiences": []
+          },
+          {
+            "conflict": {},
+            "generatedName": "categoryName",
+            "key": "name",
+            "schema": {
+              "generatedName": "CategoryName",
+              "value": {
+                "schema": {
+                  "type": "string"
+                },
+                "generatedName": "CategoryName",
+                "groupName": [],
+                "type": "primitive"
+              },
+              "groupName": [],
+              "type": "optional"
+            },
+            "audiences": []
+          }
+        ],
+        "allOfPropertyConflicts": [],
+        "description": "A category for a pet",
+        "generatedName": "Category",
+        "title": "Pet category",
+        "groupName": [],
+        "additionalProperties": false,
+        "source": {
+          "file": "../openapi.yml",
+          "type": "openapi"
+        },
+        "type": "object"
+      },
+      "Tag": {
+        "allOf": [],
+        "properties": [
+          {
+            "conflict": {},
+            "generatedName": "tagId",
+            "key": "id",
+            "schema": {
+              "generatedName": "TagId",
+              "value": {
+                "schema": {
+                  "type": "int64"
+                },
+                "generatedName": "TagId",
+                "groupName": [],
+                "type": "primitive"
+              },
+              "groupName": [],
+              "type": "optional"
+            },
+            "audiences": []
+          },
+          {
+            "conflict": {},
+            "generatedName": "tagName",
+            "key": "name",
+            "schema": {
+              "generatedName": "TagName",
+              "value": {
+                "schema": {
+                  "type": "string"
+                },
+                "generatedName": "TagName",
+                "groupName": [],
+                "type": "primitive"
+              },
+              "groupName": [],
+              "type": "optional"
+            },
+            "audiences": []
+          }
+        ],
+        "allOfPropertyConflicts": [],
+        "description": "A tag for a pet",
+        "generatedName": "Tag",
+        "title": "Pet Tag",
+        "groupName": [],
+        "additionalProperties": false,
+        "source": {
+          "file": "../openapi.yml",
+          "type": "openapi"
+        },
+        "type": "object"
+      },
       "Pet": {
         "allOf": [],
         "properties": [
@@ -364,114 +472,6 @@
         "description": "A pet for sale in the pet store",
         "generatedName": "Pet",
         "title": "a Pet",
-        "groupName": [],
-        "additionalProperties": false,
-        "source": {
-          "file": "../openapi.yml",
-          "type": "openapi"
-        },
-        "type": "object"
-      },
-      "Category": {
-        "allOf": [],
-        "properties": [
-          {
-            "conflict": {},
-            "generatedName": "categoryId",
-            "key": "id",
-            "schema": {
-              "generatedName": "CategoryId",
-              "value": {
-                "schema": {
-                  "type": "int64"
-                },
-                "generatedName": "CategoryId",
-                "groupName": [],
-                "type": "primitive"
-              },
-              "groupName": [],
-              "type": "optional"
-            },
-            "audiences": []
-          },
-          {
-            "conflict": {},
-            "generatedName": "categoryName",
-            "key": "name",
-            "schema": {
-              "generatedName": "CategoryName",
-              "value": {
-                "schema": {
-                  "type": "string"
-                },
-                "generatedName": "CategoryName",
-                "groupName": [],
-                "type": "primitive"
-              },
-              "groupName": [],
-              "type": "optional"
-            },
-            "audiences": []
-          }
-        ],
-        "allOfPropertyConflicts": [],
-        "description": "A category for a pet",
-        "generatedName": "Category",
-        "title": "Pet category",
-        "groupName": [],
-        "additionalProperties": false,
-        "source": {
-          "file": "../openapi.yml",
-          "type": "openapi"
-        },
-        "type": "object"
-      },
-      "Tag": {
-        "allOf": [],
-        "properties": [
-          {
-            "conflict": {},
-            "generatedName": "tagId",
-            "key": "id",
-            "schema": {
-              "generatedName": "TagId",
-              "value": {
-                "schema": {
-                  "type": "int64"
-                },
-                "generatedName": "TagId",
-                "groupName": [],
-                "type": "primitive"
-              },
-              "groupName": [],
-              "type": "optional"
-            },
-            "audiences": []
-          },
-          {
-            "conflict": {},
-            "generatedName": "tagName",
-            "key": "name",
-            "schema": {
-              "generatedName": "TagName",
-              "value": {
-                "schema": {
-                  "type": "string"
-                },
-                "generatedName": "TagName",
-                "groupName": [],
-                "type": "primitive"
-              },
-              "groupName": [],
-              "type": "optional"
-            },
-            "audiences": []
-          }
-        ],
-        "allOfPropertyConflicts": [],
-        "description": "A tag for a pet",
-        "generatedName": "Tag",
-        "title": "Pet Tag",
         "groupName": [],
         "additionalProperties": false,
         "source": {

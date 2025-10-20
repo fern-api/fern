@@ -165,6 +165,20 @@ types:
       message: optional<string>
     source:
       openapi: ../openapi.yml
+  Category:
+    docs: A category for a pet
+    properties:
+      id: optional<long>
+      name: optional<string>
+    source:
+      openapi: ../openapi.yml
+  Tag:
+    docs: A tag for a pet
+    properties:
+      id: optional<long>
+      name: optional<string>
+    source:
+      openapi: ../openapi.yml
   PetStatus:
     enum:
       - available
@@ -185,20 +199,6 @@ types:
       status:
         type: optional<PetStatus>
         docs: pet status in the store
-    source:
-      openapi: ../openapi.yml
-  Category:
-    docs: A category for a pet
-    properties:
-      id: optional<long>
-      name: optional<string>
-    source:
-      openapi: ../openapi.yml
-  Tag:
-    docs: A tag for a pet
-    properties:
-      id: optional<long>
-      name: optional<string>
     source:
       openapi: ../openapi.yml
 ",
