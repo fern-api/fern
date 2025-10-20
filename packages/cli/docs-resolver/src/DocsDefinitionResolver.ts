@@ -98,18 +98,12 @@ export class DocsDefinitionResolver {
     private markdownFilesToTags: Map<AbsoluteFilePath, string[]> = new Map();
     private rawMarkdownFiles: Record<RelativeFilePath, string> = {};
     public async resolve(): Promise<DocsV1Write.DocsDefinition> {
-        const resolveStartTime = Date.now();
-
-        const configStartTime = Date.now();
         this._parsedDocsConfig = await parseDocsConfiguration({
             rawDocsConfiguration: this.docsWorkspace.config,
             context: this.taskContext,
             absolutePathToFernFolder: this.docsWorkspace.absoluteFilePath,
             absoluteFilepathToDocsConfig: this.docsWorkspace.absoluteFilepathToDocsConfig
         });
-        const configDuration = Date.now() - configStartTime;
-        this.taskContext.logger.debug(`Parsed docs configuration in ${configDuration}ms`);
-        this.taskContext.logger.info(`Processing ${Object.keys(this.parsedDocsConfig.pages).length} markdown files...`);
 
         // Store raw markdown content before any processing
         for (const [relativePath, markdown] of Object.entries(this.parsedDocsConfig.pages)) {
@@ -160,8 +154,6 @@ export class DocsDefinitionResolver {
 
         // replaces all instances of <Markdown src="path/to/file.md" /> with the content of the referenced markdown file
         // this should happen before we parse image paths, as the referenced markdown files may contain images.
-        const markdownRefStartTime = Date.now();
-        this.taskContext.logger.info("Processing markdown references and includes...");
         for (const [relativePath, markdown] of Object.entries(this.parsedDocsConfig.pages)) {
             this.parsedDocsConfig.pages[RelativeFilePath.of(relativePath)] = await replaceReferencedMarkdown({
                 markdown,
@@ -180,8 +172,6 @@ export class DocsDefinitionResolver {
                 context: this.taskContext
             });
         }
-        const markdownRefDuration = Date.now() - markdownRefStartTime;
-        this.taskContext.logger.debug(`Processed markdown references in ${markdownRefDuration}ms`);
 
         const filesToUploadSet = await collectFilesFromDocsConfig({
             parsedDocsConfig: this.parsedDocsConfig,
@@ -189,8 +179,6 @@ export class DocsDefinitionResolver {
         });
 
         // preprocess markdown files to extract image paths
-        const imageParseStartTime = Date.now();
-        this.taskContext.logger.info("Parsing image paths from markdown files...");
         for (const [relativePath, markdown] of Object.entries(this.parsedDocsConfig.pages)) {
             try {
                 const { filepaths, markdown: newMarkdown } = parseImagePaths(markdown, {
@@ -212,8 +200,6 @@ export class DocsDefinitionResolver {
                 throw error;
             }
         }
-        const imageParseDuration = Date.now() - imageParseStartTime;
-        this.taskContext.logger.debug(`Parsed image paths in ${imageParseDuration}ms`);
 
         const filesToUpload: FilePathPair[] = Array.from(filesToUploadSet).map(
             (absoluteFilePath): FilePathPair => ({
@@ -222,26 +208,16 @@ export class DocsDefinitionResolver {
             })
         );
 
-        const uploadStartTime = Date.now();
-        this.taskContext.logger.info(`Uploading ${filesToUpload.length} files (images, assets, etc.)...`);
         const uploadedFiles = await this.uploadFiles(filesToUpload);
-        const uploadDuration = Date.now() - uploadStartTime;
-        this.taskContext.logger.info(`Completed file uploads in ${uploadDuration}ms`);
 
         uploadedFiles.forEach((uploadedFile) => {
             this.collectedFileIds.set(uploadedFile.absoluteFilePath, uploadedFile.fileId);
         });
 
         // store root here so we only process once
-        const navigationStartTime = Date.now();
-        this.taskContext.logger.info("Building navigation structure...");
         const root = await this.toRootNode();
-        const navigationDuration = Date.now() - navigationStartTime;
-        this.taskContext.logger.debug(`Built navigation structure in ${navigationDuration}ms`);
 
         // postprocess markdown files after uploading all images to replace the image paths in the markdown files with the fileIDs
-        const postProcessStartTime = Date.now();
-        this.taskContext.logger.info("Post-processing markdown files (replacing image paths and URLs)...");
 
         // TODO: include more (canonical) slugs from the navigation tree
         const markdownFilesToPathName: Record<AbsoluteFilePath, string> =
@@ -261,14 +237,6 @@ export class DocsDefinitionResolver {
             );
         }
 
-        const postProcessDuration = Date.now() - postProcessStartTime;
-        this.taskContext.logger.debug(`Post-processed markdown files in ${postProcessDuration}ms`);
-
-        const pagesStartTime = Date.now();
-        this.taskContext.logger.info(
-            `Creating page objects for ${Object.keys(this.parsedDocsConfig.pages).length} pages...`
-        );
-
         const pages: Record<DocsV1Write.PageId, DocsV1Write.PageContent> = {};
 
         Object.entries(this.parsedDocsConfig.pages).forEach(([relativePageFilepath, markdown]) => {
@@ -281,23 +249,11 @@ export class DocsDefinitionResolver {
             };
         });
 
-        const pagesDuration = Date.now() - pagesStartTime;
-        this.taskContext.logger.debug(`Created page objects in ${pagesDuration}ms`);
-
-        const convertConfigStartTime = Date.now();
-        this.taskContext.logger.info("Converting docs configuration and processing API definitions...");
         const config = await this.convertDocsConfiguration(root);
-        const convertConfigDuration = Date.now() - convertConfigStartTime;
-        this.taskContext.logger.debug(`Converted docs configuration in ${convertConfigDuration}ms`);
 
         // detect experimental js files to include in the docs
         let jsFiles: Record<string, string> = {};
         if (this._parsedDocsConfig.experimental?.mdxComponents != null) {
-            const mdxStartTime = Date.now();
-            this.taskContext.logger.info(
-                `Processing ${this._parsedDocsConfig.experimental.mdxComponents.length} MDX components...`
-            );
-
             const jsFilePaths = new Set<AbsoluteFilePath>();
             await Promise.all(
                 this._parsedDocsConfig.experimental.mdxComponents.map(async (filepath) => {
@@ -312,13 +268,11 @@ export class DocsDefinitionResolver {
                         files.forEach((file) => {
                             jsFilePaths.add(file);
                         });
-                    } else if (absoluteFilePath.match(/\.(js|ts|jsx,tsx,md,mdx)$/) != null) {
+                    } else if (absoluteFilePath.match(/\.(js|ts|jsx|tsx|md|mdx)$/) != null) {
                         jsFilePaths.add(absoluteFilePath);
                     }
                 })
             );
-
-            this.taskContext.logger.debug(`Found ${jsFilePaths.size} MDX component files to process`);
 
             jsFiles = Object.fromEntries(
                 await Promise.all(
@@ -329,14 +283,7 @@ export class DocsDefinitionResolver {
                     })
                 )
             );
-
-            const mdxDuration = Date.now() - mdxStartTime;
-            this.taskContext.logger.debug(`Processed MDX components in ${mdxDuration}ms`);
         }
-
-        const resolveEndTime = Date.now();
-        const totalResolveDuration = resolveEndTime - resolveStartTime;
-        this.taskContext.logger.debug(`DocsDefinitionResolver.resolve() completed in ${totalResolveDuration}ms total`);
 
         return { config, pages, jsFiles };
     }
@@ -564,7 +511,7 @@ export class DocsDefinitionResolver {
             return this.apiWorkspaces[0];
         }
         const errorMessage = apiSection.apiName
-            ? `Failed to load API Definition '${apiSection.apiName}' referenced in docs ${this.apiWorkspaces.map((workspace) => workspace.workspaceName).join(", ")}`
+            ? `Failed to load API Definition '${apiSection.apiName}' referenced in docs`
             : "Failed to load API Definition referenced in docs";
         throw new Error(errorMessage);
     }

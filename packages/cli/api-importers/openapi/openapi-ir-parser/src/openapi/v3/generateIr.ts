@@ -38,8 +38,6 @@ import { convertServer } from "./converters/convertServer";
 import { ERROR_NAMES } from "./converters/convertToHttpError";
 import { ExampleEndpointFactory } from "./converters/ExampleEndpointFactory";
 import { ConvertedOperation } from "./converters/operation/convertOperation";
-import { DocumentPreprocessor } from "./DocumentPreprocessor";
-import { ExternalDocumentResolver } from "./ExternalDocumentResolver";
 import { FernOpenAPIExtension } from "./extensions/fernExtensions";
 import { getFernBasePath } from "./extensions/getFernBasePath";
 import { getFernGroups } from "./extensions/getFernGroups";
@@ -52,7 +50,7 @@ import { hasIncompleteExample } from "./hasIncompleteExample";
 import { OpenAPIV3ParserContext } from "./OpenAPIV3ParserContext";
 import { runResolutions } from "./runResolutions";
 
-export async function generateIr({
+export function generateIr({
     openApi,
     taskContext,
     options,
@@ -64,44 +62,8 @@ export async function generateIr({
     options: ParseOpenAPIOptions;
     source: Source;
     namespace: string | undefined;
-}): Promise<OpenApiIntermediateRepresentation> {
+}): OpenApiIntermediateRepresentation {
     openApi = runResolutions({ openapi: openApi });
-
-    // Check if the document has external references and preprocess if needed
-    if (DocumentPreprocessor.hasExternalReferences(openApi)) {
-        // taskContext.logger.info("External references detected. Preprocessing document...");
-
-        const externalRefs = DocumentPreprocessor.collectExternalReferences(openApi);
-        taskContext.logger.debug(`Found ${externalRefs.length} external references: ${externalRefs.join(", ")}`);
-
-        // Create external document resolver
-        const externalResolver = new ExternalDocumentResolver(taskContext.logger, {
-            baseUrl: source.type === "openapi" ? source.file : undefined,
-            allowRemote: true, // Allow HTTP/HTTPS requests
-            httpTimeoutMs: 30000
-        });
-
-        // Create document preprocessor and process the document
-        const preprocessor = new DocumentPreprocessor(
-            externalResolver,
-            taskContext.logger,
-            source.type === "openapi" ? source.file : undefined
-        );
-        try {
-            openApi = await preprocessor.processDocument(openApi, source.type === "openapi" ? source.file : undefined);
-        } catch (error) {
-            const errorMessage = `Failed to resolve external references: ${error instanceof Error ? error.message : String(error)}`;
-            taskContext.logger.debug(errorMessage);
-
-            // Check if there are still unresolved external references
-            const remainingExternalRefs = DocumentPreprocessor.collectExternalReferences(openApi);
-            if (remainingExternalRefs.length > 0) {
-                taskContext.logger.debug(
-                    `Document still contains ${remainingExternalRefs.length} unresolved external references: ${remainingExternalRefs.join(", ")}`
-                );
-            }
-        }
-    }
 
     // Create a temporary context for reference resolution during security scheme processing
     const tempContext = new OpenAPIV3ParserContext({

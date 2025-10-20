@@ -241,31 +241,19 @@ export async function publishDocs({
         }
     );
 
-    const resolveStartTime = Date.now();
-    context.logger.info("Resolving docs definition (processing markdown files, images, and navigation)...");
     const docsDefinition = await resolver.resolve();
-    const resolveEndTime = Date.now();
-    const resolveDuration = resolveEndTime - resolveStartTime;
-    context.logger.info(`Completed docs definition resolution in ${resolveDuration}ms`);
-    context.logger.debug(
-        `Docs definition contains ${Object.keys(docsDefinition.pages || {}).length} pages and resolved successfully`
-    );
 
     if (docsRegistrationId == null) {
         return context.failAndThrow("Failed to publish docs.", "Docs registration ID is missing.");
     }
 
-    const publishStartTime = Date.now();
-    context.logger.info("Publishing docs to Fern...");
+    context.logger.debug("Publishing docs...");
     const registerDocsResponse = await fdr.docs.v2.write.finishDocsRegister(
         CjsFdrSdk.docs.v1.write.DocsRegistrationId(docsRegistrationId),
         {
             docsDefinition
         }
     );
-    const publishEndTime = Date.now();
-    const publishDuration = publishEndTime - publishStartTime;
-    context.logger.debug(`Docs registration API call completed in ${publishDuration}ms`);
 
     if (registerDocsResponse.ok) {
         const url = wrapWithHttps(urlToOutput);

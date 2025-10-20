@@ -7,7 +7,6 @@ import { ParseOpenAPIOptions } from "../../options";
 import { SchemaParserContext } from "../../schema/SchemaParserContext";
 import { getReferenceOccurrences } from "../../schema/utils/getReferenceOccurrences";
 import { isReferenceObject } from "../../schema/utils/isReferenceObject";
-import { ExternalDocumentResolver } from "./ExternalDocumentResolver";
 import { OpenAPIFilter } from "./OpenAPIFilter";
 
 export const PARAMETER_REFERENCE_PREFIX = "#/components/parameters/";
@@ -37,16 +36,14 @@ export abstract class AbstractOpenAPIV3ParserContext implements SchemaParserCont
     public readonly source: Source;
     public readonly filter: OpenAPIFilter;
     public readonly namespace: string | undefined;
-    private readonly resolutionStack = new Set<string>(); // Track circular references
-    public readonly externalResolver?: ExternalDocumentResolver;
+    private readonly resolutionStack = new Set<string>(); // Simple circular reference detection
     constructor({
         document,
         taskContext,
         authHeaders,
         options,
         source,
-        namespace,
-        externalResolver
+        namespace
     }: {
         document: OpenAPIV3.Document;
         taskContext: TaskContext;
@@ -54,7 +51,6 @@ export abstract class AbstractOpenAPIV3ParserContext implements SchemaParserCont
         options: ParseOpenAPIOptions;
         source: Source;
         namespace: string | undefined;
-        externalResolver?: ExternalDocumentResolver;
     }) {
         this.document = document;
         this.logger = taskContext.logger;
@@ -103,72 +99,47 @@ export abstract class AbstractOpenAPIV3ParserContext implements SchemaParserCont
     }
 
     public resolveSchemaReference(schema: OpenAPIV3.ReferenceObject): OpenAPIV3.SchemaObject {
-        // Check for circular references
-        if (this.resolutionStack.has(schema.$ref)) {
-            this.logger.debug(
-                `Circular reference detected in schema resolution: ${schema.$ref}. Chain: ${Array.from(this.resolutionStack).join(" -> ")} -> ${schema.$ref}`
-            );
+        if (!schema.$ref.startsWith("#/")) {
+            this.logger.debug(`Non-internal reference: ${schema.$ref}`);
             return {
                 "x-fern-type": "unknown",
-                description: `Circular reference: ${schema.$ref}`
-                // biome-ignore lint/suspicious/noExplicitAny: allow explicit any
-            } as any as OpenAPIV3.SchemaObject;
+                description: `External reference not resolved: ${schema.$ref}`
+            } as OpenAPIV3.SchemaObject;
         }
 
-        // Add current reference to stack
-        this.resolutionStack.add(schema.$ref);
+        const keys = schema.$ref
+            .substring(2)
+            .split("/")
+            .map((key) => key.replace(/~1/g, "/"));
 
-        try {
-            // Step 1: Get keys
-            const keys = schema.$ref
-                .substring(2)
-                .split("/")
-                .map((key) => key.replace(/~1/g, "/"));
-
-            // Step 2: Index recursively into the document with all the keys
-            // biome-ignore lint/suspicious/noExplicitAny: allow explicit any
-            let resolvedSchema: any = this.document;
-            for (const key of keys) {
-                if (typeof resolvedSchema !== "object" || resolvedSchema == null) {
-                    return {
-                        "x-fern-type": "unknown"
-                        // biome-ignore lint/suspicious/noExplicitAny: allow explicit any
-                    } as any as OpenAPIV3.SchemaObject;
-                }
-
-                // Handle both objects and arrays
-                if (Array.isArray(resolvedSchema)) {
-                    const index = parseInt(key, 10);
-                    if (isNaN(index) || index < 0 || index >= resolvedSchema.length) {
-                        return {
-                            "x-fern-type": "unknown"
-                            // biome-ignore lint/suspicious/noExplicitAny: allow explicit any
-                        } as any as OpenAPIV3.SchemaObject;
-                    }
-                    resolvedSchema = resolvedSchema[index];
-                } else {
-                    resolvedSchema = resolvedSchema[key];
-                }
-            }
-            if (resolvedSchema == null) {
-                this.logger.debug(`Encountered undefined reference: ${schema.$ref}`);
+        // Simple resolution without circular reference detection since external refs are pre-resolved
+        // biome-ignore lint/suspicious/noExplicitAny: allow explicit any for generic resolution
+        let resolved: any = this.document;
+        for (const key of keys) {
+            if (typeof resolved !== "object" || resolved == null) {
+                this.logger.debug(`Failed to resolve schema reference: ${schema.$ref} at key: ${key}`);
                 return {
-                    "x-fern-type": "unknown"
-                    // biome-ignore lint/suspicious/noExplicitAny: allow explicit any
-                } as any as OpenAPIV3.SchemaObject;
+                    "x-fern-type": "unknown",
+                    description: `Failed to resolve: ${schema.$ref}`
+                } as OpenAPIV3.SchemaObject;
             }
-
-            // Step 3: If the result is another reference object, make a recursive call
-            if (isReferenceObject(resolvedSchema)) {
-                resolvedSchema = this.resolveSchemaReference(resolvedSchema);
-            }
-
-            // Step 4: If the result is a schema object, return it
-            return resolvedSchema;
-        } finally {
-            // Remove current reference from stack
-            this.resolutionStack.delete(schema.$ref);
+            resolved = resolved[key];
         }
+
+        if (resolved == null) {
+            this.logger.debug(`Schema reference not found: ${schema.$ref}`);
+            return {
+                "x-fern-type": "unknown",
+                description: `Schema not found: ${schema.$ref}`
+            } as OpenAPIV3.SchemaObject;
+        }
+
+        // Handle nested references recursively (but simply)
+        if (isReferenceObject(resolved)) {
+            return this.resolveSchemaReference(resolved);
+        }
+
+        return resolved;
     }
 
     public resolveParameterReference(parameter: OpenAPIV3.ReferenceObject): OpenAPIV3.ParameterObject {
