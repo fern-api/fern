@@ -7,7 +7,7 @@ import { OpenAPISpec } from "./Spec";
 import { convertSpecToWorkspace } from "./utils/convertSpecToWorkspace";
 import { createTaskContext } from "./utils/createTaskContext";
 
-export async function generateDynamicIR({
+export function generateDynamicIR({
     spec,
     language,
     audiences,
@@ -21,8 +21,8 @@ export async function generateDynamicIR({
     keywords?: string[];
     smartCasing?: boolean;
     disableDynamicExamples?: boolean;
-}): Promise<dynamic.DynamicIntermediateRepresentation> {
-    return await generateDynamicIRFromOpenAPI({
+}): dynamic.DynamicIntermediateRepresentation {
+    return generateDynamicIRFromOpenAPI({
         spec,
         language,
         audiences,
@@ -32,7 +32,7 @@ export async function generateDynamicIR({
     });
 }
 
-async function generateDynamicIRFromOpenAPI({
+function generateDynamicIRFromOpenAPI({
     spec,
     language,
     audiences,
@@ -46,9 +46,9 @@ async function generateDynamicIRFromOpenAPI({
     keywords?: string[];
     smartCasing?: boolean;
     disableDynamicExamples?: boolean;
-}): Promise<dynamic.DynamicIntermediateRepresentation> {
+}): dynamic.DynamicIntermediateRepresentation {
     const context = createTaskContext();
-    const workspace = await convertSpecToWorkspace({ context, spec });
+    const workspace = convertSpecToWorkspace({ context, spec });
     const ir = generateIntermediateRepresentation({
         context,
         workspace,

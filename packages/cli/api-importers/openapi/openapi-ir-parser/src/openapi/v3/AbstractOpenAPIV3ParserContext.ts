@@ -36,7 +36,6 @@ export abstract class AbstractOpenAPIV3ParserContext implements SchemaParserCont
     public readonly source: Source;
     public readonly filter: OpenAPIFilter;
     public readonly namespace: string | undefined;
-    private readonly resolutionStack = new Set<string>(); // Simple circular reference detection
     constructor({
         document,
         taskContext,
@@ -99,242 +98,147 @@ export abstract class AbstractOpenAPIV3ParserContext implements SchemaParserCont
     }
 
     public resolveSchemaReference(schema: OpenAPIV3.ReferenceObject): OpenAPIV3.SchemaObject {
-        if (!schema.$ref.startsWith("#/")) {
-            this.logger.debug(`Non-internal reference: ${schema.$ref}`);
-            return {
-                "x-fern-type": "unknown",
-                description: `External reference not resolved: ${schema.$ref}`
-            } as OpenAPIV3.SchemaObject;
-        }
-
+        // Step 1: Get keys
         const keys = schema.$ref
             .substring(2)
             .split("/")
             .map((key) => key.replace(/~1/g, "/"));
 
-        // Simple resolution without circular reference detection since external refs are pre-resolved
-        // biome-ignore lint/suspicious/noExplicitAny: allow explicit any for generic resolution
-        let resolved: any = this.document;
+        // Step 2: Index recursively into the document with all the keys
+        // biome-ignore lint/suspicious/noExplicitAny: allow explicit any
+        let resolvedSchema: any = this.document;
         for (const key of keys) {
-            if (typeof resolved !== "object" || resolved == null) {
-                this.logger.debug(`Failed to resolve schema reference: ${schema.$ref} at key: ${key}`);
+            if (typeof resolvedSchema !== "object" || resolvedSchema == null) {
                 return {
-                    "x-fern-type": "unknown",
-                    description: `Failed to resolve: ${schema.$ref}`
-                } as OpenAPIV3.SchemaObject;
+                    "x-fern-type": "unknown"
+                    // biome-ignore lint/suspicious/noExplicitAny: allow explicit any
+                } as any as OpenAPIV3.SchemaObject;
             }
-            resolved = resolved[key];
-        }
 
-        if (resolved == null) {
-            this.logger.debug(`Schema reference not found: ${schema.$ref}`);
+            // Handle both objects and arrays
+            if (Array.isArray(resolvedSchema)) {
+                const index = parseInt(key, 10);
+                if (isNaN(index) || index < 0 || index >= resolvedSchema.length) {
+                    return {
+                        "x-fern-type": "unknown"
+                        // biome-ignore lint/suspicious/noExplicitAny: allow explicit any
+                    } as any as OpenAPIV3.SchemaObject;
+                }
+                resolvedSchema = resolvedSchema[index];
+            } else {
+                resolvedSchema = resolvedSchema[key];
+            }
+        }
+        if (resolvedSchema == null) {
+            this.logger.warn(`Encountered undefined reference: ${schema.$ref}`);
             return {
-                "x-fern-type": "unknown",
-                description: `Schema not found: ${schema.$ref}`
-            } as OpenAPIV3.SchemaObject;
+                "x-fern-type": "unknown"
+                // biome-ignore lint/suspicious/noExplicitAny: allow explicit any
+            } as any as OpenAPIV3.SchemaObject;
         }
 
-        // Handle nested references recursively (but simply)
-        if (isReferenceObject(resolved)) {
-            return this.resolveSchemaReference(resolved);
+        // Step 3: If the result is another reference object, make a recursive call
+        if (isReferenceObject(resolvedSchema)) {
+            resolvedSchema = this.resolveSchemaReference(resolvedSchema);
         }
 
-        return resolved;
+        // Step 4: If the result is a schema object, return it
+        return resolvedSchema;
     }
 
     public resolveParameterReference(parameter: OpenAPIV3.ReferenceObject): OpenAPIV3.ParameterObject {
-        // Check for circular references
-        if (this.resolutionStack.has(parameter.$ref)) {
-            this.logger.debug(
-                `Circular reference detected in parameter resolution: ${parameter.$ref}. Chain: ${Array.from(this.resolutionStack).join(" -> ")} -> ${parameter.$ref}`
-            );
-            return {
-                name: "unknown",
-                in: "query",
-                description: `Circular reference: ${parameter.$ref}`
-                // biome-ignore lint/suspicious/noExplicitAny: allow explicit any
-            } as any as OpenAPIV3.ParameterObject;
+        if (
+            this.document.components == null ||
+            this.document.components.parameters == null ||
+            !parameter.$ref.startsWith(PARAMETER_REFERENCE_PREFIX)
+        ) {
+            throw new Error(`Failed to resolve ${parameter.$ref}`);
         }
-
-        // Add current reference to stack
-        this.resolutionStack.add(parameter.$ref);
-
-        try {
-            if (
-                this.document.components == null ||
-                this.document.components.parameters == null ||
-                !parameter.$ref.startsWith(PARAMETER_REFERENCE_PREFIX)
-            ) {
-                throw new Error(`Failed to resolve ${parameter.$ref}`);
-            }
-            const parameterKey = parameter.$ref.substring(PARAMETER_REFERENCE_PREFIX.length);
-            const resolvedParameter = this.document.components.parameters[parameterKey];
-            if (resolvedParameter == null) {
-                throw new Error(`${parameter.$ref} is undefined`);
-            }
-            if (isReferenceObject(resolvedParameter)) {
-                return this.resolveParameterReference(resolvedParameter);
-            }
-            return resolvedParameter;
-        } finally {
-            // Remove current reference from stack
-            this.resolutionStack.delete(parameter.$ref);
+        const parameterKey = parameter.$ref.substring(PARAMETER_REFERENCE_PREFIX.length);
+        const resolvedParameter = this.document.components.parameters[parameterKey];
+        if (resolvedParameter == null) {
+            throw new Error(`${parameter.$ref} is undefined`);
         }
+        if (isReferenceObject(resolvedParameter)) {
+            return this.resolveParameterReference(resolvedParameter);
+        }
+        return resolvedParameter;
     }
 
     public resolveRequestBodyReference(requestBody: OpenAPIV3.ReferenceObject): OpenAPIV3.RequestBodyObject {
-        // Check for circular references
-        if (this.resolutionStack.has(requestBody.$ref)) {
-            this.logger.debug(
-                `Circular reference detected in request body resolution: ${requestBody.$ref}. Chain: ${Array.from(this.resolutionStack).join(" -> ")} -> ${requestBody.$ref}`
-            );
-            return {
-                content: {},
-                description: `Circular reference: ${requestBody.$ref}`
-                // biome-ignore lint/suspicious/noExplicitAny: allow explicit any
-            } as any as OpenAPIV3.RequestBodyObject;
+        if (
+            this.document.components == null ||
+            this.document.components.requestBodies == null ||
+            !requestBody.$ref.startsWith(REQUEST_BODY_REFERENCE_PREFIX)
+        ) {
+            throw new Error(`Failed to resolve ${requestBody.$ref}`);
         }
-
-        // Add current reference to stack
-        this.resolutionStack.add(requestBody.$ref);
-
-        try {
-            if (
-                this.document.components == null ||
-                this.document.components.requestBodies == null ||
-                !requestBody.$ref.startsWith(REQUEST_BODY_REFERENCE_PREFIX)
-            ) {
-                throw new Error(`Failed to resolve ${requestBody.$ref}`);
-            }
-            const requestBodyKey = requestBody.$ref.substring(REQUEST_BODY_REFERENCE_PREFIX.length);
-            const resolvedRequestBody = this.document.components.requestBodies[requestBodyKey];
-            if (resolvedRequestBody == null) {
-                throw new Error(`${requestBody.$ref} is undefined`);
-            }
-            if (isReferenceObject(resolvedRequestBody)) {
-                return this.resolveRequestBodyReference(resolvedRequestBody);
-            }
-            return resolvedRequestBody;
-        } finally {
-            // Remove current reference from stack
-            this.resolutionStack.delete(requestBody.$ref);
+        const requestBodyKey = requestBody.$ref.substring(REQUEST_BODY_REFERENCE_PREFIX.length);
+        const resolvedRequestBody = this.document.components.requestBodies[requestBodyKey];
+        if (resolvedRequestBody == null) {
+            throw new Error(`${requestBody.$ref} is undefined`);
         }
+        if (isReferenceObject(resolvedRequestBody)) {
+            return this.resolveRequestBodyReference(resolvedRequestBody);
+        }
+        return resolvedRequestBody;
     }
 
     public resolveResponseReference(response: OpenAPIV3.ReferenceObject): OpenAPIV3.ResponseObject {
-        // Check for circular references
-        if (this.resolutionStack.has(response.$ref)) {
-            this.logger.debug(
-                `Circular reference detected in response resolution: ${response.$ref}. Chain: ${Array.from(this.resolutionStack).join(" -> ")} -> ${response.$ref}`
-            );
-            return {
-                description: `Circular reference: ${response.$ref}`
-                // biome-ignore lint/suspicious/noExplicitAny: allow explicit any
-            } as any as OpenAPIV3.ResponseObject;
+        if (
+            this.document.components == null ||
+            this.document.components.responses == null ||
+            !response.$ref.startsWith(RESPONSE_REFERENCE_PREFIX)
+        ) {
+            throw new Error(`Failed to resolve ${response.$ref}`);
         }
-
-        // Add current reference to stack
-        this.resolutionStack.add(response.$ref);
-
-        try {
-            if (
-                this.document.components == null ||
-                this.document.components.responses == null ||
-                !response.$ref.startsWith(RESPONSE_REFERENCE_PREFIX)
-            ) {
-                throw new Error(`Failed to resolve ${response.$ref}`);
-            }
-            const parameterKey = response.$ref.substring(RESPONSE_REFERENCE_PREFIX.length);
-            const resolvedResponse = this.document.components.responses[parameterKey];
-            if (resolvedResponse == null) {
-                throw new Error(`${response.$ref} is undefined`);
-            }
-            if (isReferenceObject(resolvedResponse)) {
-                return this.resolveResponseReference(resolvedResponse);
-            }
-            return resolvedResponse;
-        } finally {
-            // Remove current reference from stack
-            this.resolutionStack.delete(response.$ref);
+        const parameterKey = response.$ref.substring(RESPONSE_REFERENCE_PREFIX.length);
+        const resolvedResponse = this.document.components.responses[parameterKey];
+        if (resolvedResponse == null) {
+            throw new Error(`${response.$ref} is undefined`);
         }
+        if (isReferenceObject(resolvedResponse)) {
+            return this.resolveResponseReference(resolvedResponse);
+        }
+        return resolvedResponse;
     }
 
     public resolveExampleReference(example: OpenAPIV3.ReferenceObject): OpenAPIV3.ExampleObject {
-        // Check for circular references
-        if (this.resolutionStack.has(example.$ref)) {
-            this.logger.debug(
-                `Circular reference detected in example resolution: ${example.$ref}. Chain: ${Array.from(this.resolutionStack).join(" -> ")} -> ${example.$ref}`
-            );
-            return {
-                summary: `Circular reference: ${example.$ref}`
-                // biome-ignore lint/suspicious/noExplicitAny: allow explicit any
-            } as any as OpenAPIV3.ExampleObject;
+        if (
+            this.document.components == null ||
+            this.document.components.examples == null ||
+            !example.$ref.startsWith(EXAMPLES_REFERENCE_PREFIX)
+        ) {
+            throw new Error(`Failed to resolve ${example.$ref}`);
         }
-
-        // Add current reference to stack
-        this.resolutionStack.add(example.$ref);
-
-        try {
-            if (
-                this.document.components == null ||
-                this.document.components.examples == null ||
-                !example.$ref.startsWith(EXAMPLES_REFERENCE_PREFIX)
-            ) {
-                throw new Error(`Failed to resolve ${example.$ref}`);
-            }
-            const parameterKey = example.$ref.substring(EXAMPLES_REFERENCE_PREFIX.length);
-            const resolvedExample = this.document.components.examples[parameterKey];
-            if (resolvedExample == null) {
-                throw new Error(`${example.$ref} is undefined`);
-            }
-            if (isReferenceObject(resolvedExample)) {
-                return this.resolveExampleReference(resolvedExample);
-            }
-            return resolvedExample;
-        } finally {
-            // Remove current reference from stack
-            this.resolutionStack.delete(example.$ref);
+        const parameterKey = example.$ref.substring(EXAMPLES_REFERENCE_PREFIX.length);
+        const resolvedExample = this.document.components.examples[parameterKey];
+        if (resolvedExample == null) {
+            throw new Error(`${example.$ref} is undefined`);
         }
+        if (isReferenceObject(resolvedExample)) {
+            return this.resolveExampleReference(resolvedExample);
+        }
+        return resolvedExample;
     }
 
     public resolveSecuritySchemeReference(securityScheme: OpenAPIV3.ReferenceObject): OpenAPIV3.SecuritySchemeObject {
-        // Check for circular references
-        if (this.resolutionStack.has(securityScheme.$ref)) {
-            this.logger.debug(
-                `Circular reference detected in security scheme resolution: ${securityScheme.$ref}. Chain: ${Array.from(this.resolutionStack).join(" -> ")} -> ${securityScheme.$ref}`
-            );
-            return {
-                type: "http",
-                scheme: "bearer",
-                description: `Circular reference: ${securityScheme.$ref}`
-                // biome-ignore lint/suspicious/noExplicitAny: allow explicit any
-            } as any as OpenAPIV3.SecuritySchemeObject;
+        if (
+            this.document.components == null ||
+            this.document.components.securitySchemes == null ||
+            !securityScheme.$ref.startsWith(SECURITY_SCHEME_REFERENCE_PREFIX)
+        ) {
+            throw new Error(`Failed to resolve ${securityScheme.$ref}`);
         }
-
-        // Add current reference to stack
-        this.resolutionStack.add(securityScheme.$ref);
-
-        try {
-            if (
-                this.document.components == null ||
-                this.document.components.securitySchemes == null ||
-                !securityScheme.$ref.startsWith(SECURITY_SCHEME_REFERENCE_PREFIX)
-            ) {
-                throw new Error(`Failed to resolve ${securityScheme.$ref}`);
-            }
-            const securitySchemeKey = securityScheme.$ref.substring(SECURITY_SCHEME_REFERENCE_PREFIX.length);
-            const resolvedSecurityScheme = this.document.components.securitySchemes[securitySchemeKey];
-            if (resolvedSecurityScheme == null) {
-                throw new Error(`${securityScheme.$ref} is undefined`);
-            }
-            if (isReferenceObject(resolvedSecurityScheme)) {
-                return this.resolveSecuritySchemeReference(resolvedSecurityScheme);
-            }
-            return resolvedSecurityScheme;
-        } finally {
-            // Remove current reference from stack
-            this.resolutionStack.delete(securityScheme.$ref);
+        const securitySchemeKey = securityScheme.$ref.substring(SECURITY_SCHEME_REFERENCE_PREFIX.length);
+        const resolvedSecurityScheme = this.document.components.securitySchemes[securitySchemeKey];
+        if (resolvedSecurityScheme == null) {
+            throw new Error(`${securityScheme.$ref} is undefined`);
         }
+        if (isReferenceObject(resolvedSecurityScheme)) {
+            return this.resolveSecuritySchemeReference(resolvedSecurityScheme);
+        }
+        return resolvedSecurityScheme;
     }
 
     public referenceExists(ref: string): boolean {
