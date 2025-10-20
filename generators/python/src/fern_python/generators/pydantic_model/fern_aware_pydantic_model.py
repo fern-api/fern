@@ -3,7 +3,6 @@ from __future__ import annotations
 from types import TracebackType
 from typing import List, Optional, Sequence, Tuple, Type
 
-import fern.ir.resources as ir_types
 from ..context.pydantic_generator_context import PydanticGeneratorContext
 from .custom_config import PydanticModelCustomConfig
 from .validators import (
@@ -11,10 +10,11 @@ from .validators import (
     PydanticValidatorsGenerator,
     ValidatorsGenerator,
 )
-
 from fern_python.codegen import AST, LocalClassReference, SourceFile
 from fern_python.external_dependencies.pydantic import PydanticVersionCompatibility
 from fern_python.pydantic_codegen import PydanticField, PydanticModel
+
+import fern.ir.resources as ir_types
 
 
 class FernAwarePydanticModel:
@@ -292,13 +292,12 @@ class FernAwarePydanticModel:
             ):
                 self._pydantic_model.add_partial_class()
             self._get_validators_generator().add_validators()
-        
+
         type_id_for_circular_check = self._type_id_for_forward_ref()
-        is_in_circular_cluster = (
-            type_id_for_circular_check is not None 
-            and self._context.is_in_circular_cluster(type_id_for_circular_check)
+        is_in_circular_cluster = type_id_for_circular_check is not None and self._context.is_in_circular_cluster(
+            type_id_for_circular_check
         )
-        
+
         if (self._model_contains_forward_refs or self._force_update_forward_refs) and not is_in_circular_cluster:
             self._pydantic_model.update_forward_refs()
 

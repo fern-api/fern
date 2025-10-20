@@ -5,7 +5,6 @@ from typing import TYPE_CHECKING, Literal, Set, Tuple
 if TYPE_CHECKING:
     from ..context.pydantic_generator_context import PydanticGeneratorContext
 
-import fern.ir.resources as ir_types
 from ..context.pydantic_generator_context_impl import PydanticGeneratorContextImpl
 from .circular_dependency_detector import CircularDependencyDetector
 from .custom_config import PydanticModelCustomConfig
@@ -14,13 +13,14 @@ from .type_declaration_handler import (
     TypeDeclarationSnippetGeneratorBuilder,
 )
 from .type_declaration_referencer import TypeDeclarationReferencer
-from fern.generator_exec.config import GeneratorConfig
-
 from fern_python.cli.abstract_generator import AbstractGenerator
 from fern_python.codegen import Filepath, Project
 from fern_python.generator_exec_wrapper import GeneratorExecWrapper
 from fern_python.generators.pydantic_model.model_utilities import can_be_fern_model
 from fern_python.snippet import SnippetRegistry, SnippetWriter
+
+import fern.ir.resources as ir_types
+from fern.generator_exec.config import GeneratorConfig
 
 
 class PydanticModelGenerator(AbstractGenerator):
@@ -219,26 +219,26 @@ class PydanticModelGenerator(AbstractGenerator):
     ) -> None:
         sorted_cluster = sorted(cluster, key=lambda tid: str(tid))
         canonical_type_id = sorted_cluster[0]
-        
+
         base_filepath = context.get_filepath_for_type_id(type_id=canonical_type_id, as_request=False)
-        
+
         canonical_decl = ir.types[canonical_type_id]
         consolidated_filename = f"{canonical_decl.name.name.snake_case.safe_name}_all"
-        
+
         consolidated_filepath = Filepath(
             directories=base_filepath.directories,
             file=Filepath.FilepathPart(module_name=consolidated_filename),
         )
-        
+
         source_file = context.source_file_factory.create(
             project=project,
             filepath=consolidated_filepath,
             generator_exec_wrapper=generator_exec_wrapper,
         )
-        
+
         for type_id in sorted_cluster:
             type_decl = ir.types[type_id]
-            
+
             type_declaration_handler = TypeDeclarationHandler(
                 declaration=type_decl,
                 context=context,
@@ -248,13 +248,13 @@ class PydanticModelGenerator(AbstractGenerator):
                 generate_typeddict_request=False,
             )
             generated_type = type_declaration_handler.run()
-            
+
             if generated_type.snippet is not None:
                 snippet_registry.register_snippet(
                     type_id=type_decl.name.type_id,
                     expr=generated_type.snippet,
                 )
-        
+
         project.write_source_file(source_file=source_file, filepath=consolidated_filepath)
 
     def get_sorted_modules(self) -> None:

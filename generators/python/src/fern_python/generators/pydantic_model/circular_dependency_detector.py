@@ -9,7 +9,7 @@ if TYPE_CHECKING:
 class CircularDependencyDetector:
     """
     Detects mutually recursive type clusters that should be consolidated into a single file.
-    
+
     This addresses the issue where deeply mutually recursive types (like AST operators)
     cause circular import errors and Pydantic recursion issues when split across files.
     """
@@ -36,7 +36,7 @@ class CircularDependencyDetector:
     def _compute_clusters(self) -> None:
         """
         Computes clusters of mutually recursive types using graph analysis.
-        
+
         Algorithm:
         1. Build a directed graph of type references
         2. Find strongly connected components (SCCs)
