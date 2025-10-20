@@ -9,9 +9,9 @@ if typing.TYPE_CHECKING:
     from .binary_tree_node_and_tree_value import BinaryTreeNodeAndTreeValue
     from .binary_tree_node_value import BinaryTreeNodeValue
     from .binary_tree_value import BinaryTreeValue
-    from .debug_key_value_pairs import DebugKeyValuePairs
-    from .debug_map_value import DebugMapValue
-    from .debug_variable_value import (
+    from .debug_key_value_pairs_all import (
+        DebugKeyValuePairs,
+        DebugMapValue,
         DebugVariableValue,
         DebugVariableValue_BinaryTreeNodeValue,
         DebugVariableValue_BooleanValue,
@@ -32,33 +32,9 @@ if typing.TYPE_CHECKING:
     from .doubly_linked_list_value import DoublyLinkedListValue
     from .file_info import FileInfo
     from .generic_value import GenericValue
-    from .key_value_pair import KeyValuePair
-    from .language import Language
-    from .list_type import ListType
-    from .map_type import MapType
-    from .map_value import MapValue
-    from .node_id import NodeId
-    from .problem_id import ProblemId
-    from .singly_linked_list_node_and_list_value import SinglyLinkedListNodeAndListValue
-    from .singly_linked_list_node_value import SinglyLinkedListNodeValue
-    from .singly_linked_list_value import SinglyLinkedListValue
-    from .test_case import TestCase
-    from .test_case_with_expected_result import TestCaseWithExpectedResult
-    from .user_id import UserId
-    from .variable_type import (
-        VariableType,
-        VariableType_BinaryTreeType,
-        VariableType_BooleanType,
-        VariableType_CharType,
-        VariableType_DoubleType,
-        VariableType_DoublyLinkedListType,
-        VariableType_IntegerType,
-        VariableType_ListType,
-        VariableType_MapType,
-        VariableType_SinglyLinkedListType,
-        VariableType_StringType,
-    )
-    from .variable_value import (
+    from .key_value_pair_all import (
+        KeyValuePair,
+        MapValue,
         VariableValue,
         VariableValue_BinaryTreeValue,
         VariableValue_BooleanValue,
@@ -72,36 +48,60 @@ if typing.TYPE_CHECKING:
         VariableValue_SinglyLinkedListValue,
         VariableValue_StringValue,
     )
+    from .language import Language
+    from .list_type_all import (
+        ListType,
+        MapType,
+        VariableType,
+        VariableType_BinaryTreeType,
+        VariableType_BooleanType,
+        VariableType_CharType,
+        VariableType_DoubleType,
+        VariableType_DoublyLinkedListType,
+        VariableType_IntegerType,
+        VariableType_ListType,
+        VariableType_MapType,
+        VariableType_SinglyLinkedListType,
+        VariableType_StringType,
+    )
+    from .node_id import NodeId
+    from .problem_id import ProblemId
+    from .singly_linked_list_node_and_list_value import SinglyLinkedListNodeAndListValue
+    from .singly_linked_list_node_value import SinglyLinkedListNodeValue
+    from .singly_linked_list_value import SinglyLinkedListValue
+    from .test_case import TestCase
+    from .test_case_with_expected_result import TestCaseWithExpectedResult
+    from .user_id import UserId
 _dynamic_imports: typing.Dict[str, str] = {
     "BinaryTreeNodeAndTreeValue": ".binary_tree_node_and_tree_value",
     "BinaryTreeNodeValue": ".binary_tree_node_value",
     "BinaryTreeValue": ".binary_tree_value",
-    "DebugKeyValuePairs": ".debug_key_value_pairs",
-    "DebugMapValue": ".debug_map_value",
-    "DebugVariableValue": ".debug_variable_value",
-    "DebugVariableValue_BinaryTreeNodeValue": ".debug_variable_value",
-    "DebugVariableValue_BooleanValue": ".debug_variable_value",
-    "DebugVariableValue_CharValue": ".debug_variable_value",
-    "DebugVariableValue_DoubleValue": ".debug_variable_value",
-    "DebugVariableValue_DoublyLinkedListNodeValue": ".debug_variable_value",
-    "DebugVariableValue_GenericValue": ".debug_variable_value",
-    "DebugVariableValue_IntegerValue": ".debug_variable_value",
-    "DebugVariableValue_ListValue": ".debug_variable_value",
-    "DebugVariableValue_MapValue": ".debug_variable_value",
-    "DebugVariableValue_NullValue": ".debug_variable_value",
-    "DebugVariableValue_SinglyLinkedListNodeValue": ".debug_variable_value",
-    "DebugVariableValue_StringValue": ".debug_variable_value",
-    "DebugVariableValue_UndefinedValue": ".debug_variable_value",
+    "DebugKeyValuePairs": ".debug_key_value_pairs_all",
+    "DebugMapValue": ".debug_key_value_pairs_all",
+    "DebugVariableValue": ".debug_key_value_pairs_all",
+    "DebugVariableValue_BinaryTreeNodeValue": ".debug_key_value_pairs_all",
+    "DebugVariableValue_BooleanValue": ".debug_key_value_pairs_all",
+    "DebugVariableValue_CharValue": ".debug_key_value_pairs_all",
+    "DebugVariableValue_DoubleValue": ".debug_key_value_pairs_all",
+    "DebugVariableValue_DoublyLinkedListNodeValue": ".debug_key_value_pairs_all",
+    "DebugVariableValue_GenericValue": ".debug_key_value_pairs_all",
+    "DebugVariableValue_IntegerValue": ".debug_key_value_pairs_all",
+    "DebugVariableValue_ListValue": ".debug_key_value_pairs_all",
+    "DebugVariableValue_MapValue": ".debug_key_value_pairs_all",
+    "DebugVariableValue_NullValue": ".debug_key_value_pairs_all",
+    "DebugVariableValue_SinglyLinkedListNodeValue": ".debug_key_value_pairs_all",
+    "DebugVariableValue_StringValue": ".debug_key_value_pairs_all",
+    "DebugVariableValue_UndefinedValue": ".debug_key_value_pairs_all",
     "DoublyLinkedListNodeAndListValue": ".doubly_linked_list_node_and_list_value",
     "DoublyLinkedListNodeValue": ".doubly_linked_list_node_value",
     "DoublyLinkedListValue": ".doubly_linked_list_value",
     "FileInfo": ".file_info",
     "GenericValue": ".generic_value",
-    "KeyValuePair": ".key_value_pair",
+    "KeyValuePair": ".key_value_pair_all",
     "Language": ".language",
-    "ListType": ".list_type",
-    "MapType": ".map_type",
-    "MapValue": ".map_value",
+    "ListType": ".list_type_all",
+    "MapType": ".list_type_all",
+    "MapValue": ".key_value_pair_all",
     "NodeId": ".node_id",
     "ProblemId": ".problem_id",
     "SinglyLinkedListNodeAndListValue": ".singly_linked_list_node_and_list_value",
@@ -110,29 +110,29 @@ _dynamic_imports: typing.Dict[str, str] = {
     "TestCase": ".test_case",
     "TestCaseWithExpectedResult": ".test_case_with_expected_result",
     "UserId": ".user_id",
-    "VariableType": ".variable_type",
-    "VariableType_BinaryTreeType": ".variable_type",
-    "VariableType_BooleanType": ".variable_type",
-    "VariableType_CharType": ".variable_type",
-    "VariableType_DoubleType": ".variable_type",
-    "VariableType_DoublyLinkedListType": ".variable_type",
-    "VariableType_IntegerType": ".variable_type",
-    "VariableType_ListType": ".variable_type",
-    "VariableType_MapType": ".variable_type",
-    "VariableType_SinglyLinkedListType": ".variable_type",
-    "VariableType_StringType": ".variable_type",
-    "VariableValue": ".variable_value",
-    "VariableValue_BinaryTreeValue": ".variable_value",
-    "VariableValue_BooleanValue": ".variable_value",
-    "VariableValue_CharValue": ".variable_value",
-    "VariableValue_DoubleValue": ".variable_value",
-    "VariableValue_DoublyLinkedListValue": ".variable_value",
-    "VariableValue_IntegerValue": ".variable_value",
-    "VariableValue_ListValue": ".variable_value",
-    "VariableValue_MapValue": ".variable_value",
-    "VariableValue_NullValue": ".variable_value",
-    "VariableValue_SinglyLinkedListValue": ".variable_value",
-    "VariableValue_StringValue": ".variable_value",
+    "VariableType": ".list_type_all",
+    "VariableType_BinaryTreeType": ".list_type_all",
+    "VariableType_BooleanType": ".list_type_all",
+    "VariableType_CharType": ".list_type_all",
+    "VariableType_DoubleType": ".list_type_all",
+    "VariableType_DoublyLinkedListType": ".list_type_all",
+    "VariableType_IntegerType": ".list_type_all",
+    "VariableType_ListType": ".list_type_all",
+    "VariableType_MapType": ".list_type_all",
+    "VariableType_SinglyLinkedListType": ".list_type_all",
+    "VariableType_StringType": ".list_type_all",
+    "VariableValue": ".key_value_pair_all",
+    "VariableValue_BinaryTreeValue": ".key_value_pair_all",
+    "VariableValue_BooleanValue": ".key_value_pair_all",
+    "VariableValue_CharValue": ".key_value_pair_all",
+    "VariableValue_DoubleValue": ".key_value_pair_all",
+    "VariableValue_DoublyLinkedListValue": ".key_value_pair_all",
+    "VariableValue_IntegerValue": ".key_value_pair_all",
+    "VariableValue_ListValue": ".key_value_pair_all",
+    "VariableValue_MapValue": ".key_value_pair_all",
+    "VariableValue_NullValue": ".key_value_pair_all",
+    "VariableValue_SinglyLinkedListValue": ".key_value_pair_all",
+    "VariableValue_StringValue": ".key_value_pair_all",
 }
 
 

@@ -1954,6 +1954,1846 @@
                 }
             ],
             "additionalProperties": false
+        },
+        "type_ast:AndOperator": {
+            "type": "object",
+            "declaration": {
+                "name": {
+                    "originalName": "AndOperator",
+                    "camelCase": {
+                        "unsafeName": "andOperator",
+                        "safeName": "andOperator"
+                    },
+                    "snakeCase": {
+                        "unsafeName": "and_operator",
+                        "safeName": "and_operator"
+                    },
+                    "screamingSnakeCase": {
+                        "unsafeName": "AND_OPERATOR",
+                        "safeName": "AND_OPERATOR"
+                    },
+                    "pascalCase": {
+                        "unsafeName": "AndOperator",
+                        "safeName": "AndOperator"
+                    }
+                },
+                "fernFilepath": {
+                    "allParts": [
+                        {
+                            "originalName": "ast",
+                            "camelCase": {
+                                "unsafeName": "ast",
+                                "safeName": "ast"
+                            },
+                            "snakeCase": {
+                                "unsafeName": "ast",
+                                "safeName": "ast"
+                            },
+                            "screamingSnakeCase": {
+                                "unsafeName": "AST",
+                                "safeName": "AST"
+                            },
+                            "pascalCase": {
+                                "unsafeName": "Ast",
+                                "safeName": "Ast"
+                            }
+                        }
+                    ],
+                    "packagePath": [],
+                    "file": {
+                        "originalName": "ast",
+                        "camelCase": {
+                            "unsafeName": "ast",
+                            "safeName": "ast"
+                        },
+                        "snakeCase": {
+                            "unsafeName": "ast",
+                            "safeName": "ast"
+                        },
+                        "screamingSnakeCase": {
+                            "unsafeName": "AST",
+                            "safeName": "AST"
+                        },
+                        "pascalCase": {
+                            "unsafeName": "Ast",
+                            "safeName": "Ast"
+                        }
+                    }
+                }
+            },
+            "properties": [
+                {
+                    "name": {
+                        "name": {
+                            "originalName": "children",
+                            "camelCase": {
+                                "unsafeName": "children",
+                                "safeName": "children"
+                            },
+                            "snakeCase": {
+                                "unsafeName": "children",
+                                "safeName": "children"
+                            },
+                            "screamingSnakeCase": {
+                                "unsafeName": "CHILDREN",
+                                "safeName": "CHILDREN"
+                            },
+                            "pascalCase": {
+                                "unsafeName": "Children",
+                                "safeName": "Children"
+                            }
+                        },
+                        "wireValue": "children"
+                    },
+                    "typeReference": {
+                        "type": "list",
+                        "value": {
+                            "type": "named",
+                            "value": "type_ast:AndOperatorChild"
+                        }
+                    },
+                    "propertyAccess": null,
+                    "variable": null
+                }
+            ],
+            "additionalProperties": false
+        },
+        "type_ast:AndOperatorChild": {
+            "type": "discriminatedUnion",
+            "declaration": {
+                "name": {
+                    "originalName": "AndOperatorChild",
+                    "camelCase": {
+                        "unsafeName": "andOperatorChild",
+                        "safeName": "andOperatorChild"
+                    },
+                    "snakeCase": {
+                        "unsafeName": "and_operator_child",
+                        "safeName": "and_operator_child"
+                    },
+                    "screamingSnakeCase": {
+                        "unsafeName": "AND_OPERATOR_CHILD",
+                        "safeName": "AND_OPERATOR_CHILD"
+                    },
+                    "pascalCase": {
+                        "unsafeName": "AndOperatorChild",
+                        "safeName": "AndOperatorChild"
+                    }
+                },
+                "fernFilepath": {
+                    "allParts": [
+                        {
+                            "originalName": "ast",
+                            "camelCase": {
+                                "unsafeName": "ast",
+                                "safeName": "ast"
+                            },
+                            "snakeCase": {
+                                "unsafeName": "ast",
+                                "safeName": "ast"
+                            },
+                            "screamingSnakeCase": {
+                                "unsafeName": "AST",
+                                "safeName": "AST"
+                            },
+                            "pascalCase": {
+                                "unsafeName": "Ast",
+                                "safeName": "Ast"
+                            }
+                        }
+                    ],
+                    "packagePath": [],
+                    "file": {
+                        "originalName": "ast",
+                        "camelCase": {
+                            "unsafeName": "ast",
+                            "safeName": "ast"
+                        },
+                        "snakeCase": {
+                            "unsafeName": "ast",
+                            "safeName": "ast"
+                        },
+                        "screamingSnakeCase": {
+                            "unsafeName": "AST",
+                            "safeName": "AST"
+                        },
+                        "pascalCase": {
+                            "unsafeName": "Ast",
+                            "safeName": "Ast"
+                        }
+                    }
+                }
+            },
+            "discriminant": {
+                "name": {
+                    "originalName": "type",
+                    "camelCase": {
+                        "unsafeName": "type",
+                        "safeName": "type"
+                    },
+                    "snakeCase": {
+                        "unsafeName": "type",
+                        "safeName": "type"
+                    },
+                    "screamingSnakeCase": {
+                        "unsafeName": "TYPE",
+                        "safeName": "TYPE"
+                    },
+                    "pascalCase": {
+                        "unsafeName": "Type",
+                        "safeName": "Type"
+                    }
+                },
+                "wireValue": "type"
+            },
+            "types": {
+                "and_operator": {
+                    "type": "samePropertiesAsObject",
+                    "typeId": "type_ast:AndOperator",
+                    "discriminantValue": {
+                        "name": {
+                            "originalName": "and_operator",
+                            "camelCase": {
+                                "unsafeName": "andOperator",
+                                "safeName": "andOperator"
+                            },
+                            "snakeCase": {
+                                "unsafeName": "and_operator",
+                                "safeName": "and_operator"
+                            },
+                            "screamingSnakeCase": {
+                                "unsafeName": "AND_OPERATOR",
+                                "safeName": "AND_OPERATOR"
+                            },
+                            "pascalCase": {
+                                "unsafeName": "AndOperator",
+                                "safeName": "AndOperator"
+                            }
+                        },
+                        "wireValue": "and_operator"
+                    },
+                    "properties": []
+                },
+                "or_operator": {
+                    "type": "samePropertiesAsObject",
+                    "typeId": "type_ast:OrOperator",
+                    "discriminantValue": {
+                        "name": {
+                            "originalName": "or_operator",
+                            "camelCase": {
+                                "unsafeName": "orOperator",
+                                "safeName": "orOperator"
+                            },
+                            "snakeCase": {
+                                "unsafeName": "or_operator",
+                                "safeName": "or_operator"
+                            },
+                            "screamingSnakeCase": {
+                                "unsafeName": "OR_OPERATOR",
+                                "safeName": "OR_OPERATOR"
+                            },
+                            "pascalCase": {
+                                "unsafeName": "OrOperator",
+                                "safeName": "OrOperator"
+                            }
+                        },
+                        "wireValue": "or_operator"
+                    },
+                    "properties": []
+                },
+                "eq_operator": {
+                    "type": "samePropertiesAsObject",
+                    "typeId": "type_ast:EqualsOperator",
+                    "discriminantValue": {
+                        "name": {
+                            "originalName": "eq_operator",
+                            "camelCase": {
+                                "unsafeName": "eqOperator",
+                                "safeName": "eqOperator"
+                            },
+                            "snakeCase": {
+                                "unsafeName": "eq_operator",
+                                "safeName": "eq_operator"
+                            },
+                            "screamingSnakeCase": {
+                                "unsafeName": "EQ_OPERATOR",
+                                "safeName": "EQ_OPERATOR"
+                            },
+                            "pascalCase": {
+                                "unsafeName": "EqOperator",
+                                "safeName": "EqOperator"
+                            }
+                        },
+                        "wireValue": "eq_operator"
+                    },
+                    "properties": []
+                },
+                "gt_operator": {
+                    "type": "samePropertiesAsObject",
+                    "typeId": "type_ast:GreaterThanOperator",
+                    "discriminantValue": {
+                        "name": {
+                            "originalName": "gt_operator",
+                            "camelCase": {
+                                "unsafeName": "gtOperator",
+                                "safeName": "gtOperator"
+                            },
+                            "snakeCase": {
+                                "unsafeName": "gt_operator",
+                                "safeName": "gt_operator"
+                            },
+                            "screamingSnakeCase": {
+                                "unsafeName": "GT_OPERATOR",
+                                "safeName": "GT_OPERATOR"
+                            },
+                            "pascalCase": {
+                                "unsafeName": "GtOperator",
+                                "safeName": "GtOperator"
+                            }
+                        },
+                        "wireValue": "gt_operator"
+                    },
+                    "properties": []
+                },
+                "boolean_literal": {
+                    "type": "singleProperty",
+                    "typeReference": {
+                        "type": "primitive",
+                        "value": "BOOLEAN"
+                    },
+                    "discriminantValue": {
+                        "name": {
+                            "originalName": "boolean_literal",
+                            "camelCase": {
+                                "unsafeName": "booleanLiteral",
+                                "safeName": "booleanLiteral"
+                            },
+                            "snakeCase": {
+                                "unsafeName": "boolean_literal",
+                                "safeName": "boolean_literal"
+                            },
+                            "screamingSnakeCase": {
+                                "unsafeName": "BOOLEAN_LITERAL",
+                                "safeName": "BOOLEAN_LITERAL"
+                            },
+                            "pascalCase": {
+                                "unsafeName": "BooleanLiteral",
+                                "safeName": "BooleanLiteral"
+                            }
+                        },
+                        "wireValue": "boolean_literal"
+                    },
+                    "properties": null
+                }
+            }
+        },
+        "type_ast:OrOperator": {
+            "type": "object",
+            "declaration": {
+                "name": {
+                    "originalName": "OrOperator",
+                    "camelCase": {
+                        "unsafeName": "orOperator",
+                        "safeName": "orOperator"
+                    },
+                    "snakeCase": {
+                        "unsafeName": "or_operator",
+                        "safeName": "or_operator"
+                    },
+                    "screamingSnakeCase": {
+                        "unsafeName": "OR_OPERATOR",
+                        "safeName": "OR_OPERATOR"
+                    },
+                    "pascalCase": {
+                        "unsafeName": "OrOperator",
+                        "safeName": "OrOperator"
+                    }
+                },
+                "fernFilepath": {
+                    "allParts": [
+                        {
+                            "originalName": "ast",
+                            "camelCase": {
+                                "unsafeName": "ast",
+                                "safeName": "ast"
+                            },
+                            "snakeCase": {
+                                "unsafeName": "ast",
+                                "safeName": "ast"
+                            },
+                            "screamingSnakeCase": {
+                                "unsafeName": "AST",
+                                "safeName": "AST"
+                            },
+                            "pascalCase": {
+                                "unsafeName": "Ast",
+                                "safeName": "Ast"
+                            }
+                        }
+                    ],
+                    "packagePath": [],
+                    "file": {
+                        "originalName": "ast",
+                        "camelCase": {
+                            "unsafeName": "ast",
+                            "safeName": "ast"
+                        },
+                        "snakeCase": {
+                            "unsafeName": "ast",
+                            "safeName": "ast"
+                        },
+                        "screamingSnakeCase": {
+                            "unsafeName": "AST",
+                            "safeName": "AST"
+                        },
+                        "pascalCase": {
+                            "unsafeName": "Ast",
+                            "safeName": "Ast"
+                        }
+                    }
+                }
+            },
+            "properties": [
+                {
+                    "name": {
+                        "name": {
+                            "originalName": "children",
+                            "camelCase": {
+                                "unsafeName": "children",
+                                "safeName": "children"
+                            },
+                            "snakeCase": {
+                                "unsafeName": "children",
+                                "safeName": "children"
+                            },
+                            "screamingSnakeCase": {
+                                "unsafeName": "CHILDREN",
+                                "safeName": "CHILDREN"
+                            },
+                            "pascalCase": {
+                                "unsafeName": "Children",
+                                "safeName": "Children"
+                            }
+                        },
+                        "wireValue": "children"
+                    },
+                    "typeReference": {
+                        "type": "list",
+                        "value": {
+                            "type": "named",
+                            "value": "type_ast:OrOperatorChild"
+                        }
+                    },
+                    "propertyAccess": null,
+                    "variable": null
+                }
+            ],
+            "additionalProperties": false
+        },
+        "type_ast:OrOperatorChild": {
+            "type": "discriminatedUnion",
+            "declaration": {
+                "name": {
+                    "originalName": "OrOperatorChild",
+                    "camelCase": {
+                        "unsafeName": "orOperatorChild",
+                        "safeName": "orOperatorChild"
+                    },
+                    "snakeCase": {
+                        "unsafeName": "or_operator_child",
+                        "safeName": "or_operator_child"
+                    },
+                    "screamingSnakeCase": {
+                        "unsafeName": "OR_OPERATOR_CHILD",
+                        "safeName": "OR_OPERATOR_CHILD"
+                    },
+                    "pascalCase": {
+                        "unsafeName": "OrOperatorChild",
+                        "safeName": "OrOperatorChild"
+                    }
+                },
+                "fernFilepath": {
+                    "allParts": [
+                        {
+                            "originalName": "ast",
+                            "camelCase": {
+                                "unsafeName": "ast",
+                                "safeName": "ast"
+                            },
+                            "snakeCase": {
+                                "unsafeName": "ast",
+                                "safeName": "ast"
+                            },
+                            "screamingSnakeCase": {
+                                "unsafeName": "AST",
+                                "safeName": "AST"
+                            },
+                            "pascalCase": {
+                                "unsafeName": "Ast",
+                                "safeName": "Ast"
+                            }
+                        }
+                    ],
+                    "packagePath": [],
+                    "file": {
+                        "originalName": "ast",
+                        "camelCase": {
+                            "unsafeName": "ast",
+                            "safeName": "ast"
+                        },
+                        "snakeCase": {
+                            "unsafeName": "ast",
+                            "safeName": "ast"
+                        },
+                        "screamingSnakeCase": {
+                            "unsafeName": "AST",
+                            "safeName": "AST"
+                        },
+                        "pascalCase": {
+                            "unsafeName": "Ast",
+                            "safeName": "Ast"
+                        }
+                    }
+                }
+            },
+            "discriminant": {
+                "name": {
+                    "originalName": "type",
+                    "camelCase": {
+                        "unsafeName": "type",
+                        "safeName": "type"
+                    },
+                    "snakeCase": {
+                        "unsafeName": "type",
+                        "safeName": "type"
+                    },
+                    "screamingSnakeCase": {
+                        "unsafeName": "TYPE",
+                        "safeName": "TYPE"
+                    },
+                    "pascalCase": {
+                        "unsafeName": "Type",
+                        "safeName": "Type"
+                    }
+                },
+                "wireValue": "type"
+            },
+            "types": {
+                "and_operator": {
+                    "type": "samePropertiesAsObject",
+                    "typeId": "type_ast:AndOperator",
+                    "discriminantValue": {
+                        "name": {
+                            "originalName": "and_operator",
+                            "camelCase": {
+                                "unsafeName": "andOperator",
+                                "safeName": "andOperator"
+                            },
+                            "snakeCase": {
+                                "unsafeName": "and_operator",
+                                "safeName": "and_operator"
+                            },
+                            "screamingSnakeCase": {
+                                "unsafeName": "AND_OPERATOR",
+                                "safeName": "AND_OPERATOR"
+                            },
+                            "pascalCase": {
+                                "unsafeName": "AndOperator",
+                                "safeName": "AndOperator"
+                            }
+                        },
+                        "wireValue": "and_operator"
+                    },
+                    "properties": []
+                },
+                "or_operator": {
+                    "type": "samePropertiesAsObject",
+                    "typeId": "type_ast:OrOperator",
+                    "discriminantValue": {
+                        "name": {
+                            "originalName": "or_operator",
+                            "camelCase": {
+                                "unsafeName": "orOperator",
+                                "safeName": "orOperator"
+                            },
+                            "snakeCase": {
+                                "unsafeName": "or_operator",
+                                "safeName": "or_operator"
+                            },
+                            "screamingSnakeCase": {
+                                "unsafeName": "OR_OPERATOR",
+                                "safeName": "OR_OPERATOR"
+                            },
+                            "pascalCase": {
+                                "unsafeName": "OrOperator",
+                                "safeName": "OrOperator"
+                            }
+                        },
+                        "wireValue": "or_operator"
+                    },
+                    "properties": []
+                },
+                "eq_operator": {
+                    "type": "samePropertiesAsObject",
+                    "typeId": "type_ast:EqualsOperator",
+                    "discriminantValue": {
+                        "name": {
+                            "originalName": "eq_operator",
+                            "camelCase": {
+                                "unsafeName": "eqOperator",
+                                "safeName": "eqOperator"
+                            },
+                            "snakeCase": {
+                                "unsafeName": "eq_operator",
+                                "safeName": "eq_operator"
+                            },
+                            "screamingSnakeCase": {
+                                "unsafeName": "EQ_OPERATOR",
+                                "safeName": "EQ_OPERATOR"
+                            },
+                            "pascalCase": {
+                                "unsafeName": "EqOperator",
+                                "safeName": "EqOperator"
+                            }
+                        },
+                        "wireValue": "eq_operator"
+                    },
+                    "properties": []
+                },
+                "gt_operator": {
+                    "type": "samePropertiesAsObject",
+                    "typeId": "type_ast:GreaterThanOperator",
+                    "discriminantValue": {
+                        "name": {
+                            "originalName": "gt_operator",
+                            "camelCase": {
+                                "unsafeName": "gtOperator",
+                                "safeName": "gtOperator"
+                            },
+                            "snakeCase": {
+                                "unsafeName": "gt_operator",
+                                "safeName": "gt_operator"
+                            },
+                            "screamingSnakeCase": {
+                                "unsafeName": "GT_OPERATOR",
+                                "safeName": "GT_OPERATOR"
+                            },
+                            "pascalCase": {
+                                "unsafeName": "GtOperator",
+                                "safeName": "GtOperator"
+                            }
+                        },
+                        "wireValue": "gt_operator"
+                    },
+                    "properties": []
+                },
+                "boolean_literal": {
+                    "type": "singleProperty",
+                    "typeReference": {
+                        "type": "primitive",
+                        "value": "BOOLEAN"
+                    },
+                    "discriminantValue": {
+                        "name": {
+                            "originalName": "boolean_literal",
+                            "camelCase": {
+                                "unsafeName": "booleanLiteral",
+                                "safeName": "booleanLiteral"
+                            },
+                            "snakeCase": {
+                                "unsafeName": "boolean_literal",
+                                "safeName": "boolean_literal"
+                            },
+                            "screamingSnakeCase": {
+                                "unsafeName": "BOOLEAN_LITERAL",
+                                "safeName": "BOOLEAN_LITERAL"
+                            },
+                            "pascalCase": {
+                                "unsafeName": "BooleanLiteral",
+                                "safeName": "BooleanLiteral"
+                            }
+                        },
+                        "wireValue": "boolean_literal"
+                    },
+                    "properties": null
+                }
+            }
+        },
+        "type_ast:EqualsOperator": {
+            "type": "object",
+            "declaration": {
+                "name": {
+                    "originalName": "EqualsOperator",
+                    "camelCase": {
+                        "unsafeName": "equalsOperator",
+                        "safeName": "equalsOperator"
+                    },
+                    "snakeCase": {
+                        "unsafeName": "equals_operator",
+                        "safeName": "equals_operator"
+                    },
+                    "screamingSnakeCase": {
+                        "unsafeName": "EQUALS_OPERATOR",
+                        "safeName": "EQUALS_OPERATOR"
+                    },
+                    "pascalCase": {
+                        "unsafeName": "EqualsOperator",
+                        "safeName": "EqualsOperator"
+                    }
+                },
+                "fernFilepath": {
+                    "allParts": [
+                        {
+                            "originalName": "ast",
+                            "camelCase": {
+                                "unsafeName": "ast",
+                                "safeName": "ast"
+                            },
+                            "snakeCase": {
+                                "unsafeName": "ast",
+                                "safeName": "ast"
+                            },
+                            "screamingSnakeCase": {
+                                "unsafeName": "AST",
+                                "safeName": "AST"
+                            },
+                            "pascalCase": {
+                                "unsafeName": "Ast",
+                                "safeName": "Ast"
+                            }
+                        }
+                    ],
+                    "packagePath": [],
+                    "file": {
+                        "originalName": "ast",
+                        "camelCase": {
+                            "unsafeName": "ast",
+                            "safeName": "ast"
+                        },
+                        "snakeCase": {
+                            "unsafeName": "ast",
+                            "safeName": "ast"
+                        },
+                        "screamingSnakeCase": {
+                            "unsafeName": "AST",
+                            "safeName": "AST"
+                        },
+                        "pascalCase": {
+                            "unsafeName": "Ast",
+                            "safeName": "Ast"
+                        }
+                    }
+                }
+            },
+            "properties": [
+                {
+                    "name": {
+                        "name": {
+                            "originalName": "left",
+                            "camelCase": {
+                                "unsafeName": "left",
+                                "safeName": "left"
+                            },
+                            "snakeCase": {
+                                "unsafeName": "left",
+                                "safeName": "left"
+                            },
+                            "screamingSnakeCase": {
+                                "unsafeName": "LEFT",
+                                "safeName": "LEFT"
+                            },
+                            "pascalCase": {
+                                "unsafeName": "Left",
+                                "safeName": "Left"
+                            }
+                        },
+                        "wireValue": "left"
+                    },
+                    "typeReference": {
+                        "type": "named",
+                        "value": "type_ast:EqualsOperatorLeft"
+                    },
+                    "propertyAccess": null,
+                    "variable": null
+                },
+                {
+                    "name": {
+                        "name": {
+                            "originalName": "right",
+                            "camelCase": {
+                                "unsafeName": "right",
+                                "safeName": "right"
+                            },
+                            "snakeCase": {
+                                "unsafeName": "right",
+                                "safeName": "right"
+                            },
+                            "screamingSnakeCase": {
+                                "unsafeName": "RIGHT",
+                                "safeName": "RIGHT"
+                            },
+                            "pascalCase": {
+                                "unsafeName": "Right",
+                                "safeName": "Right"
+                            }
+                        },
+                        "wireValue": "right"
+                    },
+                    "typeReference": {
+                        "type": "named",
+                        "value": "type_ast:EqualsOperatorRight"
+                    },
+                    "propertyAccess": null,
+                    "variable": null
+                }
+            ],
+            "additionalProperties": false
+        },
+        "type_ast:EqualsOperatorLeft": {
+            "type": "discriminatedUnion",
+            "declaration": {
+                "name": {
+                    "originalName": "EqualsOperatorLeft",
+                    "camelCase": {
+                        "unsafeName": "equalsOperatorLeft",
+                        "safeName": "equalsOperatorLeft"
+                    },
+                    "snakeCase": {
+                        "unsafeName": "equals_operator_left",
+                        "safeName": "equals_operator_left"
+                    },
+                    "screamingSnakeCase": {
+                        "unsafeName": "EQUALS_OPERATOR_LEFT",
+                        "safeName": "EQUALS_OPERATOR_LEFT"
+                    },
+                    "pascalCase": {
+                        "unsafeName": "EqualsOperatorLeft",
+                        "safeName": "EqualsOperatorLeft"
+                    }
+                },
+                "fernFilepath": {
+                    "allParts": [
+                        {
+                            "originalName": "ast",
+                            "camelCase": {
+                                "unsafeName": "ast",
+                                "safeName": "ast"
+                            },
+                            "snakeCase": {
+                                "unsafeName": "ast",
+                                "safeName": "ast"
+                            },
+                            "screamingSnakeCase": {
+                                "unsafeName": "AST",
+                                "safeName": "AST"
+                            },
+                            "pascalCase": {
+                                "unsafeName": "Ast",
+                                "safeName": "Ast"
+                            }
+                        }
+                    ],
+                    "packagePath": [],
+                    "file": {
+                        "originalName": "ast",
+                        "camelCase": {
+                            "unsafeName": "ast",
+                            "safeName": "ast"
+                        },
+                        "snakeCase": {
+                            "unsafeName": "ast",
+                            "safeName": "ast"
+                        },
+                        "screamingSnakeCase": {
+                            "unsafeName": "AST",
+                            "safeName": "AST"
+                        },
+                        "pascalCase": {
+                            "unsafeName": "Ast",
+                            "safeName": "Ast"
+                        }
+                    }
+                }
+            },
+            "discriminant": {
+                "name": {
+                    "originalName": "type",
+                    "camelCase": {
+                        "unsafeName": "type",
+                        "safeName": "type"
+                    },
+                    "snakeCase": {
+                        "unsafeName": "type",
+                        "safeName": "type"
+                    },
+                    "screamingSnakeCase": {
+                        "unsafeName": "TYPE",
+                        "safeName": "TYPE"
+                    },
+                    "pascalCase": {
+                        "unsafeName": "Type",
+                        "safeName": "Type"
+                    }
+                },
+                "wireValue": "type"
+            },
+            "types": {
+                "and_operator": {
+                    "type": "samePropertiesAsObject",
+                    "typeId": "type_ast:AndOperator",
+                    "discriminantValue": {
+                        "name": {
+                            "originalName": "and_operator",
+                            "camelCase": {
+                                "unsafeName": "andOperator",
+                                "safeName": "andOperator"
+                            },
+                            "snakeCase": {
+                                "unsafeName": "and_operator",
+                                "safeName": "and_operator"
+                            },
+                            "screamingSnakeCase": {
+                                "unsafeName": "AND_OPERATOR",
+                                "safeName": "AND_OPERATOR"
+                            },
+                            "pascalCase": {
+                                "unsafeName": "AndOperator",
+                                "safeName": "AndOperator"
+                            }
+                        },
+                        "wireValue": "and_operator"
+                    },
+                    "properties": []
+                },
+                "or_operator": {
+                    "type": "samePropertiesAsObject",
+                    "typeId": "type_ast:OrOperator",
+                    "discriminantValue": {
+                        "name": {
+                            "originalName": "or_operator",
+                            "camelCase": {
+                                "unsafeName": "orOperator",
+                                "safeName": "orOperator"
+                            },
+                            "snakeCase": {
+                                "unsafeName": "or_operator",
+                                "safeName": "or_operator"
+                            },
+                            "screamingSnakeCase": {
+                                "unsafeName": "OR_OPERATOR",
+                                "safeName": "OR_OPERATOR"
+                            },
+                            "pascalCase": {
+                                "unsafeName": "OrOperator",
+                                "safeName": "OrOperator"
+                            }
+                        },
+                        "wireValue": "or_operator"
+                    },
+                    "properties": []
+                },
+                "eq_operator": {
+                    "type": "samePropertiesAsObject",
+                    "typeId": "type_ast:EqualsOperator",
+                    "discriminantValue": {
+                        "name": {
+                            "originalName": "eq_operator",
+                            "camelCase": {
+                                "unsafeName": "eqOperator",
+                                "safeName": "eqOperator"
+                            },
+                            "snakeCase": {
+                                "unsafeName": "eq_operator",
+                                "safeName": "eq_operator"
+                            },
+                            "screamingSnakeCase": {
+                                "unsafeName": "EQ_OPERATOR",
+                                "safeName": "EQ_OPERATOR"
+                            },
+                            "pascalCase": {
+                                "unsafeName": "EqOperator",
+                                "safeName": "EqOperator"
+                            }
+                        },
+                        "wireValue": "eq_operator"
+                    },
+                    "properties": []
+                },
+                "gt_operator": {
+                    "type": "samePropertiesAsObject",
+                    "typeId": "type_ast:GreaterThanOperator",
+                    "discriminantValue": {
+                        "name": {
+                            "originalName": "gt_operator",
+                            "camelCase": {
+                                "unsafeName": "gtOperator",
+                                "safeName": "gtOperator"
+                            },
+                            "snakeCase": {
+                                "unsafeName": "gt_operator",
+                                "safeName": "gt_operator"
+                            },
+                            "screamingSnakeCase": {
+                                "unsafeName": "GT_OPERATOR",
+                                "safeName": "GT_OPERATOR"
+                            },
+                            "pascalCase": {
+                                "unsafeName": "GtOperator",
+                                "safeName": "GtOperator"
+                            }
+                        },
+                        "wireValue": "gt_operator"
+                    },
+                    "properties": []
+                },
+                "string_literal": {
+                    "type": "singleProperty",
+                    "typeReference": {
+                        "type": "primitive",
+                        "value": "STRING"
+                    },
+                    "discriminantValue": {
+                        "name": {
+                            "originalName": "string_literal",
+                            "camelCase": {
+                                "unsafeName": "stringLiteral",
+                                "safeName": "stringLiteral"
+                            },
+                            "snakeCase": {
+                                "unsafeName": "string_literal",
+                                "safeName": "string_literal"
+                            },
+                            "screamingSnakeCase": {
+                                "unsafeName": "STRING_LITERAL",
+                                "safeName": "STRING_LITERAL"
+                            },
+                            "pascalCase": {
+                                "unsafeName": "StringLiteral",
+                                "safeName": "StringLiteral"
+                            }
+                        },
+                        "wireValue": "string_literal"
+                    },
+                    "properties": null
+                }
+            }
+        },
+        "type_ast:EqualsOperatorRight": {
+            "type": "discriminatedUnion",
+            "declaration": {
+                "name": {
+                    "originalName": "EqualsOperatorRight",
+                    "camelCase": {
+                        "unsafeName": "equalsOperatorRight",
+                        "safeName": "equalsOperatorRight"
+                    },
+                    "snakeCase": {
+                        "unsafeName": "equals_operator_right",
+                        "safeName": "equals_operator_right"
+                    },
+                    "screamingSnakeCase": {
+                        "unsafeName": "EQUALS_OPERATOR_RIGHT",
+                        "safeName": "EQUALS_OPERATOR_RIGHT"
+                    },
+                    "pascalCase": {
+                        "unsafeName": "EqualsOperatorRight",
+                        "safeName": "EqualsOperatorRight"
+                    }
+                },
+                "fernFilepath": {
+                    "allParts": [
+                        {
+                            "originalName": "ast",
+                            "camelCase": {
+                                "unsafeName": "ast",
+                                "safeName": "ast"
+                            },
+                            "snakeCase": {
+                                "unsafeName": "ast",
+                                "safeName": "ast"
+                            },
+                            "screamingSnakeCase": {
+                                "unsafeName": "AST",
+                                "safeName": "AST"
+                            },
+                            "pascalCase": {
+                                "unsafeName": "Ast",
+                                "safeName": "Ast"
+                            }
+                        }
+                    ],
+                    "packagePath": [],
+                    "file": {
+                        "originalName": "ast",
+                        "camelCase": {
+                            "unsafeName": "ast",
+                            "safeName": "ast"
+                        },
+                        "snakeCase": {
+                            "unsafeName": "ast",
+                            "safeName": "ast"
+                        },
+                        "screamingSnakeCase": {
+                            "unsafeName": "AST",
+                            "safeName": "AST"
+                        },
+                        "pascalCase": {
+                            "unsafeName": "Ast",
+                            "safeName": "Ast"
+                        }
+                    }
+                }
+            },
+            "discriminant": {
+                "name": {
+                    "originalName": "type",
+                    "camelCase": {
+                        "unsafeName": "type",
+                        "safeName": "type"
+                    },
+                    "snakeCase": {
+                        "unsafeName": "type",
+                        "safeName": "type"
+                    },
+                    "screamingSnakeCase": {
+                        "unsafeName": "TYPE",
+                        "safeName": "TYPE"
+                    },
+                    "pascalCase": {
+                        "unsafeName": "Type",
+                        "safeName": "Type"
+                    }
+                },
+                "wireValue": "type"
+            },
+            "types": {
+                "and_operator": {
+                    "type": "samePropertiesAsObject",
+                    "typeId": "type_ast:AndOperator",
+                    "discriminantValue": {
+                        "name": {
+                            "originalName": "and_operator",
+                            "camelCase": {
+                                "unsafeName": "andOperator",
+                                "safeName": "andOperator"
+                            },
+                            "snakeCase": {
+                                "unsafeName": "and_operator",
+                                "safeName": "and_operator"
+                            },
+                            "screamingSnakeCase": {
+                                "unsafeName": "AND_OPERATOR",
+                                "safeName": "AND_OPERATOR"
+                            },
+                            "pascalCase": {
+                                "unsafeName": "AndOperator",
+                                "safeName": "AndOperator"
+                            }
+                        },
+                        "wireValue": "and_operator"
+                    },
+                    "properties": []
+                },
+                "or_operator": {
+                    "type": "samePropertiesAsObject",
+                    "typeId": "type_ast:OrOperator",
+                    "discriminantValue": {
+                        "name": {
+                            "originalName": "or_operator",
+                            "camelCase": {
+                                "unsafeName": "orOperator",
+                                "safeName": "orOperator"
+                            },
+                            "snakeCase": {
+                                "unsafeName": "or_operator",
+                                "safeName": "or_operator"
+                            },
+                            "screamingSnakeCase": {
+                                "unsafeName": "OR_OPERATOR",
+                                "safeName": "OR_OPERATOR"
+                            },
+                            "pascalCase": {
+                                "unsafeName": "OrOperator",
+                                "safeName": "OrOperator"
+                            }
+                        },
+                        "wireValue": "or_operator"
+                    },
+                    "properties": []
+                },
+                "eq_operator": {
+                    "type": "samePropertiesAsObject",
+                    "typeId": "type_ast:EqualsOperator",
+                    "discriminantValue": {
+                        "name": {
+                            "originalName": "eq_operator",
+                            "camelCase": {
+                                "unsafeName": "eqOperator",
+                                "safeName": "eqOperator"
+                            },
+                            "snakeCase": {
+                                "unsafeName": "eq_operator",
+                                "safeName": "eq_operator"
+                            },
+                            "screamingSnakeCase": {
+                                "unsafeName": "EQ_OPERATOR",
+                                "safeName": "EQ_OPERATOR"
+                            },
+                            "pascalCase": {
+                                "unsafeName": "EqOperator",
+                                "safeName": "EqOperator"
+                            }
+                        },
+                        "wireValue": "eq_operator"
+                    },
+                    "properties": []
+                },
+                "gt_operator": {
+                    "type": "samePropertiesAsObject",
+                    "typeId": "type_ast:GreaterThanOperator",
+                    "discriminantValue": {
+                        "name": {
+                            "originalName": "gt_operator",
+                            "camelCase": {
+                                "unsafeName": "gtOperator",
+                                "safeName": "gtOperator"
+                            },
+                            "snakeCase": {
+                                "unsafeName": "gt_operator",
+                                "safeName": "gt_operator"
+                            },
+                            "screamingSnakeCase": {
+                                "unsafeName": "GT_OPERATOR",
+                                "safeName": "GT_OPERATOR"
+                            },
+                            "pascalCase": {
+                                "unsafeName": "GtOperator",
+                                "safeName": "GtOperator"
+                            }
+                        },
+                        "wireValue": "gt_operator"
+                    },
+                    "properties": []
+                },
+                "string_literal": {
+                    "type": "singleProperty",
+                    "typeReference": {
+                        "type": "primitive",
+                        "value": "STRING"
+                    },
+                    "discriminantValue": {
+                        "name": {
+                            "originalName": "string_literal",
+                            "camelCase": {
+                                "unsafeName": "stringLiteral",
+                                "safeName": "stringLiteral"
+                            },
+                            "snakeCase": {
+                                "unsafeName": "string_literal",
+                                "safeName": "string_literal"
+                            },
+                            "screamingSnakeCase": {
+                                "unsafeName": "STRING_LITERAL",
+                                "safeName": "STRING_LITERAL"
+                            },
+                            "pascalCase": {
+                                "unsafeName": "StringLiteral",
+                                "safeName": "StringLiteral"
+                            }
+                        },
+                        "wireValue": "string_literal"
+                    },
+                    "properties": null
+                }
+            }
+        },
+        "type_ast:GreaterThanOperator": {
+            "type": "object",
+            "declaration": {
+                "name": {
+                    "originalName": "GreaterThanOperator",
+                    "camelCase": {
+                        "unsafeName": "greaterThanOperator",
+                        "safeName": "greaterThanOperator"
+                    },
+                    "snakeCase": {
+                        "unsafeName": "greater_than_operator",
+                        "safeName": "greater_than_operator"
+                    },
+                    "screamingSnakeCase": {
+                        "unsafeName": "GREATER_THAN_OPERATOR",
+                        "safeName": "GREATER_THAN_OPERATOR"
+                    },
+                    "pascalCase": {
+                        "unsafeName": "GreaterThanOperator",
+                        "safeName": "GreaterThanOperator"
+                    }
+                },
+                "fernFilepath": {
+                    "allParts": [
+                        {
+                            "originalName": "ast",
+                            "camelCase": {
+                                "unsafeName": "ast",
+                                "safeName": "ast"
+                            },
+                            "snakeCase": {
+                                "unsafeName": "ast",
+                                "safeName": "ast"
+                            },
+                            "screamingSnakeCase": {
+                                "unsafeName": "AST",
+                                "safeName": "AST"
+                            },
+                            "pascalCase": {
+                                "unsafeName": "Ast",
+                                "safeName": "Ast"
+                            }
+                        }
+                    ],
+                    "packagePath": [],
+                    "file": {
+                        "originalName": "ast",
+                        "camelCase": {
+                            "unsafeName": "ast",
+                            "safeName": "ast"
+                        },
+                        "snakeCase": {
+                            "unsafeName": "ast",
+                            "safeName": "ast"
+                        },
+                        "screamingSnakeCase": {
+                            "unsafeName": "AST",
+                            "safeName": "AST"
+                        },
+                        "pascalCase": {
+                            "unsafeName": "Ast",
+                            "safeName": "Ast"
+                        }
+                    }
+                }
+            },
+            "properties": [
+                {
+                    "name": {
+                        "name": {
+                            "originalName": "left",
+                            "camelCase": {
+                                "unsafeName": "left",
+                                "safeName": "left"
+                            },
+                            "snakeCase": {
+                                "unsafeName": "left",
+                                "safeName": "left"
+                            },
+                            "screamingSnakeCase": {
+                                "unsafeName": "LEFT",
+                                "safeName": "LEFT"
+                            },
+                            "pascalCase": {
+                                "unsafeName": "Left",
+                                "safeName": "Left"
+                            }
+                        },
+                        "wireValue": "left"
+                    },
+                    "typeReference": {
+                        "type": "named",
+                        "value": "type_ast:GreaterThanOperatorLeft"
+                    },
+                    "propertyAccess": null,
+                    "variable": null
+                },
+                {
+                    "name": {
+                        "name": {
+                            "originalName": "right",
+                            "camelCase": {
+                                "unsafeName": "right",
+                                "safeName": "right"
+                            },
+                            "snakeCase": {
+                                "unsafeName": "right",
+                                "safeName": "right"
+                            },
+                            "screamingSnakeCase": {
+                                "unsafeName": "RIGHT",
+                                "safeName": "RIGHT"
+                            },
+                            "pascalCase": {
+                                "unsafeName": "Right",
+                                "safeName": "Right"
+                            }
+                        },
+                        "wireValue": "right"
+                    },
+                    "typeReference": {
+                        "type": "named",
+                        "value": "type_ast:GreaterThanOperatorRight"
+                    },
+                    "propertyAccess": null,
+                    "variable": null
+                }
+            ],
+            "additionalProperties": false
+        },
+        "type_ast:GreaterThanOperatorLeft": {
+            "type": "discriminatedUnion",
+            "declaration": {
+                "name": {
+                    "originalName": "GreaterThanOperatorLeft",
+                    "camelCase": {
+                        "unsafeName": "greaterThanOperatorLeft",
+                        "safeName": "greaterThanOperatorLeft"
+                    },
+                    "snakeCase": {
+                        "unsafeName": "greater_than_operator_left",
+                        "safeName": "greater_than_operator_left"
+                    },
+                    "screamingSnakeCase": {
+                        "unsafeName": "GREATER_THAN_OPERATOR_LEFT",
+                        "safeName": "GREATER_THAN_OPERATOR_LEFT"
+                    },
+                    "pascalCase": {
+                        "unsafeName": "GreaterThanOperatorLeft",
+                        "safeName": "GreaterThanOperatorLeft"
+                    }
+                },
+                "fernFilepath": {
+                    "allParts": [
+                        {
+                            "originalName": "ast",
+                            "camelCase": {
+                                "unsafeName": "ast",
+                                "safeName": "ast"
+                            },
+                            "snakeCase": {
+                                "unsafeName": "ast",
+                                "safeName": "ast"
+                            },
+                            "screamingSnakeCase": {
+                                "unsafeName": "AST",
+                                "safeName": "AST"
+                            },
+                            "pascalCase": {
+                                "unsafeName": "Ast",
+                                "safeName": "Ast"
+                            }
+                        }
+                    ],
+                    "packagePath": [],
+                    "file": {
+                        "originalName": "ast",
+                        "camelCase": {
+                            "unsafeName": "ast",
+                            "safeName": "ast"
+                        },
+                        "snakeCase": {
+                            "unsafeName": "ast",
+                            "safeName": "ast"
+                        },
+                        "screamingSnakeCase": {
+                            "unsafeName": "AST",
+                            "safeName": "AST"
+                        },
+                        "pascalCase": {
+                            "unsafeName": "Ast",
+                            "safeName": "Ast"
+                        }
+                    }
+                }
+            },
+            "discriminant": {
+                "name": {
+                    "originalName": "type",
+                    "camelCase": {
+                        "unsafeName": "type",
+                        "safeName": "type"
+                    },
+                    "snakeCase": {
+                        "unsafeName": "type",
+                        "safeName": "type"
+                    },
+                    "screamingSnakeCase": {
+                        "unsafeName": "TYPE",
+                        "safeName": "TYPE"
+                    },
+                    "pascalCase": {
+                        "unsafeName": "Type",
+                        "safeName": "Type"
+                    }
+                },
+                "wireValue": "type"
+            },
+            "types": {
+                "and_operator": {
+                    "type": "samePropertiesAsObject",
+                    "typeId": "type_ast:AndOperator",
+                    "discriminantValue": {
+                        "name": {
+                            "originalName": "and_operator",
+                            "camelCase": {
+                                "unsafeName": "andOperator",
+                                "safeName": "andOperator"
+                            },
+                            "snakeCase": {
+                                "unsafeName": "and_operator",
+                                "safeName": "and_operator"
+                            },
+                            "screamingSnakeCase": {
+                                "unsafeName": "AND_OPERATOR",
+                                "safeName": "AND_OPERATOR"
+                            },
+                            "pascalCase": {
+                                "unsafeName": "AndOperator",
+                                "safeName": "AndOperator"
+                            }
+                        },
+                        "wireValue": "and_operator"
+                    },
+                    "properties": []
+                },
+                "or_operator": {
+                    "type": "samePropertiesAsObject",
+                    "typeId": "type_ast:OrOperator",
+                    "discriminantValue": {
+                        "name": {
+                            "originalName": "or_operator",
+                            "camelCase": {
+                                "unsafeName": "orOperator",
+                                "safeName": "orOperator"
+                            },
+                            "snakeCase": {
+                                "unsafeName": "or_operator",
+                                "safeName": "or_operator"
+                            },
+                            "screamingSnakeCase": {
+                                "unsafeName": "OR_OPERATOR",
+                                "safeName": "OR_OPERATOR"
+                            },
+                            "pascalCase": {
+                                "unsafeName": "OrOperator",
+                                "safeName": "OrOperator"
+                            }
+                        },
+                        "wireValue": "or_operator"
+                    },
+                    "properties": []
+                },
+                "eq_operator": {
+                    "type": "samePropertiesAsObject",
+                    "typeId": "type_ast:EqualsOperator",
+                    "discriminantValue": {
+                        "name": {
+                            "originalName": "eq_operator",
+                            "camelCase": {
+                                "unsafeName": "eqOperator",
+                                "safeName": "eqOperator"
+                            },
+                            "snakeCase": {
+                                "unsafeName": "eq_operator",
+                                "safeName": "eq_operator"
+                            },
+                            "screamingSnakeCase": {
+                                "unsafeName": "EQ_OPERATOR",
+                                "safeName": "EQ_OPERATOR"
+                            },
+                            "pascalCase": {
+                                "unsafeName": "EqOperator",
+                                "safeName": "EqOperator"
+                            }
+                        },
+                        "wireValue": "eq_operator"
+                    },
+                    "properties": []
+                },
+                "gt_operator": {
+                    "type": "samePropertiesAsObject",
+                    "typeId": "type_ast:GreaterThanOperator",
+                    "discriminantValue": {
+                        "name": {
+                            "originalName": "gt_operator",
+                            "camelCase": {
+                                "unsafeName": "gtOperator",
+                                "safeName": "gtOperator"
+                            },
+                            "snakeCase": {
+                                "unsafeName": "gt_operator",
+                                "safeName": "gt_operator"
+                            },
+                            "screamingSnakeCase": {
+                                "unsafeName": "GT_OPERATOR",
+                                "safeName": "GT_OPERATOR"
+                            },
+                            "pascalCase": {
+                                "unsafeName": "GtOperator",
+                                "safeName": "GtOperator"
+                            }
+                        },
+                        "wireValue": "gt_operator"
+                    },
+                    "properties": []
+                },
+                "number_literal": {
+                    "type": "singleProperty",
+                    "typeReference": {
+                        "type": "primitive",
+                        "value": "DOUBLE"
+                    },
+                    "discriminantValue": {
+                        "name": {
+                            "originalName": "number_literal",
+                            "camelCase": {
+                                "unsafeName": "numberLiteral",
+                                "safeName": "numberLiteral"
+                            },
+                            "snakeCase": {
+                                "unsafeName": "number_literal",
+                                "safeName": "number_literal"
+                            },
+                            "screamingSnakeCase": {
+                                "unsafeName": "NUMBER_LITERAL",
+                                "safeName": "NUMBER_LITERAL"
+                            },
+                            "pascalCase": {
+                                "unsafeName": "NumberLiteral",
+                                "safeName": "NumberLiteral"
+                            }
+                        },
+                        "wireValue": "number_literal"
+                    },
+                    "properties": null
+                }
+            }
+        },
+        "type_ast:GreaterThanOperatorRight": {
+            "type": "discriminatedUnion",
+            "declaration": {
+                "name": {
+                    "originalName": "GreaterThanOperatorRight",
+                    "camelCase": {
+                        "unsafeName": "greaterThanOperatorRight",
+                        "safeName": "greaterThanOperatorRight"
+                    },
+                    "snakeCase": {
+                        "unsafeName": "greater_than_operator_right",
+                        "safeName": "greater_than_operator_right"
+                    },
+                    "screamingSnakeCase": {
+                        "unsafeName": "GREATER_THAN_OPERATOR_RIGHT",
+                        "safeName": "GREATER_THAN_OPERATOR_RIGHT"
+                    },
+                    "pascalCase": {
+                        "unsafeName": "GreaterThanOperatorRight",
+                        "safeName": "GreaterThanOperatorRight"
+                    }
+                },
+                "fernFilepath": {
+                    "allParts": [
+                        {
+                            "originalName": "ast",
+                            "camelCase": {
+                                "unsafeName": "ast",
+                                "safeName": "ast"
+                            },
+                            "snakeCase": {
+                                "unsafeName": "ast",
+                                "safeName": "ast"
+                            },
+                            "screamingSnakeCase": {
+                                "unsafeName": "AST",
+                                "safeName": "AST"
+                            },
+                            "pascalCase": {
+                                "unsafeName": "Ast",
+                                "safeName": "Ast"
+                            }
+                        }
+                    ],
+                    "packagePath": [],
+                    "file": {
+                        "originalName": "ast",
+                        "camelCase": {
+                            "unsafeName": "ast",
+                            "safeName": "ast"
+                        },
+                        "snakeCase": {
+                            "unsafeName": "ast",
+                            "safeName": "ast"
+                        },
+                        "screamingSnakeCase": {
+                            "unsafeName": "AST",
+                            "safeName": "AST"
+                        },
+                        "pascalCase": {
+                            "unsafeName": "Ast",
+                            "safeName": "Ast"
+                        }
+                    }
+                }
+            },
+            "discriminant": {
+                "name": {
+                    "originalName": "type",
+                    "camelCase": {
+                        "unsafeName": "type",
+                        "safeName": "type"
+                    },
+                    "snakeCase": {
+                        "unsafeName": "type",
+                        "safeName": "type"
+                    },
+                    "screamingSnakeCase": {
+                        "unsafeName": "TYPE",
+                        "safeName": "TYPE"
+                    },
+                    "pascalCase": {
+                        "unsafeName": "Type",
+                        "safeName": "Type"
+                    }
+                },
+                "wireValue": "type"
+            },
+            "types": {
+                "and_operator": {
+                    "type": "samePropertiesAsObject",
+                    "typeId": "type_ast:AndOperator",
+                    "discriminantValue": {
+                        "name": {
+                            "originalName": "and_operator",
+                            "camelCase": {
+                                "unsafeName": "andOperator",
+                                "safeName": "andOperator"
+                            },
+                            "snakeCase": {
+                                "unsafeName": "and_operator",
+                                "safeName": "and_operator"
+                            },
+                            "screamingSnakeCase": {
+                                "unsafeName": "AND_OPERATOR",
+                                "safeName": "AND_OPERATOR"
+                            },
+                            "pascalCase": {
+                                "unsafeName": "AndOperator",
+                                "safeName": "AndOperator"
+                            }
+                        },
+                        "wireValue": "and_operator"
+                    },
+                    "properties": []
+                },
+                "or_operator": {
+                    "type": "samePropertiesAsObject",
+                    "typeId": "type_ast:OrOperator",
+                    "discriminantValue": {
+                        "name": {
+                            "originalName": "or_operator",
+                            "camelCase": {
+                                "unsafeName": "orOperator",
+                                "safeName": "orOperator"
+                            },
+                            "snakeCase": {
+                                "unsafeName": "or_operator",
+                                "safeName": "or_operator"
+                            },
+                            "screamingSnakeCase": {
+                                "unsafeName": "OR_OPERATOR",
+                                "safeName": "OR_OPERATOR"
+                            },
+                            "pascalCase": {
+                                "unsafeName": "OrOperator",
+                                "safeName": "OrOperator"
+                            }
+                        },
+                        "wireValue": "or_operator"
+                    },
+                    "properties": []
+                },
+                "eq_operator": {
+                    "type": "samePropertiesAsObject",
+                    "typeId": "type_ast:EqualsOperator",
+                    "discriminantValue": {
+                        "name": {
+                            "originalName": "eq_operator",
+                            "camelCase": {
+                                "unsafeName": "eqOperator",
+                                "safeName": "eqOperator"
+                            },
+                            "snakeCase": {
+                                "unsafeName": "eq_operator",
+                                "safeName": "eq_operator"
+                            },
+                            "screamingSnakeCase": {
+                                "unsafeName": "EQ_OPERATOR",
+                                "safeName": "EQ_OPERATOR"
+                            },
+                            "pascalCase": {
+                                "unsafeName": "EqOperator",
+                                "safeName": "EqOperator"
+                            }
+                        },
+                        "wireValue": "eq_operator"
+                    },
+                    "properties": []
+                },
+                "gt_operator": {
+                    "type": "samePropertiesAsObject",
+                    "typeId": "type_ast:GreaterThanOperator",
+                    "discriminantValue": {
+                        "name": {
+                            "originalName": "gt_operator",
+                            "camelCase": {
+                                "unsafeName": "gtOperator",
+                                "safeName": "gtOperator"
+                            },
+                            "snakeCase": {
+                                "unsafeName": "gt_operator",
+                                "safeName": "gt_operator"
+                            },
+                            "screamingSnakeCase": {
+                                "unsafeName": "GT_OPERATOR",
+                                "safeName": "GT_OPERATOR"
+                            },
+                            "pascalCase": {
+                                "unsafeName": "GtOperator",
+                                "safeName": "GtOperator"
+                            }
+                        },
+                        "wireValue": "gt_operator"
+                    },
+                    "properties": []
+                },
+                "number_literal": {
+                    "type": "singleProperty",
+                    "typeReference": {
+                        "type": "primitive",
+                        "value": "DOUBLE"
+                    },
+                    "discriminantValue": {
+                        "name": {
+                            "originalName": "number_literal",
+                            "camelCase": {
+                                "unsafeName": "numberLiteral",
+                                "safeName": "numberLiteral"
+                            },
+                            "snakeCase": {
+                                "unsafeName": "number_literal",
+                                "safeName": "number_literal"
+                            },
+                            "screamingSnakeCase": {
+                                "unsafeName": "NUMBER_LITERAL",
+                                "safeName": "NUMBER_LITERAL"
+                            },
+                            "pascalCase": {
+                                "unsafeName": "NumberLiteral",
+                                "safeName": "NumberLiteral"
+                            }
+                        },
+                        "wireValue": "number_literal"
+                    },
+                    "properties": null
+                }
+            }
         }
     },
     "headers": [],

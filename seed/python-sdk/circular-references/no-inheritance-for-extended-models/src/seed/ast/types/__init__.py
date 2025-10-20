@@ -6,28 +6,33 @@ import typing
 from importlib import import_module
 
 if typing.TYPE_CHECKING:
-    from .container_value import ContainerValue, ContainerValue_List, ContainerValue_Optional
-    from .field_value import FieldValue, FieldValue_ContainerValue, FieldValue_ObjectValue, FieldValue_PrimitiveValue
+    from .container_value_all import (
+        ContainerValue,
+        ContainerValue_List,
+        ContainerValue_Optional,
+        FieldValue,
+        FieldValue_ContainerValue,
+        FieldValue_ObjectValue,
+        FieldValue_PrimitiveValue,
+    )
     from .json_like import JsonLike
     from .object_value import ObjectValue
     from .primitive_value import PrimitiveValue
-    from .t import T
-    from .tor_u import TorU
-    from .u import U
+    from .t_all import T, TorU, U
 _dynamic_imports: typing.Dict[str, str] = {
-    "ContainerValue": ".container_value",
-    "ContainerValue_List": ".container_value",
-    "ContainerValue_Optional": ".container_value",
-    "FieldValue": ".field_value",
-    "FieldValue_ContainerValue": ".field_value",
-    "FieldValue_ObjectValue": ".field_value",
-    "FieldValue_PrimitiveValue": ".field_value",
+    "ContainerValue": ".container_value_all",
+    "ContainerValue_List": ".container_value_all",
+    "ContainerValue_Optional": ".container_value_all",
+    "FieldValue": ".container_value_all",
+    "FieldValue_ContainerValue": ".container_value_all",
+    "FieldValue_ObjectValue": ".container_value_all",
+    "FieldValue_PrimitiveValue": ".container_value_all",
     "JsonLike": ".json_like",
     "ObjectValue": ".object_value",
     "PrimitiveValue": ".primitive_value",
-    "T": ".t",
-    "TorU": ".tor_u",
-    "U": ".u",
+    "T": ".t_all",
+    "TorU": ".t_all",
+    "U": ".t_all",
 }
 
 

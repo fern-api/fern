@@ -6,21 +6,15 @@ import typing
 from importlib import import_module
 
 if typing.TYPE_CHECKING:
-    from .account import Account
-    from .base_resource import BaseResource
-    from .memo import Memo
-    from .patient import Patient
-    from .practitioner import Practitioner
-    from .resource_list import ResourceList
-    from .script import Script
+    from .account_all import Account, BaseResource, Memo, Patient, Practitioner, ResourceList, Script
 _dynamic_imports: typing.Dict[str, str] = {
-    "Account": ".account",
-    "BaseResource": ".base_resource",
-    "Memo": ".memo",
-    "Patient": ".patient",
-    "Practitioner": ".practitioner",
-    "ResourceList": ".resource_list",
-    "Script": ".script",
+    "Account": ".account_all",
+    "BaseResource": ".account_all",
+    "Memo": ".account_all",
+    "Patient": ".account_all",
+    "Practitioner": ".account_all",
+    "ResourceList": ".account_all",
+    "Script": ".account_all",
 }
 
 

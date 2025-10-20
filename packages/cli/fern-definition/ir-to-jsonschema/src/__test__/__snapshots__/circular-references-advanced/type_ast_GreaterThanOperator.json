@@ -1,0 +1,618 @@
+{
+  "type": "object",
+  "properties": {
+    "left": {
+      "$ref": "#/definitions/ast.GreaterThanOperatorLeft"
+    },
+    "right": {
+      "$ref": "#/definitions/ast.GreaterThanOperatorRight"
+    }
+  },
+  "required": [
+    "left",
+    "right"
+  ],
+  "additionalProperties": false,
+  "definitions": {
+    "ast.GreaterThanOperatorRight": {
+      "type": "object",
+      "properties": {
+        "type": {
+          "type": "string",
+          "enum": [
+            "and_operator",
+            "or_operator",
+            "eq_operator",
+            "gt_operator",
+            "number_literal"
+          ]
+        }
+      },
+      "oneOf": [
+        {
+          "properties": {
+            "type": {
+              "const": "and_operator"
+            },
+            "children": {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/ast.AndOperatorChild"
+              }
+            }
+          },
+          "required": [
+            "type",
+            "children"
+          ]
+        },
+        {
+          "properties": {
+            "type": {
+              "const": "or_operator"
+            },
+            "children": {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/ast.OrOperatorChild"
+              }
+            }
+          },
+          "required": [
+            "type",
+            "children"
+          ]
+        },
+        {
+          "properties": {
+            "type": {
+              "const": "eq_operator"
+            },
+            "left": {
+              "$ref": "#/definitions/ast.EqualsOperatorLeft"
+            },
+            "right": {
+              "$ref": "#/definitions/ast.EqualsOperatorRight"
+            }
+          },
+          "required": [
+            "type",
+            "left",
+            "right"
+          ]
+        },
+        {
+          "properties": {
+            "type": {
+              "const": "gt_operator"
+            },
+            "left": {
+              "$ref": "#/definitions/ast.GreaterThanOperatorLeft"
+            },
+            "right": {
+              "$ref": "#/definitions/ast.GreaterThanOperatorRight"
+            }
+          },
+          "required": [
+            "type",
+            "left",
+            "right"
+          ]
+        },
+        {
+          "properties": {
+            "type": {
+              "const": "number_literal"
+            },
+            "value": {
+              "type": "number"
+            }
+          },
+          "required": [
+            "type"
+          ]
+        }
+      ]
+    },
+    "ast.EqualsOperatorRight": {
+      "type": "object",
+      "properties": {
+        "type": {
+          "type": "string",
+          "enum": [
+            "and_operator",
+            "or_operator",
+            "eq_operator",
+            "gt_operator",
+            "string_literal"
+          ]
+        }
+      },
+      "oneOf": [
+        {
+          "properties": {
+            "type": {
+              "const": "and_operator"
+            },
+            "children": {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/ast.AndOperatorChild"
+              }
+            }
+          },
+          "required": [
+            "type",
+            "children"
+          ]
+        },
+        {
+          "properties": {
+            "type": {
+              "const": "or_operator"
+            },
+            "children": {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/ast.OrOperatorChild"
+              }
+            }
+          },
+          "required": [
+            "type",
+            "children"
+          ]
+        },
+        {
+          "properties": {
+            "type": {
+              "const": "eq_operator"
+            },
+            "left": {
+              "$ref": "#/definitions/ast.EqualsOperatorLeft"
+            },
+            "right": {
+              "$ref": "#/definitions/ast.EqualsOperatorRight"
+            }
+          },
+          "required": [
+            "type",
+            "left",
+            "right"
+          ]
+        },
+        {
+          "properties": {
+            "type": {
+              "const": "gt_operator"
+            },
+            "left": {
+              "$ref": "#/definitions/ast.GreaterThanOperatorLeft"
+            },
+            "right": {
+              "$ref": "#/definitions/ast.GreaterThanOperatorRight"
+            }
+          },
+          "required": [
+            "type",
+            "left",
+            "right"
+          ]
+        },
+        {
+          "properties": {
+            "type": {
+              "const": "string_literal"
+            },
+            "value": {
+              "type": "string"
+            }
+          },
+          "required": [
+            "type"
+          ]
+        }
+      ]
+    },
+    "ast.EqualsOperatorLeft": {
+      "type": "object",
+      "properties": {
+        "type": {
+          "type": "string",
+          "enum": [
+            "and_operator",
+            "or_operator",
+            "eq_operator",
+            "gt_operator",
+            "string_literal"
+          ]
+        }
+      },
+      "oneOf": [
+        {
+          "properties": {
+            "type": {
+              "const": "and_operator"
+            },
+            "children": {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/ast.AndOperatorChild"
+              }
+            }
+          },
+          "required": [
+            "type",
+            "children"
+          ]
+        },
+        {
+          "properties": {
+            "type": {
+              "const": "or_operator"
+            },
+            "children": {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/ast.OrOperatorChild"
+              }
+            }
+          },
+          "required": [
+            "type",
+            "children"
+          ]
+        },
+        {
+          "properties": {
+            "type": {
+              "const": "eq_operator"
+            },
+            "left": {
+              "$ref": "#/definitions/ast.EqualsOperatorLeft"
+            },
+            "right": {
+              "$ref": "#/definitions/ast.EqualsOperatorRight"
+            }
+          },
+          "required": [
+            "type",
+            "left",
+            "right"
+          ]
+        },
+        {
+          "properties": {
+            "type": {
+              "const": "gt_operator"
+            },
+            "left": {
+              "$ref": "#/definitions/ast.GreaterThanOperatorLeft"
+            },
+            "right": {
+              "$ref": "#/definitions/ast.GreaterThanOperatorRight"
+            }
+          },
+          "required": [
+            "type",
+            "left",
+            "right"
+          ]
+        },
+        {
+          "properties": {
+            "type": {
+              "const": "string_literal"
+            },
+            "value": {
+              "type": "string"
+            }
+          },
+          "required": [
+            "type"
+          ]
+        }
+      ]
+    },
+    "ast.OrOperatorChild": {
+      "type": "object",
+      "properties": {
+        "type": {
+          "type": "string",
+          "enum": [
+            "and_operator",
+            "or_operator",
+            "eq_operator",
+            "gt_operator",
+            "boolean_literal"
+          ]
+        }
+      },
+      "oneOf": [
+        {
+          "properties": {
+            "type": {
+              "const": "and_operator"
+            },
+            "children": {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/ast.AndOperatorChild"
+              }
+            }
+          },
+          "required": [
+            "type",
+            "children"
+          ]
+        },
+        {
+          "properties": {
+            "type": {
+              "const": "or_operator"
+            },
+            "children": {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/ast.OrOperatorChild"
+              }
+            }
+          },
+          "required": [
+            "type",
+            "children"
+          ]
+        },
+        {
+          "properties": {
+            "type": {
+              "const": "eq_operator"
+            },
+            "left": {
+              "$ref": "#/definitions/ast.EqualsOperatorLeft"
+            },
+            "right": {
+              "$ref": "#/definitions/ast.EqualsOperatorRight"
+            }
+          },
+          "required": [
+            "type",
+            "left",
+            "right"
+          ]
+        },
+        {
+          "properties": {
+            "type": {
+              "const": "gt_operator"
+            },
+            "left": {
+              "$ref": "#/definitions/ast.GreaterThanOperatorLeft"
+            },
+            "right": {
+              "$ref": "#/definitions/ast.GreaterThanOperatorRight"
+            }
+          },
+          "required": [
+            "type",
+            "left",
+            "right"
+          ]
+        },
+        {
+          "properties": {
+            "type": {
+              "const": "boolean_literal"
+            },
+            "value": {
+              "type": "boolean"
+            }
+          },
+          "required": [
+            "type"
+          ]
+        }
+      ]
+    },
+    "ast.AndOperatorChild": {
+      "type": "object",
+      "properties": {
+        "type": {
+          "type": "string",
+          "enum": [
+            "and_operator",
+            "or_operator",
+            "eq_operator",
+            "gt_operator",
+            "boolean_literal"
+          ]
+        }
+      },
+      "oneOf": [
+        {
+          "properties": {
+            "type": {
+              "const": "and_operator"
+            },
+            "children": {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/ast.AndOperatorChild"
+              }
+            }
+          },
+          "required": [
+            "type",
+            "children"
+          ]
+        },
+        {
+          "properties": {
+            "type": {
+              "const": "or_operator"
+            },
+            "children": {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/ast.OrOperatorChild"
+              }
+            }
+          },
+          "required": [
+            "type",
+            "children"
+          ]
+        },
+        {
+          "properties": {
+            "type": {
+              "const": "eq_operator"
+            },
+            "left": {
+              "$ref": "#/definitions/ast.EqualsOperatorLeft"
+            },
+            "right": {
+              "$ref": "#/definitions/ast.EqualsOperatorRight"
+            }
+          },
+          "required": [
+            "type",
+            "left",
+            "right"
+          ]
+        },
+        {
+          "properties": {
+            "type": {
+              "const": "gt_operator"
+            },
+            "left": {
+              "$ref": "#/definitions/ast.GreaterThanOperatorLeft"
+            },
+            "right": {
+              "$ref": "#/definitions/ast.GreaterThanOperatorRight"
+            }
+          },
+          "required": [
+            "type",
+            "left",
+            "right"
+          ]
+        },
+        {
+          "properties": {
+            "type": {
+              "const": "boolean_literal"
+            },
+            "value": {
+              "type": "boolean"
+            }
+          },
+          "required": [
+            "type"
+          ]
+        }
+      ]
+    },
+    "ast.GreaterThanOperatorLeft": {
+      "type": "object",
+      "properties": {
+        "type": {
+          "type": "string",
+          "enum": [
+            "and_operator",
+            "or_operator",
+            "eq_operator",
+            "gt_operator",
+            "number_literal"
+          ]
+        }
+      },
+      "oneOf": [
+        {
+          "properties": {
+            "type": {
+              "const": "and_operator"
+            },
+            "children": {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/ast.AndOperatorChild"
+              }
+            }
+          },
+          "required": [
+            "type",
+            "children"
+          ]
+        },
+        {
+          "properties": {
+            "type": {
+              "const": "or_operator"
+            },
+            "children": {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/ast.OrOperatorChild"
+              }
+            }
+          },
+          "required": [
+            "type",
+            "children"
+          ]
+        },
+        {
+          "properties": {
+            "type": {
+              "const": "eq_operator"
+            },
+            "left": {
+              "$ref": "#/definitions/ast.EqualsOperatorLeft"
+            },
+            "right": {
+              "$ref": "#/definitions/ast.EqualsOperatorRight"
+            }
+          },
+          "required": [
+            "type",
+            "left",
+            "right"
+          ]
+        },
+        {
+          "properties": {
+            "type": {
+              "const": "gt_operator"
+            },
+            "left": {
+              "$ref": "#/definitions/ast.GreaterThanOperatorLeft"
+            },
+            "right": {
+              "$ref": "#/definitions/ast.GreaterThanOperatorRight"
+            }
+          },
+          "required": [
+            "type",
+            "left",
+            "right"
+          ]
+        },
+        {
+          "properties": {
+            "type": {
+              "const": "number_literal"
+            },
+            "value": {
+              "type": "number"
+            }
+          },
+          "required": [
+            "type"
+          ]
+        }
+      ]
+    }
+  }
+}

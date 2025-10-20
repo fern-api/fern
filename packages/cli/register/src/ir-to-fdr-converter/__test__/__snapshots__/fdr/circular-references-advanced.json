@@ -392,6 +392,463 @@
           }
         ]
       }
+    },
+    "type_ast:AndOperator": {
+      "description": "Deep circular reference pattern mimicking elevenlabs AST operators",
+      "name": "AndOperator",
+      "shape": {
+        "type": "object",
+        "extends": [],
+        "properties": [
+          {
+            "key": "children",
+            "valueType": {
+              "type": "list",
+              "itemType": {
+                "type": "id",
+                "value": "type_ast:AndOperatorChild"
+              }
+            }
+          }
+        ]
+      }
+    },
+    "type_ast:AndOperatorChild": {
+      "name": "AndOperatorChild",
+      "shape": {
+        "type": "discriminatedUnion",
+        "discriminant": "type",
+        "variants": [
+          {
+            "discriminantValue": "and_operator",
+            "additionalProperties": {
+              "extends": [
+                "type_ast:AndOperator"
+              ],
+              "properties": []
+            }
+          },
+          {
+            "discriminantValue": "or_operator",
+            "additionalProperties": {
+              "extends": [
+                "type_ast:OrOperator"
+              ],
+              "properties": []
+            }
+          },
+          {
+            "discriminantValue": "eq_operator",
+            "additionalProperties": {
+              "extends": [
+                "type_ast:EqualsOperator"
+              ],
+              "properties": []
+            }
+          },
+          {
+            "discriminantValue": "gt_operator",
+            "additionalProperties": {
+              "extends": [
+                "type_ast:GreaterThanOperator"
+              ],
+              "properties": []
+            }
+          },
+          {
+            "discriminantValue": "boolean_literal",
+            "additionalProperties": {
+              "extends": [],
+              "properties": [
+                {
+                  "key": "value",
+                  "valueType": {
+                    "type": "primitive",
+                    "value": {
+                      "type": "boolean"
+                    }
+                  }
+                }
+              ]
+            }
+          }
+        ]
+      }
+    },
+    "type_ast:OrOperator": {
+      "name": "OrOperator",
+      "shape": {
+        "type": "object",
+        "extends": [],
+        "properties": [
+          {
+            "key": "children",
+            "valueType": {
+              "type": "list",
+              "itemType": {
+                "type": "id",
+                "value": "type_ast:OrOperatorChild"
+              }
+            }
+          }
+        ]
+      }
+    },
+    "type_ast:OrOperatorChild": {
+      "name": "OrOperatorChild",
+      "shape": {
+        "type": "discriminatedUnion",
+        "discriminant": "type",
+        "variants": [
+          {
+            "discriminantValue": "and_operator",
+            "additionalProperties": {
+              "extends": [
+                "type_ast:AndOperator"
+              ],
+              "properties": []
+            }
+          },
+          {
+            "discriminantValue": "or_operator",
+            "additionalProperties": {
+              "extends": [
+                "type_ast:OrOperator"
+              ],
+              "properties": []
+            }
+          },
+          {
+            "discriminantValue": "eq_operator",
+            "additionalProperties": {
+              "extends": [
+                "type_ast:EqualsOperator"
+              ],
+              "properties": []
+            }
+          },
+          {
+            "discriminantValue": "gt_operator",
+            "additionalProperties": {
+              "extends": [
+                "type_ast:GreaterThanOperator"
+              ],
+              "properties": []
+            }
+          },
+          {
+            "discriminantValue": "boolean_literal",
+            "additionalProperties": {
+              "extends": [],
+              "properties": [
+                {
+                  "key": "value",
+                  "valueType": {
+                    "type": "primitive",
+                    "value": {
+                      "type": "boolean"
+                    }
+                  }
+                }
+              ]
+            }
+          }
+        ]
+      }
+    },
+    "type_ast:EqualsOperator": {
+      "name": "EqualsOperator",
+      "shape": {
+        "type": "object",
+        "extends": [],
+        "properties": [
+          {
+            "key": "left",
+            "valueType": {
+              "type": "id",
+              "value": "type_ast:EqualsOperatorLeft"
+            }
+          },
+          {
+            "key": "right",
+            "valueType": {
+              "type": "id",
+              "value": "type_ast:EqualsOperatorRight"
+            }
+          }
+        ]
+      }
+    },
+    "type_ast:EqualsOperatorLeft": {
+      "name": "EqualsOperatorLeft",
+      "shape": {
+        "type": "discriminatedUnion",
+        "discriminant": "type",
+        "variants": [
+          {
+            "discriminantValue": "and_operator",
+            "additionalProperties": {
+              "extends": [
+                "type_ast:AndOperator"
+              ],
+              "properties": []
+            }
+          },
+          {
+            "discriminantValue": "or_operator",
+            "additionalProperties": {
+              "extends": [
+                "type_ast:OrOperator"
+              ],
+              "properties": []
+            }
+          },
+          {
+            "discriminantValue": "eq_operator",
+            "additionalProperties": {
+              "extends": [
+                "type_ast:EqualsOperator"
+              ],
+              "properties": []
+            }
+          },
+          {
+            "discriminantValue": "gt_operator",
+            "additionalProperties": {
+              "extends": [
+                "type_ast:GreaterThanOperator"
+              ],
+              "properties": []
+            }
+          },
+          {
+            "discriminantValue": "string_literal",
+            "additionalProperties": {
+              "extends": [],
+              "properties": [
+                {
+                  "key": "value",
+                  "valueType": {
+                    "type": "primitive",
+                    "value": {
+                      "type": "string"
+                    }
+                  }
+                }
+              ]
+            }
+          }
+        ]
+      }
+    },
+    "type_ast:EqualsOperatorRight": {
+      "name": "EqualsOperatorRight",
+      "shape": {
+        "type": "discriminatedUnion",
+        "discriminant": "type",
+        "variants": [
+          {
+            "discriminantValue": "and_operator",
+            "additionalProperties": {
+              "extends": [
+                "type_ast:AndOperator"
+              ],
+              "properties": []
+            }
+          },
+          {
+            "discriminantValue": "or_operator",
+            "additionalProperties": {
+              "extends": [
+                "type_ast:OrOperator"
+              ],
+              "properties": []
+            }
+          },
+          {
+            "discriminantValue": "eq_operator",
+            "additionalProperties": {
+              "extends": [
+                "type_ast:EqualsOperator"
+              ],
+              "properties": []
+            }
+          },
+          {
+            "discriminantValue": "gt_operator",
+            "additionalProperties": {
+              "extends": [
+                "type_ast:GreaterThanOperator"
+              ],
+              "properties": []
+            }
+          },
+          {
+            "discriminantValue": "string_literal",
+            "additionalProperties": {
+              "extends": [],
+              "properties": [
+                {
+                  "key": "value",
+                  "valueType": {
+                    "type": "primitive",
+                    "value": {
+                      "type": "string"
+                    }
+                  }
+                }
+              ]
+            }
+          }
+        ]
+      }
+    },
+    "type_ast:GreaterThanOperator": {
+      "name": "GreaterThanOperator",
+      "shape": {
+        "type": "object",
+        "extends": [],
+        "properties": [
+          {
+            "key": "left",
+            "valueType": {
+              "type": "id",
+              "value": "type_ast:GreaterThanOperatorLeft"
+            }
+          },
+          {
+            "key": "right",
+            "valueType": {
+              "type": "id",
+              "value": "type_ast:GreaterThanOperatorRight"
+            }
+          }
+        ]
+      }
+    },
+    "type_ast:GreaterThanOperatorLeft": {
+      "name": "GreaterThanOperatorLeft",
+      "shape": {
+        "type": "discriminatedUnion",
+        "discriminant": "type",
+        "variants": [
+          {
+            "discriminantValue": "and_operator",
+            "additionalProperties": {
+              "extends": [
+                "type_ast:AndOperator"
+              ],
+              "properties": []
+            }
+          },
+          {
+            "discriminantValue": "or_operator",
+            "additionalProperties": {
+              "extends": [
+                "type_ast:OrOperator"
+              ],
+              "properties": []
+            }
+          },
+          {
+            "discriminantValue": "eq_operator",
+            "additionalProperties": {
+              "extends": [
+                "type_ast:EqualsOperator"
+              ],
+              "properties": []
+            }
+          },
+          {
+            "discriminantValue": "gt_operator",
+            "additionalProperties": {
+              "extends": [
+                "type_ast:GreaterThanOperator"
+              ],
+              "properties": []
+            }
+          },
+          {
+            "discriminantValue": "number_literal",
+            "additionalProperties": {
+              "extends": [],
+              "properties": [
+                {
+                  "key": "value",
+                  "valueType": {
+                    "type": "primitive",
+                    "value": {
+                      "type": "double"
+                    }
+                  }
+                }
+              ]
+            }
+          }
+        ]
+      }
+    },
+    "type_ast:GreaterThanOperatorRight": {
+      "name": "GreaterThanOperatorRight",
+      "shape": {
+        "type": "discriminatedUnion",
+        "discriminant": "type",
+        "variants": [
+          {
+            "discriminantValue": "and_operator",
+            "additionalProperties": {
+              "extends": [
+                "type_ast:AndOperator"
+              ],
+              "properties": []
+            }
+          },
+          {
+            "discriminantValue": "or_operator",
+            "additionalProperties": {
+              "extends": [
+                "type_ast:OrOperator"
+              ],
+              "properties": []
+            }
+          },
+          {
+            "discriminantValue": "eq_operator",
+            "additionalProperties": {
+              "extends": [
+                "type_ast:EqualsOperator"
+              ],
+              "properties": []
+            }
+          },
+          {
+            "discriminantValue": "gt_operator",
+            "additionalProperties": {
+              "extends": [
+                "type_ast:GreaterThanOperator"
+              ],
+              "properties": []
+            }
+          },
+          {
+            "discriminantValue": "number_literal",
+            "additionalProperties": {
+              "extends": [],
+              "properties": [
+                {
+                  "key": "value",
+                  "valueType": {
+                    "type": "primitive",
+                    "value": {
+                      "type": "double"
+                    }
+                  }
+                }
+              ]
+            }
+          }
+        ]
+      }
     }
   },
   "subpackages": {
@@ -429,7 +886,17 @@
         "type_ast:ObjectValue",
         "type_ast:FieldName",
         "type_ast:FieldValue",
-        "type_ast:ObjectFieldValue"
+        "type_ast:ObjectFieldValue",
+        "type_ast:AndOperator",
+        "type_ast:AndOperatorChild",
+        "type_ast:OrOperator",
+        "type_ast:OrOperatorChild",
+        "type_ast:EqualsOperator",
+        "type_ast:EqualsOperatorLeft",
+        "type_ast:EqualsOperatorRight",
+        "type_ast:GreaterThanOperator",
+        "type_ast:GreaterThanOperatorLeft",
+        "type_ast:GreaterThanOperatorRight"
       ],
       "subpackages": []
     }

@@ -8,9 +8,8 @@ from importlib import import_module
 if typing.TYPE_CHECKING:
     from .conversation import Conversation
     from .cursor_pages import CursorPages
-    from .multiple_filter_search_request import MultipleFilterSearchRequest
+    from .multiple_filter_search_request_all import MultipleFilterSearchRequest, MultipleFilterSearchRequestValue
     from .multiple_filter_search_request_operator import MultipleFilterSearchRequestOperator
-    from .multiple_filter_search_request_value import MultipleFilterSearchRequestValue
     from .paginated_conversation_response import PaginatedConversationResponse
     from .search_request import SearchRequest
     from .search_request_query import SearchRequestQuery
@@ -20,9 +19,9 @@ if typing.TYPE_CHECKING:
 _dynamic_imports: typing.Dict[str, str] = {
     "Conversation": ".conversation",
     "CursorPages": ".cursor_pages",
-    "MultipleFilterSearchRequest": ".multiple_filter_search_request",
+    "MultipleFilterSearchRequest": ".multiple_filter_search_request_all",
     "MultipleFilterSearchRequestOperator": ".multiple_filter_search_request_operator",
-    "MultipleFilterSearchRequestValue": ".multiple_filter_search_request_value",
+    "MultipleFilterSearchRequestValue": ".multiple_filter_search_request_all",
     "PaginatedConversationResponse": ".paginated_conversation_response",
     "SearchRequest": ".search_request",
     "SearchRequestQuery": ".search_request_query",
