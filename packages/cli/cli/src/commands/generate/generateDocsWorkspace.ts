@@ -4,8 +4,10 @@ import { Rules } from "@fern-api/docs-validator";
 import { askToLogin } from "@fern-api/login";
 import { Project } from "@fern-api/project-loader";
 import { runRemoteGenerationForDocsWorkspace } from "@fern-api/remote-workspace-runner";
+import chalk from "chalk";
 
 import { CliContext } from "../../cli-context/CliContext";
+import { isCI } from "../../utils/environment";
 import { validateDocsWorkspaceAndLogIssues } from "../validate/validateDocsWorkspaceAndLogIssues";
 
 export async function generateDocsWorkspace({
@@ -15,7 +17,9 @@ export async function generateDocsWorkspace({
     preview,
     brokenLinks,
     strictBrokenLinks,
-    disableTemplates
+    disableTemplates,
+    noPrompt,
+    skipUpload
 }: {
     project: Project;
     cliContext: CliContext;
@@ -24,6 +28,8 @@ export async function generateDocsWorkspace({
     brokenLinks: boolean;
     strictBrokenLinks: boolean;
     disableTemplates: boolean | undefined;
+    noPrompt?: boolean;
+    skipUpload: boolean | undefined;
 }): Promise<void> {
     const docsWorkspace = project.docsWorkspaces;
     if (docsWorkspace == null) {
@@ -31,6 +37,20 @@ export async function generateDocsWorkspace({
         return;
     }
     const isRunningOnSelfHosted = process.env["FERN_SELF_HOSTED"] === "true";
+
+    if (!preview && !isCI() && !noPrompt) {
+        const productionUrl = instance ?? docsWorkspace.config.instances[0]?.url;
+        const urlDisplay = productionUrl ? ` (${chalk.cyan(`https://${productionUrl}`)})` : "";
+
+        const shouldContinue = await cliContext.confirmPrompt(
+            `This will affect a production site${urlDisplay}. Run with --preview to generate docs for a preview instance.\n${chalk.yellow("?")} Are you sure you want to continue?`,
+            false
+        );
+        if (!shouldContinue) {
+            cliContext.logger.info("Docs generation cancelled.");
+            return;
+        }
+    }
 
     let token: FernToken | null = null;
     if (isRunningOnSelfHosted) {
@@ -88,7 +108,8 @@ export async function generateDocsWorkspace({
             token,
             instanceUrl: instance,
             preview,
-            disableTemplates
+            disableTemplates,
+            skipUpload
         });
     });
 }

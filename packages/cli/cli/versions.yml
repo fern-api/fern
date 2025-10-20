@@ -1,6 +1,50 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
 - changelogEntry:
     - summary: |
+        Turns HTTP snippets on by default in docs generation. 
+
+        To turn HTTP snippets off, set `settings.http-snippets: false` in the `docs.yml` file. You can also specify an explicit list of snippets to include. 
+
+        ```docs.yml
+        # this will only generate typescript and python snippets, no curl
+        settings:
+          http-snippets:
+            - typescript
+            - python
+        ```
+      type: feat
+  irVersion: 61
+  createdAt: "2025-10-15"
+  version: 0.93.0
+
+- changelogEntry:
+    - summary: |
+        For debugging purposes, generating a docs preview via `fern generate --docs --preview`, it is now possible to specify `--skip-upload` to 
+        skip the asset uploading step.
+      type: feat
+  irVersion: 61
+  createdAt: "2025-10-15"
+  version: 0.92.0
+
+- changelogEntry:
+    - summary: |
+        Prevent accidental changes to doc sites by adding a confirmation prompt when generating docs for a production instance outside of common CI/CDs.
+        Bypass this prompt by adding a `--no-prompt` flag to the `fern generate` command.
+      type: chore
+  irVersion: 61
+  createdAt: "2025-10-14"
+  version: 0.91.0
+
+- changelogEntry:
+    - summary: |
+        Add Rust crates.io publishing support. Rust SDK now uses --version flag for Cargo.toml version.
+      type: feat
+  createdAt: "2025-10-14"
+  irVersion: 61
+  version: 0.90.0
+
+- changelogEntry:
+    - summary: |
         Add `group-environments-by-host` setting for OpenAPI/AsyncAPI imports. When enabled, servers with the same hostname are grouped into unified environments regardless of protocol, allowing APIs with both REST and WebSocket endpoints to share environment configuration.
       type: feat
   createdAt: "2025-10-12"

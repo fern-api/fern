@@ -1909,8 +1909,8 @@ importers:
         specifier: workspace:*
         version: link:../codegen
       '@fern-fern/ir-sdk':
-        specifier: ^59.7.0
-        version: 59.7.0
+        specifier: ^61.4.0
+        version: 61.4.0
       lodash-es:
         specifier: ^4.17.21
         version: 4.17.21
@@ -2026,8 +2026,8 @@ importers:
         specifier: ^0.0.1167
         version: 0.0.1167
       '@fern-fern/ir-sdk':
-        specifier: ^59.7.0
-        version: 59.7.0
+        specifier: ^61.4.0
+        version: 61.4.0
       '@types/node':
         specifier: 18.15.3
         version: 18.15.3
@@ -2087,8 +2087,8 @@ importers:
         specifier: ^0.0.1167
         version: 0.0.1167
       '@fern-fern/ir-sdk':
-        specifier: ^59.7.0
-        version: 59.7.0
+        specifier: ^61.4.0
+        version: 61.4.0
       '@types/node':
         specifier: 18.15.3
         version: 18.15.3
@@ -2155,6 +2155,9 @@ importers:
       lodash-es:
         specifier: ^4.17.21
         version: 4.17.21
+      number-to-words:
+        specifier: 1.2.4
+        version: 1.2.4
       zod:
         specifier: ^3.25.75
         version: 3.25.76
@@ -2168,6 +2171,9 @@ importers:
       '@types/node':
         specifier: 18.15.3
         version: 18.15.3
+      '@types/number-to-words':
+        specifier: 1.2.3
+        version: 1.2.3
       depcheck:
         specifier: ^1.4.7
         version: 1.4.7
@@ -9442,6 +9448,9 @@ packages:
   '@fern-fern/ir-sdk@61.2.0':
     resolution: {integrity: sha512-QbFRDUsD4II/psRlsv/pXXWZJ90euRfG6htQAOpGwQ5wGSXJVFHwrzVwq0oumRPjqnQrBS6JnhhZbcQjtCgteg==}
 
+  '@fern-fern/ir-sdk@61.4.0':
+    resolution: {integrity: sha512-tnnFqg3HSUh+dzrT9gKJP20QxXnv6qio468+6Opj9TiCeKCBCRL/n1heeG9+XJ3cbAeZsS8GC/1G4Jk07tAcEg==}
+
   '@fern-fern/ir-v1-model@0.0.2':
     resolution: {integrity: sha512-Rho6qXYfRoB1sAISFS4V7vttVFN0ypoaztmbfKKNFmSTNVOyLN++e2xNZ+Aw9ckE5ZZmfMXK9v4+dnFReWVzvA==}
 
@@ -10321,6 +10330,9 @@ packages:
 
   '@types/normalize-package-data@2.4.4':
     resolution: {integrity: sha512-37i+OaWTh9qeK4LSHPsyRC7NahnGotNuZvjLSgcPzblpHB3rrCJxAOgI5gCdKm7coonsaX1Of0ILiTcnZjbfxA==}
+
+  '@types/number-to-words@1.2.3':
+    resolution: {integrity: sha512-ruSA/QZ6JQofoEEN2zKmN9oihZmrCBgcw0zEzN0UA9Mw0pU5remTddZmrbHjsa99qz12Uxl82x+XkVpHu87oXw==}
 
   '@types/object-hash@3.0.6':
     resolution: {integrity: sha512-fOBV8C1FIu2ELinoILQ+ApxcUKz4ngq+IWUYrxSGjXzzjUALijilampwkMgEtJ+h2njAW3pi853QpzNVCHB73w==}
@@ -13154,6 +13166,9 @@ packages:
   npm-run-path@4.0.1:
     resolution: {integrity: sha512-S48WzZW777zhNIrn7gxOlISNAqi9ZC/uQFnRdbeIHhZhCA6UqpkOT8T1G7BvfdgP4Er8gF4sUbaS0i7QvIfCWw==}
     engines: {node: '>=8'}
+
+  number-to-words@1.2.4:
+    resolution: {integrity: sha512-/fYevVkXRcyBiZDg6yzZbm0RuaD6i0qRfn8yr+6D0KgBMOndFPxuW10qCHpzs50nN8qKuv78k8MuotZhcVX6Pw==}
 
   nwsapi@2.2.22:
     resolution: {integrity: sha512-ujSMe1OWVn55euT1ihwCI1ZcAaAU3nxUiDwfDQldc51ZXaB9m2AyOn6/jh1BLe2t/G8xd6uKG1UBF2aZJeg2SQ==}
@@ -16537,6 +16552,16 @@ snapshots:
     transitivePeerDependencies:
       - encoding
 
+  '@fern-fern/ir-sdk@61.4.0':
+    dependencies:
+      form-data: 4.0.4
+      formdata-node: 6.0.3
+      node-fetch: 2.7.0
+      qs: 6.13.0
+      readable-stream: 4.7.0
+    transitivePeerDependencies:
+      - encoding
+
   '@fern-fern/ir-v1-model@0.0.2': {}
 
   '@fern-fern/ir-v10-model@0.0.1': {}
@@ -17468,6 +17493,8 @@ snapshots:
       undici-types: 5.26.5
 
   '@types/normalize-package-data@2.4.4': {}
+
+  '@types/number-to-words@1.2.3': {}
 
   '@types/object-hash@3.0.6': {}
 
@@ -21056,6 +21083,8 @@ snapshots:
   npm-run-path@4.0.1:
     dependencies:
       path-key: 3.1.1
+
+  number-to-words@1.2.4: {}
 
   nwsapi@2.2.22:
     optional: true

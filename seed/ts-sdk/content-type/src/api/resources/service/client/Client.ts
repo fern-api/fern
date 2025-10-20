@@ -134,7 +134,7 @@ export class Service {
             url: core.url.join(
                 (await core.Supplier.get(this._options.baseUrl)) ??
                     (await core.Supplier.get(this._options.environment)),
-                `complex/${encodeURIComponent(id)}`,
+                `complex/${core.url.encodePathParam(id)}`,
             ),
             method: "PATCH",
             headers: _headers,
@@ -208,7 +208,7 @@ export class Service {
             url: core.url.join(
                 (await core.Supplier.get(this._options.baseUrl)) ??
                     (await core.Supplier.get(this._options.environment)),
-                `named-mixed/${encodeURIComponent(id)}`,
+                `named-mixed/${core.url.encodePathParam(id)}`,
             ),
             method: "PATCH",
             headers: _headers,
@@ -357,7 +357,7 @@ export class Service {
             url: core.url.join(
                 (await core.Supplier.get(this._options.baseUrl)) ??
                     (await core.Supplier.get(this._options.environment)),
-                `regular/${encodeURIComponent(id)}`,
+                `regular/${core.url.encodePathParam(id)}`,
             ),
             method: "PATCH",
             headers: _headers,

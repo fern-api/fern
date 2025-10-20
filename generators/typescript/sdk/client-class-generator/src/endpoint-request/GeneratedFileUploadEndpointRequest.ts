@@ -259,7 +259,7 @@ export class GeneratedFileUploadEndpointRequest implements GeneratedEndpointRequ
             types.push(
                 this.maybeWrapFileArray({
                     property,
-                    value: context.coreUtilities.fileUtils.FileLike._getReferenceToType()
+                    value: context.coreUtilities.fileUtils.Uploadable._getReferenceToType()
                 })
             );
         }

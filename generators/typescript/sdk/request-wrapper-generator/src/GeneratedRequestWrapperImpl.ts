@@ -818,7 +818,7 @@ export class GeneratedRequestWrapperImpl implements GeneratedRequestWrapper {
             types.push(
                 this.maybeWrapFileArray({
                     property,
-                    value: context.coreUtilities.fileUtils.FileLike._getReferenceToType()
+                    value: context.coreUtilities.fileUtils.Uploadable._getReferenceToType()
                 })
             );
         }

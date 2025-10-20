@@ -296,7 +296,7 @@ impl NullableOptionalClient2 {
         self.http_client
             .execute_request(
                 Method::GET,
-                &format!("/api/users/{}", user_id),
+                &format!("/api/users/{}/notifications", user_id),
                 None,
                 None,
                 options,
@@ -322,7 +322,7 @@ impl NullableOptionalClient2 {
         self.http_client
             .execute_request(
                 Method::PUT,
-                &format!("/api/users/{}", user_id),
+                &format!("/api/users/{}/tags", user_id),
                 Some(serde_json::to_value(request).unwrap_or_default()),
                 None,
                 options,

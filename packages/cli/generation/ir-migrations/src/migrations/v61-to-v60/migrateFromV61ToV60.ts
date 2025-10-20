@@ -38,7 +38,7 @@ export const V61_TO_V60_MIGRATION: IrMigration<
         [GeneratorName.PHP_MODEL]: GeneratorWasNeverUpdatedToConsumeNewIR,
         [GeneratorName.PHP_SDK]: GeneratorWasNeverUpdatedToConsumeNewIR,
         [GeneratorName.RUST_MODEL]: GeneratorWasNeverUpdatedToConsumeNewIR,
-        [GeneratorName.RUST_SDK]: GeneratorWasNeverUpdatedToConsumeNewIR
+        [GeneratorName.RUST_SDK]: "0.7.2"
     },
     jsonifyEarlierVersion: (ir) =>
         IrSerialization.V60.IntermediateRepresentation.jsonOrThrow(ir, {
@@ -50,10 +50,61 @@ export const V61_TO_V60_MIGRATION: IrMigration<
     ): IrVersions.V60.ir.IntermediateRepresentation => {
         return {
             ...v61,
-            dynamic: v61.dynamic != null ? convertDynamic(v61.dynamic) : undefined
+            dynamic: v61.dynamic != null ? convertDynamic(v61.dynamic) : undefined,
+            publishConfig: v61.publishConfig != null ? convertPublishConfig(v61.publishConfig) : undefined
         };
     }
 };
+
+function convertPublishConfig(
+    publishConfig: IrVersions.V61.PublishingConfig
+): IrVersions.V60.PublishingConfig | undefined {
+    return IrVersions.V61.PublishingConfig._visit<IrVersions.V60.PublishingConfig | undefined>(publishConfig, {
+        github: (github) => {
+            const convertedTarget = convertPublishTarget(github.target);
+            return convertedTarget != null
+                ? IrVersions.V60.PublishingConfig.github({
+                      ...github,
+                      target: convertedTarget
+                  })
+                : undefined;
+        },
+        direct: (direct) => {
+            const convertedTarget = convertPublishTarget(direct.target);
+            return convertedTarget != null
+                ? IrVersions.V60.PublishingConfig.direct({
+                      target: convertedTarget
+                  })
+                : undefined;
+        },
+        filesystem: (filesystem) => {
+            const convertedTarget =
+                filesystem.publishTarget != null ? convertPublishTarget(filesystem.publishTarget) : undefined;
+            return IrVersions.V60.PublishingConfig.filesystem({
+                generateFullProject: filesystem.generateFullProject,
+                publishTarget: convertedTarget
+            });
+        },
+        _other: () => undefined
+    });
+}
+
+function convertPublishTarget(target: IrVersions.V61.PublishTarget): IrVersions.V60.PublishTarget | undefined {
+    return IrVersions.V61.PublishTarget._visit<IrVersions.V60.PublishTarget | undefined>(target, {
+        postman: IrVersions.V60.PublishTarget.postman,
+        npm: IrVersions.V60.PublishTarget.npm,
+        maven: IrVersions.V60.PublishTarget.maven,
+        pypi: IrVersions.V60.PublishTarget.pypi,
+        crates: (crates) => {
+            // Convert crates to pypi for backward compatibility (v60 doesn't have crates)
+            return IrVersions.V60.PublishTarget.pypi({
+                version: crates.version,
+                packageName: crates.packageName
+            });
+        },
+        _other: () => undefined
+    });
+}
 
 function convertDynamic(
     dynamic: IrVersions.V61.dynamic.DynamicIntermediateRepresentation

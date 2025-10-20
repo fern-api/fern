@@ -16,6 +16,7 @@ export abstract class AbstractRustGeneratorContext<
     CustomConfig extends BaseRustCustomConfigSchema
 > extends AbstractGeneratorContext {
     public readonly project: RustProject;
+    public publishConfig: FernGeneratorExec.CratesGithubPublishInfo | undefined;
 
     public constructor(
         public readonly ir: IntermediateRepresentation,
@@ -24,6 +25,19 @@ export abstract class AbstractRustGeneratorContext<
         public readonly generatorNotificationService: GeneratorNotificationService
     ) {
         super(config, generatorNotificationService);
+
+        // Extract publish config from output mode
+        config.output.mode._visit<void>({
+            github: (github) => {
+                if (github.publishInfo?.type === "crates") {
+                    this.publishConfig = github.publishInfo;
+                }
+            },
+            publish: () => undefined,
+            downloadFiles: () => undefined,
+            _other: () => undefined
+        });
+
         this.project = new RustProject({
             context: this,
             crateName: this.getCrateName(),
@@ -196,10 +210,48 @@ export abstract class AbstractRustGeneratorContext<
     }
 
     /**
-     * Get the crate version with fallback to default
+     * Get the crate version from --version flag or use default
+     * Priority: 1) customConfig.crateVersion, 2) publishConfig.publishTarget.version, 3) default "0.1.0"
      */
     public getCrateVersion(): string {
-        return this.customConfig.crateVersion ?? "0.1.0";
+        // Priority 1: Check customConfig.packageVersion (explicitly set in generators.yml) and for --local generation
+        if (this.customConfig.crateVersion != null) {
+            return this.customConfig.crateVersion;
+        }
+
+        // Priority 2: Check version from output mode (same as TypeScript generator)
+        // This picks up the --version flag from the CLI
+
+        const versionFromOutputMode = this.config.output?.mode._visit({
+            downloadFiles: () => undefined,
+            github: (github) => github.version,
+            publish: (publish) => publish.version,
+            _other: () => undefined
+        });
+
+        if (versionFromOutputMode != null) {
+            return versionFromOutputMode;
+        }
+
+        // Priority 3: Try to get version from publishConfig (set via output.location = crates) for remote generation
+        if (this.ir.publishConfig != null) {
+            let publishTarget;
+
+            // Extract publishTarget based on publishConfig type
+            if (this.ir.publishConfig.type === "github" || this.ir.publishConfig.type === "direct") {
+                publishTarget = this.ir.publishConfig.target;
+            } else if (this.ir.publishConfig.type === "filesystem") {
+                publishTarget = this.ir.publishConfig.publishTarget;
+            }
+
+            if (publishTarget != null) {
+                if (publishTarget.type === "crates" && publishTarget.version != null) {
+                    return publishTarget.version;
+                }
+            }
+        }
+        // Default version if no version specified
+        return "0.1.0";
     }
 
     /**

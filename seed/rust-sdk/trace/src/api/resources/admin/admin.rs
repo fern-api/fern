@@ -98,7 +98,7 @@ impl AdminClient {
             .execute_request(
                 Method::POST,
                 &format!(
-                    "/admin/store-test-trace/submission/{}{}",
+                    "/admin/store-test-trace/submission/{}/testCase/{}",
                     submission_id.0, test_case_id
                 ),
                 Some(serde_json::to_value(request).unwrap_or_default()),
@@ -119,7 +119,7 @@ impl AdminClient {
             .execute_request(
                 Method::POST,
                 &format!(
-                    "/admin/store-test-trace-v2/submission/{}{}",
+                    "/admin/store-test-trace-v2/submission/{}/testCase/{}",
                     submission_id.0, test_case_id.0
                 ),
                 Some(serde_json::to_value(request).unwrap_or_default()),
