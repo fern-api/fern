@@ -17,18 +17,18 @@ export async function parseOpenAPI({
     const result =
         parsed != null
             ? await bundle({
-                    ...DEFAULT_OPENAPI_BUNDLE_OPTIONS,
-                    doc: {
-                        source: new Source(absolutePathToOpenAPI, "<openapi>"),
-                        parsed
-                    },
-                    externalRefResolver: new OpenAPIRefResolver(absolutePathToOpenAPIOverrides)
-                })
+                  ...DEFAULT_OPENAPI_BUNDLE_OPTIONS,
+                  doc: {
+                      source: new Source(absolutePathToOpenAPI, "<openapi>"),
+                      parsed
+                  },
+                  externalRefResolver: new OpenAPIRefResolver(absolutePathToOpenAPIOverrides)
+              })
             : await bundle({
-                    ...DEFAULT_OPENAPI_BUNDLE_OPTIONS,
-                    ref: absolutePathToOpenAPI,
-                    externalRefResolver: new OpenAPIRefResolver(absolutePathToOpenAPIOverrides)
-                });
+                  ...DEFAULT_OPENAPI_BUNDLE_OPTIONS,
+                  ref: absolutePathToOpenAPI,
+                  externalRefResolver: new OpenAPIRefResolver(absolutePathToOpenAPIOverrides)
+              });
 
     return result.bundle.parsed;
 }
