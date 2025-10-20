@@ -627,7 +627,30 @@ export class SdkGeneratorCli extends AbstractRustGeneratorCli<SdkCustomConfigSch
     // ===========================
 
     private hasTypes(context: SdkGeneratorContext): boolean {
-        return Object.keys(context.ir.types).length > 0;
+        // Check for regular IR types
+        if (Object.keys(context.ir.types).length > 0) {
+            return true;
+        }
+
+        // Also check for inlined request bodies
+        for (const service of Object.values(context.ir.services)) {
+            for (const endpoint of service.endpoints) {
+                if (endpoint.requestBody?.type === "inlinedRequestBody") {
+                    return true;
+                }
+            }
+        }
+
+        // Check for query-only endpoints that generate request types
+        for (const service of Object.values(context.ir.services)) {
+            for (const endpoint of service.endpoints) {
+                if (endpoint.queryParameters?.length > 0 && !endpoint.requestBody) {
+                    return true;
+                }
+            }
+        }
+
+        return false;
     }
 
     private hasEnvironments(context: SdkGeneratorContext): boolean {

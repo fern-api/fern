@@ -378,16 +378,9 @@ export class SubClientGenerator {
 
     private requestBodyUsesCustomTypes(requestBody: HttpRequestBody): boolean {
         return requestBody._visit({
-            inlinedRequestBody: (inlinedBody) => {
-                // Check if any properties use custom types
-                const propertiesUseCustomTypes = inlinedBody.properties.some((prop) =>
-                    this.isCustomType(prop.valueType)
-                );
-
-                // Check if any extended types are custom
-                const extendsUseCustomTypes = inlinedBody.extends.length > 0;
-
-                return propertiesUseCustomTypes || extendsUseCustomTypes;
+            inlinedRequestBody: (_inlinedBody) => {
+                // Inlined request bodies are always custom types that need to be imported
+                return true;
             },
             reference: (reference) => this.isCustomType(reference.requestBodyType),
             fileUpload: () => false, // File uploads don't typically use custom types
