@@ -87,13 +87,13 @@ export abstract class AbstractSwiftGeneratorContext<
                 typeDeclaration,
                 context: this
             });
-            registerUndiscriminatedUnionVariants({
+            registerLiteralEnums({
                 parentSymbol: registeredSymbol,
                 registry: nameRegistry,
                 typeDeclaration,
                 context: this
             });
-            registerLiteralEnums({
+            registerUndiscriminatedUnionVariants({
                 parentSymbol: registeredSymbol,
                 registry: nameRegistry,
                 typeDeclaration,

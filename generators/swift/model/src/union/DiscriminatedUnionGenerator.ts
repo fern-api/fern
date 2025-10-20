@@ -54,7 +54,7 @@ export class DiscriminatedUnionGenerator {
         return this.getAllVariants().map((variant) => {
             return {
                 unsafeName: variant.caseName,
-                associatedValue: [variant.swiftType],
+                associatedValue: [swift.TypeReference.symbol(variant.symbolName)],
                 docs: variant.docsContent ? swift.docComment({ summary: variant.docsContent }) : undefined
             };
         });

@@ -16,7 +16,6 @@ type DiscriminatedUnionVariant = {
     caseName: string;
     symbolName: string;
     discriminantWireValue: string;
-    swiftType: swift.TypeReference;
     docsContent: string | undefined;
 };
 
