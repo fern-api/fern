@@ -9,16 +9,19 @@
   "exclude": ["./src/**/__test__/**/generated"],
   "references": [
     {
-      "path": "../../utils/abstract-generator-cli"
+      "path": "../../../../packages/cli/logger"
     },
     {
-      "path": "../../utils/commons"
+      "path": "../generator"
     },
     {
       "path": "../../utils/contexts"
     },
     {
-      "path": "../generator"
+      "path": "../../utils/commons"
+    },
+    {
+      "path": "../../utils/abstract-generator-cli"
     }
   ]
 }

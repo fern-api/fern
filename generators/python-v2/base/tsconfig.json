@@ -3,11 +3,20 @@
   "compilerOptions": { "composite": true, "outDir": "lib", "rootDir": "src" },
   "include": ["./src/**/*"],
   "references": [
-    { "path": "../../../packages/commons/core-utils" },
-    { "path": "../../../packages/commons/fs-utils" },
-    { "path": "../../../packages/commons/logging-execa" },
-    { "path": "../../base" },
-    { "path": "../ast" },
-    { "path": "../browser-compatible-base" }
+    {
+      "path": "../browser-compatible-base"
+    },
+    {
+      "path": "../ast"
+    },
+    {
+      "path": "../../../packages/commons/fs-utils"
+    },
+    {
+      "path": "../../../packages/commons/core-utils"
+    },
+    {
+      "path": "../../base"
+    }
   ]
 }
