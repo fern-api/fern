@@ -120,7 +120,6 @@ export function generateIr({
         if (pathItem == null) {
             return;
         }
-        taskContext.logger.debug(`Converting path ${path}`);
         const convertedOperations = convertPathItem(path, pathItem, openApi, context);
         for (const operation of convertedOperations) {
             const operationAudiences = getAudiences({ operation });
@@ -205,7 +204,6 @@ export function generateIr({
             continue;
         }
         schemas[key] = schema;
-        taskContext.logger.debug(`Converted schema ${key}`);
     }
 
     const exampleTypeFactory = new ExampleTypeFactory(
