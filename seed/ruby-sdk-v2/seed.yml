@@ -34,6 +34,8 @@ scripts:
       - bundle exec rake test
 
 fixtures:
+  any-auth:
+    - customConfig: null
   examples:
     - outputFolder: no-custom-config
       customConfig: null

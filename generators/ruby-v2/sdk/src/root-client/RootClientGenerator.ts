@@ -8,7 +8,8 @@ import { SdkGeneratorContext } from "../SdkGeneratorContext";
 import { astNodeToCodeBlockWithComments } from "../utils/astNodeToCodeBlockWithComments";
 import { Comments } from "../utils/comments";
 
-const TOKEN_PARAMETER_NAME = "token";
+const BEARER_TOKEN_PARAMETER_NAME = "token";
+const API_KEY_PARAMETER_NAME = "api_key";
 
 export class RootClientGenerator extends FileGenerator<RubyFile, SdkCustomConfigSchema, SdkGeneratorContext> {
     public doGenerate(): RubyFile {
@@ -97,13 +98,25 @@ export class RootClientGenerator extends FileGenerator<RubyFile, SdkCustomConfig
             switch (scheme.type) {
                 case "bearer":
                     return ruby.parameters.keyword({
-                        name: TOKEN_PARAMETER_NAME,
+                        name: BEARER_TOKEN_PARAMETER_NAME,
                         type: ruby.Type.string(),
                         initializer:
                             scheme.tokenEnvVar != null
                                 ? ruby.codeblock((writer) => {
                                       writer.write(`ENV.fetch("${scheme.tokenEnvVar}", nil)`);
                                   })
+                                : undefined,
+                        docs: undefined
+                    });
+                case "header":
+                    return ruby.parameters.keyword({
+                        name: API_KEY_PARAMETER_NAME,
+                        type: ruby.Type.string(),
+                        initializer:
+                            scheme.headerEnvVar != null
+                                ? ruby.codeblock((writer) => {
+                                        writer.write(`ENV.fetch("${scheme.headerEnvVar}", nil)`);
+                                    })
                                 : undefined,
                         docs: undefined
                     });
@@ -135,7 +148,7 @@ export class RootClientGenerator extends FileGenerator<RubyFile, SdkCustomConfig
                 case "bearer":
                     headers.push({
                         key: ruby.TypeLiteral.string("Authorization"),
-                        value: ruby.TypeLiteral.string(`Bearer #{${TOKEN_PARAMETER_NAME}}`)
+                        value: ruby.TypeLiteral.string(`Bearer #{${BEARER_TOKEN_PARAMETER_NAME}}`)
                     });
                     break;
                 default:
