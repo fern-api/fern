@@ -2,9 +2,9 @@
 
 import type { BaseClientOptions, BaseRequestOptions } from "../../../../BaseClient";
 import * as core from "../../../../core";
-import * as SeedExhaustive from "../../../index";
 import { mergeHeaders, mergeOnlyDefinedHeaders } from "../../../../core/headers";
 import * as errors from "../../../../errors/index";
+import * as SeedExhaustive from "../../../index";
 
 export declare namespace NoAuth {
     export interface Options extends BaseClientOptions {}
@@ -43,7 +43,7 @@ export class NoAuth {
         request?: unknown,
         requestOptions?: NoAuth.RequestOptions,
     ): Promise<core.WithRawResponse<boolean>> {
-        let _headers: core.Fetcher.Args["headers"] = mergeHeaders(
+        const _headers: core.Fetcher.Args["headers"] = mergeHeaders(
             this._options?.headers,
             mergeOnlyDefinedHeaders({ Authorization: await this._getAuthorizationHeader() }),
             requestOptions?.headers,

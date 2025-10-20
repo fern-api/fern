@@ -2,9 +2,9 @@
 
 import type { BaseClientOptions, BaseRequestOptions } from "../../../../../../BaseClient";
 import * as core from "../../../../../../core";
-import * as SeedExhaustive from "../../../../../index";
 import { mergeHeaders, mergeOnlyDefinedHeaders } from "../../../../../../core/headers";
 import * as errors from "../../../../../../errors/index";
+import type * as SeedExhaustive from "../../../../../index";
 
 export declare namespace Put {
     export interface Options extends BaseClientOptions {}
@@ -40,7 +40,7 @@ export class Put {
         requestOptions?: Put.RequestOptions,
     ): Promise<core.WithRawResponse<SeedExhaustive.endpoints.PutResponse>> {
         const { id } = request;
-        let _headers: core.Fetcher.Args["headers"] = mergeHeaders(
+        const _headers: core.Fetcher.Args["headers"] = mergeHeaders(
             this._options?.headers,
             mergeOnlyDefinedHeaders({ Authorization: await this._getAuthorizationHeader() }),
             requestOptions?.headers,
@@ -49,7 +49,7 @@ export class Put {
             url: core.url.join(
                 (await core.Supplier.get(this._options.baseUrl)) ??
                     (await core.Supplier.get(this._options.environment)),
-                `${encodeURIComponent(id)}`,
+                `${core.url.encodePathParam(id)}`,
             ),
             method: "PUT",
             headers: _headers,

@@ -202,7 +202,7 @@ async function tryRunCli(cliContext: CliContext) {
 
     cli.middleware(async (argv) => {
         cliContext.setLogLevel(argv["log-level"]);
-        cliContext.logDebugInfo();
+        cliContext.logFernVersionDebug();
     });
 
     await cli.parse();
@@ -556,6 +556,16 @@ function addGenerateCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext)
                     boolean: true,
                     description: "Disable dynamic SDK snippets in docs generation",
                     default: false
+                })
+                .option("prompt", {
+                    boolean: true,
+                    description: "Prompt for confirmation before generating (use --no-prompt to skip)",
+                    default: true
+                })
+                .option("skip-upload", {
+                    boolean: true,
+                    description: "Skip asset upload step and generate fake links for preview",
+                    default: false
                 }),
         async (argv) => {
             if (argv.api != null && argv.docs != null) {
@@ -563,6 +573,12 @@ function addGenerateCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext)
             }
             if (argv.local && argv.preview) {
                 return cliContext.failWithoutThrowing("The --local flag is incompatible with --preview.");
+            }
+            if (argv.skipUpload && !argv.preview) {
+                return cliContext.failWithoutThrowing("The --skip-upload flag can only be used with --preview.");
+            }
+            if (argv.skipUpload && argv.docs == null) {
+                return cliContext.failWithoutThrowing("The --skip-upload flag can only be used with --docs.");
             }
             if (argv.api != null) {
                 return await generateAPIWorkspaces({
@@ -605,7 +621,9 @@ function addGenerateCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext)
                     preview: argv.preview,
                     brokenLinks: argv.brokenLinks,
                     strictBrokenLinks: argv.strictBrokenLinks,
-                    disableTemplates: argv.disableSnippets
+                    disableTemplates: argv.disableSnippets,
+                    noPrompt: !argv.prompt,
+                    skipUpload: argv.skipUpload
                 });
             }
             // default to loading api workspace to preserve legacy behavior

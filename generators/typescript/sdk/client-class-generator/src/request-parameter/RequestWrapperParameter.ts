@@ -238,8 +238,13 @@ export class RequestWrapperParameter extends AbstractRequestParameter {
     private extractDefaultValue(typeReference: TypeReference, context: SdkContext): ts.Expression | undefined {
         const resolvedType = context.type.resolveTypeReference(typeReference);
 
-        if (resolvedType.type === "container" && resolvedType.container.type === "optional") {
-            return this.extractDefaultValue(resolvedType.container.optional, context);
+        if (resolvedType.type === "container") {
+            if (resolvedType.container.type === "optional") {
+                return this.extractDefaultValue(resolvedType.container.optional, context);
+            }
+            if (resolvedType.container.type === "nullable") {
+                return this.extractDefaultValue(resolvedType.container.nullable, context);
+            }
         }
 
         const useBigInt = (context.config.customConfig as { useBigInt?: boolean })?.useBigInt;

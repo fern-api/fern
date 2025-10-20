@@ -35,8 +35,8 @@ var __importStar = (this && this.__importStar) || (function () {
 })();
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.Movie = void 0;
-const serializers = __importStar(require("../../../index"));
 const core = __importStar(require("../../../../core"));
+const serializers = __importStar(require("../../../index"));
 exports.Movie = core.serialization.object({
     id: core.serialization.lazy(() => serializers.MovieId),
     title: core.serialization.string(),

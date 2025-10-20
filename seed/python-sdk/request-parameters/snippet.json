@@ -28,6 +28,19 @@
             }
         },
         {
+            "example_identifier": "empty-object",
+            "id": {
+                "path": "/user/username-optional",
+                "method": "POST",
+                "identifier_override": "endpoint_user.createUsernameOptional"
+            },
+            "snippet": {
+                "sync_client": "from seed import SeedRequestParameters\nfrom seed.user import CreateUsernameBodyOptionalProperties\n\nclient = SeedRequestParameters(\n    base_url=\"https://yourhost.com/path/to/api\",\n)\nclient.user.create_username_optional(\n    request=CreateUsernameBodyOptionalProperties(),\n)\n",
+                "async_client": "import asyncio\n\nfrom seed import AsyncSeedRequestParameters\nfrom seed.user import CreateUsernameBodyOptionalProperties\n\nclient = AsyncSeedRequestParameters(\n    base_url=\"https://yourhost.com/path/to/api\",\n)\n\n\nasync def main() -> None:\n    await client.user.create_username_optional(\n        request=CreateUsernameBodyOptionalProperties(),\n    )\n\n\nasyncio.run(main())\n",
+                "type": "python"
+            }
+        },
+        {
             "example_identifier": "default",
             "id": {
                 "path": "/user",

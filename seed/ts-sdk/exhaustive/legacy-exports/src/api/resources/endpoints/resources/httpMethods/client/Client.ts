@@ -4,7 +4,7 @@ import type { BaseClientOptions, BaseRequestOptions } from "../../../../../../Ba
 import * as core from "../../../../../../core";
 import { mergeHeaders, mergeOnlyDefinedHeaders } from "../../../../../../core/headers";
 import * as errors from "../../../../../../errors/index";
-import * as SeedExhaustive from "../../../../../index";
+import type * as SeedExhaustive from "../../../../../index";
 
 export declare namespace HttpMethods {
     export interface Options extends BaseClientOptions {}
@@ -34,7 +34,7 @@ export class HttpMethods {
         id: string,
         requestOptions?: HttpMethods.RequestOptions,
     ): Promise<core.WithRawResponse<string>> {
-        let _headers: core.Fetcher.Args["headers"] = mergeHeaders(
+        const _headers: core.Fetcher.Args["headers"] = mergeHeaders(
             this._options?.headers,
             mergeOnlyDefinedHeaders({ Authorization: await this._getAuthorizationHeader() }),
             requestOptions?.headers,
@@ -43,7 +43,7 @@ export class HttpMethods {
             url: core.url.join(
                 (await core.Supplier.get(this._options.baseUrl)) ??
                     (await core.Supplier.get(this._options.environment)),
-                `/http-methods/${encodeURIComponent(id)}`,
+                `/http-methods/${core.url.encodePathParam(id)}`,
             ),
             method: "GET",
             headers: _headers,
@@ -101,7 +101,7 @@ export class HttpMethods {
         request: SeedExhaustive.types.ObjectWithRequiredField,
         requestOptions?: HttpMethods.RequestOptions,
     ): Promise<core.WithRawResponse<SeedExhaustive.types.ObjectWithOptionalField>> {
-        let _headers: core.Fetcher.Args["headers"] = mergeHeaders(
+        const _headers: core.Fetcher.Args["headers"] = mergeHeaders(
             this._options?.headers,
             mergeOnlyDefinedHeaders({ Authorization: await this._getAuthorizationHeader() }),
             requestOptions?.headers,
@@ -177,7 +177,7 @@ export class HttpMethods {
         request: SeedExhaustive.types.ObjectWithRequiredField,
         requestOptions?: HttpMethods.RequestOptions,
     ): Promise<core.WithRawResponse<SeedExhaustive.types.ObjectWithOptionalField>> {
-        let _headers: core.Fetcher.Args["headers"] = mergeHeaders(
+        const _headers: core.Fetcher.Args["headers"] = mergeHeaders(
             this._options?.headers,
             mergeOnlyDefinedHeaders({ Authorization: await this._getAuthorizationHeader() }),
             requestOptions?.headers,
@@ -186,7 +186,7 @@ export class HttpMethods {
             url: core.url.join(
                 (await core.Supplier.get(this._options.baseUrl)) ??
                     (await core.Supplier.get(this._options.environment)),
-                `/http-methods/${encodeURIComponent(id)}`,
+                `/http-methods/${core.url.encodePathParam(id)}`,
             ),
             method: "PUT",
             headers: _headers,
@@ -267,7 +267,7 @@ export class HttpMethods {
         request: SeedExhaustive.types.ObjectWithOptionalField,
         requestOptions?: HttpMethods.RequestOptions,
     ): Promise<core.WithRawResponse<SeedExhaustive.types.ObjectWithOptionalField>> {
-        let _headers: core.Fetcher.Args["headers"] = mergeHeaders(
+        const _headers: core.Fetcher.Args["headers"] = mergeHeaders(
             this._options?.headers,
             mergeOnlyDefinedHeaders({ Authorization: await this._getAuthorizationHeader() }),
             requestOptions?.headers,
@@ -276,7 +276,7 @@ export class HttpMethods {
             url: core.url.join(
                 (await core.Supplier.get(this._options.baseUrl)) ??
                     (await core.Supplier.get(this._options.environment)),
-                `/http-methods/${encodeURIComponent(id)}`,
+                `/http-methods/${core.url.encodePathParam(id)}`,
             ),
             method: "PATCH",
             headers: _headers,
@@ -335,7 +335,7 @@ export class HttpMethods {
         id: string,
         requestOptions?: HttpMethods.RequestOptions,
     ): Promise<core.WithRawResponse<boolean>> {
-        let _headers: core.Fetcher.Args["headers"] = mergeHeaders(
+        const _headers: core.Fetcher.Args["headers"] = mergeHeaders(
             this._options?.headers,
             mergeOnlyDefinedHeaders({ Authorization: await this._getAuthorizationHeader() }),
             requestOptions?.headers,
@@ -344,7 +344,7 @@ export class HttpMethods {
             url: core.url.join(
                 (await core.Supplier.get(this._options.baseUrl)) ??
                     (await core.Supplier.get(this._options.environment)),
-                `/http-methods/${encodeURIComponent(id)}`,
+                `/http-methods/${core.url.encodePathParam(id)}`,
             ),
             method: "DELETE",
             headers: _headers,

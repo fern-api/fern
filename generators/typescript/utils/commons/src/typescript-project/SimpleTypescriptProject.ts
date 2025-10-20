@@ -32,8 +32,6 @@ export class SimpleTypescriptProject extends TypescriptProject {
     protected async addFilesToVolume(): Promise<void> {
         await this.generateGitIgnore();
         await this.generateNpmIgnore();
-        await this.generatePrettierRc();
-        await this.generatePrettierIgnore();
         await this.generateTsConfig();
         await this.generatePackageJson();
         if (this.outputJsr) {
@@ -44,8 +42,8 @@ export class SimpleTypescriptProject extends TypescriptProject {
         }
     }
 
-    protected getFormatCommand(): string[] {
-        return [SimpleTypescriptProject.FORMAT_SCRIPT_NAME];
+    protected getCheckFixCommand(): string[] {
+        return [SimpleTypescriptProject.CHECK_FIX_SCRIPT_NAME];
     }
 
     protected getBuildCommand(): string[] {
@@ -73,36 +71,11 @@ export class SimpleTypescriptProject extends TypescriptProject {
                 SimpleTypescriptProject.GIT_IGNORE_FILENAME,
                 ".github",
                 SimpleTypescriptProject.FERN_IGNORE_FILENAME,
-                SimpleTypescriptProject.PRETTIER_RC_FILENAME,
+                "biome.json",
                 "tsconfig.json",
                 "yarn.lock",
                 "pnpm-lock.yaml"
             ].join("\n")
-        );
-    }
-
-    private async generatePrettierRc(): Promise<void> {
-        await this.writeFileToVolume(
-            RelativeFilePath.of(SimpleTypescriptProject.PRETTIER_RC_FILENAME),
-            yaml.dump({
-                tabWidth: 4,
-                printWidth: 120
-            })
-        );
-    }
-
-    private async generatePrettierIgnore(): Promise<void> {
-        await this.writeFileToVolume(
-            RelativeFilePath.of(TypescriptProject.PRETTIER_IGNORE_FILENAME),
-            `dist
-*.tsbuildinfo
-_tmp_*
-*.tmp
-.tmp/
-*.log
-.DS_Store
-Thumbs.db
-            `
         );
     }
 
@@ -243,7 +216,7 @@ Thumbs.db
                 main: "./index.js",
                 types: "./index.d.ts",
                 scripts: {
-                    [SimpleTypescriptProject.FORMAT_SCRIPT_NAME]: "prettier . --write --ignore-unknown",
+                    ...SimpleTypescriptProject.COMMON_SCRIPTS,
                     [SimpleTypescriptProject.BUILD_SCRIPT_NAME]: "tsc",
                     prepack: `cp -rv ${SimpleTypescriptProject.DIST_DIRECTORY}/. .`,
                     ...packageJson.scripts,
@@ -309,7 +282,7 @@ Thumbs.db
                     SimpleTypescriptProject.LICENSE_FILENAME
                 ],
                 scripts: {
-                    [SimpleTypescriptProject.FORMAT_SCRIPT_NAME]: "prettier . --write --ignore-unknown",
+                    ...SimpleTypescriptProject.COMMON_SCRIPTS,
                     [SimpleTypescriptProject.BUILD_SCRIPT_NAME]: `${this.packageManager} ${SimpleTypescriptProject.BUILD_CJS_SCRIPT_NAME} && ${this.packageManager} ${SimpleTypescriptProject.BUILD_ESM_SCRIPT_NAME}`,
                     [SimpleTypescriptProject.BUILD_CJS_SCRIPT_NAME]: `tsc --project ./${TypescriptProject.TS_CONFIG_CJS_FILENAME}`,
                     [SimpleTypescriptProject.BUILD_ESM_SCRIPT_NAME]: [
@@ -393,7 +366,7 @@ Thumbs.db
     private getDevDependencies(): Record<string, string> {
         return {
             "@types/node": "^18.19.70",
-            prettier: "^3.4.2",
+            "@biomejs/biome": "2.2.5",
             typescript: "~5.7.2"
         };
     }

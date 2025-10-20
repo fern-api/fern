@@ -24,7 +24,7 @@ import { SeedLiteralClient } from "@fern/literal";
 
 const client = new SeedLiteralClient({ environment: "YOUR_BASE_URL" });
 await client.headers.send({
-    query: "What is the weather today",
+    query: "What is the weather today"
 });
 ```
 
@@ -143,7 +143,10 @@ console.log(rawResponse.headers['X-My-Header']);
 
 ### Runtime Compatibility
 
+
 The SDK works in the following runtimes:
+
+
 
 - Node.js 18+
 - Vercel

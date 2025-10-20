@@ -5,19 +5,17 @@ import {
     parseGeneratorConfig,
     parseIR,
     type RawGithubConfig,
-    type ResolvedGithubConfig,
     resolveGitHubConfig
 } from "@fern-api/base-generator";
 import { assertNever } from "@fern-api/core-utils";
 import { AbsoluteFilePath, join, RelativeFilePath } from "@fern-api/fs-utils";
 import { CONSOLE_LOGGER, createLogger, Logger, LogLevel } from "@fern-api/logger";
 import { createLoggingExecutable } from "@fern-api/logging-execa";
-import { FernIr, serialization } from "@fern-fern/ir-sdk";
-import { AuthScheme, IntermediateRepresentation } from "@fern-fern/ir-sdk/api";
+import { serialization } from "@fern-fern/ir-sdk";
+import { IntermediateRepresentation } from "@fern-fern/ir-sdk/api";
 import { constructNpmPackage, NpmPackage, PersistedTypescriptProject } from "@fern-typescript/commons";
 import { GeneratorContext } from "@fern-typescript/contexts";
 import { writeFile } from "fs/promises";
-import { tmpdir } from "os";
 import tmp from "tmp-promise";
 import { publishPackage } from "./publishPackage";
 import { writeGitHubWorkflows } from "./writeGitHubWorkflows";
@@ -116,10 +114,8 @@ export abstract class AbstractGeneratorCli<CustomConfig> {
             );
             await config.output.mode._visit<void | Promise<void>>({
                 publish: async () => {
-                    await Promise.all([
-                        typescriptProject.installDependencies(logger),
-                        typescriptProject.format(logger)
-                    ]);
+                    await typescriptProject.installDependencies(logger);
+                    await typescriptProject.checkFix(logger);
                     await typescriptProject.build(logger);
                     await publishPackage({
                         logger,
@@ -147,11 +143,9 @@ export abstract class AbstractGeneratorCli<CustomConfig> {
                             packageManager: this.getPackageManager(customConfig)
                         });
                     });
-                    await Promise.all([
-                        typescriptProject.generateLockfile(logger),
-                        typescriptProject.format(logger),
-                        typescriptProject.deleteGitIgnoredFiles(logger)
-                    ]);
+                    await typescriptProject.generateLockfile(logger);
+                    await typescriptProject.checkFix(logger);
+                    await typescriptProject.deleteGitIgnoredFiles(logger);
                     await typescriptProject.copyProjectTo({
                         logger,
                         destinationPath,
@@ -170,10 +164,9 @@ export abstract class AbstractGeneratorCli<CustomConfig> {
                     }
                 },
                 downloadFiles: async () => {
-                    await Promise.all([
-                        typescriptProject.installDependencies(logger),
-                        typescriptProject.format(logger)
-                    ]);
+                    await typescriptProject.installDependencies(logger);
+                    await typescriptProject.checkFix(logger);
+
                     if (this.shouldGenerateFullProject(ir)) {
                         await typescriptProject.copyProjectTo({
                             destinationPath,

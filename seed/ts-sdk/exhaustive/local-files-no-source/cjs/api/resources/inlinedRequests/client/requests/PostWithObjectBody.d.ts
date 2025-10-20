@@ -1,4 +1,4 @@
-import * as SeedExhaustive from "../../../../index.js";
+import type * as SeedExhaustive from "../../../../index.js";
 /**
  * @example
  *     {

@@ -75,6 +75,7 @@ export interface APIDefinitionSettings {
     inlineAllOfSchemas: boolean | undefined;
     resolveAliases: generatorsYml.ResolveAliases | undefined;
     groupMultiApiEnvironments: boolean | undefined;
+    groupEnvironmentsByHost: boolean | undefined;
     wrapReferencesToNullableInOptional: boolean | undefined;
     coerceOptionalSchemasToNullable: boolean | undefined;
 }

@@ -1,7 +1,5 @@
 # Reference
-
 ## User
-
 <details><summary><code>client.user.<a href="/src/api/resources/user/client/Client.ts">head</a>() -> Headers</code></summary>
 <dl>
 <dd>
@@ -16,8 +14,8 @@
 
 ```typescript
 await client.user.head();
-```
 
+```
 </dd>
 </dl>
 </dd>
@@ -31,12 +29,13 @@ await client.user.head();
 <dl>
 <dd>
 
-**requestOptions:** `User.RequestOptions`
+**requestOptions:** `User.RequestOptions` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
 
-</dd>
-</dl>
-</dd>
-</dl>
 
 </dd>
 </dl>
@@ -56,10 +55,10 @@ await client.user.head();
 
 ```typescript
 await client.user.list({
-    limit: 1,
+    limit: 1
 });
-```
 
+```
 </dd>
 </dl>
 </dd>
@@ -73,20 +72,21 @@ await client.user.list({
 <dl>
 <dd>
 
-**request:** `SeedHttpHead.ListUsersRequest`
-
+**request:** `SeedHttpHead.ListUsersRequest` 
+    
 </dd>
 </dl>
 
 <dl>
 <dd>
 
-**requestOptions:** `User.RequestOptions`
+**requestOptions:** `User.RequestOptions` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
 
-</dd>
-</dl>
-</dd>
-</dl>
 
 </dd>
 </dl>

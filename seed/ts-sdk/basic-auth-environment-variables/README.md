@@ -22,13 +22,9 @@ Instantiate and use the client with the following:
 ```typescript
 import { SeedBasicAuthEnvironmentVariablesClient } from "@fern/basic-auth-environment-variables";
 
-const client = new SeedBasicAuthEnvironmentVariablesClient({
-    environment: "YOUR_BASE_URL",
-    username: "YOUR_USERNAME",
-    accessToken: "YOUR_ACCESS_TOKEN",
-});
+const client = new SeedBasicAuthEnvironmentVariablesClient({ environment: "YOUR_BASE_URL", username: "YOUR_USERNAME", accessToken: "YOUR_ACCESS_TOKEN" });
 await client.basicAuth.postWithBasicAuth({
-    key: "value",
+    "key": "value"
 });
 ```
 
@@ -134,7 +130,10 @@ console.log(rawResponse.headers['X-My-Header']);
 
 ### Runtime Compatibility
 
+
 The SDK works in the following runtimes:
+
+
 
 - Node.js 18+
 - Vercel

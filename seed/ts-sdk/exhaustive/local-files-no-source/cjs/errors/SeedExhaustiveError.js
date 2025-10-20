@@ -14,7 +14,7 @@ class SeedExhaustiveError extends Error {
 }
 exports.SeedExhaustiveError = SeedExhaustiveError;
 function buildMessage({ message, statusCode, body, }) {
-    let lines = [];
+    const lines = [];
     if (message != null) {
         lines.push(message);
     }

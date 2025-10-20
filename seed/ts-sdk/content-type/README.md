@@ -25,7 +25,7 @@ import { SeedContentTypesClient } from "@fern/content-type";
 const client = new SeedContentTypesClient({ environment: "YOUR_BASE_URL" });
 await client.service.patch({
     application: "application",
-    require_auth: true,
+    require_auth: true
 });
 ```
 
@@ -144,7 +144,10 @@ console.log(rawResponse.headers['X-My-Header']);
 
 ### Runtime Compatibility
 
+
 The SDK works in the following runtimes:
+
+
 
 - Node.js 18+
 - Vercel

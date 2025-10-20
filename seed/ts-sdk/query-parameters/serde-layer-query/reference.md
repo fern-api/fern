@@ -1,7 +1,5 @@
 # Reference
-
 ## User
-
 <details><summary><code>client.user.<a href="/src/api/resources/user/client/Client.ts">getUsername</a>({ ...params }) -> SeedQueryParameters.User</code></summary>
 <dl>
 <dd>
@@ -23,42 +21,39 @@ await client.user.getUsername({
     bytes: "SGVsbG8gd29ybGQh",
     user: {
         name: "name",
-        tags: ["tags", "tags"],
+        tags: ["tags", "tags"]
     },
-    userList: [
-        {
+    userList: [{
             name: "name",
-            tags: ["tags", "tags"],
-        },
-        {
+            tags: ["tags", "tags"]
+        }, {
             name: "name",
-            tags: ["tags", "tags"],
-        },
-    ],
+            tags: ["tags", "tags"]
+        }],
     optionalDeadline: new Date("2024-01-15T09:30:00.000Z"),
     keyValue: {
-        keyValue: "keyValue",
+        "keyValue": "keyValue"
     },
     optionalString: "optionalString",
     nestedUser: {
         name: "name",
         user: {
             name: "name",
-            tags: ["tags", "tags"],
-        },
+            tags: ["tags", "tags"]
+        }
     },
     optionalUser: {
         name: "name",
-        tags: ["tags", "tags"],
+        tags: ["tags", "tags"]
     },
     excludeUser: {
         name: "name",
-        tags: ["tags", "tags"],
+        tags: ["tags", "tags"]
     },
-    filter: "filter",
+    filter: "filter"
 });
-```
 
+```
 </dd>
 </dl>
 </dd>
@@ -72,20 +67,21 @@ await client.user.getUsername({
 <dl>
 <dd>
 
-**request:** `SeedQueryParameters.GetUsersRequest`
-
+**request:** `SeedQueryParameters.GetUsersRequest` 
+    
 </dd>
 </dl>
 
 <dl>
 <dd>
 
-**requestOptions:** `User.RequestOptions`
+**requestOptions:** `User.RequestOptions` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
 
-</dd>
-</dl>
-</dd>
-</dl>
 
 </dd>
 </dl>

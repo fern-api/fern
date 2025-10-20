@@ -1,7 +1,5 @@
 # Reference
-
 ## Auth
-
 <details><summary><code>client.auth.<a href="/src/api/resources/auth/client/Client.ts">getToken</a>({ ...params }) -> SeedAnyAuth.TokenResponse</code></summary>
 <dl>
 <dd>
@@ -18,10 +16,10 @@
 await client.auth.getToken({
     client_id: "client_id",
     client_secret: "client_secret",
-    scope: "scope",
+    scope: "scope"
 });
-```
 
+```
 </dd>
 </dl>
 </dd>
@@ -35,27 +33,27 @@ await client.auth.getToken({
 <dl>
 <dd>
 
-**request:** `SeedAnyAuth.GetTokenRequest`
-
+**request:** `SeedAnyAuth.GetTokenRequest` 
+    
 </dd>
 </dl>
 
 <dl>
 <dd>
 
-**requestOptions:** `Auth.RequestOptions`
+**requestOptions:** `Auth.RequestOptions` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
 
-</dd>
-</dl>
-</dd>
-</dl>
 
 </dd>
 </dl>
 </details>
 
 ## User
-
 <details><summary><code>client.user.<a href="/src/api/resources/user/client/Client.ts">get</a>() -> SeedAnyAuth.User[]</code></summary>
 <dl>
 <dd>
@@ -70,8 +68,8 @@ await client.auth.getToken({
 
 ```typescript
 await client.user.get();
-```
 
+```
 </dd>
 </dl>
 </dd>
@@ -85,12 +83,13 @@ await client.user.get();
 <dl>
 <dd>
 
-**requestOptions:** `User.RequestOptions`
+**requestOptions:** `User.RequestOptions` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
 
-</dd>
-</dl>
-</dd>
-</dl>
 
 </dd>
 </dl>
@@ -110,8 +109,8 @@ await client.user.get();
 
 ```typescript
 await client.user.getAdmins();
-```
 
+```
 </dd>
 </dl>
 </dd>
@@ -125,12 +124,13 @@ await client.user.getAdmins();
 <dl>
 <dd>
 
-**requestOptions:** `User.RequestOptions`
+**requestOptions:** `User.RequestOptions` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
 
-</dd>
-</dl>
-</dd>
-</dl>
 
 </dd>
 </dl>

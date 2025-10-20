@@ -25,7 +25,7 @@ import { SeedApiClient } from "@fern/required-nullable";
 const client = new SeedApiClient({ environment: "YOUR_BASE_URL" });
 await client.getFoo({
     required_baz: "required_baz",
-    required_nullable_baz: "required_nullable_baz",
+    required_nullable_baz: "required_nullable_baz"
 });
 ```
 
@@ -144,7 +144,10 @@ console.log(rawResponse.headers['X-My-Header']);
 
 ### Runtime Compatibility
 
+
 The SDK works in the following runtimes:
+
+
 
 - Node.js 18+
 - Vercel

@@ -28,10 +28,10 @@ await client.service.searchResources({
     offset: 1,
     query: "query",
     filters: {
-        filters: {
-            key: "value",
-        },
-    },
+        "filters": {
+            "key": "value"
+        }
+    }
 });
 ```
 
@@ -150,7 +150,10 @@ console.log(rawResponse.headers['X-My-Header']);
 
 ### Runtime Compatibility
 
+
 The SDK works in the following runtimes:
+
+
 
 - Node.js 18+
 - Vercel

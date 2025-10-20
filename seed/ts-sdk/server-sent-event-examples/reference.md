@@ -1,7 +1,5 @@
 # Reference
-
 ## Completions
-
 <details><summary><code>client.completions.<a href="/src/api/resources/completions/client/Client.ts">stream</a>({ ...params }) -> core.Stream<SeedServerSentEvents.StreamedCompletion></code></summary>
 <dl>
 <dd>
@@ -16,13 +14,13 @@
 
 ```typescript
 const response = await client.completions.stream({
-    query: "foo",
+    query: "foo"
 });
 for await (const item of response) {
     console.log(item);
 }
-```
 
+```
 </dd>
 </dl>
 </dd>
@@ -36,20 +34,21 @@ for await (const item of response) {
 <dl>
 <dd>
 
-**request:** `SeedServerSentEvents.StreamCompletionRequest`
-
+**request:** `SeedServerSentEvents.StreamCompletionRequest` 
+    
 </dd>
 </dl>
 
 <dl>
 <dd>
 
-**requestOptions:** `Completions.RequestOptions`
+**requestOptions:** `Completions.RequestOptions` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
 
-</dd>
-</dl>
-</dd>
-</dl>
 
 </dd>
 </dl>

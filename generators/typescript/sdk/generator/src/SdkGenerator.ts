@@ -531,7 +531,8 @@ export class SdkGenerator {
             useBigInt: config.useBigInt,
             generateWireTests: config.generateWireTests,
             relativePackagePath: this.relativePackagePath,
-            relativeTestPath: this.relativeTestPath
+            relativeTestPath: this.relativeTestPath,
+            generatorType: "sdk"
         });
 
         this.websocketTypeSchemaDeclarationReferencer = new WebsocketTypeSchemaDeclarationReferencer({
@@ -734,7 +735,7 @@ export class SdkGenerator {
     }
 
     private async copyAsIsFiles() {
-        await this.asIsManager.AddToTsProject({ project: this.project });
+        await this.asIsManager.addToTsProject({ project: this.project });
     }
 
     private getTypesToGenerate(): Record<TypeId, TypeDeclaration> {

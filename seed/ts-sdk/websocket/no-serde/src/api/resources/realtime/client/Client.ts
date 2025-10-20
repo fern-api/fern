@@ -31,19 +31,19 @@ export class Realtime {
         const { id, model, temperature, headers, debug, reconnectAttempts } = args;
         const _queryParams: Record<string, string | string[] | object | object[] | null> = {};
         if (model != null) {
-            _queryParams["model"] = model;
+            _queryParams.model = model;
         }
 
         if (temperature != null) {
-            _queryParams["temperature"] = temperature.toString();
+            _queryParams.temperature = temperature.toString();
         }
 
-        let _headers: Record<string, unknown> = { ...headers };
+        const _headers: Record<string, unknown> = { ...headers };
         const socket = new core.ReconnectingWebSocket({
             url: core.url.join(
-                (await core.Supplier.get(this._options["baseUrl"])) ??
-                    (await core.Supplier.get(this._options["environment"])),
-                `/realtime/${encodeURIComponent(id)}`,
+                (await core.Supplier.get(this._options.baseUrl)) ??
+                    (await core.Supplier.get(this._options.environment)),
+                `/realtime/${core.url.encodePathParam(id)}`,
             ),
             protocols: [],
             queryParameters: _queryParams,
