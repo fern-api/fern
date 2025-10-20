@@ -23,14 +23,13 @@ if typing.TYPE_CHECKING:
     from .moment import Moment
     from .movie import Movie
     from .movie_id import MovieId
-    from .node import Node
+    from .node_all import Node, Tree
     from .refresh_token_request import RefreshTokenRequest
     from .request import Request
     from .response import Response
     from .response_type import ResponseType
     from .stunt_double import StuntDouble
     from .test import Test, Test_And, Test_Or
-    from .tree import Tree
 _dynamic_imports: typing.Dict[str, str] = {
     "Actor": ".actor",
     "Actress": ".actress",
@@ -53,7 +52,7 @@ _dynamic_imports: typing.Dict[str, str] = {
     "Moment": ".moment",
     "Movie": ".movie",
     "MovieId": ".movie_id",
-    "Node": ".node",
+    "Node": ".node_all",
     "RefreshTokenRequest": ".refresh_token_request",
     "Request": ".request",
     "Response": ".response",
@@ -62,7 +61,7 @@ _dynamic_imports: typing.Dict[str, str] = {
     "Test": ".test",
     "Test_And": ".test",
     "Test_Or": ".test",
-    "Tree": ".tree",
+    "Tree": ".node_all",
 }
 
 
