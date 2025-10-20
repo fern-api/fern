@@ -9,7 +9,8 @@ module Seed
         headers: {
           "User-Agent": "fern_any-auth/0.0.1",
           "X-Fern-Language": "Ruby",
-          Authorization: "Bearer #{token}"
+          Authorization: "Bearer #{token}",
+          "X-API-Key": api_key.to_s
         }
       )
     end
