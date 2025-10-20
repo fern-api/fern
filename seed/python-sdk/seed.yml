@@ -1,3 +1,4 @@
+# Seed configuration for python-sdk
 irVersion: v60
 displayName: Python SDK
 image: fernapi/fern-python-sdk

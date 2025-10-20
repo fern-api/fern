@@ -1,3 +1,4 @@
+# Seed configuration for ruby-model
 irVersion: v39
 displayName: Ruby Model
 image: fernapi/fern-ruby-model

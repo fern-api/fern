@@ -1,3 +1,4 @@
+# Seed configuration for rust-model
 irVersion: v61
 displayName: Rust Model
 image: fernapi/fern-rust-model

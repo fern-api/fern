@@ -1,3 +1,4 @@
+# Seed configuration for pydantic-v2
 irVersion: v60
 displayName: Pydantic Model
 image: fernapi/fern-pydantic-model-v2

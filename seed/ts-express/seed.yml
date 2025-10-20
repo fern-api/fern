@@ -1,3 +1,4 @@
+# Seed configuration for ts-express
 irVersion: v60
 displayName: TypeScript Express
 changelogLocation: ../../generators/typescript/express/versions.yml

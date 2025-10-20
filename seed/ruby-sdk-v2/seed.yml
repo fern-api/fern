@@ -1,3 +1,4 @@
+# Seed configuration for ruby-sdk-v2
 irVersion: v59
 displayName: Ruby SDK
 language: ruby

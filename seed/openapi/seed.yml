@@ -1,3 +1,4 @@
+# Seed configuration for openapi
 irVersion: v53
 displayName: OpenAPI
 image: fernapi/fern-openapi

@@ -1,3 +1,4 @@
+# Seed configuration for go-fiber
 irVersion: v58
 displayName: Fiber
 image: fernapi/fern-go-fiber

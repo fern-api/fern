@@ -1,3 +1,4 @@
+# Seed configuration for ruby-sdk
 irVersion: v58
 displayName: Ruby SDK
 image: fernapi/fern-ruby-sdk

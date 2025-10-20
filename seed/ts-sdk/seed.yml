@@ -1,3 +1,4 @@
+# Seed configuration for ts-sdk
 displayName: TypeScript SDK
 irVersion: v61
 image: fernapi/fern-typescript-sdk

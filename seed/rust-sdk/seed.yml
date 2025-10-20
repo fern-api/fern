@@ -1,3 +1,4 @@
+# Seed configuration for rust-sdk
 irVersion: v61
 displayName: Rust SDK
 image: fernapi/fern-rust-sdk

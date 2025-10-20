@@ -1,3 +1,4 @@
+# Seed configuration for postman
 irVersion: v53
 displayName: Postman
 image: fernapi/fern-postman

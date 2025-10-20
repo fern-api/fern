@@ -1,3 +1,4 @@
+# Seed configuration for ts-mcp
 irVersion: v58
 displayName: TypeScript MCP Server
 image: fernapi/fern-typescript-mcp-server
