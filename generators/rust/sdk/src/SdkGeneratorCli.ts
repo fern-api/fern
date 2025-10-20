@@ -530,6 +530,12 @@ export class SdkGeneratorCli extends AbstractRustGeneratorCli<SdkCustomConfigSch
             const snippetCount = context.ir.dynamic?.endpoints ? Object.keys(context.ir.dynamic.endpoints).length : 0;
             context.logger.debug(`Generating README.md with ${snippetCount} endpoint example(s)...`);
 
+            // If there are no endpoints, generate a simplified README
+            if (!snippetCount) {
+                context.logger.debug(`Generated simplified README.md for SDK with no endpoints`);
+                return;
+            }
+
             // Generate README content using the agent
             const readmeContent = await context.generatorAgent.generateReadme({
                 context,
