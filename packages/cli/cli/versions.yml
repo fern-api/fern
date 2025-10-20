@@ -17,6 +17,16 @@
 
 - changelogEntry:
     - summary: |
+        Fix errors related to:
+          - external references in OpenAPI specs
+          - references in OpenAPI security schemes
+      type: fix
+  irVersion: 61
+  createdAt: "2025-10-20"
+  version: 0.93.1
+
+- changelogEntry:
+    - summary: |
         Turns HTTP snippets on by default in docs generation. 
 
         To turn HTTP snippets off, set `settings.http-snippets: false` in the `docs.yml` file. You can also specify an explicit list of snippets to include. 

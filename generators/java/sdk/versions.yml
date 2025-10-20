@@ -1,3 +1,22 @@
+- version: 3.8.12
+  changelogEntry:
+    - summary: |
+        Fixed wire test generation for application/x-www-form-urlencoded requests. Wire tests now correctly
+        validate form-encoded request bodies instead of attempting to parse them as JSON, eliminating
+        JsonParseException failures in generated test suites.
+      type: fix
+  createdAt: "2025-10-20"
+  irVersion: 60
+
+- version: 3.8.11
+  changelogEntry:
+    - summary: |
+        Fix Java SDK generator to preserve original environment names for multi-URL environments (e.g., "E2E" instead of "E_2_E").
+        Single-URL environments remain unchanged for backward compatibility.
+      type: fix
+  createdAt: "2025-10-16"
+  irVersion: 60
+
 - version: 3.8.10
   changelogEntry:
     - summary: |
