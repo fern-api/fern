@@ -411,7 +411,29 @@ export class UndiscriminatedUnionGenerator {
         // Generate match arms for each variant
         this.undiscriminatedUnionTypeDeclaration.members.forEach((member, index) => {
             const variantName = this.getVariantNameForMember(member, index);
-            writer.writeLine(`Self::${variantName}(value) => write!(f, "{}", value),`);
+
+            // Check if the type likely supports Display
+            if (member.type.type === "primitive") {
+                // Primitive types all support Display
+                writer.writeLine(`Self::${variantName}(value) => write!(f, "{}", value),`);
+            } else if (
+                member.type.type === "container" &&
+                (member.type.container.type === "list" ||
+                    member.type.container.type === "set" ||
+                    member.type.container.type === "map")
+            ) {
+                // Collections should use Debug format
+                writer.writeLine(`Self::${variantName}(value) => write!(f, "{:?}", value),`);
+            } else if (member.type.type === "named") {
+                // For named types, try to serialize to JSON as a fallback
+                // This ensures we always have a string representation
+                writer.writeLine(
+                    `Self::${variantName}(value) => write!(f, "{}", serde_json::to_string(value).unwrap_or_else(|_| format!("{:?}", value))),`
+                );
+            } else {
+                // Default to Debug format for unknown types
+                writer.writeLine(`Self::${variantName}(value) => write!(f, "{:?}", value),`);
+            }
         });
 
         writer.dedent();
