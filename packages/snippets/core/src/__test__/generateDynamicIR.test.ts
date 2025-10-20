@@ -55,7 +55,7 @@ describe("generateDynamicIR", () => {
                 }
             }
         };
-        const ir = await generateDynamicIR({
+        const ir = generateDynamicIR({
             spec: {
                 type: "openapi",
                 openapi,
