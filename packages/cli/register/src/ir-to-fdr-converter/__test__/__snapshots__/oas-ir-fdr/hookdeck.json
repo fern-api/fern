@@ -130,8 +130,7 @@
             "type": {
               "type": "id",
               "value": "OrderByDirection"
-            },
-            "displayName": "OrderByDirection"
+            }
           },
           {
             "typeName": "SeekPaginationDir1",
@@ -450,24 +449,21 @@
             "type": {
               "type": "id",
               "value": "IssueTriggerDeliveryConfigs"
-            },
-            "displayName": "IssueTriggerDeliveryConfigs"
+            }
           },
           {
             "typeName": "IssueTriggerTransformationConfigs",
             "type": {
               "type": "id",
               "value": "IssueTriggerTransformationConfigs"
-            },
-            "displayName": "IssueTriggerTransformationConfigs"
+            }
           },
           {
             "typeName": "IssueTriggerBackpressureConfigs",
             "type": {
               "type": "id",
               "value": "IssueTriggerBackpressureConfigs"
-            },
-            "displayName": "IssueTriggerBackpressureConfigs"
+            }
           }
         ]
       }
@@ -3099,40 +3095,35 @@
             "type": {
               "type": "id",
               "value": "HMACIntegrationConfigs"
-            },
-            "displayName": "HMACIntegrationConfigs"
+            }
           },
           {
             "typeName": "APIKeyIntegrationConfigs",
             "type": {
               "type": "id",
               "value": "APIKeyIntegrationConfigs"
-            },
-            "displayName": "APIKeyIntegrationConfigs"
+            }
           },
           {
             "typeName": "HandledHMACConfigs",
             "type": {
               "type": "id",
               "value": "HandledHMACConfigs"
-            },
-            "displayName": "HandledHMACConfigs"
+            }
           },
           {
             "typeName": "BasicAuthIntegrationConfigs",
             "type": {
               "type": "id",
               "value": "BasicAuthIntegrationConfigs"
-            },
-            "displayName": "BasicAuthIntegrationConfigs"
+            }
           },
           {
             "typeName": "ShopifyIntegrationConfigs",
             "type": {
               "type": "id",
               "value": "ShopifyIntegrationConfigs"
-            },
-            "displayName": "ShopifyIntegrationConfigs"
+            }
           }
         ]
       }
@@ -4110,16 +4101,14 @@
             "type": {
               "type": "id",
               "value": "DeliveryIssueWithData"
-            },
-            "displayName": "DeliveryIssueWithData"
+            }
           },
           {
             "typeName": "TransformationIssueWithData",
             "type": {
               "type": "id",
               "value": "TransformationIssueWithData"
-            },
-            "displayName": "TransformationIssueWithData"
+            }
           }
         ]
       }
@@ -4560,16 +4549,14 @@
             "type": {
               "type": "id",
               "value": "DeliveryIssue"
-            },
-            "displayName": "DeliveryIssue"
+            }
           },
           {
             "typeName": "TransformationIssue",
             "type": {
               "type": "id",
               "value": "TransformationIssue"
-            },
-            "displayName": "TransformationIssue"
+            }
           }
         ]
       }
@@ -5188,16 +5175,14 @@
             "type": {
               "type": "id",
               "value": "FilteredMeta"
-            },
-            "displayName": "FilteredMeta"
+            }
           },
           {
             "typeName": "TransformationFailedMeta",
             "type": {
               "type": "id",
               "value": "TransformationFailedMeta"
-            },
-            "displayName": "TransformationFailedMeta"
+            }
           }
         ]
       }
@@ -5737,16 +5722,14 @@
             "type": {
               "type": "id",
               "value": "TransformReference"
-            },
-            "displayName": "TransformReference"
+            }
           },
           {
             "typeName": "TransformFull",
             "type": {
               "type": "id",
               "value": "TransformFull"
-            },
-            "displayName": "TransformFull"
+            }
           }
         ]
       }
@@ -5800,40 +5783,35 @@
             "type": {
               "type": "id",
               "value": "RetryRule"
-            },
-            "displayName": "RetryRule"
+            }
           },
           {
             "typeName": "AlertRule",
             "type": {
               "type": "id",
               "value": "AlertRule"
-            },
-            "displayName": "AlertRule"
+            }
           },
           {
             "typeName": "FilterRule",
             "type": {
               "type": "id",
               "value": "FilterRule"
-            },
-            "displayName": "FilterRule"
+            }
           },
           {
             "typeName": "TransformRule",
             "type": {
               "type": "id",
               "value": "TransformRule"
-            },
-            "displayName": "TransformRule"
+            }
           },
           {
             "typeName": "DelayRule",
             "type": {
               "type": "id",
               "value": "DelayRule"
-            },
-            "displayName": "DelayRule"
+            }
           }
         ]
       }
@@ -7014,8 +6992,7 @@
             }
           }
         ]
-      },
-      "displayName": "Gt"
+      }
     },
     "IssueTriggersGetParametersDisabledAt": {
       "description": "Date when the issue trigger was disabled",
@@ -7036,8 +7013,7 @@
             "type": {
               "type": "id",
               "value": "IssueTriggersGetParametersDisabledAt1"
-            },
-            "displayName": "Gt"
+            }
           }
         ]
       }
@@ -7181,24 +7157,21 @@
             "type": {
               "type": "id",
               "value": "IssueTriggerDeliveryConfigs"
-            },
-            "displayName": "IssueTriggerDeliveryConfigs"
+            }
           },
           {
             "typeName": "IssueTriggerTransformationConfigs",
             "type": {
               "type": "id",
               "value": "IssueTriggerTransformationConfigs"
-            },
-            "displayName": "IssueTriggerTransformationConfigs"
+            }
           },
           {
             "typeName": "IssueTriggerBackpressureConfigs",
             "type": {
               "type": "id",
               "value": "IssueTriggerBackpressureConfigs"
-            },
-            "displayName": "IssueTriggerBackpressureConfigs"
+            }
           }
         ]
       }
@@ -7214,24 +7187,21 @@
             "type": {
               "type": "id",
               "value": "IssueTriggerDeliveryConfigs"
-            },
-            "displayName": "IssueTriggerDeliveryConfigs"
+            }
           },
           {
             "typeName": "IssueTriggerTransformationConfigs",
             "type": {
               "type": "id",
               "value": "IssueTriggerTransformationConfigs"
-            },
-            "displayName": "IssueTriggerTransformationConfigs"
+            }
           },
           {
             "typeName": "IssueTriggerBackpressureConfigs",
             "type": {
               "type": "id",
               "value": "IssueTriggerBackpressureConfigs"
-            },
-            "displayName": "IssueTriggerBackpressureConfigs"
+            }
           }
         ]
       }
@@ -7247,24 +7217,21 @@
             "type": {
               "type": "id",
               "value": "IssueTriggerDeliveryConfigs"
-            },
-            "displayName": "IssueTriggerDeliveryConfigs"
+            }
           },
           {
             "typeName": "IssueTriggerTransformationConfigs",
             "type": {
               "type": "id",
               "value": "IssueTriggerTransformationConfigs"
-            },
-            "displayName": "IssueTriggerTransformationConfigs"
+            }
           },
           {
             "typeName": "IssueTriggerBackpressureConfigs",
             "type": {
               "type": "id",
               "value": "IssueTriggerBackpressureConfigs"
-            },
-            "displayName": "IssueTriggerBackpressureConfigs"
+            }
           }
         ]
       }
@@ -7662,8 +7629,7 @@
             }
           }
         ]
-      },
-      "displayName": "Gt"
+      }
     },
     "BookmarksGetParametersLastUsedAt": {
       "description": "Filter by last used date",
@@ -7685,8 +7651,7 @@
             "type": {
               "type": "id",
               "value": "BookmarksGetParametersLastUsedAt1"
-            },
-            "displayName": "Gt"
+            }
           }
         ]
       }
@@ -7947,8 +7912,7 @@
             }
           }
         ]
-      },
-      "displayName": "Gt"
+      }
     },
     "DestinationsGetParametersName": {
       "description": "The destination name",
@@ -7971,8 +7935,7 @@
             "type": {
               "type": "id",
               "value": "DestinationsGetParametersName1"
-            },
-            "displayName": "Gt"
+            }
           }
         ]
       }
@@ -8056,8 +8019,7 @@
             }
           }
         ]
-      },
-      "displayName": "Gt"
+      }
     },
     "DestinationsGetParametersArchivedAt": {
       "description": "Date the destination was archived",
@@ -8078,8 +8040,7 @@
             "type": {
               "type": "id",
               "value": "DestinationsGetParametersArchivedAt1"
-            },
-            "displayName": "Gt"
+            }
           }
         ]
       }
@@ -8133,8 +8094,7 @@
             }
           }
         ]
-      },
-      "displayName": "Any"
+      }
     },
     "DestinationsGetParametersCliPath": {
       "description": "Path for the CLI destination",
@@ -8156,8 +8116,7 @@
             "type": {
               "type": "id",
               "value": "DestinationsGetParametersCliPath1"
-            },
-            "displayName": "Any"
+            }
           },
           {
             "type": {
@@ -8405,8 +8364,7 @@
             "type": {
               "type": "id",
               "value": "EventStatus"
-            },
-            "displayName": "EventStatus"
+            }
           },
           {
             "typeName": "EventsGetParametersStatus1",
@@ -8624,8 +8582,7 @@
             }
           }
         ]
-      },
-      "displayName": "Gt"
+      }
     },
     "EventsGetParametersAttempts": {
       "description": "Filter by number of attempts",
@@ -8647,8 +8604,7 @@
             "type": {
               "type": "id",
               "value": "EventsGetParametersAttempts1"
-            },
-            "displayName": "Gt"
+            }
           }
         ]
       }
@@ -8742,8 +8698,7 @@
             }
           }
         ]
-      },
-      "displayName": "Gt"
+      }
     },
     "EventsGetParametersResponseStatus": {
       "description": "Filter by HTTP response status code",
@@ -8766,8 +8721,7 @@
             "type": {
               "type": "id",
               "value": "EventsGetParametersResponseStatus1"
-            },
-            "displayName": "Gt"
+            }
           },
           {
             "type": {
@@ -8852,8 +8806,7 @@
             }
           }
         ]
-      },
-      "displayName": "Gt"
+      }
     },
     "EventsGetParametersSuccessfulAt": {
       "description": "Filter by `successful_at` date using a date operator",
@@ -8874,8 +8827,7 @@
             "type": {
               "type": "id",
               "value": "EventsGetParametersSuccessfulAt1"
-            },
-            "displayName": "Gt"
+            }
           }
         ]
       }
@@ -8947,8 +8899,7 @@
             }
           }
         ]
-      },
-      "displayName": "Gt"
+      }
     },
     "EventsGetParametersCreatedAt": {
       "description": "Filter by `created_at` date using a date operator",
@@ -8969,8 +8920,7 @@
             "type": {
               "type": "id",
               "value": "EventsGetParametersCreatedAt1"
-            },
-            "displayName": "Gt"
+            }
           }
         ]
       }
@@ -9023,8 +8973,7 @@
             }
           }
         ]
-      },
-      "displayName": "Any"
+      }
     },
     "EventsGetParametersCliId": {
       "description": "Filter by CLI IDs. `?[any]=true` operator for any CLI.",
@@ -9045,8 +8994,7 @@
             "type": {
               "type": "id",
               "value": "EventsGetParametersCliId1"
-            },
-            "displayName": "Any"
+            }
           },
           {
             "type": {
@@ -9156,8 +9104,7 @@
             }
           }
         ]
-      },
-      "displayName": "Gt"
+      }
     },
     "EventsGetParametersLastAttemptAt": {
       "description": "Filter by `last_attempt_at` date using a date operator",
@@ -9178,8 +9125,7 @@
             "type": {
               "type": "id",
               "value": "EventsGetParametersLastAttemptAt1"
-            },
-            "displayName": "Gt"
+            }
           }
         ]
       }
@@ -9560,8 +9506,7 @@
             }
           }
         ]
-      },
-      "displayName": "Gt"
+      }
     },
     "BulkEventsRetryGetParametersCancelledAt": {
       "description": "Filter by date the bulk retry was cancelled",
@@ -9582,8 +9527,7 @@
             "type": {
               "type": "id",
               "value": "BulkEventsRetryGetParametersCancelledAt1"
-            },
-            "displayName": "Gt"
+            }
           }
         ]
       }
@@ -9667,8 +9611,7 @@
             }
           }
         ]
-      },
-      "displayName": "Gt"
+      }
     },
     "BulkEventsRetryGetParametersCompletedAt": {
       "description": "Filter by date the bulk retry completed",
@@ -9689,8 +9632,7 @@
             "type": {
               "type": "id",
               "value": "BulkEventsRetryGetParametersCompletedAt1"
-            },
-            "displayName": "Gt"
+            }
           }
         ]
       }
@@ -9774,8 +9716,7 @@
             }
           }
         ]
-      },
-      "displayName": "Gt"
+      }
     },
     "BulkEventsRetryGetParametersCreatedAt": {
       "description": "Filter by date the bulk retry was created",
@@ -9796,8 +9737,7 @@
             "type": {
               "type": "id",
               "value": "BulkEventsRetryGetParametersCreatedAt1"
-            },
-            "displayName": "Gt"
+            }
           }
         ]
       }
@@ -9888,8 +9828,7 @@
             "type": {
               "type": "id",
               "value": "EventStatus"
-            },
-            "displayName": "EventStatus"
+            }
           },
           {
             "typeName": "BulkEventsRetryGetParametersQuerySchemaStatus1",
@@ -10107,8 +10046,7 @@
             }
           }
         ]
-      },
-      "displayName": "Gt"
+      }
     },
     "BulkEventsRetryGetParametersQuerySchemaAttempts": {
       "description": "Filter by number of attempts",
@@ -10130,8 +10068,7 @@
             "type": {
               "type": "id",
               "value": "BulkEventsRetryGetParametersQuerySchemaAttempts1"
-            },
-            "displayName": "Gt"
+            }
           }
         ]
       }
@@ -10225,8 +10162,7 @@
             }
           }
         ]
-      },
-      "displayName": "Gt"
+      }
     },
     "BulkEventsRetryGetParametersQuerySchemaResponseStatus": {
       "description": "Filter by HTTP response status code",
@@ -10249,8 +10185,7 @@
             "type": {
               "type": "id",
               "value": "BulkEventsRetryGetParametersQuerySchemaResponseStatus1"
-            },
-            "displayName": "Gt"
+            }
           },
           {
             "type": {
@@ -10335,8 +10270,7 @@
             }
           }
         ]
-      },
-      "displayName": "Gt"
+      }
     },
     "BulkEventsRetryGetParametersQuerySchemaSuccessfulAt": {
       "description": "Filter by `successful_at` date using a date operator",
@@ -10357,8 +10291,7 @@
             "type": {
               "type": "id",
               "value": "BulkEventsRetryGetParametersQuerySchemaSuccessfulAt1"
-            },
-            "displayName": "Gt"
+            }
           }
         ]
       }
@@ -10430,8 +10363,7 @@
             }
           }
         ]
-      },
-      "displayName": "Gt"
+      }
     },
     "BulkEventsRetryGetParametersQuerySchemaCreatedAt": {
       "description": "Filter by `created_at` date using a date operator",
@@ -10452,8 +10384,7 @@
             "type": {
               "type": "id",
               "value": "BulkEventsRetryGetParametersQuerySchemaCreatedAt1"
-            },
-            "displayName": "Gt"
+            }
           }
         ]
       }
@@ -10506,8 +10437,7 @@
             }
           }
         ]
-      },
-      "displayName": "Any"
+      }
     },
     "BulkEventsRetryGetParametersQuerySchemaCliId": {
       "description": "Filter by CLI IDs. `?[any]=true` operator for any CLI.",
@@ -10528,8 +10458,7 @@
             "type": {
               "type": "id",
               "value": "BulkEventsRetryGetParametersQuerySchemaCliId1"
-            },
-            "displayName": "Any"
+            }
           },
           {
             "type": {
@@ -10639,8 +10568,7 @@
             }
           }
         ]
-      },
-      "displayName": "Gt"
+      }
     },
     "BulkEventsRetryGetParametersQuerySchemaLastAttemptAt": {
       "description": "Filter by `last_attempt_at` date using a date operator",
@@ -10661,8 +10589,7 @@
             "type": {
               "type": "id",
               "value": "BulkEventsRetryGetParametersQuerySchemaLastAttemptAt1"
-            },
-            "displayName": "Gt"
+            }
           }
         ]
       }
@@ -11459,8 +11386,7 @@
             "type": {
               "type": "id",
               "value": "EventStatus"
-            },
-            "displayName": "EventStatus"
+            }
           },
           {
             "typeName": "BulkEventsRetryPostRequestBodyContentApplicationJsonSchemaQueryStatus1",
@@ -11678,8 +11604,7 @@
             }
           }
         ]
-      },
-      "displayName": "Gt"
+      }
     },
     "BulkEventsRetryPostRequestBodyContentApplicationJsonSchemaQueryAttempts": {
       "description": "Filter by number of attempts",
@@ -11701,8 +11626,7 @@
             "type": {
               "type": "id",
               "value": "BulkEventsRetryPostRequestBodyContentApplicationJsonSchemaQueryAttempts1"
-            },
-            "displayName": "Gt"
+            }
           }
         ]
       }
@@ -11796,8 +11720,7 @@
             }
           }
         ]
-      },
-      "displayName": "Gt"
+      }
     },
     "BulkEventsRetryPostRequestBodyContentApplicationJsonSchemaQueryResponseStatus": {
       "description": "Filter by HTTP response status code",
@@ -11820,8 +11743,7 @@
             "type": {
               "type": "id",
               "value": "BulkEventsRetryPostRequestBodyContentApplicationJsonSchemaQueryResponseStatus1"
-            },
-            "displayName": "Gt"
+            }
           },
           {
             "type": {
@@ -11906,8 +11828,7 @@
             }
           }
         ]
-      },
-      "displayName": "Gt"
+      }
     },
     "BulkEventsRetryPostRequestBodyContentApplicationJsonSchemaQuerySuccessfulAt": {
       "description": "Filter by `successful_at` date using a date operator",
@@ -11928,8 +11849,7 @@
             "type": {
               "type": "id",
               "value": "BulkEventsRetryPostRequestBodyContentApplicationJsonSchemaQuerySuccessfulAt1"
-            },
-            "displayName": "Gt"
+            }
           }
         ]
       }
@@ -12001,8 +11921,7 @@
             }
           }
         ]
-      },
-      "displayName": "Gt"
+      }
     },
     "BulkEventsRetryPostRequestBodyContentApplicationJsonSchemaQueryCreatedAt": {
       "description": "Filter by `created_at` date using a date operator",
@@ -12023,8 +11942,7 @@
             "type": {
               "type": "id",
               "value": "BulkEventsRetryPostRequestBodyContentApplicationJsonSchemaQueryCreatedAt1"
-            },
-            "displayName": "Gt"
+            }
           }
         ]
       }
@@ -12077,8 +11995,7 @@
             }
           }
         ]
-      },
-      "displayName": "Any"
+      }
     },
     "BulkEventsRetryPostRequestBodyContentApplicationJsonSchemaQueryCliId": {
       "description": "Filter by CLI IDs. `?[any]=true` operator for any CLI.",
@@ -12099,8 +12016,7 @@
             "type": {
               "type": "id",
               "value": "BulkEventsRetryPostRequestBodyContentApplicationJsonSchemaQueryCliId1"
-            },
-            "displayName": "Any"
+            }
           },
           {
             "type": {
@@ -12210,8 +12126,7 @@
             }
           }
         ]
-      },
-      "displayName": "Gt"
+      }
     },
     "BulkEventsRetryPostRequestBodyContentApplicationJsonSchemaQueryLastAttemptAt": {
       "description": "Filter by `last_attempt_at` date using a date operator",
@@ -12232,8 +12147,7 @@
             "type": {
               "type": "id",
               "value": "BulkEventsRetryPostRequestBodyContentApplicationJsonSchemaQueryLastAttemptAt1"
-            },
-            "displayName": "Gt"
+            }
           }
         ]
       }
@@ -12686,8 +12600,7 @@
             "type": {
               "type": "id",
               "value": "EventStatus"
-            },
-            "displayName": "EventStatus"
+            }
           },
           {
             "typeName": "BulkEventsRetryPlanGetParametersQuerySchemaStatus1",
@@ -12905,8 +12818,7 @@
             }
           }
         ]
-      },
-      "displayName": "Gt"
+      }
     },
     "BulkEventsRetryPlanGetParametersQuerySchemaAttempts": {
       "description": "Filter by number of attempts",
@@ -12928,8 +12840,7 @@
             "type": {
               "type": "id",
               "value": "BulkEventsRetryPlanGetParametersQuerySchemaAttempts1"
-            },
-            "displayName": "Gt"
+            }
           }
         ]
       }
@@ -13023,8 +12934,7 @@
             }
           }
         ]
-      },
-      "displayName": "Gt"
+      }
     },
     "BulkEventsRetryPlanGetParametersQuerySchemaResponseStatus": {
       "description": "Filter by HTTP response status code",
@@ -13047,8 +12957,7 @@
             "type": {
               "type": "id",
               "value": "BulkEventsRetryPlanGetParametersQuerySchemaResponseStatus1"
-            },
-            "displayName": "Gt"
+            }
           },
           {
             "type": {
@@ -13133,8 +13042,7 @@
             }
           }
         ]
-      },
-      "displayName": "Gt"
+      }
     },
     "BulkEventsRetryPlanGetParametersQuerySchemaSuccessfulAt": {
       "description": "Filter by `successful_at` date using a date operator",
@@ -13155,8 +13063,7 @@
             "type": {
               "type": "id",
               "value": "BulkEventsRetryPlanGetParametersQuerySchemaSuccessfulAt1"
-            },
-            "displayName": "Gt"
+            }
           }
         ]
       }
@@ -13228,8 +13135,7 @@
             }
           }
         ]
-      },
-      "displayName": "Gt"
+      }
     },
     "BulkEventsRetryPlanGetParametersQuerySchemaCreatedAt": {
       "description": "Filter by `created_at` date using a date operator",
@@ -13250,8 +13156,7 @@
             "type": {
               "type": "id",
               "value": "BulkEventsRetryPlanGetParametersQuerySchemaCreatedAt1"
-            },
-            "displayName": "Gt"
+            }
           }
         ]
       }
@@ -13304,8 +13209,7 @@
             }
           }
         ]
-      },
-      "displayName": "Any"
+      }
     },
     "BulkEventsRetryPlanGetParametersQuerySchemaCliId": {
       "description": "Filter by CLI IDs. `?[any]=true` operator for any CLI.",
@@ -13326,8 +13230,7 @@
             "type": {
               "type": "id",
               "value": "BulkEventsRetryPlanGetParametersQuerySchemaCliId1"
-            },
-            "displayName": "Any"
+            }
           },
           {
             "type": {
@@ -13437,8 +13340,7 @@
             }
           }
         ]
-      },
-      "displayName": "Gt"
+      }
     },
     "BulkEventsRetryPlanGetParametersQuerySchemaLastAttemptAt": {
       "description": "Filter by `last_attempt_at` date using a date operator",
@@ -13459,8 +13361,7 @@
             "type": {
               "type": "id",
               "value": "BulkEventsRetryPlanGetParametersQuerySchemaLastAttemptAt1"
-            },
-            "displayName": "Gt"
+            }
           }
         ]
       }
@@ -13937,8 +13838,7 @@
             }
           }
         ]
-      },
-      "displayName": "Gt"
+      }
     },
     "BulkIgnoredEventsRetryGetParametersCancelledAt": {
       "description": "Filter by date the bulk retry was cancelled",
@@ -13959,8 +13859,7 @@
             "type": {
               "type": "id",
               "value": "BulkIgnoredEventsRetryGetParametersCancelledAt1"
-            },
-            "displayName": "Gt"
+            }
           }
         ]
       }
@@ -14044,8 +13943,7 @@
             }
           }
         ]
-      },
-      "displayName": "Gt"
+      }
     },
     "BulkIgnoredEventsRetryGetParametersCompletedAt": {
       "description": "Filter by date the bulk retry completed",
@@ -14066,8 +13964,7 @@
             "type": {
               "type": "id",
               "value": "BulkIgnoredEventsRetryGetParametersCompletedAt1"
-            },
-            "displayName": "Gt"
+            }
           }
         ]
       }
@@ -14151,8 +14048,7 @@
             }
           }
         ]
-      },
-      "displayName": "Gt"
+      }
     },
     "BulkIgnoredEventsRetryGetParametersCreatedAt": {
       "description": "Filter by date the bulk retry was created",
@@ -14173,8 +14069,7 @@
             "type": {
               "type": "id",
               "value": "BulkIgnoredEventsRetryGetParametersCreatedAt1"
-            },
-            "displayName": "Gt"
+            }
           }
         ]
       }
@@ -14661,40 +14556,35 @@
             "type": {
               "type": "id",
               "value": "HMACIntegrationConfigs"
-            },
-            "displayName": "HMACIntegrationConfigs"
+            }
           },
           {
             "typeName": "APIKeyIntegrationConfigs",
             "type": {
               "type": "id",
               "value": "APIKeyIntegrationConfigs"
-            },
-            "displayName": "APIKeyIntegrationConfigs"
+            }
           },
           {
             "typeName": "HandledHMACConfigs",
             "type": {
               "type": "id",
               "value": "HandledHMACConfigs"
-            },
-            "displayName": "HandledHMACConfigs"
+            }
           },
           {
             "typeName": "BasicAuthIntegrationConfigs",
             "type": {
               "type": "id",
               "value": "BasicAuthIntegrationConfigs"
-            },
-            "displayName": "BasicAuthIntegrationConfigs"
+            }
           },
           {
             "typeName": "ShopifyIntegrationConfigs",
             "type": {
               "type": "id",
               "value": "ShopifyIntegrationConfigs"
-            },
-            "displayName": "ShopifyIntegrationConfigs"
+            }
           }
         ]
       }
@@ -14710,40 +14600,35 @@
             "type": {
               "type": "id",
               "value": "HMACIntegrationConfigs"
-            },
-            "displayName": "HMACIntegrationConfigs"
+            }
           },
           {
             "typeName": "APIKeyIntegrationConfigs",
             "type": {
               "type": "id",
               "value": "APIKeyIntegrationConfigs"
-            },
-            "displayName": "APIKeyIntegrationConfigs"
+            }
           },
           {
             "typeName": "HandledHMACConfigs",
             "type": {
               "type": "id",
               "value": "HandledHMACConfigs"
-            },
-            "displayName": "HandledHMACConfigs"
+            }
           },
           {
             "typeName": "BasicAuthIntegrationConfigs",
             "type": {
               "type": "id",
               "value": "BasicAuthIntegrationConfigs"
-            },
-            "displayName": "BasicAuthIntegrationConfigs"
+            }
           },
           {
             "typeName": "ShopifyIntegrationConfigs",
             "type": {
               "type": "id",
               "value": "ShopifyIntegrationConfigs"
-            },
-            "displayName": "ShopifyIntegrationConfigs"
+            }
           }
         ]
       }
@@ -14825,8 +14710,7 @@
             "value": "backpressure"
           }
         ]
-      },
-      "displayName": "IssueType"
+      }
     },
     "IssuesGetParametersTypeSchemaOneOf1Items": {
       "description": "Issue type",
@@ -14871,8 +14755,7 @@
             "type": {
               "type": "id",
               "value": "IssuesGetParametersType0"
-            },
-            "displayName": "IssueType"
+            }
           },
           {
             "typeName": "IssuesGetParametersType1",
@@ -14903,8 +14786,7 @@
             "value": "RESOLVED"
           }
         ]
-      },
-      "displayName": "IssueStatus"
+      }
     },
     "IssuesGetParametersStatusSchemaOneOf1Items": {
       "description": "Issue status",
@@ -14952,8 +14834,7 @@
             "type": {
               "type": "id",
               "value": "IssuesGetParametersStatus0"
-            },
-            "displayName": "IssueStatus"
+            }
           },
           {
             "typeName": "IssuesGetParametersStatus1",
@@ -15071,8 +14952,7 @@
             "type": {
               "type": "id",
               "value": "AttemptErrorCodes"
-            },
-            "displayName": "AttemptErrorCodes"
+            }
           },
           {
             "typeName": "IssuesGetParametersAggregationKeysSchemaErrorCode1",
@@ -15203,8 +15083,7 @@
             }
           }
         ]
-      },
-      "displayName": "Gt"
+      }
     },
     "IssuesGetParametersCreatedAt": {
       "description": "Filter by created dates",
@@ -15225,8 +15104,7 @@
             "type": {
               "type": "id",
               "value": "IssuesGetParametersCreatedAt1"
-            },
-            "displayName": "Gt"
+            }
           }
         ]
       }
@@ -15310,8 +15188,7 @@
             }
           }
         ]
-      },
-      "displayName": "Gt"
+      }
     },
     "IssuesGetParametersFirstSeenAt": {
       "description": "Filter by first seen dates",
@@ -15332,8 +15209,7 @@
             "type": {
               "type": "id",
               "value": "IssuesGetParametersFirstSeenAt1"
-            },
-            "displayName": "Gt"
+            }
           }
         ]
       }
@@ -15417,8 +15293,7 @@
             }
           }
         ]
-      },
-      "displayName": "Gt"
+      }
     },
     "IssuesGetParametersLastSeenAt": {
       "description": "Filter by last seen dates",
@@ -15439,8 +15314,7 @@
             "type": {
               "type": "id",
               "value": "IssuesGetParametersLastSeenAt1"
-            },
-            "displayName": "Gt"
+            }
           }
         ]
       }
@@ -15524,8 +15398,7 @@
             }
           }
         ]
-      },
-      "displayName": "Gt"
+      }
     },
     "IssuesGetParametersDismissedAt": {
       "description": "Filter by dismissed dates",
@@ -15546,8 +15419,7 @@
             "type": {
               "type": "id",
               "value": "IssuesGetParametersDismissedAt1"
-            },
-            "displayName": "Gt"
+            }
           }
         ]
       }
@@ -15775,8 +15647,7 @@
             "value": "backpressure"
           }
         ]
-      },
-      "displayName": "IssueType"
+      }
     },
     "IssuesCountGetParametersTypeSchemaOneOf1Items": {
       "description": "Issue type",
@@ -15821,8 +15692,7 @@
             "type": {
               "type": "id",
               "value": "IssuesCountGetParametersType0"
-            },
-            "displayName": "IssueType"
+            }
           },
           {
             "typeName": "IssuesCountGetParametersType1",
@@ -15853,8 +15723,7 @@
             "value": "RESOLVED"
           }
         ]
-      },
-      "displayName": "IssueStatus"
+      }
     },
     "IssuesCountGetParametersStatusSchemaOneOf1Items": {
       "description": "Issue status",
@@ -15902,8 +15771,7 @@
             "type": {
               "type": "id",
               "value": "IssuesCountGetParametersStatus0"
-            },
-            "displayName": "IssueStatus"
+            }
           },
           {
             "typeName": "IssuesCountGetParametersStatus1",
@@ -16021,8 +15889,7 @@
             "type": {
               "type": "id",
               "value": "AttemptErrorCodes"
-            },
-            "displayName": "AttemptErrorCodes"
+            }
           },
           {
             "typeName": "IssuesCountGetParametersAggregationKeysSchemaErrorCode1",
@@ -16153,8 +16020,7 @@
             }
           }
         ]
-      },
-      "displayName": "Gt"
+      }
     },
     "IssuesCountGetParametersCreatedAt": {
       "description": "Filter by created dates",
@@ -16175,8 +16041,7 @@
             "type": {
               "type": "id",
               "value": "IssuesCountGetParametersCreatedAt1"
-            },
-            "displayName": "Gt"
+            }
           }
         ]
       }
@@ -16260,8 +16125,7 @@
             }
           }
         ]
-      },
-      "displayName": "Gt"
+      }
     },
     "IssuesCountGetParametersFirstSeenAt": {
       "description": "Filter by first seen dates",
@@ -16282,8 +16146,7 @@
             "type": {
               "type": "id",
               "value": "IssuesCountGetParametersFirstSeenAt1"
-            },
-            "displayName": "Gt"
+            }
           }
         ]
       }
@@ -16367,8 +16230,7 @@
             }
           }
         ]
-      },
-      "displayName": "Gt"
+      }
     },
     "IssuesCountGetParametersLastSeenAt": {
       "description": "Filter by last seen dates",
@@ -16389,8 +16251,7 @@
             "type": {
               "type": "id",
               "value": "IssuesCountGetParametersLastSeenAt1"
-            },
-            "displayName": "Gt"
+            }
           }
         ]
       }
@@ -16474,8 +16335,7 @@
             }
           }
         ]
-      },
-      "displayName": "Gt"
+      }
     },
     "IssuesCountGetParametersDismissedAt": {
       "description": "Filter by dismissed dates",
@@ -16496,8 +16356,7 @@
             "type": {
               "type": "id",
               "value": "IssuesCountGetParametersDismissedAt1"
-            },
-            "displayName": "Gt"
+            }
           }
         ]
       }
@@ -16783,8 +16642,7 @@
             }
           }
         ]
-      },
-      "displayName": "Gt"
+      }
     },
     "RequestsGetParametersRejectionCause2": {
       "name": "RequestsGetParametersRejectionCause2",
@@ -16810,16 +16668,14 @@
             "type": {
               "type": "id",
               "value": "RequestRejectionCause"
-            },
-            "displayName": "RequestRejectionCause"
+            }
           },
           {
             "typeName": "RequestsGetParametersRejectionCause1",
             "type": {
               "type": "id",
               "value": "RequestsGetParametersRejectionCause1"
-            },
-            "displayName": "Gt"
+            }
           },
           {
             "typeName": "RequestsGetParametersRejectionCause2",
@@ -16915,8 +16771,7 @@
             }
           }
         ]
-      },
-      "displayName": "Gt"
+      }
     },
     "RequestsGetParametersIgnoredCount": {
       "name": "RequestsGetParametersIgnoredCount",
@@ -16937,8 +16792,7 @@
             "type": {
               "type": "id",
               "value": "RequestsGetParametersIgnoredCount1"
-            },
-            "displayName": "Gt"
+            }
           },
           {
             "type": {
@@ -17039,8 +16893,7 @@
             }
           }
         ]
-      },
-      "displayName": "Gt"
+      }
     },
     "RequestsGetParametersEventsCount": {
       "name": "RequestsGetParametersEventsCount",
@@ -17061,8 +16914,7 @@
             "type": {
               "type": "id",
               "value": "RequestsGetParametersEventsCount1"
-            },
-            "displayName": "Gt"
+            }
           },
           {
             "type": {
@@ -17270,8 +17122,7 @@
             }
           }
         ]
-      },
-      "displayName": "Gt"
+      }
     },
     "RequestsGetParametersCreatedAt": {
       "name": "RequestsGetParametersCreatedAt",
@@ -17291,8 +17142,7 @@
             "type": {
               "type": "id",
               "value": "RequestsGetParametersCreatedAt1"
-            },
-            "displayName": "Gt"
+            }
           }
         ]
       }
@@ -17364,8 +17214,7 @@
             }
           }
         ]
-      },
-      "displayName": "Gt"
+      }
     },
     "RequestsGetParametersIngestedAt": {
       "name": "RequestsGetParametersIngestedAt",
@@ -17385,8 +17234,7 @@
             "type": {
               "type": "id",
               "value": "RequestsGetParametersIngestedAt1"
-            },
-            "displayName": "Gt"
+            }
           }
         ]
       }
@@ -17614,8 +17462,7 @@
             "type": {
               "type": "id",
               "value": "EventStatus"
-            },
-            "displayName": "EventStatus"
+            }
           },
           {
             "typeName": "RequestsIdEventsGetParametersStatus1",
@@ -17833,8 +17680,7 @@
             }
           }
         ]
-      },
-      "displayName": "Gt"
+      }
     },
     "RequestsIdEventsGetParametersAttempts": {
       "description": "Filter by number of attempts",
@@ -17856,8 +17702,7 @@
             "type": {
               "type": "id",
               "value": "RequestsIdEventsGetParametersAttempts1"
-            },
-            "displayName": "Gt"
+            }
           }
         ]
       }
@@ -17951,8 +17796,7 @@
             }
           }
         ]
-      },
-      "displayName": "Gt"
+      }
     },
     "RequestsIdEventsGetParametersResponseStatus": {
       "description": "Filter by HTTP response status code",
@@ -17975,8 +17819,7 @@
             "type": {
               "type": "id",
               "value": "RequestsIdEventsGetParametersResponseStatus1"
-            },
-            "displayName": "Gt"
+            }
           },
           {
             "type": {
@@ -18061,8 +17904,7 @@
             }
           }
         ]
-      },
-      "displayName": "Gt"
+      }
     },
     "RequestsIdEventsGetParametersSuccessfulAt": {
       "description": "Filter by `successful_at` date using a date operator",
@@ -18083,8 +17925,7 @@
             "type": {
               "type": "id",
               "value": "RequestsIdEventsGetParametersSuccessfulAt1"
-            },
-            "displayName": "Gt"
+            }
           }
         ]
       }
@@ -18156,8 +17997,7 @@
             }
           }
         ]
-      },
-      "displayName": "Gt"
+      }
     },
     "RequestsIdEventsGetParametersCreatedAt": {
       "description": "Filter by `created_at` date using a date operator",
@@ -18178,8 +18018,7 @@
             "type": {
               "type": "id",
               "value": "RequestsIdEventsGetParametersCreatedAt1"
-            },
-            "displayName": "Gt"
+            }
           }
         ]
       }
@@ -18232,8 +18071,7 @@
             }
           }
         ]
-      },
-      "displayName": "Any"
+      }
     },
     "RequestsIdEventsGetParametersCliId": {
       "description": "Filter by CLI IDs. `?[any]=true` operator for any CLI.",
@@ -18254,8 +18092,7 @@
             "type": {
               "type": "id",
               "value": "RequestsIdEventsGetParametersCliId1"
-            },
-            "displayName": "Any"
+            }
           },
           {
             "type": {
@@ -18365,8 +18202,7 @@
             }
           }
         ]
-      },
-      "displayName": "Gt"
+      }
     },
     "RequestsIdEventsGetParametersLastAttemptAt": {
       "description": "Filter by `last_attempt_at` date using a date operator",
@@ -18387,8 +18223,7 @@
             "type": {
               "type": "id",
               "value": "RequestsIdEventsGetParametersLastAttemptAt1"
-            },
-            "displayName": "Gt"
+            }
           }
         ]
       }
@@ -18922,8 +18757,7 @@
             }
           }
         ]
-      },
-      "displayName": "Gt"
+      }
     },
     "BulkRequestsRetryGetParametersCancelledAt": {
       "description": "Filter by date the bulk retry was cancelled",
@@ -18944,8 +18778,7 @@
             "type": {
               "type": "id",
               "value": "BulkRequestsRetryGetParametersCancelledAt1"
-            },
-            "displayName": "Gt"
+            }
           }
         ]
       }
@@ -19029,8 +18862,7 @@
             }
           }
         ]
-      },
-      "displayName": "Gt"
+      }
     },
     "BulkRequestsRetryGetParametersCompletedAt": {
       "description": "Filter by date the bulk retry completed",
@@ -19051,8 +18883,7 @@
             "type": {
               "type": "id",
               "value": "BulkRequestsRetryGetParametersCompletedAt1"
-            },
-            "displayName": "Gt"
+            }
           }
         ]
       }
@@ -19136,8 +18967,7 @@
             }
           }
         ]
-      },
-      "displayName": "Gt"
+      }
     },
     "BulkRequestsRetryGetParametersCreatedAt": {
       "description": "Filter by date the bulk retry was created",
@@ -19158,8 +18988,7 @@
             "type": {
               "type": "id",
               "value": "BulkRequestsRetryGetParametersCreatedAt1"
-            },
-            "displayName": "Gt"
+            }
           }
         ]
       }
@@ -19309,8 +19138,7 @@
             }
           }
         ]
-      },
-      "displayName": "Gt"
+      }
     },
     "BulkRequestsRetryGetParametersQuerySchemaRejectionCause2": {
       "name": "BulkRequestsRetryGetParametersQuerySchemaRejectionCause2",
@@ -19336,16 +19164,14 @@
             "type": {
               "type": "id",
               "value": "RequestRejectionCause"
-            },
-            "displayName": "RequestRejectionCause"
+            }
           },
           {
             "typeName": "BulkRequestsRetryGetParametersQuerySchemaRejectionCause1",
             "type": {
               "type": "id",
               "value": "BulkRequestsRetryGetParametersQuerySchemaRejectionCause1"
-            },
-            "displayName": "Gt"
+            }
           },
           {
             "typeName": "BulkRequestsRetryGetParametersQuerySchemaRejectionCause2",
@@ -19441,8 +19267,7 @@
             }
           }
         ]
-      },
-      "displayName": "Gt"
+      }
     },
     "BulkRequestsRetryGetParametersQuerySchemaIgnoredCount": {
       "name": "BulkRequestsRetryGetParametersQuerySchemaIgnoredCount",
@@ -19463,8 +19288,7 @@
             "type": {
               "type": "id",
               "value": "BulkRequestsRetryGetParametersQuerySchemaIgnoredCount1"
-            },
-            "displayName": "Gt"
+            }
           },
           {
             "type": {
@@ -19565,8 +19389,7 @@
             }
           }
         ]
-      },
-      "displayName": "Gt"
+      }
     },
     "BulkRequestsRetryGetParametersQuerySchemaEventsCount": {
       "name": "BulkRequestsRetryGetParametersQuerySchemaEventsCount",
@@ -19587,8 +19410,7 @@
             "type": {
               "type": "id",
               "value": "BulkRequestsRetryGetParametersQuerySchemaEventsCount1"
-            },
-            "displayName": "Gt"
+            }
           },
           {
             "type": {
@@ -19796,8 +19618,7 @@
             }
           }
         ]
-      },
-      "displayName": "Gt"
+      }
     },
     "BulkRequestsRetryGetParametersQuerySchemaCreatedAt": {
       "name": "BulkRequestsRetryGetParametersQuerySchemaCreatedAt",
@@ -19817,8 +19638,7 @@
             "type": {
               "type": "id",
               "value": "BulkRequestsRetryGetParametersQuerySchemaCreatedAt1"
-            },
-            "displayName": "Gt"
+            }
           }
         ]
       }
@@ -19890,8 +19710,7 @@
             }
           }
         ]
-      },
-      "displayName": "Gt"
+      }
     },
     "BulkRequestsRetryGetParametersQuerySchemaIngestedAt": {
       "name": "BulkRequestsRetryGetParametersQuerySchemaIngestedAt",
@@ -19911,8 +19730,7 @@
             "type": {
               "type": "id",
               "value": "BulkRequestsRetryGetParametersQuerySchemaIngestedAt1"
-            },
-            "displayName": "Gt"
+            }
           }
         ]
       }
@@ -20561,8 +20379,7 @@
             }
           }
         ]
-      },
-      "displayName": "Gt"
+      }
     },
     "BulkRequestsRetryPostRequestBodyContentApplicationJsonSchemaQueryRejectionCause2": {
       "name": "BulkRequestsRetryPostRequestBodyContentApplicationJsonSchemaQueryRejectionCause2",
@@ -20588,16 +20405,14 @@
             "type": {
               "type": "id",
               "value": "RequestRejectionCause"
-            },
-            "displayName": "RequestRejectionCause"
+            }
           },
           {
             "typeName": "BulkRequestsRetryPostRequestBodyContentApplicationJsonSchemaQueryRejectionCause1",
             "type": {
               "type": "id",
               "value": "BulkRequestsRetryPostRequestBodyContentApplicationJsonSchemaQueryRejectionCause1"
-            },
-            "displayName": "Gt"
+            }
           },
           {
             "typeName": "BulkRequestsRetryPostRequestBodyContentApplicationJsonSchemaQueryRejectionCause2",
@@ -20693,8 +20508,7 @@
             }
           }
         ]
-      },
-      "displayName": "Gt"
+      }
     },
     "BulkRequestsRetryPostRequestBodyContentApplicationJsonSchemaQueryIgnoredCount": {
       "name": "BulkRequestsRetryPostRequestBodyContentApplicationJsonSchemaQueryIgnoredCount",
@@ -20715,8 +20529,7 @@
             "type": {
               "type": "id",
               "value": "BulkRequestsRetryPostRequestBodyContentApplicationJsonSchemaQueryIgnoredCount1"
-            },
-            "displayName": "Gt"
+            }
           },
           {
             "type": {
@@ -20817,8 +20630,7 @@
             }
           }
         ]
-      },
-      "displayName": "Gt"
+      }
     },
     "BulkRequestsRetryPostRequestBodyContentApplicationJsonSchemaQueryEventsCount": {
       "name": "BulkRequestsRetryPostRequestBodyContentApplicationJsonSchemaQueryEventsCount",
@@ -20839,8 +20651,7 @@
             "type": {
               "type": "id",
               "value": "BulkRequestsRetryPostRequestBodyContentApplicationJsonSchemaQueryEventsCount1"
-            },
-            "displayName": "Gt"
+            }
           },
           {
             "type": {
@@ -21048,8 +20859,7 @@
             }
           }
         ]
-      },
-      "displayName": "Gt"
+      }
     },
     "BulkRequestsRetryPostRequestBodyContentApplicationJsonSchemaQueryCreatedAt": {
       "name": "BulkRequestsRetryPostRequestBodyContentApplicationJsonSchemaQueryCreatedAt",
@@ -21069,8 +20879,7 @@
             "type": {
               "type": "id",
               "value": "BulkRequestsRetryPostRequestBodyContentApplicationJsonSchemaQueryCreatedAt1"
-            },
-            "displayName": "Gt"
+            }
           }
         ]
       }
@@ -21142,8 +20951,7 @@
             }
           }
         ]
-      },
-      "displayName": "Gt"
+      }
     },
     "BulkRequestsRetryPostRequestBodyContentApplicationJsonSchemaQueryIngestedAt": {
       "name": "BulkRequestsRetryPostRequestBodyContentApplicationJsonSchemaQueryIngestedAt",
@@ -21163,8 +20971,7 @@
             "type": {
               "type": "id",
               "value": "BulkRequestsRetryPostRequestBodyContentApplicationJsonSchemaQueryIngestedAt1"
-            },
-            "displayName": "Gt"
+            }
           }
         ]
       }
@@ -21477,8 +21284,7 @@
             }
           }
         ]
-      },
-      "displayName": "Gt"
+      }
     },
     "BulkRequestsRetryPlanGetParametersQuerySchemaRejectionCause2": {
       "name": "BulkRequestsRetryPlanGetParametersQuerySchemaRejectionCause2",
@@ -21504,16 +21310,14 @@
             "type": {
               "type": "id",
               "value": "RequestRejectionCause"
-            },
-            "displayName": "RequestRejectionCause"
+            }
           },
           {
             "typeName": "BulkRequestsRetryPlanGetParametersQuerySchemaRejectionCause1",
             "type": {
               "type": "id",
               "value": "BulkRequestsRetryPlanGetParametersQuerySchemaRejectionCause1"
-            },
-            "displayName": "Gt"
+            }
           },
           {
             "typeName": "BulkRequestsRetryPlanGetParametersQuerySchemaRejectionCause2",
@@ -21609,8 +21413,7 @@
             }
           }
         ]
-      },
-      "displayName": "Gt"
+      }
     },
     "BulkRequestsRetryPlanGetParametersQuerySchemaIgnoredCount": {
       "name": "BulkRequestsRetryPlanGetParametersQuerySchemaIgnoredCount",
@@ -21631,8 +21434,7 @@
             "type": {
               "type": "id",
               "value": "BulkRequestsRetryPlanGetParametersQuerySchemaIgnoredCount1"
-            },
-            "displayName": "Gt"
+            }
           },
           {
             "type": {
@@ -21733,8 +21535,7 @@
             }
           }
         ]
-      },
-      "displayName": "Gt"
+      }
     },
     "BulkRequestsRetryPlanGetParametersQuerySchemaEventsCount": {
       "name": "BulkRequestsRetryPlanGetParametersQuerySchemaEventsCount",
@@ -21755,8 +21556,7 @@
             "type": {
               "type": "id",
               "value": "BulkRequestsRetryPlanGetParametersQuerySchemaEventsCount1"
-            },
-            "displayName": "Gt"
+            }
           },
           {
             "type": {
@@ -21964,8 +21764,7 @@
             }
           }
         ]
-      },
-      "displayName": "Gt"
+      }
     },
     "BulkRequestsRetryPlanGetParametersQuerySchemaCreatedAt": {
       "name": "BulkRequestsRetryPlanGetParametersQuerySchemaCreatedAt",
@@ -21985,8 +21784,7 @@
             "type": {
               "type": "id",
               "value": "BulkRequestsRetryPlanGetParametersQuerySchemaCreatedAt1"
-            },
-            "displayName": "Gt"
+            }
           }
         ]
       }
@@ -22058,8 +21856,7 @@
             }
           }
         ]
-      },
-      "displayName": "Gt"
+      }
     },
     "BulkRequestsRetryPlanGetParametersQuerySchemaIngestedAt": {
       "name": "BulkRequestsRetryPlanGetParametersQuerySchemaIngestedAt",
@@ -22079,8 +21876,7 @@
             "type": {
               "type": "id",
               "value": "BulkRequestsRetryPlanGetParametersQuerySchemaIngestedAt1"
-            },
-            "displayName": "Gt"
+            }
           }
         ]
       }
@@ -22564,8 +22360,7 @@
             }
           }
         ]
-      },
-      "displayName": "Gt"
+      }
     },
     "RulesetsGetParametersName": {
       "description": "The ruleset name",
@@ -22585,8 +22380,7 @@
             "type": {
               "type": "id",
               "value": "RulesetsGetParametersName1"
-            },
-            "displayName": "Gt"
+            }
           }
         ]
       }
@@ -22670,8 +22464,7 @@
             }
           }
         ]
-      },
-      "displayName": "Gt"
+      }
     },
     "RulesetsGetParametersArchivedAt": {
       "description": "Date the ruleset was archived",
@@ -22692,8 +22485,7 @@
             "type": {
               "type": "id",
               "value": "RulesetsGetParametersArchivedAt1"
-            },
-            "displayName": "Gt"
+            }
           }
         ]
       }
@@ -22939,8 +22731,7 @@
             }
           }
         ]
-      },
-      "displayName": "Gt"
+      }
     },
     "SourcesGetParametersName": {
       "description": "The source name",
@@ -22963,8 +22754,7 @@
             "type": {
               "type": "id",
               "value": "SourcesGetParametersName1"
-            },
-            "displayName": "Gt"
+            }
           }
         ]
       }
@@ -23048,8 +22838,7 @@
             }
           }
         ]
-      },
-      "displayName": "Gt"
+      }
     },
     "SourcesGetParametersArchivedAt": {
       "description": "Date the source was archived",
@@ -23070,8 +22859,7 @@
             "type": {
               "type": "id",
               "value": "SourcesGetParametersArchivedAt1"
-            },
-            "displayName": "Gt"
+            }
           }
         ]
       }
@@ -23095,8 +22883,7 @@
             }
           }
         ]
-      },
-      "displayName": "Any"
+      }
     },
     "SourcesGetParametersIntegrationId": {
       "description": "Filter by integration IDs",
@@ -23117,8 +22904,7 @@
             "type": {
               "type": "id",
               "value": "SourcesGetParametersIntegrationId1"
-            },
-            "displayName": "Any"
+            }
           }
         ]
       }
@@ -23795,8 +23581,7 @@
             }
           }
         ]
-      },
-      "displayName": "Gt"
+      }
     },
     "TransformationsIdExecutionsGetParametersCreatedAt": {
       "description": "ISO date of the transformation's execution",
@@ -23817,8 +23602,7 @@
             "type": {
               "type": "id",
               "value": "TransformationsIdExecutionsGetParametersCreatedAt1"
-            },
-            "displayName": "Gt"
+            }
           }
         ]
       }
@@ -24064,8 +23848,7 @@
             }
           }
         ]
-      },
-      "displayName": "Gt"
+      }
     },
     "WebhooksGetParametersName": {
       "description": "Filter by connection name",
@@ -24088,8 +23871,7 @@
             "type": {
               "type": "id",
               "value": "WebhooksGetParametersName1"
-            },
-            "displayName": "Gt"
+            }
           }
         ]
       }
@@ -24233,8 +24015,7 @@
             }
           }
         ]
-      },
-      "displayName": "Gt"
+      }
     },
     "WebhooksGetParametersArchivedAt": {
       "description": "Date the connection was archived",
@@ -24255,8 +24036,7 @@
             "type": {
               "type": "id",
               "value": "WebhooksGetParametersArchivedAt1"
-            },
-            "displayName": "Gt"
+            }
           }
         ]
       }
@@ -24340,8 +24120,7 @@
             }
           }
         ]
-      },
-      "displayName": "Gt"
+      }
     },
     "WebhooksGetParametersPausedAt": {
       "description": "Date the connection was paused",
@@ -24362,8 +24141,7 @@
             "type": {
               "type": "id",
               "value": "WebhooksGetParametersPausedAt1"
-            },
-            "displayName": "Gt"
+            }
           }
         ]
       }
@@ -24910,6 +24688,10 @@
       "endpoints": [
         {
           "auth": true,
+          "authV2": [
+            "bearerAuth",
+            "basicAuth"
+          ],
           "description": "",
           "method": "GET",
           "defaultEnvironment": "Production API_2023-01-01",
@@ -25195,6 +24977,10 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "bearerAuth",
+            "basicAuth"
+          ],
           "description": "",
           "method": "POST",
           "defaultEnvironment": "Production API_2023-01-01",
@@ -25478,6 +25264,10 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "bearerAuth",
+            "basicAuth"
+          ],
           "description": "",
           "method": "PUT",
           "defaultEnvironment": "Production API_2023-01-01",
@@ -25757,6 +25547,10 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "bearerAuth",
+            "basicAuth"
+          ],
           "description": "",
           "method": "GET",
           "defaultEnvironment": "Production API_2023-01-01",
@@ -25931,6 +25725,10 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "bearerAuth",
+            "basicAuth"
+          ],
           "description": "",
           "method": "PUT",
           "defaultEnvironment": "Production API_2023-01-01",
@@ -26252,6 +26050,10 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "bearerAuth",
+            "basicAuth"
+          ],
           "description": "",
           "method": "DELETE",
           "defaultEnvironment": "Production API_2023-01-01",
@@ -26390,6 +26192,10 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "bearerAuth",
+            "basicAuth"
+          ],
           "description": "",
           "method": "PUT",
           "defaultEnvironment": "Production API_2023-01-01",
@@ -26564,6 +26370,10 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "bearerAuth",
+            "basicAuth"
+          ],
           "description": "",
           "method": "PUT",
           "defaultEnvironment": "Production API_2023-01-01",
@@ -26748,6 +26558,10 @@
       "endpoints": [
         {
           "auth": true,
+          "authV2": [
+            "bearerAuth",
+            "basicAuth"
+          ],
           "description": "",
           "method": "GET",
           "defaultEnvironment": "Production API_2023-01-01",
@@ -27014,6 +26828,10 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "bearerAuth",
+            "basicAuth"
+          ],
           "description": "",
           "method": "GET",
           "defaultEnvironment": "Production API_2023-01-01",
@@ -27202,6 +27020,10 @@
       "endpoints": [
         {
           "auth": true,
+          "authV2": [
+            "bearerAuth",
+            "basicAuth"
+          ],
           "description": "",
           "method": "GET",
           "defaultEnvironment": "Production API_2023-01-01",
@@ -27510,6 +27332,10 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "bearerAuth",
+            "basicAuth"
+          ],
           "description": "",
           "method": "POST",
           "defaultEnvironment": "Production API_2023-01-01",
@@ -27809,6 +27635,10 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "bearerAuth",
+            "basicAuth"
+          ],
           "description": "",
           "method": "GET",
           "defaultEnvironment": "Production API_2023-01-01",
@@ -27979,6 +27809,10 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "bearerAuth",
+            "basicAuth"
+          ],
           "description": "",
           "method": "PUT",
           "defaultEnvironment": "Production API_2023-01-01",
@@ -28321,6 +28155,10 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "bearerAuth",
+            "basicAuth"
+          ],
           "description": "",
           "method": "DELETE",
           "defaultEnvironment": "Production API_2023-01-01",
@@ -28459,6 +28297,10 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "bearerAuth",
+            "basicAuth"
+          ],
           "description": "",
           "method": "POST",
           "defaultEnvironment": "Production API_2023-01-01",
@@ -28741,6 +28583,10 @@
       "endpoints": [
         {
           "auth": true,
+          "authV2": [
+            "bearerAuth",
+            "basicAuth"
+          ],
           "description": "",
           "method": "GET",
           "defaultEnvironment": "Production API_2023-01-01",
@@ -29039,6 +28885,10 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "bearerAuth",
+            "basicAuth"
+          ],
           "description": "",
           "method": "POST",
           "defaultEnvironment": "Production API_2023-01-01",
@@ -29394,6 +29244,10 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "bearerAuth",
+            "basicAuth"
+          ],
           "description": "",
           "method": "PUT",
           "defaultEnvironment": "Production API_2023-01-01",
@@ -29749,6 +29603,10 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "bearerAuth",
+            "basicAuth"
+          ],
           "description": "",
           "method": "GET",
           "defaultEnvironment": "Production API_2023-01-01",
@@ -29907,6 +29765,10 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "bearerAuth",
+            "basicAuth"
+          ],
           "description": "",
           "method": "PUT",
           "defaultEnvironment": "Production API_2023-01-01",
@@ -30327,6 +30189,10 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "bearerAuth",
+            "basicAuth"
+          ],
           "description": "",
           "method": "PUT",
           "defaultEnvironment": "Production API_2023-01-01",
@@ -30485,6 +30351,10 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "bearerAuth",
+            "basicAuth"
+          ],
           "description": "",
           "method": "PUT",
           "defaultEnvironment": "Production API_2023-01-01",
@@ -30653,6 +30523,10 @@
       "endpoints": [
         {
           "auth": true,
+          "authV2": [
+            "bearerAuth",
+            "basicAuth"
+          ],
           "description": "",
           "method": "GET",
           "defaultEnvironment": "Production API_2023-01-01",
@@ -31131,6 +31005,10 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "bearerAuth",
+            "basicAuth"
+          ],
           "description": "",
           "method": "GET",
           "defaultEnvironment": "Production API_2023-01-01",
@@ -31319,6 +31197,10 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "bearerAuth",
+            "basicAuth"
+          ],
           "description": "",
           "method": "GET",
           "defaultEnvironment": "Production API_2023-01-01",
@@ -31457,6 +31339,10 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "bearerAuth",
+            "basicAuth"
+          ],
           "description": "",
           "method": "POST",
           "defaultEnvironment": "Production API_2023-01-01",
@@ -31695,6 +31581,10 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "bearerAuth",
+            "basicAuth"
+          ],
           "description": "",
           "method": "PUT",
           "defaultEnvironment": "Production API_2023-01-01",
@@ -31893,6 +31783,10 @@
       "endpoints": [
         {
           "auth": true,
+          "authV2": [
+            "bearerAuth",
+            "basicAuth"
+          ],
           "description": "",
           "method": "GET",
           "defaultEnvironment": "Production API_2023-01-01",
@@ -32211,6 +32105,10 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "bearerAuth",
+            "basicAuth"
+          ],
           "description": "",
           "method": "POST",
           "defaultEnvironment": "Production API_2023-01-01",
@@ -32424,6 +32322,10 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "bearerAuth",
+            "basicAuth"
+          ],
           "description": "",
           "method": "GET",
           "defaultEnvironment": "Production API_2023-01-01",
@@ -32570,6 +32472,10 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "bearerAuth",
+            "basicAuth"
+          ],
           "description": "",
           "method": "GET",
           "defaultEnvironment": "Production API_2023-01-01",
@@ -32736,6 +32642,10 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "bearerAuth",
+            "basicAuth"
+          ],
           "description": "",
           "method": "POST",
           "defaultEnvironment": "Production API_2023-01-01",
@@ -32912,6 +32822,10 @@
       "endpoints": [
         {
           "auth": true,
+          "authV2": [
+            "bearerAuth",
+            "basicAuth"
+          ],
           "description": "",
           "method": "GET",
           "defaultEnvironment": "Production API_2023-01-01",
@@ -33230,6 +33144,10 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "bearerAuth",
+            "basicAuth"
+          ],
           "description": "",
           "method": "POST",
           "defaultEnvironment": "Production API_2023-01-01",
@@ -33443,6 +33361,10 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "bearerAuth",
+            "basicAuth"
+          ],
           "description": "",
           "method": "GET",
           "defaultEnvironment": "Production API_2023-01-01",
@@ -33589,6 +33511,10 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "bearerAuth",
+            "basicAuth"
+          ],
           "description": "",
           "method": "GET",
           "defaultEnvironment": "Production API_2023-01-01",
@@ -33755,6 +33681,10 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "bearerAuth",
+            "basicAuth"
+          ],
           "description": "",
           "method": "POST",
           "defaultEnvironment": "Production API_2023-01-01",
@@ -33931,6 +33861,10 @@
       "endpoints": [
         {
           "auth": true,
+          "authV2": [
+            "bearerAuth",
+            "basicAuth"
+          ],
           "description": "",
           "method": "GET",
           "defaultEnvironment": "Production API_2023-01-01",
@@ -34143,6 +34077,10 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "bearerAuth",
+            "basicAuth"
+          ],
           "description": "",
           "method": "POST",
           "defaultEnvironment": "Production API_2023-01-01",
@@ -34436,6 +34374,10 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "bearerAuth",
+            "basicAuth"
+          ],
           "description": "",
           "method": "GET",
           "defaultEnvironment": "Production API_2023-01-01",
@@ -34608,6 +34550,10 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "bearerAuth",
+            "basicAuth"
+          ],
           "description": "",
           "method": "PUT",
           "defaultEnvironment": "Production API_2023-01-01",
@@ -34934,6 +34880,10 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "bearerAuth",
+            "basicAuth"
+          ],
           "description": "",
           "method": "DELETE",
           "defaultEnvironment": "Production API_2023-01-01",
@@ -35072,6 +35022,10 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "bearerAuth",
+            "basicAuth"
+          ],
           "description": "",
           "method": "PUT",
           "defaultEnvironment": "Production API_2023-01-01",
@@ -35241,6 +35195,10 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "bearerAuth",
+            "basicAuth"
+          ],
           "description": "",
           "method": "PUT",
           "defaultEnvironment": "Production API_2023-01-01",
@@ -35416,6 +35374,10 @@
       "endpoints": [
         {
           "auth": true,
+          "authV2": [
+            "bearerAuth",
+            "basicAuth"
+          ],
           "description": "",
           "method": "GET",
           "defaultEnvironment": "Production API_2023-01-01",
@@ -35892,6 +35854,10 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "bearerAuth",
+            "basicAuth"
+          ],
           "description": "",
           "method": "GET",
           "defaultEnvironment": "Production API_2023-01-01",
@@ -36171,6 +36137,10 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "bearerAuth",
+            "basicAuth"
+          ],
           "description": "",
           "method": "GET",
           "defaultEnvironment": "Production API_2023-01-01",
@@ -36469,6 +36439,10 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "bearerAuth",
+            "basicAuth"
+          ],
           "description": "",
           "method": "PUT",
           "defaultEnvironment": "Production API_2023-01-01",
@@ -36726,6 +36700,10 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "bearerAuth",
+            "basicAuth"
+          ],
           "description": "",
           "method": "DELETE",
           "defaultEnvironment": "Production API_2023-01-01",
@@ -36928,6 +36906,10 @@
       "endpoints": [
         {
           "auth": true,
+          "authV2": [
+            "bearerAuth",
+            "basicAuth"
+          ],
           "description": "",
           "method": "GET",
           "defaultEnvironment": "Production API_2023-01-01",
@@ -37344,6 +37326,10 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "bearerAuth",
+            "basicAuth"
+          ],
           "description": "",
           "method": "GET",
           "defaultEnvironment": "Production API_2023-01-01",
@@ -37528,6 +37514,10 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "bearerAuth",
+            "basicAuth"
+          ],
           "description": "",
           "method": "GET",
           "defaultEnvironment": "Production API_2023-01-01",
@@ -37666,6 +37656,10 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "bearerAuth",
+            "basicAuth"
+          ],
           "description": "",
           "method": "POST",
           "defaultEnvironment": "Production API_2023-01-01",
@@ -38008,6 +38002,10 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "bearerAuth",
+            "basicAuth"
+          ],
           "description": "",
           "method": "GET",
           "defaultEnvironment": "Production API_2023-01-01",
@@ -38519,6 +38517,10 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "bearerAuth",
+            "basicAuth"
+          ],
           "description": "",
           "method": "GET",
           "defaultEnvironment": "Production API_2023-01-01",
@@ -38802,6 +38804,10 @@
       "endpoints": [
         {
           "auth": true,
+          "authV2": [
+            "bearerAuth",
+            "basicAuth"
+          ],
           "description": "",
           "method": "GET",
           "defaultEnvironment": "Production API_2023-01-01",
@@ -39120,6 +39126,10 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "bearerAuth",
+            "basicAuth"
+          ],
           "description": "",
           "method": "POST",
           "defaultEnvironment": "Production API_2023-01-01",
@@ -39333,6 +39343,10 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "bearerAuth",
+            "basicAuth"
+          ],
           "description": "",
           "method": "GET",
           "defaultEnvironment": "Production API_2023-01-01",
@@ -39479,6 +39493,10 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "bearerAuth",
+            "basicAuth"
+          ],
           "description": "",
           "method": "GET",
           "defaultEnvironment": "Production API_2023-01-01",
@@ -39645,6 +39663,10 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "bearerAuth",
+            "basicAuth"
+          ],
           "description": "",
           "method": "POST",
           "defaultEnvironment": "Production API_2023-01-01",
@@ -39821,6 +39843,10 @@
       "endpoints": [
         {
           "auth": true,
+          "authV2": [
+            "bearerAuth",
+            "basicAuth"
+          ],
           "description": "",
           "method": "GET",
           "defaultEnvironment": "Production API_2023-01-01",
@@ -40107,6 +40133,10 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "bearerAuth",
+            "basicAuth"
+          ],
           "description": "",
           "method": "POST",
           "defaultEnvironment": "Production API_2023-01-01",
@@ -40378,6 +40408,10 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "bearerAuth",
+            "basicAuth"
+          ],
           "description": "",
           "method": "PUT",
           "defaultEnvironment": "Production API_2023-01-01",
@@ -40649,6 +40683,10 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "bearerAuth",
+            "basicAuth"
+          ],
           "description": "",
           "method": "GET",
           "defaultEnvironment": "Production API_2023-01-01",
@@ -40815,6 +40853,10 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "bearerAuth",
+            "basicAuth"
+          ],
           "description": "",
           "method": "PUT",
           "defaultEnvironment": "Production API_2023-01-01",
@@ -41153,6 +41195,10 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "bearerAuth",
+            "basicAuth"
+          ],
           "description": "",
           "method": "PUT",
           "defaultEnvironment": "Production API_2023-01-01",
@@ -41319,6 +41365,10 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "bearerAuth",
+            "basicAuth"
+          ],
           "description": "",
           "method": "PUT",
           "defaultEnvironment": "Production API_2023-01-01",
@@ -41495,6 +41545,10 @@
       "endpoints": [
         {
           "auth": true,
+          "authV2": [
+            "bearerAuth",
+            "basicAuth"
+          ],
           "description": "",
           "method": "GET",
           "defaultEnvironment": "Production API_2023-01-01",
@@ -41793,6 +41847,10 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "bearerAuth",
+            "basicAuth"
+          ],
           "description": "",
           "method": "POST",
           "defaultEnvironment": "Production API_2023-01-01",
@@ -42014,6 +42072,10 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "bearerAuth",
+            "basicAuth"
+          ],
           "description": "",
           "method": "PUT",
           "defaultEnvironment": "Production API_2023-01-01",
@@ -42235,6 +42297,10 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "bearerAuth",
+            "basicAuth"
+          ],
           "description": "",
           "method": "GET",
           "defaultEnvironment": "Production API_2023-01-01",
@@ -42403,6 +42469,10 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "bearerAuth",
+            "basicAuth"
+          ],
           "description": "",
           "method": "PUT",
           "defaultEnvironment": "Production API_2023-01-01",
@@ -42691,6 +42761,10 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "bearerAuth",
+            "basicAuth"
+          ],
           "description": "",
           "method": "PUT",
           "defaultEnvironment": "Production API_2023-01-01",
@@ -42859,6 +42933,10 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "bearerAuth",
+            "basicAuth"
+          ],
           "description": "",
           "method": "PUT",
           "defaultEnvironment": "Production API_2023-01-01",
@@ -43037,6 +43115,10 @@
       "endpoints": [
         {
           "auth": true,
+          "authV2": [
+            "bearerAuth",
+            "basicAuth"
+          ],
           "description": "",
           "method": "PUT",
           "defaultEnvironment": "Production API_2023-01-01",
@@ -43271,6 +43353,10 @@
       "endpoints": [
         {
           "auth": true,
+          "authV2": [
+            "bearerAuth",
+            "basicAuth"
+          ],
           "description": "",
           "method": "GET",
           "defaultEnvironment": "Production API_2023-01-01",
@@ -43523,6 +43609,10 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "bearerAuth",
+            "basicAuth"
+          ],
           "description": "",
           "method": "POST",
           "defaultEnvironment": "Production API_2023-01-01",
@@ -43774,6 +43864,10 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "bearerAuth",
+            "basicAuth"
+          ],
           "description": "",
           "method": "PUT",
           "defaultEnvironment": "Production API_2023-01-01",
@@ -44025,6 +44119,10 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "bearerAuth",
+            "basicAuth"
+          ],
           "description": "",
           "method": "GET",
           "defaultEnvironment": "Production API_2023-01-01",
@@ -44179,6 +44277,10 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "bearerAuth",
+            "basicAuth"
+          ],
           "description": "",
           "method": "PUT",
           "defaultEnvironment": "Production API_2023-01-01",
@@ -44469,6 +44571,10 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "bearerAuth",
+            "basicAuth"
+          ],
           "description": "",
           "method": "PUT",
           "defaultEnvironment": "Production API_2023-01-01",
@@ -44810,6 +44916,10 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "bearerAuth",
+            "basicAuth"
+          ],
           "description": "",
           "method": "GET",
           "defaultEnvironment": "Production API_2023-01-01",
@@ -45148,6 +45258,10 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "bearerAuth",
+            "basicAuth"
+          ],
           "description": "",
           "method": "GET",
           "defaultEnvironment": "Production API_2023-01-01",
@@ -45376,6 +45490,10 @@
       "endpoints": [
         {
           "auth": true,
+          "authV2": [
+            "bearerAuth",
+            "basicAuth"
+          ],
           "description": "",
           "method": "GET",
           "defaultEnvironment": "Production API_2023-01-01",
@@ -45818,6 +45936,10 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "bearerAuth",
+            "basicAuth"
+          ],
           "description": "",
           "method": "POST",
           "defaultEnvironment": "Production API_2023-01-01",
@@ -46345,6 +46467,10 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "bearerAuth",
+            "basicAuth"
+          ],
           "description": "",
           "method": "PUT",
           "defaultEnvironment": "Production API_2023-01-01",
@@ -46872,6 +46998,10 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "bearerAuth",
+            "basicAuth"
+          ],
           "description": "",
           "method": "GET",
           "defaultEnvironment": "Production API_2023-01-01",
@@ -47150,6 +47280,10 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "bearerAuth",
+            "basicAuth"
+          ],
           "description": "",
           "method": "PUT",
           "defaultEnvironment": "Production API_2023-01-01",
@@ -47600,6 +47734,10 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "bearerAuth",
+            "basicAuth"
+          ],
           "description": "",
           "method": "PUT",
           "defaultEnvironment": "Production API_2023-01-01",
@@ -47878,6 +48016,10 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "bearerAuth",
+            "basicAuth"
+          ],
           "description": "",
           "method": "PUT",
           "defaultEnvironment": "Production API_2023-01-01",
@@ -48156,6 +48298,10 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "bearerAuth",
+            "basicAuth"
+          ],
           "description": "",
           "method": "PUT",
           "defaultEnvironment": "Production API_2023-01-01",
@@ -48434,6 +48580,10 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "bearerAuth",
+            "basicAuth"
+          ],
           "description": "",
           "method": "PUT",
           "defaultEnvironment": "Production API_2023-01-01",
@@ -48847,6 +48997,17 @@
   "auth": {
     "type": "bearerAuth",
     "tokenName": "token"
+  },
+  "authSchemes": {
+    "bearerAuth": {
+      "type": "bearerAuth",
+      "tokenName": "token"
+    },
+    "basicAuth": {
+      "type": "basicAuth",
+      "passwordName": "password",
+      "usernameName": "username"
+    }
   },
   "snippetsConfiguration": {},
   "globalHeaders": []

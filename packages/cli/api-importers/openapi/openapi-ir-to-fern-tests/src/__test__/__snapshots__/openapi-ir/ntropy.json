@@ -9167,8 +9167,8 @@
             "generatedName": "accountType",
             "key": "type",
             "schema": {
-              "generatedName": "accountType",
-              "title": "Account",
+              "generatedName": "AccountType",
+              "title": "Type",
               "value": {
                 "schema": {
                   "type": "string"
@@ -9188,8 +9188,8 @@
             "generatedName": "accountNumber",
             "key": "number",
             "schema": {
-              "generatedName": "accountNumber",
-              "title": "Account",
+              "generatedName": "AccountNumber",
+              "title": "Number",
               "value": {
                 "schema": {
                   "type": "string"
@@ -9209,8 +9209,8 @@
             "generatedName": "accountOpeningBalance",
             "key": "opening_balance",
             "schema": {
-              "generatedName": "accountOpeningBalance",
-              "title": "Account",
+              "generatedName": "AccountOpeningBalance",
+              "title": "Opening Balance",
               "value": {
                 "schema": {
                   "type": "double"
@@ -9230,8 +9230,8 @@
             "generatedName": "accountClosingBalance",
             "key": "closing_balance",
             "schema": {
-              "generatedName": "accountClosingBalance",
-              "title": "Account",
+              "generatedName": "AccountClosingBalance",
+              "title": "Closing Balance",
               "value": {
                 "schema": {
                   "type": "double"
@@ -9251,8 +9251,8 @@
             "generatedName": "accountIsoCurrencyCode",
             "key": "iso_currency_code",
             "schema": {
-              "generatedName": "accountIsoCurrencyCode",
-              "title": "Account",
+              "generatedName": "AccountIsoCurrencyCode",
+              "title": "Iso Currency Code",
               "value": {
                 "schema": {
                   "type": "string"
@@ -9287,8 +9287,7 @@
             "generatedName": "accountHolderType",
             "key": "type",
             "schema": {
-              "generatedName": "accountHolderType",
-              "title": "AccountHolder",
+              "generatedName": "AccountHolderType",
               "value": {
                 "generatedName": "AccountHolderType",
                 "schema": "AccountType",
@@ -9298,7 +9297,6 @@
                 },
                 "type": "reference"
               },
-              "groupName": [],
               "type": "optional"
             },
             "audiences": [],
@@ -9310,8 +9308,8 @@
             "generatedName": "accountHolderName",
             "key": "name",
             "schema": {
-              "generatedName": "accountHolderName",
-              "title": "AccountHolder",
+              "generatedName": "AccountHolderName",
+              "title": "Name",
               "value": {
                 "schema": {
                   "type": "string"
@@ -9331,8 +9329,7 @@
             "generatedName": "accountHolderAddress",
             "key": "address",
             "schema": {
-              "generatedName": "accountHolderAddress",
-              "title": "AccountHolder",
+              "generatedName": "AccountHolderAddress",
               "value": {
                 "generatedName": "AccountHolderAddress",
                 "schema": "Address",
@@ -9342,7 +9339,6 @@
                 },
                 "type": "reference"
               },
-              "groupName": [],
               "type": "optional"
             },
             "audiences": [],
@@ -9403,8 +9399,9 @@
             "generatedName": "accountHolderCreateName",
             "key": "name",
             "schema": {
-              "generatedName": "accountHolderCreateName",
-              "title": "AccountHolderCreate",
+              "generatedName": "AccountHolderCreateName",
+              "title": "Name",
+              "description": "The name of the account holder",
               "value": {
                 "description": "The name of the account holder",
                 "schema": {
@@ -9474,8 +9471,9 @@
             "generatedName": "accountHolderExternalName",
             "key": "name",
             "schema": {
-              "generatedName": "accountHolderExternalName",
-              "title": "AccountHolderExternal",
+              "generatedName": "AccountHolderExternalName",
+              "title": "Name",
+              "description": "The name of the account holder",
               "value": {
                 "description": "The name of the account holder",
                 "schema": {
@@ -9620,8 +9618,8 @@
             "generatedName": "addressStreet",
             "key": "street",
             "schema": {
-              "generatedName": "addressStreet",
-              "title": "Address",
+              "generatedName": "AddressStreet",
+              "title": "Street",
               "value": {
                 "schema": {
                   "type": "string"
@@ -9641,8 +9639,8 @@
             "generatedName": "addressPostcode",
             "key": "postcode",
             "schema": {
-              "generatedName": "addressPostcode",
-              "title": "Address",
+              "generatedName": "AddressPostcode",
+              "title": "Postcode",
               "value": {
                 "schema": {
                   "type": "string"
@@ -9662,8 +9660,8 @@
             "generatedName": "addressCity",
             "key": "city",
             "schema": {
-              "generatedName": "addressCity",
-              "title": "Address",
+              "generatedName": "AddressCity",
+              "title": "City",
               "value": {
                 "schema": {
                   "type": "string"
@@ -9683,8 +9681,8 @@
             "generatedName": "addressState",
             "key": "state",
             "schema": {
-              "generatedName": "addressState",
-              "title": "Address",
+              "generatedName": "AddressState",
+              "title": "State",
               "value": {
                 "schema": {
                   "type": "string"
@@ -9704,8 +9702,8 @@
             "generatedName": "addressCountry",
             "key": "country",
             "schema": {
-              "generatedName": "addressCountry",
-              "title": "Address",
+              "generatedName": "AddressCountry",
+              "title": "Country",
               "value": {
                 "schema": {
                   "type": "string"
@@ -9792,8 +9790,9 @@
             "generatedName": "bankStatementName",
             "key": "name",
             "schema": {
-              "generatedName": "bankStatementName",
-              "title": "BankStatement",
+              "generatedName": "BankStatementName",
+              "title": "Name",
+              "description": "The name of the bank statement file, if available.",
               "value": {
                 "description": "The name of the bank statement file, if available.",
                 "schema": {
@@ -9864,8 +9863,7 @@
             "generatedName": "bankStatementError",
             "key": "error",
             "schema": {
-              "generatedName": "bankStatementError",
-              "title": "BankStatement",
+              "generatedName": "BankStatementError",
               "value": {
                 "generatedName": "BankStatementError",
                 "schema": "BankStatementError",
@@ -9875,7 +9873,6 @@
                 },
                 "type": "reference"
               },
-              "groupName": [],
               "type": "optional"
             },
             "audiences": [],
@@ -9903,8 +9900,9 @@
             "generatedName": "bankStatementAccountNumber",
             "key": "number",
             "schema": {
-              "generatedName": "bankStatementAccountNumber",
-              "title": "BankStatementAccount",
+              "generatedName": "BankStatementAccountNumber",
+              "title": "Number",
+              "description": "The account number, if available.",
               "value": {
                 "description": "The account number, if available.",
                 "schema": {
@@ -9925,8 +9923,9 @@
             "generatedName": "bankStatementAccountOpeningBalance",
             "key": "opening_balance",
             "schema": {
-              "generatedName": "bankStatementAccountOpeningBalance",
-              "title": "BankStatementAccount",
+              "generatedName": "BankStatementAccountOpeningBalance",
+              "title": "Opening Balance",
+              "description": "The opening balance of the account for the statement period.",
               "value": {
                 "description": "The opening balance of the account for the statement period.",
                 "schema": {
@@ -9947,8 +9946,9 @@
             "generatedName": "bankStatementAccountClosingBalance",
             "key": "closing_balance",
             "schema": {
-              "generatedName": "bankStatementAccountClosingBalance",
-              "title": "BankStatementAccount",
+              "generatedName": "BankStatementAccountClosingBalance",
+              "title": "Closing Balance",
+              "description": "The closing balance of the account for the statement period.",
               "value": {
                 "description": "The closing balance of the account for the statement period.",
                 "schema": {
@@ -9969,8 +9969,9 @@
             "generatedName": "bankStatementAccountStartDate",
             "key": "start_date",
             "schema": {
-              "generatedName": "bankStatementAccountStartDate",
-              "title": "BankStatementAccount",
+              "generatedName": "BankStatementAccountStartDate",
+              "title": "Start Date",
+              "description": "The start date of the statement period.",
               "value": {
                 "description": "The start date of the statement period.",
                 "schema": {
@@ -9991,8 +9992,9 @@
             "generatedName": "bankStatementAccountEndDate",
             "key": "end_date",
             "schema": {
-              "generatedName": "bankStatementAccountEndDate",
-              "title": "BankStatementAccount",
+              "generatedName": "BankStatementAccountEndDate",
+              "title": "End Date",
+              "description": "The end date of the statement period.",
               "value": {
                 "description": "The end date of the statement period.",
                 "schema": {
@@ -10013,8 +10015,9 @@
             "generatedName": "bankStatementAccountIsBalanceReconciled",
             "key": "is_balance_reconciled",
             "schema": {
-              "generatedName": "bankStatementAccountIsBalanceReconciled",
-              "title": "BankStatementAccount",
+              "generatedName": "BankStatementAccountIsBalanceReconciled",
+              "title": "Is Balance Reconciled",
+              "description": "Indicates whether the balance has been reconciled.",
               "value": {
                 "description": "Indicates whether the balance has been reconciled.",
                 "schema": {
@@ -10035,8 +10038,9 @@
             "generatedName": "bankStatementAccountTotalIncoming",
             "key": "total_incoming",
             "schema": {
-              "generatedName": "bankStatementAccountTotalIncoming",
-              "title": "BankStatementAccount",
+              "generatedName": "BankStatementAccountTotalIncoming",
+              "title": "Total Incoming",
+              "description": "The sum of amounts of all incoming transactions.",
               "value": {
                 "description": "The sum of amounts of all incoming transactions.",
                 "schema": {
@@ -10057,8 +10061,9 @@
             "generatedName": "bankStatementAccountTotalOutgoing",
             "key": "total_outgoing",
             "schema": {
-              "generatedName": "bankStatementAccountTotalOutgoing",
-              "title": "BankStatementAccount",
+              "generatedName": "BankStatementAccountTotalOutgoing",
+              "title": "Total Outgoing",
+              "description": "The sum of amounts of all outgoing transactions.",
               "value": {
                 "description": "The sum of amounts of all outgoing transactions.",
                 "schema": {
@@ -10202,8 +10207,9 @@
             "generatedName": "bankStatementFileSize",
             "key": "size",
             "schema": {
-              "generatedName": "bankStatementFileSize",
-              "title": "BankStatementFile",
+              "generatedName": "BankStatementFileSize",
+              "title": "Size",
+              "description": "The size of the bank statement file in bytes, if available.",
               "value": {
                 "description": "The size of the bank statement file in bytes, if available.",
                 "schema": {
@@ -10406,8 +10412,9 @@
             "generatedName": "bankStatementTransactionRunningBalance",
             "key": "running_balance",
             "schema": {
-              "generatedName": "bankStatementTransactionRunningBalance",
-              "title": "BankStatementTransaction",
+              "generatedName": "BankStatementTransactionRunningBalance",
+              "title": "Running Balance",
+              "description": "The account's balance when this transaction was performed",
               "value": {
                 "description": "The account's balance when this transaction was performed",
                 "schema": {
@@ -10727,8 +10734,9 @@
             "generatedName": "categoriesGeneral",
             "key": "general",
             "schema": {
-              "generatedName": "categoriesGeneral",
-              "title": "Categories",
+              "generatedName": "CategoriesGeneral",
+              "title": "General",
+              "description": "The category of the transaction. View the valid set of categories for your key [here](./docs/v3/enrichment/entities).",
               "value": {
                 "description": "The category of the transaction. View the valid set of categories for your key [here](./docs/v3/enrichment/entities).",
                 "schema": {
@@ -10749,13 +10757,11 @@
             "generatedName": "categoriesAccounting",
             "key": "accounting",
             "schema": {
-              "generatedName": "categoriesAccounting",
-              "title": "Categories",
+              "generatedName": "CategoriesAccounting",
+              "description": "The corresponding accounting category. Only available for `business` transactions.",
               "value": {
-                "description": "The corresponding accounting category. Only available for `business` transactions.",
                 "generatedName": "CategoriesAccounting",
                 "schema": "AccountingCategory",
-                "groupName": [],
                 "source": {
                   "file": "../openapi.yml",
                   "type": "openapi"
@@ -10875,8 +10881,9 @@
             "generatedName": "counterpartyId",
             "key": "id",
             "schema": {
-              "generatedName": "counterpartyId",
-              "title": "Counterparty",
+              "generatedName": "CounterpartyId",
+              "title": "Id",
+              "description": "The unique UUID identifier of the entity",
               "value": {
                 "description": "The unique UUID identifier of the entity",
                 "schema": {
@@ -10897,8 +10904,9 @@
             "generatedName": "counterpartyName",
             "key": "name",
             "schema": {
-              "generatedName": "counterpartyName",
-              "title": "Counterparty",
+              "generatedName": "CounterpartyName",
+              "title": "Name",
+              "description": "The name of the entity",
               "value": {
                 "description": "The name of the entity",
                 "schema": {
@@ -10919,8 +10927,9 @@
             "generatedName": "counterpartyWebsite",
             "key": "website",
             "schema": {
-              "generatedName": "counterpartyWebsite",
-              "title": "Counterparty",
+              "generatedName": "CounterpartyWebsite",
+              "title": "Website",
+              "description": "The website URL of the entity",
               "value": {
                 "description": "The website URL of the entity",
                 "schema": {
@@ -10941,8 +10950,9 @@
             "generatedName": "counterpartyLogo",
             "key": "logo",
             "schema": {
-              "generatedName": "counterpartyLogo",
-              "title": "Counterparty",
+              "generatedName": "CounterpartyLogo",
+              "title": "Logo",
+              "description": "Logo's URL",
               "value": {
                 "description": "Logo's URL",
                 "schema": {
@@ -10963,8 +10973,9 @@
             "generatedName": "counterpartyMccs",
             "key": "mccs",
             "schema": {
-              "generatedName": "counterpartyMccs",
-              "title": "Counterparty",
+              "generatedName": "CounterpartyMccs",
+              "title": "Mccs",
+              "description": "A list of [Merchant Category Codes](https://en.wikipedia.org/wiki/Merchant_category_code)",
               "value": {
                 "description": "A list of [Merchant Category Codes](https://en.wikipedia.org/wiki/Merchant_category_code)",
                 "value": {
@@ -13129,8 +13140,7 @@
             "generatedName": "enrichedTransactionEntities",
             "key": "entities",
             "schema": {
-              "generatedName": "enrichedTransactionEntities",
-              "title": "EnrichedTransaction",
+              "generatedName": "EnrichedTransactionEntities",
               "value": {
                 "generatedName": "EnrichedTransactionEntities",
                 "schema": "Entities",
@@ -13140,7 +13150,6 @@
                 },
                 "type": "reference"
               },
-              "groupName": [],
               "type": "optional"
             },
             "audiences": [],
@@ -13152,8 +13161,7 @@
             "generatedName": "enrichedTransactionCategories",
             "key": "categories",
             "schema": {
-              "generatedName": "enrichedTransactionCategories",
-              "title": "EnrichedTransaction",
+              "generatedName": "EnrichedTransactionCategories",
               "value": {
                 "generatedName": "EnrichedTransactionCategories",
                 "schema": "Categories",
@@ -13163,7 +13171,6 @@
                 },
                 "type": "reference"
               },
-              "groupName": [],
               "type": "optional"
             },
             "audiences": [],
@@ -13175,8 +13182,7 @@
             "generatedName": "enrichedTransactionLocation",
             "key": "location",
             "schema": {
-              "generatedName": "enrichedTransactionLocation",
-              "title": "EnrichedTransaction",
+              "generatedName": "EnrichedTransactionLocation",
               "value": {
                 "generatedName": "EnrichedTransactionLocation",
                 "schema": "Location",
@@ -13186,7 +13192,6 @@
                 },
                 "type": "reference"
               },
-              "groupName": [],
               "type": "optional"
             },
             "audiences": [],
@@ -13198,8 +13203,7 @@
             "generatedName": "enrichedTransactionError",
             "key": "error",
             "schema": {
-              "generatedName": "enrichedTransactionError",
-              "title": "EnrichedTransaction",
+              "generatedName": "EnrichedTransactionError",
               "value": {
                 "generatedName": "EnrichedTransactionError",
                 "schema": "TransactionError",
@@ -13209,7 +13213,6 @@
                 },
                 "type": "reference"
               },
-              "groupName": [],
               "type": "optional"
             },
             "audiences": [],
@@ -13306,8 +13309,7 @@
             "generatedName": "entitiesCounterparty",
             "key": "counterparty",
             "schema": {
-              "generatedName": "entitiesCounterparty",
-              "title": "Entities",
+              "generatedName": "EntitiesCounterparty",
               "value": {
                 "generatedName": "EntitiesCounterparty",
                 "schema": "Counterparty",
@@ -13317,7 +13319,6 @@
                 },
                 "type": "reference"
               },
-              "groupName": [],
               "type": "optional"
             },
             "audiences": [],
@@ -13329,8 +13330,8 @@
             "generatedName": "entitiesIntermediaries",
             "key": "intermediaries",
             "schema": {
-              "generatedName": "entitiesIntermediaries",
-              "title": "Entities",
+              "generatedName": "EntitiesIntermediaries",
+              "title": "Intermediaries",
               "value": {
                 "value": {
                   "generatedName": "EntitiesIntermediariesItem",
@@ -13372,8 +13373,9 @@
             "generatedName": "entityId",
             "key": "id",
             "schema": {
-              "generatedName": "entityId",
-              "title": "Entity",
+              "generatedName": "EntityId",
+              "title": "Id",
+              "description": "The unique UUID identifier of the entity",
               "value": {
                 "description": "The unique UUID identifier of the entity",
                 "schema": {
@@ -13394,8 +13396,9 @@
             "generatedName": "entityName",
             "key": "name",
             "schema": {
-              "generatedName": "entityName",
-              "title": "Entity",
+              "generatedName": "EntityName",
+              "title": "Name",
+              "description": "The name of the entity",
               "value": {
                 "description": "The name of the entity",
                 "schema": {
@@ -13416,8 +13419,9 @@
             "generatedName": "entityWebsite",
             "key": "website",
             "schema": {
-              "generatedName": "entityWebsite",
-              "title": "Entity",
+              "generatedName": "EntityWebsite",
+              "title": "Website",
+              "description": "The website URL of the entity",
               "value": {
                 "description": "The website URL of the entity",
                 "schema": {
@@ -13438,8 +13442,9 @@
             "generatedName": "entityLogo",
             "key": "logo",
             "schema": {
-              "generatedName": "entityLogo",
-              "title": "Entity",
+              "generatedName": "EntityLogo",
+              "title": "Logo",
+              "description": "Logo's URL",
               "value": {
                 "description": "Logo's URL",
                 "schema": {
@@ -13460,8 +13465,9 @@
             "generatedName": "entityMccs",
             "key": "mccs",
             "schema": {
-              "generatedName": "entityMccs",
-              "title": "Entity",
+              "generatedName": "EntityMccs",
+              "title": "Mccs",
+              "description": "A list of [Merchant Category Codes](https://en.wikipedia.org/wiki/Merchant_category_code)",
               "value": {
                 "description": "A list of [Merchant Category Codes](https://en.wikipedia.org/wiki/Merchant_category_code)",
                 "value": {
@@ -13534,8 +13540,8 @@
             "generatedName": "httpValidationErrorDetail",
             "key": "detail",
             "schema": {
-              "generatedName": "httpValidationErrorDetail",
-              "title": "HTTPValidationError",
+              "generatedName": "HttpValidationErrorDetail",
+              "title": "Detail",
               "value": {
                 "value": {
                   "generatedName": "HttpValidationErrorDetailItem",
@@ -13576,8 +13582,9 @@
             "generatedName": "intermediaryId",
             "key": "id",
             "schema": {
-              "generatedName": "intermediaryId",
-              "title": "Intermediary",
+              "generatedName": "IntermediaryId",
+              "title": "Id",
+              "description": "The unique UUID identifier of the entity",
               "value": {
                 "description": "The unique UUID identifier of the entity",
                 "schema": {
@@ -13598,8 +13605,9 @@
             "generatedName": "intermediaryName",
             "key": "name",
             "schema": {
-              "generatedName": "intermediaryName",
-              "title": "Intermediary",
+              "generatedName": "IntermediaryName",
+              "title": "Name",
+              "description": "The name of the entity",
               "value": {
                 "description": "The name of the entity",
                 "schema": {
@@ -13620,8 +13628,9 @@
             "generatedName": "intermediaryWebsite",
             "key": "website",
             "schema": {
-              "generatedName": "intermediaryWebsite",
-              "title": "Intermediary",
+              "generatedName": "IntermediaryWebsite",
+              "title": "Website",
+              "description": "The website URL of the entity",
               "value": {
                 "description": "The website URL of the entity",
                 "schema": {
@@ -13642,8 +13651,9 @@
             "generatedName": "intermediaryLogo",
             "key": "logo",
             "schema": {
-              "generatedName": "intermediaryLogo",
-              "title": "Intermediary",
+              "generatedName": "IntermediaryLogo",
+              "title": "Logo",
+              "description": "Logo's URL",
               "value": {
                 "description": "Logo's URL",
                 "schema": {
@@ -13664,8 +13674,9 @@
             "generatedName": "intermediaryMccs",
             "key": "mccs",
             "schema": {
-              "generatedName": "intermediaryMccs",
-              "title": "Intermediary",
+              "generatedName": "IntermediaryMccs",
+              "title": "Mccs",
+              "description": "A list of [Merchant Category Codes](https://en.wikipedia.org/wiki/Merchant_category_code)",
               "value": {
                 "description": "A list of [Merchant Category Codes](https://en.wikipedia.org/wiki/Merchant_category_code)",
                 "value": {
@@ -13746,8 +13757,9 @@
             "generatedName": "locationRawAddress",
             "key": "raw_address",
             "schema": {
-              "generatedName": "locationRawAddress",
-              "title": "Location",
+              "generatedName": "LocationRawAddress",
+              "title": "Raw Address",
+              "description": "An unstructured string containing the address",
               "value": {
                 "description": "An unstructured string containing the address",
                 "schema": {
@@ -13768,13 +13780,11 @@
             "generatedName": "locationStructured",
             "key": "structured",
             "schema": {
-              "generatedName": "locationStructured",
-              "title": "Location",
+              "generatedName": "LocationStructured",
+              "description": "When raw is set, a structured representation of it.",
               "value": {
-                "description": "When raw is set, a structured representation of it.",
                 "generatedName": "LocationStructured",
                 "schema": "LocationStructured",
-                "groupName": [],
                 "source": {
                   "file": "../openapi.yml",
                   "type": "openapi"
@@ -13806,8 +13816,9 @@
             "generatedName": "locationInputRawAddress",
             "key": "raw_address",
             "schema": {
-              "generatedName": "locationInputRawAddress",
-              "title": "LocationInput",
+              "generatedName": "LocationInputRawAddress",
+              "title": "Raw Address",
+              "description": "An unstructured string containing the address",
               "value": {
                 "description": "An unstructured string containing the address",
                 "schema": {
@@ -13861,8 +13872,9 @@
             "generatedName": "locationStructuredStreet",
             "key": "street",
             "schema": {
-              "generatedName": "locationStructuredStreet",
-              "title": "LocationStructured",
+              "generatedName": "LocationStructuredStreet",
+              "title": "Street",
+              "description": "The street name and number of the location",
               "value": {
                 "description": "The street name and number of the location",
                 "schema": {
@@ -13883,8 +13895,9 @@
             "generatedName": "locationStructuredCity",
             "key": "city",
             "schema": {
-              "generatedName": "locationStructuredCity",
-              "title": "LocationStructured",
+              "generatedName": "LocationStructuredCity",
+              "title": "City",
+              "description": "The city where the location is situated",
               "value": {
                 "description": "The city where the location is situated",
                 "schema": {
@@ -13905,8 +13918,9 @@
             "generatedName": "locationStructuredState",
             "key": "state",
             "schema": {
-              "generatedName": "locationStructuredState",
-              "title": "LocationStructured",
+              "generatedName": "LocationStructuredState",
+              "title": "State",
+              "description": "The state or region of the location",
               "value": {
                 "description": "The state or region of the location",
                 "schema": {
@@ -13927,8 +13941,9 @@
             "generatedName": "locationStructuredPostcode",
             "key": "postcode",
             "schema": {
-              "generatedName": "locationStructuredPostcode",
-              "title": "LocationStructured",
+              "generatedName": "LocationStructuredPostcode",
+              "title": "Postcode",
+              "description": "The postal code or ZIP code of the location",
               "value": {
                 "description": "The postal code or ZIP code of the location",
                 "schema": {
@@ -13949,8 +13964,9 @@
             "generatedName": "locationStructuredCountryCode",
             "key": "country_code",
             "schema": {
-              "generatedName": "locationStructuredCountryCode",
-              "title": "LocationStructured",
+              "generatedName": "LocationStructuredCountryCode",
+              "title": "Country Code",
+              "description": "The country code of the location in ISO 3166-2 format",
               "value": {
                 "description": "The country code of the location in ISO 3166-2 format",
                 "schema": {
@@ -13971,8 +13987,9 @@
             "generatedName": "locationStructuredCountry",
             "key": "country",
             "schema": {
-              "generatedName": "locationStructuredCountry",
-              "title": "LocationStructured",
+              "generatedName": "LocationStructuredCountry",
+              "title": "Country",
+              "description": "The full name of the country",
               "value": {
                 "description": "The full name of the country",
                 "schema": {
@@ -13993,8 +14010,9 @@
             "generatedName": "locationStructuredLatitude",
             "key": "latitude",
             "schema": {
-              "generatedName": "locationStructuredLatitude",
-              "title": "LocationStructured",
+              "generatedName": "LocationStructuredLatitude",
+              "title": "Latitude",
+              "description": "The latitude coordinate of the location",
               "value": {
                 "description": "The latitude coordinate of the location",
                 "schema": {
@@ -14015,8 +14033,9 @@
             "generatedName": "locationStructuredLongitude",
             "key": "longitude",
             "schema": {
-              "generatedName": "locationStructuredLongitude",
-              "title": "LocationStructured",
+              "generatedName": "LocationStructuredLongitude",
+              "title": "Longitude",
+              "description": "The longitude coordinate of the location",
               "value": {
                 "description": "The longitude coordinate of the location",
                 "schema": {
@@ -14037,8 +14056,9 @@
             "generatedName": "locationStructuredGoogleMapsUrl",
             "key": "google_maps_url",
             "schema": {
-              "generatedName": "locationStructuredGoogleMapsUrl",
-              "title": "LocationStructured",
+              "generatedName": "LocationStructuredGoogleMapsUrl",
+              "title": "Google Maps Url",
+              "description": "A URL link to view the location on Google Maps",
               "value": {
                 "description": "A URL link to view the location on Google Maps",
                 "schema": {
@@ -14059,8 +14079,9 @@
             "generatedName": "locationStructuredAppleMapsUrl",
             "key": "apple_maps_url",
             "schema": {
-              "generatedName": "locationStructuredAppleMapsUrl",
-              "title": "LocationStructured",
+              "generatedName": "LocationStructuredAppleMapsUrl",
+              "title": "Apple Maps Url",
+              "description": "A URL link to view the location on Apple Maps",
               "value": {
                 "description": "A URL link to view the location on Apple Maps",
                 "schema": {
@@ -14081,8 +14102,9 @@
             "generatedName": "locationStructuredStoreNumber",
             "key": "store_number",
             "schema": {
-              "generatedName": "locationStructuredStoreNumber",
-              "title": "LocationStructured",
+              "generatedName": "LocationStructuredStoreNumber",
+              "title": "Store Number",
+              "description": "A unique identifier for a specific store or branch, if applicable",
               "value": {
                 "description": "A unique identifier for a specific store or branch, if applicable",
                 "schema": {
@@ -14271,8 +14293,8 @@
             "generatedName": "pagedResponseReportNextCursor",
             "key": "next_cursor",
             "schema": {
-              "generatedName": "pagedResponseReportNextCursor",
-              "title": "PagedResponse[Report]",
+              "generatedName": "PagedResponseReportNextCursor",
+              "title": "Next Cursor",
               "value": {
                 "schema": {
                   "type": "string"
@@ -14835,8 +14857,9 @@
             "generatedName": "reportRejectionReason",
             "key": "rejection_reason",
             "schema": {
-              "generatedName": "reportRejectionReason",
-              "title": "Report",
+              "generatedName": "ReportRejectionReason",
+              "title": "Rejection Reason",
+              "description": "An explanation of why the report was rejected",
               "value": {
                 "description": "An explanation of why the report was rejected",
                 "schema": {
@@ -14974,8 +14997,8 @@
             "generatedName": "statementInfoInstitution",
             "key": "institution",
             "schema": {
-              "generatedName": "statementInfoInstitution",
-              "title": "StatementInfo",
+              "generatedName": "StatementInfoInstitution",
+              "title": "Institution",
               "value": {
                 "schema": {
                   "type": "string"
@@ -14995,8 +15018,8 @@
             "generatedName": "statementInfoStartDate",
             "key": "start_date",
             "schema": {
-              "generatedName": "statementInfoStartDate",
-              "title": "StatementInfo",
+              "generatedName": "StatementInfoStartDate",
+              "title": "Start Date",
               "value": {
                 "schema": {
                   "type": "date"
@@ -15016,8 +15039,8 @@
             "generatedName": "statementInfoEndDate",
             "key": "end_date",
             "schema": {
-              "generatedName": "statementInfoEndDate",
-              "title": "StatementInfo",
+              "generatedName": "StatementInfoEndDate",
+              "title": "End Date",
               "value": {
                 "schema": {
                   "type": "date"
@@ -15037,8 +15060,7 @@
             "generatedName": "statementInfoAccountHolder",
             "key": "account_holder",
             "schema": {
-              "generatedName": "statementInfoAccountHolder",
-              "title": "StatementInfo",
+              "generatedName": "StatementInfoAccountHolder",
               "value": {
                 "generatedName": "StatementInfoAccountHolder",
                 "schema": "AccountHolder",
@@ -15048,7 +15070,6 @@
                 },
                 "type": "reference"
               },
-              "groupName": [],
               "type": "optional"
             },
             "audiences": [],
@@ -15060,8 +15081,8 @@
             "generatedName": "statementInfoAccounts",
             "key": "accounts",
             "schema": {
-              "generatedName": "statementInfoAccounts",
-              "title": "StatementInfo",
+              "generatedName": "StatementInfoAccounts",
+              "title": "Accounts",
               "value": {
                 "value": {
                   "generatedName": "StatementInfoAccountsItem",
@@ -15277,8 +15298,7 @@
             "generatedName": "transactionEntities",
             "key": "entities",
             "schema": {
-              "generatedName": "transactionEntities",
-              "title": "Transaction",
+              "generatedName": "TransactionEntities",
               "value": {
                 "generatedName": "TransactionEntities",
                 "schema": "Entities",
@@ -15288,7 +15308,6 @@
                 },
                 "type": "reference"
               },
-              "groupName": [],
               "type": "optional"
             },
             "audiences": [],
@@ -15300,8 +15319,7 @@
             "generatedName": "transactionCategories",
             "key": "categories",
             "schema": {
-              "generatedName": "transactionCategories",
-              "title": "Transaction",
+              "generatedName": "TransactionCategories",
               "value": {
                 "generatedName": "TransactionCategories",
                 "schema": "Categories",
@@ -15311,7 +15329,6 @@
                 },
                 "type": "reference"
               },
-              "groupName": [],
               "type": "optional"
             },
             "audiences": [],
@@ -15323,8 +15340,7 @@
             "generatedName": "transactionLocation",
             "key": "location",
             "schema": {
-              "generatedName": "transactionLocation",
-              "title": "Transaction",
+              "generatedName": "TransactionLocation",
               "value": {
                 "generatedName": "TransactionLocation",
                 "schema": "Location",
@@ -15334,7 +15350,6 @@
                 },
                 "type": "reference"
               },
-              "groupName": [],
               "type": "optional"
             },
             "audiences": [],
@@ -15346,8 +15361,7 @@
             "generatedName": "transactionError",
             "key": "error",
             "schema": {
-              "generatedName": "transactionError",
-              "title": "Transaction",
+              "generatedName": "TransactionError",
               "value": {
                 "generatedName": "TransactionError",
                 "schema": "TransactionError",
@@ -15357,7 +15371,6 @@
                 },
                 "type": "reference"
               },
-              "groupName": [],
               "type": "optional"
             },
             "audiences": [],
@@ -15385,8 +15398,9 @@
             "generatedName": "transactionAccountHolderId",
             "key": "account_holder_id",
             "schema": {
-              "generatedName": "transactionAccountHolderId",
-              "title": "Transaction",
+              "generatedName": "TransactionAccountHolderId",
+              "title": "Account Holder Id",
+              "description": "The unique ID of the account holder of the transaction",
               "value": {
                 "description": "The unique ID of the account holder of the transaction",
                 "schema": {
@@ -15408,8 +15422,7 @@
             "generatedName": "transactionRecurrence",
             "key": "recurrence",
             "schema": {
-              "generatedName": "transactionRecurrence",
-              "title": "Transaction",
+              "generatedName": "TransactionRecurrence",
               "value": {
                 "generatedName": "TransactionRecurrence",
                 "schema": "Recurrence",
@@ -15419,7 +15432,6 @@
                 },
                 "type": "reference"
               },
-              "groupName": [],
               "type": "optional"
             },
             "audiences": [],
@@ -15634,8 +15646,7 @@
             "generatedName": "transactionInputLocation",
             "key": "location",
             "schema": {
-              "generatedName": "transactionInputLocation",
-              "title": "TransactionInput",
+              "generatedName": "TransactionInputLocation",
               "value": {
                 "generatedName": "TransactionInputLocation",
                 "schema": "LocationInput",
@@ -15645,7 +15656,6 @@
                 },
                 "type": "reference"
               },
-              "groupName": [],
               "type": "optional"
             },
             "audiences": [],
@@ -15837,8 +15847,9 @@
             "generatedName": "webhookToken",
             "key": "token",
             "schema": {
-              "generatedName": "webhookToken",
-              "title": "Webhook",
+              "generatedName": "WebhookToken",
+              "title": "Token",
+              "description": "A secret string used to authenticate the webhook. This value will be included in the `X-Ntropy-Token` header when sending requests to the webhook",
               "value": {
                 "description": "A secret string used to authenticate the webhook. This value will be included in the `X-Ntropy-Token` header when sending requests to the webhook",
                 "schema": {
@@ -16001,8 +16012,9 @@
             "generatedName": "webhookBaseToken",
             "key": "token",
             "schema": {
-              "generatedName": "webhookBaseToken",
-              "title": "WebhookBase",
+              "generatedName": "WebhookBaseToken",
+              "title": "Token",
+              "description": "A secret string used to authenticate the webhook. This value will be included in the `X-Ntropy-Token` header when sending requests to the webhook",
               "value": {
                 "description": "A secret string used to authenticate the webhook. This value will be included in the `X-Ntropy-Token` header when sending requests to the webhook",
                 "schema": {
@@ -16039,8 +16051,9 @@
             "generatedName": "webhookPatchUrl",
             "key": "url",
             "schema": {
-              "generatedName": "webhookPatchUrl",
-              "title": "WebhookPatch",
+              "generatedName": "WebhookPatchUrl",
+              "title": "Url",
+              "description": "The URL of the webhook",
               "value": {
                 "description": "The URL of the webhook",
                 "schema": {
@@ -16064,8 +16077,9 @@
             "generatedName": "webhookPatchEvents",
             "key": "events",
             "schema": {
-              "generatedName": "webhookPatchEvents",
-              "title": "WebhookPatch",
+              "generatedName": "WebhookPatchEvents",
+              "title": "Events",
+              "description": "A list of events that this webhook subscribes to",
               "value": {
                 "description": "A list of events that this webhook subscribes to",
                 "value": {
@@ -16129,8 +16143,9 @@
             "generatedName": "webhookPatchToken",
             "key": "token",
             "schema": {
-              "generatedName": "webhookPatchToken",
-              "title": "WebhookPatch",
+              "generatedName": "WebhookPatchToken",
+              "title": "Token",
+              "description": "A secret string used to authenticate the webhook. This value will be included in the `X-Ntropy-Token` header when sending requests to the webhook",
               "value": {
                 "description": "A secret string used to authenticate the webhook. This value will be included in the `X-Ntropy-Token` header when sending requests to the webhook",
                 "schema": {
@@ -16152,8 +16167,9 @@
             "generatedName": "webhookPatchEnabled",
             "key": "enabled",
             "schema": {
-              "generatedName": "webhookPatchEnabled",
-              "title": "WebhookPatch",
+              "generatedName": "WebhookPatchEnabled",
+              "title": "Enabled",
+              "description": "Whether the webhook is enabled or not.",
               "value": {
                 "description": "Whether the webhook is enabled or not.",
                 "schema": {
@@ -17107,8 +17123,7 @@
             "generatedName": "ifThen",
             "key": "then",
             "schema": {
-              "generatedName": "ifThen",
-              "title": "if",
+              "generatedName": "IfThen",
               "value": {
                 "value": {
                   "generatedName": "IfThenItem",
@@ -17133,8 +17148,7 @@
             "generatedName": "ifElse",
             "key": "else",
             "schema": {
-              "generatedName": "ifElse",
-              "title": "if",
+              "generatedName": "IfElse",
               "value": {
                 "value": {
                   "generatedName": "IfElseItem",

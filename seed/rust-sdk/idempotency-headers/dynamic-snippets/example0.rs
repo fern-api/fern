@@ -1,4 +1,4 @@
-use seed_idempotency_headers::{ClientConfig, CreatePaymentRequest, IdempotencyHeadersClient};
+use seed_idempotency_headers::prelude::*;
 use std::collections::HashMap;
 
 #[tokio::main]

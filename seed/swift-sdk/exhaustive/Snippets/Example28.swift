@@ -7,7 +7,7 @@ private func main() async throws {
         token: "<token>"
     )
 
-    try await client.endpoints.params.modifyWithPath(
+    _ = try await client.endpoints.params.modifyWithPath(
         param: "param",
         request: "string"
     )

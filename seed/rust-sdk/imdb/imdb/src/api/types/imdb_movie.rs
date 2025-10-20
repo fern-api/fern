@@ -1,7 +1,6 @@
-use crate::imdb_movie_id::MovieId;
-use serde::{Deserialize, Serialize};
+pub use crate::prelude::*;
 
-#[derive(Debug, Clone, Serialize, Deserialize)]
+#[derive(Debug, Clone, Serialize, Deserialize, PartialEq)]
 pub struct Movie {
     pub id: MovieId,
     pub title: String,

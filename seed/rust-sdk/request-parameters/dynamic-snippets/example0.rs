@@ -1,4 +1,4 @@
-use seed_request_parameters::{ClientConfig, CreateUsernameRequest, RequestParametersClient};
+use seed_request_parameters::prelude::*;
 use std::collections::{HashMap, HashSet};
 
 #[tokio::main]

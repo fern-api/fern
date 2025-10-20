@@ -511,6 +511,9 @@
       "endpoints": [
         {
           "auth": true,
+          "authV2": [
+            "petstore_auth"
+          ],
           "description": "Add a new pet to the store.",
           "method": "POST",
           "defaultEnvironment": "/api/v3",
@@ -724,6 +727,9 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "petstore_auth"
+          ],
           "description": "Update an existing pet by Id.",
           "method": "PUT",
           "defaultEnvironment": "/api/v3",
@@ -949,6 +955,9 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "petstore_auth"
+          ],
           "description": "Multiple status values can be provided with comma separated strings.",
           "method": "GET",
           "defaultEnvironment": "/api/v3",
@@ -1094,6 +1103,9 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "petstore_auth"
+          ],
           "description": "Multiple tags can be provided with comma separated strings. Use tag1, tag2, tag3 for testing.",
           "method": "GET",
           "defaultEnvironment": "/api/v3",
@@ -1244,6 +1256,10 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "api_key",
+            "petstore_auth"
+          ],
           "description": "Returns a single pet.",
           "method": "GET",
           "defaultEnvironment": "/api/v3",
@@ -1400,6 +1416,9 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "petstore_auth"
+          ],
           "description": "Updates a pet resource based on the form data.",
           "method": "POST",
           "defaultEnvironment": "/api/v3",
@@ -1571,6 +1590,9 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "petstore_auth"
+          ],
           "description": "Delete a pet.",
           "method": "DELETE",
           "defaultEnvironment": "/api/v3",
@@ -1695,6 +1717,9 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "petstore_auth"
+          ],
           "description": "Upload image of the pet.",
           "method": "POST",
           "defaultEnvironment": "/api/v3",
@@ -1867,6 +1892,9 @@
       "endpoints": [
         {
           "auth": true,
+          "authV2": [
+            "api_key"
+          ],
           "description": "Returns a map of status codes to quantities.",
           "method": "GET",
           "defaultEnvironment": "/api/v3",
@@ -3398,6 +3426,9 @@
       "endpoints": [
         {
           "auth": true,
+          "authV2": [
+            "petstore_auth"
+          ],
           "description": "Add a new pet to the store.",
           "method": "POST",
           "defaultEnvironment": "/api/v3",
@@ -3611,6 +3642,9 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "petstore_auth"
+          ],
           "description": "Update an existing pet by Id.",
           "method": "PUT",
           "defaultEnvironment": "/api/v3",
@@ -3836,6 +3870,9 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "petstore_auth"
+          ],
           "description": "Multiple status values can be provided with comma separated strings.",
           "method": "GET",
           "defaultEnvironment": "/api/v3",
@@ -3981,6 +4018,9 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "petstore_auth"
+          ],
           "description": "Multiple tags can be provided with comma separated strings. Use tag1, tag2, tag3 for testing.",
           "method": "GET",
           "defaultEnvironment": "/api/v3",
@@ -4131,6 +4171,10 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "api_key",
+            "petstore_auth"
+          ],
           "description": "Returns a single pet.",
           "method": "GET",
           "defaultEnvironment": "/api/v3",
@@ -4287,6 +4331,9 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "petstore_auth"
+          ],
           "description": "Updates a pet resource based on the form data.",
           "method": "POST",
           "defaultEnvironment": "/api/v3",
@@ -4458,6 +4505,9 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "petstore_auth"
+          ],
           "description": "Delete a pet.",
           "method": "DELETE",
           "defaultEnvironment": "/api/v3",
@@ -4582,6 +4632,9 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "petstore_auth"
+          ],
           "description": "Upload image of the pet.",
           "method": "POST",
           "defaultEnvironment": "/api/v3",
@@ -4754,6 +4807,9 @@
       "endpoints": [
         {
           "auth": true,
+          "authV2": [
+            "api_key"
+          ],
           "description": "Returns a map of status codes to quantities.",
           "method": "GET",
           "defaultEnvironment": "/api/v3",
@@ -6262,6 +6318,17 @@
   "auth": {
     "type": "bearerAuth",
     "tokenName": "token"
+  },
+  "authSchemes": {
+    "petstore_auth": {
+      "type": "bearerAuth",
+      "tokenName": "token"
+    },
+    "api_key": {
+      "type": "header",
+      "headerWireValue": "api_key",
+      "nameOverride": "apiKey"
+    }
   },
   "snippetsConfiguration": {},
   "globalHeaders": []

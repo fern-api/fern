@@ -15,13 +15,13 @@ Instantiate and use the client with the following:
 ```ruby
 require "seed"
 
-client = seed::Client.new();
+client = Seed::Client.new();
 
-client.user.create_user({
-  type:'CreateUserRequest',
-  version:'v1',
-  name:'name'
-});
+client.user.create_user(
+  name: 'Alice',
+  type: 'CreateUserRequest',
+  version: 'v1'
+);
 ```
 
 ## Environments

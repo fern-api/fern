@@ -84,22 +84,16 @@
             },
             "valueType": {
               "container": {
-                "optional": {
-                  "container": {
-                    "nullable": {
-                      "primitive": {
-                        "v1": "DOUBLE",
-                        "v2": {
-                          "type": "double"
-                        }
-                      },
-                      "type": "primitive"
-                    },
-                    "type": "nullable"
+                "nullable": {
+                  "primitive": {
+                    "v1": "DOUBLE",
+                    "v2": {
+                      "type": "double"
+                    }
                   },
-                  "type": "container"
+                  "type": "primitive"
                 },
-                "type": "optional"
+                "type": "nullable"
               },
               "type": "container"
             },
@@ -228,22 +222,16 @@
                 },
                 "valueType": {
                   "container": {
-                    "optional": {
-                      "container": {
-                        "nullable": {
-                          "primitive": {
-                            "v1": "STRING",
-                            "v2": {
-                              "type": "string"
-                            }
-                          },
-                          "type": "primitive"
-                        },
-                        "type": "nullable"
+                    "nullable": {
+                      "primitive": {
+                        "v1": "STRING",
+                        "v2": {
+                          "type": "string"
+                        }
                       },
-                      "type": "container"
+                      "type": "primitive"
                     },
-                    "type": "optional"
+                    "type": "nullable"
                   },
                   "type": "container"
                 },
@@ -459,13 +447,10 @@
             },
             "typeReference": {
               "value": {
-                "value": {
-                  "value": "DOUBLE",
-                  "type": "primitive"
-                },
-                "type": "nullable"
+                "value": "DOUBLE",
+                "type": "primitive"
               },
-              "type": "optional"
+              "type": "nullable"
             }
           }
         ],
@@ -561,13 +546,10 @@
                 },
                 "typeReference": {
                   "value": {
-                    "value": {
-                      "value": "STRING",
-                      "type": "primitive"
-                    },
-                    "type": "nullable"
+                    "value": "STRING",
+                    "type": "primitive"
                   },
-                  "type": "optional"
+                  "type": "nullable"
                 }
               }
             ],

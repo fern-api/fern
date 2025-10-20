@@ -20,7 +20,7 @@ With Swift Package Manager (SPM), add the following to the top-level `dependenci
 
 ```swift
 dependencies: [
-    .package(url: "<git-url>", from: "0.1.0"),
+    .package(url: "https://github.com/extra-properties/fern", from: "0.0.1"),
 ]
 ```
 
@@ -39,7 +39,7 @@ import ExtraProperties
 private func main() async throws {
     let client = ExtraPropertiesClient()
 
-    try await client.user.createUser(request: .init(
+    _ = try await client.user.createUser(request: .init(
         type: .createUserRequest,
         version: .v1,
         name: "name"

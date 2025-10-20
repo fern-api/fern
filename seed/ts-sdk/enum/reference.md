@@ -1,7 +1,5 @@
 # Reference
-
 ## Headers
-
 <details><summary><code>client.headers.<a href="/src/api/resources/headers/client/Client.ts">send</a>({ ...params }) -> void</code></summary>
 <dl>
 <dd>
@@ -19,10 +17,10 @@ await client.headers.send({
     operand: ">",
     maybeOperand: ">",
     operandOrColor: "red",
-    maybeOperandOrColor: undefined,
+    maybeOperandOrColor: undefined
 });
-```
 
+```
 </dd>
 </dl>
 </dd>
@@ -36,27 +34,27 @@ await client.headers.send({
 <dl>
 <dd>
 
-**request:** `SeedEnum.SendEnumAsHeaderRequest`
-
+**request:** `SeedEnum.SendEnumAsHeaderRequest` 
+    
 </dd>
 </dl>
 
 <dl>
 <dd>
 
-**requestOptions:** `Headers.RequestOptions`
+**requestOptions:** `Headers.RequestOptions` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
 
-</dd>
-</dl>
-</dd>
-</dl>
 
 </dd>
 </dl>
 </details>
 
 ## InlinedRequest
-
 <details><summary><code>client.inlinedRequest.<a href="/src/api/resources/inlinedRequest/client/Client.ts">send</a>({ ...params }) -> void</code></summary>
 <dl>
 <dd>
@@ -72,10 +70,10 @@ await client.headers.send({
 ```typescript
 await client.inlinedRequest.send({
     operand: ">",
-    operandOrColor: "red",
+    operandOrColor: "red"
 });
-```
 
+```
 </dd>
 </dl>
 </dd>
@@ -89,27 +87,27 @@ await client.inlinedRequest.send({
 <dl>
 <dd>
 
-**request:** `SeedEnum.SendEnumInlinedRequest`
-
+**request:** `SeedEnum.SendEnumInlinedRequest` 
+    
 </dd>
 </dl>
 
 <dl>
 <dd>
 
-**requestOptions:** `InlinedRequest.RequestOptions`
+**requestOptions:** `InlinedRequest.RequestOptions` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
 
-</dd>
-</dl>
-</dd>
-</dl>
 
 </dd>
 </dl>
 </details>
 
 ## PathParam
-
 <details><summary><code>client.pathParam.<a href="/src/api/resources/pathParam/client/Client.ts">send</a>(operand, operandOrColor) -> void</code></summary>
 <dl>
 <dd>
@@ -124,8 +122,8 @@ await client.inlinedRequest.send({
 
 ```typescript
 await client.pathParam.send(">", "red");
-```
 
+```
 </dd>
 </dl>
 </dd>
@@ -139,35 +137,35 @@ await client.pathParam.send(">", "red");
 <dl>
 <dd>
 
-**operand:** `SeedEnum.Operand`
-
+**operand:** `SeedEnum.Operand` 
+    
 </dd>
 </dl>
 
 <dl>
 <dd>
 
-**operandOrColor:** `SeedEnum.ColorOrOperand`
-
+**operandOrColor:** `SeedEnum.ColorOrOperand` 
+    
 </dd>
 </dl>
 
 <dl>
 <dd>
 
-**requestOptions:** `PathParam.RequestOptions`
+**requestOptions:** `PathParam.RequestOptions` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
 
-</dd>
-</dl>
-</dd>
-</dl>
 
 </dd>
 </dl>
 </details>
 
 ## QueryParam
-
 <details><summary><code>client.queryParam.<a href="/src/api/resources/queryParam/client/Client.ts">send</a>({ ...params }) -> void</code></summary>
 <dl>
 <dd>
@@ -183,10 +181,10 @@ await client.pathParam.send(">", "red");
 ```typescript
 await client.queryParam.send({
     operand: ">",
-    operandOrColor: "red",
+    operandOrColor: "red"
 });
-```
 
+```
 </dd>
 </dl>
 </dd>
@@ -200,20 +198,21 @@ await client.queryParam.send({
 <dl>
 <dd>
 
-**request:** `SeedEnum.SendEnumAsQueryParamRequest`
-
+**request:** `SeedEnum.SendEnumAsQueryParamRequest` 
+    
 </dd>
 </dl>
 
 <dl>
 <dd>
 
-**requestOptions:** `QueryParam.RequestOptions`
+**requestOptions:** `QueryParam.RequestOptions` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
 
-</dd>
-</dl>
-</dd>
-</dl>
 
 </dd>
 </dl>
@@ -236,10 +235,10 @@ await client.queryParam.sendList({
     operand: ">",
     maybeOperand: ">",
     operandOrColor: "red",
-    maybeOperandOrColor: "red",
+    maybeOperandOrColor: "red"
 });
-```
 
+```
 </dd>
 </dl>
 </dd>
@@ -253,20 +252,21 @@ await client.queryParam.sendList({
 <dl>
 <dd>
 
-**request:** `SeedEnum.SendEnumListAsQueryParamRequest`
-
+**request:** `SeedEnum.SendEnumListAsQueryParamRequest` 
+    
 </dd>
 </dl>
 
 <dl>
 <dd>
 
-**requestOptions:** `QueryParam.RequestOptions`
+**requestOptions:** `QueryParam.RequestOptions` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
 
-</dd>
-</dl>
-</dd>
-</dl>
 
 </dd>
 </dl>

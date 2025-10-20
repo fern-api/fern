@@ -1,7 +1,7 @@
-import { BaseSchema, Schema, SchemaType } from "../../Schema";
+import { type BaseSchema, type Schema, SchemaType } from "../../Schema";
 import { getErrorMessageForIncorrectType } from "../../utils/getErrorMessageForIncorrectType";
 import { maybeSkipValidation } from "../../utils/maybeSkipValidation";
-import { getSchemaUtils } from "../schema-utils";
+import { getSchemaUtils } from "../schema-utils/index";
 
 // https://stackoverflow.com/questions/12756159/regex-and-iso8601-formatted-datetime
 const ISO_8601_REGEX =

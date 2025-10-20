@@ -18,7 +18,7 @@ describe("getSchemaUtils", () => {
         itSchema(
             "transform and untransform run correctly",
             string().transform({
-                transform: (x) => x + "X",
+                transform: (x) => `${x}X`,
                 untransform: (x) => (x as string).slice(0, -1),
             }),
             {

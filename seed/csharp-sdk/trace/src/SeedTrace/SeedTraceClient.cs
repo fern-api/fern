@@ -17,7 +17,7 @@ public partial class SeedTraceClient
             new Dictionary<string, string>()
             {
                 { "Authorization", $"Bearer {token}" },
-                { "X-Random-Header", xRandomHeader },
+                { "X-Random-Header", xRandomHeader ?? "" },
                 { "X-Fern-Language", "C#" },
                 { "X-Fern-SDK-Name", "SeedTrace" },
                 { "X-Fern-SDK-Version", Version.Current },

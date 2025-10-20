@@ -20,7 +20,7 @@ With Swift Package Manager (SPM), add the following to the top-level `dependenci
 
 ```swift
 dependencies: [
-    .package(url: "<git-url>", from: "0.1.0"),
+    .package(url: "https://github.com/bearer-token-environment-variable/fern", from: "0.0.1"),
 ]
 ```
 
@@ -39,7 +39,7 @@ import BearerTokenEnvironmentVariable
 private func main() async throws {
     let client = BearerTokenEnvironmentVariableClient(apiKey: "<token>")
 
-    try await client.service.getWithBearerToken()
+    _ = try await client.service.getWithBearerToken()
 }
 
 try await main()

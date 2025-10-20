@@ -1,5 +1,4 @@
-use crate::complex_single_filter_search_request_operator::SingleFilterSearchRequestOperator;
-use serde::{Deserialize, Serialize};
+pub use crate::prelude::*;
 
 #[derive(Debug, Clone, Serialize, Deserialize, PartialEq, Eq, Hash)]
 pub struct SingleFilterSearchRequest {

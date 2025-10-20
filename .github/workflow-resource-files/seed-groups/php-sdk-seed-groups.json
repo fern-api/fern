@@ -1,0 +1,158 @@
+{
+  "totalTestTimeSeconds": 7614,
+  "groups": [
+    {
+      "fixtures": [
+        "query-parameters-openapi",
+        "response-property",
+        "alias:composer-json",
+        "query-parameters:private",
+        "server-sent-event-examples",
+        "file-download",
+        "path-parameters:inline-path-parameters-private",
+        "required-nullable",
+        "websocket-bearer-auth",
+        "exhaustive"
+      ],
+      "groupTotalTimeSeconds": 744
+    },
+    {
+      "fixtures": [
+        "content-type",
+        "oauth-client-credentials",
+        "inferred-auth-implicit-no-expiry",
+        "validation",
+        "websocket",
+        "idempotency-headers",
+        "basic-auth-environment-variables",
+        "unknown",
+        "variables",
+        "folders"
+      ],
+      "groupTotalTimeSeconds": 777
+    },
+    {
+      "fixtures": [
+        "query-parameters-openapi-as-objects",
+        "oauth-client-credentials-custom",
+        "any-auth",
+        "query-parameters:no-custom-config",
+        "undiscriminated-unions",
+        "imdb:no-custom-config",
+        "custom-auth",
+        "reserved-keywords",
+        "literals-unions",
+        "empty-clients"
+      ],
+      "groupTotalTimeSeconds": 775
+    },
+    {
+      "fixtures": [
+        "extends:private",
+        "pagination:property-accessors",
+        "path-parameters:inline-path-parameters",
+        "file-upload",
+        "imdb:private",
+        "extra-properties",
+        "errors",
+        "cross-package-type-names",
+        "streaming-parameter",
+        "single-url-environment-default",
+        "multi-url-environment",
+        "multi-url-environment-no-default",
+        "pagination-custom"
+      ],
+      "groupTotalTimeSeconds": 737
+    },
+    {
+      "fixtures": [
+        "bearer-token-environment-variable",
+        "pagination:no-custom-config",
+        "unions:property-accessors",
+        "oauth-client-credentials-nested-root",
+        "websocket-inferred-auth",
+        "nullable-optional",
+        "enum",
+        "inferred-auth-implicit",
+        "circular-references",
+        "mixed-case"
+      ],
+      "groupTotalTimeSeconds": 777
+    },
+    {
+      "fixtures": [
+        "accept-header",
+        "version",
+        "unions:no-custom-config",
+        "oauth-client-credentials-environment-variables",
+        "error-property",
+        "optional",
+        "imdb:packageName",
+        "server-sent-events",
+        "audiences",
+        "literal"
+      ],
+      "groupTotalTimeSeconds": 776
+    },
+    {
+      "fixtures": [
+        "alias:no-custom-config",
+        "bytes-upload",
+        "multi-line-docs",
+        "oauth-client-credentials-with-variables",
+        "imdb:clientName",
+        "public-object",
+        "license",
+        "single-url-environment-no-default",
+        "no-environment",
+        "examples:no-custom-config"
+      ],
+      "groupTotalTimeSeconds": 759
+    },
+    {
+      "fixtures": [
+        "bytes-download",
+        "version-no-default",
+        "multiple-request-bodies",
+        "imdb:namespace",
+        "objects-with-imports",
+        "request-parameters",
+        "nullable",
+        "streaming",
+        "object",
+        "trace"
+      ],
+      "groupTotalTimeSeconds": 748
+    },
+    {
+      "fixtures": [
+        "extends:no-custom-config",
+        "auth-environment-variables",
+        "oauth-client-credentials-default",
+        "imdb:package-path",
+        "package-yml:no-custom-config",
+        "simple-api",
+        "basic-auth",
+        "http-head",
+        "circular-references-advanced",
+        "simple-fhir"
+      ],
+      "groupTotalTimeSeconds": 777
+    },
+    {
+      "fixtures": [
+        "alias-extends",
+        "api-wide-base-path",
+        "property-access",
+        "mixed-file-directory",
+        "path-parameters:no-custom-config",
+        "client-side-params",
+        "package-yml:private",
+        "plain-text",
+        "inferred-auth-explicit",
+        "examples:readme-config"
+      ],
+      "groupTotalTimeSeconds": 744
+    }
+  ]
+}

@@ -30,11 +30,12 @@ import {
     TypeDeclaration,
     TypeReference
 } from "@fern-api/ir-sdk";
+import { hashJSON } from "./hashJSON";
 import { isMarkedUnstable } from "./utils/availabilityUtils";
 
 export namespace IntermediateRepresentationChangeDetector {
     export type Result = {
-        bump: "major" | "minor";
+        bump: "major" | "minor" | "no_change";
         isBreaking: boolean;
         errors: Error[];
     };
@@ -92,6 +93,18 @@ export class IntermediateRepresentationChangeDetector {
         from: IntermediateRepresentation;
         to: IntermediateRepresentation;
     }): Promise<IntermediateRepresentationChangeDetector.Result> {
+        // Hash both IRs to check if they're identical
+        const fromHash = hashJSON(from);
+        const toHash = hashJSON(to);
+
+        if (fromHash === toHash) {
+            return {
+                bump: "no_change",
+                isBreaking: false,
+                errors: []
+            };
+        }
+
         const result = this.checkBreaking({ from, to });
         return {
             bump: result.isBreaking ? "major" : "minor",

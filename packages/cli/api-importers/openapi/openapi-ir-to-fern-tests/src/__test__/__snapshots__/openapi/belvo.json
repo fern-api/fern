@@ -1069,9 +1069,7 @@ For `BUSINESS` bank accounts that Belvo creates for organizations, this field is
             "docs": "Information about the payer's bank account. Belvo returns this object when the payer's bank account information is not saved in the Belvo database.",
             "inline": undefined,
             "properties": {
-              "bank_account_information": {
-                "type": "optional<BankAccountInformationContentPse>",
-              },
+              "bank_account_information": "optional<BankAccountInformationContentPse>",
             },
             "source": {
               "openapi": "../openapi.yml",
@@ -1217,9 +1215,7 @@ In our documentation example, we use `{endpoint}` as a placeholder value. In pro
                   "pattern": undefined,
                 },
               },
-              "details": {
-                "type": "optional<BeneficiaryBankAccountOfpiDetails>",
-              },
+              "details": "optional<BeneficiaryBankAccountOfpiDetails>",
               "holder": {
                 "type": "HolderResponseOfpi",
               },
@@ -1260,9 +1256,7 @@ In our documentation example, we use `{endpoint}` as a placeholder value. In pro
             "docs": undefined,
             "inline": undefined,
             "properties": {
-              "holder": {
-                "type": "optional<HolderBusinessResponsePse>",
-              },
+              "holder": "optional<HolderBusinessResponsePse>",
               "id": {
                 "docs": "Belvo's unique ID for the beneficiary bank account.",
                 "type": "optional<string>",
@@ -1564,9 +1558,7 @@ In our documentation example, we use `{endpoint}` as a placeholder value. In pro
             "docs": "Details about the payment method.",
             "inline": undefined,
             "properties": {
-              "open_finance": {
-                "type": "optional<ChargePaymentMethodDetailsOfpiContent>",
-              },
+              "open_finance": "optional<ChargePaymentMethodDetailsOfpiContent>",
             },
             "source": {
               "openapi": "../openapi.yml",
@@ -1605,9 +1597,7 @@ In our documentation example, we use `{endpoint}` as a placeholder value. In pro
             "docs": "Details about the payment method.",
             "inline": undefined,
             "properties": {
-              "pse": {
-                "type": "optional<ChargePaymentMethodDetailsPseContent>",
-              },
+              "pse": "optional<ChargePaymentMethodDetailsPseContent>",
             },
             "source": {
               "openapi": "../openapi.yml",
@@ -1840,9 +1830,7 @@ In our documentation example, we use `{endpoint}` as a placeholder value. In pro
 ",
                 "type": "CreatePaymentLinkOfpiAmount",
               },
-              "callback_urls": {
-                "type": "optional<PaymentLinkCallbackUrls>",
-              },
+              "callback_urls": "optional<PaymentLinkCallbackUrls>",
               "customer": {
                 "docs": "Belvo's unique ID to reference the customer.
 ",
@@ -1918,9 +1906,7 @@ In our documentation example, we use `{endpoint}` as a placeholder value. In pro
 ",
                 "type": "CreatePaymentLinkPseAmount",
               },
-              "callback_urls": {
-                "type": "optional<PaymentLinkCallbackUrls>",
-              },
+              "callback_urls": "optional<PaymentLinkCallbackUrls>",
               "customer": {
                 "docs": "Belvo's unique ID to reference the customer.
 ",
@@ -2182,9 +2168,7 @@ In our documentation example, we use `{endpoint}` as a placeholder value. In pro
             "docs": "Object detailing the next steps you should follow for a specific `next_step` type.",
             "inline": undefined,
             "properties": {
-              "payer_institution": {
-                "type": "optional<PaymentInstitution>",
-              },
+              "payer_institution": "optional<PaymentInstitution>",
             },
             "source": {
               "openapi": "../openapi.yml",
@@ -2194,16 +2178,12 @@ In our documentation example, we use `{endpoint}` as a placeholder value. In pro
             "docs": "Object detailing the next steps you should follow for a specific `next_step` type.",
             "inline": undefined,
             "properties": {
-              "beneficiary_bank_account": {
-                "type": "optional<BeneficiaryBankAccountOfpi>",
-              },
+              "beneficiary_bank_account": "optional<BeneficiaryBankAccountOfpi>",
               "payer_identifier": {
                 "docs": "The payer's ID.",
                 "type": "optional<string>",
               },
-              "payer_institution": {
-                "type": "optional<PaymentInstitution>",
-              },
+              "payer_institution": "optional<PaymentInstitution>",
               "payer_name": {
                 "docs": "The name of the payer.",
                 "type": "optional<string>",
@@ -2217,9 +2197,7 @@ In our documentation example, we use `{endpoint}` as a placeholder value. In pro
             "docs": "Object containing form fields for the required credentials (for example, `username` or `password`) in this step.",
             "inline": undefined,
             "properties": {
-              "payer_institution": {
-                "type": "optional<PaymentInstitution>",
-              },
+              "payer_institution": "optional<PaymentInstitution>",
             },
             "source": {
               "openapi": "../openapi.yml",
@@ -2229,9 +2207,7 @@ In our documentation example, we use `{endpoint}` as a placeholder value. In pro
             "docs": "Object detailing what payment method information you need to display.",
             "inline": undefined,
             "properties": {
-              "beneficiary_bank_account": {
-                "type": "optional<BeneficiaryBankAccountPse>",
-              },
+              "beneficiary_bank_account": "optional<BeneficiaryBankAccountPse>",
               "customer_bank_accounts": {
                 "docs": "Array of customer bank account objects.",
                 "type": "optional<list<PaymentMethodInfoCustomerBankAccountsPse>>",
@@ -4623,9 +4599,7 @@ We return one of the following enum values:
             "docs": "Details regarding the business bank account holder.",
             "inline": undefined,
             "properties": {
-              "Information": {
-                "type": "optional<HolderInformationBusinessPseResponse>",
-              },
+              "Information": "optional<HolderInformationBusinessPseResponse>",
               "type": "EnumBankAccountHolderTypePse",
             },
             "source": {
@@ -5973,9 +5947,7 @@ For example: If the invoice is paid in installments, this field indicates the da
                 "docs": "The `link.id` the invoice belongs to.",
                 "type": "optional<string>",
               },
-              "payment_method": {
-                "type": "optional<nullable<EnumInvoiceDianPaymentMethod>>",
-              },
+              "payment_method": "optional<nullable<EnumInvoiceDianPaymentMethod>>",
               "payment_method_description": {
                 "availability": "deprecated",
                 "docs": "The description of the payment method used for this invoice.
@@ -6005,9 +5977,7 @@ For detailed information regarding DIAN's payment types, please see their [offic
 ",
                 "type": "optional<nullable<string>>",
               },
-              "receiver_details": {
-                "type": "optional<nullable<InvoicesReceiverDetailsDian>>",
-              },
+              "receiver_details": "optional<nullable<InvoicesReceiverDetailsDian>>",
               "receiver_id": {
                 "docs": "The fiscal ID of the invoice receiver.",
                 "type": "nullable<string>",
@@ -6020,9 +5990,7 @@ For detailed information regarding DIAN's payment types, please see their [offic
                 "docs": "**Note**: This field is not applicable for DIAN Colombia and will return `null`.",
                 "type": "optional<nullable<string>>",
               },
-              "sender_details": {
-                "type": "optional<nullable<InvoiceSenderDetailsDian>>",
-              },
+              "sender_details": "optional<nullable<InvoiceSenderDetailsDian>>",
               "sender_id": {
                 "docs": "The fiscal ID of the invoice sender.",
                 "type": "nullable<string>",
@@ -6069,9 +6037,7 @@ For detailed information regarding DIAN's payment types, please see their [offic
 ",
                 "type": "optional<nullable<string>>",
               },
-              "warnings": {
-                "type": "optional<nullable<InvoiceWarningsDian>>",
-              },
+              "warnings": "optional<nullable<InvoiceWarningsDian>>",
               "xml": {
                 "docs": "**Note**: This field is not applicable for DIAN Colombia and will return `null`.
 ",
@@ -6262,9 +6228,7 @@ For detailed information regarding DIAN's tax schemes, please see their [officia
                 "docs": "The `link.id` the invoice belongs to.",
                 "type": "optional<string>",
               },
-              "payment_method": {
-                "type": "optional<nullable<EnumInvoiceSatPaymentMethod>>",
-              },
+              "payment_method": "optional<nullable<EnumInvoiceSatPaymentMethod>>",
               "payment_method_description": {
                 "availability": "deprecated",
                 "docs": "*This field has been deprecated.*
@@ -6372,9 +6336,7 @@ Possible statuses are:
 ",
                 "type": "optional<nullable<string>>",
               },
-              "warnings": {
-                "type": "optional<nullable<InvoiceWarningsSat>>",
-              },
+              "warnings": "optional<nullable<InvoiceWarningsSat>>",
               "xml": {
                 "docs": "XML of the invoice document.
 ",
@@ -7090,9 +7052,7 @@ For `login_error` errors, the description can be one of the following:
             "docs": "Object detailing the next steps you should follow for a specific `next_step` type.",
             "inline": undefined,
             "properties": {
-              "open_finance_display_confirmation_required": {
-                "type": "optional<DisplayConfirmationRequiredOfpi>",
-              },
+              "open_finance_display_confirmation_required": "optional<DisplayConfirmationRequiredOfpi>",
               "ready_to_confirm": {
                 "default": true,
                 "docs": "Boolean that indicates whether the payment intent is ready to be confirmed. 
@@ -7109,9 +7069,7 @@ For `login_error` errors, the description can be one of the following:
             "docs": "Object detailing the next steps you should follow for a specific `next_step` type.",
             "inline": undefined,
             "properties": {
-              "pse_display_confirmation_required": {
-                "type": "optional<DisplayConfirmationRequiredContentPse>",
-              },
+              "pse_display_confirmation_required": "optional<DisplayConfirmationRequiredContentPse>",
               "ready_to_confirm": {
                 "default": true,
                 "docs": "Boolean that indicates whether the payment intent is ready to be confirmed. 
@@ -7128,9 +7086,7 @@ For `login_error` errors, the description can be one of the following:
             "docs": "Object detailing the next steps you should follow for a specific `next_step` type.",
             "inline": undefined,
             "properties": {
-              "pse_display_credentials_required": {
-                "type": "optional<DisplayCredentialsRequiredContentPse>",
-              },
+              "pse_display_credentials_required": "optional<DisplayCredentialsRequiredContentPse>",
               "ready_to_confirm": {
                 "default": false,
                 "docs": "Boolean that indicates whether the payment intent is ready to be confirmed. 
@@ -7147,9 +7103,7 @@ For `login_error` errors, the description can be one of the following:
             "docs": "Object detailing the next steps you should follow for a specific `next_step` type.",
             "inline": undefined,
             "properties": {
-              "pse_display_customer_bank_accounts": {
-                "type": "optional<DisplayCustomerBankAccountsContentPse>",
-              },
+              "pse_display_customer_bank_accounts": "optional<DisplayCustomerBankAccountsContentPse>",
               "ready_to_confirm": {
                 "default": true,
                 "docs": "Boolean that indicates whether the payment intent is ready to be confirmed. 
@@ -7166,9 +7120,7 @@ For `login_error` errors, the description can be one of the following:
             "docs": "Object detailing the next steps you should follow for a specific `next_step` type.",
             "inline": undefined,
             "properties": {
-              "pse_display_needs_redirect": {
-                "type": "optional<NeedsRedirectContentPse>",
-              },
+              "pse_display_needs_redirect": "optional<NeedsRedirectContentPse>",
               "ready_to_confirm": {
                 "default": true,
                 "docs": "Boolean that indicates whether the payment intent is ready to be confirmed. 
@@ -7185,9 +7137,7 @@ For `login_error` errors, the description can be one of the following:
             "docs": "Object detailing the next steps you should follow for a specific `next_step` type.",
             "inline": undefined,
             "properties": {
-              "open_finance_display_payment_failed": {
-                "type": "optional<DisplayPaymentFailed>",
-              },
+              "open_finance_display_payment_failed": "optional<DisplayPaymentFailed>",
               "ready_to_confirm": {
                 "default": false,
                 "docs": "Boolean that indicates whether the payment intent is ready to be confirmed. 
@@ -7204,9 +7154,7 @@ For `login_error` errors, the description can be one of the following:
             "docs": "Object detailing the next steps you should follow for a specific `next_step` type.",
             "inline": undefined,
             "properties": {
-              "open_finance_display_payment_method_information": {
-                "type": "optional<DisplayPaymentMethodInformationContentOfpi>",
-              },
+              "open_finance_display_payment_method_information": "optional<DisplayPaymentMethodInformationContentOfpi>",
               "ready_to_confirm": {
                 "default": false,
                 "docs": "Boolean that indicates whether the payment intent is ready to be confirmed. 
@@ -7223,9 +7171,7 @@ For `login_error` errors, the description can be one of the following:
             "docs": "Object detailing the next steps you should follow for a specific `next_step` type. You'll need to send a PATCH request with the institution selected by the customer or their bank accounts (if there are accounts already saved in the Belvo database).",
             "inline": undefined,
             "properties": {
-              "pse_display_payment_method_information": {
-                "type": "optional<DisplayPaymentMethodInformationContentPse>",
-              },
+              "pse_display_payment_method_information": "optional<DisplayPaymentMethodInformationContentPse>",
               "ready_to_confirm": {
                 "default": false,
                 "docs": "Boolean that indicates whether the payment intent is ready to be confirmed. 
@@ -7242,9 +7188,7 @@ For `login_error` errors, the description can be one of the following:
             "docs": "Object detailing the next steps you should follow for a specific `next_step` type.",
             "inline": undefined,
             "properties": {
-              "open_finance_display_payment_processing": {
-                "type": "optional<DisplayPaymentProcessing>",
-              },
+              "open_finance_display_payment_processing": "optional<DisplayPaymentProcessing>",
               "ready_to_confirm": {
                 "default": false,
                 "docs": "Boolean that indicates whether the payment intent is ready to be confirmed. 
@@ -7261,9 +7205,7 @@ For `login_error` errors, the description can be one of the following:
             "docs": "Object detailing the next steps you should follow for a specific `next_step` type.",
             "inline": undefined,
             "properties": {
-              "open_finance_display_payment_succeeded": {
-                "type": "optional<DisplayPaymentSucceeded>",
-              },
+              "open_finance_display_payment_succeeded": "optional<DisplayPaymentSucceeded>",
               "ready_to_confirm": {
                 "default": false,
                 "docs": "Boolean that indicates whether the payment intent is ready to be confirmed. 
@@ -7280,9 +7222,7 @@ For `login_error` errors, the description can be one of the following:
             "docs": "Object detailing the next steps you should follow for a specific `next_step` type.",
             "inline": undefined,
             "properties": {
-              "pse_display_token_required": {
-                "type": "optional<DisplayTokenRequiredContentPse>",
-              },
+              "pse_display_token_required": "optional<DisplayTokenRequiredContentPse>",
               "ready_to_confirm": {
                 "docs": "Boolean that indicates whether the payment intent is ready to be confirmed. This value will return: 
 
@@ -7302,9 +7242,7 @@ For `login_error` errors, the description can be one of the following:
             "docs": "Object detailing the next steps you should follow for a specific `next_step` type.",
             "inline": undefined,
             "properties": {
-              "open_finance_display_needs_redirect": {
-                "type": "optional<NeedsRedirectContent>",
-              },
+              "open_finance_display_needs_redirect": "optional<NeedsRedirectContent>",
               "ready_to_confirm": {
                 "default": false,
                 "docs": "Boolean that indicates whether the payment intent is ready to be confirmed. 
@@ -7628,9 +7566,7 @@ When set to `false`, the data won't be persisted and we return a 200 OK response
             "docs": undefined,
             "inline": undefined,
             "properties": {
-              "pse": {
-                "type": "optional<PatchPaymentMethodDetailsPse>",
-              },
+              "pse": "optional<PatchPaymentMethodDetailsPse>",
             },
             "source": {
               "openapi": "../openapi.yml",
@@ -8074,9 +8010,7 @@ In our documentation example, we use `{endpoint}` as a placeholder value. In pro
             "docs": "Details about the PSE payment method.",
             "inline": undefined,
             "properties": {
-              "pse": {
-                "type": "optional<PaymentIntentPaymentMethodDetailsBodyPse>",
-              },
+              "pse": "optional<PaymentIntentPaymentMethodDetailsBodyPse>",
             },
             "source": {
               "openapi": "../openapi.yml",
@@ -8524,9 +8458,7 @@ In our documentation example, we use `{endpoint}` as a placeholder value. In pro
                   "pattern": undefined,
                 },
               },
-              "payment_intent": {
-                "type": "optional<PaymentIntentOfpi>",
-              },
+              "payment_intent": "optional<PaymentIntentOfpi>",
               "payment_url": {
                 "docs": "The URL for the hosted-widget that will guide your user through the payments process.",
                 "type": "string",
@@ -8639,9 +8571,7 @@ In our documentation example, we use `{endpoint}` as a placeholder value. In pro
                   "pattern": undefined,
                 },
               },
-              "payment_intent": {
-                "type": "optional<PaymentIntentPse>",
-              },
+              "payment_intent": "optional<PaymentIntentPse>",
               "payment_url": {
                 "docs": "The URL for the hosted-widget that will guide your user through the payments process.",
                 "type": "string",
@@ -8832,9 +8762,7 @@ In our documentation example, we use `{endpoint}` as a placeholder value. In pro
             "docs": "Information about the payment method selected.",
             "inline": undefined,
             "properties": {
-              "open_finance": {
-                "type": "optional<PaymentMethodInformationBodyOfpi>",
-              },
+              "open_finance": "optional<PaymentMethodInformationBodyOfpi>",
             },
             "source": {
               "openapi": "../openapi.yml",
@@ -8846,9 +8774,7 @@ In our documentation example, we use `{endpoint}` as a placeholder value. In pro
 **Note**: If no payment method information is associated, we return an empty array.",
             "inline": undefined,
             "properties": {
-              "pse": {
-                "type": "optional<PaymentMethodInformationBodyPse>",
-              },
+              "pse": "optional<PaymentMethodInformationBodyPse>",
             },
             "source": {
               "openapi": "../openapi.yml",
@@ -9123,9 +9049,7 @@ In our documentation example, we use `{endpoint}` as a placeholder value. In pro
             "docs": undefined,
             "inline": undefined,
             "properties": {
-              "payments_way": {
-                "type": "optional<PaymentsWay>",
-              },
+              "payments_way": "optional<PaymentsWay>",
             },
             "source": {
               "openapi": "../openapi.yml",
@@ -15118,8 +15042,7 @@ types:
         docs: |
           *This field has been deprecated.*
         availability: deprecated
-      payment_method:
-        type: optional<nullable<EnumInvoiceSatPaymentMethod>>
+      payment_method: optional<nullable<EnumInvoiceSatPaymentMethod>>
       payment_method_description:
         type: optional<nullable<string>>
         docs: |
@@ -15193,8 +15116,7 @@ types:
         type: optional<nullable<string>>
         docs: |
           XML of the invoice document.
-      warnings:
-        type: optional<nullable<InvoiceWarningsSat>>
+      warnings: optional<nullable<InvoiceWarningsSat>>
       sender_blacklist_status:
         type: optional<nullable<string>>
         docs: >
@@ -15604,8 +15526,7 @@ types:
       sender_name:
         type: nullable<string>
         docs: The name of the invoice sender.
-      sender_details:
-        type: optional<nullable<InvoiceSenderDetailsDian>>
+      sender_details: optional<nullable<InvoiceSenderDetailsDian>>
       sender_tax_fraud_status:
         type: optional<nullable<string>>
         docs: >-
@@ -15622,8 +15543,7 @@ types:
       receiver_name:
         type: nullable<string>
         docs: The name of the invoice receiver.
-      receiver_details:
-        type: optional<nullable<InvoicesReceiverDetailsDian>>
+      receiver_details: optional<nullable<InvoicesReceiverDetailsDian>>
       receiver_tax_fraud_status:
         type: optional<nullable<string>>
         docs: >-
@@ -15663,8 +15583,7 @@ types:
         type: nullable<string>
         docs: |
           The description of the payment method used for this invoice.
-      payment_method:
-        type: optional<nullable<EnumInvoiceDianPaymentMethod>>
+      payment_method: optional<nullable<EnumInvoiceDianPaymentMethod>>
       payment_method_description:
         type: optional<nullable<string>>
         docs: |
@@ -15737,8 +15656,7 @@ types:
         docs: >
           **Note**: This field is not applicable for DIAN Colombia and will
           return `null`.
-      warnings:
-        type: optional<nullable<InvoiceWarningsDian>>
+      warnings: optional<nullable<InvoiceWarningsDian>>
     source:
       openapi: ../openapi.yml
   InvoicesResponsePaginatedResponseResultsItem:
@@ -20320,8 +20238,7 @@ types:
     docs: Details regarding the business bank account holder.
     properties:
       type: EnumBankAccountHolderTypePse
-      Information:
-        type: optional<HolderInformationBusinessPseResponse>
+      Information: optional<HolderInformationBusinessPseResponse>
     source:
       openapi: ../openapi.yml
   BankAccountBusinessPse:
@@ -20533,8 +20450,7 @@ types:
       openapi: ../openapi.yml
   ProvidersPse:
     properties:
-      payments_way:
-        type: optional<PaymentsWay>
+      payments_way: optional<PaymentsWay>
     source:
       openapi: ../openapi.yml
   CreateBankAccountPse:
@@ -20876,8 +20792,7 @@ types:
       provider: EnumPaymentLinkProvider
       payment_method_details:
         type: PaymentMethodDetailsOfpi
-      callback_urls:
-        type: optional<PaymentLinkCallbackUrls>
+      callback_urls: optional<PaymentLinkCallbackUrls>
       expires_in:
         type: optional<string>
         docs: >-
@@ -20975,8 +20890,7 @@ types:
       provider: EnumPaymentLinkProvider
       payment_method_details:
         type: PaymentMethodDetailsPse
-      callback_urls:
-        type: optional<PaymentLinkCallbackUrls>
+      callback_urls: optional<PaymentLinkCallbackUrls>
       expires_in:
         type: optional<string>
         docs: >-
@@ -21018,8 +20932,7 @@ types:
       Object detailing the next steps you should follow for a specific
       `next_step` type.
     properties:
-      open_finance_display_payment_method_information:
-        type: optional<DisplayPaymentMethodInformationContentOfpi>
+      open_finance_display_payment_method_information: optional<DisplayPaymentMethodInformationContentOfpi>
       ready_to_confirm:
         type: optional<boolean>
         docs: >-
@@ -21041,8 +20954,7 @@ types:
       Object detailing the next steps you should follow for a specific
       `next_step` type.
     properties:
-      open_finance_display_needs_redirect:
-        type: optional<NeedsRedirectContent>
+      open_finance_display_needs_redirect: optional<NeedsRedirectContent>
       ready_to_confirm:
         type: optional<boolean>
         docs: >-
@@ -21101,8 +21013,7 @@ types:
         validation:
           format: uuid
       institution: PaymentInstitution
-      details:
-        type: optional<BeneficiaryBankAccountOfpiDetails>
+      details: optional<BeneficiaryBankAccountOfpiDetails>
       holder:
         type: HolderResponseOfpi
     source:
@@ -21112,16 +21023,14 @@ types:
       Object detailing the next steps you should follow for a specific
       `next_step` type.
     properties:
-      beneficiary_bank_account:
-        type: optional<BeneficiaryBankAccountOfpi>
+      beneficiary_bank_account: optional<BeneficiaryBankAccountOfpi>
       payer_name:
         type: optional<string>
         docs: The name of the payer.
       payer_identifier:
         type: optional<string>
         docs: The payer's ID.
-      payer_institution:
-        type: optional<PaymentInstitution>
+      payer_institution: optional<PaymentInstitution>
     source:
       openapi: ../openapi.yml
   NextStepDisplayConfirmationRequiredOfpi:
@@ -21129,8 +21038,7 @@ types:
       Object detailing the next steps you should follow for a specific
       `next_step` type.
     properties:
-      open_finance_display_confirmation_required:
-        type: optional<DisplayConfirmationRequiredOfpi>
+      open_finance_display_confirmation_required: optional<DisplayConfirmationRequiredOfpi>
       ready_to_confirm:
         type: optional<boolean>
         docs: >-
@@ -21152,8 +21060,7 @@ types:
       Object detailing the next steps you should follow for a specific
       `next_step` type.
     properties:
-      open_finance_display_payment_processing:
-        type: optional<DisplayPaymentProcessing>
+      open_finance_display_payment_processing: optional<DisplayPaymentProcessing>
       ready_to_confirm:
         type: optional<boolean>
         docs: >-
@@ -21175,8 +21082,7 @@ types:
       Object detailing the next steps you should follow for a specific
       `next_step` type.
     properties:
-      open_finance_display_payment_succeeded:
-        type: optional<DisplayPaymentSucceeded>
+      open_finance_display_payment_succeeded: optional<DisplayPaymentSucceeded>
       ready_to_confirm:
         type: optional<boolean>
         docs: >-
@@ -21198,8 +21104,7 @@ types:
       Object detailing the next steps you should follow for a specific
       `next_step` type.
     properties:
-      open_finance_display_payment_failed:
-        type: optional<DisplayPaymentFailed>
+      open_finance_display_payment_failed: optional<DisplayPaymentFailed>
       ready_to_confirm:
         type: optional<boolean>
         docs: >-
@@ -21311,8 +21216,7 @@ types:
   PaymentMethodInformationOfpi:
     docs: Information about the payment method selected.
     properties:
-      open_finance:
-        type: optional<PaymentMethodInformationBodyOfpi>
+      open_finance: optional<PaymentMethodInformationBodyOfpi>
     source:
       openapi: ../openapi.yml
   ChargePaymentMethodDetailsPseContent:
@@ -21333,8 +21237,7 @@ types:
   ChargePaymentMethodDetailsPse:
     docs: Details about the payment method.
     properties:
-      pse:
-        type: optional<ChargePaymentMethodDetailsPseContent>
+      pse: optional<ChargePaymentMethodDetailsPseContent>
     source:
       openapi: ../openapi.yml
   ChargePaymentMethodDetailsOfpiContent:
@@ -21355,8 +21258,7 @@ types:
   ChargePaymentMethodDetailsOfpi:
     docs: Details about the payment method.
     properties:
-      open_finance:
-        type: optional<ChargePaymentMethodDetailsOfpiContent>
+      open_finance: optional<ChargePaymentMethodDetailsOfpiContent>
     source:
       openapi: ../openapi.yml
   PaymentMethodInformationBodyPse:
@@ -21384,8 +21286,7 @@ types:
       **Note**: If no payment method information is associated, we return an
       empty array.
     properties:
-      pse:
-        type: optional<PaymentMethodInformationBodyPse>
+      pse: optional<PaymentMethodInformationBodyPse>
     source:
       openapi: ../openapi.yml
   EnumPaymentTransactionType:
@@ -21431,8 +21332,7 @@ types:
       Information about the payer's bank account. Belvo returns this object when
       the payer's bank account information is not saved in the Belvo database.
     properties:
-      bank_account_information:
-        type: optional<BankAccountInformationContentPse>
+      bank_account_information: optional<BankAccountInformationContentPse>
     source:
       openapi: ../openapi.yml
   TransactionBankAccountPse:
@@ -21752,8 +21652,7 @@ types:
           requests.
       callback_urls:
         type: PaymentLinkCallbackUrlsResponse
-      payment_intent:
-        type: optional<PaymentIntentOfpi>
+      payment_intent: optional<PaymentIntentOfpi>
       updated_at:
         type: optional<nullable<datetime>>
         docs: |
@@ -21848,8 +21747,7 @@ types:
       selected by the customer or their bank accounts (if there are accounts
       already saved in the Belvo database).
     properties:
-      pse_display_payment_method_information:
-        type: optional<DisplayPaymentMethodInformationContentPse>
+      pse_display_payment_method_information: optional<DisplayPaymentMethodInformationContentPse>
       ready_to_confirm:
         type: optional<boolean>
         docs: >-
@@ -21865,8 +21763,7 @@ types:
       Object containing form fields for the required credentials (for example,
       `username` or `password`) in this step.
     properties:
-      payer_institution:
-        type: optional<PaymentInstitution>
+      payer_institution: optional<PaymentInstitution>
     source:
       openapi: ../openapi.yml
   NextStepDisplayCredentialsRequiredPse:
@@ -21874,8 +21771,7 @@ types:
       Object detailing the next steps you should follow for a specific
       `next_step` type.
     properties:
-      pse_display_credentials_required:
-        type: optional<DisplayCredentialsRequiredContentPse>
+      pse_display_credentials_required: optional<DisplayCredentialsRequiredContentPse>
       ready_to_confirm:
         type: optional<boolean>
         docs: >-
@@ -21897,8 +21793,7 @@ types:
       Object detailing the next steps you should follow for a specific
       `next_step` type.
     properties:
-      pse_display_needs_redirect:
-        type: optional<NeedsRedirectContentPse>
+      pse_display_needs_redirect: optional<NeedsRedirectContentPse>
       ready_to_confirm:
         type: optional<boolean>
         docs: >-
@@ -21919,8 +21814,7 @@ types:
       Object detailing the next steps you should follow for a specific
       `next_step` type.
     properties:
-      pse_display_token_required:
-        type: optional<DisplayTokenRequiredContentPse>
+      pse_display_token_required: optional<DisplayTokenRequiredContentPse>
       ready_to_confirm:
         type: optional<boolean>
         docs: >-
@@ -21953,8 +21847,7 @@ types:
       number:
         type: optional<nullable<string>>
         docs: The bank account number.
-      holder:
-        type: optional<HolderBusinessResponsePse>
+      holder: optional<HolderBusinessResponsePse>
     source:
       openapi: ../openapi.yml
   DisplayCustomerBankAccountsContentPse:
@@ -21963,8 +21856,7 @@ types:
       customer_bank_accounts:
         type: optional<list<PaymentMethodInfoCustomerBankAccountsPse>>
         docs: Array of customer bank account objects.
-      beneficiary_bank_account:
-        type: optional<BeneficiaryBankAccountPse>
+      beneficiary_bank_account: optional<BeneficiaryBankAccountPse>
     source:
       openapi: ../openapi.yml
   NextStepDisplayCustomerBankAccountsPse:
@@ -21972,8 +21864,7 @@ types:
       Object detailing the next steps you should follow for a specific
       `next_step` type.
     properties:
-      pse_display_customer_bank_accounts:
-        type: optional<DisplayCustomerBankAccountsContentPse>
+      pse_display_customer_bank_accounts: optional<DisplayCustomerBankAccountsContentPse>
       ready_to_confirm:
         type: optional<boolean>
         docs: >-
@@ -21989,8 +21880,7 @@ types:
       Object detailing the next steps you should follow for a specific
       `next_step` type.
     properties:
-      payer_institution:
-        type: optional<PaymentInstitution>
+      payer_institution: optional<PaymentInstitution>
     source:
       openapi: ../openapi.yml
   NextStepDisplayConfirmationRequiredPse:
@@ -21998,8 +21888,7 @@ types:
       Object detailing the next steps you should follow for a specific
       `next_step` type.
     properties:
-      pse_display_confirmation_required:
-        type: optional<DisplayConfirmationRequiredContentPse>
+      pse_display_confirmation_required: optional<DisplayConfirmationRequiredContentPse>
       ready_to_confirm:
         type: optional<boolean>
         docs: >-
@@ -22138,8 +22027,7 @@ types:
   PaymentIntentPaymentMethodDetailsPse:
     docs: Details about the PSE payment method.
     properties:
-      pse:
-        type: optional<PaymentIntentPaymentMethodDetailsBodyPse>
+      pse: optional<PaymentIntentPaymentMethodDetailsBodyPse>
     source:
       openapi: ../openapi.yml
   PaymentIntentPseNextStep:
@@ -22288,8 +22176,7 @@ types:
           requests.
       callback_urls:
         type: PaymentLinkCallbackUrlsResponse
-      payment_intent:
-        type: optional<PaymentIntentPse>
+      payment_intent: optional<PaymentIntentPse>
       updated_at:
         type: optional<nullable<datetime>>
         docs: |
@@ -22425,8 +22312,7 @@ types:
       openapi: ../openapi.yml
   PatchPaymentIntentsBodyPse:
     properties:
-      pse:
-        type: optional<PatchPaymentMethodDetailsPse>
+      pse: optional<PatchPaymentMethodDetailsPse>
     source:
       openapi: ../openapi.yml
   PaymentsTransactionsPaginatedResponse:

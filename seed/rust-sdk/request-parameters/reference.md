@@ -13,7 +13,7 @@
 <dd>
 
 ```rust
-use seed_request_parameters::{ClientConfig, CreateUsernameRequest, RequestParametersClient};
+use seed_request_parameters::prelude::*;
 use std::collections::{HashMap, HashSet};
 
 #[tokio::main]
@@ -98,9 +98,7 @@ async fn main() {
 <dd>
 
 ```rust
-use seed_request_parameters::{
-    ClientConfig, CreateUsernameReferencedRequest, RequestParametersClient,
-};
+use seed_request_parameters::prelude::*;
 use std::collections::{HashMap, HashSet};
 
 #[tokio::main]
@@ -150,6 +148,43 @@ async fn main() {
 </dl>
 </details>
 
+<details><summary><code>client.user.<a href="/src/api/resources/user/client.rs">create_username_optional</a>(request: Option<Option<CreateUsernameBodyOptionalProperties>>) -> Result<(), ApiError></code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```rust
+use seed_request_parameters::prelude::*;
+
+#[tokio::main]
+async fn main() {
+    let config = ClientConfig {
+        ..Default::default()
+    };
+    let client = RequestParametersClient::new(config).expect("Failed to build client");
+    client
+        .user
+        .create_username_optional(&Some(Some(CreateUsernameBodyOptionalProperties {})), None)
+        .await;
+}
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
 <details><summary><code>client.user.<a href="/src/api/resources/user/client.rs">get_username</a>(limit: Option<i64>, id: Option<String>, date: Option<String>, deadline: Option<String>, bytes: Option<String>, user: Option<User>, user_list: Option<Vec<User>>, optional_deadline: Option<Option<String>>, key_value: Option<std::collections::HashMap<String, String>>, optional_string: Option<Option<String>>, nested_user: Option<NestedUser>, optional_user: Option<Option<User>>, long_param: Option<String>, big_int_param: Option<String>) -> Result<User, ApiError></code></summary>
 <dl>
 <dd>
@@ -164,7 +199,7 @@ async fn main() {
 
 ```rust
 use chrono::{DateTime, NaiveDate, Utc};
-use seed_request_parameters::{ClientConfig, GetUsernameQueryRequest, RequestParametersClient};
+use seed_request_parameters::prelude::*;
 use std::collections::{HashMap, HashSet};
 use uuid::Uuid;
 

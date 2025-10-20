@@ -21,13 +21,13 @@ function getRetryDelayFromHeaders(response: Response, retryAttempt: number): num
     if (retryAfter) {
         // Parse as number of seconds...
         const retryAfterSeconds = parseInt(retryAfter, 10);
-        if (!isNaN(retryAfterSeconds) && retryAfterSeconds > 0) {
+        if (!Number.isNaN(retryAfterSeconds) && retryAfterSeconds > 0) {
             return Math.min(retryAfterSeconds * 1000, MAX_RETRY_DELAY);
         }
 
         // ...or as an HTTP date; both are valid
         const retryAfterDate = new Date(retryAfter);
-        if (!isNaN(retryAfterDate.getTime())) {
+        if (!Number.isNaN(retryAfterDate.getTime())) {
             const delay = retryAfterDate.getTime() - Date.now();
             if (delay > 0) {
                 return Math.min(Math.max(delay, 0), MAX_RETRY_DELAY);
@@ -39,7 +39,7 @@ function getRetryDelayFromHeaders(response: Response, retryAttempt: number): num
     const rateLimitReset = response.headers.get("X-RateLimit-Reset");
     if (rateLimitReset) {
         const resetTime = parseInt(rateLimitReset, 10);
-        if (!isNaN(resetTime)) {
+        if (!Number.isNaN(resetTime)) {
             // Assume Unix timestamp in epoch seconds
             const delay = resetTime * 1000 - Date.now();
             if (delay > 0) {
@@ -49,7 +49,7 @@ function getRetryDelayFromHeaders(response: Response, retryAttempt: number): num
     }
 
     // Fall back to exponential backoff, with symmetric jitter
-    return addSymmetricJitter(Math.min(INITIAL_RETRY_DELAY * Math.pow(2, retryAttempt), MAX_RETRY_DELAY));
+    return addSymmetricJitter(Math.min(INITIAL_RETRY_DELAY * 2 ** retryAttempt, MAX_RETRY_DELAY));
 }
 
 export async function requestWithRetries(

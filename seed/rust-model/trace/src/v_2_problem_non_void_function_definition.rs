@@ -1,8 +1,6 @@
-use crate::v_2_problem_non_void_function_signature::NonVoidFunctionSignature;
-use crate::v_2_problem_function_implementation_for_multiple_languages::FunctionImplementationForMultipleLanguages;
-use serde::{Deserialize, Serialize};
+pub use crate::prelude::*;
 
-#[derive(Debug, Clone, Serialize, Deserialize)]
+#[derive(Debug, Clone, Serialize, Deserialize, PartialEq)]
 pub struct NonVoidFunctionDefinition {
     pub signature: NonVoidFunctionSignature,
     pub code: FunctionImplementationForMultipleLanguages,

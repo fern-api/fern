@@ -20,7 +20,7 @@ With Swift Package Manager (SPM), add the following to the top-level `dependenci
 
 ```swift
 dependencies: [
-    .package(url: "<git-url>", from: "0.1.0"),
+    .package(url: "https://github.com/client-side-params/fern", from: "0.0.1"),
 ]
 ```
 
@@ -39,16 +39,18 @@ import ClientSideParams
 private func main() async throws {
     let client = ClientSideParamsClient(token: "<token>")
 
-    try await client.service.searchResources(request: .init(
+    _ = try await client.service.searchResources(
         limit: 1,
         offset: 1,
-        query: "query",
-        filters: [
-            "filters": .object([
-                "key": .string("value")
-            ])
-        ]
-    ))
+        request: .init(
+            query: "query",
+            filters: [
+                "filters": .object([
+                    "key": .string("value")
+                ])
+            ]
+        )
+    )
 }
 
 try await main()

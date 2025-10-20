@@ -20,7 +20,7 @@ With Swift Package Manager (SPM), add the following to the top-level `dependenci
 
 ```swift
 dependencies: [
-    .package(url: "<git-url>", from: "0.1.0"),
+    .package(url: "https://github.com/auth-environment-variables/fern", from: "0.0.1"),
 ]
 ```
 
@@ -39,7 +39,7 @@ import AuthEnvironmentVariables
 private func main() async throws {
     let client = AuthEnvironmentVariablesClient(apiKey: "<value>")
 
-    try await client.service.getWithApiKey()
+    _ = try await client.service.getWithApiKey()
 }
 
 try await main()

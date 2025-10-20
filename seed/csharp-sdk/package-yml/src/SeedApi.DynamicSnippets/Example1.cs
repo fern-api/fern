@@ -7,14 +7,14 @@ public class Example1
 {
     public async Task Do() {
         var client = new SeedPackageYmlClient(
-            clientOptions: new ClientOptions{
+            clientOptions: new ClientOptions {
                 BaseUrl = "https://api.fern.com"
             }
         );
 
         await client.EchoAsync(
             "id",
-            new EchoRequest{
+            new EchoRequest {
                 Name = "name",
                 Size = 1
             }

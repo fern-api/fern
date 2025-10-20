@@ -1,7 +1,7 @@
 {
     "endpoints": [
         {
-            "example_identifier": "63aad95e",
+            "example_identifier": "3ba8b3b6",
             "id": {
                 "method": "POST",
                 "path": "/stream",

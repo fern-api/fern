@@ -19,15 +19,17 @@ import RequestParameters
 private func main() async throws {
     let client = RequestParametersClient()
 
-    try await client.user.createUsername(request: .init(
+    _ = try await client.user.createUsername(
         tags: [
             "tags",
             "tags"
         ],
-        username: "username",
-        password: "password",
-        name: "test"
-    ))
+        request: .init(
+            username: "username",
+            password: "password",
+            name: "test"
+        )
+    )
 }
 
 try await main()
@@ -92,17 +94,17 @@ import RequestParameters
 private func main() async throws {
     let client = RequestParametersClient()
 
-    try await client.user.createUsernameWithReferencedType(request: .init(
+    _ = try await client.user.createUsernameWithReferencedType(
         tags: [
             "tags",
             "tags"
         ],
-        body: CreateUsernameBody(
+        request: .init(body: CreateUsernameBody(
             username: "username",
             password: "password",
             name: "test"
-        )
-    ))
+        ))
+    )
 }
 
 try await main()
@@ -148,6 +150,65 @@ try await main()
 </dl>
 </details>
 
+<details><summary><code>client.user.<a href="/Sources/Resources/User/UserClient.swift">createUsernameOptional</a>(request: Nullable<CreateUsernameBodyOptionalProperties>?, requestOptions: RequestOptions?) -> Void</code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```swift
+import Foundation
+import RequestParameters
+
+private func main() async throws {
+    let client = RequestParametersClient()
+
+    _ = try await client.user.createUsernameOptional(request: .value(CreateUsernameBodyOptionalProperties(
+
+    )))
+}
+
+try await main()
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**request:** `Nullable<CreateUsernameBodyOptionalProperties>?` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**requestOptions:** `RequestOptions?` — Additional options for configuring the request, such as custom headers or timeout settings.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
 <details><summary><code>client.user.<a href="/Sources/Resources/User/UserClient.swift">getUsername</a>(limit: Int, id: UUID, date: CalendarDate, deadline: Date, bytes: String, user: User, userList: [User], optionalDeadline: Date?, keyValue: [String: String], optionalString: String?, nestedUser: NestedUser, optionalUser: User?, excludeUser: User, filter: String, longParam: Int64, bigIntParam: String, requestOptions: RequestOptions?) -> User</code></summary>
 <dl>
 <dd>
@@ -167,7 +228,7 @@ import RequestParameters
 private func main() async throws {
     let client = RequestParametersClient()
 
-    try await client.user.getUsername(request: .init(
+    _ = try await client.user.getUsername(
         limit: 1,
         id: UUID(uuidString: "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32"),
         date: try! CalendarDate("2023-01-15"),
@@ -218,21 +279,11 @@ private func main() async throws {
                 "tags"
             ]
         ),
-        excludeUser: [
-            User(
-                name: "name",
-                tags: [
-                    "tags",
-                    "tags"
-                ]
-            )
-        ],
-        filter: [
-            "filter"
-        ],
+        excludeUser: ,
+        filter: ,
         longParam: 1000000,
         bigIntParam: 
-    ))
+    )
 }
 
 try await main()

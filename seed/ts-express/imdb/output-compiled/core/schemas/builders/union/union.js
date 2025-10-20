@@ -17,15 +17,15 @@ const getErrorMessageForIncorrectType_1 = require("../../utils/getErrorMessageFo
 const isPlainObject_1 = require("../../utils/isPlainObject");
 const keys_1 = require("../../utils/keys");
 const maybeSkipValidation_1 = require("../../utils/maybeSkipValidation");
-const enum_1 = require("../enum");
+const index_1 = require("../enum/index");
 const object_like_1 = require("../object-like");
-const schema_utils_1 = require("../schema-utils");
+const index_2 = require("../schema-utils/index");
 function union(discriminant, union) {
     const rawDiscriminant = typeof discriminant === "string" ? discriminant : discriminant.rawDiscriminant;
     const parsedDiscriminant = typeof discriminant === "string"
         ? discriminant
         : discriminant.parsedDiscriminant;
-    const discriminantValueSchema = (0, enum_1.enum_)((0, keys_1.keys)(union));
+    const discriminantValueSchema = (0, index_1.enum_)((0, keys_1.keys)(union));
     const baseSchema = {
         parse: (raw, opts) => {
             return transformAndValidateUnion({
@@ -65,7 +65,7 @@ function union(discriminant, union) {
         },
         getType: () => Schema_1.SchemaType.UNION,
     };
-    return Object.assign(Object.assign(Object.assign({}, (0, maybeSkipValidation_1.maybeSkipValidation)(baseSchema)), (0, schema_utils_1.getSchemaUtils)(baseSchema)), (0, object_like_1.getObjectLikeUtils)(baseSchema));
+    return Object.assign(Object.assign(Object.assign({}, (0, maybeSkipValidation_1.maybeSkipValidation)(baseSchema)), (0, index_2.getSchemaUtils)(baseSchema)), (0, object_like_1.getObjectLikeUtils)(baseSchema));
 }
 function transformAndValidateUnion({ value, discriminant, transformedDiscriminant, transformDiscriminantValue, getAdditionalPropertiesSchema, allowUnrecognizedUnionMembers = false, transformAdditionalProperties, breadcrumbsPrefix = [], }) {
     if (!(0, isPlainObject_1.isPlainObject)(value)) {

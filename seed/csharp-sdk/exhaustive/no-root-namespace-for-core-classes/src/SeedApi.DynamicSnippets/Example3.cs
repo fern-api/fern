@@ -10,14 +10,14 @@ public class Example3
     public async Task Do() {
         var client = new SeedExhaustiveClient(
             token: "<token>",
-            clientOptions: new ClientOptions{
+            clientOptions: new ClientOptions {
                 BaseUrl = "https://api.fern.com"
             }
         );
 
         await client.Endpoints.Container.GetAndReturnSetOfObjectsAsync(
             new HashSet<ObjectWithRequiredField>(){
-                new ObjectWithRequiredField{
+                new ObjectWithRequiredField {
                     String = "string"
                 },
             }

@@ -20,7 +20,7 @@ With Swift Package Manager (SPM), add the following to the top-level `dependenci
 
 ```swift
 dependencies: [
-    .package(url: "<git-url>", from: "0.1.0"),
+    .package(url: "https://github.com/error-property/fern", from: "0.0.1"),
 ]
 ```
 
@@ -39,7 +39,7 @@ import ErrorProperty
 private func main() async throws {
     let client = ErrorPropertyClient()
 
-    try await client.propertyBasedError.throwError()
+    _ = try await client.propertyBasedError.throwError()
 }
 
 try await main()

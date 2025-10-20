@@ -1,6 +1,5 @@
-use seed_undiscriminated_unions::{
-    ClientConfig, NestedUnionL1, NestedUnionL2, NestedUnionRoot, UndiscriminatedUnionsClient,
-};
+use seed_undiscriminated_unions::prelude::*;
+use std::collections::HashMap;
 
 #[tokio::main]
 async fn main() {
@@ -11,6 +10,13 @@ async fn main() {
     let client = UndiscriminatedUnionsClient::new(config).expect("Failed to build client");
     client
         .union_
-        .nested_unions(&NestedUnionRoot::String("string".to_string()), None)
+        .call(
+            &Request {
+                union: Some(MetadataUnion::OptionalMetadata(OptionalMetadata(Some(
+                    HashMap::from([("union".to_string(), serde_json::json!({"key":"value"}))]),
+                )))),
+            },
+            None,
+        )
         .await;
 }

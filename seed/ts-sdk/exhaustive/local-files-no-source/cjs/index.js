@@ -33,10 +33,10 @@ var __importStar = (this && this.__importStar) || (function () {
     };
 })();
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.SeedExhaustiveClient = exports.SeedExhaustiveTimeoutError = exports.SeedExhaustiveError = exports.SeedExhaustive = void 0;
+exports.SeedExhaustiveTimeoutError = exports.SeedExhaustiveError = exports.SeedExhaustiveClient = exports.SeedExhaustive = void 0;
 exports.SeedExhaustive = __importStar(require("./api/index.js"));
+var Client_js_1 = require("./Client.js");
+Object.defineProperty(exports, "SeedExhaustiveClient", { enumerable: true, get: function () { return Client_js_1.SeedExhaustiveClient; } });
 var index_js_1 = require("./errors/index.js");
 Object.defineProperty(exports, "SeedExhaustiveError", { enumerable: true, get: function () { return index_js_1.SeedExhaustiveError; } });
 Object.defineProperty(exports, "SeedExhaustiveTimeoutError", { enumerable: true, get: function () { return index_js_1.SeedExhaustiveTimeoutError; } });
-var Client_js_1 = require("./Client.js");
-Object.defineProperty(exports, "SeedExhaustiveClient", { enumerable: true, get: function () { return Client_js_1.SeedExhaustiveClient; } });

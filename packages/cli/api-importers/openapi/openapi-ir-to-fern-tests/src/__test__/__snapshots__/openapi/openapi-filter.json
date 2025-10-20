@@ -451,9 +451,7 @@ Companies are looked up via `company_id` in a `POST` request, if not found via `
                 "docs": "The name of the company.",
                 "type": "optional<string>",
               },
-              "plan": {
-                "type": "optional<CompanyPlan>",
-              },
+              "plan": "optional<CompanyPlan>",
               "remote_created_at": {
                 "docs": "The time the company was created by you.",
                 "type": "optional<integer>",
@@ -724,8 +722,7 @@ types:
         docs: >-
           The Intercom defined code of the workspace the company is associated
           to.
-      plan:
-        type: optional<CompanyPlan>
+      plan: optional<CompanyPlan>
       company_id:
         type: optional<string>
         docs: The company id you have defined for the company.

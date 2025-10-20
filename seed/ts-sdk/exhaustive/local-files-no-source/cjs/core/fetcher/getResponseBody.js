@@ -10,9 +10,9 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.getResponseBody = getResponseBody;
+const json_js_1 = require("../json.js");
 const BinaryResponse_js_1 = require("./BinaryResponse.js");
 const ResponseWithBody_js_1 = require("./ResponseWithBody.js");
-const json_js_1 = require("../json.js");
 function getResponseBody(response, responseType) {
     return __awaiter(this, void 0, void 0, function* () {
         if (!(0, ResponseWithBody_js_1.isResponseWithBody)(response)) {
@@ -36,10 +36,10 @@ function getResponseBody(response, responseType) {
         const text = yield response.text();
         if (text.length > 0) {
             try {
-                let responseBody = (0, json_js_1.fromJson)(text);
+                const responseBody = (0, json_js_1.fromJson)(text);
                 return responseBody;
             }
-            catch (err) {
+            catch (_err) {
                 return {
                     ok: false,
                     error: {

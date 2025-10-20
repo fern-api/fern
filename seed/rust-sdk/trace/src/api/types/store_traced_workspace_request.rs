@@ -1,8 +1,6 @@
-use crate::submission_trace_response::TraceResponse;
-use crate::submission_workspace_run_details::WorkspaceRunDetails;
-use serde::{Deserialize, Serialize};
+pub use crate::prelude::*;
 
-#[derive(Debug, Clone, Serialize, Deserialize)]
+#[derive(Debug, Clone, Serialize, Deserialize, PartialEq)]
 pub struct StoreTracedWorkspaceRequest {
     #[serde(rename = "workspaceRunDetails")]
     pub workspace_run_details: WorkspaceRunDetails,

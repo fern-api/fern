@@ -1,9 +1,4 @@
-use seed_trace::{
-    ClientConfig, CodeExecutionUpdate, CompileError, ErrorInfo, ExceptionInfo, InternalError,
-    RunningSubmissionState, RuntimeError, StoppedResponse, SubmissionId, TestSubmissionStatus,
-    TestSubmissionUpdateInfo, TraceClient, WorkspaceSubmissionStatus,
-    WorkspaceSubmissionUpdateInfo,
-};
+use seed_trace::prelude::*;
 use std::collections::HashMap;
 
 #[tokio::main]

@@ -421,7 +421,8 @@
             "generatedName": "chatFullResponseChatId",
             "key": "chat_id",
             "schema": {
-              "generatedName": "chatFullResponseChatId",
+              "generatedName": "ChatFullResponseChatId",
+              "description": "If the chat response was stored, the ID of the chat.",
               "value": {
                 "description": "If the chat response was stored, the ID of the chat.",
                 "schema": {
@@ -441,7 +442,8 @@
             "generatedName": "chatFullResponseTurnId",
             "key": "turn_id",
             "schema": {
-              "generatedName": "chatFullResponseTurnId",
+              "generatedName": "ChatFullResponseTurnId",
+              "description": "If the chat response was stored, the ID of the turn.",
               "value": {
                 "description": "If the chat response was stored, the ID of the turn.",
                 "schema": {
@@ -461,7 +463,8 @@
             "generatedName": "chatFullResponseAnswer",
             "key": "answer",
             "schema": {
-              "generatedName": "chatFullResponseAnswer",
+              "generatedName": "ChatFullResponseAnswer",
+              "description": "The message from the chat model for the chat message.",
               "value": {
                 "description": "The message from the chat model for the chat message.",
                 "schema": {
@@ -496,7 +499,8 @@
             "generatedName": "chatStreamedResponseChunk",
             "key": "chunk",
             "schema": {
-              "generatedName": "chatStreamedResponseChunk",
+              "generatedName": "ChatStreamedResponseChunk",
+              "description": "The chunk of the response.",
               "value": {
                 "description": "The chunk of the response.",
                 "schema": {

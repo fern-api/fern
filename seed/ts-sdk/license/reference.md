@@ -1,5 +1,4 @@
 # Reference
-
 <details><summary><code>client.<a href="/src/Client.ts">get</a>() -> void</code></summary>
 <dl>
 <dd>
@@ -14,8 +13,8 @@
 
 ```typescript
 await client.get();
-```
 
+```
 </dd>
 </dl>
 </dd>
@@ -29,15 +28,16 @@ await client.get();
 <dl>
 <dd>
 
-**requestOptions:** `SeedLicenseClient.RequestOptions`
+**requestOptions:** `SeedLicenseClient.RequestOptions` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
 
-</dd>
-</dl>
-</dd>
-</dl>
 
 </dd>
 </dl>
 </details>
 
-##
+## 

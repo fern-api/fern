@@ -14,7 +14,7 @@ public partial class SeedSingleUrlEnvironmentDefaultClient
         var defaultHeaders = new Headers(
             new Dictionary<string, string>()
             {
-                { "Authorization", $"Bearer {token}" },
+                { "Authorization", $"Bearer {token ?? ""}" },
                 { "X-Fern-Language", "C#" },
                 { "X-Fern-SDK-Name", "SeedSingleUrlEnvironmentDefault" },
                 { "X-Fern-SDK-Version", Version.Current },

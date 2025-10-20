@@ -368,7 +368,7 @@
             "generatedName": "userId",
             "key": "id",
             "schema": {
-              "generatedName": "userId",
+              "generatedName": "UserId",
               "value": {
                 "schema": {
                   "type": "string"
@@ -387,7 +387,7 @@
             "generatedName": "userUsername",
             "key": "username",
             "schema": {
-              "generatedName": "userUsername",
+              "generatedName": "UserUsername",
               "value": {
                 "schema": {
                   "type": "string"
@@ -406,7 +406,7 @@
             "generatedName": "userEmail",
             "key": "email",
             "schema": {
-              "generatedName": "userEmail",
+              "generatedName": "UserEmail",
               "value": {
                 "schema": {
                   "type": "string"
@@ -425,7 +425,7 @@
             "generatedName": "userCreatedAt",
             "key": "createdAt",
             "schema": {
-              "generatedName": "userCreatedAt",
+              "generatedName": "UserCreatedAt",
               "value": {
                 "schema": {
                   "type": "datetime"
@@ -458,7 +458,7 @@
             "generatedName": "tokenAccessToken",
             "key": "accessToken",
             "schema": {
-              "generatedName": "tokenAccessToken",
+              "generatedName": "TokenAccessToken",
               "value": {
                 "schema": {
                   "type": "string"
@@ -477,7 +477,7 @@
             "generatedName": "tokenTokenType",
             "key": "tokenType",
             "schema": {
-              "generatedName": "tokenTokenType",
+              "generatedName": "TokenTokenType",
               "value": {
                 "schema": {
                   "type": "string"
@@ -496,7 +496,7 @@
             "generatedName": "tokenExpiresIn",
             "key": "expiresIn",
             "schema": {
-              "generatedName": "tokenExpiresIn",
+              "generatedName": "TokenExpiresIn",
               "value": {
                 "schema": {
                   "type": "int"

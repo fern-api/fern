@@ -84,7 +84,8 @@
             "generatedName": "treeNodeValue",
             "key": "value",
             "schema": {
-              "generatedName": "treeNodeValue",
+              "generatedName": "TreeNodeValue",
+              "description": "The value stored in this node",
               "value": {
                 "description": "The value stored in this node",
                 "schema": {
@@ -105,7 +106,7 @@
             "generatedName": "treeNodeLeft",
             "key": "left",
             "schema": {
-              "generatedName": "treeNodeLeft",
+              "generatedName": "TreeNodeLeft",
               "value": {
                 "description": "Child nodes of this tree node",
                 "generatedName": "TreeNodeLeft",
@@ -116,7 +117,6 @@
                 },
                 "type": "reference"
               },
-              "groupName": [],
               "type": "optional"
             },
             "audiences": [],
@@ -128,7 +128,7 @@
             "generatedName": "treeNodeRight",
             "key": "right",
             "schema": {
-              "generatedName": "treeNodeRight",
+              "generatedName": "TreeNodeRight",
               "value": {
                 "description": "Child nodes of this tree node",
                 "generatedName": "TreeNodeRight",
@@ -139,7 +139,6 @@
                 },
                 "type": "reference"
               },
-              "groupName": [],
               "type": "optional"
             },
             "audiences": [],

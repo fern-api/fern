@@ -14,7 +14,8 @@
         "rootDir": "src",
         "baseUrl": "src",
         "isolatedModules": true,
-        "isolatedDeclarations": true
+        "isolatedDeclarations": true,
+        "verbatimModuleSyntax": true
     },
     "include": ["src"],
     "exclude": []

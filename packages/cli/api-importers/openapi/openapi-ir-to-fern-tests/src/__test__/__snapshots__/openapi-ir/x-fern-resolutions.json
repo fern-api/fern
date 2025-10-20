@@ -168,7 +168,7 @@
             "generatedName": "userId",
             "key": "id",
             "schema": {
-              "generatedName": "userId",
+              "generatedName": "UserId",
               "value": {
                 "schema": {
                   "format": "uuid",

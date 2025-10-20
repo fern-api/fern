@@ -13,7 +13,7 @@
 <dd>
 
 ```rust
-use seed_websocket_auth::{ClientConfig, GetTokenRequest, WebsocketAuthClient};
+use seed_websocket_auth::prelude::*;
 use std::collections::HashMap;
 
 #[tokio::main]
@@ -108,7 +108,7 @@ async fn main() {
 <dd>
 
 ```rust
-use seed_websocket_auth::{ClientConfig, RefreshTokenRequest, WebsocketAuthClient};
+use seed_websocket_auth::prelude::*;
 use std::collections::HashMap;
 
 #[tokio::main]

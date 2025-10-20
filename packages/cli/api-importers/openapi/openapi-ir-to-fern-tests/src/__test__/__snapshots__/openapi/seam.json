@@ -58,7 +58,10 @@
                 "docs": "Date and time after which the time-bound access code becomes inactive.",
                 "type": "optional<nullable<datetime>>",
               },
-              "errors": "optional<unknown>",
+              "errors": {
+                "docs": "Collection of errors associated with the access code, structured in a dictionary format. A unique "error_code" keys each error. Each error entry is an object containing two fields: "message" and "created_at." "message" is a string that describes the error. "created_at" is a date that indicates when the error was generated. This structure enables detailed tracking and timely response to critical issues.",
+                "type": "optional<nullable<unknown>>",
+              },
               "is_backup": {
                 "docs": "Indicates whether the access code is a backup code.",
                 "type": "optional<boolean>",
@@ -119,7 +122,10 @@
                 "docs": "Nature of the access code. Values are "ongoing" for access codes that are active continuously until deactivated manually or "time_bound" for access codes that have a specific duration.",
                 "type": "AccessCodeType",
               },
-              "warnings": "optional<unknown>",
+              "warnings": {
+                "docs": "Collection of warnings associated with the access code, structured in a dictionary format. A unique "warning_code" keys each warning. Each warning entry is an object containing two fields: "message" and "created_at." "message" is a string that describes the warning. "created_at" is a date that indicates when the warning was generated. This structure enables detailed tracking and timely response to potential issues that are not critical but that may require attention.",
+                "type": "optional<nullable<unknown>>",
+              },
             },
             "source": {
               "openapi": "../openapi.json",
@@ -1196,7 +1202,7 @@
               },
               "action_type": "literal<"DELETE_NOISE_THRESHOLD">",
               "error": "nullable<string>",
-              "result": "optional<unknown>",
+              "result": "optional<nullable<unknown>>",
               "status": "literal<"success">",
             },
             "source": {
@@ -1263,7 +1269,7 @@
               },
               "action_type": "literal<"UPDATE_NOISE_THRESHOLD">",
               "error": "nullable<string>",
-              "result": "optional<unknown>",
+              "result": "optional<nullable<unknown>>",
               "status": "literal<"success">",
             },
             "source": {
@@ -1811,7 +1817,7 @@
               },
               "action_type": "literal<"UPDATE_ACCESS_CODE">",
               "error": "nullable<string>",
-              "result": "optional<unknown>",
+              "result": "optional<nullable<unknown>>",
               "status": "literal<"success">",
             },
             "source": {
@@ -1867,7 +1873,7 @@
               },
               "action_type": "literal<"DELETE_ACCESS_CODE">",
               "error": "nullable<string>",
-              "result": "optional<unknown>",
+              "result": "optional<nullable<unknown>>",
               "status": "literal<"success">",
             },
             "source": {
@@ -1895,7 +1901,7 @@
               },
               "action_type": "literal<"CREATE_NOISE_THRESHOLD">",
               "error": "nullable<string>",
-              "result": "optional<unknown>",
+              "result": "optional<nullable<unknown>>",
               "status": "literal<"success">",
             },
             "source": {
@@ -2102,7 +2108,7 @@
               },
               "action_type": "literal<"CREATE_ACCESS_CODE">",
               "error": "nullable<string>",
-              "result": "optional<unknown>",
+              "result": "optional<nullable<unknown>>",
               "status": "literal<"success">",
             },
             "source": {
@@ -2141,7 +2147,7 @@
               },
               "action_type": "literal<"SYNC_ACCESS_CODES">",
               "error": "nullable<string>",
-              "result": "optional<unknown>",
+              "result": "optional<nullable<unknown>>",
               "status": "literal<"success">",
             },
             "source": {
@@ -2513,7 +2519,10 @@
                   "pattern": undefined,
                 },
               },
-              "errors": "optional<unknown>",
+              "errors": {
+                "docs": "Collection of errors associated with the access code, structured in a dictionary format. A unique "error_code" keys each error. Each error entry is an object containing two fields: "message" and "created_at." "message" is a string that describes the error. "created_at" is a date that indicates when the error was generated. This structure enables detailed tracking and timely response to critical issues.",
+                "type": "optional<nullable<unknown>>",
+              },
               "heating_set_point_celsius": "optional<double>",
               "heating_set_point_fahrenheit": "optional<double>",
               "hvac_mode_setting": "optional<ClimateSettingScheduleHvacModeSetting>",
@@ -2682,9 +2691,9 @@
               },
               "created_at": "optional<datetime>",
               "custom_metadata": "map<string, ConnectedAccountCustomMetadataValue>",
-              "errors": "optional<unknown>",
+              "errors": "optional<nullable<unknown>>",
               "user_identifier": "optional<ConnectedAccountUserIdentifier>",
-              "warnings": "optional<unknown>",
+              "warnings": "optional<nullable<unknown>>",
             },
             "source": {
               "openapi": "../openapi.json",
@@ -4229,7 +4238,10 @@
                 "docs": "Date and time after which the time-bound access code becomes inactive.",
                 "type": "optional<nullable<datetime>>",
               },
-              "errors": "optional<unknown>",
+              "errors": {
+                "docs": "Collection of errors associated with the access code, structured in a dictionary format. A unique "error_code" keys each error. Each error entry is an object containing two fields: "message" and "created_at." "message" is a string that describes the error. "created_at" is a date that indicates when the error was generated. This structure enables detailed tracking and timely response to critical issues.",
+                "type": "optional<nullable<unknown>>",
+              },
               "is_managed": "boolean",
               "name": {
                 "docs": "Name of the access code. Enables administrators and users to identify the access code easily, especially when there are numerous access codes.",
@@ -4244,7 +4256,10 @@
                 "docs": "Nature of the access code. Values are "ongoing" for access codes that are active continuously until deactivated manually or "time_bound" for access codes that have a specific duration.",
                 "type": "UnmanagedAccessCodeType",
               },
-              "warnings": "optional<unknown>",
+              "warnings": {
+                "docs": "Collection of warnings associated with the access code, structured in a dictionary format. A unique "warning_code" keys each warning. Each warning entry is an object containing two fields: "message" and "created_at." "message" is a string that describes the warning. "created_at" is a date that indicates when the warning was generated. This structure enables detailed tracking and timely response to potential issues that are not critical but that may require attention.",
+                "type": "optional<nullable<unknown>>",
+              },
             },
             "source": {
               "openapi": "../openapi.json",
@@ -4771,8 +4786,25 @@ types:
       created_at:
         type: datetime
         docs: Date and time at which the access code was created.
-      errors: optional<unknown>
-      warnings: optional<unknown>
+      errors:
+        type: optional<nullable<unknown>>
+        docs: >-
+          Collection of errors associated with the access code, structured in a
+          dictionary format. A unique "error_code" keys each error. Each error
+          entry is an object containing two fields: "message" and "created_at."
+          "message" is a string that describes the error. "created_at" is a date
+          that indicates when the error was generated. This structure enables
+          detailed tracking and timely response to critical issues.
+      warnings:
+        type: optional<nullable<unknown>>
+        docs: >-
+          Collection of warnings associated with the access code, structured in
+          a dictionary format. A unique "warning_code" keys each warning. Each
+          warning entry is an object containing two fields: "message" and
+          "created_at." "message" is a string that describes the warning.
+          "created_at" is a date that indicates when the warning was generated.
+          This structure enables detailed tracking and timely response to
+          potential issues that are not critical but that may require attention.
       is_managed:
         type: boolean
         docs: Indicates whether Seam manages the access code.
@@ -4862,8 +4894,25 @@ types:
       created_at:
         type: datetime
         docs: Date and time at which the access code was created.
-      errors: optional<unknown>
-      warnings: optional<unknown>
+      errors:
+        type: optional<nullable<unknown>>
+        docs: >-
+          Collection of errors associated with the access code, structured in a
+          dictionary format. A unique "error_code" keys each error. Each error
+          entry is an object containing two fields: "message" and "created_at."
+          "message" is a string that describes the error. "created_at" is a date
+          that indicates when the error was generated. This structure enables
+          detailed tracking and timely response to critical issues.
+      warnings:
+        type: optional<nullable<unknown>>
+        docs: >-
+          Collection of warnings associated with the access code, structured in
+          a dictionary format. A unique "warning_code" keys each warning. Each
+          warning entry is an object containing two fields: "message" and
+          "created_at." "message" is a string that describes the warning.
+          "created_at" is a date that indicates when the warning was generated.
+          This structure enables detailed tracking and timely response to
+          potential issues that are not critical but that may require attention.
       is_managed: boolean
       starts_at:
         type: optional<nullable<datetime>>
@@ -5510,7 +5559,7 @@ types:
       status: literal<"success">
       error: nullable<string>
       action_type: literal<"SYNC_ACCESS_CODES">
-      result: optional<unknown>
+      result: optional<nullable<unknown>>
     source:
       openapi: ../openapi.json
     inline: true
@@ -5577,7 +5626,7 @@ types:
       status: literal<"success">
       error: nullable<string>
       action_type: literal<"CREATE_ACCESS_CODE">
-      result: optional<unknown>
+      result: optional<nullable<unknown>>
     source:
       openapi: ../openapi.json
     inline: true
@@ -5644,7 +5693,7 @@ types:
       status: literal<"success">
       error: nullable<string>
       action_type: literal<"DELETE_ACCESS_CODE">
-      result: optional<unknown>
+      result: optional<nullable<unknown>>
     source:
       openapi: ../openapi.json
     inline: true
@@ -5711,7 +5760,7 @@ types:
       status: literal<"success">
       error: nullable<string>
       action_type: literal<"UPDATE_ACCESS_CODE">
-      result: optional<unknown>
+      result: optional<nullable<unknown>>
     source:
       openapi: ../openapi.json
     inline: true
@@ -5778,7 +5827,7 @@ types:
       status: literal<"success">
       error: nullable<string>
       action_type: literal<"CREATE_NOISE_THRESHOLD">
-      result: optional<unknown>
+      result: optional<nullable<unknown>>
     source:
       openapi: ../openapi.json
     inline: true
@@ -5845,7 +5894,7 @@ types:
       status: literal<"success">
       error: nullable<string>
       action_type: literal<"DELETE_NOISE_THRESHOLD">
-      result: optional<unknown>
+      result: optional<nullable<unknown>>
     source:
       openapi: ../openapi.json
     inline: true
@@ -5912,7 +5961,7 @@ types:
       status: literal<"success">
       error: nullable<string>
       action_type: literal<"UPDATE_NOISE_THRESHOLD">
-      result: optional<unknown>
+      result: optional<nullable<unknown>>
     source:
       openapi: ../openapi.json
     inline: true
@@ -6060,7 +6109,15 @@ types:
       schedule_starts_at: string
       schedule_ends_at: string
       created_at: datetime
-      errors: optional<unknown>
+      errors:
+        type: optional<nullable<unknown>>
+        docs: >-
+          Collection of errors associated with the access code, structured in a
+          dictionary format. A unique "error_code" keys each error. Each error
+          entry is an object containing two fields: "message" and "created_at."
+          "message" is a string that describes the error. "created_at" is a date
+          that indicates when the error was generated. This structure enables
+          detailed tracking and timely response to critical issues.
       automatic_heating_enabled: optional<boolean>
       automatic_cooling_enabled: optional<boolean>
       hvac_mode_setting: optional<ClimateSettingScheduleHvacModeSetting>
@@ -6178,8 +6235,8 @@ types:
       user_identifier: optional<ConnectedAccountUserIdentifier>
       account_type: optional<string>
       account_type_display_name: string
-      errors: optional<unknown>
-      warnings: optional<unknown>
+      errors: optional<nullable<unknown>>
+      warnings: optional<nullable<unknown>>
       custom_metadata: map<string, ConnectedAccountCustomMetadataValue>
       automatically_manage_new_devices: boolean
     source:

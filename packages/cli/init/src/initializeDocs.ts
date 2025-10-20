@@ -34,7 +34,13 @@ export async function initializeDocs({
             return;
         } else {
             try {
-                await writeFile(docsYmlPath, yaml.dump(getDocsConfig(createDirectoryResponse.organization)));
+                const docsConfig = getDocsConfig(createDirectoryResponse.organization);
+                const configWithKebabCaseAiSearch = {
+                    ...docsConfig,
+                    "ai-search": docsConfig.aiSearch
+                };
+                delete configWithKebabCaseAiSearch.aiSearch;
+                await writeFile(docsYmlPath, yaml.dump(configWithKebabCaseAiSearch));
                 taskContext.logger.info(chalk.green("Created docs configuration"));
                 return;
             } catch (writeError) {
@@ -59,6 +65,9 @@ function getDocsConfig(organization: string): docsYml.RawSchemas.DocsConfigurati
         colors: {
             accentPrimary: "#ffffff",
             background: "#000000"
+        },
+        aiSearch: {
+            location: ["docs"]
         }
     };
 }

@@ -1,6 +1,6 @@
 # Reference
 ## Bigunion
-<details><summary><code>client.Bigunion.Get(Id) -> Seed::Bigunion::Types::BigUnion</code></summary>
+<details><summary><code>client.bigunion.get(id) -> Seed::Bigunion::Types::BigUnion</code></summary>
 <dl>
 <dd>
 
@@ -40,7 +40,7 @@ client.bigunion.get();
 </dl>
 </details>
 
-<details><summary><code>client.Bigunion.Update(request) -> Internal::Types::Boolean</code></summary>
+<details><summary><code>client.bigunion.update(request) -> Internal::Types::Boolean</code></summary>
 <dl>
 <dd>
 
@@ -80,7 +80,7 @@ client.bigunion.update();
 </dl>
 </details>
 
-<details><summary><code>client.Bigunion.UpdateMany(request) -> Internal::Types::Hash[String, Internal::Types::Boolean]</code></summary>
+<details><summary><code>client.bigunion.update_many(request) -> Internal::Types::Hash[String, Internal::Types::Boolean]</code></summary>
 <dl>
 <dd>
 
@@ -121,7 +121,7 @@ client.bigunion.update_many();
 </details>
 
 ## Union
-<details><summary><code>client.Union.Get(Id) -> Seed::Union::Types::Shape</code></summary>
+<details><summary><code>client.union.get(id) -> Seed::Union::Types::Shape</code></summary>
 <dl>
 <dd>
 
@@ -161,7 +161,7 @@ client.bigunion.get();
 </dl>
 </details>
 
-<details><summary><code>client.Union.Update(request) -> Internal::Types::Boolean</code></summary>
+<details><summary><code>client.union.update(request) -> Internal::Types::Boolean</code></summary>
 <dl>
 <dd>
 

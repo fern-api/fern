@@ -34,7 +34,7 @@
               "generatedName": "uploadDocumentRequestTitle",
               "key": "title",
               "schema": {
-                "generatedName": "uploadDocumentRequestTitle",
+                "generatedName": "UploadDocumentRequestTitle",
                 "value": {
                   "schema": {
                     "type": "string"
@@ -53,7 +53,7 @@
               "generatedName": "uploadDocumentRequestAuthor",
               "key": "author",
               "schema": {
-                "generatedName": "uploadDocumentRequestAuthor",
+                "generatedName": "UploadDocumentRequestAuthor",
                 "value": {
                   "schema": {
                     "type": "string"
@@ -72,7 +72,7 @@
               "generatedName": "uploadDocumentRequestTags",
               "key": "tags",
               "schema": {
-                "generatedName": "uploadDocumentRequestTags",
+                "generatedName": "UploadDocumentRequestTags",
                 "value": {
                   "value": {
                     "schema": {
@@ -319,7 +319,7 @@
             "generatedName": "documentMetadataId",
             "key": "id",
             "schema": {
-              "generatedName": "documentMetadataId",
+              "generatedName": "DocumentMetadataId",
               "value": {
                 "schema": {
                   "type": "int"
@@ -338,7 +338,7 @@
             "generatedName": "documentMetadataTitle",
             "key": "title",
             "schema": {
-              "generatedName": "documentMetadataTitle",
+              "generatedName": "DocumentMetadataTitle",
               "value": {
                 "schema": {
                   "type": "string"
@@ -357,7 +357,7 @@
             "generatedName": "documentMetadataAuthor",
             "key": "author",
             "schema": {
-              "generatedName": "documentMetadataAuthor",
+              "generatedName": "DocumentMetadataAuthor",
               "value": {
                 "schema": {
                   "type": "string"
@@ -376,7 +376,7 @@
             "generatedName": "documentMetadataTags",
             "key": "tags",
             "schema": {
-              "generatedName": "documentMetadataTags",
+              "generatedName": "DocumentMetadataTags",
               "value": {
                 "value": {
                   "generatedName": "DocumentMetadataTags",
@@ -410,7 +410,7 @@
             "generatedName": "documentUploadResultFileId",
             "key": "fileId",
             "schema": {
-              "generatedName": "documentUploadResultFileId",
+              "generatedName": "DocumentUploadResultFileId",
               "value": {
                 "schema": {
                   "type": "string"
@@ -429,7 +429,7 @@
             "generatedName": "documentUploadResultStatus",
             "key": "status",
             "schema": {
-              "generatedName": "documentUploadResultStatus",
+              "generatedName": "DocumentUploadResultStatus",
               "value": {
                 "schema": {
                   "type": "string"

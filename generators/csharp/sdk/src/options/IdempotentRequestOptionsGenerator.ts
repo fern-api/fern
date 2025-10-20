@@ -30,7 +30,7 @@ export class IdempotentRequestOptionsGenerator extends FileGenerator<
             annotations: [this.context.getSerializableAttribute()]
         });
         class_.addFields(this.baseOptionsGenerator.getRequestOptionFields());
-        class_.addFields(this.baseOptionsGenerator.getIdempotentRequestOptionFields());
+        class_.addFields(this.context.getIdempotencyFields());
         class_.addMethod(
             this.csharp.method({
                 name: "GetIdempotencyHeaders",
@@ -40,14 +40,10 @@ export class IdempotentRequestOptionsGenerator extends FileGenerator<
                 type: ast.MethodType.INSTANCE,
                 body: this.csharp.codeblock((writer) => {
                     writer.writeLine("return new Headers(new Dictionary<string, string>");
-                    writer.writeLine("{");
-                    writer.indent();
+                    writer.pushScope();
                     for (const header of this.context.getIdempotencyHeaders()) {
                         const type = this.context.csharpTypeMapper.convert({ reference: header.valueType });
-                        const isString =
-                            type.internalType.type === "string" ||
-                            (type.internalType.type === "optional" &&
-                                type.internalType.value.internalType.type === "string");
+                        const isString = this.csharp.is.Type.string(type.unwrapIfOptional());
                         const toString = isString ? "" : ".ToString()";
                         // In header values, we only accept simple types, so we can assume that none are nullable (apart from string),
                         // unless the type is optional
@@ -56,8 +52,8 @@ export class IdempotentRequestOptionsGenerator extends FileGenerator<
                             `["${header.name.wireValue}"] = ${header.name.name.pascalCase.safeName}${nullConditionalOperator}${toString},`
                         );
                     }
-                    writer.dedent();
-                    writer.writeTextStatement("})");
+                    writer.popScope();
+                    writer.writeTextStatement(")");
                 })
             })
         );

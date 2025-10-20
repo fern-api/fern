@@ -168,7 +168,7 @@
             "generatedName": "metaHasMore",
             "key": "hasMore",
             "schema": {
-              "generatedName": "metaHasMore",
+              "generatedName": "MetaHasMore",
               "value": {
                 "schema": {
                   "type": "boolean"
@@ -201,7 +201,7 @@
             "generatedName": "usersResponseMeta",
             "key": "meta",
             "schema": {
-              "generatedName": "usersResponseMeta",
+              "generatedName": "UsersResponseMeta",
               "value": {
                 "generatedName": "UsersResponseMeta",
                 "schema": "Meta",
@@ -211,7 +211,6 @@
                 },
                 "type": "reference"
               },
-              "groupName": [],
               "type": "optional"
             },
             "audiences": [],
@@ -223,7 +222,7 @@
             "generatedName": "usersResponseUsers",
             "key": "users",
             "schema": {
-              "generatedName": "usersResponseUsers",
+              "generatedName": "UsersResponseUsers",
               "value": {
                 "value": {
                   "generatedName": "UsersResponseUsersItem",
@@ -262,7 +261,7 @@
             "generatedName": "userId",
             "key": "id",
             "schema": {
-              "generatedName": "userId",
+              "generatedName": "UserId",
               "value": {
                 "schema": {
                   "format": "uuid",
@@ -282,7 +281,7 @@
             "generatedName": "userName",
             "key": "name",
             "schema": {
-              "generatedName": "userName",
+              "generatedName": "UserName",
               "value": {
                 "schema": {
                   "type": "string"
@@ -301,7 +300,7 @@
             "generatedName": "userEmail",
             "key": "email",
             "schema": {
-              "generatedName": "userEmail",
+              "generatedName": "UserEmail",
               "value": {
                 "schema": {
                   "type": "string"
@@ -320,7 +319,7 @@
             "generatedName": "userAge",
             "key": "age",
             "schema": {
-              "generatedName": "userAge",
+              "generatedName": "UserAge",
               "value": {
                 "schema": {
                   "type": "int"

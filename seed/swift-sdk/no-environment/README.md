@@ -20,7 +20,7 @@ With Swift Package Manager (SPM), add the following to the top-level `dependenci
 
 ```swift
 dependencies: [
-    .package(url: "<git-url>", from: "0.1.0"),
+    .package(url: "https://github.com/no-environment/fern", from: "0.0.1"),
 ]
 ```
 
@@ -39,7 +39,7 @@ import NoEnvironment
 private func main() async throws {
     let client = NoEnvironmentClient(token: "<token>")
 
-    try await client.dummy.getDummy()
+    _ = try await client.dummy.getDummy()
 }
 
 try await main()

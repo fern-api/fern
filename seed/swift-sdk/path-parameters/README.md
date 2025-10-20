@@ -20,7 +20,7 @@ With Swift Package Manager (SPM), add the following to the top-level `dependenci
 
 ```swift
 dependencies: [
-    .package(url: "<git-url>", from: "0.1.0"),
+    .package(url: "https://github.com/path-parameters/fern", from: "0.0.1"),
 ]
 ```
 
@@ -39,7 +39,7 @@ import PathParameters
 private func main() async throws {
     let client = PathParametersClient()
 
-    try await client.user.createUser(
+    _ = try await client.user.createUser(
         tenantId: "tenant_id",
         request: User(
             name: "name",

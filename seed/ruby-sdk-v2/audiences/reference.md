@@ -1,6 +1,6 @@
 # Reference
 ## FolderA Service
-<details><summary><code>client.FolderA.Service.GetDirectThread() -> Seed::FolderA::Service::Types::Response</code></summary>
+<details><summary><code>client.folder_a.service.get_direct_thread() -> Seed::FolderA::Service::Types::Response</code></summary>
 <dl>
 <dd>
 
@@ -26,7 +26,7 @@ client.folder_a.service.get_direct_thread();
 </details>
 
 ## FolderD Service
-<details><summary><code>client.FolderD.Service.GetDirectThread() -> Seed::FolderD::Service::Types::Response</code></summary>
+<details><summary><code>client.folder_d.service.get_direct_thread() -> Seed::FolderD::Service::Types::Response</code></summary>
 <dl>
 <dd>
 
@@ -52,7 +52,7 @@ client.folder_d.service.get_direct_thread();
 </details>
 
 ## Foo
-<details><summary><code>client.Foo.Find(request) -> Seed::Foo::Types::ImportingType</code></summary>
+<details><summary><code>client.foo.find(request) -> Seed::Foo::Types::ImportingType</code></summary>
 <dl>
 <dd>
 
@@ -65,11 +65,11 @@ client.folder_d.service.get_direct_thread();
 <dd>
 
 ```ruby
-client.foo.find({
-  optionalString:'optionalString',
-  publicProperty:'publicProperty',
-  privateProperty:1
-});
+client.foo.find(
+  optionalString: 'optionalString',
+  publicProperty: 'publicProperty',
+  privateProperty: 1
+);
 ```
 </dd>
 </dl>
@@ -84,7 +84,7 @@ client.foo.find({
 <dl>
 <dd>
 
-**optionalString:** `String` 
+**optional_string:** `String` 
     
 </dd>
 </dl>
@@ -92,7 +92,7 @@ client.foo.find({
 <dl>
 <dd>
 
-**publicProperty:** `String` 
+**public_property:** `String` 
     
 </dd>
 </dl>
@@ -100,7 +100,7 @@ client.foo.find({
 <dl>
 <dd>
 
-**privateProperty:** `Integer` 
+**private_property:** `Integer` 
     
 </dd>
 </dl>

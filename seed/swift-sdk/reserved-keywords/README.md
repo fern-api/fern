@@ -20,7 +20,7 @@ With Swift Package Manager (SPM), add the following to the top-level `dependenci
 
 ```swift
 dependencies: [
-    .package(url: "<git-url>", from: "0.1.0"),
+    .package(url: "https://github.com/reserved-keywords/fern", from: "0.0.1"),
 ]
 ```
 
@@ -39,7 +39,7 @@ import NurseryApi
 private func main() async throws {
     let client = NurseryApiClient()
 
-    try await client.package.test(request: .init(for: "for"))
+    _ = try await client.package.test(for: "for")
 }
 
 try await main()

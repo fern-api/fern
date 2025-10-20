@@ -24,7 +24,7 @@ import { SeedPaginationClient } from "@fern/pagination-custom";
 
 const client = new SeedPaginationClient({ environment: "YOUR_BASE_URL", token: "YOUR_TOKEN" });
 const response = await client.users.listUsernamesCustom({
-    starting_after: "starting_after",
+    starting_after: "starting_after"
 });
 for await (const item of response) {
     console.log(item);
@@ -32,7 +32,7 @@ for await (const item of response) {
 
 // Or you can manually iterate page-by-page
 let page = await client.users.listUsernamesCustom({
-    starting_after: "starting_after",
+    starting_after: "starting_after"
 });
 while (page.hasNextPage()) {
     page = page.getNextPage();
@@ -81,7 +81,7 @@ import { SeedPaginationClient } from "@fern/pagination-custom";
 
 const client = new SeedPaginationClient({ environment: "YOUR_BASE_URL", token: "YOUR_TOKEN" });
 const response = await client.users.listUsernamesCustom({
-    starting_after: "starting_after",
+    starting_after: "starting_after"
 });
 for await (const item of response) {
     console.log(item);
@@ -89,7 +89,7 @@ for await (const item of response) {
 
 // Or you can manually iterate page-by-page
 let page = await client.users.listUsernamesCustom({
-    starting_after: "starting_after",
+    starting_after: "starting_after"
 });
 while (page.hasNextPage()) {
     page = page.getNextPage();
@@ -178,7 +178,10 @@ console.log(rawResponse.headers['X-My-Header']);
 
 ### Runtime Compatibility
 
+
 The SDK works in the following runtimes:
+
+
 
 - Node.js 18+
 - Vercel

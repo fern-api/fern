@@ -11876,6 +11876,9 @@
       "endpoints": [
         {
           "auth": true,
+          "authV2": [
+            "squidex-oauth-auth"
+          ],
           "method": "GET",
           "defaultEnvironment": "https://localhost:5001",
           "environments": [
@@ -12037,6 +12040,9 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "squidex-oauth-auth"
+          ],
           "method": "POST",
           "defaultEnvironment": "https://localhost:5001",
           "environments": [
@@ -12209,6 +12215,9 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "squidex-oauth-auth"
+          ],
           "method": "GET",
           "defaultEnvironment": "https://localhost:5001",
           "environments": [
@@ -12349,6 +12358,9 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "squidex-oauth-auth"
+          ],
           "method": "PUT",
           "defaultEnvironment": "https://localhost:5001",
           "environments": [
@@ -12552,6 +12564,9 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "squidex-oauth-auth"
+          ],
           "method": "DELETE",
           "defaultEnvironment": "https://localhost:5001",
           "environments": [
@@ -12700,6 +12715,9 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "squidex-oauth-auth"
+          ],
           "method": "PUT",
           "defaultEnvironment": "https://localhost:5001",
           "environments": [
@@ -12866,6 +12884,9 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "squidex-oauth-auth"
+          ],
           "method": "PUT",
           "defaultEnvironment": "https://localhost:5001",
           "environments": [
@@ -13043,6 +13064,9 @@
       "endpoints": [
         {
           "auth": true,
+          "authV2": [
+            "squidex-oauth-auth"
+          ],
           "method": "GET",
           "defaultEnvironment": "https://localhost:5001",
           "environments": [
@@ -13136,6 +13160,9 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "squidex-oauth-auth"
+          ],
           "description": "Search the user by query that contains the email address or the part of the email address.",
           "method": "GET",
           "defaultEnvironment": "https://localhost:5001",
@@ -13268,6 +13295,9 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "squidex-oauth-auth"
+          ],
           "method": "GET",
           "defaultEnvironment": "https://localhost:5001",
           "environments": [
@@ -13408,6 +13438,9 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "squidex-oauth-auth"
+          ],
           "method": "GET",
           "defaultEnvironment": "https://localhost:5001",
           "environments": [
@@ -13528,6 +13561,9 @@
       "endpoints": [
         {
           "auth": true,
+          "authV2": [
+            "squidex-oauth-auth"
+          ],
           "method": "POST",
           "defaultEnvironment": "https://localhost:5001",
           "environments": [
@@ -13712,6 +13748,9 @@
       "endpoints": [
         {
           "auth": true,
+          "authV2": [
+            "squidex-oauth-auth"
+          ],
           "method": "GET",
           "defaultEnvironment": "https://localhost:5001",
           "environments": [
@@ -13823,6 +13862,9 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "squidex-oauth-auth"
+          ],
           "method": "GET",
           "defaultEnvironment": "https://localhost:5001",
           "environments": [
@@ -13962,6 +14004,9 @@
       "endpoints": [
         {
           "auth": true,
+          "authV2": [
+            "squidex-oauth-auth"
+          ],
           "method": "GET",
           "defaultEnvironment": "https://localhost:5001",
           "environments": [
@@ -14114,6 +14159,9 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "squidex-oauth-auth"
+          ],
           "method": "POST",
           "defaultEnvironment": "https://localhost:5001",
           "environments": [
@@ -14321,6 +14369,9 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "squidex-oauth-auth"
+          ],
           "method": "DELETE",
           "defaultEnvironment": "https://localhost:5001",
           "environments": [
@@ -14486,6 +14537,9 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "squidex-oauth-auth"
+          ],
           "method": "DELETE",
           "defaultEnvironment": "https://localhost:5001",
           "environments": [
@@ -14670,6 +14724,9 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "squidex-oauth-auth"
+          ],
           "description": "You can only retrieve the list of teams when you are authenticated as a user (OpenID implicit flow).\nYou will retrieve all teams, where you are assigned as a contributor.",
           "method": "GET",
           "defaultEnvironment": "https://localhost:5001",
@@ -14786,6 +14843,9 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "squidex-oauth-auth"
+          ],
           "description": "You can only create an team when you are authenticated as a user (OpenID implicit flow).\nYou will be assigned as owner of the new team automatically.",
           "method": "POST",
           "defaultEnvironment": "https://localhost:5001",
@@ -14960,6 +15020,9 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "squidex-oauth-auth"
+          ],
           "method": "GET",
           "defaultEnvironment": "https://localhost:5001",
           "environments": [
@@ -15098,6 +15161,9 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "squidex-oauth-auth"
+          ],
           "method": "PUT",
           "defaultEnvironment": "https://localhost:5001",
           "environments": [
@@ -15302,6 +15368,9 @@
       "endpoints": [
         {
           "auth": true,
+          "authV2": [
+            "squidex-oauth-auth"
+          ],
           "method": "GET",
           "defaultEnvironment": "https://localhost:5001",
           "environments": [
@@ -15428,6 +15497,9 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "squidex-oauth-auth"
+          ],
           "method": "GET",
           "defaultEnvironment": "https://localhost:5001",
           "environments": [
@@ -15608,6 +15680,9 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "squidex-oauth-auth"
+          ],
           "method": "GET",
           "defaultEnvironment": "https://localhost:5001",
           "environments": [
@@ -15788,6 +15863,9 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "squidex-oauth-auth"
+          ],
           "method": "GET",
           "defaultEnvironment": "https://localhost:5001",
           "environments": [
@@ -15916,6 +15994,9 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "squidex-oauth-auth"
+          ],
           "method": "GET",
           "defaultEnvironment": "https://localhost:5001",
           "environments": [
@@ -16044,6 +16125,9 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "squidex-oauth-auth"
+          ],
           "method": "GET",
           "defaultEnvironment": "https://localhost:5001",
           "environments": [
@@ -16222,6 +16306,9 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "squidex-oauth-auth"
+          ],
           "method": "GET",
           "defaultEnvironment": "https://localhost:5001",
           "environments": [
@@ -16411,6 +16498,9 @@
       "endpoints": [
         {
           "auth": true,
+          "authV2": [
+            "squidex-oauth-auth"
+          ],
           "method": "GET",
           "defaultEnvironment": "https://localhost:5001",
           "environments": [
@@ -16578,6 +16668,9 @@
       "endpoints": [
         {
           "auth": true,
+          "authV2": [
+            "squidex-oauth-auth"
+          ],
           "method": "POST",
           "defaultEnvironment": "https://localhost:5001",
           "environments": [
@@ -16985,6 +17078,9 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "squidex-oauth-auth"
+          ],
           "method": "POST",
           "defaultEnvironment": "https://localhost:5001",
           "environments": [
@@ -17411,6 +17507,9 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "squidex-oauth-auth"
+          ],
           "method": "PUT",
           "defaultEnvironment": "https://localhost:5001",
           "environments": [
@@ -17789,6 +17888,9 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "squidex-oauth-auth"
+          ],
           "method": "PUT",
           "defaultEnvironment": "https://localhost:5001",
           "environments": [
@@ -18175,6 +18277,9 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "squidex-oauth-auth"
+          ],
           "method": "PUT",
           "defaultEnvironment": "https://localhost:5001",
           "environments": [
@@ -18580,6 +18685,9 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "squidex-oauth-auth"
+          ],
           "method": "PUT",
           "defaultEnvironment": "https://localhost:5001",
           "environments": [
@@ -18991,6 +19099,9 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "squidex-oauth-auth"
+          ],
           "method": "DELETE",
           "defaultEnvironment": "https://localhost:5001",
           "environments": [
@@ -19350,6 +19461,9 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "squidex-oauth-auth"
+          ],
           "method": "PUT",
           "defaultEnvironment": "https://localhost:5001",
           "environments": [
@@ -19780,6 +19894,9 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "squidex-oauth-auth"
+          ],
           "method": "DELETE",
           "defaultEnvironment": "https://localhost:5001",
           "environments": [
@@ -20158,6 +20275,9 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "squidex-oauth-auth"
+          ],
           "description": "A locked field cannot be updated or deleted.",
           "method": "PUT",
           "defaultEnvironment": "https://localhost:5001",
@@ -20518,6 +20638,9 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "squidex-oauth-auth"
+          ],
           "description": "A locked field cannot be edited or deleted.",
           "method": "PUT",
           "defaultEnvironment": "https://localhost:5001",
@@ -20897,6 +21020,9 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "squidex-oauth-auth"
+          ],
           "description": "A hidden field is not part of the API response, but can still be edited in the portal.",
           "method": "PUT",
           "defaultEnvironment": "https://localhost:5001",
@@ -21257,6 +21383,9 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "squidex-oauth-auth"
+          ],
           "description": "A hidden field is not part of the API response, but can still be edited in the portal.",
           "method": "PUT",
           "defaultEnvironment": "https://localhost:5001",
@@ -21636,6 +21765,9 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "squidex-oauth-auth"
+          ],
           "description": "A hidden field is not part of the API response, but can still be edited in the portal.",
           "method": "PUT",
           "defaultEnvironment": "https://localhost:5001",
@@ -21996,6 +22128,9 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "squidex-oauth-auth"
+          ],
           "description": "A hidden field is not part of the API response, but can still be edited in the portal.",
           "method": "PUT",
           "defaultEnvironment": "https://localhost:5001",
@@ -22375,6 +22510,9 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "squidex-oauth-auth"
+          ],
           "description": "A disabled field cannot not be edited in the squidex portal anymore, but will be part of the API response.",
           "method": "PUT",
           "defaultEnvironment": "https://localhost:5001",
@@ -22735,6 +22873,9 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "squidex-oauth-auth"
+          ],
           "description": "A disabled field cannot not be edited in the squidex portal anymore, but will be part of the API response.",
           "method": "PUT",
           "defaultEnvironment": "https://localhost:5001",
@@ -23114,6 +23255,9 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "squidex-oauth-auth"
+          ],
           "description": "A disabled field cannot not be edited in the squidex portal anymore, but will be part of the API response.",
           "method": "PUT",
           "defaultEnvironment": "https://localhost:5001",
@@ -23474,6 +23618,9 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "squidex-oauth-auth"
+          ],
           "description": "A disabled field cannot not be edited in the squidex portal anymore, but will be part of the API response.",
           "method": "PUT",
           "defaultEnvironment": "https://localhost:5001",
@@ -23853,6 +24000,9 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "squidex-oauth-auth"
+          ],
           "method": "GET",
           "defaultEnvironment": "https://localhost:5001",
           "environments": [
@@ -24171,6 +24321,9 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "squidex-oauth-auth"
+          ],
           "method": "POST",
           "defaultEnvironment": "https://localhost:5001",
           "environments": [
@@ -24541,6 +24694,9 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "squidex-oauth-auth"
+          ],
           "method": "GET",
           "defaultEnvironment": "https://localhost:5001",
           "environments": [
@@ -24868,6 +25024,9 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "squidex-oauth-auth"
+          ],
           "method": "PUT",
           "defaultEnvironment": "https://localhost:5001",
           "environments": [
@@ -25250,6 +25409,9 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "squidex-oauth-auth"
+          ],
           "method": "DELETE",
           "defaultEnvironment": "https://localhost:5001",
           "environments": [
@@ -25404,6 +25566,9 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "squidex-oauth-auth"
+          ],
           "method": "PUT",
           "defaultEnvironment": "https://localhost:5001",
           "environments": [
@@ -25790,6 +25955,9 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "squidex-oauth-auth"
+          ],
           "method": "PUT",
           "defaultEnvironment": "https://localhost:5001",
           "environments": [
@@ -26168,6 +26336,9 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "squidex-oauth-auth"
+          ],
           "method": "PUT",
           "defaultEnvironment": "https://localhost:5001",
           "environments": [
@@ -26546,6 +26717,9 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "squidex-oauth-auth"
+          ],
           "method": "PUT",
           "defaultEnvironment": "https://localhost:5001",
           "environments": [
@@ -26924,6 +27098,9 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "squidex-oauth-auth"
+          ],
           "method": "PUT",
           "defaultEnvironment": "https://localhost:5001",
           "environments": [
@@ -27302,6 +27479,9 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "squidex-oauth-auth"
+          ],
           "method": "PUT",
           "defaultEnvironment": "https://localhost:5001",
           "environments": [
@@ -27642,6 +27822,9 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "squidex-oauth-auth"
+          ],
           "method": "PUT",
           "defaultEnvironment": "https://localhost:5001",
           "environments": [
@@ -27993,6 +28176,9 @@
       "endpoints": [
         {
           "auth": true,
+          "authV2": [
+            "squidex-oauth-auth"
+          ],
           "method": "GET",
           "defaultEnvironment": "https://localhost:5001",
           "environments": [
@@ -28100,6 +28286,9 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "squidex-oauth-auth"
+          ],
           "method": "GET",
           "defaultEnvironment": "https://localhost:5001",
           "environments": [
@@ -28272,6 +28461,9 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "squidex-oauth-auth"
+          ],
           "method": "POST",
           "defaultEnvironment": "https://localhost:5001",
           "environments": [
@@ -28497,6 +28689,9 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "squidex-oauth-auth"
+          ],
           "method": "DELETE",
           "defaultEnvironment": "https://localhost:5001",
           "environments": [
@@ -28620,6 +28815,9 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "squidex-oauth-auth"
+          ],
           "method": "PUT",
           "defaultEnvironment": "https://localhost:5001",
           "environments": [
@@ -28850,6 +29048,9 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "squidex-oauth-auth"
+          ],
           "method": "DELETE",
           "defaultEnvironment": "https://localhost:5001",
           "environments": [
@@ -29004,6 +29205,9 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "squidex-oauth-auth"
+          ],
           "method": "PUT",
           "defaultEnvironment": "https://localhost:5001",
           "environments": [
@@ -29196,6 +29400,9 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "squidex-oauth-auth"
+          ],
           "method": "PUT",
           "defaultEnvironment": "https://localhost:5001",
           "environments": [
@@ -29388,6 +29595,9 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "squidex-oauth-auth"
+          ],
           "method": "PUT",
           "defaultEnvironment": "https://localhost:5001",
           "environments": [
@@ -29542,6 +29752,9 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "squidex-oauth-auth"
+          ],
           "method": "PUT",
           "defaultEnvironment": "https://localhost:5001",
           "environments": [
@@ -29699,6 +29912,9 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "squidex-oauth-auth"
+          ],
           "method": "DELETE",
           "defaultEnvironment": "https://localhost:5001",
           "environments": [
@@ -29841,6 +30057,9 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "squidex-oauth-auth"
+          ],
           "method": "POST",
           "defaultEnvironment": "https://localhost:5001",
           "environments": [
@@ -30064,6 +30283,9 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "squidex-oauth-auth"
+          ],
           "method": "GET",
           "defaultEnvironment": "https://localhost:5001",
           "environments": [
@@ -30241,6 +30463,9 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "squidex-oauth-auth"
+          ],
           "method": "GET",
           "defaultEnvironment": "https://localhost:5001",
           "environments": [
@@ -30439,6 +30664,9 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "squidex-oauth-auth"
+          ],
           "method": "DELETE",
           "defaultEnvironment": "https://localhost:5001",
           "environments": [
@@ -30562,6 +30790,9 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "squidex-oauth-auth"
+          ],
           "method": "PUT",
           "defaultEnvironment": "https://localhost:5001",
           "environments": [
@@ -30716,6 +30947,9 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "squidex-oauth-auth"
+          ],
           "method": "DELETE",
           "defaultEnvironment": "https://localhost:5001",
           "environments": [
@@ -30870,6 +31104,9 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "squidex-oauth-auth"
+          ],
           "method": "GET",
           "defaultEnvironment": "https://localhost:5001",
           "environments": [
@@ -30973,6 +31210,9 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "squidex-oauth-auth"
+          ],
           "method": "GET",
           "defaultEnvironment": "https://localhost:5001",
           "environments": [
@@ -31099,6 +31339,9 @@
       "endpoints": [
         {
           "auth": true,
+          "authV2": [
+            "squidex-oauth-auth"
+          ],
           "method": "GET",
           "defaultEnvironment": "https://localhost:5001",
           "environments": [
@@ -31271,6 +31514,9 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "squidex-oauth-auth"
+          ],
           "method": "PUT",
           "defaultEnvironment": "https://localhost:5001",
           "environments": [
@@ -31452,6 +31698,9 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "squidex-oauth-auth"
+          ],
           "method": "GET",
           "defaultEnvironment": "https://localhost:5001",
           "environments": [
@@ -31624,6 +31873,9 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "squidex-oauth-auth"
+          ],
           "method": "PUT",
           "defaultEnvironment": "https://localhost:5001",
           "environments": [
@@ -31816,6 +32068,9 @@
       "endpoints": [
         {
           "auth": true,
+          "authV2": [
+            "squidex-oauth-auth"
+          ],
           "method": "GET",
           "defaultEnvironment": "https://localhost:5001",
           "environments": [
@@ -31905,6 +32160,9 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "squidex-oauth-auth"
+          ],
           "description": "Can be used to test, if the Squidex API is alive and responding.",
           "method": "GET",
           "defaultEnvironment": "https://localhost:5001",
@@ -31995,6 +32253,9 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "squidex-oauth-auth"
+          ],
           "description": "Can be used to test, if the Squidex API is alive and responding.",
           "method": "GET",
           "defaultEnvironment": "https://localhost:5001",
@@ -32117,6 +32378,9 @@
       "endpoints": [
         {
           "auth": true,
+          "authV2": [
+            "squidex-oauth-auth"
+          ],
           "method": "GET",
           "defaultEnvironment": "https://localhost:5001",
           "environments": [
@@ -32248,6 +32512,9 @@
       "endpoints": [
         {
           "auth": true,
+          "authV2": [
+            "squidex-oauth-auth"
+          ],
           "description": "Provide a list of supported language codes, following the ISO2Code standard.",
           "method": "GET",
           "defaultEnvironment": "https://localhost:5001",
@@ -32367,6 +32634,9 @@
       "endpoints": [
         {
           "auth": true,
+          "authV2": [
+            "squidex-oauth-auth"
+          ],
           "method": "GET",
           "defaultEnvironment": "https://localhost:5001",
           "environments": [
@@ -32527,6 +32797,9 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "squidex-oauth-auth"
+          ],
           "method": "GET",
           "defaultEnvironment": "https://localhost:5001",
           "environments": [
@@ -32697,6 +32970,9 @@
       "endpoints": [
         {
           "auth": true,
+          "authV2": [
+            "squidex-oauth-auth"
+          ],
           "method": "GET",
           "defaultEnvironment": "https://localhost:5001",
           "environments": [
@@ -32812,6 +33088,9 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "squidex-oauth-auth"
+          ],
           "method": "PUT",
           "defaultEnvironment": "https://localhost:5001",
           "environments": [
@@ -32963,6 +33242,9 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "squidex-oauth-auth"
+          ],
           "method": "PUT",
           "defaultEnvironment": "https://localhost:5001",
           "environments": [
@@ -33114,6 +33396,9 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "squidex-oauth-auth"
+          ],
           "method": "PUT",
           "defaultEnvironment": "https://localhost:5001",
           "environments": [
@@ -33276,6 +33561,9 @@
       "endpoints": [
         {
           "auth": true,
+          "authV2": [
+            "squidex-oauth-auth"
+          ],
           "method": "GET",
           "defaultEnvironment": "https://localhost:5001",
           "environments": [
@@ -33378,6 +33666,9 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "squidex-oauth-auth"
+          ],
           "method": "GET",
           "defaultEnvironment": "https://localhost:5001",
           "environments": [
@@ -33491,6 +33782,9 @@
       "endpoints": [
         {
           "auth": true,
+          "authV2": [
+            "squidex-oauth-auth"
+          ],
           "description": "You can read the generated documentation for your app at /api/content/{appName}/docs.",
           "method": "GET",
           "defaultEnvironment": "https://localhost:5001",
@@ -33830,6 +34124,9 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "squidex-oauth-auth"
+          ],
           "description": "You can read the generated documentation for your app at /api/content/{appName}/docs.",
           "method": "POST",
           "defaultEnvironment": "https://localhost:5001",
@@ -34233,6 +34530,9 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "squidex-oauth-auth"
+          ],
           "description": "You can read the generated documentation for your app at /api/content/{appName}/docs.",
           "method": "POST",
           "defaultEnvironment": "https://localhost:5001",
@@ -34596,6 +34896,9 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "squidex-oauth-auth"
+          ],
           "description": "You can read the generated documentation for your app at /api/content/{appName}/docs.",
           "method": "GET",
           "defaultEnvironment": "https://localhost:5001",
@@ -34918,6 +35221,9 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "squidex-oauth-auth"
+          ],
           "description": "You can read the generated documentation for your app at /api/content/{appName}/docs.",
           "method": "POST",
           "defaultEnvironment": "https://localhost:5001",
@@ -35340,6 +35646,9 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "squidex-oauth-auth"
+          ],
           "description": "You can read the generated documentation for your app at /api/content/{appName}/docs.",
           "method": "PUT",
           "defaultEnvironment": "https://localhost:5001",
@@ -35722,6 +36031,9 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "squidex-oauth-auth"
+          ],
           "description": "You can create an generated documentation for your app at /api/content/{appName}/docs.",
           "method": "DELETE",
           "defaultEnvironment": "https://localhost:5001",
@@ -35923,6 +36235,9 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "squidex-oauth-auth"
+          ],
           "description": "You can read the generated documentation for your app at /api/content/{appName}/docs.",
           "method": "PATCH",
           "defaultEnvironment": "https://localhost:5001",
@@ -36305,6 +36620,9 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "squidex-oauth-auth"
+          ],
           "description": "You can read the generated documentation for your app at /api/content/{appName}/docs.",
           "method": "GET",
           "defaultEnvironment": "https://localhost:5001",
@@ -36479,6 +36797,9 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "squidex-oauth-auth"
+          ],
           "description": "You can read the generated documentation for your app at /api/content/{appName}/docs.",
           "method": "GET",
           "defaultEnvironment": "https://localhost:5001",
@@ -36824,6 +37145,9 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "squidex-oauth-auth"
+          ],
           "description": "You can read the generated documentation for your app at /api/content/{appName}/docs.",
           "method": "GET",
           "defaultEnvironment": "https://localhost:5001",
@@ -37170,6 +37494,9 @@
         {
           "availability": "Deprecated",
           "auth": true,
+          "authV2": [
+            "squidex-oauth-auth"
+          ],
           "description": "You can read the generated documentation for your app at /api/content/{appName}/docs.",
           "method": "GET",
           "defaultEnvironment": "https://localhost:5001",
@@ -37338,6 +37665,9 @@
         {
           "availability": "Deprecated",
           "auth": true,
+          "authV2": [
+            "squidex-oauth-auth"
+          ],
           "description": "You can read the generated documentation for your app at /api/content/{appName}/docs.",
           "method": "POST",
           "defaultEnvironment": "https://localhost:5001",
@@ -37577,6 +37907,9 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "squidex-oauth-auth"
+          ],
           "description": "You can read the generated documentation for your app at /api/content/{appName}/docs.",
           "method": "POST",
           "defaultEnvironment": "https://localhost:5001",
@@ -37816,6 +38149,9 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "squidex-oauth-auth"
+          ],
           "description": "You can read the generated documentation for your app at /api/content/{appName}/docs.",
           "method": "PUT",
           "defaultEnvironment": "https://localhost:5001",
@@ -38202,6 +38538,9 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "squidex-oauth-auth"
+          ],
           "description": "You can read the generated documentation for your app at /api/content/{appName}/docs.",
           "method": "DELETE",
           "defaultEnvironment": "https://localhost:5001",
@@ -38546,6 +38885,9 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "squidex-oauth-auth"
+          ],
           "description": "You can read the generated documentation for your app at /api/content/{appName}/docs.",
           "method": "POST",
           "defaultEnvironment": "https://localhost:5001",
@@ -38890,6 +39232,9 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "squidex-oauth-auth"
+          ],
           "description": "You can read the generated documentation for your app at /api/content/{appName}/docs.",
           "method": "DELETE",
           "defaultEnvironment": "https://localhost:5001",
@@ -39245,6 +39590,9 @@
       "endpoints": [
         {
           "auth": true,
+          "authV2": [
+            "squidex-oauth-auth"
+          ],
           "method": "GET",
           "defaultEnvironment": "https://localhost:5001",
           "environments": [
@@ -39400,6 +39748,9 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "squidex-oauth-auth"
+          ],
           "description": "When passing in a version you can retrieve all updates since then.",
           "method": "GET",
           "defaultEnvironment": "https://localhost:5001",
@@ -39603,6 +39954,9 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "squidex-oauth-auth"
+          ],
           "method": "POST",
           "defaultEnvironment": "https://localhost:5001",
           "environments": [
@@ -39811,6 +40165,9 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "squidex-oauth-auth"
+          ],
           "method": "PUT",
           "defaultEnvironment": "https://localhost:5001",
           "environments": [
@@ -40026,6 +40383,9 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "squidex-oauth-auth"
+          ],
           "method": "DELETE",
           "defaultEnvironment": "https://localhost:5001",
           "environments": [
@@ -40210,6 +40570,9 @@
       "endpoints": [
         {
           "auth": true,
+          "authV2": [
+            "squidex-oauth-auth"
+          ],
           "description": "When passing in a version you can retrieve all updates since then.",
           "method": "GET",
           "defaultEnvironment": "https://localhost:5001",
@@ -40382,6 +40745,9 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "squidex-oauth-auth"
+          ],
           "method": "DELETE",
           "defaultEnvironment": "https://localhost:5001",
           "environments": [
@@ -40547,6 +40913,9 @@
       "endpoints": [
         {
           "auth": true,
+          "authV2": [
+            "squidex-oauth-auth"
+          ],
           "method": "GET",
           "defaultEnvironment": "https://localhost:5001",
           "environments": [
@@ -40675,6 +41044,9 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "squidex-oauth-auth"
+          ],
           "method": "DELETE",
           "defaultEnvironment": "https://localhost:5001",
           "environments": [
@@ -40829,6 +41201,9 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "squidex-oauth-auth"
+          ],
           "method": "GET",
           "defaultEnvironment": "https://localhost:5001",
           "environments": [
@@ -40966,6 +41341,9 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "squidex-oauth-auth"
+          ],
           "method": "GET",
           "defaultEnvironment": "https://localhost:5001",
           "environments": [
@@ -41114,6 +41492,9 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "squidex-oauth-auth"
+          ],
           "method": "POST",
           "defaultEnvironment": "https://localhost:5001",
           "environments": [
@@ -41249,6 +41630,9 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "squidex-oauth-auth"
+          ],
           "method": "GET",
           "defaultEnvironment": "https://localhost:5001",
           "environments": [
@@ -41354,6 +41738,9 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "squidex-oauth-auth"
+          ],
           "method": "POST",
           "defaultEnvironment": "https://localhost:5001",
           "environments": [
@@ -41509,6 +41896,9 @@
       "endpoints": [
         {
           "auth": true,
+          "authV2": [
+            "squidex-oauth-auth"
+          ],
           "method": "GET",
           "defaultEnvironment": "https://localhost:5001",
           "environments": [
@@ -41836,6 +42226,9 @@
         {
           "availability": "Deprecated",
           "auth": true,
+          "authV2": [
+            "squidex-oauth-auth"
+          ],
           "method": "GET",
           "defaultEnvironment": "https://localhost:5001",
           "environments": [
@@ -42124,6 +42517,9 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "squidex-oauth-auth"
+          ],
           "description": "Get all asset folders for the app.",
           "method": "GET",
           "defaultEnvironment": "https://localhost:5001",
@@ -42314,6 +42710,9 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "squidex-oauth-auth"
+          ],
           "method": "POST",
           "defaultEnvironment": "https://localhost:5001",
           "environments": [
@@ -42503,6 +42902,9 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "squidex-oauth-auth"
+          ],
           "method": "PUT",
           "defaultEnvironment": "https://localhost:5001",
           "environments": [
@@ -42711,6 +43113,9 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "squidex-oauth-auth"
+          ],
           "method": "DELETE",
           "defaultEnvironment": "https://localhost:5001",
           "environments": [
@@ -42865,6 +43270,9 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "squidex-oauth-auth"
+          ],
           "method": "PUT",
           "defaultEnvironment": "https://localhost:5001",
           "environments": [
@@ -43069,6 +43477,9 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "squidex-oauth-auth"
+          ],
           "description": "Get all tags for assets.",
           "method": "GET",
           "defaultEnvironment": "https://localhost:5001",
@@ -43214,6 +43625,9 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "squidex-oauth-auth"
+          ],
           "method": "PUT",
           "defaultEnvironment": "https://localhost:5001",
           "environments": [
@@ -43432,6 +43846,9 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "squidex-oauth-auth"
+          ],
           "description": "Get all assets for the app.",
           "method": "GET",
           "defaultEnvironment": "https://localhost:5001",
@@ -43719,6 +44136,9 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "squidex-oauth-auth"
+          ],
           "description": "You can only upload one file at a time. The mime type of the file is not calculated by Squidex and is required correctly.",
           "method": "POST",
           "defaultEnvironment": "https://localhost:5001",
@@ -44021,6 +44441,9 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "squidex-oauth-auth"
+          ],
           "description": "Get all assets for the app.",
           "method": "POST",
           "defaultEnvironment": "https://localhost:5001",
@@ -44267,6 +44690,9 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "squidex-oauth-auth"
+          ],
           "method": "GET",
           "defaultEnvironment": "https://localhost:5001",
           "environments": [
@@ -44468,6 +44894,9 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "squidex-oauth-auth"
+          ],
           "description": "You can only upload one file at a time. The mime type of the file is not calculated by Squidex and is required correctly.",
           "method": "POST",
           "defaultEnvironment": "https://localhost:5001",
@@ -44776,6 +45205,9 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "squidex-oauth-auth"
+          ],
           "method": "PUT",
           "defaultEnvironment": "https://localhost:5001",
           "environments": [
@@ -45028,6 +45460,9 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "squidex-oauth-auth"
+          ],
           "method": "DELETE",
           "defaultEnvironment": "https://localhost:5001",
           "environments": [
@@ -45209,6 +45644,9 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "squidex-oauth-auth"
+          ],
           "method": "POST",
           "defaultEnvironment": "https://localhost:5001",
           "environments": [
@@ -45420,6 +45858,9 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "squidex-oauth-auth"
+          ],
           "description": "Use multipart request to upload an asset.",
           "method": "PUT",
           "defaultEnvironment": "https://localhost:5001",
@@ -45701,6 +46142,9 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "squidex-oauth-auth"
+          ],
           "method": "PUT",
           "defaultEnvironment": "https://localhost:5001",
           "environments": [
@@ -45964,6 +46408,9 @@
       "endpoints": [
         {
           "auth": true,
+          "authV2": [
+            "squidex-oauth-auth"
+          ],
           "method": "GET",
           "defaultEnvironment": "https://localhost:5001",
           "environments": [
@@ -46106,6 +46553,9 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "squidex-oauth-auth"
+          ],
           "method": "PUT",
           "defaultEnvironment": "https://localhost:5001",
           "environments": [
@@ -46299,6 +46749,9 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "squidex-oauth-auth"
+          ],
           "description": "Gets all configured clients for the app with the specified name.",
           "method": "GET",
           "defaultEnvironment": "https://localhost:5001",
@@ -46450,6 +46903,9 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "squidex-oauth-auth"
+          ],
           "description": "Create a new client for the app with the specified name.\nThe client secret is auto generated on the server and returned. The client does not expire, the access token is valid for 30 days.",
           "method": "POST",
           "defaultEnvironment": "https://localhost:5001",
@@ -46656,6 +47112,9 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "squidex-oauth-auth"
+          ],
           "description": "Only the display name can be changed, create a new client if necessary.",
           "method": "PUT",
           "defaultEnvironment": "https://localhost:5001",
@@ -46877,6 +47336,9 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "squidex-oauth-auth"
+          ],
           "description": "The application that uses this client credentials cannot access the API after it has been revoked.",
           "method": "DELETE",
           "defaultEnvironment": "https://localhost:5001",
@@ -47060,6 +47522,9 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "squidex-oauth-auth"
+          ],
           "method": "GET",
           "defaultEnvironment": "https://localhost:5001",
           "environments": [
@@ -47212,6 +47677,9 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "squidex-oauth-auth"
+          ],
           "method": "POST",
           "defaultEnvironment": "https://localhost:5001",
           "environments": [
@@ -47419,6 +47887,9 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "squidex-oauth-auth"
+          ],
           "method": "DELETE",
           "defaultEnvironment": "https://localhost:5001",
           "environments": [
@@ -47584,6 +48055,9 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "squidex-oauth-auth"
+          ],
           "method": "DELETE",
           "defaultEnvironment": "https://localhost:5001",
           "environments": [
@@ -47768,6 +48242,9 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "squidex-oauth-auth"
+          ],
           "method": "GET",
           "defaultEnvironment": "https://localhost:5001",
           "environments": [
@@ -47877,6 +48354,9 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "squidex-oauth-auth"
+          ],
           "method": "POST",
           "defaultEnvironment": "https://localhost:5001",
           "environments": [
@@ -48099,6 +48579,9 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "squidex-oauth-auth"
+          ],
           "method": "DELETE",
           "defaultEnvironment": "https://localhost:5001",
           "environments": [
@@ -48268,6 +48751,9 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "squidex-oauth-auth"
+          ],
           "method": "GET",
           "defaultEnvironment": "https://localhost:5001",
           "environments": [
@@ -48418,6 +48904,9 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "squidex-oauth-auth"
+          ],
           "method": "POST",
           "defaultEnvironment": "https://localhost:5001",
           "environments": [
@@ -48623,6 +49112,9 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "squidex-oauth-auth"
+          ],
           "method": "PUT",
           "defaultEnvironment": "https://localhost:5001",
           "environments": [
@@ -48843,6 +49335,9 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "squidex-oauth-auth"
+          ],
           "method": "DELETE",
           "defaultEnvironment": "https://localhost:5001",
           "environments": [
@@ -49025,6 +49520,9 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "squidex-oauth-auth"
+          ],
           "method": "GET",
           "defaultEnvironment": "https://localhost:5001",
           "environments": [
@@ -49177,6 +49675,9 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "squidex-oauth-auth"
+          ],
           "method": "POST",
           "defaultEnvironment": "https://localhost:5001",
           "environments": [
@@ -49384,6 +49885,9 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "squidex-oauth-auth"
+          ],
           "method": "GET",
           "defaultEnvironment": "https://localhost:5001",
           "environments": [
@@ -49520,6 +50024,9 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "squidex-oauth-auth"
+          ],
           "method": "PUT",
           "defaultEnvironment": "https://localhost:5001",
           "environments": [
@@ -49750,6 +50257,9 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "squidex-oauth-auth"
+          ],
           "method": "DELETE",
           "defaultEnvironment": "https://localhost:5001",
           "environments": [
@@ -49934,6 +50444,9 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "squidex-oauth-auth"
+          ],
           "description": "You can only retrieve the list of apps when you are authenticated as a user (OpenID implicit flow).\nYou will retrieve all apps, where you are assigned as a contributor.",
           "method": "GET",
           "defaultEnvironment": "https://localhost:5001",
@@ -50068,6 +50581,9 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "squidex-oauth-auth"
+          ],
           "description": "You can only create an app when you are authenticated as a user (OpenID implicit flow).\nYou will be assigned as owner of the new app automatically.",
           "method": "POST",
           "defaultEnvironment": "https://localhost:5001",
@@ -50260,6 +50776,9 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "squidex-oauth-auth"
+          ],
           "description": "You can only retrieve the list of apps when you are authenticated as a user (OpenID implicit flow).\nYou will retrieve all apps, where you are assigned as a contributor.",
           "method": "GET",
           "defaultEnvironment": "https://localhost:5001",
@@ -50415,6 +50934,9 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "squidex-oauth-auth"
+          ],
           "method": "GET",
           "defaultEnvironment": "https://localhost:5001",
           "environments": [
@@ -50571,6 +51093,9 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "squidex-oauth-auth"
+          ],
           "method": "PUT",
           "defaultEnvironment": "https://localhost:5001",
           "environments": [
@@ -50778,6 +51303,9 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "squidex-oauth-auth"
+          ],
           "method": "DELETE",
           "defaultEnvironment": "https://localhost:5001",
           "environments": [
@@ -50913,6 +51441,9 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "squidex-oauth-auth"
+          ],
           "method": "PUT",
           "defaultEnvironment": "https://localhost:5001",
           "environments": [
@@ -51120,6 +51651,9 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "squidex-oauth-auth"
+          ],
           "method": "GET",
           "defaultEnvironment": "https://localhost:5001",
           "environments": [
@@ -51278,6 +51812,9 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "squidex-oauth-auth"
+          ],
           "method": "PUT",
           "defaultEnvironment": "https://localhost:5001",
           "environments": [
@@ -51513,6 +52050,9 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "squidex-oauth-auth"
+          ],
           "method": "GET",
           "defaultEnvironment": "https://localhost:5001",
           "environments": [
@@ -51669,6 +52209,9 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "squidex-oauth-auth"
+          ],
           "method": "POST",
           "defaultEnvironment": "https://localhost:5001",
           "environments": [
@@ -51880,6 +52423,9 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "squidex-oauth-auth"
+          ],
           "method": "PUT",
           "defaultEnvironment": "https://localhost:5001",
           "environments": [
@@ -52112,6 +52658,9 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "squidex-oauth-auth"
+          ],
           "method": "DELETE",
           "defaultEnvironment": "https://localhost:5001",
           "environments": [
@@ -52547,6 +53096,7 @@
       "subpackage_apps"
     ]
   },
+  "authSchemes": {},
   "snippetsConfiguration": {},
   "globalHeaders": []
 }

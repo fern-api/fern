@@ -1478,16 +1478,14 @@
             "type": {
               "type": "id",
               "value": "StartingConnectionInfo"
-            },
-            "displayName": "StartingConnectionInfo"
+            }
           },
           {
             "typeName": "ActiveConnectionInfo",
             "type": {
               "type": "id",
               "value": "ActiveConnectionInfo"
-            },
-            "displayName": "ActiveConnectionInfo"
+            }
           }
         ]
       }
@@ -1647,6 +1645,9 @@
       "endpoints": [
         {
           "auth": true,
+          "authV2": [
+            "auth0"
+          ],
           "method": "GET",
           "defaultEnvironment": "https://api.hathora.dev",
           "environments": [
@@ -1806,6 +1807,9 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "auth0"
+          ],
           "method": "POST",
           "defaultEnvironment": "https://api.hathora.dev",
           "environments": [
@@ -1988,6 +1992,9 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "auth0"
+          ],
           "method": "POST",
           "defaultEnvironment": "https://api.hathora.dev",
           "environments": [
@@ -2188,6 +2195,9 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "auth0"
+          ],
           "method": "GET",
           "defaultEnvironment": "https://api.hathora.dev",
           "environments": [
@@ -2333,6 +2343,9 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "auth0"
+          ],
           "method": "DELETE",
           "defaultEnvironment": "https://api.hathora.dev",
           "environments": [
@@ -2471,6 +2484,7 @@
       "endpoints": [
         {
           "auth": true,
+          "authV2": [],
           "method": "POST",
           "defaultEnvironment": "https://api.hathora.dev",
           "environments": [
@@ -2588,6 +2602,7 @@
         },
         {
           "auth": true,
+          "authV2": [],
           "method": "POST",
           "defaultEnvironment": "https://api.hathora.dev",
           "environments": [
@@ -2759,6 +2774,7 @@
         },
         {
           "auth": true,
+          "authV2": [],
           "method": "POST",
           "defaultEnvironment": "https://api.hathora.dev",
           "environments": [
@@ -2955,6 +2971,9 @@
       "endpoints": [
         {
           "auth": true,
+          "authV2": [
+            "auth0"
+          ],
           "method": "GET",
           "defaultEnvironment": "https://api.hathora.dev",
           "environments": [
@@ -3110,6 +3129,9 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "auth0"
+          ],
           "method": "GET",
           "defaultEnvironment": "https://api.hathora.dev",
           "environments": [
@@ -3271,6 +3293,9 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "auth0"
+          ],
           "method": "POST",
           "defaultEnvironment": "https://api.hathora.dev",
           "environments": [
@@ -3446,6 +3471,9 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "auth0"
+          ],
           "method": "POST",
           "defaultEnvironment": "https://api.hathora.dev",
           "environments": [
@@ -3639,6 +3667,9 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "auth0"
+          ],
           "method": "DELETE",
           "defaultEnvironment": "https://api.hathora.dev",
           "environments": [
@@ -3808,6 +3839,9 @@
       "endpoints": [
         {
           "auth": true,
+          "authV2": [
+            "auth0"
+          ],
           "method": "GET",
           "defaultEnvironment": "https://api.hathora.dev",
           "environments": [
@@ -3967,6 +4001,9 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "auth0"
+          ],
           "method": "GET",
           "defaultEnvironment": "https://api.hathora.dev",
           "environments": [
@@ -4132,6 +4169,9 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "auth0"
+          ],
           "method": "POST",
           "defaultEnvironment": "https://api.hathora.dev",
           "environments": [
@@ -4393,6 +4433,7 @@
       "endpoints": [
         {
           "auth": true,
+          "authV2": [],
           "method": "GET",
           "defaultEnvironment": "https://api.hathora.dev",
           "environments": [
@@ -4495,6 +4536,7 @@
         {
           "availability": "Deprecated",
           "auth": true,
+          "authV2": [],
           "method": "POST",
           "defaultEnvironment": "https://api.hathora.dev",
           "environments": [
@@ -4705,6 +4747,7 @@
         {
           "availability": "Deprecated",
           "auth": true,
+          "authV2": [],
           "method": "POST",
           "defaultEnvironment": "https://api.hathora.dev",
           "environments": [
@@ -4915,6 +4958,7 @@
         {
           "availability": "Deprecated",
           "auth": true,
+          "authV2": [],
           "method": "GET",
           "defaultEnvironment": "https://api.hathora.dev",
           "environments": [
@@ -5120,6 +5164,7 @@
         {
           "availability": "Deprecated",
           "auth": true,
+          "authV2": [],
           "method": "POST",
           "defaultEnvironment": "https://api.hathora.dev",
           "environments": [
@@ -5403,6 +5448,7 @@
         {
           "availability": "Deprecated",
           "auth": true,
+          "authV2": [],
           "method": "POST",
           "defaultEnvironment": "https://api.hathora.dev",
           "environments": [
@@ -5686,6 +5732,7 @@
         {
           "availability": "Deprecated",
           "auth": true,
+          "authV2": [],
           "method": "POST",
           "defaultEnvironment": "https://api.hathora.dev",
           "environments": [
@@ -5968,6 +6015,7 @@
         },
         {
           "auth": true,
+          "authV2": [],
           "method": "POST",
           "defaultEnvironment": "https://api.hathora.dev",
           "environments": [
@@ -6266,6 +6314,7 @@
         },
         {
           "auth": true,
+          "authV2": [],
           "method": "GET",
           "defaultEnvironment": "https://api.hathora.dev",
           "environments": [
@@ -6404,6 +6453,7 @@
         },
         {
           "auth": true,
+          "authV2": [],
           "method": "GET",
           "defaultEnvironment": "https://api.hathora.dev",
           "environments": [
@@ -6553,6 +6603,9 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "auth0"
+          ],
           "method": "POST",
           "defaultEnvironment": "https://api.hathora.dev",
           "environments": [
@@ -6777,6 +6830,9 @@
       "endpoints": [
         {
           "auth": true,
+          "authV2": [
+            "auth0"
+          ],
           "method": "GET",
           "defaultEnvironment": "https://api.hathora.dev",
           "environments": [
@@ -6918,6 +6974,9 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "auth0"
+          ],
           "method": "GET",
           "defaultEnvironment": "https://api.hathora.dev",
           "environments": [
@@ -7065,6 +7124,9 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "auth0"
+          ],
           "method": "GET",
           "defaultEnvironment": "https://api.hathora.dev",
           "environments": [
@@ -7217,6 +7279,9 @@
       "endpoints": [
         {
           "auth": true,
+          "authV2": [
+            "auth0"
+          ],
           "method": "GET",
           "defaultEnvironment": "https://api.hathora.dev",
           "environments": [
@@ -7472,6 +7537,9 @@
       "endpoints": [
         {
           "auth": true,
+          "authV2": [
+            "auth0"
+          ],
           "method": "GET",
           "defaultEnvironment": "https://api.hathora.dev",
           "environments": [
@@ -7648,6 +7716,9 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "auth0"
+          ],
           "method": "GET",
           "defaultEnvironment": "https://api.hathora.dev",
           "environments": [
@@ -7816,6 +7887,9 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "auth0"
+          ],
           "method": "GET",
           "defaultEnvironment": "https://api.hathora.dev",
           "environments": [
@@ -7989,6 +8063,9 @@
       "endpoints": [
         {
           "auth": true,
+          "authV2": [
+            "auth0"
+          ],
           "method": "POST",
           "defaultEnvironment": "https://api.hathora.dev",
           "environments": [
@@ -8167,6 +8244,9 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "auth0"
+          ],
           "method": "GET",
           "defaultEnvironment": "https://api.hathora.dev",
           "environments": [
@@ -8332,6 +8412,9 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "auth0"
+          ],
           "method": "GET",
           "defaultEnvironment": "https://api.hathora.dev",
           "environments": [
@@ -8471,6 +8554,9 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "auth0"
+          ],
           "method": "GET",
           "defaultEnvironment": "https://api.hathora.dev",
           "environments": [
@@ -8610,6 +8696,9 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "auth0"
+          ],
           "method": "POST",
           "defaultEnvironment": "https://api.hathora.dev",
           "environments": [
@@ -8754,6 +8843,9 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "auth0"
+          ],
           "method": "POST",
           "defaultEnvironment": "https://api.hathora.dev",
           "environments": [
@@ -8898,6 +8990,7 @@
         },
         {
           "auth": true,
+          "authV2": [],
           "method": "GET",
           "defaultEnvironment": "https://api.hathora.dev",
           "environments": [
@@ -9126,6 +9219,12 @@
   "auth": {
     "type": "bearerAuth",
     "tokenName": "token"
+  },
+  "authSchemes": {
+    "auth0": {
+      "type": "bearerAuth",
+      "tokenName": "token"
+    }
   },
   "snippetsConfiguration": {},
   "globalHeaders": []

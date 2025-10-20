@@ -14,6 +14,7 @@ export { getSchemaOptions } from "./codegen-utils/getSchemaOptions";
 export { getTextOfTsKeyword } from "./codegen-utils/getTextOfTsKeyword";
 export { getTextOfTsNode } from "./codegen-utils/getTextOfTsNode";
 export { InlineConsts } from "./codegen-utils/inlineConsts";
+export { isExpressionUndefined } from "./codegen-utils/isExpressionUndefined";
 export { maybeAddDocsNode, maybeAddDocsStructure } from "./codegen-utils/maybeAddDocs";
 export { writerToString } from "./codegen-utils/writerToString";
 export * from "./core-utilities";

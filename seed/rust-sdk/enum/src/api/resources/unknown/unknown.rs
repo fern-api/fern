@@ -1,6 +1,4 @@
-use crate::{ClientConfig, ApiError, HttpClient, RequestOptions};
-use reqwest::{Method};
-use crate::api::{*};
+use crate::{ClientConfig, ApiError, HttpClient};
 
 pub struct UnknownClient {
     pub http_client: HttpClient,

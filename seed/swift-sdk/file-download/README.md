@@ -20,7 +20,7 @@ With Swift Package Manager (SPM), add the following to the top-level `dependenci
 
 ```swift
 dependencies: [
-    .package(url: "<git-url>", from: "0.1.0"),
+    .package(url: "https://github.com/file-download/fern", from: "0.0.1"),
 ]
 ```
 
@@ -39,7 +39,7 @@ import FileDownload
 private func main() async throws {
     let client = FileDownloadClient()
 
-    try await client.service.simple()
+    _ = try await client.service.simple()
 }
 
 try await main()

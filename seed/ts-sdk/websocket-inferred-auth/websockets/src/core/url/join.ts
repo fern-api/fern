@@ -17,7 +17,7 @@ export function join(base: string, ...segments: string[]): string {
         }
 
         const lastSegment = segments[segments.length - 1];
-        const shouldPreserveTrailingSlash = lastSegment && lastSegment.endsWith("/");
+        const shouldPreserveTrailingSlash = lastSegment?.endsWith("/");
 
         for (const segment of segments) {
             const cleanSegment = trimSlashes(segment);
@@ -44,7 +44,7 @@ function joinPath(base: string, ...segments: string[]): string {
     let result = base;
 
     const lastSegment = segments[segments.length - 1];
-    const shouldPreserveTrailingSlash = lastSegment && lastSegment.endsWith("/");
+    const shouldPreserveTrailingSlash = lastSegment?.endsWith("/");
 
     for (const segment of segments) {
         const cleanSegment = trimSlashes(segment);
@@ -64,7 +64,7 @@ function joinPathSegments(left: string, right: string): string {
     if (left.endsWith("/")) {
         return left + right;
     }
-    return left + "/" + right;
+    return `${left}/${right}`;
 }
 
 function trimSlashes(str: string): string {

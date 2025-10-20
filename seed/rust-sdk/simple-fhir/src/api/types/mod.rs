@@ -6,10 +6,10 @@ pub mod practitioner;
 pub mod resource_list;
 pub mod script;
 
-pub use account::*;
-pub use base_resource::*;
-pub use memo::*;
-pub use patient::*;
-pub use practitioner::*;
-pub use resource_list::*;
-pub use script::*;
+pub use account::Account;
+pub use base_resource::BaseResource;
+pub use memo::Memo;
+pub use patient::Patient;
+pub use practitioner::Practitioner;
+pub use resource_list::ResourceList;
+pub use script::Script;

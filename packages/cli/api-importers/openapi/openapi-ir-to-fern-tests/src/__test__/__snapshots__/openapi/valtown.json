@@ -1786,7 +1786,9 @@ docs: Blobs
                       "docs": "A single email or list of emails for one of the address fields",
                       "type": "optional<EmailsSendRequestCc>",
                     },
-                    "from": "optional<EmailsSendRequestFrom>",
+                    "from": {
+                      "type": "optional<EmailsSendRequestFrom>",
+                    },
                     "html": {
                       "docs": "HTML content of the email. Can be specified alongside text",
                       "type": "optional<string>",
@@ -1835,16 +1837,10 @@ docs: Blobs
             "inline": true,
             "properties": {
               "content": "string",
-              "contentId": {
-                "type": "optional<string>",
-              },
-              "disposition": {
-                "type": "optional<string>",
-              },
+              "contentId": "optional<string>",
+              "disposition": "optional<string>",
               "filename": "string",
-              "type": {
-                "type": "optional<string>",
-              },
+              "type": "optional<string>",
             },
             "source": {
               "openapi": "../openapi.yml",
@@ -1889,9 +1885,7 @@ docs: Blobs
             "inline": true,
             "properties": {
               "email": "string",
-              "name": {
-                "type": "optional<string>",
-              },
+              "name": "optional<string>",
             },
             "source": {
               "openapi": "../openapi.yml",
@@ -1918,9 +1912,7 @@ docs: Blobs
             "inline": true,
             "properties": {
               "email": "string",
-              "name": {
-                "type": "optional<string>",
-              },
+              "name": "optional<string>",
             },
             "source": {
               "openapi": "../openapi.yml",
@@ -1965,9 +1957,7 @@ docs: Blobs
             "inline": true,
             "properties": {
               "email": "string",
-              "name": {
-                "type": "optional<string>",
-              },
+              "name": "optional<string>",
             },
             "source": {
               "openapi": "../openapi.yml",
@@ -1994,9 +1984,7 @@ docs: Blobs
             "inline": true,
             "properties": {
               "email": "string",
-              "name": {
-                "type": "optional<string>",
-              },
+              "name": "optional<string>",
             },
             "source": {
               "openapi": "../openapi.yml",
@@ -2023,9 +2011,7 @@ docs: Blobs
             "inline": true,
             "properties": {
               "email": "string",
-              "name": {
-                "type": "optional<string>",
-              },
+              "name": "optional<string>",
             },
             "source": {
               "openapi": "../openapi.yml",
@@ -2054,9 +2040,7 @@ docs: Blobs
             "inline": true,
             "properties": {
               "email": "string",
-              "name": {
-                "type": "optional<string>",
-              },
+              "name": "optional<string>",
             },
             "source": {
               "openapi": "../openapi.yml",
@@ -2067,9 +2051,7 @@ docs: Blobs
             "inline": true,
             "properties": {
               "email": "string",
-              "name": {
-                "type": "optional<string>",
-              },
+              "name": "optional<string>",
             },
             "source": {
               "openapi": "../openapi.yml",
@@ -2114,9 +2096,7 @@ docs: Blobs
             "inline": true,
             "properties": {
               "email": "string",
-              "name": {
-                "type": "optional<string>",
-              },
+              "name": "optional<string>",
             },
             "source": {
               "openapi": "../openapi.yml",
@@ -2143,9 +2123,7 @@ docs: Blobs
             "inline": true,
             "properties": {
               "email": "string",
-              "name": {
-                "type": "optional<string>",
-              },
+              "name": "optional<string>",
             },
             "source": {
               "openapi": "../openapi.yml",
@@ -2167,8 +2145,7 @@ docs: Blobs
   EmailsSendRequestFromEmail:
     docs: An email address and name
     properties:
-      name:
-        type: optional<string>
+      name: optional<string>
       email: string
     source:
       openapi: ../openapi.yml
@@ -2185,8 +2162,7 @@ docs: Blobs
   EmailsSendRequestToZeroEmail:
     docs: An email address and name
     properties:
-      name:
-        type: optional<string>
+      name: optional<string>
       email: string
     source:
       openapi: ../openapi.yml
@@ -2203,8 +2179,7 @@ docs: Blobs
   EmailsSendRequestToItemEmail:
     docs: An email address and name
     properties:
-      name:
-        type: optional<string>
+      name: optional<string>
       email: string
     source:
       openapi: ../openapi.yml
@@ -2231,8 +2206,7 @@ docs: Blobs
   EmailsSendRequestCcZeroEmail:
     docs: An email address and name
     properties:
-      name:
-        type: optional<string>
+      name: optional<string>
       email: string
     source:
       openapi: ../openapi.yml
@@ -2249,8 +2223,7 @@ docs: Blobs
   EmailsSendRequestCcItemEmail:
     docs: An email address and name
     properties:
-      name:
-        type: optional<string>
+      name: optional<string>
       email: string
     source:
       openapi: ../openapi.yml
@@ -2277,8 +2250,7 @@ docs: Blobs
   EmailsSendRequestBccZeroEmail:
     docs: An email address and name
     properties:
-      name:
-        type: optional<string>
+      name: optional<string>
       email: string
     source:
       openapi: ../openapi.yml
@@ -2295,8 +2267,7 @@ docs: Blobs
   EmailsSendRequestBccItemEmail:
     docs: An email address and name
     properties:
-      name:
-        type: optional<string>
+      name: optional<string>
       email: string
     source:
       openapi: ../openapi.yml
@@ -2324,20 +2295,16 @@ docs: Blobs
     properties:
       content: string
       filename: string
-      type:
-        type: optional<string>
-      disposition:
-        type: optional<string>
-      contentId:
-        type: optional<string>
+      type: optional<string>
+      disposition: optional<string>
+      contentId: optional<string>
     source:
       openapi: ../openapi.yml
     inline: true
   EmailsSendRequestReplyToListEmail:
     docs: An email address and name
     properties:
-      name:
-        type: optional<string>
+      name: optional<string>
       email: string
     source:
       openapi: ../openapi.yml
@@ -2345,8 +2312,7 @@ docs: Blobs
   EmailsSendRequestReplyToListItem:
     docs: An email address and name
     properties:
-      name:
-        type: optional<string>
+      name: optional<string>
       email: string
     source:
       openapi: ../openapi.yml
@@ -2388,7 +2354,8 @@ service:
             subject:
               type: optional<string>
               docs: The subject line of the email
-            from: optional<EmailsSendRequestFrom>
+            from:
+              type: optional<EmailsSendRequestFrom>
             to:
               type: optional<EmailsSendRequestTo>
               docs: A single email or list of emails for one of the address fields

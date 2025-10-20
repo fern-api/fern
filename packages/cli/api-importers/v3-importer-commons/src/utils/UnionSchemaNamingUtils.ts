@@ -2,43 +2,6 @@ import { OpenAPIV3_1 } from "openapi-types";
 
 export namespace UnionSchemaNamingUtils {
     /**
-     * Generates a meaningful display name for inlined union variants using a heuristic:
-     * 1. Try typeName first (converted to Pascal case)
-     * 2. Try title
-     * 3. Try description
-     * 4. For object schemas, generate name from distinctive properties
-     * 5. Fall back to undefined (will use auto-generated name)
-     */
-    export function generateDisplayNameForInlinedObject(
-        subSchema: OpenAPIV3_1.SchemaObject & { typeName?: string },
-        allVariants: OpenAPIV3_1.SchemaObject[]
-    ): string | undefined {
-        // Try title first
-        if (subSchema.title) {
-            return subSchema.title;
-        }
-
-        // Try description second
-        if (subSchema.description) {
-            const nameFromDescription = cleanDescriptionForDisplayName(subSchema.description);
-            if (nameFromDescription) {
-                return nameFromDescription;
-            }
-        }
-
-        // For object schemas, try to generate name from properties
-        if (subSchema.type === "object" && subSchema.properties && Object.keys(subSchema.properties).length > 0) {
-            const nameFromProperties = generateNameFromObjectProperties(subSchema, allVariants);
-            if (nameFromProperties) {
-                return nameFromProperties;
-            }
-        }
-
-        // Fall back to undefined (will use auto-generated name)
-        return undefined;
-    }
-
-    /**
      * Converts a string from camelCase or snake_case to PascalCase
      */
     export function convertToPascalCase(str: string): string {

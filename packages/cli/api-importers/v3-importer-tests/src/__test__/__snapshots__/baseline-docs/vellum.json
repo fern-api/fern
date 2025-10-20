@@ -4651,7 +4651,13 @@
               "wireValue": "value"
             },
             "valueType": {
-              "type": "unknown"
+              "container": {
+                "nullable": {
+                  "type": "unknown"
+                },
+                "type": "nullable"
+              },
+              "type": "container"
             },
             "v2Examples": {
               "userSpecifiedExamples": {},
@@ -39346,7 +39352,10 @@
               "wireValue": "value"
             },
             "typeReference": {
-              "type": "unknown"
+              "value": {
+                "type": "unknown"
+              },
+              "type": "nullable"
             }
           }
         ],
@@ -55817,7 +55826,7 @@
           "type": "inlined"
         },
         "response": {
-          "type": "json"
+          "type": "streaming"
         },
         "examples": []
       },
@@ -56090,7 +56099,7 @@
           "type": "inlined"
         },
         "response": {
-          "type": "json"
+          "type": "streaming"
         },
         "examples": []
       },
@@ -56568,7 +56577,7 @@
           "type": "inlined"
         },
         "response": {
-          "type": "json"
+          "type": "streaming"
         },
         "examples": []
       },

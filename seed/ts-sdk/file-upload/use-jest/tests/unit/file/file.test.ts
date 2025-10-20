@@ -1,10 +1,10 @@
 import fs from "fs";
 import { join } from "path";
 import { Readable } from "stream";
-import { toBinaryUploadRequest, Uploadable } from "../../../src/core/file/index";
+import { toBinaryUploadRequest, type Uploadable } from "../../../src/core/file/index";
 
 describe("toBinaryUploadRequest", () => {
-    const TEST_FILE_PATH = join(__dirname, "test-file.txt");
+    const TEST_FILE_PATH = join(__dirname, "..", "test-file.txt");
 
     beforeEach(() => {
         jest.clearAllMocks();

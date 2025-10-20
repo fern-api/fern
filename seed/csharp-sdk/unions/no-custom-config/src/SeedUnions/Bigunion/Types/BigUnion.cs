@@ -451,7 +451,7 @@ public record BigUnion
     public SeedUnions.NormalSweet AsNormalSweet() =>
         IsNormalSweet
             ? (SeedUnions.NormalSweet)Value!
-            : throw new Exception("BigUnion.Type is not 'normalSweet'");
+            : throw new System.Exception("BigUnion.Type is not 'normalSweet'");
 
     /// <summary>
     /// Returns the value as a <see cref="SeedUnions.ThankfulFactor"/> if <see cref="Type"/> is 'thankfulFactor', otherwise throws an exception.
@@ -460,7 +460,7 @@ public record BigUnion
     public SeedUnions.ThankfulFactor AsThankfulFactor() =>
         IsThankfulFactor
             ? (SeedUnions.ThankfulFactor)Value!
-            : throw new Exception("BigUnion.Type is not 'thankfulFactor'");
+            : throw new System.Exception("BigUnion.Type is not 'thankfulFactor'");
 
     /// <summary>
     /// Returns the value as a <see cref="SeedUnions.JumboEnd"/> if <see cref="Type"/> is 'jumboEnd', otherwise throws an exception.
@@ -469,7 +469,7 @@ public record BigUnion
     public SeedUnions.JumboEnd AsJumboEnd() =>
         IsJumboEnd
             ? (SeedUnions.JumboEnd)Value!
-            : throw new Exception("BigUnion.Type is not 'jumboEnd'");
+            : throw new System.Exception("BigUnion.Type is not 'jumboEnd'");
 
     /// <summary>
     /// Returns the value as a <see cref="SeedUnions.HastyPain"/> if <see cref="Type"/> is 'hastyPain', otherwise throws an exception.
@@ -478,7 +478,7 @@ public record BigUnion
     public SeedUnions.HastyPain AsHastyPain() =>
         IsHastyPain
             ? (SeedUnions.HastyPain)Value!
-            : throw new Exception("BigUnion.Type is not 'hastyPain'");
+            : throw new System.Exception("BigUnion.Type is not 'hastyPain'");
 
     /// <summary>
     /// Returns the value as a <see cref="SeedUnions.MistySnow"/> if <see cref="Type"/> is 'mistySnow', otherwise throws an exception.
@@ -487,7 +487,7 @@ public record BigUnion
     public SeedUnions.MistySnow AsMistySnow() =>
         IsMistySnow
             ? (SeedUnions.MistySnow)Value!
-            : throw new Exception("BigUnion.Type is not 'mistySnow'");
+            : throw new System.Exception("BigUnion.Type is not 'mistySnow'");
 
     /// <summary>
     /// Returns the value as a <see cref="SeedUnions.DistinctFailure"/> if <see cref="Type"/> is 'distinctFailure', otherwise throws an exception.
@@ -496,7 +496,7 @@ public record BigUnion
     public SeedUnions.DistinctFailure AsDistinctFailure() =>
         IsDistinctFailure
             ? (SeedUnions.DistinctFailure)Value!
-            : throw new Exception("BigUnion.Type is not 'distinctFailure'");
+            : throw new System.Exception("BigUnion.Type is not 'distinctFailure'");
 
     /// <summary>
     /// Returns the value as a <see cref="SeedUnions.PracticalPrinciple"/> if <see cref="Type"/> is 'practicalPrinciple', otherwise throws an exception.
@@ -505,7 +505,7 @@ public record BigUnion
     public SeedUnions.PracticalPrinciple AsPracticalPrinciple() =>
         IsPracticalPrinciple
             ? (SeedUnions.PracticalPrinciple)Value!
-            : throw new Exception("BigUnion.Type is not 'practicalPrinciple'");
+            : throw new System.Exception("BigUnion.Type is not 'practicalPrinciple'");
 
     /// <summary>
     /// Returns the value as a <see cref="SeedUnions.LimpingStep"/> if <see cref="Type"/> is 'limpingStep', otherwise throws an exception.
@@ -514,7 +514,7 @@ public record BigUnion
     public SeedUnions.LimpingStep AsLimpingStep() =>
         IsLimpingStep
             ? (SeedUnions.LimpingStep)Value!
-            : throw new Exception("BigUnion.Type is not 'limpingStep'");
+            : throw new System.Exception("BigUnion.Type is not 'limpingStep'");
 
     /// <summary>
     /// Returns the value as a <see cref="SeedUnions.VibrantExcitement"/> if <see cref="Type"/> is 'vibrantExcitement', otherwise throws an exception.
@@ -523,7 +523,7 @@ public record BigUnion
     public SeedUnions.VibrantExcitement AsVibrantExcitement() =>
         IsVibrantExcitement
             ? (SeedUnions.VibrantExcitement)Value!
-            : throw new Exception("BigUnion.Type is not 'vibrantExcitement'");
+            : throw new System.Exception("BigUnion.Type is not 'vibrantExcitement'");
 
     /// <summary>
     /// Returns the value as a <see cref="SeedUnions.ActiveDiamond"/> if <see cref="Type"/> is 'activeDiamond', otherwise throws an exception.
@@ -532,7 +532,7 @@ public record BigUnion
     public SeedUnions.ActiveDiamond AsActiveDiamond() =>
         IsActiveDiamond
             ? (SeedUnions.ActiveDiamond)Value!
-            : throw new Exception("BigUnion.Type is not 'activeDiamond'");
+            : throw new System.Exception("BigUnion.Type is not 'activeDiamond'");
 
     /// <summary>
     /// Returns the value as a <see cref="SeedUnions.PopularLimit"/> if <see cref="Type"/> is 'popularLimit', otherwise throws an exception.
@@ -541,7 +541,7 @@ public record BigUnion
     public SeedUnions.PopularLimit AsPopularLimit() =>
         IsPopularLimit
             ? (SeedUnions.PopularLimit)Value!
-            : throw new Exception("BigUnion.Type is not 'popularLimit'");
+            : throw new System.Exception("BigUnion.Type is not 'popularLimit'");
 
     /// <summary>
     /// Returns the value as a <see cref="SeedUnions.FalseMirror"/> if <see cref="Type"/> is 'falseMirror', otherwise throws an exception.
@@ -550,7 +550,7 @@ public record BigUnion
     public SeedUnions.FalseMirror AsFalseMirror() =>
         IsFalseMirror
             ? (SeedUnions.FalseMirror)Value!
-            : throw new Exception("BigUnion.Type is not 'falseMirror'");
+            : throw new System.Exception("BigUnion.Type is not 'falseMirror'");
 
     /// <summary>
     /// Returns the value as a <see cref="SeedUnions.PrimaryBlock"/> if <see cref="Type"/> is 'primaryBlock', otherwise throws an exception.
@@ -559,7 +559,7 @@ public record BigUnion
     public SeedUnions.PrimaryBlock AsPrimaryBlock() =>
         IsPrimaryBlock
             ? (SeedUnions.PrimaryBlock)Value!
-            : throw new Exception("BigUnion.Type is not 'primaryBlock'");
+            : throw new System.Exception("BigUnion.Type is not 'primaryBlock'");
 
     /// <summary>
     /// Returns the value as a <see cref="SeedUnions.RotatingRatio"/> if <see cref="Type"/> is 'rotatingRatio', otherwise throws an exception.
@@ -568,7 +568,7 @@ public record BigUnion
     public SeedUnions.RotatingRatio AsRotatingRatio() =>
         IsRotatingRatio
             ? (SeedUnions.RotatingRatio)Value!
-            : throw new Exception("BigUnion.Type is not 'rotatingRatio'");
+            : throw new System.Exception("BigUnion.Type is not 'rotatingRatio'");
 
     /// <summary>
     /// Returns the value as a <see cref="SeedUnions.ColorfulCover"/> if <see cref="Type"/> is 'colorfulCover', otherwise throws an exception.
@@ -577,7 +577,7 @@ public record BigUnion
     public SeedUnions.ColorfulCover AsColorfulCover() =>
         IsColorfulCover
             ? (SeedUnions.ColorfulCover)Value!
-            : throw new Exception("BigUnion.Type is not 'colorfulCover'");
+            : throw new System.Exception("BigUnion.Type is not 'colorfulCover'");
 
     /// <summary>
     /// Returns the value as a <see cref="SeedUnions.DisloyalValue"/> if <see cref="Type"/> is 'disloyalValue', otherwise throws an exception.
@@ -586,7 +586,7 @@ public record BigUnion
     public SeedUnions.DisloyalValue AsDisloyalValue() =>
         IsDisloyalValue
             ? (SeedUnions.DisloyalValue)Value!
-            : throw new Exception("BigUnion.Type is not 'disloyalValue'");
+            : throw new System.Exception("BigUnion.Type is not 'disloyalValue'");
 
     /// <summary>
     /// Returns the value as a <see cref="SeedUnions.GruesomeCoach"/> if <see cref="Type"/> is 'gruesomeCoach', otherwise throws an exception.
@@ -595,7 +595,7 @@ public record BigUnion
     public SeedUnions.GruesomeCoach AsGruesomeCoach() =>
         IsGruesomeCoach
             ? (SeedUnions.GruesomeCoach)Value!
-            : throw new Exception("BigUnion.Type is not 'gruesomeCoach'");
+            : throw new System.Exception("BigUnion.Type is not 'gruesomeCoach'");
 
     /// <summary>
     /// Returns the value as a <see cref="SeedUnions.TotalWork"/> if <see cref="Type"/> is 'totalWork', otherwise throws an exception.
@@ -604,7 +604,7 @@ public record BigUnion
     public SeedUnions.TotalWork AsTotalWork() =>
         IsTotalWork
             ? (SeedUnions.TotalWork)Value!
-            : throw new Exception("BigUnion.Type is not 'totalWork'");
+            : throw new System.Exception("BigUnion.Type is not 'totalWork'");
 
     /// <summary>
     /// Returns the value as a <see cref="SeedUnions.HarmoniousPlay"/> if <see cref="Type"/> is 'harmoniousPlay', otherwise throws an exception.
@@ -613,7 +613,7 @@ public record BigUnion
     public SeedUnions.HarmoniousPlay AsHarmoniousPlay() =>
         IsHarmoniousPlay
             ? (SeedUnions.HarmoniousPlay)Value!
-            : throw new Exception("BigUnion.Type is not 'harmoniousPlay'");
+            : throw new System.Exception("BigUnion.Type is not 'harmoniousPlay'");
 
     /// <summary>
     /// Returns the value as a <see cref="SeedUnions.UniqueStress"/> if <see cref="Type"/> is 'uniqueStress', otherwise throws an exception.
@@ -622,7 +622,7 @@ public record BigUnion
     public SeedUnions.UniqueStress AsUniqueStress() =>
         IsUniqueStress
             ? (SeedUnions.UniqueStress)Value!
-            : throw new Exception("BigUnion.Type is not 'uniqueStress'");
+            : throw new System.Exception("BigUnion.Type is not 'uniqueStress'");
 
     /// <summary>
     /// Returns the value as a <see cref="SeedUnions.UnwillingSmoke"/> if <see cref="Type"/> is 'unwillingSmoke', otherwise throws an exception.
@@ -631,7 +631,7 @@ public record BigUnion
     public SeedUnions.UnwillingSmoke AsUnwillingSmoke() =>
         IsUnwillingSmoke
             ? (SeedUnions.UnwillingSmoke)Value!
-            : throw new Exception("BigUnion.Type is not 'unwillingSmoke'");
+            : throw new System.Exception("BigUnion.Type is not 'unwillingSmoke'");
 
     /// <summary>
     /// Returns the value as a <see cref="SeedUnions.FrozenSleep"/> if <see cref="Type"/> is 'frozenSleep', otherwise throws an exception.
@@ -640,7 +640,7 @@ public record BigUnion
     public SeedUnions.FrozenSleep AsFrozenSleep() =>
         IsFrozenSleep
             ? (SeedUnions.FrozenSleep)Value!
-            : throw new Exception("BigUnion.Type is not 'frozenSleep'");
+            : throw new System.Exception("BigUnion.Type is not 'frozenSleep'");
 
     /// <summary>
     /// Returns the value as a <see cref="SeedUnions.DiligentDeal"/> if <see cref="Type"/> is 'diligentDeal', otherwise throws an exception.
@@ -649,7 +649,7 @@ public record BigUnion
     public SeedUnions.DiligentDeal AsDiligentDeal() =>
         IsDiligentDeal
             ? (SeedUnions.DiligentDeal)Value!
-            : throw new Exception("BigUnion.Type is not 'diligentDeal'");
+            : throw new System.Exception("BigUnion.Type is not 'diligentDeal'");
 
     /// <summary>
     /// Returns the value as a <see cref="SeedUnions.AttractiveScript"/> if <see cref="Type"/> is 'attractiveScript', otherwise throws an exception.
@@ -658,7 +658,7 @@ public record BigUnion
     public SeedUnions.AttractiveScript AsAttractiveScript() =>
         IsAttractiveScript
             ? (SeedUnions.AttractiveScript)Value!
-            : throw new Exception("BigUnion.Type is not 'attractiveScript'");
+            : throw new System.Exception("BigUnion.Type is not 'attractiveScript'");
 
     /// <summary>
     /// Returns the value as a <see cref="SeedUnions.HoarseMouse"/> if <see cref="Type"/> is 'hoarseMouse', otherwise throws an exception.
@@ -667,7 +667,7 @@ public record BigUnion
     public SeedUnions.HoarseMouse AsHoarseMouse() =>
         IsHoarseMouse
             ? (SeedUnions.HoarseMouse)Value!
-            : throw new Exception("BigUnion.Type is not 'hoarseMouse'");
+            : throw new System.Exception("BigUnion.Type is not 'hoarseMouse'");
 
     /// <summary>
     /// Returns the value as a <see cref="SeedUnions.CircularCard"/> if <see cref="Type"/> is 'circularCard', otherwise throws an exception.
@@ -676,7 +676,7 @@ public record BigUnion
     public SeedUnions.CircularCard AsCircularCard() =>
         IsCircularCard
             ? (SeedUnions.CircularCard)Value!
-            : throw new Exception("BigUnion.Type is not 'circularCard'");
+            : throw new System.Exception("BigUnion.Type is not 'circularCard'");
 
     /// <summary>
     /// Returns the value as a <see cref="SeedUnions.PotableBad"/> if <see cref="Type"/> is 'potableBad', otherwise throws an exception.
@@ -685,7 +685,7 @@ public record BigUnion
     public SeedUnions.PotableBad AsPotableBad() =>
         IsPotableBad
             ? (SeedUnions.PotableBad)Value!
-            : throw new Exception("BigUnion.Type is not 'potableBad'");
+            : throw new System.Exception("BigUnion.Type is not 'potableBad'");
 
     /// <summary>
     /// Returns the value as a <see cref="SeedUnions.TriangularRepair"/> if <see cref="Type"/> is 'triangularRepair', otherwise throws an exception.
@@ -694,7 +694,7 @@ public record BigUnion
     public SeedUnions.TriangularRepair AsTriangularRepair() =>
         IsTriangularRepair
             ? (SeedUnions.TriangularRepair)Value!
-            : throw new Exception("BigUnion.Type is not 'triangularRepair'");
+            : throw new System.Exception("BigUnion.Type is not 'triangularRepair'");
 
     /// <summary>
     /// Returns the value as a <see cref="SeedUnions.GaseousRoad"/> if <see cref="Type"/> is 'gaseousRoad', otherwise throws an exception.
@@ -703,7 +703,7 @@ public record BigUnion
     public SeedUnions.GaseousRoad AsGaseousRoad() =>
         IsGaseousRoad
             ? (SeedUnions.GaseousRoad)Value!
-            : throw new Exception("BigUnion.Type is not 'gaseousRoad'");
+            : throw new System.Exception("BigUnion.Type is not 'gaseousRoad'");
 
     public T Match<T>(
         Func<SeedUnions.NormalSweet, T> onNormalSweet,
@@ -1360,67 +1360,67 @@ public record BigUnion
 
             var value = discriminator switch
             {
-                "normalSweet" => json.Deserialize<SeedUnions.NormalSweet>(options)
+                "normalSweet" => json.Deserialize<SeedUnions.NormalSweet?>(options)
                     ?? throw new JsonException("Failed to deserialize SeedUnions.NormalSweet"),
-                "thankfulFactor" => json.Deserialize<SeedUnions.ThankfulFactor>(options)
+                "thankfulFactor" => json.Deserialize<SeedUnions.ThankfulFactor?>(options)
                     ?? throw new JsonException("Failed to deserialize SeedUnions.ThankfulFactor"),
-                "jumboEnd" => json.Deserialize<SeedUnions.JumboEnd>(options)
+                "jumboEnd" => json.Deserialize<SeedUnions.JumboEnd?>(options)
                     ?? throw new JsonException("Failed to deserialize SeedUnions.JumboEnd"),
-                "hastyPain" => json.Deserialize<SeedUnions.HastyPain>(options)
+                "hastyPain" => json.Deserialize<SeedUnions.HastyPain?>(options)
                     ?? throw new JsonException("Failed to deserialize SeedUnions.HastyPain"),
-                "mistySnow" => json.Deserialize<SeedUnions.MistySnow>(options)
+                "mistySnow" => json.Deserialize<SeedUnions.MistySnow?>(options)
                     ?? throw new JsonException("Failed to deserialize SeedUnions.MistySnow"),
-                "distinctFailure" => json.Deserialize<SeedUnions.DistinctFailure>(options)
+                "distinctFailure" => json.Deserialize<SeedUnions.DistinctFailure?>(options)
                     ?? throw new JsonException("Failed to deserialize SeedUnions.DistinctFailure"),
-                "practicalPrinciple" => json.Deserialize<SeedUnions.PracticalPrinciple>(options)
+                "practicalPrinciple" => json.Deserialize<SeedUnions.PracticalPrinciple?>(options)
                     ?? throw new JsonException(
                         "Failed to deserialize SeedUnions.PracticalPrinciple"
                     ),
-                "limpingStep" => json.Deserialize<SeedUnions.LimpingStep>(options)
+                "limpingStep" => json.Deserialize<SeedUnions.LimpingStep?>(options)
                     ?? throw new JsonException("Failed to deserialize SeedUnions.LimpingStep"),
-                "vibrantExcitement" => json.Deserialize<SeedUnions.VibrantExcitement>(options)
+                "vibrantExcitement" => json.Deserialize<SeedUnions.VibrantExcitement?>(options)
                     ?? throw new JsonException(
                         "Failed to deserialize SeedUnions.VibrantExcitement"
                     ),
-                "activeDiamond" => json.Deserialize<SeedUnions.ActiveDiamond>(options)
+                "activeDiamond" => json.Deserialize<SeedUnions.ActiveDiamond?>(options)
                     ?? throw new JsonException("Failed to deserialize SeedUnions.ActiveDiamond"),
-                "popularLimit" => json.Deserialize<SeedUnions.PopularLimit>(options)
+                "popularLimit" => json.Deserialize<SeedUnions.PopularLimit?>(options)
                     ?? throw new JsonException("Failed to deserialize SeedUnions.PopularLimit"),
-                "falseMirror" => json.Deserialize<SeedUnions.FalseMirror>(options)
+                "falseMirror" => json.Deserialize<SeedUnions.FalseMirror?>(options)
                     ?? throw new JsonException("Failed to deserialize SeedUnions.FalseMirror"),
-                "primaryBlock" => json.Deserialize<SeedUnions.PrimaryBlock>(options)
+                "primaryBlock" => json.Deserialize<SeedUnions.PrimaryBlock?>(options)
                     ?? throw new JsonException("Failed to deserialize SeedUnions.PrimaryBlock"),
-                "rotatingRatio" => json.Deserialize<SeedUnions.RotatingRatio>(options)
+                "rotatingRatio" => json.Deserialize<SeedUnions.RotatingRatio?>(options)
                     ?? throw new JsonException("Failed to deserialize SeedUnions.RotatingRatio"),
-                "colorfulCover" => json.Deserialize<SeedUnions.ColorfulCover>(options)
+                "colorfulCover" => json.Deserialize<SeedUnions.ColorfulCover?>(options)
                     ?? throw new JsonException("Failed to deserialize SeedUnions.ColorfulCover"),
-                "disloyalValue" => json.Deserialize<SeedUnions.DisloyalValue>(options)
+                "disloyalValue" => json.Deserialize<SeedUnions.DisloyalValue?>(options)
                     ?? throw new JsonException("Failed to deserialize SeedUnions.DisloyalValue"),
-                "gruesomeCoach" => json.Deserialize<SeedUnions.GruesomeCoach>(options)
+                "gruesomeCoach" => json.Deserialize<SeedUnions.GruesomeCoach?>(options)
                     ?? throw new JsonException("Failed to deserialize SeedUnions.GruesomeCoach"),
-                "totalWork" => json.Deserialize<SeedUnions.TotalWork>(options)
+                "totalWork" => json.Deserialize<SeedUnions.TotalWork?>(options)
                     ?? throw new JsonException("Failed to deserialize SeedUnions.TotalWork"),
-                "harmoniousPlay" => json.Deserialize<SeedUnions.HarmoniousPlay>(options)
+                "harmoniousPlay" => json.Deserialize<SeedUnions.HarmoniousPlay?>(options)
                     ?? throw new JsonException("Failed to deserialize SeedUnions.HarmoniousPlay"),
-                "uniqueStress" => json.Deserialize<SeedUnions.UniqueStress>(options)
+                "uniqueStress" => json.Deserialize<SeedUnions.UniqueStress?>(options)
                     ?? throw new JsonException("Failed to deserialize SeedUnions.UniqueStress"),
-                "unwillingSmoke" => json.Deserialize<SeedUnions.UnwillingSmoke>(options)
+                "unwillingSmoke" => json.Deserialize<SeedUnions.UnwillingSmoke?>(options)
                     ?? throw new JsonException("Failed to deserialize SeedUnions.UnwillingSmoke"),
-                "frozenSleep" => json.Deserialize<SeedUnions.FrozenSleep>(options)
+                "frozenSleep" => json.Deserialize<SeedUnions.FrozenSleep?>(options)
                     ?? throw new JsonException("Failed to deserialize SeedUnions.FrozenSleep"),
-                "diligentDeal" => json.Deserialize<SeedUnions.DiligentDeal>(options)
+                "diligentDeal" => json.Deserialize<SeedUnions.DiligentDeal?>(options)
                     ?? throw new JsonException("Failed to deserialize SeedUnions.DiligentDeal"),
-                "attractiveScript" => json.Deserialize<SeedUnions.AttractiveScript>(options)
+                "attractiveScript" => json.Deserialize<SeedUnions.AttractiveScript?>(options)
                     ?? throw new JsonException("Failed to deserialize SeedUnions.AttractiveScript"),
-                "hoarseMouse" => json.Deserialize<SeedUnions.HoarseMouse>(options)
+                "hoarseMouse" => json.Deserialize<SeedUnions.HoarseMouse?>(options)
                     ?? throw new JsonException("Failed to deserialize SeedUnions.HoarseMouse"),
-                "circularCard" => json.Deserialize<SeedUnions.CircularCard>(options)
+                "circularCard" => json.Deserialize<SeedUnions.CircularCard?>(options)
                     ?? throw new JsonException("Failed to deserialize SeedUnions.CircularCard"),
-                "potableBad" => json.Deserialize<SeedUnions.PotableBad>(options)
+                "potableBad" => json.Deserialize<SeedUnions.PotableBad?>(options)
                     ?? throw new JsonException("Failed to deserialize SeedUnions.PotableBad"),
-                "triangularRepair" => json.Deserialize<SeedUnions.TriangularRepair>(options)
+                "triangularRepair" => json.Deserialize<SeedUnions.TriangularRepair?>(options)
                     ?? throw new JsonException("Failed to deserialize SeedUnions.TriangularRepair"),
-                "gaseousRoad" => json.Deserialize<SeedUnions.GaseousRoad>(options)
+                "gaseousRoad" => json.Deserialize<SeedUnions.GaseousRoad?>(options)
                     ?? throw new JsonException("Failed to deserialize SeedUnions.GaseousRoad"),
                 _ => json.Deserialize<object?>(options),
             };
@@ -1507,7 +1507,7 @@ public record BigUnion
 
         internal SeedUnions.NormalSweet Value { get; set; }
 
-        public override string ToString() => Value.ToString();
+        public override string ToString() => Value.ToString() ?? "null";
 
         public static implicit operator BigUnion.NormalSweet(SeedUnions.NormalSweet value) =>
             new(value);
@@ -1526,7 +1526,7 @@ public record BigUnion
 
         internal SeedUnions.ThankfulFactor Value { get; set; }
 
-        public override string ToString() => Value.ToString();
+        public override string ToString() => Value.ToString() ?? "null";
 
         public static implicit operator BigUnion.ThankfulFactor(SeedUnions.ThankfulFactor value) =>
             new(value);
@@ -1545,7 +1545,7 @@ public record BigUnion
 
         internal SeedUnions.JumboEnd Value { get; set; }
 
-        public override string ToString() => Value.ToString();
+        public override string ToString() => Value.ToString() ?? "null";
 
         public static implicit operator BigUnion.JumboEnd(SeedUnions.JumboEnd value) => new(value);
     }
@@ -1563,7 +1563,7 @@ public record BigUnion
 
         internal SeedUnions.HastyPain Value { get; set; }
 
-        public override string ToString() => Value.ToString();
+        public override string ToString() => Value.ToString() ?? "null";
 
         public static implicit operator BigUnion.HastyPain(SeedUnions.HastyPain value) =>
             new(value);
@@ -1582,7 +1582,7 @@ public record BigUnion
 
         internal SeedUnions.MistySnow Value { get; set; }
 
-        public override string ToString() => Value.ToString();
+        public override string ToString() => Value.ToString() ?? "null";
 
         public static implicit operator BigUnion.MistySnow(SeedUnions.MistySnow value) =>
             new(value);
@@ -1601,7 +1601,7 @@ public record BigUnion
 
         internal SeedUnions.DistinctFailure Value { get; set; }
 
-        public override string ToString() => Value.ToString();
+        public override string ToString() => Value.ToString() ?? "null";
 
         public static implicit operator BigUnion.DistinctFailure(
             SeedUnions.DistinctFailure value
@@ -1621,7 +1621,7 @@ public record BigUnion
 
         internal SeedUnions.PracticalPrinciple Value { get; set; }
 
-        public override string ToString() => Value.ToString();
+        public override string ToString() => Value.ToString() ?? "null";
 
         public static implicit operator BigUnion.PracticalPrinciple(
             SeedUnions.PracticalPrinciple value
@@ -1641,7 +1641,7 @@ public record BigUnion
 
         internal SeedUnions.LimpingStep Value { get; set; }
 
-        public override string ToString() => Value.ToString();
+        public override string ToString() => Value.ToString() ?? "null";
 
         public static implicit operator BigUnion.LimpingStep(SeedUnions.LimpingStep value) =>
             new(value);
@@ -1660,7 +1660,7 @@ public record BigUnion
 
         internal SeedUnions.VibrantExcitement Value { get; set; }
 
-        public override string ToString() => Value.ToString();
+        public override string ToString() => Value.ToString() ?? "null";
 
         public static implicit operator BigUnion.VibrantExcitement(
             SeedUnions.VibrantExcitement value
@@ -1680,7 +1680,7 @@ public record BigUnion
 
         internal SeedUnions.ActiveDiamond Value { get; set; }
 
-        public override string ToString() => Value.ToString();
+        public override string ToString() => Value.ToString() ?? "null";
 
         public static implicit operator BigUnion.ActiveDiamond(SeedUnions.ActiveDiamond value) =>
             new(value);
@@ -1699,7 +1699,7 @@ public record BigUnion
 
         internal SeedUnions.PopularLimit Value { get; set; }
 
-        public override string ToString() => Value.ToString();
+        public override string ToString() => Value.ToString() ?? "null";
 
         public static implicit operator BigUnion.PopularLimit(SeedUnions.PopularLimit value) =>
             new(value);
@@ -1718,7 +1718,7 @@ public record BigUnion
 
         internal SeedUnions.FalseMirror Value { get; set; }
 
-        public override string ToString() => Value.ToString();
+        public override string ToString() => Value.ToString() ?? "null";
 
         public static implicit operator BigUnion.FalseMirror(SeedUnions.FalseMirror value) =>
             new(value);
@@ -1737,7 +1737,7 @@ public record BigUnion
 
         internal SeedUnions.PrimaryBlock Value { get; set; }
 
-        public override string ToString() => Value.ToString();
+        public override string ToString() => Value.ToString() ?? "null";
 
         public static implicit operator BigUnion.PrimaryBlock(SeedUnions.PrimaryBlock value) =>
             new(value);
@@ -1756,7 +1756,7 @@ public record BigUnion
 
         internal SeedUnions.RotatingRatio Value { get; set; }
 
-        public override string ToString() => Value.ToString();
+        public override string ToString() => Value.ToString() ?? "null";
 
         public static implicit operator BigUnion.RotatingRatio(SeedUnions.RotatingRatio value) =>
             new(value);
@@ -1775,7 +1775,7 @@ public record BigUnion
 
         internal SeedUnions.ColorfulCover Value { get; set; }
 
-        public override string ToString() => Value.ToString();
+        public override string ToString() => Value.ToString() ?? "null";
 
         public static implicit operator BigUnion.ColorfulCover(SeedUnions.ColorfulCover value) =>
             new(value);
@@ -1794,7 +1794,7 @@ public record BigUnion
 
         internal SeedUnions.DisloyalValue Value { get; set; }
 
-        public override string ToString() => Value.ToString();
+        public override string ToString() => Value.ToString() ?? "null";
 
         public static implicit operator BigUnion.DisloyalValue(SeedUnions.DisloyalValue value) =>
             new(value);
@@ -1813,7 +1813,7 @@ public record BigUnion
 
         internal SeedUnions.GruesomeCoach Value { get; set; }
 
-        public override string ToString() => Value.ToString();
+        public override string ToString() => Value.ToString() ?? "null";
 
         public static implicit operator BigUnion.GruesomeCoach(SeedUnions.GruesomeCoach value) =>
             new(value);
@@ -1832,7 +1832,7 @@ public record BigUnion
 
         internal SeedUnions.TotalWork Value { get; set; }
 
-        public override string ToString() => Value.ToString();
+        public override string ToString() => Value.ToString() ?? "null";
 
         public static implicit operator BigUnion.TotalWork(SeedUnions.TotalWork value) =>
             new(value);
@@ -1851,7 +1851,7 @@ public record BigUnion
 
         internal SeedUnions.HarmoniousPlay Value { get; set; }
 
-        public override string ToString() => Value.ToString();
+        public override string ToString() => Value.ToString() ?? "null";
 
         public static implicit operator BigUnion.HarmoniousPlay(SeedUnions.HarmoniousPlay value) =>
             new(value);
@@ -1870,7 +1870,7 @@ public record BigUnion
 
         internal SeedUnions.UniqueStress Value { get; set; }
 
-        public override string ToString() => Value.ToString();
+        public override string ToString() => Value.ToString() ?? "null";
 
         public static implicit operator BigUnion.UniqueStress(SeedUnions.UniqueStress value) =>
             new(value);
@@ -1889,7 +1889,7 @@ public record BigUnion
 
         internal SeedUnions.UnwillingSmoke Value { get; set; }
 
-        public override string ToString() => Value.ToString();
+        public override string ToString() => Value.ToString() ?? "null";
 
         public static implicit operator BigUnion.UnwillingSmoke(SeedUnions.UnwillingSmoke value) =>
             new(value);
@@ -1908,7 +1908,7 @@ public record BigUnion
 
         internal SeedUnions.FrozenSleep Value { get; set; }
 
-        public override string ToString() => Value.ToString();
+        public override string ToString() => Value.ToString() ?? "null";
 
         public static implicit operator BigUnion.FrozenSleep(SeedUnions.FrozenSleep value) =>
             new(value);
@@ -1927,7 +1927,7 @@ public record BigUnion
 
         internal SeedUnions.DiligentDeal Value { get; set; }
 
-        public override string ToString() => Value.ToString();
+        public override string ToString() => Value.ToString() ?? "null";
 
         public static implicit operator BigUnion.DiligentDeal(SeedUnions.DiligentDeal value) =>
             new(value);
@@ -1946,7 +1946,7 @@ public record BigUnion
 
         internal SeedUnions.AttractiveScript Value { get; set; }
 
-        public override string ToString() => Value.ToString();
+        public override string ToString() => Value.ToString() ?? "null";
 
         public static implicit operator BigUnion.AttractiveScript(
             SeedUnions.AttractiveScript value
@@ -1966,7 +1966,7 @@ public record BigUnion
 
         internal SeedUnions.HoarseMouse Value { get; set; }
 
-        public override string ToString() => Value.ToString();
+        public override string ToString() => Value.ToString() ?? "null";
 
         public static implicit operator BigUnion.HoarseMouse(SeedUnions.HoarseMouse value) =>
             new(value);
@@ -1985,7 +1985,7 @@ public record BigUnion
 
         internal SeedUnions.CircularCard Value { get; set; }
 
-        public override string ToString() => Value.ToString();
+        public override string ToString() => Value.ToString() ?? "null";
 
         public static implicit operator BigUnion.CircularCard(SeedUnions.CircularCard value) =>
             new(value);
@@ -2004,7 +2004,7 @@ public record BigUnion
 
         internal SeedUnions.PotableBad Value { get; set; }
 
-        public override string ToString() => Value.ToString();
+        public override string ToString() => Value.ToString() ?? "null";
 
         public static implicit operator BigUnion.PotableBad(SeedUnions.PotableBad value) =>
             new(value);
@@ -2023,7 +2023,7 @@ public record BigUnion
 
         internal SeedUnions.TriangularRepair Value { get; set; }
 
-        public override string ToString() => Value.ToString();
+        public override string ToString() => Value.ToString() ?? "null";
 
         public static implicit operator BigUnion.TriangularRepair(
             SeedUnions.TriangularRepair value
@@ -2043,7 +2043,7 @@ public record BigUnion
 
         internal SeedUnions.GaseousRoad Value { get; set; }
 
-        public override string ToString() => Value.ToString();
+        public override string ToString() => Value.ToString() ?? "null";
 
         public static implicit operator BigUnion.GaseousRoad(SeedUnions.GaseousRoad value) =>
             new(value);

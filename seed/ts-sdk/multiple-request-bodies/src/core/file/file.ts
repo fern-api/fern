@@ -1,4 +1,4 @@
-import { Uploadable } from "./types.js";
+import type { Uploadable } from "./types.js";
 
 export async function toBinaryUploadRequest(
     file: Uploadable,
@@ -20,19 +20,40 @@ export async function toBinaryUploadRequest(
     return request;
 }
 
-async function getFileWithMetadata(file: Uploadable): Promise<Uploadable.WithMetadata> {
+export async function toMultipartDataPart(
+    file: Uploadable,
+): Promise<{ data: Uploadable.FileLike; filename?: string; contentType?: string }> {
+    const { data, filename, contentType } = await getFileWithMetadata(file, {
+        noSniffFileSize: true,
+    });
+    return {
+        data,
+        filename,
+        contentType,
+    };
+}
+
+async function getFileWithMetadata(
+    file: Uploadable,
+    { noSniffFileSize }: { noSniffFileSize?: boolean } = {},
+): Promise<Uploadable.WithMetadata> {
     if (isFileLike(file)) {
-        return getFileWithMetadata({
-            data: file,
-        });
+        return getFileWithMetadata(
+            {
+                data: file,
+            },
+            { noSniffFileSize },
+        );
     }
+
     if ("path" in file) {
         const fs = await import("fs");
         if (!fs || !fs.createReadStream) {
             throw new Error("File path uploads are not supported in this environment.");
         }
         const data = fs.createReadStream(file.path);
-        const contentLength = file.contentLength ?? (await tryGetFileSizeFromPath(file.path));
+        const contentLength =
+            file.contentLength ?? (noSniffFileSize === true ? undefined : await tryGetFileSizeFromPath(file.path));
         const filename = file.filename ?? getNameFromPath(file.path);
         return {
             data,
@@ -43,7 +64,11 @@ async function getFileWithMetadata(file: Uploadable): Promise<Uploadable.WithMet
     }
     if ("data" in file) {
         const data = file.data;
-        const contentLength = file.contentLength ?? (await tryGetContentLengthFromFileLike(data));
+        const contentLength =
+            file.contentLength ??
+            (await tryGetContentLengthFromFileLike(data, {
+                noSniffFileSize,
+            }));
         const filename = file.filename ?? tryGetNameFromFileLike(data);
         return {
             data,
@@ -77,7 +102,7 @@ async function tryGetFileSizeFromPath(path: string): Promise<number | undefined>
         }
         const fileStat = await fs.promises.stat(path);
         return fileStat.size;
-    } catch (fallbackError) {
+    } catch (_fallbackError) {
         return undefined;
     }
 }
@@ -92,7 +117,10 @@ function tryGetNameFromFileLike(data: Uploadable.FileLike): string | undefined {
     return undefined;
 }
 
-async function tryGetContentLengthFromFileLike(data: Uploadable.FileLike): Promise<number | undefined> {
+async function tryGetContentLengthFromFileLike(
+    data: Uploadable.FileLike,
+    { noSniffFileSize }: { noSniffFileSize?: boolean } = {},
+): Promise<number | undefined> {
     if (isBuffer(data)) {
         return data.length;
     }
@@ -107,6 +135,9 @@ async function tryGetContentLengthFromFileLike(data: Uploadable.FileLike): Promi
     }
     if (isFile(data)) {
         return data.size;
+    }
+    if (noSniffFileSize === true) {
+        return undefined;
     }
     if (isPathedValue(data)) {
         return await tryGetFileSizeFromPath(data.path.toString());

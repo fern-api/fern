@@ -1,7 +1,5 @@
 # Reference
-
 ## User
-
 <details><summary><code>client.user.<a href="/src/api/resources/user/client/Client.ts">createUsername</a>({ ...params }) -> void</code></summary>
 <dl>
 <dd>
@@ -19,10 +17,10 @@ await client.user.createUsername({
     tags: ["tags", "tags"],
     username: "username",
     password: "password",
-    name: "test",
+    name: "test"
 });
-```
 
+```
 </dd>
 </dl>
 </dd>
@@ -36,20 +34,21 @@ await client.user.createUsername({
 <dl>
 <dd>
 
-**request:** `SeedRequestParameters.CreateUsernameRequest`
-
+**request:** `SeedRequestParameters.CreateUsernameRequest` 
+    
 </dd>
 </dl>
 
 <dl>
 <dd>
 
-**requestOptions:** `User.RequestOptions`
+**requestOptions:** `User.RequestOptions` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
 
-</dd>
-</dl>
-</dd>
-</dl>
 
 </dd>
 </dl>
@@ -72,10 +71,10 @@ await client.user.createUsernameWithReferencedType({
     tags: ["tags", "tags"],
     username: "username",
     password: "password",
-    name: "test",
+    name: "test"
 });
-```
 
+```
 </dd>
 </dl>
 </dd>
@@ -89,20 +88,70 @@ await client.user.createUsernameWithReferencedType({
 <dl>
 <dd>
 
-**request:** `SeedRequestParameters.CreateUsernameReferencedRequest`
-
+**request:** `SeedRequestParameters.CreateUsernameReferencedRequest` 
+    
 </dd>
 </dl>
 
 <dl>
 <dd>
 
-**requestOptions:** `User.RequestOptions`
+**requestOptions:** `User.RequestOptions` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
 
 </dd>
 </dl>
+</details>
+
+<details><summary><code>client.user.<a href="/src/api/resources/user/client/Client.ts">createUsernameOptional</a>({ ...params }) -> void</code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```typescript
+await client.user.createUsernameOptional();
+
+```
 </dd>
 </dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**request:** `SeedRequestParameters.CreateUsernameBodyOptionalProperties | null` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**requestOptions:** `User.RequestOptions` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
 
 </dd>
 </dl>
@@ -129,44 +178,41 @@ await client.user.getUsername({
     bytes: "SGVsbG8gd29ybGQh",
     user: {
         name: "name",
-        tags: ["tags", "tags"],
+        tags: ["tags", "tags"]
     },
-    userList: [
-        {
+    userList: [{
             name: "name",
-            tags: ["tags", "tags"],
-        },
-        {
+            tags: ["tags", "tags"]
+        }, {
             name: "name",
-            tags: ["tags", "tags"],
-        },
-    ],
+            tags: ["tags", "tags"]
+        }],
     optionalDeadline: "2024-01-15T09:30:00Z",
     keyValue: {
-        keyValue: "keyValue",
+        "keyValue": "keyValue"
     },
     optionalString: "optionalString",
     nestedUser: {
         name: "name",
         user: {
             name: "name",
-            tags: ["tags", "tags"],
-        },
+            tags: ["tags", "tags"]
+        }
     },
     optionalUser: {
         name: "name",
-        tags: ["tags", "tags"],
+        tags: ["tags", "tags"]
     },
     excludeUser: {
         name: "name",
-        tags: ["tags", "tags"],
+        tags: ["tags", "tags"]
     },
     filter: "filter",
     longParam: 1000000,
-    bigIntParam: "1000000",
+    bigIntParam: "1000000"
 });
-```
 
+```
 </dd>
 </dl>
 </dd>
@@ -180,20 +226,21 @@ await client.user.getUsername({
 <dl>
 <dd>
 
-**request:** `SeedRequestParameters.GetUsersRequest`
-
+**request:** `SeedRequestParameters.GetUsersRequest` 
+    
 </dd>
 </dl>
 
 <dl>
 <dd>
 
-**requestOptions:** `User.RequestOptions`
+**requestOptions:** `User.RequestOptions` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
 
-</dd>
-</dl>
-</dd>
-</dl>
 
 </dd>
 </dl>

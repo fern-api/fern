@@ -20,7 +20,7 @@ With Swift Package Manager (SPM), add the following to the top-level `dependenci
 
 ```swift
 dependencies: [
-    .package(url: "<git-url>", from: "0.1.0"),
+    .package(url: "https://github.com/inferred-auth-implicit/fern", from: "0.0.1"),
 ]
 ```
 
@@ -39,8 +39,7 @@ import InferredAuthImplicit
 private func main() async throws {
     let client = InferredAuthImplicitClient()
 
-    try await client.auth.getTokenWithClientCredentials(request: .init(
-        xApiKey: "X-Api-Key",
+    _ = try await client.auth.getTokenWithClientCredentials(request: .init(
         clientId: "client_id",
         clientSecret: "client_secret",
         audience: .httpsApiExampleCom,

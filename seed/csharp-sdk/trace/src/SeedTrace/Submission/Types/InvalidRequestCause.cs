@@ -78,7 +78,7 @@ public record InvalidRequestCause
     public SeedTrace.SubmissionIdNotFound AsSubmissionIdNotFound() =>
         IsSubmissionIdNotFound
             ? (SeedTrace.SubmissionIdNotFound)Value!
-            : throw new Exception("InvalidRequestCause.Type is not 'submissionIdNotFound'");
+            : throw new System.Exception("InvalidRequestCause.Type is not 'submissionIdNotFound'");
 
     /// <summary>
     /// Returns the value as a <see cref="SeedTrace.CustomTestCasesUnsupported"/> if <see cref="Type"/> is 'customTestCasesUnsupported', otherwise throws an exception.
@@ -87,7 +87,9 @@ public record InvalidRequestCause
     public SeedTrace.CustomTestCasesUnsupported AsCustomTestCasesUnsupported() =>
         IsCustomTestCasesUnsupported
             ? (SeedTrace.CustomTestCasesUnsupported)Value!
-            : throw new Exception("InvalidRequestCause.Type is not 'customTestCasesUnsupported'");
+            : throw new System.Exception(
+                "InvalidRequestCause.Type is not 'customTestCasesUnsupported'"
+            );
 
     /// <summary>
     /// Returns the value as a <see cref="SeedTrace.UnexpectedLanguageError"/> if <see cref="Type"/> is 'unexpectedLanguage', otherwise throws an exception.
@@ -96,7 +98,7 @@ public record InvalidRequestCause
     public SeedTrace.UnexpectedLanguageError AsUnexpectedLanguage() =>
         IsUnexpectedLanguage
             ? (SeedTrace.UnexpectedLanguageError)Value!
-            : throw new Exception("InvalidRequestCause.Type is not 'unexpectedLanguage'");
+            : throw new System.Exception("InvalidRequestCause.Type is not 'unexpectedLanguage'");
 
     public T Match<T>(
         Func<SeedTrace.SubmissionIdNotFound, T> onSubmissionIdNotFound,
@@ -231,16 +233,18 @@ public record InvalidRequestCause
 
             var value = discriminator switch
             {
-                "submissionIdNotFound" => json.Deserialize<SeedTrace.SubmissionIdNotFound>(options)
+                "submissionIdNotFound" => json.Deserialize<SeedTrace.SubmissionIdNotFound?>(options)
                     ?? throw new JsonException(
                         "Failed to deserialize SeedTrace.SubmissionIdNotFound"
                     ),
                 "customTestCasesUnsupported" =>
-                    json.Deserialize<SeedTrace.CustomTestCasesUnsupported>(options)
+                    json.Deserialize<SeedTrace.CustomTestCasesUnsupported?>(options)
                         ?? throw new JsonException(
                             "Failed to deserialize SeedTrace.CustomTestCasesUnsupported"
                         ),
-                "unexpectedLanguage" => json.Deserialize<SeedTrace.UnexpectedLanguageError>(options)
+                "unexpectedLanguage" => json.Deserialize<SeedTrace.UnexpectedLanguageError?>(
+                    options
+                )
                     ?? throw new JsonException(
                         "Failed to deserialize SeedTrace.UnexpectedLanguageError"
                     ),
@@ -284,7 +288,7 @@ public record InvalidRequestCause
 
         internal SeedTrace.SubmissionIdNotFound Value { get; set; }
 
-        public override string ToString() => Value.ToString();
+        public override string ToString() => Value.ToString() ?? "null";
 
         public static implicit operator InvalidRequestCause.SubmissionIdNotFound(
             SeedTrace.SubmissionIdNotFound value
@@ -304,7 +308,7 @@ public record InvalidRequestCause
 
         internal SeedTrace.CustomTestCasesUnsupported Value { get; set; }
 
-        public override string ToString() => Value.ToString();
+        public override string ToString() => Value.ToString() ?? "null";
 
         public static implicit operator InvalidRequestCause.CustomTestCasesUnsupported(
             SeedTrace.CustomTestCasesUnsupported value
@@ -324,7 +328,7 @@ public record InvalidRequestCause
 
         internal SeedTrace.UnexpectedLanguageError Value { get; set; }
 
-        public override string ToString() => Value.ToString();
+        public override string ToString() => Value.ToString() ?? "null";
 
         public static implicit operator InvalidRequestCause.UnexpectedLanguage(
             SeedTrace.UnexpectedLanguageError value

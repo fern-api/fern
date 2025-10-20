@@ -478,7 +478,8 @@
                                 },
                                 "propertyAccess": null
                             }
-                        ]
+                        ],
+                        "extraProperties": null
                     },
                     "jsonExample": {
                         "id": "type-df89sdg1",
@@ -821,7 +822,8 @@
                                             },
                                             "propertyAccess": null
                                         }
-                                    ]
+                                    ],
+                                    "extraProperties": null
                                 }
                             },
                             "jsonExample": {

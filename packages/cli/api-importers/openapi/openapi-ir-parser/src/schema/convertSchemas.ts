@@ -315,7 +315,36 @@ export function convertSchemaObject(
 
     const fernSchema = getFernTypeExtension({ schema, description, title, nameOverride, generatedName, availability });
     if (fernSchema != null) {
-        return fernSchema;
+        let result: SchemaWithExample = fernSchema;
+        // we're wrapping optional/nullable here for backwards compat, but ideally, users should include optional/nullable in their `x-fern-type` extension
+        // we can add a flag when a customer wants to override this behavior
+        if (wrapAsNullable) {
+            result = SchemaWithExample.nullable({
+                availability,
+                namespace,
+                groupName,
+                description,
+                generatedName,
+                inline: undefined,
+                nameOverride,
+                title,
+                value: result
+            });
+        }
+        if (wrapAsOptional) {
+            result = SchemaWithExample.optional({
+                availability,
+                namespace,
+                groupName,
+                description,
+                generatedName,
+                inline: undefined,
+                nameOverride,
+                title,
+                value: result
+            });
+        }
+        return result;
     }
     try {
         // handle type array
@@ -505,6 +534,7 @@ export function convertSchemaObject(
                 groupName
             });
         }
+
         if (schema.type === "integer") {
             return convertInteger({
                 nameOverride,
@@ -526,6 +556,7 @@ export function convertSchemaObject(
                 groupName
             });
         }
+
         if ((schema.type as string) === "float") {
             return convertNumber({
                 nameOverride,
@@ -547,6 +578,7 @@ export function convertSchemaObject(
                 groupName
             });
         }
+
         if (schema.type === "string") {
             if (schema.format === "date-time") {
                 return wrapPrimitive({
@@ -583,7 +615,7 @@ export function convertSchemaObject(
             }
 
             if (schema.format === "json-string") {
-                return SchemaWithExample.unknown({
+                let result: SchemaWithExample = SchemaWithExample.unknown({
                     nameOverride,
                     generatedName,
                     title,
@@ -593,6 +625,33 @@ export function convertSchemaObject(
                     groupName,
                     example: undefined
                 });
+                if (wrapAsNullable) {
+                    result = SchemaWithExample.nullable({
+                        availability,
+                        namespace,
+                        groupName,
+                        description,
+                        generatedName,
+                        inline: undefined,
+                        nameOverride,
+                        title,
+                        value: result
+                    });
+                }
+                if (wrapAsOptional) {
+                    result = SchemaWithExample.optional({
+                        availability,
+                        namespace,
+                        groupName,
+                        description,
+                        generatedName,
+                        inline: undefined,
+                        nameOverride,
+                        title,
+                        value: result
+                    });
+                }
+                return result;
             }
 
             const maybeConstValue = getProperty<string>(schema, "const");
@@ -1118,7 +1177,7 @@ export function convertSchemaObject(
         }
 
         const inferredValue = schema.example ?? schema.default;
-        return SchemaWithExample.unknown({
+        let result: SchemaWithExample = SchemaWithExample.unknown({
             nameOverride,
             generatedName,
             title,
@@ -1128,6 +1187,33 @@ export function convertSchemaObject(
             groupName,
             example: inferredValue
         });
+        if (wrapAsNullable) {
+            result = SchemaWithExample.nullable({
+                availability,
+                namespace,
+                groupName,
+                description,
+                generatedName,
+                inline: undefined,
+                nameOverride,
+                title,
+                value: result
+            });
+        }
+        if (wrapAsOptional) {
+            result = SchemaWithExample.optional({
+                availability,
+                namespace,
+                groupName,
+                description,
+                generatedName,
+                inline: undefined,
+                nameOverride,
+                title,
+                value: result
+            });
+        }
+        return result;
     } catch (error) {
         context.logger.debug(
             `Error converting schema: ${(error as Error).message}\n Location: ${breadcrumbs.join("-> ")}`

@@ -1,7 +1,5 @@
 # Reference
-
 ## Auth
-
 <details><summary><code>client.auth.<a href="/src/api/resources/auth/client/Client.ts">getTokenWithClientCredentials</a>({ ...params }) -> SeedOauthClientCredentials.TokenResponse</code></summary>
 <dl>
 <dd>
@@ -18,10 +16,10 @@
 await client.auth.getTokenWithClientCredentials({
     client_id: "my_oauth_app_123",
     client_secret: "sk_live_abcdef123456789",
-    scope: "read:users",
+    scope: "read:users"
 });
-```
 
+```
 </dd>
 </dl>
 </dd>
@@ -35,20 +33,21 @@ await client.auth.getTokenWithClientCredentials({
 <dl>
 <dd>
 
-**request:** `SeedOauthClientCredentials.GetTokenRequest`
-
+**request:** `SeedOauthClientCredentials.GetTokenRequest` 
+    
 </dd>
 </dl>
 
 <dl>
 <dd>
 
-**requestOptions:** `Auth.RequestOptions`
+**requestOptions:** `Auth.RequestOptions` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
 
-</dd>
-</dl>
-</dd>
-</dl>
 
 </dd>
 </dl>
@@ -71,10 +70,10 @@ await client.auth.refreshToken({
     client_id: "my_oauth_app_123",
     client_secret: "sk_live_abcdef123456789",
     refresh_token: "refresh_token",
-    scope: "read:users",
+    scope: "read:users"
 });
-```
 
+```
 </dd>
 </dl>
 </dd>
@@ -88,27 +87,27 @@ await client.auth.refreshToken({
 <dl>
 <dd>
 
-**request:** `SeedOauthClientCredentials.RefreshTokenRequest`
-
+**request:** `SeedOauthClientCredentials.RefreshTokenRequest` 
+    
 </dd>
 </dl>
 
 <dl>
 <dd>
 
-**requestOptions:** `Auth.RequestOptions`
+**requestOptions:** `Auth.RequestOptions` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
 
-</dd>
-</dl>
-</dd>
-</dl>
 
 </dd>
 </dl>
 </details>
 
 ## NestedNoAuth Api
-
 <details><summary><code>client.nestedNoAuth.api.<a href="/src/api/resources/nestedNoAuth/resources/api/client/Client.ts">getSomething</a>() -> void</code></summary>
 <dl>
 <dd>
@@ -123,8 +122,8 @@ await client.auth.refreshToken({
 
 ```typescript
 await client.nestedNoAuth.api.getSomething();
-```
 
+```
 </dd>
 </dl>
 </dd>
@@ -138,19 +137,19 @@ await client.nestedNoAuth.api.getSomething();
 <dl>
 <dd>
 
-**requestOptions:** `Api.RequestOptions`
+**requestOptions:** `Api.RequestOptions` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
 
-</dd>
-</dl>
-</dd>
-</dl>
 
 </dd>
 </dl>
 </details>
 
 ## Nested Api
-
 <details><summary><code>client.nested.api.<a href="/src/api/resources/nested/resources/api/client/Client.ts">getSomething</a>() -> void</code></summary>
 <dl>
 <dd>
@@ -165,8 +164,8 @@ await client.nestedNoAuth.api.getSomething();
 
 ```typescript
 await client.nested.api.getSomething();
-```
 
+```
 </dd>
 </dl>
 </dd>
@@ -180,19 +179,19 @@ await client.nested.api.getSomething();
 <dl>
 <dd>
 
-**requestOptions:** `Api.RequestOptions`
+**requestOptions:** `Api.RequestOptions` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
 
-</dd>
-</dl>
-</dd>
-</dl>
 
 </dd>
 </dl>
 </details>
 
 ## Simple
-
 <details><summary><code>client.simple.<a href="/src/api/resources/simple/client/Client.ts">getSomething</a>() -> void</code></summary>
 <dl>
 <dd>
@@ -207,8 +206,8 @@ await client.nested.api.getSomething();
 
 ```typescript
 await client.simple.getSomething();
-```
 
+```
 </dd>
 </dl>
 </dd>
@@ -222,12 +221,13 @@ await client.simple.getSomething();
 <dl>
 <dd>
 
-**requestOptions:** `Simple.RequestOptions`
+**requestOptions:** `Simple.RequestOptions` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
 
-</dd>
-</dl>
-</dd>
-</dl>
 
 </dd>
 </dl>

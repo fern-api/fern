@@ -61499,7 +61499,7 @@
           "type": "inlined"
         },
         "response": {
-          "type": "json"
+          "type": "text"
         },
         "examples": []
       },

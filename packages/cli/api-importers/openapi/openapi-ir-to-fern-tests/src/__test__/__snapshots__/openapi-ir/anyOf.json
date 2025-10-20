@@ -105,23 +105,18 @@
             "generatedName": "requestId",
             "key": "id",
             "schema": {
-              "generatedName": "requestId",
+              "generatedName": "RequestId",
+              "description": "An optional string value.\n",
               "value": {
-                "generatedName": "RequestId",
-                "description": "An optional string value.\n",
-                "value": {
-                  "schema": {
-                    "type": "string"
-                  },
-                  "generatedName": "RequestId",
-                  "groupName": [],
-                  "type": "primitive"
+                "schema": {
+                  "type": "string"
                 },
+                "generatedName": "RequestId",
                 "groupName": [],
-                "type": "nullable"
+                "type": "primitive"
               },
               "groupName": [],
-              "type": "optional"
+              "type": "nullable"
             },
             "audiences": []
           }
@@ -145,23 +140,18 @@
             "generatedName": "responseValue",
             "key": "value",
             "schema": {
-              "generatedName": "responseValue",
+              "generatedName": "ResponseValue",
+              "description": "An optional numerical value.\n",
               "value": {
-                "generatedName": "ResponseValue",
-                "description": "An optional numerical value.\n",
-                "value": {
-                  "schema": {
-                    "type": "double"
-                  },
-                  "generatedName": "ResponseValue",
-                  "groupName": [],
-                  "type": "primitive"
+                "schema": {
+                  "type": "double"
                 },
+                "generatedName": "ResponseValue",
                 "groupName": [],
-                "type": "nullable"
+                "type": "primitive"
               },
               "groupName": [],
-              "type": "optional"
+              "type": "nullable"
             },
             "audiences": []
           }

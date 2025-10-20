@@ -5142,6 +5142,9 @@
       "endpoints": [
         {
           "auth": true,
+          "authV2": [
+            "APIKeyHeader"
+          ],
           "method": "GET",
           "defaultEnvironment": "Production server (uses live data).",
           "environments": [
@@ -5367,6 +5370,9 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "APIKeyHeader"
+          ],
           "description": "Deleting a transaction will also delete it from our systems. This operation is permanent.",
           "method": "DELETE",
           "defaultEnvironment": "Production server (uses live data).",
@@ -5489,6 +5495,9 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "APIKeyHeader"
+          ],
           "description": "Return a list of enriched transactions starting with the most recent one.",
           "method": "GET",
           "defaultEnvironment": "Production server (uses live data).",
@@ -5762,6 +5771,9 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "APIKeyHeader"
+          ],
           "description": "Enriches a list of transactions in synchronous fashion. The enriched transactions returned in\nthe order that they were submitted. Webhook events are not triggered for this operation. \n\nThis endpoint supports up to 1000 transactions. \n\nIf you want more throughput and live updates refer to the \n[async enrichment endpoint](../batches/post-batch).",
           "method": "POST",
           "defaultEnvironment": "Production server (uses live data).",
@@ -6020,6 +6032,9 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "APIKeyHeader"
+          ],
           "description": "Changes the account holder associated with the transaction. The old and new account holder must share the same categories",
           "method": "POST",
           "defaultEnvironment": "Production server (uses live data).",
@@ -6294,6 +6309,9 @@
       "endpoints": [
         {
           "auth": true,
+          "authV2": [
+            "APIKeyHeader"
+          ],
           "description": "Returns a list of submitted batches starting with the most recent one.",
           "method": "GET",
           "defaultEnvironment": "Production server (uses live data).",
@@ -6475,6 +6493,9 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "APIKeyHeader"
+          ],
           "description": "Creates a batch of transactions and enriches it in an asynchronous fashion. A batch, representing the status of the \nenrichment progress is returned as a result of the submission. \n\nIn order to be notified on the status of the batch, you can setup [webhooks](../../../webhooks) and receive \nthe respective notifications. Alternatively, you can \n[poll](../../../enrichment/introduction/#viewing-the-progress-of-a-batch) for the status of the batch using its id.\n\nThis endpoints supports up to 24960 transactions.",
           "method": "POST",
           "defaultEnvironment": "Production server (uses live data).",
@@ -6637,6 +6658,9 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "APIKeyHeader"
+          ],
           "method": "GET",
           "defaultEnvironment": "Production server (uses live data).",
           "environments": [
@@ -6772,6 +6796,9 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "APIKeyHeader"
+          ],
           "description": "Returns the results of the enrichment request. The resulting enriched transactions are returned in the same order they were submitted. Results are available after the batch has finished processing.",
           "method": "GET",
           "defaultEnvironment": "Production server (uses live data).",
@@ -7024,6 +7051,9 @@
       "endpoints": [
         {
           "auth": true,
+          "authV2": [
+            "APIKeyHeader"
+          ],
           "description": "Return a list of submitted bank statements starting with the most recent one.",
           "method": "GET",
           "defaultEnvironment": "Production server (uses live data).",
@@ -7209,6 +7239,9 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "APIKeyHeader"
+          ],
           "description": "Upload a PDF file and queue it for extraction.",
           "method": "POST",
           "defaultEnvironment": "Production server (uses live data).",
@@ -7372,6 +7405,9 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "APIKeyHeader"
+          ],
           "method": "GET",
           "defaultEnvironment": "Production server (uses live data).",
           "environments": [
@@ -7511,6 +7547,9 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "APIKeyHeader"
+          ],
           "method": "DELETE",
           "defaultEnvironment": "Production server (uses live data).",
           "environments": [
@@ -7632,6 +7671,9 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "APIKeyHeader"
+          ],
           "description": "Extracts account holder, bank and account information extracted from the first page of the bank statement, which is typically available before the full results. This is a synchronous call.\n\nComplete guide: [Overview](../../../bank-statements)",
           "method": "POST",
           "defaultEnvironment": "Production server (uses live data).",
@@ -7802,6 +7844,9 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "APIKeyHeader"
+          ],
           "description": "Return the extracted account information and associated transactions from a bank statement PDF. The results are accessible once the statement's status is `completed`.",
           "method": "GET",
           "defaultEnvironment": "Production server (uses live data).",
@@ -7982,6 +8027,9 @@
       "endpoints": [
         {
           "auth": true,
+          "authV2": [
+            "APIKeyHeader"
+          ],
           "method": "GET",
           "defaultEnvironment": "Production server (uses live data).",
           "environments": [
@@ -8113,6 +8161,9 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "APIKeyHeader"
+          ],
           "description": "Deletes all of the transactions in the account holder's history. This operation is permanent and irreversible",
           "method": "DELETE",
           "defaultEnvironment": "Production server (uses live data).",
@@ -8235,6 +8286,9 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "APIKeyHeader"
+          ],
           "method": "GET",
           "defaultEnvironment": "Production server (uses live data).",
           "environments": [
@@ -8400,6 +8454,9 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "APIKeyHeader"
+          ],
           "method": "POST",
           "defaultEnvironment": "Production server (uses live data).",
           "environments": [
@@ -8561,6 +8618,9 @@
       "endpoints": [
         {
           "auth": true,
+          "authV2": [
+            "APIKeyHeader"
+          ],
           "description": "Identifies and categorizes recurring patterns found in the transaction history of the account holder, such as periodic payments or subscriptions. These patterns are called recurrence groups.",
           "method": "POST",
           "defaultEnvironment": "Production server (uses live data).",
@@ -8753,6 +8813,9 @@
       "endpoints": [
         {
           "auth": true,
+          "authV2": [
+            "APIKeyHeader"
+          ],
           "description": "List all webhooks",
           "method": "GET",
           "defaultEnvironment": "Production server (uses live data).",
@@ -8873,6 +8936,9 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "APIKeyHeader"
+          ],
           "description": "Create a webhook to be called when certain events occur.",
           "method": "POST",
           "defaultEnvironment": "Production server (uses live data).",
@@ -9027,6 +9093,9 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "APIKeyHeader"
+          ],
           "description": "Retrieve a webhook",
           "method": "GET",
           "defaultEnvironment": "Production server (uses live data).",
@@ -9157,6 +9226,9 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "APIKeyHeader"
+          ],
           "description": "Delete a webhook",
           "method": "DELETE",
           "defaultEnvironment": "Production server (uses live data).",
@@ -9279,6 +9351,9 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "APIKeyHeader"
+          ],
           "description": "Update a webhook. Fields that aren't specified in the body will remain unchanged",
           "method": "PATCH",
           "defaultEnvironment": "Production server (uses live data).",
@@ -9453,6 +9528,9 @@
       "endpoints": [
         {
           "auth": true,
+          "authV2": [
+            "APIKeyHeader"
+          ],
           "description": "Get the current personalization ruleset.",
           "method": "GET",
           "defaultEnvironment": "Production server (uses live data).",
@@ -9573,6 +9651,9 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "APIKeyHeader"
+          ],
           "description": "Set the personalization ruleset.",
           "method": "POST",
           "defaultEnvironment": "Production server (uses live data).",
@@ -9744,6 +9825,9 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "APIKeyHeader"
+          ],
           "description": "Append a rule to the personalization ruleset.",
           "method": "POST",
           "defaultEnvironment": "Production server (uses live data).",
@@ -9889,6 +9973,9 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "APIKeyHeader"
+          ],
           "description": "Delete the rule at the specified index from the personalization ruleset.",
           "method": "DELETE",
           "defaultEnvironment": "Production server (uses live data).",
@@ -10004,6 +10091,9 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "APIKeyHeader"
+          ],
           "description": "Modify an existing rule at the specified index on the ruleset.",
           "method": "PATCH",
           "defaultEnvironment": "Production server (uses live data).",
@@ -10167,6 +10257,9 @@
       "endpoints": [
         {
           "auth": true,
+          "authV2": [
+            "APIKeyHeader"
+          ],
           "description": "List all reports",
           "method": "GET",
           "defaultEnvironment": "Production server (uses live data).",
@@ -10354,6 +10447,9 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "APIKeyHeader"
+          ],
           "description": "Report a transaction with incorrect fields.",
           "method": "POST",
           "defaultEnvironment": "Production server (uses live data).",
@@ -10508,6 +10604,9 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "APIKeyHeader"
+          ],
           "description": "Retrieve a report",
           "method": "GET",
           "defaultEnvironment": "Production server (uses live data).",
@@ -10648,6 +10747,9 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "APIKeyHeader"
+          ],
           "description": "Delete a report",
           "method": "DELETE",
           "defaultEnvironment": "Production server (uses live data).",
@@ -10780,6 +10882,9 @@
       "endpoints": [
         {
           "auth": true,
+          "authV2": [
+            "APIKeyHeader"
+          ],
           "description": "Retrieves the set of categories. Category sets are different per account holder type.",
           "method": "GET",
           "defaultEnvironment": "Production server (uses live data).",
@@ -10944,6 +11049,9 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "APIKeyHeader"
+          ],
           "description": "Sets a custom set of categories. Transactions that don't match a category will be categorized `not enough information` regardless of whether it is present in the set.",
           "method": "POST",
           "defaultEnvironment": "Production server (uses live data).",
@@ -11134,6 +11242,9 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "APIKeyHeader"
+          ],
           "description": "Resets the set of categories of the specified account holder type to the original values.",
           "method": "POST",
           "defaultEnvironment": "Production server (uses live data).",
@@ -11308,6 +11419,9 @@
       "endpoints": [
         {
           "auth": true,
+          "authV2": [
+            "APIKeyHeader"
+          ],
           "description": "Resolves a query into an entity by querying our entity resolution system. \n    The parameters `name` and `website` are mutually exclusive. Calls to this endpoint using \n    the `name` parameter are billed the same way transactions are.",
           "method": "GET",
           "defaultEnvironment": "Production server (uses live data).",
@@ -11478,6 +11592,9 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "APIKeyHeader"
+          ],
           "description": "Retrieve more information about an entity by using its unique ID.",
           "method": "GET",
           "defaultEnvironment": "Production server (uses live data).",
@@ -11734,6 +11851,13 @@
     "type": "header",
     "headerWireValue": "X-Api-Key",
     "nameOverride": "apiKey"
+  },
+  "authSchemes": {
+    "APIKeyHeader": {
+      "type": "header",
+      "headerWireValue": "X-Api-Key",
+      "nameOverride": "apiKey"
+    }
   },
   "snippetsConfiguration": {},
   "globalHeaders": []

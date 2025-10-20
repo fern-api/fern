@@ -109,7 +109,7 @@ export class EndpointMethodGenerator {
                 );
             } else if (endpoint.requestBody.type === "inlinedRequestBody") {
                 const fullyQualifiedRequestTypeSymbolName =
-                    this.sdkGeneratorContext.project.symbolRegistry.getFullyQualifiedRequestTypeSymbolOrThrow(
+                    this.sdkGeneratorContext.project.srcSymbolRegistry.getFullyQualifiedRequestTypeSymbolOrThrow(
                         endpoint.id,
                         endpoint.requestBody.name.pascalCase.unsafeName
                     );
@@ -132,7 +132,7 @@ export class EndpointMethodGenerator {
                 );
             } else if (endpoint.requestBody.type === "fileUpload") {
                 const fullyQualifiedRequestTypeSymbolName =
-                    this.sdkGeneratorContext.project.symbolRegistry.getFullyQualifiedRequestTypeSymbolOrThrow(
+                    this.sdkGeneratorContext.project.srcSymbolRegistry.getFullyQualifiedRequestTypeSymbolOrThrow(
                         endpoint.id,
                         endpoint.requestBody.name.pascalCase.unsafeName
                     );
@@ -282,7 +282,7 @@ export class EndpointMethodGenerator {
                                             arguments_: [
                                                 swift.functionArgument({
                                                     value:
-                                                        swiftType.nonOptionalType === "custom"
+                                                        swiftType.nonOptional().nonNullableType === "custom"
                                                             ? swift.Expression.memberAccess({
                                                                   target: swift.Expression.reference("$0"),
                                                                   memberName: "rawValue"

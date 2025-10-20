@@ -1,6 +1,7 @@
 use crate::api::*;
 use crate::{ApiError, ClientConfig, HttpClient, RequestOptions};
 use reqwest::Method;
+use std::collections::HashMap;
 
 pub struct SyspropClient {
     pub http_client: HttpClient,
@@ -16,14 +17,14 @@ impl SyspropClient {
     pub async fn set_num_warm_instances(
         &self,
         language: &Language,
-        num_warm_instances: i32,
+        num_warm_instances: i64,
         options: Option<RequestOptions>,
     ) -> Result<(), ApiError> {
         self.http_client
             .execute_request(
                 Method::PUT,
                 &format!(
-                    "/sysprop/num-warm-instances/{}{}",
+                    "/sysprop/num-warm-instances/{}/{}",
                     language, num_warm_instances
                 ),
                 None,
@@ -36,7 +37,7 @@ impl SyspropClient {
     pub async fn get_num_warm_instances(
         &self,
         options: Option<RequestOptions>,
-    ) -> Result<HashMap<Language, i32>, ApiError> {
+    ) -> Result<HashMap<Language, i64>, ApiError> {
         self.http_client
             .execute_request(
                 Method::GET,

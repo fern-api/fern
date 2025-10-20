@@ -7,14 +7,14 @@ private func main() async throws {
         token: "<token>"
     )
 
-    try await client.service.updateUser(
+    _ = try await client.service.updateUser(
         userId: "userId",
         request: UpdateUserRequest(
             email: "email",
-            emailVerified: True,
+            emailVerified: true,
             username: "username",
             phoneNumber: "phone_number",
-            phoneVerified: True,
+            phoneVerified: true,
             userMetadata: [
                 "user_metadata": .object([
                     "key": .string("value")
@@ -26,7 +26,7 @@ private func main() async throws {
                 ])
             ],
             password: "password",
-            blocked: True
+            blocked: true
         )
     )
 }

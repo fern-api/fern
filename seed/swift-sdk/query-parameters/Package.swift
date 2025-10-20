@@ -21,6 +21,11 @@ let package = Package(
         .target(
             name: "QueryParameters",
             path: "Sources"
+        ),
+        .testTarget(
+            name: "QueryParametersTests",
+            dependencies: ["QueryParameters"],
+            path: "Tests"
         )
     ]
 )

@@ -1,11 +1,6 @@
-use crate::nullable_user_id::UserId;
-use crate::nullable_metadata::Metadata;
-use crate::nullable_email::Email;
-use crate::nullable_weird_number::WeirdNumber;
-use std::collections::HashMap;
-use serde::{Deserialize, Serialize};
+pub use crate::prelude::*;
 
-#[derive(Debug, Clone, Serialize, Deserialize)]
+#[derive(Debug, Clone, Serialize, Deserialize, PartialEq)]
 pub struct User {
     pub name: String,
     pub id: UserId,
@@ -17,7 +12,7 @@ pub struct User {
     #[serde(rename = "favorite-number")]
     pub favorite_number: WeirdNumber,
     #[serde(skip_serializing_if = "Option::is_none")]
-    pub numbers: Option<Option<Vec<i32>>>,
+    pub numbers: Option<Option<Vec<i64>>>,
     #[serde(skip_serializing_if = "Option::is_none")]
     pub strings: Option<Option<HashMap<String, serde_json::Value>>>,
 }

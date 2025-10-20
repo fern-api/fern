@@ -165,7 +165,7 @@
             "generatedName": "updateStream",
             "key": "stream",
             "schema": {
-              "generatedName": "updateStream",
+              "generatedName": "UpdateStream",
               "value": {
                 "schema": {
                   "type": "boolean"

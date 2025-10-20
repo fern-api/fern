@@ -1,7 +1,5 @@
 # Reference
-
 ## Union
-
 <details><summary><code>client.union.<a href="/src/api/resources/union/client/Client.ts">get</a>({ ...params }) -> SeedUndiscriminatedUnions.MyUnion</code></summary>
 <dl>
 <dd>
@@ -16,8 +14,8 @@
 
 ```typescript
 await client.union.get("string");
-```
 
+```
 </dd>
 </dl>
 </dd>
@@ -31,20 +29,21 @@ await client.union.get("string");
 <dl>
 <dd>
 
-**request:** `SeedUndiscriminatedUnions.MyUnion`
-
+**request:** `SeedUndiscriminatedUnions.MyUnion` 
+    
 </dd>
 </dl>
 
 <dl>
 <dd>
 
-**requestOptions:** `Union.RequestOptions`
+**requestOptions:** `Union.RequestOptions` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
 
-</dd>
-</dl>
-</dd>
-</dl>
 
 </dd>
 </dl>
@@ -64,8 +63,8 @@ await client.union.get("string");
 
 ```typescript
 await client.union.getMetadata();
-```
 
+```
 </dd>
 </dl>
 </dd>
@@ -79,12 +78,13 @@ await client.union.getMetadata();
 <dl>
 <dd>
 
-**requestOptions:** `Union.RequestOptions`
+**requestOptions:** `Union.RequestOptions` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
 
-</dd>
-</dl>
-</dd>
-</dl>
 
 </dd>
 </dl>
@@ -104,12 +104,12 @@ await client.union.getMetadata();
 
 ```typescript
 await client.union.updateMetadata({
-    string: {
-        key: "value",
-    },
+    "string": {
+        "key": "value"
+    }
 });
-```
 
+```
 </dd>
 </dl>
 </dd>
@@ -123,20 +123,21 @@ await client.union.updateMetadata({
 <dl>
 <dd>
 
-**request:** `SeedUndiscriminatedUnions.MetadataUnion`
-
+**request:** `SeedUndiscriminatedUnions.MetadataUnion` 
+    
 </dd>
 </dl>
 
 <dl>
 <dd>
 
-**requestOptions:** `Union.RequestOptions`
+**requestOptions:** `Union.RequestOptions` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
 
-</dd>
-</dl>
-</dd>
-</dl>
 
 </dd>
 </dl>
@@ -157,13 +158,13 @@ await client.union.updateMetadata({
 ```typescript
 await client.union.call({
     union: {
-        union: {
-            key: "value",
-        },
-    },
+        "string": {
+            "key": "value"
+        }
+    }
 });
-```
 
+```
 </dd>
 </dl>
 </dd>
@@ -177,20 +178,21 @@ await client.union.call({
 <dl>
 <dd>
 
-**request:** `SeedUndiscriminatedUnions.Request`
-
+**request:** `SeedUndiscriminatedUnions.Request` 
+    
 </dd>
 </dl>
 
 <dl>
 <dd>
 
-**requestOptions:** `Union.RequestOptions`
+**requestOptions:** `Union.RequestOptions` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
 
-</dd>
-</dl>
-</dd>
-</dl>
 
 </dd>
 </dl>
@@ -210,8 +212,8 @@ await client.union.call({
 
 ```typescript
 await client.union.duplicateTypesUnion("string");
-```
 
+```
 </dd>
 </dl>
 </dd>
@@ -225,20 +227,21 @@ await client.union.duplicateTypesUnion("string");
 <dl>
 <dd>
 
-**request:** `SeedUndiscriminatedUnions.UnionWithDuplicateTypes`
-
+**request:** `SeedUndiscriminatedUnions.UnionWithDuplicateTypes` 
+    
 </dd>
 </dl>
 
 <dl>
 <dd>
 
-**requestOptions:** `Union.RequestOptions`
+**requestOptions:** `Union.RequestOptions` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
 
-</dd>
-</dl>
-</dd>
-</dl>
 
 </dd>
 </dl>
@@ -258,8 +261,8 @@ await client.union.duplicateTypesUnion("string");
 
 ```typescript
 await client.union.nestedUnions("string");
-```
 
+```
 </dd>
 </dl>
 </dd>
@@ -273,20 +276,21 @@ await client.union.nestedUnions("string");
 <dl>
 <dd>
 
-**request:** `SeedUndiscriminatedUnions.NestedUnionRoot`
-
+**request:** `SeedUndiscriminatedUnions.NestedUnionRoot` 
+    
 </dd>
 </dl>
 
 <dl>
 <dd>
 
-**requestOptions:** `Union.RequestOptions`
+**requestOptions:** `Union.RequestOptions` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
 
-</dd>
-</dl>
-</dd>
-</dl>
 
 </dd>
 </dl>

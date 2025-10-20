@@ -16,7 +16,7 @@ impl ServiceClient {
         &self,
         path_param: &String,
         service_param: &String,
-        endpoint_param: i32,
+        endpoint_param: i64,
         resource_param: &String,
         options: Option<RequestOptions>,
     ) -> Result<(), ApiError> {
@@ -24,7 +24,7 @@ impl ServiceClient {
             .execute_request(
                 Method::POST,
                 &format!(
-                    "/test/{}{}{}{}",
+                    "/test/{}/{}/{}/{}",
                     path_param, service_param, endpoint_param, resource_param
                 ),
                 None,

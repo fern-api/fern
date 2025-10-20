@@ -16,7 +16,11 @@ interface EndpointWithFilepath {
 export class ReadmeSnippetBuilder extends AbstractReadmeSnippetBuilder {
     private static CLIENT_VARIABLE_NAME = "client";
     private static ERRORS_FEATURE_ID: FernGeneratorCli.FeatureId = "ERRORS";
+    private static REQUEST_TYPES_FEATURE_ID: FernGeneratorCli.FeatureId = "REQUEST_TYPES";
     private static PAGINATION_FEATURE_ID: FernGeneratorCli.FeatureId = "PAGINATION";
+    private static ADDITIONAL_HEADERS_FEATURE_ID: FernGeneratorCli.FeatureId = "ADDITIONAL_HEADERS";
+    private static ADDITIONAL_QUERY_STRING_PARAMETERS_FEATURE_ID: FernGeneratorCli.FeatureId =
+        "ADDITIONAL_QUERY_STRING_PARAMETERS";
 
     private readonly context: SdkGeneratorContext;
     private readonly endpointsById: Record<EndpointId, EndpointWithFilepath> = {};
@@ -52,14 +56,24 @@ export class ReadmeSnippetBuilder extends AbstractReadmeSnippetBuilder {
         // Error handling
         snippets[ReadmeSnippetBuilder.ERRORS_FEATURE_ID] = this.buildErrorSnippets();
 
+        // Request types
+        snippets[ReadmeSnippetBuilder.REQUEST_TYPES_FEATURE_ID] = this.buildRequestTypesSnippets();
+
         // Retries
         snippets[FernGeneratorCli.StructuredFeatureId.Retries] = this.buildRetrySnippets();
 
         // Timeouts
         snippets[FernGeneratorCli.StructuredFeatureId.Timeouts] = this.buildTimeoutSnippets();
 
-        // Pagination
-        snippets[ReadmeSnippetBuilder.PAGINATION_FEATURE_ID] = this.buildPaginationSnippets();
+        // Additional headers
+        snippets[ReadmeSnippetBuilder.ADDITIONAL_HEADERS_FEATURE_ID] = this.buildAdditionalHeadersSnippets();
+
+        // Additional query string parameters
+        snippets[ReadmeSnippetBuilder.ADDITIONAL_QUERY_STRING_PARAMETERS_FEATURE_ID] =
+            this.buildAdditionalQueryStringParametersSnippets();
+
+        // Pagination disable it for now, currently only support normal pagination
+        // snippets[ReadmeSnippetBuilder.PAGINATION_FEATURE_ID] = this.buildPaginationSnippets();
 
         return snippets;
     }
@@ -81,6 +95,33 @@ export class ReadmeSnippetBuilder extends AbstractReadmeSnippetBuilder {
         });
     }
 
+    private buildRequestTypesSnippets(): string[] {
+        // Find any endpoint with a request body across all services
+        let endpointWithRequest: EndpointWithFilepath | null = null;
+
+        for (const service of Object.values(this.context.ir.services)) {
+            for (const endpoint of service.endpoints) {
+                if (endpoint.requestBody != null && endpoint.requestBody.type === "inlinedRequestBody") {
+                    endpointWithRequest = {
+                        endpoint,
+                        fernFilepath: service.name.fernFilepath
+                    };
+                    break;
+                }
+            }
+            if (endpointWithRequest != null) {
+                break;
+            }
+        }
+
+        if (endpointWithRequest == null) {
+            return [];
+        }
+
+        const codeString = this.buildRequestTypesCode(endpointWithRequest);
+        return [this.writeCode(codeString)];
+    }
+
     private buildRetrySnippets(): string[] {
         const retryEndpoints = this.getEndpointsForFeature(FernGeneratorCli.StructuredFeatureId.Retries);
         return retryEndpoints.map((endpoint) => {
@@ -93,6 +134,24 @@ export class ReadmeSnippetBuilder extends AbstractReadmeSnippetBuilder {
         const timeoutEndpoints = this.getEndpointsForFeature(FernGeneratorCli.StructuredFeatureId.Timeouts);
         return timeoutEndpoints.map((endpoint) => {
             const codeString = this.buildTimeoutCode(endpoint);
+            return this.writeCode(codeString);
+        });
+    }
+
+    private buildAdditionalHeadersSnippets(): string[] {
+        const headerEndpoints = this.getEndpointsForFeature(ReadmeSnippetBuilder.ADDITIONAL_HEADERS_FEATURE_ID);
+        return headerEndpoints.map((endpoint) => {
+            const codeString = this.buildAdditionalHeadersCode(endpoint);
+            return this.writeCode(codeString);
+        });
+    }
+
+    private buildAdditionalQueryStringParametersSnippets(): string[] {
+        const queryEndpoints = this.getEndpointsForFeature(
+            ReadmeSnippetBuilder.ADDITIONAL_QUERY_STRING_PARAMETERS_FEATURE_ID
+        );
+        return queryEndpoints.map((endpoint) => {
+            const codeString = this.buildAdditionalQueryParamsCode(endpoint);
             return this.writeCode(codeString);
         });
     }
@@ -197,65 +256,15 @@ export class ReadmeSnippetBuilder extends AbstractReadmeSnippetBuilder {
 
     private buildErrorHandlingCode(endpoint: EndpointWithFilepath): string {
         const writer = new Writer();
+        const methodCall = this.getMethodCall(endpoint);
 
-        // Use statements
-        const useStatements = [
-            new UseStatement({
-                path: this.context.getCrateName(),
-                items: ["ApiError", "ClientConfig", this.context.getClientName()]
-            })
-        ];
-
-        // Main function with error handling
-        const mainFunction = rust.standaloneFunction({
-            name: "main",
-            parameters: [],
-            isAsync: true,
-            attributes: [rust.attribute({ name: "tokio::main" })],
-            returnType: rust.Type.result(
-                rust.Type.reference(rust.reference({ name: "()" })),
-                rust.Type.reference(rust.reference({ name: "ApiError" }))
-            ),
-            body: CodeBlock.fromStatements(this.buildErrorHandlingBody(endpoint))
-        });
-
-        // Write use statements
-        useStatements.forEach((useStmt) => {
-            useStmt.write(writer);
-            writer.newLine();
-        });
-        writer.newLine();
-
-        // Write main function
-        mainFunction.write(writer);
-
-        return writer.toString().trim() + "\n";
-    }
-
-    private buildErrorHandlingBody(endpoint: EndpointWithFilepath): Statement[] {
-        // Build client using ClientConfig pattern
-        const configVar = Statement.let({
-            name: "config",
-            value: this.getClientConfigStruct("error", endpoint)
-        });
-
-        const clientBuild = Expression.raw(`${this.context.getClientName()}::new(config)`);
-
-        const clientVar = Statement.let({
-            name: "client",
-            value: Expression.try(clientBuild)
-        });
-
-        // Add a simple dummy method call to show error handling pattern
-        const dummyMethodCall = Expression.await(
-            Expression.methodCall({
-                target: Expression.reference("client"),
-                method: "some_method",
-                args: []
-            })
+        // Build the method call expression
+        const callExpr = Expression.await(
+            Expression.try(Expression.functionCall(`${methodCall}`, [Expression.none()]))
         );
 
-        const matchStatement = Statement.match(dummyMethodCall, [
+        // Build match statement with error handling using AST
+        const matchStatement = Statement.match(callExpr, [
             {
                 pattern: "Ok(response)",
                 body: [Statement.expression(Expression.raw('println!("Success: {:?}", response)'))]
@@ -270,7 +279,53 @@ export class ReadmeSnippetBuilder extends AbstractReadmeSnippetBuilder {
             }
         ]);
 
-        return [configVar, clientVar, matchStatement, Statement.return(Expression.ok(Expression.raw("()")))];
+        matchStatement.write(writer);
+        return writer.toString().trim();
+    }
+
+    private buildRequestTypesCode(endpoint: EndpointWithFilepath): string {
+        const writer = new Writer();
+
+        // Get the request type name (e.g., "PostWithObjectBody")
+        const requestTypeName = this.getRequestTypeName(endpoint);
+
+        if (requestTypeName == null) {
+            return "";
+        }
+
+        // Use statement to import from crate using AST
+        const useStatement = new UseStatement({
+            path: `${this.crateName}::prelude`,
+            items: ["*"]
+        });
+
+        // Create struct initialization with placeholder using Expression.raw
+        // We use raw because "..." is not a valid field name and should appear as-is
+        const structInit = Expression.raw(`${requestTypeName} {\n    ...\n}`);
+
+        const letStatement = Statement.let({
+            name: "request",
+            value: structInit
+        });
+
+        useStatement.write(writer);
+        writer.newLine();
+        writer.newLine();
+        letStatement.write(writer);
+
+        return writer.toString().trim();
+    }
+
+    private getRequestTypeName(endpoint: EndpointWithFilepath): string | null {
+        if (endpoint.endpoint.requestBody == null || endpoint.endpoint.requestBody.type !== "inlinedRequestBody") {
+            return null;
+        }
+
+        // Get the type name from the inlined request body
+        const requestBody = endpoint.endpoint.requestBody;
+
+        // Use the name property which gives us the proper PascalCase name
+        return requestBody.name.pascalCase.safeName;
     }
 
     private getClientConfigStruct(
@@ -330,106 +385,128 @@ export class ReadmeSnippetBuilder extends AbstractReadmeSnippetBuilder {
 
     private buildRetryCode(endpoint: EndpointWithFilepath): string {
         const writer = new Writer();
+        const methodCall = this.getMethodCall(endpoint);
 
-        const useStatements = [
-            new UseStatement({ path: this.crateName, items: ["ClientConfig", this.context.getClientName()] })
-        ];
+        // Build RequestOptions expression
+        const optionsExpr = Expression.functionCall("Some", [
+            Expression.methodCall({
+                target: Expression.functionCall("RequestOptions::new", []),
+                method: "max_retries",
+                args: [Expression.numberLiteral(3)]
+            })
+        ]);
 
-        // Write use statements
-        useStatements.forEach((useStmt) => {
-            useStmt.write(writer);
-            writer.newLine();
-        });
-        writer.newLine();
+        // Build the full call with multiline formatting
+        const callExpr = Expression.functionCall(`${methodCall}`, [optionsExpr], true);
 
-        const mainFunction = rust.standaloneFunction({
-            name: "main",
-            parameters: [],
-            isAsync: true,
-            attributes: [rust.attribute({ name: "tokio::main" })],
-            body: CodeBlock.fromStatements(this.buildRetryBody(endpoint))
-        });
+        // Wrap in try + await
+        const awaitExpr = Expression.await(Expression.try(callExpr));
 
-        mainFunction.write(writer);
-        return writer.toString().trim() + "\n";
-    }
-
-    private buildRetryBody(endpoint: EndpointWithFilepath): Statement[] {
-        // Build client using ClientConfig pattern
-        const configVar = Statement.let({
-            name: "config",
-            value: this.getClientConfigStruct("retry", endpoint)
+        // Create let statement
+        const statement = Statement.let({
+            name: "response",
+            value: awaitExpr
         });
 
-        const clientBuild = Expression.methodCall({
-            target: Expression.raw(`${this.context.getClientName()}::new(config)`),
-            method: "expect",
-            args: [Expression.stringLiteral("Failed to build client")]
-        });
-
-        const clientVar = Statement.let({
-            name: "client",
-            value: clientBuild
-        });
-
-        // Just show client initialization - no complex method calls
-        return [configVar, clientVar];
+        statement.write(writer);
+        return writer.toString().trim();
     }
 
     private buildTimeoutCode(endpoint: EndpointWithFilepath): string {
-        const useStatements = [
-            new UseStatement({ path: this.crateName, items: ["ClientConfig", this.context.getClientName()] }),
-            new UseStatement({ path: "std::time", items: ["Duration"] })
-        ];
-
         const writer = new Writer();
+        const methodCall = this.getMethodCall(endpoint);
 
-        // Write use statements
-        useStatements.forEach((useStmt) => {
-            useStmt.write(writer);
-            writer.newLine();
+        // Build RequestOptions expression
+        const optionsExpr = Expression.functionCall("Some", [
+            Expression.methodCall({
+                target: Expression.functionCall("RequestOptions::new", []),
+                method: "timeout_seconds",
+                args: [Expression.numberLiteral(30)]
+            })
+        ]);
+
+        // Build the full call with multiline formatting
+        const callExpr = Expression.functionCall(`${methodCall}`, [optionsExpr], true);
+
+        // Wrap in try + await
+        const awaitExpr = Expression.await(Expression.try(callExpr));
+
+        // Create let statement
+        const statement = Statement.let({
+            name: "response",
+            value: awaitExpr
         });
-        writer.newLine();
 
-        const mainFunction = rust.standaloneFunction({
-            name: "main",
-            parameters: [],
-            isAsync: true,
-            attributes: [rust.attribute({ name: "tokio::main" })],
-            body: CodeBlock.fromStatements(this.buildTimeoutBody(endpoint))
-        });
-
-        mainFunction.write(writer);
-        return writer.toString().trim() + "\n";
+        statement.write(writer);
+        return writer.toString().trim();
     }
 
-    private buildTimeoutBody(endpoint: EndpointWithFilepath): Statement[] {
-        // Build client using ClientConfig pattern
-        const configVar = Statement.let({
-            name: "config",
-            value: this.getClientConfigStruct("timeout", endpoint)
-        });
+    private buildAdditionalHeadersCode(endpoint: EndpointWithFilepath): string {
+        const writer = new Writer();
+        const methodCall = this.getMethodCall(endpoint);
 
-        const clientBuild = Expression.methodCall({
-            target: Expression.raw(`${this.context.getClientName()}::new(config)`),
-            method: "expect",
-            args: [Expression.stringLiteral("Failed to build client")]
-        });
+        // Manually format using Writer for proper multi-line method chain formatting
+        writer.write(`let response = ${methodCall}(`);
+        writer.newLine();
+        writer.indent();
+        writer.write("Some(");
+        writer.newLine();
+        writer.indent();
+        writer.write("RequestOptions::new()");
+        writer.newLine();
+        writer.indent();
+        writer.write('.additional_header("X-Custom-Header", "custom-value")');
+        writer.newLine();
+        writer.write('.additional_header("X-Another-Header", "another-value")');
+        writer.dedent();
+        writer.newLine();
+        writer.dedent();
+        writer.write(")");
+        writer.newLine();
+        writer.dedent();
+        writer.write(")?");
+        writer.newLine();
+        writer.write(".await;");
 
-        const clientVar = Statement.let({
-            name: "client",
-            value: clientBuild
-        });
+        return writer.toString().trim();
+    }
 
-        // Just show client initialization - no complex method calls
-        return [configVar, clientVar];
+    private buildAdditionalQueryParamsCode(endpoint: EndpointWithFilepath): string {
+        const writer = new Writer();
+        const methodCall = this.getMethodCall(endpoint);
+
+        // Manually format using Writer for proper multi-line method chain formatting
+        writer.write(`let response = ${methodCall}(`);
+        writer.newLine();
+        writer.indent();
+        writer.write("Some(");
+        writer.newLine();
+        writer.indent();
+        writer.write("RequestOptions::new()");
+        writer.newLine();
+        writer.indent();
+        writer.write('.additional_query_param("filter", "active")');
+        writer.newLine();
+        writer.write('.additional_query_param("sort", "desc")');
+        writer.dedent();
+        writer.newLine();
+        writer.dedent();
+        writer.write(")");
+        writer.newLine();
+        writer.dedent();
+        writer.write(")?");
+        writer.newLine();
+        writer.write(".await;");
+
+        return writer.toString().trim();
     }
 
     private buildPaginationCode(endpoint: EndpointWithFilepath): string {
         const writer = new Writer();
 
+        // Use prelude for all imports
         const useStatements = [
-            new UseStatement({ path: this.crateName, items: ["ClientConfig", this.context.getClientName()] }),
+            new UseStatement({ path: `${this.crateName}::prelude`, items: ["*"] }),
             new UseStatement({ path: "futures", items: ["StreamExt"] })
         ];
 

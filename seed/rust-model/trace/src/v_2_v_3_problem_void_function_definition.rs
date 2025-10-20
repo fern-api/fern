@@ -1,9 +1,7 @@
-use crate::v_2_problem_parameter::Parameter;
-use crate::v_2_problem_function_implementation_for_multiple_languages::FunctionImplementationForMultipleLanguages;
-use serde::{Deserialize, Serialize};
+pub use crate::prelude::*;
 
-#[derive(Debug, Clone, Serialize, Deserialize)]
-pub struct VoidFunctionDefinition {
-    pub parameters: Vec<Parameter>,
-    pub code: FunctionImplementationForMultipleLanguages,
+#[derive(Debug, Clone, Serialize, Deserialize, PartialEq)]
+pub struct VoidFunctionDefinition2 {
+    pub parameters: Vec<Parameter2>,
+    pub code: FunctionImplementationForMultipleLanguages2,
 }

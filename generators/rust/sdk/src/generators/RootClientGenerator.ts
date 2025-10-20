@@ -1,11 +1,24 @@
 import { RelativeFilePath } from "@fern-api/fs-utils";
 import { RustFile } from "@fern-api/rust-base";
-import { rust, UseStatement } from "@fern-api/rust-codegen";
+import {
+    CodeBlock,
+    Expression,
+    Field,
+    ImplBlock,
+    Method,
+    PUBLIC,
+    Reference,
+    rust,
+    Struct,
+    Type,
+    UseStatement
+} from "@fern-api/rust-codegen";
 
 import { Package, Subpackage } from "@fern-fern/ir-sdk/api";
 
 import { SdkGeneratorContext } from "../SdkGeneratorContext";
 import { ClientGeneratorContext } from "./ClientGeneratorContext";
+import { SubClientGenerator } from "./SubClientGenerator";
 
 export class RootClientGenerator {
     private readonly context: SdkGeneratorContext;
@@ -88,7 +101,12 @@ export class RootClientGenerator {
     }
 
     private generateReExports(subpackages: Subpackage[]): string {
-        return subpackages.map((subpackage) => `pub use ${subpackage.name.snakeCase.safeName}::*;`).join("\n");
+        return subpackages
+            .map((subpackage) => {
+                const clientName = this.getSubClientName(subpackage);
+                return `pub use ${subpackage.name.snakeCase.safeName}::${clientName};`;
+            })
+            .join("\n");
     }
 
     private generateImports(): UseStatement[] {
@@ -177,27 +195,33 @@ export class RootClientGenerator {
                     if (!directoriesCreated.has(fullPath)) {
                         directoriesCreated.add(fullPath);
 
-                        // Determine what modules this directory should expose
-                        const moduleNames = this.getModuleNamesForDirectory(subpackages, currentPath);
+                        // Check if this directory needs a unified mod.rs (client + submodules)
+                        const unifiedModFile = this.generateUnifiedModFileIfNeeded(subpackages, currentPath);
+                        if (unifiedModFile) {
+                            files.push(unifiedModFile);
+                        } else {
+                            // Generate regular mod.rs with just module declarations and re-exports
+                            const moduleNames = this.getModuleNamesForDirectory(subpackages, currentPath);
 
-                        // Create both module declarations and wildcard re-exports
-                        const rawDeclarations = [
-                            ...moduleNames.map((name) => `pub mod ${name};`),
-                            ...moduleNames.map((name) => `pub use ${name}::*;`)
-                        ];
+                            // Create module declarations and selective re-exports
+                            const rawDeclarations = [
+                                ...moduleNames.map((name) => `pub mod ${name};`),
+                                ...this.generateSelectiveReExportsForDirectory(subpackages, currentPath, moduleNames)
+                            ];
 
-                        const module = rust.module({
-                            useStatements: [],
-                            rawDeclarations
-                        });
+                            const module = rust.module({
+                                useStatements: [],
+                                rawDeclarations
+                            });
 
-                        files.push(
-                            new RustFile({
-                                filename: "mod.rs",
-                                directory: RelativeFilePath.of(fullPath),
-                                fileContents: module.toString()
-                            })
-                        );
+                            files.push(
+                                new RustFile({
+                                    filename: "mod.rs",
+                                    directory: RelativeFilePath.of(fullPath),
+                                    fileContents: module.toString()
+                                })
+                            );
+                        }
                     }
                 });
             }
@@ -206,12 +230,45 @@ export class RootClientGenerator {
         return files;
     }
 
+    private generateSelectiveReExportsForDirectory(
+        subpackages: Subpackage[],
+        currentPath: string,
+        moduleNames: string[]
+    ): string[] {
+        const reExports: string[] = [];
+
+        moduleNames.forEach((moduleName) => {
+            // Find the subpackage that corresponds to this module
+            const subpackage = subpackages.find((sp) => {
+                const fernFilepathDir = this.context.getDirectoryForFernFilepath(sp.fernFilepath);
+                if (fernFilepathDir === currentPath) {
+                    const filename = this.context.getUniqueFilenameForSubpackage(sp);
+                    const expectedModuleName = filename.replace(".rs", "");
+                    return expectedModuleName === moduleName;
+                }
+                return false;
+            });
+
+            if (subpackage) {
+                // This is a direct subpackage file - export its client
+                const clientName = this.getSubClientName(subpackage);
+                reExports.push(`pub use ${moduleName}::${clientName};`);
+            } else {
+                // This is a subdirectory - only re-export client structs, not all types
+                // We'll be more conservative and just export the module contents selectively
+                reExports.push(`pub use ${moduleName}::*;`); // TODO: This could be further refined
+            }
+        });
+
+        return reExports;
+    }
+
     private getModuleNamesForDirectory(subpackages: Subpackage[], targetPath: string): string[] {
         // Use ALL subpackages (including those without services) for module detection
         const allSubpackages = this.getAllSubpackagesForModuleDetection();
         const moduleNames = new Set<string>();
 
-        allSubpackages.forEach((subpackage, index) => {
+        allSubpackages.forEach((subpackage) => {
             const fernFilepathDir = this.context.getDirectoryForFernFilepath(subpackage.fernFilepath);
 
             if (fernFilepathDir) {
@@ -260,6 +317,181 @@ export class RootClientGenerator {
     }
 
     private getSubClientName(subpackage: Subpackage): string {
-        return `${subpackage.name.pascalCase.safeName}Client`;
+        return this.context.getUniqueClientNameForSubpackage(subpackage);
+    }
+
+    private generateUnifiedModFileIfNeeded(subpackages: Subpackage[], currentPath: string): RustFile | null {
+        // Find the subpackage that corresponds to this directory path
+        const targetSubpackage = subpackages.find((subpackage) => {
+            const fernFilepathDir = this.context.getDirectoryForFernFilepath(subpackage.fernFilepath);
+            return fernFilepathDir === currentPath;
+        });
+
+        if (!targetSubpackage) {
+            return null; // No direct subpackage for this path
+        }
+
+        // Check if this subpackage has subclients (nested structure)
+        const subClientSubpackages = this.context.getSubpackagesOrThrow(targetSubpackage);
+        const hasSubClients = subClientSubpackages.length > 0;
+
+        if (!hasSubClients) {
+            return null; // No subclients, use regular mod.rs generation
+        }
+
+        // Generate unified mod.rs with client struct + submodule declarations
+        const subClientGenerator = new SubClientGenerator(this.context, targetSubpackage);
+        return this.generateUnifiedModFileContent(targetSubpackage, subClientSubpackages, currentPath);
+    }
+
+    private generateUnifiedModFileContent(
+        subpackage: Subpackage,
+        subClientSubpackages: Array<[string, Subpackage]>,
+        currentPath: string
+    ): RustFile {
+        const subClientGenerator = new SubClientGenerator(this.context, subpackage);
+
+        // Just use the existing SubClientGenerator to generate the full unified content
+        // We'll create a modified version that includes both the client and submodules
+        const regularClientFile = this.createUnifiedModFileFromSubClient(
+            subClientGenerator,
+            subClientSubpackages,
+            currentPath,
+            subpackage
+        );
+
+        return regularClientFile;
+    }
+
+    private createUnifiedModFileFromSubClient(
+        subClientGenerator: SubClientGenerator,
+        subClientSubpackages: Array<[string, Subpackage]>,
+        currentPath: string,
+        subpackage: Subpackage
+    ): RustFile {
+        // Generate submodule declarations and re-exports
+        const subModuleDeclarations: string[] = [];
+        subClientSubpackages.forEach(([, subClientSubpackage]) => {
+            // Use the actual directory name, not the full filename
+            const fernFilepathDir = this.context.getDirectoryForFernFilepath(subClientSubpackage.fernFilepath);
+            if (fernFilepathDir) {
+                const parts = fernFilepathDir.split("/");
+                const moduleName = parts[parts.length - 1]; // Get the last part (actual directory name)
+                const subClientName = this.context.getUniqueClientNameForSubpackage(subClientSubpackage);
+
+                subModuleDeclarations.push(`pub mod ${moduleName};`);
+                subModuleDeclarations.push(`pub use ${moduleName}::${subClientName};`);
+            }
+        });
+
+        // Get the regular client generation, but we'll modify it to include submodules
+        // We need to get the client struct content from SubClientGenerator
+        // Since the methods are private, let's use a different approach
+
+        // For now, let's use the existing generateModFile method pattern but enhance it
+        const clientGeneratorContext = new ClientGeneratorContext({
+            packageOrSubpackage: subpackage,
+            sdkGeneratorContext: this.context
+        });
+
+        // Build the unified content manually
+        const useStatements = [
+            new UseStatement({
+                path: "crate",
+                items: ["ApiError", "ClientConfig", "HttpClient"]
+            })
+        ];
+
+        const clientName = this.context.getUniqueClientNameForSubpackage(subpackage);
+
+        // Create struct fields using AST
+        const structFields: Field[] = [
+            new Field({
+                name: "http_client",
+                type: Type.reference(new Reference({ name: "HttpClient", module: undefined })),
+                visibility: PUBLIC
+            }),
+            ...clientGeneratorContext.subClients.map(
+                ({ fieldName, clientName }) =>
+                    new Field({
+                        name: fieldName,
+                        type: Type.reference(new Reference({ name: clientName, module: undefined })),
+                        visibility: PUBLIC
+                    })
+            )
+        ];
+
+        // Create the struct using AST
+        const clientStruct = new Struct({
+            name: clientName,
+            visibility: PUBLIC,
+            fields: structFields
+        });
+
+        // Create the new method body using Expression
+        const constructorFields: Expression.FieldAssignment[] = [
+            {
+                name: "http_client",
+                value: Expression.try(
+                    Expression.functionCall("HttpClient::new", [
+                        Expression.methodCall({
+                            target: Expression.reference("config"),
+                            method: "clone",
+                            args: []
+                        })
+                    ])
+                )
+            },
+            ...clientGeneratorContext.subClients.map(({ fieldName, clientName }) => ({
+                name: fieldName,
+                value: Expression.try(
+                    Expression.functionCall(`${clientName}::new`, [
+                        Expression.methodCall({
+                            target: Expression.reference("config"),
+                            method: "clone",
+                            args: []
+                        })
+                    ])
+                )
+            }))
+        ];
+
+        const constructorExpression = Expression.ok(Expression.structConstruction("Self", constructorFields));
+        const constructorBody = CodeBlock.fromExpression(constructorExpression);
+
+        // Create the impl block with the new method
+        const implBlock = new ImplBlock({
+            targetType: Type.reference(new Reference({ name: clientName, module: undefined })),
+            methods: [
+                new Method({
+                    name: "new",
+                    visibility: PUBLIC,
+                    parameters: [
+                        {
+                            name: "config",
+                            parameterType: Type.reference(new Reference({ name: "ClientConfig", module: undefined })),
+                            isSelf: false
+                        }
+                    ],
+                    returnType: Type.result(
+                        Type.reference(new Reference({ name: "Self", module: undefined })),
+                        Type.reference(new Reference({ name: "ApiError", module: undefined }))
+                    ),
+                    isStatic: true,
+                    body: constructorBody
+                })
+            ]
+        });
+
+        const module = rust.module({
+            useStatements,
+            rawDeclarations: [...subModuleDeclarations, clientStruct.toString(), implBlock.toString()]
+        });
+
+        return new RustFile({
+            filename: "mod.rs",
+            directory: RelativeFilePath.of(`src/api/resources/${currentPath}`),
+            fileContents: module.toString()
+        });
     }
 }

@@ -1,9 +1,6 @@
-use crate::base_resource::BaseResource;
-use crate::patient::Patient;
-use crate::practitioner::Practitioner;
-use serde::{Deserialize, Serialize};
+pub use crate::prelude::*;
 
-#[derive(Debug, Clone, Serialize, Deserialize, PartialEq, Eq, Hash)]
+#[derive(Debug, Clone, Serialize, Deserialize, PartialEq)]
 pub struct Account {
     #[serde(flatten)]
     pub base_resource_fields: BaseResource,

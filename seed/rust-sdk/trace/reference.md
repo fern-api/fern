@@ -13,7 +13,7 @@
 <dd>
 
 ```rust
-use seed_trace::{ClientConfig, TraceClient};
+use seed_trace::prelude::*;
 
 #[tokio::main]
 async fn main() {
@@ -49,12 +49,7 @@ async fn main() {
 <dd>
 
 ```rust
-use seed_trace::{
-    ClientConfig, CodeExecutionUpdate, CompileError, ErrorInfo, ExceptionInfo, InternalError,
-    RunningSubmissionState, RuntimeError, StoppedResponse, SubmissionId, TestSubmissionStatus,
-    TestSubmissionUpdateInfo, TraceClient, WorkspaceSubmissionStatus,
-    WorkspaceSubmissionUpdateInfo,
-};
+use seed_trace::prelude::*;
 use std::collections::HashMap;
 
 #[tokio::main]
@@ -113,15 +108,7 @@ async fn main() {
 
 ```rust
 use chrono::{DateTime, Utc};
-use seed_trace::{
-    BinaryTreeValue, ClientConfig, CodeExecutionUpdate, CompileError, DoublyLinkedListValue,
-    ErrorInfo, ExceptionInfo, ExceptionV2, GradedTestCaseUpdate, InternalError, KeyValuePair,
-    MapValue, NodeId, RecordedTestCaseUpdate, RunningResponse, RunningSubmissionState,
-    RuntimeError, SinglyLinkedListValue, SubmissionId, TestCaseGrade, TestCaseHiddenGrade,
-    TestCaseId, TestCaseNonHiddenGrade, TestSubmissionStatus, TestSubmissionUpdate,
-    TestSubmissionUpdateInfo, TraceClient, VariableValue, WorkspaceSubmissionStatus,
-    WorkspaceSubmissionUpdateInfo,
-};
+use seed_trace::prelude::*;
 use std::collections::HashMap;
 
 #[tokio::main]
@@ -184,12 +171,7 @@ async fn main() {
 <dd>
 
 ```rust
-use seed_trace::{
-    ClientConfig, CodeExecutionUpdate, CompileError, ErrorInfo, ExceptionInfo, ExceptionV2,
-    InternalError, RunningSubmissionState, RuntimeError, StoppedResponse, SubmissionId,
-    TestSubmissionStatus, TestSubmissionUpdateInfo, TraceClient, WorkspaceRunDetails,
-    WorkspaceSubmissionStatus, WorkspaceSubmissionUpdateInfo,
-};
+use seed_trace::prelude::*;
 use std::collections::HashMap;
 
 #[tokio::main]
@@ -248,13 +230,7 @@ async fn main() {
 
 ```rust
 use chrono::{DateTime, Utc};
-use seed_trace::{
-    ClientConfig, CodeExecutionUpdate, CompileError, ErrorInfo, ExceptionInfo, ExceptionV2,
-    InternalError, RunningResponse, RunningSubmissionState, RuntimeError, SubmissionId,
-    TestSubmissionStatus, TestSubmissionUpdateInfo, TraceClient, WorkspaceRunDetails,
-    WorkspaceSubmissionStatus, WorkspaceSubmissionUpdate, WorkspaceSubmissionUpdateInfo,
-    WorkspaceTracedUpdate,
-};
+use seed_trace::prelude::*;
 use std::collections::HashMap;
 
 #[tokio::main]
@@ -317,10 +293,7 @@ async fn main() {
 <dd>
 
 ```rust
-use seed_trace::{
-    ActualResult, ClientConfig, DebugVariableValue, StoreTracedTestCaseRequest, TraceClient,
-    VariableValue,
-};
+use seed_trace::prelude::*;
 use std::collections::{HashMap, HashSet};
 use uuid::Uuid;
 
@@ -483,7 +456,7 @@ async fn main() {
 <dd>
 
 ```rust
-use seed_trace::{ClientConfig, DebugVariableValue, TraceClient, VariableValue};
+use seed_trace::prelude::*;
 use std::collections::{HashMap, HashSet};
 use uuid::Uuid;
 
@@ -626,10 +599,7 @@ async fn main() {
 <dd>
 
 ```rust
-use seed_trace::{
-    ClientConfig, CreateProblemError, DebugVariableValue, ExceptionInfo, ExceptionV2,
-    GenericCreateProblemError, StoreTracedWorkspaceRequest, TraceClient, VariableValue,
-};
+use seed_trace::prelude::*;
 use std::collections::{HashMap, HashSet};
 use uuid::Uuid;
 
@@ -788,7 +758,7 @@ async fn main() {
 <dd>
 
 ```rust
-use seed_trace::{ClientConfig, DebugVariableValue, TraceClient, VariableValue};
+use seed_trace::prelude::*;
 use std::collections::{HashMap, HashSet};
 use uuid::Uuid;
 
@@ -923,7 +893,7 @@ async fn main() {
 <dd>
 
 ```rust
-use seed_trace::{ClientConfig, TraceClient};
+use seed_trace::prelude::*;
 
 #[tokio::main]
 async fn main() {
@@ -958,7 +928,7 @@ async fn main() {
 <dd>
 
 ```rust
-use seed_trace::{ClientConfig, TraceClient};
+use seed_trace::prelude::*;
 use std::collections::HashSet;
 
 #[tokio::main]
@@ -1004,7 +974,7 @@ async fn main() {
 <dd>
 
 ```rust
-use seed_trace::{ClientConfig, TraceClient};
+use seed_trace::prelude::*;
 
 #[tokio::main]
 async fn main() {
@@ -1055,7 +1025,7 @@ Create a new playlist
 
 ```rust
 use chrono::{DateTime, Utc};
-use seed_trace::{ClientConfig, CreatePlaylistRequest, TraceClient};
+use seed_trace::prelude::*;
 use std::collections::{HashMap, HashSet};
 
 #[tokio::main]
@@ -1159,7 +1129,7 @@ Returns the user's playlists
 <dd>
 
 ```rust
-use seed_trace::{ClientConfig, GetPlaylistsQueryRequest, TraceClient};
+use seed_trace::prelude::*;
 
 #[tokio::main]
 async fn main() {
@@ -1279,7 +1249,7 @@ Returns a playlist
 <dd>
 
 ```rust
-use seed_trace::{ClientConfig, TraceClient};
+use seed_trace::prelude::*;
 
 #[tokio::main]
 async fn main() {
@@ -1354,7 +1324,7 @@ Updates a playlist
 <dd>
 
 ```rust
-use seed_trace::{ClientConfig, TraceClient};
+use seed_trace::prelude::*;
 use std::collections::{HashMap, HashSet};
 
 #[tokio::main]
@@ -1441,7 +1411,7 @@ Deletes a playlist
 <dd>
 
 ```rust
-use seed_trace::{ClientConfig, TraceClient};
+use seed_trace::prelude::*;
 
 #[tokio::main]
 async fn main() {
@@ -1517,12 +1487,7 @@ Creates a problem
 <dd>
 
 ```rust
-use seed_trace::{
-    BinaryTreeValue, ClientConfig, CreateProblemRequest, DebugVariableValue, DoublyLinkedListValue,
-    KeyValuePair, ListType, MapType, MapValue, NodeId, ProblemDescription, ProblemDescriptionBoard,
-    SinglyLinkedListValue, TestCase, TestCaseImplementationDescriptionBoard,
-    TestCaseWithExpectedResult, TraceClient, VariableType, VariableTypeAndName, VariableValue,
-};
+use seed_trace::prelude::*;
 use std::collections::{HashMap, HashSet};
 
 #[tokio::main]
@@ -1639,12 +1604,7 @@ Updates a problem
 <dd>
 
 ```rust
-use seed_trace::{
-    BinaryTreeValue, ClientConfig, CreateProblemRequest, DebugVariableValue, DoublyLinkedListValue,
-    KeyValuePair, ListType, MapType, MapValue, NodeId, ProblemDescription, ProblemDescriptionBoard,
-    SinglyLinkedListValue, TestCase, TestCaseImplementationDescriptionBoard,
-    TestCaseWithExpectedResult, TraceClient, VariableType, VariableTypeAndName, VariableValue,
-};
+use seed_trace::prelude::*;
 use std::collections::{HashMap, HashSet};
 
 #[tokio::main]
@@ -1777,7 +1737,7 @@ Soft deletes a problem
 <dd>
 
 ```rust
-use seed_trace::{ClientConfig, TraceClient};
+use seed_trace::prelude::*;
 
 #[tokio::main]
 async fn main() {
@@ -1844,7 +1804,7 @@ Returns default starter files for problem
 <dd>
 
 ```rust
-use seed_trace::{ClientConfig, GetDefaultStarterFilesRequest, TraceClient, VariableType};
+use seed_trace::prelude::*;
 use std::collections::{HashMap, HashSet};
 
 #[tokio::main]
@@ -1952,7 +1912,7 @@ Returns sessionId and execution server URL for session. Spins up server.
 <dd>
 
 ```rust
-use seed_trace::{ClientConfig, TraceClient};
+use seed_trace::prelude::*;
 
 #[tokio::main]
 async fn main() {
@@ -2019,7 +1979,7 @@ Returns execution server URL for session. Returns empty if session isn't registe
 <dd>
 
 ```rust
-use seed_trace::{ClientConfig, TraceClient};
+use seed_trace::prelude::*;
 
 #[tokio::main]
 async fn main() {
@@ -2086,7 +2046,7 @@ Stops execution session.
 <dd>
 
 ```rust
-use seed_trace::{ClientConfig, TraceClient};
+use seed_trace::prelude::*;
 
 #[tokio::main]
 async fn main() {
@@ -2139,7 +2099,7 @@ async fn main() {
 <dd>
 
 ```rust
-use seed_trace::{ClientConfig, TraceClient};
+use seed_trace::prelude::*;
 
 #[tokio::main]
 async fn main() {
@@ -2175,7 +2135,7 @@ async fn main() {
 <dd>
 
 ```rust
-use seed_trace::{ClientConfig, TraceClient};
+use seed_trace::prelude::*;
 
 #[tokio::main]
 async fn main() {
@@ -2236,7 +2196,7 @@ async fn main() {
 <dd>
 
 ```rust
-use seed_trace::{ClientConfig, TraceClient};
+use seed_trace::prelude::*;
 
 #[tokio::main]
 async fn main() {
@@ -2286,7 +2246,7 @@ Returns lightweight versions of all problems
 <dd>
 
 ```rust
-use seed_trace::{ClientConfig, TraceClient};
+use seed_trace::prelude::*;
 
 #[tokio::main]
 async fn main() {
@@ -2335,7 +2295,7 @@ Returns latest versions of all problems
 <dd>
 
 ```rust
-use seed_trace::{ClientConfig, TraceClient};
+use seed_trace::prelude::*;
 
 #[tokio::main]
 async fn main() {
@@ -2384,7 +2344,7 @@ Returns latest version of a problem
 <dd>
 
 ```rust
-use seed_trace::{ClientConfig, TraceClient};
+use seed_trace::prelude::*;
 
 #[tokio::main]
 async fn main() {
@@ -2452,7 +2412,7 @@ Returns requested version of a problem
 <dd>
 
 ```rust
-use seed_trace::{ClientConfig, TraceClient};
+use seed_trace::prelude::*;
 
 #[tokio::main]
 async fn main() {
@@ -2529,7 +2489,7 @@ Returns lightweight versions of all problems
 <dd>
 
 ```rust
-use seed_trace::{ClientConfig, TraceClient};
+use seed_trace::prelude::*;
 
 #[tokio::main]
 async fn main() {
@@ -2578,7 +2538,7 @@ Returns latest versions of all problems
 <dd>
 
 ```rust
-use seed_trace::{ClientConfig, TraceClient};
+use seed_trace::prelude::*;
 
 #[tokio::main]
 async fn main() {
@@ -2627,7 +2587,7 @@ Returns latest version of a problem
 <dd>
 
 ```rust
-use seed_trace::{ClientConfig, TraceClient};
+use seed_trace::prelude::*;
 
 #[tokio::main]
 async fn main() {
@@ -2695,7 +2655,7 @@ Returns requested version of a problem
 <dd>
 
 ```rust
-use seed_trace::{ClientConfig, TraceClient};
+use seed_trace::prelude::*;
 
 #[tokio::main]
 async fn main() {

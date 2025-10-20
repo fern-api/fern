@@ -30,6 +30,7 @@ interface ConstructorParameter {
     docs?: string;
     isOptional: boolean;
     typeReference: TypeReference;
+    type: ast.Type;
     /**
      * The header associated with this parameter
      */
@@ -222,7 +223,11 @@ export class RootClientGenerator extends FileGenerator<CSharpFile, SdkCustomConf
                 headerEntries.push({
                     key: this.csharp.codeblock(this.csharp.string_({ string: param.header.name })),
                     value: this.csharp.codeblock(
-                        param.header.prefix != null ? `$"${param.header.prefix} {${param.name}}"` : param.name
+                        param.header.prefix != null
+                            ? `$"${param.header.prefix} {${param.isOptional ? `${param.name} ?? ""` : param.name}}"`
+                            : param.isOptional || param.type.isOptional()
+                              ? `${param.name} ?? ""`
+                              : param.name
                     )
                 });
             }
@@ -311,7 +316,7 @@ export class RootClientGenerator extends FileGenerator<CSharpFile, SdkCustomConf
                         if (param.value.type === "string") {
                             writer.write(`clientOptions.${param.name}`);
                         } else {
-                            writer.write(`clientOptions.${param.name}.ToString()`);
+                            writer.write(`clientOptions.${param.name}.ToString()!`);
                         }
                         writer.writeLine(";");
                         writer.endControlFlow();
@@ -508,6 +513,7 @@ export class RootClientGenerator extends FileGenerator<CSharpFile, SdkCustomConf
                             prefix: scheme.prefix
                         },
                         typeReference: scheme.valueType,
+                        type: this.context.csharpTypeMapper.convert({ reference: scheme.valueType }),
                         environmentVariable: scheme.headerEnvVar
                     }
                 ];
@@ -528,6 +534,7 @@ export class RootClientGenerator extends FileGenerator<CSharpFile, SdkCustomConf
                             v1: PrimitiveTypeV1.String,
                             v2: PrimitiveTypeV2.string({ default: undefined, validation: undefined })
                         }),
+                        type: this.context.csharp.Type.string(),
                         environmentVariable: scheme.tokenEnvVar
                     }
                 ];
@@ -545,6 +552,7 @@ export class RootClientGenerator extends FileGenerator<CSharpFile, SdkCustomConf
                             v1: PrimitiveTypeV1.String,
                             v2: PrimitiveTypeV2.string({ default: undefined, validation: undefined })
                         }),
+                        type: this.context.csharp.Type.string(),
                         environmentVariable: scheme.usernameEnvVar
                     },
                     {
@@ -555,6 +563,7 @@ export class RootClientGenerator extends FileGenerator<CSharpFile, SdkCustomConf
                             v1: PrimitiveTypeV1.String,
                             v2: PrimitiveTypeV2.string({ default: undefined, validation: undefined })
                         }),
+                        type: this.context.csharp.Type.string(),
                         environmentVariable: scheme.passwordEnvVar
                     }
                 ];
@@ -570,6 +579,7 @@ export class RootClientGenerator extends FileGenerator<CSharpFile, SdkCustomConf
                             v1: PrimitiveTypeV1.String,
                             v2: PrimitiveTypeV2.string({ default: undefined, validation: undefined })
                         }),
+                        type: this.context.csharp.Type.string(),
                         environmentVariable: scheme.configuration.clientIdEnvVar
                     },
                     {
@@ -580,6 +590,7 @@ export class RootClientGenerator extends FileGenerator<CSharpFile, SdkCustomConf
                             v1: PrimitiveTypeV1.String,
                             v2: PrimitiveTypeV2.string({ default: undefined, validation: undefined })
                         }),
+                        type: this.context.csharp.Type.string(),
                         environmentVariable: scheme.configuration.clientSecretEnvVar
                     }
                 ];
@@ -606,7 +617,8 @@ export class RootClientGenerator extends FileGenerator<CSharpFile, SdkCustomConf
             },
             docs: header.docs,
             isOptional: header.valueType.type === "container" && header.valueType.container.type === "optional",
-            typeReference: header.valueType
+            typeReference: header.valueType,
+            type: this.context.csharpTypeMapper.convert({ reference: header.valueType })
         };
     }
 

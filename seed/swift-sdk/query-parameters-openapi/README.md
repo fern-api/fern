@@ -20,7 +20,7 @@ With Swift Package Manager (SPM), add the following to the top-level `dependenci
 
 ```swift
 dependencies: [
-    .package(url: "<git-url>", from: "0.1.0"),
+    .package(url: "https://github.com/query-parameters-openapi/fern", from: "0.0.1"),
 ]
 ```
 
@@ -39,7 +39,7 @@ import Api
 private func main() async throws {
     let client = ApiClient()
 
-    try await client.search(request: .init(
+    _ = try await client.search(
         limit: 1,
         id: "id",
         date: "date",
@@ -52,15 +52,7 @@ private func main() async throws {
                 "tags"
             ]
         ),
-        userList: [
-            User(
-                name: "name",
-                tags: [
-                    "tags",
-                    "tags"
-                ]
-            )
-        ],
+        userList: ,
         optionalDeadline: try! Date("2024-01-15T09:30:00Z", strategy: .iso8601),
         keyValue: [
             "keyValue": "keyValue"
@@ -83,18 +75,8 @@ private func main() async throws {
                 "tags"
             ]
         ),
-        excludeUser: [
-            User(
-                name: "name",
-                tags: [
-                    "tags",
-                    "tags"
-                ]
-            )
-        ],
-        filter: [
-            "filter"
-        ],
+        excludeUser: ,
+        filter: ,
         neighbor: User(
             name: "name",
             tags: [
@@ -111,7 +93,7 @@ private func main() async throws {
                 ]
             )
         )
-    ))
+    )
 }
 
 try await main()

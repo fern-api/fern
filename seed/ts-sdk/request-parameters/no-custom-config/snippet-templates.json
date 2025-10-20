@@ -304,6 +304,134 @@
             "type": "typescript"
         },
         "endpointId": {
+            "path": "/user/username-optional",
+            "method": "POST",
+            "identifierOverride": "endpoint_user.createUsernameOptional"
+        },
+        "snippetTemplate": {
+            "clientInstantiation": {
+                "imports": [
+                    "import { SeedRequestParametersClient } from \"@fern/request-parameters\";"
+                ],
+                "templateString": "const client = new SeedRequestParametersClient($FERN_INPUT);",
+                "isOptional": false,
+                "inputDelimiter": ",",
+                "templateInputs": [
+                    {
+                        "value": {
+                            "imports": [],
+                            "templateString": "{ $FERN_INPUT }",
+                            "isOptional": true,
+                            "templateInputs": [
+                                {
+                                    "value": {
+                                        "imports": [],
+                                        "templateString": "environment: \"YOUR_BASE_URL\"",
+                                        "isOptional": false,
+                                        "templateInputs": [],
+                                        "type": "generic"
+                                    },
+                                    "type": "template"
+                                }
+                            ],
+                            "type": "generic"
+                        },
+                        "type": "template"
+                    }
+                ],
+                "type": "generic"
+            },
+            "functionInvocation": {
+                "imports": [],
+                "templateString": "await client.user.createUsernameOptional(\n\t$FERN_INPUT\n)",
+                "isOptional": false,
+                "inputDelimiter": ",\n\t",
+                "templateInputs": [
+                    {
+                        "value": {
+                            "imports": [],
+                            "templateString": "{\n\t\t$FERN_INPUT\n\t}",
+                            "isOptional": true,
+                            "inputDelimiter": ",\n\t\t",
+                            "templateInputs": [
+                                {
+                                    "value": {
+                                        "imports": [],
+                                        "templateString": "$FERN_INPUT",
+                                        "isOptional": true,
+                                        "inputDelimiter": ",\n\t\t",
+                                        "templateInputs": [
+                                            {
+                                                "value": {
+                                                    "imports": [],
+                                                    "templateString": "username: $FERN_INPUT",
+                                                    "isOptional": true,
+                                                    "templateInputs": [
+                                                        {
+                                                            "location": "BODY",
+                                                            "path": "username",
+                                                            "type": "payload"
+                                                        }
+                                                    ],
+                                                    "type": "generic"
+                                                },
+                                                "type": "template"
+                                            },
+                                            {
+                                                "value": {
+                                                    "imports": [],
+                                                    "templateString": "password: $FERN_INPUT",
+                                                    "isOptional": true,
+                                                    "templateInputs": [
+                                                        {
+                                                            "location": "BODY",
+                                                            "path": "password",
+                                                            "type": "payload"
+                                                        }
+                                                    ],
+                                                    "type": "generic"
+                                                },
+                                                "type": "template"
+                                            },
+                                            {
+                                                "value": {
+                                                    "imports": [],
+                                                    "templateString": "name: $FERN_INPUT",
+                                                    "isOptional": true,
+                                                    "templateInputs": [
+                                                        {
+                                                            "location": "BODY",
+                                                            "path": "name",
+                                                            "type": "payload"
+                                                        }
+                                                    ],
+                                                    "type": "generic"
+                                                },
+                                                "type": "template"
+                                            }
+                                        ],
+                                        "type": "generic"
+                                    },
+                                    "type": "template"
+                                }
+                            ],
+                            "type": "generic"
+                        },
+                        "type": "template"
+                    }
+                ],
+                "type": "generic"
+            },
+            "type": "v1"
+        }
+    },
+    {
+        "sdk": {
+            "package": "@fern/request-parameters",
+            "version": "0.0.1",
+            "type": "typescript"
+        },
+        "endpointId": {
             "path": "/user",
             "method": "GET",
             "identifierOverride": "endpoint_user.getUsername"

@@ -78,7 +78,7 @@ public record ActualResult
     public SeedTrace.VariableValue AsValue() =>
         IsValue
             ? (SeedTrace.VariableValue)Value!
-            : throw new Exception("ActualResult.Type is not 'value'");
+            : throw new System.Exception("ActualResult.Type is not 'value'");
 
     /// <summary>
     /// Returns the value as a <see cref="SeedTrace.ExceptionInfo"/> if <see cref="Type"/> is 'exception', otherwise throws an exception.
@@ -87,7 +87,7 @@ public record ActualResult
     public SeedTrace.ExceptionInfo AsException() =>
         IsException
             ? (SeedTrace.ExceptionInfo)Value!
-            : throw new Exception("ActualResult.Type is not 'exception'");
+            : throw new System.Exception("ActualResult.Type is not 'exception'");
 
     /// <summary>
     /// Returns the value as a <see cref="SeedTrace.ExceptionV2"/> if <see cref="Type"/> is 'exceptionV2', otherwise throws an exception.
@@ -96,7 +96,7 @@ public record ActualResult
     public SeedTrace.ExceptionV2 AsExceptionV2() =>
         IsExceptionV2
             ? (SeedTrace.ExceptionV2)Value!
-            : throw new Exception("ActualResult.Type is not 'exceptionV2'");
+            : throw new System.Exception("ActualResult.Type is not 'exceptionV2'");
 
     public T Match<T>(
         Func<SeedTrace.VariableValue, T> onValue,
@@ -223,12 +223,12 @@ public record ActualResult
 
             var value = discriminator switch
             {
-                "value" => json.GetProperty("value").Deserialize<SeedTrace.VariableValue>(options)
+                "value" => json.GetProperty("value").Deserialize<SeedTrace.VariableValue?>(options)
                 ?? throw new JsonException("Failed to deserialize SeedTrace.VariableValue"),
-                "exception" => json.Deserialize<SeedTrace.ExceptionInfo>(options)
+                "exception" => json.Deserialize<SeedTrace.ExceptionInfo?>(options)
                     ?? throw new JsonException("Failed to deserialize SeedTrace.ExceptionInfo"),
                 "exceptionV2" => json.GetProperty("value")
-                    .Deserialize<SeedTrace.ExceptionV2>(options)
+                    .Deserialize<SeedTrace.ExceptionV2?>(options)
                 ?? throw new JsonException("Failed to deserialize SeedTrace.ExceptionV2"),
                 _ => json.Deserialize<object?>(options),
             };
@@ -273,7 +273,7 @@ public record ActualResult
 
         internal SeedTrace.VariableValue Value { get; set; }
 
-        public override string ToString() => Value.ToString();
+        public override string ToString() => Value.ToString() ?? "null";
 
         public static implicit operator ActualResult.ValueInner(SeedTrace.VariableValue value) =>
             new(value);
@@ -292,7 +292,7 @@ public record ActualResult
 
         internal SeedTrace.ExceptionInfo Value { get; set; }
 
-        public override string ToString() => Value.ToString();
+        public override string ToString() => Value.ToString() ?? "null";
 
         public static implicit operator ActualResult.Exception(SeedTrace.ExceptionInfo value) =>
             new(value);
@@ -311,7 +311,7 @@ public record ActualResult
 
         internal SeedTrace.ExceptionV2 Value { get; set; }
 
-        public override string ToString() => Value.ToString();
+        public override string ToString() => Value.ToString() ?? "null";
 
         public static implicit operator ActualResult.ExceptionV2(SeedTrace.ExceptionV2 value) =>
             new(value);

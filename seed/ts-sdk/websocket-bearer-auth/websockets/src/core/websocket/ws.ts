@@ -314,7 +314,7 @@ export class ReconnectingWebSocket {
         } = this._options;
         let delay = 0;
         if (this._retryCount > 0) {
-            delay = minReconnectionDelay * Math.pow(reconnectionDelayGrowFactor, this._retryCount - 1);
+            delay = minReconnectionDelay * reconnectionDelayGrowFactor ** (this._retryCount - 1);
             if (delay > maxReconnectionDelay) {
                 delay = maxReconnectionDelay;
             }
@@ -409,7 +409,7 @@ export class ReconnectingWebSocket {
         try {
             this._ws.close(code, reason);
             this._handleClose(new Events.CloseEvent(code, reason, this));
-        } catch (error) {
+        } catch (_error) {
             // ignore
         }
     }

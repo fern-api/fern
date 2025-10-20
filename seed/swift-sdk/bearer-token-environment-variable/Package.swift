@@ -21,6 +21,11 @@ let package = Package(
         .target(
             name: "BearerTokenEnvironmentVariable",
             path: "Sources"
+        ),
+        .testTarget(
+            name: "BearerTokenEnvironmentVariableTests",
+            dependencies: ["BearerTokenEnvironmentVariable"],
+            path: "Tests"
         )
     ]
 )

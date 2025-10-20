@@ -29822,6 +29822,9 @@
       "endpoints": [
         {
           "auth": true,
+          "authV2": [
+            "basicAuth"
+          ],
           "description": "Get a paginated list of all the existing links in your Belvo account. By default, we return up to 100 results per page.",
           "method": "GET",
           "defaultEnvironment": "Production",
@@ -30262,6 +30265,9 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "basicAuth"
+          ],
           "description": "Register a new link with your Belvo account.\n\n<div style=\"background-color:#f4f6f8; border-left: 6px solid #4CAF50;padding: 12px;margin-left: 25px; border-radius: 4px; margin-right: 25px\">\n<strong>Note: </strong> We recommend using our <a href=\"https://developers.belvo.com/docs/connect-widget\" target=\"_blank\">Connect Widget</a> to handle link creation and link status updates.\n</div>\n",
           "method": "POST",
           "defaultEnvironment": "Production",
@@ -30500,6 +30506,9 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "basicAuth"
+          ],
           "description": "Used to resume a Link register session that was paused because an MFA token was required by the institution.",
           "method": "PATCH",
           "defaultEnvironment": "Production",
@@ -30738,6 +30747,9 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "basicAuth"
+          ],
           "description": "Get the details of a specific link.",
           "method": "GET",
           "defaultEnvironment": "Production",
@@ -30926,6 +30938,9 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "basicAuth"
+          ],
           "description": "Update the credentials of a specific link. If the successfully updated link is a recurrent one, we automatically trigger an update of the link. If we find fresh data, you'll [receive historical update](https://developers.belvo.com/docs/webhooks) webhooks.\n<div style=\"background-color:#f4f6f8; border-left: 6px solid #4CAF50;padding: 12px;margin-left: 25px; border-radius: 4px; margin-right: 25px\"> <strong>Note: </strong> We recommend using our <a href=\"https://developers.belvo.com/docs/connect-widget\" target=\"_blank\">Connect Widget</a> to handle updating <code>invalid</code> or <code>token_required</code> links. </div>\n",
           "method": "PUT",
           "defaultEnvironment": "Production",
@@ -31200,6 +31215,9 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "basicAuth"
+          ],
           "description": "Delete a specific link and all associated accounts, transactions, and owners from your Belvo account.\n# Deleting links in batches\nTo delete links in bulk, we recommend looping through the list of links you want to delete and making the delete request.\n\n  > 🚧 **Rate limiting and IP blocking**\n  > \n  > An important technical note for performing operations in batches is to take into consideration our rate-limiting: up to 80 requests every 30 seconds. If you exceed this limit, you run the risk of Belvo blocking your IP from making further requests.\n  > \n  > For more information, or if your IP address has been blocked, please contact our [support team](https://support.belvo.com/hc/en-us/requests/new).",
           "method": "DELETE",
           "defaultEnvironment": "Production",
@@ -31339,6 +31357,9 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "basicAuth"
+          ],
           "description": "Change a link's access mode from `single` to `recurrent` or from `recurrent` to single.\nℹ️ **Note**: When you change a link from `single`` to `recurrent`, they will only be updated the next day at the scheduled interval.",
           "method": "PATCH",
           "defaultEnvironment": "Production",
@@ -31623,6 +31644,9 @@
       "endpoints": [
         {
           "auth": true,
+          "authV2": [
+            "basicAuth"
+          ],
           "description": "Get a paginated list of all existing accounts in your Belvo account. By default, we return up to 100 results per page.",
           "method": "GET",
           "defaultEnvironment": "Production",
@@ -32423,6 +32447,9 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "basicAuth"
+          ],
           "description": "Retrieve accounts from an existing link.\n\n  > 🚧 Scheduled field deprecation\n  > \n  > Please note that we will soon be deprecating the following fields in our `loan_data` object:\n  > - `cutting_date`\n  > - `cutting_day`\n  > - `credit_limit`: replaced by the `principal` field.\n  > - `interest_rate`: replaced by the `interest_rates` object.\n  > - `last_payment_date`\n  > - `last_period_balance`: replaced by the `outstanding_balance ` field.\n  > - `limit_day`\n  > - `limit_date`: replaced by the `payment_day ` field.\n  > - `no_interest_payment`\n  > - `payment_due_day`",
           "method": "POST",
           "defaultEnvironment": "Production",
@@ -33749,6 +33776,9 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "basicAuth"
+          ],
           "description": "Used to resume an Account retrieve session that was paused because an MFA token was required by the institution.\n\n  > 🚧 Scheduled field deprecation\n  > \n  > Please note that we will soon be deprecating the following fields in our `loan_data` object:\n  > - `cutting_date`\n  > - `cutting_day`\n  > - `credit_limit`: replaced by the `principal` field.\n  > - `interest_rate`: replaced by the `interest_rates` object.\n  > - `last_payment_date`\n  > - `last_period_balance`: replaced by the `outstanding_balance ` field.\n  > - `limit_day`\n  > - `limit_date`: replaced by the `payment_day ` field.\n  > - `no_interest_payment`\n  > - `payment_due_day`",
           "method": "PATCH",
           "defaultEnvironment": "Production",
@@ -35095,6 +35125,9 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "basicAuth"
+          ],
           "description": "Get the details of a specific account.\n\n  > 🚧 Scheduled field deprecation\n  >\n  > Please note that we will soon be deprecating the following fields in our `loan_data` object:\n  > - `cutting_date`\n  > - `cutting_day`\n  > - `credit_limit`: replaced by the `principal` field.\n  > - `interest_rate`: replaced by the `interest_rates` object.\n  > - `last_payment_date`\n  > - `last_period_balance`: replaced by the `outstanding_balance ` field.\n  > - `limit_day`\n  > - `limit_date`: replaced by the `payment_day ` field.\n  > - `no_interest_payment`\n  > - `payment_due_day`",
           "method": "GET",
           "defaultEnvironment": "Production",
@@ -35740,6 +35773,9 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "basicAuth"
+          ],
           "description": "Delete a specific account and all associated transactions, as well as owners, from your Belvo account.",
           "method": "DELETE",
           "defaultEnvironment": "Production",
@@ -35889,6 +35925,9 @@
       "endpoints": [
         {
           "auth": true,
+          "authV2": [
+            "basicAuth"
+          ],
           "description": "Get a paginated list of all existing transactions in your Belvo account. By default, we return up to 100 results per page.",
           "method": "GET",
           "defaultEnvironment": "Production",
@@ -37146,6 +37185,9 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "basicAuth"
+          ],
           "description": "Retrieve transactions for one or more accounts from a specific link.\n<div style=\"background-color:#f4f6f8; border-left: 6px solid #0663F9;padding: 12px;margin-left: 25px; border-radius: 4px; margin-right: 25px\"> <strong>Info: </strong> When retrieving transactions, it is important to understand that the available transaction data ranges depend on each institution. <br><br>\nIf you try to access older information than what we can access, we will return all the data we can read within that date range. For example, if you request transactions for the last year and we can only access the last six months, we will return the information corresponding to these six months of data. </div>\n",
           "method": "POST",
           "defaultEnvironment": "Production",
@@ -38260,6 +38302,9 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "basicAuth"
+          ],
           "description": "Used to resume a Transaction retrieve session that was paused because an MFA token was required by the institution.",
           "method": "PATCH",
           "defaultEnvironment": "Production",
@@ -39310,6 +39355,9 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "basicAuth"
+          ],
           "description": "Get the details of a specific transaction.",
           "method": "GET",
           "defaultEnvironment": "Production",
@@ -39833,6 +39881,9 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "basicAuth"
+          ],
           "description": "Delete a specific transaction from your Belvo account.",
           "method": "DELETE",
           "defaultEnvironment": "Production",
@@ -39982,6 +40033,9 @@
       "endpoints": [
         {
           "auth": true,
+          "authV2": [
+            "basicAuth"
+          ],
           "description": "Get a paginated list of all existing balances in your Belvo account. By default, we return up to 100 results per page.",
           "method": "GET",
           "defaultEnvironment": "Production",
@@ -40535,6 +40589,9 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "basicAuth"
+          ],
           "description": "Retrieve balances from one or more accounts for a specific link within a specified date range.",
           "method": "POST",
           "defaultEnvironment": "Production",
@@ -40959,6 +41016,9 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "basicAuth"
+          ],
           "description": "Used to resume a Balance retrieve session that was paused because an MFA token was required by the institution.",
           "method": "PATCH",
           "defaultEnvironment": "Production",
@@ -41379,6 +41439,9 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "basicAuth"
+          ],
           "description": "Get the details of a specific balance.",
           "method": "GET",
           "defaultEnvironment": "Production",
@@ -41613,6 +41676,9 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "basicAuth"
+          ],
           "description": "Delete a specific balance from your Belvo account.",
           "method": "DELETE",
           "defaultEnvironment": "Production",
@@ -41762,6 +41828,9 @@
       "endpoints": [
         {
           "auth": true,
+          "authV2": [
+            "basicAuth"
+          ],
           "description": "Get a paginated list of all the institutions currently supported by Belvo. By default, we return up to 100 results per page.",
           "method": "GET",
           "defaultEnvironment": "Production",
@@ -42173,6 +42242,9 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "basicAuth"
+          ],
           "description": "Get the details of a specific institution.",
           "method": "GET",
           "defaultEnvironment": "Production",
@@ -42447,6 +42519,9 @@
       "endpoints": [
         {
           "auth": true,
+          "authV2": [
+            "basicAuth"
+          ],
           "description": "Get a paginated list of all existing owners in your Belvo account. We return up to 100 results per page.",
           "method": "GET",
           "defaultEnvironment": "Production",
@@ -42793,6 +42868,9 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "basicAuth"
+          ],
           "description": "Retrieve owner information from a specific link.",
           "method": "POST",
           "defaultEnvironment": "Production",
@@ -43141,6 +43219,9 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "basicAuth"
+          ],
           "description": "Used to resume an Owner retrieve session that was paused because an MFA token was required by the institution.",
           "method": "PATCH",
           "defaultEnvironment": "Production",
@@ -43493,6 +43574,9 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "basicAuth"
+          ],
           "description": "Get the details of a specific owner.",
           "method": "GET",
           "defaultEnvironment": "Production",
@@ -43693,6 +43777,9 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "basicAuth"
+          ],
           "description": "Delete a specific owner from your Belvo account.",
           "method": "DELETE",
           "defaultEnvironment": "Production",
@@ -43842,6 +43929,9 @@
       "endpoints": [
         {
           "auth": true,
+          "authV2": [
+            "basicAuth"
+          ],
           "description": "Get a paginated list of all existing invoices in your Belvo account. By default, we return 100 results per page.",
           "method": "GET",
           "defaultEnvironment": "Production",
@@ -45104,6 +45194,9 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "basicAuth"
+          ],
           "description": "Retrieve invoice information from a specific fiscal link.\n<div style=\"background-color:#f4f6f8; border-left: 6px solid #0663F9;padding: 12px;margin-left: 25px; border-radius: 4px; margin-right: 25px\"> <strong>Info: </strong> You can ask for up to **one** year (365 days) of invoices per request. If you need invoices for more than one year, just make another request. </div>\n",
           "method": "POST",
           "defaultEnvironment": "Production",
@@ -46898,6 +46991,9 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "basicAuth"
+          ],
           "description": "Used to resume an Invoice retrieve session that was paused because an MFA token was required by the institution.",
           "method": "PATCH",
           "defaultEnvironment": "Production",
@@ -47590,6 +47686,9 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "basicAuth"
+          ],
           "description": "Get the details of a specific invoice.",
           "method": "GET",
           "defaultEnvironment": "Production",
@@ -48447,6 +48546,9 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "basicAuth"
+          ],
           "description": "Delete a specific invoice from your Belvo account.",
           "method": "DELETE",
           "defaultEnvironment": "Production",
@@ -48596,6 +48698,9 @@
       "endpoints": [
         {
           "auth": true,
+          "authV2": [
+            "basicAuth"
+          ],
           "description": "Get a paginated list of all existing tax returns in your Belvo account. By default, we return up to 100 results per page. The results will include a mix of both monthly and yearly tax returns.",
           "method": "GET",
           "defaultEnvironment": "Production",
@@ -51170,6 +51275,9 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "basicAuth"
+          ],
           "description": "Retrieve tax return information for a specific fiscal link.",
           "method": "POST",
           "defaultEnvironment": "Production",
@@ -55840,6 +55948,9 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "basicAuth"
+          ],
           "description": "Get the details of a specific tax return.",
           "method": "GET",
           "defaultEnvironment": "Production",
@@ -58135,6 +58246,9 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "basicAuth"
+          ],
           "description": "Delete a specific tax return from your Belvo account.",
           "method": "DELETE",
           "defaultEnvironment": "Production",
@@ -58284,6 +58398,9 @@
       "endpoints": [
         {
           "auth": true,
+          "authV2": [
+            "basicAuth"
+          ],
           "description": "Get a paginated list of all existing tax status in your Belvo account. By default, we return up to 100 results per page.",
           "method": "GET",
           "defaultEnvironment": "Production",
@@ -58890,6 +59007,9 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "basicAuth"
+          ],
           "description": "Retrieve tax status information for a specific fiscal link.",
           "method": "POST",
           "defaultEnvironment": "Production",
@@ -59761,6 +59881,9 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "basicAuth"
+          ],
           "description": "Get the details of a specific tax status.",
           "method": "GET",
           "defaultEnvironment": "Production",
@@ -60232,6 +60355,9 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "basicAuth"
+          ],
           "description": "Delete a specific tax status from your Belvo account.",
           "method": "DELETE",
           "defaultEnvironment": "Production",
@@ -60381,6 +60507,9 @@
       "endpoints": [
         {
           "auth": true,
+          "authV2": [
+            "basicAuth"
+          ],
           "description": "Get a paginated list of all existing Tax compliance statuses in your Belvo account. By default, we return up to 100 results per page.",
           "method": "GET",
           "defaultEnvironment": "Production",
@@ -60686,6 +60815,9 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "basicAuth"
+          ],
           "description": "Retrieve the Tax compliance status information for a specific fiscal link.",
           "method": "POST",
           "defaultEnvironment": "Production",
@@ -60965,6 +61097,9 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "basicAuth"
+          ],
           "description": "Get the details of a specific Tax compliance status.",
           "method": "GET",
           "defaultEnvironment": "Production",
@@ -61147,6 +61282,9 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "basicAuth"
+          ],
           "description": "Delete a specific Tax compliance status from your Belvo account.",
           "method": "DELETE",
           "defaultEnvironment": "Production",
@@ -61296,6 +61434,9 @@
       "endpoints": [
         {
           "auth": true,
+          "authV2": [
+            "basicAuth"
+          ],
           "description": "Get a paginated list of all incomes in your Belvo account. By default, we return up to 100 results per page.",
           "method": "GET",
           "defaultEnvironment": "Production",
@@ -61602,6 +61743,9 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "basicAuth"
+          ],
           "description": "Retrieve income insights for <b>checking and savings accounts</b> from a specific link. You can receive insights for a period of up to 365 days, depending on the transaction history available for each [bank](https://developers.belvo.com/docs/institution).",
           "method": "POST",
           "defaultEnvironment": "Production",
@@ -62029,6 +62173,9 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "basicAuth"
+          ],
           "description": "Used to resume an Income retrieve session that was paused because an MFA token was required by the institution.",
           "method": "PATCH",
           "defaultEnvironment": "Production",
@@ -62477,6 +62624,9 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "basicAuth"
+          ],
           "description": "Get the details of a specific income.",
           "method": "GET",
           "defaultEnvironment": "Production",
@@ -62735,6 +62885,9 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "basicAuth"
+          ],
           "description": "Delete a specific income from your Belvo account.",
           "method": "DELETE",
           "defaultEnvironment": "Production",
@@ -62884,6 +63037,9 @@
       "endpoints": [
         {
           "auth": true,
+          "authV2": [
+            "basicAuth"
+          ],
           "description": "Get a paginated list of all recurring expenses in your Belvo account. By default, we return up to 100 results per page.",
           "method": "GET",
           "defaultEnvironment": "Production",
@@ -63355,6 +63511,9 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "basicAuth"
+          ],
           "description": "Retrieve recurring expense insights for <b>checking and savings accounts</b> from a specific link. You can receive insights for a period of up to 365 days, depending on the transaction history available for each [bank](https://developers.belvo.com/docs/institution).",
           "method": "POST",
           "defaultEnvironment": "Production",
@@ -64075,6 +64234,9 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "basicAuth"
+          ],
           "description": "Used to resume an Recurring Expenses retrieve session that was paused because an MFA token was required by the institution.",
           "method": "PATCH",
           "defaultEnvironment": "Production",
@@ -64799,6 +64961,9 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "basicAuth"
+          ],
           "description": "Get the details of a specific recurring expense.",
           "method": "GET",
           "defaultEnvironment": "Production",
@@ -65194,6 +65359,9 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "basicAuth"
+          ],
           "description": "Delete a specific recurring expense from your Belvo account.",
           "method": "DELETE",
           "defaultEnvironment": "Production",
@@ -65342,6 +65510,9 @@
       "endpoints": [
         {
           "auth": true,
+          "authV2": [
+            "basicAuth"
+          ],
           "description": "Get a paginated list of all the existing portfolios (and their instruments) in your Belvo account. By default, we return up to 100 results per page.",
           "method": "GET",
           "defaultEnvironment": "Production",
@@ -65697,6 +65868,9 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "basicAuth"
+          ],
           "description": "Retrieve all portfolios for an existing link.",
           "method": "POST",
           "defaultEnvironment": "Production",
@@ -66140,6 +66314,9 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "basicAuth"
+          ],
           "description": "Used to resume a portfolio retrieve session that was paused because an MFA token was required by the institution.",
           "method": "PATCH",
           "defaultEnvironment": "Production",
@@ -66587,6 +66764,9 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "basicAuth"
+          ],
           "description": "Get the details of a specific portfolio.",
           "method": "GET",
           "defaultEnvironment": "Production",
@@ -66851,6 +67031,9 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "basicAuth"
+          ],
           "description": "Delete a specific investment portfolio and all associated instruments, transactions, and owners from your Belvo account.",
           "method": "DELETE",
           "defaultEnvironment": "Production",
@@ -67000,6 +67183,9 @@
       "endpoints": [
         {
           "auth": true,
+          "authV2": [
+            "basicAuth"
+          ],
           "description": "Get a paginated list of all the existing receivable transactions in your Belvo account. We return up to 100 results per page.",
           "method": "GET",
           "defaultEnvironment": "Production",
@@ -67426,6 +67612,9 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "basicAuth"
+          ],
           "description": "Retrieve all receivable transactions for an existing link.",
           "method": "POST",
           "defaultEnvironment": "Production",
@@ -67797,6 +67986,9 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "basicAuth"
+          ],
           "description": "Get the details of a specific receivable transaction.",
           "method": "GET",
           "defaultEnvironment": "Production",
@@ -68021,6 +68213,9 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "basicAuth"
+          ],
           "description": "Delete a specific receivable transaction from your Belvo account.",
           "method": "DELETE",
           "defaultEnvironment": "Production",
@@ -68170,6 +68365,9 @@
       "endpoints": [
         {
           "auth": true,
+          "authV2": [
+            "basicAuth"
+          ],
           "description": "Get a paginated list of all risk insight analyses in your Belvo account. By default, we return up to 100 results per page.",
           "method": "GET",
           "defaultEnvironment": "Production",
@@ -68546,6 +68744,9 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "basicAuth"
+          ],
           "description": "Request the risk insights for a given link ID.\n\nIf you need to know the currency of the account, just do a GET Details to the accounts endpoint (using the ID you receive from the accounts response).",
           "method": "POST",
           "defaultEnvironment": "Production",
@@ -69130,6 +69331,9 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "basicAuth"
+          ],
           "description": "Used to resume an Risk insights retrieve session that was paused because an MFA token was required by the institution.",
           "method": "PATCH",
           "defaultEnvironment": "Production",
@@ -69718,6 +69922,9 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "basicAuth"
+          ],
           "description": "Get the details of a specific risk insight.",
           "method": "GET",
           "defaultEnvironment": "Production",
@@ -70046,6 +70253,9 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "basicAuth"
+          ],
           "description": "Delete a specific risk insight from your Belvo account.",
           "method": "DELETE",
           "defaultEnvironment": "Production",
@@ -70195,6 +70405,9 @@
       "endpoints": [
         {
           "auth": true,
+          "authV2": [
+            "basicAuth"
+          ],
           "description": "Get a paginated list of all existing tax retentions in your Belvo account. We return up to 100 results per page.",
           "method": "GET",
           "defaultEnvironment": "Production",
@@ -70516,6 +70729,9 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "basicAuth"
+          ],
           "description": "Retrieve tax retention information from a specific link. The maximum number of tax retentions that can be returned for a period is 500.",
           "method": "POST",
           "defaultEnvironment": "Production",
@@ -70908,6 +71124,9 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "basicAuth"
+          ],
           "description": "Get the details of a specific tax retention.",
           "method": "GET",
           "defaultEnvironment": "Production",
@@ -71132,6 +71351,9 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "basicAuth"
+          ],
           "description": "Delete a specific tax retention from your Belvo account.",
           "method": "DELETE",
           "defaultEnvironment": "Production",
@@ -71281,6 +71503,9 @@
       "endpoints": [
         {
           "auth": true,
+          "authV2": [
+            "basicAuth"
+          ],
           "description": "Get a paginated list of all existing tax declarations in your Belvo account. By default, we return up to 100 results per page.",
           "method": "GET",
           "defaultEnvironment": "Production",
@@ -71796,6 +72021,9 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "basicAuth"
+          ],
           "description": "Retrieve tax declaration information for a specific fiscal link.",
           "method": "POST",
           "defaultEnvironment": "Production",
@@ -72328,6 +72556,9 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "basicAuth"
+          ],
           "description": "Get the details of a specific Tax declaration.",
           "method": "GET",
           "defaultEnvironment": "Production",
@@ -72642,6 +72873,9 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "basicAuth"
+          ],
           "description": "Delete a specific Tax declaration from your Belvo account.",
           "method": "DELETE",
           "defaultEnvironment": "Production",
@@ -72791,6 +73025,9 @@
       "endpoints": [
         {
           "auth": true,
+          "authV2": [
+            "basicAuth"
+          ],
           "description": "Get a paginated list of all existing employment records in your Belvo account. By default, we return up to 100 results per page.",
           "method": "GET",
           "defaultEnvironment": "Production",
@@ -73078,6 +73315,9 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "basicAuth"
+          ],
           "description": "Retrieve employment record details for an individual.\n",
           "method": "POST",
           "defaultEnvironment": "Production",
@@ -73590,6 +73830,9 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "basicAuth"
+          ],
           "description": "Get the details of a specific employment record.",
           "method": "GET",
           "defaultEnvironment": "Production",
@@ -73872,6 +74115,9 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "basicAuth"
+          ],
           "description": "Delete a specific employment record from your Belvo account.",
           "method": "DELETE",
           "defaultEnvironment": "Production",
@@ -74021,6 +74267,9 @@
       "endpoints": [
         {
           "auth": true,
+          "authV2": [
+            "basicAuth"
+          ],
           "description": "Send through your raw data and receive enriched information for each of your user's income streams.\n\n<div style=\"background-color:#f4f6f8; border-left: 6px solid #5bc0de;padding: 12px;margin-left: 25px; border-radius: 4px; margin-right: 25px\">\n<strong>Note: </strong> Belvo can process up to 10,000 unique transactions per request.\n</div>",
           "method": "POST",
           "defaultEnvironment": "Production",
@@ -74378,6 +74627,9 @@
       "endpoints": [
         {
           "auth": true,
+          "authV2": [
+            "basicAuth"
+          ],
           "description": "Send through your raw transaction data and receive enriched information for each of your transactions.\n\n<div style=\"background-color:#f4f6f8; border-left: 6px solid #5bc0de;padding: 12px;margin-left: 25px; border-radius: 4px; margin-right: 25px\">\n<strong>Note: </strong> Belvo can process up to 10,000 unique transactions per request.\n</div>",
           "method": "POST",
           "defaultEnvironment": "Production",
@@ -74695,6 +74947,9 @@
       "endpoints": [
         {
           "auth": true,
+          "authV2": [
+            "basicAuth"
+          ],
           "description": "Get a paginated list of all existing secret keys in your Belvo account. We return up to 100 results per page.\n\n\n  **Note**: We only return the ID of the secret keys.",
           "method": "GET",
           "defaultEnvironment": "Production",
@@ -74820,6 +75075,9 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "basicAuth"
+          ],
           "description": "Request API keys to use with Belvo's Payments API.\n\nYou will need to send through the username and password (in plain text) you use to login to the Belvo dashboard in the Authorization header.\n\nFor example:\n\n  ```curl\n  POST https://api.belvo.com/payments/secret-keys/\n  Authorization: Basic username:password\n  ```\n",
           "method": "POST",
           "defaultEnvironment": "Production",
@@ -74967,6 +75225,9 @@
       "endpoints": [
         {
           "auth": true,
+          "authV2": [
+            "basicAuth"
+          ],
           "description": "List all payment webhooks associated with your Belvo account.",
           "method": "GET",
           "defaultEnvironment": "Production",
@@ -75098,6 +75359,9 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "basicAuth"
+          ],
           "description": "Register a new payments webhook for your Belvo account.\n",
           "method": "POST",
           "defaultEnvironment": "Production",
@@ -75313,6 +75577,9 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "basicAuth"
+          ],
           "description": "Get the details about a specific payment webhook.",
           "method": "GET",
           "defaultEnvironment": "Production",
@@ -75468,6 +75735,9 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "basicAuth"
+          ],
           "description": "Delete a specific payment webhook from your Belvo account.",
           "method": "DELETE",
           "defaultEnvironment": "Production",
@@ -75617,6 +75887,9 @@
       "endpoints": [
         {
           "auth": true,
+          "authV2": [
+            "basicAuth"
+          ],
           "description": "List all available payment institutions.",
           "method": "GET",
           "defaultEnvironment": "Production",
@@ -75916,6 +76189,9 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "basicAuth"
+          ],
           "description": "Get the details about a specific payment institution",
           "method": "GET",
           "defaultEnvironment": "Production",
@@ -76131,6 +76407,9 @@
       "endpoints": [
         {
           "auth": true,
+          "authV2": [
+            "basicAuth"
+          ],
           "description": "List all customers associated with your Belvo account.",
           "method": "GET",
           "defaultEnvironment": "Production",
@@ -76584,6 +76863,9 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "basicAuth"
+          ],
           "description": "Create a new customer to send or request funds.",
           "method": "POST",
           "defaultEnvironment": "Production",
@@ -76908,6 +77190,9 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "basicAuth"
+          ],
           "description": "Get the details about a specific customer",
           "method": "GET",
           "defaultEnvironment": "Production",
@@ -77162,6 +77447,9 @@
       "endpoints": [
         {
           "auth": true,
+          "authV2": [
+            "basicAuth"
+          ],
           "description": "List all bank accounts associated with your Belvo account.",
           "method": "GET",
           "defaultEnvironment": "Production",
@@ -77652,6 +77940,9 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "basicAuth"
+          ],
           "description": "Create a new bank account from which to send or request funds.",
           "method": "POST",
           "defaultEnvironment": "Production",
@@ -78090,6 +78381,9 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "basicAuth"
+          ],
           "description": "Get the details about a specific bank account",
           "method": "GET",
           "defaultEnvironment": "Production",
@@ -78394,6 +78688,9 @@
       "endpoints": [
         {
           "auth": true,
+          "authV2": [
+            "basicAuth"
+          ],
           "description": "List all payment links associated with your Belvo account. By default, we return up to 100 results per page.",
           "method": "GET",
           "defaultEnvironment": "Production",
@@ -78682,6 +78979,9 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "basicAuth"
+          ],
           "description": "Create a new payment link to start a hosted-widget payment.",
           "method": "POST",
           "defaultEnvironment": "Production",
@@ -79177,6 +79477,9 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "basicAuth"
+          ],
           "description": "Get the details about a payment link.",
           "method": "GET",
           "defaultEnvironment": "Production",
@@ -79611,6 +79914,9 @@
       "endpoints": [
         {
           "auth": true,
+          "authV2": [
+            "basicAuth"
+          ],
           "description": "List all payment intents associated with your Belvo account.",
           "method": "GET",
           "defaultEnvironment": "Production",
@@ -80342,6 +80648,9 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "basicAuth"
+          ],
           "description": "Create a payment intent.",
           "method": "POST",
           "defaultEnvironment": "Production",
@@ -80921,6 +81230,9 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "basicAuth"
+          ],
           "description": "Get the details about a specific payment intent.",
           "method": "GET",
           "defaultEnvironment": "Production",
@@ -81428,6 +81740,9 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "basicAuth"
+          ],
           "description": "Complete a new payment intent.\n\nDuring the payment intent flow, you need to fill in the payment intent with required information about your customer (their institution, bank account, and login credentials). This is done by sending PATCH requests with the information that Belvo asked you display in each `next_step` object. If you need more information on how to complete a payment intent, check our <a href=\"https://developers.belvo.com/docs/colombia-pse#payment-intents\" target=\"_blank\">PSE payment initiation</a> guides for  🇨🇴 Colombia.",
           "method": "PATCH",
           "defaultEnvironment": "Production",
@@ -81983,6 +82298,9 @@
       "endpoints": [
         {
           "auth": true,
+          "authV2": [
+            "basicAuth"
+          ],
           "description": "List all payment transactions associated with your Belvo account.",
           "method": "GET",
           "defaultEnvironment": "Production",
@@ -82422,6 +82740,9 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "basicAuth"
+          ],
           "description": "Get the details about a specific payment transaction.",
           "method": "GET",
           "defaultEnvironment": "Production",
@@ -82982,7 +83303,16 @@
   "auth": {
     "type": "basicAuth",
     "passwordName": "password",
-    "usernameName": "username"
+    "usernameName": "username",
+    "description": "Belvo employs **basic authentication** using your secret keys. Just use your secretId as the `username` and secretPassword as the `password`. For example:\n\n```text Authentication example\ncurl \\\n    -u =BASE64-SECRET_ID=:=BASE64-SECRET_PASSWORD=\n    https://sandbox.belvo.com/api/\n```\n\nFor information on how to get your API keys, check out our [Get Started in 5 Minutes](https://developers.belvo.com/docs/get-started-in-5-minutes) DevPortal article."
+  },
+  "authSchemes": {
+    "basicAuth": {
+      "type": "basicAuth",
+      "passwordName": "password",
+      "usernameName": "username",
+      "description": "Belvo employs **basic authentication** using your secret keys. Just use your secretId as the `username` and secretPassword as the `password`. For example:\n\n```text Authentication example\ncurl \\\n    -u =BASE64-SECRET_ID=:=BASE64-SECRET_PASSWORD=\n    https://sandbox.belvo.com/api/\n```\n\nFor information on how to get your API keys, check out our [Get Started in 5 Minutes](https://developers.belvo.com/docs/get-started-in-5-minutes) DevPortal article."
+    }
   },
   "snippetsConfiguration": {},
   "globalHeaders": []

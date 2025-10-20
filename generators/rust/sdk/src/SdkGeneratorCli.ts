@@ -7,6 +7,8 @@ import { DynamicSnippetsGenerator } from "@fern-api/rust-dynamic-snippets";
 import { generateModels } from "@fern-api/rust-model";
 import { FernGeneratorExec } from "@fern-fern/generator-exec-sdk";
 import { HttpRequestBody, IntermediateRepresentation } from "@fern-fern/ir-sdk/api";
+import { exec } from "child_process";
+import { promisify } from "util";
 import { EnvironmentGenerator } from "./environment/EnvironmentGenerator";
 import { ErrorGenerator } from "./error/ErrorGenerator";
 import { ClientConfigGenerator } from "./generators/ClientConfigGenerator";
@@ -16,6 +18,8 @@ import { ReferenceConfigAssembler } from "./reference";
 import { SdkCustomConfigSchema } from "./SdkCustomConfig";
 import { SdkGeneratorContext } from "./SdkGeneratorContext";
 import { convertDynamicEndpointSnippetRequest, convertIr } from "./utils";
+
+const execAsync = promisify(exec);
 
 export class SdkGeneratorCli extends AbstractRustGeneratorCli<SdkCustomConfigSchema, SdkGeneratorContext> {
     // ===========================
@@ -40,8 +44,130 @@ export class SdkGeneratorCli extends AbstractRustGeneratorCli<SdkCustomConfigSch
         return customConfig != null ? SdkCustomConfigSchema.parse(customConfig) : SdkCustomConfigSchema.parse({});
     }
 
-    protected async publishPackage(_context: SdkGeneratorContext): Promise<void> {
-        throw new Error("Method not implemented.");
+    protected async publishPackage(context: SdkGeneratorContext): Promise<void> {
+        // First, generate all the files
+        context.logger.debug("Generating package files before publishing...");
+        await this.generate(context);
+
+        const publishInfo = await this.getPublishInfo(context);
+        const version = context.getCrateVersion();
+
+        context.logger.info(
+            `Publishing crate ${publishInfo.packageName}@${version} to registry: ${publishInfo.registryUrl}`
+        );
+        context.logger.debug(`Package name: ${publishInfo.packageName}, Version: ${version}`);
+
+        // Send publishing notification with crates package coordinate
+        const packageCoordinate = FernGeneratorExec.PackageCoordinate.crates({
+            name: publishInfo.packageName,
+            version
+        });
+        await context.generatorNotificationService.sendUpdate(
+            FernGeneratorExec.GeneratorUpdate.publishing(packageCoordinate)
+        );
+
+        // Execute cargo publish
+        await this.cargoPublish({
+            context,
+            registryUrl: publishInfo.registryUrl,
+            token: publishInfo.token
+        });
+
+        // Send published notification
+        await context.generatorNotificationService.sendUpdate(
+            FernGeneratorExec.GeneratorUpdate.published(packageCoordinate)
+        );
+
+        context.logger.info(`Successfully published crate ${publishInfo.packageName}@${version}`);
+    }
+
+    /**
+     * Publishes the Rust crate to crates.io or a custom registry using cargo publish.
+     */
+    private async cargoPublish({
+        context,
+        registryUrl,
+        token
+    }: {
+        context: SdkGeneratorContext;
+        registryUrl: string;
+        token: string;
+    }): Promise<void> {
+        const publishCommand = ["cargo", "publish", "--token", token];
+
+        // Add registry URL if it's not the default crates.io
+        const isCustomRegistry = registryUrl !== "https://crates.io/api/v1/crates";
+        if (isCustomRegistry) {
+            publishCommand.push("--registry-url", registryUrl);
+            context.logger.debug(`Using custom registry: ${registryUrl}`);
+        } else {
+            context.logger.debug("Publishing to default crates.io registry");
+        }
+
+        const command = publishCommand.join(" ");
+        context.logger.debug(`Executing cargo publish from: ${context.project.absolutePathToOutputDirectory}`);
+        context.logger.debug(`Command: ${command.replace(token, "***")}`);
+
+        try {
+            const { stdout, stderr } = await execAsync(command, {
+                cwd: context.project.absolutePathToOutputDirectory
+            });
+
+            if (stdout) {
+                context.logger.info(stdout);
+            }
+            if (stderr) {
+                context.logger.warn(stderr);
+            }
+        } catch (error) {
+            const errorMessage = error instanceof Error ? error.message : String(error);
+            context.logger.debug(`Cargo publish failed with error: ${errorMessage}`);
+            throw new Error(`Failed to publish crate: ${errorMessage}`);
+        }
+    }
+
+    /**
+     * Extracts publish info from the generator config.
+     *
+     * NOTE: Once generator-exec-sdk is published with crates types, we can add:
+     * - Check for publishInfo.type === "crates" in GitHub mode
+     * - Check for outputMode.registriesV2?.crates in publish mode
+     *
+     * For now, we use npm format which the configuration layer converts from crates.
+     */
+    private getPublishInfo(context: SdkGeneratorContext): { registryUrl: string; packageName: string; token: string } {
+        const outputMode = context.config.output.mode;
+
+        // Handle github mode with publish info
+        if (outputMode.type === "github" && outputMode.publishInfo != null) {
+            const publishInfo = outputMode.publishInfo;
+
+            if (publishInfo.type === "crates") {
+                return {
+                    registryUrl: publishInfo.registryUrl,
+                    packageName: publishInfo.packageName,
+                    token: publishInfo.tokenEnvironmentVariable
+                };
+            }
+        }
+
+        // Handle direct publish mode
+        if (outputMode.type === "publish") {
+            const cratesConfig = outputMode.registriesV2?.crates;
+            if (cratesConfig) {
+                return {
+                    registryUrl: cratesConfig.registryUrl,
+                    packageName: cratesConfig.packageName,
+                    token: cratesConfig.token ?? ""
+                };
+            }
+        }
+
+        return {
+            registryUrl: "https://crates.io/api/v1/crates",
+            packageName: context.getCrateName(),
+            token: ""
+        };
     }
 
     protected async writeForGithub(context: SdkGeneratorContext): Promise<void> {
@@ -57,58 +183,73 @@ export class SdkGeneratorCli extends AbstractRustGeneratorCli<SdkCustomConfigSch
     // ===========================
 
     protected async generate(context: SdkGeneratorContext): Promise<void> {
-        context.logger.info("=== GENERATE METHOD CALLED ===");
+        context.logger.debug(
+            `Starting SDK generation for ${context.ir.apiName.pascalCase.safeName} (crate: ${context.getCrateName()}@${context.getCrateVersion()})`
+        );
 
         const projectFiles = await this.generateProjectFiles(context);
+        context.logger.debug(`Generated ${projectFiles.length} project files`);
         context.project.addSourceFiles(...projectFiles);
 
-        context.logger.info("=== CALLING generateReadme ===");
+        context.logger.debug("Generating README.md with code examples...");
         // Generate README if configured
         await this.generateReadme(context);
 
-        context.logger.info("=== CALLING generateReference ===");
+        context.logger.debug("Generating reference.md documentation...");
         // Generate reference.md if configured
         await this.generateReference(context);
 
-        context.logger.info("=== CALLING persist ===");
+        context.logger.debug(`Persisting files to ${context.project.absolutePathToOutputDirectory}...`);
         await context.project.persist();
-        context.logger.info("=== PERSIST COMPLETE ===");
+        context.logger.debug("File persistence complete");
 
-        context.logger.info("=== RUNNING rustfmt ===");
+        context.logger.debug("Formatting Rust code with rustfmt...");
         await formatRustCode({
             outputDir: context.project.absolutePathToOutputDirectory,
             logger: context.logger
         });
-        context.logger.info("=== RUSTFMT COMPLETE ===");
+        context.logger.debug("Code formatting complete");
     }
 
     private async generateProjectFiles(context: SdkGeneratorContext): Promise<RustFile[]> {
         const files: RustFile[] = [];
 
         // Core files
+        context.logger.debug("Generating core files (lib.rs, error.rs, api/mod.rs)...");
         files.push(this.generateLibFile(context));
         files.push(this.generateErrorFile(context));
         files.push(this.generateApiModFile(context));
 
         // Environment.rs (if environments are defined)
-        const environmentFile = await this.generateEnvironmentFile(context);
-        if (environmentFile) {
-            files.push(environmentFile);
+        const hasEnvironments = context.ir.environments?.environments != null;
+        if (hasEnvironments) {
+            const envCount = context.ir.environments?.environments.environments.length ?? 0;
+            context.logger.debug(`Generating environment.rs with ${envCount} environment(s)...`);
+            const environmentFile = await this.generateEnvironmentFile(context);
+            if (environmentFile) {
+                files.push(environmentFile);
+            }
         }
 
         // ClientConfig.rs and ApiClientBuilder.rs (always generate with conditional template processing)
+        context.logger.debug("Generating client configuration files...");
         const clientConfigGenerator = new ClientConfigGenerator(context);
         files.push(clientConfigGenerator.generate());
 
         // Client.rs and nested mod.rs files
+        context.logger.debug(`Generating root client: ${context.getClientName()}...`);
         const rootClientGenerator = new RootClientGenerator(context);
         files.push(...rootClientGenerator.generateAllFiles());
 
         // Services/**/*.rs
+        const serviceCount = Object.keys(context.ir.services).length;
+        context.logger.debug(`Generating ${serviceCount} service client(s)...`);
         this.generateSubClientFiles(context, files);
 
         // Types/**/*.rs
         if (this.hasTypes(context)) {
+            const typeCount = Object.keys(context.ir.types).length;
+            context.logger.debug(`Generating ${typeCount} type definition(s)...`);
             files.push(...this.generateTypeFiles(context));
         }
 
@@ -143,7 +284,6 @@ export class SdkGeneratorCli extends AbstractRustGeneratorCli<SdkCustomConfigSch
 
     private generateApiModFile(context: SdkGeneratorContext): RustFile {
         const hasTypes = this.hasTypes(context);
-        const clientName = context.getClientName();
         const moduleDeclarations: ModuleDeclaration[] = [];
         const useStatements: UseStatement[] = [];
 
@@ -153,8 +293,13 @@ export class SdkGeneratorCli extends AbstractRustGeneratorCli<SdkCustomConfigSch
             moduleDeclarations.push(new ModuleDeclaration({ name: "types", isPublic: true }));
         }
 
-        // Add re-exports
-        useStatements.push(new UseStatement({ path: "resources", items: ["*"], isPublic: true }));
+        // Add named re-exports for resources
+        const resourceExports = this.getResourceExports(context);
+        if (resourceExports.length > 0) {
+            useStatements.push(new UseStatement({ path: "resources", items: resourceExports, isPublic: true }));
+        }
+
+        // Add named re-exports for types
         if (hasTypes) {
             useStatements.push(new UseStatement({ path: "types", items: ["*"], isPublic: true }));
         }
@@ -178,9 +323,12 @@ export class SdkGeneratorCli extends AbstractRustGeneratorCli<SdkCustomConfigSch
 
     private generateSubClientFiles(context: SdkGeneratorContext, files: RustFile[]): void {
         Object.values(context.ir.subpackages).forEach((subpackage) => {
-            // Always generate client files, even for subpackages without services/endpoints
+            // Generate client files, but some may return null if they generate unified mod.rs instead
             const subClientGenerator = new SubClientGenerator(context, subpackage);
-            files.push(subClientGenerator.generate());
+            const clientFile = subClientGenerator.generate();
+            if (clientFile) {
+                files.push(clientFile);
+            }
         });
     }
 
@@ -237,6 +385,7 @@ export class SdkGeneratorCli extends AbstractRustGeneratorCli<SdkCustomConfigSch
         moduleDeclarations.push(new ModuleDeclaration({ name: "core", isPublic: true }));
         moduleDeclarations.push(new ModuleDeclaration({ name: "config", isPublic: true }));
         moduleDeclarations.push(new ModuleDeclaration({ name: "client", isPublic: true }));
+        moduleDeclarations.push(new ModuleDeclaration({ name: "prelude", isPublic: true }));
 
         if (this.hasEnvironments(context)) {
             moduleDeclarations.push(new ModuleDeclaration({ name: "environment", isPublic: true }));
@@ -294,6 +443,8 @@ export class SdkGeneratorCli extends AbstractRustGeneratorCli<SdkCustomConfigSch
             const filename = context.getUniqueFilenameForType(typeDeclaration);
             const rawModuleName = filename.replace(".rs", ""); // Remove .rs extension
             const escapedModuleName = context.escapeRustKeyword(rawModuleName);
+            // Use getUniqueTypeNameForDeclaration to prevent type name conflicts
+            const typeName = context.getUniqueTypeNameForDeclaration(typeDeclaration);
 
             // Only add if we haven't seen this module name before
             if (!uniqueModuleNames.has(escapedModuleName)) {
@@ -302,7 +453,7 @@ export class SdkGeneratorCli extends AbstractRustGeneratorCli<SdkCustomConfigSch
                 useStatements.push(
                     new UseStatement({
                         path: escapedModuleName,
-                        items: ["*"],
+                        items: [typeName],
                         isPublic: true
                     })
                 );
@@ -314,10 +465,11 @@ export class SdkGeneratorCli extends AbstractRustGeneratorCli<SdkCustomConfigSch
             for (const endpoint of service.endpoints) {
                 if (endpoint.requestBody?.type === "inlinedRequestBody") {
                     const inlinedRequestBody = endpoint.requestBody as HttpRequestBody.InlinedRequestBody;
-                    const requestName = inlinedRequestBody.name.pascalCase.safeName;
+                    // Get the unique type name (may have suffix if there's a collision)
+                    const uniqueRequestName = context.getInlineRequestTypeName(endpoint.id);
 
-                    // Use centralized method for consistent snake_case conversion
-                    const rawModuleName = context.getModuleNameForInlinedRequestBody(requestName);
+                    // Use centralized method for consistent snake_case conversion (pass endpoint.id)
+                    const rawModuleName = context.getModuleNameForInlinedRequestBody(endpoint.id);
                     const escapedModuleName = context.escapeRustKeyword(rawModuleName);
 
                     // Only add if we haven't seen this module name before
@@ -327,7 +479,7 @@ export class SdkGeneratorCli extends AbstractRustGeneratorCli<SdkCustomConfigSch
                         useStatements.push(
                             new UseStatement({
                                 path: escapedModuleName,
-                                items: ["*"],
+                                items: [uniqueRequestName],
                                 isPublic: true
                             })
                         );
@@ -337,12 +489,13 @@ export class SdkGeneratorCli extends AbstractRustGeneratorCli<SdkCustomConfigSch
         }
 
         // Add query parameter request structs for query-only endpoints
-        for (const service of Object.values(context.ir.services)) {
+        for (const [serviceId, service] of Object.entries(context.ir.services)) {
             for (const endpoint of service.endpoints) {
                 // Add query request structs for endpoints without request body but with query parameters
                 if (endpoint.queryParameters.length > 0 && !endpoint.requestBody) {
-                    const queryRequestTypeName = `${endpoint.name.pascalCase.safeName}QueryRequest`;
-                    const rawModuleName = context.getModuleNameForQueryRequest(queryRequestTypeName);
+                    // Get the unique type name (may have suffix if there's a collision)
+                    const uniqueQueryRequestTypeName = context.getQueryRequestUniqueTypeName(endpoint.id);
+                    const rawModuleName = context.getModuleNameForQueryRequest(endpoint.id);
                     const escapedModuleName = context.escapeRustKeyword(rawModuleName);
 
                     // Only add if we haven't seen this module name before
@@ -352,7 +505,7 @@ export class SdkGeneratorCli extends AbstractRustGeneratorCli<SdkCustomConfigSch
                         useStatements.push(
                             new UseStatement({
                                 path: escapedModuleName,
-                                items: ["*"],
+                                items: [uniqueQueryRequestTypeName],
                                 isPublic: true
                             })
                         );
@@ -374,14 +527,18 @@ export class SdkGeneratorCli extends AbstractRustGeneratorCli<SdkCustomConfigSch
 
     private async generateReadme(context: SdkGeneratorContext): Promise<void> {
         try {
-            context.logger.info("Starting README generation...");
+            const snippetCount = context.ir.dynamic?.endpoints ? Object.keys(context.ir.dynamic.endpoints).length : 0;
+            context.logger.debug(`Generating README.md with ${snippetCount} endpoint example(s)...`);
+
             // Generate README content using the agent
             const readmeContent = await context.generatorAgent.generateReadme({
                 context,
                 endpointSnippets: this.generateSnippets(context)
             });
 
-            context.logger.debug(`Generated README content length: ${readmeContent.length}`);
+            context.logger.debug(
+                `Generated README.md (${readmeContent.length} characters, ${readmeContent.split("\n").length} lines)`
+            );
             // Add README to the project
             const readmeFile = new RustFile({
                 filename: "README.md",
@@ -390,9 +547,11 @@ export class SdkGeneratorCli extends AbstractRustGeneratorCli<SdkCustomConfigSch
             });
             context.project.addSourceFiles(readmeFile);
 
-            context.logger.info("Successfully added README.md to project");
+            context.logger.debug("Successfully added README.md to project");
         } catch (error) {
-            throw new Error(`Failed to generate README.md: ${extractErrorMessage(error)}`);
+            const errorMsg = extractErrorMessage(error);
+            context.logger.debug(`README generation failed: ${errorMsg}`);
+            throw new Error(`Failed to generate README.md: ${errorMsg}`);
         }
     }
 
@@ -435,12 +594,18 @@ export class SdkGeneratorCli extends AbstractRustGeneratorCli<SdkCustomConfigSch
     // ===========================
     private async generateReference(context: SdkGeneratorContext): Promise<void> {
         try {
-            context.logger.info("Starting reference.md generation...");
+            const endpointCount = Object.values(context.ir.services).reduce(
+                (total, service) => total + service.endpoints.length,
+                0
+            );
+            context.logger.debug(`Generating reference.md documentation for ${endpointCount} endpoint(s)...`);
 
             const builder = new ReferenceConfigAssembler(context).buildReferenceConfigBuilder();
             const content = await context.generatorAgent.generateReference(builder);
 
-            context.logger.debug(`Generated reference.md content length: ${content.length}`);
+            context.logger.debug(
+                `Generated reference.md (${content.length} characters, ${content.split("\n").length} lines)`
+            );
 
             const referenceFile = new RustFile({
                 filename: "reference.md",
@@ -449,9 +614,11 @@ export class SdkGeneratorCli extends AbstractRustGeneratorCli<SdkCustomConfigSch
             });
 
             context.project.addSourceFiles(referenceFile);
-            context.logger.info("Successfully added reference.md to project");
+            context.logger.debug("Successfully added reference.md to project");
         } catch (error) {
-            throw new Error(`Failed to generate reference.md: ${extractErrorMessage(error)}`);
+            const errorMsg = extractErrorMessage(error);
+            context.logger.debug(`Reference generation failed: ${errorMsg}`);
+            throw new Error(`Failed to generate reference.md: ${errorMsg}`);
         }
     }
 
@@ -469,5 +636,24 @@ export class SdkGeneratorCli extends AbstractRustGeneratorCli<SdkCustomConfigSch
 
     private getFileContents(file: RustFile): string {
         return typeof file.fileContents === "string" ? file.fileContents : file.fileContents.toString();
+    }
+
+    private getResourceExports(context: SdkGeneratorContext): string[] {
+        const exports: string[] = [];
+
+        // Only export top-level subpackages from the root package
+        const topLevelSubpackageIds = context.ir.rootPackage.subpackages;
+
+        topLevelSubpackageIds.forEach((subpackageId) => {
+            const subpackage = context.ir.subpackages[subpackageId];
+            if (subpackage) {
+                const subClientName = `${subpackage.name.pascalCase.safeName}Client`;
+                exports.push(subClientName);
+            }
+        });
+
+        // add main root client
+        exports.push(context.getClientName());
+        return exports;
     }
 }

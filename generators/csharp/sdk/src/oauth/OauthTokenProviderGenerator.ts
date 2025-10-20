@@ -187,7 +187,7 @@ export class OauthTokenProviderGenerator extends FileGenerator<CSharpFile, SdkCu
                         bytes: (value) => undefined,
                         _other: (value) => undefined
                     });
-                    if (requestType == null || requestType.internalType.type !== "reference") {
+                    if (!this.csharp.is.Type.reference(requestType)) {
                         throw new Error("Failed to get request class reference");
                     }
 
@@ -200,7 +200,7 @@ export class OauthTokenProviderGenerator extends FileGenerator<CSharpFile, SdkCu
                             )}`,
                             arguments_: [
                                 this.csharp.instantiateClass({
-                                    classReference: requestType.internalType.value,
+                                    classReference: requestType.value,
                                     // TODO(dsinghvi): assumes only top level client id and client secret inputs
                                     arguments_: [
                                         {
@@ -228,7 +228,7 @@ export class OauthTokenProviderGenerator extends FileGenerator<CSharpFile, SdkCu
             writer.writeTextStatement(
                 `${this.ACCESS_TOKEN_FIELD.name} = tokenResponse.${this.dotAccess(
                     tokenEndpoint.responseProperties.accessToken.property,
-                    tokenEndpoint.responseProperties.accessToken.propertyPath
+                    tokenEndpoint.responseProperties.accessToken.propertyPath?.map((val) => val.name) ?? []
                 )}`
             );
 
@@ -236,7 +236,7 @@ export class OauthTokenProviderGenerator extends FileGenerator<CSharpFile, SdkCu
                 writer.writeTextStatement(
                     `${this.EXPIRES_AT_FIELD.name} = DateTime.UtcNow.AddSeconds(tokenResponse.${this.dotAccess(
                         expiresIn.property,
-                        expiresIn.propertyPath
+                        expiresIn.propertyPath?.map((val) => val.name) ?? []
                     )}).AddMinutes(-${this.BUFFER_IN_MINUTES_FIELD.name})`
                 );
             }

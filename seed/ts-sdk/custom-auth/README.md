@@ -24,7 +24,7 @@ import { SeedCustomAuthClient } from "@fern/custom-auth";
 
 const client = new SeedCustomAuthClient({ environment: "YOUR_BASE_URL", customAuthScheme: "YOUR_CUSTOM_AUTH_SCHEME" });
 await client.customAuth.postWithCustomAuth({
-    key: "value",
+    "key": "value"
 });
 ```
 
@@ -130,7 +130,10 @@ console.log(rawResponse.headers['X-My-Header']);
 
 ### Runtime Compatibility
 
+
 The SDK works in the following runtimes:
+
+
 
 - Node.js 18+
 - Vercel

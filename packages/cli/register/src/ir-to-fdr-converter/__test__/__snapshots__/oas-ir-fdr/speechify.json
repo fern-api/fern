@@ -1433,6 +1433,9 @@
       "endpoints": [
         {
           "auth": true,
+          "authV2": [
+            "bearerAuth"
+          ],
           "description": "Gets the stream speech for the given input",
           "method": "POST",
           "defaultEnvironment": "https://api.sws.speechify.com",
@@ -1598,6 +1601,9 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "bearerAuth"
+          ],
           "description": "Gets the speech data for the given input",
           "method": "POST",
           "defaultEnvironment": "https://api.sws.speechify.com",
@@ -1763,6 +1769,9 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "bearerAuth"
+          ],
           "description": "Gets the stream speech for the given input",
           "method": "POST",
           "defaultEnvironment": "https://api.sws.speechify.com",
@@ -1949,6 +1958,9 @@
       "endpoints": [
         {
           "auth": true,
+          "authV2": [
+            "bearerAuth"
+          ],
           "description": "Create a new API token for the logged in user",
           "method": "POST",
           "defaultEnvironment": "https://api.sws.speechify.com",
@@ -2087,6 +2099,9 @@
       "endpoints": [
         {
           "auth": true,
+          "authV2": [
+            "userAuth"
+          ],
           "description": "Fetches all the API keys for the logged in user",
           "method": "GET",
           "defaultEnvironment": "https://api.sws.speechify.com",
@@ -2163,6 +2178,9 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "userAuth"
+          ],
           "description": "Create a new API key for the logged in user",
           "method": "POST",
           "defaultEnvironment": "https://api.sws.speechify.com",
@@ -2239,6 +2257,9 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "userAuth"
+          ],
           "description": "Deletes the given API key for the logged in user",
           "method": "DELETE",
           "defaultEnvironment": "https://api.sws.speechify.com",
@@ -2336,6 +2357,9 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "userAuth"
+          ],
           "description": "Update API key name for the logged in user",
           "method": "PATCH",
           "defaultEnvironment": "https://api.sws.speechify.com",
@@ -2482,6 +2506,9 @@
       "endpoints": [
         {
           "auth": true,
+          "authV2": [
+            "bearerAuth"
+          ],
           "description": "Gets the list of voices available for the user",
           "method": "GET",
           "defaultEnvironment": "https://api.sws.speechify.com",
@@ -2583,6 +2610,9 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "bearerAuth"
+          ],
           "description": "Create a personal (cloned) voice for the user",
           "method": "POST",
           "defaultEnvironment": "https://api.sws.speechify.com",
@@ -2815,6 +2845,9 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "bearerAuth"
+          ],
           "description": "Delete a personal (cloned) voice",
           "method": "DELETE",
           "defaultEnvironment": "https://api.sws.speechify.com",
@@ -2989,7 +3022,22 @@
   "auth": {
     "type": "header",
     "headerWireValue": "Authorization",
-    "nameOverride": "apiKey"
+    "nameOverride": "apiKey",
+    "description": "Enter the key with the `Bearer` prefix, e.g. 'Bearer API_KEY'."
+  },
+  "authSchemes": {
+    "bearerAuth": {
+      "type": "header",
+      "headerWireValue": "Authorization",
+      "nameOverride": "apiKey",
+      "description": "Enter the key with the `Bearer` prefix, e.g. 'Bearer API_KEY'."
+    },
+    "userAuth": {
+      "type": "header",
+      "headerWireValue": "Authorization",
+      "nameOverride": "apiKey",
+      "description": "User authorization token"
+    }
   },
   "snippetsConfiguration": {},
   "globalHeaders": []

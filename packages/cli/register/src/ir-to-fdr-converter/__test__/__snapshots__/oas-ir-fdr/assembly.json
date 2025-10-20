@@ -4281,6 +4281,9 @@
       "endpoints": [
         {
           "auth": true,
+          "authV2": [
+            "ApiKey"
+          ],
           "description": "Upload your audio or video file directly to the AssemblyAI API if it isn't accessible via a URL already.",
           "method": "POST",
           "defaultEnvironment": "AssemblyAI API",
@@ -4479,6 +4482,9 @@
       "endpoints": [
         {
           "auth": true,
+          "authV2": [
+            "ApiKey"
+          ],
           "description": "Retrieve a list of transcripts you have created.",
           "method": "GET",
           "defaultEnvironment": "AssemblyAI API",
@@ -4748,6 +4754,9 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "ApiKey"
+          ],
           "description": "Create a transcript from an audio or video file that is accessible via a URL.",
           "method": "POST",
           "defaultEnvironment": "AssemblyAI API",
@@ -5300,6 +5309,9 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "ApiKey"
+          ],
           "description": "Get the transcript resource. The transcript is ready when the \"status\" is \"completed\".",
           "method": "GET",
           "defaultEnvironment": "AssemblyAI API",
@@ -5831,6 +5843,9 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "ApiKey"
+          ],
           "description": "Delete the transcript",
           "method": "DELETE",
           "defaultEnvironment": "AssemblyAI API",
@@ -6362,6 +6377,9 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "ApiKey"
+          ],
           "description": "Export your transcript in SRT or VTT format, to be plugged into a video player for subtitles and closed captions.",
           "method": "GET",
           "defaultEnvironment": "AssemblyAI API",
@@ -6574,6 +6592,9 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "ApiKey"
+          ],
           "description": "Get the transcript split by sentences. The API will attempt to semantically segment the transcript into sentences to create more reader-friendly transcripts.",
           "method": "GET",
           "defaultEnvironment": "AssemblyAI API",
@@ -6803,6 +6824,9 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "ApiKey"
+          ],
           "description": "Get the transcript split by paragraphs. The API will attempt to semantically segment your transcript into paragraphs to create more reader-friendly transcripts.",
           "method": "GET",
           "defaultEnvironment": "AssemblyAI API",
@@ -7032,6 +7056,9 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "ApiKey"
+          ],
           "description": "Search through the transcript for a specific set of keywords. You can search for individual words, numbers, or phrases containing up to five words or numbers.",
           "method": "GET",
           "defaultEnvironment": "AssemblyAI API",
@@ -7271,6 +7298,9 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "ApiKey"
+          ],
           "description": "Retrieves the redacted audio object containing the status and URL to the redacted audio.",
           "method": "GET",
           "defaultEnvironment": "AssemblyAI API",
@@ -7475,6 +7505,9 @@
       "endpoints": [
         {
           "auth": true,
+          "authV2": [
+            "ApiKey"
+          ],
           "description": "Create a temporary authentication token for real-time transcription",
           "method": "POST",
           "defaultEnvironment": "AssemblyAI API",
@@ -7698,6 +7731,9 @@
       "endpoints": [
         {
           "auth": true,
+          "authV2": [
+            "ApiKey"
+          ],
           "description": "Custom Summary allows you to distill a piece of audio into a few impactful sentences. You can give the model context to obtain more targeted results while outputting the results in a variety of formats described in human language.",
           "method": "POST",
           "defaultEnvironment": "AssemblyAI API",
@@ -7916,6 +7952,9 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "ApiKey"
+          ],
           "description": "Question & Answer allows you to ask free-form questions about a single transcript or a group of transcripts. The questions can be any whose answers you find useful, such as judging whether a caller is likely to become a customer or whether all items on a meeting's agenda were covered.",
           "method": "POST",
           "defaultEnvironment": "AssemblyAI API",
@@ -8154,6 +8193,9 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "ApiKey"
+          ],
           "description": "Use LeMUR to generate a list of Action Items from a transcript",
           "method": "POST",
           "defaultEnvironment": "AssemblyAI API",
@@ -8372,6 +8414,9 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "ApiKey"
+          ],
           "description": "Use LeMUR to ask anything with Custom Task",
           "method": "POST",
           "defaultEnvironment": "AssemblyAI API",
@@ -8592,6 +8637,9 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "ApiKey"
+          ],
           "description": "Delete the data for a previously submitted LeMUR request.\nThe LLM response data, as well as any context provided in the original request will be removed.\n",
           "method": "DELETE",
           "defaultEnvironment": "AssemblyAI API",
@@ -9047,6 +9095,13 @@
     "type": "header",
     "headerWireValue": "Authorization",
     "nameOverride": "apiKey"
+  },
+  "authSchemes": {
+    "ApiKey": {
+      "type": "header",
+      "headerWireValue": "Authorization",
+      "nameOverride": "apiKey"
+    }
   },
   "snippetsConfiguration": {},
   "globalHeaders": []

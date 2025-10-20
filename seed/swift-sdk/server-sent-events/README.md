@@ -20,7 +20,7 @@ With Swift Package Manager (SPM), add the following to the top-level `dependenci
 
 ```swift
 dependencies: [
-    .package(url: "<git-url>", from: "0.1.0"),
+    .package(url: "https://github.com/server-sent-events/fern", from: "0.0.1"),
 ]
 ```
 
@@ -39,7 +39,7 @@ import ServerSentEvents
 private func main() async throws {
     let client = ServerSentEventsClient()
 
-    try await client.completions.stream(request: .init(query: "query"))
+    _ = try await client.completions.stream(request: .init(query: "query"))
 }
 
 try await main()

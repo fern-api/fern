@@ -64,7 +64,7 @@ public record UnionWithOptionalTime
     public DateOnly? AsDate() =>
         IsDate
             ? (DateOnly?)Value!
-            : throw new Exception("UnionWithOptionalTime.Type is not 'date'");
+            : throw new System.Exception("UnionWithOptionalTime.Type is not 'date'");
 
     /// <summary>
     /// Returns the value as a <see cref="DateTime?"/> if <see cref="Type"/> is 'datetime', otherwise throws an exception.
@@ -73,7 +73,7 @@ public record UnionWithOptionalTime
     public DateTime? AsDatetime() =>
         IsDatetime
             ? (DateTime?)Value!
-            : throw new Exception("UnionWithOptionalTime.Type is not 'datetime'");
+            : throw new System.Exception("UnionWithOptionalTime.Type is not 'datetime'");
 
     public T Match<T>(
         Func<DateOnly?, T> onDate,
@@ -224,7 +224,7 @@ public record UnionWithOptionalTime
 
         internal DateOnly? Value { get; set; }
 
-        public override string ToString() => Value?.ToString();
+        public override string ToString() => Value?.ToString() ?? "null";
 
         public static implicit operator UnionWithOptionalTime.Date(DateOnly? value) => new(value);
     }
@@ -242,7 +242,7 @@ public record UnionWithOptionalTime
 
         internal DateTime? Value { get; set; }
 
-        public override string ToString() => Value?.ToString();
+        public override string ToString() => Value?.ToString() ?? "null";
 
         public static implicit operator UnionWithOptionalTime.Datetime(DateTime? value) =>
             new(value);

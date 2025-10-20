@@ -7916,6 +7916,9 @@
       "endpoints": [
         {
           "auth": true,
+          "authV2": [
+            "auth-token"
+          ],
           "description": "Gets the download URL for the artifact.",
           "method": "GET",
           "defaultEnvironment": "DevRev API endpoint.",
@@ -8103,6 +8106,9 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "auth-token"
+          ],
           "description": "Creates an artifact and generates an upload URL for its data.\n",
           "method": "POST",
           "defaultEnvironment": "DevRev API endpoint.",
@@ -8325,6 +8331,9 @@
       "endpoints": [
         {
           "auth": true,
+          "authV2": [
+            "auth-token"
+          ],
           "description": "Creates a JWT corresponding to the requested token type for the\nauthenticated user.\n",
           "method": "POST",
           "defaultEnvironment": "DevRev API endpoint.",
@@ -8528,6 +8537,9 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "auth-token"
+          ],
           "description": "Revokes the token that matches the given token ID issued under the\ngiven Dev organization.\n",
           "method": "POST",
           "defaultEnvironment": "DevRev API endpoint.",
@@ -8730,6 +8742,9 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "auth-token"
+          ],
           "description": "Gets the token metadata corresponding to the given token ID under the\ngiven Dev organization.\n",
           "method": "GET",
           "defaultEnvironment": "DevRev API endpoint.",
@@ -8993,6 +9008,9 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "auth-token"
+          ],
           "description": "Gets the token metadata for all the tokens corresponding to the given\ntoken type issued for a given subject.\n",
           "method": "GET",
           "defaultEnvironment": "DevRev API endpoint.",
@@ -9285,6 +9303,9 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "auth-token"
+          ],
           "description": "Revokes all the tokens that matches the given token type created by the\nauthenticated user.\n",
           "method": "POST",
           "defaultEnvironment": "DevRev API endpoint.",
@@ -9487,6 +9508,9 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "auth-token"
+          ],
           "description": "Updates token metadata of a token issued under a given Dev\norganization.\n",
           "method": "POST",
           "defaultEnvironment": "DevRev API endpoint.",
@@ -9788,6 +9812,9 @@
       "endpoints": [
         {
           "auth": true,
+          "authV2": [
+            "auth-token"
+          ],
           "description": "Creates a new enterprise authentication connection for a Dev\norganization. This authentication connection will not be enabled by\ndefault for the organization and the user will need to explicitly\nenable this. Keep in mind that at a time, only one authentication\nconnection can be enabled for a Dev organization. At present, only 5\nenterprise connections can be created by an organization.\n",
           "method": "POST",
           "defaultEnvironment": "DevRev API endpoint.",
@@ -9981,6 +10008,9 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "auth-token"
+          ],
           "description": "Deletes an authentication connection. Only enterprise connections which\nare explicitly set up for a Dev organization can be deleted. Default\nconnections can not be deleted using this method.\n",
           "method": "POST",
           "defaultEnvironment": "DevRev API endpoint.",
@@ -10187,6 +10217,9 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "auth-token"
+          ],
           "description": "Retrieves the details for an authentication connection.",
           "method": "GET",
           "defaultEnvironment": "DevRev API endpoint.",
@@ -10372,6 +10405,9 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "auth-token"
+          ],
           "description": "Lists all the authentication connections available for a Dev\norganization. This list will include both social and enterprise\nconnections which are either available by default or are explicitly\ncreated by the user.\n",
           "method": "GET",
           "defaultEnvironment": "DevRev API endpoint.",
@@ -10535,6 +10571,9 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "auth-token"
+          ],
           "description": "Enable or disable an authentication connection for a Dev organization.\nCurrently, only 1 authentication connection can be enabled at a time.\nWhen a new authentication connection is enabled, the connection which\nis currently enabled for the Dev organization is automatically\ndisabled.\n",
           "method": "POST",
           "defaultEnvironment": "DevRev API endpoint.",
@@ -10741,6 +10780,9 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "auth-token"
+          ],
           "description": "Updates an authentication connection.",
           "method": "POST",
           "defaultEnvironment": "DevRev API endpoint.",
@@ -10958,6 +11000,9 @@
       "endpoints": [
         {
           "auth": true,
+          "authV2": [
+            "auth-token"
+          ],
           "description": "Lists users within your organization.",
           "method": "GET",
           "defaultEnvironment": "DevRev API endpoint.",
@@ -11295,6 +11340,9 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "auth-token"
+          ],
           "description": "Gets the authenticated user's information.",
           "method": "GET",
           "defaultEnvironment": "DevRev API endpoint.",
@@ -11551,6 +11599,9 @@
       "endpoints": [
         {
           "auth": true,
+          "authV2": [
+            "auth-token"
+          ],
           "description": "Creates new [part](https://devrev.ai/docs/product/parts).",
           "method": "POST",
           "defaultEnvironment": "DevRev API endpoint.",
@@ -11866,6 +11917,9 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "auth-token"
+          ],
           "description": "Deletes a [part](https://devrev.ai/docs/product/parts).",
           "method": "POST",
           "defaultEnvironment": "DevRev API endpoint.",
@@ -12072,6 +12126,9 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "auth-token"
+          ],
           "description": "Gets a [part's](https://devrev.ai/docs/product/parts) information.\n",
           "method": "GET",
           "defaultEnvironment": "DevRev API endpoint.",
@@ -12379,6 +12436,9 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "auth-token"
+          ],
           "description": "Lists a collection of [parts](https://devrev.ai/docs/product/parts).\n",
           "method": "GET",
           "defaultEnvironment": "DevRev API endpoint.",
@@ -12768,6 +12828,9 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "auth-token"
+          ],
           "description": "Updates a [part's](https://devrev.ai/docs/product/parts) information.\n",
           "method": "POST",
           "defaultEnvironment": "DevRev API endpoint.",
@@ -13107,6 +13170,9 @@
       "endpoints": [
         {
           "auth": true,
+          "authV2": [
+            "auth-token"
+          ],
           "description": "Creates a Rev organization in the authenticated user's Dev\norganization.\n",
           "method": "POST",
           "defaultEnvironment": "DevRev API endpoint.",
@@ -13370,6 +13436,9 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "auth-token"
+          ],
           "description": "Deletes the Rev organization.",
           "method": "POST",
           "defaultEnvironment": "DevRev API endpoint.",
@@ -13576,6 +13645,9 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "auth-token"
+          ],
           "description": "Retrieves the Rev organization's information.",
           "method": "GET",
           "defaultEnvironment": "DevRev API endpoint.",
@@ -13827,6 +13899,9 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "auth-token"
+          ],
           "description": "Gets the list of Rev organizations' information belonging to the\nauthenticated user's Dev Organization which the user is also authorized\nto access.\n",
           "method": "GET",
           "defaultEnvironment": "DevRev API endpoint.",
@@ -14211,6 +14286,9 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "auth-token"
+          ],
           "description": "Updates the Rev organization's information.",
           "method": "POST",
           "defaultEnvironment": "DevRev API endpoint.",
@@ -14498,6 +14576,9 @@
       "endpoints": [
         {
           "auth": true,
+          "authV2": [
+            "auth-token"
+          ],
           "description": "Creates a new tag, which is used to create associations between objects\nand a logical concept denoted by the tag's name.\n",
           "method": "POST",
           "defaultEnvironment": "DevRev API endpoint.",
@@ -14763,6 +14844,9 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "auth-token"
+          ],
           "description": "Deletes a tag.",
           "method": "POST",
           "defaultEnvironment": "DevRev API endpoint.",
@@ -14969,6 +15053,9 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "auth-token"
+          ],
           "description": "Gets a tag's information.",
           "method": "GET",
           "defaultEnvironment": "DevRev API endpoint.",
@@ -15222,6 +15309,9 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "auth-token"
+          ],
           "description": "Lists the available tags.",
           "method": "GET",
           "defaultEnvironment": "DevRev API endpoint.",
@@ -15495,6 +15585,9 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "auth-token"
+          ],
           "description": "Updates a tag's information.",
           "method": "POST",
           "defaultEnvironment": "DevRev API endpoint.",
@@ -15784,6 +15877,9 @@
       "endpoints": [
         {
           "auth": true,
+          "authV2": [
+            "auth-token"
+          ],
           "description": "Creates a new entry on an object's timeline.",
           "method": "POST",
           "defaultEnvironment": "DevRev API endpoint.",
@@ -16053,6 +16149,9 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "auth-token"
+          ],
           "description": "Gets an entry on an object's timeline.",
           "method": "GET",
           "defaultEnvironment": "DevRev API endpoint.",
@@ -16314,6 +16413,9 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "auth-token"
+          ],
           "description": "Lists the timeline entries for an object.",
           "method": "GET",
           "defaultEnvironment": "DevRev API endpoint.",
@@ -16620,6 +16722,9 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "auth-token"
+          ],
           "description": "Updates an entry on an object's timeline.",
           "method": "POST",
           "defaultEnvironment": "DevRev API endpoint.",
@@ -16900,6 +17005,9 @@
       "endpoints": [
         {
           "auth": true,
+          "authV2": [
+            "auth-token"
+          ],
           "description": "Creates a new webhook target.",
           "method": "POST",
           "defaultEnvironment": "DevRev API endpoint.",
@@ -17167,6 +17275,9 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "auth-token"
+          ],
           "description": "Deletes the requested webhook.",
           "method": "POST",
           "defaultEnvironment": "DevRev API endpoint.",
@@ -17373,6 +17484,9 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "auth-token"
+          ],
           "description": "Gets the requested webhook's information.",
           "method": "GET",
           "defaultEnvironment": "DevRev API endpoint.",
@@ -17628,6 +17742,9 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "auth-token"
+          ],
           "description": "Lists the webhooks.",
           "method": "GET",
           "defaultEnvironment": "DevRev API endpoint.",
@@ -17861,6 +17978,9 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "auth-token"
+          ],
           "description": "Updates the requested webhook.",
           "method": "POST",
           "defaultEnvironment": "DevRev API endpoint.",
@@ -18152,6 +18272,9 @@
       "endpoints": [
         {
           "auth": true,
+          "authV2": [
+            "auth-token"
+          ],
           "description": "Creates new work ([issue](https://devrev.ai/docs/product/build),\n[ticket](https://devrev.ai/docs/product/support)) item.\n",
           "method": "POST",
           "defaultEnvironment": "DevRev API endpoint.",
@@ -18515,6 +18638,9 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "auth-token"
+          ],
           "description": "Deletes a work item.",
           "method": "POST",
           "defaultEnvironment": "DevRev API endpoint.",
@@ -18721,6 +18847,9 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "auth-token"
+          ],
           "description": "Exports a collection of work items.",
           "method": "GET",
           "defaultEnvironment": "DevRev API endpoint.",
@@ -19206,6 +19335,9 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "auth-token"
+          ],
           "description": "Gets a work item's information.",
           "method": "GET",
           "defaultEnvironment": "DevRev API endpoint.",
@@ -19561,6 +19693,9 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "auth-token"
+          ],
           "description": "Lists a collection of work items.",
           "method": "GET",
           "defaultEnvironment": "DevRev API endpoint.",
@@ -20074,6 +20209,9 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "auth-token"
+          ],
           "description": "Updates a work item's information.",
           "method": "POST",
           "defaultEnvironment": "DevRev API endpoint.",
@@ -20696,7 +20834,16 @@
   "auth": {
     "type": "header",
     "headerWireValue": "Authorization",
-    "nameOverride": "apiKey"
+    "nameOverride": "apiKey",
+    "description": "All the DevRev APIs require a token to authenticate the user. Provide `Authorization: <token>` as a header to every API request.\n [How do I find my token?](https://devrev.ai/docs/apis/auth)"
+  },
+  "authSchemes": {
+    "auth-token": {
+      "type": "header",
+      "headerWireValue": "Authorization",
+      "nameOverride": "apiKey",
+      "description": "All the DevRev APIs require a token to authenticate the user. Provide `Authorization: <token>` as a header to every API request.\n [How do I find my token?](https://devrev.ai/docs/apis/auth)"
+    }
   },
   "snippetsConfiguration": {},
   "globalHeaders": []

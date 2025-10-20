@@ -1,4 +1,3 @@
-use crate::api::*;
 use crate::{ApiError, ClientConfig, HttpClient, RequestOptions};
 use reqwest::Method;
 
@@ -22,7 +21,7 @@ impl ServiceClient {
         self.http_client
             .execute_request(
                 Method::GET,
-                &format!("/{}{}", id, nested_id),
+                &format!("/{}//{}", id, nested_id),
                 None,
                 None,
                 options,

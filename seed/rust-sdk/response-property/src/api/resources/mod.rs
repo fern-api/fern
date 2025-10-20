@@ -15,4 +15,4 @@ impl ResponsePropertyClient {
     }
 }
 
-pub use service::*;
+pub use service::ServiceClient;

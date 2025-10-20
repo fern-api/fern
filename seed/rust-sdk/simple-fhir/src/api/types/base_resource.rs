@@ -1,8 +1,6 @@
-use crate::memo::Memo;
-use crate::resource_list::ResourceList;
-use serde::{Deserialize, Serialize};
+pub use crate::prelude::*;
 
-#[derive(Debug, Clone, Serialize, Deserialize, PartialEq, Eq, Hash)]
+#[derive(Debug, Clone, Serialize, Deserialize, PartialEq)]
 pub struct BaseResource {
     pub id: String,
     pub related_resources: Vec<ResourceList>,

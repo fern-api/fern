@@ -7,7 +7,7 @@ import {
     PROJECT_CONFIG_FILENAME,
     ROOT_API_FILENAME
 } from "@fern-api/configuration";
-import { createFiddleService, getFiddleOrigin } from "@fern-api/core";
+import { createFiddleService, getFiddleOrigin, getIrVersionForGenerator } from "@fern-api/core";
 import { AbsoluteFilePath, dirname, join, RelativeFilePath, stringifyLargeObject } from "@fern-api/fs-utils";
 import {
     migrateIntermediateRepresentationForGenerator,
@@ -245,7 +245,10 @@ async function createJob({
                 );
             },
             insufficientPermissions: () => {
-                return context.failAndThrow("Insufficient permissions.");
+                return context.failAndThrow(
+                    "You do not have permission to run this generator. Please run 'fern login' to ensure you are logged in with the correct account.\n\n" +
+                        "If you believe this is an error, please contact support@buildwithfern.com"
+                );
             },
             orgNotConfiguredForWhitelabel: () => {
                 return context.failAndThrow(
@@ -253,7 +256,10 @@ async function createJob({
                 );
             },
             _other: (content) => {
-                return context.failAndThrow("Failed to create job", content);
+                context.logger.debug(`Failed to create job: ${JSON.stringify(content)}`);
+                return context.failAndThrow(
+                    "Failed to create job. Please try again or contact support@buildwithfern.com for assistance."
+                );
             }
         });
     }
@@ -311,8 +317,12 @@ async function startJob({
     context: TaskContext;
     irVersionOverride: string | undefined;
 }): Promise<void> {
+    const irVersionFromFdr = await getIrVersionForGenerator(generatorInvocation).then((version) =>
+        version == null ? undefined : "v" + version.toString()
+    );
+    const resolvedIrVersionOverride = irVersionOverride ?? irVersionFromFdr;
     const migratedIntermediateRepresentation =
-        irVersionOverride == null
+        resolvedIrVersionOverride == null
             ? await migrateIntermediateRepresentationForGenerator({
                   intermediateRepresentation,
                   context,
@@ -324,7 +334,7 @@ async function startJob({
             : await migrateIntermediateRepresentationToVersionForGenerator({
                   intermediateRepresentation,
                   context,
-                  irVersion: irVersionOverride,
+                  irVersion: resolvedIrVersionOverride,
                   targetGenerator: {
                       name: generatorInvocation.name,
                       version: generatorInvocation.version

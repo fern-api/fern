@@ -1,5 +1,5 @@
 # Reference
-<details><summary><code>client.GetFoo() -> Seed::Types::Foo</code></summary>
+<details><summary><code>client.get_foo() -> Seed::Types::Foo</code></summary>
 <dl>
 <dd>
 
@@ -12,10 +12,10 @@
 <dd>
 
 ```ruby
-client.get_foo({
-  requiredBaz:'required_baz',
-  requiredNullableBaz:'required_nullable_baz'
-});
+client.get_foo(
+  requiredBaz: 'required_baz',
+  requiredNullableBaz: 'required_nullable_baz'
+);
 ```
 </dd>
 </dl>
@@ -30,7 +30,7 @@ client.get_foo({
 <dl>
 <dd>
 
-**optionalBaz:** `String` — An optional baz
+**optional_baz:** `String` — An optional baz
     
 </dd>
 </dl>
@@ -38,7 +38,7 @@ client.get_foo({
 <dl>
 <dd>
 
-**optionalNullableBaz:** `String` — An optional baz
+**optional_nullable_baz:** `String` — An optional baz
     
 </dd>
 </dl>
@@ -46,7 +46,7 @@ client.get_foo({
 <dl>
 <dd>
 
-**requiredBaz:** `String` — A required baz
+**required_baz:** `String` — A required baz
     
 </dd>
 </dl>
@@ -54,7 +54,7 @@ client.get_foo({
 <dl>
 <dd>
 
-**requiredNullableBaz:** `String` — A required baz
+**required_nullable_baz:** `String` — A required baz
     
 </dd>
 </dl>

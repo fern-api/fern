@@ -3,7 +3,7 @@
     "requirement": "ALL",
     "schemes": [
       {
-        "key": "header",
+        "key": "APIKeyHeader",
         "name": {
           "name": {
             "originalName": "apiKey",

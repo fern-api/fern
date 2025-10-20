@@ -5526,7 +5526,10 @@
                 "docs": "The optional odata query.",
                 "type": "optional<nullable<string>>",
               },
-              "q": "optional<unknown>",
+              "q": {
+                "docs": "The optional json query.",
+                "type": "optional<nullable<unknown>>",
+              },
               "references": {
                 "docs": "The ID of the reference content item.",
                 "type": "optional<nullable<string>>",
@@ -8112,7 +8115,10 @@
                 "docs": "The parent id (for assets).",
                 "type": "optional<nullable<string>>",
               },
-              "q": "optional<unknown>",
+              "q": {
+                "docs": "The optional json query.",
+                "type": "optional<nullable<unknown>>",
+              },
             },
             "source": {
               "openapi": "../openapi.json",
@@ -8122,7 +8128,7 @@
             "docs": undefined,
             "inline": undefined,
             "properties": {
-              "filter": "optional<unknown>",
+              "filter": "optional<nullable<unknown>>",
               "fullText": "optional<nullable<string>>",
               "random": "long",
               "skip": "long",
@@ -9081,7 +9087,10 @@
                 "docs": "The data for the action.",
                 "type": "optional<nullable<string>>",
               },
-              "enrichedEvent": "optional<unknown>",
+              "enrichedEvent": {
+                "docs": "The enriched event.",
+                "type": "optional<nullable<unknown>>",
+              },
               "error": {
                 "docs": "The name of the event.",
                 "type": "optional<nullable<string>>",
@@ -13932,7 +13941,9 @@ types:
       oData:
         type: optional<nullable<string>>
         docs: The optional odata query.
-      q: optional<unknown>
+      q:
+        type: optional<nullable<unknown>>
+        docs: The optional json query.
     source:
       openapi: ../openapi.json
   BulkResultDto:
@@ -13997,7 +14008,7 @@ types:
       openapi: ../openapi.json
   QueryJsonDto:
     properties:
-      filter: optional<unknown>
+      filter: optional<nullable<unknown>>
       fullText: optional<nullable<string>>
       skip: long
       take: long
@@ -15270,7 +15281,9 @@ types:
         validation:
           minLength: 1
       event: unknown
-      enrichedEvent: optional<unknown>
+      enrichedEvent:
+        type: optional<nullable<unknown>>
+        docs: The enriched event.
       actionName:
         type: optional<nullable<string>>
         docs: The data for the action.
@@ -15559,7 +15572,9 @@ types:
       oData:
         type: optional<nullable<string>>
         docs: The optional odata query.
-      q: optional<unknown>
+      q:
+        type: optional<nullable<unknown>>
+        docs: The optional json query.
       parentId:
         type: optional<nullable<string>>
         docs: The parent id (for assets).

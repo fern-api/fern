@@ -1,6 +1,4 @@
-use crate::ast_cat::Cat;
-use crate::ast_dog::Dog;
-use serde::{Deserialize, Serialize};
+pub use crate::prelude::*;
 
 #[derive(Debug, Clone, Serialize, Deserialize, PartialEq)]
 #[serde(untagged)]

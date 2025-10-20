@@ -1,8 +1,6 @@
-use chrono::{DateTime, Utc};
-use std::collections::HashMap;
-use serde::{Deserialize, Serialize};
+pub use crate::prelude::*;
 
-#[derive(Debug, Clone, Serialize, Deserialize)]
+#[derive(Debug, Clone, Serialize, Deserialize, PartialEq)]
 pub struct Resource {
     pub id: String,
     pub name: String,

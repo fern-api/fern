@@ -91,7 +91,7 @@
             "generatedName": "userId",
             "key": "id",
             "schema": {
-              "generatedName": "userId",
+              "generatedName": "UserId",
               "value": {
                 "schema": {
                   "format": "uuid",
@@ -101,9 +101,7 @@
                 "groupName": [],
                 "type": "primitive"
               },
-              "groupName": [
-                "user"
-              ],
+              "groupName": [],
               "type": "optional"
             },
             "audiences": []

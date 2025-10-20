@@ -1805,6 +1805,7 @@
       "subpackage_testChannel"
     ]
   },
+  "authSchemes": {},
   "snippetsConfiguration": {},
   "globalHeaders": []
 }

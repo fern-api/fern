@@ -159,7 +159,7 @@
               "generatedName": "postConsumerTransactionResponseMessage",
               "key": "message",
               "schema": {
-                "generatedName": "postConsumerTransactionResponseMessage",
+                "generatedName": "PostConsumerTransactionResponseMessage",
                 "value": {
                   "schema": {
                     "type": "string"
@@ -2509,7 +2509,7 @@
               "generatedName": "postConsumerUserResponseMessage",
               "key": "message",
               "schema": {
-                "generatedName": "postConsumerUserResponseMessage",
+                "generatedName": "PostConsumerUserResponseMessage",
                 "value": {
                   "schema": {
                     "type": "string"
@@ -3770,7 +3770,7 @@
               "generatedName": "postBusinessUserResponseMessage",
               "key": "message",
               "schema": {
-                "generatedName": "postBusinessUserResponseMessage",
+                "generatedName": "PostBusinessUserResponseMessage",
                 "value": {
                   "schema": {
                     "type": "string"
@@ -7995,8 +7995,8 @@
             "generatedName": "addressState",
             "key": "state",
             "schema": {
-              "generatedName": "addressState",
-              "title": "Address",
+              "generatedName": "AddressState",
+              "description": "State of the user's residence address",
               "value": {
                 "description": "State of the user's residence address",
                 "schema": {
@@ -8033,8 +8033,8 @@
             "generatedName": "addressTags",
             "key": "tags",
             "schema": {
-              "generatedName": "addressTags",
-              "title": "Address",
+              "generatedName": "AddressTags",
+              "description": "Additional information that can be added via tags",
               "value": {
                 "description": "Additional information that can be added via tags",
                 "value": {
@@ -8092,8 +8092,7 @@
             "generatedName": "userBaseUserDetails",
             "key": "userDetails",
             "schema": {
-              "generatedName": "userBaseUserDetails",
-              "title": "UserBase",
+              "generatedName": "UserBaseUserDetails",
               "value": {
                 "generatedName": "UserBaseUserDetails",
                 "schema": "UserDetails",
@@ -8103,7 +8102,6 @@
                 },
                 "type": "reference"
               },
-              "groupName": [],
               "type": "optional"
             },
             "audiences": [],
@@ -8148,8 +8146,7 @@
             "generatedName": "userOptionalUserStateDetails",
             "key": "userStateDetails",
             "schema": {
-              "generatedName": "userOptionalUserStateDetails",
-              "title": "UserOptional",
+              "generatedName": "UserOptionalUserStateDetails",
               "value": {
                 "generatedName": "UserOptionalUserStateDetails",
                 "schema": "UserStateDetails",
@@ -8159,7 +8156,6 @@
                 },
                 "type": "reference"
               },
-              "groupName": [],
               "type": "optional"
             },
             "audiences": [],
@@ -8171,8 +8167,7 @@
             "generatedName": "userOptionalKycStatusDetails",
             "key": "kycStatusDetails",
             "schema": {
-              "generatedName": "userOptionalKycStatusDetails",
-              "title": "UserOptional",
+              "generatedName": "UserOptionalKycStatusDetails",
               "value": {
                 "generatedName": "UserOptionalKycStatusDetails",
                 "schema": "KYCStatusDetails",
@@ -8182,7 +8177,6 @@
                 },
                 "type": "reference"
               },
-              "groupName": [],
               "type": "optional"
             },
             "audiences": [],
@@ -8194,8 +8188,8 @@
             "generatedName": "userOptionalLegalDocuments",
             "key": "legalDocuments",
             "schema": {
-              "generatedName": "userOptionalLegalDocuments",
-              "title": "UserOptional",
+              "generatedName": "UserOptionalLegalDocuments",
+              "description": "User's legal identity documents - See Document Model for details",
               "value": {
                 "description": "User's legal identity documents - See Document Model for details",
                 "value": {
@@ -8221,8 +8215,7 @@
             "generatedName": "userOptionalContactDetails",
             "key": "contactDetails",
             "schema": {
-              "generatedName": "userOptionalContactDetails",
-              "title": "UserOptional",
+              "generatedName": "UserOptionalContactDetails",
               "value": {
                 "generatedName": "UserOptionalContactDetails",
                 "schema": "ContactDetails",
@@ -8232,7 +8225,6 @@
                 },
                 "type": "reference"
               },
-              "groupName": [],
               "type": "optional"
             },
             "audiences": [],
@@ -8244,8 +8236,7 @@
             "generatedName": "userOptionalTransactionLimits",
             "key": "transactionLimits",
             "schema": {
-              "generatedName": "userOptionalTransactionLimits",
-              "title": "UserOptional",
+              "generatedName": "UserOptionalTransactionLimits",
               "value": {
                 "generatedName": "UserOptionalTransactionLimits",
                 "schema": "TransactionLimits",
@@ -8255,7 +8246,6 @@
                 },
                 "type": "reference"
               },
-              "groupName": [],
               "type": "optional"
             },
             "audiences": [],
@@ -8267,8 +8257,7 @@
             "generatedName": "userOptionalRiskLevel",
             "key": "riskLevel",
             "schema": {
-              "generatedName": "userOptionalRiskLevel",
-              "title": "UserOptional",
+              "generatedName": "UserOptionalRiskLevel",
               "value": {
                 "generatedName": "UserOptionalRiskLevel",
                 "schema": "RiskLevel",
@@ -8278,7 +8267,6 @@
                 },
                 "type": "reference"
               },
-              "groupName": [],
               "type": "optional"
             },
             "audiences": [],
@@ -8290,8 +8278,7 @@
             "generatedName": "userOptionalAcquisitionChannel",
             "key": "acquisitionChannel",
             "schema": {
-              "generatedName": "userOptionalAcquisitionChannel",
-              "title": "UserOptional",
+              "generatedName": "UserOptionalAcquisitionChannel",
               "value": {
                 "generatedName": "UserOptionalAcquisitionChannel",
                 "schema": "AcquisitionChannel",
@@ -8301,7 +8288,6 @@
                 },
                 "type": "reference"
               },
-              "groupName": [],
               "type": "optional"
             },
             "audiences": [],
@@ -8313,8 +8299,7 @@
             "generatedName": "userOptionalReasonForAccountOpening",
             "key": "reasonForAccountOpening",
             "schema": {
-              "generatedName": "userOptionalReasonForAccountOpening",
-              "title": "UserOptional",
+              "generatedName": "UserOptionalReasonForAccountOpening",
               "value": {
                 "value": {
                   "schema": {
@@ -8338,8 +8323,7 @@
             "generatedName": "userOptionalUserSegment",
             "key": "userSegment",
             "schema": {
-              "generatedName": "userOptionalUserSegment",
-              "title": "UserOptional",
+              "generatedName": "UserOptionalUserSegment",
               "value": {
                 "generatedName": "UserOptionalUserSegment",
                 "values": [
@@ -8371,8 +8355,7 @@
             "generatedName": "userOptionalPepStatus",
             "key": "pepStatus",
             "schema": {
-              "generatedName": "userOptionalPepStatus",
-              "title": "UserOptional",
+              "generatedName": "UserOptionalPepStatus",
               "value": {
                 "value": {
                   "generatedName": "UserOptionalPepStatusItem",
@@ -8397,8 +8380,8 @@
             "generatedName": "userOptionalTags",
             "key": "tags",
             "schema": {
-              "generatedName": "userOptionalTags",
-              "title": "UserOptional",
+              "generatedName": "UserOptionalTags",
+              "description": "Additional information that can be added via tags",
               "value": {
                 "description": "Additional information that can be added via tags",
                 "value": {
@@ -8491,8 +8474,8 @@
             "generatedName": "personLegalDocuments",
             "key": "legalDocuments",
             "schema": {
-              "generatedName": "personLegalDocuments",
-              "title": "Person",
+              "generatedName": "PersonLegalDocuments",
+              "description": "User's legal identity documents - See Document Model for details",
               "value": {
                 "description": "User's legal identity documents - See Document Model for details",
                 "value": {
@@ -8518,8 +8501,7 @@
             "generatedName": "personContactDetails",
             "key": "contactDetails",
             "schema": {
-              "generatedName": "personContactDetails",
-              "title": "Person",
+              "generatedName": "PersonContactDetails",
               "value": {
                 "generatedName": "PersonContactDetails",
                 "schema": "ContactDetails",
@@ -8529,7 +8511,6 @@
                 },
                 "type": "reference"
               },
-              "groupName": [],
               "type": "optional"
             },
             "audiences": [],
@@ -8541,8 +8522,7 @@
             "generatedName": "personPepStatus",
             "key": "pepStatus",
             "schema": {
-              "generatedName": "personPepStatus",
-              "title": "Person",
+              "generatedName": "PersonPepStatus",
               "value": {
                 "value": {
                   "generatedName": "PersonPepStatusItem",
@@ -8567,8 +8547,8 @@
             "generatedName": "personTags",
             "key": "tags",
             "schema": {
-              "generatedName": "personTags",
-              "title": "Person",
+              "generatedName": "PersonTags",
+              "description": "Additional information that can be added via tags",
               "value": {
                 "description": "Additional information that can be added via tags",
                 "value": {
@@ -8642,8 +8622,8 @@
             "generatedName": "legalDocumentDocumentIssuedDate",
             "key": "documentIssuedDate",
             "schema": {
-              "generatedName": "legalDocumentDocumentIssuedDate",
-              "title": "LegalDocument",
+              "generatedName": "LegalDocumentDocumentIssuedDate",
+              "description": "User's identity document issuance date (UNIX timestamp in milliseconds)",
               "value": {
                 "description": "User's identity document issuance date (UNIX timestamp in milliseconds)",
                 "schema": {
@@ -8663,8 +8643,8 @@
             "generatedName": "legalDocumentDocumentExpirationDate",
             "key": "documentExpirationDate",
             "schema": {
-              "generatedName": "legalDocumentDocumentExpirationDate",
-              "title": "LegalDocument",
+              "generatedName": "LegalDocumentDocumentExpirationDate",
+              "description": "User's identity document expiration date (UNIX timestamp in milliseconds)",
               "value": {
                 "description": "User's identity document expiration date (UNIX timestamp in milliseconds)",
                 "schema": {
@@ -8701,8 +8681,8 @@
             "generatedName": "legalDocumentTags",
             "key": "tags",
             "schema": {
-              "generatedName": "legalDocumentTags",
-              "title": "LegalDocument",
+              "generatedName": "LegalDocumentTags",
+              "description": "Additional information that can be added via tags",
               "value": {
                 "description": "Additional information that can be added via tags",
                 "value": {
@@ -8728,8 +8708,7 @@
             "generatedName": "legalDocumentNameOnDocument",
             "key": "nameOnDocument",
             "schema": {
-              "generatedName": "legalDocumentNameOnDocument",
-              "title": "LegalDocument",
+              "generatedName": "LegalDocumentNameOnDocument",
               "value": {
                 "generatedName": "LegalDocumentNameOnDocument",
                 "schema": "ConsumerName",
@@ -8739,7 +8718,6 @@
                 },
                 "type": "reference"
               },
-              "groupName": [],
               "type": "optional"
             },
             "audiences": [],
@@ -8847,8 +8825,7 @@
             "generatedName": "transactionUpdatableTransactionState",
             "key": "transactionState",
             "schema": {
-              "generatedName": "transactionUpdatableTransactionState",
-              "title": "TransactionUpdatable",
+              "generatedName": "TransactionUpdatableTransactionState",
               "value": {
                 "generatedName": "TransactionUpdatableTransactionState",
                 "schema": "TransactionState",
@@ -8858,7 +8835,6 @@
                 },
                 "type": "reference"
               },
-              "groupName": [],
               "type": "optional"
             },
             "audiences": [],
@@ -8870,8 +8846,7 @@
             "generatedName": "transactionUpdatableOriginAmountDetails",
             "key": "originAmountDetails",
             "schema": {
-              "generatedName": "transactionUpdatableOriginAmountDetails",
-              "title": "TransactionUpdatable",
+              "generatedName": "TransactionUpdatableOriginAmountDetails",
               "value": {
                 "generatedName": "TransactionUpdatableOriginAmountDetails",
                 "schema": "TransactionAmountDetails",
@@ -8881,7 +8856,6 @@
                 },
                 "type": "reference"
               },
-              "groupName": [],
               "type": "optional"
             },
             "audiences": [],
@@ -8893,8 +8867,7 @@
             "generatedName": "transactionUpdatableDestinationAmountDetails",
             "key": "destinationAmountDetails",
             "schema": {
-              "generatedName": "transactionUpdatableDestinationAmountDetails",
-              "title": "TransactionUpdatable",
+              "generatedName": "TransactionUpdatableDestinationAmountDetails",
               "value": {
                 "generatedName": "TransactionUpdatableDestinationAmountDetails",
                 "schema": "TransactionAmountDetails",
@@ -8904,7 +8877,6 @@
                 },
                 "type": "reference"
               },
-              "groupName": [],
               "type": "optional"
             },
             "audiences": [],
@@ -8916,8 +8888,8 @@
             "generatedName": "transactionUpdatableOriginPaymentDetails",
             "key": "originPaymentDetails",
             "schema": {
-              "generatedName": "transactionUpdatableOriginPaymentDetails",
-              "title": "TransactionUpdatable",
+              "generatedName": "TransactionUpdatableOriginPaymentDetails",
+              "description": "Payment details of the origin. It can be a bank account number, wallet ID, card fingerprint etc.",
               "value": {
                 "value": {
                   "commonProperties": [],
@@ -9026,8 +8998,8 @@
             "generatedName": "transactionUpdatableDestinationPaymentDetails",
             "key": "destinationPaymentDetails",
             "schema": {
-              "generatedName": "transactionUpdatableDestinationPaymentDetails",
-              "title": "TransactionUpdatable",
+              "generatedName": "TransactionUpdatableDestinationPaymentDetails",
+              "description": "Payment details of the destination. It can be a bank account number, wallet ID, card fingerprint etc.",
               "value": {
                 "value": {
                   "commonProperties": [],
@@ -9136,8 +9108,8 @@
             "generatedName": "transactionUpdatableRelatedTransactionIds",
             "key": "relatedTransactionIds",
             "schema": {
-              "generatedName": "transactionUpdatableRelatedTransactionIds",
-              "title": "TransactionUpdatable",
+              "generatedName": "TransactionUpdatableRelatedTransactionIds",
+              "description": "IDs of transactions related to this transaction. Ex: refund, split bills",
               "value": {
                 "description": "IDs of transactions related to this transaction. Ex: refund, split bills",
                 "value": {
@@ -9162,8 +9134,8 @@
             "generatedName": "transactionUpdatableProductType",
             "key": "productType",
             "schema": {
-              "generatedName": "transactionUpdatableProductType",
-              "title": "TransactionUpdatable",
+              "generatedName": "TransactionUpdatableProductType",
+              "description": "Type of produce being used by the consumer (ex wallets, payments etc)",
               "value": {
                 "description": "Type of produce being used by the consumer (ex wallets, payments etc)",
                 "schema": {
@@ -9183,8 +9155,8 @@
             "generatedName": "transactionUpdatablePromotionCodeUsed",
             "key": "promotionCodeUsed",
             "schema": {
-              "generatedName": "transactionUpdatablePromotionCodeUsed",
-              "title": "TransactionUpdatable",
+              "generatedName": "TransactionUpdatablePromotionCodeUsed",
+              "description": "Whether a promotion code was used or not the transaction",
               "value": {
                 "description": "Whether a promotion code was used or not the transaction",
                 "schema": {
@@ -9204,8 +9176,8 @@
             "generatedName": "transactionUpdatableReference",
             "key": "reference",
             "schema": {
-              "generatedName": "transactionUpdatableReference",
-              "title": "TransactionUpdatable",
+              "generatedName": "TransactionUpdatableReference",
+              "description": "Reference field for the transaction indicating the purpose of the transaction etc.",
               "value": {
                 "description": "Reference field for the transaction indicating the purpose of the transaction etc.",
                 "schema": {
@@ -9226,8 +9198,7 @@
             "generatedName": "transactionUpdatableDeviceData",
             "key": "deviceData",
             "schema": {
-              "generatedName": "transactionUpdatableDeviceData",
-              "title": "TransactionUpdatable",
+              "generatedName": "TransactionUpdatableDeviceData",
               "value": {
                 "generatedName": "TransactionUpdatableDeviceData",
                 "schema": "DeviceData",
@@ -9237,7 +9208,6 @@
                 },
                 "type": "reference"
               },
-              "groupName": [],
               "type": "optional"
             },
             "audiences": [],
@@ -9249,8 +9219,8 @@
             "generatedName": "transactionUpdatableTags",
             "key": "tags",
             "schema": {
-              "generatedName": "transactionUpdatableTags",
-              "title": "TransactionUpdatable",
+              "generatedName": "TransactionUpdatableTags",
+              "description": "Additional information that can be added via tags",
               "value": {
                 "description": "Additional information that can be added via tags",
                 "value": {
@@ -9292,8 +9262,7 @@
             "generatedName": "transactionBaseType",
             "key": "type",
             "schema": {
-              "generatedName": "transactionBaseType",
-              "title": "TransactionBase",
+              "generatedName": "TransactionBaseType",
               "value": {
                 "generatedName": "TransactionBaseType",
                 "schema": "TransactionType",
@@ -9303,7 +9272,6 @@
                 },
                 "type": "reference"
               },
-              "groupName": [],
               "type": "optional"
             },
             "audiences": [],
@@ -9348,8 +9316,8 @@
             "generatedName": "transactionBaseOriginUserId",
             "key": "originUserId",
             "schema": {
-              "generatedName": "transactionBaseOriginUserId",
-              "title": "TransactionBase",
+              "generatedName": "TransactionBaseOriginUserId",
+              "description": "UserId for where the transaction originates from",
               "value": {
                 "description": "UserId for where the transaction originates from",
                 "schema": {
@@ -9369,8 +9337,8 @@
             "generatedName": "transactionBaseDestinationUserId",
             "key": "destinationUserId",
             "schema": {
-              "generatedName": "transactionBaseDestinationUserId",
-              "title": "TransactionBase",
+              "generatedName": "TransactionBaseDestinationUserId",
+              "description": "UserId for transaction's destination. In other words, where the value is being transferred to.",
               "value": {
                 "description": "UserId for transaction's destination. In other words, where the value is being transferred to.",
                 "schema": {
@@ -9472,8 +9440,8 @@
             "generatedName": "deviceDataBatteryLevel",
             "key": "batteryLevel",
             "schema": {
-              "generatedName": "deviceDataBatteryLevel",
-              "title": "DeviceData",
+              "generatedName": "DeviceDataBatteryLevel",
+              "description": "Battery level of the device used for a transaction or event at a given timestamp",
               "value": {
                 "description": "Battery level of the device used for a transaction or event at a given timestamp",
                 "schema": {
@@ -9493,8 +9461,8 @@
             "generatedName": "deviceDataDeviceLatitude",
             "key": "deviceLatitude",
             "schema": {
-              "generatedName": "deviceDataDeviceLatitude",
-              "title": "DeviceData",
+              "generatedName": "DeviceDataDeviceLatitude",
+              "description": "Device latitude at a give timestamp for an event or transaction",
               "value": {
                 "description": "Device latitude at a give timestamp for an event or transaction",
                 "schema": {
@@ -9514,8 +9482,8 @@
             "generatedName": "deviceDataDeviceLongitude",
             "key": "deviceLongitude",
             "schema": {
-              "generatedName": "deviceDataDeviceLongitude",
-              "title": "DeviceData",
+              "generatedName": "DeviceDataDeviceLongitude",
+              "description": "Device longitude at a give timestamp for an event or transaction",
               "value": {
                 "description": "Device longitude at a give timestamp for an event or transaction",
                 "schema": {
@@ -9535,8 +9503,8 @@
             "generatedName": "deviceDataIpAddress",
             "key": "ipAddress",
             "schema": {
-              "generatedName": "deviceDataIpAddress",
-              "title": "DeviceData",
+              "generatedName": "DeviceDataIpAddress",
+              "description": "IP address of the device at a given timestamp for an event or transaction",
               "value": {
                 "description": "IP address of the device at a given timestamp for an event or transaction",
                 "schema": {
@@ -9557,8 +9525,8 @@
             "generatedName": "deviceDataDeviceIdentifier",
             "key": "deviceIdentifier",
             "schema": {
-              "generatedName": "deviceDataDeviceIdentifier",
-              "title": "DeviceData",
+              "generatedName": "DeviceDataDeviceIdentifier",
+              "description": "Device identifier number",
               "value": {
                 "description": "Device identifier number",
                 "schema": {
@@ -9579,8 +9547,8 @@
             "generatedName": "deviceDataVpnUsed",
             "key": "vpnUsed",
             "schema": {
-              "generatedName": "deviceDataVpnUsed",
-              "title": "DeviceData",
+              "generatedName": "DeviceDataVpnUsed",
+              "description": "Whether VPN was used at a given timestamp for an event or transaction",
               "value": {
                 "description": "Whether VPN was used at a given timestamp for an event or transaction",
                 "schema": {
@@ -9600,8 +9568,8 @@
             "generatedName": "deviceDataOperatingSystem",
             "key": "operatingSystem",
             "schema": {
-              "generatedName": "deviceDataOperatingSystem",
-              "title": "DeviceData",
+              "generatedName": "DeviceDataOperatingSystem",
+              "description": "Operating system of the device at a given timestamp for an event or transaction",
               "value": {
                 "description": "Operating system of the device at a given timestamp for an event or transaction",
                 "schema": {
@@ -9622,8 +9590,8 @@
             "generatedName": "deviceDataDeviceMaker",
             "key": "deviceMaker",
             "schema": {
-              "generatedName": "deviceDataDeviceMaker",
-              "title": "DeviceData",
+              "generatedName": "DeviceDataDeviceMaker",
+              "description": "The maker of the device at a given timestamp for an event or transaction",
               "value": {
                 "description": "The maker of the device at a given timestamp for an event or transaction",
                 "schema": {
@@ -9644,8 +9612,8 @@
             "generatedName": "deviceDataDeviceModel",
             "key": "deviceModel",
             "schema": {
-              "generatedName": "deviceDataDeviceModel",
-              "title": "DeviceData",
+              "generatedName": "DeviceDataDeviceModel",
+              "description": "The model of the device at a given timestamp for an event or transaction",
               "value": {
                 "description": "The model of the device at a given timestamp for an event or transaction",
                 "schema": {
@@ -9666,8 +9634,8 @@
             "generatedName": "deviceDataDeviceYear",
             "key": "deviceYear",
             "schema": {
-              "generatedName": "deviceDataDeviceYear",
-              "title": "DeviceData",
+              "generatedName": "DeviceDataDeviceYear",
+              "description": "The year the device was manufactured at a given timestamp for an event or transaction",
               "value": {
                 "description": "The year the device was manufactured at a given timestamp for an event or transaction",
                 "schema": {
@@ -9688,8 +9656,8 @@
             "generatedName": "deviceDataAppVersion",
             "key": "appVersion",
             "schema": {
-              "generatedName": "deviceDataAppVersion",
-              "title": "DeviceData",
+              "generatedName": "DeviceDataAppVersion",
+              "description": "The version of the app your user is using on their device at a given timestamp for an event or transaction",
               "value": {
                 "description": "The version of the app your user is using on their device at a given timestamp for an event or transaction",
                 "schema": {
@@ -10010,8 +9978,7 @@
             "generatedName": "executedRulesResultRuleHitMeta",
             "key": "ruleHitMeta",
             "schema": {
-              "generatedName": "executedRulesResultRuleHitMeta",
-              "title": "ExecutedRulesResult",
+              "generatedName": "ExecutedRulesResultRuleHitMeta",
               "value": {
                 "generatedName": "ExecutedRulesResultRuleHitMeta",
                 "schema": "RuleHitMeta",
@@ -10021,7 +9988,6 @@
                 },
                 "type": "reference"
               },
-              "groupName": [],
               "type": "optional"
             },
             "audiences": [],
@@ -10033,8 +9999,7 @@
             "generatedName": "executedRulesResultLabels",
             "key": "labels",
             "schema": {
-              "generatedName": "executedRulesResultLabels",
-              "title": "ExecutedRulesResult",
+              "generatedName": "ExecutedRulesResultLabels",
               "value": {
                 "value": {
                   "generatedName": "ExecutedRulesResultLabelsItem",
@@ -10059,8 +10024,7 @@
             "generatedName": "executedRulesResultNature",
             "key": "nature",
             "schema": {
-              "generatedName": "executedRulesResultNature",
-              "title": "ExecutedRulesResult",
+              "generatedName": "ExecutedRulesResultNature",
               "value": {
                 "generatedName": "ExecutedRulesResultNature",
                 "schema": "RuleNature",
@@ -10070,7 +10034,6 @@
                 },
                 "type": "reference"
               },
-              "groupName": [],
               "type": "optional"
             },
             "audiences": [],
@@ -10177,8 +10140,7 @@
             "generatedName": "hitRulesDetailsRuleHitMeta",
             "key": "ruleHitMeta",
             "schema": {
-              "generatedName": "hitRulesDetailsRuleHitMeta",
-              "title": "HitRulesDetails",
+              "generatedName": "HitRulesDetailsRuleHitMeta",
               "value": {
                 "generatedName": "HitRulesDetailsRuleHitMeta",
                 "schema": "RuleHitMeta",
@@ -10188,7 +10150,6 @@
                 },
                 "type": "reference"
               },
-              "groupName": [],
               "type": "optional"
             },
             "audiences": [],
@@ -10200,8 +10161,7 @@
             "generatedName": "hitRulesDetailsLabels",
             "key": "labels",
             "schema": {
-              "generatedName": "hitRulesDetailsLabels",
-              "title": "HitRulesDetails",
+              "generatedName": "HitRulesDetailsLabels",
               "value": {
                 "value": {
                   "generatedName": "HitRulesDetailsLabelsItem",
@@ -10226,8 +10186,7 @@
             "generatedName": "hitRulesDetailsNature",
             "key": "nature",
             "schema": {
-              "generatedName": "hitRulesDetailsNature",
-              "title": "HitRulesDetails",
+              "generatedName": "HitRulesDetailsNature",
               "value": {
                 "generatedName": "HitRulesDetailsNature",
                 "schema": "RuleNature",
@@ -10237,7 +10196,6 @@
                 },
                 "type": "reference"
               },
-              "groupName": [],
               "type": "optional"
             },
             "audiences": [],
@@ -10423,8 +10381,8 @@
             "generatedName": "riskScoringResultCustomerRiskAssessment",
             "key": "customerRiskAssessment",
             "schema": {
-              "generatedName": "riskScoringResultCustomerRiskAssessment",
-              "title": "RiskScoringResult",
+              "generatedName": "RiskScoringResultCustomerRiskAssessment",
+              "description": "Quantified dynamic risk score",
               "value": {
                 "description": "Quantified dynamic risk score",
                 "schema": {
@@ -10476,8 +10434,8 @@
             "generatedName": "consumerNameMiddleName",
             "key": "middleName",
             "schema": {
-              "generatedName": "consumerNameMiddleName",
-              "title": "ConsumerName",
+              "generatedName": "ConsumerNameMiddleName",
+              "description": "Middle name of the user",
               "value": {
                 "description": "Middle name of the user",
                 "schema": {
@@ -10498,8 +10456,8 @@
             "generatedName": "consumerNameLastName",
             "key": "lastName",
             "schema": {
-              "generatedName": "consumerNameLastName",
-              "title": "ConsumerName",
+              "generatedName": "ConsumerNameLastName",
+              "description": "Last name of the user",
               "value": {
                 "description": "Last name of the user",
                 "schema": {
@@ -10568,8 +10526,7 @@
             "generatedName": "transactionAmountDetailsCountry",
             "key": "country",
             "schema": {
-              "generatedName": "transactionAmountDetailsCountry",
-              "title": "TransactionAmountDetails",
+              "generatedName": "TransactionAmountDetailsCountry",
               "value": {
                 "generatedName": "TransactionAmountDetailsCountry",
                 "schema": "CountryCode",
@@ -10579,7 +10536,6 @@
                 },
                 "type": "reference"
               },
-              "groupName": [],
               "type": "optional"
             },
             "audiences": [],
@@ -10672,8 +10628,7 @@
             "generatedName": "legalEntityCompanyFinancialDetails",
             "key": "companyFinancialDetails",
             "schema": {
-              "generatedName": "legalEntityCompanyFinancialDetails",
-              "title": "LegalEntity",
+              "generatedName": "LegalEntityCompanyFinancialDetails",
               "value": {
                 "generatedName": "LegalEntityCompanyFinancialDetails",
                 "schema": "CompanyFinancialDetails",
@@ -10683,7 +10638,6 @@
                 },
                 "type": "reference"
               },
-              "groupName": [],
               "type": "optional"
             },
             "audiences": [],
@@ -10695,8 +10649,7 @@
             "generatedName": "legalEntityCompanyRegistrationDetails",
             "key": "companyRegistrationDetails",
             "schema": {
-              "generatedName": "legalEntityCompanyRegistrationDetails",
-              "title": "LegalEntity",
+              "generatedName": "LegalEntityCompanyRegistrationDetails",
               "value": {
                 "generatedName": "LegalEntityCompanyRegistrationDetails",
                 "schema": "CompanyRegistrationDetails",
@@ -10706,7 +10659,6 @@
                 },
                 "type": "reference"
               },
-              "groupName": [],
               "type": "optional"
             },
             "audiences": [],
@@ -10718,8 +10670,8 @@
             "generatedName": "legalEntityReasonForAccountOpening",
             "key": "reasonForAccountOpening",
             "schema": {
-              "generatedName": "legalEntityReasonForAccountOpening",
-              "title": "LegalEntity",
+              "generatedName": "LegalEntityReasonForAccountOpening",
+              "description": "Reason for opening the account at financial institution",
               "value": {
                 "description": "Reason for opening the account at financial institution",
                 "value": {
@@ -10744,8 +10696,7 @@
             "generatedName": "legalEntityContactDetails",
             "key": "contactDetails",
             "schema": {
-              "generatedName": "legalEntityContactDetails",
-              "title": "LegalEntity",
+              "generatedName": "LegalEntityContactDetails",
               "value": {
                 "generatedName": "LegalEntityContactDetails",
                 "schema": "ContactDetails",
@@ -10755,7 +10706,6 @@
                 },
                 "type": "reference"
               },
-              "groupName": [],
               "type": "optional"
             },
             "audiences": [],
@@ -10783,8 +10733,8 @@
             "generatedName": "contactDetailsEmailIds",
             "key": "emailIds",
             "schema": {
-              "generatedName": "contactDetailsEmailIds",
-              "title": "ContactDetails",
+              "generatedName": "ContactDetailsEmailIds",
+              "description": "Email addresses of the contacts for a given business customer",
               "value": {
                 "description": "Email addresses of the contacts for a given business customer",
                 "value": {
@@ -10809,8 +10759,8 @@
             "generatedName": "contactDetailsContactNumbers",
             "key": "contactNumbers",
             "schema": {
-              "generatedName": "contactDetailsContactNumbers",
-              "title": "ContactDetails",
+              "generatedName": "ContactDetailsContactNumbers",
+              "description": "Phone numbers to contact a given business customer",
               "value": {
                 "description": "Phone numbers to contact a given business customer",
                 "value": {
@@ -10835,8 +10785,8 @@
             "generatedName": "contactDetailsFaxNumbers",
             "key": "faxNumbers",
             "schema": {
-              "generatedName": "contactDetailsFaxNumbers",
-              "title": "ContactDetails",
+              "generatedName": "ContactDetailsFaxNumbers",
+              "description": "Fax numbers to contact a business customer",
               "value": {
                 "description": "Fax numbers to contact a business customer",
                 "value": {
@@ -10861,8 +10811,8 @@
             "generatedName": "contactDetailsWebsites",
             "key": "websites",
             "schema": {
-              "generatedName": "contactDetailsWebsites",
-              "title": "ContactDetails",
+              "generatedName": "ContactDetailsWebsites",
+              "description": "Website of the company",
               "value": {
                 "description": "Website of the company",
                 "value": {
@@ -10887,8 +10837,8 @@
             "generatedName": "contactDetailsAddresses",
             "key": "addresses",
             "schema": {
-              "generatedName": "contactDetailsAddresses",
-              "title": "ContactDetails",
+              "generatedName": "ContactDetailsAddresses",
+              "description": "Address(es) of the company",
               "value": {
                 "description": "Address(es) of the company",
                 "value": {
@@ -10930,8 +10880,7 @@
             "generatedName": "companyFinancialDetailsExpectedTransactionAmountPerMonth",
             "key": "expectedTransactionAmountPerMonth",
             "schema": {
-              "generatedName": "companyFinancialDetailsExpectedTransactionAmountPerMonth",
-              "title": "CompanyFinancialDetails",
+              "generatedName": "CompanyFinancialDetailsExpectedTransactionAmountPerMonth",
               "value": {
                 "generatedName": "CompanyFinancialDetailsExpectedTransactionAmountPerMonth",
                 "schema": "Amount",
@@ -10941,7 +10890,6 @@
                 },
                 "type": "reference"
               },
-              "groupName": [],
               "type": "optional"
             },
             "audiences": [],
@@ -10953,8 +10901,7 @@
             "generatedName": "companyFinancialDetailsExpectedTurnoverPerMonth",
             "key": "expectedTurnoverPerMonth",
             "schema": {
-              "generatedName": "companyFinancialDetailsExpectedTurnoverPerMonth",
-              "title": "CompanyFinancialDetails",
+              "generatedName": "CompanyFinancialDetailsExpectedTurnoverPerMonth",
               "value": {
                 "generatedName": "CompanyFinancialDetailsExpectedTurnoverPerMonth",
                 "schema": "Amount",
@@ -10964,7 +10911,6 @@
                 },
                 "type": "reference"
               },
-              "groupName": [],
               "type": "optional"
             },
             "audiences": [],
@@ -10976,8 +10922,8 @@
             "generatedName": "companyFinancialDetailsTags",
             "key": "tags",
             "schema": {
-              "generatedName": "companyFinancialDetailsTags",
-              "title": "CompanyFinancialDetails",
+              "generatedName": "CompanyFinancialDetailsTags",
+              "description": "Additional information that can be added via tags",
               "value": {
                 "description": "Additional information that can be added via tags",
                 "value": {
@@ -11036,8 +10982,8 @@
             "generatedName": "userDetailsDateOfBirth",
             "key": "dateOfBirth",
             "schema": {
-              "generatedName": "userDetailsDateOfBirth",
-              "title": "UserDetails",
+              "generatedName": "UserDetailsDateOfBirth",
+              "description": "Date of birth of the user (YYYY-MM-DD)",
               "value": {
                 "description": "Date of birth of the user (YYYY-MM-DD)",
                 "schema": {
@@ -11058,8 +11004,7 @@
             "generatedName": "userDetailsCountryOfResidence",
             "key": "countryOfResidence",
             "schema": {
-              "generatedName": "userDetailsCountryOfResidence",
-              "title": "UserDetails",
+              "generatedName": "UserDetailsCountryOfResidence",
               "value": {
                 "generatedName": "UserDetailsCountryOfResidence",
                 "schema": "CountryCode",
@@ -11069,7 +11014,6 @@
                 },
                 "type": "reference"
               },
-              "groupName": [],
               "type": "optional"
             },
             "audiences": [],
@@ -11081,8 +11025,7 @@
             "generatedName": "userDetailsCountryOfNationality",
             "key": "countryOfNationality",
             "schema": {
-              "generatedName": "userDetailsCountryOfNationality",
-              "title": "UserDetails",
+              "generatedName": "UserDetailsCountryOfNationality",
               "value": {
                 "generatedName": "UserDetailsCountryOfNationality",
                 "schema": "CountryCode",
@@ -11092,7 +11035,6 @@
                 },
                 "type": "reference"
               },
-              "groupName": [],
               "type": "optional"
             },
             "audiences": [],
@@ -11104,8 +11046,8 @@
             "generatedName": "userDetailsGender",
             "key": "gender",
             "schema": {
-              "generatedName": "userDetailsGender",
-              "title": "UserDetails",
+              "generatedName": "UserDetailsGender",
+              "description": "Gender of the individual - Male, Female or Non-Binary",
               "value": {
                 "description": "Gender of the individual - Male, Female or Non-Binary",
                 "generatedName": "UserDetailsGender",
@@ -11197,8 +11139,8 @@
             "generatedName": "companyGeneralDetailsBusinessIndustry",
             "key": "businessIndustry",
             "schema": {
-              "generatedName": "companyGeneralDetailsBusinessIndustry",
-              "title": "CompanyGeneralDetails",
+              "generatedName": "CompanyGeneralDetailsBusinessIndustry",
+              "description": "The industry the business operates in for a business customer",
               "value": {
                 "description": "The industry the business operates in for a business customer",
                 "value": {
@@ -11223,8 +11165,8 @@
             "generatedName": "companyGeneralDetailsMainProductsServicesSold",
             "key": "mainProductsServicesSold",
             "schema": {
-              "generatedName": "companyGeneralDetailsMainProductsServicesSold",
-              "title": "CompanyGeneralDetails",
+              "generatedName": "CompanyGeneralDetailsMainProductsServicesSold",
+              "description": "The key products and services provided by the company",
               "value": {
                 "description": "The key products and services provided by the company",
                 "value": {
@@ -11249,8 +11191,8 @@
             "generatedName": "companyGeneralDetailsUserSegment",
             "key": "userSegment",
             "schema": {
-              "generatedName": "companyGeneralDetailsUserSegment",
-              "title": "CompanyGeneralDetails",
+              "generatedName": "CompanyGeneralDetailsUserSegment",
+              "description": "Segmentation of the business user",
               "value": {
                 "description": "Segmentation of the business user",
                 "generatedName": "CompanyGeneralDetailsUserSegment",
@@ -11303,8 +11245,7 @@
             "generatedName": "companyGeneralDetailsUserRegistrationStatus",
             "key": "userRegistrationStatus",
             "schema": {
-              "generatedName": "companyGeneralDetailsUserRegistrationStatus",
-              "title": "CompanyGeneralDetails",
+              "generatedName": "CompanyGeneralDetailsUserRegistrationStatus",
               "value": {
                 "generatedName": "CompanyGeneralDetailsUserRegistrationStatus",
                 "schema": "UserRegistrationStatus",
@@ -11314,7 +11255,6 @@
                 },
                 "type": "reference"
               },
-              "groupName": [],
               "type": "optional"
             },
             "audiences": [],
@@ -11326,8 +11266,8 @@
             "generatedName": "companyGeneralDetailsTags",
             "key": "tags",
             "schema": {
-              "generatedName": "companyGeneralDetailsTags",
-              "title": "CompanyGeneralDetails",
+              "generatedName": "CompanyGeneralDetailsTags",
+              "description": "Additional information that can be added via tags",
               "value": {
                 "description": "Additional information that can be added via tags",
                 "value": {
@@ -11402,8 +11342,8 @@
             "generatedName": "companyRegistrationDetailsTaxIdentifier",
             "key": "taxIdentifier",
             "schema": {
-              "generatedName": "companyRegistrationDetailsTaxIdentifier",
-              "title": "CompanyRegistrationDetails",
+              "generatedName": "CompanyRegistrationDetailsTaxIdentifier",
+              "description": "Tax ID number of the registered entity",
               "value": {
                 "description": "Tax ID number of the registered entity",
                 "schema": {
@@ -11423,8 +11363,8 @@
             "generatedName": "companyRegistrationDetailsLegalEntityType",
             "key": "legalEntityType",
             "schema": {
-              "generatedName": "companyRegistrationDetailsLegalEntityType",
-              "title": "CompanyRegistrationDetails",
+              "generatedName": "CompanyRegistrationDetailsLegalEntityType",
+              "description": "Type of legal entity. Ex: Limited Liability",
               "value": {
                 "description": "Type of legal entity. Ex: Limited Liability",
                 "schema": {
@@ -11444,8 +11384,7 @@
             "generatedName": "companyRegistrationDetailsDateOfRegistration",
             "key": "dateOfRegistration",
             "schema": {
-              "generatedName": "companyRegistrationDetailsDateOfRegistration",
-              "title": "CompanyRegistrationDetails",
+              "generatedName": "CompanyRegistrationDetailsDateOfRegistration",
               "value": {
                 "schema": {
                   "pattern": "^(\\d{4}-\\d{2}-\\d{2})*$",
@@ -11465,8 +11404,8 @@
             "generatedName": "companyRegistrationDetailsTags",
             "key": "tags",
             "schema": {
-              "generatedName": "companyRegistrationDetailsTags",
-              "title": "CompanyRegistrationDetails",
+              "generatedName": "CompanyRegistrationDetailsTags",
+              "description": "Additional information that can be added via tags",
               "value": {
                 "description": "Additional information that can be added via tags",
                 "value": {
@@ -11589,8 +11528,7 @@
             "generatedName": "businessOptionalUserStateDetails",
             "key": "userStateDetails",
             "schema": {
-              "generatedName": "businessOptionalUserStateDetails",
-              "title": "BusinessOptional",
+              "generatedName": "BusinessOptionalUserStateDetails",
               "value": {
                 "generatedName": "BusinessOptionalUserStateDetails",
                 "schema": "UserStateDetails",
@@ -11600,7 +11538,6 @@
                 },
                 "type": "reference"
               },
-              "groupName": [],
               "type": "optional"
             },
             "audiences": [],
@@ -11612,8 +11549,7 @@
             "generatedName": "businessOptionalKycStatusDetails",
             "key": "kycStatusDetails",
             "schema": {
-              "generatedName": "businessOptionalKycStatusDetails",
-              "title": "BusinessOptional",
+              "generatedName": "BusinessOptionalKycStatusDetails",
               "value": {
                 "generatedName": "BusinessOptionalKycStatusDetails",
                 "schema": "KYCStatusDetails",
@@ -11623,7 +11559,6 @@
                 },
                 "type": "reference"
               },
-              "groupName": [],
               "type": "optional"
             },
             "audiences": [],
@@ -11635,8 +11570,7 @@
             "generatedName": "businessOptionalLegalEntity",
             "key": "legalEntity",
             "schema": {
-              "generatedName": "businessOptionalLegalEntity",
-              "title": "BusinessOptional",
+              "generatedName": "BusinessOptionalLegalEntity",
               "value": {
                 "generatedName": "BusinessOptionalLegalEntity",
                 "schema": "LegalEntity",
@@ -11646,7 +11580,6 @@
                 },
                 "type": "reference"
               },
-              "groupName": [],
               "type": "optional"
             },
             "audiences": [],
@@ -11658,8 +11591,8 @@
             "generatedName": "businessOptionalShareHolders",
             "key": "shareHolders",
             "schema": {
-              "generatedName": "businessOptionalShareHolders",
-              "title": "BusinessOptional",
+              "generatedName": "BusinessOptionalShareHolders",
+              "description": "Shareholders (beneficiaries) of the company that hold at least 25% ownership. Can be another company or an individual",
               "value": {
                 "description": "Shareholders (beneficiaries) of the company that hold at least 25% ownership. Can be another company or an individual",
                 "value": {
@@ -11685,8 +11618,8 @@
             "generatedName": "businessOptionalDirectors",
             "key": "directors",
             "schema": {
-              "generatedName": "businessOptionalDirectors",
-              "title": "BusinessOptional",
+              "generatedName": "BusinessOptionalDirectors",
+              "description": "Director(s) of the company. Must be at least one",
               "value": {
                 "description": "Director(s) of the company. Must be at least one",
                 "value": {
@@ -11712,8 +11645,7 @@
             "generatedName": "businessOptionalTransactionLimits",
             "key": "transactionLimits",
             "schema": {
-              "generatedName": "businessOptionalTransactionLimits",
-              "title": "BusinessOptional",
+              "generatedName": "BusinessOptionalTransactionLimits",
               "value": {
                 "generatedName": "BusinessOptionalTransactionLimits",
                 "schema": "TransactionLimits",
@@ -11723,7 +11655,6 @@
                 },
                 "type": "reference"
               },
-              "groupName": [],
               "type": "optional"
             },
             "audiences": [],
@@ -11735,8 +11666,7 @@
             "generatedName": "businessOptionalRiskLevel",
             "key": "riskLevel",
             "schema": {
-              "generatedName": "businessOptionalRiskLevel",
-              "title": "BusinessOptional",
+              "generatedName": "BusinessOptionalRiskLevel",
               "value": {
                 "generatedName": "BusinessOptionalRiskLevel",
                 "schema": "RiskLevel",
@@ -11746,7 +11676,6 @@
                 },
                 "type": "reference"
               },
-              "groupName": [],
               "type": "optional"
             },
             "audiences": [],
@@ -11758,8 +11687,7 @@
             "generatedName": "businessOptionalAllowedPaymentMethods",
             "key": "allowedPaymentMethods",
             "schema": {
-              "generatedName": "businessOptionalAllowedPaymentMethods",
-              "title": "BusinessOptional",
+              "generatedName": "BusinessOptionalAllowedPaymentMethods",
               "value": {
                 "value": {
                   "generatedName": "BusinessOptionalAllowedPaymentMethodsItem",
@@ -11784,8 +11712,7 @@
             "generatedName": "businessOptionalLinkedEntities",
             "key": "linkedEntities",
             "schema": {
-              "generatedName": "businessOptionalLinkedEntities",
-              "title": "BusinessOptional",
+              "generatedName": "BusinessOptionalLinkedEntities",
               "value": {
                 "generatedName": "BusinessOptionalLinkedEntities",
                 "schema": "BusinessEntityLink",
@@ -11795,7 +11722,6 @@
                 },
                 "type": "reference"
               },
-              "groupName": [],
               "type": "optional"
             },
             "audiences": [],
@@ -11807,8 +11733,7 @@
             "generatedName": "businessOptionalAcquisitionChannel",
             "key": "acquisitionChannel",
             "schema": {
-              "generatedName": "businessOptionalAcquisitionChannel",
-              "title": "BusinessOptional",
+              "generatedName": "BusinessOptionalAcquisitionChannel",
               "value": {
                 "generatedName": "BusinessOptionalAcquisitionChannel",
                 "schema": "AcquisitionChannel",
@@ -11818,7 +11743,6 @@
                 },
                 "type": "reference"
               },
-              "groupName": [],
               "type": "optional"
             },
             "audiences": [],
@@ -11830,8 +11754,7 @@
             "generatedName": "businessOptionalSavedPaymentDetails",
             "key": "savedPaymentDetails",
             "schema": {
-              "generatedName": "businessOptionalSavedPaymentDetails",
-              "title": "BusinessOptional",
+              "generatedName": "BusinessOptionalSavedPaymentDetails",
               "value": {
                 "value": {
                   "value": {
@@ -11944,8 +11867,7 @@
             "generatedName": "businessOptionalMccDetails",
             "key": "mccDetails",
             "schema": {
-              "generatedName": "businessOptionalMccDetails",
-              "title": "BusinessOptional",
+              "generatedName": "BusinessOptionalMccDetails",
               "value": {
                 "generatedName": "BusinessOptionalMccDetails",
                 "schema": "MCCDetails",
@@ -11955,7 +11877,6 @@
                 },
                 "type": "reference"
               },
-              "groupName": [],
               "type": "optional"
             },
             "audiences": [],
@@ -11967,8 +11888,8 @@
             "generatedName": "businessOptionalTags",
             "key": "tags",
             "schema": {
-              "generatedName": "businessOptionalTags",
-              "title": "BusinessOptional",
+              "generatedName": "BusinessOptionalTags",
+              "description": "Additional information that can be added via tags",
               "value": {
                 "description": "Additional information that can be added via tags",
                 "value": {
@@ -12074,8 +11995,8 @@
             "generatedName": "cardDetailsCardFingerprint",
             "key": "cardFingerprint",
             "schema": {
-              "generatedName": "cardDetailsCardFingerprint",
-              "title": "CardDetails",
+              "generatedName": "CardDetailsCardFingerprint",
+              "description": "Unique card fingerprint that helps identify a specific card without having to use explicit card number. This is likely available at your card payment scheme provider",
               "value": {
                 "description": "Unique card fingerprint that helps identify a specific card without having to use explicit card number. This is likely available at your card payment scheme provider",
                 "schema": {
@@ -12096,8 +12017,7 @@
             "generatedName": "cardDetailsCardIssuedCountry",
             "key": "cardIssuedCountry",
             "schema": {
-              "generatedName": "cardDetailsCardIssuedCountry",
-              "title": "CardDetails",
+              "generatedName": "CardDetailsCardIssuedCountry",
               "value": {
                 "generatedName": "CardDetailsCardIssuedCountry",
                 "schema": "CountryCode",
@@ -12107,7 +12027,6 @@
                 },
                 "type": "reference"
               },
-              "groupName": [],
               "type": "optional"
             },
             "audiences": [],
@@ -12119,8 +12038,8 @@
             "generatedName": "cardDetailsTransactionReferenceField",
             "key": "transactionReferenceField",
             "schema": {
-              "generatedName": "cardDetailsTransactionReferenceField",
-              "title": "CardDetails",
+              "generatedName": "CardDetailsTransactionReferenceField",
+              "description": "Reference for the transaction",
               "value": {
                 "description": "Reference for the transaction",
                 "schema": {
@@ -12141,8 +12060,8 @@
             "generatedName": "cardDetails3DsDone",
             "key": "3dsDone",
             "schema": {
-              "generatedName": "cardDetails3DsDone",
-              "title": "CardDetails",
+              "generatedName": "CardDetails3DsDone",
+              "description": "Whether 3ds was successfully enforced for the transaction",
               "value": {
                 "description": "Whether 3ds was successfully enforced for the transaction",
                 "schema": {
@@ -12162,8 +12081,7 @@
             "generatedName": "cardDetailsNameOnCard",
             "key": "nameOnCard",
             "schema": {
-              "generatedName": "cardDetailsNameOnCard",
-              "title": "CardDetails",
+              "generatedName": "CardDetailsNameOnCard",
               "value": {
                 "generatedName": "CardDetailsNameOnCard",
                 "schema": "ConsumerName",
@@ -12173,7 +12091,6 @@
                 },
                 "type": "reference"
               },
-              "groupName": [],
               "type": "optional"
             },
             "audiences": [],
@@ -12185,8 +12102,7 @@
             "generatedName": "cardDetailsCardExpiry",
             "key": "cardExpiry",
             "schema": {
-              "generatedName": "cardDetailsCardExpiry",
-              "title": "CardDetails",
+              "generatedName": "CardDetailsCardExpiry",
               "value": {
                 "generatedName": "CardDetailsCardExpiry",
                 "schema": "CardExpiry",
@@ -12196,7 +12112,6 @@
                 },
                 "type": "reference"
               },
-              "groupName": [],
               "type": "optional"
             },
             "audiences": [],
@@ -12208,8 +12123,8 @@
             "generatedName": "cardDetailsCardLast4Digits",
             "key": "cardLast4Digits",
             "schema": {
-              "generatedName": "cardDetailsCardLast4Digits",
-              "title": "CardDetails",
+              "generatedName": "CardDetailsCardLast4Digits",
+              "description": "Last 4 digits of Card",
               "value": {
                 "description": "Last 4 digits of Card",
                 "schema": {
@@ -12231,8 +12146,8 @@
             "generatedName": "cardDetailsCardBrand",
             "key": "cardBrand",
             "schema": {
-              "generatedName": "cardDetailsCardBrand",
-              "title": "CardDetails",
+              "generatedName": "CardDetailsCardBrand",
+              "description": "Brand of Card",
               "value": {
                 "description": "Brand of Card",
                 "generatedName": "CardDetailsCardBrand",
@@ -12290,8 +12205,8 @@
             "generatedName": "cardDetailsCardFunding",
             "key": "cardFunding",
             "schema": {
-              "generatedName": "cardDetailsCardFunding",
-              "title": "CardDetails",
+              "generatedName": "CardDetailsCardFunding",
+              "description": "Funding of Card",
               "value": {
                 "description": "Funding of Card",
                 "generatedName": "CardDetailsCardFunding",
@@ -12329,8 +12244,8 @@
             "generatedName": "cardDetailsCardAuthenticated",
             "key": "cardAuthenticated",
             "schema": {
-              "generatedName": "cardDetailsCardAuthenticated",
-              "title": "CardDetails",
+              "generatedName": "CardDetailsCardAuthenticated",
+              "description": "Authentication of Card",
               "value": {
                 "description": "Authentication of Card",
                 "schema": {
@@ -12350,8 +12265,7 @@
             "generatedName": "cardDetailsPaymentChannel",
             "key": "paymentChannel",
             "schema": {
-              "generatedName": "cardDetailsPaymentChannel",
-              "title": "CardDetails",
+              "generatedName": "CardDetailsPaymentChannel",
               "value": {
                 "schema": {
                   "type": "string"
@@ -12370,8 +12284,7 @@
             "generatedName": "cardDetailsCardType",
             "key": "cardType",
             "schema": {
-              "generatedName": "cardDetailsCardType",
-              "title": "CardDetails",
+              "generatedName": "CardDetailsCardType",
               "value": {
                 "generatedName": "CardDetailsCardType",
                 "values": [
@@ -12403,8 +12316,7 @@
             "generatedName": "cardDetailsMerchantDetails",
             "key": "merchantDetails",
             "schema": {
-              "generatedName": "cardDetailsMerchantDetails",
-              "title": "CardDetails",
+              "generatedName": "CardDetailsMerchantDetails",
               "value": {
                 "generatedName": "CardDetailsMerchantDetails",
                 "schema": "CardMerchantDetails",
@@ -12414,7 +12326,6 @@
                 },
                 "type": "reference"
               },
-              "groupName": [],
               "type": "optional"
             },
             "audiences": [],
@@ -12442,8 +12353,8 @@
             "generatedName": "ibanDetailsBic",
             "key": "BIC",
             "schema": {
-              "generatedName": "ibanDetailsBic",
-              "title": "IBANDetails",
+              "generatedName": "IbanDetailsBic",
+              "description": "Identifier for the bank. Can be routing number, BIK number, SWIFT code, BIC number etc.",
               "value": {
                 "description": "Identifier for the bank. Can be routing number, BIK number, SWIFT code, BIC number etc.",
                 "schema": {
@@ -12464,8 +12375,8 @@
             "generatedName": "ibanDetailsBankName",
             "key": "bankName",
             "schema": {
-              "generatedName": "ibanDetailsBankName",
-              "title": "IBANDetails",
+              "generatedName": "IbanDetailsBankName",
+              "description": "Name of the bank",
               "value": {
                 "description": "Name of the bank",
                 "schema": {
@@ -12486,8 +12397,7 @@
             "generatedName": "ibanDetailsBankAddress",
             "key": "bankAddress",
             "schema": {
-              "generatedName": "ibanDetailsBankAddress",
-              "title": "IBANDetails",
+              "generatedName": "IbanDetailsBankAddress",
               "value": {
                 "generatedName": "IbanDetailsBankAddress",
                 "schema": "Address",
@@ -12497,7 +12407,6 @@
                 },
                 "type": "reference"
               },
-              "groupName": [],
               "type": "optional"
             },
             "audiences": [],
@@ -12509,8 +12418,7 @@
             "generatedName": "ibanDetailsCountry",
             "key": "country",
             "schema": {
-              "generatedName": "ibanDetailsCountry",
-              "title": "IBANDetails",
+              "generatedName": "IbanDetailsCountry",
               "value": {
                 "generatedName": "IbanDetailsCountry",
                 "schema": "CountryCode",
@@ -12520,7 +12428,6 @@
                 },
                 "type": "reference"
               },
-              "groupName": [],
               "type": "optional"
             },
             "audiences": [],
@@ -12532,8 +12439,8 @@
             "generatedName": "ibanDetailsIban",
             "key": "IBAN",
             "schema": {
-              "generatedName": "ibanDetailsIban",
-              "title": "IBANDetails",
+              "generatedName": "IbanDetailsIban",
+              "description": "Account number of the user. Can be account number, IBAN number etc.",
               "value": {
                 "description": "Account number of the user. Can be account number, IBAN number etc.",
                 "schema": {
@@ -12553,8 +12460,8 @@
             "generatedName": "ibanDetailsName",
             "key": "name",
             "schema": {
-              "generatedName": "ibanDetailsName",
-              "title": "IBANDetails",
+              "generatedName": "IbanDetailsName",
+              "description": "Name of the bank account holder",
               "value": {
                 "description": "Name of the bank account holder",
                 "schema": {
@@ -12574,8 +12481,7 @@
             "generatedName": "ibanDetailsTags",
             "key": "tags",
             "schema": {
-              "generatedName": "ibanDetailsTags",
-              "title": "IBANDetails",
+              "generatedName": "IbanDetailsTags",
               "value": {
                 "generatedName": "IbanDetailsTags",
                 "schema": "Tag",
@@ -12585,7 +12491,6 @@
                 },
                 "type": "reference"
               },
-              "groupName": [],
               "type": "optional"
             },
             "audiences": [],
@@ -12597,8 +12502,8 @@
             "generatedName": "ibanDetailsBankBranchCode",
             "key": "bankBranchCode",
             "schema": {
-              "generatedName": "ibanDetailsBankBranchCode",
-              "title": "IBANDetails",
+              "generatedName": "IbanDetailsBankBranchCode",
+              "description": "Branch code of the bank. In some countries, this can be the same as the bank's SWIFT code",
               "value": {
                 "description": "Branch code of the bank. In some countries, this can be the same as the bank's SWIFT code",
                 "schema": {
@@ -12618,8 +12523,7 @@
             "generatedName": "ibanDetailsPaymentChannel",
             "key": "paymentChannel",
             "schema": {
-              "generatedName": "ibanDetailsPaymentChannel",
-              "title": "IBANDetails",
+              "generatedName": "IbanDetailsPaymentChannel",
               "value": {
                 "schema": {
                   "type": "string"
@@ -12669,8 +12573,8 @@
             "generatedName": "walletDetailsWalletId",
             "key": "walletId",
             "schema": {
-              "generatedName": "walletDetailsWalletId",
-              "title": "WalletDetails",
+              "generatedName": "WalletDetailsWalletId",
+              "description": "Unique ID of the wallet",
               "value": {
                 "description": "Unique ID of the wallet",
                 "schema": {
@@ -12691,8 +12595,8 @@
             "generatedName": "walletDetailsPaymentChannel",
             "key": "paymentChannel",
             "schema": {
-              "generatedName": "walletDetailsPaymentChannel",
-              "title": "WalletDetails",
+              "generatedName": "WalletDetailsPaymentChannel",
+              "description": "Payment Channel used through wallet",
               "value": {
                 "description": "Payment Channel used through wallet",
                 "schema": {
@@ -12712,8 +12616,8 @@
             "generatedName": "walletDetailsName",
             "key": "name",
             "schema": {
-              "generatedName": "walletDetailsName",
-              "title": "WalletDetails",
+              "generatedName": "WalletDetailsName",
+              "description": "Name of the account holder for a specific wallet",
               "value": {
                 "description": "Name of the account holder for a specific wallet",
                 "schema": {
@@ -12733,8 +12637,7 @@
             "generatedName": "walletDetailsTags",
             "key": "tags",
             "schema": {
-              "generatedName": "walletDetailsTags",
-              "title": "WalletDetails",
+              "generatedName": "WalletDetailsTags",
               "value": {
                 "generatedName": "WalletDetailsTags",
                 "schema": "Tag",
@@ -12744,7 +12647,6 @@
                 },
                 "type": "reference"
               },
-              "groupName": [],
               "type": "optional"
             },
             "audiences": [],
@@ -12756,8 +12658,8 @@
             "generatedName": "walletDetailsWalletPhoneNumber",
             "key": "walletPhoneNumber",
             "schema": {
-              "generatedName": "walletDetailsWalletPhoneNumber",
-              "title": "WalletDetails",
+              "generatedName": "WalletDetailsWalletPhoneNumber",
+              "description": "Phone number associated with the wallet, if any",
               "value": {
                 "description": "Phone number associated with the wallet, if any",
                 "schema": {
@@ -12793,8 +12695,8 @@
             "generatedName": "achDetailsRoutingNumber",
             "key": "routingNumber",
             "schema": {
-              "generatedName": "achDetailsRoutingNumber",
-              "title": "ACHDetails",
+              "generatedName": "AchDetailsRoutingNumber",
+              "description": "Routing number of the bank",
               "value": {
                 "description": "Routing number of the bank",
                 "schema": {
@@ -12815,8 +12717,8 @@
             "generatedName": "achDetailsAccountNumber",
             "key": "accountNumber",
             "schema": {
-              "generatedName": "achDetailsAccountNumber",
-              "title": "ACHDetails",
+              "generatedName": "AchDetailsAccountNumber",
+              "description": "Bank account number of the individual",
               "value": {
                 "description": "Bank account number of the individual",
                 "schema": {
@@ -12837,8 +12739,8 @@
             "generatedName": "achDetailsBankName",
             "key": "bankName",
             "schema": {
-              "generatedName": "achDetailsBankName",
-              "title": "ACHDetails",
+              "generatedName": "AchDetailsBankName",
+              "description": "Name of the bank",
               "value": {
                 "description": "Name of the bank",
                 "schema": {
@@ -12859,8 +12761,8 @@
             "generatedName": "achDetailsName",
             "key": "name",
             "schema": {
-              "generatedName": "achDetailsName",
-              "title": "ACHDetails",
+              "generatedName": "AchDetailsName",
+              "description": "Name of the account holder",
               "value": {
                 "description": "Name of the account holder",
                 "schema": {
@@ -12880,8 +12782,7 @@
             "generatedName": "achDetailsBankAddress",
             "key": "bankAddress",
             "schema": {
-              "generatedName": "achDetailsBankAddress",
-              "title": "ACHDetails",
+              "generatedName": "AchDetailsBankAddress",
               "value": {
                 "generatedName": "AchDetailsBankAddress",
                 "schema": "Address",
@@ -12891,7 +12792,6 @@
                 },
                 "type": "reference"
               },
-              "groupName": [],
               "type": "optional"
             },
             "audiences": [],
@@ -12903,8 +12803,8 @@
             "generatedName": "achDetailsBeneficiaryName",
             "key": "beneficiaryName",
             "schema": {
-              "generatedName": "achDetailsBeneficiaryName",
-              "title": "ACHDetails",
+              "generatedName": "AchDetailsBeneficiaryName",
+              "description": "Beneficiary name of the account",
               "value": {
                 "description": "Beneficiary name of the account",
                 "schema": {
@@ -12940,8 +12840,8 @@
             "generatedName": "swiftDetailsSwiftCode",
             "key": "swiftCode",
             "schema": {
-              "generatedName": "swiftDetailsSwiftCode",
-              "title": "SWIFTDetails",
+              "generatedName": "SwiftDetailsSwiftCode",
+              "description": "SWIFT code of the financial institution",
               "value": {
                 "description": "SWIFT code of the financial institution",
                 "schema": {
@@ -12962,8 +12862,8 @@
             "generatedName": "swiftDetailsAccountNumber",
             "key": "accountNumber",
             "schema": {
-              "generatedName": "swiftDetailsAccountNumber",
-              "title": "SWIFTDetails",
+              "generatedName": "SwiftDetailsAccountNumber",
+              "description": "Account number",
               "value": {
                 "description": "Account number",
                 "schema": {
@@ -12984,8 +12884,8 @@
             "generatedName": "swiftDetailsAccountType",
             "key": "accountType",
             "schema": {
-              "generatedName": "swiftDetailsAccountType",
-              "title": "SWIFTDetails",
+              "generatedName": "SwiftDetailsAccountType",
+              "description": "Account type. E.g. Checking, Savings etc.",
               "value": {
                 "description": "Account type. E.g. Checking, Savings etc.",
                 "schema": {
@@ -13005,8 +12905,8 @@
             "generatedName": "swiftDetailsBankName",
             "key": "bankName",
             "schema": {
-              "generatedName": "swiftDetailsBankName",
-              "title": "SWIFTDetails",
+              "generatedName": "SwiftDetailsBankName",
+              "description": "Name of the bank",
               "value": {
                 "description": "Name of the bank",
                 "schema": {
@@ -13027,8 +12927,8 @@
             "generatedName": "swiftDetailsName",
             "key": "name",
             "schema": {
-              "generatedName": "swiftDetailsName",
-              "title": "SWIFTDetails",
+              "generatedName": "SwiftDetailsName",
+              "description": "Name of the account holder",
               "value": {
                 "description": "Name of the account holder",
                 "schema": {
@@ -13048,8 +12948,7 @@
             "generatedName": "swiftDetailsBankAddress",
             "key": "bankAddress",
             "schema": {
-              "generatedName": "swiftDetailsBankAddress",
-              "title": "SWIFTDetails",
+              "generatedName": "SwiftDetailsBankAddress",
               "value": {
                 "generatedName": "SwiftDetailsBankAddress",
                 "schema": "Address",
@@ -13059,7 +12958,6 @@
                 },
                 "type": "reference"
               },
-              "groupName": [],
               "type": "optional"
             },
             "audiences": [],
@@ -13071,8 +12969,8 @@
             "generatedName": "swiftDetailsSpecialInstructions",
             "key": "specialInstructions",
             "schema": {
-              "generatedName": "swiftDetailsSpecialInstructions",
-              "title": "SWIFTDetails",
+              "generatedName": "SwiftDetailsSpecialInstructions",
+              "description": "Special instructions if any",
               "value": {
                 "description": "Special instructions if any",
                 "schema": {
@@ -13198,8 +13096,8 @@
             "generatedName": "genericBankAccountDetailsAccountNumber",
             "key": "accountNumber",
             "schema": {
-              "generatedName": "genericBankAccountDetailsAccountNumber",
-              "title": "GenericBankAccountDetails",
+              "generatedName": "GenericBankAccountDetailsAccountNumber",
+              "description": "Bank account number",
               "value": {
                 "description": "Bank account number",
                 "schema": {
@@ -13220,8 +13118,8 @@
             "generatedName": "genericBankAccountDetailsAccountType",
             "key": "accountType",
             "schema": {
-              "generatedName": "genericBankAccountDetailsAccountType",
-              "title": "GenericBankAccountDetails",
+              "generatedName": "GenericBankAccountDetailsAccountType",
+              "description": "Bank account type. E.g. Checking, Savings etc.",
               "value": {
                 "description": "Bank account type. E.g. Checking, Savings etc.",
                 "schema": {
@@ -13241,8 +13139,8 @@
             "generatedName": "genericBankAccountDetailsBankName",
             "key": "bankName",
             "schema": {
-              "generatedName": "genericBankAccountDetailsBankName",
-              "title": "GenericBankAccountDetails",
+              "generatedName": "GenericBankAccountDetailsBankName",
+              "description": "Name of the bank",
               "value": {
                 "description": "Name of the bank",
                 "schema": {
@@ -13263,8 +13161,8 @@
             "generatedName": "genericBankAccountDetailsBankCode",
             "key": "bankCode",
             "schema": {
-              "generatedName": "genericBankAccountDetailsBankCode",
-              "title": "GenericBankAccountDetails",
+              "generatedName": "GenericBankAccountDetailsBankCode",
+              "description": "Unique identifier of the bank. In some countries, this can be the same as the bank's SWIFT code",
               "value": {
                 "description": "Unique identifier of the bank. In some countries, this can be the same as the bank's SWIFT code",
                 "schema": {
@@ -13284,8 +13182,8 @@
             "generatedName": "genericBankAccountDetailsName",
             "key": "name",
             "schema": {
-              "generatedName": "genericBankAccountDetailsName",
-              "title": "GenericBankAccountDetails",
+              "generatedName": "GenericBankAccountDetailsName",
+              "description": "Name of the account holder",
               "value": {
                 "description": "Name of the account holder",
                 "schema": {
@@ -13305,8 +13203,7 @@
             "generatedName": "genericBankAccountDetailsBankAddress",
             "key": "bankAddress",
             "schema": {
-              "generatedName": "genericBankAccountDetailsBankAddress",
-              "title": "GenericBankAccountDetails",
+              "generatedName": "GenericBankAccountDetailsBankAddress",
               "value": {
                 "generatedName": "GenericBankAccountDetailsBankAddress",
                 "schema": "Address",
@@ -13316,7 +13213,6 @@
                 },
                 "type": "reference"
               },
-              "groupName": [],
               "type": "optional"
             },
             "audiences": [],
@@ -13328,8 +13224,8 @@
             "generatedName": "genericBankAccountDetailsSpecialInstructions",
             "key": "specialInstructions",
             "schema": {
-              "generatedName": "genericBankAccountDetailsSpecialInstructions",
-              "title": "GenericBankAccountDetails",
+              "generatedName": "GenericBankAccountDetailsSpecialInstructions",
+              "description": "Special instructions to be specified if any",
               "value": {
                 "description": "Special instructions to be specified if any",
                 "schema": {
@@ -13349,8 +13245,7 @@
             "generatedName": "genericBankAccountDetailsPaymentChannel",
             "key": "paymentChannel",
             "schema": {
-              "generatedName": "genericBankAccountDetailsPaymentChannel",
-              "title": "GenericBankAccountDetails",
+              "generatedName": "GenericBankAccountDetailsPaymentChannel",
               "value": {
                 "schema": {
                   "type": "string"
@@ -13401,8 +13296,8 @@
             "generatedName": "upiDetailsBankProvider",
             "key": "bankProvider",
             "schema": {
-              "generatedName": "upiDetailsBankProvider",
-              "title": "UPIDetails",
+              "generatedName": "UpiDetailsBankProvider",
+              "description": "Bank provider name",
               "value": {
                 "description": "Bank provider name",
                 "schema": {
@@ -13423,8 +13318,8 @@
             "generatedName": "upiDetailsInterfaceProvider",
             "key": "interfaceProvider",
             "schema": {
-              "generatedName": "upiDetailsInterfaceProvider",
-              "title": "UPIDetails",
+              "generatedName": "UpiDetailsInterfaceProvider",
+              "description": "Interface provider name",
               "value": {
                 "description": "Interface provider name",
                 "schema": {
@@ -13445,8 +13340,8 @@
             "generatedName": "upiDetailsName",
             "key": "name",
             "schema": {
-              "generatedName": "upiDetailsName",
-              "title": "UPIDetails",
+              "generatedName": "UpiDetailsName",
+              "description": "Name of the account holder",
               "value": {
                 "description": "Name of the account holder",
                 "schema": {
@@ -13482,8 +13377,7 @@
             "generatedName": "transactionLimitsMaximumDailyTransactionLimit",
             "key": "maximumDailyTransactionLimit",
             "schema": {
-              "generatedName": "transactionLimitsMaximumDailyTransactionLimit",
-              "title": "TransactionLimits",
+              "generatedName": "TransactionLimitsMaximumDailyTransactionLimit",
               "value": {
                 "generatedName": "TransactionLimitsMaximumDailyTransactionLimit",
                 "schema": "Amount",
@@ -13493,7 +13387,6 @@
                 },
                 "type": "reference"
               },
-              "groupName": [],
               "type": "optional"
             },
             "audiences": [],
@@ -13505,8 +13398,7 @@
             "generatedName": "transactionLimitsMaximumWeeklyTransactionLimit",
             "key": "maximumWeeklyTransactionLimit",
             "schema": {
-              "generatedName": "transactionLimitsMaximumWeeklyTransactionLimit",
-              "title": "TransactionLimits",
+              "generatedName": "TransactionLimitsMaximumWeeklyTransactionLimit",
               "value": {
                 "generatedName": "TransactionLimitsMaximumWeeklyTransactionLimit",
                 "schema": "Amount",
@@ -13516,7 +13408,6 @@
                 },
                 "type": "reference"
               },
-              "groupName": [],
               "type": "optional"
             },
             "audiences": [],
@@ -13528,8 +13419,7 @@
             "generatedName": "transactionLimitsMaximumMonthlyTransactionLimit",
             "key": "maximumMonthlyTransactionLimit",
             "schema": {
-              "generatedName": "transactionLimitsMaximumMonthlyTransactionLimit",
-              "title": "TransactionLimits",
+              "generatedName": "TransactionLimitsMaximumMonthlyTransactionLimit",
               "value": {
                 "generatedName": "TransactionLimitsMaximumMonthlyTransactionLimit",
                 "schema": "Amount",
@@ -13539,7 +13429,6 @@
                 },
                 "type": "reference"
               },
-              "groupName": [],
               "type": "optional"
             },
             "audiences": [],
@@ -13551,8 +13440,7 @@
             "generatedName": "transactionLimitsMaximumQuarterlyTransactionLimit",
             "key": "maximumQuarterlyTransactionLimit",
             "schema": {
-              "generatedName": "transactionLimitsMaximumQuarterlyTransactionLimit",
-              "title": "TransactionLimits",
+              "generatedName": "TransactionLimitsMaximumQuarterlyTransactionLimit",
               "value": {
                 "generatedName": "TransactionLimitsMaximumQuarterlyTransactionLimit",
                 "schema": "Amount",
@@ -13562,7 +13450,6 @@
                 },
                 "type": "reference"
               },
-              "groupName": [],
               "type": "optional"
             },
             "audiences": [],
@@ -13574,8 +13461,7 @@
             "generatedName": "transactionLimitsMaximumTransactionLimit",
             "key": "maximumTransactionLimit",
             "schema": {
-              "generatedName": "transactionLimitsMaximumTransactionLimit",
-              "title": "TransactionLimits",
+              "generatedName": "TransactionLimitsMaximumTransactionLimit",
               "value": {
                 "generatedName": "TransactionLimitsMaximumTransactionLimit",
                 "schema": "Amount",
@@ -13585,7 +13471,6 @@
                 },
                 "type": "reference"
               },
-              "groupName": [],
               "type": "optional"
             },
             "audiences": [],
@@ -13597,8 +13482,7 @@
             "generatedName": "transactionLimitsMaximumYearlyTransactionLimit",
             "key": "maximumYearlyTransactionLimit",
             "schema": {
-              "generatedName": "transactionLimitsMaximumYearlyTransactionLimit",
-              "title": "TransactionLimits",
+              "generatedName": "TransactionLimitsMaximumYearlyTransactionLimit",
               "value": {
                 "generatedName": "TransactionLimitsMaximumYearlyTransactionLimit",
                 "schema": "Amount",
@@ -13608,7 +13492,6 @@
                 },
                 "type": "reference"
               },
-              "groupName": [],
               "type": "optional"
             },
             "audiences": [],
@@ -13620,8 +13503,7 @@
             "generatedName": "transactionLimitsPaymentMethodLimits",
             "key": "paymentMethodLimits",
             "schema": {
-              "generatedName": "transactionLimitsPaymentMethodLimits",
-              "title": "TransactionLimits",
+              "generatedName": "TransactionLimitsPaymentMethodLimits",
               "value": {
                 "allOf": [],
                 "properties": [
@@ -13630,7 +13512,7 @@
                     "generatedName": "transactionLimitsPaymentMethodLimitsAch",
                     "key": "ACH",
                     "schema": {
-                      "generatedName": "transactionLimitsPaymentMethodLimitsAch",
+                      "generatedName": "TransactionLimitsPaymentMethodLimitsAch",
                       "value": {
                         "generatedName": "TransactionLimitsPaymentMethodLimitsAch",
                         "schema": "TransactionLimit",
@@ -13640,7 +13522,6 @@
                         },
                         "type": "reference"
                       },
-                      "groupName": [],
                       "type": "optional"
                     },
                     "audiences": [],
@@ -13652,7 +13533,7 @@
                     "generatedName": "transactionLimitsPaymentMethodLimitsCard",
                     "key": "CARD",
                     "schema": {
-                      "generatedName": "transactionLimitsPaymentMethodLimitsCard",
+                      "generatedName": "TransactionLimitsPaymentMethodLimitsCard",
                       "value": {
                         "generatedName": "TransactionLimitsPaymentMethodLimitsCard",
                         "schema": "TransactionLimit",
@@ -13662,7 +13543,6 @@
                         },
                         "type": "reference"
                       },
-                      "groupName": [],
                       "type": "optional"
                     },
                     "audiences": [],
@@ -13674,7 +13554,7 @@
                     "generatedName": "transactionLimitsPaymentMethodLimitsIban",
                     "key": "IBAN",
                     "schema": {
-                      "generatedName": "transactionLimitsPaymentMethodLimitsIban",
+                      "generatedName": "TransactionLimitsPaymentMethodLimitsIban",
                       "value": {
                         "generatedName": "TransactionLimitsPaymentMethodLimitsIban",
                         "schema": "TransactionLimit",
@@ -13684,7 +13564,6 @@
                         },
                         "type": "reference"
                       },
-                      "groupName": [],
                       "type": "optional"
                     },
                     "audiences": [],
@@ -13696,7 +13575,7 @@
                     "generatedName": "transactionLimitsPaymentMethodLimitsUpi",
                     "key": "UPI",
                     "schema": {
-                      "generatedName": "transactionLimitsPaymentMethodLimitsUpi",
+                      "generatedName": "TransactionLimitsPaymentMethodLimitsUpi",
                       "value": {
                         "generatedName": "TransactionLimitsPaymentMethodLimitsUpi",
                         "schema": "TransactionLimit",
@@ -13706,7 +13585,6 @@
                         },
                         "type": "reference"
                       },
-                      "groupName": [],
                       "type": "optional"
                     },
                     "audiences": [],
@@ -13718,7 +13596,7 @@
                     "generatedName": "transactionLimitsPaymentMethodLimitsGenericBankAccount",
                     "key": "GENERIC_BANK_ACCOUNT",
                     "schema": {
-                      "generatedName": "transactionLimitsPaymentMethodLimitsGenericBankAccount",
+                      "generatedName": "TransactionLimitsPaymentMethodLimitsGenericBankAccount",
                       "value": {
                         "generatedName": "TransactionLimitsPaymentMethodLimitsGenericBankAccount",
                         "schema": "TransactionLimit",
@@ -13728,7 +13606,6 @@
                         },
                         "type": "reference"
                       },
-                      "groupName": [],
                       "type": "optional"
                     },
                     "audiences": [],
@@ -13740,7 +13617,7 @@
                     "generatedName": "transactionLimitsPaymentMethodLimitsMpesa",
                     "key": "MPESA",
                     "schema": {
-                      "generatedName": "transactionLimitsPaymentMethodLimitsMpesa",
+                      "generatedName": "TransactionLimitsPaymentMethodLimitsMpesa",
                       "value": {
                         "generatedName": "TransactionLimitsPaymentMethodLimitsMpesa",
                         "schema": "TransactionLimit",
@@ -13750,7 +13627,6 @@
                         },
                         "type": "reference"
                       },
-                      "groupName": [],
                       "type": "optional"
                     },
                     "audiences": [],
@@ -13762,7 +13638,7 @@
                     "generatedName": "transactionLimitsPaymentMethodLimitsSwift",
                     "key": "SWIFT",
                     "schema": {
-                      "generatedName": "transactionLimitsPaymentMethodLimitsSwift",
+                      "generatedName": "TransactionLimitsPaymentMethodLimitsSwift",
                       "value": {
                         "generatedName": "TransactionLimitsPaymentMethodLimitsSwift",
                         "schema": "TransactionLimit",
@@ -13772,7 +13648,6 @@
                         },
                         "type": "reference"
                       },
-                      "groupName": [],
                       "type": "optional"
                     },
                     "audiences": [],
@@ -13784,7 +13659,7 @@
                     "generatedName": "transactionLimitsPaymentMethodLimitsWallet",
                     "key": "WALLET",
                     "schema": {
-                      "generatedName": "transactionLimitsPaymentMethodLimitsWallet",
+                      "generatedName": "TransactionLimitsPaymentMethodLimitsWallet",
                       "value": {
                         "generatedName": "TransactionLimitsPaymentMethodLimitsWallet",
                         "schema": "TransactionLimit",
@@ -13794,7 +13669,6 @@
                         },
                         "type": "reference"
                       },
-                      "groupName": [],
                       "type": "optional"
                     },
                     "audiences": [],
@@ -13806,7 +13680,7 @@
                     "generatedName": "transactionLimitsPaymentMethodLimitsCheck",
                     "key": "CHECK",
                     "schema": {
-                      "generatedName": "transactionLimitsPaymentMethodLimitsCheck",
+                      "generatedName": "TransactionLimitsPaymentMethodLimitsCheck",
                       "value": {
                         "generatedName": "TransactionLimitsPaymentMethodLimitsCheck",
                         "schema": "TransactionLimit",
@@ -13816,7 +13690,6 @@
                         },
                         "type": "reference"
                       },
-                      "groupName": [],
                       "type": "optional"
                     },
                     "audiences": [],
@@ -13893,7 +13766,7 @@
             "generatedName": "ruleHitMetaHitDirections",
             "key": "hitDirections",
             "schema": {
-              "generatedName": "ruleHitMetaHitDirections",
+              "generatedName": "RuleHitMetaHitDirections",
               "value": {
                 "value": {
                   "generatedName": "RuleHitMetaHitDirectionsItem",
@@ -13918,7 +13791,7 @@
             "generatedName": "ruleHitMetaFalsePositiveDetails",
             "key": "falsePositiveDetails",
             "schema": {
-              "generatedName": "ruleHitMetaFalsePositiveDetails",
+              "generatedName": "RuleHitMetaFalsePositiveDetails",
               "value": {
                 "generatedName": "RuleHitMetaFalsePositiveDetails",
                 "schema": "FalsePositiveDetails",
@@ -13928,7 +13801,6 @@
                 },
                 "type": "reference"
               },
-              "groupName": [],
               "type": "optional"
             },
             "audiences": [],
@@ -13940,7 +13812,7 @@
             "generatedName": "ruleHitMetaSanctionsDetails",
             "key": "sanctionsDetails",
             "schema": {
-              "generatedName": "ruleHitMetaSanctionsDetails",
+              "generatedName": "RuleHitMetaSanctionsDetails",
               "value": {
                 "value": {
                   "generatedName": "RuleHitMetaSanctionsDetailsItem",
@@ -14156,7 +14028,8 @@
             "generatedName": "transactionEventEventId",
             "key": "eventId",
             "schema": {
-              "generatedName": "transactionEventEventId",
+              "generatedName": "TransactionEventEventId",
+              "description": "Unique event ID",
               "value": {
                 "description": "Unique event ID",
                 "schema": {
@@ -14176,7 +14049,8 @@
             "generatedName": "transactionEventReason",
             "key": "reason",
             "schema": {
-              "generatedName": "transactionEventReason",
+              "generatedName": "TransactionEventReason",
+              "description": "Reason for the event or a state change",
               "value": {
                 "description": "Reason for the event or a state change",
                 "schema": {
@@ -14196,7 +14070,8 @@
             "generatedName": "transactionEventEventDescription",
             "key": "eventDescription",
             "schema": {
-              "generatedName": "transactionEventEventDescription",
+              "generatedName": "TransactionEventEventDescription",
+              "description": "Event description",
               "value": {
                 "description": "Event description",
                 "schema": {
@@ -14216,7 +14091,7 @@
             "generatedName": "transactionEventUpdatedTransactionAttributes",
             "key": "updatedTransactionAttributes",
             "schema": {
-              "generatedName": "transactionEventUpdatedTransactionAttributes",
+              "generatedName": "TransactionEventUpdatedTransactionAttributes",
               "value": {
                 "generatedName": "TransactionEventUpdatedTransactionAttributes",
                 "schema": "TransactionUpdatable",
@@ -14226,7 +14101,6 @@
                 },
                 "type": "reference"
               },
-              "groupName": [],
               "type": "optional"
             },
             "audiences": [],
@@ -14238,7 +14112,7 @@
             "generatedName": "transactionEventMetaData",
             "key": "metaData",
             "schema": {
-              "generatedName": "transactionEventMetaData",
+              "generatedName": "TransactionEventMetaData",
               "value": {
                 "generatedName": "TransactionEventMetaData",
                 "schema": "DeviceData",
@@ -14248,7 +14122,6 @@
                 },
                 "type": "reference"
               },
-              "groupName": [],
               "type": "optional"
             },
             "audiences": [],
@@ -14308,8 +14181,8 @@
             "generatedName": "consumerUserEventEventId",
             "key": "eventId",
             "schema": {
-              "generatedName": "consumerUserEventEventId",
-              "title": "ConsumerUserEvent",
+              "generatedName": "ConsumerUserEventEventId",
+              "description": "Unique event ID",
               "value": {
                 "description": "Unique event ID",
                 "schema": {
@@ -14329,8 +14202,8 @@
             "generatedName": "consumerUserEventReason",
             "key": "reason",
             "schema": {
-              "generatedName": "consumerUserEventReason",
-              "title": "ConsumerUserEvent",
+              "generatedName": "ConsumerUserEventReason",
+              "description": "Reason for the event or a state change",
               "value": {
                 "description": "Reason for the event or a state change",
                 "schema": {
@@ -14350,8 +14223,8 @@
             "generatedName": "consumerUserEventEventDescription",
             "key": "eventDescription",
             "schema": {
-              "generatedName": "consumerUserEventEventDescription",
-              "title": "ConsumerUserEvent",
+              "generatedName": "ConsumerUserEventEventDescription",
+              "description": "Event description",
               "value": {
                 "description": "Event description",
                 "schema": {
@@ -14371,8 +14244,7 @@
             "generatedName": "consumerUserEventUpdatedConsumerUserAttributes",
             "key": "updatedConsumerUserAttributes",
             "schema": {
-              "generatedName": "consumerUserEventUpdatedConsumerUserAttributes",
-              "title": "ConsumerUserEvent",
+              "generatedName": "ConsumerUserEventUpdatedConsumerUserAttributes",
               "value": {
                 "generatedName": "ConsumerUserEventUpdatedConsumerUserAttributes",
                 "schema": "UserOptional",
@@ -14382,7 +14254,6 @@
                 },
                 "type": "reference"
               },
-              "groupName": [],
               "type": "optional"
             },
             "audiences": [],
@@ -14443,8 +14314,8 @@
             "generatedName": "businessUserEventEventId",
             "key": "eventId",
             "schema": {
-              "generatedName": "businessUserEventEventId",
-              "title": "BusinessUserEvent",
+              "generatedName": "BusinessUserEventEventId",
+              "description": "Unique event ID",
               "value": {
                 "description": "Unique event ID",
                 "schema": {
@@ -14464,8 +14335,8 @@
             "generatedName": "businessUserEventReason",
             "key": "reason",
             "schema": {
-              "generatedName": "businessUserEventReason",
-              "title": "BusinessUserEvent",
+              "generatedName": "BusinessUserEventReason",
+              "description": "Reason for the event or a state change",
               "value": {
                 "description": "Reason for the event or a state change",
                 "schema": {
@@ -14485,8 +14356,8 @@
             "generatedName": "businessUserEventEventDescription",
             "key": "eventDescription",
             "schema": {
-              "generatedName": "businessUserEventEventDescription",
-              "title": "BusinessUserEvent",
+              "generatedName": "BusinessUserEventEventDescription",
+              "description": "Event description",
               "value": {
                 "description": "Event description",
                 "schema": {
@@ -14506,8 +14377,7 @@
             "generatedName": "businessUserEventUpdatedBusinessUserAttributes",
             "key": "updatedBusinessUserAttributes",
             "schema": {
-              "generatedName": "businessUserEventUpdatedBusinessUserAttributes",
-              "title": "BusinessUserEvent",
+              "generatedName": "BusinessUserEventUpdatedBusinessUserAttributes",
               "value": {
                 "generatedName": "BusinessUserEventUpdatedBusinessUserAttributes",
                 "schema": "BusinessOptional",
@@ -14517,7 +14387,6 @@
                 },
                 "type": "reference"
               },
-              "groupName": [],
               "type": "optional"
             },
             "audiences": [],
@@ -14627,8 +14496,8 @@
             "generatedName": "caseManagementEventTransactionId",
             "key": "transactionId",
             "schema": {
-              "generatedName": "caseManagementEventTransactionId",
-              "title": "CaseManagementEvent",
+              "generatedName": "CaseManagementEventTransactionId",
+              "description": "Transaction ID the case pertains to",
               "value": {
                 "description": "Transaction ID the case pertains to",
                 "schema": {
@@ -14649,8 +14518,8 @@
             "generatedName": "caseManagementEventUserId",
             "key": "userId",
             "schema": {
-              "generatedName": "caseManagementEventUserId",
-              "title": "CaseManagementEvent",
+              "generatedName": "CaseManagementEventUserId",
+              "description": "User ID the case pertains to",
               "value": {
                 "description": "User ID the case pertains to",
                 "schema": {
@@ -14670,8 +14539,8 @@
             "generatedName": "caseManagementEventEventId",
             "key": "eventId",
             "schema": {
-              "generatedName": "caseManagementEventEventId",
-              "title": "CaseManagementEvent",
+              "generatedName": "CaseManagementEventEventId",
+              "description": "Event ID the case pertains to",
               "value": {
                 "description": "Event ID the case pertains to",
                 "schema": {
@@ -14691,8 +14560,8 @@
             "generatedName": "caseManagementEventCaseStatusReasonDescription",
             "key": "caseStatusReasonDescription",
             "schema": {
-              "generatedName": "caseManagementEventCaseStatusReasonDescription",
-              "title": "CaseManagementEvent",
+              "generatedName": "CaseManagementEventCaseStatusReasonDescription",
+              "description": "Case status reason description",
               "value": {
                 "description": "Case status reason description",
                 "schema": {
@@ -15097,8 +14966,7 @@
             "generatedName": "pepStatusPepCountry",
             "key": "pepCountry",
             "schema": {
-              "generatedName": "pepStatusPepCountry",
-              "title": "PEPStatus",
+              "generatedName": "PepStatusPepCountry",
               "value": {
                 "schema": {
                   "minLength": 2,
@@ -15134,8 +15002,7 @@
             "generatedName": "kycStatusDetailsReason",
             "key": "reason",
             "schema": {
-              "generatedName": "kycStatusDetailsReason",
-              "title": "KYCStatusDetails",
+              "generatedName": "KycStatusDetailsReason",
               "value": {
                 "schema": {
                   "type": "string"
@@ -15154,8 +15021,7 @@
             "generatedName": "kycStatusDetailsStatus",
             "key": "status",
             "schema": {
-              "generatedName": "kycStatusDetailsStatus",
-              "title": "KYCStatusDetails",
+              "generatedName": "KycStatusDetailsStatus",
               "value": {
                 "generatedName": "KycStatusDetailsStatus",
                 "schema": "KYCStatus",
@@ -15165,7 +15031,6 @@
                 },
                 "type": "reference"
               },
-              "groupName": [],
               "type": "optional"
             },
             "audiences": [],
@@ -15192,8 +15057,7 @@
             "generatedName": "userStateDetailsUserId",
             "key": "userId",
             "schema": {
-              "generatedName": "userStateDetailsUserId",
-              "title": "UserStateDetails",
+              "generatedName": "UserStateDetailsUserId",
               "value": {
                 "schema": {
                   "type": "string"
@@ -15212,8 +15076,7 @@
             "generatedName": "userStateDetailsReason",
             "key": "reason",
             "schema": {
-              "generatedName": "userStateDetailsReason",
-              "title": "UserStateDetails",
+              "generatedName": "UserStateDetailsReason",
               "value": {
                 "schema": {
                   "type": "string"
@@ -15264,8 +15127,7 @@
             "generatedName": "caseClosedDetailsCaseId",
             "key": "caseId",
             "schema": {
-              "generatedName": "caseClosedDetailsCaseId",
-              "title": "CaseClosedDetails",
+              "generatedName": "CaseClosedDetailsCaseId",
               "value": {
                 "schema": {
                   "type": "string"
@@ -15284,8 +15146,7 @@
             "generatedName": "caseClosedDetailsStatus",
             "key": "status",
             "schema": {
-              "generatedName": "caseClosedDetailsStatus",
-              "title": "CaseClosedDetails",
+              "generatedName": "CaseClosedDetailsStatus",
               "value": {
                 "schema": {
                   "type": "string"
@@ -15304,8 +15165,7 @@
             "generatedName": "caseClosedDetailsReasons",
             "key": "reasons",
             "schema": {
-              "generatedName": "caseClosedDetailsReasons",
-              "title": "CaseClosedDetails",
+              "generatedName": "CaseClosedDetailsReasons",
               "value": {
                 "value": {
                   "schema": {
@@ -15329,8 +15189,7 @@
             "generatedName": "caseClosedDetailsReasonDescriptionForOther",
             "key": "reasonDescriptionForOther",
             "schema": {
-              "generatedName": "caseClosedDetailsReasonDescriptionForOther",
-              "title": "CaseClosedDetails",
+              "generatedName": "CaseClosedDetailsReasonDescriptionForOther",
               "value": {
                 "value": {
                   "schema": {
@@ -15354,8 +15213,7 @@
             "generatedName": "caseClosedDetailsComment",
             "key": "comment",
             "schema": {
-              "generatedName": "caseClosedDetailsComment",
-              "title": "CaseClosedDetails",
+              "generatedName": "CaseClosedDetailsComment",
               "value": {
                 "schema": {
                   "type": "string"
@@ -15374,8 +15232,7 @@
             "generatedName": "caseClosedDetailsUserId",
             "key": "userId",
             "schema": {
-              "generatedName": "caseClosedDetailsUserId",
-              "title": "CaseClosedDetails",
+              "generatedName": "CaseClosedDetailsUserId",
               "value": {
                 "schema": {
                   "type": "string"
@@ -15394,8 +15251,7 @@
             "generatedName": "caseClosedDetailsTransactionIds",
             "key": "transactionIds",
             "schema": {
-              "generatedName": "caseClosedDetailsTransactionIds",
-              "title": "CaseClosedDetails",
+              "generatedName": "CaseClosedDetailsTransactionIds",
               "value": {
                 "value": {
                   "schema": {
@@ -15434,8 +15290,7 @@
             "generatedName": "alertClosedDetailsAlertId",
             "key": "alertId",
             "schema": {
-              "generatedName": "alertClosedDetailsAlertId",
-              "title": "AlertClosedDetails",
+              "generatedName": "AlertClosedDetailsAlertId",
               "value": {
                 "schema": {
                   "type": "string"
@@ -15454,8 +15309,7 @@
             "generatedName": "alertClosedDetailsStatus",
             "key": "status",
             "schema": {
-              "generatedName": "alertClosedDetailsStatus",
-              "title": "AlertClosedDetails",
+              "generatedName": "AlertClosedDetailsStatus",
               "value": {
                 "schema": {
                   "type": "string"
@@ -15474,8 +15328,7 @@
             "generatedName": "alertClosedDetailsReasons",
             "key": "reasons",
             "schema": {
-              "generatedName": "alertClosedDetailsReasons",
-              "title": "AlertClosedDetails",
+              "generatedName": "AlertClosedDetailsReasons",
               "value": {
                 "value": {
                   "schema": {
@@ -15499,8 +15352,7 @@
             "generatedName": "alertClosedDetailsReasonDescriptionForOther",
             "key": "reasonDescriptionForOther",
             "schema": {
-              "generatedName": "alertClosedDetailsReasonDescriptionForOther",
-              "title": "AlertClosedDetails",
+              "generatedName": "AlertClosedDetailsReasonDescriptionForOther",
               "value": {
                 "value": {
                   "schema": {
@@ -15524,8 +15376,7 @@
             "generatedName": "alertClosedDetailsComment",
             "key": "comment",
             "schema": {
-              "generatedName": "alertClosedDetailsComment",
-              "title": "AlertClosedDetails",
+              "generatedName": "AlertClosedDetailsComment",
               "value": {
                 "schema": {
                   "type": "string"
@@ -15544,8 +15395,7 @@
             "generatedName": "alertClosedDetailsUserId",
             "key": "userId",
             "schema": {
-              "generatedName": "alertClosedDetailsUserId",
-              "title": "AlertClosedDetails",
+              "generatedName": "AlertClosedDetailsUserId",
               "value": {
                 "schema": {
                   "type": "string"
@@ -15564,8 +15414,7 @@
             "generatedName": "alertClosedDetailsTransactionIds",
             "key": "transactionIds",
             "schema": {
-              "generatedName": "alertClosedDetailsTransactionIds",
-              "title": "AlertClosedDetails",
+              "generatedName": "AlertClosedDetailsTransactionIds",
               "value": {
                 "value": {
                   "schema": {
@@ -15589,8 +15438,7 @@
             "generatedName": "alertClosedDetailsRuleName",
             "key": "ruleName",
             "schema": {
-              "generatedName": "alertClosedDetailsRuleName",
-              "title": "AlertClosedDetails",
+              "generatedName": "AlertClosedDetailsRuleName",
               "value": {
                 "schema": {
                   "type": "string"
@@ -15609,8 +15457,7 @@
             "generatedName": "alertClosedDetailsRuleDescription",
             "key": "ruleDescription",
             "schema": {
-              "generatedName": "alertClosedDetailsRuleDescription",
-              "title": "AlertClosedDetails",
+              "generatedName": "AlertClosedDetailsRuleDescription",
               "value": {
                 "schema": {
                   "type": "string"
@@ -15629,8 +15476,7 @@
             "generatedName": "alertClosedDetailsRuleId",
             "key": "ruleId",
             "schema": {
-              "generatedName": "alertClosedDetailsRuleId",
-              "title": "AlertClosedDetails",
+              "generatedName": "AlertClosedDetailsRuleId",
               "value": {
                 "schema": {
                   "type": "string"
@@ -15649,8 +15495,7 @@
             "generatedName": "alertClosedDetailsRuleInstanceId",
             "key": "ruleInstanceId",
             "schema": {
-              "generatedName": "alertClosedDetailsRuleInstanceId",
-              "title": "AlertClosedDetails",
+              "generatedName": "AlertClosedDetailsRuleInstanceId",
               "value": {
                 "schema": {
                   "type": "string"
@@ -15721,8 +15566,7 @@
             "generatedName": "cardExpiryMonth",
             "key": "month",
             "schema": {
-              "generatedName": "cardExpiryMonth",
-              "title": "CardExpiry",
+              "generatedName": "CardExpiryMonth",
               "value": {
                 "schema": {
                   "type": "double"
@@ -15741,8 +15585,7 @@
             "generatedName": "cardExpiryYear",
             "key": "year",
             "schema": {
-              "generatedName": "cardExpiryYear",
-              "title": "CardExpiry",
+              "generatedName": "CardExpiryYear",
               "value": {
                 "schema": {
                   "type": "double"
@@ -16032,8 +15875,7 @@
             "generatedName": "listDataMetadata",
             "key": "metadata",
             "schema": {
-              "generatedName": "listDataMetadata",
-              "title": "ListData",
+              "generatedName": "ListDataMetadata",
               "value": {
                 "generatedName": "ListDataMetadata",
                 "schema": "ListMetadata",
@@ -16043,7 +15885,6 @@
                 },
                 "type": "reference"
               },
-              "groupName": [],
               "type": "optional"
             },
             "audiences": [],
@@ -16055,8 +15896,8 @@
             "generatedName": "listDataItems",
             "key": "items",
             "schema": {
-              "generatedName": "listDataItems",
-              "title": "ListData",
+              "generatedName": "ListDataItems",
+              "description": "List items",
               "value": {
                 "description": "List items",
                 "value": {
@@ -16112,8 +15953,7 @@
             "generatedName": "listItemMetadata",
             "key": "metadata",
             "schema": {
-              "generatedName": "listItemMetadata",
-              "title": "ListItem",
+              "generatedName": "ListItemMetadata",
               "value": {
                 "generatedName": "ListItemMetadata",
                 "schema": "ListKeyMetadata",
@@ -16123,7 +15963,6 @@
                 },
                 "type": "reference"
               },
-              "groupName": [],
               "type": "optional"
             },
             "audiences": [],
@@ -16150,8 +15989,8 @@
             "generatedName": "listMetadataName",
             "key": "name",
             "schema": {
-              "generatedName": "listMetadataName",
-              "title": "ListMetadata",
+              "generatedName": "ListMetadataName",
+              "description": "List name",
               "value": {
                 "description": "List name",
                 "schema": {
@@ -16171,8 +16010,8 @@
             "generatedName": "listMetadataDescription",
             "key": "description",
             "schema": {
-              "generatedName": "listMetadataDescription",
-              "title": "ListMetadata",
+              "generatedName": "ListMetadataDescription",
+              "description": "List description",
               "value": {
                 "description": "List description",
                 "schema": {
@@ -16192,8 +16031,7 @@
             "generatedName": "listMetadataStatus",
             "key": "status",
             "schema": {
-              "generatedName": "listMetadataStatus",
-              "title": "ListMetadata",
+              "generatedName": "ListMetadataStatus",
               "value": {
                 "schema": {
                   "type": "boolean"
@@ -16212,8 +16050,7 @@
             "generatedName": "listMetadataChecksum",
             "key": "checksum",
             "schema": {
-              "generatedName": "listMetadataChecksum",
-              "title": "ListMetadata",
+              "generatedName": "ListMetadataChecksum",
               "value": {
                 "schema": {
                   "type": "string"
@@ -16363,8 +16200,7 @@
             "generatedName": "listHeaderMetadata",
             "key": "metadata",
             "schema": {
-              "generatedName": "listHeaderMetadata",
-              "title": "ListHeader",
+              "generatedName": "ListHeaderMetadata",
               "value": {
                 "generatedName": "ListHeaderMetadata",
                 "schema": "ListMetadata",
@@ -16374,7 +16210,6 @@
                 },
                 "type": "reference"
               },
-              "groupName": [],
               "type": "optional"
             },
             "audiences": [],
@@ -16486,8 +16321,7 @@
             "generatedName": "cardMerchantDetailsId",
             "key": "id",
             "schema": {
-              "generatedName": "cardMerchantDetailsId",
-              "title": "CardMerchantDetails",
+              "generatedName": "CardMerchantDetailsId",
               "value": {
                 "schema": {
                   "type": "string"
@@ -16506,8 +16340,7 @@
             "generatedName": "cardMerchantDetailsCategory",
             "key": "category",
             "schema": {
-              "generatedName": "cardMerchantDetailsCategory",
-              "title": "CardMerchantDetails",
+              "generatedName": "CardMerchantDetailsCategory",
               "value": {
                 "schema": {
                   "type": "string"
@@ -16526,8 +16359,7 @@
             "generatedName": "cardMerchantDetailsMcc",
             "key": "MCC",
             "schema": {
-              "generatedName": "cardMerchantDetailsMcc",
-              "title": "CardMerchantDetails",
+              "generatedName": "CardMerchantDetailsMcc",
               "value": {
                 "schema": {
                   "type": "string"
@@ -16546,8 +16378,7 @@
             "generatedName": "cardMerchantDetailsCity",
             "key": "city",
             "schema": {
-              "generatedName": "cardMerchantDetailsCity",
-              "title": "CardMerchantDetails",
+              "generatedName": "CardMerchantDetailsCity",
               "value": {
                 "schema": {
                   "type": "string"
@@ -16566,8 +16397,7 @@
             "generatedName": "cardMerchantDetailsCountry",
             "key": "country",
             "schema": {
-              "generatedName": "cardMerchantDetailsCountry",
-              "title": "CardMerchantDetails",
+              "generatedName": "CardMerchantDetailsCountry",
               "value": {
                 "schema": {
                   "minLength": 2,
@@ -16588,8 +16418,7 @@
             "generatedName": "cardMerchantDetailsState",
             "key": "state",
             "schema": {
-              "generatedName": "cardMerchantDetailsState",
-              "title": "CardMerchantDetails",
+              "generatedName": "CardMerchantDetailsState",
               "value": {
                 "schema": {
                   "type": "string"
@@ -16608,8 +16437,7 @@
             "generatedName": "cardMerchantDetailsPostCode",
             "key": "postCode",
             "schema": {
-              "generatedName": "cardMerchantDetailsPostCode",
-              "title": "CardMerchantDetails",
+              "generatedName": "CardMerchantDetailsPostCode",
               "value": {
                 "schema": {
                   "type": "string"
@@ -16643,8 +16471,7 @@
             "generatedName": "checkDetailsCheckNumber",
             "key": "checkNumber",
             "schema": {
-              "generatedName": "checkDetailsCheckNumber",
-              "title": "CheckDetails",
+              "generatedName": "CheckDetailsCheckNumber",
               "value": {
                 "schema": {
                   "type": "string"
@@ -16663,8 +16490,7 @@
             "generatedName": "checkDetailsCheckIdentifier",
             "key": "checkIdentifier",
             "schema": {
-              "generatedName": "checkDetailsCheckIdentifier",
-              "title": "CheckDetails",
+              "generatedName": "CheckDetailsCheckIdentifier",
               "value": {
                 "schema": {
                   "type": "string"
@@ -16683,8 +16509,7 @@
             "generatedName": "checkDetailsName",
             "key": "name",
             "schema": {
-              "generatedName": "checkDetailsName",
-              "title": "CheckDetails",
+              "generatedName": "CheckDetailsName",
               "value": {
                 "schema": {
                   "type": "string"
@@ -16703,8 +16528,7 @@
             "generatedName": "checkDetailsDeliveryStatus",
             "key": "deliveryStatus",
             "schema": {
-              "generatedName": "checkDetailsDeliveryStatus",
-              "title": "CheckDetails",
+              "generatedName": "CheckDetailsDeliveryStatus",
               "value": {
                 "generatedName": "CheckDetailsDeliveryStatus",
                 "values": [
@@ -16756,8 +16580,7 @@
             "generatedName": "checkDetailsEtaTimestamp",
             "key": "etaTimestamp",
             "schema": {
-              "generatedName": "checkDetailsEtaTimestamp",
-              "title": "CheckDetails",
+              "generatedName": "CheckDetailsEtaTimestamp",
               "value": {
                 "schema": {
                   "minimum": 1262300400000,
@@ -16777,8 +16600,7 @@
             "generatedName": "checkDetailsShippingAddress",
             "key": "shippingAddress",
             "schema": {
-              "generatedName": "checkDetailsShippingAddress",
-              "title": "CheckDetails",
+              "generatedName": "CheckDetailsShippingAddress",
               "value": {
                 "generatedName": "CheckDetailsShippingAddress",
                 "schema": "Address",
@@ -16788,7 +16610,6 @@
                 },
                 "type": "reference"
               },
-              "groupName": [],
               "type": "optional"
             },
             "audiences": [],
@@ -19454,8 +19275,8 @@
             "generatedName": "mccDetailsDescription",
             "key": "description",
             "schema": {
-              "generatedName": "mccDetailsDescription",
-              "title": "MCCDetails",
+              "generatedName": "MccDetailsDescription",
+              "description": "Merchant Description",
               "value": {
                 "description": "Merchant Description",
                 "schema": {
@@ -19490,8 +19311,7 @@
             "generatedName": "transactionCountLimitDay",
             "key": "day",
             "schema": {
-              "generatedName": "transactionCountLimitDay",
-              "title": "TransactionCountLimit",
+              "generatedName": "TransactionCountLimitDay",
               "value": {
                 "schema": {
                   "type": "double"
@@ -19510,8 +19330,7 @@
             "generatedName": "transactionCountLimitWeek",
             "key": "week",
             "schema": {
-              "generatedName": "transactionCountLimitWeek",
-              "title": "TransactionCountLimit",
+              "generatedName": "TransactionCountLimitWeek",
               "value": {
                 "schema": {
                   "type": "double"
@@ -19530,8 +19349,7 @@
             "generatedName": "transactionCountLimitMonth",
             "key": "month",
             "schema": {
-              "generatedName": "transactionCountLimitMonth",
-              "title": "TransactionCountLimit",
+              "generatedName": "TransactionCountLimitMonth",
               "value": {
                 "schema": {
                   "type": "double"
@@ -19550,8 +19368,7 @@
             "generatedName": "transactionCountLimitYear",
             "key": "year",
             "schema": {
-              "generatedName": "transactionCountLimitYear",
-              "title": "TransactionCountLimit",
+              "generatedName": "TransactionCountLimitYear",
               "value": {
                 "schema": {
                   "type": "double"
@@ -19585,8 +19402,7 @@
             "generatedName": "transactionAmountLimitDay",
             "key": "day",
             "schema": {
-              "generatedName": "transactionAmountLimitDay",
-              "title": "TransactionAmountLimit",
+              "generatedName": "TransactionAmountLimitDay",
               "value": {
                 "generatedName": "TransactionAmountLimitDay",
                 "schema": "Amount",
@@ -19596,7 +19412,6 @@
                 },
                 "type": "reference"
               },
-              "groupName": [],
               "type": "optional"
             },
             "audiences": [],
@@ -19608,8 +19423,7 @@
             "generatedName": "transactionAmountLimitWeek",
             "key": "week",
             "schema": {
-              "generatedName": "transactionAmountLimitWeek",
-              "title": "TransactionAmountLimit",
+              "generatedName": "TransactionAmountLimitWeek",
               "value": {
                 "generatedName": "TransactionAmountLimitWeek",
                 "schema": "Amount",
@@ -19619,7 +19433,6 @@
                 },
                 "type": "reference"
               },
-              "groupName": [],
               "type": "optional"
             },
             "audiences": [],
@@ -19631,8 +19444,7 @@
             "generatedName": "transactionAmountLimitMonth",
             "key": "month",
             "schema": {
-              "generatedName": "transactionAmountLimitMonth",
-              "title": "TransactionAmountLimit",
+              "generatedName": "TransactionAmountLimitMonth",
               "value": {
                 "generatedName": "TransactionAmountLimitMonth",
                 "schema": "Amount",
@@ -19642,7 +19454,6 @@
                 },
                 "type": "reference"
               },
-              "groupName": [],
               "type": "optional"
             },
             "audiences": [],
@@ -19654,8 +19465,7 @@
             "generatedName": "transactionAmountLimitYear",
             "key": "year",
             "schema": {
-              "generatedName": "transactionAmountLimitYear",
-              "title": "TransactionAmountLimit",
+              "generatedName": "TransactionAmountLimitYear",
               "value": {
                 "generatedName": "TransactionAmountLimitYear",
                 "schema": "Amount",
@@ -19665,7 +19475,6 @@
                 },
                 "type": "reference"
               },
-              "groupName": [],
               "type": "optional"
             },
             "audiences": [],
@@ -19692,8 +19501,7 @@
             "generatedName": "transactionLimitTransactionCountLimit",
             "key": "transactionCountLimit",
             "schema": {
-              "generatedName": "transactionLimitTransactionCountLimit",
-              "title": "TransactionLimit",
+              "generatedName": "TransactionLimitTransactionCountLimit",
               "value": {
                 "generatedName": "TransactionLimitTransactionCountLimit",
                 "schema": "TransactionCountLimit",
@@ -19703,7 +19511,6 @@
                 },
                 "type": "reference"
               },
-              "groupName": [],
               "type": "optional"
             },
             "audiences": [],
@@ -19715,8 +19522,7 @@
             "generatedName": "transactionLimitTransactionAmountLimit",
             "key": "transactionAmountLimit",
             "schema": {
-              "generatedName": "transactionLimitTransactionAmountLimit",
-              "title": "TransactionLimit",
+              "generatedName": "TransactionLimitTransactionAmountLimit",
               "value": {
                 "generatedName": "TransactionLimitTransactionAmountLimit",
                 "schema": "TransactionAmountLimit",
@@ -19726,7 +19532,6 @@
                 },
                 "type": "reference"
               },
-              "groupName": [],
               "type": "optional"
             },
             "audiences": [],
@@ -19738,8 +19543,7 @@
             "generatedName": "transactionLimitAverageTransactionAmountLimit",
             "key": "averageTransactionAmountLimit",
             "schema": {
-              "generatedName": "transactionLimitAverageTransactionAmountLimit",
-              "title": "TransactionLimit",
+              "generatedName": "TransactionLimitAverageTransactionAmountLimit",
               "value": {
                 "generatedName": "TransactionLimitAverageTransactionAmountLimit",
                 "schema": "TransactionAmountLimit",
@@ -19749,7 +19553,6 @@
                 },
                 "type": "reference"
               },
-              "groupName": [],
               "type": "optional"
             },
             "audiences": [],
@@ -19847,8 +19650,7 @@
             "generatedName": "sanctionsDetailsEntityType",
             "key": "entityType",
             "schema": {
-              "generatedName": "sanctionsDetailsEntityType",
-              "title": "SanctionsDetails",
+              "generatedName": "SanctionsDetailsEntityType",
               "value": {
                 "generatedName": "SanctionsDetailsEntityType",
                 "schema": "SanctionsDetailsEntityType",
@@ -19858,7 +19660,6 @@
                 },
                 "type": "reference"
               },
-              "groupName": [],
               "type": "optional"
             },
             "audiences": [],
@@ -19937,8 +19738,7 @@
             "generatedName": "businessEntityLinkParentUserId",
             "key": "parentUserId",
             "schema": {
-              "generatedName": "businessEntityLinkParentUserId",
-              "title": "BusinessEntityLink",
+              "generatedName": "BusinessEntityLinkParentUserId",
               "value": {
                 "schema": {
                   "type": "string"
@@ -19957,8 +19757,7 @@
             "generatedName": "businessEntityLinkChildUserIds",
             "key": "childUserIds",
             "schema": {
-              "generatedName": "businessEntityLinkChildUserIds",
-              "title": "BusinessEntityLink",
+              "generatedName": "BusinessEntityLinkChildUserIds",
               "value": {
                 "value": {
                   "schema": {
@@ -20007,7 +19806,7 @@
             "generatedName": "userWithRulesResultExecutedRules",
             "key": "executedRules",
             "schema": {
-              "generatedName": "userWithRulesResultExecutedRules",
+              "generatedName": "UserWithRulesResultExecutedRules",
               "value": {
                 "value": {
                   "generatedName": "UserWithRulesResultExecutedRulesItem",
@@ -20032,7 +19831,7 @@
             "generatedName": "userWithRulesResultHitRules",
             "key": "hitRules",
             "schema": {
-              "generatedName": "userWithRulesResultHitRules",
+              "generatedName": "UserWithRulesResultHitRules",
               "value": {
                 "value": {
                   "generatedName": "UserWithRulesResultHitRulesItem",
@@ -20083,7 +19882,7 @@
             "generatedName": "businessWithRulesResultExecutedRules",
             "key": "executedRules",
             "schema": {
-              "generatedName": "businessWithRulesResultExecutedRules",
+              "generatedName": "BusinessWithRulesResultExecutedRules",
               "value": {
                 "value": {
                   "generatedName": "BusinessWithRulesResultExecutedRulesItem",
@@ -20108,7 +19907,7 @@
             "generatedName": "businessWithRulesResultHitRules",
             "key": "hitRules",
             "schema": {
-              "generatedName": "businessWithRulesResultHitRules",
+              "generatedName": "BusinessWithRulesResultHitRules",
               "value": {
                 "value": {
                   "generatedName": "BusinessWithRulesResultHitRulesItem",
@@ -20149,22 +19948,17 @@
             "generatedName": "thingPublishedAt",
             "key": "publishedAt",
             "schema": {
-              "generatedName": "thingPublishedAt",
+              "generatedName": "ThingPublishedAt",
               "value": {
-                "generatedName": "ThingPublishedAt",
-                "value": {
-                  "schema": {
-                    "type": "string"
-                  },
-                  "generatedName": "ThingPublishedAt",
-                  "groupName": [],
-                  "type": "primitive"
+                "schema": {
+                  "type": "string"
                 },
+                "generatedName": "ThingPublishedAt",
                 "groupName": [],
-                "type": "nullable"
+                "type": "primitive"
               },
               "groupName": [],
-              "type": "optional"
+              "type": "nullable"
             },
             "audiences": [],
             "readonly": true

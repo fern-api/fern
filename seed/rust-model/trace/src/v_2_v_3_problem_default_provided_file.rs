@@ -1,10 +1,8 @@
-use crate::v_2_problem_file_info_v_2::FileInfoV2;
-use crate::commons_variable_type::VariableType;
-use serde::{Deserialize, Serialize};
+pub use crate::prelude::*;
 
-#[derive(Debug, Clone, Serialize, Deserialize)]
-pub struct DefaultProvidedFile {
-    pub file: FileInfoV2,
+#[derive(Debug, Clone, Serialize, Deserialize, PartialEq)]
+pub struct DefaultProvidedFile2 {
+    pub file: FileInfoV22,
     #[serde(rename = "relatedTypes")]
     pub related_types: Vec<VariableType>,
 }

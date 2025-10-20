@@ -3,7 +3,7 @@ import Foundation
 public final class UserClient: Sendable {
     private let httpClient: HTTPClient
 
-    public init(config: ClientConfig) {
+    init(config: ClientConfig) {
         self.httpClient = HTTPClient(config: config)
     }
 
@@ -26,6 +26,15 @@ public final class UserClient: Sendable {
             queryParams: [
                 "tags": .stringArray(tags)
             ],
+            body: request,
+            requestOptions: requestOptions
+        )
+    }
+
+    public func createUsernameOptional(request: Nullable<CreateUsernameBodyOptionalProperties>?, requestOptions: RequestOptions? = nil) async throws -> Void {
+        return try await httpClient.performRequest(
+            method: .post,
+            path: "/user/username-optional",
             body: request,
             requestOptions: requestOptions
         )

@@ -1,8 +1,8 @@
-use serde::{Deserialize, Serialize};
+pub use crate::prelude::*;
 
-#[derive(Debug, Clone, Serialize, Deserialize)]
+#[derive(Debug, Clone, Serialize, Deserialize, PartialEq)]
 pub struct GetQueryRequest {
     pub decimal: f64,
-    pub even: i32,
+    pub even: i64,
     pub name: String,
 }

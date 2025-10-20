@@ -1,8 +1,6 @@
-use crate::submission_workspace_submission_update_info::WorkspaceSubmissionUpdateInfo;
-use chrono::{DateTime, Utc};
-use serde::{Deserialize, Serialize};
+pub use crate::prelude::*;
 
-#[derive(Debug, Clone, Serialize, Deserialize)]
+#[derive(Debug, Clone, Serialize, Deserialize, PartialEq)]
 pub struct WorkspaceSubmissionUpdate {
     #[serde(rename = "updateTime")]
     pub update_time: DateTime<Utc>,

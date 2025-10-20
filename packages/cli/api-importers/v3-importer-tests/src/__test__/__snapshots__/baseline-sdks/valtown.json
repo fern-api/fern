@@ -41360,7 +41360,7 @@
           "type": "inlined"
         },
         "response": {
-          "type": "json"
+          "type": "fileDownload"
         },
         "examples": []
       },

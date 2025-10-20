@@ -11,7 +11,7 @@ Add this to your `Cargo.toml`:
 
 ```toml
 [dependencies]
-seed_nullable = "0.1.0"
+seed_nullable = "0.0.1"
 ```
 
 Or install via cargo:
@@ -20,13 +20,17 @@ Or install via cargo:
 cargo add seed_nullable
 ```
 
+## Reference
+
+A full reference for this library is available [here](./reference.md).
+
 ## Usage
 
 Instantiate and use the client with the following:
 
 ```rust
 use chrono::{DateTime, Utc};
-use seed_nullable::{ClientConfig, CreateUserRequest, NullableClient, Status};
+use seed_nullable::prelude::*;
 use std::collections::{HashMap, HashSet};
 
 #[tokio::main]
@@ -69,53 +73,29 @@ async fn main() {
 When the API returns a non-success status code (4xx or 5xx response), an error will be returned.
 
 ```rust
-use seed_nullable::{ApiError, ClientConfig, NullableClient};
-
-#[tokio::main]
-async fn main() -> Result<(), ApiError> {
-    let config = ClientConfig {
-        base_url: " ".to_string(),
-        api_key: Some("your-api-key".to_string())
-    };
-    let client = NullableClient::new(config)?;
-    match client.some_method().await {
-        Ok(response) => {
-            println!("Success: {:?}", response);
-        },
-        Err(ApiError::HTTP { status, message }) => {
-            println!("API Error {}: {:?}", status, message);
-        },
-        Err(e) => {
-            println!("Other error: {:?}", e);
-        }
+match client.nullable.create_user(None)?.await {
+    Ok(response) => {
+        println!("Success: {:?}", response);
+    },
+    Err(ApiError::HTTP { status, message }) => {
+        println!("API Error {}: {:?}", status, message);
+    },
+    Err(e) => {
+        println!("Other error: {:?}", e);
     }
-    return Ok(());
 }
 ```
 
-## Pagination
+## Request Types
 
-For paginated endpoints, the SDK automatically handles pagination using async streams. Use `futures::StreamExt` to iterate through all pages.
+The SDK exports all request types as Rust structs. Simply import them from the crate to access them:
 
 ```rust
-use seed_nullable::{ClientConfig, NullableClient};
-use futures::{StreamExt};
+use seed_nullable::prelude::{*};
 
-#[tokio::main]
-async fn main() {
-    let config = ClientConfig {
-        base_url: " ".to_string(),
-        api_key: Some("your-api-key".to_string())
-    };
-    let client = NullableClient::new(config).expect("Failed to build client");
-    let mut paginated_stream = client.nullable.create_user().await?;
-    while let Some(item) = paginated_stream.next().await {
-            match item {
-                Ok(data) => println!("Received item: {:?}", data),
-                Err(e) => eprintln!("Error fetching page: {}", e),
-            }
-        }
-}
+let request = CreateUserRequest {
+    ...
+};
 ```
 
 ## Advanced
@@ -135,17 +115,9 @@ A request is deemed retryable when any of the following HTTP status codes is ret
 Use the `max_retries` method to configure this behavior.
 
 ```rust
-use seed_nullable::{ClientConfig, NullableClient};
-
-#[tokio::main]
-async fn main() {
-    let config = ClientConfig {
-        base_url: " ".to_string(),
-        api_key: Some("your-api-key".to_string()),
-        max_retries: 3
-    };
-    let client = NullableClient::new(config).expect("Failed to build client");
-}
+let response = client.nullable.create_user(
+    Some(RequestOptions::new().max_retries(3))
+)?.await;
 ```
 
 ### Timeouts
@@ -153,18 +125,39 @@ async fn main() {
 The SDK defaults to a 30 second timeout. Use the `timeout` method to configure this behavior.
 
 ```rust
-use seed_nullable::{ClientConfig, NullableClient};
-use std::time::{Duration};
+let response = client.nullable.create_user(
+    Some(RequestOptions::new().timeout_seconds(30))
+)?.await;
+```
 
-#[tokio::main]
-async fn main() {
-    let config = ClientConfig {
-        base_url: " ".to_string(),
-        api_key: Some("your-api-key".to_string()),
-        timeout: Duration::from_secs(30)
-    };
-    let client = NullableClient::new(config).expect("Failed to build client");
-}
+### Additional Headers
+
+You can add custom headers to requests using `RequestOptions`.
+
+```rust
+let response = client.nullable.create_user(
+    Some(
+        RequestOptions::new()
+            .additional_header("X-Custom-Header", "custom-value")
+            .additional_header("X-Another-Header", "another-value")
+    )
+)?
+.await;
+```
+
+### Additional Query String Parameters
+
+You can add custom query parameters to requests using `RequestOptions`.
+
+```rust
+let response = client.nullable.create_user(
+    Some(
+        RequestOptions::new()
+            .additional_query_param("filter", "active")
+            .additional_query_param("sort", "desc")
+    )
+)?
+.await;
 ```
 
 ## Contributing

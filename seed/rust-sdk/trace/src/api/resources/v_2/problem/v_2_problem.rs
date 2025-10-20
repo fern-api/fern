@@ -98,14 +98,14 @@ impl V2ProblemClient {
     pub async fn get_problem_version(
         &self,
         problem_id: &ProblemId,
-        problem_version: i32,
+        problem_version: i64,
         options: Option<RequestOptions>,
     ) -> Result<ProblemInfoV2, ApiError> {
         self.http_client
             .execute_request(
                 Method::GET,
                 &format!(
-                    "/problems-v2/problem-info/{}{}",
+                    "/problems-v2/problem-info/{}/version/{}",
                     problem_id.0, problem_version
                 ),
                 None,

@@ -15,6 +15,7 @@
                 "value": {
                   "message": "message",
                   "multipleRolesNotAllowedError": {
+                    "resource": null,
                     "roles": [
                       "roles",
                     ],
@@ -26,7 +27,9 @@
                 "docs": undefined,
                 "name": undefined,
                 "value": {
-                  "invalidSubjectTypeError": {},
+                  "invalidSubjectTypeError": {
+                    "subject": null,
+                  },
                   "message": "message",
                   "reason": "INVALID_SUBJECT_TYPE",
                 },
@@ -70,7 +73,10 @@
                 "docs": undefined,
                 "name": undefined,
                 "value": {
-                  "invalidMemberError": {},
+                  "invalidMemberError": {
+                    "resource": null,
+                    "subject": null,
+                  },
                   "message": "message",
                 },
               },
@@ -304,9 +310,7 @@
                   "pattern": undefined,
                 },
               },
-              "description": {
-                "type": "optional<nullable<string>>",
-              },
+              "description": "nullable<string>",
               "documents_have_been_modified": {
                 "default": false,
                 "type": "optional<boolean>",
@@ -320,15 +324,9 @@
                   "pattern": undefined,
                 },
               },
-              "last_message": {
-                "type": "optional<nullable<datetime>>",
-              },
-              "summary": {
-                "type": "optional<nullable<string>>",
-              },
-              "title": {
-                "type": "optional<nullable<string>>",
-              },
+              "last_message": "nullable<datetime>",
+              "summary": "nullable<string>",
+              "title": "nullable<string>",
             },
             "source": {
               "openapi": "../openapi.yml",
@@ -340,11 +338,9 @@
             "properties": {
               "chat_guardrails": {
                 "docs": "Conversational Guardrails can be defined to run against Chat `input` (i.e. the users query) or on Chat `output` (i.e. the LLM output)",
-                "type": "optional<nullable<ConversationalGuardrails>>",
+                "type": "nullable<ConversationalGuardrails>",
               },
-              "chat_system_commands": {
-                "type": "optional<nullable<list<string>>>",
-              },
+              "chat_system_commands": "nullable<list<string>>",
               "knn": {
                 "default": 5,
                 "type": "optional<integer>",
@@ -437,7 +433,7 @@
             "properties": {
               "chunks": "integer",
               "connection_id": {
-                "type": "optional<nullable<string>>",
+                "type": "nullable<string>",
                 "validation": {
                   "format": "uuid",
                   "maxLength": undefined,
@@ -445,9 +441,7 @@
                   "pattern": undefined,
                 },
               },
-              "description": {
-                "type": "optional<nullable<string>>",
-              },
+              "description": "nullable<string>",
               "embedding_instances": "nullable<list<ChatDocumentEmbeddingInstance>>",
               "id": {
                 "type": "string",
@@ -468,12 +462,8 @@
                   "pattern": undefined,
                 },
               },
-              "source": {
-                "type": "optional<nullable<ChatDocumentSource>>",
-              },
-              "source_meta": {
-                "type": "optional<nullable<map<string, unknown>>>",
-              },
+              "source": "nullable<ChatDocumentSource>",
+              "source_meta": "nullable<map<string, unknown>>",
               "strategy": "string",
               "title": "string",
             },
@@ -494,9 +484,7 @@
                   "pattern": undefined,
                 },
               },
-              "config": {
-                "type": "optional<nullable<map<string, unknown>>>",
-              },
+              "config": "nullable<map<string, unknown>>",
               "id": {
                 "type": "string",
                 "validation": {
@@ -724,9 +712,7 @@
                   "pattern": undefined,
                 },
               },
-              "summary": {
-                "type": "optional<nullable<string>>",
-              },
+              "summary": "nullable<string>",
               "title": "string",
             },
             "source": {
@@ -794,50 +780,24 @@
             "docs": undefined,
             "inline": undefined,
             "properties": {
-              "audience": {
-                "type": "optional<nullable<string>>",
-              },
-              "content": {
-                "type": "optional<nullable<string>>",
-              },
-              "cta": {
-                "type": "optional<nullable<string>>",
-              },
-              "deny_words": {
-                "type": "optional<nullable<string>>",
-              },
-              "domain": {
-                "type": "optional<nullable<string>>",
-              },
-              "favourable_words": {
-                "type": "optional<nullable<string>>",
-              },
-              "keywords": {
-                "type": "optional<nullable<string>>",
-              },
+              "audience": "nullable<string>",
+              "content": "nullable<string>",
+              "cta": "nullable<string>",
+              "deny_words": "nullable<string>",
+              "domain": "nullable<string>",
+              "favourable_words": "nullable<string>",
+              "keywords": "nullable<string>",
               "language": {
                 "default": "english_british",
                 "type": "optional<ComposeInitLanguage>",
               },
-              "num_sections": {
-                "type": "optional<nullable<integer>>",
-              },
-              "purpose": {
-                "type": "optional<nullable<string>>",
-              },
+              "num_sections": "nullable<integer>",
+              "purpose": "nullable<string>",
               "title": "string",
-              "tone": {
-                "type": "optional<nullable<string>>",
-              },
-              "topic": {
-                "type": "optional<nullable<string>>",
-              },
-              "voice": {
-                "type": "optional<nullable<string>>",
-              },
-              "word_count": {
-                "type": "optional<nullable<integer>>",
-              },
+              "tone": "nullable<string>",
+              "topic": "nullable<string>",
+              "voice": "nullable<string>",
+              "word_count": "nullable<integer>",
             },
             "source": {
               "openapi": "../openapi.yml",
@@ -879,9 +839,7 @@
               },
               "position": "integer",
               "section_title": "string",
-              "text": {
-                "type": "optional<nullable<string>>",
-              },
+              "text": "nullable<string>",
             },
             "source": {
               "openapi": "../openapi.yml",
@@ -943,7 +901,7 @@
                 "type": "optional<map<string, unknown>>",
               },
               "created_by": {
-                "type": "optional<nullable<string>>",
+                "type": "nullable<string>",
                 "validation": {
                   "format": "uuid",
                   "maxLength": undefined,
@@ -952,7 +910,7 @@
                 },
               },
               "datasource_id": {
-                "type": "optional<nullable<string>>",
+                "type": "nullable<string>",
                 "validation": {
                   "format": "uuid",
                   "maxLength": undefined,
@@ -969,11 +927,9 @@
                   "pattern": undefined,
                 },
               },
-              "private": {
-                "type": "optional<nullable<boolean>>",
-              },
+              "private": "nullable<boolean>",
               "project_id": {
-                "type": "optional<nullable<string>>",
+                "type": "nullable<string>",
                 "validation": {
                   "format": "uuid",
                   "maxLength": undefined,
@@ -1047,9 +1003,7 @@
               "created": {
                 "type": "datetime",
               },
-              "datasource_connection": {
-                "type": "optional<nullable<DatasourceConnection>>",
-              },
+              "datasource_connection": "nullable<DatasourceConnection>",
               "id": {
                 "type": "string",
                 "validation": {
@@ -1062,16 +1016,12 @@
               "modified": {
                 "type": "datetime",
               },
-              "run_output": {
-                "type": "optional<nullable<map<string, unknown>>>",
-              },
+              "run_output": "nullable<map<string, unknown>>",
               "status": {
                 "default": "pending",
                 "type": "optional<DatasourceSyncRunStatus>",
               },
-              "task_id": {
-                "type": "optional<nullable<string>>",
-              },
+              "task_id": "nullable<string>",
             },
             "source": {
               "openapi": "../openapi.yml",
@@ -1096,9 +1046,7 @@
             "docs": undefined,
             "inline": undefined,
             "properties": {
-              "info": {
-                "type": "optional<nullable<map<string, unknown>>>",
-              },
+              "info": "nullable<map<string, unknown>>",
               "state": {
                 "type": "DocumentCreateTaskState",
               },
@@ -1205,7 +1153,7 @@
             "properties": {
               "avatar_url": {
                 "docs": "If avatar of the member, if it is supported by their subject type.",
-                "type": "optional<nullable<string>>",
+                "type": "nullable<string>",
               },
               "member": {
                 "docs": "The member identifier string, the format of which is '<subject_type>:<subject_id>'",
@@ -1213,7 +1161,7 @@
               },
               "name": {
                 "docs": "The name of the member.",
-                "type": "optional<nullable<string>>",
+                "type": "nullable<string>",
               },
               "roles": {
                 "docs": "A list of roles that the member holds on an entity.
@@ -1235,9 +1183,7 @@ Some entities, such as Organizations, may contain members that exist without any
             "docs": undefined,
             "inline": undefined,
             "properties": {
-              "id": {
-                "type": "optional<nullable<string>>",
-              },
+              "id": "nullable<string>",
               "type": "string",
             },
             "source": {
@@ -1248,9 +1194,7 @@ Some entities, such as Organizations, may contain members that exist without any
             "docs": undefined,
             "inline": undefined,
             "properties": {
-              "member": {
-                "type": "optional<nullable<string>>",
-              },
+              "member": "nullable<string>",
               "permissions": {
                 "type": "list<string>",
               },
@@ -1263,9 +1207,7 @@ Some entities, such as Organizations, may contain members that exist without any
             "docs": undefined,
             "inline": undefined,
             "properties": {
-              "ideas": {
-                "type": "optional<nullable<list<string>>>",
-              },
+              "ideas": "nullable<list<string>>",
               "position": "integer",
               "title": "string",
             },
@@ -1299,12 +1241,8 @@ Some entities, such as Organizations, may contain members that exist without any
             "docs": undefined,
             "inline": undefined,
             "properties": {
-              "resource": {
-                "type": "optional<nullable<IamObjectErrorDetails>>",
-              },
-              "subject": {
-                "type": "optional<nullable<IamObjectErrorDetails>>",
-              },
+              "resource": "nullable<IamObjectErrorDetails>",
+              "subject": "nullable<IamObjectErrorDetails>",
             },
             "source": {
               "openapi": "../openapi.yml",
@@ -1331,9 +1269,7 @@ Some entities, such as Organizations, may contain members that exist without any
             "docs": undefined,
             "inline": undefined,
             "properties": {
-              "resource": {
-                "type": "optional<nullable<IamObjectErrorDetails>>",
-              },
+              "resource": "nullable<IamObjectErrorDetails>",
               "role": "string",
             },
             "source": {
@@ -1361,9 +1297,7 @@ Some entities, such as Organizations, may contain members that exist without any
             "docs": undefined,
             "inline": undefined,
             "properties": {
-              "subject": {
-                "type": "optional<nullable<IamObjectErrorDetails>>",
-              },
+              "subject": "nullable<IamObjectErrorDetails>",
             },
             "source": {
               "openapi": "../openapi.yml",
@@ -1411,11 +1345,9 @@ Some entities, such as Organizations, may contain members that exist without any
             "extra-properties": true,
             "inline": undefined,
             "properties": {
-              "avatar_url": {
-                "type": "optional<nullable<string>>",
-              },
+              "avatar_url": "nullable<string>",
               "email": {
-                "type": "optional<nullable<string>>",
+                "type": "nullable<string>",
                 "validation": {
                   "format": "email",
                   "maxLength": undefined,
@@ -1423,11 +1355,9 @@ Some entities, such as Organizations, may contain members that exist without any
                   "pattern": undefined,
                 },
               },
-              "name": {
-                "type": "optional<nullable<string>>",
-              },
+              "name": "nullable<string>",
               "org_id": {
-                "type": "optional<nullable<string>>",
+                "type": "nullable<string>",
                 "validation": {
                   "format": "uuid",
                   "maxLength": undefined,
@@ -1436,7 +1366,7 @@ Some entities, such as Organizations, may contain members that exist without any
                 },
               },
               "project_id": {
-                "type": "optional<nullable<string>>",
+                "type": "nullable<string>",
                 "validation": {
                   "format": "uuid",
                   "maxLength": undefined,
@@ -1444,9 +1374,7 @@ Some entities, such as Organizations, may contain members that exist without any
                   "pattern": undefined,
                 },
               },
-              "sso_email_verified": {
-                "type": "optional<nullable<boolean>>",
-              },
+              "sso_email_verified": "nullable<boolean>",
             },
             "source": {
               "openapi": "../openapi.yml",
@@ -1456,14 +1384,10 @@ Some entities, such as Organizations, may contain members that exist without any
             "docs": undefined,
             "inline": undefined,
             "properties": {
-              "bio": {
-                "type": "optional<nullable<string>>",
-              },
-              "ctx": {
-                "type": "optional<nullable<map<string, unknown>>>",
-              },
+              "bio": "nullable<string>",
+              "ctx": "nullable<map<string, unknown>>",
               "email": {
-                "type": "optional<nullable<string>>",
+                "type": "nullable<string>",
                 "validation": {
                   "format": "email",
                   "maxLength": undefined,
@@ -1472,7 +1396,7 @@ Some entities, such as Organizations, may contain members that exist without any
                 },
               },
               "flow_id": {
-                "type": "optional<nullable<string>>",
+                "type": "nullable<string>",
                 "validation": {
                   "format": "uuid",
                   "maxLength": undefined,
@@ -1480,12 +1404,8 @@ Some entities, such as Organizations, may contain members that exist without any
                   "pattern": undefined,
                 },
               },
-              "flow_type": {
-                "type": "optional<nullable<string>>",
-              },
-              "identity": {
-                "type": "optional<nullable<KratosIdentity>>",
-              },
+              "flow_type": "nullable<string>",
+              "identity": "nullable<KratosIdentity>",
               "identity_id": {
                 "type": "string",
                 "validation": {
@@ -1505,9 +1425,7 @@ Some entities, such as Organizations, may contain members that exist without any
 https://github.com/ory/kratos/blob/master/selfservice/hook/web_hook.go",
             "inline": undefined,
             "properties": {
-              "context": {
-                "type": "optional<unknown>",
-              },
+              "context": "nullable<unknown>",
               "id": "integer",
               "text": "string",
               "type": {
@@ -1552,9 +1470,7 @@ https://github.com/ory/kratos/blob/master/selfservice/hook/web_hook.go",
               "identity": {
                 "type": "optional<nullable<KratosWebhookResponseIdentity>>",
               },
-              "messages": {
-                "type": "optional<nullable<list<KratosWebhookErrorMessage>>>",
-              },
+              "messages": "nullable<list<KratosWebhookErrorMessage>>",
             },
             "source": {
               "openapi": "../openapi.yml",
@@ -1625,9 +1541,7 @@ https://github.com/ory/kratos/blob/master/selfservice/hook/web_hook.go",
             "docs": undefined,
             "inline": undefined,
             "properties": {
-              "resource": {
-                "type": "optional<nullable<IamObjectErrorDetails>>",
-              },
+              "resource": "nullable<IamObjectErrorDetails>",
               "roles": {
                 "type": "list<string>",
               },
@@ -1696,20 +1610,12 @@ https://github.com/ory/kratos/blob/master/selfservice/hook/web_hook.go",
             "docs": undefined,
             "inline": undefined,
             "properties": {
-              "createdTime": {
-                "type": "optional<nullable<string>>",
-              },
+              "createdTime": "nullable<string>",
               "id": "string",
-              "mimeType": {
-                "type": "optional<nullable<string>>",
-              },
-              "modifiedTime": {
-                "type": "optional<nullable<string>>",
-              },
+              "mimeType": "nullable<string>",
+              "modifiedTime": "nullable<string>",
               "name": "string",
-              "size": {
-                "type": "optional<nullable<string>>",
-              },
+              "size": "nullable<string>",
               "synced": {
                 "default": false,
                 "type": "optional<boolean>",
@@ -1750,9 +1656,7 @@ https://github.com/ory/kratos/blob/master/selfservice/hook/web_hook.go",
             "docs": undefined,
             "inline": undefined,
             "properties": {
-              "avatar_url": {
-                "type": "optional<nullable<string>>",
-              },
+              "avatar_url": "nullable<string>",
               "contact_email": {
                 "type": "string",
                 "validation": {
@@ -1854,9 +1758,7 @@ https://github.com/ory/kratos/blob/master/selfservice/hook/web_hook.go",
                   "pattern": undefined,
                 },
               },
-              "roles": {
-                "type": "optional<nullable<list<string>>>",
-              },
+              "roles": "nullable<list<string>>",
             },
             "source": {
               "openapi": "../openapi.yml",
@@ -1936,7 +1838,7 @@ https://github.com/ory/kratos/blob/master/selfservice/hook/web_hook.go",
             "properties": {
               "pagination": {
                 "docs": "Contains pagination information for the result set.",
-                "type": "optional<nullable<PaginationDetails>>",
+                "type": "nullable<PaginationDetails>",
               },
               "results": {
                 "docs": "The list of items returned for the current page.",
@@ -1953,7 +1855,7 @@ https://github.com/ory/kratos/blob/master/selfservice/hook/web_hook.go",
             "properties": {
               "pagination": {
                 "docs": "Contains pagination information for the result set.",
-                "type": "optional<nullable<PaginationDetails>>",
+                "type": "nullable<PaginationDetails>",
               },
               "results": {
                 "docs": "The list of items returned for the current page.",
@@ -1970,7 +1872,7 @@ https://github.com/ory/kratos/blob/master/selfservice/hook/web_hook.go",
             "properties": {
               "pagination": {
                 "docs": "Contains pagination information for the result set.",
-                "type": "optional<nullable<PaginationDetails>>",
+                "type": "nullable<PaginationDetails>",
               },
               "results": {
                 "docs": "The list of items returned for the current page.",
@@ -1987,7 +1889,7 @@ https://github.com/ory/kratos/blob/master/selfservice/hook/web_hook.go",
             "properties": {
               "pagination": {
                 "docs": "Contains pagination information for the result set.",
-                "type": "optional<nullable<PaginationDetails>>",
+                "type": "nullable<PaginationDetails>",
               },
               "results": {
                 "docs": "The list of items returned for the current page.",
@@ -2004,7 +1906,7 @@ https://github.com/ory/kratos/blob/master/selfservice/hook/web_hook.go",
             "properties": {
               "pagination": {
                 "docs": "Contains pagination information for the result set.",
-                "type": "optional<nullable<PaginationDetails>>",
+                "type": "nullable<PaginationDetails>",
               },
               "results": {
                 "docs": "The list of items returned for the current page.",
@@ -2021,7 +1923,7 @@ https://github.com/ory/kratos/blob/master/selfservice/hook/web_hook.go",
             "properties": {
               "pagination": {
                 "docs": "Contains pagination information for the result set.",
-                "type": "optional<nullable<PaginationDetails>>",
+                "type": "nullable<PaginationDetails>",
               },
               "results": {
                 "docs": "The list of items returned for the current page.",
@@ -2038,7 +1940,7 @@ https://github.com/ory/kratos/blob/master/selfservice/hook/web_hook.go",
             "properties": {
               "pagination": {
                 "docs": "Contains pagination information for the result set.",
-                "type": "optional<nullable<PaginationDetails>>",
+                "type": "nullable<PaginationDetails>",
               },
               "results": {
                 "docs": "The list of items returned for the current page.",
@@ -2055,7 +1957,7 @@ https://github.com/ory/kratos/blob/master/selfservice/hook/web_hook.go",
             "properties": {
               "pagination": {
                 "docs": "Contains pagination information for the result set.",
-                "type": "optional<nullable<PaginationDetails>>",
+                "type": "nullable<PaginationDetails>",
               },
               "results": {
                 "docs": "The list of items returned for the current page.",
@@ -2072,7 +1974,7 @@ https://github.com/ory/kratos/blob/master/selfservice/hook/web_hook.go",
             "properties": {
               "pagination": {
                 "docs": "Contains pagination information for the result set.",
-                "type": "optional<nullable<PaginationDetails>>",
+                "type": "nullable<PaginationDetails>",
               },
               "results": {
                 "docs": "The list of items returned for the current page.",
@@ -2089,7 +1991,7 @@ https://github.com/ory/kratos/blob/master/selfservice/hook/web_hook.go",
             "properties": {
               "pagination": {
                 "docs": "Contains pagination information for the result set.",
-                "type": "optional<nullable<PaginationDetails>>",
+                "type": "nullable<PaginationDetails>",
               },
               "results": {
                 "docs": "The list of items returned for the current page.",
@@ -2106,7 +2008,7 @@ https://github.com/ory/kratos/blob/master/selfservice/hook/web_hook.go",
             "properties": {
               "pagination": {
                 "docs": "Contains pagination information for the result set.",
-                "type": "optional<nullable<PaginationDetails>>",
+                "type": "nullable<PaginationDetails>",
               },
               "results": {
                 "docs": "The list of items returned for the current page.",
@@ -2123,7 +2025,7 @@ https://github.com/ory/kratos/blob/master/selfservice/hook/web_hook.go",
             "properties": {
               "pagination": {
                 "docs": "Contains pagination information for the result set.",
-                "type": "optional<nullable<PaginationDetails>>",
+                "type": "nullable<PaginationDetails>",
               },
               "results": {
                 "docs": "The list of items returned for the current page.",
@@ -2140,15 +2042,15 @@ https://github.com/ory/kratos/blob/master/selfservice/hook/web_hook.go",
             "properties": {
               "has_next": {
                 "docs": "Indicates whether there are more results available in the next page.",
-                "type": "optional<nullable<boolean>>",
+                "type": "nullable<boolean>",
               },
               "next_cursor": {
                 "docs": "A token used to retrieve the next page of results. If `null`, there are no more results.",
-                "type": "optional<nullable<string>>",
+                "type": "nullable<string>",
               },
               "page_limit": {
                 "docs": "The maximum number of items returned per page.",
-                "type": "optional<nullable<integer>>",
+                "type": "nullable<integer>",
               },
             },
             "source": {
@@ -2160,12 +2062,8 @@ https://github.com/ory/kratos/blob/master/selfservice/hook/web_hook.go",
             "inline": undefined,
             "properties": {
               "permission": "string",
-              "resource": {
-                "type": "optional<nullable<IamObjectErrorDetails>>",
-              },
-              "subject": {
-                "type": "optional<nullable<IamObjectErrorDetails>>",
-              },
+              "resource": "nullable<IamObjectErrorDetails>",
+              "subject": "nullable<IamObjectErrorDetails>",
             },
             "source": {
               "openapi": "../openapi.yml",
@@ -2192,9 +2090,7 @@ https://github.com/ory/kratos/blob/master/selfservice/hook/web_hook.go",
             "docs": undefined,
             "inline": undefined,
             "properties": {
-              "avatar_url": {
-                "type": "optional<nullable<string>>",
-              },
+              "avatar_url": "nullable<string>",
               "id": {
                 "type": "string",
                 "validation": {
@@ -2215,7 +2111,7 @@ https://github.com/ory/kratos/blob/master/selfservice/hook/web_hook.go",
                 },
               },
               "tasks_oauth_client_id": {
-                "type": "optional<nullable<string>>",
+                "type": "nullable<string>",
                 "validation": {
                   "format": "uuid",
                   "maxLength": undefined,
@@ -2232,12 +2128,8 @@ https://github.com/ory/kratos/blob/master/selfservice/hook/web_hook.go",
             "docs": undefined,
             "inline": undefined,
             "properties": {
-              "chat_guardrails": {
-                "type": "optional<nullable<ConversationalGuardrails>>",
-              },
-              "chat_system_commands": {
-                "type": "optional<nullable<list<string>>>",
-              },
+              "chat_guardrails": "nullable<ConversationalGuardrails>",
+              "chat_system_commands": "nullable<list<string>>",
               "knn": {
                 "default": 4,
                 "type": "optional<integer>",
@@ -2328,9 +2220,7 @@ https://github.com/ory/kratos/blob/master/selfservice/hook/web_hook.go",
             "docs": undefined,
             "inline": undefined,
             "properties": {
-              "avatar_url": {
-                "type": "optional<nullable<string>>",
-              },
+              "avatar_url": "nullable<string>",
               "datasource_connections": {
                 "type": "optional<list<DatasourceConnectionPublic>>",
               },
@@ -2354,7 +2244,7 @@ https://github.com/ory/kratos/blob/master/selfservice/hook/web_hook.go",
                 },
               },
               "tasks_oauth_client_id": {
-                "type": "optional<nullable<string>>",
+                "type": "nullable<string>",
                 "validation": {
                   "format": "uuid",
                   "maxLength": undefined,
@@ -2407,7 +2297,7 @@ https://github.com/ory/kratos/blob/master/selfservice/hook/web_hook.go",
               },
               "description": {
                 "docs": "A longer description of the Task for internal reference.",
-                "type": "optional<nullable<string>>",
+                "type": "nullable<string>",
               },
               "enabled": {
                 "docs": "When `true` the Task is active and callable. `false` denotes the Task is not yet operational.",
@@ -2456,11 +2346,11 @@ https://github.com/ory/kratos/blob/master/selfservice/hook/web_hook.go",
             "properties": {
               "config": {
                 "docs": "Configuration parameters for the Task Forwarder such as a `destination` URL.",
-                "type": "optional<nullable<TaskForwarderConfig>>",
+                "type": "nullable<TaskForwarderConfig>",
               },
               "config_sensitive": {
                 "docs": "Sensitive parameters for the Task Forwarder such as a `signing_key`.",
-                "type": "optional<nullable<TaskForwarderSensitiveConfig>>",
+                "type": "nullable<TaskForwarderSensitiveConfig>",
               },
               "created": {
                 "docs": "When the Task Forwarder was created.",
@@ -2468,7 +2358,7 @@ https://github.com/ory/kratos/blob/master/selfservice/hook/web_hook.go",
               },
               "description": {
                 "docs": "Additional details about the Task Forwarder's purpose or configuration.",
-                "type": "optional<nullable<string>>",
+                "type": "nullable<string>",
               },
               "id": {
                 "docs": "The unique identifier of the Task Forwarder.",
@@ -2619,12 +2509,12 @@ https://github.com/ory/kratos/blob/master/selfservice/hook/web_hook.go",
                 ],
                 "availability": "pre-release",
                 "docs": "**Note: This is a Paid Tier feature.** Provide additional domain specific input to the LLM so that it is able to reference user specific information when executing the Task. Examples of this could be a product catalogue, terms and conditions or a user manual.",
-                "type": "optional<nullable<TaskRag>>",
+                "type": "nullable<TaskRag>",
               },
               "system_prompt": "unknown",
               "task_forwarder_id": {
                 "docs": "The unique identifier for a valid Task Forwarder. It is used to forward the Task output to another system or service.",
-                "type": "optional<nullable<string>>",
+                "type": "nullable<string>",
                 "validation": {
                   "format": "uuid",
                   "maxLength": undefined,
@@ -2755,12 +2645,8 @@ https://github.com/ory/kratos/blob/master/selfservice/hook/web_hook.go",
             "docs": undefined,
             "inline": undefined,
             "properties": {
-              "avatar_url": {
-                "type": "optional<nullable<string>>",
-              },
-              "bio": {
-                "type": "optional<nullable<string>>",
-              },
+              "avatar_url": "nullable<string>",
+              "bio": "nullable<string>",
               "email": {
                 "type": "string",
                 "validation": {
@@ -2862,12 +2748,14 @@ errors:
       - value:
           message: message
           multipleRolesNotAllowedError:
+            resource: null
             roles:
               - roles
           reason: MULTIPLE_ROLES_NOT_ALLOWED
       - value:
           message: message
-          invalidSubjectTypeError: {}
+          invalidSubjectTypeError:
+            subject: null
           reason: INVALID_SUBJECT_TYPE
       - value:
           message: message
@@ -2897,7 +2785,9 @@ errors:
     examples:
       - value:
           message: message
-          invalidMemberError: {}
+          invalidMemberError:
+            resource: null
+            subject: null
 types:
   ForbiddenErrorBody:
     discriminant: reason
@@ -2974,12 +2864,9 @@ types:
       openapi: ../openapi.yml
   Chat:
     properties:
-      title:
-        type: optional<nullable<string>>
-      description:
-        type: optional<nullable<string>>
-      summary:
-        type: optional<nullable<string>>
+      title: nullable<string>
+      description: nullable<string>
+      summary: nullable<string>
       collection_id:
         type: string
         validation:
@@ -2990,8 +2877,7 @@ types:
         type: string
         validation:
           format: uuid
-      last_message:
-        type: optional<nullable<datetime>>
+      last_message: nullable<datetime>
       id:
         type: string
         validation:
@@ -3045,10 +2931,9 @@ types:
       knn:
         type: optional<integer>
         default: 5
-      chat_system_commands:
-        type: optional<nullable<list<string>>>
+      chat_system_commands: nullable<list<string>>
       chat_guardrails:
-        type: optional<nullable<ConversationalGuardrails>>
+        type: nullable<ConversationalGuardrails>
         docs: >-
           Conversational Guardrails can be defined to run against Chat `input`
           (i.e. the users query) or on Chat `output` (i.e. the LLM output)
@@ -3081,15 +2966,12 @@ types:
         type: string
         validation:
           format: uuid
-      description:
-        type: optional<nullable<string>>
-      source:
-        type: optional<nullable<ChatDocumentSource>>
+      description: nullable<string>
+      source: nullable<ChatDocumentSource>
       strategy: string
-      source_meta:
-        type: optional<nullable<map<string, unknown>>>
+      source_meta: nullable<map<string, unknown>>
       connection_id:
-        type: optional<nullable<string>>
+        type: nullable<string>
         validation:
           format: uuid
       id:
@@ -3103,8 +2985,7 @@ types:
       openapi: ../openapi.yml
   ChatDocumentEmbeddingInstance:
     properties:
-      config:
-        type: optional<nullable<map<string, unknown>>>
+      config: nullable<map<string, unknown>>
       id:
         type: string
         validation:
@@ -3221,8 +3102,7 @@ types:
         type: string
         validation:
           format: uuid
-      summary:
-        type: optional<nullable<string>>
+      summary: nullable<string>
       created:
         type: datetime
       modified:
@@ -3278,32 +3158,19 @@ types:
   ComposeInit:
     properties:
       title: string
-      topic:
-        type: optional<nullable<string>>
-      purpose:
-        type: optional<nullable<string>>
-      audience:
-        type: optional<nullable<string>>
-      num_sections:
-        type: optional<nullable<integer>>
-      word_count:
-        type: optional<nullable<integer>>
-      voice:
-        type: optional<nullable<string>>
-      domain:
-        type: optional<nullable<string>>
-      tone:
-        type: optional<nullable<string>>
-      favourable_words:
-        type: optional<nullable<string>>
-      deny_words:
-        type: optional<nullable<string>>
-      keywords:
-        type: optional<nullable<string>>
-      cta:
-        type: optional<nullable<string>>
-      content:
-        type: optional<nullable<string>>
+      topic: nullable<string>
+      purpose: nullable<string>
+      audience: nullable<string>
+      num_sections: nullable<integer>
+      word_count: nullable<integer>
+      voice: nullable<string>
+      domain: nullable<string>
+      tone: nullable<string>
+      favourable_words: nullable<string>
+      deny_words: nullable<string>
+      keywords: nullable<string>
+      cta: nullable<string>
+      content: nullable<string>
       language:
         type: optional<ComposeInitLanguage>
         default: english_british
@@ -3320,8 +3187,7 @@ types:
       section_title: string
       instructions:
         type: list<string>
-      text:
-        type: optional<nullable<string>>
+      text: nullable<string>
     source:
       openapi: ../openapi.yml
   ConversationalGuardrails:
@@ -3352,14 +3218,13 @@ types:
       openapi: ../openapi.yml
   DatasourceConnection:
     properties:
-      private:
-        type: optional<nullable<boolean>>
+      private: nullable<boolean>
       project_id:
-        type: optional<nullable<string>>
+        type: nullable<string>
         validation:
           format: uuid
       datasource_id:
-        type: optional<nullable<string>>
+        type: nullable<string>
         validation:
           format: uuid
       config:
@@ -3368,7 +3233,7 @@ types:
         type: optional<string>
         default: ''
       created_by:
-        type: optional<nullable<string>>
+        type: nullable<string>
         validation:
           format: uuid
       id:
@@ -3417,13 +3282,11 @@ types:
       openapi: ../openapi.yml
   DatasourceSyncRun:
     properties:
-      task_id:
-        type: optional<nullable<string>>
+      task_id: nullable<string>
       status:
         type: optional<DatasourceSyncRunStatus>
         default: pending
-      run_output:
-        type: optional<nullable<map<string, unknown>>>
+      run_output: nullable<map<string, unknown>>
       id:
         type: string
         validation:
@@ -3432,8 +3295,7 @@ types:
         type: datetime
       modified:
         type: datetime
-      datasource_connection:
-        type: optional<nullable<DatasourceConnection>>
+      datasource_connection: nullable<DatasourceConnection>
     source:
       openapi: ../openapi.yml
   DocumentCreateTaskState:
@@ -3452,8 +3314,7 @@ types:
       task_id: string
       state:
         type: DocumentCreateTaskState
-      info:
-        type: optional<nullable<map<string, unknown>>>
+      info: nullable<map<string, unknown>>
     source:
       openapi: ../openapi.yml
   DocumentStatusResponse:
@@ -3503,10 +3364,10 @@ types:
           Some entities, such as Organizations, may contain members that exist
           without any roles.
       name:
-        type: optional<nullable<string>>
+        type: nullable<string>
         docs: The name of the member.
       avatar_url:
-        type: optional<nullable<string>>
+        type: nullable<string>
         docs: If avatar of the member, if it is supported by their subject type.
       total_subjects:
         type: optional<integer>
@@ -3519,24 +3380,21 @@ types:
   IamObjectErrorDetails:
     properties:
       type: string
-      id:
-        type: optional<nullable<string>>
+      id: nullable<string>
     source:
       openapi: ../openapi.yml
   IamPermissionTest:
     properties:
       permissions:
         type: list<string>
-      member:
-        type: optional<nullable<string>>
+      member: nullable<string>
     source:
       openapi: ../openapi.yml
   InitialComposeSection:
     properties:
       position: integer
       title: string
-      ideas:
-        type: optional<nullable<list<string>>>
+      ideas: nullable<list<string>>
     source:
       openapi: ../openapi.yml
   InputConversationalGuardrailDefinitionName:
@@ -3554,10 +3412,8 @@ types:
       openapi: ../openapi.yml
   InvalidMemberErrorDetails:
     properties:
-      resource:
-        type: optional<nullable<IamObjectErrorDetails>>
-      subject:
-        type: optional<nullable<IamObjectErrorDetails>>
+      resource: nullable<IamObjectErrorDetails>
+      subject: nullable<IamObjectErrorDetails>
     source:
       openapi: ../openapi.yml
   InvalidMemberErrorResponse:
@@ -3572,8 +3428,7 @@ types:
       openapi: ../openapi.yml
   InvalidRoleErrorDetails:
     properties:
-      resource:
-        type: optional<nullable<IamObjectErrorDetails>>
+      resource: nullable<IamObjectErrorDetails>
       role: string
     source:
       openapi: ../openapi.yml
@@ -3589,8 +3444,7 @@ types:
       openapi: ../openapi.yml
   InvalidSubjectTypeErrorDetails:
     properties:
-      subject:
-        type: optional<nullable<IamObjectErrorDetails>>
+      subject: nullable<IamObjectErrorDetails>
     source:
       openapi: ../openapi.yml
   InvalidSubjectTypeErrorResponse:
@@ -3616,23 +3470,20 @@ types:
   KratosIdentityTraits:
     properties:
       email:
-        type: optional<nullable<string>>
+        type: nullable<string>
         validation:
           format: email
-      name:
-        type: optional<nullable<string>>
-      avatar_url:
-        type: optional<nullable<string>>
+      name: nullable<string>
+      avatar_url: nullable<string>
       project_id:
-        type: optional<nullable<string>>
+        type: nullable<string>
         validation:
           format: uuid
       org_id:
-        type: optional<nullable<string>>
+        type: nullable<string>
         validation:
           format: uuid
-      sso_email_verified:
-        type: optional<nullable<boolean>>
+      sso_email_verified: nullable<boolean>
     extra-properties: true
     source:
       openapi: ../openapi.yml
@@ -3643,21 +3494,17 @@ types:
         validation:
           format: uuid
       email:
-        type: optional<nullable<string>>
+        type: nullable<string>
         validation:
           format: email
-      bio:
-        type: optional<nullable<string>>
+      bio: nullable<string>
       flow_id:
-        type: optional<nullable<string>>
+        type: nullable<string>
         validation:
           format: uuid
-      flow_type:
-        type: optional<nullable<string>>
-      identity:
-        type: optional<nullable<KratosIdentity>>
-      ctx:
-        type: optional<nullable<map<string, unknown>>>
+      flow_type: nullable<string>
+      identity: nullable<KratosIdentity>
+      ctx: nullable<map<string, unknown>>
     source:
       openapi: ../openapi.yml
   KratosWebhookDetailedMessageType:
@@ -3678,8 +3525,7 @@ types:
       text: string
       type:
         type: KratosWebhookDetailedMessageType
-      context:
-        type: optional<unknown>
+      context: nullable<unknown>
     source:
       openapi: ../openapi.yml
   KratosWebhookErrorMessage:
@@ -3705,8 +3551,7 @@ types:
       Sourced from rawHookResponse in:
       https://github.com/ory/kratos/blob/master/selfservice/hook/web_hook.go
     properties:
-      messages:
-        type: optional<nullable<list<KratosWebhookErrorMessage>>>
+      messages: nullable<list<KratosWebhookErrorMessage>>
       identity:
         type: optional<nullable<KratosWebhookResponseIdentity>>
     source:
@@ -3740,8 +3585,7 @@ types:
       openapi: ../openapi.yml
   MultipleRolesNotAllowedErrorDetails:
     properties:
-      resource:
-        type: optional<nullable<IamObjectErrorDetails>>
+      resource: nullable<IamObjectErrorDetails>
       roles:
         type: list<string>
     source:
@@ -3786,14 +3630,10 @@ types:
       synced:
         type: optional<boolean>
         default: false
-      size:
-        type: optional<nullable<string>>
-      mimeType:
-        type: optional<nullable<string>>
-      createdTime:
-        type: optional<nullable<string>>
-      modifiedTime:
-        type: optional<nullable<string>>
+      size: nullable<string>
+      mimeType: nullable<string>
+      createdTime: nullable<string>
+      modifiedTime: nullable<string>
       type: nullable<ObjectType>
       tags:
         type: optional<list<ObjectTags>>
@@ -3820,8 +3660,7 @@ types:
         type: string
         validation:
           format: email
-      avatar_url:
-        type: optional<nullable<string>>
+      avatar_url: nullable<string>
       id:
         type: string
         validation:
@@ -3867,8 +3706,7 @@ types:
         type: string
         validation:
           format: email
-      roles:
-        type: optional<nullable<list<string>>>
+      roles: nullable<list<string>>
       id:
         type: string
         validation:
@@ -3916,7 +3754,7 @@ types:
   PaginatedResultSetChatDocumentEmbeddingRecord:
     properties:
       pagination:
-        type: optional<nullable<PaginationDetails>>
+        type: nullable<PaginationDetails>
         docs: Contains pagination information for the result set.
       results:
         docs: The list of items returned for the current page.
@@ -3926,7 +3764,7 @@ types:
   PaginatedResultSetChatDocument:
     properties:
       pagination:
-        type: optional<nullable<PaginationDetails>>
+        type: nullable<PaginationDetails>
         docs: Contains pagination information for the result set.
       results:
         docs: The list of items returned for the current page.
@@ -3936,7 +3774,7 @@ types:
   PaginatedResultSetChat:
     properties:
       pagination:
-        type: optional<nullable<PaginationDetails>>
+        type: nullable<PaginationDetails>
         docs: Contains pagination information for the result set.
       results:
         docs: The list of items returned for the current page.
@@ -3946,7 +3784,7 @@ types:
   PaginatedResultSetCollection:
     properties:
       pagination:
-        type: optional<nullable<PaginationDetails>>
+        type: nullable<PaginationDetails>
         docs: Contains pagination information for the result set.
       results:
         docs: The list of items returned for the current page.
@@ -3956,7 +3794,7 @@ types:
   PaginatedResultSetDatasourceSyncRun:
     properties:
       pagination:
-        type: optional<nullable<PaginationDetails>>
+        type: nullable<PaginationDetails>
         docs: Contains pagination information for the result set.
       results:
         docs: The list of items returned for the current page.
@@ -3966,7 +3804,7 @@ types:
   PaginatedResultSetIamMember:
     properties:
       pagination:
-        type: optional<nullable<PaginationDetails>>
+        type: nullable<PaginationDetails>
         docs: Contains pagination information for the result set.
       results:
         docs: The list of items returned for the current page.
@@ -3976,7 +3814,7 @@ types:
   PaginatedResultSetOrganizationDomain:
     properties:
       pagination:
-        type: optional<nullable<PaginationDetails>>
+        type: nullable<PaginationDetails>
         docs: Contains pagination information for the result set.
       results:
         docs: The list of items returned for the current page.
@@ -3986,7 +3824,7 @@ types:
   PaginatedResultSetOrganizationInvite:
     properties:
       pagination:
-        type: optional<nullable<PaginationDetails>>
+        type: nullable<PaginationDetails>
         docs: Contains pagination information for the result set.
       results:
         docs: The list of items returned for the current page.
@@ -3996,7 +3834,7 @@ types:
   PaginatedResultSetProject:
     properties:
       pagination:
-        type: optional<nullable<PaginationDetails>>
+        type: nullable<PaginationDetails>
         docs: Contains pagination information for the result set.
       results:
         docs: The list of items returned for the current page.
@@ -4006,7 +3844,7 @@ types:
   PaginatedResultSetTaskForwarder:
     properties:
       pagination:
-        type: optional<nullable<PaginationDetails>>
+        type: nullable<PaginationDetails>
         docs: Contains pagination information for the result set.
       results:
         docs: The list of items returned for the current page.
@@ -4016,7 +3854,7 @@ types:
   PaginatedResultSetTaskRun:
     properties:
       pagination:
-        type: optional<nullable<PaginationDetails>>
+        type: nullable<PaginationDetails>
         docs: Contains pagination information for the result set.
       results:
         docs: The list of items returned for the current page.
@@ -4026,7 +3864,7 @@ types:
   PaginatedResultSetTask:
     properties:
       pagination:
-        type: optional<nullable<PaginationDetails>>
+        type: nullable<PaginationDetails>
         docs: Contains pagination information for the result set.
       results:
         docs: The list of items returned for the current page.
@@ -4036,24 +3874,22 @@ types:
   PaginationDetails:
     properties:
       next_cursor:
-        type: optional<nullable<string>>
+        type: nullable<string>
         docs: >-
           A token used to retrieve the next page of results. If `null`, there
           are no more results.
       has_next:
-        type: optional<nullable<boolean>>
+        type: nullable<boolean>
         docs: Indicates whether there are more results available in the next page.
       page_limit:
-        type: optional<nullable<integer>>
+        type: nullable<integer>
         docs: The maximum number of items returned per page.
     source:
       openapi: ../openapi.yml
   PermissionCheckFailedErrorDetails:
     properties:
-      subject:
-        type: optional<nullable<IamObjectErrorDetails>>
-      resource:
-        type: optional<nullable<IamObjectErrorDetails>>
+      subject: nullable<IamObjectErrorDetails>
+      resource: nullable<IamObjectErrorDetails>
       permission: string
     source:
       openapi: ../openapi.yml
@@ -4070,8 +3906,7 @@ types:
   Project:
     properties:
       name: string
-      avatar_url:
-        type: optional<nullable<string>>
+      avatar_url: nullable<string>
       id:
         type: string
         validation:
@@ -4081,7 +3916,7 @@ types:
         validation:
           format: uuid
       tasks_oauth_client_id:
-        type: optional<nullable<string>>
+        type: nullable<string>
         validation:
           format: uuid
     source:
@@ -4130,10 +3965,8 @@ types:
       knn:
         type: optional<integer>
         default: 4
-      chat_system_commands:
-        type: optional<nullable<list<string>>>
-      chat_guardrails:
-        type: optional<nullable<ConversationalGuardrails>>
+      chat_system_commands: nullable<list<string>>
+      chat_guardrails: nullable<ConversationalGuardrails>
       query_expansion:
         type: optional<boolean>
         docs: >-
@@ -4145,8 +3978,7 @@ types:
   ProjectWithDatasources:
     properties:
       name: string
-      avatar_url:
-        type: optional<nullable<string>>
+      avatar_url: nullable<string>
       id:
         type: string
         validation:
@@ -4156,7 +3988,7 @@ types:
         validation:
           format: uuid
       tasks_oauth_client_id:
-        type: optional<nullable<string>>
+        type: nullable<string>
         validation:
           format: uuid
       datasource_connections:
@@ -4190,7 +4022,7 @@ types:
         type: string
         docs: A name or reference for the Task.
       description:
-        type: optional<nullable<string>>
+        type: nullable<string>
         docs: A longer description of the Task for internal reference.
       enabled:
         type: boolean
@@ -4227,17 +4059,17 @@ types:
         type: string
         docs: A descriptive name for the Task Forwarder.
       description:
-        type: optional<nullable<string>>
+        type: nullable<string>
         docs: >-
           Additional details about the Task Forwarder's purpose or
           configuration.
       config:
-        type: optional<nullable<TaskForwarderConfig>>
+        type: nullable<TaskForwarderConfig>
         docs: >-
           Configuration parameters for the Task Forwarder such as a
           `destination` URL.
       config_sensitive:
-        type: optional<nullable<TaskForwarderSensitiveConfig>>
+        type: nullable<TaskForwarderSensitiveConfig>
         docs: Sensitive parameters for the Task Forwarder such as a `signing_key`.
       id:
         type: string
@@ -4361,22 +4193,22 @@ types:
           optional `description` can be passed to provide it with additional
           context.
       task_forwarder_id:
-        type: optional<nullable<string>>
+        type: nullable<string>
         docs: >-
           The unique identifier for a valid Task Forwarder. It is used to
           forward the Task output to another system or service.
         validation:
           format: uuid
       rag:
-        type: optional<nullable<TaskRag>>
+        type: nullable<TaskRag>
         docs: >-
           **Note: This is a Paid Tier feature.** Provide additional domain
           specific input to the LLM so that it is able to reference user
           specific information when executing the Task. Examples of this could
           be a product catalogue, terms and conditions or a user manual.
-        availability: pre-release
         audiences:
           - paid
+        availability: pre-release
       image_required:
         type: optional<boolean>
         docs: When `true` it requires an image to be sent in the Task Run request.
@@ -4432,10 +4264,8 @@ types:
         validation:
           format: email
       name: nullable<string>
-      bio:
-        type: optional<nullable<string>>
-      avatar_url:
-        type: optional<nullable<string>>
+      bio: nullable<string>
+      avatar_url: nullable<string>
       id:
         type: string
         validation:
@@ -4523,15 +4353,9 @@ types:
                         "pattern": undefined,
                       },
                     },
-                    "description": {
-                      "type": "optional<nullable<string>>",
-                    },
-                    "summary": {
-                      "type": "optional<nullable<string>>",
-                    },
-                    "title": {
-                      "type": "optional<nullable<string>>",
-                    },
+                    "description": "nullable<string>",
+                    "summary": "nullable<string>",
+                    "title": "nullable<string>",
                   },
                 },
                 "content-type": "application/json",
@@ -4902,9 +4726,7 @@ types:
               "request": {
                 "body": {
                   "properties": {
-                    "member": {
-                      "type": "optional<nullable<string>>",
-                    },
+                    "member": "nullable<string>",
                     "permissions": {
                       "docs": "A list of permissions to test on the chat.",
                       "type": "list<ChatIamPermissionTestPermissionsItem>",
@@ -4987,7 +4809,7 @@ This may be combined with `remove_all` to replace the member's entire role list.
                     },
                     "remove_all": {
                       "docs": "Removes all existing roles from the member. This may be combined with `add` to replace all existing roles that the member holds.",
-                      "type": "optional<nullable<boolean>>",
+                      "type": "nullable<boolean>",
                     },
                   },
                 },
@@ -5124,11 +4946,9 @@ This may be combined with `remove_all` to replace the member's entire role list.
                   "properties": {
                     "chat_guardrails": {
                       "docs": "Conversational Guardrails can be defined to run against Chat `input` (i.e. the users query) or on Chat `output` (i.e. the LLM output)",
-                      "type": "optional<nullable<root.ConversationalGuardrails>>",
+                      "type": "nullable<root.ConversationalGuardrails>",
                     },
-                    "chat_system_commands": {
-                      "type": "optional<nullable<list<string>>>",
-                    },
+                    "chat_system_commands": "nullable<list<string>>",
                     "knn": {
                       "default": 5,
                       "type": "optional<integer>",
@@ -5540,10 +5360,9 @@ service:
             knn:
               type: optional<integer>
               default: 5
-            chat_system_commands:
-              type: optional<nullable<list<string>>>
+            chat_system_commands: nullable<list<string>>
             chat_guardrails:
-              type: optional<nullable<root.ConversationalGuardrails>>
+              type: nullable<root.ConversationalGuardrails>
               docs: >-
                 Conversational Guardrails can be defined to run against Chat
                 `input` (i.e. the users query) or on Chat `output` (i.e. the LLM
@@ -5595,12 +5414,9 @@ service:
         name: ChatCreate
         body:
           properties:
-            title:
-              type: optional<nullable<string>>
-            description:
-              type: optional<nullable<string>>
-            summary:
-              type: optional<nullable<string>>
+            title: nullable<string>
+            description: nullable<string>
+            summary: nullable<string>
             collection_id:
               type: string
               validation:
@@ -5779,7 +5595,7 @@ service:
               type: optional<list<ChatIamMemberRoleUpdateRemoveItem>>
               docs: A list of chat roles to revoke from the member.
             remove_all:
-              type: optional<nullable<boolean>>
+              type: nullable<boolean>
               docs: >-
                 Removes all existing roles from the member. This may be combined
                 with `add` to replace all existing roles that the member holds.
@@ -5828,8 +5644,7 @@ service:
             permissions:
               docs: A list of permissions to test on the chat.
               type: list<ChatIamPermissionTestPermissionsItem>
-            member:
-              type: optional<nullable<string>>
+            member: nullable<string>
         content-type: application/json
       response:
         docs: Successful Response
@@ -6553,9 +6368,7 @@ types:
               "request": {
                 "body": {
                   "properties": {
-                    "member": {
-                      "type": "optional<nullable<string>>",
-                    },
+                    "member": "nullable<string>",
                     "permissions": {
                       "docs": "A list of permissions to test on the collection.",
                       "type": "list<CollectionIamPermissionTestPermissionsItem>",
@@ -6642,7 +6455,7 @@ This may be combined with `remove_all` to replace the member's entire role list.
                     },
                     "remove_all": {
                       "docs": "Removes all existing roles from the member. This may be combined with `add` to replace all existing roles that the member holds.",
-                      "type": "optional<nullable<boolean>>",
+                      "type": "nullable<boolean>",
                     },
                   },
                 },
@@ -6795,6 +6608,7 @@ This may be combined with `remove_all` to replace the member's entire role list.
                           "embedding_instances": [
                             {
                               "chat_document_id": "chat_document_id",
+                              "config": null,
                               "id": "id",
                               "is_active": true,
                             },
@@ -7085,7 +6899,8 @@ service:
                   created: '2024-01-15T09:30:00Z'
                   modified: '2024-01-15T09:30:00Z'
                   embedding_instances:
-                    - id: id
+                    - config: null
+                      id: id
                       chat_document_id: chat_document_id
                       is_active: true
     createCollection:
@@ -7634,7 +7449,7 @@ service:
               type: optional<list<CollectionIamMemberRoleUpdateRemoveItem>>
               docs: A list of collection roles to revoke from the member.
             remove_all:
-              type: optional<nullable<boolean>>
+              type: nullable<boolean>
               docs: >-
                 Removes all existing roles from the member. This may be combined
                 with `add` to replace all existing roles that the member holds.
@@ -7687,8 +7502,7 @@ service:
             permissions:
               docs: A list of permissions to test on the collection.
               type: list<CollectionIamPermissionTestPermissionsItem>
-            member:
-              type: optional<nullable<string>>
+            member: nullable<string>
         content-type: application/json
       response:
         docs: Successful Response
@@ -8812,7 +8626,11 @@ service:
                         {
                           "created": "2024-01-15T09:30:00Z",
                           "datasource_connection": {
+                            "created_by": null,
+                            "datasource_id": null,
                             "id": "id",
+                            "private": null,
+                            "project_id": null,
                           },
                           "id": "id",
                           "modified": "2024-01-15T09:30:00Z",
@@ -9134,6 +8952,10 @@ service:
                   created: '2024-01-15T09:30:00Z'
                   modified: '2024-01-15T09:30:00Z'
                   datasource_connection:
+                    private: null
+                    project_id: null
+                    datasource_id: null
+                    created_by: null
                     id: id
     checkStatus:
       path: /org/{org_id}/project/{project_id}/datasource/box/{connection_id}/run
@@ -9748,7 +9570,11 @@ service:
                         {
                           "created": "2024-01-15T09:30:00Z",
                           "datasource_connection": {
+                            "created_by": null,
+                            "datasource_id": null,
                             "id": "id",
+                            "private": null,
+                            "project_id": null,
                           },
                           "id": "id",
                           "modified": "2024-01-15T09:30:00Z",
@@ -10074,6 +9900,10 @@ service:
                   created: '2024-01-15T09:30:00Z'
                   modified: '2024-01-15T09:30:00Z'
                   datasource_connection:
+                    private: null
+                    project_id: null
+                    datasource_id: null
+                    created_by: null
                     id: id
     checkStatus:
       path: >-
@@ -10691,7 +10521,11 @@ service:
                         {
                           "created": "2024-01-15T09:30:00Z",
                           "datasource_connection": {
+                            "created_by": null,
+                            "datasource_id": null,
                             "id": "id",
+                            "private": null,
+                            "project_id": null,
                           },
                           "id": "id",
                           "modified": "2024-01-15T09:30:00Z",
@@ -11017,6 +10851,10 @@ service:
                   created: '2024-01-15T09:30:00Z'
                   modified: '2024-01-15T09:30:00Z'
                   datasource_connection:
+                    private: null
+                    project_id: null
+                    datasource_id: null
+                    created_by: null
                     id: id
     checkStatus:
       path: >-
@@ -11634,7 +11472,11 @@ service:
                         {
                           "created": "2024-01-15T09:30:00Z",
                           "datasource_connection": {
+                            "created_by": null,
+                            "datasource_id": null,
                             "id": "id",
+                            "private": null,
+                            "project_id": null,
                           },
                           "id": "id",
                           "modified": "2024-01-15T09:30:00Z",
@@ -11960,6 +11802,10 @@ service:
                   created: '2024-01-15T09:30:00Z'
                   modified: '2024-01-15T09:30:00Z'
                   datasource_connection:
+                    private: null
+                    project_id: null
+                    datasource_id: null
+                    created_by: null
                     id: id
     checkStatus:
       path: /org/{org_id}/project/{project_id}/datasource/gdrive/{connection_id}/run
@@ -12576,7 +12422,11 @@ service:
                         {
                           "created": "2024-01-15T09:30:00Z",
                           "datasource_connection": {
+                            "created_by": null,
+                            "datasource_id": null,
                             "id": "id",
+                            "private": null,
+                            "project_id": null,
                           },
                           "id": "id",
                           "modified": "2024-01-15T09:30:00Z",
@@ -12902,6 +12752,10 @@ service:
                   created: '2024-01-15T09:30:00Z'
                   modified: '2024-01-15T09:30:00Z'
                   datasource_connection:
+                    private: null
+                    project_id: null
+                    datasource_id: null
+                    created_by: null
                     id: id
     checkStatus:
       path: /org/{org_id}/project/{project_id}/datasource/notion/{connection_id}/run
@@ -13518,7 +13372,11 @@ service:
                         {
                           "created": "2024-01-15T09:30:00Z",
                           "datasource_connection": {
+                            "created_by": null,
+                            "datasource_id": null,
                             "id": "id",
+                            "private": null,
+                            "project_id": null,
                           },
                           "id": "id",
                           "modified": "2024-01-15T09:30:00Z",
@@ -13844,6 +13702,10 @@ service:
                   created: '2024-01-15T09:30:00Z'
                   modified: '2024-01-15T09:30:00Z'
                   datasource_connection:
+                    private: null
+                    project_id: null
+                    datasource_id: null
+                    created_by: null
                     id: id
     checkStatus:
       path: >-
@@ -14461,7 +14323,11 @@ service:
                         {
                           "created": "2024-01-15T09:30:00Z",
                           "datasource_connection": {
+                            "created_by": null,
+                            "datasource_id": null,
                             "id": "id",
+                            "private": null,
+                            "project_id": null,
                           },
                           "id": "id",
                           "modified": "2024-01-15T09:30:00Z",
@@ -14787,6 +14653,10 @@ service:
                   created: '2024-01-15T09:30:00Z'
                   modified: '2024-01-15T09:30:00Z'
                   datasource_connection:
+                    private: null
+                    project_id: null
+                    datasource_id: null
+                    created_by: null
                     id: id
     checkStatus:
       path: >-
@@ -15325,6 +15195,7 @@ service:
                           "embedding_instances": [
                             {
                               "chat_document_id": "chat_document_id",
+                              "config": null,
                               "id": "id",
                               "is_active": true,
                             },
@@ -15523,9 +15394,7 @@ service:
               "request": {
                 "body": {
                   "properties": {
-                    "description": {
-                      "type": "optional<nullable<string>>",
-                    },
+                    "description": "nullable<string>",
                     "title": "string",
                   },
                 },
@@ -15585,6 +15454,7 @@ service:
                         "embedding_instances": [
                           {
                             "chat_document_id": "chat_document_id",
+                            "config": null,
                             "id": "id",
                             "is_active": true,
                           },
@@ -15813,9 +15683,7 @@ service:
               "request": {
                 "body": {
                   "properties": {
-                    "member": {
-                      "type": "optional<nullable<string>>",
-                    },
+                    "member": "nullable<string>",
                     "permissions": {
                       "docs": "A list of permissions to test on the document.",
                       "type": "list<DocumentIamPermissionTestPermissionsItem>",
@@ -15902,7 +15770,7 @@ This may be combined with `remove_all` to replace the member's entire role list.
                     },
                     "remove_all": {
                       "docs": "Removes all existing roles from the member. This may be combined with `add` to replace all existing roles that the member holds.",
-                      "type": "optional<nullable<boolean>>",
+                      "type": "nullable<boolean>",
                     },
                   },
                 },
@@ -16195,7 +16063,8 @@ service:
                   chunks: 1
                   original_mime: original_mime
                   embedding_instances:
-                    - id: id
+                    - config: null
+                      id: id
                       chat_document_id: chat_document_id
                       is_active: true
     documentCreate:
@@ -16291,7 +16160,8 @@ service:
                 chunks: 1
                 original_mime: original_mime
                 embedding_instances:
-                  - id: id
+                  - config: null
+                    id: id
                     chat_document_id: chat_document_id
                     is_active: true
     taskStatus:
@@ -16438,8 +16308,7 @@ service:
         body:
           properties:
             title: string
-            description:
-              type: optional<nullable<string>>
+            description: nullable<string>
         content-type: application/json
       response:
         docs: Successful Response
@@ -16719,7 +16588,7 @@ service:
               type: optional<list<DocumentIamMemberRoleUpdateRemoveItem>>
               docs: A list of document roles to revoke from the member.
             remove_all:
-              type: optional<nullable<boolean>>
+              type: nullable<boolean>
               docs: >-
                 Removes all existing roles from the member. This may be combined
                 with `add` to replace all existing roles that the member holds.
@@ -16772,8 +16641,7 @@ service:
             permissions:
               docs: A list of permissions to test on the document.
               type: list<DocumentIamPermissionTestPermissionsItem>
-            member:
-              type: optional<nullable<string>>
+            member: nullable<string>
         content-type: application/json
       response:
         docs: Successful Response
@@ -16863,12 +16731,8 @@ service:
                         "pattern": undefined,
                       },
                     },
-                    "profile": {
-                      "type": "optional<root.OAuthClientProfile>",
-                    },
-                    "redirect_uris": {
-                      "type": "optional<nullable<list<string>>>",
-                    },
+                    "profile": "optional<root.OAuthClientProfile>",
+                    "redirect_uris": "nullable<list<string>>",
                   },
                 },
                 "content-type": "application/json",
@@ -16962,6 +16826,7 @@ service:
                           "instance_ptr": "instance_ptr",
                           "messages": [
                             {
+                              "context": null,
                               "id": 1,
                               "text": "text",
                               "type": "info",
@@ -17013,6 +16878,7 @@ service:
                           "instance_ptr": "instance_ptr",
                           "messages": [
                             {
+                              "context": null,
                               "id": 1,
                               "text": "text",
                               "type": "info",
@@ -17104,10 +16970,8 @@ service:
               validation:
                 minLength: 1
                 maxLength: 255
-            profile:
-              type: optional<root.OAuthClientProfile>
-            redirect_uris:
-              type: optional<nullable<list<string>>>
+            profile: optional<root.OAuthClientProfile>
+            redirect_uris: nullable<list<string>>
         content-type: application/json
       response:
         docs: Successful Response
@@ -17156,6 +17020,7 @@ service:
                     - id: 1
                       text: text
                       type: info
+                      context: null
               identity:
                 key: value
     webhookKratosSignupCommit:
@@ -17185,6 +17050,7 @@ service:
                     - id: 1
                       text: text
                       type: info
+                      context: null
               identity:
                 key: value
   source:
@@ -17892,9 +17758,7 @@ service:
                         "pattern": undefined,
                       },
                     },
-                    "roles": {
-                      "type": "optional<nullable<list<string>>>",
-                    },
+                    "roles": "nullable<list<string>>",
                   },
                 },
                 "content-type": "application/json",
@@ -18183,7 +18047,7 @@ service:
                 "body": {
                   "properties": {
                     "contact_email": {
-                      "type": "optional<nullable<string>>",
+                      "type": "nullable<string>",
                       "validation": {
                         "format": "email",
                         "maxLength": undefined,
@@ -18442,9 +18306,7 @@ service:
               "request": {
                 "body": {
                   "properties": {
-                    "member": {
-                      "type": "optional<nullable<string>>",
-                    },
+                    "member": "nullable<string>",
                     "permissions": {
                       "docs": "A list of permissions to test on the organization.",
                       "type": "list<OrganizationIamPermissionTestPermissionsItem>",
@@ -18527,7 +18389,7 @@ This may be combined with `remove_all` to replace the member's entire role list.
                     },
                     "remove_all": {
                       "docs": "Removes all existing roles from the member. This may be combined with `add` to replace all existing roles that the member holds.",
-                      "type": "optional<nullable<boolean>>",
+                      "type": "nullable<boolean>",
                     },
                   },
                 },
@@ -18772,7 +18634,7 @@ service:
               type: optional<list<OrganizationIamMemberRoleUpdateRemoveItem>>
               docs: A list of organization roles to revoke from the member.
             remove_all:
-              type: optional<nullable<boolean>>
+              type: nullable<boolean>
               docs: >-
                 Removes all existing roles from the member. This may be combined
                 with `add` to replace all existing roles that the member holds.
@@ -18821,8 +18683,7 @@ service:
             permissions:
               docs: A list of permissions to test on the organization.
               type: list<OrganizationIamPermissionTestPermissionsItem>
-            member:
-              type: optional<nullable<string>>
+            member: nullable<string>
         content-type: application/json
       response:
         docs: Successful Response
@@ -18957,7 +18818,7 @@ service:
         body:
           properties:
             contact_email:
-              type: optional<nullable<string>>
+              type: nullable<string>
               validation:
                 format: email
         content-type: application/json
@@ -19079,8 +18940,7 @@ service:
               type: string
               validation:
                 format: email
-            roles:
-              type: optional<nullable<list<string>>>
+            roles: nullable<list<string>>
         content-type: application/json
       response:
         docs: Successful Response
@@ -19646,9 +19506,7 @@ service:
               "request": {
                 "body": {
                   "properties": {
-                    "member": {
-                      "type": "optional<nullable<string>>",
-                    },
+                    "member": "nullable<string>",
                     "permissions": {
                       "docs": "A list of permissions to test on the project.",
                       "type": "list<ProjectIamPermissionTestPermissionsItem>",
@@ -19733,7 +19591,7 @@ This may be combined with `remove_all` to replace the member's entire role list.
                     },
                     "remove_all": {
                       "docs": "Removes all existing roles from the member. This may be combined with `add` to replace all existing roles that the member holds.",
-                      "type": "optional<nullable<boolean>>",
+                      "type": "nullable<boolean>",
                     },
                   },
                 },
@@ -19946,12 +19804,8 @@ This may be combined with `remove_all` to replace the member's entire role list.
               "request": {
                 "body": {
                   "properties": {
-                    "chat_guardrails": {
-                      "type": "optional<nullable<root.ConversationalGuardrails>>",
-                    },
-                    "chat_system_commands": {
-                      "type": "optional<nullable<list<string>>>",
-                    },
+                    "chat_guardrails": "nullable<root.ConversationalGuardrails>",
+                    "chat_system_commands": "nullable<list<string>>",
                     "knn": {
                       "default": 4,
                       "type": "optional<integer>",
@@ -20038,9 +19892,7 @@ This may be combined with `remove_all` to replace the member's entire role list.
               "request": {
                 "body": {
                   "properties": {
-                    "name": {
-                      "type": "optional<nullable<string>>",
-                    },
+                    "name": "nullable<string>",
                   },
                 },
                 "content-type": "application/json",
@@ -20355,8 +20207,7 @@ service:
           project_id: string
         body:
           properties:
-            name:
-              type: optional<nullable<string>>
+            name: nullable<string>
         content-type: application/json
       response:
         docs: Successful Response
@@ -20441,10 +20292,8 @@ service:
             knn:
               type: optional<integer>
               default: 4
-            chat_system_commands:
-              type: optional<nullable<list<string>>>
-            chat_guardrails:
-              type: optional<nullable<root.ConversationalGuardrails>>
+            chat_system_commands: nullable<list<string>>
+            chat_guardrails: nullable<root.ConversationalGuardrails>
             query_expansion:
               type: optional<boolean>
               docs: >-
@@ -20641,7 +20490,7 @@ service:
               type: optional<list<ProjectIamMemberRoleUpdateRemoveItem>>
               docs: A list of project roles to revoke from the member.
             remove_all:
-              type: optional<nullable<boolean>>
+              type: nullable<boolean>
               docs: >-
                 Removes all existing roles from the member. This may be combined
                 with `add` to replace all existing roles that the member holds.
@@ -20692,8 +20541,7 @@ service:
             permissions:
               docs: A list of permissions to test on the project.
               type: list<ProjectIamPermissionTestPermissionsItem>
-            member:
-              type: optional<nullable<string>>
+            member: nullable<string>
         content-type: application/json
       response:
         docs: Successful Response
@@ -21045,7 +20893,11 @@ types:
                         {
                           "created": "2024-01-15T09:30:00Z",
                           "datasource_connection": {
+                            "created_by": null,
+                            "datasource_id": null,
                             "id": "id",
+                            "private": null,
+                            "project_id": null,
                           },
                           "id": "id",
                           "modified": "2024-01-15T09:30:00Z",
@@ -21264,6 +21116,10 @@ service:
                   created: '2024-01-15T09:30:00Z'
                   modified: '2024-01-15T09:30:00Z'
                   datasource_connection:
+                    private: null
+                    project_id: null
+                    datasource_id: null
+                    created_by: null
                     id: id
   source:
     openapi: ../openapi.yml
@@ -21347,15 +21203,15 @@ service:
                   "properties": {
                     "config": {
                       "docs": "Configuration parameters for the Task Forwarder such as a `destination` URL.",
-                      "type": "optional<nullable<root.TaskForwarderConfig>>",
+                      "type": "nullable<root.TaskForwarderConfig>",
                     },
                     "config_sensitive": {
                       "docs": "Sensitive parameters for the Task Forwarder such as a `signing_key`.",
-                      "type": "optional<nullable<root.TaskForwarderSensitiveConfig>>",
+                      "type": "nullable<root.TaskForwarderSensitiveConfig>",
                     },
                     "description": {
                       "docs": "Additional details about the Task Forwarder's purpose or configuration.",
-                      "type": "optional<nullable<string>>",
+                      "type": "nullable<string>",
                     },
                     "name": {
                       "docs": "A descriptive name for the Task Forwarder.",
@@ -21632,19 +21488,19 @@ service:
                   "properties": {
                     "config": {
                       "docs": "Configuration parameters for the Task Forwarder such as a `destination` URL.",
-                      "type": "optional<nullable<root.TaskForwarderConfig>>",
+                      "type": "nullable<root.TaskForwarderConfig>",
                     },
                     "config_sensitive": {
                       "docs": "Sensitive parameters for the Task Forwarder such as a `signing_key`.",
-                      "type": "optional<nullable<root.TaskForwarderSensitiveConfig>>",
+                      "type": "nullable<root.TaskForwarderSensitiveConfig>",
                     },
                     "description": {
                       "docs": "Additional details about the Task Forwarder's purpose or configuration.",
-                      "type": "optional<nullable<string>>",
+                      "type": "nullable<string>",
                     },
                     "name": {
                       "docs": "A descriptive name for the Task Forwarder.",
-                      "type": "optional<nullable<string>>",
+                      "type": "nullable<string>",
                     },
                   },
                 },
@@ -21791,17 +21647,17 @@ service:
               type: string
               docs: A descriptive name for the Task Forwarder.
             description:
-              type: optional<nullable<string>>
+              type: nullable<string>
               docs: >-
                 Additional details about the Task Forwarder's purpose or
                 configuration.
             config:
-              type: optional<nullable<root.TaskForwarderConfig>>
+              type: nullable<root.TaskForwarderConfig>
               docs: >-
                 Configuration parameters for the Task Forwarder such as a
                 `destination` URL.
             config_sensitive:
-              type: optional<nullable<root.TaskForwarderSensitiveConfig>>
+              type: nullable<root.TaskForwarderSensitiveConfig>
               docs: >-
                 Sensitive parameters for the Task Forwarder such as a
                 `signing_key`.
@@ -21924,20 +21780,20 @@ service:
         body:
           properties:
             name:
-              type: optional<nullable<string>>
+              type: nullable<string>
               docs: A descriptive name for the Task Forwarder.
             description:
-              type: optional<nullable<string>>
+              type: nullable<string>
               docs: >-
                 Additional details about the Task Forwarder's purpose or
                 configuration.
             config:
-              type: optional<nullable<root.TaskForwarderConfig>>
+              type: nullable<root.TaskForwarderConfig>
               docs: >-
                 Configuration parameters for the Task Forwarder such as a
                 `destination` URL.
             config_sensitive:
-              type: optional<nullable<root.TaskForwarderSensitiveConfig>>
+              type: nullable<root.TaskForwarderSensitiveConfig>
               docs: >-
                 Sensitive parameters for the Task Forwarder such as a
                 `signing_key`.
@@ -22079,7 +21935,7 @@ service:
                   "properties": {
                     "description": {
                       "docs": "A longer description of the Task for internal reference.",
-                      "type": "optional<nullable<string>>",
+                      "type": "nullable<string>",
                     },
                     "enabled": {
                       "docs": "When `true` the Task is active and callable. `false` denotes the Task is not yet operational.",
@@ -22112,12 +21968,12 @@ service:
                       ],
                       "availability": "pre-release",
                       "docs": "**Note: This is a Paid Tier feature.** Provide additional domain specific input to the LLM so that it is able to reference user specific information when executing the Task. Examples of this could be a product catalogue, terms and conditions or a user manual.",
-                      "type": "optional<nullable<root.TaskRag>>",
+                      "type": "nullable<root.TaskRag>",
                     },
                     "system_prompt": "unknown",
                     "task_forwarder_id": {
                       "docs": "The unique identifier for a valid Task Forwarder. It is used to forward the Task output to another system or service.",
-                      "type": "optional<nullable<string>>",
+                      "type": "nullable<string>",
                       "validation": {
                         "format": "uuid",
                         "maxLength": undefined,
@@ -22230,31 +22086,31 @@ service:
                   "properties": {
                     "description": {
                       "docs": "A longer description of the Task for internal reference.",
-                      "type": "optional<nullable<string>>",
+                      "type": "nullable<string>",
                     },
                     "enabled": {
                       "docs": "When `true` the Task is active and callable. `false` denotes the Task is not yet operational.",
-                      "type": "optional<nullable<boolean>>",
+                      "type": "nullable<boolean>",
                     },
                     "image_required": {
                       "docs": "When `true` it requires an image to be sent in the Task Run request.",
-                      "type": "optional<nullable<boolean>>",
+                      "type": "nullable<boolean>",
                     },
                     "llm_config": {
                       "docs": "Specific configuration parameters for the LLM model.",
-                      "type": "optional<nullable<root.TaskLlmConfig>>",
+                      "type": "nullable<root.TaskLlmConfig>",
                     },
                     "llm_model": {
                       "docs": "The LLM model to use for the Task.",
-                      "type": "optional<nullable<TaskUpdateLlmModel>>",
+                      "type": "nullable<TaskUpdateLlmModel>",
                     },
                     "name": {
                       "docs": "A name or reference for the Task.",
-                      "type": "optional<nullable<string>>",
+                      "type": "nullable<string>",
                     },
                     "output_format": {
                       "docs": "This gives control over the structure of how the Task responds. Supports shorthand notation or an object with `type` can be specified for each attribute. In most instances, the LLM will be able to generate the desired output into the relevant property, but an optional `description` can be passed to provide it with additional context.",
-                      "type": "optional<nullable<map<string, nullable<TaskUpdateOutputFormatValue>>>>",
+                      "type": "nullable<map<string, nullable<TaskUpdateOutputFormatValue>>>",
                     },
                     "rag": {
                       "audiences": [
@@ -22262,14 +22118,15 @@ service:
                       ],
                       "availability": "pre-release",
                       "docs": "**Note: This is a Paid Tier feature.** Provide additional domain specific input to the LLM so that it is able to reference user specific information when executing the Task. Examples of this could be a product catalogue, terms and conditions or a user manual.",
-                      "type": "optional<nullable<root.TaskRag>>",
+                      "type": "nullable<root.TaskRag>",
                     },
                     "system_prompt": {
-                      "type": "optional<unknown>",
+                      "docs": "The system prompt that is used to set the LLM context.",
+                      "type": "nullable<unknown>",
                     },
                     "task_forwarder_id": {
                       "docs": "The unique identifier for a valid Task Forwarder. It is used to forward the Task output to another system or service.",
-                      "type": "optional<nullable<string>>",
+                      "type": "nullable<string>",
                       "validation": {
                         "format": "uuid",
                         "maxLength": undefined,
@@ -22278,7 +22135,8 @@ service:
                       },
                     },
                     "user_prompt": {
-                      "type": "optional<unknown>",
+                      "docs": "The description of the Task. It is not required to mention the outputs in the prompt, but it can help the model to understand the context better. Any input strings should be referenced with the dynamic `{...}` syntax, this informs the model to look for those values in the input data.",
+                      "type": "nullable<unknown>",
                     },
                   },
                 },
@@ -22376,7 +22234,9 @@ service:
                                 "match": "str",
                                 "rationale": "str",
                               },
+                              "rag": null,
                               "system_prompt": "You are an expert software program specifically designed for the fintech industry that will be used for pre-triage tasks to ensure the best possible client UX and efficient 3rd party platform interoperability.",
+                              "task_forwarder_id": null,
                               "user_prompt": "Your task is to validate the uploaded image and determine whether it will be suitable for authentication and onboarding checks. If the image of the person is clear and typical of a passport style photo then set the compliance field to true. Provide rationale for your decision in the rationale field. If the compliance result is false, then provide a helpful hint for the customer who has submitted the photo informing them why it is unacceptable and some steps to remedy it, place this into the hint field. Determine whether the following description matches the provided image: {description}",
                             },
                           ],
@@ -23042,9 +22902,7 @@ service:
               "request": {
                 "body": {
                   "properties": {
-                    "member": {
-                      "type": "optional<nullable<string>>",
-                    },
+                    "member": "nullable<string>",
                     "permissions": {
                       "docs": "A list of permissions to test on the task.",
                       "type": "list<TaskIamPermissionTestPermissionsItem>",
@@ -23131,7 +22989,7 @@ This may be combined with `remove_all` to replace the member's entire role list.
                     },
                     "remove_all": {
                       "docs": "Removes all existing roles from the member. This may be combined with `add` to replace all existing roles that the member holds.",
-                      "type": "optional<nullable<boolean>>",
+                      "type": "nullable<boolean>",
                     },
                   },
                 },
@@ -23458,6 +23316,8 @@ service:
                         hint: str
                         match: str
                         rationale: str
+                      task_forwarder_id: null
+                      rag: null
                       image_required: true
                       id: 019011e6-e530-3aca-6cf7-2973387c255d
                       created: '2024-06-13T14:01:03Z'
@@ -23508,14 +23368,14 @@ service:
                 but an optional `description` can be passed to provide it with
                 additional context.
             task_forwarder_id:
-              type: optional<nullable<string>>
+              type: nullable<string>
               docs: >-
                 The unique identifier for a valid Task Forwarder. It is used to
                 forward the Task output to another system or service.
               validation:
                 format: uuid
             rag:
-              type: optional<nullable<root.TaskRag>>
+              type: nullable<root.TaskRag>
               docs: >-
                 **Note: This is a Paid Tier feature.** Provide additional domain
                 specific input to the LLM so that it is able to reference user
@@ -23535,7 +23395,7 @@ service:
               type: string
               docs: A name or reference for the Task.
             description:
-              type: optional<nullable<string>>
+              type: nullable<string>
               docs: A longer description of the Task for internal reference.
             enabled:
               type: boolean
@@ -23735,19 +23595,24 @@ service:
         body:
           properties:
             system_prompt:
-              type: optional<unknown>
+              type: nullable<unknown>
+              docs: The system prompt that is used to set the LLM context.
             user_prompt:
-              type: optional<unknown>
+              type: nullable<unknown>
+              docs: >-
+                The description of the Task. It is not required to mention the
+                outputs in the prompt, but it can help the model to understand
+                the context better. Any input strings should be referenced with
+                the dynamic `{...}` syntax, this informs the model to look for
+                those values in the input data.
             llm_model:
-              type: optional<nullable<TaskUpdateLlmModel>>
+              type: nullable<TaskUpdateLlmModel>
               docs: The LLM model to use for the Task.
             llm_config:
-              type: optional<nullable<root.TaskLlmConfig>>
+              type: nullable<root.TaskLlmConfig>
               docs: Specific configuration parameters for the LLM model.
             output_format:
-              type: >-
-                optional<nullable<map<string,
-                nullable<TaskUpdateOutputFormatValue>>>>
+              type: nullable<map<string, nullable<TaskUpdateOutputFormatValue>>>
               docs: >-
                 This gives control over the structure of how the Task responds.
                 Supports shorthand notation or an object with `type` can be
@@ -23756,14 +23621,14 @@ service:
                 but an optional `description` can be passed to provide it with
                 additional context.
             task_forwarder_id:
-              type: optional<nullable<string>>
+              type: nullable<string>
               docs: >-
                 The unique identifier for a valid Task Forwarder. It is used to
                 forward the Task output to another system or service.
               validation:
                 format: uuid
             rag:
-              type: optional<nullable<root.TaskRag>>
+              type: nullable<root.TaskRag>
               docs: >-
                 **Note: This is a Paid Tier feature.** Provide additional domain
                 specific input to the LLM so that it is able to reference user
@@ -23774,18 +23639,18 @@ service:
                 - paid
               availability: pre-release
             image_required:
-              type: optional<nullable<boolean>>
+              type: nullable<boolean>
               docs: >-
                 When `true` it requires an image to be sent in the Task Run
                 request.
             name:
-              type: optional<nullable<string>>
+              type: nullable<string>
               docs: A name or reference for the Task.
             description:
-              type: optional<nullable<string>>
+              type: nullable<string>
               docs: A longer description of the Task for internal reference.
             enabled:
-              type: optional<nullable<boolean>>
+              type: nullable<boolean>
               docs: >-
                 When `true` the Task is active and callable. `false` denotes the
                 Task is not yet operational.
@@ -24155,7 +24020,7 @@ service:
               type: optional<list<TaskIamMemberRoleUpdateRemoveItem>>
               docs: A list of task roles to revoke from the member.
             remove_all:
-              type: optional<nullable<boolean>>
+              type: nullable<boolean>
               docs: >-
                 Removes all existing roles from the member. This may be combined
                 with `add` to replace all existing roles that the member holds.
@@ -24208,8 +24073,7 @@ service:
             permissions:
               docs: A list of permissions to test on the task.
               type: list<TaskIamPermissionTestPermissionsItem>
-            member:
-              type: optional<nullable<string>>
+            member: nullable<string>
         content-type: application/json
       response:
         docs: Successful Response
@@ -24504,12 +24368,8 @@ types:
               "request": {
                 "body": {
                   "properties": {
-                    "bio": {
-                      "type": "optional<nullable<string>>",
-                    },
-                    "name": {
-                      "type": "optional<nullable<string>>",
-                    },
+                    "bio": "nullable<string>",
+                    "name": "nullable<string>",
                   },
                 },
                 "content-type": "application/json",
@@ -24624,10 +24484,8 @@ service:
         name: UserProfileUpdate
         body:
           properties:
-            name:
-              type: optional<nullable<string>>
-            bio:
-              type: optional<nullable<string>>
+            name: nullable<string>
+            bio: nullable<string>
         content-type: application/json
       response:
         docs: Successful Response

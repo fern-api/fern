@@ -21,6 +21,11 @@ let package = Package(
         .target(
             name: "MyCustomModule",
             path: "Sources"
+        ),
+        .testTarget(
+            name: "MyCustomModuleTests",
+            dependencies: ["MyCustomModule"],
+            path: "Tests"
         )
     ]
 )

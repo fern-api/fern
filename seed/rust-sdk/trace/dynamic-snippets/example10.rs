@@ -1,4 +1,4 @@
-use seed_trace::{ClientConfig, TraceClient};
+use seed_trace::prelude::*;
 use std::collections::HashSet;
 
 #[tokio::main]

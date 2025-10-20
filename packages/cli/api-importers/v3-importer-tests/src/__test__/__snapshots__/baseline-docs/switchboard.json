@@ -23407,7 +23407,7 @@
           "type": "inlined"
         },
         "response": {
-          "type": "json"
+          "type": "streaming"
         },
         "examples": []
       },

@@ -20,7 +20,7 @@ With Swift Package Manager (SPM), add the following to the top-level `dependenci
 
 ```swift
 dependencies: [
-    .package(url: "<git-url>", from: "0.1.0"),
+    .package(url: "https://github.com/imdb/fern", from: "0.0.1"),
 ]
 ```
 
@@ -39,7 +39,7 @@ import Api
 private func main() async throws {
     let client = ApiClient(token: "<token>")
 
-    try await client.imdb.createMovie(request: CreateMovieRequest(
+    _ = try await client.imdb.createMovie(request: CreateMovieRequest(
         title: "title",
         rating: 1.1
     ))

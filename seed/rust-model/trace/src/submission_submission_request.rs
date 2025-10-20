@@ -1,10 +1,6 @@
-use crate::submission_initialize_problem_request::InitializeProblemRequest;
-use crate::submission_submit_request_v_2::SubmitRequestV2;
-use crate::submission_workspace_submit_request::WorkspaceSubmitRequest;
-use crate::submission_stop_request::StopRequest;
-use serde::{Deserialize, Serialize};
+pub use crate::prelude::*;
 
-#[derive(Debug, Clone, Serialize, Deserialize, PartialEq)]
+#[derive(Debug, Clone, Serialize, Deserialize, PartialEq, Eq, Hash)]
 #[serde(tag = "type")]
 pub enum SubmissionRequest {
         InitializeProblemRequest {

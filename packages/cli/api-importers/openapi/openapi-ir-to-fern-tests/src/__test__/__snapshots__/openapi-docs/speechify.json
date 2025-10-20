@@ -463,24 +463,12 @@ Enabling loudness normalization can increase latency due to additional processin
             "docs": "It details the type of segment, its start and end points in the text, and its start and end times in the synthesized speech audio.",
             "inline": undefined,
             "properties": {
-              "end": {
-                "type": "optional<long>",
-              },
-              "end_time": {
-                "type": "optional<double>",
-              },
-              "start": {
-                "type": "optional<long>",
-              },
-              "start_time": {
-                "type": "optional<double>",
-              },
-              "type": {
-                "type": "optional<string>",
-              },
-              "value": {
-                "type": "optional<string>",
-              },
+              "end": "optional<long>",
+              "end_time": "optional<double>",
+              "start": "optional<long>",
+              "start_time": "optional<double>",
+              "type": "optional<string>",
+              "value": "optional<string>",
             },
             "source": {
               "openapi": "../openapi.json",
@@ -518,24 +506,12 @@ Enabling loudness normalization can increase latency due to additional processin
                 "docs": "Array of NestedChunk, each providing detailed segment information within the synthesized speech.",
                 "type": "optional<list<NestedChunk>>",
               },
-              "end": {
-                "type": "optional<long>",
-              },
-              "end_time": {
-                "type": "optional<double>",
-              },
-              "start": {
-                "type": "optional<long>",
-              },
-              "start_time": {
-                "type": "optional<double>",
-              },
-              "type": {
-                "type": "optional<string>",
-              },
-              "value": {
-                "type": "optional<string>",
-              },
+              "end": "optional<long>",
+              "end_time": "optional<double>",
+              "start": "optional<long>",
+              "start_time": "optional<double>",
+              "type": "optional<string>",
+              "value": "optional<string>",
             },
             "source": {
               "openapi": "../openapi.json",
@@ -885,18 +861,12 @@ types:
       It details the type of segment, its start and end points in the text, and
       its start and end times in the synthesized speech audio.
     properties:
-      end:
-        type: optional<long>
-      end_time:
-        type: optional<double>
-      start:
-        type: optional<long>
-      start_time:
-        type: optional<double>
-      type:
-        type: optional<string>
-      value:
-        type: optional<string>
+      end: optional<long>
+      end_time: optional<double>
+      start: optional<long>
+      start_time: optional<double>
+      type: optional<string>
+      value: optional<string>
     source:
       openapi: ../openapi.json
   OAuthErrorError:
@@ -925,18 +895,12 @@ types:
         docs: >-
           Array of NestedChunk, each providing detailed segment information
           within the synthesized speech.
-      end:
-        type: optional<long>
-      end_time:
-        type: optional<double>
-      start:
-        type: optional<long>
-      start_time:
-        type: optional<double>
-      type:
-        type: optional<string>
-      value:
-        type: optional<string>
+      end: optional<long>
+      end_time: optional<double>
+      start: optional<long>
+      start_time: optional<double>
+      type: optional<string>
+      value: optional<string>
     source:
       openapi: ../openapi.json
 ",

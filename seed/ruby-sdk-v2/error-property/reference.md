@@ -1,6 +1,6 @@
 # Reference
 ## PropertyBasedError
-<details><summary><code>client.PropertyBasedError.ThrowError() -> String</code></summary>
+<details><summary><code>client.property_based_error.throw_error() -> String</code></summary>
 <dl>
 <dd>
 

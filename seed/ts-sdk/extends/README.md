@@ -26,7 +26,7 @@ const client = new SeedExtendsClient({ environment: "YOUR_BASE_URL" });
 await client.extendedInlineRequestBody({
     unique: "unique",
     name: "name",
-    docs: "docs",
+    docs: "docs"
 });
 ```
 
@@ -145,7 +145,10 @@ console.log(rawResponse.headers['X-My-Header']);
 
 ### Runtime Compatibility
 
+
 The SDK works in the following runtimes:
+
+
 
 - Node.js 18+
 - Vercel

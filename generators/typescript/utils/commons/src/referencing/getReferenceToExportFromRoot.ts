@@ -1,6 +1,6 @@
 import { SourceFile, ts } from "ts-morph";
 
-import { ExportedDirectory, ExportedFilePath, ExportsManager } from "../exports-manager";
+import { ExportedDirectory, ExportedFilePath, ExportsManager, NamedExport } from "../exports-manager";
 import { ImportsManager } from "../imports-manager/ImportsManager";
 import { getDirectReferenceToExport } from "./getDirectReferenceToExport";
 import { getEntityNameOfDirectory } from "./getEntityNameOfDirectory";
@@ -14,7 +14,7 @@ const DEFAULT_SRC_DIRECTORY = "src";
 export declare namespace getReferenceToExportFromRoot {
     export interface Args {
         referencedIn: SourceFile;
-        exportedName: string;
+        exportedName: NamedExport;
         exportedFromPath: ExportedFilePath;
         importsManager: ImportsManager;
         exportsManager: ExportsManager;
@@ -121,7 +121,7 @@ export function getReferenceToExportFromRoot({
     }
 
     const entityName = [exportedName, ...subImport].reduce<ts.EntityName>(
-        (acc, part) => ts.factory.createQualifiedName(acc, part),
+        (acc, part) => ts.factory.createQualifiedName(acc, NamedExport.getName(part)),
         getEntityNameOfDirectory({
             pathToDirectory: directoriesInsideNamespaceExport,
             prefix,
@@ -130,7 +130,7 @@ export function getReferenceToExportFromRoot({
     );
 
     const expression = [exportedName, ...subImport].reduce<ts.Expression>(
-        (acc, part) => ts.factory.createPropertyAccessExpression(acc, part),
+        (acc, part) => ts.factory.createPropertyAccessExpression(acc, NamedExport.getName(part)),
         getExpressionToDirectory({
             pathToDirectory: directoriesInsideNamespaceExport,
             exportsManager,

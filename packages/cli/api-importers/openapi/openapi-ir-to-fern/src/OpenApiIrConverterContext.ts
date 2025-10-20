@@ -44,6 +44,7 @@ export class OpenApiIrConverterContext {
     public respectForwardCompatibleEnums: boolean;
     public wrapReferencesToNullableInOptional: boolean;
     public coerceOptionalSchemasToNullable: boolean;
+    public groupEnvironmentsByHost: boolean;
 
     private enableUniqueErrorsPerEndpoint: boolean;
     private defaultServerName: string | undefined = undefined;
@@ -55,6 +56,13 @@ export class OpenApiIrConverterContext {
      * and therefore included in the generated definition.
      */
     private referencedSchemaIds: Set<SchemaId> | undefined;
+
+    /**
+     * Maps server URLs to their resolved URL IDs, accounting for protocol collisions.
+     * Used when groupEnvironmentsByHost is enabled to ensure channels use the same
+     * URL IDs as the environments they reference.
+     */
+    private urlIdMap: Map<string, string> = new Map();
 
     /**
      * The current endpoint method being processed. This is used to determine
@@ -96,6 +104,7 @@ export class OpenApiIrConverterContext {
         this.enableUniqueErrorsPerEndpoint = options?.enableUniqueErrorsPerEndpoint ?? false;
         this.wrapReferencesToNullableInOptional = options?.wrapReferencesToNullableInOptional ?? false;
         this.coerceOptionalSchemasToNullable = options?.coerceOptionalSchemasToNullable ?? false;
+        this.groupEnvironmentsByHost = options?.groupEnvironmentsByHost ?? false;
         this.builder = new FernDefinitionBuilderImpl(this.enableUniqueErrorsPerEndpoint);
         if (ir.title != null) {
             this.builder.setDisplayName({ displayName: ir.title });
@@ -149,6 +158,20 @@ export class OpenApiIrConverterContext {
      */
     public setDefaultServerName(name: string): void {
         this.defaultServerName = name;
+    }
+
+    /**
+     * Sets the resolved URL ID for a server URL (used for collision-aware URL ID generation)
+     */
+    public setUrlId(serverUrl: string, urlId: string): void {
+        this.urlIdMap.set(serverUrl, urlId);
+    }
+
+    /**
+     * Gets the resolved URL ID for a server URL, or undefined if not set
+     */
+    public getUrlId(serverUrl: string): string | undefined {
+        return this.urlIdMap.get(serverUrl);
     }
 
     /**

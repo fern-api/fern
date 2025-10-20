@@ -1,2 +1,2 @@
 pub mod dummy;
-pub use dummy::*;
+pub use dummy::DummyClient;

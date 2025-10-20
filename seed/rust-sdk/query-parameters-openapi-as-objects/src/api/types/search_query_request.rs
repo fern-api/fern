@@ -1,14 +1,8 @@
-use crate::nested_user::NestedUser;
-use crate::search_request_neighbor::SearchRequestNeighbor;
-use crate::search_request_neighbor_required::SearchRequestNeighborRequired;
-use crate::user::User;
-use chrono::{DateTime, Utc};
-use serde::{Deserialize, Serialize};
-use std::collections::HashMap;
+pub use crate::prelude::*;
 
-#[derive(Debug, Clone, Serialize, Deserialize)]
+#[derive(Debug, Clone, Serialize, Deserialize, PartialEq)]
 pub struct SearchQueryRequest {
-    pub limit: i32,
+    pub limit: i64,
     pub id: String,
     pub date: String,
     pub deadline: DateTime<Utc>,

@@ -20,7 +20,7 @@ With Swift Package Manager (SPM), add the following to the top-level `dependenci
 
 ```swift
 dependencies: [
-    .package(url: "<git-url>", from: "0.1.0"),
+    .package(url: "https://github.com/extends/fern", from: "0.0.1"),
 ]
 ```
 
@@ -39,7 +39,7 @@ import Extends
 private func main() async throws {
     let client = ExtendsClient()
 
-    try await client.extendedInlineRequestBody(request: .init(
+    _ = try await client.extendedInlineRequestBody(request: .init(
         name: "name",
         docs: "docs",
         unique: "unique"

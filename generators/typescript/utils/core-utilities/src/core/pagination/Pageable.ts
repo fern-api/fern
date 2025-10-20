@@ -1,4 +1,4 @@
-import { RawResponse } from "../fetcher";
+import type { RawResponse } from "../fetcher/index";
 import { Page } from "./Page";
 
 export declare namespace Pageable {

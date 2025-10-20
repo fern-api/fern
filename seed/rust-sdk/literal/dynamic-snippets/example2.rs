@@ -1,4 +1,4 @@
-use seed_literal::{ClientConfig, LiteralClient, SendLiteralsInlinedRequest};
+use seed_literal::prelude::*;
 use std::collections::HashMap;
 
 #[tokio::main]

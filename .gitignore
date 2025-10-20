@@ -76,8 +76,7 @@ seed/python-sdk/**/output.prof
 .cursor
 
 # Claude
-.claude
-CLAUDE.md
+**/settings.local.json
 
 # Preview
 **/.preview/
@@ -85,3 +84,5 @@ CLAUDE.md
 # cache folders used for package managers
 .yarn-cache
 .pnpm-cache
+
+**/vitest.config.ts.*.mjs

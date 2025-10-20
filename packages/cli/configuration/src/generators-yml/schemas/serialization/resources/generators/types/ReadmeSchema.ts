@@ -7,6 +7,7 @@ import * as FernDefinition from "../../../../api/index";
 import * as core from "../../../../core";
 import { ReadmeEndpointSchema } from "./ReadmeEndpointSchema";
 import { ReadmeCustomSectionSchema } from "./ReadmeCustomSectionSchema";
+import { ExampleStyle } from "./ExampleStyle";
 
 export const ReadmeSchema: core.serialization.ObjectSchema<serializers.ReadmeSchema.Raw, FernDefinition.ReadmeSchema> =
     core.serialization.object({
@@ -20,6 +21,7 @@ export const ReadmeSchema: core.serialization.ObjectSchema<serializers.ReadmeSch
             .record(core.serialization.string(), core.serialization.list(ReadmeEndpointSchema))
             .optional(),
         customSections: core.serialization.list(ReadmeCustomSectionSchema).optional(),
+        exampleStyle: ExampleStyle.optional(),
     });
 
 export declare namespace ReadmeSchema {
@@ -32,5 +34,6 @@ export declare namespace ReadmeSchema {
         defaultEndpoint?: ReadmeEndpointSchema.Raw | null;
         features?: Record<string, ReadmeEndpointSchema.Raw[]> | null;
         customSections?: ReadmeCustomSectionSchema.Raw[] | null;
+        exampleStyle?: ExampleStyle.Raw | null;
     }
 }

@@ -1,5 +1,36 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
 # For unreleased changes, use unreleased.yml
+- version: 4.31.1
+  changelogEntry:
+    - summary: Escape backslashes in docstrings to prevent SyntaxWarning for invalid escape sequences.
+      type: fix
+  createdAt: "2025-10-17"
+  irVersion: 60
+
+- version: 4.31.0
+  changelogEntry:
+    - summary: |
+        - Removed external dependency on httpx-sse by bringing SSE handling in-house. 
+        - Fixed SSE handling of events longer than or containing escaped newlines.
+      type: feat
+  createdAt: "2025-10-06"
+  irVersion: 60
+
+- version: 4.30.4-rc1
+  changelogEntry:
+    - summary: |
+        Cleared CVE-2025-27210
+      type: fix
+  createdAt: "2025-10-02"
+  irVersion: 60
+
+- version: 4.30.4-rc0
+  changelogEntry:
+    - summary: |
+        Cleared CVEs in generator image
+      type: fix
+  createdAt: "2025-10-02"
+  irVersion: 60
 
 - version: 4.30.3
   changelogEntry:

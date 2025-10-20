@@ -1,4 +1,4 @@
-use serde::{Deserialize, Serialize};
+pub use crate::prelude::*;
 
 #[derive(Debug, Clone, Serialize, Deserialize, Default, PartialEq, Eq, Hash)]
 pub struct ListClientsQueryRequest {
@@ -7,9 +7,9 @@ pub struct ListClientsQueryRequest {
     #[serde(skip_serializing_if = "Option::is_none")]
     pub include_fields: Option<bool>,
     #[serde(skip_serializing_if = "Option::is_none")]
-    pub page: Option<i32>,
+    pub page: Option<i64>,
     #[serde(skip_serializing_if = "Option::is_none")]
-    pub per_page: Option<i32>,
+    pub per_page: Option<i64>,
     #[serde(skip_serializing_if = "Option::is_none")]
     pub include_totals: Option<bool>,
     #[serde(skip_serializing_if = "Option::is_none")]

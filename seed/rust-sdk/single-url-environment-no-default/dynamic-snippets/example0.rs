@@ -1,4 +1,4 @@
-use seed_single_url_environment_no_default::{ClientConfig, SingleUrlEnvironmentNoDefaultClient};
+use seed_single_url_environment_no_default::prelude::*;
 
 #[tokio::main]
 async fn main() {

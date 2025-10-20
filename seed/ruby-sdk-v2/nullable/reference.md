@@ -1,6 +1,6 @@
 # Reference
 ## Nullable
-<details><summary><code>client.Nullable.GetUsers() -> Internal::Types::Array[Seed::Nullable::Types::User]</code></summary>
+<details><summary><code>client.nullable.get_users() -> Internal::Types::Array[Seed::Nullable::Types::User]</code></summary>
 <dl>
 <dd>
 
@@ -13,10 +13,13 @@
 <dd>
 
 ```ruby
-client.nullable.get_users({
-  avatar:'avatar',
-  extra:true
-});
+client.nullable.get_users(
+  usernames: ,
+  avatar: 'avatar',
+  activated: ,
+  tags: ,
+  extra: true
+);
 ```
 </dd>
 </dl>
@@ -75,7 +78,7 @@ client.nullable.get_users({
 </dl>
 </details>
 
-<details><summary><code>client.Nullable.CreateUser(request) -> Seed::Nullable::Types::User</code></summary>
+<details><summary><code>client.nullable.create_user(request) -> Seed::Nullable::Types::User</code></summary>
 <dl>
 <dd>
 
@@ -88,20 +91,20 @@ client.nullable.get_users({
 <dd>
 
 ```ruby
-client.nullable.create_user({
-  username:'username',
-  tags:['tags', 'tags'],
-  metadata:{
-    createdAt:'2024-01-15T09:30:00Z',
-    updatedAt:'2024-01-15T09:30:00Z',
-    avatar:'avatar',
-    activated:true,
-    values:{
-      values:'values'
+client.nullable.create_user(
+  username: 'username',
+  tags: ['tags', 'tags'],
+  metadata: {
+    createdAt: '2024-01-15T09:30:00Z',
+    updatedAt: '2024-01-15T09:30:00Z',
+    avatar: 'avatar',
+    activated: true,
+    values: {
+      values: 'values'
     }
   },
-  avatar:'avatar'
-});
+  avatar: 'avatar'
+);
 ```
 </dd>
 </dl>
@@ -152,7 +155,7 @@ client.nullable.create_user({
 </dl>
 </details>
 
-<details><summary><code>client.Nullable.DeleteUser(request) -> Internal::Types::Boolean</code></summary>
+<details><summary><code>client.nullable.delete_user(request) -> Internal::Types::Boolean</code></summary>
 <dl>
 <dd>
 
@@ -165,9 +168,7 @@ client.nullable.create_user({
 <dd>
 
 ```ruby
-client.nullable.delete_user({
-  username:'xy'
-});
+client.nullable.delete_user(username: 'xy');
 ```
 </dd>
 </dl>

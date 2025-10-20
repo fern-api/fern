@@ -3374,8 +3374,8 @@
             "generatedName": "agentLlm",
             "key": "llm",
             "schema": {
-              "generatedName": "agentLlm",
-              "title": "Agent",
+              "generatedName": "AgentLlm",
+              "title": "Llm",
               "value": {
                 "key": {
                   "schema": {
@@ -3404,8 +3404,8 @@
             "generatedName": "agentHasMemory",
             "key": "has_memory",
             "schema": {
-              "generatedName": "agentHasMemory",
-              "title": "Agent",
+              "generatedName": "AgentHasMemory",
+              "title": "Has Memory",
               "value": {
                 "schema": {
                   "default": false,
@@ -3426,8 +3426,8 @@
             "generatedName": "agentDocumentId",
             "key": "documentId",
             "schema": {
-              "generatedName": "agentDocumentId",
-              "title": "Agent",
+              "generatedName": "AgentDocumentId",
+              "title": "Documentid",
               "value": {
                 "schema": {
                   "type": "string"
@@ -3447,8 +3447,8 @@
             "generatedName": "agentPromptId",
             "key": "promptId",
             "schema": {
-              "generatedName": "agentPromptId",
-              "title": "Agent",
+              "generatedName": "AgentPromptId",
+              "title": "Promptid",
               "value": {
                 "schema": {
                   "type": "string"
@@ -3468,8 +3468,8 @@
             "generatedName": "agentToolId",
             "key": "toolId",
             "schema": {
-              "generatedName": "agentToolId",
-              "title": "Agent",
+              "generatedName": "AgentToolId",
+              "title": "Toolid",
               "value": {
                 "schema": {
                   "type": "string"
@@ -3579,8 +3579,8 @@
             "generatedName": "documentAuthorization",
             "key": "authorization",
             "schema": {
-              "generatedName": "documentAuthorization",
-              "title": "Document",
+              "generatedName": "DocumentAuthorization",
+              "title": "Authorization",
               "value": {
                 "key": {
                   "schema": {
@@ -3609,8 +3609,8 @@
             "generatedName": "documentFromPage",
             "key": "from_page",
             "schema": {
-              "generatedName": "documentFromPage",
-              "title": "Document",
+              "generatedName": "DocumentFromPage",
+              "title": "From Page",
               "value": {
                 "schema": {
                   "default": [
@@ -3633,8 +3633,8 @@
             "generatedName": "documentToPage",
             "key": "to_page",
             "schema": {
-              "generatedName": "documentToPage",
-              "title": "Document",
+              "generatedName": "DocumentToPage",
+              "title": "To Page",
               "value": {
                 "schema": {
                   "type": "int"
@@ -3654,8 +3654,8 @@
             "generatedName": "documentSplitter",
             "key": "splitter",
             "schema": {
-              "generatedName": "documentSplitter",
-              "title": "Document",
+              "generatedName": "DocumentSplitter",
+              "title": "Splitter",
               "value": {
                 "key": {
                   "schema": {
@@ -3699,8 +3699,8 @@
             "generatedName": "httpValidationErrorDetail",
             "key": "detail",
             "schema": {
-              "generatedName": "httpValidationErrorDetail",
-              "title": "HTTPValidationError",
+              "generatedName": "HttpValidationErrorDetail",
+              "title": "Detail",
               "value": {
                 "value": {
                   "generatedName": "HttpValidationErrorDetailItem",
@@ -3765,8 +3765,8 @@
             "generatedName": "predictAgentHasStreaming",
             "key": "has_streaming",
             "schema": {
-              "generatedName": "predictAgentHasStreaming",
-              "title": "PredictAgent",
+              "generatedName": "PredictAgentHasStreaming",
+              "title": "Has Streaming",
               "value": {
                 "schema": {
                   "default": false,
@@ -3938,8 +3938,8 @@
             "generatedName": "signUpName",
             "key": "name",
             "schema": {
-              "generatedName": "signUpName",
-              "title": "SignUp",
+              "generatedName": "SignUpName",
+              "title": "Name",
               "value": {
                 "schema": {
                   "type": "string"
@@ -3959,8 +3959,8 @@
             "generatedName": "signUpMetadata",
             "key": "metadata",
             "schema": {
-              "generatedName": "signUpMetadata",
-              "title": "SignUp",
+              "generatedName": "SignUpMetadata",
+              "title": "Metadata",
               "value": {
                 "key": {
                   "schema": {
@@ -4034,8 +4034,8 @@
             "generatedName": "toolAuthorization",
             "key": "authorization",
             "schema": {
-              "generatedName": "toolAuthorization",
-              "title": "Tool",
+              "generatedName": "ToolAuthorization",
+              "title": "Authorization",
               "value": {
                 "key": {
                   "schema": {

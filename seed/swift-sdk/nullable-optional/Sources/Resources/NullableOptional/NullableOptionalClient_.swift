@@ -3,7 +3,7 @@ import Foundation
 public final class NullableOptionalClient_: Sendable {
     private let httpClient: HTTPClient
 
-    public init(config: ClientConfig) {
+    init(config: ClientConfig) {
         self.httpClient = HTTPClient(config: config)
     }
 
@@ -142,7 +142,7 @@ public final class NullableOptionalClient_: Sendable {
             queryParams: [
                 "role": role.wrappedValue.map { .string($0) }, 
                 "status": status.map { .string($0.rawValue) }, 
-                "secondaryRole": secondaryRole?.wrappedValue.map { .string($0) }
+                "secondaryRole": secondaryRole?.wrappedValue.map { .string($0.rawValue) }
             ],
             requestOptions: requestOptions,
             responseType: [UserResponse].self

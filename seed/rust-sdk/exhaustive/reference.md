@@ -13,7 +13,7 @@
 <dd>
 
 ```rust
-use seed_exhaustive::{ClientConfig, ExhaustiveClient};
+use seed_exhaustive::prelude::*;
 use std::collections::HashSet;
 
 #[tokio::main]
@@ -53,7 +53,7 @@ async fn main() {
 <dd>
 
 ```rust
-use seed_exhaustive::{ClientConfig, ExhaustiveClient};
+use seed_exhaustive::prelude::*;
 use std::collections::{HashMap, HashSet};
 
 #[tokio::main]
@@ -103,7 +103,7 @@ async fn main() {
 <dd>
 
 ```rust
-use seed_exhaustive::{ClientConfig, ExhaustiveClient};
+use seed_exhaustive::prelude::*;
 use std::collections::HashSet;
 
 #[tokio::main]
@@ -143,7 +143,7 @@ async fn main() {
 <dd>
 
 ```rust
-use seed_exhaustive::{ClientConfig, ExhaustiveClient};
+use seed_exhaustive::prelude::*;
 use std::collections::{HashMap, HashSet};
 
 #[tokio::main]
@@ -188,7 +188,7 @@ async fn main() {
 <dd>
 
 ```rust
-use seed_exhaustive::{ClientConfig, ExhaustiveClient};
+use seed_exhaustive::prelude::*;
 use std::collections::HashMap;
 
 #[tokio::main]
@@ -231,7 +231,7 @@ async fn main() {
 <dd>
 
 ```rust
-use seed_exhaustive::{ClientConfig, ExhaustiveClient};
+use seed_exhaustive::prelude::*;
 use std::collections::HashMap;
 
 #[tokio::main]
@@ -279,7 +279,7 @@ async fn main() {
 <dd>
 
 ```rust
-use seed_exhaustive::{ClientConfig, ExhaustiveClient};
+use seed_exhaustive::prelude::*;
 use std::collections::HashMap;
 
 #[tokio::main]
@@ -326,7 +326,7 @@ async fn main() {
 
 ```rust
 use chrono::{DateTime, NaiveDate, Utc};
-use seed_exhaustive::{ClientConfig, ExhaustiveClient, ObjectWithOptionalField};
+use seed_exhaustive::prelude::*;
 use std::collections::{HashMap, HashSet};
 use uuid::Uuid;
 
@@ -389,7 +389,7 @@ async fn main() {
 
 ```rust
 use chrono::{DateTime, NaiveDate, Utc};
-use seed_exhaustive::{ClientConfig, ExhaustiveClient, ObjectWithOptionalField};
+use seed_exhaustive::prelude::*;
 use std::collections::{HashMap, HashSet};
 use uuid::Uuid;
 
@@ -452,7 +452,7 @@ async fn main() {
 <dd>
 
 ```rust
-use seed_exhaustive::{ClientConfig, ExhaustiveClient, WeatherReport};
+use seed_exhaustive::prelude::*;
 
 #[tokio::main]
 async fn main() {
@@ -492,7 +492,7 @@ async fn main() {
 <dd>
 
 ```rust
-use seed_exhaustive::{ClientConfig, ExhaustiveClient};
+use seed_exhaustive::prelude::*;
 
 #[tokio::main]
 async fn main() {
@@ -546,7 +546,7 @@ async fn main() {
 <dd>
 
 ```rust
-use seed_exhaustive::{ClientConfig, ExhaustiveClient, ObjectWithRequiredField};
+use seed_exhaustive::prelude::*;
 use std::collections::HashMap;
 
 #[tokio::main]
@@ -591,7 +591,7 @@ async fn main() {
 <dd>
 
 ```rust
-use seed_exhaustive::{ClientConfig, ExhaustiveClient, ObjectWithRequiredField};
+use seed_exhaustive::prelude::*;
 use std::collections::HashMap;
 
 #[tokio::main]
@@ -653,7 +653,7 @@ async fn main() {
 
 ```rust
 use chrono::{DateTime, NaiveDate, Utc};
-use seed_exhaustive::{ClientConfig, ExhaustiveClient, ObjectWithOptionalField};
+use seed_exhaustive::prelude::*;
 use std::collections::{HashMap, HashSet};
 use uuid::Uuid;
 
@@ -731,7 +731,7 @@ async fn main() {
 <dd>
 
 ```rust
-use seed_exhaustive::{ClientConfig, ExhaustiveClient};
+use seed_exhaustive::prelude::*;
 
 #[tokio::main]
 async fn main() {
@@ -787,7 +787,7 @@ async fn main() {
 
 ```rust
 use chrono::{DateTime, NaiveDate, Utc};
-use seed_exhaustive::{ClientConfig, ExhaustiveClient, ObjectWithOptionalField};
+use seed_exhaustive::prelude::*;
 use std::collections::{HashMap, HashSet};
 use uuid::Uuid;
 
@@ -849,7 +849,7 @@ async fn main() {
 <dd>
 
 ```rust
-use seed_exhaustive::{ClientConfig, ExhaustiveClient, ObjectWithRequiredField};
+use seed_exhaustive::prelude::*;
 use std::collections::HashMap;
 
 #[tokio::main]
@@ -894,7 +894,7 @@ async fn main() {
 <dd>
 
 ```rust
-use seed_exhaustive::{ClientConfig, ExhaustiveClient, ObjectWithMapOfMap};
+use seed_exhaustive::prelude::*;
 use std::collections::HashMap;
 
 #[tokio::main]
@@ -943,9 +943,7 @@ async fn main() {
 
 ```rust
 use chrono::{DateTime, NaiveDate, Utc};
-use seed_exhaustive::{
-    ClientConfig, ExhaustiveClient, NestedObjectWithOptionalField, ObjectWithOptionalField,
-};
+use seed_exhaustive::prelude::*;
 use std::collections::{HashMap, HashSet};
 use uuid::Uuid;
 
@@ -1011,9 +1009,7 @@ async fn main() {
 
 ```rust
 use chrono::{DateTime, NaiveDate, Utc};
-use seed_exhaustive::{
-    ClientConfig, ExhaustiveClient, NestedObjectWithRequiredField, ObjectWithOptionalField,
-};
+use seed_exhaustive::prelude::*;
 use std::collections::{HashMap, HashSet};
 use uuid::Uuid;
 
@@ -1095,7 +1091,7 @@ async fn main() {
 
 ```rust
 use chrono::{DateTime, NaiveDate, Utc};
-use seed_exhaustive::{ClientConfig, ExhaustiveClient};
+use seed_exhaustive::prelude::*;
 use std::collections::{HashMap, HashSet};
 use uuid::Uuid;
 
@@ -1203,7 +1199,7 @@ GET with path param
 <dd>
 
 ```rust
-use seed_exhaustive::{ClientConfig, ExhaustiveClient};
+use seed_exhaustive::prelude::*;
 
 #[tokio::main]
 async fn main() {
@@ -1271,7 +1267,7 @@ GET with path param
 <dd>
 
 ```rust
-use seed_exhaustive::{ClientConfig, ExhaustiveClient};
+use seed_exhaustive::prelude::*;
 
 #[tokio::main]
 async fn main() {
@@ -1339,7 +1335,7 @@ GET with query param
 <dd>
 
 ```rust
-use seed_exhaustive::{ClientConfig, ExhaustiveClient, GetWithQueryQueryRequest};
+use seed_exhaustive::prelude::*;
 
 #[tokio::main]
 async fn main() {
@@ -1421,7 +1417,7 @@ GET with multiple of same query param
 <dd>
 
 ```rust
-use seed_exhaustive::{ClientConfig, ExhaustiveClient, GetWithQueryQueryRequest};
+use seed_exhaustive::prelude::*;
 
 #[tokio::main]
 async fn main() {
@@ -1503,7 +1499,7 @@ GET with path and query params
 <dd>
 
 ```rust
-use seed_exhaustive::{ClientConfig, ExhaustiveClient, GetWithPathAndQueryQueryRequest};
+use seed_exhaustive::prelude::*;
 
 #[tokio::main]
 async fn main() {
@@ -1585,7 +1581,7 @@ GET with path and query params
 <dd>
 
 ```rust
-use seed_exhaustive::{ClientConfig, ExhaustiveClient, GetWithPathAndQueryQueryRequest};
+use seed_exhaustive::prelude::*;
 
 #[tokio::main]
 async fn main() {
@@ -1667,7 +1663,7 @@ PUT to update with path param
 <dd>
 
 ```rust
-use seed_exhaustive::{ClientConfig, ExhaustiveClient};
+use seed_exhaustive::prelude::*;
 
 #[tokio::main]
 async fn main() {
@@ -1735,7 +1731,7 @@ PUT to update with path param
 <dd>
 
 ```rust
-use seed_exhaustive::{ClientConfig, ExhaustiveClient};
+use seed_exhaustive::prelude::*;
 
 #[tokio::main]
 async fn main() {
@@ -1790,7 +1786,7 @@ async fn main() {
 <dd>
 
 ```rust
-use seed_exhaustive::{ClientConfig, ExhaustiveClient};
+use seed_exhaustive::prelude::*;
 
 #[tokio::main]
 async fn main() {
@@ -1829,7 +1825,7 @@ async fn main() {
 <dd>
 
 ```rust
-use seed_exhaustive::{ClientConfig, ExhaustiveClient};
+use seed_exhaustive::prelude::*;
 
 #[tokio::main]
 async fn main() {
@@ -1868,7 +1864,7 @@ async fn main() {
 <dd>
 
 ```rust
-use seed_exhaustive::{ClientConfig, ExhaustiveClient};
+use seed_exhaustive::prelude::*;
 
 #[tokio::main]
 async fn main() {
@@ -1907,7 +1903,7 @@ async fn main() {
 <dd>
 
 ```rust
-use seed_exhaustive::{ClientConfig, ExhaustiveClient};
+use seed_exhaustive::prelude::*;
 
 #[tokio::main]
 async fn main() {
@@ -1946,7 +1942,7 @@ async fn main() {
 <dd>
 
 ```rust
-use seed_exhaustive::{ClientConfig, ExhaustiveClient};
+use seed_exhaustive::prelude::*;
 
 #[tokio::main]
 async fn main() {
@@ -1986,7 +1982,7 @@ async fn main() {
 
 ```rust
 use chrono::{DateTime, Utc};
-use seed_exhaustive::{ClientConfig, ExhaustiveClient};
+use seed_exhaustive::prelude::*;
 
 #[tokio::main]
 async fn main() {
@@ -2031,7 +2027,7 @@ async fn main() {
 
 ```rust
 use chrono::NaiveDate;
-use seed_exhaustive::{ClientConfig, ExhaustiveClient};
+use seed_exhaustive::prelude::*;
 
 #[tokio::main]
 async fn main() {
@@ -2073,7 +2069,7 @@ async fn main() {
 <dd>
 
 ```rust
-use seed_exhaustive::{ClientConfig, ExhaustiveClient};
+use seed_exhaustive::prelude::*;
 use uuid::Uuid;
 
 #[tokio::main]
@@ -2116,7 +2112,7 @@ async fn main() {
 <dd>
 
 ```rust
-use seed_exhaustive::{ClientConfig, ExhaustiveClient};
+use seed_exhaustive::prelude::*;
 
 #[tokio::main]
 async fn main() {
@@ -2156,7 +2152,7 @@ async fn main() {
 <dd>
 
 ```rust
-use seed_exhaustive::{ClientConfig, ExhaustiveClient};
+use seed_exhaustive::prelude::*;
 
 #[tokio::main]
 async fn main() {
@@ -2207,7 +2203,7 @@ async fn main() {
 <dd>
 
 ```rust
-use seed_exhaustive::{Animal, Cat, ClientConfig, Dog, ExhaustiveClient};
+use seed_exhaustive::prelude::*;
 use std::collections::HashMap;
 
 #[tokio::main]
@@ -2256,7 +2252,7 @@ async fn main() {
 <dd>
 
 ```rust
-use seed_exhaustive::{ClientConfig, ExhaustiveClient};
+use seed_exhaustive::prelude::*;
 
 #[tokio::main]
 async fn main() {
@@ -2291,7 +2287,7 @@ async fn main() {
 <dd>
 
 ```rust
-use seed_exhaustive::{ClientConfig, ExhaustiveClient};
+use seed_exhaustive::prelude::*;
 
 #[tokio::main]
 async fn main() {
@@ -2326,7 +2322,7 @@ async fn main() {
 <dd>
 
 ```rust
-use seed_exhaustive::{ClientConfig, ExhaustiveClient};
+use seed_exhaustive::prelude::*;
 
 #[tokio::main]
 async fn main() {
@@ -2361,7 +2357,7 @@ async fn main() {
 <dd>
 
 ```rust
-use seed_exhaustive::{ClientConfig, ExhaustiveClient};
+use seed_exhaustive::prelude::*;
 
 #[tokio::main]
 async fn main() {
@@ -2412,7 +2408,7 @@ POST with custom object in request body, response is an object
 
 ```rust
 use chrono::{DateTime, NaiveDate, Utc};
-use seed_exhaustive::{ClientConfig, ExhaustiveClient, PostWithObjectBody};
+use seed_exhaustive::prelude::*;
 use std::collections::{HashMap, HashSet};
 use uuid::Uuid;
 
@@ -2523,7 +2519,7 @@ POST request with no auth
 <dd>
 
 ```rust
-use seed_exhaustive::{ClientConfig, ExhaustiveClient};
+use seed_exhaustive::prelude::*;
 use std::collections::HashMap;
 
 #[tokio::main]
@@ -2563,7 +2559,7 @@ async fn main() {
 <dd>
 
 ```rust
-use seed_exhaustive::{ClientConfig, ExhaustiveClient};
+use seed_exhaustive::prelude::*;
 
 #[tokio::main]
 async fn main() {
@@ -2598,7 +2594,7 @@ async fn main() {
 <dd>
 
 ```rust
-use seed_exhaustive::{ClientConfig, ExhaustiveClient};
+use seed_exhaustive::prelude::*;
 
 #[tokio::main]
 async fn main() {
@@ -2634,7 +2630,7 @@ async fn main() {
 <dd>
 
 ```rust
-use seed_exhaustive::{ClientConfig, ExhaustiveClient, ReqWithHeaders};
+use seed_exhaustive::prelude::*;
 
 #[tokio::main]
 async fn main() {

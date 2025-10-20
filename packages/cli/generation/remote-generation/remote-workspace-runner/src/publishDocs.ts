@@ -9,12 +9,13 @@ import { convertIrToDynamicSnippetsIr, generateIntermediateRepresentation } from
 import { convertIrToFdrApi } from "@fern-api/register";
 import { TaskContext } from "@fern-api/task-context";
 import { AbstractAPIWorkspace, DocsWorkspace, FernWorkspace } from "@fern-api/workspace-loader";
-import { FernRegistry as CjsFdrSdk } from "@fern-fern/fdr-cjs-sdk";
+import { FernRegistry as CjsFdrSdk, FernRegistryClient } from "@fern-fern/fdr-cjs-sdk";
 import {
     DynamicIr,
     DynamicIrUpload,
     SnippetsConfig
 } from "@fern-fern/fdr-cjs-sdk/api/resources/api/resources/v1/resources/register";
+import { DocsDefinition } from "@fern-fern/fdr-cjs-sdk/api/resources/docs/resources/v1/resources/write/types/DocsDefinition";
 import axios from "axios";
 import chalk from "chalk";
 import { readFile } from "fs/promises";
@@ -23,6 +24,7 @@ import * as mime from "mime-types";
 import terminalLink from "terminal-link";
 import { OSSWorkspace } from "../../../../workspace/lazy-fern-workspace/src";
 import { getDynamicGeneratorConfig } from "./getDynamicGeneratorConfig";
+import { getFaiClient } from "./getFaiClient";
 import { measureImageSizes } from "./measureImageSizes";
 
 const MEASURE_IMAGE_BATCH_SIZE = 10;
@@ -46,7 +48,8 @@ export async function publishDocs({
     preview,
     editThisPage,
     isPrivate = false,
-    disableTemplates = false
+    disableTemplates = false,
+    skipUpload = false
 }: {
     token: FernToken;
     organization: string;
@@ -60,6 +63,7 @@ export async function publishDocs({
     editThisPage: docsYml.RawSchemas.FernDocsConfig.EditThisPageConfig | undefined;
     isPrivate: boolean | undefined;
     disableTemplates: boolean | undefined;
+    skipUpload: boolean | undefined;
 }): Promise<void> {
     const fdr = createFdrService({ token: token.value });
     const authConfig: CjsFdrSdk.docs.v2.write.AuthConfig = isPrivate
@@ -127,12 +131,16 @@ export async function publishDocs({
                 if (startDocsRegisterResponse.ok) {
                     urlToOutput = startDocsRegisterResponse.body.previewUrl;
                     docsRegistrationId = startDocsRegisterResponse.body.docsRegistrationId;
-                    await uploadFiles(
-                        startDocsRegisterResponse.body.uploadUrls,
-                        docsWorkspace.absoluteFilePath,
-                        context,
-                        UPLOAD_FILE_BATCH_SIZE
-                    );
+                    if (skipUpload) {
+                        context.logger.debug("Skip-upload mode: skipping file uploads for docs preview");
+                    } else {
+                        await uploadFiles(
+                            startDocsRegisterResponse.body.uploadUrls,
+                            docsWorkspace.absoluteFilePath,
+                            context,
+                            UPLOAD_FILE_BATCH_SIZE
+                        );
+                    }
                     return convertToFilePathPairs(
                         startDocsRegisterResponse.body.uploadUrls,
                         docsWorkspace.absoluteFilePath
@@ -152,12 +160,16 @@ export async function publishDocs({
                 });
                 if (startDocsRegisterResponse.ok) {
                     docsRegistrationId = startDocsRegisterResponse.body.docsRegistrationId;
-                    await uploadFiles(
-                        startDocsRegisterResponse.body.uploadUrls,
-                        docsWorkspace.absoluteFilePath,
-                        context,
-                        UPLOAD_FILE_BATCH_SIZE
-                    );
+                    if (skipUpload) {
+                        context.logger.debug("Skip-upload mode: skipping file uploads for docs");
+                    } else {
+                        await uploadFiles(
+                            startDocsRegisterResponse.body.uploadUrls,
+                            docsWorkspace.absoluteFilePath,
+                            context,
+                            UPLOAD_FILE_BATCH_SIZE
+                        );
+                    }
                     return convertToFilePathPairs(
                         startDocsRegisterResponse.body.uploadUrls,
                         docsWorkspace.absoluteFilePath
@@ -193,12 +205,16 @@ export async function publishDocs({
                 context.logger.debug(`Registered API Definition ${response.body.apiDefinitionId}`);
 
                 if (response.body.dynamicIRs && dynamicIRsByLanguage) {
-                    await uploadDynamicIRs({
-                        dynamicIRs: dynamicIRsByLanguage,
-                        dynamicIRUploadUrls: response.body.dynamicIRs,
-                        context,
-                        apiId: response.body.apiDefinitionId
-                    });
+                    if (skipUpload) {
+                        context.logger.debug("Skip-upload mode: skipping dynamic IR uploads");
+                    } else {
+                        await uploadDynamicIRs({
+                            dynamicIRs: dynamicIRsByLanguage,
+                            dynamicIRUploadUrls: response.body.dynamicIRs,
+                            context,
+                            apiId: response.body.apiDefinitionId
+                        });
+                    }
                 }
 
                 return response.body.apiDefinitionId;
@@ -241,6 +257,16 @@ export async function publishDocs({
 
     if (registerDocsResponse.ok) {
         const url = wrapWithHttps(urlToOutput);
+        await updateAiChatFromDocsDefinition({
+            docsDefinition,
+            organization,
+            token,
+            url: url.replace("https://", ""),
+            context,
+            fdr,
+            preview
+        });
+
         const link = terminalLink(url, url);
         context.logger.info(chalk.green(`Published docs to ${link}`));
     } else {
@@ -374,6 +400,12 @@ async function generateLanguageSpecificDynamicIRs({
         return undefined;
     }
 
+    if (Object.keys(snippetsConfig).length === 0) {
+        context.logger.warn(`WARNING: No snippets defined for ${workspace.workspaceName}.`);
+        context.logger.warn("Did you add snippets to your docs configuration?");
+        context.logger.warn("For more info: https://buildwithfern.com/learn/docs/api-references/sdk-snippets");
+    }
+
     let snippetConfiguration = {
         typescript: snippetsConfig.typescriptSdk?.package,
         python: snippetsConfig.pythonSdk?.package,
@@ -383,9 +415,7 @@ async function generateLanguageSpecificDynamicIRs({
         ruby: snippetsConfig.rubySdk?.gem,
         php: snippetsConfig.phpSdk?.package,
         swift: snippetsConfig.swiftSdk?.package,
-
-        // todo: add when available
-        rust: undefined
+        rust: snippetsConfig.rustSdk?.package
     };
 
     if (workspace.generatorsConfiguration?.groups) {
@@ -411,6 +441,9 @@ async function generateLanguageSpecificDynamicIRs({
                             break;
                         case "go":
                             packageName = dynamicGeneratorConfig.outputConfig.value.repoUrl;
+                            break;
+                        case "crates":
+                            packageName = dynamicGeneratorConfig.outputConfig.value.packageName;
                             break;
                     }
                 }
@@ -528,6 +561,75 @@ async function uploadDynamicIRs({
                 }
             } else {
                 context.logger.warn(`Could not find matching dynamic IR to upload for ${apiId}:${language}`);
+            }
+        }
+    }
+}
+
+async function updateAiChatFromDocsDefinition({
+    docsDefinition,
+    organization,
+    token,
+    url,
+    context,
+    fdr,
+    preview
+}: {
+    docsDefinition: DocsDefinition;
+    organization: string;
+    token: FernToken;
+    url: string;
+    context: TaskContext;
+    fdr: FernRegistryClient;
+    preview: boolean;
+}): Promise<void> {
+    if (docsDefinition.config.aiChatConfig == null) {
+        return;
+    }
+    context.logger.debug("Processing AI Chat configuration from docs.yml");
+
+    const domain = new URL(wrapWithHttps(url)).hostname;
+
+    if (docsDefinition.config.aiChatConfig.location != null) {
+        for (const location of docsDefinition.config.aiChatConfig.location) {
+            if (location === "docs") {
+                const faiClient = getFaiClient({ token: token.value });
+                const docsSettings = await faiClient.settings.getDocsSettings({
+                    domain
+                });
+                if (docsSettings.job_id) {
+                    continue;
+                } else {
+                    context.logger.debug(
+                        `Starting Ask Fern docs content ${docsSettings.ask_ai_enabled ? "reindexing" : "indexing"}...`
+                    );
+                    const addResult = await fdr.docs.v2.write.addAlgoliaPreviewWhitelistEntry({
+                        domain
+                    });
+                    if (addResult.ok) {
+                        const indexingResult = docsSettings.ask_ai_enabled
+                            ? await faiClient.settings.reindexAskAi({
+                                  domain,
+                                  org_name: organization
+                              })
+                            : await faiClient.settings.toggleAskAi({
+                                  domain,
+                                  org_name: organization,
+                                  preview
+                              });
+                        if (indexingResult.success) {
+                            context.logger.info(
+                                chalk.green(
+                                    "Note: it may take a few minutes after publishing for Ask Fern answers to reflect new content."
+                                )
+                            );
+                        }
+                    } else {
+                        context.logger.warn(
+                            `Failed to add domain ${domain} to Algolia whitelist. Please try regenerating to test AI chat in preview.`
+                        );
+                    }
+                }
             }
         }
     }

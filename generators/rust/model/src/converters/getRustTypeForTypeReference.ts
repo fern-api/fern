@@ -3,7 +3,18 @@ import { rust } from "@fern-api/rust-codegen";
 import { PrimitiveTypeV1, TypeReference } from "@fern-fern/ir-sdk/api";
 import { isFloatingPointType } from "../utils/primitiveTypeUtils";
 
-export function generateRustTypeForTypeReference(typeReference: TypeReference): rust.Type {
+export interface RustTypeGeneratorContext {
+    getUniqueTypeNameForReference(declaredTypeName: {
+        fernFilepath: { allParts: Array<{ pascalCase: { safeName: string } }> };
+        name: { pascalCase: { safeName: string } };
+    }): string;
+}
+
+export function generateRustTypeForTypeReference(
+    typeReference: TypeReference,
+    context: RustTypeGeneratorContext,
+    wrapInBox: boolean = false
+): rust.Type {
     switch (typeReference.type) {
         case "container":
             return typeReference.container._visit({
@@ -19,8 +30,8 @@ export function generateRustTypeForTypeReference(typeReference: TypeReference): 
                 },
                 map: (mapType) =>
                     rust.Type.hashMap(
-                        generateRustTypeForTypeReference(mapType.keyType),
-                        generateRustTypeForTypeReference(mapType.valueType)
+                        generateRustTypeForTypeReference(mapType.keyType, context, false),
+                        generateRustTypeForTypeReference(mapType.valueType, context, false)
                     ),
                 set: (setType) => {
                     // Rust doesn't have a built-in Set, use HashSet
@@ -29,22 +40,25 @@ export function generateRustTypeForTypeReference(typeReference: TypeReference): 
                               rust.reference({
                                   name: "OrderedFloat",
                                   module: "ordered_float",
-                                  genericArgs: [generateRustTypeForTypeReference(setType)]
+                                  genericArgs: [generateRustTypeForTypeReference(setType, context, false)]
                               })
                           )
-                        : generateRustTypeForTypeReference(setType);
+                        : generateRustTypeForTypeReference(setType, context, false);
 
                     return rust.Type.reference(
                         rust.reference({
                             name: "HashSet",
-                            module: "std::collections",
                             genericArgs: [elementType]
                         })
                     );
                 },
-                nullable: (nullableType) => rust.Type.option(generateRustTypeForTypeReference(nullableType)),
-                optional: (optionalType) => rust.Type.option(generateRustTypeForTypeReference(optionalType)),
-                list: (listType) => rust.Type.vec(generateRustTypeForTypeReference(listType)),
+                nullable: (nullableType) =>
+                    rust.Type.option(generateRustTypeForTypeReference(nullableType, context, wrapInBox)),
+                optional: (optionalType) =>
+                    rust.Type.option(generateRustTypeForTypeReference(optionalType, context, wrapInBox)),
+                list: (listType) =>
+                    // Vec already heap-allocates, no need to propagate Box into Vec
+                    rust.Type.vec(generateRustTypeForTypeReference(listType, context, false)),
                 _other: () => {
                     // Fallback for unknown container types
                     return rust.Type.reference(
@@ -59,11 +73,11 @@ export function generateRustTypeForTypeReference(typeReference: TypeReference): 
             return PrimitiveTypeV1._visit(typeReference.primitive.v1, {
                 string: () => rust.Type.primitive(rust.PrimitiveType.String),
                 boolean: () => rust.Type.primitive(rust.PrimitiveType.Bool),
-                integer: () => rust.Type.primitive(rust.PrimitiveType.I32),
-                uint: () => rust.Type.primitive(rust.PrimitiveType.U32),
-                uint64: () => rust.Type.primitive(rust.PrimitiveType.U64),
+                integer: () => rust.Type.primitive(rust.PrimitiveType.I64),
+                uint: () => rust.Type.primitive(rust.PrimitiveType.I64),
+                uint64: () => rust.Type.primitive(rust.PrimitiveType.I64),
                 long: () => rust.Type.primitive(rust.PrimitiveType.I64),
-                float: () => rust.Type.primitive(rust.PrimitiveType.F32),
+                float: () => rust.Type.primitive(rust.PrimitiveType.F64),
                 double: () => rust.Type.primitive(rust.PrimitiveType.F64),
                 bigInteger: () => {
                     // Use BigInt from num-bigint crate
@@ -105,8 +119,7 @@ export function generateRustTypeForTypeReference(typeReference: TypeReference): 
                     // Use uuid::Uuid
                     return rust.Type.reference(
                         rust.reference({
-                            name: "Uuid",
-                            module: "uuid"
+                            name: "Uuid"
                         })
                     );
                 },
@@ -115,13 +128,23 @@ export function generateRustTypeForTypeReference(typeReference: TypeReference): 
                     return rust.Type.primitive(rust.PrimitiveType.String);
                 }
             });
-        case "named":
-            // Reference to a user-defined type
-            return rust.Type.reference(
+        case "named": {
+            const baseType = rust.Type.reference(
                 rust.reference({
-                    name: typeReference.name.pascalCase.unsafeName
+                    name: context.getUniqueTypeNameForReference(typeReference)
                 })
             );
+
+            // Wrap in Box<T> if this is a recursive reference
+            return wrapInBox
+                ? rust.Type.reference(
+                      rust.reference({
+                          name: "Box",
+                          genericArgs: [baseType]
+                      })
+                  )
+                : baseType;
+        }
         case "unknown":
             // Use serde_json::Value for truly unknown types
             return rust.Type.reference(

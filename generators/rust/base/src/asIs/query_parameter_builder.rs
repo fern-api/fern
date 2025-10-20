@@ -23,51 +23,48 @@ impl QueryBuilder {
     }
 
     /// Add an integer parameter (accept both required/optional)
-    pub fn int<T>(mut self, key: &str, value: impl Into<Option<T>>) -> Self
-    where
-        T: Into<i64>,
-    {
+    pub fn int(mut self, key: &str, value: impl Into<Option<i64>>) -> Self {
         if let Some(v) = value.into() {
-            self.params.push((key.to_string(), v.into().to_string()));
+            self.params.push((key.to_string(), v.to_string()));
         }
         self
     }
 
     /// Add a float parameter
-    pub fn float(mut self, key: &str, value: Option<f64>) -> Self {
-        if let Some(v) = value {
+    pub fn float(mut self, key: &str, value: impl Into<Option<f64>>) -> Self {
+        if let Some(v) = value.into() {
             self.params.push((key.to_string(), v.to_string()));
         }
         self
     }
 
     /// Add a boolean parameter
-    pub fn bool(mut self, key: &str, value: Option<bool>) -> Self {
-        if let Some(v) = value {
+    pub fn bool(mut self, key: &str, value: impl Into<Option<bool>>) -> Self {
+        if let Some(v) = value.into() {
             self.params.push((key.to_string(), v.to_string()));
         }
         self
     }
 
     /// Add a datetime parameter
-    pub fn datetime(mut self, key: &str, value: Option<DateTime<Utc>>) -> Self {
-        if let Some(v) = value {
+    pub fn datetime(mut self, key: &str, value: impl Into<Option<DateTime<Utc>>>) -> Self {
+        if let Some(v) = value.into() {
             self.params.push((key.to_string(), v.to_rfc3339()));
         }
         self
     }
 
     /// Add a UUID parameter (converts to string)
-    pub fn uuid(mut self, key: &str, value: Option<uuid::Uuid>) -> Self {
-        if let Some(v) = value {
+    pub fn uuid(mut self, key: &str, value: impl Into<Option<uuid::Uuid>>) -> Self {
+        if let Some(v) = value.into() {
             self.params.push((key.to_string(), v.to_string()));
         }
         self
     }
 
     /// Add a date parameter (converts NaiveDate to DateTime<Utc>)
-    pub fn date(mut self, key: &str, value: Option<chrono::NaiveDate>) -> Self {
-        if let Some(v) = value {
+    pub fn date(mut self, key: &str, value: impl Into<Option<chrono::NaiveDate>>) -> Self {
+        if let Some(v) = value.into() {
             // Convert NaiveDate to DateTime<Utc> at start of day
             let datetime = v.and_hms_opt(0, 0, 0).unwrap().and_utc();
             self.params.push((key.to_string(), datetime.to_rfc3339()));
@@ -130,7 +127,9 @@ pub enum QueryBuilderError {
 impl std::fmt::Display for QueryBuilderError {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
         match self {
-            QueryBuilderError::InvalidQuerySyntax(msg) => write!(f, "Invalid query syntax: {}", msg),
+            QueryBuilderError::InvalidQuerySyntax(msg) => {
+                write!(f, "Invalid query syntax: {}", msg)
+            }
         }
     }
 }
@@ -203,4 +202,3 @@ fn tokenize_query(input: &str) -> Vec<String> {
 
     tokens
 }
-

@@ -9990,7 +9990,7 @@
                   "generatedName": "applicationAuthConfigurationGoogle",
                   "key": "google",
                   "schema": {
-                    "generatedName": "applicationAuthConfigurationGoogle",
+                    "generatedName": "ApplicationAuthConfigurationGoogle",
                     "value": {
                       "allOf": [],
                       "properties": [
@@ -10029,7 +10029,7 @@
                   "generatedName": "applicationAuthConfigurationNickname",
                   "key": "nickname",
                   "schema": {
-                    "generatedName": "applicationAuthConfigurationNickname",
+                    "generatedName": "ApplicationAuthConfigurationNickname",
                     "value": {
                       "generatedName": "ApplicationAuthConfigurationNickname",
                       "schema": "Record_string.never_",
@@ -10039,7 +10039,6 @@
                       },
                       "type": "reference"
                     },
-                    "groupName": [],
                     "type": "optional"
                   },
                   "audiences": [],
@@ -10051,7 +10050,7 @@
                   "generatedName": "applicationAuthConfigurationAnonymous",
                   "key": "anonymous",
                   "schema": {
-                    "generatedName": "applicationAuthConfigurationAnonymous",
+                    "generatedName": "ApplicationAuthConfigurationAnonymous",
                     "value": {
                       "generatedName": "ApplicationAuthConfigurationAnonymous",
                       "schema": "Record_string.never_",
@@ -10061,7 +10060,6 @@
                       },
                       "type": "reference"
                     },
-                    "groupName": [],
                     "type": "optional"
                   },
                   "audiences": [],
@@ -10539,7 +10537,7 @@
                   "generatedName": "appConfigAuthConfigurationGoogle",
                   "key": "google",
                   "schema": {
-                    "generatedName": "appConfigAuthConfigurationGoogle",
+                    "generatedName": "AppConfigAuthConfigurationGoogle",
                     "value": {
                       "allOf": [],
                       "properties": [
@@ -10578,7 +10576,7 @@
                   "generatedName": "appConfigAuthConfigurationNickname",
                   "key": "nickname",
                   "schema": {
-                    "generatedName": "appConfigAuthConfigurationNickname",
+                    "generatedName": "AppConfigAuthConfigurationNickname",
                     "value": {
                       "generatedName": "AppConfigAuthConfigurationNickname",
                       "schema": "Record_string.never_",
@@ -10588,7 +10586,6 @@
                       },
                       "type": "reference"
                     },
-                    "groupName": [],
                     "type": "optional"
                   },
                   "audiences": [],
@@ -10600,7 +10597,7 @@
                   "generatedName": "appConfigAuthConfigurationAnonymous",
                   "key": "anonymous",
                   "schema": {
-                    "generatedName": "appConfigAuthConfigurationAnonymous",
+                    "generatedName": "AppConfigAuthConfigurationAnonymous",
                     "value": {
                       "generatedName": "AppConfigAuthConfigurationAnonymous",
                       "schema": "Record_string.never_",
@@ -10610,7 +10607,6 @@
                       },
                       "type": "reference"
                     },
-                    "groupName": [],
                     "type": "optional"
                   },
                   "audiences": [],
@@ -11038,7 +11034,7 @@
             "generatedName": "lobbyState",
             "key": "state",
             "schema": {
-              "generatedName": "lobbyState",
+              "generatedName": "LobbyState",
               "value": {
                 "key": {
                   "schema": {
@@ -11289,7 +11285,7 @@
             "generatedName": "recordPartialMetricNameMetricValueArrayCpu",
             "key": "cpu",
             "schema": {
-              "generatedName": "recordPartialMetricNameMetricValueArrayCpu",
+              "generatedName": "RecordPartialMetricNameMetricValueArrayCpu",
               "value": {
                 "value": {
                   "generatedName": "RecordPartialMetricNameMetricValueArrayCpuItem",
@@ -11314,7 +11310,7 @@
             "generatedName": "recordPartialMetricNameMetricValueArrayMemory",
             "key": "memory",
             "schema": {
-              "generatedName": "recordPartialMetricNameMetricValueArrayMemory",
+              "generatedName": "RecordPartialMetricNameMetricValueArrayMemory",
               "value": {
                 "value": {
                   "generatedName": "RecordPartialMetricNameMetricValueArrayMemoryItem",
@@ -11339,7 +11335,7 @@
             "generatedName": "recordPartialMetricNameMetricValueArrayRateEgress",
             "key": "rate_egress",
             "schema": {
-              "generatedName": "recordPartialMetricNameMetricValueArrayRateEgress",
+              "generatedName": "RecordPartialMetricNameMetricValueArrayRateEgress",
               "value": {
                 "value": {
                   "generatedName": "RecordPartialMetricNameMetricValueArrayRateEgressItem",
@@ -11364,7 +11360,7 @@
             "generatedName": "recordPartialMetricNameMetricValueArrayTotalEgress",
             "key": "total_egress",
             "schema": {
-              "generatedName": "recordPartialMetricNameMetricValueArrayTotalEgress",
+              "generatedName": "RecordPartialMetricNameMetricValueArrayTotalEgress",
               "value": {
                 "value": {
                   "generatedName": "RecordPartialMetricNameMetricValueArrayTotalEgressItem",

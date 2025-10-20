@@ -241,6 +241,7 @@
     "types": [],
     "subpackages": []
   },
+  "authSchemes": {},
   "snippetsConfiguration": {},
   "globalHeaders": []
 }

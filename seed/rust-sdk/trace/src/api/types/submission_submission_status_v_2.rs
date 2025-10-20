@@ -1,8 +1,6 @@
-use crate::submission_test_submission_status_v_2::TestSubmissionStatusV2;
-use crate::submission_workspace_submission_status_v_2::WorkspaceSubmissionStatusV2;
-use serde::{Deserialize, Serialize};
+pub use crate::prelude::*;
 
-#[derive(Debug, Clone, Serialize, Deserialize)]
+#[derive(Debug, Clone, Serialize, Deserialize, PartialEq)]
 #[serde(tag = "type")]
 pub enum SubmissionStatusV2 {
     Test {

@@ -1,4 +1,4 @@
-use seed_validation::{ClientConfig, GetQueryRequest, ValidationClient};
+use seed_validation::prelude::*;
 
 #[tokio::main]
 async fn main() {

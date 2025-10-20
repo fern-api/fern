@@ -7,6 +7,16 @@ from ....core.pydantic_utilities import IS_PYDANTIC_V2, UniversalBaseModel
 
 
 class User(UniversalBaseModel):
+    """
+    Examples
+    --------
+    from seed.extra_properties.resources.user import User
+
+    User(
+        name="Alice",
+    )
+    """
+
     name: str
 
     if IS_PYDANTIC_V2:

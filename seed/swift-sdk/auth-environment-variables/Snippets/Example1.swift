@@ -7,7 +7,7 @@ private func main() async throws {
         apiKey: "<value>"
     )
 
-    try await client.service.getWithHeader(request: .init(xEndpointHeader: "X-Endpoint-Header"))
+    _ = try await client.service.getWithHeader()
 }
 
 try await main()

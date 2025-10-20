@@ -70,7 +70,7 @@ public partial class ServiceClient
     ///         Rating = 8,
     ///         Type = "movie",
     ///         Tag = "tag-wf9as23d",
-    ///         Metadata = new Dictionary&lt;string, object&gt;()
+    ///         Metadata = new Dictionary&lt;string, object?&gt;()
     ///         {
     ///             {
     ///                 "actors",
@@ -206,7 +206,7 @@ public partial class ServiceClient
     ///             Type = "movie",
     ///             Tag = "tag",
     ///             Book = "book",
-    ///             Metadata = new Dictionary&lt;string, object&gt;()
+    ///             Metadata = new Dictionary&lt;string, object?&gt;()
     ///             {
     ///                 {
     ///                     "metadata",

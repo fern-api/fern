@@ -13,6 +13,7 @@ export namespace AsIsManager {
         generateWireTests: boolean;
         relativePackagePath: string;
         relativeTestPath: string;
+        generatorType: "sdk" | "model" | "express";
     }
 }
 
@@ -21,13 +22,20 @@ export class AsIsManager {
     private readonly generateWireTests: boolean;
     private readonly relativePackagePath: string;
     private readonly relativeTestPath: string;
+    private readonly generatorType: "sdk" | "model" | "express";
 
-    constructor({ useBigInt, generateWireTests, relativePackagePath, relativeTestPath }: AsIsManager.Init) {
+    constructor({
+        useBigInt,
+        generateWireTests,
+        relativePackagePath,
+        relativeTestPath,
+        generatorType
+    }: AsIsManager.Init) {
         this.useBigInt = useBigInt;
         this.generateWireTests = generateWireTests;
         this.relativePackagePath = relativePackagePath;
         this.relativeTestPath = relativeTestPath;
-        console.log("relativeTestPath", this.relativeTestPath);
+        this.generatorType = generatorType;
     }
 
     /**
@@ -35,6 +43,7 @@ export class AsIsManager {
      */
     private getAsIsFiles() {
         return {
+            biomeJson: { "biome.json": "biome.json" },
             core: {
                 mergeHeaders: { "core/headers.ts": `${this.relativePackagePath}/core/headers.ts` },
                 json: {
@@ -56,20 +65,25 @@ export class AsIsManager {
         };
     }
 
-    public async AddToTsProject({ project }: { project: Project }): Promise<void> {
+    public async addToTsProject({ project }: { project: Project }): Promise<void> {
         const filesToCopy: Record<string, string>[] = [];
         const asIsFiles = this.getAsIsFiles();
 
-        filesToCopy.push(asIsFiles.core.mergeHeaders);
-        filesToCopy.push(asIsFiles.scripts.renameToEsmFiles);
-        if (this.useBigInt) {
-            filesToCopy.push(asIsFiles.tests.bigintSetup);
-            filesToCopy.push(asIsFiles.core.json.bigint);
-        } else {
-            filesToCopy.push(asIsFiles.core.json.vanilla);
+        filesToCopy.push(asIsFiles.biomeJson);
+        if (this.generatorType === "sdk" || this.generatorType === "model") {
+            filesToCopy.push(asIsFiles.core.mergeHeaders);
+            filesToCopy.push(asIsFiles.scripts.renameToEsmFiles);
+            if (this.useBigInt) {
+                filesToCopy.push(asIsFiles.tests.bigintSetup);
+                filesToCopy.push(asIsFiles.core.json.bigint);
+            } else {
+                filesToCopy.push(asIsFiles.core.json.vanilla);
+            }
         }
-        if (this.generateWireTests) {
-            filesToCopy.push(asIsFiles.tests.mockServer);
+        if (this.generatorType === "sdk") {
+            if (this.generateWireTests) {
+                filesToCopy.push(asIsFiles.tests.mockServer);
+            }
         }
 
         for (const [sourcePattern, targetPattern] of filesToCopy.flatMap(Object.entries) as [string, string][]) {

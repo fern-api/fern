@@ -5,18 +5,14 @@ import com.seed.extraProperties.resources.user.requests.CreateUserRequest;
 
 public class Example0 {
     public static void main(String[] args) {
-        SeedExtraPropertiesClient client = SeedExtraPropertiesClient
-            .builder()
-            .url("https://api.fern.com")
-            .build();
+        SeedExtraPropertiesClient client =
+                SeedExtraPropertiesClient.builder().url("https://api.fern.com").build();
 
-        client.user().createUser(
-            CreateUserRequest
-                .builder()
-                .type("CreateUserRequest")
-                .version("v1")
-                .name("name")
-                .build()
-        );
+        client.user()
+                .createUser(CreateUserRequest.builder()
+                        .name("Alice")
+                        .type("CreateUserRequest")
+                        .version("v1")
+                        .build());
     }
 }

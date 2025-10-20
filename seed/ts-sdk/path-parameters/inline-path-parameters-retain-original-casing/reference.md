@@ -1,7 +1,5 @@
 # Reference
-
 ## Organizations
-
 <details><summary><code>client.organizations.<a href="/src/api/resources/organizations/client/Client.ts">getOrganization</a>(organization_id) -> SeedPathParameters.Organization</code></summary>
 <dl>
 <dd>
@@ -16,8 +14,8 @@
 
 ```typescript
 await client.organizations.getOrganization("organization_id");
-```
 
+```
 </dd>
 </dl>
 </dd>
@@ -31,20 +29,21 @@ await client.organizations.getOrganization("organization_id");
 <dl>
 <dd>
 
-**organization_id:** `string`
-
+**organization_id:** `string` 
+    
 </dd>
 </dl>
 
 <dl>
 <dd>
 
-**requestOptions:** `Organizations.RequestOptions`
+**requestOptions:** `Organizations.RequestOptions` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
 
-</dd>
-</dl>
-</dd>
-</dl>
 
 </dd>
 </dl>
@@ -65,10 +64,10 @@ await client.organizations.getOrganization("organization_id");
 ```typescript
 await client.organizations.getOrganizationUser({
     organization_id: "organization_id",
-    user_id: "user_id",
+    user_id: "user_id"
 });
-```
 
+```
 </dd>
 </dl>
 </dd>
@@ -82,20 +81,21 @@ await client.organizations.getOrganizationUser({
 <dl>
 <dd>
 
-**request:** `SeedPathParameters.GetOrganizationUserRequest`
-
+**request:** `SeedPathParameters.GetOrganizationUserRequest` 
+    
 </dd>
 </dl>
 
 <dl>
 <dd>
 
-**requestOptions:** `Organizations.RequestOptions`
+**requestOptions:** `Organizations.RequestOptions` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
 
-</dd>
-</dl>
-</dd>
-</dl>
 
 </dd>
 </dl>
@@ -115,10 +115,10 @@ await client.organizations.getOrganizationUser({
 
 ```typescript
 await client.organizations.searchOrganizations("organization_id", {
-    limit: 1,
+    limit: 1
 });
-```
 
+```
 </dd>
 </dl>
 </dd>
@@ -132,35 +132,35 @@ await client.organizations.searchOrganizations("organization_id", {
 <dl>
 <dd>
 
-**organization_id:** `string`
-
+**organization_id:** `string` 
+    
 </dd>
 </dl>
 
 <dl>
 <dd>
 
-**request:** `SeedPathParameters.SearchOrganizationsRequest`
-
+**request:** `SeedPathParameters.SearchOrganizationsRequest` 
+    
 </dd>
 </dl>
 
 <dl>
 <dd>
 
-**requestOptions:** `Organizations.RequestOptions`
+**requestOptions:** `Organizations.RequestOptions` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
 
-</dd>
-</dl>
-</dd>
-</dl>
 
 </dd>
 </dl>
 </details>
 
 ## User
-
 <details><summary><code>client.user.<a href="/src/api/resources/user/client/Client.ts">getUser</a>({ ...params }) -> SeedPathParameters.User</code></summary>
 <dl>
 <dd>
@@ -175,10 +175,10 @@ await client.organizations.searchOrganizations("organization_id", {
 
 ```typescript
 await client.user.getUser({
-    user_id: "user_id",
+    user_id: "user_id"
 });
-```
 
+```
 </dd>
 </dl>
 </dd>
@@ -192,20 +192,21 @@ await client.user.getUser({
 <dl>
 <dd>
 
-**request:** `SeedPathParameters.GetUsersRequest`
-
+**request:** `SeedPathParameters.GetUsersRequest` 
+    
 </dd>
 </dl>
 
 <dl>
 <dd>
 
-**requestOptions:** `User.RequestOptions`
+**requestOptions:** `User.RequestOptions` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
 
-</dd>
-</dl>
-</dd>
-</dl>
 
 </dd>
 </dl>
@@ -226,10 +227,10 @@ await client.user.getUser({
 ```typescript
 await client.user.createUser({
     name: "name",
-    tags: ["tags", "tags"],
+    tags: ["tags", "tags"]
 });
-```
 
+```
 </dd>
 </dl>
 </dd>
@@ -243,20 +244,21 @@ await client.user.createUser({
 <dl>
 <dd>
 
-**request:** `SeedPathParameters.User`
-
+**request:** `SeedPathParameters.User` 
+    
 </dd>
 </dl>
 
 <dl>
 <dd>
 
-**requestOptions:** `User.RequestOptions`
+**requestOptions:** `User.RequestOptions` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
 
-</dd>
-</dl>
-</dd>
-</dl>
 
 </dd>
 </dl>
@@ -279,11 +281,11 @@ await client.user.updateUser({
     user_id: "user_id",
     body: {
         name: "name",
-        tags: ["tags", "tags"],
-    },
+        tags: ["tags", "tags"]
+    }
 });
-```
 
+```
 </dd>
 </dl>
 </dd>
@@ -297,20 +299,21 @@ await client.user.updateUser({
 <dl>
 <dd>
 
-**request:** `SeedPathParameters.UpdateUserRequest`
-
+**request:** `SeedPathParameters.UpdateUserRequest` 
+    
 </dd>
 </dl>
 
 <dl>
 <dd>
 
-**requestOptions:** `User.RequestOptions`
+**requestOptions:** `User.RequestOptions` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
 
-</dd>
-</dl>
-</dd>
-</dl>
 
 </dd>
 </dl>
@@ -331,10 +334,10 @@ await client.user.updateUser({
 ```typescript
 await client.user.searchUsers({
     user_id: "user_id",
-    limit: 1,
+    limit: 1
 });
-```
 
+```
 </dd>
 </dl>
 </dd>
@@ -348,20 +351,21 @@ await client.user.searchUsers({
 <dl>
 <dd>
 
-**request:** `SeedPathParameters.SearchUsersRequest`
-
+**request:** `SeedPathParameters.SearchUsersRequest` 
+    
 </dd>
 </dl>
 
 <dl>
 <dd>
 
-**requestOptions:** `User.RequestOptions`
+**requestOptions:** `User.RequestOptions` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
 
-</dd>
-</dl>
-</dd>
-</dl>
 
 </dd>
 </dl>

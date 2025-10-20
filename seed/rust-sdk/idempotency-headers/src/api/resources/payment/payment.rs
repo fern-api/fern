@@ -1,6 +1,7 @@
 use crate::api::*;
 use crate::{ApiError, ClientConfig, HttpClient, RequestOptions};
 use reqwest::Method;
+use uuid::Uuid;
 
 pub struct PaymentClient {
     pub http_client: HttpClient,
@@ -17,7 +18,7 @@ impl PaymentClient {
         &self,
         request: &CreatePaymentRequest,
         options: Option<RequestOptions>,
-    ) -> Result<uuid::Uuid, ApiError> {
+    ) -> Result<Uuid, ApiError> {
         self.http_client
             .execute_request(
                 Method::POST,

@@ -325,7 +325,7 @@ function addGetAvailableFixturesCommand(cli: Argv) {
                     demandOption: true,
                     description: "Generator to get fixtures for"
                 })
-                .option("include-subfolders", {
+                .option("include-output-folders", {
                     type: "boolean",
                     demandOption: false,
                     default: false,
@@ -343,7 +343,7 @@ function addGetAvailableFixturesCommand(cli: Argv) {
                 );
             }
 
-            const availableFixtures = await getAvailableFixtures(generator, argv["include-subfolders"]);
+            const availableFixtures = await getAvailableFixtures(generator, argv["include-output-folders"]);
 
             // Note: HAVE to log the output for CI to pick it up
             console.log(JSON.stringify({ fixtures: availableFixtures }, null, 2));

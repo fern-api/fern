@@ -15,4 +15,4 @@ impl IdempotencyHeadersClient {
     }
 }
 
-pub use payment::*;
+pub use payment::PaymentClient;

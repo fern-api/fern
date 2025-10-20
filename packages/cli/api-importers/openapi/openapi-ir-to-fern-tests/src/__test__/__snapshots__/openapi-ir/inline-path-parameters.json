@@ -128,7 +128,7 @@
               "generatedName": "getOrganizationUserResponseResults",
               "key": "results",
               "schema": {
-                "generatedName": "getOrganizationUserResponseResults",
+                "generatedName": "GetOrganizationUserResponseResults",
                 "value": {
                   "value": {
                     "schema": {
@@ -290,7 +290,8 @@
               "generatedName": "searchRequestAccess",
               "key": "access",
               "schema": {
-                "generatedName": "searchRequestAccess",
+                "generatedName": "SearchRequestAccess",
+                "description": "Access level",
                 "value": {
                   "description": "Access level",
                   "generatedName": "SearchRequestAccess",
@@ -348,7 +349,7 @@
               "generatedName": "searchResponseResults",
               "key": "results",
               "schema": {
-                "generatedName": "searchResponseResults",
+                "generatedName": "SearchResponseResults",
                 "value": {
                   "value": {
                     "schema": {

@@ -1,9 +1,8 @@
-use crate::types_foo::Foo;
-use serde::{Deserialize, Serialize};
+pub use crate::prelude::*;
 
 #[derive(Debug, Clone, Serialize, Deserialize, PartialEq, Eq, Hash)]
 pub struct FooExtended {
     #[serde(flatten)]
     pub foo_fields: Foo,
-    pub age: i32,
+    pub age: i64,
 }

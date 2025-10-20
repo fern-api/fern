@@ -4,24 +4,11 @@ on:
   push:
     branches:
       - main
-    paths:
-      - ".github/workflows/update-seed.yml"
-      - "packages/seed/**"
-      - "packages/ir-sdk/fern/apis/**"
-      - "packages/cli/generation/ir-generator/**"
-      - "test-definitions/**"
-      - "test-definitions-openapi/**"
-      - "generators/**"
-      - "seed/**"
-  pull_request:
-    types: [opened, synchronize, reopened, ready_for_review]
-    branches:
-      - main
   workflow_dispatch:
 
 # Cancel previous workflows on previous push
 concurrency:
-  group: ${{ github.workflow }}-${{ github.event.pull_request.number || github.ref }}
+  group: ${{ github.workflow }}-${{ github.ref }}
   cancel-in-progress: true
 
 permissions:
@@ -35,17 +22,18 @@ jobs:
   setup:
     if: github.repository == 'fern-api/fern'
     runs-on: ubuntu-latest
+    timeout-minutes: 2
     outputs:
       skip-scripts: ${{ steps.set-update-options.outputs.skip-scripts }}
       update-by-push: ${{ steps.set-update-options.outputs.update-by-push }}
       update-by-pr: ${{ steps.set-update-options.outputs.update-by-pr }}
     steps:
-      # Apply by direct push for PRs to main, apply by PR for push to main or workflow_dispatch
+      # Apply by direct push for workflow_dispatches that aren't on main, apply by PR if running against main
       - name: Set update options
         id: set-update-options
         shell: bash
         run: |
-          if [[ "${{ github.event_name }}" == "pull_request" ]]; then
+          if [[ "${{ github.event_name }}" == "workflow_dispatch" && "${{ github.ref }}" != "refs/heads/main" ]]; then
             echo "skip-scripts=true" >> $GITHUB_OUTPUT
             echo "update-by-push=true" >> $GITHUB_OUTPUT
             echo "update-by-pr=false" >> $GITHUB_OUTPUT
@@ -54,18 +42,16 @@ jobs:
             echo "update-by-push=false" >> $GITHUB_OUTPUT
             echo "update-by-pr=true" >> $GITHUB_OUTPUT
           fi
+
   changes:
     if: github.repository == 'fern-api/fern'
     runs-on: ubuntu-latest
+    timeout-minutes: 5
     strategy:
       matrix:
         generator-name: [seed, ruby, ruby-v2, openapi, python, postman, java, typescript, go, csharp, php, swift, rust]
         include:
           - files: |
-              .github/actions/cached-seed/action.yaml
-              .github/actions/check-for-changed-files/action.yaml
-              .github/actions/install/action.yaml
-              .github/workflows/seed.yml
               packages/seed/
               packages/ir-sdk/fern/apis/
               packages/cli/generation/ir-generator/
@@ -133,7 +119,7 @@ jobs:
               seed/rust-sdk/
             generator-name: rust
     outputs:
-      seed: ${{ github.event_name == 'workflow_dispatch' ||  steps.set-output.outputs.seed-changes }}
+      seed: ${{ steps.set-output.outputs.seed-changes }}
       ruby: ${{ steps.set-output.outputs.ruby-changes }}
       ruby-v2: ${{ steps.set-output.outputs.ruby-v2-changes }}
       openapi: ${{ steps.set-output.outputs.openapi-changes }}
@@ -148,20 +134,46 @@ jobs:
       rust: ${{ steps.set-output.outputs.rust-changes }}
 
     steps:
-      - if: github.event_name != 'workflow_dispatch'
-        name: Checkout repo
+      - name: Checkout Files
         uses: actions/checkout@v4
         with:
           # Get sufficient history to check for changes
-          fetch-depth: 200
+          fetch-depth: 0
           sparse-checkout: |
             ${{ matrix.files }}
             .github/
+
+      - name: Setup Base SHA
+        id: setup-base-sha
+        run: |
+          BASE_SHA=""
+
+          # For workflow_dispatch events that aren't on main, find the last commit from the main branch and compare against that
+          # For workflows involving the main branch, compare to the last commit
+          if [[ "${{ github.event_name }}" == "workflow_dispatch" && "${{ github.ref }}" != "refs/heads/main" ]]; then
+            git fetch origin main
+            MERGE_BASE=$(git merge-base HEAD origin/main)
+            echo "Merge base commit: $MERGE_BASE"
+
+            BASE_SHA=$MERGE_BASE
+          elif [[ ("${{ github.event_name }}" == "workflow_dispatch" && "${{ github.ref }}" == "refs/heads/main") || \
+                  ("${{ github.event_name }}" == "push" && "${{ github.ref }}" == "refs/heads/main") ]]; then            
+            PREVIOUS_MAIN_COMMIT=$(git rev-parse origin/main^)
+            echo "Previous commit on main: $PREVIOUS_MAIN_COMMIT"
+
+            BASE_SHA=$PREVIOUS_MAIN_COMMIT
+          else
+            echo "Unexpected event and branch combination. Event: ${{ github.event_name }}, Branch: ${{ github.ref }}"
+            exit 1
+          fi
+
+          echo "base_sha=$BASE_SHA" >> $GITHUB_OUTPUT
 
       - name: Get generator changes for ${{ matrix.generator-name }}
         id: get-generator-changes
         uses: ./.github/actions/check-for-changed-files
         with:
+          base_sha: ${{ steps.setup-base-sha.outputs.base_sha }}
           files: ${{ matrix.files }}
 
       - name: Set output
@@ -171,7 +183,9 @@ jobs:
 
   get-all-test-matrices:
     runs-on: ubuntu-latest
+    timeout-minutes: 10
     strategy:
+      fail-fast: false # Don't let failing generators block the passing generators
       matrix:
         sdk-name:
           [
@@ -200,84 +214,122 @@ jobs:
             rust-sdk
           ]
     outputs:
-      ruby-model: ${{ steps.set-test-matrix.outputs.ruby-model-test-matrix }}
-      ruby-sdk: ${{ steps.set-test-matrix.outputs.ruby-sdk-test-matrix }}
-      ruby-sdk-v2: ${{ steps.set-test-matrix.outputs.ruby-sdk-v2-test-matrix }}
-      pydantic: ${{ steps.set-test-matrix.outputs.pydantic-test-matrix }}
-      python-sdk: ${{ steps.set-test-matrix.outputs.python-sdk-test-matrix }}
-      fastapi: ${{ steps.set-test-matrix.outputs.fastapi-test-matrix }}
-      openapi: ${{ steps.set-test-matrix.outputs.openapi-test-matrix }}
-      postman: ${{ steps.set-test-matrix.outputs.postman-test-matrix }}
-      java-sdk: ${{ steps.set-test-matrix.outputs.java-sdk-test-matrix }}
-      java-model: ${{ steps.set-test-matrix.outputs.java-model-test-matrix }}
-      java-spring: ${{ steps.set-test-matrix.outputs.java-spring-test-matrix }}
-      ts-sdk: ${{ steps.set-test-matrix.outputs.ts-sdk-test-matrix }}
-      ts-express: ${{ steps.set-test-matrix.outputs.ts-express-test-matrix }}
-      go-fiber: ${{ steps.set-test-matrix.outputs.go-fiber-test-matrix }}
-      go-model: ${{ steps.set-test-matrix.outputs.go-model-test-matrix }}
-      go-sdk: ${{ steps.set-test-matrix.outputs.go-sdk-test-matrix }}
-      csharp-model: ${{ steps.set-test-matrix.outputs.csharp-model-test-matrix }}
-      csharp-sdk: ${{ steps.set-test-matrix.outputs.csharp-sdk-test-matrix }}
-      php-model: ${{ steps.set-test-matrix.outputs.php-model-test-matrix }}
-      php-sdk: ${{ steps.set-test-matrix.outputs.php-sdk-test-matrix }}
-      swift-sdk: ${{ steps.set-test-matrix.outputs.swift-sdk-test-matrix }}
-      rust-model: ${{ steps.set-test-matrix.outputs.rust-model-test-matrix }}
-      rust-sdk: ${{ steps.set-test-matrix.outputs.rust-sdk-test-matrix }}
+      ruby-model: ${{ steps.create-seed-groups-matrix.outputs.ruby-model-test-matrix }}
+      ruby-sdk: ${{ steps.create-seed-groups-matrix.outputs.ruby-sdk-test-matrix }}
+      ruby-sdk-v2: ${{ steps.create-seed-groups-matrix.outputs.ruby-sdk-v2-test-matrix }}
+      pydantic: ${{ steps.create-seed-groups-matrix.outputs.pydantic-test-matrix }}
+      python-sdk: ${{ steps.create-seed-groups-matrix.outputs.python-sdk-test-matrix }}
+      fastapi: ${{ steps.create-seed-groups-matrix.outputs.fastapi-test-matrix }}
+      openapi: ${{ steps.create-seed-groups-matrix.outputs.openapi-test-matrix }}
+      postman: ${{ steps.create-seed-groups-matrix.outputs.postman-test-matrix }}
+      java-sdk: ${{ steps.create-seed-groups-matrix.outputs.java-sdk-test-matrix }}
+      java-model: ${{ steps.create-seed-groups-matrix.outputs.java-model-test-matrix }}
+      java-spring: ${{ steps.create-seed-groups-matrix.outputs.java-spring-test-matrix }}
+      ts-sdk: ${{ steps.create-seed-groups-matrix.outputs.ts-sdk-test-matrix }}
+      ts-express: ${{ steps.create-seed-groups-matrix.outputs.ts-express-test-matrix }}
+      go-fiber: ${{ steps.create-seed-groups-matrix.outputs.go-fiber-test-matrix }}
+      go-model: ${{ steps.create-seed-groups-matrix.outputs.go-model-test-matrix }}
+      go-sdk: ${{ steps.create-seed-groups-matrix.outputs.go-sdk-test-matrix }}
+      csharp-model: ${{ steps.create-seed-groups-matrix.outputs.csharp-model-test-matrix }}
+      csharp-sdk: ${{ steps.create-seed-groups-matrix.outputs.csharp-sdk-test-matrix }}
+      php-model: ${{ steps.create-seed-groups-matrix.outputs.php-model-test-matrix }}
+      php-sdk: ${{ steps.create-seed-groups-matrix.outputs.php-sdk-test-matrix }}
+      swift-sdk: ${{ steps.create-seed-groups-matrix.outputs.swift-sdk-test-matrix }}
+      rust-model: ${{ steps.create-seed-groups-matrix.outputs.rust-model-test-matrix }}
+      rust-sdk: ${{ steps.create-seed-groups-matrix.outputs.rust-sdk-test-matrix }}
     steps:
       - name: Checkout repo
         uses: actions/checkout@v4
-
-      - name: Get test matrix
-        id: get-test-matrix
-        uses: ./.github/actions/get-test-matrix
         with:
-          sdk-name: ${{ matrix.sdk-name }}
-          package-amount: 10
+          sparse-checkout: |
+            .github/workflow-resource-files/seed-groups/
 
-      - name: Set test matrix for ${{ matrix.sdk-name }}
-        id: set-test-matrix
+      - name: Verify Seed Groups File Exists
         run: |
-          if [[ "${{ steps.get-test-matrix.outputs.split-tests }}" == "true" ]]; then
-              BASH_VAR='${{ steps.get-test-matrix.outputs.test-matrix }}'
-              echo "${{ matrix.sdk-name }}-test-matrix=$BASH_VAR" >> $GITHUB_OUTPUT
-
-              # Echo the data to command line for visibility
-              echo "Packaged data for ${{ matrix.sdk-name }}-test-matrix:"
-              echo "$BASH_VAR" | jq .
+          if [ ! -f .github/workflow-resource-files/seed-groups/${{ matrix.sdk-name }}-seed-groups.json ]; then
+            echo "${{ matrix.sdk-name }}-seed-groups.json file not found. This file should be created automatically by the nightly-seed-grouping workflow."
+            exit 1
           else
-            echo "Set empty json matrix, which will run all tests on a single runner"
+            echo "${{ matrix.sdk-name }}-seed-groups.json file found."
+          fi
+
+      - name: Determine Parallelization
+        id: determine-parallelization
+        run: |
+          # Note: these times are the total time of generation and compilation for all seed tests. This is not a 
+          # measurement of throughput because it does not account of concurrency or parallelization. This is not 
+          # a perfect representation, but it gets the job done. 3800 seconds was chosen as it is approximately 
+          # 8 minutes when running with 16 concurrent tests as is our default setting in CI.
+          CUTOFF_TIME_FOR_PARALLELIZATION_SECONDS=3800
+          TOTAL_TEST_TIME_SECONDS=$(jq '.totalTestTimeSeconds' .github/workflow-resource-files/seed-groups/${{ matrix.sdk-name }}-seed-groups.json)
+          echo "Checking if ${{ matrix.sdk-name }} total test time of $TOTAL_TEST_TIME_SECONDS seconds is greater than $CUTOFF_TIME_FOR_PARALLELIZATION_SECONDS seconds to split tests into parallel runners"
+
+          # Validate both times are non-negative integers (zero is allowed)
+          if [[ ! $CUTOFF_TIME_FOR_PARALLELIZATION_SECONDS =~ ^[0-9]+$ ]]; then
+            echo "Cut off time from seed.yml workflow is not a non-negative integer ($CUTOFF_TIME_FOR_PARALLELIZATION_SECONDS)"
+            exit 1
+          fi
+
+          if [[ ! $TOTAL_TEST_TIME_SECONDS =~ ^[0-9]+$ ]]; then
+            echo "Total test time from ${{ matrix.sdk-name }}-seed-groups.json is not a non-negative integer ($TOTAL_TEST_TIME_SECONDS)"
+            exit 1
+          fi
+
+          # Determine if we should split tests into parallel runners based on the cutoff time
+          if [[ $TOTAL_TEST_TIME_SECONDS -gt $CUTOFF_TIME_FOR_PARALLELIZATION_SECONDS ]]; then
+            echo "Running ${{ matrix.sdk-name }} tests in parallel runners"
+            echo "split-tests=true" >> $GITHUB_OUTPUT
+          else
+            echo "Running ${{ matrix.sdk-name }} tests in a single runner"
+            echo "split-tests=false" >> $GITHUB_OUTPUT
+          fi
+
+      - name: Create Seed Groups Matrix
+        id: create-seed-groups-matrix
+        run: |
+          # Parallelize tests and add leftover test runner, or run all tests in a single runner
+          # Note: "leftovers" and "all" are used as keywords in the matrix jobs following this setup
+          BASH_VAR=""
+          if [[ "${{ steps.determine-parallelization.outputs.split-tests }}" == "true" ]]; then
+            echo "Using balanced groups from ${{ matrix.sdk-name }}-seed-groups.json and adding a group for any leftover tests"
+            BASH_VAR=$(jq '[.groups[] | {fixtures: .fixtures}]' .github/workflow-resource-files/seed-groups/${{ matrix.sdk-name }}-seed-groups.json)
+            WITH_LEFTOVERS=$(echo "$BASH_VAR" | jq -c '. += [{"fixtures": ["leftovers"]}]')
+            echo "${{ matrix.sdk-name }}-test-matrix=$WITH_LEFTOVERS" >> $GITHUB_OUTPUT
+
+            # Echo the data to command line for visibility
+            echo "Groups for ${{ matrix.sdk-name }}-test-matrix:"
+            echo "$WITH_LEFTOVERS" | jq .
+          else
+            echo "Using single group to run all ${{ matrix.sdk-name }} tests"
             BASH_VAR='[{"fixtures":["all"]}]'
             echo "${{ matrix.sdk-name }}-test-matrix=$BASH_VAR" >> $GITHUB_OUTPUT
 
             # Echo the data to command line for visibility
-            echo "Packaged data for ${{ matrix.sdk-name }}-test-matrix:"
+            echo "Single group for ${{ matrix.sdk-name }}-test-matrix:"
             echo "$BASH_VAR" | jq .
           fi
 
   ruby-model-seed-update:
-    needs: [changes, setup, get-all-test-matrices]
-    if: ${{ needs.changes.outputs.ruby == 'true' ||  needs.changes.outputs.seed == 'true' }}
     runs-on: ubuntu-latest
+    timeout-minutes: 60
+    needs: [changes, setup, get-all-test-matrices]
+    if: >-
+      ${{ 
+        always() && !cancelled() &&
+        (needs.changes.outputs.ruby == 'true' ||  needs.changes.outputs.seed == 'true') &&
+        needs.get-all-test-matrices.outputs.ruby-model != ''
+      }}
     strategy:
       fail-fast: false # Let all tests run for debug, won't end up applying changes with a failure
-      max-parallel: 10 # Limit the number of runners for this job to 10
+      max-parallel: 15 # Limit the number of runners for this job
       matrix:
         include: ${{ fromJSON(needs.get-all-test-matrices.outputs.ruby-model) }}
     steps:
       - name: Checkout repo
         uses: actions/checkout@v4
         with:
-          token: ${{ secrets.FERN_GITHUB_PAT }}
-
-      # Format for seed tests
-      - name: JSON to String
-        id: json-to-string
-        run: |
-          json_data='${{toJson(matrix.fixtures)}}'
-          # Convert JSON array to space-separated string
-          string_result=$(echo "$json_data" | jq -r '.[]' | tr '\n' ' ' | sed 's/ $//')
-          echo "Generated string: '$string_result'"
-          echo "as-string=$string_result" >> $GITHUB_OUTPUT
+          sparse-checkout: |
+            .github/actions/
 
       - name: Update seed
         uses: ./.github/actions/auto-update-seed
@@ -285,17 +337,23 @@ jobs:
           generator-name: ruby-model
           generator-path: generators/ruby
           allow-unexpected-failures: true
-          fixtures-to-run: ${{ steps.json-to-string.outputs.as-string }}
+          fixtures-to-run: ${{ toJson(matrix.fixtures) }}
           index: ${{ strategy.job-index }}
           skip-scripts: ${{ needs.setup.outputs.skip-scripts }}
 
   ruby-sdk-seed-update:
-    needs: [changes, setup, get-all-test-matrices]
-    if: ${{ needs.changes.outputs.ruby == 'true' ||  needs.changes.outputs.seed == 'true' }}
     runs-on: ubuntu-latest
+    timeout-minutes: 60
+    needs: [changes, setup, get-all-test-matrices]
+    if: >-
+      ${{ 
+        always() && !cancelled() &&
+        (needs.changes.outputs.ruby == 'true' ||  needs.changes.outputs.seed == 'true') &&
+        needs.get-all-test-matrices.outputs.ruby-sdk != ''
+      }}
     strategy:
       fail-fast: false # Let all tests run for debug, won't end up applying changes with a failure
-      max-parallel: 10 # Limit the number of runners for this job to 10
+      max-parallel: 15 # Limit the number of runners for this job
       matrix:
         include: ${{ fromJSON(needs.get-all-test-matrices.outputs.ruby-sdk) }}
 
@@ -303,17 +361,8 @@ jobs:
       - name: Checkout repo
         uses: actions/checkout@v4
         with:
-          token: ${{ secrets.FERN_GITHUB_PAT }}
-
-      # Format for seed tests
-      - name: JSON to String
-        id: json-to-string
-        run: |
-          json_data='${{toJson(matrix.fixtures)}}'
-          # Convert JSON array to space-separated string
-          string_result=$(echo "$json_data" | jq -r '.[]' | tr '\n' ' ' | sed 's/ $//')
-          echo "Generated string: '$string_result'"
-          echo "as-string=$string_result" >> $GITHUB_OUTPUT
+          sparse-checkout: |
+            .github/actions/
 
       - name: Update seed
         uses: ./.github/actions/auto-update-seed
@@ -321,18 +370,23 @@ jobs:
           generator-name: ruby-sdk
           generator-path: generators/ruby
           allow-unexpected-failures: true
-          fixtures-to-run: ${{ steps.json-to-string.outputs.as-string }}
+          fixtures-to-run: ${{ toJson(matrix.fixtures) }}
           index: ${{ strategy.job-index }}
           skip-scripts: ${{ needs.setup.outputs.skip-scripts }}
 
   ruby-sdk-v2-seed-update:
-    needs: [changes, setup, get-all-test-matrices]
-    if: ${{ needs.changes.outputs.ruby-v2 == 'true' ||  needs.changes.outputs.seed == 'true' }}
     runs-on: ubuntu-latest
-
+    timeout-minutes: 60
+    needs: [changes, setup, get-all-test-matrices]
+    if: >-
+      ${{ 
+        always() && !cancelled() &&
+        (needs.changes.outputs.ruby-v2 == 'true' ||  needs.changes.outputs.seed == 'true') &&
+        needs.get-all-test-matrices.outputs.ruby-sdk-v2 != ''
+      }}
     strategy:
       fail-fast: false # Let all tests run for debug, won't end up applying changes with a failure
-      max-parallel: 10 # Limit the number of runners for this job to 10
+      max-parallel: 15 # Limit the number of runners for this job
       matrix:
         include: ${{ fromJSON(needs.get-all-test-matrices.outputs.ruby-sdk-v2) }}
 
@@ -340,17 +394,8 @@ jobs:
       - name: Checkout repo
         uses: actions/checkout@v4
         with:
-          token: ${{ secrets.FERN_GITHUB_PAT }}
-
-      # Format for seed tests
-      - name: JSON to String
-        id: json-to-string
-        run: |
-          json_data='${{toJson(matrix.fixtures)}}'
-          # Convert JSON array to space-separated string
-          string_result=$(echo "$json_data" | jq -r '.[]' | tr '\n' ' ' | sed 's/ $//')
-          echo "Generated string: '$string_result'"
-          echo "as-string=$string_result" >> $GITHUB_OUTPUT
+          sparse-checkout: |
+            .github/actions/
 
       - name: Update seed
         uses: ./.github/actions/auto-update-seed
@@ -358,17 +403,23 @@ jobs:
           generator-name: ruby-sdk-v2
           generator-path: generators/ruby-v2
           allow-unexpected-failures: true
-          fixtures-to-run: ${{ steps.json-to-string.outputs.as-string }}
+          fixtures-to-run: ${{ toJson(matrix.fixtures) }}
           index: ${{ strategy.job-index }}
           skip-scripts: ${{ needs.setup.outputs.skip-scripts }}
 
   pydantic-seed-update:
-    needs: [changes, setup, get-all-test-matrices]
-    if: ${{ needs.changes.outputs.python == 'true' ||  needs.changes.outputs.seed == 'true' }}
     runs-on: ubuntu-latest
+    timeout-minutes: 60
+    needs: [changes, setup, get-all-test-matrices]
+    if: >-
+      ${{ 
+        always() && !cancelled() &&
+        (needs.changes.outputs.python == 'true' ||  needs.changes.outputs.seed == 'true') &&
+        needs.get-all-test-matrices.outputs.pydantic != ''
+      }}
     strategy:
       fail-fast: false # Let all tests run for debug, won't end up applying changes with a failure
-      max-parallel: 10 # Limit the number of runners for this job to 10
+      max-parallel: 15 # Limit the number of runners for this job
       matrix:
         include: ${{ fromJSON(needs.get-all-test-matrices.outputs.pydantic) }}
 
@@ -376,17 +427,8 @@ jobs:
       - name: Checkout repo
         uses: actions/checkout@v4
         with:
-          token: ${{ secrets.FERN_GITHUB_PAT }}
-
-      # Format for seed tests
-      - name: JSON to String
-        id: json-to-string
-        run: |
-          json_data='${{toJson(matrix.fixtures)}}'
-          # Convert JSON array to space-separated string
-          string_result=$(echo "$json_data" | jq -r '.[]' | tr '\n' ' ' | sed 's/ $//')
-          echo "Generated string: '$string_result'"
-          echo "as-string=$string_result" >> $GITHUB_OUTPUT
+          sparse-checkout: |
+            .github/actions/
 
       - name: Update seed
         uses: ./.github/actions/auto-update-seed
@@ -394,17 +436,23 @@ jobs:
           generator-name: pydantic
           generator-path: generators/python
           allow-unexpected-failures: true
-          fixtures-to-run: ${{ steps.json-to-string.outputs.as-string }}
+          fixtures-to-run: ${{ toJson(matrix.fixtures) }}
           index: ${{ strategy.job-index }}
           skip-scripts: ${{ needs.setup.outputs.skip-scripts }}
 
   python-sdk-seed-update:
-    needs: [changes, setup, get-all-test-matrices]
-    if: ${{ needs.changes.outputs.python == 'true' ||  needs.changes.outputs.seed == 'true' }}
     runs-on: ubuntu-latest
+    timeout-minutes: 60
+    needs: [changes, setup, get-all-test-matrices]
+    if: >-
+      ${{ 
+        always() && !cancelled() &&
+        (needs.changes.outputs.python == 'true' ||  needs.changes.outputs.seed == 'true') &&
+        needs.get-all-test-matrices.outputs.python-sdk != ''
+      }}
     strategy:
       fail-fast: false # Let all tests run for debug, won't end up applying changes with a failure
-      max-parallel: 10 # Limit the number of runners for this job to 10
+      max-parallel: 15 # Limit the number of runners for this job
       matrix:
         include: ${{ fromJSON(needs.get-all-test-matrices.outputs.python-sdk) }}
 
@@ -412,17 +460,8 @@ jobs:
       - name: Checkout repo
         uses: actions/checkout@v4
         with:
-          token: ${{ secrets.FERN_GITHUB_PAT }}
-
-      # Format for seed tests
-      - name: JSON to String
-        id: json-to-string
-        run: |
-          json_data='${{toJson(matrix.fixtures)}}'
-          # Convert JSON array to space-separated string
-          string_result=$(echo "$json_data" | jq -r '.[]' | tr '\n' ' ' | sed 's/ $//')
-          echo "Generated string: '$string_result'"
-          echo "as-string=$string_result" >> $GITHUB_OUTPUT
+          sparse-checkout: |
+            .github/actions/
 
       - name: Update seed
         uses: ./.github/actions/auto-update-seed
@@ -430,17 +469,23 @@ jobs:
           generator-name: python-sdk
           generator-path: generators/python
           allow-unexpected-failures: true
-          fixtures-to-run: ${{ steps.json-to-string.outputs.as-string }}
+          fixtures-to-run: ${{ toJson(matrix.fixtures) }}
           index: ${{ strategy.job-index }}
           skip-scripts: ${{ needs.setup.outputs.skip-scripts }}
 
   fastapi-seed-update:
-    needs: [changes, setup, get-all-test-matrices]
-    if: ${{ needs.changes.outputs.python == 'true' ||  needs.changes.outputs.seed == 'true' }}
     runs-on: ubuntu-latest
+    timeout-minutes: 60
+    needs: [changes, setup, get-all-test-matrices]
+    if: >-
+      ${{ 
+        always() && !cancelled() &&
+        (needs.changes.outputs.python == 'true' ||  needs.changes.outputs.seed == 'true') &&
+        needs.get-all-test-matrices.outputs.fastapi != ''
+      }}
     strategy:
       fail-fast: false # Let all tests run for debug, won't end up applying changes with a failure
-      max-parallel: 10 # Limit the number of runners for this job to 10
+      max-parallel: 15 # Limit the number of runners for this job
       matrix:
         include: ${{ fromJSON(needs.get-all-test-matrices.outputs.fastapi) }}
 
@@ -448,17 +493,8 @@ jobs:
       - name: Checkout repo
         uses: actions/checkout@v4
         with:
-          token: ${{ secrets.FERN_GITHUB_PAT }}
-
-      # Format for seed tests
-      - name: JSON to String
-        id: json-to-string
-        run: |
-          json_data='${{toJson(matrix.fixtures)}}'
-          # Convert JSON array to space-separated string
-          string_result=$(echo "$json_data" | jq -r '.[]' | tr '\n' ' ' | sed 's/ $//')
-          echo "Generated string: '$string_result'"
-          echo "as-string=$string_result" >> $GITHUB_OUTPUT
+          sparse-checkout: |
+            .github/actions/
 
       - name: Update seed
         uses: ./.github/actions/auto-update-seed
@@ -466,17 +502,23 @@ jobs:
           generator-name: fastapi
           generator-path: generators/python
           allow-unexpected-failures: true
-          fixtures-to-run: ${{ steps.json-to-string.outputs.as-string }}
+          fixtures-to-run: ${{ toJson(matrix.fixtures) }}
           index: ${{ strategy.job-index }}
           skip-scripts: ${{ needs.setup.outputs.skip-scripts }}
 
   openapi-seed-update:
-    needs: [changes, setup, get-all-test-matrices]
-    if: ${{ needs.changes.outputs.openapi == 'true' ||  needs.changes.outputs.seed == 'true' }}
     runs-on: ubuntu-latest
+    timeout-minutes: 60
+    needs: [changes, setup, get-all-test-matrices]
+    if: >-
+      ${{ 
+        always() && !cancelled() &&
+        (needs.changes.outputs.openapi == 'true' ||  needs.changes.outputs.seed == 'true') &&
+        needs.get-all-test-matrices.outputs.openapi != ''
+      }}
     strategy:
       fail-fast: false # Let all tests run for debug, won't end up applying changes with a failure
-      max-parallel: 10 # Limit the number of runners for this job to 10
+      max-parallel: 15 # Limit the number of runners for this job
       matrix:
         include: ${{ fromJSON(needs.get-all-test-matrices.outputs.openapi) }}
 
@@ -484,17 +526,8 @@ jobs:
       - name: Checkout repo
         uses: actions/checkout@v4
         with:
-          token: ${{ secrets.FERN_GITHUB_PAT }}
-
-      # Format for seed tests
-      - name: JSON to String
-        id: json-to-string
-        run: |
-          json_data='${{toJson(matrix.fixtures)}}'
-          # Convert JSON array to space-separated string
-          string_result=$(echo "$json_data" | jq -r '.[]' | tr '\n' ' ' | sed 's/ $//')
-          echo "Generated string: '$string_result'"
-          echo "as-string=$string_result" >> $GITHUB_OUTPUT
+          sparse-checkout: |
+            .github/actions/
 
       - name: Update seed
         uses: ./.github/actions/auto-update-seed
@@ -502,17 +535,23 @@ jobs:
           generator-name: openapi
           generator-path: generators/openapi
           allow-unexpected-failures: true
-          fixtures-to-run: ${{ steps.json-to-string.outputs.as-string }}
+          fixtures-to-run: ${{ toJson(matrix.fixtures) }}
           index: ${{ strategy.job-index }}
           skip-scripts: ${{ needs.setup.outputs.skip-scripts }}
 
   postman-seed-update:
-    needs: [changes, setup, get-all-test-matrices]
-    if: ${{ needs.changes.outputs.postman == 'true' ||  needs.changes.outputs.seed == 'true' }}
     runs-on: ubuntu-latest
+    timeout-minutes: 60
+    needs: [changes, setup, get-all-test-matrices]
+    if: >-
+      ${{ 
+        always() && !cancelled() &&
+        (needs.changes.outputs.psotman == 'true' ||  needs.changes.outputs.seed == 'true') &&
+        needs.get-all-test-matrices.outputs.postman != ''
+      }}
     strategy:
       fail-fast: false # Let all tests run for debug, won't end up applying changes with a failure
-      max-parallel: 10 # Limit the number of runners for this job to 10
+      max-parallel: 15 # Limit the number of runners for this job
       matrix:
         include: ${{ fromJSON(needs.get-all-test-matrices.outputs.postman) }}
 
@@ -520,17 +559,8 @@ jobs:
       - name: Checkout repo
         uses: actions/checkout@v4
         with:
-          token: ${{ secrets.FERN_GITHUB_PAT }}
-
-      # Format for seed tests
-      - name: JSON to String
-        id: json-to-string
-        run: |
-          json_data='${{toJson(matrix.fixtures)}}'
-          # Convert JSON array to space-separated string
-          string_result=$(echo "$json_data" | jq -r '.[]' | tr '\n' ' ' | sed 's/ $//')
-          echo "Generated string: '$string_result'"
-          echo "as-string=$string_result" >> $GITHUB_OUTPUT
+          sparse-checkout: |
+            .github/actions/
 
       - name: Update seed
         uses: ./.github/actions/auto-update-seed
@@ -538,17 +568,23 @@ jobs:
           generator-name: postman
           generator-path: generators/postman
           allow-unexpected-failures: true
-          fixtures-to-run: ${{ steps.json-to-string.outputs.as-string }}
+          fixtures-to-run: ${{ toJson(matrix.fixtures) }}
           index: ${{ strategy.job-index }}
           skip-scripts: ${{ needs.setup.outputs.skip-scripts }}
 
   java-sdk-seed-update:
-    needs: [changes, setup, get-all-test-matrices]
-    if: ${{ needs.changes.outputs.java == 'true' ||  needs.changes.outputs.seed == 'true' }}
     runs-on: ubuntu-latest
+    timeout-minutes: 60
+    needs: [changes, setup, get-all-test-matrices]
+    if: >-
+      ${{ 
+        always() && !cancelled() &&
+        (needs.changes.outputs.java == 'true' ||  needs.changes.outputs.seed == 'true') &&
+        needs.get-all-test-matrices.outputs.java-sdk != ''
+      }}
     strategy:
       fail-fast: false # Let all tests run for debug, won't end up applying changes with a failure
-      max-parallel: 10 # Limit the number of runners for this job to 10
+      max-parallel: 15 # Limit the number of runners for this job
       matrix:
         include: ${{ fromJSON(needs.get-all-test-matrices.outputs.java-sdk) }}
 
@@ -556,17 +592,8 @@ jobs:
       - name: Checkout repo
         uses: actions/checkout@v4
         with:
-          token: ${{ secrets.FERN_GITHUB_PAT }}
-
-      # Format for seed tests
-      - name: JSON to String
-        id: json-to-string
-        run: |
-          json_data='${{toJson(matrix.fixtures)}}'
-          # Convert JSON array to space-separated string
-          string_result=$(echo "$json_data" | jq -r '.[]' | tr '\n' ' ' | sed 's/ $//')
-          echo "Generated string: '$string_result'"
-          echo "as-string=$string_result" >> $GITHUB_OUTPUT
+          sparse-checkout: |
+            .github/actions/
 
       - name: Update seed
         uses: ./.github/actions/auto-update-seed
@@ -574,17 +601,23 @@ jobs:
           generator-name: java-sdk
           generator-path: generators/java
           allow-unexpected-failures: true
-          fixtures-to-run: ${{ steps.json-to-string.outputs.as-string }}
+          fixtures-to-run: ${{ toJson(matrix.fixtures) }}
           index: ${{ strategy.job-index }}
           skip-scripts: ${{ needs.setup.outputs.skip-scripts }}
 
   java-model-seed-update:
-    needs: [changes, setup, get-all-test-matrices]
-    if: ${{ needs.changes.outputs.java == 'true' ||  needs.changes.outputs.seed == 'true' }}
     runs-on: ubuntu-latest
+    timeout-minutes: 60
+    needs: [changes, setup, get-all-test-matrices]
+    if: >-
+      ${{ 
+        always() && !cancelled() &&
+        (needs.changes.outputs.java == 'true' ||  needs.changes.outputs.seed == 'true') &&
+        needs.get-all-test-matrices.outputs.java-model != ''
+      }}
     strategy:
       fail-fast: false # Let all tests run for debug, won't end up applying changes with a failure
-      max-parallel: 10 # Limit the number of runners for this job to 10
+      max-parallel: 15 # Limit the number of runners for this job
       matrix:
         include: ${{ fromJSON(needs.get-all-test-matrices.outputs.java-model) }}
 
@@ -592,17 +625,8 @@ jobs:
       - name: Checkout repo
         uses: actions/checkout@v4
         with:
-          token: ${{ secrets.FERN_GITHUB_PAT }}
-
-      # Format for seed tests
-      - name: JSON to String
-        id: json-to-string
-        run: |
-          json_data='${{toJson(matrix.fixtures)}}'
-          # Convert JSON array to space-separated string
-          string_result=$(echo "$json_data" | jq -r '.[]' | tr '\n' ' ' | sed 's/ $//')
-          echo "Generated string: '$string_result'"
-          echo "as-string=$string_result" >> $GITHUB_OUTPUT
+          sparse-checkout: |
+            .github/actions/
 
       - name: Update seed
         uses: ./.github/actions/auto-update-seed
@@ -610,17 +634,23 @@ jobs:
           generator-name: java-model
           generator-path: generators/java
           allow-unexpected-failures: true
-          fixtures-to-run: ${{ steps.json-to-string.outputs.as-string }}
+          fixtures-to-run: ${{ toJson(matrix.fixtures) }}
           index: ${{ strategy.job-index }}
           skip-scripts: ${{ needs.setup.outputs.skip-scripts }}
 
   java-spring-seed-update:
-    needs: [changes, setup, get-all-test-matrices]
-    if: ${{ needs.changes.outputs.java == 'true' ||  needs.changes.outputs.seed == 'true' }}
     runs-on: ubuntu-latest
+    timeout-minutes: 60
+    needs: [changes, setup, get-all-test-matrices]
+    if: >-
+      ${{ 
+        always() && !cancelled() &&
+        (needs.changes.outputs.java == 'true' ||  needs.changes.outputs.seed == 'true') &&
+        needs.get-all-test-matrices.outputs.java-spring != ''
+      }}
     strategy:
       fail-fast: false # Let all tests run for debug, won't end up applying changes with a failure
-      max-parallel: 10 # Limit the number of runners for this job to 10
+      max-parallel: 15 # Limit the number of runners for this job
       matrix:
         include: ${{ fromJSON(needs.get-all-test-matrices.outputs.java-spring) }}
 
@@ -628,17 +658,8 @@ jobs:
       - name: Checkout repo
         uses: actions/checkout@v4
         with:
-          token: ${{ secrets.FERN_GITHUB_PAT }}
-
-      # Format for seed tests
-      - name: JSON to String
-        id: json-to-string
-        run: |
-          json_data='${{toJson(matrix.fixtures)}}'
-          # Convert JSON array to space-separated string
-          string_result=$(echo "$json_data" | jq -r '.[]' | tr '\n' ' ' | sed 's/ $//')
-          echo "Generated string: '$string_result'"
-          echo "as-string=$string_result" >> $GITHUB_OUTPUT
+          sparse-checkout: |
+            .github/actions/
 
       - name: Update seed
         uses: ./.github/actions/auto-update-seed
@@ -646,17 +667,23 @@ jobs:
           generator-name: java-spring
           generator-path: generators/java
           allow-unexpected-failures: true
-          fixtures-to-run: ${{ steps.json-to-string.outputs.as-string }}
+          fixtures-to-run: ${{ toJson(matrix.fixtures) }}
           index: ${{ strategy.job-index }}
           skip-scripts: ${{ needs.setup.outputs.skip-scripts }}
 
   typescript-sdk-seed-update:
-    needs: [changes, setup, get-all-test-matrices]
-    if: ${{ needs.changes.outputs.typescript == 'true' ||  needs.changes.outputs.seed == 'true' }}
     runs-on: ubuntu-latest
+    timeout-minutes: 60
+    needs: [changes, setup, get-all-test-matrices]
+    if: >-
+      ${{ 
+        always() && !cancelled() &&
+        (needs.changes.outputs.typescript == 'true' ||  needs.changes.outputs.seed == 'true') &&
+        needs.get-all-test-matrices.outputs.ts-sdk != ''
+      }}
     strategy:
       fail-fast: false # Let all tests run for debug, won't end up applying changes with a failure
-      max-parallel: 10 # Limit the number of runners for this job to 10
+      max-parallel: 15 # Limit the number of runners for this job
       matrix:
         include: ${{ fromJSON(needs.get-all-test-matrices.outputs.ts-sdk) }}
 
@@ -664,17 +691,8 @@ jobs:
       - name: Checkout repo
         uses: actions/checkout@v4
         with:
-          token: ${{ secrets.FERN_GITHUB_PAT }}
-
-      # Format for seed tests
-      - name: JSON to String
-        id: json-to-string
-        run: |
-          json_data='${{toJson(matrix.fixtures)}}'
-          # Convert JSON array to space-separated string
-          string_result=$(echo "$json_data" | jq -r '.[]' | tr '\n' ' ' | sed 's/ $//')
-          echo "Generated string: '$string_result'"
-          echo "as-string=$string_result" >> $GITHUB_OUTPUT
+          sparse-checkout: |
+            .github/actions/
 
       - name: Update seed
         uses: ./.github/actions/auto-update-seed
@@ -682,17 +700,23 @@ jobs:
           generator-name: ts-sdk
           generator-path: generators/typescript
           allow-unexpected-failures: true
-          fixtures-to-run: ${{ steps.json-to-string.outputs.as-string }}
+          fixtures-to-run: ${{ toJson(matrix.fixtures) }}
           index: ${{ strategy.job-index }}
           skip-scripts: ${{ needs.setup.outputs.skip-scripts }}
 
   typescript-express-seed-update:
-    needs: [changes, setup, get-all-test-matrices]
-    if: ${{ needs.changes.outputs.typescript == 'true' ||  needs.changes.outputs.seed == 'true' }}
     runs-on: ubuntu-latest
+    timeout-minutes: 60
+    needs: [changes, setup, get-all-test-matrices]
+    if: >-
+      ${{ 
+        always() && !cancelled() &&
+        (needs.changes.outputs.typescript == 'true' ||  needs.changes.outputs.seed == 'true') &&
+        needs.get-all-test-matrices.outputs.ts-express != ''
+      }}
     strategy:
       fail-fast: false # Let all tests run for debug, won't end up applying changes with a failure
-      max-parallel: 10 # Limit the number of runners for this job to 10
+      max-parallel: 15 # Limit the number of runners for this job
       matrix:
         include: ${{ fromJSON(needs.get-all-test-matrices.outputs.ts-express) }}
 
@@ -700,17 +724,8 @@ jobs:
       - name: Checkout repo
         uses: actions/checkout@v4
         with:
-          token: ${{ secrets.FERN_GITHUB_PAT }}
-
-      # Format for seed tests
-      - name: JSON to String
-        id: json-to-string
-        run: |
-          json_data='${{toJson(matrix.fixtures)}}'
-          # Convert JSON array to space-separated string
-          string_result=$(echo "$json_data" | jq -r '.[]' | tr '\n' ' ' | sed 's/ $//')
-          echo "Generated string: '$string_result'"
-          echo "as-string=$string_result" >> $GITHUB_OUTPUT
+          sparse-checkout: |
+            .github/actions/
 
       - name: Update seed
         uses: ./.github/actions/auto-update-seed
@@ -718,17 +733,23 @@ jobs:
           generator-name: ts-express
           generator-path: generators/typescript
           allow-unexpected-failures: true
-          fixtures-to-run: ${{ steps.json-to-string.outputs.as-string }}
+          fixtures-to-run: ${{ toJson(matrix.fixtures) }}
           index: ${{ strategy.job-index }}
           skip-scripts: ${{ needs.setup.outputs.skip-scripts }}
 
   go-fiber-seed-update:
-    needs: [changes, setup, get-all-test-matrices]
-    if: ${{ needs.changes.outputs.go == 'true' ||  needs.changes.outputs.seed == 'true' }}
     runs-on: ubuntu-latest
+    timeout-minutes: 60
+    needs: [changes, setup, get-all-test-matrices]
+    if: >-
+      ${{ 
+        always() && !cancelled() &&
+        (needs.changes.outputs.go == 'true' ||  needs.changes.outputs.seed == 'true') &&
+        needs.get-all-test-matrices.outputs.go-fiber != ''
+      }}
     strategy:
       fail-fast: false # Let all tests run for debug, won't end up applying changes with a failure
-      max-parallel: 10 # Limit the number of runners for this job to 10
+      max-parallel: 15 # Limit the number of runners for this job
       matrix:
         include: ${{ fromJSON(needs.get-all-test-matrices.outputs.go-fiber) }}
 
@@ -736,17 +757,8 @@ jobs:
       - name: Checkout repo
         uses: actions/checkout@v4
         with:
-          token: ${{ secrets.FERN_GITHUB_PAT }}
-
-      # Format for seed tests
-      - name: JSON to String
-        id: json-to-string
-        run: |
-          json_data='${{toJson(matrix.fixtures)}}'
-          # Convert JSON array to space-separated string
-          string_result=$(echo "$json_data" | jq -r '.[]' | tr '\n' ' ' | sed 's/ $//')
-          echo "Generated string: '$string_result'"
-          echo "as-string=$string_result" >> $GITHUB_OUTPUT
+          sparse-checkout: |
+            .github/actions/
 
       - name: Update seed
         uses: ./.github/actions/auto-update-seed
@@ -754,17 +766,23 @@ jobs:
           generator-name: go-fiber
           generator-path: generators/go
           allow-unexpected-failures: true
-          fixtures-to-run: ${{ steps.json-to-string.outputs.as-string }}
+          fixtures-to-run: ${{ toJson(matrix.fixtures) }}
           index: ${{ strategy.job-index }}
           skip-scripts: ${{ needs.setup.outputs.skip-scripts }}
 
   go-model-seed-update:
-    needs: [changes, setup, get-all-test-matrices]
-    if: ${{ needs.changes.outputs.go == 'true' ||  needs.changes.outputs.seed == 'true' }}
     runs-on: ubuntu-latest
+    timeout-minutes: 60
+    needs: [changes, setup, get-all-test-matrices]
+    if: >-
+      ${{ 
+        always() && !cancelled() &&
+        (needs.changes.outputs.go == 'true' ||  needs.changes.outputs.seed == 'true') &&
+        needs.get-all-test-matrices.outputs.go-model != ''
+      }}
     strategy:
       fail-fast: false # Let all tests run for debug, won't end up applying changes with a failure
-      max-parallel: 10 # Limit the number of runners for this job to 10
+      max-parallel: 15 # Limit the number of runners for this job
       matrix:
         include: ${{ fromJSON(needs.get-all-test-matrices.outputs.go-model) }}
 
@@ -772,17 +790,8 @@ jobs:
       - name: Checkout repo
         uses: actions/checkout@v4
         with:
-          token: ${{ secrets.FERN_GITHUB_PAT }}
-
-      # Format for seed tests
-      - name: JSON to String
-        id: json-to-string
-        run: |
-          json_data='${{toJson(matrix.fixtures)}}'
-          # Convert JSON array to space-separated string
-          string_result=$(echo "$json_data" | jq -r '.[]' | tr '\n' ' ' | sed 's/ $//')
-          echo "Generated string: '$string_result'"
-          echo "as-string=$string_result" >> $GITHUB_OUTPUT
+          sparse-checkout: |
+            .github/actions/
 
       - name: Update seed
         uses: ./.github/actions/auto-update-seed
@@ -790,17 +799,23 @@ jobs:
           generator-name: go-model
           generator-path: generators/go
           allow-unexpected-failures: true
-          fixtures-to-run: ${{ steps.json-to-string.outputs.as-string }}
+          fixtures-to-run: ${{ toJson(matrix.fixtures) }}
           index: ${{ strategy.job-index }}
           skip-scripts: ${{ needs.setup.outputs.skip-scripts }}
 
   go-sdk-seed-update:
-    needs: [changes, setup, get-all-test-matrices]
-    if: ${{ needs.changes.outputs.go == 'true' ||  needs.changes.outputs.seed == 'true' }}
     runs-on: ubuntu-latest
+    timeout-minutes: 60
+    needs: [changes, setup, get-all-test-matrices]
+    if: >-
+      ${{ 
+        always() && !cancelled() &&
+        (needs.changes.outputs.go == 'true' ||  needs.changes.outputs.seed == 'true') &&
+        needs.get-all-test-matrices.outputs.go-sdk != ''
+      }}
     strategy:
       fail-fast: false # Let all tests run for debug, won't end up applying changes with a failure
-      max-parallel: 10 # Limit the number of runners for this job to 10
+      max-parallel: 15 # Limit the number of runners for this job
       matrix:
         include: ${{ fromJSON(needs.get-all-test-matrices.outputs.go-sdk) }}
 
@@ -808,17 +823,8 @@ jobs:
       - name: Checkout repo
         uses: actions/checkout@v4
         with:
-          token: ${{ secrets.FERN_GITHUB_PAT }}
-
-      # Format for seed tests
-      - name: JSON to String
-        id: json-to-string
-        run: |
-          json_data='${{toJson(matrix.fixtures)}}'
-          # Convert JSON array to space-separated string
-          string_result=$(echo "$json_data" | jq -r '.[]' | tr '\n' ' ' | sed 's/ $//')
-          echo "Generated string: '$string_result'"
-          echo "as-string=$string_result" >> $GITHUB_OUTPUT
+          sparse-checkout: |
+            .github/actions/
 
       - name: Update seed
         uses: ./.github/actions/auto-update-seed
@@ -826,17 +832,23 @@ jobs:
           generator-name: go-sdk
           generator-path: generators/go
           allow-unexpected-failures: true
-          fixtures-to-run: ${{ steps.json-to-string.outputs.as-string }}
+          fixtures-to-run: ${{ toJson(matrix.fixtures) }}
           index: ${{ strategy.job-index }}
           skip-scripts: ${{ needs.setup.outputs.skip-scripts }}
 
   csharp-model-seed-update:
-    needs: [changes, setup, get-all-test-matrices]
-    if: ${{ needs.changes.outputs.csharp == 'true' ||  needs.changes.outputs.seed == 'true' }}
     runs-on: ubuntu-latest
+    timeout-minutes: 60
+    needs: [changes, setup, get-all-test-matrices]
+    if: >-
+      ${{ 
+        always() && !cancelled() &&
+        (needs.changes.outputs.csharp == 'true' ||  needs.changes.outputs.seed == 'true') &&
+        needs.get-all-test-matrices.outputs.csharp-model != ''
+      }}
     strategy:
       fail-fast: false # Let all tests run for debug, won't end up applying changes with a failure
-      max-parallel: 10 # Limit the number of runners for this job to 10
+      max-parallel: 15 # Limit the number of runners for this job
       matrix:
         include: ${{ fromJSON(needs.get-all-test-matrices.outputs.csharp-model) }}
 
@@ -844,17 +856,8 @@ jobs:
       - name: Checkout repo
         uses: actions/checkout@v4
         with:
-          token: ${{ secrets.FERN_GITHUB_PAT }}
-
-      # Format for seed tests
-      - name: JSON to String
-        id: json-to-string
-        run: |
-          json_data='${{toJson(matrix.fixtures)}}'
-          # Convert JSON array to space-separated string
-          string_result=$(echo "$json_data" | jq -r '.[]' | tr '\n' ' ' | sed 's/ $//')
-          echo "Generated string: '$string_result'"
-          echo "as-string=$string_result" >> $GITHUB_OUTPUT
+          sparse-checkout: |
+            .github/actions/
 
       - name: Update seed
         uses: ./.github/actions/auto-update-seed
@@ -862,17 +865,23 @@ jobs:
           generator-name: csharp-model
           generator-path: generators/csharp
           allow-unexpected-failures: true
-          fixtures-to-run: ${{ steps.json-to-string.outputs.as-string }}
+          fixtures-to-run: ${{ toJson(matrix.fixtures) }}
           index: ${{ strategy.job-index }}
           skip-scripts: ${{ needs.setup.outputs.skip-scripts }}
 
   csharp-sdk-seed-update:
-    needs: [changes, setup, get-all-test-matrices]
-    if: ${{ needs.changes.outputs.csharp == 'true' ||  needs.changes.outputs.seed == 'true' }}
     runs-on: ubuntu-latest
+    timeout-minutes: 60
+    needs: [changes, setup, get-all-test-matrices]
+    if: >-
+      ${{ 
+        always() && !cancelled() &&
+        (needs.changes.outputs.csharp == 'true' ||  needs.changes.outputs.seed == 'true') &&
+        needs.get-all-test-matrices.outputs.csharp-sdk != ''
+      }}
     strategy:
       fail-fast: false # Let all tests run for debug, won't end up applying changes with a failure
-      max-parallel: 10 # Limit the number of runners for this job to 10
+      max-parallel: 15 # Limit the number of runners for this job
       matrix:
         include: ${{ fromJSON(needs.get-all-test-matrices.outputs.csharp-sdk) }}
 
@@ -880,17 +889,8 @@ jobs:
       - name: Checkout repo
         uses: actions/checkout@v4
         with:
-          token: ${{ secrets.FERN_GITHUB_PAT }}
-
-      # Format for seed tests
-      - name: JSON to String
-        id: json-to-string
-        run: |
-          json_data='${{toJson(matrix.fixtures)}}'
-          # Convert JSON array to space-separated string
-          string_result=$(echo "$json_data" | jq -r '.[]' | tr '\n' ' ' | sed 's/ $//')
-          echo "Generated string: '$string_result'"
-          echo "as-string=$string_result" >> $GITHUB_OUTPUT
+          sparse-checkout: |
+            .github/actions/
 
       - name: Update seed
         uses: ./.github/actions/auto-update-seed
@@ -898,17 +898,23 @@ jobs:
           generator-name: csharp-sdk
           generator-path: generators/csharp
           allow-unexpected-failures: true
-          fixtures-to-run: ${{ steps.json-to-string.outputs.as-string }}
+          fixtures-to-run: ${{ toJson(matrix.fixtures) }}
           index: ${{ strategy.job-index }}
           skip-scripts: ${{ needs.setup.outputs.skip-scripts }}
 
   php-model-seed-update:
-    needs: [changes, setup, get-all-test-matrices]
-    if: ${{ needs.changes.outputs.php == 'true' ||  needs.changes.outputs.seed == 'true' }}
     runs-on: ubuntu-latest
+    timeout-minutes: 60
+    needs: [changes, setup, get-all-test-matrices]
+    if: >-
+      ${{ 
+        always() && !cancelled() &&
+        (needs.changes.outputs.php == 'true' ||  needs.changes.outputs.seed == 'true') &&
+        needs.get-all-test-matrices.outputs.php-model != ''
+      }}
     strategy:
       fail-fast: false # Let all tests run for debug, won't end up applying changes with a failure
-      max-parallel: 10 # Limit the number of runners for this job to 10
+      max-parallel: 15 # Limit the number of runners for this job
       matrix:
         include: ${{ fromJSON(needs.get-all-test-matrices.outputs.php-model) }}
 
@@ -916,17 +922,8 @@ jobs:
       - name: Checkout repo
         uses: actions/checkout@v4
         with:
-          token: ${{ secrets.FERN_GITHUB_PAT }}
-
-      # Format for seed tests
-      - name: JSON to String
-        id: json-to-string
-        run: |
-          json_data='${{toJson(matrix.fixtures)}}'
-          # Convert JSON array to space-separated string
-          string_result=$(echo "$json_data" | jq -r '.[]' | tr '\n' ' ' | sed 's/ $//')
-          echo "Generated string: '$string_result'"
-          echo "as-string=$string_result" >> $GITHUB_OUTPUT
+          sparse-checkout: |
+            .github/actions/
 
       - name: Update seed
         uses: ./.github/actions/auto-update-seed
@@ -934,17 +931,23 @@ jobs:
           generator-name: php-model
           generator-path: generators/php
           allow-unexpected-failures: true
-          fixtures-to-run: ${{ steps.json-to-string.outputs.as-string }}
+          fixtures-to-run: ${{ toJson(matrix.fixtures) }}
           index: ${{ strategy.job-index }}
           skip-scripts: ${{ needs.setup.outputs.skip-scripts }}
 
   php-sdk-seed-update:
-    needs: [changes, setup, get-all-test-matrices]
-    if: ${{ needs.changes.outputs.php == 'true' ||  needs.changes.outputs.seed == 'true' }}
     runs-on: ubuntu-latest
+    timeout-minutes: 60
+    needs: [changes, setup, get-all-test-matrices]
+    if: >-
+      ${{ 
+        always() && !cancelled() &&
+        (needs.changes.outputs.php == 'true' ||  needs.changes.outputs.seed == 'true') &&
+        needs.get-all-test-matrices.outputs.php-sdk != ''
+      }}
     strategy:
       fail-fast: false # Let all tests run for debug, won't end up applying changes with a failure
-      max-parallel: 10 # Limit the number of runners for this job to 10
+      max-parallel: 15 # Limit the number of runners for this job
       matrix:
         include: ${{ fromJSON(needs.get-all-test-matrices.outputs.php-sdk) }}
 
@@ -952,17 +955,8 @@ jobs:
       - name: Checkout repo
         uses: actions/checkout@v4
         with:
-          token: ${{ secrets.FERN_GITHUB_PAT }}
-
-      # Format for seed tests
-      - name: JSON to String
-        id: json-to-string
-        run: |
-          json_data='${{toJson(matrix.fixtures)}}'
-          # Convert JSON array to space-separated string
-          string_result=$(echo "$json_data" | jq -r '.[]' | tr '\n' ' ' | sed 's/ $//')
-          echo "Generated string: '$string_result'"
-          echo "as-string=$string_result" >> $GITHUB_OUTPUT
+          sparse-checkout: |
+            .github/actions/
 
       - name: Update seed
         uses: ./.github/actions/auto-update-seed
@@ -970,17 +964,23 @@ jobs:
           generator-name: php-sdk
           generator-path: generators/php
           allow-unexpected-failures: true
-          fixtures-to-run: ${{ steps.json-to-string.outputs.as-string }}
+          fixtures-to-run: ${{ toJson(matrix.fixtures) }}
           index: ${{ strategy.job-index }}
           skip-scripts: ${{ needs.setup.outputs.skip-scripts }}
 
   swift-sdk-seed-update:
-    needs: [changes, setup, get-all-test-matrices]
-    if: ${{ needs.changes.outputs.swift == 'true' ||  needs.changes.outputs.seed == 'true' }}
     runs-on: ubuntu-latest
+    timeout-minutes: 60
+    needs: [changes, setup, get-all-test-matrices]
+    if: >-
+      ${{ 
+        always() && !cancelled() &&
+        (needs.changes.outputs.swift == 'true' ||  needs.changes.outputs.seed == 'true') &&
+        needs.get-all-test-matrices.outputs.swift-sdk != ''
+      }}
     strategy:
       fail-fast: false # Let all tests run for debug, won't end up applying changes with a failure
-      max-parallel: 10 # Limit the number of runners for this job to 10
+      max-parallel: 15 # Limit the number of runners for this job
       matrix:
         include: ${{ fromJSON(needs.get-all-test-matrices.outputs.swift-sdk) }}
 
@@ -988,17 +988,8 @@ jobs:
       - name: Checkout repo
         uses: actions/checkout@v4
         with:
-          token: ${{ secrets.FERN_GITHUB_PAT }}
-
-      # Format for seed tests
-      - name: JSON to String
-        id: json-to-string
-        run: |
-          json_data='${{toJson(matrix.fixtures)}}'
-          # Convert JSON array to space-separated string
-          string_result=$(echo "$json_data" | jq -r '.[]' | tr '\n' ' ' | sed 's/ $//')
-          echo "Generated string: '$string_result'"
-          echo "as-string=$string_result" >> $GITHUB_OUTPUT
+          sparse-checkout: |
+            .github/actions/
 
       - name: Update seed
         uses: ./.github/actions/auto-update-seed
@@ -1006,17 +997,23 @@ jobs:
           generator-name: swift-sdk
           generator-path: generators/swift
           allow-unexpected-failures: true
-          fixtures-to-run: ${{ steps.json-to-string.outputs.as-string }}
+          fixtures-to-run: ${{ toJson(matrix.fixtures) }}
           index: ${{ strategy.job-index }}
           skip-scripts: ${{ needs.setup.outputs.skip-scripts }}
 
   rust-model-seed-update:
-    needs: [changes, setup, get-all-test-matrices]
-    if: ${{ needs.changes.outputs.rust == 'true' ||  needs.changes.outputs.seed == 'true' }}
     runs-on: ubuntu-latest
+    timeout-minutes: 60
+    needs: [changes, setup, get-all-test-matrices]
+    if: >-
+      ${{ 
+        always() && !cancelled() &&
+        (needs.changes.outputs.rust == 'true' ||  needs.changes.outputs.seed == 'true') &&
+        needs.get-all-test-matrices.outputs.rust-model != ''
+      }}
     strategy:
       fail-fast: false # Let all tests run for debug, won't end up applying changes with a failure
-      max-parallel: 10 # Limit the number of runners for this job to 10
+      max-parallel: 15 # Limit the number of runners for this job
       matrix:
         include: ${{ fromJSON(needs.get-all-test-matrices.outputs.rust-model) }}
 
@@ -1024,17 +1021,8 @@ jobs:
       - name: Checkout repo
         uses: actions/checkout@v4
         with:
-          token: ${{ secrets.FERN_GITHUB_PAT }}
-
-      # Format for seed tests
-      - name: JSON to String
-        id: json-to-string
-        run: |
-          json_data='${{toJson(matrix.fixtures)}}'
-          # Convert JSON array to space-separated string
-          string_result=$(echo "$json_data" | jq -r '.[]' | tr '\n' ' ' | sed 's/ $//')
-          echo "Generated string: '$string_result'"
-          echo "as-string=$string_result" >> $GITHUB_OUTPUT
+          sparse-checkout: |
+            .github/actions/
 
       - name: Update seed
         uses: ./.github/actions/auto-update-seed
@@ -1042,17 +1030,23 @@ jobs:
           generator-name: rust-model
           generator-path: generators/rust
           allow-unexpected-failures: true
-          fixtures-to-run: ${{ steps.json-to-string.outputs.as-string }}
+          fixtures-to-run: ${{ toJson(matrix.fixtures) }}
           index: ${{ strategy.job-index }}
           skip-scripts: ${{ needs.setup.outputs.skip-scripts }}
 
   rust-sdk-seed-update:
-    needs: [changes, setup, get-all-test-matrices]
-    if: ${{ needs.changes.outputs.rust == 'true' ||  needs.changes.outputs.seed == 'true' }}
     runs-on: ubuntu-latest
+    timeout-minutes: 60
+    needs: [changes, setup, get-all-test-matrices]
+    if: >-
+      ${{ 
+        always() && !cancelled() &&
+        (needs.changes.outputs.rust == 'true' ||  needs.changes.outputs.seed == 'true') &&
+        needs.get-all-test-matrices.outputs.rust-sdk != ''
+      }}
     strategy:
       fail-fast: false # Let all tests run for debug, won't end up applying changes with a failure
-      max-parallel: 10 # Limit the number of runners for this job to 10
+      max-parallel: 15 # Limit the number of runners for this job
       matrix:
         include: ${{ fromJSON(needs.get-all-test-matrices.outputs.rust-sdk) }}
 
@@ -1060,17 +1054,8 @@ jobs:
       - name: Checkout repo
         uses: actions/checkout@v4
         with:
-          token: ${{ secrets.FERN_GITHUB_PAT }}
-
-      # Format for seed tests
-      - name: JSON to String
-        id: json-to-string
-        run: |
-          json_data='${{toJson(matrix.fixtures)}}'
-          # Convert JSON array to space-separated string
-          string_result=$(echo "$json_data" | jq -r '.[]' | tr '\n' ' ' | sed 's/ $//')
-          echo "Generated string: '$string_result'"
-          echo "as-string=$string_result" >> $GITHUB_OUTPUT
+          sparse-checkout: |
+            .github/actions/
 
       - name: Update seed
         uses: ./.github/actions/auto-update-seed
@@ -1078,15 +1063,13 @@ jobs:
           generator-name: rust-sdk
           generator-path: generators/rust
           allow-unexpected-failures: true
-          fixtures-to-run: ${{ steps.json-to-string.outputs.as-string }}
+          fixtures-to-run: ${{ toJson(matrix.fixtures) }}
           index: ${{ strategy.job-index }}
           skip-scripts: ${{ needs.setup.outputs.skip-scripts }}
 
   # Use always() to ensure this runs even if stages from needs are skipped.
   # Add check back to make sure it doesn't run for failures or cancellations.
   commit-seed-changes-by-push:
-    outputs:
-      has-patches: ${{ steps.get-number-of-patches.outputs.HAS_PATCHES }}
     if: >-
       ${{
         always() && needs.setup.outputs.update-by-push == 'true' &&
@@ -1121,80 +1104,51 @@ jobs:
         rust-sdk-seed-update
       ]
     runs-on: ubuntu-latest
+
+    timeout-minutes: 10
     steps:
-      - name: Extract branch name
-        id: extract_branch
+      # Get running branch name
+      - name: Extract Branch Name
+        id: extract-branch
         shell: bash
         run: |
           echo "branch=${GITHUB_HEAD_REF:-${GITHUB_REF#refs/heads/}}" >> $GITHUB_OUTPUT
           echo $branch
 
-      # Checkout the branch directly to avoid detaching the head so we can commit back changes
-      - name: Checkout repo
+      # Get action file specific to the running branch
+      - name: Checkout Action File
         uses: actions/checkout@v4
         with:
-          ref: ${{ steps.extract_branch.outputs.branch }}
-          token: ${{ secrets.FERN_GITHUB_PAT }}
+          ref: ${{ steps.extract-branch.outputs.branch }}
+          sparse-checkout: |
+            .github/
 
-      - name: Create artifacts downloads directory
-        shell: bash
-        run: |
-          DIRECTORY=artifacts
-          if [ ! -d "$DIRECTORY" ]; then
-            echo "'$DIRECTORY' does NOT exist, creating it now."
-            mkdir $DIRECTORY
-          else
-            echo "WARNING: Directory '$DIRECTORY' already exists. Not an immediate error but could cause a problem downstream."
-          fi
-
-      # Merge-multiple is set so all patches are downloaded into the same folder. Otherwise
-      # they are subfoldered into folders that match *.patch pattern and cause errors downstream
-      - name: Download patches
-        uses: actions/download-artifact@v5
+      # Match to all patch files, since we are committing all generator changes at once
+      # Checkout the branch directly to avoid detaching the head so we can commit back changes
+      - name: Apply Patches
+        id: apply-patches
+        uses: ./.github/actions/apply-update-seed-patches
         with:
-          path: ./artifacts
-          merge-multiple: true
+          patch-pattern: seed-*.patch
+          checkout-ref: ${{ steps.extract-branch.outputs.branch }}
 
-      - name: Get number of patches
-        shell: bash
-        id: get-number-of-patches
-        run: |
-          # Apply all patches together for single commit
-          file_count=$(find ./artifacts -type f -name "*.patch" | wc -l)
-          echo "Number of patches downloaded: $file_count"
-          if [ "$file_count" -gt 0 ]; then
-            echo "HAS_PATCHES=true" >> $GITHUB_OUTPUT
-          else
-            echo "HAS_PATCHES=false" >> $GITHUB_OUTPUT
-          fi
-
-      - name: Display content of a folder
-        run: |
-          echo "Content of 'artifacts' folder:"
-          ls -R artifacts/
-
-      - name: Apply patches
-        shell: bash
-        if: ${{ steps.get-number-of-patches.outputs.HAS_PATCHES == 'true' }}
-        run: |
-          git apply artifacts/*.patch
-
+      # Commit all applied patches back to branch (will be checked out in apply-patches step)
       - name: Add and Commit Changes
         id: commit-changes
         uses: EndBug/add-and-commit@v9
-        if: ${{ steps.get-number-of-patches.outputs.HAS_PATCHES == 'true' }}
+        if: ${{ steps.apply-patches.outputs.has-patches == 'true' }}
         with:
           add: "seed/*"
           push: true
           fetch: false
           message: "Automated update of seed files"
 
-  # Verify that the branch is the default branch (running for push to main)
+  # Verify that the branch is the default branch (running for PR to main)
   commit-seed-changes-by-pr:
     if: >-
       ${{
         always() &&
-        github.ref == format('refs/heads/{0}', github.event.repository.default_branch) &&
+        github.ref == 'refs/heads/main' &&
         needs.setup.outputs.update-by-pr == 'true' &&
         !contains(needs.*.result, 'failure') && 
         !contains(needs.*.result, 'cancelled')
@@ -1228,6 +1182,7 @@ jobs:
         rust-sdk-seed-update
       ]
     runs-on: ubuntu-latest
+    timeout-minutes: 10
     strategy:
       matrix:
         sdk-name:
@@ -1304,58 +1259,23 @@ jobs:
           - language-name: rust
             sdk-name: rust-sdk
     steps:
-      # Can checkout detached head here since changes will be PR'd
-      - name: Checkout repo
+      - name: Checkout Action File
         uses: actions/checkout@v4
         with:
-          token: ${{ secrets.FERN_GITHUB_PAT }}
+          sparse-checkout: |
+            .github/
 
-      - name: Create artifacts downloads directory
-        shell: bash
-        run: |
-          DIRECTORY=artifacts
-          if [ ! -d "$DIRECTORY" ]; then
-            echo "'$DIRECTORY' does NOT exist, creating it now."
-            mkdir $DIRECTORY
-          else
-            echo "WARNING: Directory '$DIRECTORY' already exists. Not an immediate error but could cause a problem downstream."
-          fi
-
-      # Merge-multiple is set so all patches are downloaded into the same folder. Otherwise
-      # they are subfoldered into folders that match *.patch pattern and cause errors downstream
-      - name: Download patches
-        uses: actions/download-artifact@v5
+      # Don't set checkout-ref, applying by PR so we can checkout detached
+      # Only match to patches with this matrix name, since we are PR'ing per generator
+      - name: Apply Patches
+        id: apply-patches
+        uses: ./.github/actions/apply-update-seed-patches
         with:
-          path: ./artifacts
-          merge-multiple: true
-
-      - name: Get number of patches
-        shell: bash
-        id: get-number-of-patches
-        run: |
-          # Apply patches per generator for multiple, separate, PRs
-          file_count=$(find ./artifacts -type f -name "${{ matrix.sdk-name }}-*.patch" | wc -l)
-          echo "Number of patches downloaded: $file_count"
-          if [ "$file_count" -gt 0 ]; then
-            echo "HAS_PATCHES=true" >> $GITHUB_OUTPUT
-          else
-            echo "HAS_PATCHES=false" >> $GITHUB_OUTPUT
-          fi
-
-      - name: Display content of a folder
-        run: |
-          echo "Content of 'artifacts' folder:"
-          ls -R artifacts/
-
-      - name: Apply patches
-        shell: bash
-        if: ${{ steps.get-number-of-patches.outputs.HAS_PATCHES == 'true' }}
-        run: |
-          git apply artifacts/${{ matrix.sdk-name }}-*.patch
+          patch-pattern: seed-${{ matrix.sdk-name }}-*.patch
 
       # Create PR, approve and set to merge per generator
       - name: Create Pull Request
-        if: steps.get-number-of-patches.outputs.HAS_PATCHES == 'true'
+        if: steps.apply-patches.outputs.has-patches == 'true'
         id: cpr
         uses: peter-evans/create-pull-request@v5
         with:
@@ -1365,6 +1285,8 @@ jobs:
           branch: update-${{ matrix.sdk-name }}-seed
           body: "Auto-generated PR, triggered by GitHub event: ${{ github.event_name }} from branch: ${{ github.ref_name }}.\nGitHub workflow run: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}"
           delete-branch: true
+          add-paths: |
+            seed/**
           labels: |
             seed
             language/${{ matrix.language-name }}
@@ -1395,25 +1317,3 @@ jobs:
         with:
           approver-gh-token: ${{ secrets.PR_BOT_GH_PAT }}
           pull-request-number: ${{ steps.cpr.outputs.pull-request-number }}
-
-  # Use always() to ensure this runs even if stages from needs are skipped.
-  # Add check back to make sure it doesn't run for failures or cancellations.
-  # Only trigger if there are no new patches (seed is up to date) and workflow
-  # is adding changes by commit (not by PR)
-  trigger-seed-snapshot-tests:
-    needs: [commit-seed-changes-by-push, changes, setup]
-    if: >-
-      ${{ 
-        always() && needs.setup.outputs.update-by-push == 'true' &&
-        needs.commit-seed-changes-by-push.outputs.has-patches == 'false' &&
-        !contains(needs.*.result, 'failure') && !contains(needs.*.result, 'cancelled')
-      }}
-    runs-on: ubuntu-latest
-    steps:
-      # Note: this will trigger to the default branch of the repo, not the PR branch
-      - name: Trigger seed tests
-        uses: peter-evans/repository-dispatch@v2
-        with:
-          token: ${{ secrets.FERN_GITHUB_PAT }}
-          event-type: seed-tests
-          client-payload: '{"ref": "${{ github.ref }}"}'

@@ -7,31 +7,20 @@ import com.seed.propertyAccess.types.UserProfileVerification;
 
 public class Example0 {
     public static void main(String[] args) {
-        SeedPropertyAccessClient client = SeedPropertyAccessClient
-            .builder()
-            .url("https://api.fern.com")
-            .build();
+        SeedPropertyAccessClient client =
+                SeedPropertyAccessClient.builder().url("https://api.fern.com").build();
 
-        client.createUser(
-            User
-                .builder()
+        client.createUser(User.builder()
                 .id("id")
                 .email("email")
                 .password("password")
-                .profile(
-                    UserProfile
-                        .builder()
+                .profile(UserProfile.builder()
                         .name("name")
-                        .verification(
-                            UserProfileVerification
-                                .builder()
+                        .verification(UserProfileVerification.builder()
                                 .verified("verified")
-                                .build()
-                        )
+                                .build())
                         .ssn("ssn")
-                        .build()
-                )
-                .build()
-        );
+                        .build())
+                .build());
     }
 }

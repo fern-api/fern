@@ -19686,8 +19686,8 @@
             "generatedName": "artifactsLocateResponseExpiresAt",
             "key": "expires_at",
             "schema": {
-              "generatedName": "artifactsLocateResponseExpiresAt",
-              "title": "artifacts-locate-response",
+              "generatedName": "ArtifactsLocateResponseExpiresAt",
+              "description": "The expiration timestamp of the URL.",
               "value": {
                 "description": "The expiration timestamp of the URL.",
                 "schema": {
@@ -19882,8 +19882,7 @@
             "generatedName": "atomBaseCreatedBy",
             "key": "created_by",
             "schema": {
-              "generatedName": "atomBaseCreatedBy",
-              "title": "atom-base",
+              "generatedName": "AtomBaseCreatedBy",
               "value": {
                 "generatedName": "AtomBaseCreatedBy",
                 "schema": "user-summary",
@@ -19893,7 +19892,6 @@
                 },
                 "type": "reference"
               },
-              "groupName": [],
               "type": "optional"
             },
             "audiences": [],
@@ -19905,8 +19903,8 @@
             "generatedName": "atomBaseCreatedDate",
             "key": "created_date",
             "schema": {
-              "generatedName": "atomBaseCreatedDate",
-              "title": "atom-base",
+              "generatedName": "AtomBaseCreatedDate",
+              "description": "Timestamp when the object was created.",
               "value": {
                 "description": "Timestamp when the object was created.",
                 "schema": {
@@ -19926,8 +19924,8 @@
             "generatedName": "atomBaseDisplayId",
             "key": "display_id",
             "schema": {
-              "generatedName": "atomBaseDisplayId",
-              "title": "atom-base",
+              "generatedName": "AtomBaseDisplayId",
+              "description": "Human-readable object ID unique to the Dev organization.",
               "value": {
                 "description": "Human-readable object ID unique to the Dev organization.",
                 "schema": {
@@ -19962,8 +19960,7 @@
             "generatedName": "atomBaseModifiedBy",
             "key": "modified_by",
             "schema": {
-              "generatedName": "atomBaseModifiedBy",
-              "title": "atom-base",
+              "generatedName": "AtomBaseModifiedBy",
               "value": {
                 "generatedName": "AtomBaseModifiedBy",
                 "schema": "user-summary",
@@ -19973,7 +19970,6 @@
                 },
                 "type": "reference"
               },
-              "groupName": [],
               "type": "optional"
             },
             "audiences": [],
@@ -19985,8 +19981,8 @@
             "generatedName": "atomBaseModifiedDate",
             "key": "modified_date",
             "schema": {
-              "generatedName": "atomBaseModifiedDate",
-              "title": "atom-base",
+              "generatedName": "AtomBaseModifiedDate",
+              "description": "Timestamp when the object was last modified.",
               "value": {
                 "description": "Timestamp when the object was last modified.",
                 "schema": {
@@ -20021,8 +20017,8 @@
             "generatedName": "atomBaseSummaryDisplayId",
             "key": "display_id",
             "schema": {
-              "generatedName": "atomBaseSummaryDisplayId",
-              "title": "atom-base-summary",
+              "generatedName": "AtomBaseSummaryDisplayId",
+              "description": "Human-readable object ID unique to the Dev organization.",
               "value": {
                 "description": "Human-readable object ID unique to the Dev organization.",
                 "schema": {
@@ -20184,8 +20180,8 @@
             "generatedName": "authConnectionOptionsAzureAdClientId",
             "key": "client_id",
             "schema": {
-              "generatedName": "authConnectionOptionsAzureAdClientId",
-              "title": "auth-connection-options-azure-ad",
+              "generatedName": "AuthConnectionOptionsAzureAdClientId",
+              "description": "Client ID for the Azure authentication connection.",
               "value": {
                 "description": "Client ID for the Azure authentication connection.",
                 "schema": {
@@ -20205,8 +20201,8 @@
             "generatedName": "authConnectionOptionsAzureAdClientSecret",
             "key": "client_secret",
             "schema": {
-              "generatedName": "authConnectionOptionsAzureAdClientSecret",
-              "title": "auth-connection-options-azure-ad",
+              "generatedName": "AuthConnectionOptionsAzureAdClientSecret",
+              "description": "Client secret for the Azure authentication connection.",
               "value": {
                 "description": "Client secret for the Azure authentication connection.",
                 "schema": {
@@ -20226,8 +20222,8 @@
             "generatedName": "authConnectionOptionsAzureAdDomain",
             "key": "domain",
             "schema": {
-              "generatedName": "authConnectionOptionsAzureAdDomain",
-              "title": "auth-connection-options-azure-ad",
+              "generatedName": "AuthConnectionOptionsAzureAdDomain",
+              "description": "Domain URL of the Azure authentication connection.",
               "value": {
                 "description": "Domain URL of the Azure authentication connection.",
                 "schema": {
@@ -20263,8 +20259,8 @@
             "generatedName": "authConnectionOptionsGoogleAppsClientId",
             "key": "client_id",
             "schema": {
-              "generatedName": "authConnectionOptionsGoogleAppsClientId",
-              "title": "auth-connection-options-google-apps",
+              "generatedName": "AuthConnectionOptionsGoogleAppsClientId",
+              "description": "Client ID for the Google Apps authentication connection.",
               "value": {
                 "description": "Client ID for the Google Apps authentication connection.",
                 "schema": {
@@ -20284,8 +20280,8 @@
             "generatedName": "authConnectionOptionsGoogleAppsClientSecret",
             "key": "client_secret",
             "schema": {
-              "generatedName": "authConnectionOptionsGoogleAppsClientSecret",
-              "title": "auth-connection-options-google-apps",
+              "generatedName": "AuthConnectionOptionsGoogleAppsClientSecret",
+              "description": "Client secret for the Google Apps authentication connection.\n",
               "value": {
                 "description": "Client secret for the Google Apps authentication connection.\n",
                 "schema": {
@@ -20305,8 +20301,8 @@
             "generatedName": "authConnectionOptionsGoogleAppsTenantDomain",
             "key": "tenant_domain",
             "schema": {
-              "generatedName": "authConnectionOptionsGoogleAppsTenantDomain",
-              "title": "auth-connection-options-google-apps",
+              "generatedName": "AuthConnectionOptionsGoogleAppsTenantDomain",
+              "description": "Tenant domain URL of the Google Apps authentication connection.\n",
               "value": {
                 "description": "Tenant domain URL of the Google Apps authentication connection.\n",
                 "schema": {
@@ -20342,8 +20338,8 @@
             "generatedName": "authConnectionOptionsOidcClientId",
             "key": "client_id",
             "schema": {
-              "generatedName": "authConnectionOptionsOidcClientId",
-              "title": "auth-connection-options-oidc",
+              "generatedName": "AuthConnectionOptionsOidcClientId",
+              "description": "Client ID for the OIDC authentication connection.",
               "value": {
                 "description": "Client ID for the OIDC authentication connection.",
                 "schema": {
@@ -20363,8 +20359,8 @@
             "generatedName": "authConnectionOptionsOidcClientSecret",
             "key": "client_secret",
             "schema": {
-              "generatedName": "authConnectionOptionsOidcClientSecret",
-              "title": "auth-connection-options-oidc",
+              "generatedName": "AuthConnectionOptionsOidcClientSecret",
+              "description": "Client secret for the OIDC authentication connection.",
               "value": {
                 "description": "Client secret for the OIDC authentication connection.",
                 "schema": {
@@ -20384,8 +20380,8 @@
             "generatedName": "authConnectionOptionsOidcIssuer",
             "key": "issuer",
             "schema": {
-              "generatedName": "authConnectionOptionsOidcIssuer",
-              "title": "auth-connection-options-oidc",
+              "generatedName": "AuthConnectionOptionsOidcIssuer",
+              "description": "Issuer URL of the OIDC authentication connection.",
               "value": {
                 "description": "Issuer URL of the OIDC authentication connection.",
                 "schema": {
@@ -20421,8 +20417,8 @@
             "generatedName": "authConnectionOptionsSamlSignInEndpoint",
             "key": "sign_in_endpoint",
             "schema": {
-              "generatedName": "authConnectionOptionsSamlSignInEndpoint",
-              "title": "auth-connection-options-saml",
+              "generatedName": "AuthConnectionOptionsSamlSignInEndpoint",
+              "description": "Sign In endpoint for the SAML authentication connection.",
               "value": {
                 "description": "Sign In endpoint for the SAML authentication connection.",
                 "schema": {
@@ -20442,8 +20438,8 @@
             "generatedName": "authConnectionOptionsSamlSigningCert",
             "key": "signing_cert",
             "schema": {
-              "generatedName": "authConnectionOptionsSamlSigningCert",
-              "title": "auth-connection-options-saml",
+              "generatedName": "AuthConnectionOptionsSamlSigningCert",
+              "description": "Signing certificate for the SAML authentication connection.\n",
               "value": {
                 "description": "Signing certificate for the SAML authentication connection.\n",
                 "schema": {
@@ -20565,7 +20561,8 @@
             "generatedName": "authTokenClientId",
             "key": "client_id",
             "schema": {
-              "generatedName": "authTokenClientId",
+              "generatedName": "AuthTokenClientId",
+              "description": "An identifier that represents the application that requested the\ntoken. Only applicable for application access tokens.\n",
               "value": {
                 "description": "An identifier that represents the application that requested the\ntoken. Only applicable for application access tokens.\n",
                 "schema": {
@@ -20585,7 +20582,8 @@
             "generatedName": "authTokenExpiresAt",
             "key": "expires_at",
             "schema": {
-              "generatedName": "authTokenExpiresAt",
+              "generatedName": "AuthTokenExpiresAt",
+              "description": "The time at which the token expires.",
               "value": {
                 "description": "The time at which the token expires.",
                 "schema": {
@@ -20605,7 +20603,8 @@
             "generatedName": "authTokenIssuedAt",
             "key": "issued_at",
             "schema": {
-              "generatedName": "authTokenIssuedAt",
+              "generatedName": "AuthTokenIssuedAt",
+              "description": "The time at which the token was issued.",
               "value": {
                 "description": "The time at which the token was issued.",
                 "schema": {
@@ -20625,7 +20624,7 @@
             "generatedName": "authTokenRequestedTokenType",
             "key": "requested_token_type",
             "schema": {
-              "generatedName": "authTokenRequestedTokenType",
+              "generatedName": "AuthTokenRequestedTokenType",
               "value": {
                 "generatedName": "AuthTokenRequestedTokenType",
                 "schema": "auth-token-requested-token-type",
@@ -20635,7 +20634,6 @@
                 },
                 "type": "reference"
               },
-              "groupName": [],
               "type": "optional"
             },
             "audiences": [],
@@ -20647,7 +20645,8 @@
             "generatedName": "authTokenScopes",
             "key": "scopes",
             "schema": {
-              "generatedName": "authTokenScopes",
+              "generatedName": "AuthTokenScopes",
+              "description": "The scopes associated with the issued token.",
               "value": {
                 "description": "The scopes associated with the issued token.",
                 "value": {
@@ -20672,7 +20671,7 @@
             "generatedName": "authTokenStatus",
             "key": "status",
             "schema": {
-              "generatedName": "authTokenStatus",
+              "generatedName": "AuthTokenStatus",
               "value": {
                 "generatedName": "AuthTokenStatus",
                 "schema": "auth-token-status",
@@ -20682,7 +20681,6 @@
                 },
                 "type": "reference"
               },
-              "groupName": [],
               "type": "optional"
             },
             "audiences": [],
@@ -20694,7 +20692,8 @@
             "generatedName": "authTokenSubject",
             "key": "subject",
             "schema": {
-              "generatedName": "authTokenSubject",
+              "generatedName": "AuthTokenSubject",
+              "description": "The subject of the token.",
               "value": {
                 "description": "The subject of the token.",
                 "schema": {
@@ -20714,7 +20713,8 @@
             "generatedName": "authTokenTokenHint",
             "key": "token_hint",
             "schema": {
-              "generatedName": "authTokenTokenHint",
+              "generatedName": "AuthTokenTokenHint",
+              "description": "A hint that identifies the token.",
               "value": {
                 "description": "A hint that identifies the token.",
                 "schema": {
@@ -20912,8 +20912,8 @@
             "generatedName": "authTokensCreateRequestAud",
             "key": "aud",
             "schema": {
-              "generatedName": "authTokensCreateRequestAud",
-              "title": "auth-tokens-create-request",
+              "generatedName": "AuthTokensCreateRequestAud",
+              "description": "The expected audience values with respect to the token.",
               "value": {
                 "description": "The expected audience values with respect to the token.",
                 "value": {
@@ -20938,8 +20938,8 @@
             "generatedName": "authTokensCreateRequestClientId",
             "key": "client_id",
             "schema": {
-              "generatedName": "authTokensCreateRequestClientId",
-              "title": "auth-tokens-create-request",
+              "generatedName": "AuthTokensCreateRequestClientId",
+              "description": "An identifier that represents the application which is requesting\nthe token. If no client_id is present in the request to generate an\napplication access token (AAT), DevRev will generate a client_id.\nThis client_id is only associated with an AAT.\n",
               "value": {
                 "description": "An identifier that represents the application which is requesting\nthe token. If no client_id is present in the request to generate an\napplication access token (AAT), DevRev will generate a client_id.\nThis client_id is only associated with an AAT.\n",
                 "schema": {
@@ -20959,8 +20959,8 @@
             "generatedName": "authTokensCreateRequestExpiresIn",
             "key": "expires_in",
             "schema": {
-              "generatedName": "authTokensCreateRequestExpiresIn",
-              "title": "auth-tokens-create-request",
+              "generatedName": "AuthTokensCreateRequestExpiresIn",
+              "description": "The expected validity lifetime of the token in number of days.\n",
               "value": {
                 "description": "The expected validity lifetime of the token in number of days.\n",
                 "schema": {
@@ -20980,8 +20980,7 @@
             "generatedName": "authTokensCreateRequestGrantType",
             "key": "grant_type",
             "schema": {
-              "generatedName": "authTokensCreateRequestGrantType",
-              "title": "auth-tokens-create-request",
+              "generatedName": "AuthTokensCreateRequestGrantType",
               "value": {
                 "generatedName": "AuthTokensCreateRequestGrantType",
                 "schema": "auth-token-grant-type",
@@ -20991,7 +20990,6 @@
                 },
                 "type": "reference"
               },
-              "groupName": [],
               "type": "optional"
             },
             "audiences": [],
@@ -21003,8 +21001,7 @@
             "generatedName": "authTokensCreateRequestRequestedTokenType",
             "key": "requested_token_type",
             "schema": {
-              "generatedName": "authTokensCreateRequestRequestedTokenType",
-              "title": "auth-tokens-create-request",
+              "generatedName": "AuthTokensCreateRequestRequestedTokenType",
               "value": {
                 "generatedName": "AuthTokensCreateRequestRequestedTokenType",
                 "schema": "auth-token-requested-token-type",
@@ -21014,7 +21011,6 @@
                 },
                 "type": "reference"
               },
-              "groupName": [],
               "type": "optional"
             },
             "audiences": [],
@@ -21026,8 +21022,7 @@
             "generatedName": "authTokensCreateRequestRevInfo",
             "key": "rev_info",
             "schema": {
-              "generatedName": "authTokensCreateRequestRevInfo",
-              "title": "auth-tokens-create-request",
+              "generatedName": "AuthTokensCreateRequestRevInfo",
               "value": {
                 "generatedName": "AuthTokensCreateRequestRevInfo",
                 "schema": "auth-tokens-rev-info",
@@ -21037,7 +21032,6 @@
                 },
                 "type": "reference"
               },
-              "groupName": [],
               "type": "optional"
             },
             "audiences": [],
@@ -21049,8 +21043,8 @@
             "generatedName": "authTokensCreateRequestScope",
             "key": "scope",
             "schema": {
-              "generatedName": "authTokensCreateRequestScope",
-              "title": "auth-tokens-create-request",
+              "generatedName": "AuthTokensCreateRequestScope",
+              "description": "The requested set of scopes associated with the issued token. A\nspace-delimited list of values in which the order of values does\nnot matter.\n",
               "value": {
                 "description": "The requested set of scopes associated with the issued token. A\nspace-delimited list of values in which the order of values does\nnot matter.\n",
                 "schema": {
@@ -21070,8 +21064,8 @@
             "generatedName": "authTokensCreateRequestSubjectToken",
             "key": "subject_token",
             "schema": {
-              "generatedName": "authTokensCreateRequestSubjectToken",
-              "title": "auth-tokens-create-request",
+              "generatedName": "AuthTokensCreateRequestSubjectToken",
+              "description": "Represents the entity that requests the token. Not required when\nrequesting an application access token (AAT).\n",
               "value": {
                 "description": "Represents the entity that requests the token. Not required when\nrequesting an application access token (AAT).\n",
                 "schema": {
@@ -21091,8 +21085,7 @@
             "generatedName": "authTokensCreateRequestSubjectTokenType",
             "key": "subject_token_type",
             "schema": {
-              "generatedName": "authTokensCreateRequestSubjectTokenType",
-              "title": "auth-tokens-create-request",
+              "generatedName": "AuthTokensCreateRequestSubjectTokenType",
               "value": {
                 "generatedName": "AuthTokensCreateRequestSubjectTokenType",
                 "schema": "auth-token-subject-token-type",
@@ -21102,7 +21095,6 @@
                 },
                 "type": "reference"
               },
-              "groupName": [],
               "type": "optional"
             },
             "audiences": [],
@@ -21114,8 +21106,8 @@
             "generatedName": "authTokensCreateRequestTokenHint",
             "key": "token_hint",
             "schema": {
-              "generatedName": "authTokensCreateRequestTokenHint",
-              "title": "auth-tokens-create-request",
+              "generatedName": "AuthTokensCreateRequestTokenHint",
+              "description": "A hint that identifies the token.",
               "value": {
                 "description": "A hint that identifies the token.",
                 "schema": {
@@ -21166,8 +21158,8 @@
             "generatedName": "authTokensCreateResponseClientId",
             "key": "client_id",
             "schema": {
-              "generatedName": "authTokensCreateResponseClientId",
-              "title": "auth-tokens-create-response",
+              "generatedName": "AuthTokensCreateResponseClientId",
+              "description": "An identifier that represents the application which is requesting\nthe token. Only present in a response corresponding to an\napplication access token (AAT).\n",
               "value": {
                 "description": "An identifier that represents the application which is requesting\nthe token. Only present in a response corresponding to an\napplication access token (AAT).\n",
                 "schema": {
@@ -21202,8 +21194,8 @@
             "generatedName": "authTokensCreateResponseRefreshToken",
             "key": "refresh_token",
             "schema": {
-              "generatedName": "authTokensCreateResponseRefreshToken",
-              "title": "auth-tokens-create-response",
+              "generatedName": "AuthTokensCreateResponseRefreshToken",
+              "description": "A token to refresh the issued token.",
               "value": {
                 "description": "A token to refresh the issued token.",
                 "schema": {
@@ -21223,8 +21215,8 @@
             "generatedName": "authTokensCreateResponseScope",
             "key": "scope",
             "schema": {
-              "generatedName": "authTokensCreateResponseScope",
-              "title": "auth-tokens-create-response",
+              "generatedName": "AuthTokensCreateResponseScope",
+              "description": "The scopes associated with the issued token. A space-delimited list\nof values in which the order of values does not matter.\n",
               "value": {
                 "description": "The scopes associated with the issued token. A space-delimited list\nof values in which the order of values does not matter.\n",
                 "schema": {
@@ -21277,8 +21269,8 @@
             "generatedName": "authTokensDeleteRequestTokenId",
             "key": "token_id",
             "schema": {
-              "generatedName": "authTokensDeleteRequestTokenId",
-              "title": "auth-tokens-delete-request",
+              "generatedName": "AuthTokensDeleteRequestTokenId",
+              "description": "The unique identifier for the token under a given Dev organization.\nIf no token ID is provided, then the token ID will be set from the\nJTI claim of the token in the authorization header.\n",
               "value": {
                 "description": "The unique identifier for the token under a given Dev organization.\nIf no token ID is provided, then the token ID will be set from the\nJTI claim of the token in the authorization header.\n",
                 "schema": {
@@ -21384,8 +21376,8 @@
             "generatedName": "authTokensOrgTraitsDisplayName",
             "key": "display_name",
             "schema": {
-              "generatedName": "authTokensOrgTraitsDisplayName",
-              "title": "auth-tokens-org-traits",
+              "generatedName": "AuthTokensOrgTraitsDisplayName",
+              "description": "The display name of the Rev org.",
               "value": {
                 "description": "The display name of the Rev org.",
                 "schema": {
@@ -21405,8 +21397,8 @@
             "generatedName": "authTokensOrgTraitsDomain",
             "key": "domain",
             "schema": {
-              "generatedName": "authTokensOrgTraitsDomain",
-              "title": "auth-tokens-org-traits",
+              "generatedName": "AuthTokensOrgTraitsDomain",
+              "description": "The domain of the Rev org.",
               "value": {
                 "description": "The domain of the Rev org.",
                 "schema": {
@@ -21442,8 +21434,8 @@
             "generatedName": "authTokensRevInfoOrgRef",
             "key": "org_ref",
             "schema": {
-              "generatedName": "authTokensRevInfoOrgRef",
-              "title": "auth-tokens-rev-info",
+              "generatedName": "AuthTokensRevInfoOrgRef",
+              "description": "An identifier which uniquely identifies a Rev org.",
               "value": {
                 "description": "An identifier which uniquely identifies a Rev org.",
                 "schema": {
@@ -21463,8 +21455,7 @@
             "generatedName": "authTokensRevInfoOrgTraits",
             "key": "org_traits",
             "schema": {
-              "generatedName": "authTokensRevInfoOrgTraits",
-              "title": "auth-tokens-rev-info",
+              "generatedName": "AuthTokensRevInfoOrgTraits",
               "value": {
                 "generatedName": "AuthTokensRevInfoOrgTraits",
                 "schema": "auth-tokens-org-traits",
@@ -21474,7 +21465,6 @@
                 },
                 "type": "reference"
               },
-              "groupName": [],
               "type": "optional"
             },
             "audiences": [],
@@ -21486,8 +21476,8 @@
             "generatedName": "authTokensRevInfoRevUserId",
             "key": "rev_user_id",
             "schema": {
-              "generatedName": "authTokensRevInfoRevUserId",
-              "title": "auth-tokens-rev-info",
+              "generatedName": "AuthTokensRevInfoRevUserId",
+              "description": "The unique ID of the Rev user.",
               "value": {
                 "description": "The unique ID of the Rev user.",
                 "schema": {
@@ -21522,8 +21512,7 @@
             "generatedName": "authTokensRevInfoUserTraits",
             "key": "user_traits",
             "schema": {
-              "generatedName": "authTokensRevInfoUserTraits",
-              "title": "auth-tokens-rev-info",
+              "generatedName": "AuthTokensRevInfoUserTraits",
               "value": {
                 "generatedName": "AuthTokensRevInfoUserTraits",
                 "schema": "auth-tokens-user-traits",
@@ -21533,7 +21522,6 @@
                 },
                 "type": "reference"
               },
-              "groupName": [],
               "type": "optional"
             },
             "audiences": [],
@@ -21561,8 +21549,7 @@
             "generatedName": "authTokensSelfDeleteRequestRequestedTokenType",
             "key": "requested_token_type",
             "schema": {
-              "generatedName": "authTokensSelfDeleteRequestRequestedTokenType",
-              "title": "auth-tokens-self-delete-request",
+              "generatedName": "AuthTokensSelfDeleteRequestRequestedTokenType",
               "value": {
                 "generatedName": "AuthTokensSelfDeleteRequestRequestedTokenType",
                 "schema": "auth-token-requested-token-type",
@@ -21572,7 +21559,6 @@
                 },
                 "type": "reference"
               },
-              "groupName": [],
               "type": "optional"
             },
             "audiences": [],
@@ -21679,8 +21665,8 @@
             "generatedName": "authTokensUserTraitsDisplayName",
             "key": "display_name",
             "schema": {
-              "generatedName": "authTokensUserTraitsDisplayName",
-              "title": "auth-tokens-user-traits",
+              "generatedName": "AuthTokensUserTraitsDisplayName",
+              "description": "The display name of the Rev user.",
               "value": {
                 "description": "The display name of the Rev user.",
                 "schema": {
@@ -21700,8 +21686,8 @@
             "generatedName": "authTokensUserTraitsEmail",
             "key": "email",
             "schema": {
-              "generatedName": "authTokensUserTraitsEmail",
-              "title": "auth-tokens-user-traits",
+              "generatedName": "AuthTokensUserTraitsEmail",
+              "description": "The email address of the Rev user.",
               "value": {
                 "description": "The email address of the Rev user.",
                 "schema": {
@@ -21721,8 +21707,8 @@
             "generatedName": "authTokensUserTraitsFullName",
             "key": "full_name",
             "schema": {
-              "generatedName": "authTokensUserTraitsFullName",
-              "title": "auth-tokens-user-traits",
+              "generatedName": "AuthTokensUserTraitsFullName",
+              "description": "The full name of the Rev user.",
               "value": {
                 "description": "The full name of the Rev user.",
                 "schema": {
@@ -22032,8 +22018,7 @@
             "generatedName": "devOrgAuthConnectionsToggleRequestToggle",
             "key": "toggle",
             "schema": {
-              "generatedName": "devOrgAuthConnectionsToggleRequestToggle",
-              "title": "dev-org-auth-connections-toggle-request",
+              "generatedName": "DevOrgAuthConnectionsToggleRequestToggle",
               "value": {
                 "generatedName": "DevOrgAuthConnectionsToggleRequestToggle",
                 "schema": "auth-connection-toggle",
@@ -22043,7 +22028,6 @@
                 },
                 "type": "reference"
               },
-              "groupName": [],
               "type": "optional"
             },
             "audiences": [],
@@ -22245,7 +22229,8 @@
             "generatedName": "devUserExternalIdentities",
             "key": "external_identities",
             "schema": {
-              "generatedName": "devUserExternalIdentities",
+              "generatedName": "DevUserExternalIdentities",
+              "description": "IDs of the Dev User outside the DevRev SOR.",
               "value": {
                 "description": "IDs of the Dev User outside the DevRev SOR.",
                 "value": {
@@ -22317,8 +22302,8 @@
             "generatedName": "devUsersListResponseNextCursor",
             "key": "next_cursor",
             "schema": {
-              "generatedName": "devUsersListResponseNextCursor",
-              "title": "dev-users-list-response",
+              "generatedName": "DevUsersListResponseNextCursor",
+              "description": "The cursor used to iterate subsequent results in accordance to the\nsort order. If not set, then no later elements exist.\n",
               "value": {
                 "description": "The cursor used to iterate subsequent results in accordance to the\nsort order. If not set, then no later elements exist.\n",
                 "schema": {
@@ -22338,8 +22323,8 @@
             "generatedName": "devUsersListResponsePrevCursor",
             "key": "prev_cursor",
             "schema": {
-              "generatedName": "devUsersListResponsePrevCursor",
-              "title": "dev-users-list-response",
+              "generatedName": "DevUsersListResponsePrevCursor",
+              "description": "The cursor used to iterate preceding results in accordance to the\nsort order. If not set, then no prior elements exist.\n",
               "value": {
                 "description": "The cursor used to iterate preceding results in accordance to the\nsort order. If not set, then no prior elements exist.\n",
                 "schema": {
@@ -22436,7 +22421,8 @@
             "generatedName": "enhancementTargetCloseDate",
             "key": "target_close_date",
             "schema": {
-              "generatedName": "enhancementTargetCloseDate",
+              "generatedName": "EnhancementTargetCloseDate",
+              "description": "Timestamp when the enhancement is expected to be closed.",
               "value": {
                 "description": "Timestamp when the enhancement is expected to be closed.",
                 "schema": {
@@ -22481,7 +22467,8 @@
             "generatedName": "partBaseArtifacts",
             "key": "artifacts",
             "schema": {
-              "generatedName": "partBaseArtifacts",
+              "generatedName": "PartBaseArtifacts",
+              "description": "The attached artifacts.",
               "value": {
                 "description": "The attached artifacts.",
                 "value": {
@@ -22507,7 +22494,8 @@
             "generatedName": "partBaseDescription",
             "key": "description",
             "schema": {
-              "generatedName": "partBaseDescription",
+              "generatedName": "PartBaseDescription",
+              "description": "Description of the part.",
               "value": {
                 "description": "Description of the part.",
                 "schema": {
@@ -22563,7 +22551,8 @@
             "generatedName": "partBaseTags",
             "key": "tags",
             "schema": {
-              "generatedName": "partBaseTags",
+              "generatedName": "PartBaseTags",
+              "description": "Tags associated with the object.",
               "value": {
                 "description": "Tags associated with the object.",
                 "value": {
@@ -22820,8 +22809,8 @@
             "generatedName": "errorBadRequestValueNotPermittedReason",
             "key": "reason",
             "schema": {
-              "generatedName": "errorBadRequestValueNotPermittedReason",
-              "title": "error-bad-request-value-not-permitted",
+              "generatedName": "ErrorBadRequestValueNotPermittedReason",
+              "description": "The reason the value isn't permitted.",
               "value": {
                 "description": "The reason the value isn't permitted.",
                 "schema": {
@@ -22856,8 +22845,8 @@
             "generatedName": "errorBaseMessage",
             "key": "message",
             "schema": {
-              "generatedName": "errorBaseMessage",
-              "title": "error-base",
+              "generatedName": "ErrorBaseMessage",
+              "description": "The message associated with the error.",
               "value": {
                 "description": "The message associated with the error.",
                 "schema": {
@@ -23826,7 +23815,7 @@
             "generatedName": "issuePriority",
             "key": "priority",
             "schema": {
-              "generatedName": "issuePriority",
+              "generatedName": "IssuePriority",
               "value": {
                 "generatedName": "IssuePriority",
                 "schema": "issue-priority",
@@ -23836,7 +23825,6 @@
                 },
                 "type": "reference"
               },
-              "groupName": [],
               "type": "optional"
             },
             "audiences": [],
@@ -23873,7 +23861,7 @@
             "generatedName": "workBaseAppliesToPart",
             "key": "applies_to_part",
             "schema": {
-              "generatedName": "workBaseAppliesToPart",
+              "generatedName": "WorkBaseAppliesToPart",
               "value": {
                 "generatedName": "WorkBaseAppliesToPart",
                 "schema": "part-summary",
@@ -23883,7 +23871,6 @@
                 },
                 "type": "reference"
               },
-              "groupName": [],
               "type": "optional"
             },
             "audiences": [],
@@ -23895,7 +23882,8 @@
             "generatedName": "workBaseArtifacts",
             "key": "artifacts",
             "schema": {
-              "generatedName": "workBaseArtifacts",
+              "generatedName": "WorkBaseArtifacts",
+              "description": "The artifacts attached to the work item.",
               "value": {
                 "description": "The artifacts attached to the work item.",
                 "value": {
@@ -23921,7 +23909,8 @@
             "generatedName": "workBaseBody",
             "key": "body",
             "schema": {
-              "generatedName": "workBaseBody",
+              "generatedName": "WorkBaseBody",
+              "description": "Body of the work object.",
               "value": {
                 "description": "Body of the work object.",
                 "schema": {
@@ -23962,7 +23951,8 @@
             "generatedName": "workBaseReportedBy",
             "key": "reported_by",
             "schema": {
-              "generatedName": "workBaseReportedBy",
+              "generatedName": "WorkBaseReportedBy",
+              "description": "Users that reported the work.",
               "value": {
                 "description": "Users that reported the work.",
                 "value": {
@@ -23988,7 +23978,7 @@
             "generatedName": "workBaseStage",
             "key": "stage",
             "schema": {
-              "generatedName": "workBaseStage",
+              "generatedName": "WorkBaseStage",
               "value": {
                 "generatedName": "WorkBaseStage",
                 "schema": "stage",
@@ -23998,7 +23988,6 @@
                 },
                 "type": "reference"
               },
-              "groupName": [],
               "type": "optional"
             },
             "audiences": [],
@@ -24010,7 +23999,8 @@
             "generatedName": "workBaseTags",
             "key": "tags",
             "schema": {
-              "generatedName": "workBaseTags",
+              "generatedName": "WorkBaseTags",
+              "description": "Tags associated with the object.",
               "value": {
                 "description": "Tags associated with the object.",
                 "value": {
@@ -24036,7 +24026,8 @@
             "generatedName": "workBaseTargetCloseDate",
             "key": "target_close_date",
             "schema": {
-              "generatedName": "workBaseTargetCloseDate",
+              "generatedName": "WorkBaseTargetCloseDate",
+              "description": "Timestamp when the work is expected to be complete.",
               "value": {
                 "description": "Timestamp when the work is expected to be complete.",
                 "schema": {
@@ -24150,7 +24141,8 @@
             "generatedName": "orgBaseDisplayName",
             "key": "display_name",
             "schema": {
-              "generatedName": "orgBaseDisplayName",
+              "generatedName": "OrgBaseDisplayName",
+              "description": "Name of the Organization.",
               "value": {
                 "description": "Name of the Organization.",
                 "schema": {
@@ -24195,7 +24187,8 @@
             "generatedName": "orgBaseSummaryDisplayName",
             "key": "display_name",
             "schema": {
-              "generatedName": "orgBaseSummaryDisplayName",
+              "generatedName": "OrgBaseSummaryDisplayName",
+              "description": "Name of the Organization.",
               "value": {
                 "description": "Name of the Organization.",
                 "schema": {
@@ -24625,8 +24618,8 @@
             "generatedName": "partsCreateRequestEnhancementTargetCloseDate",
             "key": "target_close_date",
             "schema": {
-              "generatedName": "partsCreateRequestEnhancementTargetCloseDate",
-              "title": "parts-create-request-enhancement",
+              "generatedName": "PartsCreateRequestEnhancementTargetCloseDate",
+              "description": "Target close date by which enhancement is expected to be closed.\n",
               "value": {
                 "description": "Target close date by which enhancement is expected to be closed.\n",
                 "schema": {
@@ -24827,8 +24820,8 @@
             "generatedName": "partsListResponseNextCursor",
             "key": "next_cursor",
             "schema": {
-              "generatedName": "partsListResponseNextCursor",
-              "title": "parts-list-response",
+              "generatedName": "PartsListResponseNextCursor",
+              "description": "The cursor used to iterate subsequent results in accordance to the\nsort order. If not set, then no later elements exist.\n",
               "value": {
                 "description": "The cursor used to iterate subsequent results in accordance to the\nsort order. If not set, then no later elements exist.\n",
                 "schema": {
@@ -24869,8 +24862,8 @@
             "generatedName": "partsListResponsePrevCursor",
             "key": "prev_cursor",
             "schema": {
-              "generatedName": "partsListResponsePrevCursor",
-              "title": "parts-list-response",
+              "generatedName": "PartsListResponsePrevCursor",
+              "description": "The cursor used to iterate preceding results in accordance to the\nsort order. If not set, then no prior elements exist.\n",
               "value": {
                 "description": "The cursor used to iterate preceding results in accordance to the\nsort order. If not set, then no prior elements exist.\n",
                 "schema": {
@@ -25051,8 +25044,8 @@
             "generatedName": "partsUpdateRequestEnhancementTargetCloseDate",
             "key": "target_close_date",
             "schema": {
-              "generatedName": "partsUpdateRequestEnhancementTargetCloseDate",
-              "title": "parts-update-request-enhancement",
+              "generatedName": "PartsUpdateRequestEnhancementTargetCloseDate",
+              "description": "Updates the target close date of the enhancement.",
               "value": {
                 "description": "Updates the target close date of the enhancement.",
                 "schema": {
@@ -25105,8 +25098,8 @@
             "generatedName": "partsUpdateRequestOwnedBySet",
             "key": "set",
             "schema": {
-              "generatedName": "partsUpdateRequestOwnedBySet",
-              "title": "parts-update-request-owned-by",
+              "generatedName": "PartsUpdateRequestOwnedBySet",
+              "description": "Sets the owner IDs to the provided user IDs. This must not be\nempty.\n",
               "value": {
                 "description": "Sets the owner IDs to the provided user IDs. This must not be\nempty.\n",
                 "value": {
@@ -25226,7 +25219,8 @@
             "generatedName": "revOrgDescription",
             "key": "description",
             "schema": {
-              "generatedName": "revOrgDescription",
+              "generatedName": "RevOrgDescription",
+              "description": "Description of the Rev organization.",
               "value": {
                 "description": "Description of the Rev organization.",
                 "schema": {
@@ -25246,7 +25240,8 @@
             "generatedName": "revOrgDomain",
             "key": "domain",
             "schema": {
-              "generatedName": "revOrgDomain",
+              "generatedName": "RevOrgDomain",
+              "description": "Company's domain name. Example - 'devrev.ai'.",
               "value": {
                 "description": "Company's domain name. Example - 'devrev.ai'.",
                 "schema": {
@@ -25266,7 +25261,8 @@
             "generatedName": "revOrgExternalRef",
             "key": "external_ref",
             "schema": {
-              "generatedName": "revOrgExternalRef",
+              "generatedName": "RevOrgExternalRef",
+              "description": "External ref is a unique identifier for the Rev (customer)\norganization from your primary customer system of records. If none\nis specified, a system-generated identifier will be assigned to the\norganization.\n",
               "value": {
                 "description": "External ref is a unique identifier for the Rev (customer)\norganization from your primary customer system of records. If none\nis specified, a system-generated identifier will be assigned to the\norganization.\n",
                 "schema": {
@@ -25311,8 +25307,8 @@
             "generatedName": "revOrgsCreateRequestDescription",
             "key": "description",
             "schema": {
-              "generatedName": "revOrgsCreateRequestDescription",
-              "title": "rev-orgs-create-request",
+              "generatedName": "RevOrgsCreateRequestDescription",
+              "description": "Description of the Rev organization.",
               "value": {
                 "description": "Description of the Rev organization.",
                 "schema": {
@@ -25347,8 +25343,8 @@
             "generatedName": "revOrgsCreateRequestDomain",
             "key": "domain",
             "schema": {
-              "generatedName": "revOrgsCreateRequestDomain",
-              "title": "rev-orgs-create-request",
+              "generatedName": "RevOrgsCreateRequestDomain",
+              "description": "Company's domain name. Example - 'devrev.ai'.",
               "value": {
                 "description": "Company's domain name. Example - 'devrev.ai'.",
                 "schema": {
@@ -25368,8 +25364,7 @@
             "generatedName": "revOrgsCreateRequestEnvironment",
             "key": "environment",
             "schema": {
-              "generatedName": "revOrgsCreateRequestEnvironment",
-              "title": "rev-orgs-create-request",
+              "generatedName": "RevOrgsCreateRequestEnvironment",
               "value": {
                 "generatedName": "RevOrgsCreateRequestEnvironment",
                 "schema": "org-environment",
@@ -25379,7 +25374,6 @@
                 },
                 "type": "reference"
               },
-              "groupName": [],
               "type": "optional"
             },
             "audiences": [],
@@ -25391,8 +25385,8 @@
             "generatedName": "revOrgsCreateRequestExternalRef",
             "key": "external_ref",
             "schema": {
-              "generatedName": "revOrgsCreateRequestExternalRef",
-              "title": "rev-orgs-create-request",
+              "generatedName": "RevOrgsCreateRequestExternalRef",
+              "description": "External ref is a custom unique identifier which is a reference to\nan unique id for this organization's data in some system of\nrecords.\n",
               "value": {
                 "description": "External ref is a custom unique identifier which is a reference to\nan unique id for this organization's data in some system of\nrecords.\n",
                 "schema": {
@@ -25412,8 +25406,8 @@
             "generatedName": "revOrgsCreateRequestTier",
             "key": "tier",
             "schema": {
-              "generatedName": "revOrgsCreateRequestTier",
-              "title": "rev-orgs-create-request",
+              "generatedName": "RevOrgsCreateRequestTier",
+              "description": "The tier of the RevOrg.",
               "value": {
                 "description": "The tier of the RevOrg.",
                 "schema": {
@@ -25566,8 +25560,8 @@
             "generatedName": "revOrgsListResponseNextCursor",
             "key": "next_cursor",
             "schema": {
-              "generatedName": "revOrgsListResponseNextCursor",
-              "title": "rev-orgs-list-response",
+              "generatedName": "RevOrgsListResponseNextCursor",
+              "description": "The cursor used to iterate subsequent results in accordance to the\nsort order. If not set, then no later elements exist.\n",
               "value": {
                 "description": "The cursor used to iterate subsequent results in accordance to the\nsort order. If not set, then no later elements exist.\n",
                 "schema": {
@@ -25587,8 +25581,8 @@
             "generatedName": "revOrgsListResponsePrevCursor",
             "key": "prev_cursor",
             "schema": {
-              "generatedName": "revOrgsListResponsePrevCursor",
-              "title": "rev-orgs-list-response",
+              "generatedName": "RevOrgsListResponsePrevCursor",
+              "description": "The cursor used to iterate preceding results in accordance to the\nsort order. If not set, then no prior elements exist.\n",
               "value": {
                 "description": "The cursor used to iterate preceding results in accordance to the\nsort order. If not set, then no prior elements exist.\n",
                 "schema": {
@@ -25645,8 +25639,8 @@
             "generatedName": "revOrgsUpdateRequestDescription",
             "key": "description",
             "schema": {
-              "generatedName": "revOrgsUpdateRequestDescription",
-              "title": "rev-orgs-update-request",
+              "generatedName": "RevOrgsUpdateRequestDescription",
+              "description": "Description of the Rev organization.",
               "value": {
                 "description": "Description of the Rev organization.",
                 "schema": {
@@ -25666,8 +25660,8 @@
             "generatedName": "revOrgsUpdateRequestDisplayName",
             "key": "display_name",
             "schema": {
-              "generatedName": "revOrgsUpdateRequestDisplayName",
-              "title": "rev-orgs-update-request",
+              "generatedName": "RevOrgsUpdateRequestDisplayName",
+              "description": "Customer chosen name for the Rev organization.",
               "value": {
                 "description": "Customer chosen name for the Rev organization.",
                 "schema": {
@@ -25687,8 +25681,8 @@
             "generatedName": "revOrgsUpdateRequestDomain",
             "key": "domain",
             "schema": {
-              "generatedName": "revOrgsUpdateRequestDomain",
-              "title": "rev-orgs-update-request",
+              "generatedName": "RevOrgsUpdateRequestDomain",
+              "description": "Company's domain name. Example - 'devrev.ai'.",
               "value": {
                 "description": "Company's domain name. Example - 'devrev.ai'.",
                 "schema": {
@@ -25708,8 +25702,7 @@
             "generatedName": "revOrgsUpdateRequestEnvironment",
             "key": "environment",
             "schema": {
-              "generatedName": "revOrgsUpdateRequestEnvironment",
-              "title": "rev-orgs-update-request",
+              "generatedName": "RevOrgsUpdateRequestEnvironment",
               "value": {
                 "generatedName": "RevOrgsUpdateRequestEnvironment",
                 "schema": "org-environment",
@@ -25719,7 +25712,6 @@
                 },
                 "type": "reference"
               },
-              "groupName": [],
               "type": "optional"
             },
             "audiences": [],
@@ -25731,8 +25723,8 @@
             "generatedName": "revOrgsUpdateRequestExternalRef",
             "key": "external_ref",
             "schema": {
-              "generatedName": "revOrgsUpdateRequestExternalRef",
-              "title": "rev-orgs-update-request",
+              "generatedName": "RevOrgsUpdateRequestExternalRef",
+              "description": "External ref is a custom unique identifier which is a reference to\nan unique id for this organization's data in some system of\nrecords.\n",
               "value": {
                 "description": "External ref is a custom unique identifier which is a reference to\nan unique id for this organization's data in some system of\nrecords.\n",
                 "schema": {
@@ -25768,8 +25760,8 @@
             "generatedName": "revOrgsUpdateRequestTier",
             "key": "tier",
             "schema": {
-              "generatedName": "revOrgsUpdateRequestTier",
-              "title": "rev-orgs-update-request",
+              "generatedName": "RevOrgsUpdateRequestTier",
+              "description": "The tier of the RevOrg.",
               "value": {
                 "description": "The tier of the RevOrg.",
                 "schema": {
@@ -25848,7 +25840,8 @@
             "generatedName": "revUserSummaryExternalRef",
             "key": "external_ref",
             "schema": {
-              "generatedName": "revUserSummaryExternalRef",
+              "generatedName": "RevUserSummaryExternalRef",
+              "description": "External ref is a mutable unique identifier for a user within the\nRev organization from your primary customer record. If none is\navailable, a good alternative is the email address/phone number\nwhich could uniquely identify the user. If none is specified, a\nsystem-generated identifier will be assigned to the user.\n",
               "value": {
                 "description": "External ref is a mutable unique identifier for a user within the\nRev organization from your primary customer record. If none is\navailable, a good alternative is the email address/phone number\nwhich could uniquely identify the user. If none is specified, a\nsystem-generated identifier will be assigned to the user.\n",
                 "schema": {
@@ -25868,7 +25861,7 @@
             "generatedName": "revUserSummaryRevOrg",
             "key": "rev_org",
             "schema": {
-              "generatedName": "revUserSummaryRevOrg",
+              "generatedName": "RevUserSummaryRevOrg",
               "value": {
                 "generatedName": "RevUserSummaryRevOrg",
                 "schema": "org-summary",
@@ -25878,7 +25871,6 @@
                 },
                 "type": "reference"
               },
-              "groupName": [],
               "type": "optional"
             },
             "audiences": [],
@@ -25915,7 +25907,8 @@
             "generatedName": "userBaseSummaryDisplayName",
             "key": "display_name",
             "schema": {
-              "generatedName": "userBaseSummaryDisplayName",
+              "generatedName": "UserBaseSummaryDisplayName",
+              "description": "The user's display name. The name is non-unique and mutable.\n",
               "value": {
                 "description": "The user's display name. The name is non-unique and mutable.\n",
                 "schema": {
@@ -25935,7 +25928,7 @@
             "generatedName": "userBaseSummaryDisplayPicture",
             "key": "display_picture",
             "schema": {
-              "generatedName": "userBaseSummaryDisplayPicture",
+              "generatedName": "UserBaseSummaryDisplayPicture",
               "value": {
                 "generatedName": "UserBaseSummaryDisplayPicture",
                 "schema": "artifact-summary",
@@ -25945,7 +25938,6 @@
                 },
                 "type": "reference"
               },
-              "groupName": [],
               "type": "optional"
             },
             "audiences": [],
@@ -25957,7 +25949,8 @@
             "generatedName": "userBaseSummaryEmail",
             "key": "email",
             "schema": {
-              "generatedName": "userBaseSummaryEmail",
+              "generatedName": "UserBaseSummaryEmail",
+              "description": "Email address of the user.",
               "value": {
                 "description": "Email address of the user.",
                 "schema": {
@@ -25977,7 +25970,8 @@
             "generatedName": "userBaseSummaryFullName",
             "key": "full_name",
             "schema": {
-              "generatedName": "userBaseSummaryFullName",
+              "generatedName": "UserBaseSummaryFullName",
+              "description": "Full name of the user.",
               "value": {
                 "description": "Full name of the user.",
                 "schema": {
@@ -25997,7 +25991,7 @@
             "generatedName": "userBaseSummaryState",
             "key": "state",
             "schema": {
-              "generatedName": "userBaseSummaryState",
+              "generatedName": "UserBaseSummaryState",
               "value": {
                 "generatedName": "UserBaseSummaryState",
                 "schema": "user-state",
@@ -26007,7 +26001,6 @@
                 },
                 "type": "reference"
               },
-              "groupName": [],
               "type": "optional"
             },
             "audiences": [],
@@ -26050,8 +26043,8 @@
             "generatedName": "setTagWithValueValue",
             "key": "value",
             "schema": {
-              "generatedName": "setTagWithValueValue",
-              "title": "set-tag-with-value",
+              "generatedName": "SetTagWithValueValue",
+              "description": "The value for the object's association with the tag. If specified,\nthe value must be one that's specified in the tag's allowed values.\n",
               "value": {
                 "description": "The value for the object's association with the tag. If specified,\nthe value must be one that's specified in the tag's allowed values.\n",
                 "schema": {
@@ -26117,8 +26110,8 @@
             "generatedName": "stageInitName",
             "key": "name",
             "schema": {
-              "generatedName": "stageInitName",
-              "title": "stage-init",
+              "generatedName": "StageInitName",
+              "description": "The name of the stage.",
               "value": {
                 "description": "The name of the stage.",
                 "schema": {
@@ -26154,8 +26147,8 @@
             "generatedName": "stageUpdateName",
             "key": "name",
             "schema": {
-              "generatedName": "stageUpdateName",
-              "title": "stage-update",
+              "generatedName": "StageUpdateName",
+              "description": "The updated name of the stage, otherwise unchanged if not set.\n",
               "value": {
                 "description": "The updated name of the stage, otherwise unchanged if not set.\n",
                 "schema": {
@@ -26211,7 +26204,8 @@
             "generatedName": "tagAllowedValues",
             "key": "allowed_values",
             "schema": {
-              "generatedName": "tagAllowedValues",
+              "generatedName": "TagAllowedValues",
+              "description": "The allowed values for the tag, where a value is provided when a\ntag is associated with an object. If empty, then no value should be\nprovided when the association is made.\n",
               "value": {
                 "description": "The allowed values for the tag, where a value is provided when a\ntag is associated with an object. If empty, then no value should be\nprovided when the association is made.\n",
                 "value": {
@@ -26236,7 +26230,8 @@
             "generatedName": "tagDescription",
             "key": "description",
             "schema": {
-              "generatedName": "tagDescription",
+              "generatedName": "TagDescription",
+              "description": "An informative description for the tag that should provide context\non the tag's purpose and usage.\n",
               "value": {
                 "description": "An informative description for the tag that should provide context\non the tag's purpose and usage.\n",
                 "schema": {
@@ -26343,8 +26338,8 @@
             "generatedName": "tagWithValueValue",
             "key": "value",
             "schema": {
-              "generatedName": "tagWithValueValue",
-              "title": "tag-with-value",
+              "generatedName": "TagWithValueValue",
+              "description": "The value for the object's association with the tag.",
               "value": {
                 "description": "The value for the object's association with the tag.",
                 "schema": {
@@ -26379,8 +26374,8 @@
             "generatedName": "tagsCreateRequestAllowedValues",
             "key": "allowed_values",
             "schema": {
-              "generatedName": "tagsCreateRequestAllowedValues",
-              "title": "tags-create-request",
+              "generatedName": "TagsCreateRequestAllowedValues",
+              "description": "The allowed values for the tag, or empty if no values are\npermitted.\n",
               "value": {
                 "description": "The allowed values for the tag, or empty if no values are\npermitted.\n",
                 "value": {
@@ -26405,8 +26400,8 @@
             "generatedName": "tagsCreateRequestDescription",
             "key": "description",
             "schema": {
-              "generatedName": "tagsCreateRequestDescription",
-              "title": "tags-create-request",
+              "generatedName": "TagsCreateRequestDescription",
+              "description": "The description for the tag.",
               "value": {
                 "description": "The description for the tag.",
                 "schema": {
@@ -26574,8 +26569,8 @@
             "generatedName": "tagsListResponseNextCursor",
             "key": "next_cursor",
             "schema": {
-              "generatedName": "tagsListResponseNextCursor",
-              "title": "tags-list-response",
+              "generatedName": "TagsListResponseNextCursor",
+              "description": "The cursor used to iterate subsequent results in accordance to the\nsort order. If not set, then no later elements exist.\n",
               "value": {
                 "description": "The cursor used to iterate subsequent results in accordance to the\nsort order. If not set, then no later elements exist.\n",
                 "schema": {
@@ -26595,8 +26590,8 @@
             "generatedName": "tagsListResponsePrevCursor",
             "key": "prev_cursor",
             "schema": {
-              "generatedName": "tagsListResponsePrevCursor",
-              "title": "tags-list-response",
+              "generatedName": "TagsListResponsePrevCursor",
+              "description": "The cursor used to iterate preceding results in accordance to the\nsort order. If not set, then no prior elements exist.\n",
               "value": {
                 "description": "The cursor used to iterate preceding results in accordance to the\nsort order. If not set, then no prior elements exist.\n",
                 "schema": {
@@ -26653,8 +26648,8 @@
             "generatedName": "tagsUpdateAllowedValuesSet",
             "key": "set",
             "schema": {
-              "generatedName": "tagsUpdateAllowedValuesSet",
-              "title": "tags-update-allowed-values",
+              "generatedName": "TagsUpdateAllowedValuesSet",
+              "description": "Sets the allowed values for the tag.",
               "value": {
                 "description": "Sets the allowed values for the tag.",
                 "value": {
@@ -26695,8 +26690,7 @@
             "generatedName": "tagsUpdateRequestAllowedValues",
             "key": "allowed_values",
             "schema": {
-              "generatedName": "tagsUpdateRequestAllowedValues",
-              "title": "tags-update-request",
+              "generatedName": "TagsUpdateRequestAllowedValues",
               "value": {
                 "generatedName": "TagsUpdateRequestAllowedValues",
                 "schema": "tags-update-allowed-values",
@@ -26706,7 +26700,6 @@
                 },
                 "type": "reference"
               },
-              "groupName": [],
               "type": "optional"
             },
             "audiences": [],
@@ -26718,8 +26711,8 @@
             "generatedName": "tagsUpdateRequestDescription",
             "key": "description",
             "schema": {
-              "generatedName": "tagsUpdateRequestDescription",
-              "title": "tags-update-request",
+              "generatedName": "TagsUpdateRequestDescription",
+              "description": "The updated description of the tag.",
               "value": {
                 "description": "The updated description of the tag.",
                 "schema": {
@@ -26755,8 +26748,8 @@
             "generatedName": "tagsUpdateRequestName",
             "key": "name",
             "schema": {
-              "generatedName": "tagsUpdateRequestName",
-              "title": "tags-update-request",
+              "generatedName": "TagsUpdateRequestName",
+              "description": "The updated name of the tag. The name must be unique across all\ntags.\n",
               "value": {
                 "description": "The updated name of the tag. The name must be unique across all\ntags.\n",
                 "schema": {
@@ -26835,7 +26828,7 @@
             "generatedName": "ticketGroup",
             "key": "group",
             "schema": {
-              "generatedName": "ticketGroup",
+              "generatedName": "TicketGroup",
               "value": {
                 "generatedName": "TicketGroup",
                 "schema": "group-summary",
@@ -26845,7 +26838,6 @@
                 },
                 "type": "reference"
               },
-              "groupName": [],
               "type": "optional"
             },
             "audiences": [],
@@ -26857,7 +26849,7 @@
             "generatedName": "ticketRevOrg",
             "key": "rev_org",
             "schema": {
-              "generatedName": "ticketRevOrg",
+              "generatedName": "TicketRevOrg",
               "value": {
                 "generatedName": "TicketRevOrg",
                 "schema": "org-summary",
@@ -26867,7 +26859,6 @@
                 },
                 "type": "reference"
               },
-              "groupName": [],
               "type": "optional"
             },
             "audiences": [],
@@ -26879,7 +26870,7 @@
             "generatedName": "ticketSeverity",
             "key": "severity",
             "schema": {
-              "generatedName": "ticketSeverity",
+              "generatedName": "TicketSeverity",
               "value": {
                 "generatedName": "TicketSeverity",
                 "schema": "ticket-severity",
@@ -26889,7 +26880,6 @@
                 },
                 "type": "reference"
               },
-              "groupName": [],
               "type": "optional"
             },
             "audiences": [],
@@ -26958,7 +26948,8 @@
             "generatedName": "timelineCommentArtifacts",
             "key": "artifacts",
             "schema": {
-              "generatedName": "timelineCommentArtifacts",
+              "generatedName": "TimelineCommentArtifacts",
+              "description": "The artifacts for the comment.",
               "value": {
                 "description": "The artifacts for the comment.",
                 "value": {
@@ -26984,7 +26975,8 @@
             "generatedName": "timelineCommentBody",
             "key": "body",
             "schema": {
-              "generatedName": "timelineCommentBody",
+              "generatedName": "TimelineCommentBody",
+              "description": "The comment's body. If the comment has been deleted, then no body\nwill appear in the response.\n",
               "value": {
                 "description": "The comment's body. If the comment has been deleted, then no body\nwill appear in the response.\n",
                 "schema": {
@@ -27004,7 +26996,7 @@
             "generatedName": "timelineCommentBodyType",
             "key": "body_type",
             "schema": {
-              "generatedName": "timelineCommentBodyType",
+              "generatedName": "TimelineCommentBodyType",
               "value": {
                 "generatedName": "TimelineCommentBodyType",
                 "schema": "timeline-comment-body-type",
@@ -27014,7 +27006,6 @@
                 },
                 "type": "reference"
               },
-              "groupName": [],
               "type": "optional"
             },
             "audiences": [],
@@ -27026,7 +27017,8 @@
             "generatedName": "timelineCommentSnapKitBody",
             "key": "snap_kit_body",
             "schema": {
-              "generatedName": "timelineCommentSnapKitBody",
+              "generatedName": "TimelineCommentSnapKitBody",
+              "description": "The SnapKit Body of the comment.",
               "value": {
                 "description": "The SnapKit Body of the comment.",
                 "key": {
@@ -27149,8 +27141,8 @@
             "generatedName": "timelineEntriesCreateRequestTimelineCommentArtifacts",
             "key": "artifacts",
             "schema": {
-              "generatedName": "timelineEntriesCreateRequestTimelineCommentArtifacts",
-              "title": "timeline-entries-create-request-timeline-comment",
+              "generatedName": "TimelineEntriesCreateRequestTimelineCommentArtifacts",
+              "description": "The IDs of the artifacts attached to the comment.",
               "value": {
                 "description": "The IDs of the artifacts attached to the comment.",
                 "value": {
@@ -27175,8 +27167,8 @@
             "generatedName": "timelineEntriesCreateRequestTimelineCommentBody",
             "key": "body",
             "schema": {
-              "generatedName": "timelineEntriesCreateRequestTimelineCommentBody",
-              "title": "timeline-entries-create-request-timeline-comment",
+              "generatedName": "TimelineEntriesCreateRequestTimelineCommentBody",
+              "description": "The comment's body.",
               "value": {
                 "description": "The comment's body.",
                 "schema": {
@@ -27196,8 +27188,7 @@
             "generatedName": "timelineEntriesCreateRequestTimelineCommentBodyType",
             "key": "body_type",
             "schema": {
-              "generatedName": "timelineEntriesCreateRequestTimelineCommentBodyType",
-              "title": "timeline-entries-create-request-timeline-comment",
+              "generatedName": "TimelineEntriesCreateRequestTimelineCommentBodyType",
               "value": {
                 "generatedName": "TimelineEntriesCreateRequestTimelineCommentBodyType",
                 "schema": "timeline-comment-body-type",
@@ -27207,7 +27198,6 @@
                 },
                 "type": "reference"
               },
-              "groupName": [],
               "type": "optional"
             },
             "audiences": [],
@@ -27219,8 +27209,8 @@
             "generatedName": "timelineEntriesCreateRequestTimelineCommentSnapKitBody",
             "key": "snap_kit_body",
             "schema": {
-              "generatedName": "timelineEntriesCreateRequestTimelineCommentSnapKitBody",
-              "title": "timeline-entries-create-request-timeline-comment",
+              "generatedName": "TimelineEntriesCreateRequestTimelineCommentSnapKitBody",
+              "description": "The SnapKit body of the comment.",
               "value": {
                 "description": "The SnapKit body of the comment.",
                 "key": {
@@ -27339,8 +27329,8 @@
             "generatedName": "timelineEntriesListResponseNextCursor",
             "key": "next_cursor",
             "schema": {
-              "generatedName": "timelineEntriesListResponseNextCursor",
-              "title": "timeline-entries-list-response",
+              "generatedName": "TimelineEntriesListResponseNextCursor",
+              "description": "The cursor used to iterate subsequent results in accordance to the\nsort order. If not set, then no later elements exist.\n",
               "value": {
                 "description": "The cursor used to iterate subsequent results in accordance to the\nsort order. If not set, then no later elements exist.\n",
                 "schema": {
@@ -27360,8 +27350,8 @@
             "generatedName": "timelineEntriesListResponsePrevCursor",
             "key": "prev_cursor",
             "schema": {
-              "generatedName": "timelineEntriesListResponsePrevCursor",
-              "title": "timeline-entries-list-response",
+              "generatedName": "TimelineEntriesListResponsePrevCursor",
+              "description": "The cursor used to iterate preceding results in accordance to the\nsort order. If not set, then no prior elements exist.\n",
               "value": {
                 "description": "The cursor used to iterate preceding results in accordance to the\nsort order. If not set, then no prior elements exist.\n",
                 "schema": {
@@ -27458,8 +27448,7 @@
             "generatedName": "timelineEntriesUpdateRequestTimelineCommentArtifacts",
             "key": "artifacts",
             "schema": {
-              "generatedName": "timelineEntriesUpdateRequestTimelineCommentArtifacts",
-              "title": "timeline-entries-update-request-timeline-comment",
+              "generatedName": "TimelineEntriesUpdateRequestTimelineCommentArtifacts",
               "value": {
                 "generatedName": "TimelineEntriesUpdateRequestTimelineCommentArtifacts",
                 "schema": "timeline-entries-update-request-timeline-comment-artifacts",
@@ -27469,7 +27458,6 @@
                 },
                 "type": "reference"
               },
-              "groupName": [],
               "type": "optional"
             },
             "audiences": [],
@@ -27481,8 +27469,8 @@
             "generatedName": "timelineEntriesUpdateRequestTimelineCommentBody",
             "key": "body",
             "schema": {
-              "generatedName": "timelineEntriesUpdateRequestTimelineCommentBody",
-              "title": "timeline-entries-update-request-timeline-comment",
+              "generatedName": "TimelineEntriesUpdateRequestTimelineCommentBody",
+              "description": "The updated comment's body.",
               "value": {
                 "description": "The updated comment's body.",
                 "schema": {
@@ -27502,8 +27490,7 @@
             "generatedName": "timelineEntriesUpdateRequestTimelineCommentBodyType",
             "key": "body_type",
             "schema": {
-              "generatedName": "timelineEntriesUpdateRequestTimelineCommentBodyType",
-              "title": "timeline-entries-update-request-timeline-comment",
+              "generatedName": "TimelineEntriesUpdateRequestTimelineCommentBodyType",
               "value": {
                 "generatedName": "TimelineEntriesUpdateRequestTimelineCommentBodyType",
                 "schema": "timeline-comment-body-type",
@@ -27513,7 +27500,6 @@
                 },
                 "type": "reference"
               },
-              "groupName": [],
               "type": "optional"
             },
             "audiences": [],
@@ -27525,8 +27511,8 @@
             "generatedName": "timelineEntriesUpdateRequestTimelineCommentSnapKitBody",
             "key": "snap_kit_body",
             "schema": {
-              "generatedName": "timelineEntriesUpdateRequestTimelineCommentSnapKitBody",
-              "title": "timeline-entries-update-request-timeline-comment",
+              "generatedName": "TimelineEntriesUpdateRequestTimelineCommentSnapKitBody",
+              "description": "The SnapKit body of the comment.",
               "value": {
                 "description": "The SnapKit body of the comment.",
                 "key": {
@@ -27570,8 +27556,8 @@
             "generatedName": "timelineEntriesUpdateRequestTimelineCommentArtifactsAdd",
             "key": "add",
             "schema": {
-              "generatedName": "timelineEntriesUpdateRequestTimelineCommentArtifactsAdd",
-              "title": "timeline-entries-update-request-timeline-comment-artifacts",
+              "generatedName": "TimelineEntriesUpdateRequestTimelineCommentArtifactsAdd",
+              "description": "Adds the provided artifacts to the comment. An artifact cannot be\nadded more than once, i.e. nothing is done if the artifact is\nalready attached. Mutually exclusive with `set`.\n",
               "value": {
                 "description": "Adds the provided artifacts to the comment. An artifact cannot be\nadded more than once, i.e. nothing is done if the artifact is\nalready attached. Mutually exclusive with `set`.\n",
                 "value": {
@@ -27596,8 +27582,8 @@
             "generatedName": "timelineEntriesUpdateRequestTimelineCommentArtifactsRemove",
             "key": "remove",
             "schema": {
-              "generatedName": "timelineEntriesUpdateRequestTimelineCommentArtifactsRemove",
-              "title": "timeline-entries-update-request-timeline-comment-artifacts",
+              "generatedName": "TimelineEntriesUpdateRequestTimelineCommentArtifactsRemove",
+              "description": "Removes the provided artifacts from the comment. If an artifact is\nnot present, then it's ignored. Mututally exclusive with `set`.\n",
               "value": {
                 "description": "Removes the provided artifacts from the comment. If an artifact is\nnot present, then it's ignored. Mututally exclusive with `set`.\n",
                 "value": {
@@ -27622,8 +27608,8 @@
             "generatedName": "timelineEntriesUpdateRequestTimelineCommentArtifactsSet",
             "key": "set",
             "schema": {
-              "generatedName": "timelineEntriesUpdateRequestTimelineCommentArtifactsSet",
-              "title": "timeline-entries-update-request-timeline-comment-artifacts",
+              "generatedName": "TimelineEntriesUpdateRequestTimelineCommentArtifactsSet",
+              "description": "Sets the field to the provided artifacts.",
               "value": {
                 "description": "Sets the field to the provided artifacts.",
                 "value": {
@@ -27770,7 +27756,8 @@
             "generatedName": "userBaseDisplayName",
             "key": "display_name",
             "schema": {
-              "generatedName": "userBaseDisplayName",
+              "generatedName": "UserBaseDisplayName",
+              "description": "The user's display name. The name is non-unique and mutable.\n",
               "value": {
                 "description": "The user's display name. The name is non-unique and mutable.\n",
                 "schema": {
@@ -27790,7 +27777,7 @@
             "generatedName": "userBaseDisplayPicture",
             "key": "display_picture",
             "schema": {
-              "generatedName": "userBaseDisplayPicture",
+              "generatedName": "UserBaseDisplayPicture",
               "value": {
                 "generatedName": "UserBaseDisplayPicture",
                 "schema": "artifact-summary",
@@ -27800,7 +27787,6 @@
                 },
                 "type": "reference"
               },
-              "groupName": [],
               "type": "optional"
             },
             "audiences": [],
@@ -27812,7 +27798,8 @@
             "generatedName": "userBaseEmail",
             "key": "email",
             "schema": {
-              "generatedName": "userBaseEmail",
+              "generatedName": "UserBaseEmail",
+              "description": "Email address of the user.",
               "value": {
                 "description": "Email address of the user.",
                 "schema": {
@@ -27832,7 +27819,8 @@
             "generatedName": "userBaseFullName",
             "key": "full_name",
             "schema": {
-              "generatedName": "userBaseFullName",
+              "generatedName": "UserBaseFullName",
+              "description": "Full name of the user.",
               "value": {
                 "description": "Full name of the user.",
                 "schema": {
@@ -27852,7 +27840,8 @@
             "generatedName": "userBasePhoneNumbers",
             "key": "phone_numbers",
             "schema": {
-              "generatedName": "userBasePhoneNumbers",
+              "generatedName": "UserBasePhoneNumbers",
+              "description": "Phone numbers of the user.",
               "value": {
                 "description": "Phone numbers of the user.",
                 "value": {
@@ -27877,7 +27866,7 @@
             "generatedName": "userBaseState",
             "key": "state",
             "schema": {
-              "generatedName": "userBaseState",
+              "generatedName": "UserBaseState",
               "value": {
                 "generatedName": "UserBaseState",
                 "schema": "user-state",
@@ -27887,7 +27876,6 @@
                 },
                 "type": "reference"
               },
-              "groupName": [],
               "type": "optional"
             },
             "audiences": [],
@@ -28031,7 +28019,8 @@
             "generatedName": "webhookEventTypes",
             "key": "event_types",
             "schema": {
-              "generatedName": "webhookEventTypes",
+              "generatedName": "WebhookEventTypes",
+              "description": "The event types that the webhook will receive.",
               "value": {
                 "description": "The event types that the webhook will receive.",
                 "value": {
@@ -28135,8 +28124,7 @@
             "generatedName": "webhookEventRequestPartCreated",
             "key": "part_created",
             "schema": {
-              "generatedName": "webhookEventRequestPartCreated",
-              "title": "webhook-event-request",
+              "generatedName": "WebhookEventRequestPartCreated",
               "value": {
                 "generatedName": "WebhookEventRequestPartCreated",
                 "schema": "event-part-created",
@@ -28146,7 +28134,6 @@
                 },
                 "type": "reference"
               },
-              "groupName": [],
               "type": "optional"
             },
             "audiences": [],
@@ -28158,8 +28145,7 @@
             "generatedName": "webhookEventRequestPartDeleted",
             "key": "part_deleted",
             "schema": {
-              "generatedName": "webhookEventRequestPartDeleted",
-              "title": "webhook-event-request",
+              "generatedName": "WebhookEventRequestPartDeleted",
               "value": {
                 "generatedName": "WebhookEventRequestPartDeleted",
                 "schema": "event-part-deleted",
@@ -28169,7 +28155,6 @@
                 },
                 "type": "reference"
               },
-              "groupName": [],
               "type": "optional"
             },
             "audiences": [],
@@ -28181,8 +28166,7 @@
             "generatedName": "webhookEventRequestPartUpdated",
             "key": "part_updated",
             "schema": {
-              "generatedName": "webhookEventRequestPartUpdated",
-              "title": "webhook-event-request",
+              "generatedName": "WebhookEventRequestPartUpdated",
               "value": {
                 "generatedName": "WebhookEventRequestPartUpdated",
                 "schema": "event-part-updated",
@@ -28192,7 +28176,6 @@
                 },
                 "type": "reference"
               },
-              "groupName": [],
               "type": "optional"
             },
             "audiences": [],
@@ -28204,8 +28187,7 @@
             "generatedName": "webhookEventRequestRevOrgCreated",
             "key": "rev_org_created",
             "schema": {
-              "generatedName": "webhookEventRequestRevOrgCreated",
-              "title": "webhook-event-request",
+              "generatedName": "WebhookEventRequestRevOrgCreated",
               "value": {
                 "generatedName": "WebhookEventRequestRevOrgCreated",
                 "schema": "event-rev-org-created",
@@ -28215,7 +28197,6 @@
                 },
                 "type": "reference"
               },
-              "groupName": [],
               "type": "optional"
             },
             "audiences": [],
@@ -28227,8 +28208,7 @@
             "generatedName": "webhookEventRequestRevOrgDeleted",
             "key": "rev_org_deleted",
             "schema": {
-              "generatedName": "webhookEventRequestRevOrgDeleted",
-              "title": "webhook-event-request",
+              "generatedName": "WebhookEventRequestRevOrgDeleted",
               "value": {
                 "generatedName": "WebhookEventRequestRevOrgDeleted",
                 "schema": "event-rev-org-deleted",
@@ -28238,7 +28218,6 @@
                 },
                 "type": "reference"
               },
-              "groupName": [],
               "type": "optional"
             },
             "audiences": [],
@@ -28250,8 +28229,7 @@
             "generatedName": "webhookEventRequestRevOrgUpdated",
             "key": "rev_org_updated",
             "schema": {
-              "generatedName": "webhookEventRequestRevOrgUpdated",
-              "title": "webhook-event-request",
+              "generatedName": "WebhookEventRequestRevOrgUpdated",
               "value": {
                 "generatedName": "WebhookEventRequestRevOrgUpdated",
                 "schema": "event-rev-org-updated",
@@ -28261,7 +28239,6 @@
                 },
                 "type": "reference"
               },
-              "groupName": [],
               "type": "optional"
             },
             "audiences": [],
@@ -28273,8 +28250,7 @@
             "generatedName": "webhookEventRequestTagCreated",
             "key": "tag_created",
             "schema": {
-              "generatedName": "webhookEventRequestTagCreated",
-              "title": "webhook-event-request",
+              "generatedName": "WebhookEventRequestTagCreated",
               "value": {
                 "generatedName": "WebhookEventRequestTagCreated",
                 "schema": "event-tag-created",
@@ -28284,7 +28260,6 @@
                 },
                 "type": "reference"
               },
-              "groupName": [],
               "type": "optional"
             },
             "audiences": [],
@@ -28296,8 +28271,7 @@
             "generatedName": "webhookEventRequestTagDeleted",
             "key": "tag_deleted",
             "schema": {
-              "generatedName": "webhookEventRequestTagDeleted",
-              "title": "webhook-event-request",
+              "generatedName": "WebhookEventRequestTagDeleted",
               "value": {
                 "generatedName": "WebhookEventRequestTagDeleted",
                 "schema": "event-tag-deleted",
@@ -28307,7 +28281,6 @@
                 },
                 "type": "reference"
               },
-              "groupName": [],
               "type": "optional"
             },
             "audiences": [],
@@ -28319,8 +28292,7 @@
             "generatedName": "webhookEventRequestTagUpdated",
             "key": "tag_updated",
             "schema": {
-              "generatedName": "webhookEventRequestTagUpdated",
-              "title": "webhook-event-request",
+              "generatedName": "WebhookEventRequestTagUpdated",
               "value": {
                 "generatedName": "WebhookEventRequestTagUpdated",
                 "schema": "event-tag-updated",
@@ -28330,7 +28302,6 @@
                 },
                 "type": "reference"
               },
-              "groupName": [],
               "type": "optional"
             },
             "audiences": [],
@@ -28342,8 +28313,7 @@
             "generatedName": "webhookEventRequestTimelineEntryCreated",
             "key": "timeline_entry_created",
             "schema": {
-              "generatedName": "webhookEventRequestTimelineEntryCreated",
-              "title": "webhook-event-request",
+              "generatedName": "WebhookEventRequestTimelineEntryCreated",
               "value": {
                 "generatedName": "WebhookEventRequestTimelineEntryCreated",
                 "schema": "event-timeline-entry-created",
@@ -28353,7 +28323,6 @@
                 },
                 "type": "reference"
               },
-              "groupName": [],
               "type": "optional"
             },
             "audiences": [],
@@ -28365,8 +28334,7 @@
             "generatedName": "webhookEventRequestTimelineEntryDeleted",
             "key": "timeline_entry_deleted",
             "schema": {
-              "generatedName": "webhookEventRequestTimelineEntryDeleted",
-              "title": "webhook-event-request",
+              "generatedName": "WebhookEventRequestTimelineEntryDeleted",
               "value": {
                 "generatedName": "WebhookEventRequestTimelineEntryDeleted",
                 "schema": "event-timeline-entry-deleted",
@@ -28376,7 +28344,6 @@
                 },
                 "type": "reference"
               },
-              "groupName": [],
               "type": "optional"
             },
             "audiences": [],
@@ -28388,8 +28355,7 @@
             "generatedName": "webhookEventRequestTimelineEntryUpdated",
             "key": "timeline_entry_updated",
             "schema": {
-              "generatedName": "webhookEventRequestTimelineEntryUpdated",
-              "title": "webhook-event-request",
+              "generatedName": "WebhookEventRequestTimelineEntryUpdated",
               "value": {
                 "generatedName": "WebhookEventRequestTimelineEntryUpdated",
                 "schema": "event-timeline-entry-updated",
@@ -28399,7 +28365,6 @@
                 },
                 "type": "reference"
               },
-              "groupName": [],
               "type": "optional"
             },
             "audiences": [],
@@ -28411,8 +28376,8 @@
             "generatedName": "webhookEventRequestTimestamp",
             "key": "timestamp",
             "schema": {
-              "generatedName": "webhookEventRequestTimestamp",
-              "title": "webhook-event-request",
+              "generatedName": "WebhookEventRequestTimestamp",
+              "description": "Timestamp of the webhook's invocation for the event. Note this\nshould be used to protect against replay attacks, where the event\nshould only be processed if the timestamp isn't stale by several\nseconds.\n",
               "value": {
                 "description": "Timestamp of the webhook's invocation for the event. Note this\nshould be used to protect against replay attacks, where the event\nshould only be processed if the timestamp isn't stale by several\nseconds.\n",
                 "schema": {
@@ -28432,8 +28397,7 @@
             "generatedName": "webhookEventRequestType",
             "key": "type",
             "schema": {
-              "generatedName": "webhookEventRequestType",
-              "title": "webhook-event-request",
+              "generatedName": "WebhookEventRequestType",
               "value": {
                 "generatedName": "WebhookEventRequestType",
                 "schema": "webhook-event-type",
@@ -28443,7 +28407,6 @@
                 },
                 "type": "reference"
               },
-              "groupName": [],
               "type": "optional"
             },
             "audiences": [],
@@ -28455,8 +28418,7 @@
             "generatedName": "webhookEventRequestVerify",
             "key": "verify",
             "schema": {
-              "generatedName": "webhookEventRequestVerify",
-              "title": "webhook-event-request",
+              "generatedName": "WebhookEventRequestVerify",
               "value": {
                 "generatedName": "WebhookEventRequestVerify",
                 "schema": "webhook-event-verify",
@@ -28466,7 +28428,6 @@
                 },
                 "type": "reference"
               },
-              "groupName": [],
               "type": "optional"
             },
             "audiences": [],
@@ -28478,8 +28439,7 @@
             "generatedName": "webhookEventRequestWebhookCreated",
             "key": "webhook_created",
             "schema": {
-              "generatedName": "webhookEventRequestWebhookCreated",
-              "title": "webhook-event-request",
+              "generatedName": "WebhookEventRequestWebhookCreated",
               "value": {
                 "generatedName": "WebhookEventRequestWebhookCreated",
                 "schema": "event-webhook-created",
@@ -28489,7 +28449,6 @@
                 },
                 "type": "reference"
               },
-              "groupName": [],
               "type": "optional"
             },
             "audiences": [],
@@ -28501,8 +28460,7 @@
             "generatedName": "webhookEventRequestWebhookDeleted",
             "key": "webhook_deleted",
             "schema": {
-              "generatedName": "webhookEventRequestWebhookDeleted",
-              "title": "webhook-event-request",
+              "generatedName": "WebhookEventRequestWebhookDeleted",
               "value": {
                 "generatedName": "WebhookEventRequestWebhookDeleted",
                 "schema": "event-webhook-deleted",
@@ -28512,7 +28470,6 @@
                 },
                 "type": "reference"
               },
-              "groupName": [],
               "type": "optional"
             },
             "audiences": [],
@@ -28540,8 +28497,7 @@
             "generatedName": "webhookEventRequestWebhookUpdated",
             "key": "webhook_updated",
             "schema": {
-              "generatedName": "webhookEventRequestWebhookUpdated",
-              "title": "webhook-event-request",
+              "generatedName": "WebhookEventRequestWebhookUpdated",
               "value": {
                 "generatedName": "WebhookEventRequestWebhookUpdated",
                 "schema": "event-webhook-updated",
@@ -28551,7 +28507,6 @@
                 },
                 "type": "reference"
               },
-              "groupName": [],
               "type": "optional"
             },
             "audiences": [],
@@ -28563,8 +28518,7 @@
             "generatedName": "webhookEventRequestWorkCreated",
             "key": "work_created",
             "schema": {
-              "generatedName": "webhookEventRequestWorkCreated",
-              "title": "webhook-event-request",
+              "generatedName": "WebhookEventRequestWorkCreated",
               "value": {
                 "generatedName": "WebhookEventRequestWorkCreated",
                 "schema": "event-work-created",
@@ -28574,7 +28528,6 @@
                 },
                 "type": "reference"
               },
-              "groupName": [],
               "type": "optional"
             },
             "audiences": [],
@@ -28586,8 +28539,7 @@
             "generatedName": "webhookEventRequestWorkDeleted",
             "key": "work_deleted",
             "schema": {
-              "generatedName": "webhookEventRequestWorkDeleted",
-              "title": "webhook-event-request",
+              "generatedName": "WebhookEventRequestWorkDeleted",
               "value": {
                 "generatedName": "WebhookEventRequestWorkDeleted",
                 "schema": "event-work-deleted",
@@ -28597,7 +28549,6 @@
                 },
                 "type": "reference"
               },
-              "groupName": [],
               "type": "optional"
             },
             "audiences": [],
@@ -28609,8 +28560,7 @@
             "generatedName": "webhookEventRequestWorkUpdated",
             "key": "work_updated",
             "schema": {
-              "generatedName": "webhookEventRequestWorkUpdated",
-              "title": "webhook-event-request",
+              "generatedName": "WebhookEventRequestWorkUpdated",
               "value": {
                 "generatedName": "WebhookEventRequestWorkUpdated",
                 "schema": "event-work-updated",
@@ -28620,7 +28570,6 @@
                 },
                 "type": "reference"
               },
-              "groupName": [],
               "type": "optional"
             },
             "audiences": [],
@@ -28647,8 +28596,8 @@
             "generatedName": "webhookEventResponseChallenge",
             "key": "challenge",
             "schema": {
-              "generatedName": "webhookEventResponseChallenge",
-              "title": "webhook-event-response",
+              "generatedName": "WebhookEventResponseChallenge",
+              "description": "The challenge from the \"verify\" request, otherwise this should not\nbe set for other request types.\n",
               "value": {
                 "description": "The challenge from the \"verify\" request, otherwise this should not\nbe set for other request types.\n",
                 "schema": {
@@ -28849,8 +28798,8 @@
             "generatedName": "webhooksCreateRequestEventTypes",
             "key": "event_types",
             "schema": {
-              "generatedName": "webhooksCreateRequestEventTypes",
-              "title": "webhooks-create-request",
+              "generatedName": "WebhooksCreateRequestEventTypes",
+              "description": "The event types that the webhook endpoint will receive.",
               "value": {
                 "description": "The event types that the webhook endpoint will receive.",
                 "value": {
@@ -28876,8 +28825,8 @@
             "generatedName": "webhooksCreateRequestSecret",
             "key": "secret",
             "schema": {
-              "generatedName": "webhooksCreateRequestSecret",
-              "title": "webhooks-create-request",
+              "generatedName": "WebhooksCreateRequestSecret",
+              "description": "The secret to use when verifying webhook events. If provided, the\nsecret must be between 8 and 32 bytes (inclusive). If not set, a\nsecret will be automatically generated and provided in the\nresponse.\n",
               "value": {
                 "description": "The secret to use when verifying webhook events. If provided, the\nsecret must be between 8 and 32 bytes (inclusive). If not set, a\nsecret will be automatically generated and provided in the\nresponse.\n",
                 "schema": {
@@ -29105,8 +29054,7 @@
             "generatedName": "webhooksUpdateRequestAction",
             "key": "action",
             "schema": {
-              "generatedName": "webhooksUpdateRequestAction",
-              "title": "webhooks-update-request",
+              "generatedName": "WebhooksUpdateRequestAction",
               "value": {
                 "generatedName": "WebhooksUpdateRequestAction",
                 "schema": "webhooks-update-action",
@@ -29116,7 +29064,6 @@
                 },
                 "type": "reference"
               },
-              "groupName": [],
               "type": "optional"
             },
             "audiences": [],
@@ -29128,8 +29075,7 @@
             "generatedName": "webhooksUpdateRequestEventTypes",
             "key": "event_types",
             "schema": {
-              "generatedName": "webhooksUpdateRequestEventTypes",
-              "title": "webhooks-update-request",
+              "generatedName": "WebhooksUpdateRequestEventTypes",
               "value": {
                 "generatedName": "WebhooksUpdateRequestEventTypes",
                 "schema": "webhooks-update-request-event-types",
@@ -29139,7 +29085,6 @@
                 },
                 "type": "reference"
               },
-              "groupName": [],
               "type": "optional"
             },
             "audiences": [],
@@ -29167,8 +29112,8 @@
             "generatedName": "webhooksUpdateRequestSecret",
             "key": "secret",
             "schema": {
-              "generatedName": "webhooksUpdateRequestSecret",
-              "title": "webhooks-update-request",
+              "generatedName": "WebhooksUpdateRequestSecret",
+              "description": "If provided, updates the secret that's used when verifying webhook\nevents, which must be between 8 and 32 bytes (inclusive). Otherwise\nif empty, then a new secret is generated. If the webhook is active,\nthen its status will transition to the 'unverified' state and it\nwon't receive any object events until successfully verified.\n",
               "value": {
                 "description": "If provided, updates the secret that's used when verifying webhook\nevents, which must be between 8 and 32 bytes (inclusive). Otherwise\nif empty, then a new secret is generated. If the webhook is active,\nthen its status will transition to the 'unverified' state and it\nwon't receive any object events until successfully verified.\n",
                 "schema": {
@@ -29189,8 +29134,8 @@
             "generatedName": "webhooksUpdateRequestUrl",
             "key": "url",
             "schema": {
-              "generatedName": "webhooksUpdateRequestUrl",
-              "title": "webhooks-update-request",
+              "generatedName": "WebhooksUpdateRequestUrl",
+              "description": "The webhook's updated URL. If the webhook is active, then the\nwebhook's status will transition to the 'unverified' state and it\nwon't receive any object events until successfully verified.\n",
               "value": {
                 "description": "The webhook's updated URL. If the webhook is active, then the\nwebhook's status will transition to the 'unverified' state and it\nwon't receive any object events until successfully verified.\n",
                 "schema": {
@@ -29226,8 +29171,8 @@
             "generatedName": "webhooksUpdateRequestEventTypesAdd",
             "key": "add",
             "schema": {
-              "generatedName": "webhooksUpdateRequestEventTypesAdd",
-              "title": "webhooks-update-request-event-types",
+              "generatedName": "WebhooksUpdateRequestEventTypesAdd",
+              "description": "The event types to add. If a provided event type is already set for\nthe webhook, then nothing is done. Note this is mutually exclusive\nwith 'set'.\n",
               "value": {
                 "description": "The event types to add. If a provided event type is already set for\nthe webhook, then nothing is done. Note this is mutually exclusive\nwith 'set'.\n",
                 "value": {
@@ -29253,8 +29198,8 @@
             "generatedName": "webhooksUpdateRequestEventTypesRemove",
             "key": "remove",
             "schema": {
-              "generatedName": "webhooksUpdateRequestEventTypesRemove",
-              "title": "webhooks-update-request-event-types",
+              "generatedName": "WebhooksUpdateRequestEventTypesRemove",
+              "description": "The event types to remove. If a provided event type isn't set for\nthe webhook, then nothing is done. Note this is mutually exclusive\nwith 'set'.\n",
               "value": {
                 "description": "The event types to remove. If a provided event type isn't set for\nthe webhook, then nothing is done. Note this is mutually exclusive\nwith 'set'.\n",
                 "value": {
@@ -29280,8 +29225,8 @@
             "generatedName": "webhooksUpdateRequestEventTypesSet",
             "key": "set",
             "schema": {
-              "generatedName": "webhooksUpdateRequestEventTypesSet",
-              "title": "webhooks-update-request-event-types",
+              "generatedName": "WebhooksUpdateRequestEventTypesSet",
+              "description": "The updated event types, which will replace the webhook's current\nevent types. Note this is mutually exclusive with 'add' and\n'remove'.\n",
               "value": {
                 "description": "The updated event types, which will replace the webhook's current\nevent types. Note this is mutually exclusive with 'add' and\n'remove'.\n",
                 "value": {
@@ -29611,8 +29556,7 @@
             "generatedName": "worksCreateRequestIssuePriority",
             "key": "priority",
             "schema": {
-              "generatedName": "worksCreateRequestIssuePriority",
-              "title": "works-create-request-issue",
+              "generatedName": "WorksCreateRequestIssuePriority",
               "value": {
                 "generatedName": "WorksCreateRequestIssuePriority",
                 "schema": "issue-priority",
@@ -29622,7 +29566,6 @@
                 },
                 "type": "reference"
               },
-              "groupName": [],
               "type": "optional"
             },
             "audiences": [],
@@ -29634,8 +29577,8 @@
             "generatedName": "worksCreateRequestIssueSprint",
             "key": "sprint",
             "schema": {
-              "generatedName": "worksCreateRequestIssueSprint",
-              "title": "works-create-request-issue",
+              "generatedName": "WorksCreateRequestIssueSprint",
+              "description": "The sprint that the issue belongs to.",
               "value": {
                 "description": "The sprint that the issue belongs to.",
                 "schema": {
@@ -29670,8 +29613,8 @@
             "generatedName": "worksCreateRequestTicketGroup",
             "key": "group",
             "schema": {
-              "generatedName": "worksCreateRequestTicketGroup",
-              "title": "works-create-request-ticket",
+              "generatedName": "WorksCreateRequestTicketGroup",
+              "description": "The group that the ticket is associated with.",
               "value": {
                 "description": "The group that the ticket is associated with.",
                 "schema": {
@@ -29691,8 +29634,8 @@
             "generatedName": "worksCreateRequestTicketRevOrg",
             "key": "rev_org",
             "schema": {
-              "generatedName": "worksCreateRequestTicketRevOrg",
-              "title": "works-create-request-ticket",
+              "generatedName": "WorksCreateRequestTicketRevOrg",
+              "description": "The Rev organization that the ticket is associated with.",
               "value": {
                 "description": "The Rev organization that the ticket is associated with.",
                 "schema": {
@@ -29713,8 +29656,7 @@
             "generatedName": "worksCreateRequestTicketSeverity",
             "key": "severity",
             "schema": {
-              "generatedName": "worksCreateRequestTicketSeverity",
-              "title": "works-create-request-ticket",
+              "generatedName": "WorksCreateRequestTicketSeverity",
               "value": {
                 "generatedName": "WorksCreateRequestTicketSeverity",
                 "schema": "ticket-severity",
@@ -29724,7 +29666,6 @@
                 },
                 "type": "reference"
               },
-              "groupName": [],
               "type": "optional"
             },
             "audiences": [],
@@ -29900,8 +29841,8 @@
             "generatedName": "worksListResponseNextCursor",
             "key": "next_cursor",
             "schema": {
-              "generatedName": "worksListResponseNextCursor",
-              "title": "works-list-response",
+              "generatedName": "WorksListResponseNextCursor",
+              "description": "The cursor used to iterate subsequent results in accordance to the\nsort order. If not set, then no later elements exist.\n",
               "value": {
                 "description": "The cursor used to iterate subsequent results in accordance to the\nsort order. If not set, then no later elements exist.\n",
                 "schema": {
@@ -29921,8 +29862,8 @@
             "generatedName": "worksListResponsePrevCursor",
             "key": "prev_cursor",
             "schema": {
-              "generatedName": "worksListResponsePrevCursor",
-              "title": "works-list-response",
+              "generatedName": "WorksListResponsePrevCursor",
+              "description": "The cursor used to iterate preceding results in accordance to the\nsort order. If not set, then no prior elements exist.\n",
               "value": {
                 "description": "The cursor used to iterate preceding results in accordance to the\nsort order. If not set, then no prior elements exist.\n",
                 "schema": {
@@ -30189,8 +30130,8 @@
             "generatedName": "worksUpdateRequestArtifactIdsSet",
             "key": "set",
             "schema": {
-              "generatedName": "worksUpdateRequestArtifactIdsSet",
-              "title": "works-update-request-artifact-ids",
+              "generatedName": "WorksUpdateRequestArtifactIdsSet",
+              "description": "Sets the IDs to the provided artifact IDs.",
               "value": {
                 "description": "Sets the IDs to the provided artifact IDs.",
                 "value": {
@@ -30230,8 +30171,7 @@
             "generatedName": "worksUpdateRequestIssuePriority",
             "key": "priority",
             "schema": {
-              "generatedName": "worksUpdateRequestIssuePriority",
-              "title": "works-update-request-issue",
+              "generatedName": "WorksUpdateRequestIssuePriority",
               "value": {
                 "generatedName": "WorksUpdateRequestIssuePriority",
                 "schema": "issue-priority",
@@ -30241,7 +30181,6 @@
                 },
                 "type": "reference"
               },
-              "groupName": [],
               "type": "optional"
             },
             "audiences": [],
@@ -30253,8 +30192,8 @@
             "generatedName": "worksUpdateRequestIssueSprint",
             "key": "sprint",
             "schema": {
-              "generatedName": "worksUpdateRequestIssueSprint",
-              "title": "works-update-request-issue",
+              "generatedName": "WorksUpdateRequestIssueSprint",
+              "description": "Updates the sprint that the issue belongs to.",
               "value": {
                 "generatedName": "WorksUpdateRequestIssueSprint",
                 "description": "Updates the sprint that the issue belongs to.",
@@ -30295,8 +30234,8 @@
             "generatedName": "worksUpdateRequestOwnedBySet",
             "key": "set",
             "schema": {
-              "generatedName": "worksUpdateRequestOwnedBySet",
-              "title": "works-update-request-owned-by",
+              "generatedName": "WorksUpdateRequestOwnedBySet",
+              "description": "Sets the owner IDs to the provided user IDs. This must not be\nempty.\n",
               "value": {
                 "description": "Sets the owner IDs to the provided user IDs. This must not be\nempty.\n",
                 "value": {
@@ -30336,8 +30275,8 @@
             "generatedName": "worksUpdateRequestReportedBySet",
             "key": "set",
             "schema": {
-              "generatedName": "worksUpdateRequestReportedBySet",
-              "title": "works-update-request-reported-by",
+              "generatedName": "WorksUpdateRequestReportedBySet",
+              "description": "Sets the users that reported the work to the provided user IDs.\n",
               "value": {
                 "description": "Sets the users that reported the work to the provided user IDs.\n",
                 "value": {
@@ -30377,8 +30316,8 @@
             "generatedName": "worksUpdateRequestTagsSet",
             "key": "set",
             "schema": {
-              "generatedName": "worksUpdateRequestTagsSet",
-              "title": "works-update-request-tags",
+              "generatedName": "WorksUpdateRequestTagsSet",
+              "description": "Sets the provided tags on the work item.",
               "value": {
                 "description": "Sets the provided tags on the work item.",
                 "value": {
@@ -30419,8 +30358,8 @@
             "generatedName": "worksUpdateRequestTicketGroup",
             "key": "group",
             "schema": {
-              "generatedName": "worksUpdateRequestTicketGroup",
-              "title": "works-update-request-ticket",
+              "generatedName": "WorksUpdateRequestTicketGroup",
+              "description": "The group that the ticket is associated with.",
               "value": {
                 "description": "The group that the ticket is associated with.",
                 "schema": {
@@ -30440,8 +30379,8 @@
             "generatedName": "worksUpdateRequestTicketRevOrg",
             "key": "rev_org",
             "schema": {
-              "generatedName": "worksUpdateRequestTicketRevOrg",
-              "title": "works-update-request-ticket",
+              "generatedName": "WorksUpdateRequestTicketRevOrg",
+              "description": "Updates the Rev organization that the ticket is associated with.\n",
               "value": {
                 "generatedName": "WorksUpdateRequestTicketRevOrg",
                 "description": "Updates the Rev organization that the ticket is associated with.\n",
@@ -30468,8 +30407,7 @@
             "generatedName": "worksUpdateRequestTicketSeverity",
             "key": "severity",
             "schema": {
-              "generatedName": "worksUpdateRequestTicketSeverity",
-              "title": "works-update-request-ticket",
+              "generatedName": "WorksUpdateRequestTicketSeverity",
               "value": {
                 "generatedName": "WorksUpdateRequestTicketSeverity",
                 "schema": "ticket-severity",
@@ -30479,7 +30417,6 @@
                 },
                 "type": "reference"
               },
-              "groupName": [],
               "type": "optional"
             },
             "audiences": [],

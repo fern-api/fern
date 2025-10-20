@@ -2211,6 +2211,7 @@
             }
           },
           {
+            "docs": "For ResourceSets, the id of the base resource.",
             "name": {
               "name": {
                 "originalName": "resource_id",
@@ -2687,6 +2688,7 @@
             }
           },
           {
+            "docs": "Parent Condition Set",
             "name": {
               "name": {
                 "originalName": "parent_id",
@@ -51159,6 +51161,7 @@
                 }
               },
               {
+                "docs": "For ResourceSets, the id of the base resource.",
                 "name": {
                   "name": {
                     "originalName": "resource_id",
@@ -51340,6 +51343,7 @@
                 }
               },
               {
+                "docs": "Parent Condition Set",
                 "name": {
                   "name": {
                     "originalName": "parent_id",
@@ -52782,6 +52786,7 @@
                 }
               },
               {
+                "docs": "Parent Condition Set",
                 "name": {
                   "name": {
                     "originalName": "parent_id",

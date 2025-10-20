@@ -348,6 +348,7 @@
       "subpackage_chatCompletions"
     ]
   },
+  "authSchemes": {},
   "snippetsConfiguration": {},
   "globalHeaders": []
 }

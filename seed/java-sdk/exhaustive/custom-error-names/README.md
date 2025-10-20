@@ -77,9 +77,9 @@ When the API returns a non-success status code (4xx or 5xx response), an API exc
 ```java
 import com.seed.exhaustive.core.CustomApiException;
 
-try {
+try{
     client.endpoints().container().getAndReturnListOfPrimitives(...);
-} catch (CustomApiException e) {
+} catch (CustomApiException e){
     // Do something with the API exception...
 }
 ```

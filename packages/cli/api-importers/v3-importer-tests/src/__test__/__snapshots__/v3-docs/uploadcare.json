@@ -11960,7 +11960,6 @@
               },
               "typeId": "fromURLUploadResponseSchema",
               "inline": false,
-              "displayName": "fromURLUploadResponseSchema",
               "type": "named"
             }
           },
@@ -11991,7 +11990,6 @@
               },
               "typeId": "fileUploadInfoFromURL",
               "inline": false,
-              "displayName": "fileUploadInfoFromURL",
               "type": "named"
             }
           }
@@ -12065,7 +12063,6 @@
               },
               "typeId": "fileUploadInfoWaitingStatus",
               "inline": false,
-              "displayName": "fileUploadInfoWaitingStatus",
               "type": "named"
             }
           },
@@ -12096,7 +12093,6 @@
               },
               "typeId": "fileUploadInfoProgressStatus",
               "inline": false,
-              "displayName": "fileUploadInfoProgressStatus",
               "type": "named"
             }
           },
@@ -12127,7 +12123,6 @@
               },
               "typeId": "fileUploadInfoSuccessStatus",
               "inline": false,
-              "displayName": "fileUploadInfoSuccessStatus",
               "type": "named"
             }
           },
@@ -12158,7 +12153,6 @@
               },
               "typeId": "fileUploadInfoErrorStatus",
               "inline": false,
-              "displayName": "fileUploadInfoErrorStatus",
               "type": "named"
             }
           },
@@ -12189,7 +12183,6 @@
               },
               "typeId": "fileUploadInfoUnknownStatus",
               "inline": false,
-              "displayName": "fileUploadInfoUnknownStatus",
               "type": "named"
             }
           }

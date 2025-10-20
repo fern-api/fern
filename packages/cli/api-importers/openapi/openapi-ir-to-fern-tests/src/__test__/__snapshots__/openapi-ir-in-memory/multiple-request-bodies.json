@@ -138,6 +138,7 @@
     "inlineAllOfSchemas": false,
     "resolveAliases": false,
     "groupMultiApiEnvironments": false,
+    "groupEnvironmentsByHost": false,
     "wrapReferencesToNullableInOptional": false,
     "coerceOptionalSchemasToNullable": false
   }

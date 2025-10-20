@@ -22,6 +22,29 @@ class ServiceClient:
         """
         return self._raw_client
 
+    def simple(self, *, request_options: typing.Optional[RequestOptions] = None) -> None:
+        """
+        Parameters
+        ----------
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        None
+
+        Examples
+        --------
+        from seed import SeedBytesDownload
+
+        client = SeedBytesDownload(
+            base_url="https://yourhost.com/path/to/api",
+        )
+        client.service.simple()
+        """
+        _response = self._raw_client.simple(request_options=request_options)
+        return _response.data
+
     def download(self, id: str, *, request_options: typing.Optional[RequestOptions] = None) -> bytes:
         """
         Parameters
@@ -53,6 +76,37 @@ class AsyncServiceClient:
         AsyncRawServiceClient
         """
         return self._raw_client
+
+    async def simple(self, *, request_options: typing.Optional[RequestOptions] = None) -> None:
+        """
+        Parameters
+        ----------
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        None
+
+        Examples
+        --------
+        import asyncio
+
+        from seed import AsyncSeedBytesDownload
+
+        client = AsyncSeedBytesDownload(
+            base_url="https://yourhost.com/path/to/api",
+        )
+
+
+        async def main() -> None:
+            await client.service.simple()
+
+
+        asyncio.run(main())
+        """
+        _response = await self._raw_client.simple(request_options=request_options)
+        return _response.data
 
     async def download(self, id: str, *, request_options: typing.Optional[RequestOptions] = None) -> bytes:
         """

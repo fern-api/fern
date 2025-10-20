@@ -20,7 +20,7 @@ With Swift Package Manager (SPM), add the following to the top-level `dependenci
 
 ```swift
 dependencies: [
-    .package(url: "<git-url>", from: "0.1.0"),
+    .package(url: "https://github.com/simple-fhir/fern", from: "0.0.1"),
 ]
 ```
 
@@ -39,7 +39,7 @@ import Api
 private func main() async throws {
     let client = ApiClient()
 
-    try await client.getAccount(accountId: "account_id")
+    _ = try await client.getAccount(accountId: "account_id")
 }
 
 try await main()

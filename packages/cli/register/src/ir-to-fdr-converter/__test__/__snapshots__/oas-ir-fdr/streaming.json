@@ -727,6 +727,7 @@
     ],
     "subpackages": []
   },
+  "authSchemes": {},
   "snippetsConfiguration": {},
   "globalHeaders": []
 }

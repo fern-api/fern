@@ -54,6 +54,7 @@ export class RemoteTaskHandler {
                 pypi: (pypiPackage) => `${pypiPackage.name} ${pypiPackage.version}`,
                 ruby: (rubyGem) => `${rubyGem.name}:${rubyGem.version}`,
                 nuget: (nugetPackage) => `${nugetPackage.name} ${nugetPackage.version}`,
+                crates: (cratesPackage) => `${cratesPackage.name} ${cratesPackage.version}`,
                 _other: () => "<unknown package>"
             });
         });

@@ -1,8 +1,6 @@
-use crate::v_2_problem_test_case_with_actual_result_implementation::TestCaseWithActualResultImplementation;
-use crate::v_2_problem_void_function_definition::VoidFunctionDefinition;
-use serde::{Deserialize, Serialize};
+pub use crate::prelude::*;
 
-#[derive(Debug, Clone, Serialize, Deserialize)]
+#[derive(Debug, Clone, Serialize, Deserialize, PartialEq)]
 #[serde(tag = "type")]
 pub enum TestCaseFunction {
         WithActualResult {

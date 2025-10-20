@@ -70,7 +70,8 @@
               "generatedName": "getTokenAuthRequestUsername",
               "key": "username",
               "schema": {
-                "generatedName": "getTokenAuthRequestUsername",
+                "generatedName": "GetTokenAuthRequestUsername",
+                "description": "Required for password grant type",
                 "value": {
                   "description": "Required for password grant type",
                   "schema": {
@@ -90,7 +91,8 @@
               "generatedName": "getTokenAuthRequestPassword",
               "key": "password",
               "schema": {
-                "generatedName": "getTokenAuthRequestPassword",
+                "generatedName": "GetTokenAuthRequestPassword",
+                "description": "Required for password grant type",
                 "value": {
                   "description": "Required for password grant type",
                   "schema": {
@@ -110,7 +112,8 @@
               "generatedName": "getTokenAuthRequestRefreshToken",
               "key": "refresh_token",
               "schema": {
-                "generatedName": "getTokenAuthRequestRefreshToken",
+                "generatedName": "GetTokenAuthRequestRefreshToken",
+                "description": "Required for refresh_token grant type",
                 "value": {
                   "description": "Required for refresh_token grant type",
                   "schema": {
@@ -185,7 +188,7 @@
               "generatedName": "getTokenAuthResponseAccessToken",
               "key": "access_token",
               "schema": {
-                "generatedName": "getTokenAuthResponseAccessToken",
+                "generatedName": "GetTokenAuthResponseAccessToken",
                 "value": {
                   "schema": {
                     "type": "string"
@@ -204,7 +207,7 @@
               "generatedName": "getTokenAuthResponseTokenType",
               "key": "token_type",
               "schema": {
-                "generatedName": "getTokenAuthResponseTokenType",
+                "generatedName": "GetTokenAuthResponseTokenType",
                 "value": {
                   "schema": {
                     "example": "Bearer",
@@ -224,7 +227,8 @@
               "generatedName": "getTokenAuthResponseExpiresIn",
               "key": "expires_in",
               "schema": {
-                "generatedName": "getTokenAuthResponseExpiresIn",
+                "generatedName": "GetTokenAuthResponseExpiresIn",
+                "description": "Token expiration time in seconds",
                 "value": {
                   "description": "Token expiration time in seconds",
                   "schema": {
@@ -244,7 +248,7 @@
               "generatedName": "getTokenAuthResponseRefreshToken",
               "key": "refresh_token",
               "schema": {
-                "generatedName": "getTokenAuthResponseRefreshToken",
+                "generatedName": "GetTokenAuthResponseRefreshToken",
                 "value": {
                   "schema": {
                     "type": "string"

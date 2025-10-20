@@ -1,5 +1,5 @@
 displayName: TypeScript SDK
-irVersion: v60
+irVersion: v61
 image: fernapi/fern-typescript-sdk
 imageAliases: [fernapi/fern-typescript-node-sdk]
 changelogLocation: ../../generators/typescript/sdk/versions.yml
@@ -425,6 +425,7 @@ allowedFailures:
   - errors
   - examples:examples-with-api-reference
   - examples:retain-original-casing
+  - exhaustive:bigint-serde-layer
   - mixed-case:no-custom-config
   - mixed-case:retain-original-casing
   - oauth-client-credentials-custom

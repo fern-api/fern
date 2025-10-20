@@ -988,8 +988,7 @@ channel:
     docs: A card (debit or credit) to take payment from.
     inline: true
     properties:
-      address_city:
-        type: optional<string>
+      address_city: optional<string>
       address_country: string
       address_line1:
         access: write-only
@@ -997,8 +996,7 @@ channel:
       address_line2:
         access: write-only
         type: optional<string>
-      address_post_code:
-        type: optional<string>
+      address_post_code: optional<string>
       cvc:
         access: write-only
         docs: >-

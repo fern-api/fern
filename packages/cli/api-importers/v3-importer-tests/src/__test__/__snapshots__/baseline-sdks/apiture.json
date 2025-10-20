@@ -2458,6 +2458,7 @@
         "extends": [],
         "properties": [
           {
+            "docs": "The ordered list of accounts assigned as overdraft protection accounts. This array is limited to no more than `maximumOverdraftAccounts` accounts.",
             "name": {
               "name": {
                 "originalName": "accounts",
@@ -2642,6 +2643,7 @@
         "extraProperties": false,
         "extendedProperties": [
           {
+            "docs": "The ordered list of accounts assigned as overdraft protection accounts. This array is limited to no more than `maximumOverdraftAccounts` accounts.",
             "name": {
               "name": {
                 "originalName": "accounts",
@@ -42203,6 +42205,7 @@
             "extraProperties": false,
             "extendedProperties": [
               {
+                "docs": "The ordered list of accounts assigned as overdraft protection accounts. This array is limited to no more than `maximumOverdraftAccounts` accounts.",
                 "name": {
                   "name": {
                     "originalName": "accounts",

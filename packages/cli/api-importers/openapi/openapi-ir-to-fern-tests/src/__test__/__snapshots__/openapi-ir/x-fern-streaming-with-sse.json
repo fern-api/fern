@@ -115,7 +115,7 @@
             "generatedName": "createCompletionRequestStream",
             "key": "stream",
             "schema": {
-              "generatedName": "createCompletionRequestStream",
+              "generatedName": "CreateCompletionRequestStream",
               "value": {
                 "schema": {
                   "type": "boolean"
@@ -162,7 +162,7 @@
             "generatedName": "completionText",
             "key": "text",
             "schema": {
-              "generatedName": "completionText",
+              "generatedName": "CompletionText",
               "value": {
                 "schema": {
                   "type": "string"
@@ -195,7 +195,7 @@
             "generatedName": "completionChunkText",
             "key": "text",
             "schema": {
-              "generatedName": "completionChunkText",
+              "generatedName": "CompletionChunkText",
               "value": {
                 "schema": {
                   "type": "string"

@@ -1,7 +1,5 @@
 # Reference
-
 ## Service
-
 <details><summary><code>client.service.<a href="/src/api/resources/service/client/Client.ts">patch</a>({ ...params }) -> void</code></summary>
 <dl>
 <dd>
@@ -17,10 +15,10 @@
 ```typescript
 await client.service.patch({
     application: "application",
-    require_auth: true,
+    require_auth: true
 });
-```
 
+```
 </dd>
 </dl>
 </dd>
@@ -34,20 +32,21 @@ await client.service.patch({
 <dl>
 <dd>
 
-**request:** `SeedContentTypes.PatchProxyRequest`
-
+**request:** `SeedContentTypes.PatchProxyRequest` 
+    
 </dd>
 </dl>
 
 <dl>
 <dd>
 
-**requestOptions:** `Service.RequestOptions`
+**requestOptions:** `Service.RequestOptions` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
 
-</dd>
-</dl>
-</dd>
-</dl>
 
 </dd>
 </dl>
@@ -67,13 +66,12 @@ await client.service.patch({
 
 Update with JSON merge patch - complex types.
 This endpoint demonstrates the distinction between:
-
 - optional<T> fields (can be present or absent, but not null)
 - optional<nullable<T>> fields (can be present, absent, or null)
-  </dd>
-  </dl>
-  </dd>
-  </dl>
+</dd>
+</dl>
+</dd>
+</dl>
 
 #### 🔌 Usage
 
@@ -89,9 +87,9 @@ await client.service.patchComplex("id", {
     age: 1,
     active: true,
     metadata: {
-        metadata: {
-            key: "value",
-        },
+        "metadata": {
+            "key": "value"
+        }
     },
     tags: ["tags", "tags"],
     email: "email",
@@ -99,13 +97,13 @@ await client.service.patchComplex("id", {
     bio: "bio",
     profileImageUrl: "profileImageUrl",
     settings: {
-        settings: {
-            key: "value",
-        },
-    },
+        "settings": {
+            "key": "value"
+        }
+    }
 });
-```
 
+```
 </dd>
 </dl>
 </dd>
@@ -119,28 +117,29 @@ await client.service.patchComplex("id", {
 <dl>
 <dd>
 
-**id:** `string`
-
+**id:** `string` 
+    
 </dd>
 </dl>
 
 <dl>
 <dd>
 
-**request:** `SeedContentTypes.PatchComplexRequest`
-
+**request:** `SeedContentTypes.PatchComplexRequest` 
+    
 </dd>
 </dl>
 
 <dl>
 <dd>
 
-**requestOptions:** `Service.RequestOptions`
+**requestOptions:** `Service.RequestOptions` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
 
-</dd>
-</dl>
-</dd>
-</dl>
 
 </dd>
 </dl>
@@ -160,7 +159,6 @@ await client.service.patchComplex("id", {
 
 Named request with mixed optional/nullable fields and merge-patch content type.
 This should trigger the NPE issue when optional fields aren't initialized.
-
 </dd>
 </dl>
 </dd>
@@ -178,10 +176,10 @@ This should trigger the NPE issue when optional fields aren't initialized.
 await client.service.namedPatchWithMixed("id", {
     appId: "appId",
     instructions: "instructions",
-    active: true,
+    active: true
 });
-```
 
+```
 </dd>
 </dl>
 </dd>
@@ -195,28 +193,29 @@ await client.service.namedPatchWithMixed("id", {
 <dl>
 <dd>
 
-**id:** `string`
-
+**id:** `string` 
+    
 </dd>
 </dl>
 
 <dl>
 <dd>
 
-**request:** `SeedContentTypes.NamedMixedPatchRequest`
-
+**request:** `SeedContentTypes.NamedMixedPatchRequest` 
+    
 </dd>
 </dl>
 
 <dl>
 <dd>
 
-**requestOptions:** `Service.RequestOptions`
+**requestOptions:** `Service.RequestOptions` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
 
-</dd>
-</dl>
-</dd>
-</dl>
 
 </dd>
 </dl>
@@ -236,13 +235,12 @@ await client.service.namedPatchWithMixed("id", {
 
 Test endpoint to verify Optional field initialization and JsonSetter with Nulls.SKIP.
 This endpoint should:
-
 1. Not NPE when fields are not provided (tests initialization)
 2. Not NPE when fields are explicitly null in JSON (tests Nulls.SKIP)
- </dd>
- </dl>
- </dd>
- </dl>
+</dd>
+</dl>
+</dd>
+</dl>
 
 #### 🔌 Usage
 
@@ -258,10 +256,10 @@ await client.service.optionalMergePatchTest({
     optionalString: "optionalString",
     optionalInteger: 1,
     optionalBoolean: true,
-    nullableString: "nullableString",
+    nullableString: "nullableString"
 });
-```
 
+```
 </dd>
 </dl>
 </dd>
@@ -275,20 +273,21 @@ await client.service.optionalMergePatchTest({
 <dl>
 <dd>
 
-**request:** `SeedContentTypes.OptionalMergePatchRequest`
-
+**request:** `SeedContentTypes.OptionalMergePatchRequest` 
+    
 </dd>
 </dl>
 
 <dl>
 <dd>
 
-**requestOptions:** `Service.RequestOptions`
+**requestOptions:** `Service.RequestOptions` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
 
-</dd>
-</dl>
-</dd>
-</dl>
 
 </dd>
 </dl>
@@ -307,7 +306,6 @@ await client.service.optionalMergePatchTest({
 <dd>
 
 Regular PATCH endpoint without merge-patch semantics
-
 </dd>
 </dl>
 </dd>
@@ -324,10 +322,10 @@ Regular PATCH endpoint without merge-patch semantics
 ```typescript
 await client.service.regularPatch("id", {
     field1: "field1",
-    field2: 1,
+    field2: 1
 });
-```
 
+```
 </dd>
 </dl>
 </dd>
@@ -341,28 +339,29 @@ await client.service.regularPatch("id", {
 <dl>
 <dd>
 
-**id:** `string`
-
+**id:** `string` 
+    
 </dd>
 </dl>
 
 <dl>
 <dd>
 
-**request:** `SeedContentTypes.RegularPatchRequest`
-
+**request:** `SeedContentTypes.RegularPatchRequest` 
+    
 </dd>
 </dl>
 
 <dl>
 <dd>
 
-**requestOptions:** `Service.RequestOptions`
+**requestOptions:** `Service.RequestOptions` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
 
-</dd>
-</dl>
-</dd>
-</dl>
 
 </dd>
 </dl>

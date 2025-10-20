@@ -176,11 +176,11 @@ public record EventInfo
 
             var value = discriminator switch
             {
-                "metadata" => json.Deserialize<SeedExamples.Commons.Metadata>(options)
+                "metadata" => json.Deserialize<SeedExamples.Commons.Metadata?>(options)
                     ?? throw new JsonException(
                         "Failed to deserialize SeedExamples.Commons.Metadata"
                     ),
-                "tag" => json.GetProperty("value").Deserialize<string>(options)
+                "tag" => json.GetProperty("value").Deserialize<string?>(options)
                 ?? throw new JsonException("Failed to deserialize string"),
                 _ => json.Deserialize<object?>(options),
             };
@@ -221,7 +221,7 @@ public record EventInfo
 
         internal SeedExamples.Commons.Metadata Value { get; set; }
 
-        public override string ToString() => Value.ToString();
+        public override string ToString() => Value.ToString() ?? "null";
 
         public static implicit operator EventInfo.Metadata(SeedExamples.Commons.Metadata value) =>
             new(value);

@@ -100,7 +100,7 @@ public partial class IdempotentRequestOptions : IIdempotentRequestOptions
 #endif
     }
 
-    public int IdempotencyExpiration { get;
+    public required int IdempotencyExpiration { get;
 #if NET5_0_OR_GREATER
         init;
 #else
@@ -108,7 +108,7 @@ public partial class IdempotentRequestOptions : IIdempotentRequestOptions
 #endif
     }
 
-    public string? IdempotencyKey { get;
+    public required string IdempotencyKey { get;
 #if NET5_0_OR_GREATER
         init;
 #else
@@ -158,7 +158,8 @@ public class IdempotentHeadersTests
             Query = new Dictionary<string, object>(),
             Options = new IdempotentRequestOptions
             {
-                IdempotencyKey = "1234567890"
+                IdempotencyKey = "1234567890",
+                IdempotencyExpiration = 3600
             }
             
         });

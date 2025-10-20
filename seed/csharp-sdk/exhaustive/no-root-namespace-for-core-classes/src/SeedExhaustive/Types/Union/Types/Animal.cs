@@ -64,7 +64,7 @@ public record Animal
     public SeedExhaustive.Types.Dog AsDog() =>
         IsDog
             ? (SeedExhaustive.Types.Dog)Value!
-            : throw new Exception("Animal.Animal_ is not 'dog'");
+            : throw new System.Exception("Animal.Animal_ is not 'dog'");
 
     /// <summary>
     /// Returns the value as a <see cref="SeedExhaustive.Types.Cat"/> if <see cref="Animal_"/> is 'cat', otherwise throws an exception.
@@ -73,7 +73,7 @@ public record Animal
     public SeedExhaustive.Types.Cat AsCat() =>
         IsCat
             ? (SeedExhaustive.Types.Cat)Value!
-            : throw new Exception("Animal.Animal_ is not 'cat'");
+            : throw new System.Exception("Animal.Animal_ is not 'cat'");
 
     public T Match<T>(
         Func<SeedExhaustive.Types.Dog, T> onDog,
@@ -178,9 +178,9 @@ public record Animal
 
             var value = discriminator switch
             {
-                "dog" => json.Deserialize<SeedExhaustive.Types.Dog>(options)
+                "dog" => json.Deserialize<SeedExhaustive.Types.Dog?>(options)
                     ?? throw new JsonException("Failed to deserialize SeedExhaustive.Types.Dog"),
-                "cat" => json.Deserialize<SeedExhaustive.Types.Cat>(options)
+                "cat" => json.Deserialize<SeedExhaustive.Types.Cat?>(options)
                     ?? throw new JsonException("Failed to deserialize SeedExhaustive.Types.Cat"),
                 _ => json.Deserialize<object?>(options),
             };
@@ -218,7 +218,7 @@ public record Animal
 
         internal SeedExhaustive.Types.Dog Value { get; set; }
 
-        public override string ToString() => Value.ToString();
+        public override string ToString() => Value.ToString() ?? "null";
 
         public static implicit operator Animal.Dog(SeedExhaustive.Types.Dog value) => new(value);
     }
@@ -236,7 +236,7 @@ public record Animal
 
         internal SeedExhaustive.Types.Cat Value { get; set; }
 
-        public override string ToString() => Value.ToString();
+        public override string ToString() => Value.ToString() ?? "null";
 
         public static implicit operator Animal.Cat(SeedExhaustive.Types.Cat value) => new(value);
     }

@@ -13,7 +13,7 @@
 <dd>
 
 ```rust
-use seed_path_parameters::{ClientConfig, PathParametersClient};
+use seed_path_parameters::prelude::*;
 
 #[tokio::main]
 async fn main() {
@@ -77,7 +77,7 @@ async fn main() {
 <dd>
 
 ```rust
-use seed_path_parameters::{ClientConfig, PathParametersClient};
+use seed_path_parameters::prelude::*;
 
 #[tokio::main]
 async fn main() {
@@ -150,7 +150,7 @@ async fn main() {
 <dd>
 
 ```rust
-use seed_path_parameters::{ClientConfig, PathParametersClient, SearchOrganizationsQueryRequest};
+use seed_path_parameters::prelude::*;
 
 #[tokio::main]
 async fn main() {
@@ -224,7 +224,7 @@ async fn main() {
 <dd>
 
 ```rust
-use seed_path_parameters::{ClientConfig, PathParametersClient};
+use seed_path_parameters::prelude::*;
 
 #[tokio::main]
 async fn main() {
@@ -284,7 +284,7 @@ async fn main() {
 <dd>
 
 ```rust
-use seed_path_parameters::{ClientConfig, PathParametersClient, User};
+use seed_path_parameters::prelude::*;
 use std::collections::{HashMap, HashSet};
 
 #[tokio::main]
@@ -344,7 +344,7 @@ async fn main() {
 <dd>
 
 ```rust
-use seed_path_parameters::{ClientConfig, PathParametersClient, UpdateUserRequest};
+use seed_path_parameters::prelude::*;
 use std::collections::{HashMap, HashSet};
 
 #[tokio::main]
@@ -415,7 +415,7 @@ async fn main() {
 <dd>
 
 ```rust
-use seed_path_parameters::{ClientConfig, PathParametersClient, SearchUsersQueryRequest};
+use seed_path_parameters::prelude::*;
 
 #[tokio::main]
 async fn main() {

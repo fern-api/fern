@@ -45,7 +45,6 @@ export async function parseDocsConfiguration({
         colors,
         typography: rawTypography,
         layout,
-        analytics: analyticsConfig,
         /* integrations */
         integrations,
 
@@ -55,6 +54,8 @@ export async function parseDocsConfiguration({
 
         aiChat,
         aiSearch,
+
+        pageActions,
 
         experimental
     } = rawDocsConfiguration;
@@ -137,6 +138,7 @@ export async function parseDocsConfiguration({
         colors: convertColorsConfiguration(colors, context),
         typography,
         layout: convertLayoutConfig(layout),
+        settings: convertSettingsConfig(rawDocsConfiguration.settings),
         analyticsConfig: {
             ...rawDocsConfiguration.analytics,
             intercom: rawDocsConfiguration.analytics?.intercom
@@ -181,16 +183,9 @@ export async function parseDocsConfiguration({
 
         aiChatConfig: aiSearch ?? aiChat,
 
-        experimental,
+        pageActions: convertPageActions(pageActions),
 
-        pageActions: {
-            copyPage: true,
-            viewAsMarkdown: true,
-            openAi: rawDocsConfiguration.pageActions?.chatgpt ?? false,
-            claude: rawDocsConfiguration.pageActions?.claude ?? false,
-            vscode: rawDocsConfiguration.pageActions?.vscode ?? false,
-            cursor: rawDocsConfiguration.pageActions?.cursor ?? false
-        }
+        experimental
     };
 }
 
@@ -287,6 +282,70 @@ async function convertJsConfig(
     }
 
     return { remote, files };
+}
+
+function convertPageActions(
+    pageActions: docsYml.RawSchemas.PageActionsConfig | undefined
+): docsYml.ParsedDocsConfiguration["pageActions"] {
+    if (pageActions == null) {
+        return undefined;
+    }
+
+    const convertedDefault = pageActions.default != null ? convertPageActionOption(pageActions.default) : undefined;
+
+    return {
+        default: convertedDefault,
+        options: {
+            askAi: pageActions.options?.askAi ?? true,
+            copyPage: pageActions.options?.copyPage ?? true,
+            viewAsMarkdown: pageActions.options?.viewAsMarkdown ?? true,
+            openAi: pageActions.options?.chatgpt ?? false,
+            claude: pageActions.options?.claude ?? false,
+            cursor: pageActions.options?.cursor ?? false,
+            vscode: pageActions.options?.vscode ?? false
+        }
+    };
+}
+
+function convertPageActionOption(
+    option: docsYml.RawSchemas.PageActionOption
+): CjsFdrSdk.docs.v1.commons.PageActionOption {
+    switch (option) {
+        case "copy-page":
+            return CjsFdrSdk.docs.v1.commons.PageActionOption.CopyPage;
+        case "view-as-markdown":
+            return CjsFdrSdk.docs.v1.commons.PageActionOption.ViewAsMarkdown;
+        case "ask-ai":
+            return CjsFdrSdk.docs.v1.commons.PageActionOption.AskAi;
+        case "chatgpt":
+            return CjsFdrSdk.docs.v1.commons.PageActionOption.OpenAi;
+        case "claude":
+            return CjsFdrSdk.docs.v1.commons.PageActionOption.Claude;
+        case "cursor":
+            return CjsFdrSdk.docs.v1.commons.PageActionOption.Cursor;
+        case "vscode":
+            return CjsFdrSdk.docs.v1.commons.PageActionOption.Vscode;
+        default:
+            assertNever(option);
+    }
+}
+
+function convertSettingsConfig(
+    settings: docsYml.RawSchemas.DocsSettingsConfig | undefined
+): docsYml.ParsedDocsConfiguration["settings"] {
+    if (settings == null) {
+        return undefined;
+    }
+
+    return {
+        darkModeCode: settings.darkModeCode ?? false,
+        defaultSearchFilters: settings.defaultSearchFilters ?? false,
+        disableSearch: settings.disableSearch ?? false,
+        hide404Page: settings.hide404Page ?? false,
+        httpSnippets: settings.httpSnippets ?? true,
+        searchText: settings.searchText ?? "Search",
+        useJavascriptAsTypescript: settings.useJavascriptAsTypescript ?? false
+    };
 }
 
 function convertLayoutConfig(
@@ -1088,7 +1147,8 @@ async function convertMetadata(
         "twitter:url": metadata.twitterUrl,
         "twitter:card": metadata.twitterCard,
         nofollow: undefined,
-        noindex: undefined
+        noindex: undefined,
+        canonicalHost: metadata.canonicalHost
     };
 }
 

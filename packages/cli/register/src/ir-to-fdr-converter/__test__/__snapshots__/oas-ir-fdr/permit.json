@@ -7137,6 +7137,9 @@
       "endpoints": [
         {
           "auth": true,
+          "authV2": [
+            "HTTPBearer"
+          ],
           "description": "Lists all the organizations that can be accessed by the\nauthenticated actor (i.e: human team member or api key).",
           "method": "GET",
           "defaultEnvironment": "https://api.permit.io",
@@ -7285,6 +7288,9 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "HTTPBearer"
+          ],
           "description": "Creates a new organization that will be owned by the\nauthenticated actor (i.e: human team member or api key).",
           "method": "POST",
           "defaultEnvironment": "https://api.permit.io",
@@ -7435,6 +7441,9 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "HTTPBearer"
+          ],
           "description": "Gets a single organization (Permit.io account) matching the given org_id,\nif such org exists and can be accessed by the authenticated actor.",
           "method": "GET",
           "defaultEnvironment": "https://api.permit.io",
@@ -7562,6 +7571,9 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "HTTPBearer"
+          ],
           "description": "Deletes an organization (Permit.io account) and all its related data.",
           "method": "DELETE",
           "defaultEnvironment": "https://api.permit.io",
@@ -7673,6 +7685,9 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "HTTPBearer"
+          ],
           "description": "Updates the organization's profile.",
           "method": "PATCH",
           "defaultEnvironment": "https://api.permit.io",
@@ -7834,6 +7849,9 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "HTTPBearer"
+          ],
           "description": "Gets a single organization (Permit.io account) matching the given org_id,\nif such org exists and can be accessed by the authenticated actor.",
           "method": "GET",
           "defaultEnvironment": "https://api.permit.io",
@@ -7950,6 +7968,9 @@
       "endpoints": [
         {
           "auth": true,
+          "authV2": [
+            "HTTPBearer"
+          ],
           "description": "Lists all the projects under the active organization.",
           "method": "GET",
           "defaultEnvironment": "https://api.permit.io",
@@ -8104,6 +8125,9 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "HTTPBearer"
+          ],
           "description": "Creates a new project under the active organization.",
           "method": "POST",
           "defaultEnvironment": "https://api.permit.io",
@@ -8256,6 +8280,9 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "HTTPBearer"
+          ],
           "description": "Gets a single project matching the given proj_id, if such project exists.",
           "method": "GET",
           "defaultEnvironment": "https://api.permit.io",
@@ -8389,6 +8416,9 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "HTTPBearer"
+          ],
           "description": "Deletes the project and all its related data.",
           "method": "DELETE",
           "defaultEnvironment": "https://api.permit.io",
@@ -8500,6 +8530,9 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "HTTPBearer"
+          ],
           "description": "Updates the project.",
           "method": "PATCH",
           "defaultEnvironment": "https://api.permit.io",
@@ -8677,6 +8710,9 @@
       "endpoints": [
         {
           "auth": true,
+          "authV2": [
+            "HTTPBearer"
+          ],
           "method": "GET",
           "defaultEnvironment": "https://api.permit.io",
           "environments": [
@@ -8984,6 +9020,9 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "HTTPBearer"
+          ],
           "description": "Lists all the environments under a given project.",
           "method": "GET",
           "defaultEnvironment": "https://api.permit.io",
@@ -9169,6 +9208,9 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "HTTPBearer"
+          ],
           "description": "Creates a new environment under a given project.",
           "method": "POST",
           "defaultEnvironment": "https://api.permit.io",
@@ -9352,6 +9394,9 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "HTTPBearer"
+          ],
           "description": "Gets a single environment matching the given env_id, if such environment exists.",
           "method": "GET",
           "defaultEnvironment": "https://api.permit.io",
@@ -9514,6 +9559,9 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "HTTPBearer"
+          ],
           "description": "Deletes an environment and all its related data.",
           "method": "DELETE",
           "defaultEnvironment": "https://api.permit.io",
@@ -9644,6 +9692,9 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "HTTPBearer"
+          ],
           "description": "Updates the environment.",
           "method": "PATCH",
           "defaultEnvironment": "https://api.permit.io",
@@ -9840,6 +9891,9 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "HTTPBearer"
+          ],
           "description": "Copy environment\n\nThis endpoint either duplicates an existing environment to a new environment\nin the same project, or copies from an existing environment to another\nexisting environment.\n\nThe `scope` object controls which objects will be copied to the target\nenvironment.\n\nTo clone to a new environment, the user must have write permissions\nto the containing project. To clone into an existing environment,\nthe user must have write permissions to the target environment.\n\nCopying environments across projects or organizations is not\nallowed.",
           "method": "POST",
           "defaultEnvironment": "https://api.permit.io",
@@ -10050,6 +10104,9 @@
       "endpoints": [
         {
           "auth": true,
+          "authV2": [
+            "HTTPBearer"
+          ],
           "description": "Lists all the resources defined in your schema.",
           "method": "GET",
           "defaultEnvironment": "https://api.permit.io",
@@ -10293,6 +10350,9 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "HTTPBearer"
+          ],
           "description": "Creates a new resource (a type of object you may protect with permissions).",
           "method": "POST",
           "defaultEnvironment": "https://api.permit.io",
@@ -10561,6 +10621,9 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "HTTPBearer"
+          ],
           "description": "Gets a single resource, if such resource exists.",
           "method": "GET",
           "defaultEnvironment": "https://api.permit.io",
@@ -10778,6 +10841,9 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "HTTPBearer"
+          ],
           "description": "Completely replaces the resource definition.\n\n- If the resource key is changed, all role and permissions assignments for the the resource will be revoked.\n- If the resource key is unchanged, but some actions are removed or renamed from the resource definition,\nrole and permissions assignments for these actions will be revoked.\n\nTODO: we need to decide if we are auto-revoking, or if we are rejecting the PUT completely while there are permissions that can be affected.",
           "method": "PUT",
           "defaultEnvironment": "https://api.permit.io",
@@ -11035,6 +11101,9 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "HTTPBearer"
+          ],
           "description": "Deletes the resource and all its related data.",
           "method": "DELETE",
           "defaultEnvironment": "https://api.permit.io",
@@ -11184,6 +11253,9 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "HTTPBearer"
+          ],
           "description": "Partially updates the resource definition.\nFields that will be provided will be completely overwritten.",
           "method": "PATCH",
           "defaultEnvironment": "https://api.permit.io",
@@ -11445,6 +11517,9 @@
       "endpoints": [
         {
           "auth": true,
+          "authV2": [
+            "HTTPBearer"
+          ],
           "description": "Lists all the actions defined on the resource.",
           "method": "GET",
           "defaultEnvironment": "https://api.permit.io",
@@ -11662,6 +11737,9 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "HTTPBearer"
+          ],
           "description": "Creates a new action that can affect the resource.",
           "method": "POST",
           "defaultEnvironment": "https://api.permit.io",
@@ -11877,6 +11955,9 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "HTTPBearer"
+          ],
           "description": "Gets a single action defined on the resource, if such action exists.",
           "method": "GET",
           "defaultEnvironment": "https://api.permit.io",
@@ -12069,6 +12150,9 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "HTTPBearer"
+          ],
           "description": "Deletes the action and all its related data.\nThis includes any permissions granted to perform the action.",
           "method": "DELETE",
           "defaultEnvironment": "https://api.permit.io",
@@ -12237,6 +12321,9 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "HTTPBearer"
+          ],
           "description": "Partially updates the action defined on a resource.\nFields that will be provided will be completely overwritten.",
           "method": "PATCH",
           "defaultEnvironment": "https://api.permit.io",
@@ -12477,6 +12564,9 @@
       "endpoints": [
         {
           "auth": true,
+          "authV2": [
+            "HTTPBearer"
+          ],
           "description": "Lists all the action groups defined on the resource.",
           "method": "GET",
           "defaultEnvironment": "https://api.permit.io",
@@ -12698,6 +12788,9 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "HTTPBearer"
+          ],
           "description": "Creates a new action group that can affect the resource.",
           "method": "POST",
           "defaultEnvironment": "https://api.permit.io",
@@ -12927,6 +13020,9 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "HTTPBearer"
+          ],
           "description": "Gets a single action group defined on the resource, if such action exists.",
           "method": "GET",
           "defaultEnvironment": "https://api.permit.io",
@@ -13125,6 +13221,9 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "HTTPBearer"
+          ],
           "description": "Deletes the action and all its related data.\nThis includes any permissions granted to perform the action.",
           "method": "DELETE",
           "defaultEnvironment": "https://api.permit.io",
@@ -13293,6 +13392,9 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "HTTPBearer"
+          ],
           "description": "Partially updates the action defined on a resource.\nFields that will be provided will be completely overwritten.",
           "method": "PATCH",
           "defaultEnvironment": "https://api.permit.io",
@@ -13535,6 +13637,9 @@
       "endpoints": [
         {
           "auth": true,
+          "authV2": [
+            "HTTPBearer"
+          ],
           "description": "Lists all the roles defined on the resource.",
           "method": "GET",
           "defaultEnvironment": "https://api.permit.io",
@@ -13762,6 +13867,9 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "HTTPBearer"
+          ],
           "description": "Creates a new role associated with the resource.",
           "method": "POST",
           "defaultEnvironment": "https://api.permit.io",
@@ -13999,6 +14107,9 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "HTTPBearer"
+          ],
           "description": "Gets a single role defined on the resource, if such role exists.",
           "method": "GET",
           "defaultEnvironment": "https://api.permit.io",
@@ -14201,6 +14312,9 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "HTTPBearer"
+          ],
           "description": "Deletes the role and all its related data.\nThis includes any permissions granted to said role.",
           "method": "DELETE",
           "defaultEnvironment": "https://api.permit.io",
@@ -14369,6 +14483,9 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "HTTPBearer"
+          ],
           "description": "Partially updates the role defined on a resource.\nFields that will be provided will be completely overwritten.",
           "method": "PATCH",
           "defaultEnvironment": "https://api.permit.io",
@@ -14615,6 +14732,9 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "HTTPBearer"
+          ],
           "description": "Assign permissions to role.\n\nIf some of the permissions specified are already assigned, will skip them.",
           "method": "POST",
           "defaultEnvironment": "https://api.permit.io",
@@ -14859,6 +14979,9 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "HTTPBearer"
+          ],
           "description": "Remove permissions from role.\n\nIf some of the permissions specified are already unassigned, will skip them.",
           "method": "DELETE",
           "defaultEnvironment": "https://api.permit.io",
@@ -15103,6 +15226,9 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "HTTPBearer"
+          ],
           "method": "GET",
           "defaultEnvironment": "https://api.permit.io",
           "environments": [
@@ -15314,6 +15440,9 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "HTTPBearer"
+          ],
           "method": "GET",
           "defaultEnvironment": "https://api.permit.io",
           "environments": [
@@ -15535,6 +15664,9 @@
       "endpoints": [
         {
           "auth": true,
+          "authV2": [
+            "HTTPBearer"
+          ],
           "description": "Lists all the attributes defined on the resource.",
           "method": "GET",
           "defaultEnvironment": "https://api.permit.io",
@@ -15752,6 +15884,9 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "HTTPBearer"
+          ],
           "description": "Creates a new attribute as part of the resource definition.",
           "method": "POST",
           "defaultEnvironment": "https://api.permit.io",
@@ -15969,6 +16104,9 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "HTTPBearer"
+          ],
           "description": "Gets a single attribute defined on the resource, if such attribute exists.",
           "method": "GET",
           "defaultEnvironment": "https://api.permit.io",
@@ -16163,6 +16301,9 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "HTTPBearer"
+          ],
           "description": "Deletes the attribute and all its related data.\n\nNote: If the attribute is used by policies, removing it will cause the\nattribute to evaluate as `undefined`.",
           "method": "DELETE",
           "defaultEnvironment": "https://api.permit.io",
@@ -16363,6 +16504,9 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "HTTPBearer"
+          ],
           "description": "Partially updates the attribute defined on a resource.\nFields that will be provided will be completely overwritten.",
           "method": "PATCH",
           "defaultEnvironment": "https://api.permit.io",
@@ -16605,6 +16749,9 @@
       "endpoints": [
         {
           "auth": true,
+          "authV2": [
+            "HTTPBearer"
+          ],
           "description": "Lists all the attributes defined on the User resource.",
           "method": "GET",
           "defaultEnvironment": "https://api.permit.io",
@@ -16816,6 +16963,9 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "HTTPBearer"
+          ],
           "description": "Creates a new attribute for the User resource.",
           "method": "POST",
           "defaultEnvironment": "https://api.permit.io",
@@ -17028,6 +17178,9 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "HTTPBearer"
+          ],
           "description": "Gets a single attribute defined on the User resource, if such attribute exists.",
           "method": "GET",
           "defaultEnvironment": "https://api.permit.io",
@@ -17217,6 +17370,9 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "HTTPBearer"
+          ],
           "description": "Deletes the attribute and all its related data.\n\nNote: If the attribute is used by policies, removing it will cause the\nattribute to evaluate as `undefined`.",
           "method": "DELETE",
           "defaultEnvironment": "https://api.permit.io",
@@ -17411,6 +17567,9 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "HTTPBearer"
+          ],
           "description": "Partially updates the attribute defined on the User resource.\nFields that will be provided will be completely overwritten.",
           "method": "PATCH",
           "defaultEnvironment": "https://api.permit.io",
@@ -17648,6 +17807,9 @@
       "endpoints": [
         {
           "auth": true,
+          "authV2": [
+            "HTTPBearer"
+          ],
           "description": "Lists all tenant roles.",
           "method": "GET",
           "defaultEnvironment": "https://api.permit.io",
@@ -17883,6 +18045,9 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "HTTPBearer"
+          ],
           "description": "Creates a new tenant role.",
           "method": "POST",
           "defaultEnvironment": "https://api.permit.io",
@@ -18099,6 +18264,9 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "HTTPBearer"
+          ],
           "description": "Gets a single tenant role, if such role exists.",
           "method": "GET",
           "defaultEnvironment": "https://api.permit.io",
@@ -18280,6 +18448,9 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "HTTPBearer"
+          ],
           "description": "Deletes a tenant role and all its related data.\nThis includes any permissions granted to said role.",
           "method": "DELETE",
           "defaultEnvironment": "https://api.permit.io",
@@ -18429,6 +18600,9 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "HTTPBearer"
+          ],
           "description": "Partially updates a tenant role.\nFields that will be provided will be completely overwritten.",
           "method": "PATCH",
           "defaultEnvironment": "https://api.permit.io",
@@ -18654,6 +18828,9 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "HTTPBearer"
+          ],
           "description": "Assign permissions to role.\n\nIf some of the permissions specified are already assigned, will skip them.",
           "method": "POST",
           "defaultEnvironment": "https://api.permit.io",
@@ -18877,6 +19054,9 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "HTTPBearer"
+          ],
           "description": "Remove permissions from role.\n\nIf some of the permissions specified are already unassigned, will skip them.",
           "method": "DELETE",
           "defaultEnvironment": "https://api.permit.io",
@@ -19100,6 +19280,9 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "HTTPBearer"
+          ],
           "method": "GET",
           "defaultEnvironment": "https://api.permit.io",
           "environments": [
@@ -19290,6 +19473,9 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "HTTPBearer"
+          ],
           "method": "GET",
           "defaultEnvironment": "https://api.permit.io",
           "environments": [
@@ -19490,6 +19676,9 @@
       "endpoints": [
         {
           "auth": true,
+          "authV2": [
+            "HTTPBearer"
+          ],
           "description": "Lists all condition sets matching a filter.",
           "method": "GET",
           "defaultEnvironment": "https://api.permit.io",
@@ -19762,6 +19951,9 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "HTTPBearer"
+          ],
           "description": "Creates a new condition set (can be either a user set or a resource set).",
           "method": "POST",
           "defaultEnvironment": "https://api.permit.io",
@@ -20028,6 +20220,9 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "HTTPBearer"
+          ],
           "description": "Gets a single condition set, if such condition set exists.",
           "method": "GET",
           "defaultEnvironment": "https://api.permit.io",
@@ -20237,6 +20432,9 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "HTTPBearer"
+          ],
           "description": "Deletes a condition set and all its related data.\nThis includes any permissions granted to said condition set (i.e: any matching condition set rules).",
           "method": "DELETE",
           "defaultEnvironment": "https://api.permit.io",
@@ -20386,6 +20584,9 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "HTTPBearer"
+          ],
           "description": "Partially updates a condition set.\nFields that will be provided will be completely overwritten.",
           "method": "PATCH",
           "defaultEnvironment": "https://api.permit.io",
@@ -20665,6 +20866,9 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "HTTPBearer"
+          ],
           "description": "Gets all ancestors (parent, parent of parent, and so on)",
           "method": "GET",
           "defaultEnvironment": "https://api.permit.io",
@@ -20916,6 +21120,9 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "HTTPBearer"
+          ],
           "description": "Gets all descendants (children, children of children, and so on)",
           "method": "GET",
           "defaultEnvironment": "https://api.permit.io",
@@ -21177,6 +21384,9 @@
       "endpoints": [
         {
           "auth": true,
+          "authV2": [
+            "HTTPBearer"
+          ],
           "description": "Lists all the users defined within an environment.",
           "method": "GET",
           "defaultEnvironment": "https://api.permit.io",
@@ -21427,6 +21637,9 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "HTTPBearer"
+          ],
           "description": "Creates a new user inside the Permit.io system, from that point forward\nyou may run permission checks on that user.\n\nIf the user is already created: will return 200 instead of 201,\nand will return the existing user object in the response body.",
           "method": "POST",
           "defaultEnvironment": "https://api.permit.io",
@@ -21703,6 +21916,9 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "HTTPBearer"
+          ],
           "description": "Gets a user, if such user exists. Otherwise returns 404.",
           "method": "GET",
           "defaultEnvironment": "https://api.permit.io",
@@ -21938,6 +22154,9 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "HTTPBearer"
+          ],
           "method": "PUT",
           "defaultEnvironment": "https://api.permit.io",
           "environments": [
@@ -22377,6 +22596,9 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "HTTPBearer"
+          ],
           "description": "Deletes the user and all its related data.",
           "method": "DELETE",
           "defaultEnvironment": "https://api.permit.io",
@@ -22526,6 +22748,9 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "HTTPBearer"
+          ],
           "description": "Partially updates the user definition.\nFields that will be provided will be completely overwritten.",
           "method": "PATCH",
           "defaultEnvironment": "https://api.permit.io",
@@ -22795,6 +23020,9 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "HTTPBearer"
+          ],
           "description": "Assigns a role to the user within the tenant.\n\nThe tenant defines the scope of the assignment. In other words, the role is effective only within the tenant.",
           "method": "POST",
           "defaultEnvironment": "https://api.permit.io",
@@ -23008,6 +23236,9 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "HTTPBearer"
+          ],
           "description": "Unassigns the role from the user within the tenant.\n\nThe tenant defines the scope of the assignment. In other words, the role is effective only within the tenant.\n\nIf the role is not actually assigned, will return 404.",
           "method": "DELETE",
           "defaultEnvironment": "https://api.permit.io",
@@ -23207,6 +23438,9 @@
       "endpoints": [
         {
           "auth": true,
+          "authV2": [
+            "HTTPBearer"
+          ],
           "method": "GET",
           "defaultEnvironment": "https://api.permit.io",
           "environments": [
@@ -23475,6 +23709,9 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "HTTPBearer"
+          ],
           "description": "Lists all the tenants defined within an environment.",
           "method": "GET",
           "defaultEnvironment": "https://api.permit.io",
@@ -23700,6 +23937,9 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "HTTPBearer"
+          ],
           "description": "Creates a new tenant inside the Permit.io system.\n\nIf the tenant is already created: will return 200 instead of 201,\nand will return the existing tenant object in the response body.",
           "method": "POST",
           "defaultEnvironment": "https://api.permit.io",
@@ -23914,6 +24154,9 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "HTTPBearer"
+          ],
           "description": "Gets a tenant, if such tenant exists. Otherwise returns 404.",
           "method": "GET",
           "defaultEnvironment": "https://api.permit.io",
@@ -24095,6 +24338,9 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "HTTPBearer"
+          ],
           "description": "Deletes the tenant and all its related data.",
           "method": "DELETE",
           "defaultEnvironment": "https://api.permit.io",
@@ -24244,6 +24490,9 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "HTTPBearer"
+          ],
           "description": "Partially updates the tenant definition.\nFields that will be provided will be completely overwritten.",
           "method": "PATCH",
           "defaultEnvironment": "https://api.permit.io",
@@ -24459,6 +24708,9 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "HTTPBearer"
+          ],
           "description": "Deletes a user under a tenant.",
           "method": "DELETE",
           "defaultEnvironment": "https://api.permit.io",
@@ -24637,6 +24889,9 @@
       "endpoints": [
         {
           "auth": true,
+          "authV2": [
+            "HTTPBearer"
+          ],
           "description": "Lists the role assignments defined within an environment.\n\n- If the `user` filter is present, will only return the role assignments of that user.\n- If the `tenant` filter is present, will only return the role assignments in that tenant.\n- If the `role` filter is present, will only return role assignments that are granting that role.",
           "method": "GET",
           "defaultEnvironment": "https://api.permit.io",
@@ -24872,6 +25127,9 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "HTTPBearer"
+          ],
           "description": "Assigns a role to a user within a tenant.\n\nThe tenant defines the scope of the assignment. In other words, the role is effective only within the tenant.",
           "method": "POST",
           "defaultEnvironment": "https://api.permit.io",
@@ -25068,6 +25326,9 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "HTTPBearer"
+          ],
           "description": "Unassigns a user role within a tenant.\n\nThe tenant defines the scope of the assignment. In other words, the role is effective only within the tenant.\n\nIf the role is not actually assigned, will return 404.",
           "method": "DELETE",
           "defaultEnvironment": "https://api.permit.io",
@@ -25240,6 +25501,9 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "HTTPBearer"
+          ],
           "method": "POST",
           "defaultEnvironment": "https://api.permit.io",
           "environments": [
@@ -25425,6 +25689,9 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "HTTPBearer"
+          ],
           "method": "DELETE",
           "defaultEnvironment": "https://api.permit.io",
           "environments": [
@@ -25620,6 +25887,9 @@
       "endpoints": [
         {
           "auth": true,
+          "authV2": [
+            "HTTPBearer"
+          ],
           "description": "Lists the condition set rules matching the filter.\n- If the `user_set` filter is present, will only return the permissions set of that user set.\n- If the `permission` filter is present, will only return the permissions sets that equals to the queried permission.\n- If the `resource_set` filter is present, will only return the permissions set of that resource set.",
           "method": "GET",
           "defaultEnvironment": "https://api.permit.io",
@@ -25853,6 +26123,9 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "HTTPBearer"
+          ],
           "description": "Grant permissions to a user set *on* a resource set.\n\nIf the permission is already granted, it is skipped.",
           "method": "POST",
           "defaultEnvironment": "https://api.permit.io",
@@ -26057,6 +26330,9 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "HTTPBearer"
+          ],
           "description": "Revokes permissions to a user set *on* a resource set.\n\nIf the permission is not granted, it is skipped.",
           "method": "DELETE",
           "defaultEnvironment": "https://api.permit.io",
@@ -26239,6 +26515,9 @@
       "endpoints": [
         {
           "auth": true,
+          "authV2": [
+            "HTTPBearer"
+          ],
           "description": "Lists all the resource instances defined within an environment.",
           "method": "GET",
           "defaultEnvironment": "https://api.permit.io",
@@ -26437,6 +26716,9 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "HTTPBearer"
+          ],
           "description": "Creates a new instance inside the Permit.io system.\n\nIf the instance is already created: will return 200 instead of 201,\nand will return the existing instance object in the response body.",
           "method": "POST",
           "defaultEnvironment": "https://api.permit.io",
@@ -26649,6 +26931,9 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "HTTPBearer"
+          ],
           "description": "Gets a instance, if such instance exists. Otherwise returns 404.",
           "method": "GET",
           "defaultEnvironment": "https://api.permit.io",
@@ -26830,6 +27115,9 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "HTTPBearer"
+          ],
           "description": "Deletes the instance and all its related data.",
           "method": "DELETE",
           "defaultEnvironment": "https://api.permit.io",
@@ -26979,6 +27267,9 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "HTTPBearer"
+          ],
           "description": "Partially updates the instance definition.\nFields that will be provided will be completely overwritten.",
           "method": "PATCH",
           "defaultEnvironment": "https://api.permit.io",
@@ -27214,6 +27505,9 @@
       "endpoints": [
         {
           "auth": true,
+          "authV2": [
+            "HTTPBearer"
+          ],
           "method": "POST",
           "defaultEnvironment": "https://api.permit.io",
           "environments": [
@@ -27389,6 +27683,9 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "HTTPBearer"
+          ],
           "method": "PUT",
           "defaultEnvironment": "https://api.permit.io",
           "environments": [
@@ -27564,6 +27861,9 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "HTTPBearer"
+          ],
           "method": "DELETE",
           "defaultEnvironment": "https://api.permit.io",
           "environments": [
@@ -27735,6 +28035,9 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "HTTPBearer"
+          ],
           "method": "POST",
           "defaultEnvironment": "https://api.permit.io",
           "environments": [
@@ -27912,6 +28215,9 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "HTTPBearer"
+          ],
           "method": "DELETE",
           "defaultEnvironment": "https://api.permit.io",
           "environments": [
@@ -28217,7 +28523,15 @@
   },
   "auth": {
     "type": "bearerAuth",
-    "tokenName": "token"
+    "tokenName": "token",
+    "description": "Authorization header, we support the bearer authentication scheme (see: RFC 6750)"
+  },
+  "authSchemes": {
+    "HTTPBearer": {
+      "type": "bearerAuth",
+      "tokenName": "token",
+      "description": "Authorization header, we support the bearer authentication scheme (see: RFC 6750)"
+    }
   },
   "snippetsConfiguration": {},
   "globalHeaders": []

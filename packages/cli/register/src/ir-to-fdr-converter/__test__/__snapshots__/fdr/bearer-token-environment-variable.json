@@ -7,6 +7,9 @@
       "endpoints": [
         {
           "auth": true,
+          "authV2": [
+            "Bearer"
+          ],
           "description": "GET request with custom api key",
           "method": "GET",
           "id": "getWithBearerToken",
@@ -78,6 +81,12 @@
   "auth": {
     "type": "bearerAuth",
     "tokenName": "apiKey"
+  },
+  "authSchemes": {
+    "Bearer": {
+      "type": "bearerAuth",
+      "tokenName": "apiKey"
+    }
   },
   "snippetsConfiguration": {},
   "globalHeaders": [

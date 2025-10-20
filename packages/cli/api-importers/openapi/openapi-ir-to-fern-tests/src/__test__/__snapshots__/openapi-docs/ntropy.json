@@ -634,15 +634,11 @@
             "docs": undefined,
             "inline": undefined,
             "properties": {
-              "address": {
-                "type": "optional<Address>",
-              },
+              "address": "optional<Address>",
               "name": {
                 "type": "optional<string>",
               },
-              "type": {
-                "type": "optional<AccountType>",
-              },
+              "type": "optional<AccountType>",
             },
             "source": {
               "openapi": "../openapi.yml",
@@ -776,9 +772,7 @@
                 "docs": "The date and time when the job was created.",
                 "type": "datetime",
               },
-              "error": {
-                "type": "optional<BankStatementError>",
-              },
+              "error": "optional<BankStatementError>",
               "file": {
                 "docs": "Information about the bank statement file being processed.",
                 "type": "BankStatementFile",
@@ -1584,19 +1578,13 @@ enriched transactions.",
             "docs": undefined,
             "inline": undefined,
             "properties": {
-              "categories": {
-                "type": "optional<Categories>",
-              },
+              "categories": "optional<Categories>",
               "created_at": {
                 "docs": "The timestamp of when the account holder was created.",
                 "type": "datetime",
               },
-              "entities": {
-                "type": "optional<Entities>",
-              },
-              "error": {
-                "type": "optional<TransactionError>",
-              },
+              "entities": "optional<Entities>",
+              "error": "optional<TransactionError>",
               "id": {
                 "docs": "A unique identifier for the transaction. If two transactions are submitted with the same `id` the most recent one will replace the previous one.",
                 "type": "string",
@@ -1607,9 +1595,7 @@ enriched transactions.",
                   "pattern": undefined,
                 },
               },
-              "location": {
-                "type": "optional<Location>",
-              },
+              "location": "optional<Location>",
             },
             "source": {
               "openapi": "../openapi.yml",
@@ -1632,9 +1618,7 @@ enriched transactions.",
             "docs": "Entities found by identity identification",
             "inline": undefined,
             "properties": {
-              "counterparty": {
-                "type": "optional<Counterparty>",
-              },
+              "counterparty": "optional<Counterparty>",
               "intermediaries": {
                 "type": "optional<list<Intermediary>>",
               },
@@ -2013,15 +1997,11 @@ enriched transactions.",
             "docs": undefined,
             "inline": undefined,
             "properties": {
-              "else": {
-                "type": "optional<list<Action>>",
-              },
+              "else": "optional<list<Action>>",
               "if": {
                 "type": "Expr",
               },
-              "then": {
-                "type": "optional<list<Action>>",
-              },
+              "then": "optional<list<Action>>",
             },
             "source": {
               "openapi": "../openapi.yml",
@@ -2514,9 +2494,7 @@ whether a transaction is a one-time event or a part of a recurring series.",
             "docs": undefined,
             "inline": undefined,
             "properties": {
-              "account_holder": {
-                "type": "optional<AccountHolder>",
-              },
+              "account_holder": "optional<AccountHolder>",
               "accounts": {
                 "type": "optional<list<Account>>",
               },
@@ -2572,9 +2550,7 @@ whether a transaction is a one-time event or a part of a recurring series.",
                   "multipleOf": undefined,
                 },
               },
-              "categories": {
-                "type": "optional<Categories>",
-              },
+              "categories": "optional<Categories>",
               "created_at": {
                 "docs": "The timestamp of when the account holder was created.",
                 "type": "datetime",
@@ -2597,16 +2573,12 @@ whether a transaction is a one-time event or a part of a recurring series.",
                   "pattern": undefined,
                 },
               },
-              "entities": {
-                "type": "optional<Entities>",
-              },
+              "entities": "optional<Entities>",
               "entry_type": {
                 "docs": "The direction of the flow of the money from the perspective of the account holder. `outgoing` to represent money leaving the account, such as purchases or fees, while `incoming` represents money entering the account, such as income or refunds.",
                 "type": "EntryType",
               },
-              "error": {
-                "type": "optional<TransactionError>",
-              },
+              "error": "optional<TransactionError>",
               "id": {
                 "docs": "A unique identifier of the transaction",
                 "type": "string",
@@ -2617,12 +2589,8 @@ whether a transaction is a one-time event or a part of a recurring series.",
                   "pattern": undefined,
                 },
               },
-              "location": {
-                "type": "optional<Location>",
-              },
-              "recurrence": {
-                "type": "optional<Recurrence>",
-              },
+              "location": "optional<Location>",
+              "recurrence": "optional<Recurrence>",
             },
             "source": {
               "openapi": "../openapi.yml",
@@ -2703,9 +2671,7 @@ whether a transaction is a one-time event or a part of a recurring series.",
                   "pattern": undefined,
                 },
               },
-              "location": {
-                "type": "optional<LocationInput>",
-              },
+              "location": "optional<LocationInput>",
             },
             "source": {
               "openapi": "../openapi.yml",
@@ -3198,12 +3164,10 @@ types:
       openapi: ../openapi.yml
   AccountHolder:
     properties:
-      type:
-        type: optional<AccountType>
+      type: optional<AccountType>
       name:
         type: optional<string>
-      address:
-        type: optional<Address>
+      address: optional<Address>
     source:
       openapi: ../openapi.yml
   AccountHolderExternal:
@@ -3284,8 +3248,7 @@ types:
       file:
         type: BankStatementFile
         docs: Information about the bank statement file being processed.
-      error:
-        type: optional<BankStatementError>
+      error: optional<BankStatementError>
     source:
       openapi: ../openapi.yml
   BankStatementAccount:
@@ -3938,14 +3901,10 @@ types:
       openapi: ../openapi.yml
   EnrichedTransaction:
     properties:
-      entities:
-        type: optional<Entities>
-      categories:
-        type: optional<Categories>
-      location:
-        type: optional<Location>
-      error:
-        type: optional<TransactionError>
+      entities: optional<Entities>
+      categories: optional<Categories>
+      location: optional<Location>
+      error: optional<TransactionError>
       created_at:
         type: datetime
         docs: The timestamp of when the account holder was created.
@@ -3971,8 +3930,7 @@ types:
   Entities:
     docs: Entities found by identity identification
     properties:
-      counterparty:
-        type: optional<Counterparty>
+      counterparty: optional<Counterparty>
       intermediaries:
         type: optional<list<Intermediary>>
     source:
@@ -4274,8 +4232,7 @@ types:
         type: optional<date>
       end_date:
         type: optional<date>
-      account_holder:
-        type: optional<AccountHolder>
+      account_holder: optional<AccountHolder>
       accounts:
         type: optional<list<Account>>
     source:
@@ -4325,14 +4282,10 @@ types:
       currency:
         type: Currency
         docs: The currency of the transaction in ISO 4217 format
-      entities:
-        type: optional<Entities>
-      categories:
-        type: optional<Categories>
-      location:
-        type: optional<Location>
-      error:
-        type: optional<TransactionError>
+      entities: optional<Entities>
+      categories: optional<Categories>
+      location: optional<Location>
+      error: optional<TransactionError>
       created_at:
         type: datetime
         docs: The timestamp of when the account holder was created.
@@ -4341,8 +4294,7 @@ types:
         docs: The unique ID of the account holder of the transaction
         validation:
           minLength: 1
-      recurrence:
-        type: optional<Recurrence>
+      recurrence: optional<Recurrence>
     source:
       openapi: ../openapi.yml
   TransactionError:
@@ -4400,8 +4352,7 @@ types:
         docs: >-
           The unique ID of the account holder. Unsetting it will disable
           [categorization](./docs/v3/enrichment/entities).
-      location:
-        type: optional<LocationInput>
+      location: optional<LocationInput>
     source:
       openapi: ../openapi.yml
   ValidationErrorLocItem:
@@ -4666,10 +4617,8 @@ types:
     properties:
       if:
         type: Expr
-      then:
-        type: optional<list<Action>>
-      else:
-        type: optional<list<Action>>
+      then: optional<list<Action>>
+      else: optional<list<Action>>
     source:
       openapi: ../openapi.yml
   ModifyLabelsAddLabel:

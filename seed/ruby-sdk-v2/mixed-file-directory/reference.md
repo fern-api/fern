@@ -1,6 +1,6 @@
 # Reference
 ## Organization
-<details><summary><code>client.Organization.Create(request) -> Seed::Organization::Types::Organization</code></summary>
+<details><summary><code>client.organization.create(request) -> Seed::Organization::Types::Organization</code></summary>
 <dl>
 <dd>
 
@@ -28,7 +28,7 @@ Create a new organization.
 
 ```ruby
 client.organization.create({
-  name:'name'
+  name: 'name'
 });
 ```
 </dd>
@@ -57,7 +57,7 @@ client.organization.create({
 </details>
 
 ## User
-<details><summary><code>client.User.List() -> Internal::Types::Array[Seed::User::Types::User]</code></summary>
+<details><summary><code>client.user.list() -> Internal::Types::Array[Seed::User::Types::User]</code></summary>
 <dl>
 <dd>
 
@@ -84,9 +84,7 @@ List all users.
 <dd>
 
 ```ruby
-client.user.list({
-  limit:1
-});
+client.user.list(limit: 1);
 ```
 </dd>
 </dl>
@@ -114,7 +112,7 @@ client.user.list({
 </details>
 
 ## User Events
-<details><summary><code>client.User.Events.ListEvents() -> Internal::Types::Array[Seed::User::Events::Types::Event]</code></summary>
+<details><summary><code>client.user.events.list_events() -> Internal::Types::Array[Seed::User::Events::Types::Event]</code></summary>
 <dl>
 <dd>
 
@@ -141,9 +139,7 @@ List all user events.
 <dd>
 
 ```ruby
-client.user.events.list_events({
-  limit:1
-});
+client.user.events.list_events(limit: 1);
 ```
 </dd>
 </dl>
@@ -171,7 +167,7 @@ client.user.events.list_events({
 </details>
 
 ## User Events Metadata
-<details><summary><code>client.User.Events.Metadata.GetMetadata() -> Seed::User::Events::Metadata::Types::Metadata</code></summary>
+<details><summary><code>client.user.events.metadata.get_metadata() -> Seed::User::Events::Metadata::Types::Metadata</code></summary>
 <dl>
 <dd>
 
@@ -198,9 +194,7 @@ Get event metadata.
 <dd>
 
 ```ruby
-client.user.events.metadata.get_metadata({
-  id:'id'
-});
+client.user.events.metadata.get_metadata(id: 'id');
 ```
 </dd>
 </dl>

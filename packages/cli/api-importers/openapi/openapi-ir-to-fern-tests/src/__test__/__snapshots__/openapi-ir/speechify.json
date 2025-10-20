@@ -1665,7 +1665,8 @@
             "generatedName": "apiKeyApiKey",
             "key": "api_key",
             "schema": {
-              "generatedName": "apiKeyApiKey",
+              "generatedName": "ApiKeyApiKey",
+              "description": "API key",
               "value": {
                 "description": "API key",
                 "schema": {
@@ -1685,7 +1686,8 @@
             "generatedName": "apiKeyCreatedAt",
             "key": "created_at",
             "schema": {
-              "generatedName": "apiKeyCreatedAt",
+              "generatedName": "ApiKeyCreatedAt",
+              "description": "Creation time of the key",
               "value": {
                 "description": "Creation time of the key",
                 "schema": {
@@ -1705,7 +1707,8 @@
             "generatedName": "apiKeyId",
             "key": "id",
             "schema": {
-              "generatedName": "apiKeyId",
+              "generatedName": "ApiKeyId",
+              "description": "ID of the key",
               "value": {
                 "description": "ID of the key",
                 "schema": {
@@ -1725,7 +1728,8 @@
             "generatedName": "apiKeyName",
             "key": "name",
             "schema": {
-              "generatedName": "apiKeyName",
+              "generatedName": "ApiKeyName",
+              "description": "Name of the key",
               "value": {
                 "description": "Name of the key",
                 "schema": {
@@ -1745,7 +1749,8 @@
             "generatedName": "apiKeyUpdatedAt",
             "key": "updated_at",
             "schema": {
-              "generatedName": "apiKeyUpdatedAt",
+              "generatedName": "ApiKeyUpdatedAt",
+              "description": "Last updated time of the key",
               "value": {
                 "description": "Last updated time of the key",
                 "schema": {
@@ -1765,7 +1770,8 @@
             "generatedName": "apiKeyUserId",
             "key": "user_id",
             "schema": {
-              "generatedName": "apiKeyUserId",
+              "generatedName": "ApiKeyUserId",
+              "description": "User ID to whom the key belongs",
               "value": {
                 "description": "User ID to whom the key belongs",
                 "schema": {
@@ -1799,7 +1805,7 @@
             "generatedName": "accessTokenAccessToken",
             "key": "access_token",
             "schema": {
-              "generatedName": "accessTokenAccessToken",
+              "generatedName": "AccessTokenAccessToken",
               "value": {
                 "schema": {
                   "type": "string"
@@ -1818,7 +1824,8 @@
             "generatedName": "accessTokenExpiresIn",
             "key": "expires_in",
             "schema": {
-              "generatedName": "accessTokenExpiresIn",
+              "generatedName": "AccessTokenExpiresIn",
+              "description": "Expiration time, in seconds from the issue time",
               "value": {
                 "description": "Expiration time, in seconds from the issue time",
                 "schema": {
@@ -1838,7 +1845,8 @@
             "generatedName": "accessTokenScope",
             "key": "scope",
             "schema": {
-              "generatedName": "accessTokenScope",
+              "generatedName": "AccessTokenScope",
+              "description": "The scope, or a space-delimited list of scopes the token is issued for",
               "value": {
                 "description": "The scope, or a space-delimited list of scopes the token is issued for",
                 "generatedName": "AccessTokenScope",
@@ -1896,7 +1904,8 @@
             "generatedName": "accessTokenTokenType",
             "key": "token_type",
             "schema": {
-              "generatedName": "accessTokenTokenType",
+              "generatedName": "AccessTokenTokenType",
+              "description": "Token type",
               "value": {
                 "description": "Token type",
                 "value": {
@@ -1947,7 +1956,8 @@
             "generatedName": "createAccessTokenRequestScope",
             "key": "scope",
             "schema": {
-              "generatedName": "createAccessTokenRequestScope",
+              "generatedName": "CreateAccessTokenRequestScope",
+              "description": "The scope, or a space-delimited list of scopes the token is requested for\nin: body",
               "value": {
                 "description": "The scope, or a space-delimited list of scopes the token is requested for\nin: body",
                 "generatedName": "CreateAccessTokenRequestScope",
@@ -2019,7 +2029,7 @@
             "generatedName": "createVoiceLanguageLocale",
             "key": "locale",
             "schema": {
-              "generatedName": "createVoiceLanguageLocale",
+              "generatedName": "CreateVoiceLanguageLocale",
               "value": {
                 "schema": {
                   "type": "string"
@@ -2038,7 +2048,7 @@
             "generatedName": "createVoiceLanguagePreviewAudio",
             "key": "preview_audio",
             "schema": {
-              "generatedName": "createVoiceLanguagePreviewAudio",
+              "generatedName": "CreateVoiceLanguagePreviewAudio",
               "value": {
                 "schema": {
                   "type": "string"
@@ -2071,7 +2081,7 @@
             "generatedName": "createVoiceModelLanguages",
             "key": "languages",
             "schema": {
-              "generatedName": "createVoiceModelLanguages",
+              "generatedName": "CreateVoiceModelLanguages",
               "value": {
                 "value": {
                   "generatedName": "CreateVoiceModelLanguagesItem",
@@ -2096,7 +2106,7 @@
             "generatedName": "createVoiceModelName",
             "key": "name",
             "schema": {
-              "generatedName": "createVoiceModelName",
+              "generatedName": "CreateVoiceModelName",
               "value": {
                 "generatedName": "CreateVoiceModelName",
                 "values": [
@@ -2152,7 +2162,7 @@
             "generatedName": "createdVoiceDisplayName",
             "key": "display_name",
             "schema": {
-              "generatedName": "createdVoiceDisplayName",
+              "generatedName": "CreatedVoiceDisplayName",
               "value": {
                 "schema": {
                   "type": "string"
@@ -2171,7 +2181,7 @@
             "generatedName": "createdVoiceId",
             "key": "id",
             "schema": {
-              "generatedName": "createdVoiceId",
+              "generatedName": "CreatedVoiceId",
               "value": {
                 "schema": {
                   "type": "string"
@@ -2190,7 +2200,7 @@
             "generatedName": "createdVoiceModels",
             "key": "models",
             "schema": {
-              "generatedName": "createdVoiceModels",
+              "generatedName": "CreatedVoiceModels",
               "value": {
                 "value": {
                   "generatedName": "CreatedVoiceModelsItem",
@@ -2215,7 +2225,7 @@
             "generatedName": "createdVoiceType",
             "key": "type",
             "schema": {
-              "generatedName": "createdVoiceType",
+              "generatedName": "CreatedVoiceType",
               "value": {
                 "generatedName": "CreatedVoiceType",
                 "values": [
@@ -2276,7 +2286,8 @@
             "generatedName": "experimentalStreamRequestLanguage",
             "key": "language",
             "schema": {
-              "generatedName": "experimentalStreamRequestLanguage",
+              "generatedName": "ExperimentalStreamRequestLanguage",
+              "description": "Language of the input. Follow the format of an ISO 639-1 language code and an ISO 3166-1 region code, separated by a hyphen, e.g. en-US.\nPlease refer to the list of the supported languages and recommendations regarding this parameter: https://docs.sws.speechify.com/docs/language-support.",
               "value": {
                 "description": "Language of the input. Follow the format of an ISO 639-1 language code and an ISO 3166-1 region code, separated by a hyphen, e.g. en-US.\nPlease refer to the list of the supported languages and recommendations regarding this parameter: https://docs.sws.speechify.com/docs/language-support.",
                 "schema": {
@@ -2296,7 +2307,8 @@
             "generatedName": "experimentalStreamRequestModel",
             "key": "model",
             "schema": {
-              "generatedName": "experimentalStreamRequestModel",
+              "generatedName": "ExperimentalStreamRequestModel",
+              "description": "Model used for audio synthesis\nsimba-base ModelBase  ModelBase is deprecated. Use simba-english or simba-multilingual instead.  @deprecated\nsimba-english ModelEnglish\nsimba-multilingual ModelMultilingual\nsimba-turbo ModelTurbo",
               "value": {
                 "description": "Model used for audio synthesis\nsimba-base ModelBase  ModelBase is deprecated. Use simba-english or simba-multilingual instead.  @deprecated\nsimba-english ModelEnglish\nsimba-multilingual ModelMultilingual\nsimba-turbo ModelTurbo",
                 "generatedName": "ExperimentalStreamRequestModel",
@@ -2374,7 +2386,8 @@
             "generatedName": "experimentalStreamResponseAudioUrl",
             "key": "audio_url",
             "schema": {
-              "generatedName": "experimentalStreamResponseAudioUrl",
+              "generatedName": "ExperimentalStreamResponseAudioUrl",
+              "description": "URL to the synthesized audio file. It includes the expiration time and a signature in the query params.\nThe audio file will be available for download until the expiration time.\nFor the URL to work correctly, it must be used verbatim, with all the query parameters.",
               "value": {
                 "description": "URL to the synthesized audio file. It includes the expiration time and a signature in the query params.\nThe audio file will be available for download until the expiration time.\nFor the URL to work correctly, it must be used verbatim, with all the query parameters.",
                 "schema": {
@@ -2395,7 +2408,8 @@
             "generatedName": "experimentalStreamResponseExpires",
             "key": "expires",
             "schema": {
-              "generatedName": "experimentalStreamResponseExpires",
+              "generatedName": "ExperimentalStreamResponseExpires",
+              "description": "Expiry time of the audio file, in ISO-8601 format.",
               "value": {
                 "description": "Expiry time of the audio file, in ISO-8601 format.",
                 "schema": {
@@ -2431,7 +2445,8 @@
             "generatedName": "getSpeechOptionsRequestLoudnessNormalization",
             "key": "loudness_normalization",
             "schema": {
-              "generatedName": "getSpeechOptionsRequestLoudnessNormalization",
+              "generatedName": "GetSpeechOptionsRequestLoudnessNormalization",
+              "description": "Determines whether to normalize the audio loudness to a standard level.\nWhen enabled, loudness normalization aligns the audio output to the following standards:\nIntegrated loudness: -14 LUFS\nTrue peak: -2 dBTP\nLoudness range: 7 LU\nIf disabled, the audio loudness will match the original loudness of the selected voice, which may vary significantly and be either too quiet or too loud.\nEnabling loudness normalization can increase latency due to additional processing required for audio level adjustments.",
               "value": {
                 "description": "Determines whether to normalize the audio loudness to a standard level.\nWhen enabled, loudness normalization aligns the audio output to the following standards:\nIntegrated loudness: -14 LUFS\nTrue peak: -2 dBTP\nLoudness range: 7 LU\nIf disabled, the audio loudness will match the original loudness of the selected voice, which may vary significantly and be either too quiet or too loud.\nEnabling loudness normalization can increase latency due to additional processing required for audio level adjustments.",
                 "schema": {
@@ -2467,7 +2482,8 @@
             "generatedName": "getSpeechRequestAudioFormat",
             "key": "audio_format",
             "schema": {
-              "generatedName": "getSpeechRequestAudioFormat",
+              "generatedName": "GetSpeechRequestAudioFormat",
+              "description": "The format for the output audio. Note, that the current default is \"wav\", but there's no guarantee it will not change in the future. We recommend always passing the specific param you expect.",
               "value": {
                 "description": "The format for the output audio. Note, that the current default is \"wav\", but there's no guarantee it will not change in the future. We recommend always passing the specific param you expect.",
                 "generatedName": "GetSpeechRequestAudioFormat",
@@ -2530,7 +2546,8 @@
             "generatedName": "getSpeechRequestLanguage",
             "key": "language",
             "schema": {
-              "generatedName": "getSpeechRequestLanguage",
+              "generatedName": "GetSpeechRequestLanguage",
+              "description": "Language of the input. Follow the format of an ISO 639-1 language code and an ISO 3166-1 region code, separated by a hyphen, e.g. en-US.\nPlease refer to the list of the supported languages and recommendations regarding this parameter: https://docs.sws.speechify.com/docs/language-support.",
               "value": {
                 "description": "Language of the input. Follow the format of an ISO 639-1 language code and an ISO 3166-1 region code, separated by a hyphen, e.g. en-US.\nPlease refer to the list of the supported languages and recommendations regarding this parameter: https://docs.sws.speechify.com/docs/language-support.",
                 "schema": {
@@ -2550,7 +2567,8 @@
             "generatedName": "getSpeechRequestModel",
             "key": "model",
             "schema": {
-              "generatedName": "getSpeechRequestModel",
+              "generatedName": "GetSpeechRequestModel",
+              "description": "Model used for audio synthesis\nsimba-base ModelBase  ModelBase is deprecated. Use simba-english or simba-multilingual instead.  @deprecated\nsimba-english ModelEnglish\nsimba-multilingual ModelMultilingual\nsimba-turbo ModelTurbo",
               "value": {
                 "description": "Model used for audio synthesis\nsimba-base ModelBase  ModelBase is deprecated. Use simba-english or simba-multilingual instead.  @deprecated\nsimba-english ModelEnglish\nsimba-multilingual ModelMultilingual\nsimba-turbo ModelTurbo",
                 "generatedName": "GetSpeechRequestModel",
@@ -2598,7 +2616,7 @@
             "generatedName": "getSpeechRequestOptions",
             "key": "options",
             "schema": {
-              "generatedName": "getSpeechRequestOptions",
+              "generatedName": "GetSpeechRequestOptions",
               "value": {
                 "generatedName": "GetSpeechRequestOptions",
                 "schema": "GetSpeechOptionsRequest",
@@ -2608,7 +2626,6 @@
                 },
                 "type": "reference"
               },
-              "groupName": [],
               "type": "optional"
             },
             "audiences": [],
@@ -2650,7 +2667,8 @@
             "generatedName": "getSpeechResponseAudioData",
             "key": "audio_data",
             "schema": {
-              "generatedName": "getSpeechResponseAudioData",
+              "generatedName": "GetSpeechResponseAudioData",
+              "description": "Synthesized speech audio, Base64-encoded",
               "value": {
                 "description": "Synthesized speech audio, Base64-encoded",
                 "value": {
@@ -2675,7 +2693,8 @@
             "generatedName": "getSpeechResponseAudioFormat",
             "key": "audio_format",
             "schema": {
-              "generatedName": "getSpeechResponseAudioFormat",
+              "generatedName": "GetSpeechResponseAudioFormat",
+              "description": "The format of the audio data",
               "value": {
                 "description": "The format of the audio data",
                 "generatedName": "GetSpeechResponseAudioFormat",
@@ -2718,7 +2737,8 @@
             "generatedName": "getSpeechResponseBillableCharactersCount",
             "key": "billable_characters_count",
             "schema": {
-              "generatedName": "getSpeechResponseBillableCharactersCount",
+              "generatedName": "GetSpeechResponseBillableCharactersCount",
+              "description": "The number of billable characters processed in the request.",
               "value": {
                 "description": "The number of billable characters processed in the request.",
                 "schema": {
@@ -2738,7 +2758,7 @@
             "generatedName": "getSpeechResponseSpeechMarks",
             "key": "speech_marks",
             "schema": {
-              "generatedName": "getSpeechResponseSpeechMarks",
+              "generatedName": "GetSpeechResponseSpeechMarks",
               "value": {
                 "generatedName": "GetSpeechResponseSpeechMarks",
                 "schema": "SpeechMarks",
@@ -2748,7 +2768,6 @@
                 },
                 "type": "reference"
               },
-              "groupName": [],
               "type": "optional"
             },
             "audiences": [],
@@ -2774,7 +2793,8 @@
             "generatedName": "getStreamOptionsRequestLoudnessNormalization",
             "key": "loudness_normalization",
             "schema": {
-              "generatedName": "getStreamOptionsRequestLoudnessNormalization",
+              "generatedName": "GetStreamOptionsRequestLoudnessNormalization",
+              "description": "Determines whether to normalize the audio loudness to a standard level.\nWhen enabled, loudness normalization aligns the audio output to the following standards:\nIntegrated loudness: -14 LUFS\nTrue peak: -2 dBTP\nLoudness range: 7 LU\nIf disabled, the audio loudness will match the original loudness of the selected voice, which may vary significantly and be either too quiet or too loud.\nEnabling loudness normalization can increase latency due to additional processing required for audio level adjustments.",
               "value": {
                 "description": "Determines whether to normalize the audio loudness to a standard level.\nWhen enabled, loudness normalization aligns the audio output to the following standards:\nIntegrated loudness: -14 LUFS\nTrue peak: -2 dBTP\nLoudness range: 7 LU\nIf disabled, the audio loudness will match the original loudness of the selected voice, which may vary significantly and be either too quiet or too loud.\nEnabling loudness normalization can increase latency due to additional processing required for audio level adjustments.",
                 "schema": {
@@ -2825,7 +2845,8 @@
             "generatedName": "getStreamRequestLanguage",
             "key": "language",
             "schema": {
-              "generatedName": "getStreamRequestLanguage",
+              "generatedName": "GetStreamRequestLanguage",
+              "description": "Language of the input. Follow the format of an ISO 639-1 language code and an ISO 3166-1 region code, separated by a hyphen, e.g. en-US.\nPlease refer to the list of the supported languages and recommendations regarding this parameter: https://docs.sws.speechify.com/docs/language-support.",
               "value": {
                 "description": "Language of the input. Follow the format of an ISO 639-1 language code and an ISO 3166-1 region code, separated by a hyphen, e.g. en-US.\nPlease refer to the list of the supported languages and recommendations regarding this parameter: https://docs.sws.speechify.com/docs/language-support.",
                 "schema": {
@@ -2845,7 +2866,8 @@
             "generatedName": "getStreamRequestModel",
             "key": "model",
             "schema": {
-              "generatedName": "getStreamRequestModel",
+              "generatedName": "GetStreamRequestModel",
+              "description": "Model used for audio synthesis\nsimba-base ModelBase  ModelBase is deprecated. Use simba-english or simba-multilingual instead.  @deprecated\nsimba-english ModelEnglish\nsimba-multilingual ModelMultilingual\nsimba-turbo ModelTurbo",
               "value": {
                 "description": "Model used for audio synthesis\nsimba-base ModelBase  ModelBase is deprecated. Use simba-english or simba-multilingual instead.  @deprecated\nsimba-english ModelEnglish\nsimba-multilingual ModelMultilingual\nsimba-turbo ModelTurbo",
                 "generatedName": "GetStreamRequestModel",
@@ -2893,7 +2915,7 @@
             "generatedName": "getStreamRequestOptions",
             "key": "options",
             "schema": {
-              "generatedName": "getStreamRequestOptions",
+              "generatedName": "GetStreamRequestOptions",
               "value": {
                 "generatedName": "GetStreamRequestOptions",
                 "schema": "GetStreamOptionsRequest",
@@ -2903,7 +2925,6 @@
                 },
                 "type": "reference"
               },
-              "groupName": [],
               "type": "optional"
             },
             "audiences": [],
@@ -2945,7 +2966,7 @@
             "generatedName": "getVoiceAvatarImage",
             "key": "avatar_image",
             "schema": {
-              "generatedName": "getVoiceAvatarImage",
+              "generatedName": "GetVoiceAvatarImage",
               "value": {
                 "schema": {
                   "type": "string"
@@ -2964,7 +2985,7 @@
             "generatedName": "getVoiceDisplayName",
             "key": "display_name",
             "schema": {
-              "generatedName": "getVoiceDisplayName",
+              "generatedName": "GetVoiceDisplayName",
               "value": {
                 "schema": {
                   "type": "string"
@@ -2983,7 +3004,7 @@
             "generatedName": "getVoiceGender",
             "key": "gender",
             "schema": {
-              "generatedName": "getVoiceGender",
+              "generatedName": "GetVoiceGender",
               "value": {
                 "generatedName": "GetVoiceGender",
                 "values": [
@@ -3020,7 +3041,7 @@
             "generatedName": "getVoiceId",
             "key": "id",
             "schema": {
-              "generatedName": "getVoiceId",
+              "generatedName": "GetVoiceId",
               "value": {
                 "schema": {
                   "type": "string"
@@ -3039,7 +3060,7 @@
             "generatedName": "getVoiceModels",
             "key": "models",
             "schema": {
-              "generatedName": "getVoiceModels",
+              "generatedName": "GetVoiceModels",
               "value": {
                 "value": {
                   "generatedName": "GetVoiceModelsItem",
@@ -3064,7 +3085,7 @@
             "generatedName": "getVoicePreviewAudio",
             "key": "preview_audio",
             "schema": {
-              "generatedName": "getVoicePreviewAudio",
+              "generatedName": "GetVoicePreviewAudio",
               "value": {
                 "schema": {
                   "type": "string"
@@ -3083,7 +3104,7 @@
             "generatedName": "getVoiceTags",
             "key": "tags",
             "schema": {
-              "generatedName": "getVoiceTags",
+              "generatedName": "GetVoiceTags",
               "value": {
                 "value": {
                   "schema": {
@@ -3107,7 +3128,7 @@
             "generatedName": "getVoiceType",
             "key": "type",
             "schema": {
-              "generatedName": "getVoiceType",
+              "generatedName": "GetVoiceType",
               "value": {
                 "generatedName": "GetVoiceType",
                 "values": [
@@ -3153,7 +3174,7 @@
             "generatedName": "getVoiceLanguageLocale",
             "key": "locale",
             "schema": {
-              "generatedName": "getVoiceLanguageLocale",
+              "generatedName": "GetVoiceLanguageLocale",
               "value": {
                 "schema": {
                   "type": "string"
@@ -3172,7 +3193,7 @@
             "generatedName": "getVoiceLanguagePreviewAudio",
             "key": "preview_audio",
             "schema": {
-              "generatedName": "getVoiceLanguagePreviewAudio",
+              "generatedName": "GetVoiceLanguagePreviewAudio",
               "value": {
                 "schema": {
                   "type": "string"
@@ -3205,7 +3226,7 @@
             "generatedName": "getVoicesModelLanguages",
             "key": "languages",
             "schema": {
-              "generatedName": "getVoicesModelLanguages",
+              "generatedName": "GetVoicesModelLanguages",
               "value": {
                 "value": {
                   "generatedName": "GetVoicesModelLanguagesItem",
@@ -3230,7 +3251,7 @@
             "generatedName": "getVoicesModelName",
             "key": "name",
             "schema": {
-              "generatedName": "getVoicesModelName",
+              "generatedName": "GetVoicesModelName",
               "value": {
                 "generatedName": "GetVoicesModelName",
                 "values": [
@@ -3286,8 +3307,7 @@
             "generatedName": "nestedChunkEnd",
             "key": "end",
             "schema": {
-              "generatedName": "nestedChunkEnd",
-              "title": "NestedChunk represents a detailed segment within the synthesized speech.",
+              "generatedName": "NestedChunkEnd",
               "value": {
                 "schema": {
                   "type": "int64"
@@ -3306,8 +3326,7 @@
             "generatedName": "nestedChunkEndTime",
             "key": "end_time",
             "schema": {
-              "generatedName": "nestedChunkEndTime",
-              "title": "NestedChunk represents a detailed segment within the synthesized speech.",
+              "generatedName": "NestedChunkEndTime",
               "value": {
                 "schema": {
                   "type": "double"
@@ -3326,8 +3345,7 @@
             "generatedName": "nestedChunkStart",
             "key": "start",
             "schema": {
-              "generatedName": "nestedChunkStart",
-              "title": "NestedChunk represents a detailed segment within the synthesized speech.",
+              "generatedName": "NestedChunkStart",
               "value": {
                 "schema": {
                   "type": "int64"
@@ -3346,8 +3364,7 @@
             "generatedName": "nestedChunkStartTime",
             "key": "start_time",
             "schema": {
-              "generatedName": "nestedChunkStartTime",
-              "title": "NestedChunk represents a detailed segment within the synthesized speech.",
+              "generatedName": "NestedChunkStartTime",
               "value": {
                 "schema": {
                   "type": "double"
@@ -3366,8 +3383,7 @@
             "generatedName": "nestedChunkType",
             "key": "type",
             "schema": {
-              "generatedName": "nestedChunkType",
-              "title": "NestedChunk represents a detailed segment within the synthesized speech.",
+              "generatedName": "NestedChunkType",
               "value": {
                 "schema": {
                   "type": "string"
@@ -3386,8 +3402,7 @@
             "generatedName": "nestedChunkValue",
             "key": "value",
             "schema": {
-              "generatedName": "nestedChunkValue",
-              "title": "NestedChunk represents a detailed segment within the synthesized speech.",
+              "generatedName": "NestedChunkValue",
               "value": {
                 "schema": {
                   "type": "string"
@@ -3422,7 +3437,7 @@
             "generatedName": "oAuthErrorError",
             "key": "error",
             "schema": {
-              "generatedName": "oAuthErrorError",
+              "generatedName": "OAuthErrorError",
               "value": {
                 "generatedName": "OAuthErrorError",
                 "values": [
@@ -3469,7 +3484,7 @@
             "generatedName": "oAuthErrorErrorDescription",
             "key": "error_description",
             "schema": {
-              "generatedName": "oAuthErrorErrorDescription",
+              "generatedName": "OAuthErrorErrorDescription",
               "value": {
                 "schema": {
                   "type": "string"
@@ -3502,8 +3517,8 @@
             "generatedName": "speechMarksChunks",
             "key": "chunks",
             "schema": {
-              "generatedName": "speechMarksChunks",
-              "title": "SpeechMarks holds the structured data of speech synthesis marks.",
+              "generatedName": "SpeechMarksChunks",
+              "description": "Array of NestedChunk, each providing detailed segment information within the synthesized speech.",
               "value": {
                 "description": "Array of NestedChunk, each providing detailed segment information within the synthesized speech.",
                 "value": {
@@ -3529,8 +3544,7 @@
             "generatedName": "speechMarksEnd",
             "key": "end",
             "schema": {
-              "generatedName": "speechMarksEnd",
-              "title": "SpeechMarks holds the structured data of speech synthesis marks.",
+              "generatedName": "SpeechMarksEnd",
               "value": {
                 "schema": {
                   "type": "int64"
@@ -3549,8 +3563,7 @@
             "generatedName": "speechMarksEndTime",
             "key": "end_time",
             "schema": {
-              "generatedName": "speechMarksEndTime",
-              "title": "SpeechMarks holds the structured data of speech synthesis marks.",
+              "generatedName": "SpeechMarksEndTime",
               "value": {
                 "schema": {
                   "type": "double"
@@ -3569,8 +3582,7 @@
             "generatedName": "speechMarksStart",
             "key": "start",
             "schema": {
-              "generatedName": "speechMarksStart",
-              "title": "SpeechMarks holds the structured data of speech synthesis marks.",
+              "generatedName": "SpeechMarksStart",
               "value": {
                 "schema": {
                   "type": "int64"
@@ -3589,8 +3601,7 @@
             "generatedName": "speechMarksStartTime",
             "key": "start_time",
             "schema": {
-              "generatedName": "speechMarksStartTime",
-              "title": "SpeechMarks holds the structured data of speech synthesis marks.",
+              "generatedName": "SpeechMarksStartTime",
               "value": {
                 "schema": {
                   "type": "double"
@@ -3609,8 +3620,7 @@
             "generatedName": "speechMarksType",
             "key": "type",
             "schema": {
-              "generatedName": "speechMarksType",
-              "title": "SpeechMarks holds the structured data of speech synthesis marks.",
+              "generatedName": "SpeechMarksType",
               "value": {
                 "schema": {
                   "type": "string"
@@ -3629,8 +3639,7 @@
             "generatedName": "speechMarksValue",
             "key": "value",
             "schema": {
-              "generatedName": "speechMarksValue",
-              "title": "SpeechMarks holds the structured data of speech synthesis marks.",
+              "generatedName": "SpeechMarksValue",
               "value": {
                 "schema": {
                   "type": "string"

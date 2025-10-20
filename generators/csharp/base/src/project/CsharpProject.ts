@@ -463,7 +463,8 @@ dotnet_diagnostic.IDE0005.severity = error
                     idempotencyHeaders: this.context.hasIdempotencyHeaders(),
                     namespace,
                     testNamespace: this.context.getTestNamespace(),
-                    additionalProperties: this.context.generateNewAdditionalProperties()
+                    additionalProperties: this.context.generateNewAdditionalProperties(),
+                    context: this.context
                 }
             })
         );
@@ -480,7 +481,8 @@ dotnet_diagnostic.IDE0005.severity = error
                     grpc: this.context.hasGrpcEndpoints(),
                     idempotencyHeaders: this.context.hasIdempotencyHeaders(),
                     namespace,
-                    additionalProperties: this.context.generateNewAdditionalProperties()
+                    additionalProperties: this.context.generateNewAdditionalProperties(),
+                    context: this.context
                 }
             })
         );
@@ -506,7 +508,8 @@ dotnet_diagnostic.IDE0005.severity = error
                         grpc: this.context.hasGrpcEndpoints(),
                         idempotencyHeaders: this.context.hasIdempotencyHeaders(),
                         namespace: this.context.getCoreNamespace(),
-                        additionalProperties: this.context.generateNewAdditionalProperties()
+                        additionalProperties: this.context.generateNewAdditionalProperties(),
+                        context: this.context
                     }
                 }).replaceAll("CustomPager", customPagerName)
             ),
@@ -519,7 +522,8 @@ dotnet_diagnostic.IDE0005.severity = error
                         grpc: this.context.hasGrpcEndpoints(),
                         idempotencyHeaders: this.context.hasIdempotencyHeaders(),
                         namespace: this.context.getCoreNamespace(),
-                        additionalProperties: this.context.generateNewAdditionalProperties()
+                        additionalProperties: this.context.generateNewAdditionalProperties(),
+                        context: this.context
                     }
                 }).replaceAll("CustomPager", customPagerName)
             )
@@ -538,7 +542,8 @@ dotnet_diagnostic.IDE0005.severity = error
                     idempotencyHeaders: this.context.hasIdempotencyHeaders(),
                     namespace: this.context.getTestUtilsNamespace(),
                     testNamespace: this.context.getTestNamespace(),
-                    additionalProperties: this.context.generateNewAdditionalProperties()
+                    additionalProperties: this.context.generateNewAdditionalProperties(),
+                    context: this.context
                 }
             })
         );
@@ -648,9 +653,10 @@ ${projectGroup.join("\n")}
     <ItemGroup Condition="'$(UsePortableDateOnly)' == 'false'">
         <Compile Remove="Core\\DateOnlyConverter.cs" />
     </ItemGroup>
-${this.getWebSocketAsyncDependencies().join(`\n${FOUR_SPACES}`)}
     <ItemGroup>
         ${dependencies.join(`\n${FOUR_SPACES}${FOUR_SPACES}`)}
+        ${this.getSseDependencies().join(`\n${FOUR_SPACES}`)}
+        ${this.getWebSocketAsyncDependencies().join(`\n${FOUR_SPACES}`)}
     </ItemGroup>
 ${this.getProtobufDependencies(this.protobufSourceFilePaths).join(`\n${FOUR_SPACES}`)}
     <ItemGroup>
@@ -695,12 +701,15 @@ ${this.getAdditionalItemGroups().join(`\n${FOUR_SPACES}`)}
     private getWebSocketAsyncDependencies(): string[] {
         return this.context.hasWebSocketEndpoints
             ? [
-                  "",
-                  "<ItemGroup>",
                   '    <PackageReference Include="Microsoft.Extensions.Logging.Abstractions" Version="8.0.2" />',
-                  '    <PackageReference Include="Microsoft.IO.RecyclableMemoryStream" Version="3.0.1" />',
-                  "</ItemGroup>"
+                  '    <PackageReference Include="Microsoft.IO.RecyclableMemoryStream" Version="3.0.1" />'
               ]
+            : [];
+    }
+
+    private getSseDependencies(): string[] {
+        return this.context.hasSseEndpoints
+            ? ['    <PackageReference Include="System.Net.ServerSentEvents" Version="9.0.9" />']
             : [];
     }
 

@@ -1,7 +1,7 @@
 {
     "endpoints": [
         {
-            "example_identifier": "37326ab",
+            "example_identifier": "d1ff5866",
             "id": {
                 "method": "GET",
                 "path": "/{tenant_id}/organizations/{organization_id}/",
@@ -14,7 +14,7 @@
             }
         },
         {
-            "example_identifier": "42a498b9",
+            "example_identifier": "2c584746",
             "id": {
                 "method": "GET",
                 "path": "/{tenant_id}/organizations/{organization_id}/users/{user_id}",
@@ -27,7 +27,7 @@
             }
         },
         {
-            "example_identifier": "c99be3ff",
+            "example_identifier": "ddfa7e1d",
             "id": {
                 "method": "GET",
                 "path": "/{tenant_id}/organizations/{organization_id}/search",
@@ -40,7 +40,7 @@
             }
         },
         {
-            "example_identifier": "ed87af0c",
+            "example_identifier": "d57717b9",
             "id": {
                 "method": "GET",
                 "path": "/{tenant_id}/user/{user_id}",
@@ -53,7 +53,7 @@
             }
         },
         {
-            "example_identifier": "b89d729d",
+            "example_identifier": "ff975f47",
             "id": {
                 "method": "POST",
                 "path": "/{tenant_id}/user/",
@@ -66,7 +66,7 @@
             }
         },
         {
-            "example_identifier": "389d10d4",
+            "example_identifier": "ff54969e",
             "id": {
                 "method": "PATCH",
                 "path": "/{tenant_id}/user/{user_id}",
@@ -79,7 +79,7 @@
             }
         },
         {
-            "example_identifier": "43493df2",
+            "example_identifier": "fc85891e",
             "id": {
                 "method": "GET",
                 "path": "/{tenant_id}/user/{user_id}/search",

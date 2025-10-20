@@ -15,6 +15,7 @@ types:
       - csharp
       - php
       - swift
+      - rust
       - nodets
       - nodejs
       - dotnet
@@ -159,6 +160,7 @@ types:
       colors: optional<ColorsConfiguration>
       typography: optional<DocsTypographyConfig>
       layout: optional<LayoutConfig>
+      settings: optional<DocsSettingsConfig>
 
       # integrations
       integrations: optional<IntegrationsConfig>
@@ -171,10 +173,31 @@ types:
 
   PageActionsConfig:
     properties:
+      default: optional<PageActionOption>
+      options: optional<PageActionOptions>
+
+  PageActionOption:
+    enum:
+      - value: copy-page
+        name: copy_page
+      - value: view-as-markdown
+        name: view_as_markdown
+      - value: ask-ai
+        name: ask_ai
+      - chatgpt
+      - claude
+      - cursor
+      - vscode
+
+  PageActionOptions:
+    properties:
+      copy-page: optional<boolean>
+      view-as-markdown: optional<boolean>
+      ask-ai: optional<boolean>
       chatgpt: optional<boolean>
       claude: optional<boolean>
-      vscode: optional<boolean>
       cursor: optional<boolean>
+      vscode: optional<boolean>
 
   AIChatConfig:
     properties:
@@ -182,6 +205,26 @@ types:
       "system-prompt":
         type: optional<string>
         docs: This is a system prompt that acts as context given to the LLM for AI chat.
+      location:
+        type: optional<list<AIChatLocation>>
+      datasources:
+        type: optional<list<AIChatDatasource>>
+
+  AIChatLocation:
+    enum:
+      - docs
+      - slack
+      - discord
+
+  AIChatDatasource:
+    discriminated: false
+    union:
+      - AIChatWebsiteDatasource
+
+  AIChatWebsiteDatasource:
+    properties:
+      url: string
+      title: optional<string>
 
   AIChatModel:
     enum:
@@ -461,6 +504,35 @@ types:
         availability: in-development
         docs: |
           If `hide-feedback` is set to true, the feedback button will not be rendered. This can be overridden for a specific page using the frontmatter.
+
+  DocsSettingsConfig:
+    properties:
+      search-text: optional<string>
+      disable-search: optional<boolean>
+      dark-mode-code: optional<boolean>
+      default-search-filters: optional<boolean>
+      http-snippets: optional<HttpSnippetsConfig>
+      hide-404-page: optional<boolean>
+      use-javascript-as-typescript: optional<boolean>
+
+  HttpSnippetsConfig:
+    discriminated: false
+    union:
+      - boolean
+      - list<HttpSnippetLanguage>
+
+  HttpSnippetLanguage:
+    enum:
+      - curl
+      - csharp
+      - go
+      - java
+      - javascript
+      - php
+      - python
+      - ruby
+      - swift
+      - typescript
 
   SearchbarPlacement:
     enum:
@@ -797,6 +869,7 @@ types:
       csharp: optional<SnippetLanguageConfiguration>
       php: optional<SnippetLanguageConfiguration>
       swift: optional<SnippetLanguageConfiguration>
+      rust: optional<SnippetLanguageConfiguration>
 
   ColorsConfiguration:
     properties:
@@ -1023,6 +1096,7 @@ types:
       "twitter:site": optional<string>
       "twitter:url": optional<string>
       "twitter:card": optional<TwitterCardSetting>
+      canonical-host: optional<string>
 
   TwitterCardSetting:
     enum:

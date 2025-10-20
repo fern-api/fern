@@ -11,7 +11,7 @@ public partial class SeedMultiUrlEnvironmentClient
         var defaultHeaders = new Headers(
             new Dictionary<string, string>()
             {
-                { "Authorization", $"Bearer {token}" },
+                { "Authorization", $"Bearer {token ?? ""}" },
                 { "X-Fern-Language", "C#" },
                 { "X-Fern-SDK-Name", "SeedMultiUrlEnvironment" },
                 { "X-Fern-SDK-Version", Version.Current },

@@ -11,7 +11,7 @@ Add this to your `Cargo.toml`:
 
 ```toml
 [dependencies]
-seed_audiences = "0.1.0"
+seed_audiences = "0.0.1"
 ```
 
 Or install via cargo:
@@ -20,12 +20,16 @@ Or install via cargo:
 cargo add seed_audiences
 ```
 
+## Reference
+
+A full reference for this library is available [here](./reference.md).
+
 ## Usage
 
 Instantiate and use the client with the following:
 
 ```rust
-use seed_audiences::{AudiencesClient, ClientConfig, FindRequest};
+use seed_audiences::prelude::*;
 use std::collections::HashMap;
 
 #[tokio::main]
@@ -53,53 +57,29 @@ async fn main() {
 When the API returns a non-success status code (4xx or 5xx response), an error will be returned.
 
 ```rust
-use seed_audiences::{ApiError, ClientConfig, AudiencesClient};
-
-#[tokio::main]
-async fn main() -> Result<(), ApiError> {
-    let config = ClientConfig {
-        base_url: " ".to_string(),
-        api_key: Some("your-api-key".to_string())
-    };
-    let client = AudiencesClient::new(config)?;
-    match client.some_method().await {
-        Ok(response) => {
-            println!("Success: {:?}", response);
-        },
-        Err(ApiError::HTTP { status, message }) => {
-            println!("API Error {}: {:?}", status, message);
-        },
-        Err(e) => {
-            println!("Other error: {:?}", e);
-        }
+match client.foo.find(None)?.await {
+    Ok(response) => {
+        println!("Success: {:?}", response);
+    },
+    Err(ApiError::HTTP { status, message }) => {
+        println!("API Error {}: {:?}", status, message);
+    },
+    Err(e) => {
+        println!("Other error: {:?}", e);
     }
-    return Ok(());
 }
 ```
 
-## Pagination
+## Request Types
 
-For paginated endpoints, the SDK automatically handles pagination using async streams. Use `futures::StreamExt` to iterate through all pages.
+The SDK exports all request types as Rust structs. Simply import them from the crate to access them:
 
 ```rust
-use seed_audiences::{ClientConfig, AudiencesClient};
-use futures::{StreamExt};
+use seed_audiences::prelude::{*};
 
-#[tokio::main]
-async fn main() {
-    let config = ClientConfig {
-        base_url: " ".to_string(),
-        api_key: Some("your-api-key".to_string())
-    };
-    let client = AudiencesClient::new(config).expect("Failed to build client");
-    let mut paginated_stream = client.foo.find().await?;
-    while let Some(item) = paginated_stream.next().await {
-            match item {
-                Ok(data) => println!("Received item: {:?}", data),
-                Err(e) => eprintln!("Error fetching page: {}", e),
-            }
-        }
-}
+let request = FindRequest {
+    ...
+};
 ```
 
 ## Advanced
@@ -119,17 +99,9 @@ A request is deemed retryable when any of the following HTTP status codes is ret
 Use the `max_retries` method to configure this behavior.
 
 ```rust
-use seed_audiences::{ClientConfig, AudiencesClient};
-
-#[tokio::main]
-async fn main() {
-    let config = ClientConfig {
-        base_url: " ".to_string(),
-        api_key: Some("your-api-key".to_string()),
-        max_retries: 3
-    };
-    let client = AudiencesClient::new(config).expect("Failed to build client");
-}
+let response = client.foo.find(
+    Some(RequestOptions::new().max_retries(3))
+)?.await;
 ```
 
 ### Timeouts
@@ -137,18 +109,39 @@ async fn main() {
 The SDK defaults to a 30 second timeout. Use the `timeout` method to configure this behavior.
 
 ```rust
-use seed_audiences::{ClientConfig, AudiencesClient};
-use std::time::{Duration};
+let response = client.foo.find(
+    Some(RequestOptions::new().timeout_seconds(30))
+)?.await;
+```
 
-#[tokio::main]
-async fn main() {
-    let config = ClientConfig {
-        base_url: " ".to_string(),
-        api_key: Some("your-api-key".to_string()),
-        timeout: Duration::from_secs(30)
-    };
-    let client = AudiencesClient::new(config).expect("Failed to build client");
-}
+### Additional Headers
+
+You can add custom headers to requests using `RequestOptions`.
+
+```rust
+let response = client.foo.find(
+    Some(
+        RequestOptions::new()
+            .additional_header("X-Custom-Header", "custom-value")
+            .additional_header("X-Another-Header", "another-value")
+    )
+)?
+.await;
+```
+
+### Additional Query String Parameters
+
+You can add custom query parameters to requests using `RequestOptions`.
+
+```rust
+let response = client.foo.find(
+    Some(
+        RequestOptions::new()
+            .additional_query_param("filter", "active")
+            .additional_query_param("sort", "desc")
+    )
+)?
+.await;
 ```
 
 ## Contributing

@@ -20,7 +20,7 @@ With Swift Package Manager (SPM), add the following to the top-level `dependenci
 
 ```swift
 dependencies: [
-    .package(url: "<git-url>", from: "0.1.0"),
+    .package(url: "https://github.com/oauth-client-credentials-with-variables/fern", from: "0.0.1"),
 ]
 ```
 
@@ -39,7 +39,7 @@ import OauthClientCredentialsWithVariables
 private func main() async throws {
     let client = OauthClientCredentialsWithVariablesClient()
 
-    try await client.auth.getTokenWithClientCredentials(request: .init(
+    _ = try await client.auth.getTokenWithClientCredentials(request: .init(
         clientId: "client_id",
         clientSecret: "client_secret",
         audience: .httpsApiExampleCom,

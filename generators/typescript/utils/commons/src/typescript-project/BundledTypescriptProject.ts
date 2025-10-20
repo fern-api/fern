@@ -20,8 +20,6 @@ export class BundledTypescriptProject extends TypescriptProject {
             this.getBuildScriptContents()
         );
         await this.generateGitIgnore();
-        await this.generatePrettierRc();
-        await this.generatePrettierIgnore();
         await this.generateStubTypeDeclarations();
         await this.generateTsConfig();
         await this.generatePackageJson();
@@ -33,8 +31,8 @@ export class BundledTypescriptProject extends TypescriptProject {
         }
     }
 
-    protected getFormatCommand(): string[] {
-        return [BundledTypescriptProject.FORMAT_SCRIPT_NAME];
+    protected getCheckFixCommand(): string[] {
+        return [BundledTypescriptProject.CHECK_FIX_SCRIPT_NAME];
     }
 
     protected getBuildCommand(): string[] {
@@ -133,31 +131,6 @@ async function runEsbuild({ platform, target, format, entryPoint, outfile }) {
         await this.writeFileToVolume(RelativeFilePath.of(TypescriptProject.PNPM_WORKSPACE_FILENAME), "packages: ['.']");
     }
 
-    private async generatePrettierRc(): Promise<void> {
-        await this.writeFileToVolume(
-            RelativeFilePath.of(TypescriptProject.PRETTIER_RC_FILENAME),
-            yaml.dump({
-                tabWidth: 4,
-                printWidth: 120
-            })
-        );
-    }
-
-    private async generatePrettierIgnore(): Promise<void> {
-        await this.writeFileToVolume(
-            RelativeFilePath.of(TypescriptProject.PRETTIER_IGNORE_FILENAME),
-            `dist
-*.tsbuildinfo
-_tmp_*
-*.tmp
-.tmp/
-*.log
-.DS_Store
-Thumbs.db
-            `
-        );
-    }
-
     private async generateStubTypeDeclarations(): Promise<void> {
         for (const folder of this.getFoldersForExports()) {
             await this.writeFileToVolume(
@@ -194,7 +167,8 @@ export * from "./${BundledTypescriptProject.TYPES_DIRECTORY}/${folder}";
             rootDir: this.packagePath,
             baseUrl: this.packagePath,
             isolatedModules: true,
-            isolatedDeclarations: true
+            isolatedDeclarations: true,
+            verbatimModuleSyntax: true
         };
 
         await this.writeFileToVolume(
@@ -235,14 +209,6 @@ export * from "./${BundledTypescriptProject.TYPES_DIRECTORY}/${folder}";
 
         packageJson = {
             ...packageJson,
-            scripts: {
-                ...packageJson.scripts,
-                ...this.extraScripts
-            }
-        };
-
-        packageJson = {
-            ...packageJson,
             files: [
                 BundledTypescriptProject.DIST_DIRECTORY,
                 BundledTypescriptProject.TYPES_DIRECTORY,
@@ -267,13 +233,15 @@ export * from "./${BundledTypescriptProject.TYPES_DIRECTORY}/${folder}";
             },
             types: `./${BundledTypescriptProject.TYPES_DIRECTORY}/index.d.ts`,
             scripts: {
-                [BundledTypescriptProject.FORMAT_SCRIPT_NAME]: "prettier . --write --ignore-unknown",
+                ...BundledTypescriptProject.COMMON_SCRIPTS,
                 [BundledTypescriptProject.COMPILE_SCRIPT_NAME]: "tsc",
                 [BundledTypescriptProject.BUNDLE_SCRIPT_NAME]: `node ${BundledTypescriptProject.BUILD_SCRIPT_FILENAME}`,
                 [BundledTypescriptProject.BUILD_SCRIPT_NAME]: [
                     `${this.packageManager} ${BundledTypescriptProject.COMPILE_SCRIPT_NAME}`,
                     `${this.packageManager} ${BundledTypescriptProject.BUNDLE_SCRIPT_NAME}`
-                ].join(" && ")
+                ].join(" && "),
+                ...packageJson.scripts,
+                ...this.extraScripts
             }
         };
 
@@ -390,7 +358,7 @@ export * from "./${BundledTypescriptProject.TYPES_DIRECTORY}/${folder}";
         return {
             "@types/node": "^18.19.70",
             esbuild: "~0.24.2",
-            prettier: "^3.4.2",
+            "@biomejs/biome": "2.2.5",
             typescript: "~5.7.2"
         };
     }

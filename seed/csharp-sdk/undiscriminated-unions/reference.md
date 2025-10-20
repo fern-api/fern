@@ -79,7 +79,7 @@ await client.Union.GetMetadataAsync();
 
 ```csharp
 await client.Union.UpdateMetadataAsync(
-    new Dictionary<string, object>()
+    new Dictionary<string, object?>()
     {
         {
             "string",
@@ -129,10 +129,10 @@ await client.Union.UpdateMetadataAsync(
 await client.Union.CallAsync(
     new Request
     {
-        Union = new Dictionary<string, object>()
+        Union = new Dictionary<string, object?>()
         {
             {
-                "union",
+                "string",
                 new Dictionary<object, object?>() { { "key", "value" } }
             },
         },

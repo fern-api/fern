@@ -3,7 +3,7 @@
     "requirement": "ALL",
     "schemes": [
       {
-        "key": "header",
+        "key": "tokenAuth",
         "name": {
           "name": {
             "originalName": "apiKey",

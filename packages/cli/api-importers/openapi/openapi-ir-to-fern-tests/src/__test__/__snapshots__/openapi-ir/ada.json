@@ -2036,7 +2036,8 @@
             "generatedName": "endUserEndUserId",
             "key": "end_user_id",
             "schema": {
-              "generatedName": "endUserEndUserId",
+              "generatedName": "EndUserEndUserId",
+              "description": "The unique Ada-generated ID for the end user",
               "value": {
                 "description": "The unique Ada-generated ID for the end user",
                 "schema": {
@@ -2058,7 +2059,8 @@
             "generatedName": "endUserProfile",
             "key": "profile",
             "schema": {
-              "generatedName": "endUserProfile",
+              "generatedName": "EndUserProfile",
+              "description": "The end user's profile information",
               "value": {
                 "allOf": [],
                 "properties": [
@@ -2067,7 +2069,8 @@
                     "generatedName": "endUserProfileFirstName",
                     "key": "first_name",
                     "schema": {
-                      "generatedName": "endUserProfileFirstName",
+                      "generatedName": "EndUserProfileFirstName",
+                      "description": "The end user's first name",
                       "value": {
                         "generatedName": "EndUserProfileFirstName",
                         "description": "The end user's first name",
@@ -2094,7 +2097,8 @@
                     "generatedName": "endUserProfileLastName",
                     "key": "last_name",
                     "schema": {
-                      "generatedName": "endUserProfileLastName",
+                      "generatedName": "EndUserProfileLastName",
+                      "description": "The end user's last name",
                       "value": {
                         "generatedName": "EndUserProfileLastName",
                         "description": "The end user's last name",
@@ -2121,7 +2125,8 @@
                     "generatedName": "endUserProfileEmail",
                     "key": "email",
                     "schema": {
-                      "generatedName": "endUserProfileEmail",
+                      "generatedName": "EndUserProfileEmail",
+                      "description": "The end user's email address",
                       "value": {
                         "generatedName": "EndUserProfileEmail",
                         "description": "The end user's email address",
@@ -2148,7 +2153,8 @@
                     "generatedName": "endUserProfileLanguage",
                     "key": "language",
                     "schema": {
-                      "generatedName": "endUserProfileLanguage",
+                      "generatedName": "EndUserProfileLanguage",
+                      "description": "The end user's language in BCP 47 format",
                       "value": {
                         "generatedName": "EndUserProfileLanguage",
                         "description": "The end user's language in BCP 47 format",
@@ -2175,7 +2181,8 @@
                     "generatedName": "endUserProfileMetadata",
                     "key": "metadata",
                     "schema": {
-                      "generatedName": "endUserProfileMetadata",
+                      "generatedName": "EndUserProfileMetadata",
+                      "description": "A dictionary of arbitrary key, value pairs assigned to the end user                      - `metadata` keys may only be of type: `string`                      - `metadata` values may only be one of type: `string`, `boolean`, or `integer`                     ",
                       "value": {
                         "description": "A dictionary of arbitrary key, value pairs assigned to the end user                      - `metadata` keys may only be of type: `string`                      - `metadata` values may only be one of type: `string`, `boolean`, or `integer`                     ",
                         "key": {
@@ -2204,7 +2211,8 @@
                     "generatedName": "endUserProfileSystemProperties",
                     "key": "system_properties",
                     "schema": {
-                      "generatedName": "endUserProfileSystemProperties",
+                      "generatedName": "EndUserProfileSystemProperties",
+                      "description": "Read-only profile information set by Ada",
                       "value": {
                         "allOf": [],
                         "properties": [
@@ -2213,7 +2221,8 @@
                             "generatedName": "endUserProfileSystemPropertiesUserAgent",
                             "key": "user_agent",
                             "schema": {
-                              "generatedName": "endUserProfileSystemPropertiesUserAgent",
+                              "generatedName": "EndUserProfileSystemPropertiesUserAgent",
+                              "description": "The end user's browser user-agent information captured by Ada",
                               "value": {
                                 "generatedName": "EndUserProfileSystemPropertiesUserAgent",
                                 "description": "The end user's browser user-agent information captured by Ada",
@@ -2241,7 +2250,8 @@
                             "generatedName": "endUserProfileSystemPropertiesDevice",
                             "key": "device",
                             "schema": {
-                              "generatedName": "endUserProfileSystemPropertiesDevice",
+                              "generatedName": "EndUserProfileSystemPropertiesDevice",
+                              "description": "The end user's device information captured by Ada",
                               "value": {
                                 "generatedName": "EndUserProfileSystemPropertiesDevice",
                                 "description": "The end user's device information captured by Ada",
@@ -2269,7 +2279,8 @@
                             "generatedName": "endUserProfileSystemPropertiesBrowser",
                             "key": "browser",
                             "schema": {
-                              "generatedName": "endUserProfileSystemPropertiesBrowser",
+                              "generatedName": "EndUserProfileSystemPropertiesBrowser",
+                              "description": "The end user's browser information captured by Ada",
                               "value": {
                                 "generatedName": "EndUserProfileSystemPropertiesBrowser",
                                 "description": "The end user's browser information captured by Ada",
@@ -2297,7 +2308,8 @@
                             "generatedName": "endUserProfileSystemPropertiesBrowserVersion",
                             "key": "browser_version",
                             "schema": {
-                              "generatedName": "endUserProfileSystemPropertiesBrowserVersion",
+                              "generatedName": "EndUserProfileSystemPropertiesBrowserVersion",
+                              "description": "The end user's browser version captured by Ada",
                               "value": {
                                 "generatedName": "EndUserProfileSystemPropertiesBrowserVersion",
                                 "description": "The end user's browser version captured by Ada",
@@ -2325,7 +2337,8 @@
                             "generatedName": "endUserProfileSystemPropertiesIntroshown",
                             "key": "introshown",
                             "schema": {
-                              "generatedName": "endUserProfileSystemPropertiesIntroshown",
+                              "generatedName": "EndUserProfileSystemPropertiesIntroshown",
+                              "description": "Whether the introductory message of a campaign has been displayed to the end user",
                               "value": {
                                 "generatedName": "EndUserProfileSystemPropertiesIntroshown",
                                 "description": "Whether the introductory message of a campaign has been displayed to the end user",
@@ -2353,7 +2366,8 @@
                             "generatedName": "endUserProfileSystemPropertiesLastAnswerId",
                             "key": "last_answer_id",
                             "schema": {
-                              "generatedName": "endUserProfileSystemPropertiesLastAnswerId",
+                              "generatedName": "EndUserProfileSystemPropertiesLastAnswerId",
+                              "description": "The ID for the last answer displayed to the end user during a conversation",
                               "value": {
                                 "generatedName": "EndUserProfileSystemPropertiesLastAnswerId",
                                 "description": "The ID for the last answer displayed to the end user during a conversation",
@@ -2381,7 +2395,8 @@
                             "generatedName": "endUserProfileSystemPropertiesLastQuestionAsked",
                             "key": "last_question_asked",
                             "schema": {
-                              "generatedName": "endUserProfileSystemPropertiesLastQuestionAsked",
+                              "generatedName": "EndUserProfileSystemPropertiesLastQuestionAsked",
+                              "description": "The last question asked by the end user",
                               "value": {
                                 "generatedName": "EndUserProfileSystemPropertiesLastQuestionAsked",
                                 "description": "The last question asked by the end user",
@@ -2409,7 +2424,8 @@
                             "generatedName": "endUserProfileSystemPropertiesSunshineFirstMessageId",
                             "key": "sunshine_first_message_id",
                             "schema": {
-                              "generatedName": "endUserProfileSystemPropertiesSunshineFirstMessageId",
+                              "generatedName": "EndUserProfileSystemPropertiesSunshineFirstMessageId",
+                              "description": "The ID for the first message sent to the end user via Sunshine Conversations",
                               "value": {
                                 "generatedName": "EndUserProfileSystemPropertiesSunshineFirstMessageId",
                                 "description": "The ID for the first message sent to the end user via Sunshine Conversations",
@@ -2437,7 +2453,8 @@
                             "generatedName": "endUserProfileSystemPropertiesSunshineConversationId",
                             "key": "sunshine_conversation_id",
                             "schema": {
-                              "generatedName": "endUserProfileSystemPropertiesSunshineConversationId",
+                              "generatedName": "EndUserProfileSystemPropertiesSunshineConversationId",
+                              "description": "The ID for the Sunshine Conversation for this end user",
                               "value": {
                                 "generatedName": "EndUserProfileSystemPropertiesSunshineConversationId",
                                 "description": "The ID for the Sunshine Conversation for this end user",
@@ -2465,7 +2482,8 @@
                             "generatedName": "endUserProfileSystemPropertiesSunshineEndUserChannel",
                             "key": "sunshine_end_user_channel",
                             "schema": {
-                              "generatedName": "endUserProfileSystemPropertiesSunshineEndUserChannel",
+                              "generatedName": "EndUserProfileSystemPropertiesSunshineEndUserChannel",
+                              "description": "The channel used to communicate with the end user via Sunshine Conversations",
                               "value": {
                                 "generatedName": "EndUserProfileSystemPropertiesSunshineEndUserChannel",
                                 "description": "The channel used to communicate with the end user via Sunshine Conversations",
@@ -2493,7 +2511,8 @@
                             "generatedName": "endUserProfileSystemPropertiesSunshineSignedUpAt",
                             "key": "sunshine_signed_up_at",
                             "schema": {
-                              "generatedName": "endUserProfileSystemPropertiesSunshineSignedUpAt",
+                              "generatedName": "EndUserProfileSystemPropertiesSunshineSignedUpAt",
+                              "description": "The date the end user signed up for Sunshine Conversations",
                               "value": {
                                 "generatedName": "EndUserProfileSystemPropertiesSunshineSignedUpAt",
                                 "description": "The date the end user signed up for Sunshine Conversations",
@@ -2521,7 +2540,8 @@
                             "generatedName": "endUserProfileSystemPropertiesSunshineUserId",
                             "key": "sunshine_user_id",
                             "schema": {
-                              "generatedName": "endUserProfileSystemPropertiesSunshineUserId",
+                              "generatedName": "EndUserProfileSystemPropertiesSunshineUserId",
+                              "description": "The Sunshine Conversations user ID for the end user",
                               "value": {
                                 "generatedName": "EndUserProfileSystemPropertiesSunshineUserId",
                                 "description": "The Sunshine Conversations user ID for the end user",
@@ -2583,7 +2603,8 @@
             "generatedName": "endUserCreatedAt",
             "key": "created_at",
             "schema": {
-              "generatedName": "endUserCreatedAt",
+              "generatedName": "EndUserCreatedAt",
+              "description": "The date and time the end user was created",
               "value": {
                 "description": "The date and time the end user was created",
                 "schema": {
@@ -2605,7 +2626,8 @@
             "generatedName": "endUserUpdatedAt",
             "key": "updated_at",
             "schema": {
-              "generatedName": "endUserUpdatedAt",
+              "generatedName": "EndUserUpdatedAt",
+              "description": "The date and time the end user was updated",
               "value": {
                 "description": "The date and time the end user was updated",
                 "schema": {
@@ -2648,7 +2670,8 @@
                   "generatedName": "endUserRequestProfileFirstName",
                   "key": "first_name",
                   "schema": {
-                    "generatedName": "endUserRequestProfileFirstName",
+                    "generatedName": "EndUserRequestProfileFirstName",
+                    "description": "The end user's first name",
                     "value": {
                       "generatedName": "EndUserRequestProfileFirstName",
                       "description": "The end user's first name",
@@ -2675,7 +2698,8 @@
                   "generatedName": "endUserRequestProfileLastName",
                   "key": "last_name",
                   "schema": {
-                    "generatedName": "endUserRequestProfileLastName",
+                    "generatedName": "EndUserRequestProfileLastName",
+                    "description": "The end user's last name",
                     "value": {
                       "generatedName": "EndUserRequestProfileLastName",
                       "description": "The end user's last name",
@@ -2702,7 +2726,8 @@
                   "generatedName": "endUserRequestProfileEmail",
                   "key": "email",
                   "schema": {
-                    "generatedName": "endUserRequestProfileEmail",
+                    "generatedName": "EndUserRequestProfileEmail",
+                    "description": "The end user's email address",
                     "value": {
                       "generatedName": "EndUserRequestProfileEmail",
                       "description": "The end user's email address",
@@ -2729,7 +2754,8 @@
                   "generatedName": "endUserRequestProfileLanguage",
                   "key": "language",
                   "schema": {
-                    "generatedName": "endUserRequestProfileLanguage",
+                    "generatedName": "EndUserRequestProfileLanguage",
+                    "description": "The end user's language in BCP 47 format",
                     "value": {
                       "generatedName": "EndUserRequestProfileLanguage",
                       "description": "The end user's language in BCP 47 format",
@@ -2756,7 +2782,8 @@
                   "generatedName": "endUserRequestProfileMetadata",
                   "key": "metadata",
                   "schema": {
-                    "generatedName": "endUserRequestProfileMetadata",
+                    "generatedName": "EndUserRequestProfileMetadata",
+                    "description": "A dictionary of arbitrary key, value pairs assigned to the end user                      - `metadata` keys may only be of type: `string`                      - `metadata` values may only be one of type: `string`, `boolean`, or `integer`                     ",
                     "value": {
                       "generatedName": "EndUserRequestProfileMetadata",
                       "description": "A dictionary of arbitrary key, value pairs assigned to the end user                      - `metadata` keys may only be of type: `string`                      - `metadata` values may only be one of type: `string`, `boolean`, or `integer`                     ",
@@ -2900,7 +2927,8 @@
             "generatedName": "endUsersEndUsers",
             "key": "end_users",
             "schema": {
-              "generatedName": "endUsersEndUsers",
+              "generatedName": "EndUsersEndUsers",
+              "description": "List of end user profiles",
               "value": {
                 "description": "List of end user profiles",
                 "value": {
@@ -2926,7 +2954,8 @@
             "generatedName": "endUsersMeta",
             "key": "meta",
             "schema": {
-              "generatedName": "endUsersMeta",
+              "generatedName": "EndUsersMeta",
+              "description": "Metadata returned with the results including but not limited to a link to the next page of data",
               "value": {
                 "allOf": [],
                 "properties": [
@@ -2935,7 +2964,8 @@
                     "generatedName": "endUsersMetaNextPageUrl",
                     "key": "next_page_url",
                     "schema": {
-                      "generatedName": "endUsersMetaNextPageUrl",
+                      "generatedName": "EndUsersMetaNextPageUrl",
+                      "description": "Link to the next page of data using a cursor value",
                       "value": {
                         "description": "Link to the next page of data using a cursor value",
                         "schema": {
@@ -2988,7 +3018,8 @@
             "generatedName": "endUserCreatedWebhookPayloadType",
             "key": "type",
             "schema": {
-              "generatedName": "endUserCreatedWebhookPayloadType",
+              "generatedName": "EndUserCreatedWebhookPayloadType",
+              "description": "The webhook event type description",
               "value": {
                 "description": "The webhook event type description",
                 "schema": {
@@ -3010,7 +3041,8 @@
             "generatedName": "endUserCreatedWebhookPayloadTimestamp",
             "key": "timestamp",
             "schema": {
-              "generatedName": "endUserCreatedWebhookPayloadTimestamp",
+              "generatedName": "EndUserCreatedWebhookPayloadTimestamp",
+              "description": "The timestamp for when the event was generated. Uses millisecond precision to help with event ordering needs.",
               "value": {
                 "description": "The timestamp for when the event was generated. Uses millisecond precision to help with event ordering needs.",
                 "schema": {
@@ -3032,7 +3064,8 @@
             "generatedName": "endUserCreatedWebhookPayloadData",
             "key": "data",
             "schema": {
-              "generatedName": "endUserCreatedWebhookPayloadData",
+              "generatedName": "EndUserCreatedWebhookPayloadData",
+              "description": "The webhook event data",
               "value": {
                 "allOf": [
                   {
@@ -3055,7 +3088,8 @@
                     "generatedName": "endUserCreatedWebhookPayloadDataEndUserId",
                     "key": "end_user_id",
                     "schema": {
-                      "generatedName": "endUserCreatedWebhookPayloadDataEndUserId",
+                      "generatedName": "EndUserCreatedWebhookPayloadDataEndUserId",
+                      "description": "The unique Ada-generated ID for the end user",
                       "value": {
                         "description": "The unique Ada-generated ID for the end user",
                         "schema": {
@@ -3081,7 +3115,8 @@
                     "generatedName": "endUserCreatedWebhookPayloadDataCreatedAt",
                     "key": "created_at",
                     "schema": {
-                      "generatedName": "endUserCreatedWebhookPayloadDataCreatedAt",
+                      "generatedName": "EndUserCreatedWebhookPayloadDataCreatedAt",
+                      "description": "The date and time the end user was created",
                       "value": {
                         "description": "The date and time the end user was created",
                         "schema": {
@@ -3107,7 +3142,8 @@
                     "generatedName": "endUserCreatedWebhookPayloadDataUpdatedAt",
                     "key": "updated_at",
                     "schema": {
-                      "generatedName": "endUserCreatedWebhookPayloadDataUpdatedAt",
+                      "generatedName": "EndUserCreatedWebhookPayloadDataUpdatedAt",
+                      "description": "The date and time the end user was updated",
                       "value": {
                         "description": "The date and time the end user was updated",
                         "schema": {
@@ -3160,7 +3196,8 @@
             "generatedName": "endUserUpdatedWebhookPayloadType",
             "key": "type",
             "schema": {
-              "generatedName": "endUserUpdatedWebhookPayloadType",
+              "generatedName": "EndUserUpdatedWebhookPayloadType",
+              "description": "The webhook event type description",
               "value": {
                 "description": "The webhook event type description",
                 "schema": {
@@ -3182,7 +3219,8 @@
             "generatedName": "endUserUpdatedWebhookPayloadTimestamp",
             "key": "timestamp",
             "schema": {
-              "generatedName": "endUserUpdatedWebhookPayloadTimestamp",
+              "generatedName": "EndUserUpdatedWebhookPayloadTimestamp",
+              "description": "The timestamp for when the event was generated. Uses millisecond precision to help with event ordering needs.",
               "value": {
                 "description": "The timestamp for when the event was generated. Uses millisecond precision to help with event ordering needs.",
                 "schema": {
@@ -3204,7 +3242,8 @@
             "generatedName": "endUserUpdatedWebhookPayloadData",
             "key": "data",
             "schema": {
-              "generatedName": "endUserUpdatedWebhookPayloadData",
+              "generatedName": "EndUserUpdatedWebhookPayloadData",
+              "description": "The webhook event data",
               "value": {
                 "allOf": [
                   {
@@ -3227,7 +3266,8 @@
                     "generatedName": "endUserUpdatedWebhookPayloadDataEndUserId",
                     "key": "end_user_id",
                     "schema": {
-                      "generatedName": "endUserUpdatedWebhookPayloadDataEndUserId",
+                      "generatedName": "EndUserUpdatedWebhookPayloadDataEndUserId",
+                      "description": "The unique Ada-generated ID for the end user",
                       "value": {
                         "description": "The unique Ada-generated ID for the end user",
                         "schema": {
@@ -3253,7 +3293,8 @@
                     "generatedName": "endUserUpdatedWebhookPayloadDataCreatedAt",
                     "key": "created_at",
                     "schema": {
-                      "generatedName": "endUserUpdatedWebhookPayloadDataCreatedAt",
+                      "generatedName": "EndUserUpdatedWebhookPayloadDataCreatedAt",
+                      "description": "The date and time the end user was created",
                       "value": {
                         "description": "The date and time the end user was created",
                         "schema": {
@@ -3279,7 +3320,8 @@
                     "generatedName": "endUserUpdatedWebhookPayloadDataUpdatedAt",
                     "key": "updated_at",
                     "schema": {
-                      "generatedName": "endUserUpdatedWebhookPayloadDataUpdatedAt",
+                      "generatedName": "EndUserUpdatedWebhookPayloadDataUpdatedAt",
+                      "description": "The date and time the end user was updated",
                       "value": {
                         "description": "The date and time the end user was updated",
                         "schema": {

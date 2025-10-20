@@ -111,14 +111,14 @@ public class UpdateUserTest : BaseMockServerTest
                 Username = "username",
                 PhoneNumber = "phone_number",
                 PhoneVerified = true,
-                UserMetadata = new Dictionary<string, object>()
+                UserMetadata = new Dictionary<string, object?>()
                 {
                     {
                         "user_metadata",
                         new Dictionary<object, object?>() { { "key", "value" } }
                     },
                 },
-                AppMetadata = new Dictionary<string, object>()
+                AppMetadata = new Dictionary<string, object?>()
                 {
                     {
                         "app_metadata",

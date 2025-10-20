@@ -20,7 +20,7 @@ With Swift Package Manager (SPM), add the following to the top-level `dependenci
 
 ```swift
 dependencies: [
-    .package(url: "<git-url>", from: "0.1.0"),
+    .package(url: "https://github.com/unknown/fern", from: "0.0.1"),
 ]
 ```
 
@@ -39,7 +39,7 @@ import UnknownAsAny
 private func main() async throws {
     let client = UnknownAsAnyClient()
 
-    try await client.unknown.post(request: .object([
+    _ = try await client.unknown.post(request: .object([
         "key": .string("value")
     ]))
 }

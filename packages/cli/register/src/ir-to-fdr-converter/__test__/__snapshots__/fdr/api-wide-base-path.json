@@ -134,6 +134,7 @@
       "subpackage_service"
     ]
   },
+  "authSchemes": {},
   "snippetsConfiguration": {},
   "globalHeaders": []
 }

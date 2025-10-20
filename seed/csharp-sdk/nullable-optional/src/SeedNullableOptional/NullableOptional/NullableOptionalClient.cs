@@ -295,7 +295,10 @@ public partial class NullableOptionalClient
     {
         var _query = new Dictionary<string, object>();
         _query["query"] = request.Query;
-        _query["department"] = request.Department;
+        if (request.Department != null)
+        {
+            _query["department"] = request.Department;
+        }
         if (request.Role != null)
         {
             _query["role"] = request.Role;
@@ -803,7 +806,10 @@ public partial class NullableOptionalClient
     )
     {
         var _query = new Dictionary<string, object>();
-        _query["role"] = request.Role.Value.ToString();
+        if (request.Role != null)
+        {
+            _query["role"] = request.Role.Value.ToString();
+        }
         if (request.Status != null)
         {
             _query["status"] = request.Status.Value.Stringify();

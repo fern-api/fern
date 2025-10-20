@@ -8,13 +8,13 @@ public class Example0
     public async Task Do() {
         var client = new SeedClientSideParamsClient(
             token: "<token>",
-            clientOptions: new ClientOptions{
+            clientOptions: new ClientOptions {
                 BaseUrl = "https://api.fern.com"
             }
         );
 
         await client.Service.ListResourcesAsync(
-            new ListResourcesRequest{
+            new ListResourcesRequest {
                 Page = 1,
                 PerPage = 1,
                 Sort = "created_at",

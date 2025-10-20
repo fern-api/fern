@@ -1,10 +1,10 @@
-use serde::{Deserialize, Serialize};
+pub use crate::prelude::*;
 
-#[derive(Debug, Clone, Serialize, Deserialize, PartialEq)]
+#[derive(Debug, Clone, Serialize, Deserialize, PartialEq, Eq, Hash)]
 #[serde(tag = "type")]
 pub enum UnionWithPrimitive {
         Integer {
-            value: i32,
+            value: i64,
         },
 
         String {

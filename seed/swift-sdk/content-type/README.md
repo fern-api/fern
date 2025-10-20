@@ -20,7 +20,7 @@ With Swift Package Manager (SPM), add the following to the top-level `dependenci
 
 ```swift
 dependencies: [
-    .package(url: "<git-url>", from: "0.1.0"),
+    .package(url: "https://github.com/content-type/fern", from: "0.0.1"),
 ]
 ```
 
@@ -39,9 +39,9 @@ import ContentTypes
 private func main() async throws {
     let client = ContentTypesClient()
 
-    try await client.service.patch(request: .init(
-        application: "application",
-        requireAuth: True
+    _ = try await client.service.patch(request: .init(
+        application: .value("application"),
+        requireAuth: .value(true)
     ))
 }
 

@@ -1,6 +1,6 @@
 # Reference
 ## Service
-<details><summary><code>client.Service.GetWithApiKey() -> String</code></summary>
+<details><summary><code>client.service.get_with_api_key() -> String</code></summary>
 <dl>
 <dd>
 
@@ -39,7 +39,7 @@ client.service.get_with_api_key();
 </dl>
 </details>
 
-<details><summary><code>client.Service.GetWithHeader() -> String</code></summary>
+<details><summary><code>client.service.get_with_header() -> String</code></summary>
 <dl>
 <dd>
 
@@ -66,9 +66,7 @@ GET request with custom api key
 <dd>
 
 ```ruby
-client.service.get_with_header({
-  xEndpointHeader:'X-Endpoint-Header'
-});
+client.service.get_with_header(xEndpointHeader: 'X-Endpoint-Header');
 ```
 </dd>
 </dl>
@@ -83,7 +81,7 @@ client.service.get_with_header({
 <dl>
 <dd>
 
-**xEndpointHeader:** `String` — Specifies the endpoint key.
+**x_endpoint_header:** `String` — Specifies the endpoint key.
     
 </dd>
 </dl>

@@ -1,0 +1,94 @@
+name: Run Seed Process
+description: Run whole process for seed tests
+
+inputs:
+  sdk-name:
+    description: The name of the SDK to get the test matrix for
+    required: true
+  generator-path:
+    description: The path to the generator to run
+    required: true
+  fixtures-to-run:
+    description: The fixtures to run, as JSON
+    required: true
+  skip-scripts:
+    description: Whether to skip running scripts during seed generation
+    required: false
+    default: "false"
+  job-index:
+    description: The index of the job (when parallelized in a matrix strategy)
+    required: true
+  collect-metrics:
+    description: Whether to collect metrics
+    required: false
+    default: "false"
+
+outputs:
+  start_time:
+    description: The start time of the seed tests, used for metric collection
+    value: ${{ steps.start-seed-timer.outputs.start_time }}
+  end_time:
+    description: The end time of the seed tests, used for metric collection
+    value: ${{ steps.end-seed-timer.outputs.end_time }}
+
+runs:
+  using: "composite"
+  steps:
+    - name: Record seed start time
+      id: start-seed-timer
+      shell: bash
+      run: |
+        echo "start_time=$EPOCHSECONDS" >> $GITHUB_OUTPUT
+
+    - name: Echo package
+      shell: bash
+      run: echo '${{ inputs.fixtures-to-run }}' | jq .
+
+    # Format for seed tests
+    - name: JSON to String
+      id: json-to-string
+      shell: bash
+      run: |
+        json_data='${{ inputs.fixtures-to-run }}'
+        # Convert JSON array to space-separated string
+        string_result=$(echo "$json_data" | jq -r '.[]' | tr '\n' ' ' | sed 's/ $//')
+        echo "Generated string: '$string_result'"
+        echo "as-string=$string_result" >> $GITHUB_OUTPUT
+
+    - name: Checkout repo
+      uses: actions/checkout@v4
+
+    - name: Run seed
+      if: ${{ steps.json-to-string.outputs.as-string != 'leftovers' }}
+      uses: ./.github/actions/cached-seed
+      with:
+        generator-name: ${{ inputs.sdk-name }}
+        generator-path: ${{ inputs.generator-path }}
+        fixtures-to-run: ${{ steps.json-to-string.outputs.as-string }}
+        skip-scripts: ${{ inputs.skip-scripts }}
+
+    - name: Handle Seed Leftover Tests
+      if: ${{ steps.json-to-string.outputs.as-string == 'leftovers' }}
+      uses: ./.github/actions/handle-leftover-seed-tests
+      with:
+        sdk-name: ${{ inputs.sdk-name }}
+        generator-path: ${{ inputs.generator-path }}
+
+    - name: Record end time
+      id: end-seed-timer
+      # Log end time even if the tests fail
+      if: always() && !cancelled()
+      shell: bash
+      run: |
+        echo "end_time=$EPOCHSECONDS" >> $GITHUB_OUTPUT
+
+    # Collect the outputs from this matrix iteration
+    - name: Collect Metrics
+      # Save metrics even if the tests fail
+      if: ${{ always() && !cancelled() && inputs.collect-metrics == 'true' }}
+      uses: ./.github/actions/artifact-seed-test-times
+      with:
+        sdk-name: ${{ inputs.sdk-name }}
+        job-index: ${{ inputs.job-index }}
+        start-time: ${{ steps.start-seed-timer.outputs.start_time }}
+        end-time: ${{ steps.end-seed-timer.outputs.end_time }}

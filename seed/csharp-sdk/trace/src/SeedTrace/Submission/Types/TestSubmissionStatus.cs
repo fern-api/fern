@@ -90,7 +90,9 @@ public record TestSubmissionStatus
     /// </summary>
     /// <exception cref="Exception">Thrown when <see cref="Type"/> is not 'stopped'.</exception>
     public object AsStopped() =>
-        IsStopped ? Value! : throw new Exception("TestSubmissionStatus.Type is not 'stopped'");
+        IsStopped
+            ? Value!
+            : throw new System.Exception("TestSubmissionStatus.Type is not 'stopped'");
 
     /// <summary>
     /// Returns the value as a <see cref="SeedTrace.ErrorInfo"/> if <see cref="Type"/> is 'errored', otherwise throws an exception.
@@ -99,7 +101,7 @@ public record TestSubmissionStatus
     public SeedTrace.ErrorInfo AsErrored() =>
         IsErrored
             ? (SeedTrace.ErrorInfo)Value!
-            : throw new Exception("TestSubmissionStatus.Type is not 'errored'");
+            : throw new System.Exception("TestSubmissionStatus.Type is not 'errored'");
 
     /// <summary>
     /// Returns the value as a <see cref="SeedTrace.RunningSubmissionState"/> if <see cref="Type"/> is 'running', otherwise throws an exception.
@@ -108,7 +110,7 @@ public record TestSubmissionStatus
     public SeedTrace.RunningSubmissionState AsRunning() =>
         IsRunning
             ? (SeedTrace.RunningSubmissionState)Value!
-            : throw new Exception("TestSubmissionStatus.Type is not 'running'");
+            : throw new System.Exception("TestSubmissionStatus.Type is not 'running'");
 
     /// <summary>
     /// Returns the value as a <see cref="Dictionary<string, SubmissionStatusForTestCase>"/> if <see cref="Type"/> is 'testCaseIdToState', otherwise throws an exception.
@@ -117,7 +119,7 @@ public record TestSubmissionStatus
     public Dictionary<string, SubmissionStatusForTestCase> AsTestCaseIdToState() =>
         IsTestCaseIdToState
             ? (Dictionary<string, SubmissionStatusForTestCase>)Value!
-            : throw new Exception("TestSubmissionStatus.Type is not 'testCaseIdToState'");
+            : throw new System.Exception("TestSubmissionStatus.Type is not 'testCaseIdToState'");
 
     public T Match<T>(
         Func<object, T> onStopped,
@@ -269,15 +271,15 @@ public record TestSubmissionStatus
             var value = discriminator switch
             {
                 "stopped" => new { },
-                "errored" => json.GetProperty("value").Deserialize<SeedTrace.ErrorInfo>(options)
+                "errored" => json.GetProperty("value").Deserialize<SeedTrace.ErrorInfo?>(options)
                 ?? throw new JsonException("Failed to deserialize SeedTrace.ErrorInfo"),
                 "running" => json.GetProperty("value")
-                    .Deserialize<SeedTrace.RunningSubmissionState>(options)
+                    .Deserialize<SeedTrace.RunningSubmissionState?>(options)
                 ?? throw new JsonException(
                         "Failed to deserialize SeedTrace.RunningSubmissionState"
                     ),
                 "testCaseIdToState" => json.GetProperty("value")
-                    .Deserialize<Dictionary<string, SubmissionStatusForTestCase>>(options)
+                    .Deserialize<Dictionary<string, SubmissionStatusForTestCase>?>(options)
                 ?? throw new JsonException(
                         "Failed to deserialize Dictionary<string, SubmissionStatusForTestCase>"
                     ),
@@ -323,7 +325,7 @@ public record TestSubmissionStatus
     {
         internal object Value => new { };
 
-        public override string ToString() => Value.ToString();
+        public override string ToString() => Value.ToString() ?? "null";
     }
 
     /// <summary>
@@ -339,7 +341,7 @@ public record TestSubmissionStatus
 
         internal SeedTrace.ErrorInfo Value { get; set; }
 
-        public override string ToString() => Value.ToString();
+        public override string ToString() => Value.ToString() ?? "null";
 
         public static implicit operator TestSubmissionStatus.Errored(SeedTrace.ErrorInfo value) =>
             new(value);
@@ -358,7 +360,7 @@ public record TestSubmissionStatus
 
         internal SeedTrace.RunningSubmissionState Value { get; set; }
 
-        public override string ToString() => Value.ToString();
+        public override string ToString() => Value.ToString() ?? "null";
 
         public static implicit operator TestSubmissionStatus.Running(
             SeedTrace.RunningSubmissionState value
@@ -379,7 +381,7 @@ public record TestSubmissionStatus
         internal Dictionary<string, SubmissionStatusForTestCase> Value { get; set; } =
             new Dictionary<string, SubmissionStatusForTestCase>();
 
-        public override string ToString() => Value.ToString();
+        public override string ToString() => Value.ToString() ?? "null";
 
         public static implicit operator TestSubmissionStatus.TestCaseIdToState(
             Dictionary<string, SubmissionStatusForTestCase> value

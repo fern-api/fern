@@ -11,11 +11,37 @@ import * as FernIr from "../../../../../index";
  * variety of other endpoint response types (e.g. file download, pagination,
  * streaming, etc).
  */
-export type Response = FernIr.dynamic.Response.Json;
+export type Response =
+    | FernIr.dynamic.Response.Json
+    | FernIr.dynamic.Response.Streaming
+    | FernIr.dynamic.Response.StreamParameter
+    | FernIr.dynamic.Response.FileDownload
+    | FernIr.dynamic.Response.Text
+    | FernIr.dynamic.Response.Bytes;
 
 export namespace Response {
     export interface Json extends _Utils {
         type: "json";
+    }
+
+    export interface Streaming extends _Utils {
+        type: "streaming";
+    }
+
+    export interface StreamParameter extends _Utils {
+        type: "streamParameter";
+    }
+
+    export interface FileDownload extends _Utils {
+        type: "fileDownload";
+    }
+
+    export interface Text extends _Utils {
+        type: "text";
+    }
+
+    export interface Bytes extends _Utils {
+        type: "bytes";
     }
 
     export interface _Utils {
@@ -24,6 +50,11 @@ export namespace Response {
 
     export interface _Visitor<_Result> {
         json: () => _Result;
+        streaming: () => _Result;
+        streamParameter: () => _Result;
+        fileDownload: () => _Result;
+        text: () => _Result;
+        bytes: () => _Result;
         _other: (value: { type: string }) => _Result;
     }
 }
@@ -41,10 +72,80 @@ export const Response = {
         };
     },
 
+    streaming: (): FernIr.dynamic.Response.Streaming => {
+        return {
+            type: "streaming",
+            _visit: function <_Result>(
+                this: FernIr.dynamic.Response.Streaming,
+                visitor: FernIr.dynamic.Response._Visitor<_Result>,
+            ) {
+                return FernIr.dynamic.Response._visit(this, visitor);
+            },
+        };
+    },
+
+    streamParameter: (): FernIr.dynamic.Response.StreamParameter => {
+        return {
+            type: "streamParameter",
+            _visit: function <_Result>(
+                this: FernIr.dynamic.Response.StreamParameter,
+                visitor: FernIr.dynamic.Response._Visitor<_Result>,
+            ) {
+                return FernIr.dynamic.Response._visit(this, visitor);
+            },
+        };
+    },
+
+    fileDownload: (): FernIr.dynamic.Response.FileDownload => {
+        return {
+            type: "fileDownload",
+            _visit: function <_Result>(
+                this: FernIr.dynamic.Response.FileDownload,
+                visitor: FernIr.dynamic.Response._Visitor<_Result>,
+            ) {
+                return FernIr.dynamic.Response._visit(this, visitor);
+            },
+        };
+    },
+
+    text: (): FernIr.dynamic.Response.Text => {
+        return {
+            type: "text",
+            _visit: function <_Result>(
+                this: FernIr.dynamic.Response.Text,
+                visitor: FernIr.dynamic.Response._Visitor<_Result>,
+            ) {
+                return FernIr.dynamic.Response._visit(this, visitor);
+            },
+        };
+    },
+
+    bytes: (): FernIr.dynamic.Response.Bytes => {
+        return {
+            type: "bytes",
+            _visit: function <_Result>(
+                this: FernIr.dynamic.Response.Bytes,
+                visitor: FernIr.dynamic.Response._Visitor<_Result>,
+            ) {
+                return FernIr.dynamic.Response._visit(this, visitor);
+            },
+        };
+    },
+
     _visit: <_Result>(value: FernIr.dynamic.Response, visitor: FernIr.dynamic.Response._Visitor<_Result>): _Result => {
         switch (value.type) {
             case "json":
                 return visitor.json();
+            case "streaming":
+                return visitor.streaming();
+            case "streamParameter":
+                return visitor.streamParameter();
+            case "fileDownload":
+                return visitor.fileDownload();
+            case "text":
+                return visitor.text();
+            case "bytes":
+                return visitor.bytes();
             default:
                 return visitor._other(value as any);
         }

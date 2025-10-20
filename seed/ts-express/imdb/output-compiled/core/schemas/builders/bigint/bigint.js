@@ -4,7 +4,7 @@ exports.bigint = bigint;
 const Schema_1 = require("../../Schema");
 const getErrorMessageForIncorrectType_1 = require("../../utils/getErrorMessageForIncorrectType");
 const maybeSkipValidation_1 = require("../../utils/maybeSkipValidation");
-const schema_utils_1 = require("../schema-utils");
+const index_1 = require("../schema-utils/index");
 function bigint() {
     const baseSchema = {
         parse: (raw, { breadcrumbsPrefix = [] } = {}) => {
@@ -49,5 +49,5 @@ function bigint() {
         },
         getType: () => Schema_1.SchemaType.BIGINT,
     };
-    return Object.assign(Object.assign({}, (0, maybeSkipValidation_1.maybeSkipValidation)(baseSchema)), (0, schema_utils_1.getSchemaUtils)(baseSchema));
+    return Object.assign(Object.assign({}, (0, maybeSkipValidation_1.maybeSkipValidation)(baseSchema)), (0, index_1.getSchemaUtils)(baseSchema));
 }

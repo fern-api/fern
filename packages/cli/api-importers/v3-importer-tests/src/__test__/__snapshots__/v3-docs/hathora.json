@@ -3,7 +3,7 @@
     "requirement": "ALL",
     "schemes": [
       {
-        "key": "bearer",
+        "key": "auth0",
         "token": {
           "originalName": "token",
           "camelCase": {
@@ -8710,7 +8710,6 @@
               },
               "typeId": "StartingConnectionInfo",
               "inline": false,
-              "displayName": "StartingConnectionInfo",
               "type": "named"
             }
           },
@@ -8741,7 +8740,6 @@
               },
               "typeId": "ActiveConnectionInfo",
               "inline": false,
-              "displayName": "ActiveConnectionInfo",
               "type": "named"
             }
           }

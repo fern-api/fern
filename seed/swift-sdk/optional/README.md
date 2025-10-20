@@ -20,7 +20,7 @@ With Swift Package Manager (SPM), add the following to the top-level `dependenci
 
 ```swift
 dependencies: [
-    .package(url: "<git-url>", from: "0.1.0"),
+    .package(url: "https://github.com/optional/fern", from: "0.0.1"),
 ]
 ```
 
@@ -39,7 +39,7 @@ import ObjectsWithImports
 private func main() async throws {
     let client = ObjectsWithImportsClient()
 
-    try await client.optional.sendOptionalBody(request: [
+    _ = try await client.optional.sendOptionalBody(request: [
         "string": .object([
             "key": .string("value")
         ])

@@ -1,4 +1,4 @@
-use serde::{Deserialize, Serialize};
+pub use crate::prelude::*;
 
 #[derive(Debug, Clone, Serialize, Deserialize, PartialEq, Eq, Hash)]
-pub struct TestCaseTemplateId(pub String);
+pub struct TestCaseTemplateId2(pub String);

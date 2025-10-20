@@ -76,14 +76,16 @@ public record Status
     /// </summary>
     /// <exception cref="Exception">Thrown when <see cref="Type"/> is not 'active'.</exception>
     public object AsActive() =>
-        IsActive ? Value! : throw new Exception("Status.Type is not 'active'");
+        IsActive ? Value! : throw new System.Exception("Status.Type is not 'active'");
 
     /// <summary>
     /// Returns the value as a <see cref="DateTime?"/> if <see cref="Type"/> is 'archived', otherwise throws an exception.
     /// </summary>
     /// <exception cref="Exception">Thrown when <see cref="Type"/> is not 'archived'.</exception>
     public DateTime? AsArchived() =>
-        IsArchived ? (DateTime?)Value! : throw new Exception("Status.Type is not 'archived'");
+        IsArchived
+            ? (DateTime?)Value!
+            : throw new System.Exception("Status.Type is not 'archived'");
 
     /// <summary>
     /// Returns the value as a <see cref="DateTime?"/> if <see cref="Type"/> is 'soft-deleted', otherwise throws an exception.
@@ -92,7 +94,7 @@ public record Status
     public DateTime? AsSoftDeleted() =>
         IsSoftDeleted
             ? (DateTime?)Value!
-            : throw new Exception("Status.Type is not 'soft-deleted'");
+            : throw new System.Exception("Status.Type is not 'soft-deleted'");
 
     public T Match<T>(
         Func<object, T> onActive,
@@ -258,7 +260,7 @@ public record Status
     {
         internal object Value => new { };
 
-        public override string ToString() => Value.ToString();
+        public override string ToString() => Value.ToString() ?? "null";
     }
 
     /// <summary>
@@ -274,7 +276,7 @@ public record Status
 
         internal DateTime? Value { get; set; }
 
-        public override string ToString() => Value?.ToString();
+        public override string ToString() => Value?.ToString() ?? "null";
 
         public static implicit operator Status.Archived(DateTime? value) => new(value);
     }
@@ -292,7 +294,7 @@ public record Status
 
         internal DateTime? Value { get; set; }
 
-        public override string ToString() => Value?.ToString();
+        public override string ToString() => Value?.ToString() ?? "null";
 
         public static implicit operator Status.SoftDeleted(DateTime? value) => new(value);
     }

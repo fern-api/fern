@@ -15,11 +15,12 @@ Instantiate and use the client with the following:
 ```ruby
 require "seed"
 
-client = seed::Client.new(token: '<token>');
+client = Seed::Client.new(token: '<token>');
 
-client.payment.create({
-  amount:1
-});
+client.payment.create(
+  amount: 1,
+  currency: 
+);
 ```
 
 ## Environments

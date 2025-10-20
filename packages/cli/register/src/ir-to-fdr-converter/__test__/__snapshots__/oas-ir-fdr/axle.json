@@ -2451,6 +2451,13 @@
     "headerWireValue": "x-access-token",
     "nameOverride": "apiKey"
   },
+  "authSchemes": {
+    "apiKeyAuth": {
+      "type": "header",
+      "headerWireValue": "x-access-token",
+      "nameOverride": "apiKey"
+    }
+  },
   "snippetsConfiguration": {},
   "globalHeaders": []
 }

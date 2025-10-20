@@ -1,5 +1,4 @@
-use crate::level_1_level_2_types_address::Address;
-use serde::{Deserialize, Serialize};
+pub use crate::prelude::*;
 
 #[derive(Debug, Clone, Serialize, Deserialize, PartialEq, Eq, Hash)]
 pub struct Person {

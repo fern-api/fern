@@ -130,7 +130,7 @@
             "generatedName": "userId",
             "key": "id",
             "schema": {
-              "generatedName": "userId",
+              "generatedName": "UserId",
               "value": {
                 "schema": {
                   "format": "uuid",
@@ -140,9 +140,7 @@
                 "groupName": [],
                 "type": "primitive"
               },
-              "groupName": [
-                "user"
-              ],
+              "groupName": [],
               "type": "optional"
             },
             "audiences": []
@@ -152,7 +150,7 @@
             "generatedName": "userAssociatedPersons",
             "key": "associatedPersons",
             "schema": {
-              "generatedName": "userAssociatedPersons",
+              "generatedName": "UserAssociatedPersons",
               "value": {
                 "value": {
                   "generatedName": "UserAssociatedPersonsItem",
@@ -167,9 +165,7 @@
                 "groupName": [],
                 "type": "array"
               },
-              "groupName": [
-                "user"
-              ],
+              "groupName": [],
               "type": "optional"
             },
             "audiences": []
@@ -196,7 +192,7 @@
             "generatedName": "personId",
             "key": "id",
             "schema": {
-              "generatedName": "personId",
+              "generatedName": "PersonId",
               "value": {
                 "schema": {
                   "format": "uuid",

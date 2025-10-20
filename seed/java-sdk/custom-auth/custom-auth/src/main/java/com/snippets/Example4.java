@@ -5,14 +5,15 @@ import java.util.HashMap;
 
 public class Example4 {
     public static void main(String[] args) {
-        SeedCustomAuthClient client = SeedCustomAuthClient
-            .builder()
-            .customAuthScheme("<value>")
-            .url("https://api.fern.com")
-            .build();
+        SeedCustomAuthClient client = SeedCustomAuthClient.builder()
+                .customAuthScheme("<value>")
+                .url("https://api.fern.com")
+                .build();
 
-        client.customAuth().postWithCustomAuth(new 
-        HashMap<String, Object>() {{put("key", "value");
-        }});
+        client.customAuth().postWithCustomAuth(new HashMap<String, Object>() {
+            {
+                put("key", "value");
+            }
+        });
     }
 }

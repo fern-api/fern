@@ -1,17 +1,15 @@
-use crate::v_2_problem_deep_equality_correctness_check::DeepEqualityCorrectnessCheck;
-use crate::v_2_problem_void_function_definition_that_takes_actual_result::VoidFunctionDefinitionThatTakesActualResult;
-use serde::{Deserialize, Serialize};
+pub use crate::prelude::*;
 
-#[derive(Debug, Clone, Serialize, Deserialize)]
+#[derive(Debug, Clone, Serialize, Deserialize, PartialEq)]
 #[serde(tag = "type")]
-pub enum AssertCorrectnessCheck {
+pub enum AssertCorrectnessCheck2 {
         DeepEquality {
             #[serde(flatten)]
-            data: DeepEqualityCorrectnessCheck,
+            data: DeepEqualityCorrectnessCheck2,
         },
 
         Custom {
             #[serde(flatten)]
-            data: VoidFunctionDefinitionThatTakesActualResult,
+            data: VoidFunctionDefinitionThatTakesActualResult2,
         },
 }

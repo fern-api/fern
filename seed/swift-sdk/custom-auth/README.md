@@ -20,7 +20,7 @@ With Swift Package Manager (SPM), add the following to the top-level `dependenci
 
 ```swift
 dependencies: [
-    .package(url: "<git-url>", from: "0.1.0"),
+    .package(url: "https://github.com/custom-auth/fern", from: "0.0.1"),
 ]
 ```
 
@@ -39,7 +39,7 @@ import CustomAuth
 private func main() async throws {
     let client = CustomAuthClient(customAuthScheme: "<value>")
 
-    try await client.customAuth.postWithCustomAuth(request: .object([
+    _ = try await client.customAuth.postWithCustomAuth(request: .object([
         "key": .string("value")
     ]))
 }

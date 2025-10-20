@@ -69,9 +69,9 @@ When the API returns a non-success status code (4xx or 5xx response), an API exc
 ```java
 import com.seed.publicObject.core.SeedPublicObjectApiException;
 
-try {
+try{
     client.service().get(...);
-} catch (SeedPublicObjectApiException e) {
+} catch (SeedPublicObjectApiException e){
     // Do something with the API exception...
 }
 ```

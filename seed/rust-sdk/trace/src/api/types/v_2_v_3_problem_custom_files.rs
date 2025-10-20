@@ -1,16 +1,14 @@
-use crate::v_2_problem_basic_custom_files::BasicCustomFiles;
-use serde::{Deserialize, Serialize};
-use std::collections::HashMap;
+pub use crate::prelude::*;
 
-#[derive(Debug, Clone, Serialize, Deserialize)]
+#[derive(Debug, Clone, Serialize, Deserialize, PartialEq)]
 #[serde(tag = "type")]
-pub enum CustomFiles {
+pub enum CustomFiles2 {
     Basic {
         #[serde(flatten)]
-        data: BasicCustomFiles,
+        data: BasicCustomFiles2,
     },
 
     Custom {
-        value: HashMap<Language, Files>,
+        value: HashMap<Language, Files2>,
     },
 }

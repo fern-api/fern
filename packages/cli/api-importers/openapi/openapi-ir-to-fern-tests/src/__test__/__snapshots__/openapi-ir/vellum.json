@@ -4160,7 +4160,7 @@
             "key": "add_to_index_names",
             "schema": {
               "value": {
-                "generatedName": "documentsUploadRequestAddToIndexNames",
+                "generatedName": "DocumentsUploadRequestAddToIndexNames",
                 "value": {
                   "generatedName": "DocumentsUploadRequestAddToIndexNames",
                   "value": {
@@ -4182,6 +4182,7 @@
                   "groupName": [],
                   "type": "nullable"
                 },
+                "description": "Optionally include the names of all indexes that you'd like this document to be included in",
                 "groupName": [],
                 "type": "optional"
               },
@@ -4192,7 +4193,7 @@
             "key": "external_id",
             "schema": {
               "value": {
-                "generatedName": "documentsUploadRequestExternalId",
+                "generatedName": "DocumentsUploadRequestExternalId",
                 "value": {
                   "generatedName": "DocumentsUploadRequestExternalId",
                   "value": {
@@ -4210,6 +4211,7 @@
                   "type": "nullable"
                 },
                 "groupName": [],
+                "description": "Optionally include an external ID for this document. This is useful if you want to re-upload the same document later when its contents change and would like it to be re-indexed.",
                 "type": "optional"
               },
               "type": "json"
@@ -4246,7 +4248,7 @@
             "key": "keywords",
             "schema": {
               "value": {
-                "generatedName": "documentsUploadRequestKeywords",
+                "generatedName": "DocumentsUploadRequestKeywords",
                 "value": {
                   "generatedName": "DocumentsUploadRequestKeywords",
                   "value": {
@@ -4268,6 +4270,7 @@
                   "groupName": [],
                   "type": "nullable"
                 },
+                "description": "Optionally include a list of keywords that'll be associated with this document. Used when performing keyword searches.",
                 "groupName": [],
                 "type": "optional"
               },
@@ -4655,7 +4658,7 @@
             "generatedName": "conditionalNodeResultDataSourceHandleId",
             "key": "source_handle_id",
             "schema": {
-              "generatedName": "conditionalNodeResultDataSourceHandleId",
+              "generatedName": "ConditionalNodeResultDataSourceHandleId",
               "value": {
                 "generatedName": "ConditionalNodeResultDataSourceHandleId",
                 "value": {
@@ -4760,7 +4763,7 @@
             "generatedName": "deploymentNodeResultDataText",
             "key": "text",
             "schema": {
-              "generatedName": "deploymentNodeResultDataText",
+              "generatedName": "DeploymentNodeResultDataText",
               "value": {
                 "generatedName": "DeploymentNodeResultDataText",
                 "value": {
@@ -4784,7 +4787,7 @@
             "generatedName": "deploymentNodeResultDataDelta",
             "key": "delta",
             "schema": {
-              "generatedName": "deploymentNodeResultDataDelta",
+              "generatedName": "DeploymentNodeResultDataDelta",
               "value": {
                 "generatedName": "DeploymentNodeResultDataDelta",
                 "value": {
@@ -4822,7 +4825,7 @@
             "generatedName": "deploymentReadId",
             "key": "id",
             "schema": {
-              "generatedName": "deploymentReadId",
+              "generatedName": "DeploymentReadId",
               "value": {
                 "schema": {
                   "format": "uuid",
@@ -4843,7 +4846,7 @@
             "generatedName": "deploymentReadCreated",
             "key": "created",
             "schema": {
-              "generatedName": "deploymentReadCreated",
+              "generatedName": "DeploymentReadCreated",
               "value": {
                 "schema": {
                   "type": "datetime"
@@ -4895,12 +4898,11 @@
             "generatedName": "deploymentReadStatus",
             "key": "status",
             "schema": {
-              "generatedName": "deploymentReadStatus",
+              "generatedName": "DeploymentReadStatus",
+              "description": "The current status of the deployment\n\n* `ACTIVE` - Active\n* `INACTIVE` - Inactive\n* `ARCHIVED` - Archived",
               "value": {
-                "description": "The current status of the deployment\n\n* `ACTIVE` - Active\n* `INACTIVE` - Inactive\n* `ARCHIVED` - Archived",
                 "generatedName": "DeploymentReadStatus",
                 "schema": "DeploymentReadStatusEnum",
-                "groupName": [],
                 "source": {
                   "file": "../openapi.yml",
                   "type": "openapi"
@@ -4917,12 +4919,11 @@
             "generatedName": "deploymentReadEnvironment",
             "key": "environment",
             "schema": {
-              "generatedName": "deploymentReadEnvironment",
+              "generatedName": "DeploymentReadEnvironment",
+              "description": "The environment this deployment is used in\n\n* `DEVELOPMENT` - Development\n* `STAGING` - Staging\n* `PRODUCTION` - Production",
               "value": {
-                "description": "The environment this deployment is used in\n\n* `DEVELOPMENT` - Development\n* `STAGING` - Staging\n* `PRODUCTION` - Production",
                 "generatedName": "DeploymentReadEnvironment",
                 "schema": "EnvironmentEnum",
-                "groupName": [],
                 "source": {
                   "file": "../openapi.yml",
                   "type": "openapi"
@@ -4956,7 +4957,7 @@
             "generatedName": "deploymentReadActiveModelVersionIds",
             "key": "active_model_version_ids",
             "schema": {
-              "generatedName": "deploymentReadActiveModelVersionIds",
+              "generatedName": "DeploymentReadActiveModelVersionIds",
               "value": {
                 "value": {
                   "schema": {
@@ -5037,7 +5038,8 @@
             "generatedName": "documentId",
             "key": "id",
             "schema": {
-              "generatedName": "documentId",
+              "generatedName": "DocumentId",
+              "description": "The ID of the document.",
               "value": {
                 "description": "The ID of the document.",
                 "schema": {
@@ -5075,7 +5077,8 @@
             "generatedName": "documentExternalId",
             "key": "external_id",
             "schema": {
-              "generatedName": "documentExternalId",
+              "generatedName": "DocumentExternalId",
+              "description": "The unique ID of the document as represented in an external system and specified when it was originally uploaded.",
               "value": {
                 "generatedName": "DocumentExternalId",
                 "description": "The unique ID of the document as represented in an external system and specified when it was originally uploaded.",
@@ -5116,7 +5119,8 @@
             "generatedName": "documentDocumentToDocumentIndexId",
             "key": "id",
             "schema": {
-              "generatedName": "documentDocumentToDocumentIndexId",
+              "generatedName": "DocumentDocumentToDocumentIndexId",
+              "description": "Vellum-generated ID that uniquely identifies this link.",
               "value": {
                 "description": "Vellum-generated ID that uniquely identifies this link.",
                 "schema": {
@@ -5138,7 +5142,8 @@
             "generatedName": "documentDocumentToDocumentIndexDocumentIndexId",
             "key": "document_index_id",
             "schema": {
-              "generatedName": "documentDocumentToDocumentIndexDocumentIndexId",
+              "generatedName": "DocumentDocumentToDocumentIndexDocumentIndexId",
+              "description": "Vellum-generated ID that uniquely identifies the index this document is included in.",
               "value": {
                 "description": "Vellum-generated ID that uniquely identifies the index this document is included in.",
                 "schema": {
@@ -5160,12 +5165,11 @@
             "generatedName": "documentDocumentToDocumentIndexIndexingState",
             "key": "indexing_state",
             "schema": {
-              "generatedName": "documentDocumentToDocumentIndexIndexingState",
+              "generatedName": "DocumentDocumentToDocumentIndexIndexingState",
+              "description": "An enum value representing where this document is along its indexing lifecycle for this index.\n\n* `AWAITING_PROCESSING` - Awaiting Processing\n* `QUEUED` - Queued\n* `INDEXING` - Indexing\n* `INDEXED` - Indexed\n* `FAILED` - Failed",
               "value": {
-                "description": "An enum value representing where this document is along its indexing lifecycle for this index.\n\n* `AWAITING_PROCESSING` - Awaiting Processing\n* `QUEUED` - Queued\n* `INDEXING` - Indexing\n* `INDEXED` - Indexed\n* `FAILED` - Failed",
                 "generatedName": "DocumentDocumentToDocumentIndexIndexingState",
                 "schema": "IndexingStateEnum",
-                "groupName": [],
                 "source": {
                   "file": "../openapi.yml",
                   "type": "openapi"
@@ -5230,12 +5234,11 @@
             "generatedName": "documentIndexCreateRequestStatus",
             "key": "status",
             "schema": {
-              "generatedName": "documentIndexCreateRequestStatus",
+              "generatedName": "DocumentIndexCreateRequestStatus",
+              "description": "The current status of the document index\n\n* `ACTIVE` - Active\n* `ARCHIVED` - Archived",
               "value": {
-                "description": "The current status of the document index\n\n* `ACTIVE` - Active\n* `ARCHIVED` - Archived",
                 "generatedName": "DocumentIndexCreateRequestStatus",
                 "schema": "DocumentIndexStatus",
-                "groupName": [],
                 "source": {
                   "file": "../openapi.yml",
                   "type": "openapi"
@@ -5252,12 +5255,11 @@
             "generatedName": "documentIndexCreateRequestEnvironment",
             "key": "environment",
             "schema": {
-              "generatedName": "documentIndexCreateRequestEnvironment",
+              "generatedName": "DocumentIndexCreateRequestEnvironment",
+              "description": "The environment this document index is used in\n\n* `DEVELOPMENT` - Development\n* `STAGING` - Staging\n* `PRODUCTION` - Production",
               "value": {
-                "description": "The environment this document index is used in\n\n* `DEVELOPMENT` - Development\n* `STAGING` - Staging\n* `PRODUCTION` - Production",
                 "generatedName": "DocumentIndexCreateRequestEnvironment",
                 "schema": "EnvironmentEnum",
-                "groupName": [],
                 "source": {
                   "file": "../openapi.yml",
                   "type": "openapi"
@@ -5298,7 +5300,8 @@
             "generatedName": "documentIndexCreateRequestCopyDocumentsFromIndexId",
             "key": "copy_documents_from_index_id",
             "schema": {
-              "generatedName": "documentIndexCreateRequestCopyDocumentsFromIndexId",
+              "generatedName": "DocumentIndexCreateRequestCopyDocumentsFromIndexId",
+              "description": "Optionally specify the id of a document index from which you'd like to copy and re-index its documents into this newly created index",
               "value": {
                 "description": "Optionally specify the id of a document index from which you'd like to copy and re-index its documents into this newly created index",
                 "schema": {
@@ -5333,7 +5336,7 @@
             "generatedName": "documentIndexReadId",
             "key": "id",
             "schema": {
-              "generatedName": "documentIndexReadId",
+              "generatedName": "DocumentIndexReadId",
               "value": {
                 "schema": {
                   "format": "uuid",
@@ -5354,7 +5357,7 @@
             "generatedName": "documentIndexReadCreated",
             "key": "created",
             "schema": {
-              "generatedName": "documentIndexReadCreated",
+              "generatedName": "DocumentIndexReadCreated",
               "value": {
                 "schema": {
                   "type": "datetime"
@@ -5406,12 +5409,11 @@
             "generatedName": "documentIndexReadStatus",
             "key": "status",
             "schema": {
-              "generatedName": "documentIndexReadStatus",
+              "generatedName": "DocumentIndexReadStatus",
+              "description": "The current status of the document index\n\n* `ACTIVE` - Active\n* `ARCHIVED` - Archived",
               "value": {
-                "description": "The current status of the document index\n\n* `ACTIVE` - Active\n* `ARCHIVED` - Archived",
                 "generatedName": "DocumentIndexReadStatus",
                 "schema": "DocumentIndexStatus",
-                "groupName": [],
                 "source": {
                   "file": "../openapi.yml",
                   "type": "openapi"
@@ -5428,12 +5430,11 @@
             "generatedName": "documentIndexReadEnvironment",
             "key": "environment",
             "schema": {
-              "generatedName": "documentIndexReadEnvironment",
+              "generatedName": "DocumentIndexReadEnvironment",
+              "description": "The environment this document index is used in\n\n* `DEVELOPMENT` - Development\n* `STAGING` - Staging\n* `PRODUCTION` - Production",
               "value": {
-                "description": "The environment this document index is used in\n\n* `DEVELOPMENT` - Development\n* `STAGING` - Staging\n* `PRODUCTION` - Production",
                 "generatedName": "DocumentIndexReadEnvironment",
                 "schema": "EnvironmentEnum",
-                "groupName": [],
                 "source": {
                   "file": "../openapi.yml",
                   "type": "openapi"
@@ -5526,7 +5527,8 @@
             "generatedName": "enrichedNormalizedCompletionExternalId",
             "key": "external_id",
             "schema": {
-              "generatedName": "enrichedNormalizedCompletionExternalId",
+              "generatedName": "EnrichedNormalizedCompletionExternalId",
+              "description": "The external ID that was originally provided along with the generation request, which uniquely identifies this generation in an external system.",
               "value": {
                 "generatedName": "EnrichedNormalizedCompletionExternalId",
                 "description": "The external ID that was originally provided along with the generation request, which uniquely identifies this generation in an external system.",
@@ -5588,10 +5590,10 @@
             "generatedName": "enrichedNormalizedCompletionLogprobs",
             "key": "logprobs",
             "schema": {
-              "generatedName": "enrichedNormalizedCompletionLogprobs",
+              "generatedName": "EnrichedNormalizedCompletionLogprobs",
+              "description": "The logprobs of the completion. Only present if specified in the original request options.",
               "value": {
                 "generatedName": "EnrichedNormalizedCompletionLogprobs",
-                "description": "The logprobs of the completion. Only present if specified in the original request options.",
                 "value": {
                   "generatedName": "EnrichedNormalizedCompletionLogprobs",
                   "schema": "NormalizedLogProbs",
@@ -5601,7 +5603,6 @@
                   },
                   "type": "reference"
                 },
-                "groupName": [],
                 "type": "nullable"
               },
               "groupName": [],
@@ -5629,7 +5630,7 @@
             "generatedName": "enrichedNormalizedCompletionType",
             "key": "type",
             "schema": {
-              "generatedName": "enrichedNormalizedCompletionType",
+              "generatedName": "EnrichedNormalizedCompletionType",
               "value": {
                 "generatedName": "EnrichedNormalizedCompletionType",
                 "schema": "ContentType",
@@ -5639,7 +5640,6 @@
                 },
                 "type": "reference"
               },
-              "groupName": [],
               "type": "optional"
             },
             "audiences": [],
@@ -5692,7 +5692,8 @@
             "generatedName": "evaluationParamsTarget",
             "key": "target",
             "schema": {
-              "generatedName": "evaluationParamsTarget",
+              "generatedName": "EvaluationParamsTarget",
+              "description": "The target value to compare the LLM output against. Typically what you expect or desire the LLM output to be.",
               "value": {
                 "description": "The target value to compare the LLM output against. Typically what you expect or desire the LLM output to be.",
                 "schema": {
@@ -5726,7 +5727,8 @@
             "generatedName": "evaluationParamsRequestTarget",
             "key": "target",
             "schema": {
-              "generatedName": "evaluationParamsRequestTarget",
+              "generatedName": "EvaluationParamsRequestTarget",
+              "description": "The target value to compare the LLM output against. Typically what you expect or desire the LLM output to be.",
               "value": {
                 "description": "The target value to compare the LLM output against. Typically what you expect or desire the LLM output to be.",
                 "schema": {
@@ -5760,7 +5762,8 @@
             "generatedName": "executeWorkflowStreamRequestWorkflowDeploymentId",
             "key": "workflow_deployment_id",
             "schema": {
-              "generatedName": "executeWorkflowStreamRequestWorkflowDeploymentId",
+              "generatedName": "ExecuteWorkflowStreamRequestWorkflowDeploymentId",
+              "description": "The ID of the Workflow Deployment. Must provide either this or workflow_deployment_name.",
               "value": {
                 "generatedName": "ExecuteWorkflowStreamRequestWorkflowDeploymentId",
                 "description": "The ID of the Workflow Deployment. Must provide either this or workflow_deployment_name.",
@@ -5787,7 +5790,8 @@
             "generatedName": "executeWorkflowStreamRequestWorkflowDeploymentName",
             "key": "workflow_deployment_name",
             "schema": {
-              "generatedName": "executeWorkflowStreamRequestWorkflowDeploymentName",
+              "generatedName": "ExecuteWorkflowStreamRequestWorkflowDeploymentName",
+              "description": "The name of the Workflow Deployment. Must provide either this or workflow_deployment_id.",
               "value": {
                 "generatedName": "ExecuteWorkflowStreamRequestWorkflowDeploymentName",
                 "description": "The name of the Workflow Deployment. Must provide either this or workflow_deployment_id.",
@@ -5814,7 +5818,8 @@
             "generatedName": "executeWorkflowStreamRequestReleaseTag",
             "key": "release_tag",
             "schema": {
-              "generatedName": "executeWorkflowStreamRequestReleaseTag",
+              "generatedName": "ExecuteWorkflowStreamRequestReleaseTag",
+              "description": "Optionally specify a release tag if you want to pin to a specific release of the Workflow Deployment",
               "value": {
                 "generatedName": "ExecuteWorkflowStreamRequestReleaseTag",
                 "description": "Optionally specify a release tag if you want to pin to a specific release of the Workflow Deployment",
@@ -5861,7 +5866,8 @@
             "generatedName": "executeWorkflowStreamRequestExternalId",
             "key": "external_id",
             "schema": {
-              "generatedName": "executeWorkflowStreamRequestExternalId",
+              "generatedName": "ExecuteWorkflowStreamRequestExternalId",
+              "description": "Optionally include a unique identifier for tracking purposes.",
               "value": {
                 "generatedName": "ExecuteWorkflowStreamRequestExternalId",
                 "description": "Optionally include a unique identifier for tracking purposes.",
@@ -5929,7 +5935,8 @@
             "generatedName": "generateBodyRequestDeploymentId",
             "key": "deployment_id",
             "schema": {
-              "generatedName": "generateBodyRequestDeploymentId",
+              "generatedName": "GenerateBodyRequestDeploymentId",
+              "description": "The ID of the deployment. Must provide either this or deployment_name.",
               "value": {
                 "generatedName": "GenerateBodyRequestDeploymentId",
                 "description": "The ID of the deployment. Must provide either this or deployment_name.",
@@ -5956,7 +5963,8 @@
             "generatedName": "generateBodyRequestDeploymentName",
             "key": "deployment_name",
             "schema": {
-              "generatedName": "generateBodyRequestDeploymentName",
+              "generatedName": "GenerateBodyRequestDeploymentName",
+              "description": "The name of the deployment. Must provide either this or deployment_id.",
               "value": {
                 "generatedName": "GenerateBodyRequestDeploymentName",
                 "description": "The name of the deployment. Must provide either this or deployment_id.",
@@ -6004,10 +6012,10 @@
             "generatedName": "generateBodyRequestOptions",
             "key": "options",
             "schema": {
-              "generatedName": "generateBodyRequestOptions",
+              "generatedName": "GenerateBodyRequestOptions",
+              "description": "Additional configuration that can be used to control what's included in the response.",
               "value": {
                 "generatedName": "GenerateBodyRequestOptions",
-                "description": "Additional configuration that can be used to control what's included in the response.",
                 "value": {
                   "generatedName": "GenerateBodyRequestOptions",
                   "schema": "GenerateOptionsRequest",
@@ -6017,7 +6025,6 @@
                   },
                   "type": "reference"
                 },
-                "groupName": [],
                 "type": "nullable"
               },
               "groupName": [],
@@ -6073,12 +6080,11 @@
             "generatedName": "generateOptionsRequestLogprobs",
             "key": "logprobs",
             "schema": {
-              "generatedName": "generateOptionsRequestLogprobs",
+              "generatedName": "GenerateOptionsRequestLogprobs",
+              "description": "Which logprobs to include, if any. Defaults to NONE.\n\n* `ALL` - ALL\n* `NONE` - NONE",
               "value": {
-                "description": "Which logprobs to include, if any. Defaults to NONE.\n\n* `ALL` - ALL\n* `NONE` - NONE",
                 "generatedName": "GenerateOptionsRequestLogprobs",
                 "schema": "LogprobsEnum",
-                "groupName": [],
                 "source": {
                   "file": "../openapi.yml",
                   "type": "openapi"
@@ -6133,7 +6139,8 @@
             "generatedName": "generateRequestChatHistory",
             "key": "chat_history",
             "schema": {
-              "generatedName": "generateRequestChatHistory",
+              "generatedName": "GenerateRequestChatHistory",
+              "description": "Optionally provide a list of chat messages that'll be used in place of the special {$chat_history} variable, if included in the prompt.",
               "value": {
                 "description": "Optionally provide a list of chat messages that'll be used in place of the special {$chat_history} variable, if included in the prompt.",
                 "value": {
@@ -6159,7 +6166,8 @@
             "generatedName": "generateRequestExternalIds",
             "key": "external_ids",
             "schema": {
-              "generatedName": "generateRequestExternalIds",
+              "generatedName": "GenerateRequestExternalIds",
+              "description": "Optionally include a unique identifier for each generation, as represented outside of Vellum. Note that this should generally be a list of length one.",
               "value": {
                 "generatedName": "GenerateRequestExternalIds",
                 "description": "Optionally include a unique identifier for each generation, as represented outside of Vellum. Note that this should generally be a list of length one.",
@@ -6240,12 +6248,11 @@
             "generatedName": "generateResultData",
             "key": "data",
             "schema": {
-              "generatedName": "generateResultData",
+              "generatedName": "GenerateResultData",
+              "description": "An object containing the resulting generation. This key will be absent if the LLM provider experienced an error.",
               "value": {
-                "description": "An object containing the resulting generation. This key will be absent if the LLM provider experienced an error.",
                 "generatedName": "GenerateResultData",
                 "schema": "GenerateResultData",
-                "groupName": [],
                 "source": {
                   "file": "../openapi.yml",
                   "type": "openapi"
@@ -6262,12 +6269,11 @@
             "generatedName": "generateResultError",
             "key": "error",
             "schema": {
-              "generatedName": "generateResultError",
+              "generatedName": "GenerateResultError",
+              "description": "An object containing details about the error that occurred. This key will be absent if the LLM provider did not experience an error.",
               "value": {
-                "description": "An object containing details about the error that occurred. This key will be absent if the LLM provider did not experience an error.",
                 "generatedName": "GenerateResultError",
                 "schema": "GenerateResultError",
-                "groupName": [],
                 "source": {
                   "file": "../openapi.yml",
                   "type": "openapi"
@@ -6362,7 +6368,8 @@
             "generatedName": "generateStreamBodyRequestDeploymentId",
             "key": "deployment_id",
             "schema": {
-              "generatedName": "generateStreamBodyRequestDeploymentId",
+              "generatedName": "GenerateStreamBodyRequestDeploymentId",
+              "description": "The ID of the deployment. Must provide either this or deployment_name.",
               "value": {
                 "generatedName": "GenerateStreamBodyRequestDeploymentId",
                 "description": "The ID of the deployment. Must provide either this or deployment_name.",
@@ -6389,7 +6396,8 @@
             "generatedName": "generateStreamBodyRequestDeploymentName",
             "key": "deployment_name",
             "schema": {
-              "generatedName": "generateStreamBodyRequestDeploymentName",
+              "generatedName": "GenerateStreamBodyRequestDeploymentName",
+              "description": "The name of the deployment. Must provide either this or deployment_id.",
               "value": {
                 "generatedName": "GenerateStreamBodyRequestDeploymentName",
                 "description": "The name of the deployment. Must provide either this or deployment_id.",
@@ -6437,10 +6445,10 @@
             "generatedName": "generateStreamBodyRequestOptions",
             "key": "options",
             "schema": {
-              "generatedName": "generateStreamBodyRequestOptions",
+              "generatedName": "GenerateStreamBodyRequestOptions",
+              "description": "Additional configuration that can be used to control what's included in the response.",
               "value": {
                 "generatedName": "GenerateStreamBodyRequestOptions",
-                "description": "Additional configuration that can be used to control what's included in the response.",
                 "value": {
                   "generatedName": "GenerateStreamBodyRequestOptions",
                   "schema": "GenerateOptionsRequest",
@@ -6450,7 +6458,6 @@
                   },
                   "type": "reference"
                 },
-                "groupName": [],
                 "type": "nullable"
               },
               "groupName": [],
@@ -6522,7 +6529,7 @@
             "generatedName": "generateStreamResultData",
             "key": "data",
             "schema": {
-              "generatedName": "generateStreamResultData",
+              "generatedName": "GenerateStreamResultData",
               "value": {
                 "generatedName": "GenerateStreamResultData",
                 "schema": "GenerateStreamResultData",
@@ -6532,7 +6539,6 @@
                 },
                 "type": "reference"
               },
-              "groupName": [],
               "type": "optional"
             },
             "audiences": [],
@@ -6544,7 +6550,7 @@
             "generatedName": "generateStreamResultError",
             "key": "error",
             "schema": {
-              "generatedName": "generateStreamResultError",
+              "generatedName": "GenerateStreamResultError",
               "value": {
                 "generatedName": "GenerateStreamResultError",
                 "schema": "GenerateResultError",
@@ -6554,7 +6560,6 @@
                 },
                 "type": "reference"
               },
-              "groupName": [],
               "type": "optional"
             },
             "audiences": [],
@@ -6721,10 +6726,10 @@
             "generatedName": "modelVersionBuildConfigSandboxSnapshot",
             "key": "sandbox_snapshot",
             "schema": {
-              "generatedName": "modelVersionBuildConfigSandboxSnapshot",
+              "generatedName": "ModelVersionBuildConfigSandboxSnapshot",
+              "description": "Information about the sandbox snapshot that was used to create this model version, if applicable.",
               "value": {
                 "generatedName": "ModelVersionBuildConfigSandboxSnapshot",
-                "description": "Information about the sandbox snapshot that was used to create this model version, if applicable.",
                 "value": {
                   "generatedName": "ModelVersionBuildConfigSandboxSnapshot",
                   "schema": "ModelVersionSandboxSnapshot",
@@ -6734,7 +6739,6 @@
                   },
                   "type": "reference"
                 },
-                "groupName": [],
                 "type": "nullable"
               },
               "groupName": [],
@@ -6913,7 +6917,8 @@
             "generatedName": "modelVersionExecConfigPromptTemplate",
             "key": "prompt_template",
             "schema": {
-              "generatedName": "modelVersionExecConfigPromptTemplate",
+              "generatedName": "ModelVersionExecConfigPromptTemplate",
+              "description": "The template used to generate prompts for this model version.",
               "value": {
                 "description": "The template used to generate prompts for this model version.",
                 "schema": {
@@ -6933,7 +6938,7 @@
             "generatedName": "modelVersionExecConfigPromptBlockData",
             "key": "prompt_block_data",
             "schema": {
-              "generatedName": "modelVersionExecConfigPromptBlockData",
+              "generatedName": "ModelVersionExecConfigPromptBlockData",
               "value": {
                 "generatedName": "ModelVersionExecConfigPromptBlockData",
                 "schema": "PromptTemplateBlockData",
@@ -6943,7 +6948,6 @@
                 },
                 "type": "reference"
               },
-              "groupName": [],
               "type": "optional"
             },
             "audiences": [],
@@ -6955,7 +6959,7 @@
             "generatedName": "modelVersionExecConfigPromptSyntaxVersion",
             "key": "prompt_syntax_version",
             "schema": {
-              "generatedName": "modelVersionExecConfigPromptSyntaxVersion",
+              "generatedName": "ModelVersionExecConfigPromptSyntaxVersion",
               "value": {
                 "schema": {
                   "type": "int"
@@ -7058,7 +7062,7 @@
             "generatedName": "modelVersionExecConfigParametersLogitBias",
             "key": "logit_bias",
             "schema": {
-              "generatedName": "modelVersionExecConfigParametersLogitBias",
+              "generatedName": "ModelVersionExecConfigParametersLogitBias",
               "value": {
                 "generatedName": "ModelVersionExecConfigParametersLogitBias",
                 "value": {
@@ -7101,7 +7105,7 @@
             "generatedName": "modelVersionExecConfigParametersStop",
             "key": "stop",
             "schema": {
-              "generatedName": "modelVersionExecConfigParametersStop",
+              "generatedName": "ModelVersionExecConfigParametersStop",
               "value": {
                 "generatedName": "ModelVersionExecConfigParametersStop",
                 "value": {
@@ -7130,7 +7134,7 @@
             "generatedName": "modelVersionExecConfigParametersTopK",
             "key": "top_k",
             "schema": {
-              "generatedName": "modelVersionExecConfigParametersTopK",
+              "generatedName": "ModelVersionExecConfigParametersTopK",
               "value": {
                 "schema": {
                   "type": "double"
@@ -7163,7 +7167,8 @@
             "generatedName": "modelVersionReadId",
             "key": "id",
             "schema": {
-              "generatedName": "modelVersionReadId",
+              "generatedName": "ModelVersionReadId",
+              "description": "Vellum-generated ID that uniquely identifies this model version.",
               "value": {
                 "description": "Vellum-generated ID that uniquely identifies this model version.",
                 "schema": {
@@ -7185,7 +7190,8 @@
             "generatedName": "modelVersionReadCreated",
             "key": "created",
             "schema": {
-              "generatedName": "modelVersionReadCreated",
+              "generatedName": "ModelVersionReadCreated",
+              "description": "Timestamp of when this model version was created.",
               "value": {
                 "description": "Timestamp of when this model version was created.",
                 "schema": {
@@ -7306,7 +7312,7 @@
             "generatedName": "modelVersionReadStatus",
             "key": "status",
             "schema": {
-              "generatedName": "modelVersionReadStatus",
+              "generatedName": "ModelVersionReadStatus",
               "value": {
                 "generatedName": "ModelVersionReadStatus",
                 "schema": "ModelVersionReadStatusEnum",
@@ -7316,7 +7322,6 @@
                 },
                 "type": "reference"
               },
-              "groupName": [],
               "type": "optional"
             },
             "audiences": [],
@@ -7389,7 +7394,8 @@
             "generatedName": "modelVersionSandboxSnapshotPromptIndex",
             "key": "prompt_index",
             "schema": {
-              "generatedName": "modelVersionSandboxSnapshotPromptIndex",
+              "generatedName": "ModelVersionSandboxSnapshotPromptIndex",
+              "description": "The index of the prompt in the sandbox snapshot.",
               "value": {
                 "description": "The index of the prompt in the sandbox snapshot.",
                 "schema": {
@@ -7410,7 +7416,8 @@
             "generatedName": "modelVersionSandboxSnapshotPromptId",
             "key": "prompt_id",
             "schema": {
-              "generatedName": "modelVersionSandboxSnapshotPromptId",
+              "generatedName": "ModelVersionSandboxSnapshotPromptId",
+              "description": "The id of the prompt in the sandbox snapshot.",
               "value": {
                 "description": "The id of the prompt in the sandbox snapshot.",
                 "schema": {
@@ -7430,7 +7437,7 @@
             "generatedName": "modelVersionSandboxSnapshotSandboxId",
             "key": "sandbox_id",
             "schema": {
-              "generatedName": "modelVersionSandboxSnapshotSandboxId",
+              "generatedName": "ModelVersionSandboxSnapshotSandboxId",
               "value": {
                 "generatedName": "ModelVersionSandboxSnapshotSandboxId",
                 "value": {
@@ -7621,7 +7628,7 @@
             "generatedName": "paginatedSlimDocumentListCount",
             "key": "count",
             "schema": {
-              "generatedName": "paginatedSlimDocumentListCount",
+              "generatedName": "PaginatedSlimDocumentListCount",
               "value": {
                 "schema": {
                   "example": 123,
@@ -7641,7 +7648,7 @@
             "generatedName": "paginatedSlimDocumentListNext",
             "key": "next",
             "schema": {
-              "generatedName": "paginatedSlimDocumentListNext",
+              "generatedName": "PaginatedSlimDocumentListNext",
               "value": {
                 "generatedName": "PaginatedSlimDocumentListNext",
                 "value": {
@@ -7667,7 +7674,7 @@
             "generatedName": "paginatedSlimDocumentListPrevious",
             "key": "previous",
             "schema": {
-              "generatedName": "paginatedSlimDocumentListPrevious",
+              "generatedName": "PaginatedSlimDocumentListPrevious",
               "value": {
                 "generatedName": "PaginatedSlimDocumentListPrevious",
                 "value": {
@@ -7693,7 +7700,7 @@
             "generatedName": "paginatedSlimDocumentListResults",
             "key": "results",
             "schema": {
-              "generatedName": "paginatedSlimDocumentListResults",
+              "generatedName": "PaginatedSlimDocumentListResults",
               "value": {
                 "value": {
                   "generatedName": "PaginatedSlimDocumentListResultsItem",
@@ -7819,7 +7826,7 @@
             "generatedName": "promptNodeResultDataText",
             "key": "text",
             "schema": {
-              "generatedName": "promptNodeResultDataText",
+              "generatedName": "PromptNodeResultDataText",
               "value": {
                 "generatedName": "PromptNodeResultDataText",
                 "value": {
@@ -7843,7 +7850,7 @@
             "generatedName": "promptNodeResultDataDelta",
             "key": "delta",
             "schema": {
-              "generatedName": "promptNodeResultDataDelta",
+              "generatedName": "PromptNodeResultDataDelta",
               "value": {
                 "generatedName": "PromptNodeResultDataDelta",
                 "value": {
@@ -8039,7 +8046,7 @@
             "generatedName": "promptTemplateBlockPropertiesChatRole",
             "key": "chat_role",
             "schema": {
-              "generatedName": "promptTemplateBlockPropertiesChatRole",
+              "generatedName": "PromptTemplateBlockPropertiesChatRole",
               "value": {
                 "generatedName": "PromptTemplateBlockPropertiesChatRole",
                 "value": {
@@ -8051,7 +8058,6 @@
                   },
                   "type": "reference"
                 },
-                "groupName": [],
                 "type": "nullable"
               },
               "groupName": [],
@@ -8064,7 +8070,7 @@
             "generatedName": "promptTemplateBlockPropertiesChatMessageUnterminated",
             "key": "chat_message_unterminated",
             "schema": {
-              "generatedName": "promptTemplateBlockPropertiesChatMessageUnterminated",
+              "generatedName": "PromptTemplateBlockPropertiesChatMessageUnterminated",
               "value": {
                 "schema": {
                   "default": false,
@@ -8084,7 +8090,7 @@
             "generatedName": "promptTemplateBlockPropertiesTemplate",
             "key": "template",
             "schema": {
-              "generatedName": "promptTemplateBlockPropertiesTemplate",
+              "generatedName": "PromptTemplateBlockPropertiesTemplate",
               "value": {
                 "generatedName": "PromptTemplateBlockPropertiesTemplate",
                 "value": {
@@ -8108,7 +8114,7 @@
             "generatedName": "promptTemplateBlockPropertiesTemplateType",
             "key": "template_type",
             "schema": {
-              "generatedName": "promptTemplateBlockPropertiesTemplateType",
+              "generatedName": "PromptTemplateBlockPropertiesTemplateType",
               "value": {
                 "generatedName": "PromptTemplateBlockPropertiesTemplateType",
                 "value": {
@@ -8120,7 +8126,6 @@
                   },
                   "type": "reference"
                 },
-                "groupName": [],
                 "type": "nullable"
               },
               "groupName": [],
@@ -8133,7 +8138,7 @@
             "generatedName": "promptTemplateBlockPropertiesFunctionName",
             "key": "function_name",
             "schema": {
-              "generatedName": "promptTemplateBlockPropertiesFunctionName",
+              "generatedName": "PromptTemplateBlockPropertiesFunctionName",
               "value": {
                 "generatedName": "PromptTemplateBlockPropertiesFunctionName",
                 "value": {
@@ -8157,7 +8162,7 @@
             "generatedName": "promptTemplateBlockPropertiesFunctionDescription",
             "key": "function_description",
             "schema": {
-              "generatedName": "promptTemplateBlockPropertiesFunctionDescription",
+              "generatedName": "PromptTemplateBlockPropertiesFunctionDescription",
               "value": {
                 "generatedName": "PromptTemplateBlockPropertiesFunctionDescription",
                 "value": {
@@ -8181,7 +8186,7 @@
             "generatedName": "promptTemplateBlockPropertiesFunctionParameters",
             "key": "function_parameters",
             "schema": {
-              "generatedName": "promptTemplateBlockPropertiesFunctionParameters",
+              "generatedName": "PromptTemplateBlockPropertiesFunctionParameters",
               "value": {
                 "generatedName": "PromptTemplateBlockPropertiesFunctionParameters",
                 "value": {
@@ -8214,7 +8219,7 @@
             "generatedName": "promptTemplateBlockPropertiesBlocks",
             "key": "blocks",
             "schema": {
-              "generatedName": "promptTemplateBlockPropertiesBlocks",
+              "generatedName": "PromptTemplateBlockPropertiesBlocks",
               "value": {
                 "generatedName": "PromptTemplateBlockPropertiesBlocks",
                 "value": {
@@ -8258,7 +8263,7 @@
             "generatedName": "promptTemplateBlockPropertiesRequestChatRole",
             "key": "chat_role",
             "schema": {
-              "generatedName": "promptTemplateBlockPropertiesRequestChatRole",
+              "generatedName": "PromptTemplateBlockPropertiesRequestChatRole",
               "value": {
                 "generatedName": "PromptTemplateBlockPropertiesRequestChatRole",
                 "value": {
@@ -8270,7 +8275,6 @@
                   },
                   "type": "reference"
                 },
-                "groupName": [],
                 "type": "nullable"
               },
               "groupName": [],
@@ -8283,7 +8287,7 @@
             "generatedName": "promptTemplateBlockPropertiesRequestChatMessageUnterminated",
             "key": "chat_message_unterminated",
             "schema": {
-              "generatedName": "promptTemplateBlockPropertiesRequestChatMessageUnterminated",
+              "generatedName": "PromptTemplateBlockPropertiesRequestChatMessageUnterminated",
               "value": {
                 "schema": {
                   "default": false,
@@ -8303,7 +8307,7 @@
             "generatedName": "promptTemplateBlockPropertiesRequestTemplate",
             "key": "template",
             "schema": {
-              "generatedName": "promptTemplateBlockPropertiesRequestTemplate",
+              "generatedName": "PromptTemplateBlockPropertiesRequestTemplate",
               "value": {
                 "generatedName": "PromptTemplateBlockPropertiesRequestTemplate",
                 "value": {
@@ -8327,7 +8331,7 @@
             "generatedName": "promptTemplateBlockPropertiesRequestTemplateType",
             "key": "template_type",
             "schema": {
-              "generatedName": "promptTemplateBlockPropertiesRequestTemplateType",
+              "generatedName": "PromptTemplateBlockPropertiesRequestTemplateType",
               "value": {
                 "generatedName": "PromptTemplateBlockPropertiesRequestTemplateType",
                 "value": {
@@ -8339,7 +8343,6 @@
                   },
                   "type": "reference"
                 },
-                "groupName": [],
                 "type": "nullable"
               },
               "groupName": [],
@@ -8352,7 +8355,7 @@
             "generatedName": "promptTemplateBlockPropertiesRequestFunctionName",
             "key": "function_name",
             "schema": {
-              "generatedName": "promptTemplateBlockPropertiesRequestFunctionName",
+              "generatedName": "PromptTemplateBlockPropertiesRequestFunctionName",
               "value": {
                 "generatedName": "PromptTemplateBlockPropertiesRequestFunctionName",
                 "value": {
@@ -8377,7 +8380,7 @@
             "generatedName": "promptTemplateBlockPropertiesRequestFunctionDescription",
             "key": "function_description",
             "schema": {
-              "generatedName": "promptTemplateBlockPropertiesRequestFunctionDescription",
+              "generatedName": "PromptTemplateBlockPropertiesRequestFunctionDescription",
               "value": {
                 "generatedName": "PromptTemplateBlockPropertiesRequestFunctionDescription",
                 "value": {
@@ -8402,7 +8405,7 @@
             "generatedName": "promptTemplateBlockPropertiesRequestFunctionParameters",
             "key": "function_parameters",
             "schema": {
-              "generatedName": "promptTemplateBlockPropertiesRequestFunctionParameters",
+              "generatedName": "PromptTemplateBlockPropertiesRequestFunctionParameters",
               "value": {
                 "generatedName": "PromptTemplateBlockPropertiesRequestFunctionParameters",
                 "value": {
@@ -8435,7 +8438,7 @@
             "generatedName": "promptTemplateBlockPropertiesRequestBlocks",
             "key": "blocks",
             "schema": {
-              "generatedName": "promptTemplateBlockPropertiesRequestBlocks",
+              "generatedName": "PromptTemplateBlockPropertiesRequestBlocks",
               "value": {
                 "generatedName": "PromptTemplateBlockPropertiesRequestBlocks",
                 "value": {
@@ -8748,7 +8751,7 @@
             "generatedName": "registerPromptModelParametersRequestTopK",
             "key": "top_k",
             "schema": {
-              "generatedName": "registerPromptModelParametersRequestTopK",
+              "generatedName": "RegisterPromptModelParametersRequestTopK",
               "value": {
                 "schema": {
                   "type": "double"
@@ -8795,7 +8798,7 @@
             "generatedName": "registerPromptModelParametersRequestLogitBias",
             "key": "logit_bias",
             "schema": {
-              "generatedName": "registerPromptModelParametersRequestLogitBias",
+              "generatedName": "RegisterPromptModelParametersRequestLogitBias",
               "value": {
                 "generatedName": "RegisterPromptModelParametersRequestLogitBias",
                 "value": {
@@ -8896,7 +8899,7 @@
             "generatedName": "registerPromptPromptInfoRequestPromptSyntaxVersion",
             "key": "prompt_syntax_version",
             "schema": {
-              "generatedName": "registerPromptPromptInfoRequestPromptSyntaxVersion",
+              "generatedName": "RegisterPromptPromptInfoRequestPromptSyntaxVersion",
               "value": {
                 "schema": {
                   "default": 2,
@@ -9067,7 +9070,8 @@
             "generatedName": "registerPromptRequestRequestMeta",
             "key": "meta",
             "schema": {
-              "generatedName": "registerPromptRequestRequestMeta",
+              "generatedName": "RegisterPromptRequestRequestMeta",
+              "description": "Optionally include additional metadata to store along with the prompt.",
               "value": {
                 "description": "Optionally include additional metadata to store along with the prompt.",
                 "key": {
@@ -9385,7 +9389,7 @@
             "generatedName": "sandboxMetricInputParamsParams",
             "key": "params",
             "schema": {
-              "generatedName": "sandboxMetricInputParamsParams",
+              "generatedName": "SandboxMetricInputParamsParams",
               "value": {
                 "generatedName": "SandboxMetricInputParamsParams",
                 "value": {
@@ -9397,7 +9401,6 @@
                   },
                   "type": "reference"
                 },
-                "groupName": [],
                 "type": "nullable"
               },
               "groupName": [],
@@ -9424,7 +9427,7 @@
             "generatedName": "sandboxMetricInputParamsRequestParams",
             "key": "params",
             "schema": {
-              "generatedName": "sandboxMetricInputParamsRequestParams",
+              "generatedName": "SandboxMetricInputParamsRequestParams",
               "value": {
                 "generatedName": "SandboxMetricInputParamsRequestParams",
                 "value": {
@@ -9436,7 +9439,6 @@
                   },
                   "type": "reference"
                 },
-                "groupName": [],
                 "type": "nullable"
               },
               "groupName": [],
@@ -9508,7 +9510,7 @@
             "generatedName": "sandboxNodeResultDataText",
             "key": "text",
             "schema": {
-              "generatedName": "sandboxNodeResultDataText",
+              "generatedName": "SandboxNodeResultDataText",
               "value": {
                 "generatedName": "SandboxNodeResultDataText",
                 "value": {
@@ -9532,7 +9534,7 @@
             "generatedName": "sandboxNodeResultDataDelta",
             "key": "delta",
             "schema": {
-              "generatedName": "sandboxNodeResultDataDelta",
+              "generatedName": "SandboxNodeResultDataDelta",
               "value": {
                 "generatedName": "SandboxNodeResultDataDelta",
                 "value": {
@@ -9570,7 +9572,7 @@
             "generatedName": "sandboxScenarioLabel",
             "key": "label",
             "schema": {
-              "generatedName": "sandboxScenarioLabel",
+              "generatedName": "SandboxScenarioLabel",
               "value": {
                 "schema": {
                   "default": "Untitled Scenario",
@@ -9671,7 +9673,7 @@
             "generatedName": "scenarioInputType",
             "key": "type",
             "schema": {
-              "generatedName": "scenarioInputType",
+              "generatedName": "ScenarioInputType",
               "value": {
                 "generatedName": "ScenarioInputType",
                 "value": {
@@ -9683,7 +9685,6 @@
                   },
                   "type": "reference"
                 },
-                "groupName": [],
                 "type": "nullable"
               },
               "groupName": [],
@@ -9696,7 +9697,7 @@
             "generatedName": "scenarioInputValue",
             "key": "value",
             "schema": {
-              "generatedName": "scenarioInputValue",
+              "generatedName": "ScenarioInputValue",
               "value": {
                 "schema": {
                   "type": "string"
@@ -9715,7 +9716,7 @@
             "generatedName": "scenarioInputChatHistory",
             "key": "chat_history",
             "schema": {
-              "generatedName": "scenarioInputChatHistory",
+              "generatedName": "ScenarioInputChatHistory",
               "value": {
                 "value": {
                   "generatedName": "ScenarioInputChatHistoryItem",
@@ -9769,7 +9770,7 @@
             "generatedName": "scenarioInputRequestType",
             "key": "type",
             "schema": {
-              "generatedName": "scenarioInputRequestType",
+              "generatedName": "ScenarioInputRequestType",
               "value": {
                 "generatedName": "ScenarioInputRequestType",
                 "value": {
@@ -9781,7 +9782,6 @@
                   },
                   "type": "reference"
                 },
-                "groupName": [],
                 "type": "nullable"
               },
               "groupName": [],
@@ -9794,7 +9794,7 @@
             "generatedName": "scenarioInputRequestValue",
             "key": "value",
             "schema": {
-              "generatedName": "scenarioInputRequestValue",
+              "generatedName": "ScenarioInputRequestValue",
               "value": {
                 "schema": {
                   "type": "string"
@@ -9813,7 +9813,7 @@
             "generatedName": "scenarioInputRequestChatHistory",
             "key": "chat_history",
             "schema": {
-              "generatedName": "scenarioInputRequestChatHistory",
+              "generatedName": "ScenarioInputRequestChatHistory",
               "value": {
                 "value": {
                   "generatedName": "ScenarioInputRequestChatHistoryItem",
@@ -9903,7 +9903,8 @@
             "generatedName": "searchFiltersRequestExternalIds",
             "key": "external_ids",
             "schema": {
-              "generatedName": "searchFiltersRequestExternalIds",
+              "generatedName": "SearchFiltersRequestExternalIds",
+              "description": "The document external IDs to filter by",
               "value": {
                 "generatedName": "SearchFiltersRequestExternalIds",
                 "description": "The document external IDs to filter by",
@@ -10022,7 +10023,7 @@
             "generatedName": "searchNodeResultDataTextOutputId",
             "key": "text_output_id",
             "schema": {
-              "generatedName": "searchNodeResultDataTextOutputId",
+              "generatedName": "SearchNodeResultDataTextOutputId",
               "value": {
                 "generatedName": "SearchNodeResultDataTextOutputId",
                 "value": {
@@ -10046,7 +10047,7 @@
             "generatedName": "searchNodeResultDataText",
             "key": "text",
             "schema": {
-              "generatedName": "searchNodeResultDataText",
+              "generatedName": "SearchNodeResultDataText",
               "value": {
                 "generatedName": "SearchNodeResultDataText",
                 "value": {
@@ -10084,7 +10085,8 @@
             "generatedName": "searchRequestBodyRequestIndexId",
             "key": "index_id",
             "schema": {
-              "generatedName": "searchRequestBodyRequestIndexId",
+              "generatedName": "SearchRequestBodyRequestIndexId",
+              "description": "The ID of the index to search against. Must provide either this or index_name.",
               "value": {
                 "generatedName": "SearchRequestBodyRequestIndexId",
                 "description": "The ID of the index to search against. Must provide either this or index_name.",
@@ -10111,7 +10113,8 @@
             "generatedName": "searchRequestBodyRequestIndexName",
             "key": "index_name",
             "schema": {
-              "generatedName": "searchRequestBodyRequestIndexName",
+              "generatedName": "SearchRequestBodyRequestIndexName",
+              "description": "The name of the index to search against. Must provide either this or index_id.",
               "value": {
                 "generatedName": "SearchRequestBodyRequestIndexName",
                 "description": "The name of the index to search against. Must provide either this or index_id.",
@@ -10154,10 +10157,10 @@
             "generatedName": "searchRequestBodyRequestOptions",
             "key": "options",
             "schema": {
-              "generatedName": "searchRequestBodyRequestOptions",
+              "generatedName": "SearchRequestBodyRequestOptions",
+              "description": "Configuration options for the search.",
               "value": {
                 "generatedName": "SearchRequestBodyRequestOptions",
-                "description": "Configuration options for the search.",
                 "value": {
                   "generatedName": "SearchRequestBodyRequestOptions",
                   "schema": "SearchRequestOptionsRequest",
@@ -10167,7 +10170,6 @@
                   },
                   "type": "reference"
                 },
-                "groupName": [],
                 "type": "nullable"
               },
               "groupName": [],
@@ -10194,7 +10196,8 @@
             "generatedName": "searchRequestOptionsRequestLimit",
             "key": "limit",
             "schema": {
-              "generatedName": "searchRequestOptionsRequestLimit",
+              "generatedName": "SearchRequestOptionsRequestLimit",
+              "description": "The maximum number of results to return.",
               "value": {
                 "generatedName": "SearchRequestOptionsRequestLimit",
                 "description": "The maximum number of results to return.",
@@ -10220,10 +10223,10 @@
             "generatedName": "searchRequestOptionsRequestWeights",
             "key": "weights",
             "schema": {
-              "generatedName": "searchRequestOptionsRequestWeights",
+              "generatedName": "SearchRequestOptionsRequestWeights",
+              "description": "The weights to use for the search. Must add up to 1.0.",
               "value": {
                 "generatedName": "SearchRequestOptionsRequestWeights",
-                "description": "The weights to use for the search. Must add up to 1.0.",
                 "value": {
                   "generatedName": "SearchRequestOptionsRequestWeights",
                   "schema": "SearchWeightsRequest",
@@ -10233,7 +10236,6 @@
                   },
                   "type": "reference"
                 },
-                "groupName": [],
                 "type": "nullable"
               },
               "groupName": [],
@@ -10246,10 +10248,10 @@
             "generatedName": "searchRequestOptionsRequestResultMerging",
             "key": "result_merging",
             "schema": {
-              "generatedName": "searchRequestOptionsRequestResultMerging",
+              "generatedName": "SearchRequestOptionsRequestResultMerging",
+              "description": "The configuration for merging results.",
               "value": {
                 "generatedName": "SearchRequestOptionsRequestResultMerging",
-                "description": "The configuration for merging results.",
                 "value": {
                   "generatedName": "SearchRequestOptionsRequestResultMerging",
                   "schema": "SearchResultMergingRequest",
@@ -10259,7 +10261,6 @@
                   },
                   "type": "reference"
                 },
-                "groupName": [],
                 "type": "nullable"
               },
               "groupName": [],
@@ -10272,10 +10273,10 @@
             "generatedName": "searchRequestOptionsRequestFilters",
             "key": "filters",
             "schema": {
-              "generatedName": "searchRequestOptionsRequestFilters",
+              "generatedName": "SearchRequestOptionsRequestFilters",
+              "description": "The filters to apply to the search.",
               "value": {
                 "generatedName": "SearchRequestOptionsRequestFilters",
-                "description": "The filters to apply to the search.",
                 "value": {
                   "generatedName": "SearchRequestOptionsRequestFilters",
                   "schema": "SearchFiltersRequest",
@@ -10285,7 +10286,6 @@
                   },
                   "type": "reference"
                 },
-                "groupName": [],
                 "type": "nullable"
               },
               "groupName": [],
@@ -10500,7 +10500,8 @@
             "generatedName": "slimDocumentId",
             "key": "id",
             "schema": {
-              "generatedName": "slimDocumentId",
+              "generatedName": "SlimDocumentId",
+              "description": "Vellum-generated ID that uniquely identifies this document.",
               "value": {
                 "description": "Vellum-generated ID that uniquely identifies this document.",
                 "schema": {
@@ -10522,7 +10523,8 @@
             "generatedName": "slimDocumentExternalId",
             "key": "external_id",
             "schema": {
-              "generatedName": "slimDocumentExternalId",
+              "generatedName": "SlimDocumentExternalId",
+              "description": "The external ID that was originally provided when uploading the document.",
               "value": {
                 "generatedName": "SlimDocumentExternalId",
                 "description": "The external ID that was originally provided when uploading the document.",
@@ -10580,12 +10582,11 @@
             "generatedName": "slimDocumentProcessingState",
             "key": "processing_state",
             "schema": {
-              "generatedName": "slimDocumentProcessingState",
+              "generatedName": "SlimDocumentProcessingState",
+              "description": "An enum value representing where this document is along its processing lifecycle. Note that this is different than its indexing lifecycle.\n\n* `QUEUED` - Queued\n* `PROCESSING` - Processing\n* `PROCESSED` - Processed\n* `FAILED` - Failed",
               "value": {
-                "description": "An enum value representing where this document is along its processing lifecycle. Note that this is different than its indexing lifecycle.\n\n* `QUEUED` - Queued\n* `PROCESSING` - Processing\n* `PROCESSED` - Processed\n* `FAILED` - Failed",
                 "generatedName": "SlimDocumentProcessingState",
                 "schema": "ProcessingStateEnum",
-                "groupName": [],
                 "source": {
                   "file": "../openapi.yml",
                   "type": "openapi"
@@ -10602,10 +10603,10 @@
             "generatedName": "slimDocumentProcessingFailureReason",
             "key": "processing_failure_reason",
             "schema": {
-              "generatedName": "slimDocumentProcessingFailureReason",
+              "generatedName": "SlimDocumentProcessingFailureReason",
+              "description": "An enum value representing why the document could not be processed. Is null unless processing_state is FAILED.\n\n* `EXCEEDED_CHARACTER_LIMIT` - Exceeded Character Limit",
               "value": {
                 "generatedName": "SlimDocumentProcessingFailureReason",
-                "description": "An enum value representing why the document could not be processed. Is null unless processing_state is FAILED.\n\n* `EXCEEDED_CHARACTER_LIMIT` - Exceeded Character Limit",
                 "value": {
                   "generatedName": "SlimDocumentProcessingFailureReason",
                   "schema": "ProcessingFailureReasonEnum",
@@ -10615,7 +10616,6 @@
                   },
                   "type": "reference"
                 },
-                "groupName": [],
                 "type": "nullable"
               },
               "groupName": [],
@@ -10628,12 +10628,11 @@
             "generatedName": "slimDocumentStatus",
             "key": "status",
             "schema": {
-              "generatedName": "slimDocumentStatus",
+              "generatedName": "SlimDocumentStatus",
+              "description": "The document's current status.\n\n* `ACTIVE` - Active",
               "value": {
-                "description": "The document's current status.\n\n* `ACTIVE` - Active",
                 "generatedName": "SlimDocumentStatus",
                 "schema": "SlimDocumentStatusEnum",
-                "groupName": [],
                 "source": {
                   "file": "../openapi.yml",
                   "type": "openapi"
@@ -10650,7 +10649,8 @@
             "generatedName": "slimDocumentKeywords",
             "key": "keywords",
             "schema": {
-              "generatedName": "slimDocumentKeywords",
+              "generatedName": "SlimDocumentKeywords",
+              "description": "A list of keywords associated with this document. Originally provided when uploading the document.",
               "value": {
                 "description": "A list of keywords associated with this document. Originally provided when uploading the document.",
                 "value": {
@@ -10719,7 +10719,8 @@
             "generatedName": "submitCompletionActualRequestId",
             "key": "id",
             "schema": {
-              "generatedName": "submitCompletionActualRequestId",
+              "generatedName": "SubmitCompletionActualRequestId",
+              "description": "The Vellum-generated ID of a previously generated completion. Must provide either this or external_id.",
               "value": {
                 "generatedName": "SubmitCompletionActualRequestId",
                 "description": "The Vellum-generated ID of a previously generated completion. Must provide either this or external_id.",
@@ -10746,7 +10747,8 @@
             "generatedName": "submitCompletionActualRequestExternalId",
             "key": "external_id",
             "schema": {
-              "generatedName": "submitCompletionActualRequestExternalId",
+              "generatedName": "SubmitCompletionActualRequestExternalId",
+              "description": "The external ID that was originally provided when generating the completion that you'd now like to submit actuals for. Must provide either this or id.",
               "value": {
                 "generatedName": "SubmitCompletionActualRequestExternalId",
                 "description": "The external ID that was originally provided when generating the completion that you'd now like to submit actuals for. Must provide either this or id.",
@@ -10773,7 +10775,8 @@
             "generatedName": "submitCompletionActualRequestText",
             "key": "text",
             "schema": {
-              "generatedName": "submitCompletionActualRequestText",
+              "generatedName": "SubmitCompletionActualRequestText",
+              "description": "Text representing what the completion _should_ have been.",
               "value": {
                 "generatedName": "SubmitCompletionActualRequestText",
                 "description": "Text representing what the completion _should_ have been.",
@@ -10799,7 +10802,8 @@
             "generatedName": "submitCompletionActualRequestQuality",
             "key": "quality",
             "schema": {
-              "generatedName": "submitCompletionActualRequestQuality",
+              "generatedName": "SubmitCompletionActualRequestQuality",
+              "description": "A number between 0 and 1 representing the quality of the completion. 0 is the worst, 1 is the best.",
               "value": {
                 "generatedName": "SubmitCompletionActualRequestQuality",
                 "description": "A number between 0 and 1 representing the quality of the completion. 0 is the worst, 1 is the best.",
@@ -10827,7 +10831,8 @@
             "generatedName": "submitCompletionActualRequestTimestamp",
             "key": "timestamp",
             "schema": {
-              "generatedName": "submitCompletionActualRequestTimestamp",
+              "generatedName": "SubmitCompletionActualRequestTimestamp",
+              "description": "Optionally provide the timestamp representing when this feedback was collected. Used for reporting purposes.",
               "value": {
                 "generatedName": "SubmitCompletionActualRequestTimestamp",
                 "description": "Optionally provide the timestamp representing when this feedback was collected. Used for reporting purposes.",
@@ -10895,7 +10900,8 @@
             "generatedName": "submitCompletionActualsRequestDeploymentId",
             "key": "deployment_id",
             "schema": {
-              "generatedName": "submitCompletionActualsRequestDeploymentId",
+              "generatedName": "SubmitCompletionActualsRequestDeploymentId",
+              "description": "The ID of the deployment. Must provide either this or deployment_name.",
               "value": {
                 "generatedName": "SubmitCompletionActualsRequestDeploymentId",
                 "description": "The ID of the deployment. Must provide either this or deployment_name.",
@@ -10922,7 +10928,8 @@
             "generatedName": "submitCompletionActualsRequestDeploymentName",
             "key": "deployment_name",
             "schema": {
-              "generatedName": "submitCompletionActualsRequestDeploymentName",
+              "generatedName": "SubmitCompletionActualsRequestDeploymentName",
+              "description": "The name of the deployment. Must provide either this or deployment_id.",
               "value": {
                 "generatedName": "SubmitCompletionActualsRequestDeploymentName",
                 "description": "The name of the deployment. Must provide either this or deployment_id.",
@@ -11233,7 +11240,8 @@
             "generatedName": "testSuiteTestCaseTestCaseId",
             "key": "test_case_id",
             "schema": {
-              "generatedName": "testSuiteTestCaseTestCaseId",
+              "generatedName": "TestSuiteTestCaseTestCaseId",
+              "description": "The id of the test case to update. If none is provided, an id will be generated and a new test case will be appended.",
               "value": {
                 "description": "The id of the test case to update. If none is provided, an id will be generated and a new test case will be appended.",
                 "schema": {
@@ -11253,7 +11261,8 @@
             "generatedName": "testSuiteTestCaseLabel",
             "key": "label",
             "schema": {
-              "generatedName": "testSuiteTestCaseLabel",
+              "generatedName": "TestSuiteTestCaseLabel",
+              "description": "A human-friendly label for the test case.",
               "value": {
                 "generatedName": "TestSuiteTestCaseLabel",
                 "description": "A human-friendly label for the test case.",
@@ -11334,7 +11343,8 @@
             "generatedName": "testSuiteTestCaseRequestTestCaseId",
             "key": "test_case_id",
             "schema": {
-              "generatedName": "testSuiteTestCaseRequestTestCaseId",
+              "generatedName": "TestSuiteTestCaseRequestTestCaseId",
+              "description": "The id of the test case to update. If none is provided, an id will be generated and a new test case will be appended.",
               "value": {
                 "description": "The id of the test case to update. If none is provided, an id will be generated and a new test case will be appended.",
                 "schema": {
@@ -11355,7 +11365,8 @@
             "generatedName": "testSuiteTestCaseRequestLabel",
             "key": "label",
             "schema": {
-              "generatedName": "testSuiteTestCaseRequestLabel",
+              "generatedName": "TestSuiteTestCaseRequestLabel",
+              "description": "A human-friendly label for the test case.",
               "value": {
                 "generatedName": "TestSuiteTestCaseRequestLabel",
                 "description": "A human-friendly label for the test case.",
@@ -11436,7 +11447,8 @@
             "generatedName": "uploadDocumentBodyRequestAddToIndexNames",
             "key": "add_to_index_names",
             "schema": {
-              "generatedName": "uploadDocumentBodyRequestAddToIndexNames",
+              "generatedName": "UploadDocumentBodyRequestAddToIndexNames",
+              "description": "Optionally include the names of all indexes that you'd like this document to be included in",
               "value": {
                 "generatedName": "UploadDocumentBodyRequestAddToIndexNames",
                 "description": "Optionally include the names of all indexes that you'd like this document to be included in",
@@ -11468,7 +11480,8 @@
             "generatedName": "uploadDocumentBodyRequestExternalId",
             "key": "external_id",
             "schema": {
-              "generatedName": "uploadDocumentBodyRequestExternalId",
+              "generatedName": "UploadDocumentBodyRequestExternalId",
+              "description": "Optionally include an external ID for this document. This is useful if you want to re-upload the same document later when its contents change and would like it to be re-indexed.",
               "value": {
                 "generatedName": "UploadDocumentBodyRequestExternalId",
                 "description": "Optionally include an external ID for this document. This is useful if you want to re-upload the same document later when its contents change and would like it to be re-indexed.",
@@ -11527,7 +11540,8 @@
             "generatedName": "uploadDocumentBodyRequestKeywords",
             "key": "keywords",
             "schema": {
-              "generatedName": "uploadDocumentBodyRequestKeywords",
+              "generatedName": "UploadDocumentBodyRequestKeywords",
+              "description": "Optionally include a list of keywords that'll be associated with this document. Used when performing keyword searches.",
               "value": {
                 "generatedName": "UploadDocumentBodyRequestKeywords",
                 "description": "Optionally include a list of keywords that'll be associated with this document. Used when performing keyword searches.",
@@ -11631,7 +11645,7 @@
             "generatedName": "upsertSandboxScenarioRequestRequestLabel",
             "key": "label",
             "schema": {
-              "generatedName": "upsertSandboxScenarioRequestRequestLabel",
+              "generatedName": "UpsertSandboxScenarioRequestRequestLabel",
               "value": {
                 "schema": {
                   "default": "Untitled Scenario",
@@ -11672,7 +11686,8 @@
             "generatedName": "upsertSandboxScenarioRequestRequestScenarioId",
             "key": "scenario_id",
             "schema": {
-              "generatedName": "upsertSandboxScenarioRequestRequestScenarioId",
+              "generatedName": "UpsertSandboxScenarioRequestRequestScenarioId",
+              "description": "The id of the scenario to update. If none is provided, an id will be generated and a new scenario will be appended.",
               "value": {
                 "description": "The id of the scenario to update. If none is provided, an id will be generated and a new scenario will be appended.",
                 "schema": {
@@ -11693,7 +11708,7 @@
             "generatedName": "upsertSandboxScenarioRequestRequestMetricInputParams",
             "key": "metric_input_params",
             "schema": {
-              "generatedName": "upsertSandboxScenarioRequestRequestMetricInputParams",
+              "generatedName": "UpsertSandboxScenarioRequestRequestMetricInputParams",
               "value": {
                 "generatedName": "UpsertSandboxScenarioRequestRequestMetricInputParams",
                 "schema": "SandboxMetricInputParamsRequest",
@@ -11703,7 +11718,6 @@
                 },
                 "type": "reference"
               },
-              "groupName": [],
               "type": "optional"
             },
             "audiences": [],
@@ -11810,7 +11824,7 @@
             "generatedName": "workflowExecutionNodeResultEventExternalId",
             "key": "external_id",
             "schema": {
-              "generatedName": "workflowExecutionNodeResultEventExternalId",
+              "generatedName": "WorkflowExecutionNodeResultEventExternalId",
               "value": {
                 "generatedName": "WorkflowExecutionNodeResultEventExternalId",
                 "value": {
@@ -11879,7 +11893,7 @@
             "generatedName": "workflowExecutionWorkflowResultEventExternalId",
             "key": "external_id",
             "schema": {
-              "generatedName": "workflowExecutionWorkflowResultEventExternalId",
+              "generatedName": "WorkflowExecutionWorkflowResultEventExternalId",
               "value": {
                 "generatedName": "WorkflowExecutionWorkflowResultEventExternalId",
                 "value": {
@@ -12063,7 +12077,7 @@
             "generatedName": "workflowNodeResultEventTs",
             "key": "ts",
             "schema": {
-              "generatedName": "workflowNodeResultEventTs",
+              "generatedName": "WorkflowNodeResultEventTs",
               "value": {
                 "generatedName": "WorkflowNodeResultEventTs",
                 "value": {
@@ -12107,7 +12121,7 @@
             "generatedName": "workflowNodeResultEventError",
             "key": "error",
             "schema": {
-              "generatedName": "workflowNodeResultEventError",
+              "generatedName": "WorkflowNodeResultEventError",
               "value": {
                 "generatedName": "WorkflowNodeResultEventError",
                 "value": {
@@ -12119,7 +12133,6 @@
                   },
                   "type": "reference"
                 },
-                "groupName": [],
                 "type": "nullable"
               },
               "groupName": [],
@@ -12433,7 +12446,7 @@
             "generatedName": "workflowResultEventError",
             "key": "error",
             "schema": {
-              "generatedName": "workflowResultEventError",
+              "generatedName": "WorkflowResultEventError",
               "value": {
                 "generatedName": "WorkflowResultEventError",
                 "value": {
@@ -12445,7 +12458,6 @@
                   },
                   "type": "reference"
                 },
-                "groupName": [],
                 "type": "nullable"
               },
               "groupName": [],
@@ -12560,7 +12572,8 @@
             "generatedName": "workflowResultEventOutputDataChatHistoryDelta",
             "key": "delta",
             "schema": {
-              "generatedName": "workflowResultEventOutputDataChatHistoryDelta",
+              "generatedName": "WorkflowResultEventOutputDataChatHistoryDelta",
+              "description": "The newly output string value. Only relevant for string outputs with a state of STREAMING.",
               "value": {
                 "generatedName": "WorkflowResultEventOutputDataChatHistoryDelta",
                 "description": "The newly output string value. Only relevant for string outputs with a state of STREAMING.",
@@ -12587,7 +12600,7 @@
             "generatedName": "workflowResultEventOutputDataChatHistoryValue",
             "key": "value",
             "schema": {
-              "generatedName": "workflowResultEventOutputDataChatHistoryValue",
+              "generatedName": "WorkflowResultEventOutputDataChatHistoryValue",
               "value": {
                 "generatedName": "WorkflowResultEventOutputDataChatHistoryValue",
                 "value": {
@@ -12676,7 +12689,8 @@
             "generatedName": "workflowResultEventOutputDataJsonDelta",
             "key": "delta",
             "schema": {
-              "generatedName": "workflowResultEventOutputDataJsonDelta",
+              "generatedName": "WorkflowResultEventOutputDataJsonDelta",
+              "description": "The newly output string value. Only relevant for string outputs with a state of STREAMING.",
               "value": {
                 "generatedName": "WorkflowResultEventOutputDataJsonDelta",
                 "description": "The newly output string value. Only relevant for string outputs with a state of STREAMING.",

@@ -20,7 +20,7 @@ With Swift Package Manager (SPM), add the following to the top-level `dependenci
 
 ```swift
 dependencies: [
-    .package(url: "<git-url>", from: "0.1.0"),
+    .package(url: "https://github.com/enum/fern", from: "0.0.1"),
 ]
 ```
 
@@ -39,13 +39,7 @@ import Enum
 private func main() async throws {
     let client = EnumClient()
 
-    try await client.headers.send(request: .init(
-        operand: .greaterThan,
-        maybeOperand: .greaterThan,
-        operandOrColor: ColorOrOperand.color(
-            .red
-        )
-    ))
+    _ = try await client.headers.send()
 }
 
 try await main()
