@@ -74,18 +74,37 @@ export class TestMethodBuilder {
                 writer.writeLine("// Validate request body");
                 writer.writeLine("String actualRequestBody = request.getBody().readUtf8();");
 
-                this.jsonValidator.formatMultilineJson(writer, "expectedRequestBody", expectedRequestJson);
+                const isFormEncoded = this.isFormUrlEncodedEndpoint(endpoint);
 
-                writer.writeLine("JsonNode actualJson = objectMapper.readTree(actualRequestBody);");
-                writer.writeLine("JsonNode expectedJson = objectMapper.readTree(expectedRequestBody);");
+                if (isFormEncoded) {
+                    // For form-urlencoded requests, validate the raw form data format
+                    const formDataPairs: string[] = [];
+                    if (typeof expectedRequestJson === "object" && expectedRequestJson !== null) {
+                        for (const [key, value] of Object.entries(expectedRequestJson)) {
+                            formDataPairs.push(`${key}=${encodeURIComponent(String(value))}`);
+                        }
+                    }
+                    const expectedFormData = formDataPairs.join("&");
 
-                this.jsonValidator.generateEnhancedJsonValidation(
-                    writer,
-                    endpoint,
-                    "request",
-                    "actualJson",
-                    "expectedJson"
-                );
+                    writer.writeLine(`String expectedRequestBody = ${JSON.stringify(expectedFormData)};`);
+                    writer.writeLine(
+                        'Assertions.assertEquals(expectedRequestBody, actualRequestBody, "Form-urlencoded request body does not match expected");'
+                    );
+                } else {
+                    // Standard JSON validation
+                    this.jsonValidator.formatMultilineJson(writer, "expectedRequestBody", expectedRequestJson);
+
+                    writer.writeLine("JsonNode actualJson = objectMapper.readTree(actualRequestBody);");
+                    writer.writeLine("JsonNode expectedJson = objectMapper.readTree(expectedRequestBody);");
+
+                    this.jsonValidator.generateEnhancedJsonValidation(
+                        writer,
+                        endpoint,
+                        "request",
+                        "actualJson",
+                        "expectedJson"
+                    );
+                }
             }
 
             if (hasResponseBody && expectedResponseJson && responseStatusCode < 400) {
@@ -127,6 +146,33 @@ export class TestMethodBuilder {
             writer.dedent();
             writer.writeLine("}");
         };
+    }
+
+    /**
+     * Checks if the endpoint uses application/x-www-form-urlencoded content type.
+     */
+    private isFormUrlEncodedEndpoint(endpoint: HttpEndpoint): boolean {
+        const requestBody = endpoint.requestBody;
+        if (!requestBody) {
+            return false;
+        }
+
+        // Check inlined request body
+        if (requestBody.type === "inlinedRequestBody") {
+            return requestBody.contentType === "application/x-www-form-urlencoded";
+        }
+
+        // Check referenced request body
+        if (requestBody.type === "reference") {
+            return requestBody.contentType === "application/x-www-form-urlencoded";
+        }
+
+        // Check bytes request body
+        if (requestBody.type === "bytes") {
+            return requestBody.contentType === "application/x-www-form-urlencoded";
+        }
+
+        return false;
     }
 
     /**
