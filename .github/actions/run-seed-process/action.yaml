@@ -55,8 +55,26 @@ runs:
         echo "Generated string: '$string_result'"
         echo "as-string=$string_result" >> $GITHUB_OUTPUT
 
+    - name: Record checkout start time
+      id: checkout-start
+      shell: bash
+      run: |
+        echo "checkout_start_time=$EPOCHSECONDS" >> $GITHUB_OUTPUT
+        echo "Starting checkout at $(date)"
+
     - name: Checkout repo
       uses: actions/checkout@v4
+
+    - name: Record checkout end time and duration
+      id: checkout-end
+      shell: bash
+      run: |
+        checkout_end_time=$EPOCHSECONDS
+        checkout_duration=$((checkout_end_time - ${{ steps.checkout-start.outputs.checkout_start_time }}))
+        echo "checkout_end_time=$checkout_end_time" >> $GITHUB_OUTPUT
+        echo "checkout_duration=$checkout_duration" >> $GITHUB_OUTPUT
+        echo "Checkout completed at $(date)"
+        echo "Checkout took $checkout_duration seconds"
 
     - name: Run seed
       if: ${{ steps.json-to-string.outputs.as-string != 'leftovers' }}
