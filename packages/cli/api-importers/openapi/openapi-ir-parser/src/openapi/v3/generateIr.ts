@@ -65,10 +65,20 @@ export function generateIr({
 }): OpenApiIntermediateRepresentation {
     openApi = runResolutions({ openapi: openApi });
 
+    // Create a temporary context for reference resolution during security scheme processing
+    const tempContext = new OpenAPIV3ParserContext({
+        document: openApi,
+        taskContext,
+        authHeaders: new Set(), // temporary empty set
+        options,
+        source,
+        namespace
+    });
+
     const securitySchemes: Record<string, SecurityScheme> = Object.fromEntries(
         Object.entries(openApi.components?.securitySchemes ?? {})
             .map(([key, securityScheme]) => {
-                const convertedSecurityScheme = convertSecurityScheme(securityScheme, source, taskContext);
+                const convertedSecurityScheme = convertSecurityScheme(securityScheme, source, taskContext, tempContext);
                 if (convertedSecurityScheme == null) {
                     return null;
                 }
