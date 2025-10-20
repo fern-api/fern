@@ -2,6 +2,12 @@
 
 import type * as core from "../../../../../core/index.js";
 
+/**
+ * @example
+ *     {
+ *         file: fs.createReadStream("/path/to/your/file")
+ *     }
+ */
 export interface JustFileRequest {
     file: core.file.Uploadable;
 }
