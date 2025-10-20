@@ -1,4 +1,4 @@
-# Seed configuration for rust-sdk
+# Seed configuration file for rust-sdk generator
 irVersion: v61
 displayName: Rust SDK
 image: fernapi/fern-rust-sdk

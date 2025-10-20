@@ -1,4 +1,4 @@
-# Seed configuration for ruby-sdk
+# Seed configuration file for ruby-sdk generator
 irVersion: v58
 displayName: Ruby SDK
 image: fernapi/fern-ruby-sdk

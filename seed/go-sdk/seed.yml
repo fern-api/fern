@@ -1,4 +1,4 @@
-# Seed configuration for go-sdk
+# Seed configuration file for go-sdk generator
 irVersion: v60
 displayName: Go SDK
 image: fernapi/fern-go-sdk

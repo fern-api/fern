@@ -1,4 +1,4 @@
-# Seed configuration for fern-cli
+# Seed configuration file for fern-cli generator
 changelogLocation: ../../packages/cli/cli/versions.yml
 publishGa:
   workingDirectory: packages/cli/cli

@@ -1,4 +1,4 @@
-# Seed configuration for java-model
+# Seed configuration file for java-model generator
 irVersion: v58
 displayName: Java Model
 changelogLocation: ../../generators/java/model/versions.yml

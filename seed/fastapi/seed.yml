@@ -1,4 +1,4 @@
-# Seed configuration for fastapi
+# Seed configuration file for fastapi generator
 irVersion: v60
 displayName: FastAPI
 image: fernapi/fern-fastapi-server

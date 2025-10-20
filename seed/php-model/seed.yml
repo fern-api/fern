@@ -1,4 +1,4 @@
-# Seed configuration for php-model
+# Seed configuration file for php-model generator
 irVersion: v58
 displayName: PHP Model
 image: fernapi/fern-php-model

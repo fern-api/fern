@@ -1,4 +1,4 @@
-# Seed configuration for swift-sdk
+# Seed configuration file for swift-sdk generator
 displayName: Swift SDK
 irVersion: v59
 image: fernapi/fern-swift-sdk

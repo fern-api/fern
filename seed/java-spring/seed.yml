@@ -1,4 +1,4 @@
-# Seed configuration for java-spring
+# Seed configuration file for java-spring generator
 irVersion: v58
 displayName: Java Spring
 changelogLocation: ../../generators/java/spring/versions.yml

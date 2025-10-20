@@ -1,4 +1,4 @@
-# Seed configuration for csharp-sdk
+# Seed configuration file for csharp-sdk generator
 displayName: C# SDK
 irVersion: v61
 image: fernapi/fern-csharp-sdk

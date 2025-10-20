@@ -1,4 +1,4 @@
-# Seed configuration for php-sdk
+# Seed configuration file for php-sdk generator
 irVersion: v59
 displayName: PHP SDK
 image: fernapi/fern-php-sdk

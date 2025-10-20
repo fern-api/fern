@@ -1,4 +1,4 @@
-# Seed configuration for go-model
+# Seed configuration file for go-model generator
 irVersion: v60
 displayName: Go Model
 image: fernapi/fern-go-model

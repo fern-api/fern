@@ -1,4 +1,4 @@
-# Seed configuration for rust-model
+# Seed configuration file for rust-model generator
 irVersion: v61
 displayName: Rust Model
 image: fernapi/fern-rust-model

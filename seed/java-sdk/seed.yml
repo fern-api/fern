@@ -1,4 +1,4 @@
-# Seed configuration for java-sdk
+# Seed configuration file for java-sdk generator
 irVersion: v60
 displayName: Java SDK
 changelogLocation: ../../generators/java/sdk/versions.yml

@@ -1,4 +1,4 @@
-# Seed configuration for ts-sdk
+# Seed configuration file for ts-sdk generator
 displayName: TypeScript SDK
 irVersion: v61
 image: fernapi/fern-typescript-sdk

@@ -1,4 +1,4 @@
-# Seed configuration for csharp-model
+# Seed configuration file for csharp-model generator
 irVersion: v61
 displayName: C# Model
 image: fernapi/fern-csharp-model

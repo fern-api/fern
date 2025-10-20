@@ -1,4 +1,4 @@
-# Seed configuration for postman
+# Seed configuration file for postman generator
 irVersion: v53
 displayName: Postman
 image: fernapi/fern-postman
