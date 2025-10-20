@@ -4334,9 +4334,6 @@ importers:
       '@redocly/openapi-core':
         specifier: ^1.4.1
         version: 1.34.5
-      js-yaml:
-        specifier: ^4.1.0
-        version: 4.1.0
       lodash-es:
         specifier: ^4.17.21
         version: 4.17.21
@@ -4350,9 +4347,6 @@ importers:
       '@fern-api/configs':
         specifier: workspace:*
         version: link:../../../../configs
-      '@types/js-yaml':
-        specifier: ^4.0.5
-        version: 4.0.9
       '@types/lodash-es':
         specifier: ^4.17.12
         version: 4.17.12
