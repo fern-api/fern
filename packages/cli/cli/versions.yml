@@ -1,6 +1,14 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
 - changelogEntry:
     - summary: |
+        If API publishing fails, alert and continue to next in fern generate --docs.
+      type: fix
+  irVersion: 61
+  createdAt: "2025-10-20"
+  version: 0.93.2
+
+- changelogEntry:
+    - summary: |
         Fix errors related to:
           - external references in OpenAPI specs
           - references in OpenAPI security schemes
