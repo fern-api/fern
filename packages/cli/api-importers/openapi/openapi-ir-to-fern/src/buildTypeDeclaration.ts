@@ -341,6 +341,26 @@ function getAllParentSchemasToInline({
     return [];
 }
 
+// Helper function to extract properties directly from a Schema object
+function getPropertiesFromSchema(
+    context: OpenApiIrConverterContext,
+    schema: Schema,
+    namespace: string | undefined
+): {
+    properties: ObjectProperty[];
+    allOf: ReferencedSchema[];
+} {
+    if (schema.type === "object") {
+        return { properties: schema.properties, allOf: schema.allOf };
+    } else if (schema.type === "reference") {
+        return getProperties(context, schema.schema, namespace);
+    } else if (schema.type === "nullable") {
+        // Unwrap nullable schemas and recursively get properties from the wrapped schema
+        return getPropertiesFromSchema(context, schema.value, namespace);
+    }
+    return { properties: [], allOf: [] };
+}
+
 function getProperties(
     context: OpenApiIrConverterContext,
     schemaId: SchemaId,
@@ -353,12 +373,7 @@ function getProperties(
     if (schema == null) {
         return { properties: [], allOf: [] };
     }
-    if (schema.type === "object") {
-        return { properties: schema.properties, allOf: schema.allOf };
-    } else if (schema.type === "reference") {
-        return getProperties(context, schema.schema, namespace);
-    }
-    throw new Error(`Cannot getAllProperties for a non-object schema. schemaId=${schemaId}, type=${schema.type}`);
+    return getPropertiesFromSchema(context, schema, namespace);
 }
 
 export function buildArrayTypeDeclaration({
