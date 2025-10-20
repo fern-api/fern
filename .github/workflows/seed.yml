@@ -21,7 +21,7 @@ concurrency:
 
 jobs:
   setup:
-    runs-on: ubuntu-latest
+    runs-on: blacksmith-2vcpu-ubuntu-2404
     timeout-minutes: 2
     outputs:
       post-metrics: ${{ steps.set-options.outputs.post-metrics }}
@@ -41,7 +41,7 @@ jobs:
           fi
 
   changes:
-    runs-on: ubuntu-latest
+    runs-on: blacksmith-2vcpu-ubuntu-2404
     timeout-minutes: 5
     needs: [setup]
     strategy:
@@ -150,7 +150,7 @@ jobs:
           fi
 
   get-all-test-matrices:
-    runs-on: ubuntu-latest
+    runs-on: blacksmith-2vcpu-ubuntu-2404
     timeout-minutes: 10
     strategy:
       fail-fast: false # Don't let failing generators block the passing generators
@@ -278,7 +278,7 @@ jobs:
           fi
 
   ruby-model:
-    runs-on: ubuntu-latest
+    runs-on: blacksmith-2vcpu-ubuntu-2404
     timeout-minutes: 60
     needs: [setup, changes, get-all-test-matrices]
     if: >-
@@ -308,7 +308,7 @@ jobs:
           collect-metrics: ${{ needs.setup.outputs.post-metrics }}
 
   ruby-sdk:
-    runs-on: ubuntu-latest
+    runs-on: blacksmith-2vcpu-ubuntu-2404
     timeout-minutes: 60
     needs: [setup, changes, get-all-test-matrices]
     if: >-
@@ -338,7 +338,7 @@ jobs:
           collect-metrics: ${{ needs.setup.outputs.post-metrics }}
 
   ruby-sdk-v2:
-    runs-on: ubuntu-latest
+    runs-on: blacksmith-2vcpu-ubuntu-2404
     timeout-minutes: 60
     needs: [setup, changes, get-all-test-matrices]
     if: >-
@@ -368,7 +368,7 @@ jobs:
           collect-metrics: ${{ needs.setup.outputs.post-metrics }}
 
   pydantic:
-    runs-on: ubuntu-latest
+    runs-on: blacksmith-2vcpu-ubuntu-2404
     timeout-minutes: 60
     needs: [setup, changes, get-all-test-matrices]
     if: >-
@@ -398,7 +398,7 @@ jobs:
           collect-metrics: ${{ needs.setup.outputs.post-metrics }}
 
   python-sdk:
-    runs-on: ubuntu-latest
+    runs-on: blacksmith-2vcpu-ubuntu-2404
     timeout-minutes: 60
     needs: [setup, changes, get-all-test-matrices]
     if: >-
@@ -428,7 +428,7 @@ jobs:
           collect-metrics: ${{ needs.setup.outputs.post-metrics }}
 
   fastapi:
-    runs-on: ubuntu-latest
+    runs-on: blacksmith-2vcpu-ubuntu-2404
     timeout-minutes: 60
     needs: [setup, changes, get-all-test-matrices]
     if: >-
@@ -458,7 +458,7 @@ jobs:
           collect-metrics: ${{ needs.setup.outputs.post-metrics }}
 
   openapi:
-    runs-on: ubuntu-latest
+    runs-on: blacksmith-2vcpu-ubuntu-2404
     timeout-minutes: 60
     needs: [setup, changes, get-all-test-matrices]
     if: >-
@@ -488,7 +488,7 @@ jobs:
           collect-metrics: ${{ needs.setup.outputs.post-metrics }}
 
   postman:
-    runs-on: ubuntu-latest
+    runs-on: blacksmith-2vcpu-ubuntu-2404
     timeout-minutes: 60
     needs: [setup, changes, get-all-test-matrices]
     if: >-
@@ -518,7 +518,7 @@ jobs:
           collect-metrics: ${{ needs.setup.outputs.post-metrics }}
 
   java-sdk:
-    runs-on: ubuntu-latest
+    runs-on: blacksmith-2vcpu-ubuntu-2404
     timeout-minutes: 60
     needs: [setup, changes, get-all-test-matrices]
     if: >-
@@ -548,7 +548,7 @@ jobs:
           collect-metrics: ${{ needs.setup.outputs.post-metrics }}
 
   java-model:
-    runs-on: ubuntu-latest
+    runs-on: blacksmith-2vcpu-ubuntu-2404
     timeout-minutes: 60
     needs: [setup, changes, get-all-test-matrices]
     if: >-
@@ -578,7 +578,7 @@ jobs:
           collect-metrics: ${{ needs.setup.outputs.post-metrics }}
 
   java-spring:
-    runs-on: ubuntu-latest
+    runs-on: blacksmith-2vcpu-ubuntu-2404
     timeout-minutes: 60
     needs: [setup, changes, get-all-test-matrices]
     if: >-
@@ -608,7 +608,7 @@ jobs:
           collect-metrics: ${{ needs.setup.outputs.post-metrics }}
 
   ts-sdk:
-    runs-on: ubuntu-latest
+    runs-on: blacksmith-2vcpu-ubuntu-2404
     timeout-minutes: 60
     needs: [setup, changes, get-all-test-matrices]
     if: >-
@@ -638,7 +638,7 @@ jobs:
           collect-metrics: ${{ needs.setup.outputs.post-metrics }}
 
   ts-express:
-    runs-on: ubuntu-latest
+    runs-on: blacksmith-2vcpu-ubuntu-2404
     timeout-minutes: 60
     needs: [setup, changes, get-all-test-matrices]
     if: >-
@@ -668,7 +668,7 @@ jobs:
           collect-metrics: ${{ needs.setup.outputs.post-metrics }}
 
   go-fiber:
-    runs-on: ubuntu-latest
+    runs-on: blacksmith-2vcpu-ubuntu-2404
     timeout-minutes: 60
     needs: [setup, changes, get-all-test-matrices]
     if: >-
@@ -698,7 +698,7 @@ jobs:
           collect-metrics: ${{ needs.setup.outputs.post-metrics }}
 
   go-model:
-    runs-on: ubuntu-latest
+    runs-on: blacksmith-2vcpu-ubuntu-2404
     timeout-minutes: 60
     needs: [setup, changes, get-all-test-matrices]
     if: >-
@@ -728,7 +728,7 @@ jobs:
           collect-metrics: ${{ needs.setup.outputs.post-metrics }}
 
   go-sdk:
-    runs-on: ubuntu-latest
+    runs-on: blacksmith-2vcpu-ubuntu-2404
     timeout-minutes: 60
     needs: [setup, changes, get-all-test-matrices]
     if: >-
@@ -758,7 +758,7 @@ jobs:
           collect-metrics: ${{ needs.setup.outputs.post-metrics }}
 
   csharp-model:
-    runs-on: ubuntu-latest
+    runs-on: blacksmith-2vcpu-ubuntu-2404
     timeout-minutes: 60
     needs: [setup, changes, get-all-test-matrices]
     if: >-
@@ -788,7 +788,7 @@ jobs:
           collect-metrics: ${{ needs.setup.outputs.post-metrics }}
 
   csharp-sdk:
-    runs-on: ubuntu-latest
+    runs-on: blacksmith-2vcpu-ubuntu-2404
     timeout-minutes: 60
     needs: [setup, changes, get-all-test-matrices]
     if: >-
@@ -818,7 +818,7 @@ jobs:
           collect-metrics: ${{ needs.setup.outputs.post-metrics }}
 
   php-model:
-    runs-on: ubuntu-latest
+    runs-on: blacksmith-2vcpu-ubuntu-2404
     timeout-minutes: 60
     needs: [setup, changes, get-all-test-matrices]
     if: >-
@@ -848,7 +848,7 @@ jobs:
           collect-metrics: ${{ needs.setup.outputs.post-metrics }}
 
   php-sdk:
-    runs-on: ubuntu-latest
+    runs-on: blacksmith-2vcpu-ubuntu-2404
     timeout-minutes: 60
     needs: [setup, changes, get-all-test-matrices]
     if: >-
@@ -878,7 +878,7 @@ jobs:
           collect-metrics: ${{ needs.setup.outputs.post-metrics }}
 
   swift-sdk:
-    runs-on: ubuntu-latest
+    runs-on: blacksmith-2vcpu-ubuntu-2404
     timeout-minutes: 60
     needs: [setup, changes, get-all-test-matrices]
     if: >-
@@ -908,7 +908,7 @@ jobs:
           collect-metrics: ${{ needs.setup.outputs.post-metrics }}
 
   rust-model:
-    runs-on: ubuntu-latest
+    runs-on: blacksmith-2vcpu-ubuntu-2404
     timeout-minutes: 60
     needs: [setup, changes, get-all-test-matrices]
     if: >-
@@ -938,7 +938,7 @@ jobs:
           collect-metrics: ${{ needs.setup.outputs.post-metrics }}
 
   rust-sdk:
-    runs-on: ubuntu-latest
+    runs-on: blacksmith-2vcpu-ubuntu-2404
     timeout-minutes: 60
     needs: [setup, changes, get-all-test-matrices]
     if: >-
@@ -969,7 +969,7 @@ jobs:
 
   # Round up all tests into job with defined name for PR merge requirements
   seed-test-results:
-    runs-on: ubuntu-latest
+    runs-on: blacksmith-2vcpu-ubuntu-2404
     timeout-minutes: 3
     needs:
       [
@@ -1079,7 +1079,7 @@ jobs:
           fi
 
   post-metrics:
-    runs-on: ubuntu-latest
+    runs-on: blacksmith-2vcpu-ubuntu-2404
     timeout-minutes: 10
     needs:
       [
