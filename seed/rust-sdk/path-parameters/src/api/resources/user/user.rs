@@ -22,7 +22,7 @@ impl UserClient {
         self.http_client
             .execute_request(
                 Method::GET,
-                &format!("/{}{}", tenant_id, user_id),
+                &format!("/{}/user/{}", tenant_id, user_id),
                 None,
                 None,
                 options,
@@ -39,7 +39,7 @@ impl UserClient {
         self.http_client
             .execute_request(
                 Method::POST,
-                &format!("/{}", tenant_id),
+                &format!("/{}/user/", tenant_id),
                 Some(serde_json::to_value(request).unwrap_or_default()),
                 None,
                 options,
@@ -57,7 +57,7 @@ impl UserClient {
         self.http_client
             .execute_request(
                 Method::PATCH,
-                &format!("/{}{}", tenant_id, user_id),
+                &format!("/{}/user/{}", tenant_id, user_id),
                 Some(serde_json::to_value(request).unwrap_or_default()),
                 None,
                 options,
@@ -75,7 +75,7 @@ impl UserClient {
         self.http_client
             .execute_request(
                 Method::GET,
-                &format!("/{}{}", tenant_id, user_id),
+                &format!("/{}/user/{}/search", tenant_id, user_id),
                 None,
                 QueryBuilder::new()
                     .int("limit", request.limit.clone())

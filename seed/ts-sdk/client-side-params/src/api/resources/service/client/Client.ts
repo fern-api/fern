@@ -149,7 +149,7 @@ export class Service {
             url: core.url.join(
                 (await core.Supplier.get(this._options.baseUrl)) ??
                     (await core.Supplier.get(this._options.environment)),
-                `/api/resources/${encodeURIComponent(resourceId)}`,
+                `/api/resources/${core.url.encodePathParam(resourceId)}`,
             ),
             method: "GET",
             headers: _headers,
@@ -441,7 +441,7 @@ export class Service {
             url: core.url.join(
                 (await core.Supplier.get(this._options.baseUrl)) ??
                     (await core.Supplier.get(this._options.environment)),
-                `/api/users/${encodeURIComponent(userId)}`,
+                `/api/users/${core.url.encodePathParam(userId)}`,
             ),
             method: "GET",
             headers: _headers,
@@ -619,7 +619,7 @@ export class Service {
             url: core.url.join(
                 (await core.Supplier.get(this._options.baseUrl)) ??
                     (await core.Supplier.get(this._options.environment)),
-                `/api/users/${encodeURIComponent(userId)}`,
+                `/api/users/${core.url.encodePathParam(userId)}`,
             ),
             method: "PATCH",
             headers: _headers,
@@ -688,7 +688,7 @@ export class Service {
             url: core.url.join(
                 (await core.Supplier.get(this._options.baseUrl)) ??
                     (await core.Supplier.get(this._options.environment)),
-                `/api/users/${encodeURIComponent(userId)}`,
+                `/api/users/${core.url.encodePathParam(userId)}`,
             ),
             method: "DELETE",
             headers: _headers,
@@ -855,7 +855,7 @@ export class Service {
             url: core.url.join(
                 (await core.Supplier.get(this._options.baseUrl)) ??
                     (await core.Supplier.get(this._options.environment)),
-                `/api/connections/${encodeURIComponent(connectionId)}`,
+                `/api/connections/${core.url.encodePathParam(connectionId)}`,
             ),
             method: "GET",
             headers: _headers,
@@ -1062,7 +1062,7 @@ export class Service {
             url: core.url.join(
                 (await core.Supplier.get(this._options.baseUrl)) ??
                     (await core.Supplier.get(this._options.environment)),
-                `/api/clients/${encodeURIComponent(clientId)}`,
+                `/api/clients/${core.url.encodePathParam(clientId)}`,
             ),
             method: "GET",
             headers: _headers,

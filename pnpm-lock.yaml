@@ -2155,6 +2155,9 @@ importers:
       lodash-es:
         specifier: ^4.17.21
         version: 4.17.21
+      number-to-words:
+        specifier: 1.2.4
+        version: 1.2.4
       zod:
         specifier: ^3.25.75
         version: 3.25.76
@@ -2168,6 +2171,9 @@ importers:
       '@types/node':
         specifier: 18.15.3
         version: 18.15.3
+      '@types/number-to-words':
+        specifier: 1.2.3
+        version: 1.2.3
       depcheck:
         specifier: ^1.4.7
         version: 1.4.7
@@ -7747,7 +7753,7 @@ importers:
     devDependencies:
       vitest:
         specifier: ^2.1.9
-        version: 2.1.9(@types/node@18.19.129)(jsdom@20.0.3)(msw@2.11.3(@types/node@18.19.129)(typescript@5.9.2))(sass@1.93.2)(terser@5.44.0)
+        version: 2.1.9(@types/node@18.19.129)(jsdom@20.0.3)(msw@2.11.3(@types/node@18.19.129)(typescript@5.8.3))(sass@1.93.2)(terser@5.44.0)
 
   packages/core:
     dependencies:
@@ -10324,6 +10330,9 @@ packages:
 
   '@types/normalize-package-data@2.4.4':
     resolution: {integrity: sha512-37i+OaWTh9qeK4LSHPsyRC7NahnGotNuZvjLSgcPzblpHB3rrCJxAOgI5gCdKm7coonsaX1Of0ILiTcnZjbfxA==}
+
+  '@types/number-to-words@1.2.3':
+    resolution: {integrity: sha512-ruSA/QZ6JQofoEEN2zKmN9oihZmrCBgcw0zEzN0UA9Mw0pU5remTddZmrbHjsa99qz12Uxl82x+XkVpHu87oXw==}
 
   '@types/object-hash@3.0.6':
     resolution: {integrity: sha512-fOBV8C1FIu2ELinoILQ+ApxcUKz4ngq+IWUYrxSGjXzzjUALijilampwkMgEtJ+h2njAW3pi853QpzNVCHB73w==}
@@ -13157,6 +13166,9 @@ packages:
   npm-run-path@4.0.1:
     resolution: {integrity: sha512-S48WzZW777zhNIrn7gxOlISNAqi9ZC/uQFnRdbeIHhZhCA6UqpkOT8T1G7BvfdgP4Er8gF4sUbaS0i7QvIfCWw==}
     engines: {node: '>=8'}
+
+  number-to-words@1.2.4:
+    resolution: {integrity: sha512-/fYevVkXRcyBiZDg6yzZbm0RuaD6i0qRfn8yr+6D0KgBMOndFPxuW10qCHpzs50nN8qKuv78k8MuotZhcVX6Pw==}
 
   nwsapi@2.2.22:
     resolution: {integrity: sha512-ujSMe1OWVn55euT1ihwCI1ZcAaAU3nxUiDwfDQldc51ZXaB9m2AyOn6/jh1BLe2t/G8xd6uKG1UBF2aZJeg2SQ==}
@@ -17482,6 +17494,8 @@ snapshots:
 
   '@types/normalize-package-data@2.4.4': {}
 
+  '@types/number-to-words@1.2.3': {}
+
   '@types/object-hash@3.0.6': {}
 
   '@types/parse-json@4.0.2': {}
@@ -17696,15 +17710,6 @@ snapshots:
       magic-string: 0.30.19
     optionalDependencies:
       msw: 2.11.3(@types/node@18.19.129)(typescript@5.8.3)
-      vite: 5.4.20(@types/node@18.19.129)(sass@1.93.2)(terser@5.44.0)
-
-  '@vitest/mocker@2.1.9(msw@2.11.3(@types/node@18.19.129)(typescript@5.9.2))(vite@5.4.20(@types/node@18.19.129)(sass@1.93.2)(terser@5.44.0))':
-    dependencies:
-      '@vitest/spy': 2.1.9
-      estree-walker: 3.0.3
-      magic-string: 0.30.19
-    optionalDependencies:
-      msw: 2.11.3(@types/node@18.19.129)(typescript@5.9.2)
       vite: 5.4.20(@types/node@18.19.129)(sass@1.93.2)(terser@5.44.0)
 
   '@vitest/pretty-format@2.1.9':
@@ -20988,33 +20993,6 @@ snapshots:
       - '@types/node'
     optional: true
 
-  msw@2.11.3(@types/node@18.19.129)(typescript@5.9.2):
-    dependencies:
-      '@bundled-es-modules/cookie': 2.0.1
-      '@bundled-es-modules/statuses': 1.0.1
-      '@inquirer/confirm': 5.1.18(@types/node@18.19.129)
-      '@mswjs/interceptors': 0.39.7
-      '@open-draft/deferred-promise': 2.2.0
-      '@types/cookie': 0.6.0
-      '@types/statuses': 2.0.6
-      graphql: 16.11.0
-      headers-polyfill: 4.0.3
-      is-node-process: 1.2.0
-      outvariant: 1.4.3
-      path-to-regexp: 6.3.0
-      picocolors: 1.1.1
-      rettime: 0.7.0
-      strict-event-emitter: 0.5.1
-      tough-cookie: 6.0.0
-      type-fest: 4.41.0
-      until-async: 3.0.2
-      yargs: 17.7.2
-    optionalDependencies:
-      typescript: 5.9.2
-    transitivePeerDependencies:
-      - '@types/node'
-    optional: true
-
   multimatch@5.0.0:
     dependencies:
       '@types/minimatch': 3.0.5
@@ -21105,6 +21083,8 @@ snapshots:
   npm-run-path@4.0.1:
     dependencies:
       path-key: 3.1.1
+
+  number-to-words@1.2.4: {}
 
   nwsapi@2.2.22:
     optional: true
@@ -23174,42 +23154,6 @@ snapshots:
     dependencies:
       '@vitest/expect': 2.1.9
       '@vitest/mocker': 2.1.9(msw@2.11.3(@types/node@18.19.129)(typescript@5.8.3))(vite@5.4.20(@types/node@18.19.129)(sass@1.93.2)(terser@5.44.0))
-      '@vitest/pretty-format': 2.1.9
-      '@vitest/runner': 2.1.9
-      '@vitest/snapshot': 2.1.9
-      '@vitest/spy': 2.1.9
-      '@vitest/utils': 2.1.9
-      chai: 5.3.3
-      debug: 4.4.3
-      expect-type: 1.2.2
-      magic-string: 0.30.19
-      pathe: 1.1.2
-      std-env: 3.9.0
-      tinybench: 2.9.0
-      tinyexec: 0.3.2
-      tinypool: 1.1.1
-      tinyrainbow: 1.2.0
-      vite: 5.4.20(@types/node@18.19.129)(sass@1.93.2)(terser@5.44.0)
-      vite-node: 2.1.9(@types/node@18.19.129)(sass@1.93.2)(terser@5.44.0)
-      why-is-node-running: 2.3.0
-    optionalDependencies:
-      '@types/node': 18.19.129
-      jsdom: 20.0.3
-    transitivePeerDependencies:
-      - less
-      - lightningcss
-      - msw
-      - sass
-      - sass-embedded
-      - stylus
-      - sugarss
-      - supports-color
-      - terser
-
-  vitest@2.1.9(@types/node@18.19.129)(jsdom@20.0.3)(msw@2.11.3(@types/node@18.19.129)(typescript@5.9.2))(sass@1.93.2)(terser@5.44.0):
-    dependencies:
-      '@vitest/expect': 2.1.9
-      '@vitest/mocker': 2.1.9(msw@2.11.3(@types/node@18.19.129)(typescript@5.9.2))(vite@5.4.20(@types/node@18.19.129)(sass@1.93.2)(terser@5.44.0))
       '@vitest/pretty-format': 2.1.9
       '@vitest/runner': 2.1.9
       '@vitest/snapshot': 2.1.9

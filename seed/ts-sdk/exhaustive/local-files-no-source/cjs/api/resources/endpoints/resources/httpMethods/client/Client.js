@@ -66,7 +66,7 @@ class HttpMethods {
             var _a, _b, _c, _d, _e, _f, _g;
             const _headers = (0, headers_js_1.mergeHeaders)((_a = this._options) === null || _a === void 0 ? void 0 : _a.headers, (0, headers_js_1.mergeOnlyDefinedHeaders)({ Authorization: yield this._getAuthorizationHeader() }), requestOptions === null || requestOptions === void 0 ? void 0 : requestOptions.headers);
             const _response = yield core.fetcher({
-                url: core.url.join((_b = (yield core.Supplier.get(this._options.baseUrl))) !== null && _b !== void 0 ? _b : (yield core.Supplier.get(this._options.environment)), `/http-methods/${encodeURIComponent(id)}`),
+                url: core.url.join((_b = (yield core.Supplier.get(this._options.baseUrl))) !== null && _b !== void 0 ? _b : (yield core.Supplier.get(this._options.environment)), `/http-methods/${core.url.encodePathParam(id)}`),
                 method: "GET",
                 headers: _headers,
                 queryParameters: requestOptions === null || requestOptions === void 0 ? void 0 : requestOptions.queryParams,
@@ -177,7 +177,7 @@ class HttpMethods {
             var _a, _b, _c, _d, _e, _f, _g;
             const _headers = (0, headers_js_1.mergeHeaders)((_a = this._options) === null || _a === void 0 ? void 0 : _a.headers, (0, headers_js_1.mergeOnlyDefinedHeaders)({ Authorization: yield this._getAuthorizationHeader() }), requestOptions === null || requestOptions === void 0 ? void 0 : requestOptions.headers);
             const _response = yield core.fetcher({
-                url: core.url.join((_b = (yield core.Supplier.get(this._options.baseUrl))) !== null && _b !== void 0 ? _b : (yield core.Supplier.get(this._options.environment)), `/http-methods/${encodeURIComponent(id)}`),
+                url: core.url.join((_b = (yield core.Supplier.get(this._options.baseUrl))) !== null && _b !== void 0 ? _b : (yield core.Supplier.get(this._options.environment)), `/http-methods/${core.url.encodePathParam(id)}`),
                 method: "PUT",
                 headers: _headers,
                 contentType: "application/json",
@@ -250,7 +250,7 @@ class HttpMethods {
             var _a, _b, _c, _d, _e, _f, _g;
             const _headers = (0, headers_js_1.mergeHeaders)((_a = this._options) === null || _a === void 0 ? void 0 : _a.headers, (0, headers_js_1.mergeOnlyDefinedHeaders)({ Authorization: yield this._getAuthorizationHeader() }), requestOptions === null || requestOptions === void 0 ? void 0 : requestOptions.headers);
             const _response = yield core.fetcher({
-                url: core.url.join((_b = (yield core.Supplier.get(this._options.baseUrl))) !== null && _b !== void 0 ? _b : (yield core.Supplier.get(this._options.environment)), `/http-methods/${encodeURIComponent(id)}`),
+                url: core.url.join((_b = (yield core.Supplier.get(this._options.baseUrl))) !== null && _b !== void 0 ? _b : (yield core.Supplier.get(this._options.environment)), `/http-methods/${core.url.encodePathParam(id)}`),
                 method: "PATCH",
                 headers: _headers,
                 contentType: "application/json",
@@ -306,7 +306,7 @@ class HttpMethods {
             var _a, _b, _c, _d, _e, _f, _g;
             const _headers = (0, headers_js_1.mergeHeaders)((_a = this._options) === null || _a === void 0 ? void 0 : _a.headers, (0, headers_js_1.mergeOnlyDefinedHeaders)({ Authorization: yield this._getAuthorizationHeader() }), requestOptions === null || requestOptions === void 0 ? void 0 : requestOptions.headers);
             const _response = yield core.fetcher({
-                url: core.url.join((_b = (yield core.Supplier.get(this._options.baseUrl))) !== null && _b !== void 0 ? _b : (yield core.Supplier.get(this._options.environment)), `/http-methods/${encodeURIComponent(id)}`),
+                url: core.url.join((_b = (yield core.Supplier.get(this._options.baseUrl))) !== null && _b !== void 0 ? _b : (yield core.Supplier.get(this._options.environment)), `/http-methods/${core.url.encodePathParam(id)}`),
                 method: "DELETE",
                 headers: _headers,
                 queryParameters: requestOptions === null || requestOptions === void 0 ? void 0 : requestOptions.queryParams,

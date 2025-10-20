@@ -1,5 +1,5 @@
 import { assertNever, noop } from "@fern-api/core-utils";
-import { sanitizeSelf, swift } from "@fern-api/swift-codegen";
+import { EnumWithAssociatedValues, sanitizeSelf, swift } from "@fern-api/swift-codegen";
 import { ObjectProperty, TypeId, UnionTypeDeclaration } from "@fern-fern/ir-sdk/api";
 
 import { StructGenerator } from "../helpers/struct-generator/StructGenerator";
@@ -46,9 +46,13 @@ export class DiscriminatedUnionGenerator {
 
     private generateCasesForTypeDeclaration(): swift.EnumWithAssociatedValues.Case[] {
         return this.unionTypeDeclaration.types.map((singleUnionType) => {
+            const caseName = EnumWithAssociatedValues.sanitizeToCamelCase(singleUnionType.discriminantValue.wireValue);
+            const structName = EnumWithAssociatedValues.sanitizeToPascalCase(
+                singleUnionType.discriminantValue.wireValue
+            );
             return {
-                unsafeName: singleUnionType.discriminantValue.name.camelCase.unsafeName,
-                associatedValue: [swift.Type.custom(singleUnionType.discriminantValue.name.pascalCase.unsafeName)],
+                unsafeName: caseName,
+                associatedValue: [swift.Type.custom(structName)],
                 docs: singleUnionType.docs ? swift.docComment({ summary: singleUnionType.docs }) : undefined
             };
         });
@@ -101,18 +105,23 @@ export class DiscriminatedUnionGenerator {
             swift.Statement.switch({
                 target: swift.Expression.reference("discriminant"),
                 cases: this.unionTypeDeclaration.types.map((singleUnionType) => {
+                    const caseName = EnumWithAssociatedValues.sanitizeToCamelCase(
+                        singleUnionType.discriminantValue.wireValue
+                    );
+                    const structName = EnumWithAssociatedValues.sanitizeToPascalCase(
+                        singleUnionType.discriminantValue.wireValue
+                    );
                     return {
                         pattern: swift.Expression.stringLiteral(singleUnionType.discriminantValue.wireValue),
                         body: [
                             swift.Statement.selfAssignment(
                                 swift.Expression.contextualMethodCall({
-                                    methodName: singleUnionType.discriminantValue.name.camelCase.unsafeName,
+                                    methodName: caseName,
                                     arguments_: [
                                         swift.functionArgument({
                                             value: swift.Expression.try(
                                                 swift.Expression.structInitialization({
-                                                    unsafeName:
-                                                        singleUnionType.discriminantValue.name.pascalCase.unsafeName,
+                                                    unsafeName: structName,
                                                     arguments_: [
                                                         swift.functionArgument({
                                                             label: "from",
@@ -198,9 +207,12 @@ export class DiscriminatedUnionGenerator {
                 swift.Statement.switch({
                     target: swift.Expression.rawValue("self"),
                     cases: this.unionTypeDeclaration.types.map((singleUnionType) => {
+                        const caseName = EnumWithAssociatedValues.sanitizeToCamelCase(
+                            singleUnionType.discriminantValue.wireValue
+                        );
                         return {
                             pattern: swift.Pattern.enumCaseValueBinding({
-                                caseName: singleUnionType.discriminantValue.name.camelCase.unsafeName,
+                                caseName: caseName,
                                 referenceName: "data",
                                 declarationType: swift.DeclarationType.Let
                             }),
@@ -267,7 +279,7 @@ export class DiscriminatedUnionGenerator {
             }
 
             return new StructGenerator({
-                name: singleUnionType.discriminantValue.name.pascalCase.unsafeName,
+                name: EnumWithAssociatedValues.sanitizeToPascalCase(singleUnionType.discriminantValue.wireValue),
                 constantPropertyDefinitions,
                 dataPropertyDefinitions,
                 additionalProperties: true,

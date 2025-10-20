@@ -1,7 +1,7 @@
 import { DiscriminatedUnionTypeInstance, Severity } from "@fern-api/browser-compatible-base-generator";
 import { assertNever } from "@fern-api/core-utils";
 import { FernIr } from "@fern-api/dynamic-ir-sdk";
-import { LiteralEnum, sanitizeSelf, swift } from "@fern-api/swift-codegen";
+import { EnumWithAssociatedValues, LiteralEnum, sanitizeSelf, swift } from "@fern-api/swift-codegen";
 
 import { DynamicSnippetsGeneratorContext } from "./DynamicSnippetsGeneratorContext";
 import { DynamicTypeMapper } from "./DynamicTypeMapper";
@@ -183,7 +183,9 @@ export class DynamicTypeLiteralMapper {
         }
         return swift.Expression.methodCall({
             target: swift.Expression.reference(discriminatedUnion.declaration.name.pascalCase.unsafeName),
-            methodName: unionVariant.discriminantValue.name.camelCase.unsafeName,
+            methodName: EnumWithAssociatedValues.sanitizeToCamelCase(
+                unionVariant.discriminantValue.name.camelCase.unsafeName
+            ),
             arguments_: [
                 swift.functionArgument({
                     value: swift.Expression.contextualMethodCall({
@@ -237,7 +239,11 @@ export class DynamicTypeLiteralMapper {
                     return [
                         ...baseFields,
                         swift.functionArgument({
-                            label: sanitizeSelf(unionVariant.discriminantValue.name.camelCase.unsafeName),
+                            label: sanitizeSelf(
+                                EnumWithAssociatedValues.sanitizeToCamelCase(
+                                    unionVariant.discriminantValue.name.camelCase.unsafeName
+                                )
+                            ),
                             value: this.convert({
                                 typeReference: unionVariant.typeReference,
                                 value: record[unionVariant.discriminantValue.wireValue]

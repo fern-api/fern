@@ -196,7 +196,21 @@ export abstract class AbstractRustGeneratorContext<
             return this.customConfig.crateVersion;
         }
 
-        // Priority 2: Try to get version from publishConfig (set via output.location = crates) for remote generation
+        // Priority 2: Check version from output mode (same as TypeScript generator)
+        // This picks up the --version flag from the CLI
+
+        const versionFromOutputMode = this.config.output?.mode._visit({
+            downloadFiles: () => undefined,
+            github: (github) => github.version,
+            publish: (publish) => publish.version,
+            _other: () => undefined
+        });
+
+        if (versionFromOutputMode != null) {
+            return versionFromOutputMode;
+        }
+
+        // Priority 3: Try to get version from publishConfig (set via output.location = crates) for remote generation
         if (this.ir.publishConfig != null) {
             let publishTarget;
 

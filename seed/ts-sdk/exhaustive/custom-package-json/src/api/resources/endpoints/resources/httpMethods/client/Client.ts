@@ -45,7 +45,7 @@ export class HttpMethods {
             url: core.url.join(
                 (await core.Supplier.get(this._options.baseUrl)) ??
                     (await core.Supplier.get(this._options.environment)),
-                `/http-methods/${encodeURIComponent(id)}`,
+                `/http-methods/${core.url.encodePathParam(id)}`,
             ),
             method: "GET",
             headers: _headers,
@@ -183,7 +183,7 @@ export class HttpMethods {
             url: core.url.join(
                 (await core.Supplier.get(this._options.baseUrl)) ??
                     (await core.Supplier.get(this._options.environment)),
-                `/http-methods/${encodeURIComponent(id)}`,
+                `/http-methods/${core.url.encodePathParam(id)}`,
             ),
             method: "PUT",
             headers: _headers,
@@ -269,7 +269,7 @@ export class HttpMethods {
             url: core.url.join(
                 (await core.Supplier.get(this._options.baseUrl)) ??
                     (await core.Supplier.get(this._options.environment)),
-                `/http-methods/${encodeURIComponent(id)}`,
+                `/http-methods/${core.url.encodePathParam(id)}`,
             ),
             method: "PATCH",
             headers: _headers,
@@ -330,7 +330,7 @@ export class HttpMethods {
             url: core.url.join(
                 (await core.Supplier.get(this._options.baseUrl)) ??
                     (await core.Supplier.get(this._options.environment)),
-                `/http-methods/${encodeURIComponent(id)}`,
+                `/http-methods/${core.url.encodePathParam(id)}`,
             ),
             method: "DELETE",
             headers: _headers,

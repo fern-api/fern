@@ -94,7 +94,7 @@ export class Imdb {
     private async __getMovie(movieId: SeedApi.MovieId, requestOptions?: Imdb.RequestOptions): Promise<core.WithRawResponse<SeedApi.Movie>> {
         let _headers: core.Fetcher.Args["headers"] = mergeHeaders(this._options?.headers, mergeOnlyDefinedHeaders({ "Authorization": await this._getAuthorizationHeader() }), requestOptions?.headers);
         const _response = await core.fetcher({
-            url: core.url.join(await core.Supplier.get(this._options.baseUrl) ?? await core.Supplier.get(this._options.environment), `/movies/${encodeURIComponent(movieId)}`),
+            url: core.url.join(await core.Supplier.get(this._options.baseUrl) ?? await core.Supplier.get(this._options.environment), `/movies/${core.url.encodePathParam(movieId)}`),
             method: "GET",
             headers: _headers,
             queryParameters: requestOptions?.queryParams,

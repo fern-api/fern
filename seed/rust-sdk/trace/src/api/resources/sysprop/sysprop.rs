@@ -24,7 +24,7 @@ impl SyspropClient {
             .execute_request(
                 Method::PUT,
                 &format!(
-                    "/sysprop/num-warm-instances/{}{}",
+                    "/sysprop/num-warm-instances/{}/{}",
                     language, num_warm_instances
                 ),
                 None,

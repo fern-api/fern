@@ -1057,6 +1057,16 @@ describe("${serviceName}", () => {
         if (isCodeUndefined(requestExample)) {
             return undefined;
         }
+        if (isCodeEmptyObject(requestExample)) {
+            // exception in the static example generation where empty objects are omitted for optional containers
+            if (
+                request.type === "reference" &&
+                request.shape.type === "container" &&
+                request.shape.container.type === "optional"
+            ) {
+                return undefined;
+            }
+        }
         return requestExample;
     }
 
@@ -1459,4 +1469,9 @@ function getExampleErrorDeclarationOrThrow({
 function isCodeUndefined(code: Code): boolean {
     const rawCode = code.toString().trim();
     return rawCode === "undefined";
+}
+
+function isCodeEmptyObject(code: Code): boolean {
+    const rawCode = code.toString().trim();
+    return rawCode === "{}" || rawCode === "{ }";
 }

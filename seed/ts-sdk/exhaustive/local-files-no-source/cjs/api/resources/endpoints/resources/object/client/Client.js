@@ -353,7 +353,7 @@ class Object_ {
             var _a, _b, _c, _d, _e, _f, _g;
             const _headers = (0, headers_js_1.mergeHeaders)((_a = this._options) === null || _a === void 0 ? void 0 : _a.headers, (0, headers_js_1.mergeOnlyDefinedHeaders)({ Authorization: yield this._getAuthorizationHeader() }), requestOptions === null || requestOptions === void 0 ? void 0 : requestOptions.headers);
             const _response = yield core.fetcher({
-                url: core.url.join((_b = (yield core.Supplier.get(this._options.baseUrl))) !== null && _b !== void 0 ? _b : (yield core.Supplier.get(this._options.environment)), `/object/get-and-return-nested-with-required-field/${encodeURIComponent(string_)}`),
+                url: core.url.join((_b = (yield core.Supplier.get(this._options.baseUrl))) !== null && _b !== void 0 ? _b : (yield core.Supplier.get(this._options.environment)), `/object/get-and-return-nested-with-required-field/${core.url.encodePathParam(string_)}`),
                 method: "POST",
                 headers: _headers,
                 contentType: "application/json",
