@@ -61,11 +61,10 @@ fixtures:
     - customConfig:
         use_inheritance_for_extended_models: false
       outputFolder: no-inheritance-for-extended-models
-  deep-circular-references:
     - customConfig:
         pydantic_config:
           version: v2
-      outputFolder: no-custom-config
+      outputFolder: pydantic-v2
     - customConfig:
         pydantic_config:
           version: v1
