@@ -2,12 +2,6 @@
 
 # isort: skip_file
 
-from .account import Account
-from .base_resource import BaseResource
-from .memo import Memo
-from .patient import Patient
-from .practitioner import Practitioner
-from .resource_list import ResourceList
-from .script import Script
+from .account_all import Account, BaseResource, Memo, Patient, Practitioner, ResourceList, Script
 
 __all__ = ["Account", "BaseResource", "Memo", "Patient", "Practitioner", "ResourceList", "Script"]

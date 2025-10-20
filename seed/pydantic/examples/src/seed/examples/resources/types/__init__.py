@@ -19,14 +19,13 @@ from .migration_status import MigrationStatus
 from .moment import Moment
 from .movie import Movie
 from .movie_id import MovieId
-from .node import Node
+from .node_all import Node, Tree
 from .refresh_token_request import RefreshTokenRequest
 from .request import Request
 from .response import Response
 from .response_type import ResponseType
 from .stunt_double import StuntDouble
 from .test import Test, Test_And, Test_Or
-from .tree import Tree
 
 __all__ = [
     "Actor",
