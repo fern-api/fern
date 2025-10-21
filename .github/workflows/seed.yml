@@ -1339,6 +1339,8 @@ jobs:
           merge-multiple: true
           # CHRISM - temp, get from last night run
           run-id: 18678685519
+          github-token: ${{ secrets.FERN_GITHUB_PAT }}
+
 
       - name: Get Number of Metrics Artifacts
         shell: bash
