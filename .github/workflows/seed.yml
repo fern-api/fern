@@ -1419,7 +1419,7 @@ jobs:
         with:
           posthog-token: ${{ secrets.POSTHOG_API_KEY }}
           # CHRISM - temp name
-          event: "gh-actions-seed-test-metrics-event-testing-allowed-failures"
+          event: "gh-actions-seed-test-metrics-event"
           properties: |
             {
               "event_type": "${{ github.event_name }}",
