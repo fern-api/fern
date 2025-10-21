@@ -9,13 +9,16 @@
   "exclude": ["./src/**/__test__/**/generated"],
   "references": [
     {
+      "path": "../../../../packages/commons/core-utils"
+    },
+    {
       "path": "../commons"
     },
     {
-      "path": "../../../base"
+      "path": "../../../../packages/cli/logger"
     },
     {
-      "path": "../../../../packages/cli/logger"
+      "path": "../../../base"
     }
   ]
 }
