@@ -33,6 +33,7 @@ export class RubyProject extends AbstractProject<AbstractRubyGeneratorContext<Ba
         await this.createGemspecfile();
         await this.createCustomGemspecFile();
         await this.createGemfile();
+        await this.createCustomGemfile();
         await this.createRakefile();
         await this.writeRawFiles();
         await this.createAsIsFiles();
