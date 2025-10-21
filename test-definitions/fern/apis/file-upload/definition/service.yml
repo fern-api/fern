@@ -34,7 +34,7 @@ service:
           properties:
             file: file
       examples:
-        - {}
+        - request: {}
 
     justFileWithQueryParams:
       path: /just-file-with-query-params
@@ -165,7 +165,9 @@ service:
         status-code: 200
         type: string
       examples:
-        - {}
+        - request: {}
+          response:
+            body: "Foo"
 
         # add one non-file endpoint to force snippet generation
 
