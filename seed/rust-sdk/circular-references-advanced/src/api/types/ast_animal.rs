@@ -1,6 +1,4 @@
-use crate::ast_cat::Cat;
-use crate::ast_dog::Dog;
-use serde::{Deserialize, Serialize};
+pub use crate::prelude::*;
 
 #[derive(Debug, Clone, Serialize, Deserialize, PartialEq)]
 #[serde(untagged)]
@@ -44,6 +42,23 @@ impl Animal {
         match self {
             Self::Dog(value) => Some(value),
             _ => None,
+        }
+    }
+}
+
+impl fmt::Display for Animal {
+    fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
+        match self {
+            Self::Cat(value) => write!(
+                f,
+                "{}",
+                serde_json::to_string(value).unwrap_or_else(|_| format!("{:?}", value))
+            ),
+            Self::Dog(value) => write!(
+                f,
+                "{}",
+                serde_json::to_string(value).unwrap_or_else(|_| format!("{:?}", value))
+            ),
         }
     }
 }
