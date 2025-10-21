@@ -16,18 +16,20 @@ Instantiate and use the client with the following:
 package example
 
 import (
-    client "github.com/fern-api/file-upload-go/client"
+    client "github.com/url-form-encoded/fern/client"
+    fern "github.com/url-form-encoded/fern"
     context "context"
-    strings "strings"
 )
 
 func do() {
     client := client.NewClient()
-    client.Service.JustFile(
+    request := &fern.PostSubmitRequest{
+        Username: "johndoe",
+        Email: "john@example.com",
+    }
+    client.SubmitFormData(
         context.TODO(),
-        strings.NewReader(
-            "",
-        ),
+        request,
     )
 }
 ```
@@ -49,7 +51,7 @@ Structured error types are returned from API calls that return non-success statu
 with the `errors.Is` and `errors.As` APIs, so you can access the error like so:
 
 ```go
-response, err := client.Service.JustFile(...)
+response, err := client.SubmitFormData(...)
 if err != nil {
     var apiError *core.APIError
     if errors.As(err, apiError) {
@@ -83,7 +85,7 @@ client := client.NewClient(
 )
 
 // Specify options for an individual request.
-response, err := client.Service.JustFile(
+response, err := client.SubmitFormData(
     ...,
     option.WithToken("<YOUR_API_KEY>"),
 )
@@ -97,7 +99,7 @@ You can access the raw HTTP response data by using the `WithRawResponse` field o
 when you need to examine the response headers received from the API call.
 
 ```go
-response, err := client.Service.WithRawResponse.JustFile(...)
+response, err := client.WithRawResponse.SubmitFormData(...)
 if err != nil {
     return err
 }
@@ -126,7 +128,7 @@ client := client.NewClient(
     option.WithMaxAttempts(1),
 )
 
-response, err := client.Service.JustFile(
+response, err := client.SubmitFormData(
     ...,
     option.WithMaxAttempts(1),
 )
@@ -140,7 +142,7 @@ Setting a timeout for each individual request is as simple as using the standard
 ctx, cancel := context.WithTimeout(ctx, time.Second)
 defer cancel()
 
-response, err := client.Service.JustFile(ctx, ...)
+response, err := client.SubmitFormData(ctx, ...)
 ```
 
 ### Explicit Null
@@ -162,7 +164,7 @@ type ExampleRequest struct {
 request := &ExampleRequest{}
 request.SetName(nil)
 
-response, err := client.Service.JustFile(ctx, request, ...)
+response, err := client.SubmitFormData(ctx, request, ...)
 ```
 
 ## Contributing
