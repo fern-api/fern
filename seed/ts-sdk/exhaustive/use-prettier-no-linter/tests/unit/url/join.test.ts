@@ -31,7 +31,7 @@ describe("join", () => {
             expect(join("https://example.com?query=1", "api")).toBe("https://example.com/api?query=1");
             expect(join("https://example.com#fragment", "api")).toBe("https://example.com/api#fragment");
             expect(join("https://example.com?query=1#fragment", "api")).toBe(
-                "https://example.com/api?query=1#fragment"
+                "https://example.com/api?query=1#fragment",
             );
         });
 
@@ -112,7 +112,7 @@ describe("join", () => {
 
         it("should preserve trailing slash with multiple segments where last has trailing slash", () => {
             expect(join("https://api.example.com", "v1", "collections/")).toBe(
-                "https://api.example.com/v1/collections/"
+                "https://api.example.com/v1/collections/",
             );
             expect(join("base", "path1", "path2/")).toBe("base/path1/path2/");
         });

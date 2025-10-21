@@ -7,18 +7,15 @@ import { mergeHeaders, mergeOnlyDefinedHeaders } from "../../../../../../core/he
 import * as errors from "../../../../../../errors/index.js";
 
 export declare namespace ContentType {
-    export interface Options extends BaseClientOptions {
-    }
+    export interface Options extends BaseClientOptions {}
 
-    export interface RequestOptions extends BaseRequestOptions {
-    }
+    export interface RequestOptions extends BaseRequestOptions {}
 }
 
 export class ContentType {
     protected readonly _options: ContentType.Options;
 
     constructor(_options: ContentType.Options) {
-
         this._options = _options;
     }
 
@@ -45,14 +42,28 @@ export class ContentType {
      *         bigint: "1000000"
      *     })
      */
-    public postJsonPatchContentType(request: SeedExhaustive.types.ObjectWithOptionalField, requestOptions?: ContentType.RequestOptions): core.HttpResponsePromise<void> {
+    public postJsonPatchContentType(
+        request: SeedExhaustive.types.ObjectWithOptionalField,
+        requestOptions?: ContentType.RequestOptions,
+    ): core.HttpResponsePromise<void> {
         return core.HttpResponsePromise.fromPromise(this.__postJsonPatchContentType(request, requestOptions));
     }
 
-    private async __postJsonPatchContentType(request: SeedExhaustive.types.ObjectWithOptionalField, requestOptions?: ContentType.RequestOptions): Promise<core.WithRawResponse<void>> {
-        let _headers: core.Fetcher.Args["headers"] = mergeHeaders(this._options?.headers, mergeOnlyDefinedHeaders({ "Authorization": await this._getAuthorizationHeader() }), requestOptions?.headers);
+    private async __postJsonPatchContentType(
+        request: SeedExhaustive.types.ObjectWithOptionalField,
+        requestOptions?: ContentType.RequestOptions,
+    ): Promise<core.WithRawResponse<void>> {
+        let _headers: core.Fetcher.Args["headers"] = mergeHeaders(
+            this._options?.headers,
+            mergeOnlyDefinedHeaders({ Authorization: await this._getAuthorizationHeader() }),
+            requestOptions?.headers,
+        );
         const _response = await core.fetcher({
-            url: core.url.join(await core.Supplier.get(this._options.baseUrl) ?? await core.Supplier.get(this._options.environment), "/foo/bar"),
+            url: core.url.join(
+                (await core.Supplier.get(this._options.baseUrl)) ??
+                    (await core.Supplier.get(this._options.environment)),
+                "/foo/bar",
+            ),
             method: "POST",
             headers: _headers,
             contentType: "application/json-patch+json",
@@ -61,7 +72,7 @@ export class ContentType {
             body: request,
             timeoutMs: (requestOptions?.timeoutInSeconds ?? this._options?.timeoutInSeconds ?? 60) * 1000,
             maxRetries: requestOptions?.maxRetries ?? this._options?.maxRetries,
-            abortSignal: requestOptions?.abortSignal
+            abortSignal: requestOptions?.abortSignal,
         });
         if (_response.ok) {
             return { data: undefined, rawResponse: _response.rawResponse };
@@ -71,21 +82,24 @@ export class ContentType {
             throw new errors.SeedExhaustiveError({
                 statusCode: _response.error.statusCode,
                 body: _response.error.body,
-                rawResponse: _response.rawResponse
+                rawResponse: _response.rawResponse,
             });
         }
 
         switch (_response.error.reason) {
-            case "non-json": throw new errors.SeedExhaustiveError({
-                statusCode: _response.error.statusCode,
-                body: _response.error.rawBody,
-                rawResponse: _response.rawResponse
-            });
-            case "timeout": throw new errors.SeedExhaustiveTimeoutError("Timeout exceeded when calling POST /foo/bar.");
-            case "unknown": throw new errors.SeedExhaustiveError({
-                message: _response.error.errorMessage,
-                rawResponse: _response.rawResponse
-            });
+            case "non-json":
+                throw new errors.SeedExhaustiveError({
+                    statusCode: _response.error.statusCode,
+                    body: _response.error.rawBody,
+                    rawResponse: _response.rawResponse,
+                });
+            case "timeout":
+                throw new errors.SeedExhaustiveTimeoutError("Timeout exceeded when calling POST /foo/bar.");
+            case "unknown":
+                throw new errors.SeedExhaustiveError({
+                    message: _response.error.errorMessage,
+                    rawResponse: _response.rawResponse,
+                });
         }
     }
 
@@ -112,14 +126,30 @@ export class ContentType {
      *         bigint: "1000000"
      *     })
      */
-    public postJsonPatchContentWithCharsetType(request: SeedExhaustive.types.ObjectWithOptionalField, requestOptions?: ContentType.RequestOptions): core.HttpResponsePromise<void> {
-        return core.HttpResponsePromise.fromPromise(this.__postJsonPatchContentWithCharsetType(request, requestOptions));
+    public postJsonPatchContentWithCharsetType(
+        request: SeedExhaustive.types.ObjectWithOptionalField,
+        requestOptions?: ContentType.RequestOptions,
+    ): core.HttpResponsePromise<void> {
+        return core.HttpResponsePromise.fromPromise(
+            this.__postJsonPatchContentWithCharsetType(request, requestOptions),
+        );
     }
 
-    private async __postJsonPatchContentWithCharsetType(request: SeedExhaustive.types.ObjectWithOptionalField, requestOptions?: ContentType.RequestOptions): Promise<core.WithRawResponse<void>> {
-        let _headers: core.Fetcher.Args["headers"] = mergeHeaders(this._options?.headers, mergeOnlyDefinedHeaders({ "Authorization": await this._getAuthorizationHeader() }), requestOptions?.headers);
+    private async __postJsonPatchContentWithCharsetType(
+        request: SeedExhaustive.types.ObjectWithOptionalField,
+        requestOptions?: ContentType.RequestOptions,
+    ): Promise<core.WithRawResponse<void>> {
+        let _headers: core.Fetcher.Args["headers"] = mergeHeaders(
+            this._options?.headers,
+            mergeOnlyDefinedHeaders({ Authorization: await this._getAuthorizationHeader() }),
+            requestOptions?.headers,
+        );
         const _response = await core.fetcher({
-            url: core.url.join(await core.Supplier.get(this._options.baseUrl) ?? await core.Supplier.get(this._options.environment), "/foo/baz"),
+            url: core.url.join(
+                (await core.Supplier.get(this._options.baseUrl)) ??
+                    (await core.Supplier.get(this._options.environment)),
+                "/foo/baz",
+            ),
             method: "POST",
             headers: _headers,
             contentType: "application/json-patch+json; charset=utf-8",
@@ -128,7 +158,7 @@ export class ContentType {
             body: request,
             timeoutMs: (requestOptions?.timeoutInSeconds ?? this._options?.timeoutInSeconds ?? 60) * 1000,
             maxRetries: requestOptions?.maxRetries ?? this._options?.maxRetries,
-            abortSignal: requestOptions?.abortSignal
+            abortSignal: requestOptions?.abortSignal,
         });
         if (_response.ok) {
             return { data: undefined, rawResponse: _response.rawResponse };
@@ -138,21 +168,24 @@ export class ContentType {
             throw new errors.SeedExhaustiveError({
                 statusCode: _response.error.statusCode,
                 body: _response.error.body,
-                rawResponse: _response.rawResponse
+                rawResponse: _response.rawResponse,
             });
         }
 
         switch (_response.error.reason) {
-            case "non-json": throw new errors.SeedExhaustiveError({
-                statusCode: _response.error.statusCode,
-                body: _response.error.rawBody,
-                rawResponse: _response.rawResponse
-            });
-            case "timeout": throw new errors.SeedExhaustiveTimeoutError("Timeout exceeded when calling POST /foo/baz.");
-            case "unknown": throw new errors.SeedExhaustiveError({
-                message: _response.error.errorMessage,
-                rawResponse: _response.rawResponse
-            });
+            case "non-json":
+                throw new errors.SeedExhaustiveError({
+                    statusCode: _response.error.statusCode,
+                    body: _response.error.rawBody,
+                    rawResponse: _response.rawResponse,
+                });
+            case "timeout":
+                throw new errors.SeedExhaustiveTimeoutError("Timeout exceeded when calling POST /foo/baz.");
+            case "unknown":
+                throw new errors.SeedExhaustiveError({
+                    message: _response.error.errorMessage,
+                    rawResponse: _response.rawResponse,
+                });
         }
     }
 

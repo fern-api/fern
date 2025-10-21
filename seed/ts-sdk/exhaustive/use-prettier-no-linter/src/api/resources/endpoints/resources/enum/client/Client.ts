@@ -7,18 +7,15 @@ import { mergeHeaders, mergeOnlyDefinedHeaders } from "../../../../../../core/he
 import * as errors from "../../../../../../errors/index.js";
 
 export declare namespace Enum {
-    export interface Options extends BaseClientOptions {
-    }
+    export interface Options extends BaseClientOptions {}
 
-    export interface RequestOptions extends BaseRequestOptions {
-    }
+    export interface RequestOptions extends BaseRequestOptions {}
 }
 
 export class Enum {
     protected readonly _options: Enum.Options;
 
     constructor(_options: Enum.Options) {
-
         this._options = _options;
     }
 
@@ -29,14 +26,28 @@ export class Enum {
      * @example
      *     await client.endpoints.enum.getAndReturnEnum("SUNNY")
      */
-    public getAndReturnEnum(request: SeedExhaustive.types.WeatherReport, requestOptions?: Enum.RequestOptions): core.HttpResponsePromise<SeedExhaustive.types.WeatherReport> {
+    public getAndReturnEnum(
+        request: SeedExhaustive.types.WeatherReport,
+        requestOptions?: Enum.RequestOptions,
+    ): core.HttpResponsePromise<SeedExhaustive.types.WeatherReport> {
         return core.HttpResponsePromise.fromPromise(this.__getAndReturnEnum(request, requestOptions));
     }
 
-    private async __getAndReturnEnum(request: SeedExhaustive.types.WeatherReport, requestOptions?: Enum.RequestOptions): Promise<core.WithRawResponse<SeedExhaustive.types.WeatherReport>> {
-        let _headers: core.Fetcher.Args["headers"] = mergeHeaders(this._options?.headers, mergeOnlyDefinedHeaders({ "Authorization": await this._getAuthorizationHeader() }), requestOptions?.headers);
+    private async __getAndReturnEnum(
+        request: SeedExhaustive.types.WeatherReport,
+        requestOptions?: Enum.RequestOptions,
+    ): Promise<core.WithRawResponse<SeedExhaustive.types.WeatherReport>> {
+        let _headers: core.Fetcher.Args["headers"] = mergeHeaders(
+            this._options?.headers,
+            mergeOnlyDefinedHeaders({ Authorization: await this._getAuthorizationHeader() }),
+            requestOptions?.headers,
+        );
         const _response = await core.fetcher({
-            url: core.url.join(await core.Supplier.get(this._options.baseUrl) ?? await core.Supplier.get(this._options.environment), "/enum"),
+            url: core.url.join(
+                (await core.Supplier.get(this._options.baseUrl)) ??
+                    (await core.Supplier.get(this._options.environment)),
+                "/enum",
+            ),
             method: "POST",
             headers: _headers,
             contentType: "application/json",
@@ -45,7 +56,7 @@ export class Enum {
             body: request,
             timeoutMs: (requestOptions?.timeoutInSeconds ?? this._options?.timeoutInSeconds ?? 60) * 1000,
             maxRetries: requestOptions?.maxRetries ?? this._options?.maxRetries,
-            abortSignal: requestOptions?.abortSignal
+            abortSignal: requestOptions?.abortSignal,
         });
         if (_response.ok) {
             return { data: _response.body as SeedExhaustive.types.WeatherReport, rawResponse: _response.rawResponse };
@@ -55,21 +66,24 @@ export class Enum {
             throw new errors.SeedExhaustiveError({
                 statusCode: _response.error.statusCode,
                 body: _response.error.body,
-                rawResponse: _response.rawResponse
+                rawResponse: _response.rawResponse,
             });
         }
 
         switch (_response.error.reason) {
-            case "non-json": throw new errors.SeedExhaustiveError({
-                statusCode: _response.error.statusCode,
-                body: _response.error.rawBody,
-                rawResponse: _response.rawResponse
-            });
-            case "timeout": throw new errors.SeedExhaustiveTimeoutError("Timeout exceeded when calling POST /enum.");
-            case "unknown": throw new errors.SeedExhaustiveError({
-                message: _response.error.errorMessage,
-                rawResponse: _response.rawResponse
-            });
+            case "non-json":
+                throw new errors.SeedExhaustiveError({
+                    statusCode: _response.error.statusCode,
+                    body: _response.error.rawBody,
+                    rawResponse: _response.rawResponse,
+                });
+            case "timeout":
+                throw new errors.SeedExhaustiveTimeoutError("Timeout exceeded when calling POST /enum.");
+            case "unknown":
+                throw new errors.SeedExhaustiveError({
+                    message: _response.error.errorMessage,
+                    rawResponse: _response.rawResponse,
+                });
         }
     }
 

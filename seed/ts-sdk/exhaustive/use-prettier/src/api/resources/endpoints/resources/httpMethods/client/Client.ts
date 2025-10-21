@@ -4,21 +4,18 @@ import type { BaseClientOptions, BaseRequestOptions } from "../../../../../../Ba
 import * as core from "../../../../../../core/index.js";
 import { mergeHeaders, mergeOnlyDefinedHeaders } from "../../../../../../core/headers.js";
 import * as errors from "../../../../../../errors/index.js";
-import * as SeedExhaustive from "../../../../../index.js";
+import type * as SeedExhaustive from "../../../../../index.js";
 
 export declare namespace HttpMethods {
-    export interface Options extends BaseClientOptions {
-    }
+    export interface Options extends BaseClientOptions {}
 
-    export interface RequestOptions extends BaseRequestOptions {
-    }
+    export interface RequestOptions extends BaseRequestOptions {}
 }
 
 export class HttpMethods {
     protected readonly _options: HttpMethods.Options;
 
     constructor(_options: HttpMethods.Options) {
-
         this._options = _options;
     }
 
@@ -33,16 +30,27 @@ export class HttpMethods {
         return core.HttpResponsePromise.fromPromise(this.__testGet(id, requestOptions));
     }
 
-    private async __testGet(id: string, requestOptions?: HttpMethods.RequestOptions): Promise<core.WithRawResponse<string>> {
-        let _headers: core.Fetcher.Args["headers"] = mergeHeaders(this._options?.headers, mergeOnlyDefinedHeaders({ "Authorization": await this._getAuthorizationHeader() }), requestOptions?.headers);
+    private async __testGet(
+        id: string,
+        requestOptions?: HttpMethods.RequestOptions,
+    ): Promise<core.WithRawResponse<string>> {
+        const _headers: core.Fetcher.Args["headers"] = mergeHeaders(
+            this._options?.headers,
+            mergeOnlyDefinedHeaders({ Authorization: await this._getAuthorizationHeader() }),
+            requestOptions?.headers,
+        );
         const _response = await core.fetcher({
-            url: core.url.join(await core.Supplier.get(this._options.baseUrl) ?? await core.Supplier.get(this._options.environment), `/http-methods/${core.url.encodePathParam(id)}`),
+            url: core.url.join(
+                (await core.Supplier.get(this._options.baseUrl)) ??
+                    (await core.Supplier.get(this._options.environment)),
+                `/http-methods/${core.url.encodePathParam(id)}`,
+            ),
             method: "GET",
             headers: _headers,
             queryParameters: requestOptions?.queryParams,
             timeoutMs: (requestOptions?.timeoutInSeconds ?? this._options?.timeoutInSeconds ?? 60) * 1000,
             maxRetries: requestOptions?.maxRetries ?? this._options?.maxRetries,
-            abortSignal: requestOptions?.abortSignal
+            abortSignal: requestOptions?.abortSignal,
         });
         if (_response.ok) {
             return { data: _response.body as string, rawResponse: _response.rawResponse };
@@ -52,21 +60,24 @@ export class HttpMethods {
             throw new errors.SeedExhaustiveError({
                 statusCode: _response.error.statusCode,
                 body: _response.error.body,
-                rawResponse: _response.rawResponse
+                rawResponse: _response.rawResponse,
             });
         }
 
         switch (_response.error.reason) {
-            case "non-json": throw new errors.SeedExhaustiveError({
-                statusCode: _response.error.statusCode,
-                body: _response.error.rawBody,
-                rawResponse: _response.rawResponse
-            });
-            case "timeout": throw new errors.SeedExhaustiveTimeoutError("Timeout exceeded when calling GET /http-methods/{id}.");
-            case "unknown": throw new errors.SeedExhaustiveError({
-                message: _response.error.errorMessage,
-                rawResponse: _response.rawResponse
-            });
+            case "non-json":
+                throw new errors.SeedExhaustiveError({
+                    statusCode: _response.error.statusCode,
+                    body: _response.error.rawBody,
+                    rawResponse: _response.rawResponse,
+                });
+            case "timeout":
+                throw new errors.SeedExhaustiveTimeoutError("Timeout exceeded when calling GET /http-methods/{id}.");
+            case "unknown":
+                throw new errors.SeedExhaustiveError({
+                    message: _response.error.errorMessage,
+                    rawResponse: _response.rawResponse,
+                });
         }
     }
 
@@ -79,14 +90,28 @@ export class HttpMethods {
      *         string: "string"
      *     })
      */
-    public testPost(request: SeedExhaustive.types.ObjectWithRequiredField, requestOptions?: HttpMethods.RequestOptions): core.HttpResponsePromise<SeedExhaustive.types.ObjectWithOptionalField> {
+    public testPost(
+        request: SeedExhaustive.types.ObjectWithRequiredField,
+        requestOptions?: HttpMethods.RequestOptions,
+    ): core.HttpResponsePromise<SeedExhaustive.types.ObjectWithOptionalField> {
         return core.HttpResponsePromise.fromPromise(this.__testPost(request, requestOptions));
     }
 
-    private async __testPost(request: SeedExhaustive.types.ObjectWithRequiredField, requestOptions?: HttpMethods.RequestOptions): Promise<core.WithRawResponse<SeedExhaustive.types.ObjectWithOptionalField>> {
-        let _headers: core.Fetcher.Args["headers"] = mergeHeaders(this._options?.headers, mergeOnlyDefinedHeaders({ "Authorization": await this._getAuthorizationHeader() }), requestOptions?.headers);
+    private async __testPost(
+        request: SeedExhaustive.types.ObjectWithRequiredField,
+        requestOptions?: HttpMethods.RequestOptions,
+    ): Promise<core.WithRawResponse<SeedExhaustive.types.ObjectWithOptionalField>> {
+        const _headers: core.Fetcher.Args["headers"] = mergeHeaders(
+            this._options?.headers,
+            mergeOnlyDefinedHeaders({ Authorization: await this._getAuthorizationHeader() }),
+            requestOptions?.headers,
+        );
         const _response = await core.fetcher({
-            url: core.url.join(await core.Supplier.get(this._options.baseUrl) ?? await core.Supplier.get(this._options.environment), "/http-methods"),
+            url: core.url.join(
+                (await core.Supplier.get(this._options.baseUrl)) ??
+                    (await core.Supplier.get(this._options.environment)),
+                "/http-methods",
+            ),
             method: "POST",
             headers: _headers,
             contentType: "application/json",
@@ -95,31 +120,37 @@ export class HttpMethods {
             body: request,
             timeoutMs: (requestOptions?.timeoutInSeconds ?? this._options?.timeoutInSeconds ?? 60) * 1000,
             maxRetries: requestOptions?.maxRetries ?? this._options?.maxRetries,
-            abortSignal: requestOptions?.abortSignal
+            abortSignal: requestOptions?.abortSignal,
         });
         if (_response.ok) {
-            return { data: _response.body as SeedExhaustive.types.ObjectWithOptionalField, rawResponse: _response.rawResponse };
+            return {
+                data: _response.body as SeedExhaustive.types.ObjectWithOptionalField,
+                rawResponse: _response.rawResponse,
+            };
         }
 
         if (_response.error.reason === "status-code") {
             throw new errors.SeedExhaustiveError({
                 statusCode: _response.error.statusCode,
                 body: _response.error.body,
-                rawResponse: _response.rawResponse
+                rawResponse: _response.rawResponse,
             });
         }
 
         switch (_response.error.reason) {
-            case "non-json": throw new errors.SeedExhaustiveError({
-                statusCode: _response.error.statusCode,
-                body: _response.error.rawBody,
-                rawResponse: _response.rawResponse
-            });
-            case "timeout": throw new errors.SeedExhaustiveTimeoutError("Timeout exceeded when calling POST /http-methods.");
-            case "unknown": throw new errors.SeedExhaustiveError({
-                message: _response.error.errorMessage,
-                rawResponse: _response.rawResponse
-            });
+            case "non-json":
+                throw new errors.SeedExhaustiveError({
+                    statusCode: _response.error.statusCode,
+                    body: _response.error.rawBody,
+                    rawResponse: _response.rawResponse,
+                });
+            case "timeout":
+                throw new errors.SeedExhaustiveTimeoutError("Timeout exceeded when calling POST /http-methods.");
+            case "unknown":
+                throw new errors.SeedExhaustiveError({
+                    message: _response.error.errorMessage,
+                    rawResponse: _response.rawResponse,
+                });
         }
     }
 
@@ -133,14 +164,30 @@ export class HttpMethods {
      *         string: "string"
      *     })
      */
-    public testPut(id: string, request: SeedExhaustive.types.ObjectWithRequiredField, requestOptions?: HttpMethods.RequestOptions): core.HttpResponsePromise<SeedExhaustive.types.ObjectWithOptionalField> {
+    public testPut(
+        id: string,
+        request: SeedExhaustive.types.ObjectWithRequiredField,
+        requestOptions?: HttpMethods.RequestOptions,
+    ): core.HttpResponsePromise<SeedExhaustive.types.ObjectWithOptionalField> {
         return core.HttpResponsePromise.fromPromise(this.__testPut(id, request, requestOptions));
     }
 
-    private async __testPut(id: string, request: SeedExhaustive.types.ObjectWithRequiredField, requestOptions?: HttpMethods.RequestOptions): Promise<core.WithRawResponse<SeedExhaustive.types.ObjectWithOptionalField>> {
-        let _headers: core.Fetcher.Args["headers"] = mergeHeaders(this._options?.headers, mergeOnlyDefinedHeaders({ "Authorization": await this._getAuthorizationHeader() }), requestOptions?.headers);
+    private async __testPut(
+        id: string,
+        request: SeedExhaustive.types.ObjectWithRequiredField,
+        requestOptions?: HttpMethods.RequestOptions,
+    ): Promise<core.WithRawResponse<SeedExhaustive.types.ObjectWithOptionalField>> {
+        const _headers: core.Fetcher.Args["headers"] = mergeHeaders(
+            this._options?.headers,
+            mergeOnlyDefinedHeaders({ Authorization: await this._getAuthorizationHeader() }),
+            requestOptions?.headers,
+        );
         const _response = await core.fetcher({
-            url: core.url.join(await core.Supplier.get(this._options.baseUrl) ?? await core.Supplier.get(this._options.environment), `/http-methods/${core.url.encodePathParam(id)}`),
+            url: core.url.join(
+                (await core.Supplier.get(this._options.baseUrl)) ??
+                    (await core.Supplier.get(this._options.environment)),
+                `/http-methods/${core.url.encodePathParam(id)}`,
+            ),
             method: "PUT",
             headers: _headers,
             contentType: "application/json",
@@ -149,31 +196,37 @@ export class HttpMethods {
             body: request,
             timeoutMs: (requestOptions?.timeoutInSeconds ?? this._options?.timeoutInSeconds ?? 60) * 1000,
             maxRetries: requestOptions?.maxRetries ?? this._options?.maxRetries,
-            abortSignal: requestOptions?.abortSignal
+            abortSignal: requestOptions?.abortSignal,
         });
         if (_response.ok) {
-            return { data: _response.body as SeedExhaustive.types.ObjectWithOptionalField, rawResponse: _response.rawResponse };
+            return {
+                data: _response.body as SeedExhaustive.types.ObjectWithOptionalField,
+                rawResponse: _response.rawResponse,
+            };
         }
 
         if (_response.error.reason === "status-code") {
             throw new errors.SeedExhaustiveError({
                 statusCode: _response.error.statusCode,
                 body: _response.error.body,
-                rawResponse: _response.rawResponse
+                rawResponse: _response.rawResponse,
             });
         }
 
         switch (_response.error.reason) {
-            case "non-json": throw new errors.SeedExhaustiveError({
-                statusCode: _response.error.statusCode,
-                body: _response.error.rawBody,
-                rawResponse: _response.rawResponse
-            });
-            case "timeout": throw new errors.SeedExhaustiveTimeoutError("Timeout exceeded when calling PUT /http-methods/{id}.");
-            case "unknown": throw new errors.SeedExhaustiveError({
-                message: _response.error.errorMessage,
-                rawResponse: _response.rawResponse
-            });
+            case "non-json":
+                throw new errors.SeedExhaustiveError({
+                    statusCode: _response.error.statusCode,
+                    body: _response.error.rawBody,
+                    rawResponse: _response.rawResponse,
+                });
+            case "timeout":
+                throw new errors.SeedExhaustiveTimeoutError("Timeout exceeded when calling PUT /http-methods/{id}.");
+            case "unknown":
+                throw new errors.SeedExhaustiveError({
+                    message: _response.error.errorMessage,
+                    rawResponse: _response.rawResponse,
+                });
         }
     }
 
@@ -201,14 +254,30 @@ export class HttpMethods {
      *         bigint: "1000000"
      *     })
      */
-    public testPatch(id: string, request: SeedExhaustive.types.ObjectWithOptionalField, requestOptions?: HttpMethods.RequestOptions): core.HttpResponsePromise<SeedExhaustive.types.ObjectWithOptionalField> {
+    public testPatch(
+        id: string,
+        request: SeedExhaustive.types.ObjectWithOptionalField,
+        requestOptions?: HttpMethods.RequestOptions,
+    ): core.HttpResponsePromise<SeedExhaustive.types.ObjectWithOptionalField> {
         return core.HttpResponsePromise.fromPromise(this.__testPatch(id, request, requestOptions));
     }
 
-    private async __testPatch(id: string, request: SeedExhaustive.types.ObjectWithOptionalField, requestOptions?: HttpMethods.RequestOptions): Promise<core.WithRawResponse<SeedExhaustive.types.ObjectWithOptionalField>> {
-        let _headers: core.Fetcher.Args["headers"] = mergeHeaders(this._options?.headers, mergeOnlyDefinedHeaders({ "Authorization": await this._getAuthorizationHeader() }), requestOptions?.headers);
+    private async __testPatch(
+        id: string,
+        request: SeedExhaustive.types.ObjectWithOptionalField,
+        requestOptions?: HttpMethods.RequestOptions,
+    ): Promise<core.WithRawResponse<SeedExhaustive.types.ObjectWithOptionalField>> {
+        const _headers: core.Fetcher.Args["headers"] = mergeHeaders(
+            this._options?.headers,
+            mergeOnlyDefinedHeaders({ Authorization: await this._getAuthorizationHeader() }),
+            requestOptions?.headers,
+        );
         const _response = await core.fetcher({
-            url: core.url.join(await core.Supplier.get(this._options.baseUrl) ?? await core.Supplier.get(this._options.environment), `/http-methods/${core.url.encodePathParam(id)}`),
+            url: core.url.join(
+                (await core.Supplier.get(this._options.baseUrl)) ??
+                    (await core.Supplier.get(this._options.environment)),
+                `/http-methods/${core.url.encodePathParam(id)}`,
+            ),
             method: "PATCH",
             headers: _headers,
             contentType: "application/json",
@@ -217,31 +286,37 @@ export class HttpMethods {
             body: request,
             timeoutMs: (requestOptions?.timeoutInSeconds ?? this._options?.timeoutInSeconds ?? 60) * 1000,
             maxRetries: requestOptions?.maxRetries ?? this._options?.maxRetries,
-            abortSignal: requestOptions?.abortSignal
+            abortSignal: requestOptions?.abortSignal,
         });
         if (_response.ok) {
-            return { data: _response.body as SeedExhaustive.types.ObjectWithOptionalField, rawResponse: _response.rawResponse };
+            return {
+                data: _response.body as SeedExhaustive.types.ObjectWithOptionalField,
+                rawResponse: _response.rawResponse,
+            };
         }
 
         if (_response.error.reason === "status-code") {
             throw new errors.SeedExhaustiveError({
                 statusCode: _response.error.statusCode,
                 body: _response.error.body,
-                rawResponse: _response.rawResponse
+                rawResponse: _response.rawResponse,
             });
         }
 
         switch (_response.error.reason) {
-            case "non-json": throw new errors.SeedExhaustiveError({
-                statusCode: _response.error.statusCode,
-                body: _response.error.rawBody,
-                rawResponse: _response.rawResponse
-            });
-            case "timeout": throw new errors.SeedExhaustiveTimeoutError("Timeout exceeded when calling PATCH /http-methods/{id}.");
-            case "unknown": throw new errors.SeedExhaustiveError({
-                message: _response.error.errorMessage,
-                rawResponse: _response.rawResponse
-            });
+            case "non-json":
+                throw new errors.SeedExhaustiveError({
+                    statusCode: _response.error.statusCode,
+                    body: _response.error.rawBody,
+                    rawResponse: _response.rawResponse,
+                });
+            case "timeout":
+                throw new errors.SeedExhaustiveTimeoutError("Timeout exceeded when calling PATCH /http-methods/{id}.");
+            case "unknown":
+                throw new errors.SeedExhaustiveError({
+                    message: _response.error.errorMessage,
+                    rawResponse: _response.rawResponse,
+                });
         }
     }
 
@@ -256,16 +331,27 @@ export class HttpMethods {
         return core.HttpResponsePromise.fromPromise(this.__testDelete(id, requestOptions));
     }
 
-    private async __testDelete(id: string, requestOptions?: HttpMethods.RequestOptions): Promise<core.WithRawResponse<boolean>> {
-        let _headers: core.Fetcher.Args["headers"] = mergeHeaders(this._options?.headers, mergeOnlyDefinedHeaders({ "Authorization": await this._getAuthorizationHeader() }), requestOptions?.headers);
+    private async __testDelete(
+        id: string,
+        requestOptions?: HttpMethods.RequestOptions,
+    ): Promise<core.WithRawResponse<boolean>> {
+        const _headers: core.Fetcher.Args["headers"] = mergeHeaders(
+            this._options?.headers,
+            mergeOnlyDefinedHeaders({ Authorization: await this._getAuthorizationHeader() }),
+            requestOptions?.headers,
+        );
         const _response = await core.fetcher({
-            url: core.url.join(await core.Supplier.get(this._options.baseUrl) ?? await core.Supplier.get(this._options.environment), `/http-methods/${core.url.encodePathParam(id)}`),
+            url: core.url.join(
+                (await core.Supplier.get(this._options.baseUrl)) ??
+                    (await core.Supplier.get(this._options.environment)),
+                `/http-methods/${core.url.encodePathParam(id)}`,
+            ),
             method: "DELETE",
             headers: _headers,
             queryParameters: requestOptions?.queryParams,
             timeoutMs: (requestOptions?.timeoutInSeconds ?? this._options?.timeoutInSeconds ?? 60) * 1000,
             maxRetries: requestOptions?.maxRetries ?? this._options?.maxRetries,
-            abortSignal: requestOptions?.abortSignal
+            abortSignal: requestOptions?.abortSignal,
         });
         if (_response.ok) {
             return { data: _response.body as boolean, rawResponse: _response.rawResponse };
@@ -275,21 +361,24 @@ export class HttpMethods {
             throw new errors.SeedExhaustiveError({
                 statusCode: _response.error.statusCode,
                 body: _response.error.body,
-                rawResponse: _response.rawResponse
+                rawResponse: _response.rawResponse,
             });
         }
 
         switch (_response.error.reason) {
-            case "non-json": throw new errors.SeedExhaustiveError({
-                statusCode: _response.error.statusCode,
-                body: _response.error.rawBody,
-                rawResponse: _response.rawResponse
-            });
-            case "timeout": throw new errors.SeedExhaustiveTimeoutError("Timeout exceeded when calling DELETE /http-methods/{id}.");
-            case "unknown": throw new errors.SeedExhaustiveError({
-                message: _response.error.errorMessage,
-                rawResponse: _response.rawResponse
-            });
+            case "non-json":
+                throw new errors.SeedExhaustiveError({
+                    statusCode: _response.error.statusCode,
+                    body: _response.error.rawBody,
+                    rawResponse: _response.rawResponse,
+                });
+            case "timeout":
+                throw new errors.SeedExhaustiveTimeoutError("Timeout exceeded when calling DELETE /http-methods/{id}.");
+            case "unknown":
+                throw new errors.SeedExhaustiveError({
+                    message: _response.error.errorMessage,
+                    rawResponse: _response.rawResponse,
+                });
         }
     }
 

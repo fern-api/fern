@@ -22,7 +22,7 @@ describe("Test createRequestUrl", () => {
         const baseUrl = "https://api.example.com";
         const queryParams = { filter: { name: "John", age: 30 } };
         expect(createRequestUrl(baseUrl, queryParams)).toBe(
-            "https://api.example.com?filter%5Bname%5D=John&filter%5Bage%5D=30"
+            "https://api.example.com?filter%5Bname%5D=John&filter%5Bage%5D=30",
         );
     });
 
@@ -31,10 +31,10 @@ describe("Test createRequestUrl", () => {
         const queryParams = {
             simple: "value",
             array: ["x", "y"],
-            object: { key: "value" }
+            object: { key: "value" },
         };
         expect(createRequestUrl(baseUrl, queryParams)).toBe(
-            "https://api.example.com?simple=value&array=x&array=y&object%5Bkey%5D=value"
+            "https://api.example.com?simple=value&array=x&array=y&object%5Bkey%5D=value",
         );
     });
 
@@ -54,7 +54,7 @@ describe("Test createRequestUrl", () => {
         const baseUrl = "https://api.example.com";
         const queryParams = { count: 42, price: 19.99, active: 1, inactive: 0 };
         expect(createRequestUrl(baseUrl, queryParams)).toBe(
-            "https://api.example.com?count=42&price=19.99&active=1&inactive=0"
+            "https://api.example.com?count=42&price=19.99&active=1&inactive=0",
         );
     });
 
@@ -70,10 +70,10 @@ describe("Test createRequestUrl", () => {
             valid: "value",
             nullValue: null,
             undefinedValue: undefined,
-            emptyString: ""
+            emptyString: "",
         };
         expect(createRequestUrl(baseUrl, queryParams)).toBe(
-            "https://api.example.com?valid=value&nullValue=&emptyString="
+            "https://api.example.com?valid=value&nullValue=&emptyString=",
         );
     });
 
@@ -83,12 +83,12 @@ describe("Test createRequestUrl", () => {
             user: {
                 profile: {
                     name: "John",
-                    settings: { theme: "dark" }
-                }
-            }
+                    settings: { theme: "dark" },
+                },
+            },
         };
         expect(createRequestUrl(baseUrl, queryParams)).toBe(
-            "https://api.example.com?user%5Bprofile%5D%5Bname%5D=John&user%5Bprofile%5D%5Bsettings%5D%5Btheme%5D=dark"
+            "https://api.example.com?user%5Bprofile%5D%5Bname%5D=John&user%5Bprofile%5D%5Bsettings%5D%5Btheme%5D=dark",
         );
     });
 
@@ -97,21 +97,21 @@ describe("Test createRequestUrl", () => {
         const queryParams = {
             users: [
                 { name: "John", age: 30 },
-                { name: "Jane", age: 25 }
-            ]
+                { name: "Jane", age: 25 },
+            ],
         };
         expect(createRequestUrl(baseUrl, queryParams)).toBe(
-            "https://api.example.com?users%5Bname%5D=John&users%5Bage%5D=30&users%5Bname%5D=Jane&users%5Bage%5D=25"
+            "https://api.example.com?users%5Bname%5D=John&users%5Bage%5D=30&users%5Bname%5D=Jane&users%5Bage%5D=25",
         );
     });
 
     it("should handle mixed arrays", () => {
         const baseUrl = "https://api.example.com";
         const queryParams = {
-            mixed: ["string", 42, true, { key: "value" }]
+            mixed: ["string", 42, true, { key: "value" }],
         };
         expect(createRequestUrl(baseUrl, queryParams)).toBe(
-            "https://api.example.com?mixed=string&mixed=42&mixed=true&mixed%5Bkey%5D=value"
+            "https://api.example.com?mixed=string&mixed=42&mixed=true&mixed%5Bkey%5D=value",
         );
     });
 
@@ -131,7 +131,7 @@ describe("Test createRequestUrl", () => {
         const baseUrl = "https://api.example.com";
         const queryParams = { "key with spaces": "value", "key[with]brackets": "value" };
         expect(createRequestUrl(baseUrl, queryParams)).toBe(
-            "https://api.example.com?key%20with%20spaces=value&key%5Bwith%5Dbrackets=value"
+            "https://api.example.com?key%20with%20spaces=value&key%5Bwith%5Dbrackets=value",
         );
     });
 
@@ -148,13 +148,13 @@ describe("Test createRequestUrl", () => {
                 status: ["active", "pending"],
                 category: {
                     type: "electronics",
-                    subcategories: ["phones", "laptops"]
-                }
+                    subcategories: ["phones", "laptops"],
+                },
             },
-            sort: { field: "name", direction: "asc" }
+            sort: { field: "name", direction: "asc" },
         };
         expect(createRequestUrl(baseUrl, queryParams)).toBe(
-            "https://api.example.com?filters%5Bstatus%5D=active&filters%5Bstatus%5D=pending&filters%5Bcategory%5D%5Btype%5D=electronics&filters%5Bcategory%5D%5Bsubcategories%5D=phones&filters%5Bcategory%5D%5Bsubcategories%5D=laptops&sort%5Bfield%5D=name&sort%5Bdirection%5D=asc"
+            "https://api.example.com?filters%5Bstatus%5D=active&filters%5Bstatus%5D=pending&filters%5Bcategory%5D%5Btype%5D=electronics&filters%5Bcategory%5D%5Bsubcategories%5D=phones&filters%5Bcategory%5D%5Bsubcategories%5D=laptops&sort%5Bfield%5D=name&sort%5Bdirection%5D=asc",
         );
     });
 });

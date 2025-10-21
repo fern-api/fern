@@ -7,18 +7,15 @@ import { mergeHeaders, mergeOnlyDefinedHeaders } from "../../../../core/headers.
 import * as errors from "../../../../errors/index.js";
 
 export declare namespace NoAuth {
-    export interface Options extends BaseClientOptions {
-    }
+    export interface Options extends BaseClientOptions {}
 
-    export interface RequestOptions extends BaseRequestOptions {
-    }
+    export interface RequestOptions extends BaseRequestOptions {}
 }
 
 export class NoAuth {
     protected readonly _options: NoAuth.Options;
 
     constructor(_options: NoAuth.Options) {
-
         this._options = _options;
     }
 
@@ -35,14 +32,28 @@ export class NoAuth {
      *         "key": "value"
      *     })
      */
-    public postWithNoAuth(request?: unknown, requestOptions?: NoAuth.RequestOptions): core.HttpResponsePromise<boolean> {
+    public postWithNoAuth(
+        request?: unknown,
+        requestOptions?: NoAuth.RequestOptions,
+    ): core.HttpResponsePromise<boolean> {
         return core.HttpResponsePromise.fromPromise(this.__postWithNoAuth(request, requestOptions));
     }
 
-    private async __postWithNoAuth(request?: unknown, requestOptions?: NoAuth.RequestOptions): Promise<core.WithRawResponse<boolean>> {
-        let _headers: core.Fetcher.Args["headers"] = mergeHeaders(this._options?.headers, mergeOnlyDefinedHeaders({ "Authorization": await this._getAuthorizationHeader() }), requestOptions?.headers);
+    private async __postWithNoAuth(
+        request?: unknown,
+        requestOptions?: NoAuth.RequestOptions,
+    ): Promise<core.WithRawResponse<boolean>> {
+        let _headers: core.Fetcher.Args["headers"] = mergeHeaders(
+            this._options?.headers,
+            mergeOnlyDefinedHeaders({ Authorization: await this._getAuthorizationHeader() }),
+            requestOptions?.headers,
+        );
         const _response = await core.fetcher({
-            url: core.url.join(await core.Supplier.get(this._options.baseUrl) ?? await core.Supplier.get(this._options.environment), "/no-auth"),
+            url: core.url.join(
+                (await core.Supplier.get(this._options.baseUrl)) ??
+                    (await core.Supplier.get(this._options.environment)),
+                "/no-auth",
+            ),
             method: "POST",
             headers: _headers,
             contentType: "application/json",
@@ -51,7 +62,7 @@ export class NoAuth {
             body: request,
             timeoutMs: (requestOptions?.timeoutInSeconds ?? this._options?.timeoutInSeconds ?? 60) * 1000,
             maxRetries: requestOptions?.maxRetries ?? this._options?.maxRetries,
-            abortSignal: requestOptions?.abortSignal
+            abortSignal: requestOptions?.abortSignal,
         });
         if (_response.ok) {
             return { data: _response.body as boolean, rawResponse: _response.rawResponse };
@@ -59,26 +70,34 @@ export class NoAuth {
 
         if (_response.error.reason === "status-code") {
             switch (_response.error.statusCode) {
-                case 400: throw new SeedExhaustive.BadRequestBody(_response.error.body as SeedExhaustive.BadObjectRequestInfo, _response.rawResponse);
-                default: throw new errors.SeedExhaustiveError({
-                    statusCode: _response.error.statusCode,
-                    body: _response.error.body,
-                    rawResponse: _response.rawResponse
-                });
+                case 400:
+                    throw new SeedExhaustive.BadRequestBody(
+                        _response.error.body as SeedExhaustive.BadObjectRequestInfo,
+                        _response.rawResponse,
+                    );
+                default:
+                    throw new errors.SeedExhaustiveError({
+                        statusCode: _response.error.statusCode,
+                        body: _response.error.body,
+                        rawResponse: _response.rawResponse,
+                    });
             }
         }
 
         switch (_response.error.reason) {
-            case "non-json": throw new errors.SeedExhaustiveError({
-                statusCode: _response.error.statusCode,
-                body: _response.error.rawBody,
-                rawResponse: _response.rawResponse
-            });
-            case "timeout": throw new errors.SeedExhaustiveTimeoutError("Timeout exceeded when calling POST /no-auth.");
-            case "unknown": throw new errors.SeedExhaustiveError({
-                message: _response.error.errorMessage,
-                rawResponse: _response.rawResponse
-            });
+            case "non-json":
+                throw new errors.SeedExhaustiveError({
+                    statusCode: _response.error.statusCode,
+                    body: _response.error.rawBody,
+                    rawResponse: _response.rawResponse,
+                });
+            case "timeout":
+                throw new errors.SeedExhaustiveTimeoutError("Timeout exceeded when calling POST /no-auth.");
+            case "unknown":
+                throw new errors.SeedExhaustiveError({
+                    message: _response.error.errorMessage,
+                    rawResponse: _response.rawResponse,
+                });
         }
     }
 
