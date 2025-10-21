@@ -1,5 +1,4 @@
 use seed_inferred_auth_implicit::prelude::*;
-use std::collections::HashMap;
 
 #[tokio::main]
 async fn main() {

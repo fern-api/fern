@@ -285,7 +285,6 @@ async fn main() {
 
 ```rust
 use seed_path_parameters::prelude::*;
-use std::collections::{HashMap, HashSet};
 
 #[tokio::main]
 async fn main() {
@@ -345,7 +344,6 @@ async fn main() {
 
 ```rust
 use seed_path_parameters::prelude::*;
-use std::collections::{HashMap, HashSet};
 
 #[tokio::main]
 async fn main() {

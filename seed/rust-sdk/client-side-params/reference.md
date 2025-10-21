@@ -244,7 +244,6 @@ Search resources with complex parameters
 
 ```rust
 use seed_client_side_params::prelude::*;
-use std::collections::HashMap;
 
 #[tokio::main]
 async fn main() {
@@ -572,7 +571,6 @@ Create a new user
 
 ```rust
 use seed_client_side_params::prelude::*;
-use std::collections::HashMap;
 
 #[tokio::main]
 async fn main() {
@@ -644,7 +642,6 @@ Update a user
 
 ```rust
 use seed_client_side_params::prelude::*;
-use std::collections::HashMap;
 
 #[tokio::main]
 async fn main() {
@@ -970,7 +967,6 @@ List all clients/applications
 
 ```rust
 use seed_client_side_params::prelude::*;
-use std::collections::HashSet;
 
 #[tokio::main]
 async fn main() {

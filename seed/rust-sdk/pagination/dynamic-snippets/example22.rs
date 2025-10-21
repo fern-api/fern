@@ -1,5 +1,4 @@
 use seed_pagination::prelude::*;
-use uuid::Uuid;
 
 #[tokio::main]
 async fn main() {
