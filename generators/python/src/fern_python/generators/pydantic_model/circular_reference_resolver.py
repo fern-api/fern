@@ -27,7 +27,7 @@ class CircularReferenceResolver:
     def find_mutually_recursive_groups(self) -> List[OrderedSet[ir_types.TypeId]]:
         """
         Find all strongly connected components (mutually recursive type groups).
-        
+
         Returns:
             List of type ID sets, where each set contains types that are mutually recursive.
             Only returns groups with 2 or more types (single-type self-references are handled differently).
@@ -35,7 +35,7 @@ class CircularReferenceResolver:
         for type_id in self._types.keys():
             if type_id not in self._indices:
                 self._strongconnect(type_id)
-        
+
         return [scc for scc in self._sccs if len(scc) >= 2]
 
     def _strongconnect(self, type_id: ir_types.TypeId) -> None:
@@ -50,7 +50,7 @@ class CircularReferenceResolver:
         for referenced_type_id in type_declaration.referenced_types:
             if referenced_type_id not in self._types:
                 continue
-                
+
             if referenced_type_id not in self._indices:
                 self._strongconnect(referenced_type_id)
                 self._lowlinks[type_id] = min(self._lowlinks[type_id], self._lowlinks[referenced_type_id])
@@ -70,10 +70,10 @@ class CircularReferenceResolver:
     def get_consolidated_filename(self, scc: OrderedSet[ir_types.TypeId]) -> str:
         """
         Generate a filename for a consolidated file containing mutually recursive types.
-        
+
         Args:
             scc: Set of mutually recursive type IDs
-            
+
         Returns:
             Filename without extension (e.g., "container_value_field_value_all")
         """
@@ -81,9 +81,9 @@ class CircularReferenceResolver:
         for type_id in sorted(scc):
             type_declaration = self._types[type_id]
             type_names.append(type_declaration.name.name.snake_case.safe_name)
-        
+
         type_names.sort()
-        
+
         if len(type_names) <= 3:
             return "_".join(type_names) + "_all"
         else:
