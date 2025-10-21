@@ -7,12 +7,21 @@ from importlib import import_module
 
 if typing.TYPE_CHECKING:
     from .acai import Acai
+    from .and_expression import AndExpression
     from .animal import Animal
     from .berry import Berry
+    from .boolean_literal import BooleanLiteral
     from .branch_node import BranchNode
     from .cat import Cat
     from .container_value import ContainerValue, ContainerValue_List, ContainerValue_Optional
     from .dog import Dog
+    from .expression import (
+        Expression,
+        Expression_AndOperator,
+        Expression_BooleanLiteral,
+        Expression_NumberLiteral,
+        Expression_OrOperator,
+    )
     from .field_name import FieldName
     from .field_value import FieldValue, FieldValue_ContainerValue, FieldValue_ObjectValue, FieldValue_PrimitiveValue
     from .fig import Fig
@@ -20,19 +29,28 @@ if typing.TYPE_CHECKING:
     from .leaf_node import LeafNode
     from .node import Node
     from .nodes_wrapper import NodesWrapper
+    from .number_literal import NumberLiteral
     from .object_field_value import ObjectFieldValue
     from .object_value import ObjectValue
+    from .or_expression import OrExpression
     from .primitive_value import PrimitiveValue
 _dynamic_imports: typing.Dict[str, str] = {
     "Acai": ".acai",
+    "AndExpression": ".and_expression",
     "Animal": ".animal",
     "Berry": ".berry",
+    "BooleanLiteral": ".boolean_literal",
     "BranchNode": ".branch_node",
     "Cat": ".cat",
     "ContainerValue": ".container_value",
     "ContainerValue_List": ".container_value",
     "ContainerValue_Optional": ".container_value",
     "Dog": ".dog",
+    "Expression": ".expression",
+    "Expression_AndOperator": ".expression",
+    "Expression_BooleanLiteral": ".expression",
+    "Expression_NumberLiteral": ".expression",
+    "Expression_OrOperator": ".expression",
     "FieldName": ".field_name",
     "FieldValue": ".field_value",
     "FieldValue_ContainerValue": ".field_value",
@@ -43,8 +61,10 @@ _dynamic_imports: typing.Dict[str, str] = {
     "LeafNode": ".leaf_node",
     "Node": ".node",
     "NodesWrapper": ".nodes_wrapper",
+    "NumberLiteral": ".number_literal",
     "ObjectFieldValue": ".object_field_value",
     "ObjectValue": ".object_value",
+    "OrExpression": ".or_expression",
     "PrimitiveValue": ".primitive_value",
 }
 
@@ -72,14 +92,21 @@ def __dir__():
 
 __all__ = [
     "Acai",
+    "AndExpression",
     "Animal",
     "Berry",
+    "BooleanLiteral",
     "BranchNode",
     "Cat",
     "ContainerValue",
     "ContainerValue_List",
     "ContainerValue_Optional",
     "Dog",
+    "Expression",
+    "Expression_AndOperator",
+    "Expression_BooleanLiteral",
+    "Expression_NumberLiteral",
+    "Expression_OrOperator",
     "FieldName",
     "FieldValue",
     "FieldValue_ContainerValue",
@@ -90,7 +117,9 @@ __all__ = [
     "LeafNode",
     "Node",
     "NodesWrapper",
+    "NumberLiteral",
     "ObjectFieldValue",
     "ObjectValue",
+    "OrExpression",
     "PrimitiveValue",
 ]

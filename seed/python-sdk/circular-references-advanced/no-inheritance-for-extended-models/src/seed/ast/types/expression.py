@@ -6,25 +6,12 @@ import typing
 
 import pydantic
 from ...core.pydantic_utilities import IS_PYDANTIC_V2, UniversalBaseModel
-from .primitive_value import PrimitiveValue
 
 
-class FieldValue_PrimitiveValue(UniversalBaseModel):
-    value: PrimitiveValue
-    type: typing.Literal["primitive_value"] = "primitive_value"
-
-    if IS_PYDANTIC_V2:
-        model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2
-    else:
-
-        class Config:
-            frozen = True
-            smart_union = True
-            extra = pydantic.Extra.allow
-
-
-class FieldValue_ObjectValue(UniversalBaseModel):
-    type: typing.Literal["object_value"] = "object_value"
+class Expression_AndOperator(UniversalBaseModel):
+    type: typing.Literal["and_operator"] = "and_operator"
+    left: "Expression"
+    right: "Expression"
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2
@@ -36,9 +23,10 @@ class FieldValue_ObjectValue(UniversalBaseModel):
             extra = pydantic.Extra.allow
 
 
-class FieldValue_ContainerValue(UniversalBaseModel):
-    value: "ContainerValue"
-    type: typing.Literal["container_value"] = "container_value"
+class Expression_OrOperator(UniversalBaseModel):
+    type: typing.Literal["or_operator"] = "or_operator"
+    left: "Expression"
+    right: "Expression"
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2
@@ -50,5 +38,34 @@ class FieldValue_ContainerValue(UniversalBaseModel):
             extra = pydantic.Extra.allow
 
 
-FieldValue = typing.Union[FieldValue_PrimitiveValue, FieldValue_ObjectValue, FieldValue_ContainerValue]
-from .container_value import ContainerValue  # noqa: E402, F401, I001
+class Expression_NumberLiteral(UniversalBaseModel):
+    type: typing.Literal["number_literal"] = "number_literal"
+    value: float
+
+    if IS_PYDANTIC_V2:
+        model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2
+    else:
+
+        class Config:
+            frozen = True
+            smart_union = True
+            extra = pydantic.Extra.allow
+
+
+class Expression_BooleanLiteral(UniversalBaseModel):
+    type: typing.Literal["boolean_literal"] = "boolean_literal"
+    value: bool
+
+    if IS_PYDANTIC_V2:
+        model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2
+    else:
+
+        class Config:
+            frozen = True
+            smart_union = True
+            extra = pydantic.Extra.allow
+
+
+Expression = typing.Union[
+    Expression_AndOperator, Expression_OrOperator, Expression_NumberLiteral, Expression_BooleanLiteral
+]

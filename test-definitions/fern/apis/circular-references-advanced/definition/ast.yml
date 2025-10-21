@@ -58,3 +58,30 @@ types:
     properties:
       name: FieldName
       value: FieldValue
+  # Test case for discriminated union with self-referencing variants
+  # This reproduces the circular import issue found in ElevenLabs SDK
+  Expression:
+    discriminant: type
+    union:
+      and_operator:
+        type: AndExpression
+      or_operator:
+        type: OrExpression
+      number_literal:
+        type: NumberLiteral
+      boolean_literal:
+        type: BooleanLiteral
+  AndExpression:
+    properties:
+      left: Expression
+      right: Expression
+  OrExpression:
+    properties:
+      left: Expression
+      right: Expression
+  NumberLiteral:
+    properties:
+      value: double
+  BooleanLiteral:
+    properties:
+      value: boolean
