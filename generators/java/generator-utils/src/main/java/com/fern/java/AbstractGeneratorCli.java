@@ -587,7 +587,7 @@ public abstract class AbstractGeneratorCli<T extends ICustomConfig, K extends ID
                                 .build(),
                         GradlePlugin.builder()
                                 .pluginId("com.diffplug.spotless")
-                                .version("7.2.1")
+                                .version("6.25.0")
                                 .build()))
                 .addCustomRepositories(
                         GradleRepository.builder().url(repositoryUrl).build())
