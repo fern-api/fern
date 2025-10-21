@@ -90,7 +90,7 @@ runs:
     # Note: tests failing can be a cause of this reporting as non-deterministic
     - name: Verify Determinism
       id: verify-determinism
-      if: always() && !cancelled() inputs.collect-metrics == 'true' }}
+      if: always() && !cancelled() && inputs.collect-metrics == 'true' }}
       uses: ./.github/actions/verify-determinism
       with:
         determinism-exclude-paths: ${{ inputs.determinism-exclude-paths }}
