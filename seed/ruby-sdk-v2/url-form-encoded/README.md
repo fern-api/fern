@@ -17,7 +17,10 @@ require "seed"
 
 client = Seed::Client.new();
 
-client.service.just_file();
+client.submit_form_data(
+  username: 'johndoe',
+  email: 'john@example.com'
+);
 ```
 
 ## Environments
@@ -45,7 +48,7 @@ client = Seed::Client.new(
 )
 
 begin
-    result = client.service.just_file
+    result = client.submit_form_data
 rescue Seed::Errors::TimeoutError
     puts "API didn't respond before our timeout elapsed"
 rescue Seed::Errors::ServiceUnavailableError
@@ -68,7 +71,7 @@ The SDK defaults to a 60 second timeout. Use the `timeout` option to configure t
 ```ruby
 require "seed"
 
-response = client.service.just_file(
+response = client.submit_form_data(
     ...,
     timeout: 30  # 30 second timeout
 )
