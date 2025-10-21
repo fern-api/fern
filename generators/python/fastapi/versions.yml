@@ -1,6 +1,13 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
 # For unreleased changes, use unreleased.yml
 
+- version: 1.9.3
+  changelogEntry:
+    - summary: Fix circular import errors with self-referencing discriminated union types.
+      type: fix
+  createdAt: "2025-10-21"
+  irVersion: 60
+
 - version: 1.9.2
   changelogEntry:
     - summary: Escape backslashes in docstrings to prevent SyntaxWarning for invalid escape sequences.
