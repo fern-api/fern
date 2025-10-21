@@ -1430,8 +1430,8 @@ jobs:
               "all_tests_passing": "${{ steps.parse-seed-test-metrics.outputs.all_tests_passing }}",
               "all_seed_files_deterministic": "${{ steps.parse-seed-test-metrics.outputs.all_seed_files_deterministic }}",
               "total_fixture_count": "${{ needs.collect-allowed-failures.outputs[format('{0}-total-fixtures-count', matrix.seed-generator-alias)] }}",
-              "allowed_failures": "${{ needs.collect-allowed-failures.outputs[format('{0}-allowed-failures', matrix.seed-generator-alias)] }}",
-              "allowed_failures_count": "${{ needs.collect-allowed-failures.outputs[format('{0}-allowed-failures_count', matrix.seed-generator-alias)] }}"
+              "allowed_failures": ${{ needs.collect-allowed-failures.outputs[format('{0}-allowed-failures', matrix.seed-generator-alias)] }},
+              "allowed_failures_count": "${{ needs.collect-allowed-failures.outputs[format('{0}-allowed-failures-count', matrix.seed-generator-alias)] }}"
             }
 
       
