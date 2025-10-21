@@ -22,21 +22,19 @@ runs:
         # Split the input string into an array
         IFS=',' read -ra FOLDERS <<< "${{ inputs.determinism-exclude-paths }}"
 
-        # Build the exclude string
-        EXCLUDE_STRING=""
+        # Build the exclude array
+        EXCLUDE_ARGS=()
         for folder in "${FOLDERS[@]}"; do
           # Trim whitespace
           folder=$(echo "$folder" | xargs)
           if [ -n "$folder" ]; then
-            EXCLUDE_STRING="$EXCLUDE_STRING\":(exclude)$folder\" "
+            EXCLUDE_ARGS+=(":(exclude)$folder")
           fi
         done
 
-        # Remove trailing space
-        EXCLUDE_STRING=$(echo "$EXCLUDE_STRING" | sed 's/[[:space:]]*$//')
-        echo "exclude_string=$EXCLUDE_STRING" >> $GITHUB_OUTPUT
-        echo "Built git diff exclude string as: "
-        echo "$EXCLUDE_STRING"
+        echo "exclude_string=${EXCLUDE_ARGS[*]}" >> $GITHUB_OUTPUT
+        echo "Built git diff exclude args as: "
+        printf '%s\n' "${EXCLUDE_ARGS[@]}"
 
         # Debug: Show git status before diff
         echo "=== Git status before diff ==="
@@ -44,14 +42,14 @@ runs:
 
         # Debug: Show what files git diff would check
         echo "=== Git diff command that will be executed ==="
-        echo "git --no-pager diff --exit-code -- $EXCLUDE_STRING"
+        echo "git --no-pager diff --exit-code -- ${EXCLUDE_ARGS[@]}"
 
         # Set results
-        if git --no-pager diff --exit-code -- $EXCLUDE_STRING; then
+        if git --no-pager diff --exit-code -- "${EXCLUDE_ARGS[@]}"; then
           echo "Results match"
           echo "deterministic=true" >> $GITHUB_OUTPUT
         else
           echo "Changes detected in git-tracked files. Showing first 50 lines of diff:"
-          git --no-pager diff -- $EXCLUDE_STRING | head -50
+          git --no-pager diff -- "${EXCLUDE_ARGS[@]}" | head -50
           echo "deterministic=false" >> $GITHUB_OUTPUT
         fi
