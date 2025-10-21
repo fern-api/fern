@@ -83,7 +83,7 @@ export async function fetcherImpl<R = unknown>(args: Fetcher.Args): Promise<APIR
     const url = createRequestUrl(args.url, args.queryParameters);
     const requestBody: BodyInit | undefined = await getRequestBody({
         body: args.body,
-        type: args.requestType === "json" ? "json" : "other"
+        type: args.requestType === "json" ? "json" : "other",
     });
     const fetchFn = await getFetchFn();
 
@@ -99,9 +99,9 @@ export async function fetcherImpl<R = unknown>(args: Fetcher.Args): Promise<APIR
                     args.timeoutMs,
                     args.abortSignal,
                     args.withCredentials,
-                    args.duplex
+                    args.duplex,
                 ),
-            args.maxRetries
+            args.maxRetries,
         );
 
         if (response.status >= 200 && response.status < 400) {
@@ -109,7 +109,7 @@ export async function fetcherImpl<R = unknown>(args: Fetcher.Args): Promise<APIR
                 ok: true,
                 body: (await getResponseBody(response, args.responseType)) as R,
                 headers: response.headers,
-                rawResponse: toRawResponse(response)
+                rawResponse: toRawResponse(response),
             };
         } else {
             return {
@@ -117,9 +117,9 @@ export async function fetcherImpl<R = unknown>(args: Fetcher.Args): Promise<APIR
                 error: {
                     reason: "status-code",
                     statusCode: response.status,
-                    body: await getErrorResponseBody(response)
+                    body: await getErrorResponseBody(response),
                 },
-                rawResponse: toRawResponse(response)
+                rawResponse: toRawResponse(response),
             };
         }
     } catch (error) {
@@ -128,26 +128,26 @@ export async function fetcherImpl<R = unknown>(args: Fetcher.Args): Promise<APIR
                 ok: false,
                 error: {
                     reason: "unknown",
-                    errorMessage: "The user aborted a request"
+                    errorMessage: "The user aborted a request",
                 },
-                rawResponse: abortRawResponse
+                rawResponse: abortRawResponse,
             };
         } else if (error instanceof Error && error.name === "AbortError") {
             return {
                 ok: false,
                 error: {
-                    reason: "timeout"
+                    reason: "timeout",
                 },
-                rawResponse: abortRawResponse
+                rawResponse: abortRawResponse,
             };
         } else if (error instanceof Error) {
             return {
                 ok: false,
                 error: {
                     reason: "unknown",
-                    errorMessage: error.message
+                    errorMessage: error.message,
                 },
-                rawResponse: unknownRawResponse
+                rawResponse: unknownRawResponse,
             };
         }
 
@@ -155,9 +155,9 @@ export async function fetcherImpl<R = unknown>(args: Fetcher.Args): Promise<APIR
             ok: false,
             error: {
                 reason: "unknown",
-                errorMessage: toJson(error)
+                errorMessage: toJson(error),
             },
-            rawResponse: unknownRawResponse
+            rawResponse: unknownRawResponse,
         };
     }
 }

@@ -1,7 +1,6 @@
 import { RUNTIME } from "../../../src/core/runtime";
 import { getResponseBody } from "../../../src/core/fetcher/getResponseBody";
 
-
 describe("Test getResponseBody", () => {
     it("should handle blob response type", async () => {
         const mockBlob = new Blob(["test"], { type: "text/plain" });
@@ -20,7 +19,6 @@ describe("Test getResponseBody", () => {
         }
     });
 
-
     it("should handle streaming response type", async () => {
         // Create a ReadableStream with some test data
         const encoder = new TextEncoder();
@@ -29,7 +27,7 @@ describe("Test getResponseBody", () => {
             start(controller) {
                 controller.enqueue(encoder.encode(testData));
                 controller.close();
-            }
+            },
         });
 
         const mockResponse = new Response(mockStream);
@@ -44,7 +42,6 @@ describe("Test getResponseBody", () => {
         const streamContent = decoder.decode(value);
         expect(streamContent).toBe(testData);
     });
-
 
     it("should handle text response type", async () => {
         const mockResponse = new Response("test text");
@@ -73,8 +70,8 @@ describe("Test getResponseBody", () => {
             error: {
                 reason: "non-json",
                 statusCode: 200,
-                rawBody: "invalid json"
-            }
+                rawBody: "invalid json",
+            },
         });
     });
 });

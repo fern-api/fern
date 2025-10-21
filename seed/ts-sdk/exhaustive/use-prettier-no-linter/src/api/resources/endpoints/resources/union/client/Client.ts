@@ -7,18 +7,15 @@ import { mergeHeaders, mergeOnlyDefinedHeaders } from "../../../../../../core/he
 import * as errors from "../../../../../../errors/index.js";
 
 export declare namespace Union {
-    export interface Options extends BaseClientOptions {
-    }
+    export interface Options extends BaseClientOptions {}
 
-    export interface RequestOptions extends BaseRequestOptions {
-    }
+    export interface RequestOptions extends BaseRequestOptions {}
 }
 
 export class Union {
     protected readonly _options: Union.Options;
 
     constructor(_options: Union.Options) {
-
         this._options = _options;
     }
 
@@ -33,14 +30,28 @@ export class Union {
      *         likesToWoof: true
      *     })
      */
-    public getAndReturnUnion(request: SeedExhaustive.types.Animal, requestOptions?: Union.RequestOptions): core.HttpResponsePromise<SeedExhaustive.types.Animal> {
+    public getAndReturnUnion(
+        request: SeedExhaustive.types.Animal,
+        requestOptions?: Union.RequestOptions,
+    ): core.HttpResponsePromise<SeedExhaustive.types.Animal> {
         return core.HttpResponsePromise.fromPromise(this.__getAndReturnUnion(request, requestOptions));
     }
 
-    private async __getAndReturnUnion(request: SeedExhaustive.types.Animal, requestOptions?: Union.RequestOptions): Promise<core.WithRawResponse<SeedExhaustive.types.Animal>> {
-        let _headers: core.Fetcher.Args["headers"] = mergeHeaders(this._options?.headers, mergeOnlyDefinedHeaders({ "Authorization": await this._getAuthorizationHeader() }), requestOptions?.headers);
+    private async __getAndReturnUnion(
+        request: SeedExhaustive.types.Animal,
+        requestOptions?: Union.RequestOptions,
+    ): Promise<core.WithRawResponse<SeedExhaustive.types.Animal>> {
+        let _headers: core.Fetcher.Args["headers"] = mergeHeaders(
+            this._options?.headers,
+            mergeOnlyDefinedHeaders({ Authorization: await this._getAuthorizationHeader() }),
+            requestOptions?.headers,
+        );
         const _response = await core.fetcher({
-            url: core.url.join(await core.Supplier.get(this._options.baseUrl) ?? await core.Supplier.get(this._options.environment), "/union"),
+            url: core.url.join(
+                (await core.Supplier.get(this._options.baseUrl)) ??
+                    (await core.Supplier.get(this._options.environment)),
+                "/union",
+            ),
             method: "POST",
             headers: _headers,
             contentType: "application/json",
@@ -49,7 +60,7 @@ export class Union {
             body: request,
             timeoutMs: (requestOptions?.timeoutInSeconds ?? this._options?.timeoutInSeconds ?? 60) * 1000,
             maxRetries: requestOptions?.maxRetries ?? this._options?.maxRetries,
-            abortSignal: requestOptions?.abortSignal
+            abortSignal: requestOptions?.abortSignal,
         });
         if (_response.ok) {
             return { data: _response.body as SeedExhaustive.types.Animal, rawResponse: _response.rawResponse };
@@ -59,21 +70,24 @@ export class Union {
             throw new errors.SeedExhaustiveError({
                 statusCode: _response.error.statusCode,
                 body: _response.error.body,
-                rawResponse: _response.rawResponse
+                rawResponse: _response.rawResponse,
             });
         }
 
         switch (_response.error.reason) {
-            case "non-json": throw new errors.SeedExhaustiveError({
-                statusCode: _response.error.statusCode,
-                body: _response.error.rawBody,
-                rawResponse: _response.rawResponse
-            });
-            case "timeout": throw new errors.SeedExhaustiveTimeoutError("Timeout exceeded when calling POST /union.");
-            case "unknown": throw new errors.SeedExhaustiveError({
-                message: _response.error.errorMessage,
-                rawResponse: _response.rawResponse
-            });
+            case "non-json":
+                throw new errors.SeedExhaustiveError({
+                    statusCode: _response.error.statusCode,
+                    body: _response.error.rawBody,
+                    rawResponse: _response.rawResponse,
+                });
+            case "timeout":
+                throw new errors.SeedExhaustiveTimeoutError("Timeout exceeded when calling POST /union.");
+            case "unknown":
+                throw new errors.SeedExhaustiveError({
+                    message: _response.error.errorMessage,
+                    rawResponse: _response.rawResponse,
+                });
         }
     }
 

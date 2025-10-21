@@ -10,7 +10,7 @@ export class ErrorWithEnumBody extends errors.SeedExhaustiveError {
             message: "ErrorWithEnumBody",
             statusCode: 400,
             body: body,
-            rawResponse: rawResponse
+            rawResponse: rawResponse,
         });
         Object.setPrototypeOf(this, ErrorWithEnumBody.prototype);
     }

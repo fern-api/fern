@@ -10,7 +10,7 @@ export class ObjectWithOptionalFieldError extends errors.SeedExhaustiveError {
             message: "ObjectWithOptionalFieldError",
             statusCode: 400,
             body: body,
-            rawResponse: rawResponse
+            rawResponse: rawResponse,
         });
         Object.setPrototypeOf(this, ObjectWithOptionalFieldError.prototype);
     }
