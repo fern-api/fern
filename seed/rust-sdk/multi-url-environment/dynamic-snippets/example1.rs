@@ -1,5 +1,4 @@
 use seed_multi_url_environment::prelude::*;
-use std::collections::HashMap;
 
 #[tokio::main]
 async fn main() {

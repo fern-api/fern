@@ -2,6 +2,28 @@
     "endpoints": [
         {
             "id": {
+                "path": "/just-file",
+                "method": "POST",
+                "identifier_override": "endpoint_service.justFile"
+            },
+            "snippet": {
+                "type": "go",
+                "client": "import (\n\tcontext \"context\"\n\tfern \"github.com/file-upload/fern\"\n\tfernclient \"github.com/file-upload/fern/client\"\n)\n\nclient := fernclient.NewClient()\nerr := client.Service.JustFile(\n\tcontext.TODO(),\n\t\u0026fern.JustFileRequest{},\n)\n"
+            }
+        },
+        {
+            "id": {
+                "path": "/optional-args",
+                "method": "POST",
+                "identifier_override": "endpoint_service.optionalArgs"
+            },
+            "snippet": {
+                "type": "go",
+                "client": "import (\n\tcontext \"context\"\n\tfern \"github.com/file-upload/fern\"\n\tfernclient \"github.com/file-upload/fern/client\"\n)\n\nclient := fernclient.NewClient()\nresponse, err := client.Service.OptionalArgs(\n\tcontext.TODO(),\n\t\u0026fern.OptionalArgsRequest{},\n)\n"
+            }
+        },
+        {
+            "id": {
                 "path": "/snippet",
                 "method": "POST",
                 "identifier_override": "endpoint_service.simple"

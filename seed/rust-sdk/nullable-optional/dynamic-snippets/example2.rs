@@ -1,5 +1,4 @@
 use seed_nullable_optional::prelude::*;
-use std::collections::HashMap;
 
 #[tokio::main]
 async fn main() {

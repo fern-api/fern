@@ -69,6 +69,8 @@ export declare namespace ExpressGenerator {
         noOptionalProperties: boolean;
         packagePath: string | undefined;
         packageManager: "pnpm" | "yarn";
+        formatter: "prettier" | "biome";
+        linter: "biome" | "none";
     }
 }
 
@@ -138,7 +140,9 @@ export class ExpressGenerator {
             generateWireTests: false,
             relativePackagePath: this.getRelativePackagePath(),
             relativeTestPath: this.getRelativeTestPath(),
-            generatorType: "express"
+            generatorType: "express",
+            formatter: config.formatter,
+            linter: config.linter
         });
 
         this.project = new Project({
@@ -302,7 +306,9 @@ export class ExpressGenerator {
             exportSerde: false,
             useLegacyExports: true,
             packageManager: this.config.packageManager,
-            testPath: this.getRelativeTestPath()
+            testPath: this.getRelativeTestPath(),
+            formatter: this.config.formatter,
+            linter: this.config.linter
         });
     }
 

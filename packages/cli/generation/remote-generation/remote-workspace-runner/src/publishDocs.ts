@@ -202,7 +202,7 @@ export async function publishDocs({
             });
 
             if (response.ok) {
-                context.logger.debug(`Registered API Definition ${response.body.apiDefinitionId}`);
+                context.logger.debug(`Registered API Definition ${apiName}: ${response.body.apiDefinitionId}`);
 
                 if (response.body.dynamicIRs && dynamicIRsByLanguage) {
                     if (skipUpload) {

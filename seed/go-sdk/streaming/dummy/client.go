@@ -49,7 +49,7 @@ func (c *Client) GenerateStream(
 		c.options.ToHeader(),
 		options.ToHeader(),
 	)
-	streamer := stream.NewStreamer[stream.StreamResponse](c.caller)
+	streamer := internal.NewStreamer[stream.StreamResponse](c.caller)
 	return streamer.Stream(
 		ctx,
 		&internal.StreamParams{
