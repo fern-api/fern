@@ -216,7 +216,6 @@ allowedFailures:
   - request-parameters
   - server-sent-event-examples
   - server-sent-events
-  - streaming:.
   - streaming-parameter
   - trace
   - property-access
