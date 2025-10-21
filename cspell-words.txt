@@ -667,6 +667,7 @@ vapi
 Vapi
 vectorizing
 venus
+venv
 vercel
 Vercel
 versionof

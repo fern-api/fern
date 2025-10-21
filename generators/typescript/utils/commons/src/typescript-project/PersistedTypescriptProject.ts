@@ -14,6 +14,7 @@ export declare namespace PersistedTypescriptProject {
         distDirectory: RelativeFilePath;
         testDirectory: RelativeFilePath;
         buildCommand: string[];
+        formatCommand: string[];
         checkFixCommand: string[];
         runScripts: boolean;
         packageManager: "pnpm" | "yarn";
@@ -27,6 +28,7 @@ export class PersistedTypescriptProject {
     private packageManager: "pnpm" | "yarn";
     private testDirectory: RelativeFilePath;
     private buildCommand: string[];
+    private formatCommand: string[];
     private checkFixCommand: string[];
 
     private runScripts;
@@ -37,6 +39,7 @@ export class PersistedTypescriptProject {
         distDirectory,
         testDirectory,
         buildCommand,
+        formatCommand,
         checkFixCommand,
         runScripts,
         packageManager
@@ -46,6 +49,7 @@ export class PersistedTypescriptProject {
         this.distDirectory = distDirectory;
         this.testDirectory = testDirectory;
         this.buildCommand = buildCommand;
+        this.formatCommand = formatCommand;
         this.checkFixCommand = checkFixCommand;
         this.runScripts = runScripts;
         this.packageManager = packageManager;
@@ -111,6 +115,22 @@ export class PersistedTypescriptProject {
                       PNPM_FROZEN_LOCKFILE: "false"
                   }
               }));
+    }
+
+    public async format(logger: Logger): Promise<void> {
+        if (!this.runScripts) {
+            return;
+        }
+
+        const pm = createLoggingExecutable(this.packageManager, {
+            cwd: this.directory,
+            logger
+        });
+        try {
+            await pm(this.formatCommand);
+        } catch (e) {
+            logger.error(`Failed to format the generated project: ${e}`);
+        }
     }
 
     public async checkFix(logger: Logger): Promise<void> {
