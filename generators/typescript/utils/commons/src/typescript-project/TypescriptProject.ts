@@ -348,7 +348,7 @@ export abstract class TypescriptProject {
     private async generatePrettierRc(): Promise<void> {
         await this.writeFileToVolume(
             RelativeFilePath.of(TypescriptProject.PRETTIER_RC_FILENAME),
-            `tabWidth: 4,
+            `tabWidth: 4
 printWidth: 120
 `
         );
