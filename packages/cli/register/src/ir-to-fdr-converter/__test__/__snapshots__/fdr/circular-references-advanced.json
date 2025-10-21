@@ -392,6 +392,307 @@
           }
         ]
       }
+    },
+    "type_ast:Expression": {
+      "name": "Expression",
+      "shape": {
+        "type": "discriminatedUnion",
+        "discriminant": "type",
+        "variants": [
+          {
+            "discriminantValue": "and_operator",
+            "additionalProperties": {
+              "extends": [
+                "type_ast:AndExpression"
+              ],
+              "properties": []
+            }
+          },
+          {
+            "discriminantValue": "or_operator",
+            "additionalProperties": {
+              "extends": [
+                "type_ast:OrExpression"
+              ],
+              "properties": []
+            }
+          },
+          {
+            "discriminantValue": "equals",
+            "additionalProperties": {
+              "extends": [
+                "type_ast:EqualsExpression"
+              ],
+              "properties": []
+            }
+          },
+          {
+            "discriminantValue": "not_equals",
+            "additionalProperties": {
+              "extends": [
+                "type_ast:NotEqualsExpression"
+              ],
+              "properties": []
+            }
+          },
+          {
+            "discriminantValue": "greater_than",
+            "additionalProperties": {
+              "extends": [
+                "type_ast:GreaterThanExpression"
+              ],
+              "properties": []
+            }
+          },
+          {
+            "discriminantValue": "less_than",
+            "additionalProperties": {
+              "extends": [
+                "type_ast:LessThanExpression"
+              ],
+              "properties": []
+            }
+          },
+          {
+            "discriminantValue": "number_literal",
+            "additionalProperties": {
+              "extends": [
+                "type_ast:NumberLiteral"
+              ],
+              "properties": []
+            }
+          },
+          {
+            "discriminantValue": "boolean_literal",
+            "additionalProperties": {
+              "extends": [
+                "type_ast:BooleanLiteral"
+              ],
+              "properties": []
+            }
+          },
+          {
+            "discriminantValue": "string_literal",
+            "additionalProperties": {
+              "extends": [
+                "type_ast:StringLiteral"
+              ],
+              "properties": []
+            }
+          },
+          {
+            "discriminantValue": "variable",
+            "additionalProperties": {
+              "extends": [
+                "type_ast:VariableExpression"
+              ],
+              "properties": []
+            }
+          }
+        ]
+      }
+    },
+    "type_ast:AndExpression": {
+      "name": "AndExpression",
+      "shape": {
+        "type": "object",
+        "extends": [],
+        "properties": [
+          {
+            "key": "children",
+            "valueType": {
+              "type": "list",
+              "itemType": {
+                "type": "id",
+                "value": "type_ast:Expression"
+              }
+            }
+          }
+        ]
+      }
+    },
+    "type_ast:OrExpression": {
+      "name": "OrExpression",
+      "shape": {
+        "type": "object",
+        "extends": [],
+        "properties": [
+          {
+            "key": "children",
+            "valueType": {
+              "type": "list",
+              "itemType": {
+                "type": "id",
+                "value": "type_ast:Expression"
+              }
+            }
+          }
+        ]
+      }
+    },
+    "type_ast:EqualsExpression": {
+      "name": "EqualsExpression",
+      "shape": {
+        "type": "object",
+        "extends": [],
+        "properties": [
+          {
+            "key": "left",
+            "valueType": {
+              "type": "id",
+              "value": "type_ast:Expression"
+            }
+          },
+          {
+            "key": "right",
+            "valueType": {
+              "type": "id",
+              "value": "type_ast:Expression"
+            }
+          }
+        ]
+      }
+    },
+    "type_ast:NotEqualsExpression": {
+      "name": "NotEqualsExpression",
+      "shape": {
+        "type": "object",
+        "extends": [],
+        "properties": [
+          {
+            "key": "left",
+            "valueType": {
+              "type": "id",
+              "value": "type_ast:Expression"
+            }
+          },
+          {
+            "key": "right",
+            "valueType": {
+              "type": "id",
+              "value": "type_ast:Expression"
+            }
+          }
+        ]
+      }
+    },
+    "type_ast:GreaterThanExpression": {
+      "name": "GreaterThanExpression",
+      "shape": {
+        "type": "object",
+        "extends": [],
+        "properties": [
+          {
+            "key": "left",
+            "valueType": {
+              "type": "id",
+              "value": "type_ast:Expression"
+            }
+          },
+          {
+            "key": "right",
+            "valueType": {
+              "type": "id",
+              "value": "type_ast:Expression"
+            }
+          }
+        ]
+      }
+    },
+    "type_ast:LessThanExpression": {
+      "name": "LessThanExpression",
+      "shape": {
+        "type": "object",
+        "extends": [],
+        "properties": [
+          {
+            "key": "left",
+            "valueType": {
+              "type": "id",
+              "value": "type_ast:Expression"
+            }
+          },
+          {
+            "key": "right",
+            "valueType": {
+              "type": "id",
+              "value": "type_ast:Expression"
+            }
+          }
+        ]
+      }
+    },
+    "type_ast:NumberLiteral": {
+      "name": "NumberLiteral",
+      "shape": {
+        "type": "object",
+        "extends": [],
+        "properties": [
+          {
+            "key": "value",
+            "valueType": {
+              "type": "primitive",
+              "value": {
+                "type": "double"
+              }
+            }
+          }
+        ]
+      }
+    },
+    "type_ast:BooleanLiteral": {
+      "name": "BooleanLiteral",
+      "shape": {
+        "type": "object",
+        "extends": [],
+        "properties": [
+          {
+            "key": "value",
+            "valueType": {
+              "type": "primitive",
+              "value": {
+                "type": "boolean"
+              }
+            }
+          }
+        ]
+      }
+    },
+    "type_ast:StringLiteral": {
+      "name": "StringLiteral",
+      "shape": {
+        "type": "object",
+        "extends": [],
+        "properties": [
+          {
+            "key": "value",
+            "valueType": {
+              "type": "primitive",
+              "value": {
+                "type": "string"
+              }
+            }
+          }
+        ]
+      }
+    },
+    "type_ast:VariableExpression": {
+      "name": "VariableExpression",
+      "shape": {
+        "type": "object",
+        "extends": [],
+        "properties": [
+          {
+            "key": "name",
+            "valueType": {
+              "type": "primitive",
+              "value": {
+                "type": "string"
+              }
+            }
+          }
+        ]
+      }
     }
   },
   "subpackages": {
@@ -429,7 +730,18 @@
         "type_ast:ObjectValue",
         "type_ast:FieldName",
         "type_ast:FieldValue",
-        "type_ast:ObjectFieldValue"
+        "type_ast:ObjectFieldValue",
+        "type_ast:Expression",
+        "type_ast:AndExpression",
+        "type_ast:OrExpression",
+        "type_ast:EqualsExpression",
+        "type_ast:NotEqualsExpression",
+        "type_ast:GreaterThanExpression",
+        "type_ast:LessThanExpression",
+        "type_ast:NumberLiteral",
+        "type_ast:BooleanLiteral",
+        "type_ast:StringLiteral",
+        "type_ast:VariableExpression"
       ],
       "subpackages": []
     }

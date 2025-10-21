@@ -1,0 +1,202 @@
+{
+  "type": "object",
+  "properties": {
+    "left": {
+      "$ref": "#/definitions/ast.Expression"
+    },
+    "right": {
+      "$ref": "#/definitions/ast.Expression"
+    }
+  },
+  "required": [
+    "left",
+    "right"
+  ],
+  "additionalProperties": false,
+  "definitions": {
+    "ast.Expression": {
+      "type": "object",
+      "properties": {
+        "type": {
+          "type": "string",
+          "enum": [
+            "and_operator",
+            "or_operator",
+            "equals",
+            "not_equals",
+            "greater_than",
+            "less_than",
+            "number_literal",
+            "boolean_literal",
+            "string_literal",
+            "variable"
+          ]
+        }
+      },
+      "oneOf": [
+        {
+          "properties": {
+            "type": {
+              "const": "and_operator"
+            },
+            "children": {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/ast.Expression"
+              }
+            }
+          },
+          "required": [
+            "type",
+            "children"
+          ]
+        },
+        {
+          "properties": {
+            "type": {
+              "const": "or_operator"
+            },
+            "children": {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/ast.Expression"
+              }
+            }
+          },
+          "required": [
+            "type",
+            "children"
+          ]
+        },
+        {
+          "properties": {
+            "type": {
+              "const": "equals"
+            },
+            "left": {
+              "$ref": "#/definitions/ast.Expression"
+            },
+            "right": {
+              "$ref": "#/definitions/ast.Expression"
+            }
+          },
+          "required": [
+            "type",
+            "left",
+            "right"
+          ]
+        },
+        {
+          "properties": {
+            "type": {
+              "const": "not_equals"
+            },
+            "left": {
+              "$ref": "#/definitions/ast.Expression"
+            },
+            "right": {
+              "$ref": "#/definitions/ast.Expression"
+            }
+          },
+          "required": [
+            "type",
+            "left",
+            "right"
+          ]
+        },
+        {
+          "properties": {
+            "type": {
+              "const": "greater_than"
+            },
+            "left": {
+              "$ref": "#/definitions/ast.Expression"
+            },
+            "right": {
+              "$ref": "#/definitions/ast.Expression"
+            }
+          },
+          "required": [
+            "type",
+            "left",
+            "right"
+          ]
+        },
+        {
+          "properties": {
+            "type": {
+              "const": "less_than"
+            },
+            "left": {
+              "$ref": "#/definitions/ast.Expression"
+            },
+            "right": {
+              "$ref": "#/definitions/ast.Expression"
+            }
+          },
+          "required": [
+            "type",
+            "left",
+            "right"
+          ]
+        },
+        {
+          "properties": {
+            "type": {
+              "const": "number_literal"
+            },
+            "value": {
+              "type": "number"
+            }
+          },
+          "required": [
+            "type",
+            "value"
+          ]
+        },
+        {
+          "properties": {
+            "type": {
+              "const": "boolean_literal"
+            },
+            "value": {
+              "type": "boolean"
+            }
+          },
+          "required": [
+            "type",
+            "value"
+          ]
+        },
+        {
+          "properties": {
+            "type": {
+              "const": "string_literal"
+            },
+            "value": {
+              "type": "string"
+            }
+          },
+          "required": [
+            "type",
+            "value"
+          ]
+        },
+        {
+          "properties": {
+            "type": {
+              "const": "variable"
+            },
+            "name": {
+              "type": "string"
+            }
+          },
+          "required": [
+            "type",
+            "name"
+          ]
+        }
+      ]
+    }
+  }
+}
