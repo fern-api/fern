@@ -42,8 +42,6 @@ export class ExampleEndpointFactory {
     }
 
     public buildEndpointExample(endpoint: EndpointWithExample): EndpointExample[] {
-        this.logger.debug(`Building endpoint example for ${endpoint.method.toUpperCase()} ${endpoint.path}`);
-
         // pares down the request/response to only multipart or json schemas.
         // other types are not supported in the builder.
         const requestSchemaIdResponse = getRequestSchema(endpoint.request);

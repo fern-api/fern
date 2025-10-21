@@ -1,7 +1,7 @@
 use crate::{ApiError, ClientConfig, HttpClient};
 
 pub mod common;
-pub use common::FolderCCommonClient;
+pub use common::CommonClient2;
 pub struct FolderCClient {
     pub http_client: HttpClient,
 }

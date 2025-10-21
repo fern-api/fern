@@ -1,2 +1,2 @@
 pub mod a_b;
-pub use a_b::ABClient;
+pub use a_b::BClient;

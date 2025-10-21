@@ -18,8 +18,13 @@
       "response": {
         "description": "A list of pets",
         "schema": {
-          "generatedName": "",
-          "type": "unknown"
+          "generatedName": "GetPetsResponse",
+          "schema": "Pet",
+          "source": {
+            "file": "../openapi.yml",
+            "type": "openapi"
+          },
+          "type": "reference"
         },
         "fullExamples": [],
         "source": {
@@ -42,22 +47,108 @@
           "headers": [],
           "response": {
             "value": {
-              "value": [
-                {
-                  "key": {
-                    "value": "key",
+              "properties": {
+                "id": {
+                  "value": {
+                    "value": 0,
+                    "type": "int64"
+                  },
+                  "type": "primitive"
+                },
+                "category": {
+                  "properties": {
+                    "id": {
+                      "value": {
+                        "value": 6,
+                        "type": "int64"
+                      },
+                      "type": "primitive"
+                    },
+                    "name": {
+                      "value": {
+                        "value": "name",
+                        "type": "string"
+                      },
+                      "type": "primitive"
+                    }
+                  },
+                  "type": "object"
+                },
+                "name": {
+                  "value": {
+                    "value": "doggie",
                     "type": "string"
                   },
-                  "value": {
-                    "value": {
-                      "value": "value",
-                      "type": "string"
+                  "type": "primitive"
+                },
+                "photoUrls": {
+                  "value": [
+                    {
+                      "value": {
+                        "value": "photoUrls",
+                        "type": "string"
+                      },
+                      "type": "primitive"
                     },
-                    "type": "primitive"
-                  }
+                    {
+                      "value": {
+                        "value": "photoUrls",
+                        "type": "string"
+                      },
+                      "type": "primitive"
+                    }
+                  ],
+                  "type": "array"
+                },
+                "tags": {
+                  "value": [
+                    {
+                      "properties": {
+                        "id": {
+                          "value": {
+                            "value": 1,
+                            "type": "int64"
+                          },
+                          "type": "primitive"
+                        },
+                        "name": {
+                          "value": {
+                            "value": "name",
+                            "type": "string"
+                          },
+                          "type": "primitive"
+                        }
+                      },
+                      "type": "object"
+                    },
+                    {
+                      "properties": {
+                        "id": {
+                          "value": {
+                            "value": 1,
+                            "type": "int64"
+                          },
+                          "type": "primitive"
+                        },
+                        "name": {
+                          "value": {
+                            "value": "name",
+                            "type": "string"
+                          },
+                          "type": "primitive"
+                        }
+                      },
+                      "type": "object"
+                    }
+                  ],
+                  "type": "array"
+                },
+                "status": {
+                  "value": "available",
+                  "type": "enum"
                 }
-              ],
-              "type": "map"
+              },
+              "type": "object"
             },
             "type": "withoutStreaming"
           },
@@ -119,6 +210,268 @@
         ],
         "allOfPropertyConflicts": [],
         "generatedName": "Error",
+        "groupName": [],
+        "additionalProperties": false,
+        "source": {
+          "file": "../openapi.yml",
+          "type": "openapi"
+        },
+        "type": "object"
+      },
+      "Category": {
+        "allOf": [],
+        "properties": [
+          {
+            "conflict": {},
+            "generatedName": "categoryId",
+            "key": "id",
+            "schema": {
+              "generatedName": "CategoryId",
+              "value": {
+                "schema": {
+                  "type": "int64"
+                },
+                "generatedName": "CategoryId",
+                "groupName": [],
+                "type": "primitive"
+              },
+              "groupName": [],
+              "type": "optional"
+            },
+            "audiences": []
+          },
+          {
+            "conflict": {},
+            "generatedName": "categoryName",
+            "key": "name",
+            "schema": {
+              "generatedName": "CategoryName",
+              "value": {
+                "schema": {
+                  "type": "string"
+                },
+                "generatedName": "CategoryName",
+                "groupName": [],
+                "type": "primitive"
+              },
+              "groupName": [],
+              "type": "optional"
+            },
+            "audiences": []
+          }
+        ],
+        "allOfPropertyConflicts": [],
+        "description": "A category for a pet",
+        "generatedName": "Category",
+        "title": "Pet category",
+        "groupName": [],
+        "additionalProperties": false,
+        "source": {
+          "file": "../openapi.yml",
+          "type": "openapi"
+        },
+        "type": "object"
+      },
+      "Tag": {
+        "allOf": [],
+        "properties": [
+          {
+            "conflict": {},
+            "generatedName": "tagId",
+            "key": "id",
+            "schema": {
+              "generatedName": "TagId",
+              "value": {
+                "schema": {
+                  "type": "int64"
+                },
+                "generatedName": "TagId",
+                "groupName": [],
+                "type": "primitive"
+              },
+              "groupName": [],
+              "type": "optional"
+            },
+            "audiences": []
+          },
+          {
+            "conflict": {},
+            "generatedName": "tagName",
+            "key": "name",
+            "schema": {
+              "generatedName": "TagName",
+              "value": {
+                "schema": {
+                  "type": "string"
+                },
+                "generatedName": "TagName",
+                "groupName": [],
+                "type": "primitive"
+              },
+              "groupName": [],
+              "type": "optional"
+            },
+            "audiences": []
+          }
+        ],
+        "allOfPropertyConflicts": [],
+        "description": "A tag for a pet",
+        "generatedName": "Tag",
+        "title": "Pet Tag",
+        "groupName": [],
+        "additionalProperties": false,
+        "source": {
+          "file": "../openapi.yml",
+          "type": "openapi"
+        },
+        "type": "object"
+      },
+      "Pet": {
+        "allOf": [],
+        "properties": [
+          {
+            "conflict": {},
+            "generatedName": "petId",
+            "key": "id",
+            "schema": {
+              "generatedName": "PetId",
+              "value": {
+                "schema": {
+                  "type": "int64"
+                },
+                "generatedName": "PetId",
+                "groupName": [],
+                "type": "primitive"
+              },
+              "groupName": [],
+              "type": "optional"
+            },
+            "audiences": []
+          },
+          {
+            "conflict": {},
+            "generatedName": "petCategory",
+            "key": "category",
+            "schema": {
+              "generatedName": "PetCategory",
+              "value": {
+                "generatedName": "PetCategory",
+                "schema": "Category",
+                "source": {
+                  "file": "../openapi.yml",
+                  "type": "openapi"
+                },
+                "type": "reference"
+              },
+              "type": "optional"
+            },
+            "audiences": [],
+            "readonly": false,
+            "writeonly": false
+          },
+          {
+            "conflict": {},
+            "generatedName": "petName",
+            "key": "name",
+            "schema": {
+              "schema": {
+                "example": "doggie",
+                "type": "string"
+              },
+              "generatedName": "PetName",
+              "groupName": [],
+              "type": "primitive"
+            },
+            "audiences": []
+          },
+          {
+            "conflict": {},
+            "generatedName": "petPhotoUrls",
+            "key": "photoUrls",
+            "schema": {
+              "value": {
+                "schema": {
+                  "type": "string"
+                },
+                "generatedName": "PetPhotoUrlsItem",
+                "groupName": [],
+                "type": "primitive"
+              },
+              "generatedName": "PetPhotoUrls",
+              "groupName": [],
+              "type": "array"
+            },
+            "audiences": []
+          },
+          {
+            "conflict": {},
+            "generatedName": "petTags",
+            "key": "tags",
+            "schema": {
+              "generatedName": "PetTags",
+              "value": {
+                "value": {
+                  "generatedName": "PetTagsItem",
+                  "schema": "Tag",
+                  "source": {
+                    "file": "../openapi.yml",
+                    "type": "openapi"
+                  },
+                  "type": "reference"
+                },
+                "generatedName": "PetTags",
+                "groupName": [],
+                "type": "array"
+              },
+              "groupName": [],
+              "type": "optional"
+            },
+            "audiences": []
+          },
+          {
+            "conflict": {},
+            "generatedName": "petStatus",
+            "key": "status",
+            "schema": {
+              "generatedName": "PetStatus",
+              "description": "pet status in the store",
+              "value": {
+                "description": "pet status in the store",
+                "generatedName": "PetStatus",
+                "values": [
+                  {
+                    "generatedName": "available",
+                    "value": "available",
+                    "casing": {}
+                  },
+                  {
+                    "generatedName": "pending",
+                    "value": "pending",
+                    "casing": {}
+                  },
+                  {
+                    "generatedName": "sold",
+                    "value": "sold",
+                    "casing": {}
+                  }
+                ],
+                "groupName": [],
+                "source": {
+                  "file": "../openapi.yml",
+                  "type": "openapi"
+                },
+                "type": "enum"
+              },
+              "groupName": [],
+              "type": "optional"
+            },
+            "audiences": []
+          }
+        ],
+        "allOfPropertyConflicts": [],
+        "description": "A pet for sale in the pet store",
+        "generatedName": "Pet",
+        "title": "a Pet",
         "groupName": [],
         "additionalProperties": false,
         "source": {

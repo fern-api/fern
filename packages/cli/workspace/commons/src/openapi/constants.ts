@@ -17,5 +17,5 @@ export const DEFAULT_OPENAPI_BUNDLE_OPTIONS: BundleOptions = {
     ),
     dereference: false,
     removeUnusedComponents: false,
-    keepUrlRefs: true
+    keepUrlRefs: false
 };
