@@ -1,25 +1,27 @@
 from __future__ import annotations
 
-from typing import TYPE_CHECKING, Literal, Tuple
+from typing import TYPE_CHECKING, Dict, Literal, Set, Tuple
 
 if TYPE_CHECKING:
     from ..context.pydantic_generator_context import PydanticGeneratorContext
 
+import fern.ir.resources as ir_types
 from ..context.pydantic_generator_context_impl import PydanticGeneratorContextImpl
+from .circular_reference_resolver import CircularReferenceResolver
 from .custom_config import PydanticModelCustomConfig
 from .type_declaration_handler import (
     TypeDeclarationHandler,
     TypeDeclarationSnippetGeneratorBuilder,
 )
 from .type_declaration_referencer import TypeDeclarationReferencer
+from fern.generator_exec.config import GeneratorConfig
+from ordered_set import OrderedSet
+
 from fern_python.cli.abstract_generator import AbstractGenerator
-from fern_python.codegen import Project
+from fern_python.codegen import Filepath, Project
 from fern_python.generator_exec_wrapper import GeneratorExecWrapper
 from fern_python.generators.pydantic_model.model_utilities import can_be_fern_model
 from fern_python.snippet import SnippetRegistry, SnippetWriter
-
-import fern.ir.resources as ir_types
-from fern.generator_exec.config import GeneratorConfig
 
 
 class PydanticModelGenerator(AbstractGenerator):
@@ -117,16 +119,45 @@ class PydanticModelGenerator(AbstractGenerator):
         snippet_registry: SnippetRegistry,
         snippet_writer: SnippetWriter,
     ) -> None:
+        resolver = CircularReferenceResolver(ir.types)
+        mutually_recursive_groups = resolver.find_mutually_recursive_groups()
+        
+        type_id_to_group: Dict[ir_types.TypeId, OrderedSet[ir_types.TypeId]] = {}
+        for group in mutually_recursive_groups:
+            for type_id in group:
+                type_id_to_group[type_id] = group
+        
+        generated_groups: Set[frozenset] = set()
+        
         for type_to_generate in ir.types.values():
-            self._generate_type(
-                project,
-                type=type_to_generate,
-                generator_exec_wrapper=generator_exec_wrapper,
-                custom_config=custom_config,
-                context=context,
-                snippet_registry=snippet_registry,
-                snippet_writer=snippet_writer,
-            )
+            type_id = type_to_generate.name.type_id
+            
+            if type_id in type_id_to_group:
+                group = type_id_to_group[type_id]
+                group_key = frozenset(group)
+                
+                if group_key not in generated_groups:
+                    self._generate_consolidated_types(
+                        project=project,
+                        group=group,
+                        generator_exec_wrapper=generator_exec_wrapper,
+                        custom_config=custom_config,
+                        context=context,
+                        snippet_registry=snippet_registry,
+                        snippet_writer=snippet_writer,
+                        ir=ir,
+                    )
+                    generated_groups.add(group_key)
+            else:
+                self._generate_type(
+                    project,
+                    type=type_to_generate,
+                    generator_exec_wrapper=generator_exec_wrapper,
+                    custom_config=custom_config,
+                    context=context,
+                    snippet_registry=snippet_registry,
+                    snippet_writer=snippet_writer,
+                )
 
     def _should_generate_typedict(self, context: "PydanticGeneratorContext", type_: ir_types.Type) -> bool:
         return context.use_typeddict_requests and can_be_fern_model(type_, context.ir.types)
@@ -184,6 +215,129 @@ class PydanticModelGenerator(AbstractGenerator):
                 expr=generated_type.snippet,
             )
         project.write_source_file(source_file=source_file, filepath=filepath)
+
+    def _generate_consolidated_types(
+        self,
+        project: Project,
+        group: OrderedSet[ir_types.TypeId],
+        generator_exec_wrapper: GeneratorExecWrapper,
+        custom_config: PydanticModelCustomConfig,
+        context: "PydanticGeneratorContext",
+        snippet_registry: SnippetRegistry,
+        snippet_writer: SnippetWriter,
+        ir: ir_types.IntermediateRepresentation,
+    ) -> None:
+        resolver = CircularReferenceResolver(ir.types)
+        consolidated_filename = resolver.get_consolidated_filename(group)
+        
+        first_type_id = next(iter(group))
+        first_type = ir.types[first_type_id]
+        base_filepath = context.get_filepath_for_type_id(type_id=first_type_id, as_request=False)
+        
+        
+        consolidated_filepath = Filepath(
+            directories=base_filepath.directories,
+            file=Filepath.FilepathPart(
+                module_name=consolidated_filename,
+            ),
+        )
+        
+        from fern_python.codegen.reference_resolver_impl import ReferenceResolverImpl
+        from fern_python.codegen.source_file import SourceFileImpl
+        
+        module = consolidated_filepath.to_module()
+        consolidated_source_file = SourceFileImpl(
+            module_path=module.path,
+            completion_listener=lambda _: None,  # No-op callback to prevent export registration
+            reference_resolver=ReferenceResolverImpl(
+                module_path_of_source_file=module.path,
+            ),
+            dependency_manager=project._dependency_manager,
+            should_format=False,
+            whitelabel=False,
+        )
+        
+        for type_id in group:
+            type_declaration = ir.types[type_id]
+            
+            type_declaration_handler = TypeDeclarationHandler(
+                declaration=type_declaration,
+                context=context,
+                custom_config=custom_config,
+                source_file=consolidated_source_file,
+                snippet_writer=snippet_writer,
+                generate_typeddict_request=False,
+            )
+            generated_type = type_declaration_handler.run()
+            if generated_type.snippet is not None:
+                snippet_registry.register_snippet(
+                    type_id=type_declaration.name.type_id,
+                    expr=generated_type.snippet,
+                )
+        
+        import os
+        full_path = project.get_source_file_filepath(consolidated_filepath, include_src_root=True)
+        os.makedirs(os.path.dirname(full_path), exist_ok=True)
+        consolidated_source_file.write_to_file(filepath=full_path)
+        
+        for type_id in group:
+            type_declaration = ir.types[type_id]
+            self._generate_stub_file(
+                project=project,
+                type_declaration=type_declaration,
+                consolidated_filename=consolidated_filename,
+                context=context,
+                generator_exec_wrapper=generator_exec_wrapper,
+            )
+
+    def _generate_stub_file(
+        self,
+        project: Project,
+        type_declaration: ir_types.TypeDeclaration,
+        consolidated_filename: str,
+        context: "PydanticGeneratorContext",
+        generator_exec_wrapper: GeneratorExecWrapper,
+    ) -> None:
+        filepath = context.get_filepath_for_type_id(type_id=type_declaration.name.type_id, as_request=False)
+        
+        class_name = context.get_class_name_for_type_id(type_id=type_declaration.name.type_id, as_request=False)
+        
+        exports_to_add = [class_name]
+        
+        shape = type_declaration.shape.get_as_union()
+        if shape.type == "union":
+            for member in shape.types:
+                member_class_name = context.get_class_name_for_type_id(
+                    type_id=type_declaration.name.type_id, as_request=False
+                ) + "_" + member.discriminant_value.name.pascal_case.safe_name
+                exports_to_add.append(member_class_name)
+        elif shape.type == "undiscriminatedUnion":
+            base_class_name = context.get_class_name_for_type_id(
+                type_id=type_declaration.name.type_id, as_request=False
+            )
+            for member in shape.members:
+                member_type_union = member.type.get_as_union()
+                if member_type_union.type == "container":
+                    container_type = member_type_union.container.get_as_union()
+                    if container_type.type == "list":
+                        member_class_name = f"{base_class_name}_List"
+                    elif container_type.type == "optional":
+                        member_class_name = f"{base_class_name}_Optional"
+                    else:
+                        continue
+                    exports_to_add.append(member_class_name)
+        
+        stub_content = "# This file was auto-generated by Fern from our API Definition.\n\n"
+        stub_content += f"from .{consolidated_filename} import {', '.join(exports_to_add)}\n\n"
+        stub_content += f"__all__ = [{', '.join(repr(e) for e in exports_to_add)}]\n"
+        
+        import os
+        full_path = project.get_source_file_filepath(filepath, include_src_root=True)
+        os.makedirs(os.path.dirname(full_path), exist_ok=True)
+        with open(full_path, 'w') as f:
+            f.write(stub_content)
+        
+        project.register_export_in_project(filepath, set(exports_to_add))
 
     def get_sorted_modules(self) -> None:
         return None
