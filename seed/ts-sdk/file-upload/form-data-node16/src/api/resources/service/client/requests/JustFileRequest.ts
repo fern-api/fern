@@ -2,6 +2,12 @@
 
 import type * as fs from "fs";
 
+/**
+ * @example
+ *     {
+ *         file: fs.createReadStream("/path/to/your/file")
+ *     }
+ */
 export interface JustFileRequest {
     file: File | fs.ReadStream | Blob;
 }
