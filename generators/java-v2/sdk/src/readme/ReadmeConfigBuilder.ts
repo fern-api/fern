@@ -53,16 +53,12 @@ export class ReadmeConfigBuilder {
             whiteLabel: context.ir.readmeConfig?.whiteLabel,
             customSections: getCustomSections(context),
             features,
-            // Check for exampleStyle in multiple locations
-            // Default to "comprehensive" if not specified for backward compatibility
+            // TODO: @tanmay, once this is released look for it normally
             exampleStyle: (() => {
-                // First check if it's in the custom config (from generators.yml config section)
                 const customConfig = context.config.customConfig as { readmeConfig?: { exampleStyle?: string } };
                 const customConfigExampleStyle = customConfig?.readmeConfig?.exampleStyle;
-                // Then check the IR (for newer IR versions)
                 const irReadmeConfig = context.ir.readmeConfig as { exampleStyle?: string } | undefined;
                 const irExampleStyle = irReadmeConfig?.exampleStyle;
-                // Use custom config value if available, then IR value, otherwise default
                 const exampleStyle = customConfigExampleStyle ?? irExampleStyle ?? "comprehensive";
                 return exampleStyle as FernGeneratorCli.ExampleStyle;
             })()
