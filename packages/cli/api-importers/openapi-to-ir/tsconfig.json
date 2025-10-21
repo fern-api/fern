@@ -9,7 +9,10 @@
   "exclude": ["./src/**/__test__/**/generated"],
   "references": [
     {
-      "path": "../../../commons/core-utils"
+      "path": "../openapi/openapi-ir-parser"
+    },
+    {
+      "path": "../v3-importer-commons"
     },
     {
       "path": "../../../commons/ir-utils"
@@ -21,10 +24,7 @@
       "path": "../../fern-definition/schema"
     },
     {
-      "path": "../../workspace/commons"
-    },
-    {
-      "path": "../v3-importer-commons"
+      "path": "../../../commons/core-utils"
     }
   ]
 }

@@ -8,6 +8,12 @@
   "include": ["./src/**/*"],
   "references": [
     {
+      "path": "../codegen"
+    },
+    {
+      "path": "../../../packages/cli/logger"
+    },
+    {
       "path": "../../../packages/commons/fs-utils"
     },
     {
@@ -15,9 +21,6 @@
     },
     {
       "path": "../../base"
-    },
-    {
-      "path": "../codegen"
     }
   ]
 }

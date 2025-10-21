@@ -486,6 +486,9 @@
     },
     {
       "path": "./packages/seed"
+    },
+    {
+      "path": "./generators/swift/dynamic-snippets"
     }
   ]
 }
