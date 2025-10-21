@@ -1,5 +1,4 @@
 use seed_exhaustive::prelude::*;
-use std::collections::HashSet;
 
 #[tokio::main]
 async fn main() {

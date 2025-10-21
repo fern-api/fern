@@ -151,7 +151,7 @@ public final class EnvironmentGenerator extends AbstractFileGenerator {
                         .map(EnvironmentUrl::get)
                         .map(url -> "\"" + url + "\"")
                         .collect(Collectors.joining(","));
-                String constant = environment.getName().getScreamingSnakeCase().getSafeName();
+                String constant = environment.getName().getOriginalName();
                 environmentsBuilder.addField(
                         FieldSpec.builder(className, constant, Modifier.PUBLIC, Modifier.STATIC, Modifier.FINAL)
                                 .initializer("new $T(" + args + ")", className)

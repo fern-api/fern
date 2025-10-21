@@ -94,7 +94,6 @@ Create a new user
 
 ```rust
 use seed_nullable_optional::prelude::*;
-use std::collections::HashMap;
 
 #[tokio::main]
 async fn main() {
@@ -162,7 +161,6 @@ Update a user (partial update)
 
 ```rust
 use seed_nullable_optional::prelude::*;
-use std::collections::HashMap;
 
 #[tokio::main]
 async fn main() {
@@ -441,9 +439,7 @@ Create a complex profile to test nullable enums and unions
 <dd>
 
 ```rust
-use chrono::{DateTime, Utc};
 use seed_nullable_optional::prelude::*;
-use std::collections::{HashMap, HashSet};
 
 #[tokio::main]
 async fn main() {
@@ -690,9 +686,7 @@ Update complex profile to test nullable field updates
 <dd>
 
 ```rust
-use chrono::{DateTime, Utc};
 use seed_nullable_optional::prelude::*;
-use std::collections::{HashMap, HashSet};
 
 #[tokio::main]
 async fn main() {
@@ -841,9 +835,7 @@ Test endpoint for validating null deserialization
 <dd>
 
 ```rust
-use chrono::{DateTime, Utc};
 use seed_nullable_optional::prelude::*;
-use std::collections::{HashMap, HashSet};
 
 #[tokio::main]
 async fn main() {
@@ -1109,7 +1101,6 @@ Update tags to test array handling
 
 ```rust
 use seed_nullable_optional::prelude::*;
-use std::collections::{HashMap, HashSet};
 
 #[tokio::main]
 async fn main() {
@@ -1208,7 +1199,6 @@ Get search results with nullable unions
 
 ```rust
 use seed_nullable_optional::prelude::*;
-use std::collections::{HashMap, HashSet};
 
 #[tokio::main]
 async fn main() {

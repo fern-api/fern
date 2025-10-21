@@ -187,7 +187,6 @@ async fn main() {
 
 ```rust
 use seed_api::prelude::*;
-use std::collections::HashMap;
 
 #[tokio::main]
 async fn main() {

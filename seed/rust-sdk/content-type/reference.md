@@ -14,7 +14,6 @@
 
 ```rust
 use seed_content_types::prelude::*;
-use std::collections::HashMap;
 
 #[tokio::main]
 async fn main() {
@@ -98,7 +97,6 @@ This endpoint demonstrates the distinction between:
 
 ```rust
 use seed_content_types::prelude::*;
-use std::collections::{HashMap, HashSet};
 
 #[tokio::main]
 async fn main() {
@@ -267,7 +265,6 @@ This should trigger the NPE issue when optional fields aren't initialized.
 
 ```rust
 use seed_content_types::prelude::*;
-use std::collections::HashMap;
 
 #[tokio::main]
 async fn main() {
@@ -369,7 +366,6 @@ This endpoint should:
 
 ```rust
 use seed_content_types::prelude::*;
-use std::collections::HashMap;
 
 #[tokio::main]
 async fn main() {
@@ -477,7 +473,6 @@ Regular PATCH endpoint without merge-patch semantics
 
 ```rust
 use seed_content_types::prelude::*;
-use std::collections::HashMap;
 
 #[tokio::main]
 async fn main() {

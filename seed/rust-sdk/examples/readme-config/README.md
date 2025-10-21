@@ -47,9 +47,7 @@ Generator Invocation Custom Content for seed_examples:0.0.1
 Instantiate and use the client with the following:
 
 ```rust
-use chrono::NaiveDate;
 use seed_examples::prelude::*;
-use std::collections::{HashMap, HashSet};
 
 #[tokio::main]
 async fn main() {
