@@ -1,0 +1,50 @@
+name: Verify Deterministic
+description: To be run after seed generation to compare against committed code and verify the results match.
+
+inputs:
+  determinism-exclude-paths:
+    description: "Comma separated list of paths to exclude from determinism verification step, typically package manager/lock files"
+    required: false
+    default: "seed/*/.mock/*"
+
+outputs:
+  deterministic:
+    description: "Test matrix without any packaging"
+    value: ${{ steps.validate.outputs.deterministic }}
+
+
+runs:
+  using: "composite"
+  steps:
+  - name: Validate results
+    id: validate
+    shell: bash
+    run: |
+      # Split the input string into an array
+      IFS=',' read -ra FOLDERS <<< "${{ inputs.determinism-exclude-paths }}"
+
+      # Build the exclude string
+      EXCLUDE_STRING=""
+      for folder in "${FOLDERS[@]}"; do
+        # Trim whitespace
+        folder=$(echo "$folder" | xargs)
+        if [ -n "$folder" ]; then
+          EXCLUDE_STRING="$EXCLUDE_STRING\":(exclude)$folder\" "
+        fi
+      done
+
+      # Remove trailing space
+      EXCLUDE_STRING=$(echo "$EXCLUDE_STRING" | sed 's/[[:space:]]*$//')
+      echo "exclude_string=$EXCLUDE_STRING" >> $GITHUB_OUTPUT
+      echo "Built git diff exclude string as: "
+      echo "$EXCLUDE_STRING"
+
+      # Set results
+      if git --no-pager diff --exit-code -- $EXCLUDE_STRING; then
+        echo "Results match"
+        echo "deterministic=true" >> $GITHUB_OUTPUT
+      else
+        echo "Changes detected in git-tracked files. Showing first 50 lines of diff:"
+        git --no-pager diff -- $EXCLUDE_STRING | head -50
+        echo "deterministic=false" >> $GITHUB_OUTPUT
+      fi
