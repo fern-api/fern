@@ -1227,6 +1227,13 @@ jobs:
             seed/${{ matrix.seed-generator-alias }}/seed.yml
             .github/workflow-resource-files/seed-groups/${{ matrix.seed-generator-alias }}-seed-groups.json
 
+      # CHRISM - not heavily used 
+      - name: Setup yq for Bash Use
+        uses: frenck/action-setup-yq@v1
+
+      - name: Check yq Version Installed
+        run: yq --version
+
       - name: Extract All Fixture Info
         shell: bash
         id: extract-all-fixture-info
@@ -1237,7 +1244,6 @@ jobs:
           # Output for debugging
           echo "Found $FIXTURE_COUNT total fixtures"
 
-          # CHRISM - out of the box or need to install?
           # Set defaults for allowed failures data
           ALLOWED_FAILURES="N/A"
           ALLOWED_FAILURES_COUNT=0
@@ -1248,6 +1254,10 @@ jobs:
             ALLOWED_FAILURES=$(yq -o json '.allowedFailures' seed/${{ matrix.seed-generator-alias }}/seed.yml)
             ALLOWED_FAILURES_COUNT=$(echo "$ALLOWED_FAILURES" | jq 'length')
           fi
+
+          # Output for debugging
+          echo "Found $ALLOWED_FAILURES_COUNT total allowed failures"
+          echo "$ALLOWED_FAILURES" | jq .
 
           # Set outputs
           echo "${{ matrix.seed-generator-alias }}-total-fixtures-count=$FIXTURE_COUNT" >> $GITHUB_OUTPUT
