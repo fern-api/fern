@@ -62,6 +62,11 @@ runs:
     - name: Checkout repo
       uses: actions/checkout@v4
 
+    - name: Dump file BEFORE seed
+      shell: bash
+      run: |
+        echo "$(cat seed/${{ inputs.sdk-name }}/basic-auth/README.md)"
+
     - name: Run seed
       if: ${{ steps.json-to-string.outputs.as-string != 'leftovers' }}
       uses: ./.github/actions/cached-seed
@@ -77,6 +82,11 @@ runs:
       with:
         sdk-name: ${{ inputs.sdk-name }}
         generator-path: ${{ inputs.generator-path }}
+
+    - name: Dump file AFTER seed
+      shell: bash
+      run: |
+        echo "$(cat seed/${{ inputs.sdk-name }}/basic-auth/README.md)"
 
     - name: Record end time
       id: end-seed-timer
