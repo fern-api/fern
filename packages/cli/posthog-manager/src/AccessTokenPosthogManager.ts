@@ -16,7 +16,7 @@ export class AccessTokenPosthogManager implements PosthogManager {
 
     public async sendEvent(event: PosthogEvent): Promise<void> {
         if (event.orgId != null) {
-            await this.posthog.capture({
+            this.posthog.capture({
                 distinctId: event.orgId,
                 event: "CLI",
                 properties: {

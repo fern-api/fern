@@ -31,7 +31,7 @@ export class UserPosthogManager implements PosthogManager {
     }
 
     public async sendEvent(event: PosthogEvent): Promise<void> {
-        await this.posthog.capture({
+        this.posthog.capture({
             distinctId: this.userId ?? (await this.getPersistedDistinctId()),
             event: "CLI",
             properties: {
