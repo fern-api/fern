@@ -216,7 +216,6 @@ allowedFailures:
   - request-parameters
   - server-sent-event-examples
   - server-sent-events
-  - streaming:.
   - streaming-parameter
   - trace
   - property-access
@@ -234,3 +233,7 @@ allowedFailures:
 
   - oauth-client-credentials-with-variables
   - variables
+
+  # Will include these back in once we fix dynamic snippets for inline file properties
+  - file-upload:no-custom-config 
+  - file-upload:package-name 
