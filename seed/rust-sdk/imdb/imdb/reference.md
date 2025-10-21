@@ -28,7 +28,6 @@ Add a movie to the database using the movies/* /... path.
 
 ```rust
 use seed_api::prelude::*;
-use std::collections::HashMap;
 
 #[tokio::main]
 async fn main() {

@@ -11,7 +11,7 @@ const SdkCustomConfigSchema: typeof TypescriptCustomConfigSchema = TypescriptCus
 type SdkCustomConfigSchema = TypescriptCustomConfigSchema;
 
 export class ReadmeConfigBuilder {
-    private endpointSnippets: FernGeneratorExec.Endpoint[];
+    private readonly endpointSnippets: FernGeneratorExec.Endpoint[];
     private readonly fileResponseType: "stream" | "binary-response";
     private readonly fetchSupport: "node-fetch" | "native";
 

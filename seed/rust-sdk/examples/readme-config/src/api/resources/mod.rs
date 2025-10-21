@@ -9,7 +9,7 @@ pub struct ExamplesClient {
     pub config: ClientConfig,
     pub file: FileClient,
     pub health: HealthClient,
-    pub service: ServiceClient,
+    pub service: ServiceClient4,
 }
 
 impl ExamplesClient {
@@ -18,7 +18,7 @@ impl ExamplesClient {
             config: config.clone(),
             file: FileClient::new(config.clone())?,
             health: HealthClient::new(config.clone())?,
-            service: ServiceClient::new(config.clone())?,
+            service: ServiceClient4::new(config.clone())?,
         })
     }
 }
@@ -26,5 +26,5 @@ impl ExamplesClient {
 pub use commons::CommonsClient;
 pub use file::FileClient;
 pub use health::HealthClient;
-pub use service::ServiceClient;
-pub use types::TypesClient;
+pub use service::ServiceClient4;
+pub use types::TypesClient2;

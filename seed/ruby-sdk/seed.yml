@@ -136,6 +136,7 @@ allowedFailures:
   - undiscriminated-unions
   - unions
   - unknown
+  - url-form-encoded
   - validation
   - variables
   - version

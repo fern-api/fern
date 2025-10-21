@@ -96,7 +96,6 @@ This endpoint is used to create a new user.
 
 ```rust
 use seed_multi_line_docs::prelude::*;
-use std::collections::HashMap;
 
 #[tokio::main]
 async fn main() {

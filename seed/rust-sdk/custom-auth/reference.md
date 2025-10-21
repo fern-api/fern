@@ -77,7 +77,6 @@ POST request with custom auth scheme
 
 ```rust
 use seed_custom_auth::prelude::*;
-use std::collections::HashMap;
 
 #[tokio::main]
 async fn main() {

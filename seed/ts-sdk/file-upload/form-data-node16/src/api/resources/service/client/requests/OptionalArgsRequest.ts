@@ -2,6 +2,10 @@
 
 import type * as fs from "fs";
 
+/**
+ * @example
+ *     {}
+ */
 export interface OptionalArgsRequest {
     image_file?: File | fs.ReadStream | Blob | undefined;
     request?: unknown;

@@ -16,6 +16,7 @@ export abstract class AbstractRustGeneratorContext<
     CustomConfig extends BaseRustCustomConfigSchema
 > extends AbstractGeneratorContext {
     public readonly project: RustProject;
+    public publishConfig: FernGeneratorExec.CratesGithubPublishInfo | undefined;
 
     public constructor(
         public readonly ir: IntermediateRepresentation,
@@ -24,6 +25,19 @@ export abstract class AbstractRustGeneratorContext<
         public readonly generatorNotificationService: GeneratorNotificationService
     ) {
         super(config, generatorNotificationService);
+
+        // Extract publish config from output mode
+        config.output.mode._visit<void>({
+            github: (github) => {
+                if (github.publishInfo?.type === "crates") {
+                    this.publishConfig = github.publishInfo;
+                }
+            },
+            publish: () => undefined,
+            downloadFiles: () => undefined,
+            _other: () => undefined
+        });
+
         this.project = new RustProject({
             context: this,
             crateName: this.getCrateName(),
@@ -141,8 +155,31 @@ export abstract class AbstractRustGeneratorContext<
         }
         this.logger.debug(`Registered ${queryRequestCount} query request filenames and type names`);
 
+        // Priority 4: Client names (root client + all subpackage clients)
+        let clientNameCount = 0;
+
+        // Register root client first
+        const rootClientName = this.getClientName();
+        const registeredRootClientName = this.project.filenameRegistry.registerClientName("root", rootClientName);
+        if (registeredRootClientName !== rootClientName) {
+            this.logger.debug(`Root client collision resolved: ${rootClientName} → ${registeredRootClientName}`);
+        }
+        clientNameCount++;
+
+        // Register all subpackage clients
+        for (const [subpackageId, subpackage] of Object.entries(ir.subpackages)) {
+            const baseClientName = `${subpackage.name.pascalCase.safeName}Client`;
+            const registeredClientName = this.project.filenameRegistry.registerClientName(subpackageId, baseClientName);
+
+            if (registeredClientName !== baseClientName) {
+                this.logger.debug(`Client collision resolved: ${baseClientName} → ${registeredClientName}`);
+            }
+            clientNameCount++;
+        }
+        this.logger.debug(`Registered ${clientNameCount} client names`);
+
         this.logger.debug(
-            `=== Pre-registration complete: ${schemaTypeCount + inlineRequestCount + queryRequestCount} total filenames ===`
+            `=== Pre-registration complete: ${schemaTypeCount + inlineRequestCount + queryRequestCount} filenames, ${clientNameCount} client names ===`
         );
     }
 
@@ -218,9 +255,19 @@ export abstract class AbstractRustGeneratorContext<
     }
 
     /**
-     * Get the client class name with fallback to generated default
+     * Get the client class name using the registered name from the filename registry.
+     * Falls back to custom config or generated default for initial registration.
      */
     public getClientName(): string {
+        // Try to get the registered root client name first (if project is initialized)
+        if (this.project != null) {
+            const registeredName = this.project.filenameRegistry.getClientNameOrUndefined("root");
+            if (registeredName != null) {
+                return registeredName;
+            }
+        }
+
+        // Fallback for initial registration phase (before project is created or registry is populated)
         return this.customConfig.clientClassName ?? `${this.ir.apiName.pascalCase.safeName}Client`;
     }
 
@@ -538,17 +585,35 @@ export abstract class AbstractRustGeneratorContext<
     }
 
     /**
-     * Get the unique client name for a subpackage using its fernFilepath
-     * to prevent name collisions between clients with the same name in different paths.
+     * Get the unique client name for a subpackage using the registered name from the filename registry.
+     * This ensures consistent naming and prevents collisions.
      *
-     * @param subpackage The subpackage to generate a client name for
-     * @returns The unique client name (e.g., "NestedNoAuthApiClient")
+     * @param subpackage The subpackage to get the client name for
+     * @returns The unique client name (e.g., "NestedNoAuthApiClient" or "BasicAuthClient2" if collision)
      */
     public getUniqueClientNameForSubpackage(subpackage: {
         fernFilepath: { allParts: Array<{ pascalCase: { safeName: string } }> };
     }): string {
-        // Use the full fernFilepath to create unique client names to prevent collisions
-        // E.g., "nested-no-auth/api" becomes "NestedNoAuthApiClient"
+        // Find the subpackage ID by matching fernFilepath
+        const subpackageId = Object.entries(this.ir.subpackages).find(([, sp]) => {
+            return (
+                sp.fernFilepath.allParts.length === subpackage.fernFilepath.allParts.length &&
+                sp.fernFilepath.allParts.every(
+                    (part, index) =>
+                        part.pascalCase.safeName === subpackage.fernFilepath.allParts[index]?.pascalCase.safeName
+                )
+            );
+        })?.[0];
+
+        if (subpackageId != null) {
+            // Use registered name if available
+            const registeredName = this.project.filenameRegistry.getClientNameOrUndefined(subpackageId);
+            if (registeredName != null) {
+                return registeredName;
+            }
+        }
+
+        // Fallback to old behavior if not found (shouldn't happen in normal flow)
         const pathParts = subpackage.fernFilepath.allParts.map((part) => part.pascalCase.safeName);
         return pathParts.join("") + "Client";
     }

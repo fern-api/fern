@@ -1,2 +1,2 @@
 pub mod types_docs;
-pub use types_docs::TypesDocsClient;
+pub use types_docs::DocsClient;
