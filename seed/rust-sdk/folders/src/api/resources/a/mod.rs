@@ -1,22 +1,22 @@
 use crate::{ApiError, ClientConfig, HttpClient};
 
 pub mod b;
-pub use b::ABClient;
+pub use b::BClient;
 pub mod c;
-pub use c::ACClient;
+pub use c::CClient;
 pub mod d;
-pub use d::ADClient;
+pub use d::DClient;
 pub struct AClient {
     pub http_client: HttpClient,
-    pub b: ABClient,
-    pub c: ACClient,
+    pub b: BClient,
+    pub c: CClient,
 }
 impl AClient {
     pub fn new(config: ClientConfig) -> Result<Self, ApiError> {
         Ok(Self {
             http_client: HttpClient::new(config.clone())?,
-            b: ABClient::new(config.clone())?,
-            c: ACClient::new(config.clone())?,
+            b: BClient::new(config.clone())?,
+            c: CClient::new(config.clone())?,
         })
     }
 }
