@@ -1,7 +1,7 @@
 plugins {
     id 'java-library'
     id 'maven-publish'
-    id 'com.diffplug.spotless' version '6.11.0'
+    id 'com.diffplug.spotless' version '7.2.1'
     id 'signing'
     id 'cl.franciscosolis.sonatype-central-upload' version '1.0.3'
 }
@@ -35,7 +35,7 @@ tasks.withType(Javadoc) {
 
 spotless {
     java {
-        palantirJavaFormat()
+        palantirJavaFormat('2.80.0')
     }
 }
 
