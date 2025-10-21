@@ -364,7 +364,25 @@
           "requestsV2": {},
           "responsesV2": {},
           "errorsV2": [],
-          "examples": []
+          "examples": [
+            {
+              "path": "/just-file",
+              "pathParameters": {},
+              "queryParameters": {},
+              "headers": {},
+              "requestBody": {},
+              "requestBodyV3": {
+                "type": "form",
+                "value": {
+                  "file": {
+                    "type": "filename",
+                    "value": "<file1>"
+                  }
+                }
+              },
+              "responseStatusCode": 204
+            }
+          ]
         },
         {
           "auth": false,
@@ -890,7 +908,33 @@
           },
           "responsesV2": {},
           "errorsV2": [],
-          "examples": []
+          "examples": [
+            {
+              "path": "/optional-args",
+              "pathParameters": {},
+              "queryParameters": {},
+              "headers": {},
+              "requestBody": {},
+              "requestBodyV3": {
+                "type": "form",
+                "value": {
+                  "image_file": {
+                    "type": "filename",
+                    "value": "<file1>"
+                  },
+                  "request": {
+                    "type": "json"
+                  }
+                }
+              },
+              "responseStatusCode": 200,
+              "responseBody": "Foo",
+              "responseBodyV3": {
+                "type": "json",
+                "value": "Foo"
+              }
+            }
+          ]
         },
         {
           "auth": false,

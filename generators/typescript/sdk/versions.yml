@@ -22,6 +22,14 @@
   createdAt: "2025-10-21"
   irVersion: 60
 
+- version: 3.10.0
+  changelogEntry:
+    - summary: |
+        Generate file upload section in README.md for multipart-form file uploads.
+      type: feat
+  createdAt: "2025-10-20"
+  irVersion: 60
+
 - version: 3.9.3
   changelogEntry:
     - summary: |

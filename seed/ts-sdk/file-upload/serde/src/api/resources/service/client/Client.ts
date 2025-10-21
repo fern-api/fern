@@ -185,6 +185,12 @@ export class Service {
     /**
      * @param {SeedFileUpload.JustFileRequest} request
      * @param {Service.RequestOptions} requestOptions - Request-specific configuration.
+     *
+     * @example
+     *     import { createReadStream } from "fs";
+     *     await client.service.justFile({
+     *         file: fs.createReadStream("/path/to/your/file")
+     *     })
      */
     public justFile(
         request: SeedFileUpload.JustFileRequest,
@@ -657,6 +663,10 @@ export class Service {
     /**
      * @param {SeedFileUpload.OptionalArgsRequest} request
      * @param {Service.RequestOptions} requestOptions - Request-specific configuration.
+     *
+     * @example
+     *     import { createReadStream } from "fs";
+     *     await client.service.optionalArgs({})
      */
     public optionalArgs(
         request: SeedFileUpload.OptionalArgsRequest,

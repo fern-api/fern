@@ -248,33 +248,53 @@ const response = await ${this.getMethodCall(queryStringEndpoint)}(..., {
     }
 
     private buildFileUploadRequestSnippet(): string[] {
-        const binaryRequestEndpoints = Object.values(this.context.ir.services).flatMap((service) =>
+        const fileUploadEndpoints = Object.values(this.context.ir.services).flatMap((service) =>
             service.endpoints
-                .filter((endpoint) => endpoint.requestBody?.type === "bytes")
+                .filter((endpoint) => {
+                    if (endpoint.requestBody == null) {
+                        return false;
+                    }
+                    if (endpoint.requestBody.type === "bytes") {
+                        return true;
+                    }
+                    if (
+                        endpoint.requestBody.type === "fileUpload" &&
+                        endpoint.requestBody.properties.some((property) => property.type === "file")
+                    ) {
+                        return true;
+                    }
+                    return false;
+                })
                 .map((endpoint) => ({
                     endpoint,
                     fernFilepath: service.name.fernFilepath
                 }))
         );
-        if (binaryRequestEndpoints.length === 0) {
-            return [];
-        }
-        const binaryRequestEndpoint = binaryRequestEndpoints[0] as EndpointWithFilepath;
-        return [
-            this.writeCode(
-                code`
+        for (const fileUploadEndpoint of fileUploadEndpoints) {
+            if (fileUploadEndpoint.endpoint.requestBody?.type === "bytes") {
+                return [
+                    this.writeCode(
+                        code`
 import { createReadStream } from "fs";
 
-await ${this.getMethodCall(binaryRequestEndpoint)}(createReadStream("path/to/file"), ...);
-await ${this.getMethodCall(binaryRequestEndpoint)}(new ReadableStream(), ...);
-await ${this.getMethodCall(binaryRequestEndpoint)}(Buffer.from('binary data'), ...);
-await ${this.getMethodCall(binaryRequestEndpoint)}(new Blob(['binary data'], { type: 'audio/mpeg' }), ...);
-await ${this.getMethodCall(binaryRequestEndpoint)}(new File(['binary data'], 'file.mp3'), ...);
-await ${this.getMethodCall(binaryRequestEndpoint)}(new ArrayBuffer(8), ...);
-await ${this.getMethodCall(binaryRequestEndpoint)}(new Uint8Array([0, 1, 2]), ...);
-`
-            )
-        ];
+await ${this.getMethodCall(fileUploadEndpoint)}(createReadStream("path/to/file"), ...);
+await ${this.getMethodCall(fileUploadEndpoint)}(new ReadableStream(), ...);
+await ${this.getMethodCall(fileUploadEndpoint)}(Buffer.from('binary data'), ...);
+await ${this.getMethodCall(fileUploadEndpoint)}(new Blob(['binary data'], { type: 'audio/mpeg' }), ...);
+await ${this.getMethodCall(fileUploadEndpoint)}(new File(['binary data'], 'file.mp3'), ...);
+await ${this.getMethodCall(fileUploadEndpoint)}(new ArrayBuffer(8), ...);
+await ${this.getMethodCall(fileUploadEndpoint)}(new Uint8Array([0, 1, 2]), ...);
+                `
+                    )
+                ];
+            }
+
+            const snippet = this.getSnippetForEndpointId(fileUploadEndpoint.endpoint.id);
+            if (snippet != null) {
+                return [snippet];
+            }
+        }
+        return [];
     }
 
     private buildBinaryResponseSnippet(): string[] {
