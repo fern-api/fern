@@ -21,7 +21,9 @@
   "main": "lib/index.js",
   "source": "src/index.ts",
   "types": "lib/index.d.ts",
-  "files": ["lib"],
+  "files": [
+    "lib"
+  ],
   "scripts": {
     "clean": "rm -rf ./lib && tsc --build --clean",
     "compile": "tsc --build",
@@ -53,7 +55,7 @@
     "@fern-api/semver-utils": "workspace:*",
     "@fern-api/task-context": "workspace:*",
     "@fern-api/v3-importer-commons": "workspace:*",
-    "@fern-fern/fiddle-sdk": "0.0.656",
+    "@fern-fern/fiddle-sdk": "catalog:",
     "@open-rpc/meta-schema": "^1.14.9",
     "@redocly/openapi-core": "^1.4.1",
     "@types/uuid": "^9.0.8",

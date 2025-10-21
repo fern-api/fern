@@ -4,10 +4,10 @@
   "repository": "https://github.com/fern-api/fern",
   "author": "Birch Solutions, Inc.",
   "private": true,
-  "packageManager": "pnpm@9.4.0",
+  "packageManager": "pnpm@9.5.0",
   "engines": {
     "npm": "please-use-pnpm",
-    "pnpm": "^9.4.0",
+    "pnpm": "^9.5.0",
     "node": ">=20.0.0"
   },
   "scripts": {

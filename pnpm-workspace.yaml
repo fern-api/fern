@@ -7,3 +7,8 @@ packages:
   - "!packages/cli/cli/dist/local"
   - "!packages/cli/cli/dist/dev"
   - "!packages/cli/cli/dist/prod"
+
+catalog:
+  "@fern-fern/fiddle-sdk": "0.0.665"
+  "@fern-fern/generator-exec-sdk": "0.0.1169"
+  "@fern-fern/snippet-sdk": "0.0.6540"
