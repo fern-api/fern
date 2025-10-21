@@ -51,7 +51,7 @@ export class EndpointSnippetGenerator {
         snippet: FernIr.dynamic.EndpointSnippetRequest;
     }): string[] {
         // Get use statements
-        const useStatements = this.getUseStatements({ endpoint, snippet });
+        const useStatements = this.getUseStatements();
 
         // Create the main function body
         const mainBody = rust.CodeBlock.fromStatements([
@@ -99,51 +99,8 @@ export class EndpointSnippetGenerator {
         return components;
     }
 
-    private getUseStatements({
-        endpoint,
-        snippet
-    }: {
-        endpoint: FernIr.dynamic.Endpoint;
-        snippet: FernIr.dynamic.EndpointSnippetRequest;
-    }): rust.UseStatement[] {
-        const stdImports = new Set<string>();
-        const chronoImports = new Set<string>();
-        const uuidImports = new Set<string>();
-
-        // Collect types used in snippet values that require std/chrono/uuid imports
-        this.collectSnippetTypeImports(snippet, new Set<string>(), stdImports, chronoImports, uuidImports);
-
+    private getUseStatements(): rust.UseStatement[] {
         const useStatements: rust.UseStatement[] = [];
-
-        // Add standard library imports if needed
-        if (stdImports.size > 0) {
-            useStatements.push(
-                new rust.UseStatement({
-                    path: "std::collections",
-                    items: Array.from(stdImports)
-                })
-            );
-        }
-
-        // Add chrono imports if needed
-        if (chronoImports.size > 0) {
-            useStatements.push(
-                new rust.UseStatement({
-                    path: "chrono",
-                    items: Array.from(chronoImports)
-                })
-            );
-        }
-
-        // Add UUID imports if needed
-        if (uuidImports.size > 0) {
-            useStatements.push(
-                new rust.UseStatement({
-                    path: "uuid",
-                    items: Array.from(uuidImports)
-                })
-            );
-        }
 
         // Use prelude import for all crate types
         useStatements.push(
@@ -154,34 +111,6 @@ export class EndpointSnippetGenerator {
         );
 
         return useStatements;
-    }
-
-    // New method to collect types from snippet values
-    private collectSnippetTypeImports(
-        snippet: FernIr.dynamic.EndpointSnippetRequest,
-        imports: Set<string>,
-        stdImports: Set<string>,
-        chronoImports: Set<string>,
-        uuidImports: Set<string>
-    ): void {
-        // Collect types from request body if present
-        if (snippet.requestBody != null) {
-            this.collectTypesFromValue(snippet.requestBody, imports, stdImports, chronoImports, uuidImports);
-        }
-
-        // Collect types from query parameters
-        if (snippet.queryParameters != null) {
-            Object.values(snippet.queryParameters).forEach((value) => {
-                this.collectTypesFromValue(value, imports, stdImports, chronoImports, uuidImports);
-            });
-        }
-
-        // Collect types from headers
-        if (snippet.headers != null) {
-            Object.values(snippet.headers).forEach((value) => {
-                this.collectTypesFromValue(value, imports, stdImports, chronoImports, uuidImports);
-            });
-        }
     }
 
     // Helper to collect type imports from a value by analyzing its structure

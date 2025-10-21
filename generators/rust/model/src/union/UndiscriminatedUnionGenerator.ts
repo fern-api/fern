@@ -1,27 +1,14 @@
 import { RelativeFilePath } from "@fern-api/fs-utils";
 import { RustFile } from "@fern-api/rust-base";
 import { Attribute, rust } from "@fern-api/rust-codegen";
-
 import {
     TypeDeclaration,
-    TypeReference,
     UndiscriminatedUnionMember,
     UndiscriminatedUnionTypeDeclaration
 } from "@fern-fern/ir-sdk/api";
-
 import { generateRustTypeForTypeReference } from "../converters/getRustTypeForTypeReference";
 import { ModelGeneratorContext } from "../ModelGeneratorContext";
-import {
-    extractNamedTypesFromTypeReference,
-    isCollectionType,
-    isDateTimeOnlyType,
-    isDateTimeType,
-    isDateType,
-    isUnknownType,
-    isUuidType,
-    typeSupportsHashAndEq,
-    typeSupportsPartialEq
-} from "../utils/primitiveTypeUtils";
+import { typeSupportsHashAndEq, typeSupportsPartialEq } from "../utils/primitiveTypeUtils";
 
 export class UndiscriminatedUnionGenerator {
     private readonly typeDeclaration: TypeDeclaration;
@@ -55,59 +42,6 @@ export class UndiscriminatedUnionGenerator {
             directory: RelativeFilePath.of("src"),
             fileContents: writer.toString()
         });
-    }
-
-    private writeUseStatements(writer: rust.Writer): void {
-        // Add imports for variant types FIRST
-        const variantTypes = this.getVariantTypesUsedInUnion();
-        variantTypes.forEach((typeName) => {
-            const modulePath = this.context.getModulePathForType(typeName.snakeCase.unsafeName);
-            const moduleNameEscaped = this.context.escapeRustKeyword(modulePath);
-            writer.writeLine(`use crate::${moduleNameEscaped}::${typeName.pascalCase.unsafeName};`);
-        });
-
-        // Add chrono imports based on specific types needed
-        const hasDateOnly = this.hasDateFields();
-        const hasDateTimeOnly = this.hasDateTimeOnlyFields();
-
-        // TODO: @iamnamananand996 - use AST mechanism for all imports
-        if (hasDateOnly && hasDateTimeOnly) {
-            // Both date and datetime types present
-            writer.writeLine("use chrono::{DateTime, NaiveDate, Utc};");
-        } else if (hasDateOnly) {
-            // Only date type present, import NaiveDate only
-            writer.writeLine("use chrono::NaiveDate;");
-        } else if (hasDateTimeOnly) {
-            // Only datetime type present, import DateTime and Utc only
-            writer.writeLine("use chrono::{DateTime, Utc};");
-        }
-
-        // Add std::collections if we have maps or sets
-        if (this.hasCollectionFields()) {
-            const hasMaps = this.hasMapFields();
-            const hasSets = this.hasSetFields();
-
-            if (hasMaps && hasSets) {
-                writer.writeLine("use std::collections::{HashMap, HashSet};");
-            } else if (hasMaps) {
-                writer.writeLine("use std::collections::HashMap;");
-            } else if (hasSets) {
-                writer.writeLine("use std::collections::HashSet;");
-            }
-        }
-
-        // Add uuid if we have UUID fields
-        if (this.hasUuidFields()) {
-            writer.writeLine("use uuid::Uuid;");
-        }
-
-        // TODO: @iamnamananand996 build to use serde_json::Value ---> Value directly
-        // if (hasJsonValueFields(properties)) {
-        //     writer.writeLine("use serde_json::Value;");
-        // }
-
-        // Add serde imports LAST
-        writer.writeLine("use serde::{Deserialize, Serialize};");
     }
 
     private generateUndiscriminatedUnionEnum(writer: rust.Writer): void {
@@ -302,72 +236,6 @@ export class UndiscriminatedUnionGenerator {
                 writer.newLine();
             }
         });
-    }
-
-    // Helper methods to detect field types for imports
-    private hasDateTimeFields(): boolean {
-        return this.hasFieldsOfType(isDateTimeType);
-    }
-
-    private hasDateFields(): boolean {
-        return this.hasFieldsOfType(isDateType);
-    }
-
-    private hasDateTimeOnlyFields(): boolean {
-        return this.hasFieldsOfType(isDateTimeOnlyType);
-    }
-
-    private hasUuidFields(): boolean {
-        return this.hasFieldsOfType(isUuidType);
-    }
-
-    private hasCollectionFields(): boolean {
-        return this.hasFieldsOfType(isCollectionType);
-    }
-
-    private hasMapFields(): boolean {
-        return this.hasFieldsOfType((typeRef: TypeReference) => {
-            if (typeRef.type === "container") {
-                return typeRef.container.type === "map";
-            }
-            return false;
-        });
-    }
-
-    private hasSetFields(): boolean {
-        return this.hasFieldsOfType((typeRef: TypeReference) => {
-            if (typeRef.type === "container") {
-                return typeRef.container.type === "set";
-            }
-            return false;
-        });
-    }
-
-    private hasJsonValueFields(): boolean {
-        return this.hasFieldsOfType(isUnknownType);
-    }
-
-    private hasFieldsOfType(predicate: (typeRef: TypeReference) => boolean): boolean {
-        return this.undiscriminatedUnionTypeDeclaration.members.some((member) => predicate(member.type));
-    }
-
-    private getVariantTypesUsedInUnion(): {
-        snakeCase: { unsafeName: string };
-        pascalCase: { unsafeName: string };
-    }[] {
-        const variantTypeNames: {
-            snakeCase: { unsafeName: string };
-            pascalCase: { unsafeName: string };
-        }[] = [];
-        const visited = new Set<string>();
-
-        this.undiscriminatedUnionTypeDeclaration.members.forEach((member) => {
-            extractNamedTypesFromTypeReference(member.type, variantTypeNames, visited);
-        });
-
-        // Filter out the current type itself to prevent self-imports
-        const currentTypeName = this.context.getUniqueTypeNameForDeclaration(this.typeDeclaration);
-        return variantTypeNames.filter((typeName) => typeName.pascalCase.unsafeName !== currentTypeName);
     }
 
     private canDerivePartialEq(): boolean {
