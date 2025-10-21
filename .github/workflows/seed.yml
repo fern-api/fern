@@ -311,7 +311,7 @@ jobs:
           fixtures-to-run: ${{toJson(matrix.fixtures)}}
           job-index: ${{ strategy.job-index }}
           collect-metrics: ${{ needs.setup.outputs.post-metrics }}
-  
+
   ruby-sdk:
     runs-on: ubuntu-latest
     timeout-minutes: 60
@@ -1095,34 +1095,34 @@ jobs:
         always() && !cancelled() && needs.setup.outputs.post-metrics == 'true'
       }}
     strategy:
-        fail-fast: false # Let all collections run, even if some fail
-        matrix:
-          seed-generator-alias:
-            [
-              ruby-model,
-              ruby-sdk,
-              ruby-sdk-v2,
-              pydantic,
-              python-sdk,
-              fastapi,
-              openapi,
-              postman,
-              java-sdk,
-              java-model,
-              java-spring,
-              ts-sdk,
-              ts-express,
-              go-fiber,
-              go-model,
-              go-sdk,
-              csharp-model,
-              csharp-sdk,
-              php-model,
-              php-sdk,
-              swift-sdk,
-              rust-model,
-              rust-sdk
-            ]
+      fail-fast: false # Let all collections run, even if some fail
+      matrix:
+        seed-generator-alias:
+          [
+            ruby-model,
+            ruby-sdk,
+            ruby-sdk-v2,
+            pydantic,
+            python-sdk,
+            fastapi,
+            openapi,
+            postman,
+            java-sdk,
+            java-model,
+            java-spring,
+            ts-sdk,
+            ts-express,
+            go-fiber,
+            go-model,
+            go-sdk,
+            csharp-model,
+            csharp-sdk,
+            php-model,
+            php-sdk,
+            swift-sdk,
+            rust-model,
+            rust-sdk
+          ]
     outputs:
       ruby-model-total-fixtures-count: ${{ steps.extract.outputs.ruby-model-total-fixtures-count }}
       ruby-model-allowed-failures: ${{ steps.extract.outputs.ruby-model-allowed-failures }}
@@ -1217,11 +1217,13 @@ jobs:
       rust-sdk-allowed-failures-count: ${{ steps.extract.outputs.rust-sdk-allowed-failures-count }}
     steps:
       - name: Checkout Files with Test Info
-        # Only need most recent commit
-        fetch-depth: 1
-        sparse-checkout: |
-          seed/${{ matrix.seed-generator-alias }}/seed.yml
-          .github/workflow-resource-files/seed-groups/${{ matrix.seed-generator-alias }}-seed-groups.json
+        uses: actions/checkout@v4
+        with:
+          # Only need most recent commit
+          fetch-depth: 1
+          sparse-checkout: |
+            seed/${{ matrix.seed-generator-alias }}/seed.yml
+            .github/workflow-resource-files/seed-groups/${{ matrix.seed-generator-alias }}-seed-groups.json
 
       - name: Extract All Fixture Info
         shell: bash
@@ -1248,7 +1250,7 @@ jobs:
           # Set outputs
           echo "${{ matrix.seed-generator-alias }}-total-fixtures-count=$FIXTURE_COUNT" >> $GITHUB_OUTPUT
           echo "${{ matrix.seed-generator-alias }}-allowed-failures=$(echo "$ALLOWED_FAILURES" | jq -c .)" >> $GITHUB_OUTPUT
-          echo "${{ matrix.seed-generator-alias }}-allowed-failures-count=$ALLOWED_FAILURES_COUNT" >> $GITHUB_OUTPUT        
+          echo "${{ matrix.seed-generator-alias }}-allowed-failures-count=$ALLOWED_FAILURES_COUNT" >> $GITHUB_OUTPUT
 
   post-metrics:
     runs-on: ubuntu-latest
