@@ -146,6 +146,14 @@ class FernAwarePydanticModel:
             # that we must call update_forward_refs on the union utils class itself, but we'll cross that bridge when we get there
             return
 
+        # If we're generating a union variant (type_name is None but original_type_id is set),
+        # skip adding ghost references. All imports will be deferred until after the union type definition.
+        if self._type_name is None and self._original_type_id is not None:
+            return
+
+        # Get the type ID to use for checking self-references
+        type_id_for_self_check = self._type_id_for_forward_ref()
+
         # Get self-referencing dependencies of the type you are trying to add
         # And add them as ghost references at the bottom of the file
         self_referencing_dependencies_from_non_union_types = (
@@ -153,7 +161,7 @@ class FernAwarePydanticModel:
         )
         for dependency in self_referencing_dependencies_from_non_union_types:
             if (
-                not self._type_name or self._type_name.type_id != dependency
+                type_id_for_self_check is None or type_id_for_self_check != dependency
             ) and dependency not in self._forward_referenced_models:
                 self.add_ghost_reference(dependency)
 
@@ -292,7 +300,11 @@ class FernAwarePydanticModel:
             ):
                 self._pydantic_model.add_partial_class()
             self._get_validators_generator().add_validators()
-        if self._model_contains_forward_refs or self._force_update_forward_refs:
+        # For union variants (type_name is None but original_type_id is set), skip update_forward_refs
+        # to avoid infinite recursion in circular reference chains. The forward references will be
+        # resolved when the parent union type's update_forward_refs is called.
+        is_union_variant = self._type_name is None and self._original_type_id is not None
+        if not is_union_variant and (self._model_contains_forward_refs or self._force_update_forward_refs):
             self._pydantic_model.update_forward_refs()
 
         # Acknowledge forward refs for extended models as well
