@@ -45,6 +45,9 @@ jobs:
           echo "post-metrics=true" >> $GITHUB_OUTPUT
           echo "Set to collect metrics on this run"
 
+          # CHRISM - temp
+          yq --version
+
   changes:
     runs-on: ubuntu-latest
     timeout-minutes: 5
@@ -146,15 +149,13 @@ jobs:
       - name: Set output
         id: set-output
         run: |
-          # if [[ "${{ needs.setup.outputs.post-metrics }}" == "true" ]]; then
-          #   echo "${{ matrix.generator-name }}-changes=true" >> $GITHUB_OUTPUT
-          #   echo "Forced changes to true to collect metrics data."
-          # else
-          #   echo "${{ matrix.generator-name }}-changes=${{ steps.get-generator-changes.outputs.any_changed }}" >> $GITHUB_OUTPUT
-          #   echo "Set changes according to output of get-generator-changes step"
-          # fi
-          # CHRISM - test in total at the end
-          echo "${{ matrix.generator-name }}-changes=false" >> $GITHUB_OUTPUT
+          if [[ "${{ needs.setup.outputs.post-metrics }}" == "true" ]]; then
+            echo "${{ matrix.generator-name }}-changes=true" >> $GITHUB_OUTPUT
+            echo "Forced changes to true to collect metrics data."
+          else
+            echo "${{ matrix.generator-name }}-changes=${{ steps.get-generator-changes.outputs.any_changed }}" >> $GITHUB_OUTPUT
+            echo "Set changes according to output of get-generator-changes step"
+          fi
 
   get-all-test-matrices:
     runs-on: ubuntu-latest
@@ -1227,7 +1228,6 @@ jobs:
             seed/${{ matrix.seed-generator-alias }}/seed.yml
             .github/workflow-resource-files/seed-groups/${{ matrix.seed-generator-alias }}-seed-groups.json
 
-      # CHRISM - not heavily used 
       - name: Setup yq for Bash Use
         uses: frenck/action-setup-yq@v1
 
@@ -1347,10 +1347,6 @@ jobs:
           path: ${{ steps.artifacts-info.outputs.metrics_path }}
           pattern: ${{ steps.artifacts-info.outputs.metrics_pattern }}
           merge-multiple: true
-          # CHRISM - temp, get from last night run
-          run-id: 18678685519
-          github-token: ${{ secrets.FERN_GITHUB_PAT }}
-
 
       - name: Get Number of Metrics Artifacts
         shell: bash
@@ -1415,24 +1411,6 @@ jobs:
           echo "all_seed_files_deterministic=$all_seed_files_deterministic" >> $GITHUB_OUTPUT
 
       # CHRISM temp
-      # - name: Post to PostHog
-      #   # https://github.com/PostHog/posthog-github-action
-      #   uses: PostHog/posthog-github-action@v0.1
-      #   with:
-      #     posthog-token: ${{ secrets.POSTHOG_API_KEY }}
-      #     event: "gh-actions-seed-test-metrics-event"
-      #     properties: |
-      #       {
-      #         "event_type": "${{ github.event_name }}",
-      #         "branch": "${{ github.ref_name }}",
-      #         "seed_generator_alias": "${{ matrix.seed-generator-alias }}",
-      #         "run_url": "${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}",
-      #         "duration_seconds": ${{ steps.parse-seed-test-metrics.outputs.duration_seconds }},
-      #         "all_tests_passing": "${{ steps.parse-seed-test-metrics.outputs.all_tests_passing }}",
-      #         "all_seed_files_deterministic": "${{ steps.parse-seed-test-metrics.outputs.all_seed_files_deterministic }}"
-      #       }
-
-      # CHRISM temp
       - name: Echo PostHog Info
         shell: bash
         run: |
@@ -1443,6 +1421,27 @@ jobs:
           echo "duration_seconds": ${{ steps.parse-seed-test-metrics.outputs.duration_seconds }}
           echo "all_tests_passing=${{ steps.parse-seed-test-metrics.outputs.all_tests_passing }}"
           echo "all_seed_files_deterministic=${{ steps.parse-seed-test-metrics.outputs.all_seed_files_deterministic }}"
-          echo "total_fixture_count=${{ needs.collect-allowed-failures.outputs[format('{0}-total-fixtures-count', matrix.seed-generator-alias)] }}"
-          echo "allowed_failures=${{ needs.collect-allowed-failures.outputs[format('{0}-allowed-failures', matrix.seed-generator-alias)] }}"
-          echo "allowed_failures_count=${{ needs.collect-allowed-failures.outputs[format('{0}-allowed-failures_count', matrix.seed-generator-alias)] }}"
+
+      - name: Post to PostHog
+        # https://github.com/PostHog/posthog-github-action
+        uses: PostHog/posthog-github-action@v0.1
+        with:
+          posthog-token: ${{ secrets.POSTHOG_API_KEY }}
+          # CHRISM - temp name
+          event: "gh-actions-seed-test-metrics-event-testing-allowed-failures"
+          properties: |
+            {
+              "event_type": "${{ github.event_name }}",
+              "branch": "${{ github.ref_name }}",
+              "seed_generator_alias": "${{ matrix.seed-generator-alias }}",
+              "run_url": "${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}",
+              "duration_seconds": ${{ steps.parse-seed-test-metrics.outputs.duration_seconds }},
+              "all_tests_passing": "${{ steps.parse-seed-test-metrics.outputs.all_tests_passing }}",
+              "all_seed_files_deterministic": "${{ steps.parse-seed-test-metrics.outputs.all_seed_files_deterministic }}"
+              "total_fixture_count": "${{ needs.collect-allowed-failures.outputs[format('{0}-total-fixtures-count', matrix.seed-generator-alias)] }}"
+              "allowed_failures": "${{ needs.collect-allowed-failures.outputs[format('{0}-allowed-failures', matrix.seed-generator-alias)] }}"
+              "allowed_failures_count": "${{ needs.collect-allowed-failures.outputs[format('{0}-allowed-failures_count', matrix.seed-generator-alias)] }}"
+            }
+
+      
+          
