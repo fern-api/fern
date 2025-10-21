@@ -3,11 +3,11 @@ use chrono::{DateTime, NaiveDate, Utc};
 use reqwest::Method;
 use uuid::Uuid;
 
-pub struct EndpointsPrimitiveClient {
+pub struct PrimitiveClient {
     pub http_client: HttpClient,
 }
 
-impl EndpointsPrimitiveClient {
+impl PrimitiveClient {
     pub fn new(config: ClientConfig) -> Result<Self, ApiError> {
         Ok(Self {
             http_client: HttpClient::new(config.clone())?,
