@@ -38,6 +38,14 @@ runs:
         echo "Built git diff exclude string as: "
         echo "$EXCLUDE_STRING"
 
+        # Debug: Show git status before diff
+        echo "=== Git status before diff ==="
+        git status --porcelain
+
+        # Debug: Show what files git diff would check
+        echo "=== Git diff command that will be executed ==="
+        echo "git --no-pager diff --exit-code -- $EXCLUDE_STRING"
+
         # Set results
         if git --no-pager diff --exit-code -- $EXCLUDE_STRING; then
           echo "Results match"
