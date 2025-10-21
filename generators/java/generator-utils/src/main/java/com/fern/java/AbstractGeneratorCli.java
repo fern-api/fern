@@ -587,7 +587,7 @@ public abstract class AbstractGeneratorCli<T extends ICustomConfig, K extends ID
                                 .build(),
                         GradlePlugin.builder()
                                 .pluginId("com.diffplug.spotless")
-                                .version("6.11.0")
+                                .version("7.2.1")
                                 .build()))
                 .addCustomRepositories(
                         GradleRepository.builder().url(repositoryUrl).build())
@@ -602,7 +602,8 @@ public abstract class AbstractGeneratorCli<T extends ICustomConfig, K extends ID
                 .addCustomBlocks("tasks.withType(Javadoc) {\n" + "    failOnError false\n"
                         + "    options.addStringOption('Xdoclint:none', '-quiet')\n"
                         + "}")
-                .addCustomBlocks("spotless {\n" + "    java {\n" + "        palantirJavaFormat()\n" + "    }\n" + "}\n")
+                .addCustomBlocks(
+                        "spotless {\n" + "    java {\n" + "        palantirJavaFormat('2.80.0')\n" + "    }\n" + "}\n")
                 .addCustomBlocks("java {\n" + "    withSourcesJar()\n" + "    withJavadocJar()\n" + "}\n");
         if (maybeMavenCoordinate.isPresent()) {
             buildGradle.addCustomBlocks("group = '" + maybeMavenCoordinate.get().getGroup() + "'");
