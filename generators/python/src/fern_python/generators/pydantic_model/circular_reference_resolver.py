@@ -8,8 +8,9 @@ be consolidated into a single file to avoid circular import issues.
 
 from typing import Dict, List, Set
 
-import fern.ir.resources as ir_types
 from ordered_set import OrderedSet
+
+import fern.ir.resources as ir_types
 
 
 class CircularReferenceResolver:

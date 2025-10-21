@@ -5,7 +5,6 @@ from typing import TYPE_CHECKING, Dict, Literal, Set, Tuple
 if TYPE_CHECKING:
     from ..context.pydantic_generator_context import PydanticGeneratorContext
 
-import fern.ir.resources as ir_types
 from ..context.pydantic_generator_context_impl import PydanticGeneratorContextImpl
 from .circular_reference_resolver import CircularReferenceResolver
 from .custom_config import PydanticModelCustomConfig
@@ -14,14 +13,15 @@ from .type_declaration_handler import (
     TypeDeclarationSnippetGeneratorBuilder,
 )
 from .type_declaration_referencer import TypeDeclarationReferencer
-from fern.generator_exec.config import GeneratorConfig
-from ordered_set import OrderedSet
-
 from fern_python.cli.abstract_generator import AbstractGenerator
 from fern_python.codegen import Filepath, Project
 from fern_python.generator_exec_wrapper import GeneratorExecWrapper
 from fern_python.generators.pydantic_model.model_utilities import can_be_fern_model
 from fern_python.snippet import SnippetRegistry, SnippetWriter
+from ordered_set import OrderedSet
+
+import fern.ir.resources as ir_types
+from fern.generator_exec.config import GeneratorConfig
 
 
 class PydanticModelGenerator(AbstractGenerator):
