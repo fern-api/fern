@@ -5,7 +5,7 @@
   changelogEntry:
     - type: feat
       summary: |
-        Add support for customizable Gemfile.
+        Add support for custom Gemfiles.
   irVersion: 59
 
 - version: 1.0.0-rc29
