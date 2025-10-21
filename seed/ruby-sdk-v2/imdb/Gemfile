@@ -19,5 +19,5 @@ group :test, :development do
 end
 
 # Load custom Gemfile configuration if it exists
-custom_gemfile = File.join(__dir__, "custom.gemfile.rb")
+custom_gemfile = File.join(__dir__, "Gemfile.custom")
 eval_gemfile(custom_gemfile) if File.exist?(custom_gemfile)

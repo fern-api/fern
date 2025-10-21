@@ -11,7 +11,7 @@ import { AbstractRubyGeneratorContext } from "../context/AbstractRubyGeneratorCo
 import { RubocopFile } from "./RubocopFile";
 
 const GEMFILE_FILENAME = "Gemfile";
-const CUSTOM_GEMFILE_FILENAME = "custom.gemfile.rb";
+const CUSTOM_GEMFILE_FILENAME = "Gemfile.custom";
 const RAKEFILE_FILENAME = "Rakefile";
 const RUBOCOP_FILENAME = ".rubocop.yml";
 const CUSTOM_TEST_FILENAME = "custom.test.rb";
