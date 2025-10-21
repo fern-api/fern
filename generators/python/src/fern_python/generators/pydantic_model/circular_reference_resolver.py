@@ -58,7 +58,7 @@ class CircularReferenceResolver:
                 self._lowlinks[type_id] = min(self._lowlinks[type_id], self._indices[referenced_type_id])
 
         if self._lowlinks[type_id] == self._indices[type_id]:
-            scc = OrderedSet()
+            scc: OrderedSet[ir_types.TypeId] = OrderedSet()
             while True:
                 w = self._stack.pop()
                 self._on_stack.remove(w)

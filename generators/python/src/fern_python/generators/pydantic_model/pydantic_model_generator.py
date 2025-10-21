@@ -127,7 +127,7 @@ class PydanticModelGenerator(AbstractGenerator):
             for type_id in group:
                 type_id_to_group[type_id] = group
         
-        generated_groups: Set[frozenset] = set()
+        generated_groups: Set[frozenset[ir_types.TypeId]] = set()
         
         for type_to_generate in ir.types.values():
             type_id = type_to_generate.name.type_id
@@ -315,10 +315,10 @@ class PydanticModelGenerator(AbstractGenerator):
             base_class_name = context.get_class_name_for_type_id(
                 type_id=type_declaration.name.type_id, as_request=False
             )
-            for member in shape.members:
-                member_type_union = member.type.get_as_union()
-                if member_type_union.type == "container":
-                    container_type = member_type_union.container.get_as_union()
+            for undiscriminated_member in shape.members:
+                member_type_ref = undiscriminated_member.type.get_as_union()
+                if member_type_ref.type == "container":
+                    container_type = member_type_ref.container.get_as_union()
                     if container_type.type == "list":
                         member_class_name = f"{base_class_name}_List"
                     elif container_type.type == "optional":
