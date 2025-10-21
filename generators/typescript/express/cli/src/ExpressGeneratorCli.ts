@@ -33,7 +33,9 @@ export class ExpressGeneratorCli extends AbstractGeneratorCli<ExpressCustomConfi
             noOptionalProperties: parsed?.noOptionalProperties ?? false,
             enableInlineTypes,
             packagePath: parsed?.packagePath ?? undefined,
-            packageManager: parsed?.packageManager ?? "pnpm"
+            packageManager: parsed?.packageManager ?? "pnpm",
+            linter: parsed?.linter ?? "biome",
+            formatter: parsed?.formatter ?? "biome"
         };
     }
 
@@ -74,7 +76,9 @@ export class ExpressGeneratorCli extends AbstractGeneratorCli<ExpressCustomConfi
                 useBigInt: customConfig.useBigInt,
                 noOptionalProperties: customConfig.noOptionalProperties,
                 packagePath: customConfig.packagePath,
-                packageManager: customConfig.packageManager
+                packageManager: customConfig.packageManager,
+                formatter: customConfig.formatter,
+                linter: customConfig.linter
             }
         });
 

@@ -1,4 +1,27 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 3.11.0
+  changelogEntry:
+    - summary: |
+        Add `linter` and `formatter` configuration options to configure code linters and formatters for the generated SDK.
+        - `linter`:
+          - `biome`: Use Biome as the code linter. This is the default.
+          - `none`: Do not include a code linter.
+        - `formatter`:
+          - `biome`: Use Biome as the code formatter. This is the default.
+          - `prettier`: Use Prettier as the code formatter.
+
+        For consistency, the _package.json_ scripts will always include the following scripts:
+        - `lint`: Run the configured linter.
+        - `lint:fix`: Run the configured linter with auto-fix.
+        - `format`: Run the configured formatter.
+        - `format:check`: Run the configured formatter in check mode.
+        - `check`: Run both the linter and formatter in check mode.
+        - `check:fix`: Run both the linter and formatter with auto-fix.
+        When the `linter` is set to `none`, `lint` and `lint:fix` scripts will echo a message indicating that no linter is configured.
+      type: feat
+  createdAt: "2025-10-21"
+  irVersion: 60
+
 - version: 3.9.3
   changelogEntry:
     - summary: |
