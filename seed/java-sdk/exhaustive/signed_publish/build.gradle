@@ -1,7 +1,7 @@
 plugins {
     id 'java-library'
     id 'maven-publish'
-    id 'com.diffplug.spotless' version '6.25.0'
+    id 'com.diffplug.spotless' version '6.11.0'
     id 'signing'
     id 'cl.franciscosolis.sonatype-central-upload' version '1.0.3'
 }
