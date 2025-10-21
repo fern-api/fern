@@ -45,9 +45,6 @@ jobs:
           echo "post-metrics=true" >> $GITHUB_OUTPUT
           echo "Set to collect metrics on this run"
 
-          # CHRISM - temp
-          yq --version
-
   changes:
     runs-on: ubuntu-latest
     timeout-minutes: 5
@@ -1227,12 +1224,6 @@ jobs:
           sparse-checkout: |
             seed/${{ matrix.seed-generator-alias }}/seed.yml
             .github/workflow-resource-files/seed-groups/${{ matrix.seed-generator-alias }}-seed-groups.json
-
-      - name: Setup yq for Bash Use
-        uses: frenck/action-setup-yq@v1
-
-      - name: Check yq Version Installed
-        run: yq --version
 
       - name: Extract All Fixture Info
         shell: bash
