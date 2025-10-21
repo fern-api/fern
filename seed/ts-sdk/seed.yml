@@ -73,6 +73,16 @@ fixtures:
         testFramework: jest
       outputFolder: use-jest
     - customConfig:
+        formatter: prettier
+      outputFolder: use-prettier
+    - customConfig:
+        formatter: prettier
+        linter: none
+      outputFolder: use-prettier-no-linter
+    - customConfig:
+        linter: none
+      outputFolder: no-linter
+    - customConfig:
         omitFernHeaders: true
       outputFolder: omit-fern-headers
     - customConfig:
