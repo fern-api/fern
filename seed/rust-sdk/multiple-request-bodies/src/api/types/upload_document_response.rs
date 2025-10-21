@@ -45,3 +45,20 @@ impl UploadDocumentResponse {
         }
     }
 }
+
+impl fmt::Display for UploadDocumentResponse {
+    fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
+        match self {
+            Self::DocumentMetadata(value) => write!(
+                f,
+                "{}",
+                serde_json::to_string(value).unwrap_or_else(|_| format!("{:?}", value))
+            ),
+            Self::DocumentUploadResult(value) => write!(
+                f,
+                "{}",
+                serde_json::to_string(value).unwrap_or_else(|_| format!("{:?}", value))
+            ),
+        }
+    }
+}

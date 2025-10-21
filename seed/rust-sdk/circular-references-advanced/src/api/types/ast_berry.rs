@@ -1,7 +1,6 @@
-use crate::ast_animal::Animal;
-use serde::{Deserialize, Serialize};
+pub use crate::prelude::*;
 
-#[derive(Debug, Clone, Serialize, Deserialize)]
+#[derive(Debug, Clone, Serialize, Deserialize, PartialEq)]
 pub struct Berry {
     pub animal: Animal,
 }
