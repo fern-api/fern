@@ -8,8 +8,9 @@ import pydantic
 from ...core.pydantic_utilities import IS_PYDANTIC_V2, UniversalBaseModel, update_forward_refs
 
 
-class AndExpression(UniversalBaseModel):
-    children: typing.List["Expression"]
+class NotEqualsExpression(UniversalBaseModel):
+    left: "Expression"
+    right: "Expression"
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2
@@ -21,11 +22,11 @@ class AndExpression(UniversalBaseModel):
             extra = pydantic.Extra.allow
 
 
+from .and_expression import AndExpression  # noqa: E402, F401, I001
 from .equals_expression import EqualsExpression  # noqa: E402, F401, I001
 from .greater_than_expression import GreaterThanExpression  # noqa: E402, F401, I001
 from .less_than_expression import LessThanExpression  # noqa: E402, F401, I001
-from .not_equals_expression import NotEqualsExpression  # noqa: E402, F401, I001
 from .or_expression import OrExpression  # noqa: E402, F401, I001
 from .expression import Expression  # noqa: E402, F401, I001
 
-update_forward_refs(AndExpression)
+update_forward_refs(NotEqualsExpression)

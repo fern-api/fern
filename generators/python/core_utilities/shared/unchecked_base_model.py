@@ -1,5 +1,6 @@
 import datetime as dt
 import inspect
+import sys
 import typing
 import uuid
 
@@ -33,7 +34,10 @@ Model = typing.TypeVar("Model", bound=pydantic.BaseModel)
 
 class UncheckedBaseModel(UniversalBaseModel):
     if IS_PYDANTIC_V2:
-        model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow")  # type: ignore # Pydantic v2
+        # defer_build delays schema building until first validation, which prevents
+        # RecursionError during class definition for deeply nested self-referencing
+        # discriminated unions. Introduced in Pydantic v2.10.
+        model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", defer_build=True)  # type: ignore # Pydantic v2
     else:
 
         class Config:

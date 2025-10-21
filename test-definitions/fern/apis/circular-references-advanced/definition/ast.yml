@@ -58,8 +58,10 @@ types:
     properties:
       name: FieldName
       value: FieldValue
-  # Test case for discriminated union with self-referencing variants
-  # This reproduces the circular import issue found in ElevenLabs SDK
+  # Test case for discriminated union with deeply nested self-referencing variants
+  # This reproduces the circular import RecursionError issue found in ElevenLabs SDK
+  # where multiple union variants reference lists of the same union type, creating
+  # deep recursion during Pydantic V2 schema building.
   Expression:
     discriminant: type
     union:
@@ -67,21 +69,56 @@ types:
         type: AndExpression
       or_operator:
         type: OrExpression
+      equals:
+        type: EqualsExpression
+      not_equals:
+        type: NotEqualsExpression
+      greater_than:
+        type: GreaterThanExpression
+      less_than:
+        type: LessThanExpression
       number_literal:
         type: NumberLiteral
       boolean_literal:
         type: BooleanLiteral
+      string_literal:
+        type: StringLiteral
+      variable:
+        type: VariableExpression
+  # Operators that take lists of expressions (like ElevenLabs AST nodes)
   AndExpression:
     properties:
-      left: Expression
-      right: Expression
+      children: list<Expression>
   OrExpression:
+    properties:
+      children: list<Expression>
+  # Binary operators that take two expressions
+  EqualsExpression:
     properties:
       left: Expression
       right: Expression
+  NotEqualsExpression:
+    properties:
+      left: Expression
+      right: Expression
+  GreaterThanExpression:
+    properties:
+      left: Expression
+      right: Expression
+  LessThanExpression:
+    properties:
+      left: Expression
+      right: Expression
+  # Leaf nodes (literals and variables)
   NumberLiteral:
     properties:
       value: double
   BooleanLiteral:
     properties:
       value: boolean
+  StringLiteral:
+    properties:
+      value: string
+  VariableExpression:
+    properties:
+      name: string

@@ -10,8 +10,7 @@ from ...core.pydantic_utilities import IS_PYDANTIC_V2, UniversalBaseModel
 
 class Expression_AndOperator(UniversalBaseModel):
     type: typing.Literal["and_operator"] = "and_operator"
-    left: "Expression"
-    right: "Expression"
+    children: typing.List["Expression"]
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2
@@ -25,6 +24,65 @@ class Expression_AndOperator(UniversalBaseModel):
 
 class Expression_OrOperator(UniversalBaseModel):
     type: typing.Literal["or_operator"] = "or_operator"
+    children: typing.List["Expression"]
+
+    if IS_PYDANTIC_V2:
+        model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2
+    else:
+
+        class Config:
+            frozen = True
+            smart_union = True
+            extra = pydantic.Extra.allow
+
+
+class Expression_Equals(UniversalBaseModel):
+    type: typing.Literal["equals"] = "equals"
+    left: "Expression"
+    right: "Expression"
+
+    if IS_PYDANTIC_V2:
+        model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2
+    else:
+
+        class Config:
+            frozen = True
+            smart_union = True
+            extra = pydantic.Extra.allow
+
+
+class Expression_NotEquals(UniversalBaseModel):
+    type: typing.Literal["not_equals"] = "not_equals"
+    left: "Expression"
+    right: "Expression"
+
+    if IS_PYDANTIC_V2:
+        model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2
+    else:
+
+        class Config:
+            frozen = True
+            smart_union = True
+            extra = pydantic.Extra.allow
+
+
+class Expression_GreaterThan(UniversalBaseModel):
+    type: typing.Literal["greater_than"] = "greater_than"
+    left: "Expression"
+    right: "Expression"
+
+    if IS_PYDANTIC_V2:
+        model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2
+    else:
+
+        class Config:
+            frozen = True
+            smart_union = True
+            extra = pydantic.Extra.allow
+
+
+class Expression_LessThan(UniversalBaseModel):
+    type: typing.Literal["less_than"] = "less_than"
     left: "Expression"
     right: "Expression"
 
@@ -66,6 +124,43 @@ class Expression_BooleanLiteral(UniversalBaseModel):
             extra = pydantic.Extra.allow
 
 
+class Expression_StringLiteral(UniversalBaseModel):
+    type: typing.Literal["string_literal"] = "string_literal"
+    value: str
+
+    if IS_PYDANTIC_V2:
+        model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2
+    else:
+
+        class Config:
+            frozen = True
+            smart_union = True
+            extra = pydantic.Extra.allow
+
+
+class Expression_Variable(UniversalBaseModel):
+    type: typing.Literal["variable"] = "variable"
+    name: str
+
+    if IS_PYDANTIC_V2:
+        model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2
+    else:
+
+        class Config:
+            frozen = True
+            smart_union = True
+            extra = pydantic.Extra.allow
+
+
 Expression = typing.Union[
-    Expression_AndOperator, Expression_OrOperator, Expression_NumberLiteral, Expression_BooleanLiteral
+    Expression_AndOperator,
+    Expression_OrOperator,
+    Expression_Equals,
+    Expression_NotEquals,
+    Expression_GreaterThan,
+    Expression_LessThan,
+    Expression_NumberLiteral,
+    Expression_BooleanLiteral,
+    Expression_StringLiteral,
+    Expression_Variable,
 ]

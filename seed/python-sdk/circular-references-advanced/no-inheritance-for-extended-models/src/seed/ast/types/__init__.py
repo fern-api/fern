@@ -15,25 +15,37 @@ if typing.TYPE_CHECKING:
     from .cat import Cat
     from .container_value import ContainerValue, ContainerValue_List, ContainerValue_Optional
     from .dog import Dog
+    from .equals_expression import EqualsExpression
     from .expression import (
         Expression,
         Expression_AndOperator,
         Expression_BooleanLiteral,
+        Expression_Equals,
+        Expression_GreaterThan,
+        Expression_LessThan,
+        Expression_NotEquals,
         Expression_NumberLiteral,
         Expression_OrOperator,
+        Expression_StringLiteral,
+        Expression_Variable,
     )
     from .field_name import FieldName
     from .field_value import FieldValue, FieldValue_ContainerValue, FieldValue_ObjectValue, FieldValue_PrimitiveValue
     from .fig import Fig
     from .fruit import Fruit
+    from .greater_than_expression import GreaterThanExpression
     from .leaf_node import LeafNode
+    from .less_than_expression import LessThanExpression
     from .node import Node
     from .nodes_wrapper import NodesWrapper
+    from .not_equals_expression import NotEqualsExpression
     from .number_literal import NumberLiteral
     from .object_field_value import ObjectFieldValue
     from .object_value import ObjectValue
     from .or_expression import OrExpression
     from .primitive_value import PrimitiveValue
+    from .string_literal import StringLiteral
+    from .variable_expression import VariableExpression
 _dynamic_imports: typing.Dict[str, str] = {
     "Acai": ".acai",
     "AndExpression": ".and_expression",
@@ -46,11 +58,18 @@ _dynamic_imports: typing.Dict[str, str] = {
     "ContainerValue_List": ".container_value",
     "ContainerValue_Optional": ".container_value",
     "Dog": ".dog",
+    "EqualsExpression": ".equals_expression",
     "Expression": ".expression",
     "Expression_AndOperator": ".expression",
     "Expression_BooleanLiteral": ".expression",
+    "Expression_Equals": ".expression",
+    "Expression_GreaterThan": ".expression",
+    "Expression_LessThan": ".expression",
+    "Expression_NotEquals": ".expression",
     "Expression_NumberLiteral": ".expression",
     "Expression_OrOperator": ".expression",
+    "Expression_StringLiteral": ".expression",
+    "Expression_Variable": ".expression",
     "FieldName": ".field_name",
     "FieldValue": ".field_value",
     "FieldValue_ContainerValue": ".field_value",
@@ -58,14 +77,19 @@ _dynamic_imports: typing.Dict[str, str] = {
     "FieldValue_PrimitiveValue": ".field_value",
     "Fig": ".fig",
     "Fruit": ".fruit",
+    "GreaterThanExpression": ".greater_than_expression",
     "LeafNode": ".leaf_node",
+    "LessThanExpression": ".less_than_expression",
     "Node": ".node",
     "NodesWrapper": ".nodes_wrapper",
+    "NotEqualsExpression": ".not_equals_expression",
     "NumberLiteral": ".number_literal",
     "ObjectFieldValue": ".object_field_value",
     "ObjectValue": ".object_value",
     "OrExpression": ".or_expression",
     "PrimitiveValue": ".primitive_value",
+    "StringLiteral": ".string_literal",
+    "VariableExpression": ".variable_expression",
 }
 
 
@@ -102,11 +126,18 @@ __all__ = [
     "ContainerValue_List",
     "ContainerValue_Optional",
     "Dog",
+    "EqualsExpression",
     "Expression",
     "Expression_AndOperator",
     "Expression_BooleanLiteral",
+    "Expression_Equals",
+    "Expression_GreaterThan",
+    "Expression_LessThan",
+    "Expression_NotEquals",
     "Expression_NumberLiteral",
     "Expression_OrOperator",
+    "Expression_StringLiteral",
+    "Expression_Variable",
     "FieldName",
     "FieldValue",
     "FieldValue_ContainerValue",
@@ -114,12 +145,17 @@ __all__ = [
     "FieldValue_PrimitiveValue",
     "Fig",
     "Fruit",
+    "GreaterThanExpression",
     "LeafNode",
+    "LessThanExpression",
     "Node",
     "NodesWrapper",
+    "NotEqualsExpression",
     "NumberLiteral",
     "ObjectFieldValue",
     "ObjectValue",
     "OrExpression",
     "PrimitiveValue",
+    "StringLiteral",
+    "VariableExpression",
 ]
