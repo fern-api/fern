@@ -1,5 +1,5 @@
-name: Artifact Seed Test Times
-description: Artifact the seed test start and end times found during seed jobs
+name: Artifact Seed Metrics
+description: Artifact the seed test start and end times found during seed jobs, as well as the generator's determinism
 
 inputs:
   sdk-name:
@@ -14,6 +14,9 @@ inputs:
   end-time:
     description: The end time of the seed tests
     required: true
+  deterministic:
+    description: Whether the run portion of seed generation is deterministic or not (will reproduce the same results on repeated runs)
+    required: true
 
 runs:
   using: "composite"
@@ -24,7 +27,7 @@ runs:
       run: |
         METRICS_FILE_NAME="seed-metrics-${{ inputs.sdk-name }}-${{ inputs.job-index }}.json"
         echo "file_name=$METRICS_FILE_NAME" >> $GITHUB_OUTPUT
-        echo "{\"index\":\"${{ inputs.job-index }}\",\"startTimeSeconds\":\"${{ inputs.start-time }}\",\"endTimeSeconds\":\"${{ inputs.end-time }}\"}" > $METRICS_FILE_NAME
+        echo "{\"index\":\"${{ inputs.job-index }}\",\"startTimeSeconds\":\"${{ inputs.start-time }}\",\"endTimeSeconds\":\"${{ inputs.end-time }}\",\"deterministic\":\"${{ inputs.deterministic }}\"}" > $METRICS_FILE_NAME
 
     # Save for at least a week to help track slowdowns if/when they show up
     - name: Upload Metrics File
