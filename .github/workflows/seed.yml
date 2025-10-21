@@ -1236,7 +1236,7 @@ jobs:
           echo "Found $FIXTURE_COUNT total fixtures"
 
           # Set defaults for allowed failures data
-          ALLOWED_FAILURES="N/A"
+          ALLOWED_FAILURES="[]"
           ALLOWED_FAILURES_COUNT=0
 
           # Read allowed failures from yml file as JSON data, if it exists

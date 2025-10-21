@@ -90,7 +90,7 @@ runs:
     # Note: tests failing can be a cause of this reporting as non-deterministic
     - name: Verify Determinism
       id: verify-determinism
-      if: always() && !cancelled() && inputs.collect-metrics == 'true'
+      if: ${{ always() && !cancelled() && inputs.collect-metrics == 'true' }}
       uses: ./.github/actions/verify-determinism
       with:
         determinism-exclude-paths: ${{ inputs.determinism-exclude-paths }}
@@ -98,7 +98,7 @@ runs:
     # Collect the outputs from this matrix iteration
     - name: Collect All Metrics
       # Save metrics even if the tests fail
-      if: ${{ always() && !cancelled() && inputs.collect-metrics == 'true'
+      if: ${{ always() && !cancelled() && inputs.collect-metrics == 'true' }}
       uses: ./.github/actions/artifact-seed-metrics
       with:
         sdk-name: ${{ inputs.sdk-name }}
