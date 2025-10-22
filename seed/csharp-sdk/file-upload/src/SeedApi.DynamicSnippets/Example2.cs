@@ -3,7 +3,7 @@ using System.Threading.Tasks;
 
 namespace Usage;
 
-public class Example0
+public class Example2
 {
     public async Task Do() {
         var client = new SeedFileUploadClient(
@@ -12,9 +12,7 @@ public class Example0
             }
         );
 
-        await client.Service.JustFileAsync(
-            new JustFileRequest()
-        );
+        await client.Service.SimpleAsync();
     }
 
 }
