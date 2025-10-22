@@ -75,8 +75,6 @@ describe("Test fetcherImpl", () => {
         }
     });
 
-
-
     it("should receive file as stream", async () => {
         const url = "https://httpbin.org/post/file";
         const mockArgs: Fetcher.Args = {
@@ -110,7 +108,7 @@ describe("Test fetcherImpl", () => {
             const body = result.body as BinaryResponse;
             expect(body).toBeDefined();
             expect(body.bodyUsed).toBe(false);
-            expect(typeof body.stream).toBe('function');
+            expect(typeof body.stream).toBe("function");
             const stream = body.stream();
             expect(stream).toBeInstanceOf(ReadableStream);
             const reader = stream.getReader();
@@ -155,7 +153,7 @@ describe("Test fetcherImpl", () => {
             const body = result.body as BinaryResponse;
             expect(body).toBeDefined();
             expect(body.bodyUsed).toBe(false);
-            expect(typeof body.blob).toBe('function');
+            expect(typeof body.blob).toBe("function");
             const blob = await body.blob();
             expect(blob).toBeInstanceOf(Blob);
             const reader = blob.stream().getReader();
@@ -200,7 +198,7 @@ describe("Test fetcherImpl", () => {
             const body = result.body as BinaryResponse;
             expect(body).toBeDefined();
             expect(body.bodyUsed).toBe(false);
-            expect(typeof body.arrayBuffer).toBe('function');
+            expect(typeof body.arrayBuffer).toBe("function");
             const arrayBuffer = await body.arrayBuffer();
             expect(arrayBuffer).toBeInstanceOf(ArrayBuffer);
             const decoder = new TextDecoder();
@@ -209,7 +207,7 @@ describe("Test fetcherImpl", () => {
             expect(body.bodyUsed).toBe(true);
         }
     });
-    
+
     it("should receive file as bytes", async () => {
         const url = "https://httpbin.org/post/file";
         const mockArgs: Fetcher.Args = {
@@ -243,8 +241,8 @@ describe("Test fetcherImpl", () => {
             const body = result.body as BinaryResponse;
             expect(body).toBeDefined();
             expect(body.bodyUsed).toBe(false);
-            expect(typeof body.bytes).toBe("function");            
-            if(!body.bytes) {
+            expect(typeof body.bytes).toBe("function");
+            if (!body.bytes) {
                 return;
             }
             const bytes = await body.bytes();
@@ -255,5 +253,4 @@ describe("Test fetcherImpl", () => {
             expect(body.bodyUsed).toBe(true);
         }
     });
-
 });

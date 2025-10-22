@@ -9,12 +9,12 @@ export const makeRequest = async (
     timeoutMs?: number,
     abortSignal?: AbortSignal,
     withCredentials?: boolean,
-    duplex?: "half"
+    duplex?: "half",
 ): Promise<Response> => {
     const signals: AbortSignal[] = [];
 
     // Add timeout signal
-    let timeoutAbortId: NodeJS.Timeout | undefined = undefined;
+    let timeoutAbortId: NodeJS.Timeout | undefined ;
     if (timeoutMs != null) {
         const { signal, abortId } = getTimeoutSignal(timeoutMs);
         timeoutAbortId = abortId;
@@ -25,7 +25,7 @@ export const makeRequest = async (
     if (abortSignal != null) {
         signals.push(abortSignal);
     }
-    let newSignals = anySignal(signals);
+    const newSignals = anySignal(signals);
     const response = await fetchFn(url, {
         method: method,
         headers,
@@ -33,7 +33,7 @@ export const makeRequest = async (
         signal: newSignals,
         credentials: withCredentials ? "include" : undefined,
         // @ts-ignore
-        duplex
+        duplex,
     });
 
     if (timeoutAbortId != null) {

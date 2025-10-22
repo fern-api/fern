@@ -10,7 +10,7 @@ export class NestedObjectWithOptionalFieldError extends errors.SeedExhaustiveErr
             message: "NestedObjectWithOptionalFieldError",
             statusCode: 400,
             body: body,
-            rawResponse: rawResponse
+            rawResponse: rawResponse,
         });
         Object.setPrototypeOf(this, NestedObjectWithOptionalFieldError.prototype);
     }

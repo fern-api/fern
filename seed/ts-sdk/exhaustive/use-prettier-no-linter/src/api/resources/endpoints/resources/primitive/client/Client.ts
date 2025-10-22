@@ -6,18 +6,15 @@ import { mergeHeaders, mergeOnlyDefinedHeaders } from "../../../../../../core/he
 import * as errors from "../../../../../../errors/index.js";
 
 export declare namespace Primitive {
-    export interface Options extends BaseClientOptions {
-    }
+    export interface Options extends BaseClientOptions {}
 
-    export interface RequestOptions extends BaseRequestOptions {
-    }
+    export interface RequestOptions extends BaseRequestOptions {}
 }
 
 export class Primitive {
     protected readonly _options: Primitive.Options;
 
     constructor(_options: Primitive.Options) {
-
         this._options = _options;
     }
 
@@ -28,14 +25,28 @@ export class Primitive {
      * @example
      *     await client.endpoints.primitive.getAndReturnString("string")
      */
-    public getAndReturnString(request: string, requestOptions?: Primitive.RequestOptions): core.HttpResponsePromise<string> {
+    public getAndReturnString(
+        request: string,
+        requestOptions?: Primitive.RequestOptions,
+    ): core.HttpResponsePromise<string> {
         return core.HttpResponsePromise.fromPromise(this.__getAndReturnString(request, requestOptions));
     }
 
-    private async __getAndReturnString(request: string, requestOptions?: Primitive.RequestOptions): Promise<core.WithRawResponse<string>> {
-        let _headers: core.Fetcher.Args["headers"] = mergeHeaders(this._options?.headers, mergeOnlyDefinedHeaders({ "Authorization": await this._getAuthorizationHeader() }), requestOptions?.headers);
+    private async __getAndReturnString(
+        request: string,
+        requestOptions?: Primitive.RequestOptions,
+    ): Promise<core.WithRawResponse<string>> {
+        let _headers: core.Fetcher.Args["headers"] = mergeHeaders(
+            this._options?.headers,
+            mergeOnlyDefinedHeaders({ Authorization: await this._getAuthorizationHeader() }),
+            requestOptions?.headers,
+        );
         const _response = await core.fetcher({
-            url: core.url.join(await core.Supplier.get(this._options.baseUrl) ?? await core.Supplier.get(this._options.environment), "/primitive/string"),
+            url: core.url.join(
+                (await core.Supplier.get(this._options.baseUrl)) ??
+                    (await core.Supplier.get(this._options.environment)),
+                "/primitive/string",
+            ),
             method: "POST",
             headers: _headers,
             contentType: "application/json",
@@ -44,7 +55,7 @@ export class Primitive {
             body: request,
             timeoutMs: (requestOptions?.timeoutInSeconds ?? this._options?.timeoutInSeconds ?? 60) * 1000,
             maxRetries: requestOptions?.maxRetries ?? this._options?.maxRetries,
-            abortSignal: requestOptions?.abortSignal
+            abortSignal: requestOptions?.abortSignal,
         });
         if (_response.ok) {
             return { data: _response.body as string, rawResponse: _response.rawResponse };
@@ -54,21 +65,24 @@ export class Primitive {
             throw new errors.SeedExhaustiveError({
                 statusCode: _response.error.statusCode,
                 body: _response.error.body,
-                rawResponse: _response.rawResponse
+                rawResponse: _response.rawResponse,
             });
         }
 
         switch (_response.error.reason) {
-            case "non-json": throw new errors.SeedExhaustiveError({
-                statusCode: _response.error.statusCode,
-                body: _response.error.rawBody,
-                rawResponse: _response.rawResponse
-            });
-            case "timeout": throw new errors.SeedExhaustiveTimeoutError("Timeout exceeded when calling POST /primitive/string.");
-            case "unknown": throw new errors.SeedExhaustiveError({
-                message: _response.error.errorMessage,
-                rawResponse: _response.rawResponse
-            });
+            case "non-json":
+                throw new errors.SeedExhaustiveError({
+                    statusCode: _response.error.statusCode,
+                    body: _response.error.rawBody,
+                    rawResponse: _response.rawResponse,
+                });
+            case "timeout":
+                throw new errors.SeedExhaustiveTimeoutError("Timeout exceeded when calling POST /primitive/string.");
+            case "unknown":
+                throw new errors.SeedExhaustiveError({
+                    message: _response.error.errorMessage,
+                    rawResponse: _response.rawResponse,
+                });
         }
     }
 
@@ -79,14 +93,28 @@ export class Primitive {
      * @example
      *     await client.endpoints.primitive.getAndReturnInt(1)
      */
-    public getAndReturnInt(request: number, requestOptions?: Primitive.RequestOptions): core.HttpResponsePromise<number> {
+    public getAndReturnInt(
+        request: number,
+        requestOptions?: Primitive.RequestOptions,
+    ): core.HttpResponsePromise<number> {
         return core.HttpResponsePromise.fromPromise(this.__getAndReturnInt(request, requestOptions));
     }
 
-    private async __getAndReturnInt(request: number, requestOptions?: Primitive.RequestOptions): Promise<core.WithRawResponse<number>> {
-        let _headers: core.Fetcher.Args["headers"] = mergeHeaders(this._options?.headers, mergeOnlyDefinedHeaders({ "Authorization": await this._getAuthorizationHeader() }), requestOptions?.headers);
+    private async __getAndReturnInt(
+        request: number,
+        requestOptions?: Primitive.RequestOptions,
+    ): Promise<core.WithRawResponse<number>> {
+        let _headers: core.Fetcher.Args["headers"] = mergeHeaders(
+            this._options?.headers,
+            mergeOnlyDefinedHeaders({ Authorization: await this._getAuthorizationHeader() }),
+            requestOptions?.headers,
+        );
         const _response = await core.fetcher({
-            url: core.url.join(await core.Supplier.get(this._options.baseUrl) ?? await core.Supplier.get(this._options.environment), "/primitive/integer"),
+            url: core.url.join(
+                (await core.Supplier.get(this._options.baseUrl)) ??
+                    (await core.Supplier.get(this._options.environment)),
+                "/primitive/integer",
+            ),
             method: "POST",
             headers: _headers,
             contentType: "application/json",
@@ -95,7 +123,7 @@ export class Primitive {
             body: request,
             timeoutMs: (requestOptions?.timeoutInSeconds ?? this._options?.timeoutInSeconds ?? 60) * 1000,
             maxRetries: requestOptions?.maxRetries ?? this._options?.maxRetries,
-            abortSignal: requestOptions?.abortSignal
+            abortSignal: requestOptions?.abortSignal,
         });
         if (_response.ok) {
             return { data: _response.body as number, rawResponse: _response.rawResponse };
@@ -105,21 +133,24 @@ export class Primitive {
             throw new errors.SeedExhaustiveError({
                 statusCode: _response.error.statusCode,
                 body: _response.error.body,
-                rawResponse: _response.rawResponse
+                rawResponse: _response.rawResponse,
             });
         }
 
         switch (_response.error.reason) {
-            case "non-json": throw new errors.SeedExhaustiveError({
-                statusCode: _response.error.statusCode,
-                body: _response.error.rawBody,
-                rawResponse: _response.rawResponse
-            });
-            case "timeout": throw new errors.SeedExhaustiveTimeoutError("Timeout exceeded when calling POST /primitive/integer.");
-            case "unknown": throw new errors.SeedExhaustiveError({
-                message: _response.error.errorMessage,
-                rawResponse: _response.rawResponse
-            });
+            case "non-json":
+                throw new errors.SeedExhaustiveError({
+                    statusCode: _response.error.statusCode,
+                    body: _response.error.rawBody,
+                    rawResponse: _response.rawResponse,
+                });
+            case "timeout":
+                throw new errors.SeedExhaustiveTimeoutError("Timeout exceeded when calling POST /primitive/integer.");
+            case "unknown":
+                throw new errors.SeedExhaustiveError({
+                    message: _response.error.errorMessage,
+                    rawResponse: _response.rawResponse,
+                });
         }
     }
 
@@ -130,14 +161,28 @@ export class Primitive {
      * @example
      *     await client.endpoints.primitive.getAndReturnLong(1000000)
      */
-    public getAndReturnLong(request: number, requestOptions?: Primitive.RequestOptions): core.HttpResponsePromise<number> {
+    public getAndReturnLong(
+        request: number,
+        requestOptions?: Primitive.RequestOptions,
+    ): core.HttpResponsePromise<number> {
         return core.HttpResponsePromise.fromPromise(this.__getAndReturnLong(request, requestOptions));
     }
 
-    private async __getAndReturnLong(request: number, requestOptions?: Primitive.RequestOptions): Promise<core.WithRawResponse<number>> {
-        let _headers: core.Fetcher.Args["headers"] = mergeHeaders(this._options?.headers, mergeOnlyDefinedHeaders({ "Authorization": await this._getAuthorizationHeader() }), requestOptions?.headers);
+    private async __getAndReturnLong(
+        request: number,
+        requestOptions?: Primitive.RequestOptions,
+    ): Promise<core.WithRawResponse<number>> {
+        let _headers: core.Fetcher.Args["headers"] = mergeHeaders(
+            this._options?.headers,
+            mergeOnlyDefinedHeaders({ Authorization: await this._getAuthorizationHeader() }),
+            requestOptions?.headers,
+        );
         const _response = await core.fetcher({
-            url: core.url.join(await core.Supplier.get(this._options.baseUrl) ?? await core.Supplier.get(this._options.environment), "/primitive/long"),
+            url: core.url.join(
+                (await core.Supplier.get(this._options.baseUrl)) ??
+                    (await core.Supplier.get(this._options.environment)),
+                "/primitive/long",
+            ),
             method: "POST",
             headers: _headers,
             contentType: "application/json",
@@ -146,7 +191,7 @@ export class Primitive {
             body: request,
             timeoutMs: (requestOptions?.timeoutInSeconds ?? this._options?.timeoutInSeconds ?? 60) * 1000,
             maxRetries: requestOptions?.maxRetries ?? this._options?.maxRetries,
-            abortSignal: requestOptions?.abortSignal
+            abortSignal: requestOptions?.abortSignal,
         });
         if (_response.ok) {
             return { data: _response.body as number, rawResponse: _response.rawResponse };
@@ -156,21 +201,24 @@ export class Primitive {
             throw new errors.SeedExhaustiveError({
                 statusCode: _response.error.statusCode,
                 body: _response.error.body,
-                rawResponse: _response.rawResponse
+                rawResponse: _response.rawResponse,
             });
         }
 
         switch (_response.error.reason) {
-            case "non-json": throw new errors.SeedExhaustiveError({
-                statusCode: _response.error.statusCode,
-                body: _response.error.rawBody,
-                rawResponse: _response.rawResponse
-            });
-            case "timeout": throw new errors.SeedExhaustiveTimeoutError("Timeout exceeded when calling POST /primitive/long.");
-            case "unknown": throw new errors.SeedExhaustiveError({
-                message: _response.error.errorMessage,
-                rawResponse: _response.rawResponse
-            });
+            case "non-json":
+                throw new errors.SeedExhaustiveError({
+                    statusCode: _response.error.statusCode,
+                    body: _response.error.rawBody,
+                    rawResponse: _response.rawResponse,
+                });
+            case "timeout":
+                throw new errors.SeedExhaustiveTimeoutError("Timeout exceeded when calling POST /primitive/long.");
+            case "unknown":
+                throw new errors.SeedExhaustiveError({
+                    message: _response.error.errorMessage,
+                    rawResponse: _response.rawResponse,
+                });
         }
     }
 
@@ -181,14 +229,28 @@ export class Primitive {
      * @example
      *     await client.endpoints.primitive.getAndReturnDouble(1.1)
      */
-    public getAndReturnDouble(request: number, requestOptions?: Primitive.RequestOptions): core.HttpResponsePromise<number> {
+    public getAndReturnDouble(
+        request: number,
+        requestOptions?: Primitive.RequestOptions,
+    ): core.HttpResponsePromise<number> {
         return core.HttpResponsePromise.fromPromise(this.__getAndReturnDouble(request, requestOptions));
     }
 
-    private async __getAndReturnDouble(request: number, requestOptions?: Primitive.RequestOptions): Promise<core.WithRawResponse<number>> {
-        let _headers: core.Fetcher.Args["headers"] = mergeHeaders(this._options?.headers, mergeOnlyDefinedHeaders({ "Authorization": await this._getAuthorizationHeader() }), requestOptions?.headers);
+    private async __getAndReturnDouble(
+        request: number,
+        requestOptions?: Primitive.RequestOptions,
+    ): Promise<core.WithRawResponse<number>> {
+        let _headers: core.Fetcher.Args["headers"] = mergeHeaders(
+            this._options?.headers,
+            mergeOnlyDefinedHeaders({ Authorization: await this._getAuthorizationHeader() }),
+            requestOptions?.headers,
+        );
         const _response = await core.fetcher({
-            url: core.url.join(await core.Supplier.get(this._options.baseUrl) ?? await core.Supplier.get(this._options.environment), "/primitive/double"),
+            url: core.url.join(
+                (await core.Supplier.get(this._options.baseUrl)) ??
+                    (await core.Supplier.get(this._options.environment)),
+                "/primitive/double",
+            ),
             method: "POST",
             headers: _headers,
             contentType: "application/json",
@@ -197,7 +259,7 @@ export class Primitive {
             body: request,
             timeoutMs: (requestOptions?.timeoutInSeconds ?? this._options?.timeoutInSeconds ?? 60) * 1000,
             maxRetries: requestOptions?.maxRetries ?? this._options?.maxRetries,
-            abortSignal: requestOptions?.abortSignal
+            abortSignal: requestOptions?.abortSignal,
         });
         if (_response.ok) {
             return { data: _response.body as number, rawResponse: _response.rawResponse };
@@ -207,21 +269,24 @@ export class Primitive {
             throw new errors.SeedExhaustiveError({
                 statusCode: _response.error.statusCode,
                 body: _response.error.body,
-                rawResponse: _response.rawResponse
+                rawResponse: _response.rawResponse,
             });
         }
 
         switch (_response.error.reason) {
-            case "non-json": throw new errors.SeedExhaustiveError({
-                statusCode: _response.error.statusCode,
-                body: _response.error.rawBody,
-                rawResponse: _response.rawResponse
-            });
-            case "timeout": throw new errors.SeedExhaustiveTimeoutError("Timeout exceeded when calling POST /primitive/double.");
-            case "unknown": throw new errors.SeedExhaustiveError({
-                message: _response.error.errorMessage,
-                rawResponse: _response.rawResponse
-            });
+            case "non-json":
+                throw new errors.SeedExhaustiveError({
+                    statusCode: _response.error.statusCode,
+                    body: _response.error.rawBody,
+                    rawResponse: _response.rawResponse,
+                });
+            case "timeout":
+                throw new errors.SeedExhaustiveTimeoutError("Timeout exceeded when calling POST /primitive/double.");
+            case "unknown":
+                throw new errors.SeedExhaustiveError({
+                    message: _response.error.errorMessage,
+                    rawResponse: _response.rawResponse,
+                });
         }
     }
 
@@ -232,14 +297,28 @@ export class Primitive {
      * @example
      *     await client.endpoints.primitive.getAndReturnBool(true)
      */
-    public getAndReturnBool(request: boolean, requestOptions?: Primitive.RequestOptions): core.HttpResponsePromise<boolean> {
+    public getAndReturnBool(
+        request: boolean,
+        requestOptions?: Primitive.RequestOptions,
+    ): core.HttpResponsePromise<boolean> {
         return core.HttpResponsePromise.fromPromise(this.__getAndReturnBool(request, requestOptions));
     }
 
-    private async __getAndReturnBool(request: boolean, requestOptions?: Primitive.RequestOptions): Promise<core.WithRawResponse<boolean>> {
-        let _headers: core.Fetcher.Args["headers"] = mergeHeaders(this._options?.headers, mergeOnlyDefinedHeaders({ "Authorization": await this._getAuthorizationHeader() }), requestOptions?.headers);
+    private async __getAndReturnBool(
+        request: boolean,
+        requestOptions?: Primitive.RequestOptions,
+    ): Promise<core.WithRawResponse<boolean>> {
+        let _headers: core.Fetcher.Args["headers"] = mergeHeaders(
+            this._options?.headers,
+            mergeOnlyDefinedHeaders({ Authorization: await this._getAuthorizationHeader() }),
+            requestOptions?.headers,
+        );
         const _response = await core.fetcher({
-            url: core.url.join(await core.Supplier.get(this._options.baseUrl) ?? await core.Supplier.get(this._options.environment), "/primitive/boolean"),
+            url: core.url.join(
+                (await core.Supplier.get(this._options.baseUrl)) ??
+                    (await core.Supplier.get(this._options.environment)),
+                "/primitive/boolean",
+            ),
             method: "POST",
             headers: _headers,
             contentType: "application/json",
@@ -248,7 +327,7 @@ export class Primitive {
             body: request,
             timeoutMs: (requestOptions?.timeoutInSeconds ?? this._options?.timeoutInSeconds ?? 60) * 1000,
             maxRetries: requestOptions?.maxRetries ?? this._options?.maxRetries,
-            abortSignal: requestOptions?.abortSignal
+            abortSignal: requestOptions?.abortSignal,
         });
         if (_response.ok) {
             return { data: _response.body as boolean, rawResponse: _response.rawResponse };
@@ -258,21 +337,24 @@ export class Primitive {
             throw new errors.SeedExhaustiveError({
                 statusCode: _response.error.statusCode,
                 body: _response.error.body,
-                rawResponse: _response.rawResponse
+                rawResponse: _response.rawResponse,
             });
         }
 
         switch (_response.error.reason) {
-            case "non-json": throw new errors.SeedExhaustiveError({
-                statusCode: _response.error.statusCode,
-                body: _response.error.rawBody,
-                rawResponse: _response.rawResponse
-            });
-            case "timeout": throw new errors.SeedExhaustiveTimeoutError("Timeout exceeded when calling POST /primitive/boolean.");
-            case "unknown": throw new errors.SeedExhaustiveError({
-                message: _response.error.errorMessage,
-                rawResponse: _response.rawResponse
-            });
+            case "non-json":
+                throw new errors.SeedExhaustiveError({
+                    statusCode: _response.error.statusCode,
+                    body: _response.error.rawBody,
+                    rawResponse: _response.rawResponse,
+                });
+            case "timeout":
+                throw new errors.SeedExhaustiveTimeoutError("Timeout exceeded when calling POST /primitive/boolean.");
+            case "unknown":
+                throw new errors.SeedExhaustiveError({
+                    message: _response.error.errorMessage,
+                    rawResponse: _response.rawResponse,
+                });
         }
     }
 
@@ -283,14 +365,28 @@ export class Primitive {
      * @example
      *     await client.endpoints.primitive.getAndReturnDatetime("2024-01-15T09:30:00Z")
      */
-    public getAndReturnDatetime(request: string, requestOptions?: Primitive.RequestOptions): core.HttpResponsePromise<string> {
+    public getAndReturnDatetime(
+        request: string,
+        requestOptions?: Primitive.RequestOptions,
+    ): core.HttpResponsePromise<string> {
         return core.HttpResponsePromise.fromPromise(this.__getAndReturnDatetime(request, requestOptions));
     }
 
-    private async __getAndReturnDatetime(request: string, requestOptions?: Primitive.RequestOptions): Promise<core.WithRawResponse<string>> {
-        let _headers: core.Fetcher.Args["headers"] = mergeHeaders(this._options?.headers, mergeOnlyDefinedHeaders({ "Authorization": await this._getAuthorizationHeader() }), requestOptions?.headers);
+    private async __getAndReturnDatetime(
+        request: string,
+        requestOptions?: Primitive.RequestOptions,
+    ): Promise<core.WithRawResponse<string>> {
+        let _headers: core.Fetcher.Args["headers"] = mergeHeaders(
+            this._options?.headers,
+            mergeOnlyDefinedHeaders({ Authorization: await this._getAuthorizationHeader() }),
+            requestOptions?.headers,
+        );
         const _response = await core.fetcher({
-            url: core.url.join(await core.Supplier.get(this._options.baseUrl) ?? await core.Supplier.get(this._options.environment), "/primitive/datetime"),
+            url: core.url.join(
+                (await core.Supplier.get(this._options.baseUrl)) ??
+                    (await core.Supplier.get(this._options.environment)),
+                "/primitive/datetime",
+            ),
             method: "POST",
             headers: _headers,
             contentType: "application/json",
@@ -299,7 +395,7 @@ export class Primitive {
             body: request,
             timeoutMs: (requestOptions?.timeoutInSeconds ?? this._options?.timeoutInSeconds ?? 60) * 1000,
             maxRetries: requestOptions?.maxRetries ?? this._options?.maxRetries,
-            abortSignal: requestOptions?.abortSignal
+            abortSignal: requestOptions?.abortSignal,
         });
         if (_response.ok) {
             return { data: _response.body as string, rawResponse: _response.rawResponse };
@@ -309,21 +405,24 @@ export class Primitive {
             throw new errors.SeedExhaustiveError({
                 statusCode: _response.error.statusCode,
                 body: _response.error.body,
-                rawResponse: _response.rawResponse
+                rawResponse: _response.rawResponse,
             });
         }
 
         switch (_response.error.reason) {
-            case "non-json": throw new errors.SeedExhaustiveError({
-                statusCode: _response.error.statusCode,
-                body: _response.error.rawBody,
-                rawResponse: _response.rawResponse
-            });
-            case "timeout": throw new errors.SeedExhaustiveTimeoutError("Timeout exceeded when calling POST /primitive/datetime.");
-            case "unknown": throw new errors.SeedExhaustiveError({
-                message: _response.error.errorMessage,
-                rawResponse: _response.rawResponse
-            });
+            case "non-json":
+                throw new errors.SeedExhaustiveError({
+                    statusCode: _response.error.statusCode,
+                    body: _response.error.rawBody,
+                    rawResponse: _response.rawResponse,
+                });
+            case "timeout":
+                throw new errors.SeedExhaustiveTimeoutError("Timeout exceeded when calling POST /primitive/datetime.");
+            case "unknown":
+                throw new errors.SeedExhaustiveError({
+                    message: _response.error.errorMessage,
+                    rawResponse: _response.rawResponse,
+                });
         }
     }
 
@@ -334,14 +433,28 @@ export class Primitive {
      * @example
      *     await client.endpoints.primitive.getAndReturnDate("2023-01-15")
      */
-    public getAndReturnDate(request: string, requestOptions?: Primitive.RequestOptions): core.HttpResponsePromise<string> {
+    public getAndReturnDate(
+        request: string,
+        requestOptions?: Primitive.RequestOptions,
+    ): core.HttpResponsePromise<string> {
         return core.HttpResponsePromise.fromPromise(this.__getAndReturnDate(request, requestOptions));
     }
 
-    private async __getAndReturnDate(request: string, requestOptions?: Primitive.RequestOptions): Promise<core.WithRawResponse<string>> {
-        let _headers: core.Fetcher.Args["headers"] = mergeHeaders(this._options?.headers, mergeOnlyDefinedHeaders({ "Authorization": await this._getAuthorizationHeader() }), requestOptions?.headers);
+    private async __getAndReturnDate(
+        request: string,
+        requestOptions?: Primitive.RequestOptions,
+    ): Promise<core.WithRawResponse<string>> {
+        let _headers: core.Fetcher.Args["headers"] = mergeHeaders(
+            this._options?.headers,
+            mergeOnlyDefinedHeaders({ Authorization: await this._getAuthorizationHeader() }),
+            requestOptions?.headers,
+        );
         const _response = await core.fetcher({
-            url: core.url.join(await core.Supplier.get(this._options.baseUrl) ?? await core.Supplier.get(this._options.environment), "/primitive/date"),
+            url: core.url.join(
+                (await core.Supplier.get(this._options.baseUrl)) ??
+                    (await core.Supplier.get(this._options.environment)),
+                "/primitive/date",
+            ),
             method: "POST",
             headers: _headers,
             contentType: "application/json",
@@ -350,7 +463,7 @@ export class Primitive {
             body: request,
             timeoutMs: (requestOptions?.timeoutInSeconds ?? this._options?.timeoutInSeconds ?? 60) * 1000,
             maxRetries: requestOptions?.maxRetries ?? this._options?.maxRetries,
-            abortSignal: requestOptions?.abortSignal
+            abortSignal: requestOptions?.abortSignal,
         });
         if (_response.ok) {
             return { data: _response.body as string, rawResponse: _response.rawResponse };
@@ -360,21 +473,24 @@ export class Primitive {
             throw new errors.SeedExhaustiveError({
                 statusCode: _response.error.statusCode,
                 body: _response.error.body,
-                rawResponse: _response.rawResponse
+                rawResponse: _response.rawResponse,
             });
         }
 
         switch (_response.error.reason) {
-            case "non-json": throw new errors.SeedExhaustiveError({
-                statusCode: _response.error.statusCode,
-                body: _response.error.rawBody,
-                rawResponse: _response.rawResponse
-            });
-            case "timeout": throw new errors.SeedExhaustiveTimeoutError("Timeout exceeded when calling POST /primitive/date.");
-            case "unknown": throw new errors.SeedExhaustiveError({
-                message: _response.error.errorMessage,
-                rawResponse: _response.rawResponse
-            });
+            case "non-json":
+                throw new errors.SeedExhaustiveError({
+                    statusCode: _response.error.statusCode,
+                    body: _response.error.rawBody,
+                    rawResponse: _response.rawResponse,
+                });
+            case "timeout":
+                throw new errors.SeedExhaustiveTimeoutError("Timeout exceeded when calling POST /primitive/date.");
+            case "unknown":
+                throw new errors.SeedExhaustiveError({
+                    message: _response.error.errorMessage,
+                    rawResponse: _response.rawResponse,
+                });
         }
     }
 
@@ -385,14 +501,28 @@ export class Primitive {
      * @example
      *     await client.endpoints.primitive.getAndReturnUuid("d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32")
      */
-    public getAndReturnUuid(request: string, requestOptions?: Primitive.RequestOptions): core.HttpResponsePromise<string> {
+    public getAndReturnUuid(
+        request: string,
+        requestOptions?: Primitive.RequestOptions,
+    ): core.HttpResponsePromise<string> {
         return core.HttpResponsePromise.fromPromise(this.__getAndReturnUuid(request, requestOptions));
     }
 
-    private async __getAndReturnUuid(request: string, requestOptions?: Primitive.RequestOptions): Promise<core.WithRawResponse<string>> {
-        let _headers: core.Fetcher.Args["headers"] = mergeHeaders(this._options?.headers, mergeOnlyDefinedHeaders({ "Authorization": await this._getAuthorizationHeader() }), requestOptions?.headers);
+    private async __getAndReturnUuid(
+        request: string,
+        requestOptions?: Primitive.RequestOptions,
+    ): Promise<core.WithRawResponse<string>> {
+        let _headers: core.Fetcher.Args["headers"] = mergeHeaders(
+            this._options?.headers,
+            mergeOnlyDefinedHeaders({ Authorization: await this._getAuthorizationHeader() }),
+            requestOptions?.headers,
+        );
         const _response = await core.fetcher({
-            url: core.url.join(await core.Supplier.get(this._options.baseUrl) ?? await core.Supplier.get(this._options.environment), "/primitive/uuid"),
+            url: core.url.join(
+                (await core.Supplier.get(this._options.baseUrl)) ??
+                    (await core.Supplier.get(this._options.environment)),
+                "/primitive/uuid",
+            ),
             method: "POST",
             headers: _headers,
             contentType: "application/json",
@@ -401,7 +531,7 @@ export class Primitive {
             body: request,
             timeoutMs: (requestOptions?.timeoutInSeconds ?? this._options?.timeoutInSeconds ?? 60) * 1000,
             maxRetries: requestOptions?.maxRetries ?? this._options?.maxRetries,
-            abortSignal: requestOptions?.abortSignal
+            abortSignal: requestOptions?.abortSignal,
         });
         if (_response.ok) {
             return { data: _response.body as string, rawResponse: _response.rawResponse };
@@ -411,21 +541,24 @@ export class Primitive {
             throw new errors.SeedExhaustiveError({
                 statusCode: _response.error.statusCode,
                 body: _response.error.body,
-                rawResponse: _response.rawResponse
+                rawResponse: _response.rawResponse,
             });
         }
 
         switch (_response.error.reason) {
-            case "non-json": throw new errors.SeedExhaustiveError({
-                statusCode: _response.error.statusCode,
-                body: _response.error.rawBody,
-                rawResponse: _response.rawResponse
-            });
-            case "timeout": throw new errors.SeedExhaustiveTimeoutError("Timeout exceeded when calling POST /primitive/uuid.");
-            case "unknown": throw new errors.SeedExhaustiveError({
-                message: _response.error.errorMessage,
-                rawResponse: _response.rawResponse
-            });
+            case "non-json":
+                throw new errors.SeedExhaustiveError({
+                    statusCode: _response.error.statusCode,
+                    body: _response.error.rawBody,
+                    rawResponse: _response.rawResponse,
+                });
+            case "timeout":
+                throw new errors.SeedExhaustiveTimeoutError("Timeout exceeded when calling POST /primitive/uuid.");
+            case "unknown":
+                throw new errors.SeedExhaustiveError({
+                    message: _response.error.errorMessage,
+                    rawResponse: _response.rawResponse,
+                });
         }
     }
 
@@ -436,14 +569,28 @@ export class Primitive {
      * @example
      *     await client.endpoints.primitive.getAndReturnBase64("SGVsbG8gd29ybGQh")
      */
-    public getAndReturnBase64(request: string, requestOptions?: Primitive.RequestOptions): core.HttpResponsePromise<string> {
+    public getAndReturnBase64(
+        request: string,
+        requestOptions?: Primitive.RequestOptions,
+    ): core.HttpResponsePromise<string> {
         return core.HttpResponsePromise.fromPromise(this.__getAndReturnBase64(request, requestOptions));
     }
 
-    private async __getAndReturnBase64(request: string, requestOptions?: Primitive.RequestOptions): Promise<core.WithRawResponse<string>> {
-        let _headers: core.Fetcher.Args["headers"] = mergeHeaders(this._options?.headers, mergeOnlyDefinedHeaders({ "Authorization": await this._getAuthorizationHeader() }), requestOptions?.headers);
+    private async __getAndReturnBase64(
+        request: string,
+        requestOptions?: Primitive.RequestOptions,
+    ): Promise<core.WithRawResponse<string>> {
+        let _headers: core.Fetcher.Args["headers"] = mergeHeaders(
+            this._options?.headers,
+            mergeOnlyDefinedHeaders({ Authorization: await this._getAuthorizationHeader() }),
+            requestOptions?.headers,
+        );
         const _response = await core.fetcher({
-            url: core.url.join(await core.Supplier.get(this._options.baseUrl) ?? await core.Supplier.get(this._options.environment), "/primitive/base64"),
+            url: core.url.join(
+                (await core.Supplier.get(this._options.baseUrl)) ??
+                    (await core.Supplier.get(this._options.environment)),
+                "/primitive/base64",
+            ),
             method: "POST",
             headers: _headers,
             contentType: "application/json",
@@ -452,7 +599,7 @@ export class Primitive {
             body: request,
             timeoutMs: (requestOptions?.timeoutInSeconds ?? this._options?.timeoutInSeconds ?? 60) * 1000,
             maxRetries: requestOptions?.maxRetries ?? this._options?.maxRetries,
-            abortSignal: requestOptions?.abortSignal
+            abortSignal: requestOptions?.abortSignal,
         });
         if (_response.ok) {
             return { data: _response.body as string, rawResponse: _response.rawResponse };
@@ -462,21 +609,24 @@ export class Primitive {
             throw new errors.SeedExhaustiveError({
                 statusCode: _response.error.statusCode,
                 body: _response.error.body,
-                rawResponse: _response.rawResponse
+                rawResponse: _response.rawResponse,
             });
         }
 
         switch (_response.error.reason) {
-            case "non-json": throw new errors.SeedExhaustiveError({
-                statusCode: _response.error.statusCode,
-                body: _response.error.rawBody,
-                rawResponse: _response.rawResponse
-            });
-            case "timeout": throw new errors.SeedExhaustiveTimeoutError("Timeout exceeded when calling POST /primitive/base64.");
-            case "unknown": throw new errors.SeedExhaustiveError({
-                message: _response.error.errorMessage,
-                rawResponse: _response.rawResponse
-            });
+            case "non-json":
+                throw new errors.SeedExhaustiveError({
+                    statusCode: _response.error.statusCode,
+                    body: _response.error.rawBody,
+                    rawResponse: _response.rawResponse,
+                });
+            case "timeout":
+                throw new errors.SeedExhaustiveTimeoutError("Timeout exceeded when calling POST /primitive/base64.");
+            case "unknown":
+                throw new errors.SeedExhaustiveError({
+                    message: _response.error.errorMessage,
+                    rawResponse: _response.rawResponse,
+                });
         }
     }
 

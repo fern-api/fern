@@ -10,11 +10,9 @@ import { NoReqBody } from "./api/resources/noReqBody/client/Client.js";
 import { ReqWithHeaders } from "./api/resources/reqWithHeaders/client/Client.js";
 
 export declare namespace SeedExhaustiveClient {
-    export interface Options extends BaseClientOptions {
-    }
+    export interface Options extends BaseClientOptions {}
 
-    export interface RequestOptions extends BaseRequestOptions {
-    }
+    export interface RequestOptions extends BaseRequestOptions {}
 }
 
 export class SeedExhaustiveClient {
@@ -26,11 +24,20 @@ export class SeedExhaustiveClient {
     protected _reqWithHeaders: ReqWithHeaders | undefined;
 
     constructor(_options: SeedExhaustiveClient.Options) {
-
         this._options = {
-                            ..._options,
-                            headers: mergeHeaders({ "X-Fern-Language": "JavaScript", "X-Fern-SDK-Name": "@fern/exhaustive", "X-Fern-SDK-Version": "0.0.1", "User-Agent": "@fern/exhaustive/0.0.1", "X-Fern-Runtime": core.RUNTIME.type, "X-Fern-Runtime-Version": core.RUNTIME.version }, _options?.headers),
-                        };
+            ..._options,
+            headers: mergeHeaders(
+                {
+                    "X-Fern-Language": "JavaScript",
+                    "X-Fern-SDK-Name": "@fern/exhaustive",
+                    "X-Fern-SDK-Version": "0.0.1",
+                    "User-Agent": "@fern/exhaustive/0.0.1",
+                    "X-Fern-Runtime": core.RUNTIME.type,
+                    "X-Fern-Runtime-Version": core.RUNTIME.version,
+                },
+                _options?.headers,
+            ),
+        };
     }
 
     public get endpoints(): Endpoints {

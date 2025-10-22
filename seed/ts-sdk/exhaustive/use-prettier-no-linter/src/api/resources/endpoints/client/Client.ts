@@ -14,8 +14,7 @@ import { Union } from "../resources/union/client/Client.js";
 import { Urls } from "../resources/urls/client/Client.js";
 
 export declare namespace Endpoints {
-    export interface Options extends BaseClientOptions {
-    }
+    export interface Options extends BaseClientOptions {}
 }
 
 export class Endpoints {
@@ -32,7 +31,6 @@ export class Endpoints {
     protected _urls: Urls | undefined;
 
     constructor(_options: Endpoints.Options) {
-
         this._options = _options;
     }
 

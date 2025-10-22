@@ -7,18 +7,15 @@ import { mergeHeaders, mergeOnlyDefinedHeaders } from "../../../../core/headers.
 import * as errors from "../../../../errors/index.js";
 
 export declare namespace InlinedRequests {
-    export interface Options extends BaseClientOptions {
-    }
+    export interface Options extends BaseClientOptions {}
 
-    export interface RequestOptions extends BaseRequestOptions {
-    }
+    export interface RequestOptions extends BaseRequestOptions {}
 }
 
 export class InlinedRequests {
     protected readonly _options: InlinedRequests.Options;
 
     constructor(_options: InlinedRequests.Options) {
-
         this._options = _options;
     }
 
@@ -53,14 +50,28 @@ export class InlinedRequests {
      *         }
      *     })
      */
-    public postWithObjectBodyandResponse(request: SeedExhaustive.PostWithObjectBody, requestOptions?: InlinedRequests.RequestOptions): core.HttpResponsePromise<SeedExhaustive.types.ObjectWithOptionalField> {
+    public postWithObjectBodyandResponse(
+        request: SeedExhaustive.PostWithObjectBody,
+        requestOptions?: InlinedRequests.RequestOptions,
+    ): core.HttpResponsePromise<SeedExhaustive.types.ObjectWithOptionalField> {
         return core.HttpResponsePromise.fromPromise(this.__postWithObjectBodyandResponse(request, requestOptions));
     }
 
-    private async __postWithObjectBodyandResponse(request: SeedExhaustive.PostWithObjectBody, requestOptions?: InlinedRequests.RequestOptions): Promise<core.WithRawResponse<SeedExhaustive.types.ObjectWithOptionalField>> {
-        let _headers: core.Fetcher.Args["headers"] = mergeHeaders(this._options?.headers, mergeOnlyDefinedHeaders({ "Authorization": await this._getAuthorizationHeader() }), requestOptions?.headers);
+    private async __postWithObjectBodyandResponse(
+        request: SeedExhaustive.PostWithObjectBody,
+        requestOptions?: InlinedRequests.RequestOptions,
+    ): Promise<core.WithRawResponse<SeedExhaustive.types.ObjectWithOptionalField>> {
+        const _headers: core.Fetcher.Args["headers"] = mergeHeaders(
+            this._options?.headers,
+            mergeOnlyDefinedHeaders({ Authorization: await this._getAuthorizationHeader() }),
+            requestOptions?.headers,
+        );
         const _response = await core.fetcher({
-            url: core.url.join(await core.Supplier.get(this._options.baseUrl) ?? await core.Supplier.get(this._options.environment), "/req-bodies/object"),
+            url: core.url.join(
+                (await core.Supplier.get(this._options.baseUrl)) ??
+                    (await core.Supplier.get(this._options.environment)),
+                "/req-bodies/object",
+            ),
             method: "POST",
             headers: _headers,
             contentType: "application/json",
@@ -69,34 +80,45 @@ export class InlinedRequests {
             body: request,
             timeoutMs: (requestOptions?.timeoutInSeconds ?? this._options?.timeoutInSeconds ?? 60) * 1000,
             maxRetries: requestOptions?.maxRetries ?? this._options?.maxRetries,
-            abortSignal: requestOptions?.abortSignal
+            abortSignal: requestOptions?.abortSignal,
         });
         if (_response.ok) {
-            return { data: _response.body as SeedExhaustive.types.ObjectWithOptionalField, rawResponse: _response.rawResponse };
+            return {
+                data: _response.body as SeedExhaustive.types.ObjectWithOptionalField,
+                rawResponse: _response.rawResponse,
+            };
         }
 
         if (_response.error.reason === "status-code") {
             switch (_response.error.statusCode) {
-                case 400: throw new SeedExhaustive.BadRequestBody(_response.error.body as SeedExhaustive.BadObjectRequestInfo, _response.rawResponse);
-                default: throw new errors.SeedExhaustiveError({
-                    statusCode: _response.error.statusCode,
-                    body: _response.error.body,
-                    rawResponse: _response.rawResponse
-                });
+                case 400:
+                    throw new SeedExhaustive.BadRequestBody(
+                        _response.error.body as SeedExhaustive.BadObjectRequestInfo,
+                        _response.rawResponse,
+                    );
+                default:
+                    throw new errors.SeedExhaustiveError({
+                        statusCode: _response.error.statusCode,
+                        body: _response.error.body,
+                        rawResponse: _response.rawResponse,
+                    });
             }
         }
 
         switch (_response.error.reason) {
-            case "non-json": throw new errors.SeedExhaustiveError({
-                statusCode: _response.error.statusCode,
-                body: _response.error.rawBody,
-                rawResponse: _response.rawResponse
-            });
-            case "timeout": throw new errors.SeedExhaustiveTimeoutError("Timeout exceeded when calling POST /req-bodies/object.");
-            case "unknown": throw new errors.SeedExhaustiveError({
-                message: _response.error.errorMessage,
-                rawResponse: _response.rawResponse
-            });
+            case "non-json":
+                throw new errors.SeedExhaustiveError({
+                    statusCode: _response.error.statusCode,
+                    body: _response.error.rawBody,
+                    rawResponse: _response.rawResponse,
+                });
+            case "timeout":
+                throw new errors.SeedExhaustiveTimeoutError("Timeout exceeded when calling POST /req-bodies/object.");
+            case "unknown":
+                throw new errors.SeedExhaustiveError({
+                    message: _response.error.errorMessage,
+                    rawResponse: _response.rawResponse,
+                });
         }
     }
 

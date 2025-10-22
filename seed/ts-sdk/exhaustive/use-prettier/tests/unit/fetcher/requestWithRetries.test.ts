@@ -12,21 +12,21 @@ describe("requestWithRetries", () => {
         // Mock Math.random for consistent jitter
         Math.random = vi.fn(() => 0.5);
 
-        vi.useFakeTimers({ 
-        	toFake: [
-        		"setTimeout",
-        		"clearTimeout",
-        		"setInterval",
-        		"clearInterval",
-        		"setImmediate",
-        		"clearImmediate",
-        		"Date",
-        		"performance",
-        		"requestAnimationFrame",
-        		"cancelAnimationFrame",
-        		"requestIdleCallback",
-        		"cancelIdleCallback"
-        	]
+        vi.useFakeTimers({
+            toFake: [
+                "setTimeout",
+                "clearTimeout",
+                "setInterval",
+                "clearInterval",
+                "setImmediate",
+                "clearImmediate",
+                "Date",
+                "performance",
+                "requestAnimationFrame",
+                "cancelAnimationFrame",
+                "requestIdleCallback",
+                "cancelIdleCallback",
+            ],
         });
     });
 
@@ -155,8 +155,8 @@ describe("requestWithRetries", () => {
             .mockResolvedValueOnce(
                 new Response("", {
                     status: 429,
-                    headers: new Headers({ "retry-after": "5" })
-                })
+                    headers: new Headers({ "retry-after": "5" }),
+                }),
             )
             .mockResolvedValueOnce(new Response("", { status: 200 }));
 
@@ -179,8 +179,8 @@ describe("requestWithRetries", () => {
             .mockResolvedValueOnce(
                 new Response("", {
                     status: 429,
-                    headers: new Headers({ "retry-after": futureDate.toUTCString() })
-                })
+                    headers: new Headers({ "retry-after": futureDate.toUTCString() }),
+                }),
             )
             .mockResolvedValueOnce(new Response("", { status: 200 }));
 
@@ -207,8 +207,8 @@ describe("requestWithRetries", () => {
             .mockResolvedValueOnce(
                 new Response("", {
                     status: 429,
-                    headers: new Headers({ "x-ratelimit-reset": resetTime.toString() })
-                })
+                    headers: new Headers({ "x-ratelimit-reset": resetTime.toString() }),
+                }),
             )
             .mockResolvedValueOnce(new Response("", { status: 200 }));
 
@@ -234,8 +234,8 @@ describe("requestWithRetries", () => {
             .mockResolvedValueOnce(
                 new Response("", {
                     status: 429,
-                    headers: new Headers({ "retry-after": "120" }) // 120 seconds = 120000ms > MAX_RETRY_DELAY (60000ms)
-                })
+                    headers: new Headers({ "retry-after": "120" }), // 120 seconds = 120000ms > MAX_RETRY_DELAY (60000ms)
+                }),
             )
             .mockResolvedValueOnce(new Response("", { status: 200 }));
 

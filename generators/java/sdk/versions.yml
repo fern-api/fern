@@ -1,3 +1,13 @@
+- version: 3.9.0
+  changelogEntry:
+    - summary: |
+        Add support for README example style configuration via `exampleStyle` field. When set to "minimal",
+        generated README.md files show streamlined code examples with only required parameters, reducing
+        verbosity for better readability. Defaults to "comprehensive" to maintain backward compatibility.
+      type: feat
+  createdAt: "2025-10-21"
+  irVersion: 61
+
 - version: 3.8.12
   changelogEntry:
     - summary: |

@@ -2,9 +2,7 @@
 
 import * as SeedExhaustive from "../../../../../index.js";
 
-export type Animal = 
-    | SeedExhaustive.types.Animal.Dog
-    | SeedExhaustive.types.Animal.Cat;
+export type Animal = SeedExhaustive.types.Animal.Dog | SeedExhaustive.types.Animal.Cat;
 
 export namespace Animal {
     export interface Dog extends SeedExhaustive.types.Dog {

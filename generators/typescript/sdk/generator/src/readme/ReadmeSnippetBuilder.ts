@@ -26,7 +26,6 @@ export class ReadmeSnippetBuilder extends AbstractReadmeSnippetBuilder {
     private static readonly REQUEST_AND_RESPONSE_TYPES_FEATURE_ID: FernGeneratorCli.FeatureId =
         "REQUEST_AND_RESPONSE_TYPES";
     private static readonly RUNTIME_COMPATIBILITY_FEATURE_ID: FernGeneratorCli.FeatureId = "RUNTIME_COMPATIBILITY";
-    private static readonly STREAMING_FEATURE_ID: FernGeneratorCli.FeatureId = "STREAMING";
     private static readonly PAGINATION_FEATURE_ID: FernGeneratorCli.FeatureId = "PAGINATION";
     private static readonly RAW_RESPONSES_FEATURE_ID: FernGeneratorCli.FeatureId = "ACCESS_RAW_RESPONSE_DATA";
     private static readonly ADDITIONAL_HEADERS_FEATURE_ID: FernGeneratorCli.FeatureId = "ADDITIONAL_HEADERS";
@@ -34,6 +33,7 @@ export class ReadmeSnippetBuilder extends AbstractReadmeSnippetBuilder {
         "ADDITIONAL_QUERY_STRING_PARAMETERS";
     public static readonly BINARY_RESPONSE_FEATURE_ID: FernGeneratorCli.FeatureId = "BINARY_RESPONSE";
     public static readonly FILE_UPLOAD_REQUEST_FEATURE_ID: FernGeneratorCli.FeatureId = "FILE_UPLOADS";
+    public static readonly STREAMING_RESPONSE_FEATURE_ID: FernGeneratorCli.FeatureId = "STREAMING_RESPONSE";
 
     private readonly context: SdkContext;
     private readonly isPaginationEnabled: boolean;
@@ -81,7 +81,7 @@ export class ReadmeSnippetBuilder extends AbstractReadmeSnippetBuilder {
         snippets[ReadmeSnippetBuilder.ABORTING_REQUESTS_FEATURE_ID] = this.buildAbortSignalSnippets();
         snippets[ReadmeSnippetBuilder.EXCEPTION_HANDLING_FEATURE_ID] = this.buildExceptionHandlingSnippets();
         snippets[ReadmeSnippetBuilder.RUNTIME_COMPATIBILITY_FEATURE_ID] = this.buildRuntimeCompatibilitySnippets();
-        snippets[ReadmeSnippetBuilder.STREAMING_FEATURE_ID] = this.buildStreamingSnippets();
+        snippets[ReadmeSnippetBuilder.STREAMING_RESPONSE_FEATURE_ID] = this.buildStreamingSnippets();
         snippets[ReadmeSnippetBuilder.FILE_UPLOAD_REQUEST_FEATURE_ID] = this.buildFileUploadRequestSnippet();
         snippets[ReadmeSnippetBuilder.BINARY_RESPONSE_FEATURE_ID] = this.buildBinaryResponseSnippet();
         snippets[ReadmeSnippetBuilder.RAW_RESPONSES_FEATURE_ID] = this.buildRawResponseSnippets();

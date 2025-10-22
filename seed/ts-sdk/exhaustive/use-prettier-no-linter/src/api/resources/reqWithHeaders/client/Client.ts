@@ -7,18 +7,15 @@ import { mergeHeaders, mergeOnlyDefinedHeaders } from "../../../../core/headers.
 import * as errors from "../../../../errors/index.js";
 
 export declare namespace ReqWithHeaders {
-    export interface Options extends BaseClientOptions {
-    }
+    export interface Options extends BaseClientOptions {}
 
-    export interface RequestOptions extends BaseRequestOptions {
-    }
+    export interface RequestOptions extends BaseRequestOptions {}
 }
 
 export class ReqWithHeaders {
     protected readonly _options: ReqWithHeaders.Options;
 
     constructor(_options: ReqWithHeaders.Options) {
-
         this._options = _options;
     }
 
@@ -33,15 +30,37 @@ export class ReqWithHeaders {
      *         body: "string"
      *     })
      */
-    public getWithCustomHeader(request: SeedExhaustive.ReqWithHeaders, requestOptions?: ReqWithHeaders.RequestOptions): core.HttpResponsePromise<void> {
+    public getWithCustomHeader(
+        request: SeedExhaustive.ReqWithHeaders,
+        requestOptions?: ReqWithHeaders.RequestOptions,
+    ): core.HttpResponsePromise<void> {
         return core.HttpResponsePromise.fromPromise(this.__getWithCustomHeader(request, requestOptions));
     }
 
-    private async __getWithCustomHeader(request: SeedExhaustive.ReqWithHeaders, requestOptions?: ReqWithHeaders.RequestOptions): Promise<core.WithRawResponse<void>> {
-        const { "X-TEST-SERVICE-HEADER": xTestServiceHeader, "X-TEST-ENDPOINT-HEADER": xTestEndpointHeader, body: _body } = request;
-        let _headers: core.Fetcher.Args["headers"] = mergeHeaders(this._options?.headers, mergeOnlyDefinedHeaders({ "Authorization": await this._getAuthorizationHeader(), "X-TEST-SERVICE-HEADER": xTestServiceHeader, "X-TEST-ENDPOINT-HEADER": xTestEndpointHeader }), requestOptions?.headers);
+    private async __getWithCustomHeader(
+        request: SeedExhaustive.ReqWithHeaders,
+        requestOptions?: ReqWithHeaders.RequestOptions,
+    ): Promise<core.WithRawResponse<void>> {
+        const {
+            "X-TEST-SERVICE-HEADER": xTestServiceHeader,
+            "X-TEST-ENDPOINT-HEADER": xTestEndpointHeader,
+            body: _body,
+        } = request;
+        let _headers: core.Fetcher.Args["headers"] = mergeHeaders(
+            this._options?.headers,
+            mergeOnlyDefinedHeaders({
+                Authorization: await this._getAuthorizationHeader(),
+                "X-TEST-SERVICE-HEADER": xTestServiceHeader,
+                "X-TEST-ENDPOINT-HEADER": xTestEndpointHeader,
+            }),
+            requestOptions?.headers,
+        );
         const _response = await core.fetcher({
-            url: core.url.join(await core.Supplier.get(this._options.baseUrl) ?? await core.Supplier.get(this._options.environment), "/test-headers/custom-header"),
+            url: core.url.join(
+                (await core.Supplier.get(this._options.baseUrl)) ??
+                    (await core.Supplier.get(this._options.environment)),
+                "/test-headers/custom-header",
+            ),
             method: "POST",
             headers: _headers,
             contentType: "application/json",
@@ -50,7 +69,7 @@ export class ReqWithHeaders {
             body: _body,
             timeoutMs: (requestOptions?.timeoutInSeconds ?? this._options?.timeoutInSeconds ?? 60) * 1000,
             maxRetries: requestOptions?.maxRetries ?? this._options?.maxRetries,
-            abortSignal: requestOptions?.abortSignal
+            abortSignal: requestOptions?.abortSignal,
         });
         if (_response.ok) {
             return { data: undefined, rawResponse: _response.rawResponse };
@@ -60,21 +79,26 @@ export class ReqWithHeaders {
             throw new errors.SeedExhaustiveError({
                 statusCode: _response.error.statusCode,
                 body: _response.error.body,
-                rawResponse: _response.rawResponse
+                rawResponse: _response.rawResponse,
             });
         }
 
         switch (_response.error.reason) {
-            case "non-json": throw new errors.SeedExhaustiveError({
-                statusCode: _response.error.statusCode,
-                body: _response.error.rawBody,
-                rawResponse: _response.rawResponse
-            });
-            case "timeout": throw new errors.SeedExhaustiveTimeoutError("Timeout exceeded when calling POST /test-headers/custom-header.");
-            case "unknown": throw new errors.SeedExhaustiveError({
-                message: _response.error.errorMessage,
-                rawResponse: _response.rawResponse
-            });
+            case "non-json":
+                throw new errors.SeedExhaustiveError({
+                    statusCode: _response.error.statusCode,
+                    body: _response.error.rawBody,
+                    rawResponse: _response.rawResponse,
+                });
+            case "timeout":
+                throw new errors.SeedExhaustiveTimeoutError(
+                    "Timeout exceeded when calling POST /test-headers/custom-header.",
+                );
+            case "unknown":
+                throw new errors.SeedExhaustiveError({
+                    message: _response.error.errorMessage,
+                    rawResponse: _response.rawResponse,
+                });
         }
     }
 

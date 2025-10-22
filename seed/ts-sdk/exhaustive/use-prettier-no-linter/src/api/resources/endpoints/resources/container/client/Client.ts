@@ -7,18 +7,15 @@ import * as errors from "../../../../../../errors/index.js";
 import * as SeedExhaustive from "../../../../../index.js";
 
 export declare namespace Container {
-    export interface Options extends BaseClientOptions {
-    }
+    export interface Options extends BaseClientOptions {}
 
-    export interface RequestOptions extends BaseRequestOptions {
-    }
+    export interface RequestOptions extends BaseRequestOptions {}
 }
 
 export class Container {
     protected readonly _options: Container.Options;
 
     constructor(_options: Container.Options) {
-
         this._options = _options;
     }
 
@@ -29,14 +26,28 @@ export class Container {
      * @example
      *     await client.endpoints.container.getAndReturnListOfPrimitives(["string", "string"])
      */
-    public getAndReturnListOfPrimitives(request: string[], requestOptions?: Container.RequestOptions): core.HttpResponsePromise<string[]> {
+    public getAndReturnListOfPrimitives(
+        request: string[],
+        requestOptions?: Container.RequestOptions,
+    ): core.HttpResponsePromise<string[]> {
         return core.HttpResponsePromise.fromPromise(this.__getAndReturnListOfPrimitives(request, requestOptions));
     }
 
-    private async __getAndReturnListOfPrimitives(request: string[], requestOptions?: Container.RequestOptions): Promise<core.WithRawResponse<string[]>> {
-        let _headers: core.Fetcher.Args["headers"] = mergeHeaders(this._options?.headers, mergeOnlyDefinedHeaders({ "Authorization": await this._getAuthorizationHeader() }), requestOptions?.headers);
+    private async __getAndReturnListOfPrimitives(
+        request: string[],
+        requestOptions?: Container.RequestOptions,
+    ): Promise<core.WithRawResponse<string[]>> {
+        let _headers: core.Fetcher.Args["headers"] = mergeHeaders(
+            this._options?.headers,
+            mergeOnlyDefinedHeaders({ Authorization: await this._getAuthorizationHeader() }),
+            requestOptions?.headers,
+        );
         const _response = await core.fetcher({
-            url: core.url.join(await core.Supplier.get(this._options.baseUrl) ?? await core.Supplier.get(this._options.environment), "/container/list-of-primitives"),
+            url: core.url.join(
+                (await core.Supplier.get(this._options.baseUrl)) ??
+                    (await core.Supplier.get(this._options.environment)),
+                "/container/list-of-primitives",
+            ),
             method: "POST",
             headers: _headers,
             contentType: "application/json",
@@ -45,7 +56,7 @@ export class Container {
             body: request,
             timeoutMs: (requestOptions?.timeoutInSeconds ?? this._options?.timeoutInSeconds ?? 60) * 1000,
             maxRetries: requestOptions?.maxRetries ?? this._options?.maxRetries,
-            abortSignal: requestOptions?.abortSignal
+            abortSignal: requestOptions?.abortSignal,
         });
         if (_response.ok) {
             return { data: _response.body as string[], rawResponse: _response.rawResponse };
@@ -55,21 +66,26 @@ export class Container {
             throw new errors.SeedExhaustiveError({
                 statusCode: _response.error.statusCode,
                 body: _response.error.body,
-                rawResponse: _response.rawResponse
+                rawResponse: _response.rawResponse,
             });
         }
 
         switch (_response.error.reason) {
-            case "non-json": throw new errors.SeedExhaustiveError({
-                statusCode: _response.error.statusCode,
-                body: _response.error.rawBody,
-                rawResponse: _response.rawResponse
-            });
-            case "timeout": throw new errors.SeedExhaustiveTimeoutError("Timeout exceeded when calling POST /container/list-of-primitives.");
-            case "unknown": throw new errors.SeedExhaustiveError({
-                message: _response.error.errorMessage,
-                rawResponse: _response.rawResponse
-            });
+            case "non-json":
+                throw new errors.SeedExhaustiveError({
+                    statusCode: _response.error.statusCode,
+                    body: _response.error.rawBody,
+                    rawResponse: _response.rawResponse,
+                });
+            case "timeout":
+                throw new errors.SeedExhaustiveTimeoutError(
+                    "Timeout exceeded when calling POST /container/list-of-primitives.",
+                );
+            case "unknown":
+                throw new errors.SeedExhaustiveError({
+                    message: _response.error.errorMessage,
+                    rawResponse: _response.rawResponse,
+                });
         }
     }
 
@@ -84,14 +100,28 @@ export class Container {
      *             string: "string"
      *         }])
      */
-    public getAndReturnListOfObjects(request: SeedExhaustive.types.ObjectWithRequiredField[], requestOptions?: Container.RequestOptions): core.HttpResponsePromise<SeedExhaustive.types.ObjectWithRequiredField[]> {
+    public getAndReturnListOfObjects(
+        request: SeedExhaustive.types.ObjectWithRequiredField[],
+        requestOptions?: Container.RequestOptions,
+    ): core.HttpResponsePromise<SeedExhaustive.types.ObjectWithRequiredField[]> {
         return core.HttpResponsePromise.fromPromise(this.__getAndReturnListOfObjects(request, requestOptions));
     }
 
-    private async __getAndReturnListOfObjects(request: SeedExhaustive.types.ObjectWithRequiredField[], requestOptions?: Container.RequestOptions): Promise<core.WithRawResponse<SeedExhaustive.types.ObjectWithRequiredField[]>> {
-        let _headers: core.Fetcher.Args["headers"] = mergeHeaders(this._options?.headers, mergeOnlyDefinedHeaders({ "Authorization": await this._getAuthorizationHeader() }), requestOptions?.headers);
+    private async __getAndReturnListOfObjects(
+        request: SeedExhaustive.types.ObjectWithRequiredField[],
+        requestOptions?: Container.RequestOptions,
+    ): Promise<core.WithRawResponse<SeedExhaustive.types.ObjectWithRequiredField[]>> {
+        let _headers: core.Fetcher.Args["headers"] = mergeHeaders(
+            this._options?.headers,
+            mergeOnlyDefinedHeaders({ Authorization: await this._getAuthorizationHeader() }),
+            requestOptions?.headers,
+        );
         const _response = await core.fetcher({
-            url: core.url.join(await core.Supplier.get(this._options.baseUrl) ?? await core.Supplier.get(this._options.environment), "/container/list-of-objects"),
+            url: core.url.join(
+                (await core.Supplier.get(this._options.baseUrl)) ??
+                    (await core.Supplier.get(this._options.environment)),
+                "/container/list-of-objects",
+            ),
             method: "POST",
             headers: _headers,
             contentType: "application/json",
@@ -100,31 +130,39 @@ export class Container {
             body: request,
             timeoutMs: (requestOptions?.timeoutInSeconds ?? this._options?.timeoutInSeconds ?? 60) * 1000,
             maxRetries: requestOptions?.maxRetries ?? this._options?.maxRetries,
-            abortSignal: requestOptions?.abortSignal
+            abortSignal: requestOptions?.abortSignal,
         });
         if (_response.ok) {
-            return { data: _response.body as SeedExhaustive.types.ObjectWithRequiredField[], rawResponse: _response.rawResponse };
+            return {
+                data: _response.body as SeedExhaustive.types.ObjectWithRequiredField[],
+                rawResponse: _response.rawResponse,
+            };
         }
 
         if (_response.error.reason === "status-code") {
             throw new errors.SeedExhaustiveError({
                 statusCode: _response.error.statusCode,
                 body: _response.error.body,
-                rawResponse: _response.rawResponse
+                rawResponse: _response.rawResponse,
             });
         }
 
         switch (_response.error.reason) {
-            case "non-json": throw new errors.SeedExhaustiveError({
-                statusCode: _response.error.statusCode,
-                body: _response.error.rawBody,
-                rawResponse: _response.rawResponse
-            });
-            case "timeout": throw new errors.SeedExhaustiveTimeoutError("Timeout exceeded when calling POST /container/list-of-objects.");
-            case "unknown": throw new errors.SeedExhaustiveError({
-                message: _response.error.errorMessage,
-                rawResponse: _response.rawResponse
-            });
+            case "non-json":
+                throw new errors.SeedExhaustiveError({
+                    statusCode: _response.error.statusCode,
+                    body: _response.error.rawBody,
+                    rawResponse: _response.rawResponse,
+                });
+            case "timeout":
+                throw new errors.SeedExhaustiveTimeoutError(
+                    "Timeout exceeded when calling POST /container/list-of-objects.",
+                );
+            case "unknown":
+                throw new errors.SeedExhaustiveError({
+                    message: _response.error.errorMessage,
+                    rawResponse: _response.rawResponse,
+                });
         }
     }
 
@@ -135,14 +173,28 @@ export class Container {
      * @example
      *     await client.endpoints.container.getAndReturnSetOfPrimitives(["string"])
      */
-    public getAndReturnSetOfPrimitives(request: string[], requestOptions?: Container.RequestOptions): core.HttpResponsePromise<string[]> {
+    public getAndReturnSetOfPrimitives(
+        request: string[],
+        requestOptions?: Container.RequestOptions,
+    ): core.HttpResponsePromise<string[]> {
         return core.HttpResponsePromise.fromPromise(this.__getAndReturnSetOfPrimitives(request, requestOptions));
     }
 
-    private async __getAndReturnSetOfPrimitives(request: string[], requestOptions?: Container.RequestOptions): Promise<core.WithRawResponse<string[]>> {
-        let _headers: core.Fetcher.Args["headers"] = mergeHeaders(this._options?.headers, mergeOnlyDefinedHeaders({ "Authorization": await this._getAuthorizationHeader() }), requestOptions?.headers);
+    private async __getAndReturnSetOfPrimitives(
+        request: string[],
+        requestOptions?: Container.RequestOptions,
+    ): Promise<core.WithRawResponse<string[]>> {
+        let _headers: core.Fetcher.Args["headers"] = mergeHeaders(
+            this._options?.headers,
+            mergeOnlyDefinedHeaders({ Authorization: await this._getAuthorizationHeader() }),
+            requestOptions?.headers,
+        );
         const _response = await core.fetcher({
-            url: core.url.join(await core.Supplier.get(this._options.baseUrl) ?? await core.Supplier.get(this._options.environment), "/container/set-of-primitives"),
+            url: core.url.join(
+                (await core.Supplier.get(this._options.baseUrl)) ??
+                    (await core.Supplier.get(this._options.environment)),
+                "/container/set-of-primitives",
+            ),
             method: "POST",
             headers: _headers,
             contentType: "application/json",
@@ -151,7 +203,7 @@ export class Container {
             body: request,
             timeoutMs: (requestOptions?.timeoutInSeconds ?? this._options?.timeoutInSeconds ?? 60) * 1000,
             maxRetries: requestOptions?.maxRetries ?? this._options?.maxRetries,
-            abortSignal: requestOptions?.abortSignal
+            abortSignal: requestOptions?.abortSignal,
         });
         if (_response.ok) {
             return { data: _response.body as string[], rawResponse: _response.rawResponse };
@@ -161,21 +213,26 @@ export class Container {
             throw new errors.SeedExhaustiveError({
                 statusCode: _response.error.statusCode,
                 body: _response.error.body,
-                rawResponse: _response.rawResponse
+                rawResponse: _response.rawResponse,
             });
         }
 
         switch (_response.error.reason) {
-            case "non-json": throw new errors.SeedExhaustiveError({
-                statusCode: _response.error.statusCode,
-                body: _response.error.rawBody,
-                rawResponse: _response.rawResponse
-            });
-            case "timeout": throw new errors.SeedExhaustiveTimeoutError("Timeout exceeded when calling POST /container/set-of-primitives.");
-            case "unknown": throw new errors.SeedExhaustiveError({
-                message: _response.error.errorMessage,
-                rawResponse: _response.rawResponse
-            });
+            case "non-json":
+                throw new errors.SeedExhaustiveError({
+                    statusCode: _response.error.statusCode,
+                    body: _response.error.rawBody,
+                    rawResponse: _response.rawResponse,
+                });
+            case "timeout":
+                throw new errors.SeedExhaustiveTimeoutError(
+                    "Timeout exceeded when calling POST /container/set-of-primitives.",
+                );
+            case "unknown":
+                throw new errors.SeedExhaustiveError({
+                    message: _response.error.errorMessage,
+                    rawResponse: _response.rawResponse,
+                });
         }
     }
 
@@ -188,14 +245,28 @@ export class Container {
      *             string: "string"
      *         }])
      */
-    public getAndReturnSetOfObjects(request: SeedExhaustive.types.ObjectWithRequiredField[], requestOptions?: Container.RequestOptions): core.HttpResponsePromise<SeedExhaustive.types.ObjectWithRequiredField[]> {
+    public getAndReturnSetOfObjects(
+        request: SeedExhaustive.types.ObjectWithRequiredField[],
+        requestOptions?: Container.RequestOptions,
+    ): core.HttpResponsePromise<SeedExhaustive.types.ObjectWithRequiredField[]> {
         return core.HttpResponsePromise.fromPromise(this.__getAndReturnSetOfObjects(request, requestOptions));
     }
 
-    private async __getAndReturnSetOfObjects(request: SeedExhaustive.types.ObjectWithRequiredField[], requestOptions?: Container.RequestOptions): Promise<core.WithRawResponse<SeedExhaustive.types.ObjectWithRequiredField[]>> {
-        let _headers: core.Fetcher.Args["headers"] = mergeHeaders(this._options?.headers, mergeOnlyDefinedHeaders({ "Authorization": await this._getAuthorizationHeader() }), requestOptions?.headers);
+    private async __getAndReturnSetOfObjects(
+        request: SeedExhaustive.types.ObjectWithRequiredField[],
+        requestOptions?: Container.RequestOptions,
+    ): Promise<core.WithRawResponse<SeedExhaustive.types.ObjectWithRequiredField[]>> {
+        let _headers: core.Fetcher.Args["headers"] = mergeHeaders(
+            this._options?.headers,
+            mergeOnlyDefinedHeaders({ Authorization: await this._getAuthorizationHeader() }),
+            requestOptions?.headers,
+        );
         const _response = await core.fetcher({
-            url: core.url.join(await core.Supplier.get(this._options.baseUrl) ?? await core.Supplier.get(this._options.environment), "/container/set-of-objects"),
+            url: core.url.join(
+                (await core.Supplier.get(this._options.baseUrl)) ??
+                    (await core.Supplier.get(this._options.environment)),
+                "/container/set-of-objects",
+            ),
             method: "POST",
             headers: _headers,
             contentType: "application/json",
@@ -204,31 +275,39 @@ export class Container {
             body: request,
             timeoutMs: (requestOptions?.timeoutInSeconds ?? this._options?.timeoutInSeconds ?? 60) * 1000,
             maxRetries: requestOptions?.maxRetries ?? this._options?.maxRetries,
-            abortSignal: requestOptions?.abortSignal
+            abortSignal: requestOptions?.abortSignal,
         });
         if (_response.ok) {
-            return { data: _response.body as SeedExhaustive.types.ObjectWithRequiredField[], rawResponse: _response.rawResponse };
+            return {
+                data: _response.body as SeedExhaustive.types.ObjectWithRequiredField[],
+                rawResponse: _response.rawResponse,
+            };
         }
 
         if (_response.error.reason === "status-code") {
             throw new errors.SeedExhaustiveError({
                 statusCode: _response.error.statusCode,
                 body: _response.error.body,
-                rawResponse: _response.rawResponse
+                rawResponse: _response.rawResponse,
             });
         }
 
         switch (_response.error.reason) {
-            case "non-json": throw new errors.SeedExhaustiveError({
-                statusCode: _response.error.statusCode,
-                body: _response.error.rawBody,
-                rawResponse: _response.rawResponse
-            });
-            case "timeout": throw new errors.SeedExhaustiveTimeoutError("Timeout exceeded when calling POST /container/set-of-objects.");
-            case "unknown": throw new errors.SeedExhaustiveError({
-                message: _response.error.errorMessage,
-                rawResponse: _response.rawResponse
-            });
+            case "non-json":
+                throw new errors.SeedExhaustiveError({
+                    statusCode: _response.error.statusCode,
+                    body: _response.error.rawBody,
+                    rawResponse: _response.rawResponse,
+                });
+            case "timeout":
+                throw new errors.SeedExhaustiveTimeoutError(
+                    "Timeout exceeded when calling POST /container/set-of-objects.",
+                );
+            case "unknown":
+                throw new errors.SeedExhaustiveError({
+                    message: _response.error.errorMessage,
+                    rawResponse: _response.rawResponse,
+                });
         }
     }
 
@@ -241,14 +320,28 @@ export class Container {
      *         "string": "string"
      *     })
      */
-    public getAndReturnMapPrimToPrim(request: Record<string, string>, requestOptions?: Container.RequestOptions): core.HttpResponsePromise<Record<string, string>> {
+    public getAndReturnMapPrimToPrim(
+        request: Record<string, string>,
+        requestOptions?: Container.RequestOptions,
+    ): core.HttpResponsePromise<Record<string, string>> {
         return core.HttpResponsePromise.fromPromise(this.__getAndReturnMapPrimToPrim(request, requestOptions));
     }
 
-    private async __getAndReturnMapPrimToPrim(request: Record<string, string>, requestOptions?: Container.RequestOptions): Promise<core.WithRawResponse<Record<string, string>>> {
-        let _headers: core.Fetcher.Args["headers"] = mergeHeaders(this._options?.headers, mergeOnlyDefinedHeaders({ "Authorization": await this._getAuthorizationHeader() }), requestOptions?.headers);
+    private async __getAndReturnMapPrimToPrim(
+        request: Record<string, string>,
+        requestOptions?: Container.RequestOptions,
+    ): Promise<core.WithRawResponse<Record<string, string>>> {
+        let _headers: core.Fetcher.Args["headers"] = mergeHeaders(
+            this._options?.headers,
+            mergeOnlyDefinedHeaders({ Authorization: await this._getAuthorizationHeader() }),
+            requestOptions?.headers,
+        );
         const _response = await core.fetcher({
-            url: core.url.join(await core.Supplier.get(this._options.baseUrl) ?? await core.Supplier.get(this._options.environment), "/container/map-prim-to-prim"),
+            url: core.url.join(
+                (await core.Supplier.get(this._options.baseUrl)) ??
+                    (await core.Supplier.get(this._options.environment)),
+                "/container/map-prim-to-prim",
+            ),
             method: "POST",
             headers: _headers,
             contentType: "application/json",
@@ -257,7 +350,7 @@ export class Container {
             body: request,
             timeoutMs: (requestOptions?.timeoutInSeconds ?? this._options?.timeoutInSeconds ?? 60) * 1000,
             maxRetries: requestOptions?.maxRetries ?? this._options?.maxRetries,
-            abortSignal: requestOptions?.abortSignal
+            abortSignal: requestOptions?.abortSignal,
         });
         if (_response.ok) {
             return { data: _response.body as Record<string, string>, rawResponse: _response.rawResponse };
@@ -267,21 +360,26 @@ export class Container {
             throw new errors.SeedExhaustiveError({
                 statusCode: _response.error.statusCode,
                 body: _response.error.body,
-                rawResponse: _response.rawResponse
+                rawResponse: _response.rawResponse,
             });
         }
 
         switch (_response.error.reason) {
-            case "non-json": throw new errors.SeedExhaustiveError({
-                statusCode: _response.error.statusCode,
-                body: _response.error.rawBody,
-                rawResponse: _response.rawResponse
-            });
-            case "timeout": throw new errors.SeedExhaustiveTimeoutError("Timeout exceeded when calling POST /container/map-prim-to-prim.");
-            case "unknown": throw new errors.SeedExhaustiveError({
-                message: _response.error.errorMessage,
-                rawResponse: _response.rawResponse
-            });
+            case "non-json":
+                throw new errors.SeedExhaustiveError({
+                    statusCode: _response.error.statusCode,
+                    body: _response.error.rawBody,
+                    rawResponse: _response.rawResponse,
+                });
+            case "timeout":
+                throw new errors.SeedExhaustiveTimeoutError(
+                    "Timeout exceeded when calling POST /container/map-prim-to-prim.",
+                );
+            case "unknown":
+                throw new errors.SeedExhaustiveError({
+                    message: _response.error.errorMessage,
+                    rawResponse: _response.rawResponse,
+                });
         }
     }
 
@@ -296,14 +394,28 @@ export class Container {
      *         }
      *     })
      */
-    public getAndReturnMapOfPrimToObject(request: Record<string, SeedExhaustive.types.ObjectWithRequiredField>, requestOptions?: Container.RequestOptions): core.HttpResponsePromise<Record<string, SeedExhaustive.types.ObjectWithRequiredField>> {
+    public getAndReturnMapOfPrimToObject(
+        request: Record<string, SeedExhaustive.types.ObjectWithRequiredField>,
+        requestOptions?: Container.RequestOptions,
+    ): core.HttpResponsePromise<Record<string, SeedExhaustive.types.ObjectWithRequiredField>> {
         return core.HttpResponsePromise.fromPromise(this.__getAndReturnMapOfPrimToObject(request, requestOptions));
     }
 
-    private async __getAndReturnMapOfPrimToObject(request: Record<string, SeedExhaustive.types.ObjectWithRequiredField>, requestOptions?: Container.RequestOptions): Promise<core.WithRawResponse<Record<string, SeedExhaustive.types.ObjectWithRequiredField>>> {
-        let _headers: core.Fetcher.Args["headers"] = mergeHeaders(this._options?.headers, mergeOnlyDefinedHeaders({ "Authorization": await this._getAuthorizationHeader() }), requestOptions?.headers);
+    private async __getAndReturnMapOfPrimToObject(
+        request: Record<string, SeedExhaustive.types.ObjectWithRequiredField>,
+        requestOptions?: Container.RequestOptions,
+    ): Promise<core.WithRawResponse<Record<string, SeedExhaustive.types.ObjectWithRequiredField>>> {
+        let _headers: core.Fetcher.Args["headers"] = mergeHeaders(
+            this._options?.headers,
+            mergeOnlyDefinedHeaders({ Authorization: await this._getAuthorizationHeader() }),
+            requestOptions?.headers,
+        );
         const _response = await core.fetcher({
-            url: core.url.join(await core.Supplier.get(this._options.baseUrl) ?? await core.Supplier.get(this._options.environment), "/container/map-prim-to-object"),
+            url: core.url.join(
+                (await core.Supplier.get(this._options.baseUrl)) ??
+                    (await core.Supplier.get(this._options.environment)),
+                "/container/map-prim-to-object",
+            ),
             method: "POST",
             headers: _headers,
             contentType: "application/json",
@@ -312,31 +424,39 @@ export class Container {
             body: request,
             timeoutMs: (requestOptions?.timeoutInSeconds ?? this._options?.timeoutInSeconds ?? 60) * 1000,
             maxRetries: requestOptions?.maxRetries ?? this._options?.maxRetries,
-            abortSignal: requestOptions?.abortSignal
+            abortSignal: requestOptions?.abortSignal,
         });
         if (_response.ok) {
-            return { data: _response.body as Record<string, SeedExhaustive.types.ObjectWithRequiredField>, rawResponse: _response.rawResponse };
+            return {
+                data: _response.body as Record<string, SeedExhaustive.types.ObjectWithRequiredField>,
+                rawResponse: _response.rawResponse,
+            };
         }
 
         if (_response.error.reason === "status-code") {
             throw new errors.SeedExhaustiveError({
                 statusCode: _response.error.statusCode,
                 body: _response.error.body,
-                rawResponse: _response.rawResponse
+                rawResponse: _response.rawResponse,
             });
         }
 
         switch (_response.error.reason) {
-            case "non-json": throw new errors.SeedExhaustiveError({
-                statusCode: _response.error.statusCode,
-                body: _response.error.rawBody,
-                rawResponse: _response.rawResponse
-            });
-            case "timeout": throw new errors.SeedExhaustiveTimeoutError("Timeout exceeded when calling POST /container/map-prim-to-object.");
-            case "unknown": throw new errors.SeedExhaustiveError({
-                message: _response.error.errorMessage,
-                rawResponse: _response.rawResponse
-            });
+            case "non-json":
+                throw new errors.SeedExhaustiveError({
+                    statusCode: _response.error.statusCode,
+                    body: _response.error.rawBody,
+                    rawResponse: _response.rawResponse,
+                });
+            case "timeout":
+                throw new errors.SeedExhaustiveTimeoutError(
+                    "Timeout exceeded when calling POST /container/map-prim-to-object.",
+                );
+            case "unknown":
+                throw new errors.SeedExhaustiveError({
+                    message: _response.error.errorMessage,
+                    rawResponse: _response.rawResponse,
+                });
         }
     }
 
@@ -349,14 +469,28 @@ export class Container {
      *         string: "string"
      *     })
      */
-    public getAndReturnOptional(request?: SeedExhaustive.types.ObjectWithRequiredField, requestOptions?: Container.RequestOptions): core.HttpResponsePromise<SeedExhaustive.types.ObjectWithRequiredField | undefined> {
+    public getAndReturnOptional(
+        request?: SeedExhaustive.types.ObjectWithRequiredField,
+        requestOptions?: Container.RequestOptions,
+    ): core.HttpResponsePromise<SeedExhaustive.types.ObjectWithRequiredField | undefined> {
         return core.HttpResponsePromise.fromPromise(this.__getAndReturnOptional(request, requestOptions));
     }
 
-    private async __getAndReturnOptional(request?: SeedExhaustive.types.ObjectWithRequiredField, requestOptions?: Container.RequestOptions): Promise<core.WithRawResponse<SeedExhaustive.types.ObjectWithRequiredField | undefined>> {
-        let _headers: core.Fetcher.Args["headers"] = mergeHeaders(this._options?.headers, mergeOnlyDefinedHeaders({ "Authorization": await this._getAuthorizationHeader() }), requestOptions?.headers);
+    private async __getAndReturnOptional(
+        request?: SeedExhaustive.types.ObjectWithRequiredField,
+        requestOptions?: Container.RequestOptions,
+    ): Promise<core.WithRawResponse<SeedExhaustive.types.ObjectWithRequiredField | undefined>> {
+        let _headers: core.Fetcher.Args["headers"] = mergeHeaders(
+            this._options?.headers,
+            mergeOnlyDefinedHeaders({ Authorization: await this._getAuthorizationHeader() }),
+            requestOptions?.headers,
+        );
         const _response = await core.fetcher({
-            url: core.url.join(await core.Supplier.get(this._options.baseUrl) ?? await core.Supplier.get(this._options.environment), "/container/opt-objects"),
+            url: core.url.join(
+                (await core.Supplier.get(this._options.baseUrl)) ??
+                    (await core.Supplier.get(this._options.environment)),
+                "/container/opt-objects",
+            ),
             method: "POST",
             headers: _headers,
             contentType: "application/json",
@@ -365,31 +499,39 @@ export class Container {
             body: request != null ? request : undefined,
             timeoutMs: (requestOptions?.timeoutInSeconds ?? this._options?.timeoutInSeconds ?? 60) * 1000,
             maxRetries: requestOptions?.maxRetries ?? this._options?.maxRetries,
-            abortSignal: requestOptions?.abortSignal
+            abortSignal: requestOptions?.abortSignal,
         });
         if (_response.ok) {
-            return { data: _response.body as SeedExhaustive.types.ObjectWithRequiredField | undefined, rawResponse: _response.rawResponse };
+            return {
+                data: _response.body as SeedExhaustive.types.ObjectWithRequiredField | undefined,
+                rawResponse: _response.rawResponse,
+            };
         }
 
         if (_response.error.reason === "status-code") {
             throw new errors.SeedExhaustiveError({
                 statusCode: _response.error.statusCode,
                 body: _response.error.body,
-                rawResponse: _response.rawResponse
+                rawResponse: _response.rawResponse,
             });
         }
 
         switch (_response.error.reason) {
-            case "non-json": throw new errors.SeedExhaustiveError({
-                statusCode: _response.error.statusCode,
-                body: _response.error.rawBody,
-                rawResponse: _response.rawResponse
-            });
-            case "timeout": throw new errors.SeedExhaustiveTimeoutError("Timeout exceeded when calling POST /container/opt-objects.");
-            case "unknown": throw new errors.SeedExhaustiveError({
-                message: _response.error.errorMessage,
-                rawResponse: _response.rawResponse
-            });
+            case "non-json":
+                throw new errors.SeedExhaustiveError({
+                    statusCode: _response.error.statusCode,
+                    body: _response.error.rawBody,
+                    rawResponse: _response.rawResponse,
+                });
+            case "timeout":
+                throw new errors.SeedExhaustiveTimeoutError(
+                    "Timeout exceeded when calling POST /container/opt-objects.",
+                );
+            case "unknown":
+                throw new errors.SeedExhaustiveError({
+                    message: _response.error.errorMessage,
+                    rawResponse: _response.rawResponse,
+                });
         }
     }
 
