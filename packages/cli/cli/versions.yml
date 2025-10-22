@@ -1,6 +1,14 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
 - changelogEntry:
     - summary: |
+        Skip bundling APIs with docs creation request.
+      type: fix
+  irVersion: 61
+  createdAt: "2025-10-22"
+  version: 0.93.4
+
+- changelogEntry:
+    - summary: |
         Upgrade fdr sdk to 0.139.33
       type: fix
   irVersion: 61
