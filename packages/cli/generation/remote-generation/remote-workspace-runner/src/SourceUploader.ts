@@ -37,7 +37,7 @@ export class SourceUploader {
         const fileData = await readFile(uploadCommand.absoluteFilePath);
         const response = await fetch(uploadURL, {
             method: "PUT",
-            body: fileData,
+            body: fileData as BodyInit,
             headers: {
                 "Content-Type": "application/octet-stream"
             }
