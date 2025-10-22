@@ -217,6 +217,9 @@ fixtures:
         wrapped-aliases: true
       outputFolder: wrapped-aliases
     - outputFolder: no-custom-config
+    - readmeConfig:
+        exampleStyle: minimal
+      outputFolder: minimal-readme
   java-nullable-named-request-types:
     - outputFolder: custom-config
       customConfig:
