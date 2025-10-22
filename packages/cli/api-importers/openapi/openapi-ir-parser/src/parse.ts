@@ -69,6 +69,10 @@ export function parse({
         idempotencyHeaders: [],
         groups: {}
     };
+    
+    // console.log("parse function called - this will help you trace where it's invoked from");
+    // console.trace("Call stack for parse function:");
+    
     let documentIndex = 0;
     for (const document of documents) {
         try {

@@ -1,0 +1,32 @@
+{
+  "name": "@fern-api/generation-caching",
+  "version": "0.0.0",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/fern-api/fern.git",
+    "directory": "packages/cli/generation/caching"
+  },
+  "files": ["lib"],
+  "type": "commonjs",
+  "main": "./lib/index.js",
+  "types": "./lib/index.d.ts",
+  "sideEffects": false,
+  "scripts": {
+    "clean": "rimraf lib",
+    "compile": "tsc",
+    "test": "vitest"
+  },
+  "devDependencies": {
+    "@types/node": "18.7.18",
+    "rimraf": "^3.0.2",
+    "typescript": "4.6.4",
+    "vitest": "^2.0.5"
+  },
+  "dependencies": {
+    "@fern-api/api-workspace-commons": "workspace:*",
+    "@fern-api/core-utils": "workspace:*",
+    "@fern-api/ir-sdk": "workspace:*",
+    "@fern-api/path-utils": "workspace:*",
+    "@fern-api/task-context": "workspace:*"
+  }
+}

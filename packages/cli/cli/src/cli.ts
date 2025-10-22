@@ -26,6 +26,7 @@ import { getLatestVersionOfCli } from "./cli-context/upgrade-utils/getLatestVers
 import { GlobalCliOptions, loadProjectAndRegisterWorkspacesWithContext } from "./cliCommons";
 import { addGeneratorCommands, addGetOrganizationCommand } from "./cliV2";
 import { addGeneratorToWorkspaces } from "./commands/add-generator/addGeneratorToWorkspaces";
+import { CacheCommand } from "./commands/cache/cacheCommand";
 import { diff } from "./commands/diff/diff";
 import { previewDocsWorkspace } from "./commands/docs-dev/devDocsWorkspace";
 import { generateOpenAPIForWorkspaces } from "./commands/export/generateOpenAPIForWorkspaces";
@@ -183,6 +184,7 @@ async function tryRunCli(cliContext: CliContext) {
     addWriteOverridesCommand(cli, cliContext);
     addTestCommand(cli, cliContext);
     addUpdateApiSpecCommand(cli, cliContext);
+    addCacheCommand(cli, cliContext);
     addUpgradeCommand({
         cli,
         cliContext,
@@ -1497,4 +1499,8 @@ function writeBytes(stream: WriteStream, data: Uint8Array): Promise<void> {
             }
         });
     });
+}
+
+function addCacheCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext) {
+    cli.command(CacheCommand);
 }

@@ -104,6 +104,7 @@ export class OSSWorkspace extends BaseOpenAPIWorkspace {
         settings?: OSSWorkspace.Settings
     ): Promise<OpenApiIntermediateRepresentation> {
         const openApiSpecs = await getAllOpenAPISpecs({ context, specs: this.specs, relativePathToDependency });
+        console.log("get openapiir called");
         return parse({
             context,
             documents: await this.loader.loadDocuments({
@@ -175,6 +176,9 @@ export class OSSWorkspace extends BaseOpenAPIWorkspace {
         const errorCollectors: ErrorCollector[] = [];
 
         for (const document of documents) {
+            console.log("document", document.source?.file);
+            console.log("document type", document.type);
+            // continue;
             const absoluteFilepathToSpec = join(
                 this.absoluteFilePath,
                 RelativeFilePath.of(document.source?.file ?? "")
@@ -371,6 +375,7 @@ export class OSSWorkspace extends BaseOpenAPIWorkspace {
         { context }: { context: TaskContext },
         settings?: OSSWorkspace.Settings
     ): Promise<FernWorkspace> {
+        console.log("OSSWorkspace to fern workspace called");
         const definition = await this.getDefinition({ context }, settings);
         return new FernWorkspace({
             absoluteFilePath: this.absoluteFilePath,

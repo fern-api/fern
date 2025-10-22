@@ -1,0 +1,25 @@
+{
+  "extends": "../../../../tsconfig.json",
+  "compilerOptions": {
+    "outDir": "./lib",
+    "rootDir": "./src"
+  },
+  "include": ["./src/**/*"],
+  "references": [
+    {
+      "path": "../../workspace/commons"
+    },
+    {
+      "path": "../../../commons/core-utils"
+    },
+    {
+      "path": "../../../ir-sdk"
+    },
+    {
+      "path": "../../../commons/path-utils"
+    },
+    {
+      "path": "../../task-context"
+    }
+  ]
+}

@@ -517,12 +517,19 @@ export class DocsDefinitionResolver {
     }
 
     private getOpenApiWorkspaceForApiSection(apiSection: docsYml.DocsNavigationItem.ApiSection): OSSWorkspace {
+        console.trace("get open api workspace for api section called");
+        // console.log("get open api workspace for api section called");
+        // console.log("apiSection JSON object:", JSON.stringify(apiSection, null, 2));
+        // console.log(apiSection.apiName);
         if (apiSection.apiName != null) {
             const ossWorkspace = this.ossWorkspaces.find((workspace) => workspace.workspaceName === apiSection.apiName);
             if (ossWorkspace != null) {
+                // console.log("Found ossWorkspace JSON object:", JSON.stringify(ossWorkspace, null, 2));
                 return ossWorkspace;
             }
         } else if (this.ossWorkspaces.length === 1 && this.ossWorkspaces[0] != null) {
+            // console.log(this.ossWorkspaces[0].workspaceName);
+            // console.log("Fallback ossWorkspace JSON object:", JSON.stringify(this.ossWorkspaces[0], null, 2));
             return this.ossWorkspaces[0];
         }
         const errorMessage = apiSection.apiName
@@ -850,6 +857,10 @@ export class DocsDefinitionResolver {
         if (useV3Parser) {
             try {
                 const openapiWorkspace = this.getOpenApiWorkspaceForApiSection(item);
+                console.log("openapiWorkspace absolute file path:", openapiWorkspace.absoluteFilePath);
+
+                // todo kenny: hash these arguments to getIntermediateRepresentation? then we can skip registration of that particular apiDefinition?
+
                 ir = await openapiWorkspace.getIntermediateRepresentation({
                     context: this.taskContext,
                     audiences: item.audiences,
@@ -881,6 +892,10 @@ export class DocsDefinitionResolver {
             });
         }
 
+        console.log("ir generated");
+        console.log("ir JSON object:", JSON.stringify(ir, null, 2));
+        console.log("register api called");
+        // todo kenny: can skip this, but we need to get the previously registered apiDefinitionId - for now from local file storage.
         const apiDefinitionId = await this.registerApi({
             ir,
             snippetsConfig,
@@ -888,6 +903,7 @@ export class DocsDefinitionResolver {
             apiName: item.apiName,
             workspace
         });
+        // if we got an apiDefinitionId, let's store our hash from before --> this apiDefinitionId
         const api = convertIrToApiDefinition({
             ir,
             apiDefinitionId,
