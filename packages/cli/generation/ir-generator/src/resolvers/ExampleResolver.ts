@@ -101,14 +101,7 @@ export class ExampleResolverImpl implements ExampleResolver {
             };
         }
 
-        const resolved = this.resolveExampleReference(example, file);
-        if (resolved == null) {
-            // If example reference resolution fails, fallback to treating as literal string;
-            // this allows strings like $123.45 to still be used
-            // NOTE(patrick): should we throw a warning when doing this, or is that too messy?
-            return { resolvedExample: example, file };
-        }
-        return resolved;
+        return this.resolveExampleReference(example, file);
     }
 
     private resolveExampleReference(
