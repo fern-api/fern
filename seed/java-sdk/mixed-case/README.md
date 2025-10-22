@@ -48,7 +48,7 @@ public class Example {
             .builder()
             .build();
 
-        client.service().getResource("rsc-xyz");
+        client.service().getResource("ResourceID");
     }
 }
 ```
