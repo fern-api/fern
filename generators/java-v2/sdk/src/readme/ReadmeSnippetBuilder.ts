@@ -493,11 +493,7 @@ export class ReadmeSnippetBuilder extends AbstractReadmeSnippetBuilder {
         endpointSnippets: FernGeneratorExec.Endpoint[]
     ): Record<EndpointId, string> {
         const snippets: Record<EndpointId, string> = {};
-        const customConfig = this.context.config.customConfig as { readmeConfig?: { exampleStyle?: string } };
-        const customConfigExampleStyle = customConfig?.readmeConfig?.exampleStyle;
-        const irReadmeConfig = this.context.ir.readmeConfig as { exampleStyle?: string } | undefined;
-        const irExampleStyle = irReadmeConfig?.exampleStyle;
-        const exampleStyle = customConfigExampleStyle ?? irExampleStyle ?? "comprehensive";
+        const exampleStyle = this.context.ir.readmeConfig?.exampleStyle;
 
         const snippetsByEndpointId: Record<EndpointId, FernGeneratorExec.Endpoint[]> = {};
 
