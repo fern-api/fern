@@ -12,18 +12,18 @@ public enum SubmissionResponse: Codable, Hashable, Sendable {
         let container = try decoder.container(keyedBy: CodingKeys.self)
         let discriminant = try container.decode(String.self, forKey: .type)
         switch discriminant {
-        case "serverInitialized":
-            self = .serverInitialized(try ServerInitialized(from: decoder))
-        case "problemInitialized":
-            self = .problemInitialized(try ProblemInitialized(from: decoder))
-        case "workspaceInitialized":
-            self = .workspaceInitialized(try WorkspaceInitialized(from: decoder))
-        case "serverErrored":
-            self = .serverErrored(try ServerErrored(from: decoder))
         case "codeExecutionUpdate":
             self = .codeExecutionUpdate(try CodeExecutionUpdate(from: decoder))
+        case "problemInitialized":
+            self = .problemInitialized(try ProblemInitialized(from: decoder))
+        case "serverErrored":
+            self = .serverErrored(try ServerErrored(from: decoder))
+        case "serverInitialized":
+            self = .serverInitialized(try ServerInitialized(from: decoder))
         case "terminated":
             self = .terminated(try Terminated(from: decoder))
+        case "workspaceInitialized":
+            self = .workspaceInitialized(try WorkspaceInitialized(from: decoder))
         default:
             throw DecodingError.dataCorrupted(
                 DecodingError.Context(
@@ -36,17 +36,17 @@ public enum SubmissionResponse: Codable, Hashable, Sendable {
 
     public func encode(to encoder: Encoder) throws -> Void {
         switch self {
-        case .serverInitialized(let data):
+        case .codeExecutionUpdate(let data):
             try data.encode(to: encoder)
         case .problemInitialized(let data):
             try data.encode(to: encoder)
-        case .workspaceInitialized(let data):
-            try data.encode(to: encoder)
         case .serverErrored(let data):
             try data.encode(to: encoder)
-        case .codeExecutionUpdate(let data):
+        case .serverInitialized(let data):
             try data.encode(to: encoder)
         case .terminated(let data):
+            try data.encode(to: encoder)
+        case .workspaceInitialized(let data):
             try data.encode(to: encoder)
         }
     }

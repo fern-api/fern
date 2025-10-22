@@ -15,12 +15,12 @@ public enum SubmissionRequest: Codable, Hashable, Sendable {
             self = .initializeProblemRequest(try InitializeProblemRequest(from: decoder))
         case "initializeWorkspaceRequest":
             self = .initializeWorkspaceRequest(try InitializeWorkspaceRequest(from: decoder))
+        case "stop":
+            self = .stop(try Stop(from: decoder))
         case "submitV2":
             self = .submitV2(try SubmitV2(from: decoder))
         case "workspaceSubmit":
             self = .workspaceSubmit(try WorkspaceSubmit(from: decoder))
-        case "stop":
-            self = .stop(try Stop(from: decoder))
         default:
             throw DecodingError.dataCorrupted(
                 DecodingError.Context(
@@ -37,11 +37,11 @@ public enum SubmissionRequest: Codable, Hashable, Sendable {
             try data.encode(to: encoder)
         case .initializeWorkspaceRequest(let data):
             try data.encode(to: encoder)
+        case .stop(let data):
+            try data.encode(to: encoder)
         case .submitV2(let data):
             try data.encode(to: encoder)
         case .workspaceSubmit(let data):
-            try data.encode(to: encoder)
-        case .stop(let data):
             try data.encode(to: encoder)
         }
     }

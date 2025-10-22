@@ -11,10 +11,10 @@ public enum InvalidRequestCause: Codable, Hashable, Sendable {
         let container = try decoder.container(keyedBy: CodingKeys.self)
         let discriminant = try container.decode(String.self, forKey: .type)
         switch discriminant {
-        case "submissionIdNotFound":
-            self = .submissionIdNotFound(try SubmissionIdNotFound(from: decoder))
         case "customTestCasesUnsupported":
             self = .customTestCasesUnsupported(try CustomTestCasesUnsupported(from: decoder))
+        case "submissionIdNotFound":
+            self = .submissionIdNotFound(try SubmissionIdNotFound(from: decoder))
         case "unexpectedLanguage":
             self = .unexpectedLanguage(try UnexpectedLanguage(from: decoder))
         default:
@@ -29,9 +29,9 @@ public enum InvalidRequestCause: Codable, Hashable, Sendable {
 
     public func encode(to encoder: Encoder) throws -> Void {
         switch self {
-        case .submissionIdNotFound(let data):
-            try data.encode(to: encoder)
         case .customTestCasesUnsupported(let data):
+            try data.encode(to: encoder)
+        case .submissionIdNotFound(let data):
             try data.encode(to: encoder)
         case .unexpectedLanguage(let data):
             try data.encode(to: encoder)

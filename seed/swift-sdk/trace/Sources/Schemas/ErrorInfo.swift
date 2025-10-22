@@ -13,10 +13,10 @@ public enum ErrorInfo: Codable, Hashable, Sendable {
         switch discriminant {
         case "compileError":
             self = .compileError(try CompileError(from: decoder))
-        case "runtimeError":
-            self = .runtimeError(try RuntimeError(from: decoder))
         case "internalError":
             self = .internalError(try InternalError(from: decoder))
+        case "runtimeError":
+            self = .runtimeError(try RuntimeError(from: decoder))
         default:
             throw DecodingError.dataCorrupted(
                 DecodingError.Context(
@@ -31,9 +31,9 @@ public enum ErrorInfo: Codable, Hashable, Sendable {
         switch self {
         case .compileError(let data):
             try data.encode(to: encoder)
-        case .runtimeError(let data):
-            try data.encode(to: encoder)
         case .internalError(let data):
+            try data.encode(to: encoder)
+        case .runtimeError(let data):
             try data.encode(to: encoder)
         }
     }

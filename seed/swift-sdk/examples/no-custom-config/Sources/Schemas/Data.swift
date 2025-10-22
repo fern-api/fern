@@ -8,10 +8,10 @@ public enum Data: Codable, Hashable, Sendable {
         let container = try decoder.container(keyedBy: CodingKeys.self)
         let discriminant = try container.decode(Swift.String.self, forKey: .type)
         switch discriminant {
-        case "string":
-            self = .string(try String(from: decoder))
         case "base64":
             self = .base64(try Base64(from: decoder))
+        case "string":
+            self = .string(try String(from: decoder))
         default:
             throw DecodingError.dataCorrupted(
                 DecodingError.Context(
@@ -24,9 +24,9 @@ public enum Data: Codable, Hashable, Sendable {
 
     public func encode(to encoder: Encoder) throws -> Void {
         switch self {
-        case .string(let data):
-            try data.encode(to: encoder)
         case .base64(let data):
+            try data.encode(to: encoder)
+        case .string(let data):
             try data.encode(to: encoder)
         }
     }

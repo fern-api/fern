@@ -12,18 +12,18 @@ public enum TestSubmissionUpdateInfo: Codable, Hashable, Sendable {
         let container = try decoder.container(keyedBy: CodingKeys.self)
         let discriminant = try container.decode(String.self, forKey: .type)
         switch discriminant {
-        case "running":
-            self = .running(try Running(from: decoder))
-        case "stopped":
-            self = .stopped(try Stopped(from: decoder))
         case "errored":
             self = .errored(try Errored(from: decoder))
+        case "finished":
+            self = .finished(try Finished(from: decoder))
         case "gradedTestCase":
             self = .gradedTestCase(try GradedTestCase(from: decoder))
         case "recordedTestCase":
             self = .recordedTestCase(try RecordedTestCase(from: decoder))
-        case "finished":
-            self = .finished(try Finished(from: decoder))
+        case "running":
+            self = .running(try Running(from: decoder))
+        case "stopped":
+            self = .stopped(try Stopped(from: decoder))
         default:
             throw DecodingError.dataCorrupted(
                 DecodingError.Context(
@@ -36,17 +36,17 @@ public enum TestSubmissionUpdateInfo: Codable, Hashable, Sendable {
 
     public func encode(to encoder: Encoder) throws -> Void {
         switch self {
-        case .running(let data):
-            try data.encode(to: encoder)
-        case .stopped(let data):
-            try data.encode(to: encoder)
         case .errored(let data):
+            try data.encode(to: encoder)
+        case .finished(let data):
             try data.encode(to: encoder)
         case .gradedTestCase(let data):
             try data.encode(to: encoder)
         case .recordedTestCase(let data):
             try data.encode(to: encoder)
-        case .finished(let data):
+        case .running(let data):
+            try data.encode(to: encoder)
+        case .stopped(let data):
             try data.encode(to: encoder)
         }
     }

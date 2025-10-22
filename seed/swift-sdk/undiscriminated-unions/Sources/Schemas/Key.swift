@@ -27,4 +27,8 @@ public enum Key: Codable, Hashable, Sendable {
             try container.encode(value)
         }
     }
+
+    public enum Default: String, Codable, Hashable, CaseIterable, Sendable {
+        case `default`
+    }
 }

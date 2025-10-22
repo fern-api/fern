@@ -8,10 +8,10 @@ public enum TestCaseFunctionType: Codable, Hashable, Sendable {
         let container = try decoder.container(keyedBy: CodingKeys.self)
         let discriminant = try container.decode(String.self, forKey: .type)
         switch discriminant {
-        case "withActualResult":
-            self = .withActualResult(try WithActualResult(from: decoder))
         case "custom":
             self = .custom(try Custom(from: decoder))
+        case "withActualResult":
+            self = .withActualResult(try WithActualResult(from: decoder))
         default:
             throw DecodingError.dataCorrupted(
                 DecodingError.Context(
@@ -24,9 +24,9 @@ public enum TestCaseFunctionType: Codable, Hashable, Sendable {
 
     public func encode(to encoder: Encoder) throws -> Void {
         switch self {
-        case .withActualResult(let data):
-            try data.encode(to: encoder)
         case .custom(let data):
+            try data.encode(to: encoder)
+        case .withActualResult(let data):
             try data.encode(to: encoder)
         }
     }

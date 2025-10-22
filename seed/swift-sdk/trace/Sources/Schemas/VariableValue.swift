@@ -17,28 +17,28 @@ public enum VariableValue: Codable, Hashable, Sendable {
         let container = try decoder.container(keyedBy: CodingKeys.self)
         let discriminant = try container.decode(String.self, forKey: .type)
         switch discriminant {
-        case "integerValue":
-            self = .integerValue(try IntegerValue(from: decoder))
-        case "booleanValue":
-            self = .booleanValue(try BooleanValue(from: decoder))
-        case "doubleValue":
-            self = .doubleValue(try DoubleValue(from: decoder))
-        case "stringValue":
-            self = .stringValue(try StringValue(from: decoder))
-        case "charValue":
-            self = .charValue(try CharValue(from: decoder))
-        case "mapValue":
-            self = .mapValue(try MapValue(from: decoder))
-        case "listValue":
-            self = .listValue(try ListValue(from: decoder))
         case "binaryTreeValue":
             self = .binaryTreeValue(try BinaryTreeValue(from: decoder))
-        case "singlyLinkedListValue":
-            self = .singlyLinkedListValue(try SinglyLinkedListValue(from: decoder))
+        case "booleanValue":
+            self = .booleanValue(try BooleanValue(from: decoder))
+        case "charValue":
+            self = .charValue(try CharValue(from: decoder))
+        case "doubleValue":
+            self = .doubleValue(try DoubleValue(from: decoder))
         case "doublyLinkedListValue":
             self = .doublyLinkedListValue(try DoublyLinkedListValue(from: decoder))
+        case "integerValue":
+            self = .integerValue(try IntegerValue(from: decoder))
+        case "listValue":
+            self = .listValue(try ListValue(from: decoder))
+        case "mapValue":
+            self = .mapValue(try MapValue(from: decoder))
         case "nullValue":
             self = .nullValue(try NullValue(from: decoder))
+        case "singlyLinkedListValue":
+            self = .singlyLinkedListValue(try SinglyLinkedListValue(from: decoder))
+        case "stringValue":
+            self = .stringValue(try StringValue(from: decoder))
         default:
             throw DecodingError.dataCorrupted(
                 DecodingError.Context(
@@ -51,27 +51,27 @@ public enum VariableValue: Codable, Hashable, Sendable {
 
     public func encode(to encoder: Encoder) throws -> Void {
         switch self {
-        case .integerValue(let data):
+        case .binaryTreeValue(let data):
             try data.encode(to: encoder)
         case .booleanValue(let data):
             try data.encode(to: encoder)
-        case .doubleValue(let data):
-            try data.encode(to: encoder)
-        case .stringValue(let data):
-            try data.encode(to: encoder)
         case .charValue(let data):
             try data.encode(to: encoder)
-        case .mapValue(let data):
-            try data.encode(to: encoder)
-        case .listValue(let data):
-            try data.encode(to: encoder)
-        case .binaryTreeValue(let data):
-            try data.encode(to: encoder)
-        case .singlyLinkedListValue(let data):
+        case .doubleValue(let data):
             try data.encode(to: encoder)
         case .doublyLinkedListValue(let data):
             try data.encode(to: encoder)
+        case .integerValue(let data):
+            try data.encode(to: encoder)
+        case .listValue(let data):
+            try data.encode(to: encoder)
+        case .mapValue(let data):
+            try data.encode(to: encoder)
         case .nullValue(let data):
+            try data.encode(to: encoder)
+        case .singlyLinkedListValue(let data):
+            try data.encode(to: encoder)
+        case .stringValue(let data):
             try data.encode(to: encoder)
         }
     }

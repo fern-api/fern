@@ -10,10 +10,10 @@ public enum FunctionSignatureType: Codable, Hashable, Sendable {
         let container = try decoder.container(keyedBy: CodingKeys.self)
         let discriminant = try container.decode(String.self, forKey: .type)
         switch discriminant {
-        case "void":
-            self = .void(try Void(from: decoder))
         case "nonVoid":
             self = .nonVoid(try NonVoid(from: decoder))
+        case "void":
+            self = .void(try Void(from: decoder))
         case "voidThatTakesActualResult":
             self = .voidThatTakesActualResult(try VoidThatTakesActualResult(from: decoder))
         default:
@@ -28,9 +28,9 @@ public enum FunctionSignatureType: Codable, Hashable, Sendable {
 
     public func encode(to encoder: Encoder) throws -> Swift.Void {
         switch self {
-        case .void(let data):
-            try data.encode(to: encoder)
         case .nonVoid(let data):
+            try data.encode(to: encoder)
+        case .void(let data):
             try data.encode(to: encoder)
         case .voidThatTakesActualResult(let data):
             try data.encode(to: encoder)

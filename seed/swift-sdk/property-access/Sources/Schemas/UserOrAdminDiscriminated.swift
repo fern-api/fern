@@ -10,12 +10,12 @@ public enum UserOrAdminDiscriminated: Codable, Hashable, Sendable {
         let container = try decoder.container(keyedBy: CodingKeys.self)
         let discriminant = try container.decode(String.self, forKey: .type)
         switch discriminant {
-        case "user":
-            self = .user(try User(from: decoder))
         case "admin":
             self = .admin(try Admin(from: decoder))
         case "empty":
             self = .empty(try Empty(from: decoder))
+        case "user":
+            self = .user(try User(from: decoder))
         default:
             throw DecodingError.dataCorrupted(
                 DecodingError.Context(
@@ -28,11 +28,11 @@ public enum UserOrAdminDiscriminated: Codable, Hashable, Sendable {
 
     public func encode(to encoder: Encoder) throws -> Void {
         switch self {
-        case .user(let data):
-            try data.encode(to: encoder)
         case .admin(let data):
             try data.encode(to: encoder)
         case .empty(let data):
+            try data.encode(to: encoder)
+        case .user(let data):
             try data.encode(to: encoder)
         }
     }

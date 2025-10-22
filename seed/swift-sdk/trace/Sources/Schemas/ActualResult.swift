@@ -9,12 +9,12 @@ public enum ActualResult: Codable, Hashable, Sendable {
         let container = try decoder.container(keyedBy: CodingKeys.self)
         let discriminant = try container.decode(String.self, forKey: .type)
         switch discriminant {
-        case "value":
-            self = .value(try Value(from: decoder))
         case "exception":
             self = .exception(try Exception(from: decoder))
         case "exceptionV2":
             self = .exceptionV2(try ExceptionV2(from: decoder))
+        case "value":
+            self = .value(try Value(from: decoder))
         default:
             throw DecodingError.dataCorrupted(
                 DecodingError.Context(
@@ -27,11 +27,11 @@ public enum ActualResult: Codable, Hashable, Sendable {
 
     public func encode(to encoder: Encoder) throws -> Void {
         switch self {
-        case .value(let data):
-            try data.encode(to: encoder)
         case .exception(let data):
             try data.encode(to: encoder)
         case .exceptionV2(let data):
+            try data.encode(to: encoder)
+        case .value(let data):
             try data.encode(to: encoder)
         }
     }

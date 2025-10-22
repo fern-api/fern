@@ -30,26 +30,26 @@ public enum CodeExecutionUpdate: Codable, Hashable, Sendable {
         switch discriminant {
         case "buildingExecutor":
             self = .buildingExecutor(try BuildingExecutor(from: decoder))
-        case "running":
-            self = .running(try Running(from: decoder))
         case "errored":
             self = .errored(try Errored(from: decoder))
-        case "stopped":
-            self = .stopped(try Stopped(from: decoder))
+        case "finished":
+            self = .finished(try Finished(from: decoder))
         case "graded":
             self = .graded(try Graded(from: decoder))
         case "gradedV2":
             self = .gradedV2(try GradedV2(from: decoder))
-        case "workspaceRan":
-            self = .workspaceRan(try WorkspaceRan(from: decoder))
-        case "recording":
-            self = .recording(try Recording(from: decoder))
-        case "recorded":
-            self = .recorded(try Recorded(from: decoder))
         case "invalidRequest":
             self = .invalidRequest(try InvalidRequest(from: decoder))
-        case "finished":
-            self = .finished(try Finished(from: decoder))
+        case "recorded":
+            self = .recorded(try Recorded(from: decoder))
+        case "recording":
+            self = .recording(try Recording(from: decoder))
+        case "running":
+            self = .running(try Running(from: decoder))
+        case "stopped":
+            self = .stopped(try Stopped(from: decoder))
+        case "workspaceRan":
+            self = .workspaceRan(try WorkspaceRan(from: decoder))
         default:
             throw DecodingError.dataCorrupted(
                 DecodingError.Context(
@@ -64,25 +64,25 @@ public enum CodeExecutionUpdate: Codable, Hashable, Sendable {
         switch self {
         case .buildingExecutor(let data):
             try data.encode(to: encoder)
-        case .running(let data):
-            try data.encode(to: encoder)
         case .errored(let data):
             try data.encode(to: encoder)
-        case .stopped(let data):
+        case .finished(let data):
             try data.encode(to: encoder)
         case .graded(let data):
             try data.encode(to: encoder)
         case .gradedV2(let data):
             try data.encode(to: encoder)
-        case .workspaceRan(let data):
-            try data.encode(to: encoder)
-        case .recording(let data):
+        case .invalidRequest(let data):
             try data.encode(to: encoder)
         case .recorded(let data):
             try data.encode(to: encoder)
-        case .invalidRequest(let data):
+        case .recording(let data):
             try data.encode(to: encoder)
-        case .finished(let data):
+        case .running(let data):
+            try data.encode(to: encoder)
+        case .stopped(let data):
+            try data.encode(to: encoder)
+        case .workspaceRan(let data):
             try data.encode(to: encoder)
         }
     }

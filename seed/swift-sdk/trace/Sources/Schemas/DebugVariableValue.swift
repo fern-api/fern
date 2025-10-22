@@ -19,32 +19,32 @@ public enum DebugVariableValue: Codable, Hashable, Sendable {
         let container = try decoder.container(keyedBy: CodingKeys.self)
         let discriminant = try container.decode(String.self, forKey: .type)
         switch discriminant {
-        case "integerValue":
-            self = .integerValue(try IntegerValue(from: decoder))
-        case "booleanValue":
-            self = .booleanValue(try BooleanValue(from: decoder))
-        case "doubleValue":
-            self = .doubleValue(try DoubleValue(from: decoder))
-        case "stringValue":
-            self = .stringValue(try StringValue(from: decoder))
-        case "charValue":
-            self = .charValue(try CharValue(from: decoder))
-        case "mapValue":
-            self = .mapValue(try MapValue(from: decoder))
-        case "listValue":
-            self = .listValue(try ListValue(from: decoder))
         case "binaryTreeNodeValue":
             self = .binaryTreeNodeValue(try BinaryTreeNodeValue(from: decoder))
-        case "singlyLinkedListNodeValue":
-            self = .singlyLinkedListNodeValue(try SinglyLinkedListNodeValue(from: decoder))
+        case "booleanValue":
+            self = .booleanValue(try BooleanValue(from: decoder))
+        case "charValue":
+            self = .charValue(try CharValue(from: decoder))
+        case "doubleValue":
+            self = .doubleValue(try DoubleValue(from: decoder))
         case "doublyLinkedListNodeValue":
             self = .doublyLinkedListNodeValue(try DoublyLinkedListNodeValue(from: decoder))
-        case "undefinedValue":
-            self = .undefinedValue(try UndefinedValue(from: decoder))
-        case "nullValue":
-            self = .nullValue(try NullValue(from: decoder))
         case "genericValue":
             self = .genericValue(try GenericValue(from: decoder))
+        case "integerValue":
+            self = .integerValue(try IntegerValue(from: decoder))
+        case "listValue":
+            self = .listValue(try ListValue(from: decoder))
+        case "mapValue":
+            self = .mapValue(try MapValue(from: decoder))
+        case "nullValue":
+            self = .nullValue(try NullValue(from: decoder))
+        case "singlyLinkedListNodeValue":
+            self = .singlyLinkedListNodeValue(try SinglyLinkedListNodeValue(from: decoder))
+        case "stringValue":
+            self = .stringValue(try StringValue(from: decoder))
+        case "undefinedValue":
+            self = .undefinedValue(try UndefinedValue(from: decoder))
         default:
             throw DecodingError.dataCorrupted(
                 DecodingError.Context(
@@ -57,31 +57,31 @@ public enum DebugVariableValue: Codable, Hashable, Sendable {
 
     public func encode(to encoder: Encoder) throws -> Void {
         switch self {
-        case .integerValue(let data):
+        case .binaryTreeNodeValue(let data):
             try data.encode(to: encoder)
         case .booleanValue(let data):
             try data.encode(to: encoder)
-        case .doubleValue(let data):
-            try data.encode(to: encoder)
-        case .stringValue(let data):
-            try data.encode(to: encoder)
         case .charValue(let data):
             try data.encode(to: encoder)
-        case .mapValue(let data):
-            try data.encode(to: encoder)
-        case .listValue(let data):
-            try data.encode(to: encoder)
-        case .binaryTreeNodeValue(let data):
-            try data.encode(to: encoder)
-        case .singlyLinkedListNodeValue(let data):
+        case .doubleValue(let data):
             try data.encode(to: encoder)
         case .doublyLinkedListNodeValue(let data):
             try data.encode(to: encoder)
-        case .undefinedValue(let data):
+        case .genericValue(let data):
+            try data.encode(to: encoder)
+        case .integerValue(let data):
+            try data.encode(to: encoder)
+        case .listValue(let data):
+            try data.encode(to: encoder)
+        case .mapValue(let data):
             try data.encode(to: encoder)
         case .nullValue(let data):
             try data.encode(to: encoder)
-        case .genericValue(let data):
+        case .singlyLinkedListNodeValue(let data):
+            try data.encode(to: encoder)
+        case .stringValue(let data):
+            try data.encode(to: encoder)
+        case .undefinedValue(let data):
             try data.encode(to: encoder)
         }
     }

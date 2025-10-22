@@ -8,10 +8,10 @@ public enum Animal: Codable, Hashable, Sendable {
         let container = try decoder.container(keyedBy: CodingKeys.self)
         let discriminant = try container.decode(String.self, forKey: .animal)
         switch discriminant {
-        case "dog":
-            self = .dog(try Dog(from: decoder))
         case "cat":
             self = .cat(try Cat(from: decoder))
+        case "dog":
+            self = .dog(try Dog(from: decoder))
         default:
             throw DecodingError.dataCorrupted(
                 DecodingError.Context(
@@ -24,9 +24,9 @@ public enum Animal: Codable, Hashable, Sendable {
 
     public func encode(to encoder: Encoder) throws -> Void {
         switch self {
-        case .dog(let data):
-            try data.encode(to: encoder)
         case .cat(let data):
+            try data.encode(to: encoder)
+        case .dog(let data):
             try data.encode(to: encoder)
         }
     }
