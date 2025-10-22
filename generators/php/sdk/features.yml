@@ -10,7 +10,7 @@ features:
   - id: CUSTOM_CLIENT
     advanced: true
     description: |
-      This SDK is built to work with CHRISM FORCE TEST any HTTP client that implements Guzzle's `ClientInterface`.
+      This SDK is built to work with any HTTP client that implements Guzzle's `ClientInterface`.
       By default, if no client is provided, the SDK will use Guzzle's default HTTP client.
       However, you can pass your own client that adheres to `ClientInterface`:
 

@@ -3,9 +3,7 @@ name: Seed Snapshot Tests
 on:
   push:
     branches:
-      #  CHRISM
-      # - main
-      - mallinson/overnight-seed-validation
+      - main
   # Note: pull request trigger will be removed once repository_dispatch trigger is verified
   pull_request:
     types: [opened, synchronize, reopened, ready_for_review]
@@ -32,18 +30,15 @@ jobs:
         id: set-options
         shell: bash
         run: |
-          # CHRISM
-          # echo "GitHub Event: ${{ github.event_name }}"
-          # echo "GitHub Event Action: ${{ github.event.action }}"
-          # if [[ "${{ github.event_name }}" == "repository_dispatch" && "${{ github.event.action }}" == "seed-test-metrics" ]]; then
-          #   echo "post-metrics=true" >> $GITHUB_OUTPUT
-          #   echo "Set to collect metrics on this run"
-          # else
-          #   echo "post-metrics=false" >> $GITHUB_OUTPUT
-          #   echo "Will not collect metrics on this run"
-          # fi
-          echo "post-metrics=true" >> $GITHUB_OUTPUT
-          echo "Set to collect metrics on this run"
+          echo "GitHub Event: ${{ github.event_name }}"
+          echo "GitHub Event Action: ${{ github.event.action }}"
+          if [[ "${{ github.event_name }}" == "repository_dispatch" && "${{ github.event.action }}" == "seed-test-metrics" ]]; then
+            echo "post-metrics=true" >> $GITHUB_OUTPUT
+            echo "Set to collect metrics on this run"
+          else
+            echo "post-metrics=false" >> $GITHUB_OUTPUT
+            echo "Will not collect metrics on this run"
+          fi
 
   changes:
     runs-on: ubuntu-latest
