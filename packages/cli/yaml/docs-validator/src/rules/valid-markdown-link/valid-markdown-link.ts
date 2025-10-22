@@ -236,10 +236,7 @@ function createLinkViolationMessage({
 }
 
 function toLatest(apiDefinition: APIV1Read.ApiDefinition) {
-    const latest = ApiDefinition.ApiDefinitionV1ToLatest.from(apiDefinition, {
-        useJavaScriptAsTypeScript: false,
-        alwaysEnableJavaScriptFetch: false
-    }).migrate();
+    const latest = ApiDefinition.ApiDefinitionV1ToLatest.from(apiDefinition).migrate();
 
     return latest;
 }
