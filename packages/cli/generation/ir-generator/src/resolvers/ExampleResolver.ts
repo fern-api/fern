@@ -94,14 +94,6 @@ export class ExampleResolverImpl implements ExampleResolver {
             };
         }
 
-        if (example.startsWith(`\\${EXAMPLE_REFERENCE_PREFIX}`)) {
-            return {
-                // remove backslash
-                resolvedExample: example.slice(1),
-                file
-            };
-        }
-
         if (!example.startsWith(EXAMPLE_REFERENCE_PREFIX)) {
             return {
                 resolvedExample: example,

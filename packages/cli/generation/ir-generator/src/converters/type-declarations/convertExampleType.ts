@@ -1,6 +1,7 @@
 import { FernWorkspace } from "@fern-api/api-workspace-commons";
 import { assertNever, Examples, isPlainObject } from "@fern-api/core-utils";
 import {
+    EXAMPLE_REFERENCE_PREFIX,
     isRawAliasDefinition,
     isRawObjectDefinition,
     RawSchemas,
@@ -395,6 +396,11 @@ function convertPrimitiveExample({
     example: RawSchemas.ExampleTypeReferenceSchema;
     typeBeingExemplified: PrimitiveTypeV1;
 }): ExampleTypeReferenceShape {
+    // Handle escaped dollar signs (e.g., "\$100" becomes "$100")
+    if (typeof example === "string" && example.startsWith(`\\${EXAMPLE_REFERENCE_PREFIX}`)) {
+        example = example.slice(1);
+    }
+
     return PrimitiveTypeV1._visit(typeBeingExemplified, {
         string: () => {
             if (typeof example !== "string") {
