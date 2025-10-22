@@ -313,7 +313,7 @@ jobs:
           fixtures-to-run: ${{toJson(matrix.fixtures)}}
           job-index: ${{ strategy.job-index }}
           collect-metrics: ${{ needs.setup.outputs.post-metrics }}
-          determinism-exclude-paths: "seed/*/.mock/*,seed/**/Gemfile.lock"
+          determinism-exclude-paths: '["seed/*/.mock/*", "seed/**/Gemfile.lock"]'
 
   pydantic:
     runs-on: ubuntu-latest
@@ -374,7 +374,7 @@ jobs:
           fixtures-to-run: ${{toJson(matrix.fixtures)}}
           job-index: ${{ strategy.job-index }}
           collect-metrics: ${{ needs.setup.outputs.post-metrics }}
-          determinism-exclude-paths: "seed/*/.mock/*,seed/**/poetry.lock"
+          determinism-exclude-paths: '["seed/*/.mock/*", "seed/**/poetry.lock"]'
 
   fastapi:
     runs-on: ubuntu-latest
@@ -585,7 +585,7 @@ jobs:
           fixtures-to-run: ${{toJson(matrix.fixtures)}}
           job-index: ${{ strategy.job-index }}
           collect-metrics: ${{ needs.setup.outputs.post-metrics }}
-          determinism-exclude-paths: "seed/*/.mock/*,seed/ts-sdk/**/pnpm-lock.yaml"
+          determinism-exclude-paths: '["seed/*/.mock/*", "seed/ts-sdk/**/pnpm-lock.yaml"]'
 
   ts-express:
     runs-on: ubuntu-latest

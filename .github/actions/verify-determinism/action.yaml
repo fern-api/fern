@@ -3,9 +3,9 @@ description: To be run after seed generation to compare against committed code a
 
 inputs:
   determinism-exclude-paths:
-    description: "Comma separated list of paths to exclude from determinism verification step, typically package manager/lock files"
+    description: "JSON array of paths to exclude from determinism verification step, typically package manager/lock files"
     required: false
-    default: "seed/*/.mock/*"
+    default: '["seed/*/.mock/*"]'
 
 outputs:
   deterministic:
@@ -19,20 +19,13 @@ runs:
       id: validate
       shell: bash
       run: |
-        # Split the input string into an array
-        IFS=',' read -ra FOLDERS <<< "${{ inputs.determinism-exclude-paths }}"
+        # Parse JSON array and build exclude arguments
+        JSON_INPUT='${{ inputs.determinism-exclude-paths }}'
+        echo "Input JSON: $JSON_INPUT"
 
-        # Build the exclude array
-        EXCLUDE_ARGS=()
-        for folder in "${FOLDERS[@]}"; do
-          # Trim whitespace
-          folder=$(echo "$folder" | xargs)
-          if [ -n "$folder" ]; then
-            EXCLUDE_ARGS+=(":(exclude)$folder")
-          fi
-        done
+        # Build the exclude array from JSON using jq and mapfile
+        mapfile -t EXCLUDE_ARGS < <(echo "$JSON_INPUT" | jq -r '.[] | ":(exclude)" + .')
 
-        echo "exclude_string=${EXCLUDE_ARGS[*]}" >> $GITHUB_OUTPUT
         echo "Built git diff exclude args as: "
         printf '%s\n' "${EXCLUDE_ARGS[@]}"
 
@@ -53,3 +46,37 @@ runs:
           git --no-pager diff -- "${EXCLUDE_ARGS[@]}" | head -50
           echo "deterministic=false" >> $GITHUB_OUTPUT
         fi
+
+        # # Parse JSON array and build exclude arguments
+        # JSON_INPUT='${{ inputs.determinism-exclude-paths }}'
+        # echo "Input JSON: $JSON_INPUT"
+
+        # # Build the exclude array from JSON
+        # EXCLUDE_ARGS=()
+        # while IFS= read -r folder; do
+        #   if [ -n "$folder" ]; then
+        #     EXCLUDE_ARGS+=(":(exclude)$folder")
+        #   fi
+        # done < <(echo "$JSON_INPUT" | jq -r '.[]')
+
+        # echo "exclude_string=${EXCLUDE_ARGS[*]}" >> $GITHUB_OUTPUT
+        # echo "Built git diff exclude args as: "
+        # printf '%s\n' "${EXCLUDE_ARGS[@]}"
+
+        # # Debug: Show git status before diff
+        # echo "=== Git status before diff ==="
+        # git status --porcelain
+
+        # # Debug: Show what files git diff would check
+        # echo "=== Git diff command that will be executed ==="
+        # echo "git --no-pager diff --exit-code -- ${EXCLUDE_ARGS[@]}"
+
+        # # Set results
+        # if git --no-pager diff --exit-code -- "${EXCLUDE_ARGS[@]}"; then
+        #   echo "Results match"
+        #   echo "deterministic=true" >> $GITHUB_OUTPUT
+        # else
+        #   echo "Changes detected in git-tracked files. Showing first 50 lines of diff:"
+        #   git --no-pager diff -- "${EXCLUDE_ARGS[@]}" | head -50
+        #   echo "deterministic=false" >> $GITHUB_OUTPUT
+        # fi
