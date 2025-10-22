@@ -21,21 +21,18 @@ runs:
       run: |
         # Parse JSON array and build exclude arguments
         JSON_INPUT='${{ inputs.determinism-exclude-paths }}'
-        echo "Input JSON: $JSON_INPUT"
+        echo "Input JSON:"
+        echo ${JSON_INPUT} | jq .
 
-        # Build the exclude array from JSON using jq and mapfile
-        mapfile -t EXCLUDE_ARGS < <(echo "$JSON_INPUT" | jq -r '.[] | ":(exclude)" + .')
+        # Build exclude array
+        EXCLUDE_ARGS=()
+        for EXCLUDE_PATTERN in $(echo "${JSON_INPUT}" | jq -c -r '.[]'); do
+          EXCLUDE_ARGS+=(":(exclude)${EXCLUDE_PATTERN}")
+        done
 
-        echo "Built git diff exclude args as: "
+        # Log for debugging
+        echo "Built exclude args as:"
         printf '%s\n' "${EXCLUDE_ARGS[@]}"
-
-        # Debug: Show git status before diff
-        echo "=== Git status before diff ==="
-        git status --porcelain
-
-        # Debug: Show what files git diff would check
-        echo "=== Git diff command that will be executed ==="
-        echo "git --no-pager diff --exit-code -- ${EXCLUDE_ARGS[@]}"
 
         # Set results
         if git --no-pager diff --exit-code -- "${EXCLUDE_ARGS[@]}"; then

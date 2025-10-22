@@ -32,6 +32,7 @@ jobs:
         id: set-options
         shell: bash
         run: |
+          # CHRISM
           # echo "GitHub Event: ${{ github.event_name }}"
           # echo "GitHub Event Action: ${{ github.event.action }}"
           # if [[ "${{ github.event_name }}" == "repository_dispatch" && "${{ github.event.action }}" == "seed-test-metrics" ]]; then
@@ -41,7 +42,6 @@ jobs:
           #   echo "post-metrics=false" >> $GITHUB_OUTPUT
           #   echo "Will not collect metrics on this run"
           # fi
-          # CHRISM temp
           echo "post-metrics=true" >> $GITHUB_OUTPUT
           echo "Set to collect metrics on this run"
 
@@ -1406,7 +1406,6 @@ jobs:
         uses: PostHog/posthog-github-action@v0.1
         with:
           posthog-token: ${{ secrets.POSTHOG_API_KEY }}
-          # CHRISM - temp name
           event: "gh-actions-seed-test-metrics-event"
           properties: |
             {
