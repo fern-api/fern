@@ -3205,13 +3205,20 @@
           ]
         },
         "config": {
-          "type": [
-            "string",
-            "number",
-            "boolean",
-            "object",
-            "array",
-            "null"
+          "oneOf": [
+            {
+              "type": [
+                "string",
+                "number",
+                "boolean",
+                "object",
+                "array",
+                "null"
+              ]
+            },
+            {
+              "type": "null"
+            }
           ]
         },
         "metadata": {
@@ -3300,8 +3307,7 @@
       },
       "required": [
         "name",
-        "version",
-        "config"
+        "version"
       ],
       "additionalProperties": false
     },

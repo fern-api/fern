@@ -19,7 +19,7 @@ export const GeneratorInvocationSchema: core.serialization.ObjectSchema<
     version: core.serialization.string(),
     output: GeneratorOutputSchema.optional(),
     github: GithubConfigurationSchema.optional(),
-    config: core.serialization.unknown(),
+    config: core.serialization.unknown().optional(),
     metadata: GeneratorPublishMetadataSchema.optional(),
     keywords: core.serialization.list(core.serialization.string()).optional(),
     snippets: GeneratorSnippetsSchema.optional(),
@@ -36,7 +36,7 @@ export declare namespace GeneratorInvocationSchema {
         version: string;
         output?: GeneratorOutputSchema.Raw | null;
         github?: GithubConfigurationSchema.Raw | null;
-        config?: unknown;
+        config?: unknown | null;
         metadata?: GeneratorPublishMetadataSchema.Raw | null;
         keywords?: string[] | null;
         snippets?: GeneratorSnippetsSchema.Raw | null;
