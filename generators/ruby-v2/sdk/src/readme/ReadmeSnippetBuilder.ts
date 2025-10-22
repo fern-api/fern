@@ -137,7 +137,7 @@ export class ReadmeSnippetBuilder extends AbstractReadmeSnippetBuilder {
         // Description
         if (hasEnvironments === true) {
             fullString +=
-                "This SDK allows you to CHRISM FORCING A DIFF FOR TEST configure different environments or custom URLs for API requests. You can either use the predefined environments or specify your own custom URL.";
+                "This SDK allows you to configure different environments or custom URLs for API requests. You can either use the predefined environments or specify your own custom URL.";
         } else {
             fullString +=
                 "This SDK allows you to configure different custom URLs for API requests. You can specify your own custom URL.";

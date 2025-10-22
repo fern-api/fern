@@ -1401,18 +1401,6 @@ jobs:
 
           echo "all_seed_files_deterministic=$all_seed_files_deterministic" >> $GITHUB_OUTPUT
 
-      # CHRISM temp
-      - name: Echo PostHog Info
-        shell: bash
-        run: |
-          echo "event_type=${{ github.event_name }}"
-          echo "branch=${{ github.ref_name }}"
-          echo "seed_generator_alias=${{ matrix.seed-generator-alias }}"
-          echo "run_url=${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}"
-          echo "duration_seconds": ${{ steps.parse-seed-test-metrics.outputs.duration_seconds }}
-          echo "all_tests_passing=${{ steps.parse-seed-test-metrics.outputs.all_tests_passing }}"
-          echo "all_seed_files_deterministic=${{ steps.parse-seed-test-metrics.outputs.all_seed_files_deterministic }}"
-
       - name: Post to PostHog
         # https://github.com/PostHog/posthog-github-action
         uses: PostHog/posthog-github-action@v0.1

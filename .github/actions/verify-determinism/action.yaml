@@ -19,7 +19,7 @@ runs:
       id: validate
       shell: bash
       run: |
-        # Split the input string into an array
+        # Parse JSON array and build exclude arguments
         JSON_INPUT='${{ inputs.determinism-exclude-paths }}'
         echo "Input JSON: $JSON_INPUT"
 
