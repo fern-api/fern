@@ -23,9 +23,9 @@ inputs:
     required: false
     default: "false"
   determinism-exclude-paths:
-    description: "Comma separated list of paths to exclude from determinism verification step, typically package manager/lock files"
+    description: "JSON array of paths to exclude from determinism verification step, typically package manager/lock files"
     required: false
-    default: "seed/*/.mock/*"
+    default: '["seed/*/.mock/*"]'
 
 outputs:
   start_time:
