@@ -1,6 +1,14 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
 - changelogEntry:
     - summary: |
+        Update FDR SDK to 0.139.33-c9426f366.
+      type: fix
+  irVersion: 61
+  createdAt: "2025-10-22"
+  version: 0.93.3
+
+- changelogEntry:
+    - summary: |
         If API publishing fails, alert and continue to next in fern generate --docs.
       type: fix
   irVersion: 61
