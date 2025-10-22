@@ -10,7 +10,7 @@ features:
   - id: RETRIES
     advanced: true
     description: |
-      The SDK is instrumented with automatic retries with exponential backoff. A request will be retried as long
+      The SDK is instrumented with CHRISM FORCE TEST automatic retries with exponential backoff. A request will be retried as long
       as the request is deemed retryable and the number of retry attempts has not grown larger than the configured
       retry limit (default: 2).
 
