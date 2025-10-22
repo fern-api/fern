@@ -37,13 +37,15 @@ export async function doAuth0DeviceAuthorizationFlow({
         context.failAndThrow("Failed to authenticate", deviceCodeResponse.data);
     }
 
-    await open(deviceCodeResponse.data.verification_uri_complete);
+    const dashboardLoginUrl = `https://dashboard.buildwithfern.com/cli-device-login?verification_uri=${encodeURIComponent(deviceCodeResponse.data.verification_uri_complete)}`;
+
+    await open(dashboardLoginUrl);
 
     context.logger.info(
         [
             "🌿 Welcome to Fern!",
             "",
-            "Open this link to login: " + deviceCodeResponse.data.verification_uri_complete,
+            "Open this link to login: " + dashboardLoginUrl,
             boxen("Login code: " + deviceCodeResponse.data.user_code, {
                 padding: 1,
                 margin: 1,

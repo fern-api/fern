@@ -128,6 +128,6 @@ function constructAuth0Url({
         redirect_uri: origin,
         audience
     });
-    const url = `https://${auth0Domain}/authorize?${queryParams.toString()}`;
+    const url = `https://dashboard.buildwithfern.com/cli-login?${queryParams.toString()}`;
     return url;
 }
