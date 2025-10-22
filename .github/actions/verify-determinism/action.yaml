@@ -39,7 +39,8 @@ runs:
           echo "Results match"
           echo "deterministic=true" >> $GITHUB_OUTPUT
         else
+          # Note: need to add the || true when outputting the diff to gracefully avoid a SIGPIPE error when we stop reading the output of diff
           echo "Changes detected in git-tracked files. Showing first 50 lines of diff (to avoid log limits in GitHub Actions):"
-          git --no-pager diff -- "${EXCLUDE_ARGS[@]}" | head -50
+          git --no-pager diff -- "${EXCLUDE_ARGS[@]}" | head -50 || true
           echo "deterministic=false" >> $GITHUB_OUTPUT
         fi
