@@ -48,7 +48,7 @@ types:
               rottenTomatoes: 97
               imdb: 7.6
           revenue: 1000000
-          price: $12.34
+          price: \$12.34
       - name: LargeRating
         value:
           id: movie-large-123
