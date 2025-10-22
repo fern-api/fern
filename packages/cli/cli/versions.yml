@@ -1,6 +1,14 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
 - changelogEntry:
     - summary: |
+        Handle npm OIDC token publishing for local workspace generation.
+      type: feat
+  irVersion: 61
+  createdAt: "2025-10-22"
+  version: 0.94.0
+
+- changelogEntry:
+    - summary: |
         Skip bundling APIs with docs creation request.
       type: fix
   irVersion: 61

@@ -4,7 +4,7 @@
     - summary: |
         Add support for [publishing to npmjs.org using OIDC from GitHub Actions](https://docs.npmjs.com/trusted-publishers).
         Set the `output.token` field to `OIDC` in _generators.yml_ to enable this feature:
-        
+
         ```yml
         # In generators.yml
         groups:
@@ -17,6 +17,8 @@
                   token: OIDC # previously this would be set to something like ${NPM_TOKEN}
                 ...
         ```
+
+        For local generation, you'll need Fern CLI version 0.94.0 or later.
       type: feat
     - summary: |
         Update GitHub Actions `setup-node` action to v4 in the generated CI workflow.
