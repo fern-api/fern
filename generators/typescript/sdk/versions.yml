@@ -1,4 +1,29 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 3.12.0
+  changelogEntry:
+    - summary: |
+        Add support for [publishing to npmjs.org using OIDC from GitHub Actions](https://docs.npmjs.com/trusted-publishers).
+        Set the `output.token` field to `OIDC` in _generators.yml_ to enable this feature:
+        
+        ```yml
+        # In generators.yml
+        groups:
+          ts-sdk:
+            generators:
+              - name: fernapi/fern-typescript-sdk
+                output:
+                  location: npm
+                  package-name: your-package-name
+                  token: OIDC # previously this would be set to something like ${NPM_TOKEN}
+                ...
+        ```
+      type: feat
+    - summary: |
+        Update GitHub Actions `setup-node` action to v4 in the generated CI workflow.
+      type: feat
+  createdAt: "2025-10-21"
+  irVersion: 60
+
 - version: 3.11.1
   changelogEntry:
     - summary: |
