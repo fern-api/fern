@@ -2,6 +2,7 @@ import { RelativeFilePath } from "@fern-api/fs-utils";
 import { go } from "@fern-api/go-ast";
 import { GoFile } from "@fern-api/go-base";
 import { DynamicSnippetsGenerator } from "@fern-api/go-dynamic-snippets";
+import { WireMockMapping } from "@fern-api/mock-utils";
 import {
     dynamic,
     ExampleEndpointCall,
@@ -9,22 +10,18 @@ import {
     HttpEndpoint,
     HttpService,
     PrimitiveTypeV1,
-    QueryParameter,
     TypeReference
 } from "@fern-fern/ir-sdk/api";
 import { SdkGeneratorContext } from "../SdkGeneratorContext";
 import { convertDynamicEndpointSnippetRequest } from "../utils/convertEndpointSnippetRequest";
 import { convertIr } from "../utils/convertIr";
-import { TEST_MAIN_FUNCTION_CONTENT, TEST_MAIN_FUNCTION_IMPORTS } from "./TestMainFunctionContent";
-
-const WIREMOCK_BASE_URL = "WireMockBaseURL";
-const WIREMOCK_CLIENT_VAR_NAME = "WireMockClient";
-const CLIENT_VAR_NAME = "client";
+import { WireTestSetupGenerator } from "./WireTestSetupGenerator";
 
 export class WireTestGenerator {
     private readonly context: SdkGeneratorContext;
     private dynamicIr: dynamic.DynamicIntermediateRepresentation;
     private dynamicSnippetsGenerator: DynamicSnippetsGenerator;
+    private wireMockConfigContent: Record<string, WireMockMapping>;
 
     constructor(context: SdkGeneratorContext) {
         this.context = context;
@@ -37,6 +34,30 @@ export class WireTestGenerator {
             ir: convertIr(dynamicIr),
             config: this.context.config
         });
+        this.wireMockConfigContent = this.getWireMockConfigContent();
+    }
+
+    private wiremockMappingKey({
+        requestMethod,
+        requestUrlPathTemplate
+    }: {
+        requestMethod: string;
+        requestUrlPathTemplate: string;
+    }): string {
+        return `${requestMethod} - ${requestUrlPathTemplate}`;
+    }
+
+    private getWireMockConfigContent(): Record<string, WireMockMapping> {
+        let out: Record<string, WireMockMapping> = {};
+        const wiremockStubMapping = WireTestSetupGenerator.getWiremockConfigContent(this.context.ir);
+        for (const mapping of wiremockStubMapping.mappings) {
+            const key = this.wiremockMappingKey({
+                requestMethod: mapping.request.method,
+                requestUrlPathTemplate: mapping.request.urlPathTemplate
+            });
+            out[key] = mapping;
+        }
+        return out;
     }
 
     public async generate(): Promise<void> {
@@ -65,6 +86,8 @@ export class WireTestGenerator {
 
             this.context.project.addGoFiles(serviceTestFile);
         }
+        // Generate docker-compose.test.yml for WireMock
+        new WireTestSetupGenerator(this.context, this.context.ir).generate();
     }
 
     private async generateServiceTestFile(
@@ -91,6 +114,11 @@ export class WireTestGenerator {
         }
 
         const imports = new Map<string, string>();
+
+        imports.set("http", "net/http");
+        imports.set("bytes", "bytes");
+        imports.set("encoding/json", "encoding/json");
+
         const endpointTestCaseCodeBlocks = endpoints
             .map((endpoint) => {
                 const snippet = endpointTestCases.get(endpoint.id);
@@ -113,12 +141,131 @@ export class WireTestGenerator {
                 // but that may not be used in the rest of the generated test file and therefore would be missed
                 writer.addImport(importPath);
             }
-            for (const mainTestImport of TEST_MAIN_FUNCTION_IMPORTS) {
-                writer.addImport(mainTestImport);
-            }
             writer.writeNewLineIfLastLineNot();
             writer.newLine();
-            writer.write(TEST_MAIN_FUNCTION_CONTENT);
+            writer.write(
+                go.func({
+                    name: "ResetWireMockRequests",
+                    parameters: [
+                        go.parameter({
+                            name: "t",
+                            type: go.Type.pointer(go.Type.reference(this.context.getTestingTypeReference()))
+                        })
+                    ],
+                    return_: [],
+                    body: go.codeblock((writer) => {
+                        writer.writeNode(go.codeblock('WiremockAdminURL := "http://localhost:8080/__admin"'));
+                        writer.newLine();
+                        writer.writeNode(
+                            go.codeblock(
+                                '_, err := http.Post(WiremockAdminURL+"/requests/reset", "application/json", nil)'
+                            )
+                        );
+                        writer.newLine();
+                        writer.writeNode(go.codeblock("require.NoError(t, err)"));
+                        writer.newLine();
+                    })
+                })
+            );
+
+            // Uses the requests/find endpoint for more flexible matching based on query parameters and base URL
+            // This allows proper matching even when SDKs reorder query parameters alphabetically
+            writer.writeNewLineIfLastLineNot();
+            writer.newLine();
+            writer.write(
+                go.func({
+                    name: "VerifyRequestCount",
+                    parameters: [
+                        go.parameter({
+                            name: "t",
+                            type: go.Type.pointer(go.Type.reference(this.context.getTestingTypeReference()))
+                        }),
+                        go.parameter({
+                            name: "method",
+                            type: go.Type.string()
+                        }),
+                        go.parameter({
+                            name: "urlPath",
+                            type: go.Type.string()
+                        }),
+                        go.parameter({
+                            name: "queryParams",
+                            type: go.Type.map(go.Type.string(), go.Type.string())
+                        }),
+                        go.parameter({
+                            name: "expected",
+                            type: go.Type.int()
+                        })
+                    ],
+                    return_: [],
+                    body: go.codeblock((writer) => {
+                        // Build the request body for WireMock's requests/find endpoint
+                        writer.writeNode(go.codeblock('WiremockAdminURL := "http://localhost:8080/__admin"'));
+                        writer.newLine();
+                        writer.writeNode(go.codeblock("var reqBody bytes.Buffer"));
+                        writer.newLine();
+                        writer.writeNode(go.codeblock('reqBody.WriteString(`{"method":"`)'));
+                        writer.newLine();
+                        writer.writeNode(go.codeblock("reqBody.WriteString(method)"));
+                        writer.newLine();
+                        writer.writeNode(go.codeblock('reqBody.WriteString(`","urlPath":"`)'));
+                        writer.newLine();
+                        writer.writeNode(go.codeblock("reqBody.WriteString(urlPath)"));
+                        writer.newLine();
+                        writer.writeNode(go.codeblock('reqBody.WriteString(`"}`)'));
+                        writer.newLine();
+                        writer.writeNode(go.codeblock("if len(queryParams) > 0 {"));
+                        writer.newLine();
+                        writer.writeNode(go.codeblock('    reqBody.WriteString(`,"queryParameters":{`)'));
+                        writer.newLine();
+                        writer.writeNode(go.codeblock("    first := true"));
+                        writer.newLine();
+                        writer.writeNode(go.codeblock("    for key, value := range queryParams {"));
+                        writer.newLine();
+                        writer.writeNode(go.codeblock("        if !first {"));
+                        writer.newLine();
+                        writer.writeNode(go.codeblock('            reqBody.WriteString(",")'));
+                        writer.newLine();
+                        writer.writeNode(go.codeblock("        }"));
+                        writer.newLine();
+                        writer.writeNode(go.codeblock('        reqBody.WriteString(`"`)'));
+                        writer.newLine();
+                        writer.writeNode(go.codeblock("        reqBody.WriteString(key)"));
+                        writer.newLine();
+                        writer.writeNode(go.codeblock('        reqBody.WriteString(`":{"equalTo":"`)'));
+                        writer.newLine();
+                        writer.writeNode(go.codeblock("        reqBody.WriteString(value)"));
+                        writer.newLine();
+                        writer.writeNode(go.codeblock('        reqBody.WriteString(`"}`)'));
+                        writer.newLine();
+                        writer.writeNode(go.codeblock("        first = false"));
+                        writer.newLine();
+                        writer.writeNode(go.codeblock("    }"));
+                        writer.newLine();
+                        writer.writeNode(go.codeblock('    reqBody.WriteString("}")'));
+                        writer.newLine();
+                        writer.writeNode(go.codeblock("}"));
+                        writer.newLine();
+                        writer.writeNode(go.codeblock('reqBody.WriteString("}")'));
+                        writer.newLine();
+                        writer.writeNode(
+                            go.codeblock(
+                                'resp, err := http.Post(WiremockAdminURL+"/requests/find", "application/json", &reqBody)'
+                            )
+                        );
+                        writer.newLine();
+                        writer.writeNode(go.codeblock("require.NoError(t, err)"));
+                        writer.newLine();
+                        writer.writeNode(
+                            go.codeblock('var result struct { Requests []interface{} `json:"requests"` }')
+                        );
+                        writer.newLine();
+                        writer.writeNode(go.codeblock("json.NewDecoder(resp.Body).Decode(&result)"));
+                        writer.newLine();
+                        writer.writeNode(go.codeblock("require.Equal(t, expected, len(result.Requests))"));
+                    })
+                })
+            );
             writer.writeNewLineIfLastLineNot();
             writer.newLine();
             for (const endpointTestCaseCodeBlock of endpointTestCaseCodeBlocks) {
@@ -172,10 +319,9 @@ export class WireTestGenerator {
                     ],
                     return_: [],
                     body: go.codeblock((writer) => {
-                        for (const node of this.buildWiremockTestSetup({ endpoint })) {
-                            writer.writeNode(node);
-                            writer.writeNewLineIfLastLineNot();
-                        }
+                        writer.writeNode(go.codeblock(`ResetWireMockRequests(t)`));
+                        writer.newLine();
+                        writer.writeNode(go.codeblock('WireMockBaseURL := "http://localhost:8080"'));
                         writer.newLine();
                         writer.writeNode(this.constructWiremockTestClient({ endpoint, snippet }));
                         writer.newLine();
@@ -399,297 +545,6 @@ export class WireTestGenerator {
         return imports;
     }
 
-    private buildWiremockTestSetup({
-        endpoint,
-        errorCase
-    }: {
-        endpoint: HttpEndpoint;
-        errorCase?: boolean;
-    }): go.AstNode[] {
-        const ENDPOINT_STUB_NAME = "stub";
-        const usedSharedMainTest = true;
-        return [
-            ...(!usedSharedMainTest
-                ? [
-                      // Initialize context
-                      go.codeblock((writer) => {
-                          writer.write("ctx := ");
-                          writer.writeNode(
-                              go.invokeFunc({
-                                  func: go.typeReference({
-                                      name: "Background",
-                                      importPath: "context"
-                                  }),
-                                  arguments_: [],
-                                  multiline: false
-                              })
-                          );
-                      }),
-
-                      // Start WireMock container
-                      go.codeblock((writer) => {
-                          writer.write(`container, containerErr := `);
-                          writer.writeNode(
-                              go.invokeFunc({
-                                  func: go.typeReference({
-                                      name: "RunContainerAndStopOnCleanup",
-                                      importPath: "github.com/wiremock/wiremock-testcontainers-go"
-                                  }),
-                                  arguments_: [
-                                      go.codeblock("ctx"),
-                                      go.codeblock("t"),
-                                      go.invokeFunc({
-                                          func: go.typeReference({
-                                              name: "WithImage",
-                                              importPath: "github.com/wiremock/wiremock-testcontainers-go"
-                                          }),
-                                          arguments_: [
-                                              go.TypeInstantiation.string("docker.io/wiremock/wiremock:3.9.1")
-                                          ],
-                                          multiline: false
-                                      })
-                                  ],
-                                  multiline: true
-                              })
-                          );
-                      }),
-
-                      // Check for container error
-                      go.codeblock((writer) => {
-                          writer.write("if containerErr != nil {");
-                          writer.writeLine();
-                          writer.write("    t.Fatal(containerErr)");
-                          writer.writeLine();
-                          writer.write("}");
-                      }),
-
-                      // Get WireMock URL from container
-                      go.codeblock((writer) => {
-                          writer.write(`${WIREMOCK_BASE_URL}, endpointErr := `);
-                          writer.writeNode(
-                              go.invokeMethod({
-                                  on: go.codeblock("container"),
-                                  method: "Endpoint",
-                                  arguments_: [go.codeblock("ctx"), go.TypeInstantiation.string("")],
-                                  multiline: false
-                              })
-                          );
-                      }),
-
-                      go.invokeFunc({
-                          func: go.typeReference({
-                              name: "NoError",
-                              importPath: "github.com/stretchr/testify/require"
-                          }),
-                          arguments_: [
-                              go.codeblock("t"),
-                              go.codeblock("endpointErr"),
-                              go.TypeInstantiation.string("Failed to get WireMock container endpoint")
-                          ],
-                          multiline: false
-                      }),
-
-                      go.codeblock((writer) => {
-                          writer.write(`${WIREMOCK_BASE_URL} = "http://" + ${WIREMOCK_BASE_URL}`);
-                      }),
-
-                      // Get WireMock client from container
-                      go.codeblock((writer) => {
-                          writer.write(`${WIREMOCK_CLIENT_VAR_NAME} := `);
-                          writer.writeNode(
-                              go.selector({
-                                  on: go.codeblock("container"),
-                                  selector: go.codeblock("Client")
-                              })
-                          );
-                      })
-                  ]
-                : []),
-
-            ...(usedSharedMainTest
-                ? [
-                      go.codeblock((writer) => {
-                          writer.write("// wiremock client and server initialized in shared main_test.go ");
-                      })
-                  ]
-                : []),
-
-            go.codeblock((writer) => {
-                writer.write("defer ");
-                writer.writeNode(
-                    go.invokeMethod({
-                        on: go.codeblock(WIREMOCK_CLIENT_VAR_NAME),
-                        method: "Reset",
-                        arguments_: [],
-                        multiline: false
-                    })
-                );
-            }),
-
-            // Create a mock response for the endpoint
-            go.codeblock((writer) => {
-                writer.write(`${ENDPOINT_STUB_NAME} := `);
-                writer.writeNode(
-                    SdkGeneratorContext.chainMethods(
-                        go.invokeFunc({
-                            func: go.typeReference({
-                                name: endpoint.method.toLowerCase().replace(/^./, (c) => c.toUpperCase()),
-                                importPath: "github.com/wiremock/go-wiremock"
-                            }),
-                            arguments_: [
-                                go.invokeFunc({
-                                    func: go.typeReference({
-                                        name: "URLPathTemplate",
-                                        importPath: "github.com/wiremock/go-wiremock"
-                                    }),
-                                    arguments_: [go.TypeInstantiation.string(this.buildFullPath(endpoint))],
-                                    multiline: false
-                                })
-                            ],
-                            multiline: false
-                        }),
-                        ...(endpoint.requestBody?.type === "inlinedRequestBody"
-                            ? endpoint.queryParameters
-                                  //Exclude optional since it appears that optional query params do not automatically get mocked in the dynamic snippet invocation (for now)
-                                  .filter(
-                                      (queryParameter: QueryParameter) =>
-                                          !this.context.isOptional(queryParameter.valueType)
-                                  )
-                                  .map((queryParameter: QueryParameter) => ({
-                                      method: "WithQueryParam",
-                                      arguments_: [
-                                          go.TypeInstantiation.string(queryParameter.name.wireValue),
-                                          go.invokeFunc({
-                                              func: go.typeReference({
-                                                  name: "Matching",
-                                                  importPath: "github.com/wiremock/go-wiremock"
-                                              }),
-                                              arguments_: [
-                                                  go.TypeInstantiation.string(
-                                                      this.resolveQueryParamValue(
-                                                          endpoint,
-                                                          queryParameter.name.wireValue
-                                                      )
-                                                  )
-                                              ],
-                                              multiline: false
-                                          })
-                                      ]
-                                  }))
-                            : []),
-                        ...Object.entries(this.getDynamicEndpointExample(endpoint)?.pathParameters ?? {}).map(
-                            ([pathParameterName, pathParameterValue]) => ({
-                                method: "WithPathParam",
-                                arguments_: [
-                                    go.TypeInstantiation.string(pathParameterName),
-                                    go.invokeFunc({
-                                        func: go.typeReference({
-                                            name: "Matching",
-                                            importPath: "github.com/wiremock/go-wiremock"
-                                        }),
-                                        arguments_: [go.TypeInstantiation.string(pathParameterValue as string)],
-                                        multiline: false
-                                    })
-                                ]
-                            })
-                        ),
-                        ...(this.resolveRequestBody(endpoint) !== null
-                            ? [
-                                  {
-                                      method: "WithBodyPattern",
-                                      arguments_: [
-                                          go.invokeFunc({
-                                              func: go.typeReference({
-                                                  name: "MatchesJsonSchema",
-                                                  importPath: "github.com/wiremock/go-wiremock"
-                                              }),
-                                              arguments_: [
-                                                  go.TypeInstantiation.string(this.buildMinimalJsonSchema(endpoint)),
-                                                  go.TypeInstantiation.string("V202012")
-                                              ],
-                                              multiline: false
-                                          })
-                                      ],
-                                      multiline: false
-                                  }
-                              ]
-                            : []),
-                        {
-                            method: "WillReturnResponse",
-                            arguments_: [
-                                SdkGeneratorContext.chainMethods(
-                                    go.invokeFunc({
-                                        func: go.typeReference({
-                                            name: "NewResponse",
-                                            importPath: "github.com/wiremock/go-wiremock"
-                                        }),
-                                        arguments_: [],
-                                        multiline: false
-                                    }),
-                                    ...(errorCase
-                                        ? [
-                                              {
-                                                  method: "WithStatus",
-                                                  arguments_: [
-                                                      go.typeReference({
-                                                          name: "StatusInternalServerError",
-                                                          importPath: "net/http"
-                                                      })
-                                                  ],
-                                                  multiline: false
-                                              }
-                                          ]
-                                        : [
-                                              {
-                                                  method: "WithJSONBody",
-                                                  arguments_: [this.resolveResponseBody(endpoint)]
-                                              },
-                                              {
-                                                  method: "WithStatus",
-                                                  arguments_: [
-                                                      go.typeReference({
-                                                          name: "StatusOK",
-                                                          importPath: "net/http"
-                                                      })
-                                                  ],
-                                                  multiline: false
-                                              }
-                                          ])
-                                )
-                            ]
-                        }
-                    )
-                );
-            }),
-
-            // Register the stub with WireMock
-            go.codeblock((writer) => {
-                writer.write("err := ");
-                writer.writeNode(
-                    go.invokeMethod({
-                        on: go.codeblock(WIREMOCK_CLIENT_VAR_NAME),
-                        method: "StubFor",
-                        arguments_: [go.codeblock(ENDPOINT_STUB_NAME)],
-                        multiline: false
-                    })
-                );
-            }),
-
-            go.invokeFunc({
-                func: go.typeReference({
-                    name: "NoError",
-                    importPath: "github.com/stretchr/testify/require"
-                }),
-                arguments_: [
-                    go.codeblock("t"),
-                    go.codeblock("err"),
-                    go.TypeInstantiation.string("Failed to create WireMock stub")
-                ],
-                multiline: false
-            })
-        ];
-    }
-
     private constructWiremockTestClient({
         endpoint,
         snippet
@@ -745,60 +600,117 @@ export class WireTestGenerator {
                     multiline: false
                 })
             );
+
             writer.writeLine();
 
-            // Verify WireMock request was matched
-            writer.write("ok, countErr := ");
-            writer.writeNode(
-                go.invokeMethod({
-                    on: go.codeblock(WIREMOCK_CLIENT_VAR_NAME),
-                    method: "Verify",
-                    arguments_: [
-                        go.invokeMethod({
-                            on: go.codeblock("stub"),
-                            method: "Request",
-                            arguments_: [],
-                            multiline: false
-                        }),
-                        go.codeblock("1")
-                    ],
-                    multiline: false
-                })
-            );
-            writer.writeLine();
+            // Build URL path and query parameters separately
+            const basePath = this.buildBasePath(endpoint);
+            const queryParamsMap = this.buildQueryParamsMap(endpoint);
 
             writer.writeNode(
-                go.invokeFunc({
-                    func: go.typeReference({
-                        name: "NoError",
-                        importPath: "github.com/stretchr/testify/require"
-                    }),
-                    arguments_: [
-                        go.codeblock("t"),
-                        go.codeblock("countErr"),
-                        go.TypeInstantiation.string("Failed to verify WireMock request was matched")
-                    ],
-                    multiline: false
-                })
+                go.codeblock(`VerifyRequestCount(t, "${endpoint.method}", "${basePath}", ${queryParamsMap}, 1)`)
             );
-            writer.writeLine();
 
-            writer.writeNode(
-                go.invokeFunc({
-                    func: go.typeReference({
-                        name: "True",
-                        importPath: "github.com/stretchr/testify/require"
-                    }),
-                    arguments_: [
-                        go.codeblock("t"),
-                        go.codeblock("ok"),
-                        go.TypeInstantiation.string("WireMock request was not matched")
-                    ],
-                    multiline: false
-                })
-            );
             writer.writeLine();
         });
+    }
+
+    private buildBasePath(endpoint: HttpEndpoint): string {
+        let basePath =
+            endpoint.fullPath.head +
+            endpoint.fullPath.parts.map((part) => `{${part.pathParameter}}${part.tail}`).join("");
+
+        if (!basePath.startsWith("/")) {
+            basePath = `/${basePath}`;
+        }
+
+        const mappingKey = this.wiremockMappingKey({
+            requestMethod: endpoint.method,
+            requestUrlPathTemplate: basePath
+        });
+
+        const wiremockMapping = this.wireMockConfigContent[mappingKey];
+        // Take the first 15 keys
+        if (!wiremockMapping) {
+            throw new Error(
+                `No wiremock mapping found for endpoint ${endpoint.id} and mappingKey "${mappingKey}". Keys available look like "${Object.keys(this.wireMockConfigContent).slice(0, 15).join('", "')}"`
+            );
+        }
+
+        // As an example, we return /email-templates/verify_email in the case of the following wiremock mapping:
+        // {
+        //     "id": "5348c89b-9cdd-4376-9b4f-f9c4922fa0f1",
+        //     "name": "Patch an email template - default",
+        //     "request": {
+        //         "urlPathTemplate": "/email-templates/{templateName}",
+        //         "method": "PATCH",
+        //         "pathParameters": {
+        //             "templateName": {
+        //                 "equalTo": "verify_email"
+        //             }
+        //         }
+        //     }
+
+        Object.entries(wiremockMapping.request.pathParameters || {}).forEach(([paramName, paramValue]) => {
+            basePath = basePath.replace(`{${paramName}}`, paramValue.equalTo);
+        });
+
+        return basePath;
+    }
+
+    private buildQueryParamsMap(endpoint: HttpEndpoint): string {
+        const dynamicEndpointExample = this.getDynamicEndpointExample(endpoint);
+
+        if (!dynamicEndpointExample?.queryParameters) {
+            return "nil";
+        }
+
+        const queryParamEntries: string[] = [];
+        for (const [paramName, paramValue] of Object.entries(dynamicEndpointExample.queryParameters)) {
+            if (paramValue != null) {
+                const key = JSON.stringify(paramName);
+                const value = JSON.stringify(String(paramValue));
+                queryParamEntries.push(`${key}: ${value}`);
+            }
+        }
+
+        if (queryParamEntries.length === 0) {
+            return "nil";
+        }
+
+        return `map[string]string{${queryParamEntries.join(", ")}}`;
+    }
+
+    private buildUrlPathWithQueryParams(endpoint: HttpEndpoint): string {
+        let basePath =
+            endpoint.fullPath.head +
+            endpoint.fullPath.parts.map((part) => `${part.pathParameter}${part.tail}`).join("");
+
+        if (!basePath.startsWith("/")) {
+            basePath = `/${basePath}`;
+        }
+
+        const dynamicEndpointExample = this.getDynamicEndpointExample(endpoint);
+
+        if (!dynamicEndpointExample?.queryParameters) {
+            return basePath;
+        }
+
+        const queryParams: string[] = [];
+        for (const [paramName, paramValue] of Object.entries(dynamicEndpointExample.queryParameters)) {
+            if (paramValue != null) {
+                // URL encode the parameter name and value
+                const encodedName = encodeURIComponent(paramName);
+                const encodedValue = encodeURIComponent(String(paramValue));
+                queryParams.push(`${encodedName}=${encodedValue}`);
+            }
+        }
+
+        if (queryParams.length === 0) {
+            return basePath;
+        }
+
+        return `${basePath}?${queryParams.join("&")}`;
     }
 
     private parseEndpointTestCaseSnippet(fileString: string): [string, Map<string, string>] {

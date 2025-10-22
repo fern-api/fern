@@ -9,8 +9,9 @@ buildScripts:
       - go build -v ./...
   testScript:
     commands:
+      - docker compose -f wiremock/docker-compose.test.yml down && docker compose -f wiremock/docker-compose.test.yml up -d || true 
       - go test -v ./...
-
+      - docker compose -f wiremock/docker-compose.test.yml down
 publish:
   workingDirectory: generators/go
   preBuildCommands:
@@ -201,7 +202,9 @@ fixtures:
 scripts:
   - docker: fernapi/go-seed:1.0.0
     commands:
+      - docker compose -f wiremock/docker-compose.test.yml down && docker compose -f wiremock/docker-compose.test.yml up -d || true
       - CGO_ENABLED=0 go test ./...
+      - docker compose -f wiremock/docker-compose.test.yml down || true
 allowedFailures:
   - alias-extends
   - bytes-download
@@ -227,9 +230,6 @@ allowedFailures:
   - examples:exported-client-name
   - path-parameters:no-custom-config
   - path-parameters:package-name
-
-  # TODO: Investigate addition of toolchain directive to go.mod
-  - imdb:with-wiremock-tests
 
   - oauth-client-credentials-with-variables
   - variables
