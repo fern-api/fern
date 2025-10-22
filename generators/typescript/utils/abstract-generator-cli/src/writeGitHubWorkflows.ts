@@ -127,6 +127,14 @@ jobs:
 
       - name: Set up node
         uses: actions/setup-node@v4${
+            useOidc
+                ? `
+                
+      # Ensure npm 11.5.1 or later is installed for OIDC support
+      - name: Update npm
+        run: npm install -g npm@latest`
+                : ""
+        }${
             usePnpm
                 ? `
 
