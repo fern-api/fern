@@ -34,12 +34,12 @@ runs:
         echo "Built exclude args as:"
         printf '%s\n' "${EXCLUDE_ARGS[@]}"
 
-        # Set results
-        if git --no-pager diff --exit-code -- "${EXCLUDE_ARGS[@]}"; then
+        # Set results. Run with quiet flag to avoid GitHub Actions log limits
+        if git --no-pager diff --exit-code --quiet -- "${EXCLUDE_ARGS[@]}"; then
           echo "Results match"
           echo "deterministic=true" >> $GITHUB_OUTPUT
         else
-          echo "Changes detected in git-tracked files. Showing first 50 lines of diff:"
+          echo "Changes detected in git-tracked files. Showing first 50 lines of diff (to avoid log limits in GitHub Actions):"
           git --no-pager diff -- "${EXCLUDE_ARGS[@]}" | head -50
           echo "deterministic=false" >> $GITHUB_OUTPUT
         fi
