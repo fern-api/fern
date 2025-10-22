@@ -41,7 +41,7 @@ Instantiate and use the client with the following:
 package com.example.usage;
 
 import com.seed.nullable.SeedNullableClient;
-import com.seed.nullable.resources.nullable.requests.CreateUserRequest;
+import com.seed.nullable.resources.nullable.types.CreateUserRequest;
 import com.seed.nullable.resources.nullable.types.Metadata;
 import com.seed.nullable.resources.nullable.types.Status;
 import java.time.OffsetDateTime;

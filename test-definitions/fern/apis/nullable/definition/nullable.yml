@@ -36,6 +36,13 @@ types:
       status: Status
       values: optional<map<string, optional<nullable<string>>>>
 
+  CreateUserRequest:
+    properties:
+      username: string
+      tags: optional<list<string>>
+      metadata: optional<Metadata>
+      avatar: optional<nullable<string>>
+
 service:
   base-path: /users
   auth: false
@@ -62,15 +69,7 @@ service:
     createUser:
       path: ""
       method: POST
-      request:
-        name: CreateUserRequest
-        body:
-          properties:
-            username: string
-            tags: optional<list<string>>
-            metadata: optional<Metadata>
-            avatar:
-              type: optional<nullable<string>>
+      request: CreateUserRequest
       response: User
 
     deleteUser:

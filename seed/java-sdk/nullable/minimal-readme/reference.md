@@ -143,31 +143,7 @@ client.nullable().createUser(
 <dl>
 <dd>
 
-**username:** `String` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**tags:** `Optional<List<String>>` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**metadata:** `Optional<Metadata>` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**avatar:** `Optional<String>` 
+**request:** `CreateUserRequest` 
     
 </dd>
 </dl>

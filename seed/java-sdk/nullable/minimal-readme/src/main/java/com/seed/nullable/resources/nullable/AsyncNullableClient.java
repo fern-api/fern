@@ -5,9 +5,9 @@ package com.seed.nullable.resources.nullable;
 
 import com.seed.nullable.core.ClientOptions;
 import com.seed.nullable.core.RequestOptions;
-import com.seed.nullable.resources.nullable.requests.CreateUserRequest;
 import com.seed.nullable.resources.nullable.requests.DeleteUserRequest;
 import com.seed.nullable.resources.nullable.requests.GetUsersRequest;
+import com.seed.nullable.resources.nullable.types.CreateUserRequest;
 import com.seed.nullable.resources.nullable.types.User;
 import java.util.List;
 import java.util.concurrent.CompletableFuture;
