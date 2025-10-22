@@ -52,7 +52,7 @@ public class Example {
         client.completions().stream(
             StreamCompletionRequest
                 .builder()
-                .query("foo")
+                .query("query")
                 .build()
         );
     }

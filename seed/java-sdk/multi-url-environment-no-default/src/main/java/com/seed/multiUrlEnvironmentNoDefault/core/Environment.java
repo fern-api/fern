@@ -4,9 +4,9 @@
 package com.seed.multiUrlEnvironmentNoDefault.core;
 
 public final class Environment {
-    public static final Environment PRODUCTION = new Environment("https://ec2.aws.com", "https://s3.aws.com");
+    public static final Environment Production = new Environment("https://ec2.aws.com", "https://s3.aws.com");
 
-    public static final Environment STAGING =
+    public static final Environment Staging =
             new Environment("https://staging.ec2.aws.com", "https://staging.s3.aws.com");
 
     private final String ec2;
