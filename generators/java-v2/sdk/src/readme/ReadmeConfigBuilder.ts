@@ -52,7 +52,16 @@ export class ReadmeConfigBuilder {
             disabledFeatures: context.ir.readmeConfig?.disabledFeatures,
             whiteLabel: context.ir.readmeConfig?.whiteLabel,
             customSections: getCustomSections(context),
-            features
+            features,
+            // TODO: @tanmay, once this is released look for it normally
+            exampleStyle: (() => {
+                const customConfig = context.config.customConfig as { readmeConfig?: { exampleStyle?: string } };
+                const customConfigExampleStyle = customConfig?.readmeConfig?.exampleStyle;
+                const irReadmeConfig = context.ir.readmeConfig as { exampleStyle?: string } | undefined;
+                const irExampleStyle = irReadmeConfig?.exampleStyle;
+                const exampleStyle = customConfigExampleStyle ?? irExampleStyle ?? "comprehensive";
+                return exampleStyle as FernGeneratorCli.ExampleStyle;
+            })()
         };
     }
 
