@@ -27,7 +27,7 @@ export function runRulesOnWorkspace({
 }): ValidationViolation[] {
     const violations: ValidationViolation[] = [];
 
-    const allRuleVisitors = rules.map((rule) => rule.create({ workspace, logger }));
+    const allRuleVisitors = rules.map((rule) => rule.create?.({ workspace, logger })).filter((v) => v != null) as RuleVisitors[];
 
     const violationsForRoot = validateRootApiFile({
         contents: workspace.definition.rootApiFile.contents,
