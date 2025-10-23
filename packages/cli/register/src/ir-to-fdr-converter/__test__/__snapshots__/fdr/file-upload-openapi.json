@@ -1,0 +1,141 @@
+{
+  "types": {
+    "type_:FileId": {
+      "description": "The unique identifier for a File in the database",
+      "name": "FileId",
+      "shape": {
+        "type": "alias",
+        "value": {
+          "type": "primitive",
+          "value": {
+            "type": "string"
+          }
+        }
+      }
+    }
+  },
+  "subpackages": {
+    "subpackage_fileUploadExample": {
+      "subpackageId": "subpackage_fileUploadExample",
+      "name": "fileUploadExample",
+      "endpoints": [
+        {
+          "auth": false,
+          "description": "Upload a file to the database",
+          "method": "POST",
+          "id": "uploadFile",
+          "originalEndpointId": "endpoint_fileUploadExample.uploadFile",
+          "name": "Upload File",
+          "path": {
+            "pathParameters": [],
+            "parts": [
+              {
+                "type": "literal",
+                "value": ""
+              },
+              {
+                "type": "literal",
+                "value": "/upload-file"
+              }
+            ]
+          },
+          "queryParameters": [],
+          "headers": [],
+          "request": {
+            "type": {
+              "type": "fileUpload",
+              "value": {
+                "name": "UploadFileRequest",
+                "properties": [
+                  {
+                    "type": "bodyProperty",
+                    "key": "name",
+                    "valueType": {
+                      "type": "primitive",
+                      "value": {
+                        "type": "string"
+                      }
+                    },
+                    "exploded": false
+                  },
+                  {
+                    "type": "file",
+                    "value": {
+                      "type": "file",
+                      "key": "file",
+                      "isOptional": true,
+                      "description": "The file to upload."
+                    }
+                  }
+                ]
+              },
+              "contentType": "multipart/form-data"
+            }
+          },
+          "requestsV2": {},
+          "response": {
+            "type": {
+              "type": "reference",
+              "value": {
+                "type": "id",
+                "value": "type_:FileId"
+              }
+            },
+            "statusCode": 200,
+            "description": ""
+          },
+          "responsesV2": {},
+          "errorsV2": [],
+          "examples": [
+            {
+              "path": "/upload-file",
+              "pathParameters": {},
+              "queryParameters": {},
+              "headers": {},
+              "requestBody": {
+                "name": "name"
+              },
+              "requestBodyV3": {
+                "type": "form",
+                "value": {
+                  "name": {
+                    "type": "json",
+                    "value": "name"
+                  },
+                  "file": {
+                    "type": "filename",
+                    "value": "<file1>"
+                  }
+                }
+              },
+              "responseStatusCode": 200,
+              "responseBody": "string",
+              "responseBodyV3": {
+                "type": "json",
+                "value": "string"
+              }
+            }
+          ]
+        }
+      ],
+      "webhooks": [],
+      "websockets": [],
+      "types": [],
+      "subpackages": []
+    }
+  },
+  "rootPackage": {
+    "endpoints": [],
+    "webhooks": [],
+    "websockets": [],
+    "types": [
+      "type_:FileId"
+    ],
+    "subpackages": [
+      "subpackage_fileUploadExample"
+    ]
+  },
+  "authSchemes": {},
+  "snippetsConfiguration": {},
+  "globalHeaders": []
+}
