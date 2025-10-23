@@ -1,7 +1,7 @@
-use serde::{Deserialize, Serialize};
+pub use crate::prelude::*;
 
 #[derive(Debug, Clone, Serialize, Deserialize, PartialEq, Eq, Hash)]
-pub struct Address {
+pub struct Address2 {
     #[serde(rename = "line1")]
     pub line_1: String,
     #[serde(rename = "line2")]

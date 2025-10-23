@@ -126,7 +126,6 @@ export class SubClientGenerator {
     }
 
     private generateImports(): UseStatement[] {
-        const hasTypes = this.hasTypes(this.context);
         const hasQueryParams = this.hasQueryParameters();
         const hasEndpoints = this.hasEndpoints();
         const typeAnalysis = this.analyzeRequiredImports();
@@ -315,10 +314,6 @@ export class SubClientGenerator {
     // CAPABILITY DETECTION
     // =============================================================================
 
-    private hasTypes(context: SdkGeneratorContext): boolean {
-        return Object.keys(context.ir.types).length > 0;
-    }
-
     private hasEndpoints(): boolean {
         const endpoints = this.service?.endpoints || [];
         return endpoints.length > 0;
@@ -380,14 +375,7 @@ export class SubClientGenerator {
         return requestBody._visit({
             inlinedRequestBody: (inlinedBody) => {
                 // Check if any properties use custom types
-                const propertiesUseCustomTypes = inlinedBody.properties.some((prop) =>
-                    this.isCustomType(prop.valueType)
-                );
-
-                // Check if any extended types are custom
-                const extendsUseCustomTypes = inlinedBody.extends.length > 0;
-
-                return propertiesUseCustomTypes || extendsUseCustomTypes;
+                return true;
             },
             reference: (reference) => this.isCustomType(reference.requestBodyType),
             fileUpload: () => false, // File uploads don't typically use custom types
@@ -970,7 +958,14 @@ export class SubClientGenerator {
                     map: () => "serialize",
                     set: () => "serialize",
                     list: () => "serialize",
-                    literal: () => "string",
+                    literal: (literal) => {
+                        // Handle literal types based on their actual type
+                        return literal._visit({
+                            string: () => "string",
+                            boolean: () => "bool",
+                            _other: () => "serialize"
+                        });
+                    },
                     _other: () => "serialize"
                 });
             },

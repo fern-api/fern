@@ -1,12 +1,10 @@
-use crate::api::*;
-use crate::{ApiError, ClientConfig, HttpClient, RequestOptions};
-use reqwest::Method;
+use crate::{ApiError, ClientConfig, HttpClient};
 
-pub struct CommonsMetadataClient {
+pub struct MetadataClient {
     pub http_client: HttpClient,
 }
 
-impl CommonsMetadataClient {
+impl MetadataClient {
     pub fn new(config: ClientConfig) -> Result<Self, ApiError> {
         Ok(Self {
             http_client: HttpClient::new(config.clone())?,

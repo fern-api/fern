@@ -107,12 +107,4 @@ fixtures:
       outputFolder: readme-config
 
 allowedFailures:
-  - circular-references
-  - circular-references-advanced
-  - empty-clients
-  - literals-unions
-  - object
-  - objects-with-imports
   - public-object
-  - websocket
-  - websocket-bearer-auth

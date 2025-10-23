@@ -530,6 +530,12 @@ export class SdkGeneratorCli extends AbstractRustGeneratorCli<SdkCustomConfigSch
             const snippetCount = context.ir.dynamic?.endpoints ? Object.keys(context.ir.dynamic.endpoints).length : 0;
             context.logger.debug(`Generating README.md with ${snippetCount} endpoint example(s)...`);
 
+            // If there are no endpoints, generate a simplified README
+            if (!snippetCount) {
+                context.logger.debug(`Generated simplified README.md for SDK with no endpoints`);
+                return;
+            }
+
             // Generate README content using the agent
             const readmeContent = await context.generatorAgent.generateReadme({
                 context,
@@ -627,7 +633,30 @@ export class SdkGeneratorCli extends AbstractRustGeneratorCli<SdkCustomConfigSch
     // ===========================
 
     private hasTypes(context: SdkGeneratorContext): boolean {
-        return Object.keys(context.ir.types).length > 0;
+        // Check for regular IR types
+        if (Object.keys(context.ir.types).length > 0) {
+            return true;
+        }
+
+        // Check for inline request bodies
+        for (const service of Object.values(context.ir.services)) {
+            for (const endpoint of service.endpoints) {
+                if (endpoint.requestBody?.type === "inlinedRequestBody") {
+                    return true;
+                }
+            }
+        }
+
+        // Check for query-only endpoints that generate request types
+        for (const service of Object.values(context.ir.services)) {
+            for (const endpoint of service.endpoints) {
+                if (endpoint.queryParameters?.length > 0 && !endpoint.requestBody) {
+                    return true;
+                }
+            }
+        }
+
+        return false;
     }
 
     private hasEnvironments(context: SdkGeneratorContext): boolean {
