@@ -544,26 +544,20 @@ export class OperationConverter extends AbstractOperationConverter {
                     this.getExampleName({ example, exampleIndex }),
                     {
                         displayName: undefined,
-                        request:
-                            example.request != null ||
-                            example["path-parameters"] != null ||
-                            example["query-parameters"] != null ||
-                            example.headers != null
-                                ? {
-                                      docs: undefined,
-                                      endpoint: {
-                                          method: httpMethod,
-                                          path: this.buildExamplePath(httpPath, example["path-parameters"] ?? {})
-                                      },
-                                      baseUrl: undefined,
-                                      environment: baseUrl,
-                                      auth: undefined,
-                                      pathParameters: example["path-parameters"] ?? {},
-                                      queryParameters: example["query-parameters"] ?? {},
-                                      headers: example.headers ?? {},
-                                      requestBody: example.request ?? undefined
-                                  }
-                                : undefined,
+                        request: {
+                            docs: undefined,
+                            endpoint: {
+                                method: httpMethod,
+                                path: this.buildExamplePath(httpPath, example["path-parameters"] ?? {})
+                            },
+                            baseUrl: undefined,
+                            environment: baseUrl,
+                            auth: undefined,
+                            pathParameters: example["path-parameters"] ?? {},
+                            queryParameters: example["query-parameters"] ?? {},
+                            headers: example.headers ?? {},
+                            requestBody: example.request ?? undefined
+                        },
                         response:
                             example.response != null
                                 ? {
