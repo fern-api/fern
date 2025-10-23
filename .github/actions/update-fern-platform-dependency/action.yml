@@ -62,11 +62,13 @@ runs:
         git push origin "$BRANCH_NAME"
         
         # Create PR using GitHub CLI
+        PR_BODY="This PR updates \`${{ inputs.package-name }}\` to version \`${{ inputs.version }}\` in the \`@fern-api/snippets\` package.
+        
+        This PR was automatically created after publishing ${{ inputs.package-name }}@${{ inputs.version }}."
+        
         gh pr create \
           --title "chore: update ${{ inputs.package-name }} to ${{ inputs.version }}" \
-          --body "This PR updates \`${{ inputs.package-name }}\` to version \`${{ inputs.version }}\` in the \`@fern-api/snippets\` package.
-
-This PR was automatically created after publishing ${{ inputs.package-name }}@${{ inputs.version }}." \
+          --body "$PR_BODY" \
           --base main \
           --head "$BRANCH_NAME"
       env:
