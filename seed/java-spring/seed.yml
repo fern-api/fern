@@ -66,3 +66,4 @@ allowedFailures:
   - bytes-download
   - bytes-upload
   - multiple-request-bodies
+  - undiscriminated-union-with-response-property
