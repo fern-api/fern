@@ -26,6 +26,42 @@ types:
           id: kljasc85
           name: bar
 
+  TypeIdMap:
+    docs: A map using TypeId (wrapped alias) as keys.
+    type: map<TypeId, string>
+    examples:
+      - name: One
+        value:
+          type-abc123: "value1"
+          type-def456: "value2"
+
+  NestedTypeIdMap:
+    docs: A nested map structure with wrapped alias keys.
+    type: map<TypeId, map<string, string>>
+    examples:
+      - name: One
+        value:
+          type-outer1:
+            inner1: "nested-value1"
+            inner2: "nested-value2"
+          type-outer2:
+            inner3: "nested-value3"
+
+  ComplexMapObject:
+    docs: An object containing maps with wrapped alias keys.
+    properties:
+      simpleMap: map<TypeId, string>
+      nestedMap: map<TypeId, Type>
+    examples:
+      - name: One
+        value:
+          simpleMap:
+            type-key1: "simple-value"
+          nestedMap:
+            type-key2:
+              id: type-nested
+              name: nested-type
+
 service:
   auth: false
   base-path: /
@@ -35,3 +71,23 @@ service:
       path-parameters:
         typeId: TypeId
       method: GET
+
+    getTypeMap:
+      docs: Test endpoint for maps with wrapped alias keys.
+      path: "/types/map"
+      method: POST
+      request: TypeIdMap
+      response: TypeIdMap
+
+    getNestedMap:
+      docs: Test endpoint for nested maps with wrapped alias keys.
+      path: "/types/nested-map"
+      method: GET
+      response: NestedTypeIdMap
+
+    updateComplexMap:
+      docs: Test endpoint for complex objects containing maps with wrapped alias keys.
+      path: "/types/complex-map"
+      method: PUT
+      request: ComplexMapObject
+      response: ComplexMapObject
