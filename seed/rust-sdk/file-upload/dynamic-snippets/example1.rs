@@ -9,9 +9,10 @@ async fn main() {
     let client = FileUploadClient::new(config).expect("Failed to build client");
     client
         .service
-        .just_file(
-            &JustFileRequest {
-                file: todo!("Missing file value"),
+        .optional_args(
+            &OptionalArgsRequest {
+                image_file: todo!("Missing file value"),
+                request: todo!("Missing body property value"),
             },
             None,
         )
