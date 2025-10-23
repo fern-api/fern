@@ -1,159 +1,159 @@
 {
-  "totalTestTimeSeconds": 7680,
+  "totalTestTimeSeconds": 7819,
   "groups": [
     {
       "fixtures": [
-        "extends:no-custom-config",
-        "undiscriminated-unions",
-        "file-upload",
-        "enum",
-        "oauth-client-credentials-nested-root",
-        "path-parameters:no-custom-config",
-        "nullable-optional",
-        "single-url-environment-default",
-        "server-sent-event-examples",
-        "object"
-      ],
-      "groupTotalTimeSeconds": 769
-    },
-    {
-      "fixtures": [
         "query-parameters-openapi",
-        "response-property",
-        "unions:no-custom-config",
-        "inferred-auth-explicit",
-        "objects-with-imports",
-        "validation",
+        "imdb:no-custom-config",
+        "multiple-request-bodies",
         "package-yml:no-custom-config",
-        "imdb:namespace",
-        "cross-package-type-names",
-        "folders"
+        "package-yml:private",
+        "http-head",
+        "nullable",
+        "inferred-auth-explicit",
+        "file-download",
+        "examples:readme-config",
+        "multi-url-environment-no-default",
+        "pagination-custom"
       ],
-      "groupTotalTimeSeconds": 767
+      "groupTotalTimeSeconds": 775
     },
     {
       "fixtures": [
-        "bearer-token-environment-variable",
-        "pagination:no-custom-config",
-        "basic-auth-environment-variables",
+        "query-parameters-openapi-as-objects",
+        "response-property",
+        "alias:composer-json",
         "oauth-client-credentials-custom",
-        "optional",
-        "multi-line-docs",
-        "imdb:packageName",
-        "license",
-        "nullable",
-        "empty-clients"
+        "enum",
+        "required-nullable",
+        "server-sent-event-examples",
+        "server-sent-events",
+        "public-object",
+        "examples:no-custom-config",
+        "multi-url-environment"
       ],
-      "groupTotalTimeSeconds": 765
+      "groupTotalTimeSeconds": 773
+    },
+    {
+      "fixtures": [
+        "api-wide-base-path",
+        "path-parameters:inline-path-parameters",
+        "oauth-client-credentials-environment-variables",
+        "mixed-case",
+        "imdb:clientName",
+        "simple-fhir",
+        "client-side-params",
+        "oauth-client-credentials",
+        "optional",
+        "simple-api"
+      ],
+      "groupTotalTimeSeconds": 788
+    },
+    {
+      "fixtures": [
+        "alias:no-custom-config",
+        "bytes-download",
+        "oauth-client-credentials-default",
+        "websocket-inferred-auth",
+        "errors",
+        "unknown",
+        "basic-auth-environment-variables",
+        "cross-package-type-names",
+        "basic-auth",
+        "websocket-bearer-auth"
+      ],
+      "groupTotalTimeSeconds": 787
     },
     {
       "fixtures": [
         "alias-extends",
-        "path-parameters:inline-path-parameters-private",
-        "unions:property-accessors",
-        "path-parameters:inline-path-parameters",
-        "reserved-keywords",
-        "unknown",
-        "simple-fhir",
-        "public-object",
-        "server-sent-events",
-        "examples:readme-config"
-      ],
-      "groupTotalTimeSeconds": 764
-    },
-    {
-      "fixtures": [
         "bytes-upload",
-        "pagination:property-accessors",
-        "oauth-client-credentials-environment-variables",
-        "required-nullable",
-        "streaming",
-        "plain-text",
-        "websocket-bearer-auth",
-        "basic-auth",
-        "circular-references",
-        "imdb:private"
-      ],
-      "groupTotalTimeSeconds": 772
-    },
-    {
-      "fixtures": [
-        "accept-header",
-        "version-no-default",
-        "oauth-client-credentials-with-variables",
-        "request-parameters",
-        "extra-properties",
-        "multiple-request-bodies",
+        "pagination:no-custom-config",
+        "any-auth",
         "audiences",
-        "property-access",
-        "variables",
-        "single-url-environment-no-default"
+        "imdb:private",
+        "objects-with-imports",
+        "extends:private",
+        "object",
+        "circular-references-advanced"
       ],
-      "groupTotalTimeSeconds": 771
-    },
-    {
-      "fixtures": [
-        "bytes-download",
-        "alias:no-custom-config",
-        "mixed-file-directory",
-        "error-property",
-        "mixed-case",
-        "oauth-client-credentials",
-        "custom-auth",
-        "circular-references-advanced",
-        "simple-api",
-        "examples:no-custom-config",
-        "multi-url-environment",
-        "multi-url-environment-no-default",
-        "pagination-custom"
-      ],
-      "groupTotalTimeSeconds": 759
+      "groupTotalTimeSeconds": 785
     },
     {
       "fixtures": [
         "content-type",
-        "api-wide-base-path",
-        "alias:composer-json",
-        "any-auth",
-        "query-parameters:no-custom-config",
+        "path-parameters:inline-path-parameters-private",
+        "unions:property-accessors",
+        "mixed-file-directory",
         "inferred-auth-implicit-no-expiry",
-        "errors",
-        "client-side-params",
+        "unions:no-custom-config",
+        "idempotency-headers",
+        "single-url-environment-default",
         "streaming-parameter",
+        "empty-clients"
+      ],
+      "groupTotalTimeSeconds": 784
+    },
+    {
+      "fixtures": [
+        "extends:no-custom-config",
+        "pagination:property-accessors",
+        "oauth-client-credentials-nested-root",
+        "oauth-client-credentials-with-variables",
+        "license",
+        "validation",
+        "imdb:packageName",
+        "file-upload",
+        "websocket",
         "trace",
         "exhaustive"
+      ],
+      "groupTotalTimeSeconds": 784
+    },
+    {
+      "fixtures": [
+        "bearer-token-environment-variable",
+        "url-form-encoded",
+        "path-parameters:no-custom-config",
+        "custom-auth",
+        "error-property",
+        "undiscriminated-unions",
+        "property-access",
+        "literal",
+        "single-url-environment-no-default",
+        "literals-unions"
+      ],
+      "groupTotalTimeSeconds": 781
+    },
+    {
+      "fixtures": [
+        "auth-environment-variables",
+        "version-no-default",
+        "inferred-auth-implicit",
+        "query-parameters:private",
+        "plain-text",
+        "query-parameters:no-custom-config",
+        "extra-properties",
+        "nullable-optional",
+        "variables",
+        "folders"
       ],
       "groupTotalTimeSeconds": 774
     },
     {
       "fixtures": [
-        "query-parameters-openapi-as-objects",
+        "accept-header",
         "version",
-        "websocket-inferred-auth",
-        "oauth-client-credentials-default",
+        "request-parameters",
+        "multi-line-docs",
         "imdb:package-path",
-        "query-parameters:private",
-        "extends:private",
-        "file-download",
-        "http-head",
-        "websocket"
+        "imdb:namespace",
+        "streaming",
+        "reserved-keywords",
+        "circular-references",
+        "no-environment"
       ],
-      "groupTotalTimeSeconds": 771
-    },
-    {
-      "fixtures": [
-        "url-form-encoded",
-        "auth-environment-variables",
-        "inferred-auth-implicit",
-        "imdb:no-custom-config",
-        "imdb:clientName",
-        "package-yml:private",
-        "no-environment",
-        "idempotency-headers",
-        "literal",
-        "literals-unions"
-      ],
-      "groupTotalTimeSeconds": 768
+      "groupTotalTimeSeconds": 788
     }
   ]
 }

@@ -5,5 +5,6 @@ export { FernIgnoreExtension } from "./x-fern-ignore";
 export { FernOptionalExtension } from "./x-fern-optional";
 export { SdkGroupNameExtension } from "./x-fern-sdk-group-name";
 export { SdkMethodNameExtension } from "./x-fern-sdk-method-name";
+export { ServerFromOperationNameExtension } from "./x-fern-server-name-from-operation";
 export { FernTypeExtension } from "./x-fern-type";
 export { FernTypeNameExtension } from "./x-fern-type-name";

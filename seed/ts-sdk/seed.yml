@@ -190,6 +190,12 @@ fixtures:
     - customConfig:
         useLegacyExports: true
       outputFolder: legacy-exports
+    - publishConfig:
+        type: npm     
+        registryUrl: https://registry.npmjs.org/
+        packageName: "@fern-api/dummy"
+        token: <USE_OIDC>
+      outputFolder: oidc-token
   error-property:
     - customConfig:
         private: true
