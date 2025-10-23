@@ -7,6 +7,7 @@ import com.seed.api.core.ClientOptions;
 import com.seed.api.core.RequestOptions;
 import com.seed.api.resources.fileuploadexample.requests.UploadFileRequest;
 import java.io.File;
+import java.util.Optional;
 
 public class FileUploadExampleClient {
     protected final ClientOptions clientOptions;
@@ -28,14 +29,14 @@ public class FileUploadExampleClient {
     /**
      * Upload a file to the database
      */
-    public String uploadFile(File file, UploadFileRequest request) {
+    public String uploadFile(Optional<File> file, UploadFileRequest request) {
         return this.rawClient.uploadFile(file, request).body();
     }
 
     /**
      * Upload a file to the database
      */
-    public String uploadFile(File file, UploadFileRequest request, RequestOptions requestOptions) {
+    public String uploadFile(Optional<File> file, UploadFileRequest request, RequestOptions requestOptions) {
         return this.rawClient.uploadFile(file, request, requestOptions).body();
     }
 }

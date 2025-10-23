@@ -20,7 +20,11 @@ class RawFileUploadExampleClient:
         self._client_wrapper = client_wrapper
 
     def upload_file(
-        self, *, name: str, file: core.File, request_options: typing.Optional[RequestOptions] = None
+        self,
+        *,
+        name: str,
+        file: typing.Optional[core.File] = OMIT,
+        request_options: typing.Optional[RequestOptions] = None,
     ) -> HttpResponse[FileId]:
         """
         Upload a file to the database
@@ -29,7 +33,7 @@ class RawFileUploadExampleClient:
         ----------
         name : str
 
-        file : core.File
+        file : typing.Optional[core.File]
             See core.File for more documentation
 
         request_options : typing.Optional[RequestOptions]
@@ -47,7 +51,7 @@ class RawFileUploadExampleClient:
                 "name": name,
             },
             files={
-                "file": file,
+                **({"file": file} if file is not None else {}),
             },
             request_options=request_options,
             omit=OMIT,
@@ -74,7 +78,11 @@ class AsyncRawFileUploadExampleClient:
         self._client_wrapper = client_wrapper
 
     async def upload_file(
-        self, *, name: str, file: core.File, request_options: typing.Optional[RequestOptions] = None
+        self,
+        *,
+        name: str,
+        file: typing.Optional[core.File] = OMIT,
+        request_options: typing.Optional[RequestOptions] = None,
     ) -> AsyncHttpResponse[FileId]:
         """
         Upload a file to the database
@@ -83,7 +91,7 @@ class AsyncRawFileUploadExampleClient:
         ----------
         name : str
 
-        file : core.File
+        file : typing.Optional[core.File]
             See core.File for more documentation
 
         request_options : typing.Optional[RequestOptions]
@@ -101,7 +109,7 @@ class AsyncRawFileUploadExampleClient:
                 "name": name,
             },
             files={
-                "file": file,
+                **({"file": file} if file is not None else {}),
             },
             request_options=request_options,
             omit=OMIT,

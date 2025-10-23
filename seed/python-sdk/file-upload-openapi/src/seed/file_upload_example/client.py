@@ -28,7 +28,11 @@ class FileUploadExampleClient:
         return self._raw_client
 
     def upload_file(
-        self, *, name: str, file: core.File, request_options: typing.Optional[RequestOptions] = None
+        self,
+        *,
+        name: str,
+        file: typing.Optional[core.File] = OMIT,
+        request_options: typing.Optional[RequestOptions] = None,
     ) -> FileId:
         """
         Upload a file to the database
@@ -37,7 +41,7 @@ class FileUploadExampleClient:
         ----------
         name : str
 
-        file : core.File
+        file : typing.Optional[core.File]
             See core.File for more documentation
 
         request_options : typing.Optional[RequestOptions]
@@ -79,7 +83,11 @@ class AsyncFileUploadExampleClient:
         return self._raw_client
 
     async def upload_file(
-        self, *, name: str, file: core.File, request_options: typing.Optional[RequestOptions] = None
+        self,
+        *,
+        name: str,
+        file: typing.Optional[core.File] = OMIT,
+        request_options: typing.Optional[RequestOptions] = None,
     ) -> FileId:
         """
         Upload a file to the database
@@ -88,7 +96,7 @@ class AsyncFileUploadExampleClient:
         ----------
         name : str
 
-        file : core.File
+        file : typing.Optional[core.File]
             See core.File for more documentation
 
         request_options : typing.Optional[RequestOptions]

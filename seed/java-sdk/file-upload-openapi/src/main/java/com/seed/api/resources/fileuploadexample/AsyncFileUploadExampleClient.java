@@ -7,6 +7,7 @@ import com.seed.api.core.ClientOptions;
 import com.seed.api.core.RequestOptions;
 import com.seed.api.resources.fileuploadexample.requests.UploadFileRequest;
 import java.io.File;
+import java.util.Optional;
 import java.util.concurrent.CompletableFuture;
 
 public class AsyncFileUploadExampleClient {
@@ -29,14 +30,15 @@ public class AsyncFileUploadExampleClient {
     /**
      * Upload a file to the database
      */
-    public CompletableFuture<String> uploadFile(File file, UploadFileRequest request) {
+    public CompletableFuture<String> uploadFile(Optional<File> file, UploadFileRequest request) {
         return this.rawClient.uploadFile(file, request).thenApply(response -> response.body());
     }
 
     /**
      * Upload a file to the database
      */
-    public CompletableFuture<String> uploadFile(File file, UploadFileRequest request, RequestOptions requestOptions) {
+    public CompletableFuture<String> uploadFile(
+            Optional<File> file, UploadFileRequest request, RequestOptions requestOptions) {
         return this.rawClient.uploadFile(file, request, requestOptions).thenApply(response -> response.body());
     }
 }

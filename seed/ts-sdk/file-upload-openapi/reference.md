@@ -28,7 +28,6 @@ Upload a file to the database
 
 ```typescript
 await client.fileUploadExample.uploadFile({
-    file: fs.createReadStream("/path/to/your/file"),
     name: "name"
 });
 

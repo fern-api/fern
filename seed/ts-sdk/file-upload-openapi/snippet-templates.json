@@ -76,7 +76,7 @@
                                     "value": {
                                         "imports": [],
                                         "templateString": "file: $FERN_INPUT",
-                                        "isOptional": false,
+                                        "isOptional": true,
                                         "templateInputs": [
                                             {
                                                 "value": {

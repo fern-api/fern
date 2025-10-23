@@ -60,7 +60,7 @@ client.file_upload_example.upload_file(
 
 **file:** `from __future__ import annotations
 
-core.File` — See core.File for more documentation
+typing.Optional[core.File]` — See core.File for more documentation
     
 </dd>
 </dl>

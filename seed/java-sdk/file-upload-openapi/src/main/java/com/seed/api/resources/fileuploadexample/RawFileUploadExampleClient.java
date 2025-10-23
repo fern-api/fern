@@ -13,6 +13,7 @@ import com.seed.api.resources.fileuploadexample.requests.UploadFileRequest;
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
+import java.util.Optional;
 import okhttp3.Headers;
 import okhttp3.HttpUrl;
 import okhttp3.MediaType;
@@ -33,14 +34,15 @@ public class RawFileUploadExampleClient {
     /**
      * Upload a file to the database
      */
-    public SeedApiHttpResponse<String> uploadFile(File file, UploadFileRequest request) {
+    public SeedApiHttpResponse<String> uploadFile(Optional<File> file, UploadFileRequest request) {
         return uploadFile(file, request, null);
     }
 
     /**
      * Upload a file to the database
      */
-    public SeedApiHttpResponse<String> uploadFile(File file, UploadFileRequest request, RequestOptions requestOptions) {
+    public SeedApiHttpResponse<String> uploadFile(
+            Optional<File> file, UploadFileRequest request, RequestOptions requestOptions) {
         HttpUrl httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
                 .newBuilder()
                 .addPathSegments("upload-file")
@@ -48,9 +50,12 @@ public class RawFileUploadExampleClient {
         MultipartBody.Builder body = new MultipartBody.Builder().setType(MultipartBody.FORM);
         try {
             body.addFormDataPart("name", ObjectMappers.JSON_MAPPER.writeValueAsString(request.getName()));
-            String fileMimeType = Files.probeContentType(file.toPath());
-            MediaType fileMimeTypeMediaType = fileMimeType != null ? MediaType.parse(fileMimeType) : null;
-            body.addFormDataPart("file", file.getName(), RequestBody.create(file, fileMimeTypeMediaType));
+            if (file.isPresent()) {
+                String fileMimeType = Files.probeContentType(file.get().toPath());
+                MediaType fileMimeTypeMediaType = fileMimeType != null ? MediaType.parse(fileMimeType) : null;
+                body.addFormDataPart(
+                        "file", file.get().getName(), RequestBody.create(file.get(), fileMimeTypeMediaType));
+            }
         } catch (Exception e) {
             throw new RuntimeException(e);
         }

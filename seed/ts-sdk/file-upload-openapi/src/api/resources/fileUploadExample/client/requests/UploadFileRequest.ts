@@ -5,12 +5,11 @@ import type * as core from "../../../../../core/index.js";
 /**
  * @example
  *     {
- *         file: fs.createReadStream("/path/to/your/file"),
  *         name: "name"
  *     }
  */
 export interface UploadFileRequest {
     name: string;
     /** The file to upload. */
-    file: core.file.Uploadable;
+    file?: core.file.Uploadable | undefined;
 }

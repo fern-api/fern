@@ -28,7 +28,6 @@ export class FileUploadExample {
      * @example
      *     import { createReadStream } from "fs";
      *     await client.fileUploadExample.uploadFile({
-     *         file: fs.createReadStream("/path/to/your/file"),
      *         name: "name"
      *     })
      */
@@ -45,7 +44,10 @@ export class FileUploadExample {
     ): Promise<core.WithRawResponse<SeedApi.FileId>> {
         const _request = await core.newFormData();
         _request.append("name", request.name);
-        await _request.appendFile("file", request.file);
+        if (request.file != null) {
+            await _request.appendFile("file", request.file);
+        }
+
         const _maybeEncodedRequest = await _request.getRequest();
         const _headers: core.Fetcher.Args["headers"] = mergeHeaders(
             this._options?.headers,
