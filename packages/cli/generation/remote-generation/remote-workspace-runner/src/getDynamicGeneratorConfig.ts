@@ -160,6 +160,14 @@ function getDynamicGeneratorConfigGithubOutputMode({
             })
         );
     }
+    if (language === generatorsYml.GenerationLanguage.SWIFT) {
+        return dynamic.GeneratorOutputConfig.publish(
+            dynamic.PublishInfo.swift({
+                version,
+                repoUrl
+            })
+        );
+    }
     const publishInfo = github.publishInfo;
     if (publishInfo == null) {
         return undefined;
