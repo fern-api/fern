@@ -6,6 +6,7 @@ import * as serializers from "../../../../../index";
 import * as FernIr from "../../../../../../api/index";
 import * as core from "../../../../../../core";
 import { GoPublishInfo } from "./GoPublishInfo";
+import { SwiftPublishInfo } from "./SwiftPublishInfo";
 import { MavenPublishInfo } from "./MavenPublishInfo";
 import { NpmPublishInfo } from "./NpmPublishInfo";
 import { NugetPublishInfo } from "./NugetPublishInfo";
@@ -17,6 +18,7 @@ export const PublishInfo: core.serialization.Schema<serializers.dynamic.PublishI
     core.serialization
         .union("type", {
             go: GoPublishInfo,
+            swift: SwiftPublishInfo,
             maven: MavenPublishInfo,
             npm: NpmPublishInfo,
             nuget: NugetPublishInfo,
@@ -29,6 +31,8 @@ export const PublishInfo: core.serialization.Schema<serializers.dynamic.PublishI
                 switch (value.type) {
                     case "go":
                         return FernIr.dynamic.PublishInfo.go(value);
+                    case "swift":
+                        return FernIr.dynamic.PublishInfo.swift(value);
                     case "maven":
                         return FernIr.dynamic.PublishInfo.maven(value);
                     case "npm":
@@ -51,6 +55,7 @@ export const PublishInfo: core.serialization.Schema<serializers.dynamic.PublishI
 export declare namespace PublishInfo {
     export type Raw =
         | PublishInfo.Go
+        | PublishInfo.Swift
         | PublishInfo.Maven
         | PublishInfo.Npm
         | PublishInfo.Nuget
@@ -60,6 +65,10 @@ export declare namespace PublishInfo {
 
     export interface Go extends GoPublishInfo.Raw {
         type: "go";
+    }
+
+    export interface Swift extends SwiftPublishInfo.Raw {
+        type: "swift";
     }
 
     export interface Maven extends MavenPublishInfo.Raw {
