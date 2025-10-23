@@ -167,17 +167,21 @@ service:
       docs: Test endpoint with TypeId in query parameter.
       path: "/types/query"
       method: GET
-      query-parameters:
-        typeId: TypeId
-        optionalTypeId: optional<TypeId>
+      request:
+        name: GetWithQueryParamRequest
+        query-parameters:
+          typeId: TypeId
+          optionalTypeId: optional<TypeId>
       response: Type
 
     getWithHeader:
       docs: Test endpoint with TypeId in header.
       path: "/types/header"
       method: GET
-      headers:
-        X-Type-Id: TypeId
+      request:
+        name: GetWithHeaderRequest
+        headers:
+          X-Type-Id: TypeId
       response: Type
 
     testContainerAliases:
