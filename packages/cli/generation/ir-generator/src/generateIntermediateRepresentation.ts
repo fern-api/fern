@@ -189,7 +189,8 @@ export function generateIntermediateRepresentation({
         sourceConfig: undefined,
         publishConfig: undefined,
         dynamic: undefined,
-        audiences: workspace.definition.rootApiFile.contents.audiences
+        audiences: workspace.definition.rootApiFile.contents.audiences,
+        generationMetadata: undefined
     };
 
     const packageTreeGenerator = new PackageTreeGenerator();

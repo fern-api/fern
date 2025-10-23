@@ -1,4 +1,5 @@
 export * from "./IntermediateRepresentation";
+export * from "./GenerationMetadata";
 export * from "./ReadmeConfig";
 export * from "./ExampleStyle";
 export * from "./ReadmeCustomSection";

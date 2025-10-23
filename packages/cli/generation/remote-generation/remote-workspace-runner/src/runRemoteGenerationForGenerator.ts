@@ -101,6 +101,13 @@ export async function runRemoteGenerationForGenerator({
         }
     }
 
+    ir.generationMetadata = {
+        cliVersion: process.env.CLI_VERSION ?? "unknown",
+        generatorName: generatorInvocation.name,
+        generatorVersion: generatorInvocation.version,
+        generatorConfig: generatorInvocation.config
+    };
+
     const sources = workspace.getSources();
     const apiDefinition = convertIrToFdrApi({
         ir,
