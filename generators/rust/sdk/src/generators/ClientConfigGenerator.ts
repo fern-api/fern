@@ -33,7 +33,8 @@ export class ClientConfigGenerator {
         ];
 
         if (this.hasEnvironments()) {
-            imports.push(new UseStatement({ path: "crate", items: ["Environment"] }));
+            const environmentEnumName = this.getEnvironmentEnumName();
+            imports.push(new UseStatement({ path: "crate", items: [environmentEnumName] }));
         }
 
         return imports;
@@ -98,6 +99,8 @@ export class ClientConfigGenerator {
 
     private generateDefaultImpl() {
         const userAgent = `${this.context.ir.apiName.pascalCase.safeName} Rust SDK`;
+        const environmentEnumName = this.getEnvironmentEnumName();
+        const hasDefaultEnvironment = this.context.ir.environments?.defaultEnvironment !== undefined;
 
         const defaultMethod = rust.method({
             name: "default",
@@ -107,17 +110,18 @@ export class ClientConfigGenerator {
                 Expression.structConstruction("Self", [
                     {
                         name: "base_url",
-                        value: this.hasEnvironments()
-                            ? Expression.methodCall({
-                                  target: Expression.methodCall({
-                                      target: Expression.functionCall("Environment::default", []),
-                                      method: "url",
+                        value:
+                            this.hasEnvironments() && hasDefaultEnvironment
+                                ? Expression.methodCall({
+                                      target: Expression.methodCall({
+                                          target: Expression.functionCall(`${environmentEnumName}::default`, []),
+                                          method: "url",
+                                          args: []
+                                      }),
+                                      method: "to_string",
                                       args: []
-                                  }),
-                                  method: "to_string",
-                                  args: []
-                              })
-                            : Expression.functionCall("String::new", [])
+                                  })
+                                : Expression.functionCall("String::new", [])
                     },
                     {
                         name: "api_key",
@@ -164,5 +168,10 @@ export class ClientConfigGenerator {
 
     private hasEnvironments(): boolean {
         return this.context.ir.environments?.environments != null;
+    }
+
+    private getEnvironmentEnumName(): string {
+        const customConfig = this.context.customConfig;
+        return customConfig.environmentEnumName || "Environment";
     }
 }

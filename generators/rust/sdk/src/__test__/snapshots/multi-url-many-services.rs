@@ -1,5 +1,4 @@
-use serde::{Deserialize, Serialize};
-use std::collections::{HashMap};
+use crate::prelude::{*};
 
 #[derive(Debug, Clone, Serialize, Deserialize)]
 pub struct ProductionUrls {
@@ -31,9 +30,9 @@ pub enum Environment {
 impl Environment {
     pub fn url(&self) -> &str {
     match self {
-        Self::Production { urls } => urls.api,
-        Self::Staging { urls } => urls.api,
-        Self::Development { urls } => urls.api,
+        Self::Production(urls) => &urls.api,
+        Self::Staging(urls) => &urls.api,
+        Self::Development(urls) => &urls.api,
     }
 }
 }

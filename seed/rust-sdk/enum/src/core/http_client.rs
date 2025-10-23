@@ -253,7 +253,6 @@ impl HttpClient {
         serde_json::from_str(&text).map_err(ApiError::Serialization)
     }
 
-
     /// Execute a request and return a streaming response (for large file downloads)
     ///
     /// This method returns a `ByteStream` that can be used to download large files

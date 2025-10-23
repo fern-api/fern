@@ -1,4 +1,16 @@
 use crate::{ApiError, ClientConfig};
 
 pub mod literals;
-pub use literals::*;
+pub struct LiteralsUnionsClient {
+    pub config: ClientConfig,
+}
+
+impl LiteralsUnionsClient {
+    pub fn new(config: ClientConfig) -> Result<Self, ApiError> {
+        Ok(Self {
+            config: config.clone(),
+        })
+    }
+}
+
+pub use literals::LiteralsClient;
