@@ -176,6 +176,161 @@
             }
           }
         ]
+      },
+      {
+        "auth": false,
+        "method": "PATCH",
+        "id": "updateFoo",
+        "originalEndpointId": "endpoint_.updateFoo",
+        "name": "Update foo",
+        "path": {
+          "pathParameters": [
+            {
+              "key": "id",
+              "type": {
+                "type": "primitive",
+                "value": {
+                  "type": "string"
+                }
+              }
+            }
+          ],
+          "parts": [
+            {
+              "type": "literal",
+              "value": ""
+            },
+            {
+              "type": "literal",
+              "value": "/foo/"
+            },
+            {
+              "type": "pathParameter",
+              "value": "id"
+            },
+            {
+              "type": "literal",
+              "value": ""
+            }
+          ]
+        },
+        "queryParameters": [],
+        "headers": [
+          {
+            "key": "X-Idempotency-Key",
+            "type": {
+              "type": "primitive",
+              "value": {
+                "type": "string"
+              }
+            }
+          }
+        ],
+        "request": {
+          "type": {
+            "type": "json",
+            "contentType": "application/json",
+            "shape": {
+              "type": "object",
+              "extends": [],
+              "properties": [
+                {
+                  "description": "Can be explicitly set to null to clear the value",
+                  "key": "nullable_text",
+                  "valueType": {
+                    "type": "optional",
+                    "itemType": {
+                      "type": "nullable",
+                      "itemType": {
+                        "type": "primitive",
+                        "value": {
+                          "type": "string"
+                        }
+                      }
+                    }
+                  }
+                },
+                {
+                  "description": "Can be explicitly set to null to clear the value",
+                  "key": "nullable_number",
+                  "valueType": {
+                    "type": "optional",
+                    "itemType": {
+                      "type": "nullable",
+                      "itemType": {
+                        "type": "primitive",
+                        "value": {
+                          "type": "double"
+                        }
+                      }
+                    }
+                  }
+                },
+                {
+                  "description": "Regular non-nullable field",
+                  "key": "non_nullable_text",
+                  "valueType": {
+                    "type": "optional",
+                    "itemType": {
+                      "type": "primitive",
+                      "value": {
+                        "type": "string"
+                      }
+                    }
+                  }
+                }
+              ]
+            }
+          }
+        },
+        "requestsV2": {},
+        "response": {
+          "type": {
+            "type": "reference",
+            "value": {
+              "type": "id",
+              "value": "type_:Foo"
+            }
+          },
+          "statusCode": 200,
+          "description": "successful operation"
+        },
+        "responsesV2": {},
+        "errorsV2": [],
+        "examples": [
+          {
+            "path": "/foo/id",
+            "pathParameters": {
+              "id": "id"
+            },
+            "queryParameters": {},
+            "headers": {
+              "X-Idempotency-Key": "X-Idempotency-Key"
+            },
+            "requestBody": {},
+            "requestBodyV3": {
+              "type": "json",
+              "value": {}
+            },
+            "responseStatusCode": 200,
+            "responseBody": {
+              "bar": "bar",
+              "nullable_bar": "nullable_bar",
+              "nullable_required_bar": "nullable_required_bar",
+              "required_bar": "required_bar"
+            },
+            "responseBodyV3": {
+              "type": "json",
+              "value": {
+                "bar": "bar",
+                "nullable_bar": "nullable_bar",
+                "nullable_required_bar": "nullable_required_bar",
+                "required_bar": "required_bar"
+              }
+            },
+            "codeSamples": []
+          }
+        ]
       }
     ],
     "webhooks": [],
