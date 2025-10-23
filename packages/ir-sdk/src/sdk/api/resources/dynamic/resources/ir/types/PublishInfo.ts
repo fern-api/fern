@@ -6,6 +6,7 @@ import * as FernIr from "../../../../../index";
 
 export type PublishInfo =
     | FernIr.dynamic.PublishInfo.Go
+    | FernIr.dynamic.PublishInfo.Swift
     | FernIr.dynamic.PublishInfo.Maven
     | FernIr.dynamic.PublishInfo.Npm
     | FernIr.dynamic.PublishInfo.Nuget
@@ -16,6 +17,10 @@ export type PublishInfo =
 export namespace PublishInfo {
     export interface Go extends FernIr.dynamic.GoPublishInfo, _Utils {
         type: "go";
+    }
+
+    export interface Swift extends FernIr.dynamic.SwiftPublishInfo, _Utils {
+        type: "swift";
     }
 
     export interface Maven extends FernIr.dynamic.MavenPublishInfo, _Utils {
@@ -48,6 +53,7 @@ export namespace PublishInfo {
 
     export interface _Visitor<_Result> {
         go: (value: FernIr.dynamic.GoPublishInfo) => _Result;
+        swift: (value: FernIr.dynamic.SwiftPublishInfo) => _Result;
         maven: (value: FernIr.dynamic.MavenPublishInfo) => _Result;
         npm: (value: FernIr.dynamic.NpmPublishInfo) => _Result;
         nuget: (value: FernIr.dynamic.NugetPublishInfo) => _Result;
@@ -65,6 +71,19 @@ export const PublishInfo = {
             type: "go",
             _visit: function <_Result>(
                 this: FernIr.dynamic.PublishInfo.Go,
+                visitor: FernIr.dynamic.PublishInfo._Visitor<_Result>,
+            ) {
+                return FernIr.dynamic.PublishInfo._visit(this, visitor);
+            },
+        };
+    },
+
+    swift: (value: FernIr.dynamic.SwiftPublishInfo): FernIr.dynamic.PublishInfo.Swift => {
+        return {
+            ...value,
+            type: "swift",
+            _visit: function <_Result>(
+                this: FernIr.dynamic.PublishInfo.Swift,
                 visitor: FernIr.dynamic.PublishInfo._Visitor<_Result>,
             ) {
                 return FernIr.dynamic.PublishInfo._visit(this, visitor);
@@ -157,6 +176,8 @@ export const PublishInfo = {
         switch (value.type) {
             case "go":
                 return visitor.go(value);
+            case "swift":
+                return visitor.swift(value);
             case "maven":
                 return visitor.maven(value);
             case "npm":
