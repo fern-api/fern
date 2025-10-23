@@ -45,6 +45,19 @@ customFixtureConfig:
     use_typeddict_requests: true
   outputFolder: client-filename
 fixtures:
+  alias:
+    - customConfig: null
+      outputFolder: no-custom-config
+    - customConfig:
+        pydantic_config:
+          version: v1
+          wrapped_aliases: true
+      outputFolder: pydantic-v1-wrapped
+    - customConfig:
+        pydantic_config:
+          version: v2
+          wrapped_aliases: true
+      outputFolder: pydantic-v2-wrapped
   alias-extends:
     - customConfig: null
       outputFolder: no-custom-config
