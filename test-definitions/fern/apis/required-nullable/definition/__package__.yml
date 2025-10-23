@@ -46,5 +46,30 @@ service:
         type: Foo
       source:
         openapi: openapi.json
+    updateFoo:
+      display-name: Update foo
+      method: PATCH
+      path: /foo/{id}
+      path-parameters:
+        id: string
+      request:
+        name: UpdateFooRequest
+        body:
+          properties:
+            nullable_text:
+              docs: Can be explicitly set to null to clear the value
+              type: optional<nullable<string>>
+            nullable_number:
+              docs: Can be explicitly set to null to clear the value
+              type: optional<nullable<double>>
+            non_nullable_text:
+              docs: Regular non-nullable field
+              type: optional<string>
+        headers:
+          X-Idempotency-Key: string
+      response:
+        docs: successful operation
+        status-code: 200
+        type: Foo
   source:
     openapi: openapi.json
