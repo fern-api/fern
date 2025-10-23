@@ -442,6 +442,9 @@ async function generateLanguageSpecificDynamicIRs({
                         case "go":
                             packageName = dynamicGeneratorConfig.outputConfig.value.repoUrl;
                             break;
+                        case "swift":
+                            packageName = dynamicGeneratorConfig.outputConfig.value.repoUrl;
+                            break;
                         case "crates":
                             packageName = dynamicGeneratorConfig.outputConfig.value.packageName;
                             break;
