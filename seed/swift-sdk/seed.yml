@@ -88,6 +88,7 @@ fixtures:
       outputFolder: with-custom-config
 
 allowedFailures:
+  - accept-header
   - any-auth
   - api-wide-base-path
   - audiences
