@@ -7,7 +7,7 @@ private func main() async throws {
         token: "<token>"
     )
 
-    _ = try await client.endpoints.container.getAndReturnSetOfObjects(request: )
+    _ = try await client.endpoints.container.getAndReturnSetOfObjects()
 }
 
 try await main()

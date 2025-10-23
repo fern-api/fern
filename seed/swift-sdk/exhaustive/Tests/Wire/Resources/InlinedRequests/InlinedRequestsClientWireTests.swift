@@ -75,11 +75,9 @@ import Exhaustive
                     "list",
                     "list"
                 ],
-                set: ,
                 map: [
                     1: "map"
-                ],
-                bigint: 
+                ]
             )
         ))
         try #require(response == expectedResponse)

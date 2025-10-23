@@ -148,10 +148,7 @@ import Nullable
             )
         ]
         let response = try await client.nullable.getUsers(
-            usernames: ,
             avatar: "avatar",
-            activated: ,
-            tags: ,
             extra: .value(true)
         )
         try #require(response == expectedResponse)

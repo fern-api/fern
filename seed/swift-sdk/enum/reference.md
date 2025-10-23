@@ -289,12 +289,7 @@ import Enum
 private func main() async throws {
     let client = EnumClient()
 
-    _ = try await client.queryParam.sendList(
-        operand: ,
-        maybeOperand: ,
-        operandOrColor: ,
-        maybeOperandOrColor: 
-    )
+    _ = try await client.queryParam.sendList()
 }
 
 try await main()

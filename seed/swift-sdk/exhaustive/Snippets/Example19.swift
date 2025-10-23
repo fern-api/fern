@@ -25,11 +25,9 @@ private func main() async throws {
                     "list",
                     "list"
                 ],
-                set: ,
                 map: [
                     1: "map"
-                ],
-                bigint: 
+                ]
             )
         )
     )

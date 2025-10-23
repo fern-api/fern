@@ -79,9 +79,7 @@ import QueryParameters
                     "tags",
                     "tags"
                 ]
-            ),
-            excludeUser: ,
-            filter: 
+            )
         )
         try #require(response == expectedResponse)
     }

@@ -533,10 +533,7 @@ import Examples
 private func main() async throws {
     let client = ExamplesClient(token: "<token>")
 
-    _ = try await client.service.getMetadata(
-        shallow: false,
-        tag: 
-    )
+    _ = try await client.service.getMetadata(shallow: false)
 }
 
 try await main()

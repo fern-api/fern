@@ -80,10 +80,7 @@ import RequestParameters
                     "tags"
                 ]
             ),
-            excludeUser: ,
-            filter: ,
-            longParam: 1000000,
-            bigIntParam: 
+            longParam: 1000000
         )
         try #require(response == expectedResponse)
     }

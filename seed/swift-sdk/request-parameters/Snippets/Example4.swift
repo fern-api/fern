@@ -55,10 +55,7 @@ private func main() async throws {
                 "tags"
             ]
         ),
-        excludeUser: ,
-        filter: ,
-        longParam: 1000000,
-        bigIntParam: 
+        longParam: 1000000
     )
 }
 

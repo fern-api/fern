@@ -143,7 +143,7 @@ import Exhaustive
 private func main() async throws {
     let client = ExhaustiveClient(token: "<token>")
 
-    _ = try await client.endpoints.container.getAndReturnSetOfPrimitives(request: )
+    _ = try await client.endpoints.container.getAndReturnSetOfPrimitives()
 }
 
 try await main()
@@ -200,7 +200,7 @@ import Exhaustive
 private func main() async throws {
     let client = ExhaustiveClient(token: "<token>")
 
-    _ = try await client.endpoints.container.getAndReturnSetOfObjects(request: )
+    _ = try await client.endpoints.container.getAndReturnSetOfObjects()
 }
 
 try await main()
@@ -451,11 +451,9 @@ private func main() async throws {
             "list",
             "list"
         ],
-        set: ,
         map: [
             1: "map"
-        ],
-        bigint: 
+        ]
     ))
 }
 
@@ -527,11 +525,9 @@ private func main() async throws {
             "list",
             "list"
         ],
-        set: ,
         map: [
             1: "map"
-        ],
-        bigint: 
+        ]
     ))
 }
 
@@ -850,11 +846,9 @@ private func main() async throws {
                 "list",
                 "list"
             ],
-            set: ,
             map: [
                 1: "map"
-            ],
-            bigint: 
+            ]
         )
     )
 }
@@ -993,11 +987,9 @@ private func main() async throws {
             "list",
             "list"
         ],
-        set: ,
         map: [
             1: "map"
-        ],
-        bigint: 
+        ]
     ))
 }
 
@@ -1193,11 +1185,9 @@ private func main() async throws {
                 "list",
                 "list"
             ],
-            set: ,
             map: [
                 1: "map"
-            ],
-            bigint: 
+            ]
         )
     ))
 }
@@ -1274,11 +1264,9 @@ private func main() async throws {
                     "list",
                     "list"
                 ],
-                set: ,
                 map: [
                     1: "map"
-                ],
-                bigint: 
+                ]
             )
         )
     )
@@ -1363,11 +1351,9 @@ private func main() async throws {
                     "list",
                     "list"
                 ],
-                set: ,
                 map: [
                     1: "map"
-                ],
-                bigint: 
+                ]
             )
         ),
         NestedObjectWithRequiredField(
@@ -1386,11 +1372,9 @@ private func main() async throws {
                     "list",
                     "list"
                 ],
-                set: ,
                 map: [
                     1: "map"
-                ],
-                bigint: 
+                ]
             )
         )
     ])
@@ -2949,11 +2933,9 @@ private func main() async throws {
                 "list",
                 "list"
             ],
-            set: ,
             map: [
                 1: "map"
-            ],
-            bigint: 
+            ]
         )
     ))
 }

@@ -54,9 +54,7 @@ private func main() async throws {
                 "tags",
                 "tags"
             ]
-        ),
-        excludeUser: ,
-        filter: 
+        )
     )
 }
 

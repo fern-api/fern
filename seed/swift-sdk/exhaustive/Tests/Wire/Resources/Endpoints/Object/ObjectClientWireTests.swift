@@ -72,11 +72,9 @@ import Exhaustive
                 "list",
                 "list"
             ],
-            set: ,
             map: [
                 1: "map"
-            ],
-            bigint: 
+            ]
         ))
         try #require(response == expectedResponse)
     }
@@ -220,11 +218,9 @@ import Exhaustive
                     "list",
                     "list"
                 ],
-                set: ,
                 map: [
                     1: "map"
-                ],
-                bigint: 
+                ]
             )
         ))
         try #require(response == expectedResponse)
@@ -309,11 +305,9 @@ import Exhaustive
                         "list",
                         "list"
                     ],
-                    set: ,
                     map: [
                         1: "map"
-                    ],
-                    bigint: 
+                    ]
                 )
             )
         )
@@ -398,11 +392,9 @@ import Exhaustive
                         "list",
                         "list"
                     ],
-                    set: ,
                     map: [
                         1: "map"
-                    ],
-                    bigint: 
+                    ]
                 )
             ),
             NestedObjectWithRequiredField(
@@ -421,11 +413,9 @@ import Exhaustive
                         "list",
                         "list"
                     ],
-                    set: ,
                     map: [
                         1: "map"
-                    ],
-                    bigint: 
+                    ]
                 )
             )
         ])

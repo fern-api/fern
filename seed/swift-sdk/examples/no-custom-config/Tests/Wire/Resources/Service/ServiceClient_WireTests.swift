@@ -217,10 +217,7 @@ import Examples
             urlSession: stub.urlSession
         )
         let expectedResponse = "<head>...</head>"
-        let response = try await client.service.getMetadata(
-            shallow: false,
-            tag: 
-        )
+        let response = try await client.service.getMetadata(shallow: false)
         try #require(response == expectedResponse)
     }
 
@@ -248,10 +245,7 @@ import Examples
             urlSession: stub.urlSession
         )
         let expectedResponse = "string"
-        let response = try await client.service.getMetadata(
-            shallow: true,
-            tag: 
-        )
+        let response = try await client.service.getMetadata(shallow: true)
         try #require(response == expectedResponse)
     }
 
