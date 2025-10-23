@@ -25,7 +25,7 @@ export class ClassInstantiation extends AstNode {
         super();
         this.classReference = classReference;
         this.arguments_ = arguments_;
-        this.multiline = multiline ?? false;
+        this.multiline = multiline ?? (Array.isArray(arguments_) && arguments_.length > 3);
     }
 
     public write(writer: Writer): void {
