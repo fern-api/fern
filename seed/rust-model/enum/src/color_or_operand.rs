@@ -47,3 +47,12 @@ impl ColorOrOperand {
     }
 
 }
+
+impl fmt::Display for ColorOrOperand {
+    fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
+        match self {
+            Self::Color(value) => write!(f, "{}", serde_json::to_string(value).unwrap_or_else(|_| format!("{:?}", value))),
+            Self::Operand(value) => write!(f, "{}", serde_json::to_string(value).unwrap_or_else(|_| format!("{:?}", value))),
+        }
+    }
+}
