@@ -97,8 +97,8 @@
     "@fern-fern/ir-v57-sdk": "0.0.2",
     "@fern-fern/ir-v58-sdk": "0.0.2",
     "@fern-fern/ir-v59-sdk": "0.0.8",
-    "@fern-fern/ir-v60-sdk": "0.0.5",
     "@fern-fern/ir-v6-model": "0.0.33",
+    "@fern-fern/ir-v60-sdk": "0.0.5",
     "@fern-fern/ir-v7-model": "0.0.2",
     "@fern-fern/ir-v8-model": "0.0.1",
     "@fern-fern/ir-v9-model": "0.0.1",
@@ -109,7 +109,7 @@
     "@types/lodash-es": "^4.17.12",
     "@types/node": "18.15.3",
     "depcheck": "^1.4.7",
-    "typescript": "5.8.3",
+    "typescript": "5.9.3",
     "vitest": "^2.1.9"
   }
 }

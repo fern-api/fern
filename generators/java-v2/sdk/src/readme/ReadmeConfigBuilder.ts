@@ -52,8 +52,9 @@ export class ReadmeConfigBuilder {
             disabledFeatures: context.ir.readmeConfig?.disabledFeatures,
             whiteLabel: context.ir.readmeConfig?.whiteLabel,
             customSections: getCustomSections(context),
-            features
-        };
+            features,
+            exampleStyle: context.ir.readmeConfig?.exampleStyle
+        } as FernGeneratorCli.ReadmeConfig;
     }
 
     private getLanguageInfo({ context }: { context: SdkGeneratorContext }): FernGeneratorCli.LanguageInfo {

@@ -1,6 +1,7 @@
 import { FernWorkspace } from "@fern-api/api-workspace-commons";
 import { assertNever, Examples, isPlainObject } from "@fern-api/core-utils";
 import {
+    EXAMPLE_REFERENCE_PREFIX,
     isRawAliasDefinition,
     isRawObjectDefinition,
     RawSchemas,
@@ -404,9 +405,12 @@ function convertPrimitiveExample({
                     })
                 );
             }
+
+            // remove initial \
+            const unescaped = example.startsWith(`\\${EXAMPLE_REFERENCE_PREFIX}`) ? example.slice(1) : example;
             return ExampleTypeReferenceShape.primitive(
                 ExamplePrimitive.string({
-                    original: example
+                    original: unescaped
                 })
             );
         },

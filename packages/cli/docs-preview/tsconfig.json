@@ -10,9 +10,6 @@
   "include": ["./src/**/*"],
   "references": [
     {
-      "path": "../workspace/loader"
-    },
-    {
       "path": "../docs-markdown-utils"
     },
     {

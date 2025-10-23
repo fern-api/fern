@@ -1,15 +1,12 @@
 {
   "name": "@fern-api/rust-dynamic-snippets",
   "version": "0.0.0",
+  "private": true,
   "repository": {
     "type": "git",
     "url": "https://github.com/fern-api/fern.git",
     "directory": "generators/rust/dynamic-snippets"
   },
-  "private": true,
-  "main": "lib/index.js",
-  "module": "lib/index.js",
-  "types": "lib/index.d.ts",
   "exports": {
     ".": {
       "types": "./lib/index.d.ts",
@@ -17,15 +14,18 @@
       "default": "./lib/index.js"
     }
   },
-  "files": ["lib"],
+  "main": "lib/index.js",
+  "module": "lib/index.js",
   "source": "src/index.ts",
+  "types": "lib/index.d.ts",
+  "files": ["lib"],
   "scripts": {
     "clean": "rm -rf ./lib && tsc --build --clean",
     "compile": "tsc --build",
-    "test": "vitest run --passWithNoTests",
-    "test:update": "vitest run -u --passWithNoTests",
+    "depcheck": "depcheck",
     "organize-imports": "organize-imports-cli tsconfig.json",
-    "depcheck": "depcheck"
+    "test": "vitest run --passWithNoTests",
+    "test:update": "vitest run -u --passWithNoTests"
   },
   "dependencies": {
     "@fern-api/browser-compatible-base-generator": "workspace:*",
@@ -41,7 +41,7 @@
     "@yarnpkg/esbuild-plugin-pnp": "3.0.0-rc.15",
     "depcheck": "^1.4.7",
     "esbuild": "^0.24.0",
-    "typescript": "5.8.3",
+    "typescript": "5.9.3",
     "vitest": "^2.1.9"
   }
 }

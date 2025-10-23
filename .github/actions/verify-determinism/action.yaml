@@ -1,0 +1,46 @@
+name: Verify Deterministic
+description: To be run after seed generation to compare against committed code and verify the results match.
+
+inputs:
+  determinism-exclude-paths:
+    description: "JSON array of paths to exclude from determinism verification step, typically package manager/lock files"
+    required: false
+    default: '["seed/*/.mock/*"]'
+
+outputs:
+  deterministic:
+    description: "Test matrix without any packaging"
+    value: ${{ steps.validate.outputs.deterministic }}
+
+runs:
+  using: "composite"
+  steps:
+    - name: Validate results
+      id: validate
+      shell: bash
+      run: |
+        # Parse JSON array and build exclude arguments
+        JSON_INPUT='${{ inputs.determinism-exclude-paths }}'
+        echo "Input JSON:"
+        echo ${JSON_INPUT} | jq .
+
+        # Build exclude array
+        EXCLUDE_ARGS=()
+        for EXCLUDE_PATTERN in $(echo "${JSON_INPUT}" | jq -c -r '.[]'); do
+          EXCLUDE_ARGS+=(":(exclude)${EXCLUDE_PATTERN}")
+        done
+
+        # Log for debugging
+        echo "Built exclude args as:"
+        printf '%s\n' "${EXCLUDE_ARGS[@]}"
+
+        # Set results. Run with quiet flag to avoid GitHub Actions log limits
+        if git --no-pager diff --exit-code --quiet -- "${EXCLUDE_ARGS[@]}"; then
+          echo "Results match"
+          echo "deterministic=true" >> $GITHUB_OUTPUT
+        else
+          # Note: need to add the || true when outputting the diff to gracefully avoid a SIGPIPE error when we stop reading the output of diff
+          echo "Changes detected in git-tracked files. Showing first 50 lines of diff (to avoid log limits in GitHub Actions):"
+          git --no-pager diff -- "${EXCLUDE_ARGS[@]}" | head -50 || true
+          echo "deterministic=false" >> $GITHUB_OUTPUT
+        fi

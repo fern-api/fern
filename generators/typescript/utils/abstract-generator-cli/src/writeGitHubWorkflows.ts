@@ -62,7 +62,7 @@ jobs:
         uses: actions/checkout@v4
 
       - name: Set up node
-        uses: actions/setup-node@v3${
+        uses: actions/setup-node@v4${
             usePnpm
                 ? `
 
@@ -76,7 +76,31 @@ jobs:
 
       - name: Compile
         run: ${packageManager} build
-${getTestJob({ config, packageManager })}`;
+
+  test:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v4
+
+      - name: Set up node
+        uses: actions/setup-node@v4${
+            usePnpm
+                ? `
+                
+      - name: Install pnpm
+        uses: pnpm/action-setup@v4`
+                : ""
+        }
+
+      - name: Install dependencies
+        run: ${packageManager} install
+
+      - name: Test
+        run: ${packageManager} test
+`;
+
     // First condition is for resilience in the event that Fiddle isn't upgraded to include the new flag
     if (
         (publishInfo != null && publishInfo?.shouldGeneratePublishWorkflow == null) ||
@@ -84,17 +108,33 @@ ${getTestJob({ config, packageManager })}`;
     ) {
         const access = isPackagePrivate ? "restricted" : "public";
         const secretsVarName = publishInfo.tokenEnvironmentVariable?.toString() || "NPM_TOKEN";
+        const useOidc = secretsVarName === "<USE_OIDC>";
+
         workflowYaml += `
   publish:
     needs: [ compile, test ]
     if: github.event_name == 'push' && contains(github.ref, 'refs/tags/')
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-latest${
+        useOidc
+            ? `
+    permissions:
+      id-token: write  # Required for OIDC`
+            : ""
+    }
     steps:
       - name: Checkout repo
         uses: actions/checkout@v4
 
       - name: Set up node
-        uses: actions/setup-node@v3${
+        uses: actions/setup-node@v4${
+            useOidc
+                ? `
+                
+      # Ensure npm 11.5.1 or later is installed for OIDC support
+      - name: Update npm
+        run: npm install -g npm@latest`
+                : ""
+        }${
             usePnpm
                 ? `
 
@@ -110,17 +150,25 @@ ${getTestJob({ config, packageManager })}`;
         run: ${packageManager} build
 
       - name: Publish to npm
-        run: |
-          npm config set //registry.npmjs.org/:_authToken \${NPM_TOKEN}
+        run: |${
+            useOidc
+                ? ""
+                : `
+          npm config set //registry.npmjs.org/:_authToken \${NPM_TOKEN}`
+        }
           if [[ \${GITHUB_REF} == *alpha* ]]; then
             npm publish --access ${access} --tag alpha
           elif [[ \${GITHUB_REF} == *beta* ]]; then
             npm publish --access ${access} --tag beta
           else
             npm publish --access ${access}
-          fi
+          fi${
+              useOidc
+                  ? ""
+                  : `
         env:
-          NPM_TOKEN: \${{ secrets.${secretsVarName} }}`;
+          NPM_TOKEN: \${{ secrets.${secretsVarName} }}`
+          }`;
     }
 
     if (publishToJsr) {
@@ -138,7 +186,7 @@ ${getTestJob({ config, packageManager })}`;
         uses: actions/checkout@v4
       
       - name: Set up node
-        uses: actions/setup-node@v3${
+        uses: actions/setup-node@v4${
             usePnpm
                 ? `
 
@@ -158,39 +206,4 @@ ${getTestJob({ config, packageManager })}`;
     }
 
     return workflowYaml;
-}
-
-function getTestJob({
-    config,
-    packageManager
-}: {
-    config: FernGeneratorExec.GeneratorConfig;
-    packageManager: "pnpm" | "yarn";
-}): string {
-    const usePnpm = packageManager === "pnpm";
-    return `
-  test:
-    runs-on: ubuntu-latest
-
-    steps:
-      - name: Checkout repo
-        uses: actions/checkout@v4
-
-      - name: Set up node
-        uses: actions/setup-node@v3${
-            usePnpm
-                ? `
-                
-      - name: Install pnpm
-        uses: pnpm/action-setup@v4`
-                : ""
-        }
-
-      - name: Install dependencies
-        run: ${packageManager} install
-
-      - name: Test
-        run: ${packageManager} test
-`;
-    // }
 }
