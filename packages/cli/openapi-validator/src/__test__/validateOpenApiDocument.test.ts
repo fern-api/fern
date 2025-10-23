@@ -5,10 +5,18 @@ import { validateOpenApiDocument } from "../validateOpenApiDocument";
 
 const createMockLogger = (): Logger =>
     ({
-        debug: () => {},
-        info: () => {},
-        warn: () => {},
-        error: () => {}
+        debug: () => {
+            // no-op (important-comment)
+        },
+        info: () => {
+            // no-op (important-comment)
+        },
+        warn: () => {
+            // no-op (important-comment)
+        },
+        error: () => {
+            // no-op (important-comment)
+        }
     }) as Logger;
 
 describe("validateOpenApiDocument", () => {
@@ -85,7 +93,7 @@ describe("validateOpenApiDocument", () => {
     });
 
     it("should detect missing responses in operation", () => {
-        const document: OpenAPIV3_1.Document = {
+        const document = {
             openapi: "3.1.0",
             info: {
                 title: "Test API",
@@ -95,10 +103,10 @@ describe("validateOpenApiDocument", () => {
                 "/test": {
                     get: {
                         description: "Test endpoint"
-                    } as any
+                    }
                 }
             }
-        };
+        } as unknown as OpenAPIV3_1.Document;
 
         const violations = validateOpenApiDocument(document, createMockLogger());
         const responseViolations = violations.filter((v) => v.message.includes("responses"));
@@ -106,7 +114,7 @@ describe("validateOpenApiDocument", () => {
     });
 
     it("should detect invalid parameter", () => {
-        const document: OpenAPIV3_1.Document = {
+        const document = {
             openapi: "3.1.0",
             info: {
                 title: "Test API",
@@ -119,7 +127,7 @@ describe("validateOpenApiDocument", () => {
                             {
                                 name: "",
                                 in: "query"
-                            } as any
+                            }
                         ],
                         responses: {
                             "200": {
@@ -129,7 +137,7 @@ describe("validateOpenApiDocument", () => {
                     }
                 }
             }
-        };
+        } as unknown as OpenAPIV3_1.Document;
 
         const violations = validateOpenApiDocument(document, createMockLogger());
         const paramViolations = violations.filter((v) => v.message.includes("Parameter"));

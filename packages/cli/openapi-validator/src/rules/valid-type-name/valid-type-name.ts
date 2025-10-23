@@ -7,7 +7,7 @@ export const ValidTypeNameRule: Rule = {
     description: "Validates that schema names begin with a letter",
     validate: (context: RuleContext): RuleViolation[] => {
         const { document, logger } = context;
-        
+
         logger.debug(
             `[valid-type-name.ts:validate:12:9] Starting valid-type-name validation | ${JSON.stringify({
                 file: "valid-type-name.ts",

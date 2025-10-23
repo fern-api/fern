@@ -5,7 +5,7 @@ export const RequiredInfoRule: Rule = {
     description: "Validates that the OpenAPI document has required info object with title and version",
     validate: (context: RuleContext): RuleViolation[] => {
         const { document, logger } = context;
-        
+
         logger.debug(
             `[required-info.ts:validate:7:9] Starting required-info validation | ${JSON.stringify({
                 file: "required-info.ts",

@@ -40,7 +40,7 @@ export const NoCircularReferencesRule: Rule = {
 
             const schemaObj = schema as OpenAPIV3_1.SchemaObject;
 
-            const checkRefs = (obj: any) => {
+            const checkRefs = (obj: unknown) => {
                 if (!obj || typeof obj !== "object") {
                     return;
                 }
@@ -48,8 +48,11 @@ export const NoCircularReferencesRule: Rule = {
                 if ("$ref" in obj) {
                     const ref = obj.$ref as string;
                     if (ref.startsWith("#/components/schemas/")) {
-                        const refSchemaName = ref.split("/").pop()!;
-                        detectCircular(refSchemaName, [...path, schemaName]);
+                        const parts = ref.split("/");
+                        const refSchemaName = parts[parts.length - 1];
+                        if (refSchemaName) {
+                            detectCircular(refSchemaName, [...path, schemaName]);
+                        }
                     }
                     return;
                 }

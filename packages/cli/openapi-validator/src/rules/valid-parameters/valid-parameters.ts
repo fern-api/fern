@@ -77,7 +77,7 @@ export const ValidParametersRule: Rule = {
             validateParameters(pathItem.parameters, `/paths/${path}`);
 
             HTTP_METHODS.forEach((method) => {
-                const operation = (pathItem as any)[method] as OpenAPIV3_1.OperationObject | undefined;
+                const operation = (pathItem as Record<string, unknown>)[method] as OpenAPIV3_1.OperationObject | undefined;
                 if (operation) {
                     validateParameters(operation.parameters, `/paths/${path}/${method}`);
                 }

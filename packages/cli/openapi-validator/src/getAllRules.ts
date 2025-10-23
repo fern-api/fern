@@ -123,7 +123,7 @@ export function getAllRules(): Rule[] {
         ValidStreamConditionRule,
         ValidTypeNameRule,
         ValidTypeReferenceWithDefaultAndValidationRule,
-        ValidVersionRule,
+        ValidVersionRule
     ];
 }
 

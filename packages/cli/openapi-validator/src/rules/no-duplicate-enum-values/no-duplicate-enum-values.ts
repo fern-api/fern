@@ -6,17 +6,19 @@ export const NoDuplicateEnumValuesRule: Rule = {
     description: "Enum values should be unique within each schema",
     validate: (context: RuleContext): RuleViolation[] => {
         const { document, logger } = context;
-        
+
         logger.debug(
-            `[no-duplicate-enum-values.ts:validate:11:9] Starting no-duplicate-enum-values validation | ${JSON.stringify({
-                file: "no-duplicate-enum-values.ts",
-                function: "validate",
-                line: 11,
-                column: 9,
-                state: {
-                    hasSchemas: !!document.components?.schemas
+            `[no-duplicate-enum-values.ts:validate:11:9] Starting no-duplicate-enum-values validation | ${JSON.stringify(
+                {
+                    file: "no-duplicate-enum-values.ts",
+                    function: "validate",
+                    line: 11,
+                    column: 9,
+                    state: {
+                        hasSchemas: !!document.components?.schemas
+                    }
                 }
-            })}`
+            )}`
         );
 
         const violations: RuleViolation[] = [];
@@ -31,7 +33,7 @@ export const NoDuplicateEnumValuesRule: Rule = {
             }
 
             const schemaObj = schema as OpenAPIV3_1.SchemaObject;
-            
+
             if (schemaObj.enum && Array.isArray(schemaObj.enum)) {
                 const seen = new Set();
                 const duplicates = new Set();
@@ -92,15 +94,17 @@ export const NoDuplicateEnumValuesRule: Rule = {
         }
 
         logger.debug(
-            `[no-duplicate-enum-values.ts:validate:96:9] No-duplicate-enum-values validation complete | ${JSON.stringify({
-                file: "no-duplicate-enum-values.ts",
-                function: "validate",
-                line: 96,
-                column: 9,
-                state: {
-                    violationCount: violations.length
+            `[no-duplicate-enum-values.ts:validate:96:9] No-duplicate-enum-values validation complete | ${JSON.stringify(
+                {
+                    file: "no-duplicate-enum-values.ts",
+                    function: "validate",
+                    line: 96,
+                    column: 9,
+                    state: {
+                        violationCount: violations.length
+                    }
                 }
-            })}`
+            )}`
         );
 
         return violations;

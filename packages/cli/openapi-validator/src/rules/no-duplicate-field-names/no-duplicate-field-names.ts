@@ -6,17 +6,19 @@ export const NoDuplicateFieldNamesRule: Rule = {
     description: "Validates that object schemas do not have duplicate property names",
     validate: (context: RuleContext): RuleViolation[] => {
         const { document, logger } = context;
-        
+
         logger.debug(
-            `[no-duplicate-field-names.ts:validate:11:9] Starting no-duplicate-field-names validation | ${JSON.stringify({
-                file: "no-duplicate-field-names.ts",
-                function: "validate",
-                line: 11,
-                column: 9,
-                state: {
-                    hasSchemas: !!document.components?.schemas
+            `[no-duplicate-field-names.ts:validate:11:9] Starting no-duplicate-field-names validation | ${JSON.stringify(
+                {
+                    file: "no-duplicate-field-names.ts",
+                    function: "validate",
+                    line: 11,
+                    column: 9,
+                    state: {
+                        hasSchemas: !!document.components?.schemas
+                    }
                 }
-            })}`
+            )}`
         );
 
         const violations: RuleViolation[] = [];
@@ -31,7 +33,7 @@ export const NoDuplicateFieldNamesRule: Rule = {
             }
 
             const schemaObj = schema as OpenAPIV3_1.SchemaObject;
-            
+
             if (schemaObj.properties) {
                 const propertyNames = Object.keys(schemaObj.properties);
                 const seen = new Set<string>();
@@ -47,13 +49,15 @@ export const NoDuplicateFieldNamesRule: Rule = {
 
                 if (duplicates.size > 0) {
                     logger.debug(
-                        `[no-duplicate-field-names.ts:validate:50:21] Duplicate property names found | ${JSON.stringify({
-                            file: "no-duplicate-field-names.ts",
-                            function: "validate",
-                            line: 50,
-                            column: 21,
-                            state: { schemaName, duplicates: Array.from(duplicates) }
-                        })}`
+                        `[no-duplicate-field-names.ts:validate:50:21] Duplicate property names found | ${JSON.stringify(
+                            {
+                                file: "no-duplicate-field-names.ts",
+                                function: "validate",
+                                line: 50,
+                                column: 21,
+                                state: { schemaName, duplicates: Array.from(duplicates) }
+                            }
+                        )}`
                     );
                     violations.push({
                         severity: "error",
@@ -85,15 +89,17 @@ export const NoDuplicateFieldNamesRule: Rule = {
         }
 
         logger.debug(
-            `[no-duplicate-field-names.ts:validate:91:9] No-duplicate-field-names validation complete | ${JSON.stringify({
-                file: "no-duplicate-field-names.ts",
-                function: "validate",
-                line: 91,
-                column: 9,
-                state: {
-                    violationCount: violations.length
+            `[no-duplicate-field-names.ts:validate:91:9] No-duplicate-field-names validation complete | ${JSON.stringify(
+                {
+                    file: "no-duplicate-field-names.ts",
+                    function: "validate",
+                    line: 91,
+                    column: 9,
+                    state: {
+                        violationCount: violations.length
+                    }
                 }
-            })}`
+            )}`
         );
 
         return violations;

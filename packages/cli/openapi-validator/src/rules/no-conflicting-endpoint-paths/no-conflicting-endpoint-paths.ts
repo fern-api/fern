@@ -1,4 +1,3 @@
-import { OpenAPIV3_1 } from "openapi-types";
 import { Rule, RuleContext, RuleViolation } from "../../Rule";
 
 export const NoConflictingEndpointPathsRule: Rule = {
@@ -6,17 +5,19 @@ export const NoConflictingEndpointPathsRule: Rule = {
     description: "Path templates should not conflict with each other",
     validate: (context: RuleContext): RuleViolation[] => {
         const { document, logger } = context;
-        
+
         logger.debug(
-            `[no-conflicting-endpoint-paths.ts:validate:11:9] Starting no-conflicting-endpoint-paths validation | ${JSON.stringify({
-                file: "no-conflicting-endpoint-paths.ts",
-                function: "validate",
-                line: 11,
-                column: 9,
-                state: {
-                    pathCount: Object.keys(document.paths || {}).length
+            `[no-conflicting-endpoint-paths.ts:validate:11:9] Starting no-conflicting-endpoint-paths validation | ${JSON.stringify(
+                {
+                    file: "no-conflicting-endpoint-paths.ts",
+                    function: "validate",
+                    line: 11,
+                    column: 9,
+                    state: {
+                        pathCount: Object.keys(document.paths || {}).length
+                    }
                 }
-            })}`
+            )}`
         );
 
         const violations: RuleViolation[] = [];
@@ -30,10 +31,12 @@ export const NoConflictingEndpointPathsRule: Rule = {
 
         for (const path of paths) {
             const normalized = path.replace(/\{[^}]+\}/g, "{param}");
-            if (!normalizedPaths.has(normalized)) {
-                normalizedPaths.set(normalized, []);
+            const existing = normalizedPaths.get(normalized);
+            if (existing) {
+                existing.push(path);
+            } else {
+                normalizedPaths.set(normalized, [path]);
             }
-            normalizedPaths.get(normalized)!.push(path);
         }
 
         for (const [normalized, originalPaths] of normalizedPaths.entries()) {
@@ -56,15 +59,17 @@ export const NoConflictingEndpointPathsRule: Rule = {
         }
 
         logger.debug(
-            `[no-conflicting-endpoint-paths.ts:validate:61:9] No-conflicting-endpoint-paths validation complete | ${JSON.stringify({
-                file: "no-conflicting-endpoint-paths.ts",
-                function: "validate",
-                line: 61,
-                column: 9,
-                state: {
-                    violationCount: violations.length
+            `[no-conflicting-endpoint-paths.ts:validate:61:9] No-conflicting-endpoint-paths validation complete | ${JSON.stringify(
+                {
+                    file: "no-conflicting-endpoint-paths.ts",
+                    function: "validate",
+                    line: 61,
+                    column: 9,
+                    state: {
+                        violationCount: violations.length
+                    }
                 }
-            })}`
+            )}`
         );
 
         return violations;

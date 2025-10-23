@@ -6,7 +6,7 @@ export const NoGetRequestBodyRule: Rule = {
     description: "GET and HEAD requests should not have request bodies",
     validate: (context: RuleContext): RuleViolation[] => {
         const { document, logger } = context;
-        
+
         logger.debug(
             `[no-get-request-body.ts:validate:11:9] Starting no-get-request-body validation | ${JSON.stringify({
                 file: "no-get-request-body.ts",

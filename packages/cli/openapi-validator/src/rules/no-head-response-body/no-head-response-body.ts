@@ -6,7 +6,7 @@ export const NoHeadResponseBodyRule: Rule = {
     description: "HEAD requests should not have response bodies with content",
     validate: (context: RuleContext): RuleViolation[] => {
         const { document, logger } = context;
-        
+
         logger.debug(
             `[no-head-response-body.ts:validate:11:9] Starting no-head-response-body validation | ${JSON.stringify({
                 file: "no-head-response-body.ts",
@@ -41,13 +41,15 @@ export const NoHeadResponseBodyRule: Rule = {
                     const responseObj = response as OpenAPIV3_1.ResponseObject;
                     if (responseObj.content && Object.keys(responseObj.content).length > 0) {
                         logger.debug(
-                            `[no-head-response-body.ts:validate:46:25] HEAD with response body found | ${JSON.stringify({
-                                file: "no-head-response-body.ts",
-                                function: "validate",
-                                line: 46,
-                                column: 25,
-                                state: { path, statusCode }
-                            })}`
+                            `[no-head-response-body.ts:validate:46:25] HEAD with response body found | ${JSON.stringify(
+                                {
+                                    file: "no-head-response-body.ts",
+                                    function: "validate",
+                                    line: 46,
+                                    column: 25,
+                                    state: { path, statusCode }
+                                }
+                            )}`
                         );
                         violations.push({
                             severity: "error",

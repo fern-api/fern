@@ -113,7 +113,7 @@ function runRulesOnDocument({
         );
 
         const ruleViolations = rule.validate(context);
-        
+
         logger.debug(
             `[validateOpenApiDocument.ts:runRulesOnDocument:114:9] Rule complete: ${rule.name} | ${JSON.stringify({
                 file: "validateOpenApiDocument.ts",

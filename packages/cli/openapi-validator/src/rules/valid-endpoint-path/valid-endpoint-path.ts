@@ -5,7 +5,7 @@ export const ValidEndpointPathRule: Rule = {
     description: "Validates that endpoint paths start with a slash",
     validate: (context: RuleContext): RuleViolation[] => {
         const { document, logger } = context;
-        
+
         logger.debug(
             `[valid-endpoint-path.ts:validate:10:9] Starting valid-endpoint-path validation | ${JSON.stringify({
                 file: "valid-endpoint-path.ts",

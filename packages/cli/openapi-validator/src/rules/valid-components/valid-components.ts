@@ -13,7 +13,7 @@ export const ValidComponentsRule: Rule = {
 
         const componentNameRegex = /^[a-zA-Z0-9._-]+$/;
 
-        const validateComponentNames = (componentType: string, components: Record<string, any>) => {
+        const validateComponentNames = (componentType: string, components: Record<string, unknown>) => {
             Object.keys(components).forEach((name) => {
                 if (!componentNameRegex.test(name)) {
                     violations.push({

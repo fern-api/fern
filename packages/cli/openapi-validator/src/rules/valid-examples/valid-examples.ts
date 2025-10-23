@@ -14,7 +14,7 @@ export const ValidExamplesRule: Rule = {
             return violations;
         }
 
-        const validateExample = (example: any, schemaType: string | undefined, path: string) => {
+        const validateExample = (example: unknown, schemaType: string | undefined, path: string) => {
             if (example === undefined || example === null) {
                 return;
             }

@@ -12,7 +12,7 @@ export const ValidReferencesRule: Rule = {
         const availableRefs = new Set<string>();
 
         if (document.components) {
-            const addRefs = (componentType: string, components: Record<string, any>) => {
+            const addRefs = (componentType: string, components: Record<string, unknown>) => {
                 Object.keys(components).forEach((name) => {
                     availableRefs.add(`#/components/${componentType}/${name}`);
                 });
@@ -59,7 +59,7 @@ export const ValidReferencesRule: Rule = {
             }
         };
 
-        const checkRefsInObject = (obj: any, basePath: string) => {
+        const checkRefsInObject = (obj: unknown, basePath: string) => {
             if (!obj || typeof obj !== "object") {
                 return;
             }
