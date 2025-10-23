@@ -1,0 +1,274 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`fdr --from-openapi > {"name":"simple"} 1`] = `
+"{
+    "types": {
+        "PlantResponseStatus": {
+            "name": "PlantResponseStatus",
+            "shape": {
+                "type": "enum",
+                "values": [
+                    {
+                        "value": "available"
+                    },
+                    {
+                        "value": "pending"
+                    },
+                    {
+                        "value": "sold"
+                    }
+                ]
+            }
+        },
+        "PlantResponse": {
+            "name": "PlantResponse",
+            "shape": {
+                "type": "object",
+                "extends": [],
+                "properties": [
+                    {
+                        "key": "category",
+                        "valueType": {
+                            "type": "optional",
+                            "itemType": {
+                                "type": "primitive",
+                                "value": {
+                                    "type": "string"
+                                }
+                            }
+                        }
+                    },
+                    {
+                        "key": "tags",
+                        "valueType": {
+                            "type": "optional",
+                            "itemType": {
+                                "type": "list",
+                                "itemType": {
+                                    "type": "primitive",
+                                    "value": {
+                                        "type": "string"
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    {
+                        "key": "status",
+                        "valueType": {
+                            "type": "optional",
+                            "itemType": {
+                                "type": "id",
+                                "value": "PlantResponseStatus"
+                            }
+                        }
+                    }
+                ]
+            }
+        },
+        "PlantInfo": {
+            "name": "PlantInfo",
+            "shape": {
+                "type": "object",
+                "extends": [],
+                "properties": [
+                    {
+                        "key": "plantResponse",
+                        "valueType": {
+                            "type": "optional",
+                            "itemType": {
+                                "type": "id",
+                                "value": "PlantResponse"
+                            }
+                        }
+                    },
+                    {
+                        "key": "name",
+                        "valueType": {
+                            "type": "optional",
+                            "itemType": {
+                                "type": "primitive",
+                                "value": {
+                                    "type": "string"
+                                }
+                            }
+                        }
+                    }
+                ]
+            }
+        }
+    },
+    "subpackages": {
+        "subpackage_plant": {
+            "subpackageId": "subpackage_plant",
+            "displayName": "plant",
+            "name": "plant",
+            "endpoints": [
+                {
+                    "auth": false,
+                    "method": "PUT",
+                    "defaultEnvironment": "Demo server",
+                    "environments": [
+                        {
+                            "id": "Demo server",
+                            "baseUrl": "https://api.plantstore.dev/v3"
+                        }
+                    ],
+                    "id": "updatePlant",
+                    "originalEndpointId": "endpoint_plant.updatePlant",
+                    "name": "Update an existing plant",
+                    "path": {
+                        "pathParameters": [],
+                        "parts": [
+                            {
+                                "type": "literal",
+                                "value": ""
+                            },
+                            {
+                                "type": "literal",
+                                "value": "/plant"
+                            }
+                        ]
+                    },
+                    "queryParameters": [],
+                    "headers": [],
+                    "request": {
+                        "type": {
+                            "type": "json",
+                            "contentType": "application/json",
+                            "shape": {
+                                "type": "reference",
+                                "value": {
+                                    "type": "id",
+                                    "value": "PlantInfo"
+                                }
+                            },
+                            "description": "Updated details of the plant"
+                        },
+                        "description": "Updated details of the plant"
+                    },
+                    "requestsV2": {
+                        "requests": [
+                            {
+                                "type": {
+                                    "type": "json",
+                                    "contentType": "application/json",
+                                    "shape": {
+                                        "type": "reference",
+                                        "value": {
+                                            "type": "id",
+                                            "value": "PlantInfo"
+                                        }
+                                    },
+                                    "description": "Updated details of the plant"
+                                },
+                                "description": "Updated details of the plant"
+                            }
+                        ]
+                    },
+                    "response": {
+                        "type": {
+                            "type": "reference",
+                            "value": {
+                                "type": "id",
+                                "value": "PlantInfo"
+                            }
+                        },
+                        "statusCode": 200,
+                        "description": "Plant successfully updated"
+                    },
+                    "responsesV2": {
+                        "responses": [
+                            {
+                                "type": {
+                                    "type": "reference",
+                                    "value": {
+                                        "type": "id",
+                                        "value": "PlantInfo"
+                                    }
+                                },
+                                "statusCode": 200,
+                                "description": "Plant successfully updated"
+                            }
+                        ]
+                    },
+                    "errorsV2": [
+                        {
+                            "type": {
+                                "type": "alias",
+                                "value": {
+                                    "type": "unknown"
+                                }
+                            },
+                            "statusCode": 400,
+                            "description": "Invalid ID supplied",
+                            "name": "BadRequestError",
+                            "examples": []
+                        }
+                    ],
+                    "examples": [
+                        {
+                            "description": "",
+                            "path": "/plant",
+                            "pathParameters": {},
+                            "queryParameters": {},
+                            "headers": {},
+                            "requestBody": {},
+                            "requestBodyV3": {
+                                "type": "json",
+                                "value": {}
+                            },
+                            "responseStatusCode": 200,
+                            "responseBody": {
+                                "plantResponse": {
+                                    "category": "string",
+                                    "tags": [
+                                        "string"
+                                    ],
+                                    "status": "available"
+                                },
+                                "name": "string"
+                            },
+                            "responseBodyV3": {
+                                "type": "json",
+                                "value": {
+                                    "plantResponse": {
+                                        "category": "string",
+                                        "tags": [
+                                            "string"
+                                        ],
+                                        "status": "available"
+                                    },
+                                    "name": "string"
+                                }
+                            }
+                        }
+                    ],
+                    "protocol": {
+                        "type": "rest"
+                    }
+                }
+            ],
+            "webhooks": [],
+            "websockets": [],
+            "types": [],
+            "subpackages": []
+        }
+    },
+    "rootPackage": {
+        "endpoints": [],
+        "webhooks": [],
+        "websockets": [],
+        "types": [
+            "PlantResponse",
+            "PlantInfo"
+        ],
+        "subpackages": [
+            "subpackage_plant"
+        ]
+    },
+    "authSchemes": {},
+    "snippetsConfiguration": {},
+    "globalHeaders": []
+}"
+`;

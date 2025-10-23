@@ -1,0 +1,55 @@
+openapi: 3.1.0
+servers:
+  - url: https://api.plantstore.dev/v3
+    description: Demo server
+info:
+  description: |
+    This is a sample Plant Store Server based on the OpenAPI 3.1 specification. It provides a comprehensive set of endpoints for managing plants, orders, and user authentication.
+  version: 1.0.18
+  license:
+    name: Apache 2.0
+    url: "http://www.apache.org/licenses/LICENSE-2.0.html"
+paths:
+  /plant:
+    put:
+      tags:
+        - plant
+      summary: Update an existing plant
+      operationId: updatePlant
+      requestBody:
+        description: Updated details of the plant
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/PlantInfo"
+      responses:
+        "200":
+          description: Plant successfully updated
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/PlantInfo"
+        "400":
+          description: Invalid ID supplied
+components:
+  schemas:
+    PlantResponse:
+      type: object
+      properties:
+        category:
+          type: string
+        tags:
+          type: array
+          items:
+            type: string
+        status:
+          type: string
+          enum: [available, pending, sold]
+    PlantInfo:
+      type: object
+      properties:
+        plantResponse:
+          $ref: "#/components/schemas/PlantResponse"
+        name:
+          type: string
