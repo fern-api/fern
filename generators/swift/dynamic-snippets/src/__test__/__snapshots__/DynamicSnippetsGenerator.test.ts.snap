@@ -158,11 +158,9 @@ private func main() async throws {
             "list",
             "list"
         ],
-        set: ,
         map: [
             1: "map"
-        ],
-        bigint: 
+        ]
     ))
 }
 
@@ -245,18 +243,7 @@ private func main() async throws {
             .init(data: Data("Second".utf8))
         ],
         maybeFile: .init(data: Data("".utf8)),
-        maybeFileList: [],
-        maybeString: ,
-        integer: ,
-        maybeInteger: ,
-        optionalListOfStrings: ,
-        listOfObjects: ,
-        optionalMetadata: ,
-        optionalObjectType: ,
-        optionalID: ,
-        aliasObject: ,
-        listOfAliasObject: ,
-        aliasListOfObject: 
+        maybeFileList: []
     ))
 }
 
