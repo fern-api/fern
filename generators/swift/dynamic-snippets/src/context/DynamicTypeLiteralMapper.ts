@@ -327,11 +327,16 @@ export class DynamicTypeLiteralMapper {
                     snippetObject: value
                 })
                 .map((typeInstance) => {
+                    const expression = this.convert(typeInstance);
+                    if (expression.isNop()) {
+                        return null;
+                    }
                     return swift.functionArgument({
                         label: sanitizeSelf(typeInstance.name.name.camelCase.unsafeName),
                         value: this.convert(typeInstance)
                     });
-                }),
+                })
+                .filter((argument) => argument != null),
             multiline: true
         });
     }
