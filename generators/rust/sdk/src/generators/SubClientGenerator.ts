@@ -958,7 +958,14 @@ export class SubClientGenerator {
                     map: () => "serialize",
                     set: () => "serialize",
                     list: () => "serialize",
-                    literal: () => "string",
+                    literal: (literal) => {
+                        // Handle literal types based on their actual type
+                        return literal._visit({
+                            string: () => "string",
+                            boolean: () => "bool",
+                            _other: () => "serialize"
+                        });
+                    },
                     _other: () => "serialize"
                 });
             },
