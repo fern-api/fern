@@ -62,6 +62,77 @@ types:
               id: type-nested
               name: nested-type
 
+  TypeIdAlias:
+    docs: An alias of TypeId (tests nested alias resolution).
+    type: TypeId
+    examples:
+      - name: One
+        value: type-nested-alias
+
+  OptionalTypeId:
+    docs: An optional TypeId (tests alias wrapping optional).
+    type: optional<TypeId>
+    examples:
+      - name: Some
+        value: type-optional-123
+
+  TypeIdList:
+    docs: A list of TypeIds (tests alias in list items).
+    type: list<TypeId>
+    examples:
+      - name: One
+        value:
+          - type-list-1
+          - type-list-2
+
+  StringToTypeIdMap:
+    docs: A map with TypeId as values instead of keys.
+    type: map<string, TypeId>
+    examples:
+      - name: One
+        value:
+          key1: "type-value-1"
+          key2: "type-value-2"
+
+  TypeIdToTypeIdMap:
+    docs: A map with TypeId as both keys and values.
+    type: map<TypeId, TypeId>
+    examples:
+      - name: One
+        value:
+          type-key-1: "type-value-1"
+          type-key-2: "type-value-2"
+
+  NestedAliasMap:
+    docs: A map using nested alias (TypeIdAlias) as keys.
+    type: map<TypeIdAlias, string>
+    examples:
+      - name: One
+        value:
+          type-nested-1: "value1"
+
+  ContainerAliasCombinations:
+    docs: Object testing aliases in various container positions.
+    properties:
+      aliasToList: TypeIdList
+      listOfAliases: list<TypeId>
+      optionalAlias: optional<TypeId>
+      mapOfAliasLists: map<TypeId, list<TypeId>>
+    examples:
+      - name: One
+        value:
+          aliasToList:
+            - type-1
+            - type-2
+          listOfAliases:
+            - type-3
+            - type-4
+          optionalAlias: type-optional
+          mapOfAliasLists:
+            type-key:
+              - type-inner-1
+              - type-inner-2
+
 service:
   auth: false
   base-path: /
@@ -91,3 +162,48 @@ service:
       method: PUT
       request: ComplexMapObject
       response: ComplexMapObject
+
+    getWithQueryParam:
+      docs: Test endpoint with TypeId in query parameter.
+      path: "/types/query"
+      method: GET
+      query-parameters:
+        typeId: TypeId
+        optionalTypeId: optional<TypeId>
+      response: Type
+
+    getWithHeader:
+      docs: Test endpoint with TypeId in header.
+      path: "/types/header"
+      method: GET
+      headers:
+        X-Type-Id: TypeId
+      response: Type
+
+    testContainerAliases:
+      docs: Test endpoint exercising aliases in containers.
+      path: "/types/containers"
+      method: POST
+      request: ContainerAliasCombinations
+      response: ContainerAliasCombinations
+
+    testAliasAsValue:
+      docs: Test endpoint with map having alias as value.
+      path: "/types/value-map"
+      method: POST
+      request: StringToTypeIdMap
+      response: StringToTypeIdMap
+
+    testNestedAliasMap:
+      docs: Test endpoint with nested alias in map keys.
+      path: "/types/nested-alias-map"
+      method: POST
+      request: NestedAliasMap
+      response: NestedAliasMap
+
+    testAliasAsBoth:
+      docs: Test endpoint with alias as both map key and value.
+      path: "/types/both-map"
+      method: POST
+      request: TypeIdToTypeIdMap
+      response: TypeIdToTypeIdMap
