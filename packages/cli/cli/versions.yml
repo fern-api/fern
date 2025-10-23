@@ -1,6 +1,24 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
 - changelogEntry:
     - summary: |
+        Fix broken recursive unescaping of \ during handling of \$ in IR generation.
+      type: fix
+  irVersion: 61
+  createdAt: "2025-10-23"
+  version: 0.94.3
+
+- changelogEntry:
+    - summary: |
+        Improve IR hashing in IntermediateRepresentationChangeDetector.
+        Previously it looked at the entire IR. Now it only compares the
+        parts of the IR that describe the API interface.
+      type: fix
+  irVersion: 61
+  createdAt: "2025-10-23"
+  version: 0.94.2
+
+- changelogEntry:
+    - summary: |
         Undo change to skip bundling APIs with docs creation request.
       type: fix
   irVersion: 61
@@ -51,9 +69,9 @@
 
 - changelogEntry:
     - summary: |
-        Turns HTTP snippets on by default in docs generation. 
+        Turns HTTP snippets on by default in docs generation.
 
-        To turn HTTP snippets off, set `settings.http-snippets: false` in the `docs.yml` file. You can also specify an explicit list of snippets to include. 
+        To turn HTTP snippets off, set `settings.http-snippets: false` in the `docs.yml` file. You can also specify an explicit list of snippets to include.
 
         ```docs.yml
         # this will only generate typescript and python snippets, no curl
@@ -69,7 +87,7 @@
 
 - changelogEntry:
     - summary: |
-        For debugging purposes, generating a docs preview via `fern generate --docs --preview`, it is now possible to specify `--skip-upload` to 
+        For debugging purposes, generating a docs preview via `fern generate --docs --preview`, it is now possible to specify `--skip-upload` to
         skip the asset uploading step.
       type: feat
   irVersion: 61
@@ -205,7 +223,7 @@
 
         page-actions:
           default: cursor
-          options: 
+          options:
             chatgpt: false
             claude: true
             vscode: true
@@ -234,7 +252,7 @@
 
 - changelogEntry:
     - summary: |
-        Fixes `displayName` generation to be stricter for `oneOf` variants. 
+        Fixes `displayName` generation to be stricter for `oneOf` variants.
         Now, a display name will be set if a `summary` or `title` is provided for a variant, otherwise none will be generated.
       type: fix
   irVersion: 60

@@ -1,0 +1,16 @@
+{
+    "endpoints": [
+        {
+            "id": {
+                "path": "/users/{id}",
+                "method": "GET",
+                "identifier_override": "endpoint_user.get"
+            },
+            "snippet": {
+                "type": "typescript",
+                "client": "import { SeedSimpleApiEnvironment, SeedSimpleApiClient } from \"@fern-api/dummy\";\n\nconst client = new SeedSimpleApiClient({ environment: SeedSimpleApiEnvironment.Production, token: \"YOUR_TOKEN\" });\nawait client.user.get(\"id\");\n"
+            }
+        }
+    ],
+    "types": {}
+}
