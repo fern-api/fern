@@ -86,6 +86,64 @@
           }
         }
       }
+    },
+    "/foo/{id}": {
+      "patch": {
+        "summary": "Update foo",
+        "operationId": "updateFoo",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "X-Idempotency-Key",
+            "in": "header",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "nullable_text": {
+                    "type": "string",
+                    "nullable": true,
+                    "description": "Can be explicitly set to null to clear the value"
+                  },
+                  "nullable_number": {
+                    "type": "number",
+                    "nullable": true,
+                    "description": "Can be explicitly set to null to clear the value"
+                  },
+                  "non_nullable_text": {
+                    "type": "string",
+                    "description": "Regular non-nullable field"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "content": {
+              "application/json": { "schema": { "$ref": "#/components/schemas/Foo" } }
+            }
+          }
+        }
+      }
     }
   }
 }
