@@ -65,11 +65,11 @@ jobs:
         run: |
           npm config set //registry.npmjs.org/:_authToken ${NPM_TOKEN}
           if [[ ${GITHUB_REF} == *alpha* ]]; then
-            npm publish --access restricted --tag alpha
+            npm publish --access public --tag alpha
           elif [[ ${GITHUB_REF} == *beta* ]]; then
-            npm publish --access restricted --tag beta
+            npm publish --access public --tag beta
           else
-            npm publish --access restricted
+            npm publish --access public
           fi
         env:
           NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
