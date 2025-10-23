@@ -18,6 +18,7 @@ async function main() {
     minify: true,
     dts: true,
     sourcemap: true,
+    external: ["@fern-api/swift-codegen"],
     esbuildPlugins: [
       NodeModulesPolyfillPlugin(),
       NodeGlobalsPolyfillPlugin({
