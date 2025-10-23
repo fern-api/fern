@@ -1,0 +1,3 @@
+rootProject.name = 'undiscriminated-union-with-response-property'
+
+include 'sample-app'
