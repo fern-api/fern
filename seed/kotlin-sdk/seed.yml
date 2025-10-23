@@ -1,0 +1,42 @@
+irVersion: v60
+displayName: Kotlin SDK
+image: fernapi/fern-kotlin-sdk
+changelogLocation: ../../generators/kotlin/sdk/versions.yml
+
+buildScripts:
+  compileScript:
+    commands:
+      - ./gradlew build
+
+publish:
+  workingDirectory: generators/kotlin
+  preBuildCommands:
+    - pnpm --filter @fern-api/kotlin-sdk dist:cli
+  docker:
+    file: ./generators/kotlin/sdk/Dockerfile
+    image: fernapi/fern-kotlin-sdk
+    context: .
+
+test:
+  docker:
+    image: fernapi/fern-kotlin-sdk:latest
+    command: pnpm --filter @fern-api/kotlin-sdk dist:cli && docker build -f ./generators/kotlin/sdk/Dockerfile -t fernapi/fern-kotlin-sdk:latest .
+
+language: kotlin
+generatorType: SDK
+defaultOutputMode: github
+
+fixtures:
+  examples:
+    - outputFolder: no-custom-config
+      customConfig: null
+  imdb:
+    - outputFolder: no-custom-config
+      customConfig: null
+
+scripts:
+  - docker: gradle:8.4-jdk11
+    commands:
+      - ./gradlew build
+
+allowedFailures: []
