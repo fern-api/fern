@@ -27,3 +27,11 @@ impl UnionWithIdenticalStrings {
     }
 
 }
+
+impl fmt::Display for UnionWithIdenticalStrings {
+    fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
+        match self {
+            Self::String(value) => write!(f, "{}", value),
+        }
+    }
+}
