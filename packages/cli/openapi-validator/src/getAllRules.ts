@@ -1,5 +1,9 @@
 import type { Rule } from "./Rule";
 import { NoCircularReferencesRule } from "./rules/no-circular-references";
+import { NoConflictingEndpointPathsRule } from "./rules/no-conflicting-endpoint-paths";
+import { NoDuplicateEnumValuesRule } from "./rules/no-duplicate-enum-values";
+import { NoGetRequestBodyRule } from "./rules/no-get-request-body";
+import { NoHeadResponseBodyRule } from "./rules/no-head-response-body";
 import { RequiredInfoRule } from "./rules/required-info";
 import { RequiredPathsRule } from "./rules/required-paths";
 import { ValidComponentsRule } from "./rules/valid-components";
@@ -31,7 +35,11 @@ export function getAllRules(): Rule[] {
         ValidComponentsRule,
         NoCircularReferencesRule,
         ValidReferencesRule,
-        ValidExamplesRule
+        ValidExamplesRule,
+        NoGetRequestBodyRule,
+        NoHeadResponseBodyRule,
+        NoDuplicateEnumValuesRule,
+        NoConflictingEndpointPathsRule
     ];
 }
 
