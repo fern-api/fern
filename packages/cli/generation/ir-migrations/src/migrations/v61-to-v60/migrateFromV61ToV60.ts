@@ -42,7 +42,7 @@ export const V61_TO_V60_MIGRATION: IrMigration<
     },
     jsonifyEarlierVersion: (ir) =>
         IrSerialization.V60.IntermediateRepresentation.jsonOrThrow(ir, {
-            unrecognizedObjectKeys: "passthrough", // Changed from "strip" to preserve isOptional flags
+            unrecognizedObjectKeys: "strip",
             skipValidation: true
         }),
     migrateBackwards: (
