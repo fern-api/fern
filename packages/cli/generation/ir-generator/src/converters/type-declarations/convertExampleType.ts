@@ -396,11 +396,6 @@ function convertPrimitiveExample({
     example: RawSchemas.ExampleTypeReferenceSchema;
     typeBeingExemplified: PrimitiveTypeV1;
 }): ExampleTypeReferenceShape {
-    // Handle escaped dollar signs (e.g., "\$100" becomes "$100")
-    if (typeof example === "string" && example.startsWith(`\\${EXAMPLE_REFERENCE_PREFIX}`)) {
-        example = example.slice(1);
-    }
-
     return PrimitiveTypeV1._visit(typeBeingExemplified, {
         string: () => {
             if (typeof example !== "string") {
@@ -410,9 +405,12 @@ function convertPrimitiveExample({
                     })
                 );
             }
+
+            // remove initial \
+            const unescaped = example.startsWith(`\\${EXAMPLE_REFERENCE_PREFIX}`) ? example.slice(1) : example;
             return ExampleTypeReferenceShape.primitive(
                 ExamplePrimitive.string({
-                    original: example
+                    original: unescaped
                 })
             );
         },

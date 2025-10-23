@@ -38,9 +38,17 @@ export class ExampleResolverImpl implements ExampleResolver {
                 example,
                 file
             });
-            if (resolvedExample == null || typeof resolvedExample.resolvedExample === "string") {
+
+            if (resolvedExample == null) {
                 return resolvedExample;
             }
+            if (typeof resolvedExample.resolvedExample === "string") {
+                if (resolvedExample.resolvedExample.startsWith(`\\${EXAMPLE_REFERENCE_PREFIX}`)) {
+                    resolvedExample.resolvedExample = resolvedExample.resolvedExample.slice(1);
+                }
+                return resolvedExample;
+            }
+
             return this.resolveAllReferencesInExample({
                 example: resolvedExample.resolvedExample,
                 file: resolvedExample.file
