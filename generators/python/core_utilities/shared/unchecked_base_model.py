@@ -173,7 +173,45 @@ def _convert_undiscriminated_union_type(union_type: typing.Type[typing.Any], obj
         except Exception:
             continue
 
-    # If none of the types work, just return the first successful cast
+    # If none of the types work, try matching literal fields first, then fall back
+    # First pass: try types where all literal fields match the object's values
+    for inner_type in inner_types:
+        if inspect.isclass(inner_type) and issubclass(inner_type, pydantic.BaseModel):
+            fields = _get_model_fields(inner_type)
+            literal_fields_match = True
+
+            for field_name, field in fields.items():
+                # Check if this field has a Literal type
+                if IS_PYDANTIC_V2:
+                    field_type = field.annotation
+                else:
+                    field_type = field.outer_type_
+
+                if is_literal_type(field_type):
+                    field_default = _get_field_default(field)
+                    # Get the value from the object
+                    if isinstance(object_, dict):
+                        object_value = object_.get(field_name) or object_.get(field.alias)
+                    else:
+                        object_value = (
+                            getattr(object_, field_name, None) or getattr(object_, field.alias, None)
+                            if field.alias
+                            else None
+                        )
+
+                    # If the literal field value doesn't match, this type is not a match
+                    if object_value is not None and field_default != object_value:
+                        literal_fields_match = False
+                        break
+
+            # If all literal fields match, try to construct this type
+            if literal_fields_match:
+                try:
+                    return construct_type(object_=object_, type_=inner_type)
+                except Exception:
+                    continue
+
+    # Second pass: if no literal matches, just return the first successful cast
     for inner_type in inner_types:
         try:
             return construct_type(object_=object_, type_=inner_type)
