@@ -1,0 +1,17 @@
+{
+  "type": "object",
+  "properties": {
+    "type": {
+      "const": "C"
+    },
+    "valueC": {
+      "type": "boolean"
+    }
+  },
+  "required": [
+    "type",
+    "valueC"
+  ],
+  "additionalProperties": false,
+  "definitions": {}
+}

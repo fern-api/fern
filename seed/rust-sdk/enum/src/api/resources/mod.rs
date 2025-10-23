@@ -1,4 +1,4 @@
-use crate::{ClientConfig, ApiError};
+use crate::{ApiError, ClientConfig};
 
 pub mod headers;
 pub mod inlined_request;
@@ -20,10 +20,9 @@ impl EnumClient {
             headers: HeadersClient::new(config.clone())?,
             inlined_request: InlinedRequestClient::new(config.clone())?,
             path_param: PathParamClient::new(config.clone())?,
-            query_param: QueryParamClient::new(config.clone())?
+            query_param: QueryParamClient::new(config.clone())?,
         })
     }
-
 }
 
 pub use headers::HeadersClient;

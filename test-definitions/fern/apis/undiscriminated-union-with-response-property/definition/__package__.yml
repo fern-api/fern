@@ -1,0 +1,57 @@
+service:
+  auth: false
+  base-path: /
+  endpoints:
+    # Test: response property returns undiscriminated union directly
+    getUnion:
+      path: /union
+      method: GET
+      response:
+        type: UnionResponse
+        property: data
+
+    # Test: response property returns list of undiscriminated union
+    listUnions:
+      path: /unions
+      method: GET
+      response:
+        type: UnionListResponse
+        property: data
+
+types:
+  UnionResponse:
+    properties:
+      data: MyUnion
+
+  UnionListResponse:
+    properties:
+      data: list<MyUnion>
+
+  MyUnion:
+    docs: |
+      Undiscriminated union with multiple object variants.
+      This reproduces the Pipedream issue where Emitter is a union of
+      DeployedComponent, HttpInterface, and TimerInterface.
+    discriminated: false
+    union:
+      - VariantA
+      - VariantB
+      - VariantC
+
+  VariantA:
+    properties:
+      type:
+        type: literal<"A">
+      valueA: string
+
+  VariantB:
+    properties:
+      type:
+        type: literal<"B">
+      valueB: integer
+
+  VariantC:
+    properties:
+      type:
+        type: literal<"C">
+      valueC: boolean
