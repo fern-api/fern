@@ -33,7 +33,8 @@ export class ClientConfigGenerator {
         ];
 
         if (this.hasEnvironments()) {
-            imports.push(new UseStatement({ path: "crate", items: ["Environment"] }));
+            const environmentEnumName = this.getEnvironmentEnumName();
+            imports.push(new UseStatement({ path: "crate", items: [environmentEnumName] }));
         }
 
         return imports;
@@ -98,6 +99,7 @@ export class ClientConfigGenerator {
 
     private generateDefaultImpl() {
         const userAgent = `${this.context.ir.apiName.pascalCase.safeName} Rust SDK`;
+        const environmentEnumName = this.getEnvironmentEnumName();
 
         const defaultMethod = rust.method({
             name: "default",
@@ -110,7 +112,7 @@ export class ClientConfigGenerator {
                         value: this.hasEnvironments()
                             ? Expression.methodCall({
                                   target: Expression.methodCall({
-                                      target: Expression.functionCall("Environment::default", []),
+                                      target: Expression.functionCall(`${environmentEnumName}::default`, []),
                                       method: "url",
                                       args: []
                                   }),
@@ -164,5 +166,10 @@ export class ClientConfigGenerator {
 
     private hasEnvironments(): boolean {
         return this.context.ir.environments?.environments != null;
+    }
+
+    private getEnvironmentEnumName(): string {
+        const customConfig = this.context.customConfig;
+        return customConfig.environmentEnumName || "Environment";
     }
 }
