@@ -63,7 +63,7 @@
 - changelogEntry:
     - summary: |
         Restore support for x-fern-examples path parameters if there is no request body.
-      type: feat
+      type: fix
   irVersion: 61
   createdAt: "2025-10-23"
   version: 0.94.4
