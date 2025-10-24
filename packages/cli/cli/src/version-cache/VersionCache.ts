@@ -396,7 +396,7 @@ export class VersionCache {
         // Ensure parent directory exists
         await mkdir(path.dirname(targetDir), { recursive: true });
 
-        // Use npm install to download the package (output hidden for clean UX)
+        // Use npm install to download the package
         const { failed, stdout, stderr } = await loggingExeca(
             this.logger,
             "npm",
@@ -404,19 +404,17 @@ export class VersionCache {
             {
                 reject: false,
                 timeout: this.options.downloadTimeoutMs,
-                stdio: "pipe", // Hide npm output from user
+                stdio: "pipe",
                 env: {
-                    // Disable npm audit and fund messages
                     npm_config_audit: "false",
                     npm_config_fund: "false",
                     npm_config_progress: "false",
-                    npm_config_loglevel: "silent" // Make npm even quieter
+                    npm_config_loglevel: "silent"
                 }
             }
         );
 
         if (failed) {
-            // Log the npm error for debugging but don't show to user
             this.logger.debug(`npm install failed with stdout: ${stdout}`);
             this.logger.debug(`npm install failed with stderr: ${stderr}`);
             throw new Error(`Failed to download ${packageSpec}: ${stderr || stdout || "Unknown error"}`);

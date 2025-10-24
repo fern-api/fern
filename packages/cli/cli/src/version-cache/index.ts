@@ -19,7 +19,6 @@ export type {
     CacheEntry,
     CacheExecutionResult,
     CacheMetadata,
-    CacheStats,
     VersionCacheOptions
 } from "./types";
 

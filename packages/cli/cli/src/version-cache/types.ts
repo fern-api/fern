@@ -93,23 +93,3 @@ export interface InternalVersionCacheOptions {
     /** Timeout for download operations in ms */
     downloadTimeoutMs: number;
 }
-
-/**
- * Statistics about the version cache
- */
-export interface CacheStats {
-    /** Number of cached versions */
-    entryCount: number;
-
-    /** Total size of all cached versions in bytes */
-    totalSize: number;
-
-    /** Cache hit rate (between 0 and 1) */
-    hitRate: number;
-
-    /** Most recently used version */
-    mostRecentVersion?: string;
-
-    /** Least recently used version */
-    leastRecentVersion?: string;
-}
