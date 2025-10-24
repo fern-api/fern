@@ -18,6 +18,7 @@ import javax.lang.model.element.Modifier;
 public class NullableNonemptyFilterGenerator extends AbstractFileGenerator {
 
     private static final String IS_OPTIONAL_EMPTY = "isOptionalEmpty";
+    private static final String IS_NULLABLE_EMPTY = "isNullableEmpty";
     private static final String IS_ALIAS_OF_OPTIONAL_EMPTY = "isAliasOfOptionalEmpty";
     private static final ParameterSpec PARAMETER_SPEC =
             ParameterSpec.builder(TypeName.get(Object.class), "o").build();
@@ -44,9 +45,26 @@ public class NullableNonemptyFilterGenerator extends AbstractFileGenerator {
                         PARAMETER_SPEC.name)
                 .build();
 
+        ClassName nullableClassName = generatorContext.getPoetClassNameFactory().getNullableClassName();
+        MethodSpec isNullableEmptySpec = MethodSpec.methodBuilder("isNullableEmpty")
+                .addParameter(PARAMETER_SPEC)
+                .addModifiers(Modifier.PRIVATE)
+                .returns(TypeName.BOOLEAN)
+                .addStatement(
+                        "return $L instanceof $T && (($T<?>) $L).isEmpty()",
+                        PARAMETER_SPEC.name,
+                        nullableClassName,
+                        nullableClassName,
+                        PARAMETER_SPEC.name)
+                .build();
+
         methodBody.addStatement(
                 "boolean $L = $L($L)", IS_OPTIONAL_EMPTY, isOptionalEmptySpec.name, PARAMETER_SPEC.name);
         resultingOrStatement.add(CodeBlock.of(IS_OPTIONAL_EMPTY));
+
+        methodBody.addStatement(
+                "boolean $L = $L($L)", IS_NULLABLE_EMPTY, isNullableEmptySpec.name, PARAMETER_SPEC.name);
+        resultingOrStatement.add(CodeBlock.of(IS_NULLABLE_EMPTY));
 
         if (generatorContext.getCustomConfig().wrappedAliases()) {
             handleWrappedAliases(methodBody, resultingOrStatement, isOptionalEmptySpec, additionalMethods);
@@ -64,6 +82,7 @@ public class NullableNonemptyFilterGenerator extends AbstractFileGenerator {
                         .addCode(methodBody.build())
                         .build())
                 .addMethod(isOptionalEmptySpec)
+                .addMethod(isNullableEmptySpec)
                 .addMethods(additionalMethods)
                 .build();
 

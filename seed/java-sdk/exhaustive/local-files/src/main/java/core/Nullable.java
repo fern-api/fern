@@ -80,6 +80,19 @@ public final class Nullable<T> {
         return this.value.getLeft().equals(((Nullable<?>) other).value.getLeft());
     }
 
+    @Override
+    public int hashCode() {
+        if (this.isNull()) {
+            return 0;
+        }
+
+        if (this.isEmpty()) {
+            return 1;
+        }
+
+        return this.value.getLeft().hashCode();
+    }
+
     private static final class Either<L, R> {
         private L left = null;
         private R right = null;

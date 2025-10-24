@@ -547,15 +547,7 @@ public final class BuilderGenerator {
                                 propertyTypeName,
                                 finalStageClassName,
                                 implsOverride)
-                        .beginControlFlow("if ($L.isNull())", fieldSpec.name)
-                        .addStatement("this.$L = null", fieldSpec.name)
-                        .endControlFlow()
-                        .beginControlFlow("else if ($N.isEmpty())", fieldSpec.name)
-                        .addStatement("this.$L = $T.empty()", fieldSpec.name, Optional.class)
-                        .endControlFlow()
-                        .beginControlFlow("else")
-                        .addStatement("this.$L = $T.of($L.get())", fieldSpec.name, Optional.class, fieldSpec.name)
-                        .endControlFlow()
+                        .addStatement("this.$L = $L", fieldSpec.name, fieldSpec.name)
                         .addStatement("return this")
                         .build());
             }
