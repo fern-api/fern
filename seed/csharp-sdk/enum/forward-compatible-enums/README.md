@@ -99,14 +99,13 @@ This SDK uses forward-compatible enums that can handle unknown values gracefully
 ```csharp
 using SeedEnum;
 
+// Using a built-in value
 var operand = Operand.GreaterThan;
 
+// Using a custom value
 var customOperand = Operand.FromCustom("custom-value");
-```
 
-```csharp
-using SeedEnum;
-
+// Using in a switch statement
 switch (operand.Value)
 {
     case Operand.Values.GreaterThan:
@@ -116,11 +115,8 @@ switch (operand.Value)
         Console.WriteLine($"Unknown value: {operand.Value}");
         break;
 }
-```
 
-```csharp
-using SeedEnum;
-
+// Explicit casting
 string operandString = (string)Operand.GreaterThan;
 Operand operandFromString = (Operand)">";
 ```
