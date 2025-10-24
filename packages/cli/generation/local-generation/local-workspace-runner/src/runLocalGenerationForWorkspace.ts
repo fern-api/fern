@@ -3,7 +3,7 @@ import { SourceResolverImpl } from "@fern-api/cli-source-resolver";
 import { fernConfigJson, GeneratorInvocation, generatorsYml } from "@fern-api/configuration";
 import { createVenusService } from "@fern-api/core";
 import { ContainerRunner, replaceEnvVariables } from "@fern-api/core-utils";
-import { AbsoluteFilePath, join, RelativeFilePath } from "@fern-api/fs-utils";
+import { AbsoluteFilePath, join, RelativeFilePath, validateOutputPath } from "@fern-api/fs-utils";
 import { generateIntermediateRepresentation } from "@fern-api/ir-generator";
 import { FernIr, PublishTarget } from "@fern-api/ir-sdk";
 import { TaskContext } from "@fern-api/task-context";
@@ -126,6 +126,15 @@ export async function runLocalGenerationForWorkspace({
                         RelativeFilePath.of("sdks"),
                         RelativeFilePath.of(generatorInvocation.language ?? generatorInvocation.name)
                     );
+
+                const validationResult = validateOutputPath(absolutePathToLocalOutput);
+                if (!validationResult.isValid) {
+                    interactiveTaskContext.failAndThrow(
+                        `Cannot write to output directory: ${validationResult.reason}\n` +
+                            `Attempted path: ${absolutePathToLocalOutput}\n` +
+                            `This path is blocked for security reasons to prevent accidental system file deletion.`
+                    );
+                }
 
                 const absolutePathToLocalSnippetJSON =
                     generatorInvocation.raw?.snippets?.path != null

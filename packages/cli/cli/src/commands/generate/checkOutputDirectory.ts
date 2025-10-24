@@ -1,4 +1,4 @@
-import { AbsoluteFilePath, doesPathExist, isCI } from "@fern-api/fs-utils";
+import { AbsoluteFilePath, doesPathExist, isCI, validateOutputPath } from "@fern-api/fs-utils";
 import { readdir } from "fs/promises";
 
 import { CliContext } from "../../cli-context/CliContext";
@@ -20,7 +20,25 @@ export async function checkOutputDirectory(
     cliContext: CliContext,
     force: boolean
 ): Promise<CheckOutputDirectoryResult> {
-    if (!outputPath || isCI() || force) {
+    if (!outputPath) {
+        return {
+            shouldProceed: true
+        };
+    }
+
+    const validationResult = validateOutputPath(outputPath);
+    if (!validationResult.isValid) {
+        cliContext.logger.error(
+            `Cannot write to output directory: ${validationResult.reason}\n` +
+                `Attempted path: ${outputPath}\n` +
+                `This path is blocked for security reasons to prevent accidental system file deletion.`
+        );
+        return {
+            shouldProceed: false
+        };
+    }
+
+    if (isCI() || force) {
         return {
             shouldProceed: true
         };

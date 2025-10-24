@@ -31,4 +31,9 @@ export { splitPath } from "./splitPath";
 export { streamObjectFromFile } from "./streamObjectFromFile";
 export { streamObjectToFile } from "./streamObjectToFile";
 export { stringifyLargeObject } from "./stringifyLargeObject";
+export {
+    isWithinProjectDirectory,
+    type PathValidationResult,
+    validateOutputPath
+} from "./validateOutputPath";
 export { waitUntilPathExists } from "./waitUntilPathExists";
