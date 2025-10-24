@@ -1,6 +1,14 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
 - changelogEntry:
     - summary: |
+        Support using audience tags in products and versions to generate a filtered instance of a docs site.
+      type: feat
+  irVersion: 61
+  createdAt: "2025-10-24"
+  version: 0.95.0
+
+- changelogEntry:
+    - summary: |
         Properly reload pages with Markdown snippets if you update the snippet in `fern docs dev`
       type: fix
   irVersion: 61
