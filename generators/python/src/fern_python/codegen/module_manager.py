@@ -96,7 +96,6 @@ def _write_recursion_limit(writer: AST.Writer, recursion_limit: int) -> None:
     writer.write_line(f"if sys.getrecursionlimit() < {recursion_limit}:")
     with writer.indent():
         writer.write_line(f"sys.setrecursionlimit({recursion_limit})")
-    writer.write_newline_if_last_line_not()
 
 
 class ModuleManager:
