@@ -2,8 +2,8 @@ import Foundation
 
 public enum ProblemDescriptionBoard: Codable, Hashable, Sendable {
     case html(Html)
-    case variable(Variable)
     case testCaseId(TestCaseId)
+    case variable(Variable)
 
     public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
@@ -11,10 +11,10 @@ public enum ProblemDescriptionBoard: Codable, Hashable, Sendable {
         switch discriminant {
         case "html":
             self = .html(try Html(from: decoder))
-        case "variable":
-            self = .variable(try Variable(from: decoder))
         case "testCaseId":
             self = .testCaseId(try TestCaseId(from: decoder))
+        case "variable":
+            self = .variable(try Variable(from: decoder))
         default:
             throw DecodingError.dataCorrupted(
                 DecodingError.Context(
@@ -29,9 +29,9 @@ public enum ProblemDescriptionBoard: Codable, Hashable, Sendable {
         switch self {
         case .html(let data):
             try data.encode(to: encoder)
-        case .variable(let data):
-            try data.encode(to: encoder)
         case .testCaseId(let data):
+            try data.encode(to: encoder)
+        case .variable(let data):
             try data.encode(to: encoder)
         }
     }

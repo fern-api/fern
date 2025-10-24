@@ -1,6 +1,6 @@
 import { RelativeFilePath } from "@fern-api/fs-utils";
 import { swift } from "@fern-api/swift-codegen";
-import { SwiftFile } from "./SwiftFile";
+import { SwiftFile } from "../SwiftFile";
 
 export class FileRegistry {
     private readonly filesByName: Map<string, SwiftFile> = new Map();

@@ -139,4 +139,3 @@ allowedFailures:
   - unions
   - variables
   - websocket-inferred-auth
-  - file-upload

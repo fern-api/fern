@@ -1,32 +1,32 @@
 import Foundation
 
 public enum WorkspaceSubmissionUpdateInfo: Codable, Hashable, Sendable {
-    case running(Running)
+    case errored(Errored)
+    case finished(Finished)
     case ran(Ran)
+    case running(Running)
     case stopped(Stopped)
     case traced(Traced)
     case tracedV2(TracedV2)
-    case errored(Errored)
-    case finished(Finished)
 
     public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
         let discriminant = try container.decode(String.self, forKey: .type)
         switch discriminant {
-        case "running":
-            self = .running(try Running(from: decoder))
+        case "errored":
+            self = .errored(try Errored(from: decoder))
+        case "finished":
+            self = .finished(try Finished(from: decoder))
         case "ran":
             self = .ran(try Ran(from: decoder))
+        case "running":
+            self = .running(try Running(from: decoder))
         case "stopped":
             self = .stopped(try Stopped(from: decoder))
         case "traced":
             self = .traced(try Traced(from: decoder))
         case "tracedV2":
             self = .tracedV2(try TracedV2(from: decoder))
-        case "errored":
-            self = .errored(try Errored(from: decoder))
-        case "finished":
-            self = .finished(try Finished(from: decoder))
         default:
             throw DecodingError.dataCorrupted(
                 DecodingError.Context(
@@ -39,19 +39,19 @@ public enum WorkspaceSubmissionUpdateInfo: Codable, Hashable, Sendable {
 
     public func encode(to encoder: Encoder) throws -> Void {
         switch self {
-        case .running(let data):
+        case .errored(let data):
+            try data.encode(to: encoder)
+        case .finished(let data):
             try data.encode(to: encoder)
         case .ran(let data):
+            try data.encode(to: encoder)
+        case .running(let data):
             try data.encode(to: encoder)
         case .stopped(let data):
             try data.encode(to: encoder)
         case .traced(let data):
             try data.encode(to: encoder)
         case .tracedV2(let data):
-            try data.encode(to: encoder)
-        case .errored(let data):
-            try data.encode(to: encoder)
-        case .finished(let data):
             try data.encode(to: encoder)
         }
     }
