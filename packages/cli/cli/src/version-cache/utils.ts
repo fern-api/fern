@@ -2,7 +2,11 @@ import { AbsoluteFilePath, doesPathExist, getAllFilesInDirectory, join, Relative
 import { stat } from "fs/promises";
 import os from "os";
 import path from "path";
-import { CACHE_METADATA_FILENAME, FERN_CACHE_DIRECTORY, VERSION_CACHE_SUBDIRECTORY } from "./constants";
+import {
+    CACHE_DIRECTORY_ENV_VAR,
+    CACHE_METADATA_FILENAME,
+    DEFAULT_FERN_CACHE_DIRECTORY,
+} from "./constants";
 
 /**
  * Creates a cache key from package name and version
@@ -16,14 +20,18 @@ export function getCacheKey(packageName: string, version: string): string {
 
 /**
  * Gets the absolute path to the Fern cache directory
- * Creates the directory if it doesn't exist
- * @returns Absolute path to ~/.fern/version-cache/
+ * Can be customized via FERN_VERSION_CACHE_DIRECTORY environment variable
+ * @returns Absolute path to cache directory (default: ~/.fern/version-cache/)
  */
 export function getCacheDirectory(): AbsoluteFilePath {
-    const homeDir = os.homedir();
-    const fernDir = path.join(homeDir, FERN_CACHE_DIRECTORY);
-    const cacheDir = path.join(fernDir, VERSION_CACHE_SUBDIRECTORY);
+    // Check if custom cache directory is set via environment variable
+    const customCacheDir = process.env[CACHE_DIRECTORY_ENV_VAR];
+    if (customCacheDir) {
+        return AbsoluteFilePath.of(customCacheDir);
+    }
 
+    // Use default cache directory
+    const cacheDir = path.join(os.homedir(), DEFAULT_FERN_CACHE_DIRECTORY);
     return AbsoluteFilePath.of(cacheDir);
 }
 

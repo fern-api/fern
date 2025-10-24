@@ -1,18 +1,29 @@
 /**
- * Default maximum number of versions to keep in the cache
- * Can be overridden via environment variable FERN_VERSION_CACHE_SIZE
+ * Default maximum number of versions to keep in the cache;
+ * can be overridden via environment variable CACHE_SIZE_ENV_VAR
  */
 export const DEFAULT_FERN_VERSION_CACHE_SIZE = 5;
 
 /**
- * Name of the Fern cache directory in user's home directory
+ * Default name of the Fern cache directory in user's home directory;
+ * can be overridden via environment variable CACHE_DIRECTORY_ENV_VAR
  */
-export const FERN_CACHE_DIRECTORY = ".fern";
+export const DEFAULT_FERN_CACHE_DIRECTORY = ".fern/version-cache";
 
 /**
- * Subdirectory within .fern for version cache
+ * Environment variable to set custom cache size
  */
-export const VERSION_CACHE_SUBDIRECTORY = "version-cache";
+export const CACHE_SIZE_ENV_VAR = "FERN_VERSION_CACHE_SIZE";
+
+/**
+ * Environment variable to set custom cache directory
+ */
+export const CACHE_DIRECTORY_ENV_VAR = "FERN_VERSION_CACHE_DIRECTORY";
+
+/**
+ * Environment variable to disable version caching
+ */
+export const DISABLE_CACHE_ENV_VAR = "FERN_NO_VERSION_CACHE";
 
 /**
  * Filename for cache metadata
@@ -29,21 +40,6 @@ export const CACHE_METADATA_SCHEMA_VERSION = 1;
  * Default timeout for npm download operations (in milliseconds)
  */
 export const DEFAULT_DOWNLOAD_TIMEOUT_MS = 60000; // 1 minute
-
-/**
- * Environment variable to set custom cache size
- */
-export const CACHE_SIZE_ENV_VAR = "FERN_VERSION_CACHE_SIZE";
-
-/**
- * Environment variable to disable version caching
- */
-export const DISABLE_CACHE_ENV_VAR = "FERN_NO_VERSION_CACHE";
-
-/**
- * Environment variable to set custom cache directory
- */
-export const CACHE_DIRECTORY_ENV_VAR = "FERN_CACHE_DIRECTORY";
 
 /**
  * Minimum free disk space required before downloading (in bytes)
