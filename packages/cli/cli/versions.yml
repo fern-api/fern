@@ -2,6 +2,14 @@
 
 - changelogEntry:
     - summary: |
+        Print how to upgrade generators with major version changes and point them to the changelog.
+      type: feat
+  irVersion: 61
+  createdAt: "2025-10-24"
+  version: 0.95.0
+
+- changelogEntry:
+    - summary: |
         Fixed bug in openapi-importer where file type params in multipart/form-data
         were incorrectly marked as required.
       type: fix
