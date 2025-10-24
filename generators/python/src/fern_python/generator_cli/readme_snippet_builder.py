@@ -205,6 +205,7 @@ client.{endpoint.endpoint_package_path}{endpoint.method_name}({"..., " if has_pa
     def _build_access_raw_response_data_snippets(self) -> List[str]:
         def write(writer: AST.NodeWriter) -> None:
             writer.write_node(
+                # todo(tedks): Remove this
                 AST.VariableDeclaration(
                     name="client",
                     initializer=AST.Expression(
@@ -252,6 +253,7 @@ client.{endpoint.endpoint_package_path}{endpoint.method_name}({"..., " if has_pa
                         ),
                     )
                 )
+                # todo(tedks): Just manually fix this line
                 writer.write_line("print(response.headers)  # access the response headers")
                 writer.write_line("print(response.data)  # access the underlying object")
 
