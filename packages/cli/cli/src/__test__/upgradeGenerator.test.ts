@@ -4,8 +4,7 @@ describe("getChangelogUrl", () => {
     function getChangelogUrl(generatorName: string): string | undefined {
         const changelogMap: Record<string, string> = {
             "fernapi/fern-typescript-sdk": "https://buildwithfern.com/learn/sdks/generators/typescript/changelog",
-            "fernapi/fern-typescript-node-sdk":
-                "https://buildwithfern.com/learn/sdks/generators/typescript/changelog",
+            "fernapi/fern-typescript-node-sdk": "https://buildwithfern.com/learn/sdks/generators/typescript/changelog",
             "fernapi/fern-python-sdk": "https://buildwithfern.com/learn/sdks/generators/python/changelog",
             "fernapi/fern-go-sdk": "https://buildwithfern.com/learn/sdks/generators/go/changelog",
             "fernapi/fern-java-sdk": "https://buildwithfern.com/learn/sdks/generators/java/changelog",
