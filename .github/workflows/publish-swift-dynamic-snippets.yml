@@ -1,4 +1,4 @@
-name: Publish @fern-api/php-dynamic-snippets
+name: Publish @fern-api/swift-dynamic-snippets
 
 on:
   workflow_dispatch:
@@ -9,7 +9,7 @@ on:
         type: string
 
 env:
-  PACKAGE_NAME: "@fern-api/php-dynamic-snippets"
+  PACKAGE_NAME: "@fern-api/swift-dynamic-snippets"
   GITHUB_TOKEN: ${{ secrets.FERN_GITHUB_TOKEN }}
   NPM_TOKEN: ${{ secrets.FERN_NPM_TOKEN }}
 
@@ -43,9 +43,9 @@ jobs:
       - name: 🧪 Test
         run: pnpm --filter=${{ env.PACKAGE_NAME }} test
 
-      - name: Publish @fern-api/php-dynamic-snippets
+      - name: Publish @fern-api/swift-dynamic-snippets
         run: |
-          cd generators/php/dynamic-snippets
+          cd generators/swift/dynamic-snippets
           pnpm --filter=${{ env.PACKAGE_NAME }} dist ${{ inputs.version }}
           cd dist
           echo "//registry.npmjs.org/:_authToken=${{ env.NPM_TOKEN }}" > ~/.npmrc
