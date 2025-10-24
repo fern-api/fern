@@ -37,6 +37,9 @@ runs:
         git config user.name "fern-bot"
         git config user.email "bot@buildwithfern.com"
 
+        # Configure git to use the token for push operations
+        git remote set-url origin https://x-access-token:${{ inputs.github-token }}@github.com/fern-api/fern-platform.git
+
         # Create branch
         BRANCH_NAME="devin/update-${{ inputs.package-name }}-to-${{ inputs.version }}"
         git checkout -b "$BRANCH_NAME"
