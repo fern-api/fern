@@ -2,7 +2,15 @@ import { AbstractReadmeSnippetBuilder } from "@fern-api/base-generator";
 
 import { FernGeneratorCli } from "@fern-fern/generator-cli-sdk";
 import { FernGeneratorExec } from "@fern-fern/generator-exec-sdk";
-import { EndpointId, FeatureId, FernFilepath, HttpEndpoint, TypeDeclaration } from "@fern-fern/ir-sdk/api";
+import {
+    EndpointId,
+    EnumValue,
+    FeatureId,
+    FernFilepath,
+    HttpEndpoint,
+    Type,
+    TypeDeclaration
+} from "@fern-fern/ir-sdk/api";
 
 import { SdkGeneratorContext } from "../SdkGeneratorContext";
 
@@ -127,18 +135,26 @@ try {
     }
 
     private buildForwardCompatibleEnumSnippets(): string[] {
-        const firstEnum = this.getFirstEnumWithValues();
-        if (firstEnum == null || firstEnum.shape.type !== "enum") {
+        const enumsWithValues = Object.values(this.context.ir.types).filter((t) => {
+            if (t.shape.type !== "enum") {
+                return false;
+            }
+            if (t.shape.values == null || t.shape.values.length === 0) {
+                return false;
+            }
+            return true;
+        });
+        if (enumsWithValues.length === 0) {
             return [];
         }
+        const firstEnum = enumsWithValues[0] as TypeDeclaration & {
+            shape: Type.Enum;
+        };
 
         const enumName = firstEnum.name.name.pascalCase.safeName;
         const enumCamelCaseName = firstEnum.name.name.camelCase.safeName;
         const enumNamespace = this.context.getNamespaceFromFernFilepath(firstEnum.name.fernFilepath);
-        const firstEnumValue = firstEnum.shape.values[0];
-        if (firstEnumValue == null) {
-            return [];
-        }
+        const firstEnumValue = firstEnum.shape.values[0] as EnumValue;
         const firstEnumValueName = firstEnumValue.name.name.pascalCase.safeName;
         const firstEnumValueWire = firstEnumValue.name.wireValue;
 
@@ -168,19 +184,6 @@ string ${enumCamelCaseName}String = (string)${enumName}.${firstEnumValueName};
 ${enumName} ${enumCamelCaseName}FromString = (${enumName})"${firstEnumValueWire}";
 `)
         ];
-    }
-
-    private getFirstEnumWithValues(): TypeDeclaration | undefined {
-        for (const typeDeclaration of Object.values(this.context.ir.types)) {
-            if (
-                typeDeclaration.shape.type === "enum" &&
-                typeDeclaration.shape.values != null &&
-                typeDeclaration.shape.values.length > 0
-            ) {
-                return typeDeclaration;
-            }
-        }
-        return undefined;
     }
 
     private getEndpointWithPagination(): EndpointWithFilepath | undefined {
