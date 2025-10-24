@@ -2,7 +2,7 @@
 # For unreleased changes, use unreleased.yml
 - version: 1.10.1
   changelogEntry:
-    - summary: Fix pydantic model alias generator to correctly serialize wrapped aliases in pydantic v2.
+    - summary: Fix pydantic model alias generator to correctly serialize wrapped aliases in pydantic v2..
       type: fix
   createdAt: "2025-10-27"
   irVersion: 60
