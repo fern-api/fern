@@ -1,0 +1,31 @@
+{
+    "endpoints": [
+        {
+            "example_identifier": "7efa2f71",
+            "id": {
+                "method": "GET",
+                "path": "/union",
+                "identifier_override": "endpoint_.getUnion"
+            },
+            "snippet": {
+                "type": "java",
+                "sync_client": "package com.example.usage;\n\nimport com.seed.undiscriminatedUnionWithResponseProperty.SeedUndiscriminatedUnionWithResponsePropertyClient;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedUndiscriminatedUnionWithResponsePropertyClient client = SeedUndiscriminatedUnionWithResponsePropertyClient\n            .builder()\n            .build();\n\n        client.getUnion();\n    }\n}\n",
+                "async_client": "package com.example.usage;\n\nimport com.seed.undiscriminatedUnionWithResponseProperty.SeedUndiscriminatedUnionWithResponsePropertyClient;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedUndiscriminatedUnionWithResponsePropertyClient client = SeedUndiscriminatedUnionWithResponsePropertyClient\n            .builder()\n            .build();\n\n        client.getUnion();\n    }\n}\n"
+            }
+        },
+        {
+            "example_identifier": "5f1fd589",
+            "id": {
+                "method": "GET",
+                "path": "/unions",
+                "identifier_override": "endpoint_.listUnions"
+            },
+            "snippet": {
+                "type": "java",
+                "sync_client": "package com.example.usage;\n\nimport com.seed.undiscriminatedUnionWithResponseProperty.SeedUndiscriminatedUnionWithResponsePropertyClient;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedUndiscriminatedUnionWithResponsePropertyClient client = SeedUndiscriminatedUnionWithResponsePropertyClient\n            .builder()\n            .build();\n\n        client.listUnions();\n    }\n}\n",
+                "async_client": "package com.example.usage;\n\nimport com.seed.undiscriminatedUnionWithResponseProperty.SeedUndiscriminatedUnionWithResponsePropertyClient;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedUndiscriminatedUnionWithResponsePropertyClient client = SeedUndiscriminatedUnionWithResponsePropertyClient\n            .builder()\n            .build();\n\n        client.listUnions();\n    }\n}\n"
+            }
+        }
+    ],
+    "types": {}
+}

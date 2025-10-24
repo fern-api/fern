@@ -319,9 +319,12 @@ export function convertRequest({
         );
         const properties: MultipartRequestProperty[] = [];
         if (convertedMultipartSchema.type === "object") {
+            const requiredProperties = new Set(resolvedMultipartSchema.schema.required ?? []);
             for (const property of convertedMultipartSchema.properties) {
+                const isPropertyRequired = requiredProperties.has(property.key);
                 const { isFile, isOptional, isArray, description } = recursivelyCheckSchemaWithExampleIsFile({
-                    schema: property.schema
+                    schema: property.schema,
+                    isOptional: !isPropertyRequired
                 });
                 if (isFile) {
                     const contentType = getContentType(property.key, multipartEncoding);

@@ -65,6 +65,7 @@ types:
   PublishInfo:
     union:
       go: GoPublishInfo
+      swift: SwiftPublishInfo
       maven: MavenPublishInfo
       npm: NpmPublishInfo
       nuget: NugetPublishInfo
@@ -73,6 +74,13 @@ types:
       crates: CratesPublishInfo
 
   GoPublishInfo:
+    properties:
+      version: string
+      repoUrl:
+        type: string
+        docs: A full repo url (i.e. https://github.com/fern-api/fern)
+
+  SwiftPublishInfo:
     properties:
       version: string
       repoUrl:

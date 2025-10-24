@@ -1,3 +1,22 @@
+- version: 3.9.2
+  changelogEntry:
+    - summary: |
+        Fix nullable field serialization in PATCH requests with wrapped request bodies. Explicit null values
+        (Nullable.ofNull()) are now correctly serialized as `{"field": null}` instead of being omitted like
+        Nullable.empty().
+      type: fix
+  createdAt: "2025-10-23"
+  irVersion: 61
+
+- version: 3.9.1
+  changelogEntry:
+    - summary: |
+        Fix raw client methods to return union types instead of first variant when using response
+        properties (x-fern-sdk-return-value) with discriminated or undiscriminated unions.
+      type: fix
+  createdAt: "2025-10-23"
+  irVersion: 61
+
 - version: 3.9.0
   changelogEntry:
     - summary: |

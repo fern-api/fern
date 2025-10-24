@@ -1,5 +1,12 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
 
+- version: 0.8.3
+  createdAt: "2025-10-24"
+  changelogEntry:
+    - type: fix
+      summary: build failures for content-types, enum, literals, empty-clients requestbody, multi-url-environment-no-default seed fixtures
+  irVersion: 61
+
 - version: 0.8.2
   createdAt: "2025-10-21"
   changelogEntry:
