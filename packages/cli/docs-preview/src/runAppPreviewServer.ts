@@ -1,13 +1,6 @@
 import { wrapWithHttps } from "@fern-api/docs-resolver";
 import { DocsV1Read, DocsV2Read, FernNavigation } from "@fern-api/fdr-sdk";
-import {
-    AbsoluteFilePath,
-    dirname,
-    doesPathExist,
-    listFiles,
-    RelativeFilePath,
-    resolve
-} from "@fern-api/fs-utils";
+import { AbsoluteFilePath, dirname, doesPathExist, listFiles, RelativeFilePath, resolve } from "@fern-api/fs-utils";
 import { runExeca } from "@fern-api/logging-execa";
 import { Project } from "@fern-api/project-loader";
 import { TaskContext } from "@fern-api/task-context";
