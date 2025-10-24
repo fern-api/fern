@@ -1,0 +1,149 @@
+{
+    "types": {
+        "type_:TypeId": "\"type-kaljhv87\"\n",
+        "type_:Type": "from seed import Type\n\nType(\n    id=\"type-df89sdg1\",\n    name=\"foo\",\n)\n",
+        "type_:Object": "from seed import Type\n\nType(\n    id=\"kljasc85\",\n    name=\"bar\",\n)\n",
+        "type_:TypeIdMap": "{\"type-abc123\": \"value1\", \"type-def456\": \"value2\"}\n",
+        "type_:NestedTypeIdMap": "{\n    \"type-outer1\": {\"inner1\": \"nested-value1\", \"inner2\": \"nested-value2\"},\n    \"type-outer2\": {\"inner3\": \"nested-value3\"},\n}\n",
+        "type_:ComplexMapObject": "from seed import ComplexMapObject, Type\n\nComplexMapObject(\n    simple_map={\"type-key1\": \"simple-value\"},\n    nested_map={\n        \"type-key2\": Type(\n            id=\"type-nested\",\n            name=\"nested-type\",\n        )\n    },\n)\n",
+        "type_:TypeIdAlias": "\"type-nested-alias\"\n",
+        "type_:OptionalTypeId": "\"type-optional-123\"\n",
+        "type_:TypeIdList": "[\"type-list-1\", \"type-list-2\"]\n",
+        "type_:StringToTypeIdMap": "{\"key1\": \"type-value-1\", \"key2\": \"type-value-2\"}\n",
+        "type_:TypeIdToTypeIdMap": "{\"type-key-1\": \"type-value-1\", \"type-key-2\": \"type-value-2\"}\n",
+        "type_:NestedAliasMap": "{\"type-nested-1\": \"value1\"}\n",
+        "type_:ContainerAliasCombinations": "from seed import ContainerAliasCombinations\n\nContainerAliasCombinations(\n    alias_to_list=[\"type-1\", \"type-2\"],\n    list_of_aliases=[\"type-3\", \"type-4\"],\n    optional_alias=\"type-optional\",\n    map_of_alias_lists={\"type-key\": [\"type-inner-1\", \"type-inner-2\"]},\n)\n"
+    },
+    "endpoints": [
+        {
+            "example_identifier": "default",
+            "id": {
+                "path": "/{typeId}",
+                "method": "GET",
+                "identifier_override": "endpoint_.get"
+            },
+            "snippet": {
+                "sync_client": "from seed import SeedAlias\n\nclient = SeedAlias(\n    base_url=\"https://yourhost.com/path/to/api\",\n)\nclient.get(\n    type_id=\"typeId\",\n)\n",
+                "async_client": "import asyncio\n\nfrom seed import AsyncSeedAlias\n\nclient = AsyncSeedAlias(\n    base_url=\"https://yourhost.com/path/to/api\",\n)\n\n\nasync def main() -> None:\n    await client.get(\n        type_id=\"typeId\",\n    )\n\n\nasyncio.run(main())\n",
+                "type": "python"
+            }
+        },
+        {
+            "example_identifier": "default",
+            "id": {
+                "path": "/types/map",
+                "method": "POST",
+                "identifier_override": "endpoint_.getTypeMap"
+            },
+            "snippet": {
+                "sync_client": "from seed import SeedAlias\n\nclient = SeedAlias(\n    base_url=\"https://yourhost.com/path/to/api\",\n)\nclient.get_type_map(\n    request={\"string\": \"string\"},\n)\n",
+                "async_client": "import asyncio\n\nfrom seed import AsyncSeedAlias\n\nclient = AsyncSeedAlias(\n    base_url=\"https://yourhost.com/path/to/api\",\n)\n\n\nasync def main() -> None:\n    await client.get_type_map(\n        request={\"string\": \"string\"},\n    )\n\n\nasyncio.run(main())\n",
+                "type": "python"
+            }
+        },
+        {
+            "example_identifier": "default",
+            "id": {
+                "path": "/types/nested-map",
+                "method": "GET",
+                "identifier_override": "endpoint_.getNestedMap"
+            },
+            "snippet": {
+                "sync_client": "from seed import SeedAlias\n\nclient = SeedAlias(\n    base_url=\"https://yourhost.com/path/to/api\",\n)\nclient.get_nested_map()\n",
+                "async_client": "import asyncio\n\nfrom seed import AsyncSeedAlias\n\nclient = AsyncSeedAlias(\n    base_url=\"https://yourhost.com/path/to/api\",\n)\n\n\nasync def main() -> None:\n    await client.get_nested_map()\n\n\nasyncio.run(main())\n",
+                "type": "python"
+            }
+        },
+        {
+            "example_identifier": "default",
+            "id": {
+                "path": "/types/complex-map",
+                "method": "PUT",
+                "identifier_override": "endpoint_.updateComplexMap"
+            },
+            "snippet": {
+                "sync_client": "from seed import SeedAlias, Type\n\nclient = SeedAlias(\n    base_url=\"https://yourhost.com/path/to/api\",\n)\nclient.update_complex_map(\n    simple_map={\"simpleMap\": \"simpleMap\"},\n    nested_map={\n        \"nestedMap\": Type(\n            id=\"id\",\n            name=\"name\",\n        )\n    },\n)\n",
+                "async_client": "import asyncio\n\nfrom seed import AsyncSeedAlias, Type\n\nclient = AsyncSeedAlias(\n    base_url=\"https://yourhost.com/path/to/api\",\n)\n\n\nasync def main() -> None:\n    await client.update_complex_map(\n        simple_map={\"simpleMap\": \"simpleMap\"},\n        nested_map={\n            \"nestedMap\": Type(\n                id=\"id\",\n                name=\"name\",\n            )\n        },\n    )\n\n\nasyncio.run(main())\n",
+                "type": "python"
+            }
+        },
+        {
+            "example_identifier": "default",
+            "id": {
+                "path": "/types/query",
+                "method": "GET",
+                "identifier_override": "endpoint_.getWithQueryParam"
+            },
+            "snippet": {
+                "sync_client": "from seed import SeedAlias\n\nclient = SeedAlias(\n    base_url=\"https://yourhost.com/path/to/api\",\n)\nclient.get_with_query_param(\n    type_id=\"typeId\",\n    optional_type_id=\"optionalTypeId\",\n)\n",
+                "async_client": "import asyncio\n\nfrom seed import AsyncSeedAlias\n\nclient = AsyncSeedAlias(\n    base_url=\"https://yourhost.com/path/to/api\",\n)\n\n\nasync def main() -> None:\n    await client.get_with_query_param(\n        type_id=\"typeId\",\n        optional_type_id=\"optionalTypeId\",\n    )\n\n\nasyncio.run(main())\n",
+                "type": "python"
+            }
+        },
+        {
+            "example_identifier": "default",
+            "id": {
+                "path": "/types/header",
+                "method": "GET",
+                "identifier_override": "endpoint_.getWithHeader"
+            },
+            "snippet": {
+                "sync_client": "from seed import SeedAlias\n\nclient = SeedAlias(\n    base_url=\"https://yourhost.com/path/to/api\",\n)\nclient.get_with_header(\n    x_type_id=\"X-Type-Id\",\n)\n",
+                "async_client": "import asyncio\n\nfrom seed import AsyncSeedAlias\n\nclient = AsyncSeedAlias(\n    base_url=\"https://yourhost.com/path/to/api\",\n)\n\n\nasync def main() -> None:\n    await client.get_with_header(\n        x_type_id=\"X-Type-Id\",\n    )\n\n\nasyncio.run(main())\n",
+                "type": "python"
+            }
+        },
+        {
+            "example_identifier": "default",
+            "id": {
+                "path": "/types/containers",
+                "method": "POST",
+                "identifier_override": "endpoint_.testContainerAliases"
+            },
+            "snippet": {
+                "sync_client": "from seed import SeedAlias\n\nclient = SeedAlias(\n    base_url=\"https://yourhost.com/path/to/api\",\n)\nclient.test_container_aliases(\n    alias_to_list=[\"aliasToList\", \"aliasToList\"],\n    list_of_aliases=[\"listOfAliases\", \"listOfAliases\"],\n    optional_alias=\"optionalAlias\",\n    map_of_alias_lists={\n        \"mapOfAliasLists\": [\"mapOfAliasLists\", \"mapOfAliasLists\"]\n    },\n)\n",
+                "async_client": "import asyncio\n\nfrom seed import AsyncSeedAlias\n\nclient = AsyncSeedAlias(\n    base_url=\"https://yourhost.com/path/to/api\",\n)\n\n\nasync def main() -> None:\n    await client.test_container_aliases(\n        alias_to_list=[\"aliasToList\", \"aliasToList\"],\n        list_of_aliases=[\"listOfAliases\", \"listOfAliases\"],\n        optional_alias=\"optionalAlias\",\n        map_of_alias_lists={\n            \"mapOfAliasLists\": [\"mapOfAliasLists\", \"mapOfAliasLists\"]\n        },\n    )\n\n\nasyncio.run(main())\n",
+                "type": "python"
+            }
+        },
+        {
+            "example_identifier": "default",
+            "id": {
+                "path": "/types/value-map",
+                "method": "POST",
+                "identifier_override": "endpoint_.testAliasAsValue"
+            },
+            "snippet": {
+                "sync_client": "from seed import SeedAlias\n\nclient = SeedAlias(\n    base_url=\"https://yourhost.com/path/to/api\",\n)\nclient.test_alias_as_value(\n    request={\"string\": \"string\"},\n)\n",
+                "async_client": "import asyncio\n\nfrom seed import AsyncSeedAlias\n\nclient = AsyncSeedAlias(\n    base_url=\"https://yourhost.com/path/to/api\",\n)\n\n\nasync def main() -> None:\n    await client.test_alias_as_value(\n        request={\"string\": \"string\"},\n    )\n\n\nasyncio.run(main())\n",
+                "type": "python"
+            }
+        },
+        {
+            "example_identifier": "default",
+            "id": {
+                "path": "/types/nested-alias-map",
+                "method": "POST",
+                "identifier_override": "endpoint_.testNestedAliasMap"
+            },
+            "snippet": {
+                "sync_client": "from seed import SeedAlias\n\nclient = SeedAlias(\n    base_url=\"https://yourhost.com/path/to/api\",\n)\nclient.test_nested_alias_map(\n    request={\"string\": \"string\"},\n)\n",
+                "async_client": "import asyncio\n\nfrom seed import AsyncSeedAlias\n\nclient = AsyncSeedAlias(\n    base_url=\"https://yourhost.com/path/to/api\",\n)\n\n\nasync def main() -> None:\n    await client.test_nested_alias_map(\n        request={\"string\": \"string\"},\n    )\n\n\nasyncio.run(main())\n",
+                "type": "python"
+            }
+        },
+        {
+            "example_identifier": "default",
+            "id": {
+                "path": "/types/both-map",
+                "method": "POST",
+                "identifier_override": "endpoint_.testAliasAsBoth"
+            },
+            "snippet": {
+                "sync_client": "from seed import SeedAlias\n\nclient = SeedAlias(\n    base_url=\"https://yourhost.com/path/to/api\",\n)\nclient.test_alias_as_both(\n    request={\"string\": \"string\"},\n)\n",
+                "async_client": "import asyncio\n\nfrom seed import AsyncSeedAlias\n\nclient = AsyncSeedAlias(\n    base_url=\"https://yourhost.com/path/to/api\",\n)\n\n\nasync def main() -> None:\n    await client.test_alias_as_both(\n        request={\"string\": \"string\"},\n    )\n\n\nasyncio.run(main())\n",
+                "type": "python"
+            }
+        }
+    ]
+}
