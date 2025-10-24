@@ -15,13 +15,6 @@ inputs:
 runs:
   using: composite
   steps:
-    - name: Checkout fern-platform repo
-      uses: actions/checkout@v4
-      with:
-        repository: fern-api/fern-platform
-        token: ${{ inputs.github-token }}
-        path: fern-platform-repo
-
     - name: Setup Node.js
       uses: actions/setup-node@v4
       with:
@@ -33,40 +26,48 @@ runs:
         curl -fsSL https://get.pnpm.io/install.sh | env PNPM_VERSION=10.11.0 sh -
         echo "$HOME/.local/share/pnpm" >> $GITHUB_PATH
 
-    - name: Create branch and update dependency
+    - name: Clone, update, and create PR
       shell: bash
-      working-directory: fern-platform-repo
       run: |
+        # Clone fern-platform repo
+        git clone https://x-access-token:${{ inputs.github-token }}@github.com/fern-api/fern-platform.git fern-platform-repo
+        cd fern-platform-repo
+
         # Configure git
         git config user.name "fern-bot"
         git config user.email "bot@buildwithfern.com"
-        
+
+        # Configure git to use the token for push operations
+        git remote set-url origin https://x-access-token:${{ inputs.github-token }}@github.com/fern-api/fern-platform.git
+
         # Create branch
         BRANCH_NAME="devin/update-${{ inputs.package-name }}-to-${{ inputs.version }}"
         git checkout -b "$BRANCH_NAME"
-        
+
         # Update the dependency in the snippets package
         cd packages/snippets
         pnpm add "${{ inputs.package-name }}@${{ inputs.version }}"
-        
+
         # Check if there are changes
         cd ../..
         if git diff --quiet; then
           echo "No changes detected, skipping PR creation"
           exit 0
         fi
-        
+
         # Commit and push
         git add packages/snippets/package.json
         git commit -m "chore: update ${{ inputs.package-name }} to ${{ inputs.version }}"
         git push origin "$BRANCH_NAME"
-        
+
         # Create PR using GitHub CLI
+        PR_BODY="This PR updates \`${{ inputs.package-name }}\` to version \`${{ inputs.version }}\` in the \`@fern-api/snippets\` package.
+
+        This PR was automatically created after publishing ${{ inputs.package-name }}@${{ inputs.version }}."
+
         gh pr create \
           --title "chore: update ${{ inputs.package-name }} to ${{ inputs.version }}" \
-          --body "This PR updates \`${{ inputs.package-name }}\` to version \`${{ inputs.version }}\` in the \`@fern-api/snippets\` package.
-
-This PR was automatically created after publishing ${{ inputs.package-name }}@${{ inputs.version }}." \
+          --body "$PR_BODY" \
           --base main \
           --head "$BRANCH_NAME"
       env:

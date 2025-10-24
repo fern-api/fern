@@ -1,7 +1,25 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+
 - changelogEntry:
     - summary: |
-       Fixed bug in openapi-importer where file type params in multipart/form-data requests were incorrectly marked as required.
+        Fixed bug in openapi-importer where file type params in multipart/form-data
+        were incorrectly marked as required.
+      type: fix
+  irVersion: 61
+  createdAt: "2025-10-23"
+  version: 0.94.6
+
+- changelogEntry:
+    - summary: |
+        Properly reload pages with Markdown snippets if you update the snippet in `fern docs dev`
+      type: fix
+  irVersion: 61
+  createdAt: "2025-10-23"
+  version: 0.94.5
+
+- changelogEntry:
+    - summary: |
+        Restore support for x-fern-examples path parameters if there is no request body.
       type: fix
   irVersion: 61
   createdAt: "2025-10-23"
