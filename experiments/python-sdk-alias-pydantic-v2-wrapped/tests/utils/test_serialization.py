@@ -70,3 +70,85 @@ def test_convert_and_respect_annotation_metadata_with_empty_object() -> None:
     data: Any = {}
     converted = convert_and_respect_annotation_metadata(object_=data, annotation=ShapeParams, direction="write")
     assert converted == data
+
+
+def test_wrapped_alias_map_serialization() -> None:
+    """Test serialization of maps with wrapped alias keys."""
+    from seed.types import TypeId, TypeIdMap
+
+    # Create TypeId instances
+    key1 = TypeId(root="type-abc123")
+    key2 = TypeId(root="type-def456")
+
+    # Create a TypeIdMap with wrapped alias keys
+    type_id_map = TypeIdMap(root={key1: "value1", key2: "value2"})
+
+    # Serialize to dict
+    serialized = type_id_map.model_dump()
+    print(f"Serialized TypeIdMap: {serialized}")
+
+    # Expected: keys should be serialized as strings
+    # Check what we actually get
+    assert "root" in serialized
+
+    # Try to deserialize back
+    deserialized = TypeIdMap.model_validate(serialized)
+    print(f"Deserialized TypeIdMap: {deserialized}")
+    assert deserialized.root is not None
+
+
+def test_wrapped_alias_map_from_json() -> None:
+    """Test creating TypeIdMap from JSON-like dict."""
+    from seed.types import TypeIdMap
+
+    # JSON representation (what would come from API)
+    json_data = {
+        "root": {
+            "type-key1": "value1",
+            "type-key2": "value2"
+        }
+    }
+
+    # Try to create TypeIdMap from JSON
+    type_id_map = TypeIdMap.model_validate(json_data)
+    print(f"Created from JSON: {type_id_map}")
+    print(f"Root type: {type(type_id_map.root)}")
+    print(f"Root keys: {list(type_id_map.root.keys())}")
+    print(f"First key type: {type(list(type_id_map.root.keys())[0])}")
+
+    # Check if keys are TypeId instances or strings
+    first_key = list(type_id_map.root.keys())[0]
+    print(f"First key value: {first_key}")
+    print(f"First key attributes: {dir(first_key)}")
+
+
+def test_complex_map_object_with_wrapped_alias_keys() -> None:
+    """Test ComplexMapObject which has maps with wrapped alias keys as properties."""
+    from seed.types import ComplexMapObject, TypeId, Type
+
+    # JSON representation
+    json_data = {
+        "simpleMap": {
+            "type-key1": "simple-value"
+        },
+        "nestedMap": {
+            "type-key2": {
+                "id": "type-nested",
+                "name": "nested-type"
+            }
+        }
+    }
+
+    # Try to create from JSON
+    obj = ComplexMapObject.model_validate(json_data)
+    print(f"ComplexMapObject created: {obj}")
+    print(f"simpleMap type: {type(obj.simple_map)}")
+    print(f"simpleMap keys: {list(obj.simple_map.keys())}")
+    print(f"simpleMap first key type: {type(list(obj.simple_map.keys())[0])}")
+
+    # Serialize back
+    serialized = obj.model_dump()
+    print(f"Serialized back: {serialized}")
+
+    assert obj.simple_map is not None
+    assert obj.nested_map is not None
