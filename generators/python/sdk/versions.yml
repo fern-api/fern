@@ -1,5 +1,12 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
 # For unreleased changes, use unreleased.yml
+- version: 4.31.2
+  changelogEntry:
+    - summary: Fix union type deserialization to properly match discriminated unions based on literal field values (e.g., type discriminators) when nested fields have validation errors.
+      type: fix
+  createdAt: "2025-10-23"
+  irVersion: 60
+
 - version: 4.31.1
   changelogEntry:
     - summary: Escape backslashes in docstrings to prevent SyntaxWarning for invalid escape sequences.
