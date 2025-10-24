@@ -8,6 +8,9 @@ from .core.request_options import RequestOptions
 from .raw_client import AsyncRawSeedApi, RawSeedApi
 from .types.foo import Foo
 
+# this is used as the default value for optional parameters
+OMIT = typing.cast(typing.Any, ...)
+
 
 class SeedApi:
     """
@@ -123,6 +126,65 @@ class SeedApi:
             optional_baz=optional_baz,
             optional_nullable_baz=optional_nullable_baz,
             required_nullable_baz=required_nullable_baz,
+            request_options=request_options,
+        )
+        return _response.data
+
+    def update_foo(
+        self,
+        id: str,
+        *,
+        x_idempotency_key: str,
+        nullable_text: typing.Optional[str] = OMIT,
+        nullable_number: typing.Optional[float] = OMIT,
+        non_nullable_text: typing.Optional[str] = OMIT,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> Foo:
+        """
+        Parameters
+        ----------
+        id : str
+
+        x_idempotency_key : str
+
+        nullable_text : typing.Optional[str]
+            Can be explicitly set to null to clear the value
+
+        nullable_number : typing.Optional[float]
+            Can be explicitly set to null to clear the value
+
+        non_nullable_text : typing.Optional[str]
+            Regular non-nullable field
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        Foo
+            successful operation
+
+        Examples
+        --------
+        from seed import SeedApi
+
+        client = SeedApi(
+            base_url="https://yourhost.com/path/to/api",
+        )
+        client.update_foo(
+            id="id",
+            x_idempotency_key="X-Idempotency-Key",
+            nullable_text="nullable_text",
+            nullable_number=1.1,
+            non_nullable_text="non_nullable_text",
+        )
+        """
+        _response = self._raw_client.update_foo(
+            id,
+            x_idempotency_key=x_idempotency_key,
+            nullable_text=nullable_text,
+            nullable_number=nullable_number,
+            non_nullable_text=non_nullable_text,
             request_options=request_options,
         )
         return _response.data
@@ -250,6 +312,73 @@ class AsyncSeedApi:
             optional_baz=optional_baz,
             optional_nullable_baz=optional_nullable_baz,
             required_nullable_baz=required_nullable_baz,
+            request_options=request_options,
+        )
+        return _response.data
+
+    async def update_foo(
+        self,
+        id: str,
+        *,
+        x_idempotency_key: str,
+        nullable_text: typing.Optional[str] = OMIT,
+        nullable_number: typing.Optional[float] = OMIT,
+        non_nullable_text: typing.Optional[str] = OMIT,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> Foo:
+        """
+        Parameters
+        ----------
+        id : str
+
+        x_idempotency_key : str
+
+        nullable_text : typing.Optional[str]
+            Can be explicitly set to null to clear the value
+
+        nullable_number : typing.Optional[float]
+            Can be explicitly set to null to clear the value
+
+        non_nullable_text : typing.Optional[str]
+            Regular non-nullable field
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        Foo
+            successful operation
+
+        Examples
+        --------
+        import asyncio
+
+        from seed import AsyncSeedApi
+
+        client = AsyncSeedApi(
+            base_url="https://yourhost.com/path/to/api",
+        )
+
+
+        async def main() -> None:
+            await client.update_foo(
+                id="id",
+                x_idempotency_key="X-Idempotency-Key",
+                nullable_text="nullable_text",
+                nullable_number=1.1,
+                non_nullable_text="non_nullable_text",
+            )
+
+
+        asyncio.run(main())
+        """
+        _response = await self._raw_client.update_foo(
+            id,
+            x_idempotency_key=x_idempotency_key,
+            nullable_text=nullable_text,
+            nullable_number=nullable_number,
+            non_nullable_text=non_nullable_text,
             request_options=request_options,
         )
         return _response.data
