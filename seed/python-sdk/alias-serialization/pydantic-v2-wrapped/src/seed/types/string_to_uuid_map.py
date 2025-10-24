@@ -10,7 +10,7 @@ from .uuid_alias import UuidAlias
 
 class StringToUuidMap(pydantic.RootModel):
     """
-    A map with UuidAlias as values instead of keys
+    A map with UuidAlias as values
 
     Examples
     --------

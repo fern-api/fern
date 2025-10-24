@@ -6,11 +6,9 @@ import httpx
 from .core.client_wrapper import AsyncClientWrapper, SyncClientWrapper
 from .core.request_options import RequestOptions
 from .raw_client import AsyncRawSeedAliasSerialization, RawSeedAliasSerialization
-from .types.nested_serialization_object import NestedSerializationObject
 from .types.serialization_test_object import SerializationTestObject
 from .types.string_to_uuid_map import StringToUuidMap
 from .types.uuid_alias import UuidAlias
-from .types.uuid_alias_map import UuidAliasMap
 
 # this is used as the default value for optional parameters
 OMIT = typing.cast(typing.Any, ...)
@@ -112,37 +110,6 @@ class SeedAliasSerialization:
         _response = self._raw_client.test_direct_alias(alias_id, request_options=request_options)
         return _response.data
 
-    def test_alias_map(
-        self, *, request: UuidAliasMap, request_options: typing.Optional[RequestOptions] = None
-    ) -> UuidAliasMap:
-        """
-        Test endpoint for maps with alias keys
-
-        Parameters
-        ----------
-        request : UuidAliasMap
-
-        request_options : typing.Optional[RequestOptions]
-            Request-specific configuration.
-
-        Returns
-        -------
-        UuidAliasMap
-
-        Examples
-        --------
-        from seed import SeedAliasSerialization
-
-        client = SeedAliasSerialization(
-            base_url="https://yourhost.com/path/to/api",
-        )
-        client.test_alias_map(
-            request={"string": "string"},
-        )
-        """
-        _response = self._raw_client.test_alias_map(request=request, request_options=request_options)
-        return _response.data
-
     def test_string_to_alias_map(
         self, *, request: StringToUuidMap, request_options: typing.Optional[RequestOptions] = None
     ) -> StringToUuidMap:
@@ -178,7 +145,6 @@ class SeedAliasSerialization:
         self,
         *,
         direct_alias: UuidAlias,
-        alias_in_map: typing.Dict[UuidAlias, str],
         string_to_alias: typing.Dict[str, UuidAlias],
         alias_list: typing.Sequence[UuidAlias],
         optional_alias: typing.Optional[UuidAlias] = OMIT,
@@ -190,8 +156,6 @@ class SeedAliasSerialization:
         Parameters
         ----------
         direct_alias : UuidAlias
-
-        alias_in_map : typing.Dict[UuidAlias, str]
 
         string_to_alias : typing.Dict[str, UuidAlias]
 
@@ -215,7 +179,6 @@ class SeedAliasSerialization:
         )
         client.test_serialization_object(
             direct_alias="directAlias",
-            alias_in_map={"aliasInMap": "aliasInMap"},
             string_to_alias={"stringToAlias": "stringToAlias"},
             optional_alias="optionalAlias",
             alias_list=["aliasList", "aliasList"],
@@ -223,148 +186,11 @@ class SeedAliasSerialization:
         """
         _response = self._raw_client.test_serialization_object(
             direct_alias=direct_alias,
-            alias_in_map=alias_in_map,
             string_to_alias=string_to_alias,
             alias_list=alias_list,
             optional_alias=optional_alias,
             request_options=request_options,
         )
-        return _response.data
-
-    def test_nested_serialization(
-        self,
-        *,
-        id: UuidAlias,
-        nested: SerializationTestObject,
-        nested_list: typing.Sequence[SerializationTestObject],
-        request_options: typing.Optional[RequestOptions] = None,
-    ) -> NestedSerializationObject:
-        """
-        Test endpoint for nested object serialization
-
-        Parameters
-        ----------
-        id : UuidAlias
-
-        nested : SerializationTestObject
-
-        nested_list : typing.Sequence[SerializationTestObject]
-
-        request_options : typing.Optional[RequestOptions]
-            Request-specific configuration.
-
-        Returns
-        -------
-        NestedSerializationObject
-
-        Examples
-        --------
-        from seed import SeedAliasSerialization, SerializationTestObject
-
-        client = SeedAliasSerialization(
-            base_url="https://yourhost.com/path/to/api",
-        )
-        client.test_nested_serialization(
-            id="id",
-            nested=SerializationTestObject(
-                direct_alias="directAlias",
-                alias_in_map={"aliasInMap": "aliasInMap"},
-                string_to_alias={"stringToAlias": "stringToAlias"},
-                optional_alias="optionalAlias",
-                alias_list=["aliasList", "aliasList"],
-            ),
-            nested_list=[
-                SerializationTestObject(
-                    direct_alias="directAlias",
-                    alias_in_map={"aliasInMap": "aliasInMap"},
-                    string_to_alias={"stringToAlias": "stringToAlias"},
-                    optional_alias="optionalAlias",
-                    alias_list=["aliasList", "aliasList"],
-                ),
-                SerializationTestObject(
-                    direct_alias="directAlias",
-                    alias_in_map={"aliasInMap": "aliasInMap"},
-                    string_to_alias={"stringToAlias": "stringToAlias"},
-                    optional_alias="optionalAlias",
-                    alias_list=["aliasList", "aliasList"],
-                ),
-            ],
-        )
-        """
-        _response = self._raw_client.test_nested_serialization(
-            id=id, nested=nested, nested_list=nested_list, request_options=request_options
-        )
-        return _response.data
-
-    def test_query_param(
-        self,
-        *,
-        alias_param: UuidAlias,
-        optional_alias_param: typing.Optional[UuidAlias] = None,
-        request_options: typing.Optional[RequestOptions] = None,
-    ) -> SerializationTestObject:
-        """
-        Test endpoint with alias in query parameter
-
-        Parameters
-        ----------
-        alias_param : UuidAlias
-
-        optional_alias_param : typing.Optional[UuidAlias]
-
-        request_options : typing.Optional[RequestOptions]
-            Request-specific configuration.
-
-        Returns
-        -------
-        SerializationTestObject
-
-        Examples
-        --------
-        from seed import SeedAliasSerialization
-
-        client = SeedAliasSerialization(
-            base_url="https://yourhost.com/path/to/api",
-        )
-        client.test_query_param(
-            alias_param="aliasParam",
-            optional_alias_param="optionalAliasParam",
-        )
-        """
-        _response = self._raw_client.test_query_param(
-            alias_param=alias_param, optional_alias_param=optional_alias_param, request_options=request_options
-        )
-        return _response.data
-
-    def test_header(
-        self, *, x_uuid_alias: UuidAlias, request_options: typing.Optional[RequestOptions] = None
-    ) -> UuidAlias:
-        """
-        Test endpoint with alias in header
-
-        Parameters
-        ----------
-        x_uuid_alias : UuidAlias
-
-        request_options : typing.Optional[RequestOptions]
-            Request-specific configuration.
-
-        Returns
-        -------
-        UuidAlias
-
-        Examples
-        --------
-        from seed import SeedAliasSerialization
-
-        client = SeedAliasSerialization(
-            base_url="https://yourhost.com/path/to/api",
-        )
-        client.test_header(
-            x_uuid_alias="X-Uuid-Alias",
-        )
-        """
-        _response = self._raw_client.test_header(x_uuid_alias=x_uuid_alias, request_options=request_options)
         return _response.data
 
 
@@ -472,45 +298,6 @@ class AsyncSeedAliasSerialization:
         _response = await self._raw_client.test_direct_alias(alias_id, request_options=request_options)
         return _response.data
 
-    async def test_alias_map(
-        self, *, request: UuidAliasMap, request_options: typing.Optional[RequestOptions] = None
-    ) -> UuidAliasMap:
-        """
-        Test endpoint for maps with alias keys
-
-        Parameters
-        ----------
-        request : UuidAliasMap
-
-        request_options : typing.Optional[RequestOptions]
-            Request-specific configuration.
-
-        Returns
-        -------
-        UuidAliasMap
-
-        Examples
-        --------
-        import asyncio
-
-        from seed import AsyncSeedAliasSerialization
-
-        client = AsyncSeedAliasSerialization(
-            base_url="https://yourhost.com/path/to/api",
-        )
-
-
-        async def main() -> None:
-            await client.test_alias_map(
-                request={"string": "string"},
-            )
-
-
-        asyncio.run(main())
-        """
-        _response = await self._raw_client.test_alias_map(request=request, request_options=request_options)
-        return _response.data
-
     async def test_string_to_alias_map(
         self, *, request: StringToUuidMap, request_options: typing.Optional[RequestOptions] = None
     ) -> StringToUuidMap:
@@ -554,7 +341,6 @@ class AsyncSeedAliasSerialization:
         self,
         *,
         direct_alias: UuidAlias,
-        alias_in_map: typing.Dict[UuidAlias, str],
         string_to_alias: typing.Dict[str, UuidAlias],
         alias_list: typing.Sequence[UuidAlias],
         optional_alias: typing.Optional[UuidAlias] = OMIT,
@@ -566,8 +352,6 @@ class AsyncSeedAliasSerialization:
         Parameters
         ----------
         direct_alias : UuidAlias
-
-        alias_in_map : typing.Dict[UuidAlias, str]
 
         string_to_alias : typing.Dict[str, UuidAlias]
 
@@ -596,7 +380,6 @@ class AsyncSeedAliasSerialization:
         async def main() -> None:
             await client.test_serialization_object(
                 direct_alias="directAlias",
-                alias_in_map={"aliasInMap": "aliasInMap"},
                 string_to_alias={"stringToAlias": "stringToAlias"},
                 optional_alias="optionalAlias",
                 alias_list=["aliasList", "aliasList"],
@@ -607,170 +390,9 @@ class AsyncSeedAliasSerialization:
         """
         _response = await self._raw_client.test_serialization_object(
             direct_alias=direct_alias,
-            alias_in_map=alias_in_map,
             string_to_alias=string_to_alias,
             alias_list=alias_list,
             optional_alias=optional_alias,
             request_options=request_options,
         )
-        return _response.data
-
-    async def test_nested_serialization(
-        self,
-        *,
-        id: UuidAlias,
-        nested: SerializationTestObject,
-        nested_list: typing.Sequence[SerializationTestObject],
-        request_options: typing.Optional[RequestOptions] = None,
-    ) -> NestedSerializationObject:
-        """
-        Test endpoint for nested object serialization
-
-        Parameters
-        ----------
-        id : UuidAlias
-
-        nested : SerializationTestObject
-
-        nested_list : typing.Sequence[SerializationTestObject]
-
-        request_options : typing.Optional[RequestOptions]
-            Request-specific configuration.
-
-        Returns
-        -------
-        NestedSerializationObject
-
-        Examples
-        --------
-        import asyncio
-
-        from seed import AsyncSeedAliasSerialization, SerializationTestObject
-
-        client = AsyncSeedAliasSerialization(
-            base_url="https://yourhost.com/path/to/api",
-        )
-
-
-        async def main() -> None:
-            await client.test_nested_serialization(
-                id="id",
-                nested=SerializationTestObject(
-                    direct_alias="directAlias",
-                    alias_in_map={"aliasInMap": "aliasInMap"},
-                    string_to_alias={"stringToAlias": "stringToAlias"},
-                    optional_alias="optionalAlias",
-                    alias_list=["aliasList", "aliasList"],
-                ),
-                nested_list=[
-                    SerializationTestObject(
-                        direct_alias="directAlias",
-                        alias_in_map={"aliasInMap": "aliasInMap"},
-                        string_to_alias={"stringToAlias": "stringToAlias"},
-                        optional_alias="optionalAlias",
-                        alias_list=["aliasList", "aliasList"],
-                    ),
-                    SerializationTestObject(
-                        direct_alias="directAlias",
-                        alias_in_map={"aliasInMap": "aliasInMap"},
-                        string_to_alias={"stringToAlias": "stringToAlias"},
-                        optional_alias="optionalAlias",
-                        alias_list=["aliasList", "aliasList"],
-                    ),
-                ],
-            )
-
-
-        asyncio.run(main())
-        """
-        _response = await self._raw_client.test_nested_serialization(
-            id=id, nested=nested, nested_list=nested_list, request_options=request_options
-        )
-        return _response.data
-
-    async def test_query_param(
-        self,
-        *,
-        alias_param: UuidAlias,
-        optional_alias_param: typing.Optional[UuidAlias] = None,
-        request_options: typing.Optional[RequestOptions] = None,
-    ) -> SerializationTestObject:
-        """
-        Test endpoint with alias in query parameter
-
-        Parameters
-        ----------
-        alias_param : UuidAlias
-
-        optional_alias_param : typing.Optional[UuidAlias]
-
-        request_options : typing.Optional[RequestOptions]
-            Request-specific configuration.
-
-        Returns
-        -------
-        SerializationTestObject
-
-        Examples
-        --------
-        import asyncio
-
-        from seed import AsyncSeedAliasSerialization
-
-        client = AsyncSeedAliasSerialization(
-            base_url="https://yourhost.com/path/to/api",
-        )
-
-
-        async def main() -> None:
-            await client.test_query_param(
-                alias_param="aliasParam",
-                optional_alias_param="optionalAliasParam",
-            )
-
-
-        asyncio.run(main())
-        """
-        _response = await self._raw_client.test_query_param(
-            alias_param=alias_param, optional_alias_param=optional_alias_param, request_options=request_options
-        )
-        return _response.data
-
-    async def test_header(
-        self, *, x_uuid_alias: UuidAlias, request_options: typing.Optional[RequestOptions] = None
-    ) -> UuidAlias:
-        """
-        Test endpoint with alias in header
-
-        Parameters
-        ----------
-        x_uuid_alias : UuidAlias
-
-        request_options : typing.Optional[RequestOptions]
-            Request-specific configuration.
-
-        Returns
-        -------
-        UuidAlias
-
-        Examples
-        --------
-        import asyncio
-
-        from seed import AsyncSeedAliasSerialization
-
-        client = AsyncSeedAliasSerialization(
-            base_url="https://yourhost.com/path/to/api",
-        )
-
-
-        async def main() -> None:
-            await client.test_header(
-                x_uuid_alias="X-Uuid-Alias",
-            )
-
-
-        asyncio.run(main())
-        """
-        _response = await self._raw_client.test_header(x_uuid_alias=x_uuid_alias, request_options=request_options)
         return _response.data

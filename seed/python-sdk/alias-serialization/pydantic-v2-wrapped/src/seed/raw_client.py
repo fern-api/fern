@@ -9,12 +9,9 @@ from .core.http_response import AsyncHttpResponse, HttpResponse
 from .core.jsonable_encoder import jsonable_encoder
 from .core.pydantic_utilities import parse_obj_as
 from .core.request_options import RequestOptions
-from .core.serialization import convert_and_respect_annotation_metadata
-from .types.nested_serialization_object import NestedSerializationObject
 from .types.serialization_test_object import SerializationTestObject
 from .types.string_to_uuid_map import StringToUuidMap
 from .types.uuid_alias import UuidAlias
-from .types.uuid_alias_map import UuidAliasMap
 
 # this is used as the default value for optional parameters
 OMIT = typing.cast(typing.Any, ...)
@@ -52,45 +49,6 @@ class RawSeedAliasSerialization:
                     UuidAlias,
                     parse_obj_as(
                         type_=UuidAlias,  # type: ignore
-                        object_=_response.json(),
-                    ),
-                )
-                return HttpResponse(response=_response, data=_data)
-            _response_json = _response.json()
-        except JSONDecodeError:
-            raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
-        raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
-
-    def test_alias_map(
-        self, *, request: UuidAliasMap, request_options: typing.Optional[RequestOptions] = None
-    ) -> HttpResponse[UuidAliasMap]:
-        """
-        Test endpoint for maps with alias keys
-
-        Parameters
-        ----------
-        request : UuidAliasMap
-
-        request_options : typing.Optional[RequestOptions]
-            Request-specific configuration.
-
-        Returns
-        -------
-        HttpResponse[UuidAliasMap]
-        """
-        _response = self._client_wrapper.httpx_client.request(
-            "alias-map",
-            method="POST",
-            json=request,
-            request_options=request_options,
-            omit=OMIT,
-        )
-        try:
-            if 200 <= _response.status_code < 300:
-                _data = typing.cast(
-                    UuidAliasMap,
-                    parse_obj_as(
-                        type_=UuidAliasMap,  # type: ignore
                         object_=_response.json(),
                     ),
                 )
@@ -143,7 +101,6 @@ class RawSeedAliasSerialization:
         self,
         *,
         direct_alias: UuidAlias,
-        alias_in_map: typing.Dict[UuidAlias, str],
         string_to_alias: typing.Dict[str, UuidAlias],
         alias_list: typing.Sequence[UuidAlias],
         optional_alias: typing.Optional[UuidAlias] = OMIT,
@@ -155,8 +112,6 @@ class RawSeedAliasSerialization:
         Parameters
         ----------
         direct_alias : UuidAlias
-
-        alias_in_map : typing.Dict[UuidAlias, str]
 
         string_to_alias : typing.Dict[str, UuidAlias]
 
@@ -176,7 +131,6 @@ class RawSeedAliasSerialization:
             method="POST",
             json={
                 "directAlias": direct_alias,
-                "aliasInMap": alias_in_map,
                 "stringToAlias": string_to_alias,
                 "optionalAlias": optional_alias,
                 "aliasList": alias_list,
@@ -190,149 +144,6 @@ class RawSeedAliasSerialization:
                     SerializationTestObject,
                     parse_obj_as(
                         type_=SerializationTestObject,  # type: ignore
-                        object_=_response.json(),
-                    ),
-                )
-                return HttpResponse(response=_response, data=_data)
-            _response_json = _response.json()
-        except JSONDecodeError:
-            raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
-        raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
-
-    def test_nested_serialization(
-        self,
-        *,
-        id: UuidAlias,
-        nested: SerializationTestObject,
-        nested_list: typing.Sequence[SerializationTestObject],
-        request_options: typing.Optional[RequestOptions] = None,
-    ) -> HttpResponse[NestedSerializationObject]:
-        """
-        Test endpoint for nested object serialization
-
-        Parameters
-        ----------
-        id : UuidAlias
-
-        nested : SerializationTestObject
-
-        nested_list : typing.Sequence[SerializationTestObject]
-
-        request_options : typing.Optional[RequestOptions]
-            Request-specific configuration.
-
-        Returns
-        -------
-        HttpResponse[NestedSerializationObject]
-        """
-        _response = self._client_wrapper.httpx_client.request(
-            "nested-serialization",
-            method="POST",
-            json={
-                "id": id,
-                "nested": convert_and_respect_annotation_metadata(
-                    object_=nested, annotation=SerializationTestObject, direction="write"
-                ),
-                "nestedList": convert_and_respect_annotation_metadata(
-                    object_=nested_list, annotation=typing.Sequence[SerializationTestObject], direction="write"
-                ),
-            },
-            request_options=request_options,
-            omit=OMIT,
-        )
-        try:
-            if 200 <= _response.status_code < 300:
-                _data = typing.cast(
-                    NestedSerializationObject,
-                    parse_obj_as(
-                        type_=NestedSerializationObject,  # type: ignore
-                        object_=_response.json(),
-                    ),
-                )
-                return HttpResponse(response=_response, data=_data)
-            _response_json = _response.json()
-        except JSONDecodeError:
-            raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
-        raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
-
-    def test_query_param(
-        self,
-        *,
-        alias_param: UuidAlias,
-        optional_alias_param: typing.Optional[UuidAlias] = None,
-        request_options: typing.Optional[RequestOptions] = None,
-    ) -> HttpResponse[SerializationTestObject]:
-        """
-        Test endpoint with alias in query parameter
-
-        Parameters
-        ----------
-        alias_param : UuidAlias
-
-        optional_alias_param : typing.Optional[UuidAlias]
-
-        request_options : typing.Optional[RequestOptions]
-            Request-specific configuration.
-
-        Returns
-        -------
-        HttpResponse[SerializationTestObject]
-        """
-        _response = self._client_wrapper.httpx_client.request(
-            "query-test",
-            method="GET",
-            params={
-                "aliasParam": alias_param,
-                "optionalAliasParam": optional_alias_param,
-            },
-            request_options=request_options,
-        )
-        try:
-            if 200 <= _response.status_code < 300:
-                _data = typing.cast(
-                    SerializationTestObject,
-                    parse_obj_as(
-                        type_=SerializationTestObject,  # type: ignore
-                        object_=_response.json(),
-                    ),
-                )
-                return HttpResponse(response=_response, data=_data)
-            _response_json = _response.json()
-        except JSONDecodeError:
-            raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
-        raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
-
-    def test_header(
-        self, *, x_uuid_alias: UuidAlias, request_options: typing.Optional[RequestOptions] = None
-    ) -> HttpResponse[UuidAlias]:
-        """
-        Test endpoint with alias in header
-
-        Parameters
-        ----------
-        x_uuid_alias : UuidAlias
-
-        request_options : typing.Optional[RequestOptions]
-            Request-specific configuration.
-
-        Returns
-        -------
-        HttpResponse[UuidAlias]
-        """
-        _response = self._client_wrapper.httpx_client.request(
-            "header-test",
-            method="GET",
-            headers={
-                "X-Uuid-Alias": str(x_uuid_alias) if x_uuid_alias is not None else None,
-            },
-            request_options=request_options,
-        )
-        try:
-            if 200 <= _response.status_code < 300:
-                _data = typing.cast(
-                    UuidAlias,
-                    parse_obj_as(
-                        type_=UuidAlias,  # type: ignore
                         object_=_response.json(),
                     ),
                 )
@@ -375,45 +186,6 @@ class AsyncRawSeedAliasSerialization:
                     UuidAlias,
                     parse_obj_as(
                         type_=UuidAlias,  # type: ignore
-                        object_=_response.json(),
-                    ),
-                )
-                return AsyncHttpResponse(response=_response, data=_data)
-            _response_json = _response.json()
-        except JSONDecodeError:
-            raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
-        raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
-
-    async def test_alias_map(
-        self, *, request: UuidAliasMap, request_options: typing.Optional[RequestOptions] = None
-    ) -> AsyncHttpResponse[UuidAliasMap]:
-        """
-        Test endpoint for maps with alias keys
-
-        Parameters
-        ----------
-        request : UuidAliasMap
-
-        request_options : typing.Optional[RequestOptions]
-            Request-specific configuration.
-
-        Returns
-        -------
-        AsyncHttpResponse[UuidAliasMap]
-        """
-        _response = await self._client_wrapper.httpx_client.request(
-            "alias-map",
-            method="POST",
-            json=request,
-            request_options=request_options,
-            omit=OMIT,
-        )
-        try:
-            if 200 <= _response.status_code < 300:
-                _data = typing.cast(
-                    UuidAliasMap,
-                    parse_obj_as(
-                        type_=UuidAliasMap,  # type: ignore
                         object_=_response.json(),
                     ),
                 )
@@ -466,7 +238,6 @@ class AsyncRawSeedAliasSerialization:
         self,
         *,
         direct_alias: UuidAlias,
-        alias_in_map: typing.Dict[UuidAlias, str],
         string_to_alias: typing.Dict[str, UuidAlias],
         alias_list: typing.Sequence[UuidAlias],
         optional_alias: typing.Optional[UuidAlias] = OMIT,
@@ -478,8 +249,6 @@ class AsyncRawSeedAliasSerialization:
         Parameters
         ----------
         direct_alias : UuidAlias
-
-        alias_in_map : typing.Dict[UuidAlias, str]
 
         string_to_alias : typing.Dict[str, UuidAlias]
 
@@ -499,7 +268,6 @@ class AsyncRawSeedAliasSerialization:
             method="POST",
             json={
                 "directAlias": direct_alias,
-                "aliasInMap": alias_in_map,
                 "stringToAlias": string_to_alias,
                 "optionalAlias": optional_alias,
                 "aliasList": alias_list,
@@ -513,149 +281,6 @@ class AsyncRawSeedAliasSerialization:
                     SerializationTestObject,
                     parse_obj_as(
                         type_=SerializationTestObject,  # type: ignore
-                        object_=_response.json(),
-                    ),
-                )
-                return AsyncHttpResponse(response=_response, data=_data)
-            _response_json = _response.json()
-        except JSONDecodeError:
-            raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
-        raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
-
-    async def test_nested_serialization(
-        self,
-        *,
-        id: UuidAlias,
-        nested: SerializationTestObject,
-        nested_list: typing.Sequence[SerializationTestObject],
-        request_options: typing.Optional[RequestOptions] = None,
-    ) -> AsyncHttpResponse[NestedSerializationObject]:
-        """
-        Test endpoint for nested object serialization
-
-        Parameters
-        ----------
-        id : UuidAlias
-
-        nested : SerializationTestObject
-
-        nested_list : typing.Sequence[SerializationTestObject]
-
-        request_options : typing.Optional[RequestOptions]
-            Request-specific configuration.
-
-        Returns
-        -------
-        AsyncHttpResponse[NestedSerializationObject]
-        """
-        _response = await self._client_wrapper.httpx_client.request(
-            "nested-serialization",
-            method="POST",
-            json={
-                "id": id,
-                "nested": convert_and_respect_annotation_metadata(
-                    object_=nested, annotation=SerializationTestObject, direction="write"
-                ),
-                "nestedList": convert_and_respect_annotation_metadata(
-                    object_=nested_list, annotation=typing.Sequence[SerializationTestObject], direction="write"
-                ),
-            },
-            request_options=request_options,
-            omit=OMIT,
-        )
-        try:
-            if 200 <= _response.status_code < 300:
-                _data = typing.cast(
-                    NestedSerializationObject,
-                    parse_obj_as(
-                        type_=NestedSerializationObject,  # type: ignore
-                        object_=_response.json(),
-                    ),
-                )
-                return AsyncHttpResponse(response=_response, data=_data)
-            _response_json = _response.json()
-        except JSONDecodeError:
-            raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
-        raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
-
-    async def test_query_param(
-        self,
-        *,
-        alias_param: UuidAlias,
-        optional_alias_param: typing.Optional[UuidAlias] = None,
-        request_options: typing.Optional[RequestOptions] = None,
-    ) -> AsyncHttpResponse[SerializationTestObject]:
-        """
-        Test endpoint with alias in query parameter
-
-        Parameters
-        ----------
-        alias_param : UuidAlias
-
-        optional_alias_param : typing.Optional[UuidAlias]
-
-        request_options : typing.Optional[RequestOptions]
-            Request-specific configuration.
-
-        Returns
-        -------
-        AsyncHttpResponse[SerializationTestObject]
-        """
-        _response = await self._client_wrapper.httpx_client.request(
-            "query-test",
-            method="GET",
-            params={
-                "aliasParam": alias_param,
-                "optionalAliasParam": optional_alias_param,
-            },
-            request_options=request_options,
-        )
-        try:
-            if 200 <= _response.status_code < 300:
-                _data = typing.cast(
-                    SerializationTestObject,
-                    parse_obj_as(
-                        type_=SerializationTestObject,  # type: ignore
-                        object_=_response.json(),
-                    ),
-                )
-                return AsyncHttpResponse(response=_response, data=_data)
-            _response_json = _response.json()
-        except JSONDecodeError:
-            raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
-        raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
-
-    async def test_header(
-        self, *, x_uuid_alias: UuidAlias, request_options: typing.Optional[RequestOptions] = None
-    ) -> AsyncHttpResponse[UuidAlias]:
-        """
-        Test endpoint with alias in header
-
-        Parameters
-        ----------
-        x_uuid_alias : UuidAlias
-
-        request_options : typing.Optional[RequestOptions]
-            Request-specific configuration.
-
-        Returns
-        -------
-        AsyncHttpResponse[UuidAlias]
-        """
-        _response = await self._client_wrapper.httpx_client.request(
-            "header-test",
-            method="GET",
-            headers={
-                "X-Uuid-Alias": str(x_uuid_alias) if x_uuid_alias is not None else None,
-            },
-            request_options=request_options,
-        )
-        try:
-            if 200 <= _response.status_code < 300:
-                _data = typing.cast(
-                    UuidAlias,
-                    parse_obj_as(
-                        type_=UuidAlias,  # type: ignore
                         object_=_response.json(),
                     ),
                 )

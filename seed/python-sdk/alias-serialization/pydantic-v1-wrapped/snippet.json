@@ -1,10 +1,8 @@
 {
     "types": {
         "type_:UuidAlias": "\"uuid:550e8400-e29b-41d4-a716-446655440000\"\n",
-        "type_:UuidAliasMap": "{\"uuid:key1\": \"value1\", \"uuid:key2\": \"value2\"}\n",
         "type_:StringToUuidMap": "{\"key1\": \"uuid:value1\", \"key2\": \"uuid:value2\"}\n",
-        "type_:SerializationTestObject": "from seed import SerializationTestObject\n\nSerializationTestObject(\n    direct_alias=\"uuid:direct-test\",\n    alias_in_map={\"uuid:map-key1\": \"map-value1\", \"uuid:map-key2\": \"map-value2\"},\n    string_to_alias={\n        \"string-key1\": \"uuid:string-value1\",\n        \"string-key2\": \"uuid:string-value2\",\n    },\n    optional_alias=\"uuid:optional-test\",\n    alias_list=[\"uuid:list-item1\", \"uuid:list-item2\"],\n)\n",
-        "type_:NestedSerializationObject": "from seed import NestedSerializationObject, SerializationTestObject\n\nNestedSerializationObject(\n    id=\"uuid:nested-parent\",\n    nested=SerializationTestObject(\n        direct_alias=\"uuid:nested-direct\",\n        alias_in_map={\"uuid:nested-key\": \"nested-value\"},\n        string_to_alias={\"nested-string\": \"uuid:nested-alias-value\"},\n        alias_list=[\"uuid:nested-list1\"],\n    ),\n    nested_list=[\n        SerializationTestObject(\n            direct_alias=\"uuid:list-item1\",\n            alias_in_map={\"uuid:list-map-key\": \"list-map-value\"},\n            string_to_alias={\"list-string\": \"uuid:list-alias-value\"},\n            alias_list=[\"uuid:list-nested1\"],\n        )\n    ],\n)\n"
+        "type_:SerializationTestObject": "from seed import SerializationTestObject\n\nSerializationTestObject(\n    direct_alias=\"uuid:direct-test\",\n    string_to_alias={\n        \"string-key1\": \"uuid:string-value1\",\n        \"string-key2\": \"uuid:string-value2\",\n    },\n    optional_alias=\"uuid:optional-test\",\n    alias_list=[\"uuid:list-item1\", \"uuid:list-item2\"],\n)\n"
     },
     "endpoints": [
         {
@@ -17,19 +15,6 @@
             "snippet": {
                 "sync_client": "from seed import SeedAliasSerialization\n\nclient = SeedAliasSerialization(\n    base_url=\"https://yourhost.com/path/to/api\",\n)\nclient.test_direct_alias(\n    alias_id=\"aliasId\",\n)\n",
                 "async_client": "import asyncio\n\nfrom seed import AsyncSeedAliasSerialization\n\nclient = AsyncSeedAliasSerialization(\n    base_url=\"https://yourhost.com/path/to/api\",\n)\n\n\nasync def main() -> None:\n    await client.test_direct_alias(\n        alias_id=\"aliasId\",\n    )\n\n\nasyncio.run(main())\n",
-                "type": "python"
-            }
-        },
-        {
-            "example_identifier": "default",
-            "id": {
-                "path": "/alias-map",
-                "method": "POST",
-                "identifier_override": "endpoint_.testAliasMap"
-            },
-            "snippet": {
-                "sync_client": "from seed import SeedAliasSerialization\n\nclient = SeedAliasSerialization(\n    base_url=\"https://yourhost.com/path/to/api\",\n)\nclient.test_alias_map(\n    request={\"string\": \"string\"},\n)\n",
-                "async_client": "import asyncio\n\nfrom seed import AsyncSeedAliasSerialization\n\nclient = AsyncSeedAliasSerialization(\n    base_url=\"https://yourhost.com/path/to/api\",\n)\n\n\nasync def main() -> None:\n    await client.test_alias_map(\n        request={\"string\": \"string\"},\n    )\n\n\nasyncio.run(main())\n",
                 "type": "python"
             }
         },
@@ -54,47 +39,8 @@
                 "identifier_override": "endpoint_.testSerializationObject"
             },
             "snippet": {
-                "sync_client": "from seed import SeedAliasSerialization\n\nclient = SeedAliasSerialization(\n    base_url=\"https://yourhost.com/path/to/api\",\n)\nclient.test_serialization_object(\n    direct_alias=\"directAlias\",\n    alias_in_map={\"aliasInMap\": \"aliasInMap\"},\n    string_to_alias={\"stringToAlias\": \"stringToAlias\"},\n    optional_alias=\"optionalAlias\",\n    alias_list=[\"aliasList\", \"aliasList\"],\n)\n",
-                "async_client": "import asyncio\n\nfrom seed import AsyncSeedAliasSerialization\n\nclient = AsyncSeedAliasSerialization(\n    base_url=\"https://yourhost.com/path/to/api\",\n)\n\n\nasync def main() -> None:\n    await client.test_serialization_object(\n        direct_alias=\"directAlias\",\n        alias_in_map={\"aliasInMap\": \"aliasInMap\"},\n        string_to_alias={\"stringToAlias\": \"stringToAlias\"},\n        optional_alias=\"optionalAlias\",\n        alias_list=[\"aliasList\", \"aliasList\"],\n    )\n\n\nasyncio.run(main())\n",
-                "type": "python"
-            }
-        },
-        {
-            "example_identifier": "default",
-            "id": {
-                "path": "/nested-serialization",
-                "method": "POST",
-                "identifier_override": "endpoint_.testNestedSerialization"
-            },
-            "snippet": {
-                "sync_client": "from seed import SeedAliasSerialization, SerializationTestObject\n\nclient = SeedAliasSerialization(\n    base_url=\"https://yourhost.com/path/to/api\",\n)\nclient.test_nested_serialization(\n    id=\"id\",\n    nested=SerializationTestObject(\n        direct_alias=\"directAlias\",\n        alias_in_map={\"aliasInMap\": \"aliasInMap\"},\n        string_to_alias={\"stringToAlias\": \"stringToAlias\"},\n        optional_alias=\"optionalAlias\",\n        alias_list=[\"aliasList\", \"aliasList\"],\n    ),\n    nested_list=[\n        SerializationTestObject(\n            direct_alias=\"directAlias\",\n            alias_in_map={\"aliasInMap\": \"aliasInMap\"},\n            string_to_alias={\"stringToAlias\": \"stringToAlias\"},\n            optional_alias=\"optionalAlias\",\n            alias_list=[\"aliasList\", \"aliasList\"],\n        ),\n        SerializationTestObject(\n            direct_alias=\"directAlias\",\n            alias_in_map={\"aliasInMap\": \"aliasInMap\"},\n            string_to_alias={\"stringToAlias\": \"stringToAlias\"},\n            optional_alias=\"optionalAlias\",\n            alias_list=[\"aliasList\", \"aliasList\"],\n        ),\n    ],\n)\n",
-                "async_client": "import asyncio\n\nfrom seed import AsyncSeedAliasSerialization, SerializationTestObject\n\nclient = AsyncSeedAliasSerialization(\n    base_url=\"https://yourhost.com/path/to/api\",\n)\n\n\nasync def main() -> None:\n    await client.test_nested_serialization(\n        id=\"id\",\n        nested=SerializationTestObject(\n            direct_alias=\"directAlias\",\n            alias_in_map={\"aliasInMap\": \"aliasInMap\"},\n            string_to_alias={\"stringToAlias\": \"stringToAlias\"},\n            optional_alias=\"optionalAlias\",\n            alias_list=[\"aliasList\", \"aliasList\"],\n        ),\n        nested_list=[\n            SerializationTestObject(\n                direct_alias=\"directAlias\",\n                alias_in_map={\"aliasInMap\": \"aliasInMap\"},\n                string_to_alias={\"stringToAlias\": \"stringToAlias\"},\n                optional_alias=\"optionalAlias\",\n                alias_list=[\"aliasList\", \"aliasList\"],\n            ),\n            SerializationTestObject(\n                direct_alias=\"directAlias\",\n                alias_in_map={\"aliasInMap\": \"aliasInMap\"},\n                string_to_alias={\"stringToAlias\": \"stringToAlias\"},\n                optional_alias=\"optionalAlias\",\n                alias_list=[\"aliasList\", \"aliasList\"],\n            ),\n        ],\n    )\n\n\nasyncio.run(main())\n",
-                "type": "python"
-            }
-        },
-        {
-            "example_identifier": "default",
-            "id": {
-                "path": "/query-test",
-                "method": "GET",
-                "identifier_override": "endpoint_.testQueryParam"
-            },
-            "snippet": {
-                "sync_client": "from seed import SeedAliasSerialization\n\nclient = SeedAliasSerialization(\n    base_url=\"https://yourhost.com/path/to/api\",\n)\nclient.test_query_param(\n    alias_param=\"aliasParam\",\n    optional_alias_param=\"optionalAliasParam\",\n)\n",
-                "async_client": "import asyncio\n\nfrom seed import AsyncSeedAliasSerialization\n\nclient = AsyncSeedAliasSerialization(\n    base_url=\"https://yourhost.com/path/to/api\",\n)\n\n\nasync def main() -> None:\n    await client.test_query_param(\n        alias_param=\"aliasParam\",\n        optional_alias_param=\"optionalAliasParam\",\n    )\n\n\nasyncio.run(main())\n",
-                "type": "python"
-            }
-        },
-        {
-            "example_identifier": "default",
-            "id": {
-                "path": "/header-test",
-                "method": "GET",
-                "identifier_override": "endpoint_.testHeader"
-            },
-            "snippet": {
-                "sync_client": "from seed import SeedAliasSerialization\n\nclient = SeedAliasSerialization(\n    base_url=\"https://yourhost.com/path/to/api\",\n)\nclient.test_header(\n    x_uuid_alias=\"X-Uuid-Alias\",\n)\n",
-                "async_client": "import asyncio\n\nfrom seed import AsyncSeedAliasSerialization\n\nclient = AsyncSeedAliasSerialization(\n    base_url=\"https://yourhost.com/path/to/api\",\n)\n\n\nasync def main() -> None:\n    await client.test_header(\n        x_uuid_alias=\"X-Uuid-Alias\",\n    )\n\n\nasyncio.run(main())\n",
+                "sync_client": "from seed import SeedAliasSerialization\n\nclient = SeedAliasSerialization(\n    base_url=\"https://yourhost.com/path/to/api\",\n)\nclient.test_serialization_object(\n    direct_alias=\"directAlias\",\n    string_to_alias={\"stringToAlias\": \"stringToAlias\"},\n    optional_alias=\"optionalAlias\",\n    alias_list=[\"aliasList\", \"aliasList\"],\n)\n",
+                "async_client": "import asyncio\n\nfrom seed import AsyncSeedAliasSerialization\n\nclient = AsyncSeedAliasSerialization(\n    base_url=\"https://yourhost.com/path/to/api\",\n)\n\n\nasync def main() -> None:\n    await client.test_serialization_object(\n        direct_alias=\"directAlias\",\n        string_to_alias={\"stringToAlias\": \"stringToAlias\"},\n        optional_alias=\"optionalAlias\",\n        alias_list=[\"aliasList\", \"aliasList\"],\n    )\n\n\nasyncio.run(main())\n",
                 "type": "python"
             }
         }

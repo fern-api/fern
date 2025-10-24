@@ -6,17 +6,13 @@ import typing
 from importlib import import_module
 
 if typing.TYPE_CHECKING:
-    from .nested_serialization_object import NestedSerializationObject
     from .serialization_test_object import SerializationTestObject
     from .string_to_uuid_map import StringToUuidMap
     from .uuid_alias import UuidAlias
-    from .uuid_alias_map import UuidAliasMap
 _dynamic_imports: typing.Dict[str, str] = {
-    "NestedSerializationObject": ".nested_serialization_object",
     "SerializationTestObject": ".serialization_test_object",
     "StringToUuidMap": ".string_to_uuid_map",
     "UuidAlias": ".uuid_alias",
-    "UuidAliasMap": ".uuid_alias_map",
 }
 
 
@@ -41,4 +37,4 @@ def __dir__():
     return sorted(lazy_attrs)
 
 
-__all__ = ["NestedSerializationObject", "SerializationTestObject", "StringToUuidMap", "UuidAlias", "UuidAliasMap"]
+__all__ = ["SerializationTestObject", "StringToUuidMap", "UuidAlias"]

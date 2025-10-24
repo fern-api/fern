@@ -11,7 +11,7 @@ from .uuid_alias import UuidAlias
 
 class StringToUuidMap(UniversalBaseModel):
     """
-    A map with UuidAlias as values instead of keys
+    A map with UuidAlias as values
 
     Examples
     --------

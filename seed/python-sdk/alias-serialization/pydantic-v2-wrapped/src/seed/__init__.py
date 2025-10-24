@@ -6,17 +6,15 @@ import typing
 from importlib import import_module
 
 if typing.TYPE_CHECKING:
-    from .types import NestedSerializationObject, SerializationTestObject, StringToUuidMap, UuidAlias, UuidAliasMap
+    from .types import SerializationTestObject, StringToUuidMap, UuidAlias
     from .client import AsyncSeedAliasSerialization, SeedAliasSerialization
     from .version import __version__
 _dynamic_imports: typing.Dict[str, str] = {
     "AsyncSeedAliasSerialization": ".client",
-    "NestedSerializationObject": ".types",
     "SeedAliasSerialization": ".client",
     "SerializationTestObject": ".types",
     "StringToUuidMap": ".types",
     "UuidAlias": ".types",
-    "UuidAliasMap": ".types",
     "__version__": ".version",
 }
 
@@ -44,11 +42,9 @@ def __dir__():
 
 __all__ = [
     "AsyncSeedAliasSerialization",
-    "NestedSerializationObject",
     "SeedAliasSerialization",
     "SerializationTestObject",
     "StringToUuidMap",
     "UuidAlias",
-    "UuidAliasMap",
     "__version__",
 ]

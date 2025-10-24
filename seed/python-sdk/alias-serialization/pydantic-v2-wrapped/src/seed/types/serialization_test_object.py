@@ -19,7 +19,6 @@ class SerializationTestObject(UniversalBaseModel):
 
     SerializationTestObject(
         direct_alias="uuid:direct-test",
-        alias_in_map={"uuid:map-key1": "map-value1", "uuid:map-key2": "map-value2"},
         string_to_alias={
             "string-key1": "uuid:string-value1",
             "string-key2": "uuid:string-value2",
@@ -30,7 +29,6 @@ class SerializationTestObject(UniversalBaseModel):
     """
 
     direct_alias: typing_extensions.Annotated[UuidAlias, FieldMetadata(alias="directAlias")]
-    alias_in_map: typing_extensions.Annotated[typing.Dict[UuidAlias, str], FieldMetadata(alias="aliasInMap")]
     string_to_alias: typing_extensions.Annotated[typing.Dict[str, UuidAlias], FieldMetadata(alias="stringToAlias")]
     optional_alias: typing_extensions.Annotated[typing.Optional[UuidAlias], FieldMetadata(alias="optionalAlias")] = None
     alias_list: typing_extensions.Annotated[typing.List[UuidAlias], FieldMetadata(alias="aliasList")]

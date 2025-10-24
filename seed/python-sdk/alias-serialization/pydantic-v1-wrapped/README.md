@@ -25,7 +25,7 @@ from seed import SeedAliasSerialization
 client = SeedAliasSerialization(
     base_url="https://yourhost.com/path/to/api",
 )
-client.test_alias_map(
+client.test_string_to_alias_map(
     request={"string": "string"},
 )
 ```
@@ -45,7 +45,7 @@ client = AsyncSeedAliasSerialization(
 
 
 async def main() -> None:
-    await client.test_alias_map(
+    await client.test_string_to_alias_map(
         request={"string": "string"},
     )
 
@@ -62,7 +62,7 @@ will be thrown.
 from seed.core.api_error import ApiError
 
 try:
-    client.test_alias_map(...)
+    client.test_string_to_alias_map(...)
 except ApiError as e:
     print(e.status_code)
     print(e.body)
@@ -81,7 +81,7 @@ from seed import SeedAliasSerialization
 client = SeedAliasSerialization(
     ...,
 )
-response = client.with_raw_response.test_alias_map(...)
+response = client.with_raw_response.test_string_to_alias_map(...)
 print(response.headers)  # access the response headers
 print(response.data)  # access the underlying object
 ```
@@ -101,7 +101,7 @@ A request is deemed retryable when any of the following HTTP status codes is ret
 Use the `max_retries` request option to configure this behavior.
 
 ```python
-client.test_alias_map(..., request_options={
+client.test_string_to_alias_map(..., request_options={
     "max_retries": 1
 })
 ```
@@ -121,7 +121,7 @@ client = SeedAliasSerialization(
 
 
 # Override timeout for a specific method
-client.test_alias_map(..., request_options={
+client.test_string_to_alias_map(..., request_options={
     "timeout_in_seconds": 1
 })
 ```
