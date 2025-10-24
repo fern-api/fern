@@ -33,12 +33,30 @@ function getGeneratorIdentifierForChangelog(generatorName: string): string {
     normalized = normalized.replace(/-sdk$/, "");
     normalized = normalized.replace(/-model$/, "");
     normalized = normalized.replace(/-server$/, "");
+    normalized = normalized.replace(/-node$/, "");
+    normalized = normalized.replace(/-browser$/, "");
     return normalized;
 }
 
-function getChangelogUrl(generatorName: string): string {
+function getChangelogUrl(generatorName: string): string | undefined {
     const identifier = getGeneratorIdentifierForChangelog(generatorName);
-    return `https://buildwithfern.com/learn/sdks/generators/${identifier}/changelog`;
+    const changelogMap: Record<string, string> = {
+        typescript: "typescript",
+        python: "python",
+        go: "go",
+        java: "java",
+        csharp: "csharp",
+        php: "php",
+        ruby: "ruby",
+        swift: "swift"
+    };
+
+    const changelogSlug = changelogMap[identifier];
+    if (changelogSlug == null) {
+        return undefined;
+    }
+
+    return `https://buildwithfern.com/docs/sdks/overview/${changelogSlug}/changelog`;
 }
 
 export async function loadAndUpdateGenerators({
@@ -248,7 +266,10 @@ export async function upgradeGenerator({
                     ? `fern generator upgrade --generator ${upgrade.generatorName} --include-major`
                     : `fern generator upgrade --include-major`;
             cliContext.logger.info(chalk.dim(`    Run: ${upgradeCommand}`));
-            cliContext.logger.info(chalk.dim(`    Changelog: ${getChangelogUrl(upgrade.generatorName)}`));
+            const changelogUrl = getChangelogUrl(upgrade.generatorName);
+            if (changelogUrl != null) {
+                cliContext.logger.info(chalk.dim(`    Changelog: ${changelogUrl}`));
+            }
         }
     }
 }
