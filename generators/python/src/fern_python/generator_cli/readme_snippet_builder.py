@@ -204,18 +204,6 @@ client.{endpoint.endpoint_package_path}{endpoint.method_name}({"..., " if has_pa
 
     def _build_access_raw_response_data_snippets(self) -> List[str]:
         def write(writer: AST.NodeWriter) -> None:
-            writer.write_node(
-                # todo(tedks): Remove this
-                AST.VariableDeclaration(
-                    name="client",
-                    initializer=AST.Expression(
-                        AST.ClassInstantiation(
-                            class_=self._root_client.sync_client.class_reference,
-                            args=[AST.Expression("...")],
-                        )
-                    ),
-                )
-            )
 
             endpoints_with_pagination_feature = self._filter_endpoint_ids_by_feature(
                 ReadmeSnippetBuilder.PAGINATION_FEATURE_ID
