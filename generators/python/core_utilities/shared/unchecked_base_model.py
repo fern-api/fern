@@ -185,9 +185,9 @@ def _convert_undiscriminated_union_type(union_type: typing.Type[typing.Any], obj
                 if IS_PYDANTIC_V2:
                     field_type = field.annotation
                 else:
-                    field_type = field.outer_type_
+                    field_type = field.outer_type_  # type: ignore # Pydantic v1
 
-                if is_literal_type(field_type):
+                if is_literal_type(field_type):  # type: ignore[arg-type]
                     field_default = _get_field_default(field)
                     name_or_alias = get_field_to_alias_mapping(inner_type).get(field_name, field_name)
                     # Get the value from the object
