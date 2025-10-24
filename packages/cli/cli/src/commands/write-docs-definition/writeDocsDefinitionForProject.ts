@@ -37,7 +37,11 @@ export async function writeDocsDefinitionForProject({
             docsWorkspace,
             ossWorkspaces,
             fernWorkspaces,
-            context
+            context,
+            undefined, // editThisPage
+            undefined, // uploadFiles
+            undefined, // registerApi
+            docsWorkspace.config.instances[0]?.audiences // targetAudiences
         );
         const docsDefinition = await docsResolver.resolve();
 

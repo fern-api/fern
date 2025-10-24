@@ -7,6 +7,7 @@ import * as FernDocsConfig from "../../../../api/index";
 import * as core from "../../../../core";
 import { CustomDomain } from "./CustomDomain";
 import { EditThisPageConfig } from "./EditThisPageConfig";
+import { AudienceId } from "./AudienceId";
 
 export const DocsInstance: core.serialization.ObjectSchema<serializers.DocsInstance.Raw, FernDocsConfig.DocsInstance> =
     core.serialization.object({
@@ -14,6 +15,7 @@ export const DocsInstance: core.serialization.ObjectSchema<serializers.DocsInsta
         customDomain: core.serialization.property("custom-domain", CustomDomain.optional()),
         private: core.serialization.boolean().optional(),
         editThisPage: core.serialization.property("edit-this-page", EditThisPageConfig.optional()),
+        audiences: core.serialization.list(AudienceId).optional(),
     });
 
 export declare namespace DocsInstance {
@@ -22,5 +24,6 @@ export declare namespace DocsInstance {
         "custom-domain"?: CustomDomain.Raw | null;
         private?: boolean | null;
         "edit-this-page"?: EditThisPageConfig.Raw | null;
+        audiences?: AudienceId.Raw[] | null;
     }
 }

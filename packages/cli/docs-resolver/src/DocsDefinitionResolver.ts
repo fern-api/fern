@@ -80,10 +80,103 @@ export class DocsDefinitionResolver {
         // Optional
         private editThisPage?: docsYml.RawSchemas.EditThisPageConfig,
         private uploadFiles: UploadFilesFn = defaultUploadFiles,
-        private registerApi: RegisterApiFn = defaultRegisterApi
+        private registerApi: RegisterApiFn = defaultRegisterApi,
+        private targetAudiences?: string[]
     ) {}
 
     #idgen = NodeIdGenerator.init();
+
+    /**
+     * Checks if an item should be included based on its audiences and the target audiences.
+     * An item is included if:
+     * 1. It has no audiences specified (visible to all), OR
+     * 2. There are no target audiences (showing all content), OR
+     * 3. There's at least one audience overlap between the item and target audiences
+     */
+    private shouldIncludeByAudience(itemAudiences?: string[]): boolean {
+        // If no audiences specified on the item, it's visible to all
+        if (!itemAudiences || itemAudiences.length === 0) {
+            return true;
+        }
+
+        // If no target audiences specified, show all content
+        if (!this.targetAudiences || this.targetAudiences.length === 0) {
+            return true;
+        }
+
+        // Check for audience overlap
+        return itemAudiences.some((audience) => this.targetAudiences!.includes(audience));
+    }
+
+    /**
+     * Applies audience-based filtering to the parsed docs configuration.
+     * Filters products, versions, and navigation items based on target audiences.
+     */
+    private applyAudienceFiltering(
+        config: WithoutQuestionMarks<docsYml.ParsedDocsConfiguration>
+    ): WithoutQuestionMarks<docsYml.ParsedDocsConfiguration> {
+        // Apply filtering by modifying the navigation in place
+        const filteredNavigation = this.filterNavigationByAudience(config.navigation);
+
+        return {
+            ...config,
+            navigation: filteredNavigation
+        };
+    }
+
+    /**
+     * Filters navigation configuration based on target audiences.
+     */
+    private filterNavigationByAudience(
+        navigation: docsYml.DocsNavigationConfiguration
+    ): docsYml.DocsNavigationConfiguration {
+        if (navigation.type === "untabbed") {
+            return navigation; // No filtering needed for untabbed navigation
+        }
+
+        if (navigation.type === "tabbed") {
+            return navigation; // No filtering needed for tabbed navigation
+        }
+
+        if (navigation.type === "versioned") {
+            return {
+                ...navigation,
+                versions: navigation.versions.filter((version) =>
+                    this.shouldIncludeByAudience(this.getRawVersionAudiences(version.version))
+                )
+            };
+        }
+
+        if (navigation.type === "productgroup") {
+            return {
+                ...navigation,
+                products: navigation.products.filter((product) => {
+                    const productAudiences = this.getRawProductAudiences(product.product);
+                    return this.shouldIncludeByAudience(productAudiences);
+                })
+            };
+        }
+
+        return navigation;
+    }
+
+    /**
+     * Gets the raw audiences for a product by looking up the original configuration.
+     */
+    private getRawProductAudiences(productName: string): string[] | undefined {
+        const rawProducts = this.docsWorkspace.config.products;
+        const product = rawProducts?.find((p) => p.displayName === productName);
+        return product?.audiences;
+    }
+
+    /**
+     * Gets the raw audiences for a version by looking up the original configuration.
+     */
+    private getRawVersionAudiences(versionName: string): string[] | undefined {
+        const rawVersions = this.docsWorkspace.config.versions;
+        const version = rawVersions?.find((v) => v.displayName === versionName);
+        return version?.audiences;
+    }
 
     private _parsedDocsConfig: WithoutQuestionMarks<docsYml.ParsedDocsConfiguration> | undefined;
     private get parsedDocsConfig(): WithoutQuestionMarks<docsYml.ParsedDocsConfiguration> {
@@ -104,6 +197,11 @@ export class DocsDefinitionResolver {
             absolutePathToFernFolder: this.docsWorkspace.absoluteFilePath,
             absoluteFilepathToDocsConfig: this.docsWorkspace.absoluteFilepathToDocsConfig
         });
+
+        // Apply audience-based filtering to the navigation if target audiences are specified
+        if (this.targetAudiences && this.targetAudiences.length > 0) {
+            this._parsedDocsConfig = this.applyAudienceFiltering(this._parsedDocsConfig);
+        }
 
         // Store raw markdown content before any processing
         for (const [relativePath, markdown] of Object.entries(this.parsedDocsConfig.pages)) {

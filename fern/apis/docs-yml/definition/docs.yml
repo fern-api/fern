@@ -280,6 +280,7 @@ types:
         docs: |
           If `edit-this-page` is set, Fern will add an "Edit this page" link to the bottom of each page that links to the given GitHub repository.
         availability: in-development
+      audiences: optional<list<AudienceId>>
 
   CustomDomain:
     discriminated: false
@@ -319,6 +320,7 @@ types:
         type: optional<VersionAvailability>
         docs: |
           If `availability` is set to `deprecated`, Fern will display a warning banner on the docs site.
+      audiences: optional<list<AudienceId>>
 
   Availability:
     enum:
@@ -1202,6 +1204,7 @@ types:
         type: optional<string>
         docs: The "slug" is this version's basePath. If not set, the slug will be generated from the display-name.
       versions: optional<list<VersionConfig>>
+      audiences: optional<list<AudienceId>>
 
   ProductFileConfig:
     properties:

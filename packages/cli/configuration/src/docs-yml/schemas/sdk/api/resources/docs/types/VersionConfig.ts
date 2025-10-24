@@ -12,4 +12,5 @@ export interface VersionConfig extends FernDocsConfig.WithPermissions, FernDocsC
     slug?: string;
     /** If `availability` is set to `deprecated`, Fern will display a warning banner on the docs site. */
     availability?: FernDocsConfig.VersionAvailability;
+    audiences?: FernDocsConfig.AudienceId[];
 }

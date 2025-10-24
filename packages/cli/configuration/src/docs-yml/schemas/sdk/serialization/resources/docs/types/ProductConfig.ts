@@ -6,6 +6,7 @@ import * as serializers from "../../../index";
 import * as FernDocsConfig from "../../../../api/index";
 import * as core from "../../../../core";
 import { VersionConfig } from "./VersionConfig";
+import { AudienceId } from "./AudienceId";
 import { WithPermissions } from "./WithPermissions";
 import { WithFeatureFlags } from "./WithFeatureFlags";
 
@@ -21,6 +22,7 @@ export const ProductConfig: core.serialization.ObjectSchema<
         image: core.serialization.string().optional(),
         slug: core.serialization.string().optional(),
         versions: core.serialization.list(VersionConfig).optional(),
+        audiences: core.serialization.list(AudienceId).optional(),
     })
     .extend(WithPermissions)
     .extend(WithFeatureFlags);
@@ -34,5 +36,6 @@ export declare namespace ProductConfig {
         image?: string | null;
         slug?: string | null;
         versions?: VersionConfig.Raw[] | null;
+        audiences?: AudienceId.Raw[] | null;
     }
 }

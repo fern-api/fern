@@ -26,7 +26,8 @@ it.skip("converts to api reference node", async () => {
         context,
         undefined,
         async (_files) => [],
-        async (_opts) => ""
+        async (_opts) => "",
+        undefined // targetAudiences - not applicable for test
     );
 
     const resolved = await resolver.resolve();

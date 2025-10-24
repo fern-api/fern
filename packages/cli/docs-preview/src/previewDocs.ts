@@ -128,7 +128,8 @@ export async function getPreviewDocsDefinition({
                     fileId
                 };
             }),
-        async (opts) => apiCollector.addReferencedAPI(opts)
+        async (opts) => apiCollector.addReferencedAPI(opts),
+        undefined // targetAudiences - not applicable for preview
     );
 
     const writeDocsDefinition = await resolver.resolve();

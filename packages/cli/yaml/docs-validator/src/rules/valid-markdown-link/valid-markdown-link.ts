@@ -30,7 +30,11 @@ export const ValidMarkdownLinks: Rule = {
             workspace,
             ossWorkspaces,
             apiWorkspaces,
-            NOOP_CONTEXT
+            NOOP_CONTEXT,
+            undefined, // editThisPage
+            undefined, // uploadFiles
+            undefined, // registerApi
+            undefined // targetAudiences - not applicable for validation
         );
 
         const resolvedDocsDefinition = await docsDefinitionResolver.resolve();

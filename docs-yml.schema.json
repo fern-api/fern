@@ -376,6 +376,9 @@
       },
       "additionalProperties": false
     },
+    "docs.AudienceId": {
+      "type": "string"
+    },
     "docs.DocsInstance": {
       "type": "object",
       "properties": {
@@ -406,6 +409,19 @@
           "oneOf": [
             {
               "$ref": "#/definitions/docs.EditThisPageConfig"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "audiences": {
+          "oneOf": [
+            {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/docs.AudienceId"
+              }
             },
             {
               "type": "null"
@@ -841,6 +857,19 @@
               "type": "null"
             }
           ]
+        },
+        "audiences": {
+          "oneOf": [
+            {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/docs.AudienceId"
+              }
+            },
+            {
+              "type": "null"
+            }
+          ]
         }
       },
       "required": [
@@ -934,6 +963,19 @@
               "type": "array",
               "items": {
                 "$ref": "#/definitions/docs.VersionConfig"
+              }
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "audiences": {
+          "oneOf": [
+            {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/docs.AudienceId"
               }
             },
             {
@@ -1173,9 +1215,6 @@
         "contents"
       ],
       "additionalProperties": false
-    },
-    "docs.AudienceId": {
-      "type": "string"
     },
     "docs.VersionedSnippetLanguageConfiguration": {
       "type": "object",

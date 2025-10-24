@@ -49,7 +49,8 @@ export async function publishDocs({
     editThisPage,
     isPrivate = false,
     disableTemplates = false,
-    skipUpload = false
+    skipUpload = false,
+    targetAudiences
 }: {
     token: FernToken;
     organization: string;
@@ -64,6 +65,7 @@ export async function publishDocs({
     isPrivate: boolean | undefined;
     disableTemplates: boolean | undefined;
     skipUpload: boolean | undefined;
+    targetAudiences?: string[];
 }): Promise<void> {
     const fdr = createFdrService({ token: token.value });
     const authConfig: CjsFdrSdk.docs.v2.write.AuthConfig = isPrivate
@@ -238,7 +240,8 @@ export async function publishDocs({
                         }
                 }
             }
-        }
+        },
+        targetAudiences
     );
 
     const docsDefinition = await resolver.resolve();
