@@ -2,7 +2,7 @@
   changelogEntry:
     - summary: |
         Fix nullable field serialization in PATCH requests with wrapped request bodies. Explicit null values
-        (Nullable.ofNull()) are now correctly serialized as {"field": null} instead of being omitted like
+        (Nullable.ofNull()) are now correctly serialized as `{"field": null}` instead of being omitted like
         Nullable.empty().
       type: fix
   createdAt: "2025-10-23"
