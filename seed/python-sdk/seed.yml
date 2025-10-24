@@ -316,6 +316,10 @@ fixtures:
           union_naming: v1
         use_inheritance_for_extended_models: false
       outputFolder: union-naming-v1
+    - customConfig:
+        pydantic_config:
+          skip_validation: true
+      outputFolder: skip-validation
   websocket:
     - outputFolder: websocket-base
     - customConfig:

@@ -196,7 +196,7 @@ def _convert_undiscriminated_union_type(union_type: typing.Type[typing.Any], obj
                     if isinstance(object_, dict):
                         object_value = object_.get(name_or_alias)
                     else:
-                        object_value = getattr(object_, name_or_alias, None)
+                        object_value = (getattr(object_, name_or_alias, None))
 
                     # If the literal field value doesn't match, this type is not a match
                     if object_value is not None and field_default != object_value:
