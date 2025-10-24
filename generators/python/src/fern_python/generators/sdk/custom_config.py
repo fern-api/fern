@@ -115,6 +115,11 @@ class SDKCustomConfig(pydantic.BaseModel):
     # It also improves the performance of an initial import of the SDK, at the cost of some latency during first use.
     lazy_imports: bool = True
 
+    # The recursion limit to set for the SDK. Must be greater than 1000 (the default recursion limit in Python).
+    # If set, the root __init__.py will include sys.setrecursionlimit() to ensure
+    # the recursion limit is at least this value.
+    recursion_limit: Optional[int] = pydantic.Field(None, gt=1000)
+
     class Config:
         extra = pydantic.Extra.forbid
 
