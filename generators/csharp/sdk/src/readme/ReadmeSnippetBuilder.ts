@@ -51,10 +51,8 @@ export class ReadmeSnippetBuilder extends AbstractReadmeSnippetBuilder {
             snippets[FernGeneratorCli.StructuredFeatureId.Pagination] = this.buildPaginationSnippets();
         }
         if (this.context.isForwardCompatibleEnumsEnabled()) {
-            const forwardCompatibleEnumSnippets = this.buildForwardCompatibleEnumSnippets();
-            if (forwardCompatibleEnumSnippets.length > 0) {
-                snippets[ReadmeSnippetBuilder.FORWARD_COMPATIBLE_ENUMS_FEATURE_ID] = forwardCompatibleEnumSnippets;
-            }
+            snippets[ReadmeSnippetBuilder.FORWARD_COMPATIBLE_ENUMS_FEATURE_ID] =
+                this.buildForwardCompatibleEnumSnippets();
         }
         return snippets;
     }
