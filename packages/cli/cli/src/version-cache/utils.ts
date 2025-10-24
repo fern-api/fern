@@ -2,11 +2,7 @@ import { AbsoluteFilePath, doesPathExist, getAllFilesInDirectory, join, Relative
 import { stat } from "fs/promises";
 import os from "os";
 import path from "path";
-import {
-    CACHE_DIRECTORY_ENV_VAR,
-    CACHE_METADATA_FILENAME,
-    DEFAULT_FERN_CACHE_DIRECTORY,
-} from "./constants";
+import { CACHE_DIRECTORY_ENV_VAR, CACHE_METADATA_FILENAME, DEFAULT_FERN_CACHE_DIRECTORY } from "./constants";
 
 /**
  * Creates a cache key from package name and version

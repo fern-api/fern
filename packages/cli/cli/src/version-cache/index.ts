@@ -11,7 +11,7 @@ export {
     DEFAULT_FERN_VERSION_CACHE_SIZE,
     DISABLE_CACHE_ENV_VAR,
     MAX_VERSION_SIZE_BYTES,
-    MIN_FREE_SPACE_BYTES,
+    MIN_FREE_SPACE_BYTES
 } from "./constants";
 
 // Types and interfaces
