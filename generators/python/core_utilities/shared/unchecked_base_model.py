@@ -183,7 +183,7 @@ def _convert_undiscriminated_union_type(union_type: typing.Type[typing.Any], obj
             for field_name, field in fields.items():
                 # Check if this field has a Literal type
                 if IS_PYDANTIC_V2:
-                    field_type = field.annotation
+                    field_type = field.annotation  # type: ignore # Pydantic v2
                 else:
                     field_type = field.outer_type_  # type: ignore # Pydantic v1
 
