@@ -2,6 +2,10 @@
 
 # isort: skip_file
 
+import sys
+
+if sys.getrecursionlimit() < 1234:
+    sys.setrecursionlimit(1234)
 from .resources import (
     BadObjectRequestInfo,
     BadRequestBody,
