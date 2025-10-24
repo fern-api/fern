@@ -143,13 +143,13 @@ try {
             this.writeCode(`
 using ${enumNamespace};
 
+// Using a built-in value
 var ${enumCamelCaseName} = ${enumName}.${firstEnumValueName};
 
+// Using a custom value
 var custom${enumName} = ${enumName}.FromCustom("custom-value");
-`),
-            this.writeCode(`
-using ${enumNamespace};
 
+// Using in a switch statement
 switch (${enumCamelCaseName}.Value)
 {
     case ${enumName}.Values.${firstEnumValueName}:
@@ -159,10 +159,8 @@ switch (${enumCamelCaseName}.Value)
         Console.WriteLine($"Unknown value: {${enumCamelCaseName}.Value}");
         break;
 }
-`),
-            this.writeCode(`
-using ${enumNamespace};
 
+// Explicit casting
 string ${enumCamelCaseName}String = (string)${enumName}.${firstEnumValueName};
 ${enumName} ${enumCamelCaseName}FromString = (${enumName})"${firstEnumValueWire}";
 `)
