@@ -27,7 +27,7 @@
 
 - changelogEntry:
     - summary: |
-        Remove excludeApis flag from docs creation request.
+        Re-enable excludeApis flag to skip bundling APIs with docs creation request.
       type: fix
   irVersion: 61
   createdAt: "2025-10-24"
