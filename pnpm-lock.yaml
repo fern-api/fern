@@ -2146,9 +2146,6 @@ importers:
 
   generators/swift/codegen:
     dependencies:
-      '@fern-api/base-generator':
-        specifier: workspace:*
-        version: link:../../base
       '@fern-api/browser-compatible-base-generator':
         specifier: workspace:*
         version: link:../../browser-compatible-base
