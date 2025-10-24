@@ -1,6 +1,15 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
 # For unreleased changes, use unreleased.yml
 
+- version: 1.10.0
+  changelogEntry:
+    - summary: |
+        Add support for setting the recursion limit above the default of 1000.
+        Also removes unused imports that were previously F401-ignored.
+      type: feat
+  createdAt: "2025-10-24"
+  irVersion: 60
+
 - version: 1.9.2
   changelogEntry:
     - summary: Escape backslashes in docstrings to prevent SyntaxWarning for invalid escape sequences.
