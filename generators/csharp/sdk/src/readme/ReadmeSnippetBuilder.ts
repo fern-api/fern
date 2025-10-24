@@ -127,17 +127,14 @@ try {
     }
 
     private buildForwardCompatibleEnumSnippets(): string[] {
-        const firstEnum = this.getFirstEnum();
+        const firstEnum = this.getFirstEnumWithValues();
         if (firstEnum == null || firstEnum.shape.type !== "enum") {
             return [];
         }
 
         const enumName = firstEnum.name.name.pascalCase.safeName;
         const enumNamespace = this.context.getNamespaceFromFernFilepath(firstEnum.name.fernFilepath);
-        const firstEnumValue = firstEnum.shape.values[0];
-        if (firstEnumValue == null) {
-            return [];
-        }
+        const firstEnumValue = firstEnum.shape.values[0]!;
         const firstEnumValueName = firstEnumValue.name.name.pascalCase.safeName;
         const firstEnumValueWire = firstEnumValue.name.wireValue;
 
@@ -171,9 +168,13 @@ ${enumName} ${this.toCamelCase(enumName)}FromString = (${enumName})"${firstEnumV
         ];
     }
 
-    private getFirstEnum(): TypeDeclaration | undefined {
+    private getFirstEnumWithValues(): TypeDeclaration | undefined {
         for (const typeDeclaration of Object.values(this.context.ir.types)) {
-            if (typeDeclaration.shape.type === "enum") {
+            if (
+                typeDeclaration.shape.type === "enum" &&
+                typeDeclaration.shape.values != null &&
+                typeDeclaration.shape.values.length > 0
+            ) {
                 return typeDeclaration;
             }
         }
