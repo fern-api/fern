@@ -26,6 +26,7 @@ import { getLatestVersionOfCli } from "./cli-context/upgrade-utils/getLatestVers
 import { GlobalCliOptions, loadProjectAndRegisterWorkspacesWithContext } from "./cliCommons";
 import { addGeneratorCommands, addGetOrganizationCommand } from "./cliV2";
 import { addGeneratorToWorkspaces } from "./commands/add-generator/addGeneratorToWorkspaces";
+import { cacheClear, cacheInfo } from "./commands/cache";
 import { diff } from "./commands/diff/diff";
 import { previewDocsWorkspace } from "./commands/docs-dev/devDocsWorkspace";
 import { generateOpenAPIForWorkspaces } from "./commands/export/generateOpenAPIForWorkspaces";
@@ -179,6 +180,7 @@ async function tryRunCli(cliContext: CliContext) {
     addFormatCommand(cli, cliContext);
     addWriteDefinitionCommand(cli, cliContext);
     addDocsCommand(cli, cliContext);
+    addCacheCommand(cli, cliContext);
     addMockCommand(cli, cliContext);
     addWriteOverridesCommand(cli, cliContext);
     addTestCommand(cli, cliContext);
@@ -1254,8 +1256,46 @@ function addDocsCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext) {
         // Add subcommands directly
         addDocsPreviewCommand(yargs, cliContext);
         addDocsBrokenLinksCommand(yargs, cliContext);
-        return yargs;
+        return yargs.demandCommand(1, "Please specify a subcommand!").showHelpOnFail(true);
     });
+}
+
+function addCacheCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext) {
+    cli.command("cache", "Manage the Fern CLI version cache", (yargs) => {
+        addCacheInfoCommand(yargs, cliContext);
+        addCacheClearCommand(yargs, cliContext);
+        return yargs.demandCommand(1, "Please specify a subcommand!").showHelpOnFail(true);
+    });
+}
+
+function addCacheInfoCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext) {
+    cli.command(
+        "info",
+        "Display version cache information",
+        (yargs) => yargs,
+        async () => {
+            await cliContext.instrumentPostHogEvent({
+                command: "fern cache info"
+            });
+
+            await cacheInfo({ cliContext });
+        }
+    );
+}
+
+function addCacheClearCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext) {
+    cli.command(
+        "clear",
+        "Clear the version cache",
+        (yargs) => yargs,
+        async () => {
+            await cliContext.instrumentPostHogEvent({
+                command: "fern cache clear"
+            });
+
+            await cacheClear({ cliContext });
+        }
+    );
 }
 
 function addDocsPreviewCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext) {
