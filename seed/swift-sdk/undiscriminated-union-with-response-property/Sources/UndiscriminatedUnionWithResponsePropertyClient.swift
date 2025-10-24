@@ -1,7 +1,7 @@
 import Foundation
 
 /// Use this class to access the different functions within the SDK. You can instantiate any number of clients with different configuration that will propagate to these functions.
-public final class ApiClient: Sendable {
+public final class UndiscriminatedUnionWithResponsePropertyClient: Sendable {
     private let httpClient: HTTPClient
 
     /// Initialize the client with the specified configuration.
@@ -53,31 +53,21 @@ public final class ApiClient: Sendable {
         self.httpClient = HTTPClient(config: config)
     }
 
-    public func getFoo(optionalBaz: String? = nil, optionalNullableBaz: Nullable<String>? = nil, requiredBaz: String, requiredNullableBaz: Nullable<String>, requestOptions: RequestOptions? = nil) async throws -> Foo {
+    public func getUnion(requestOptions: RequestOptions? = nil) async throws -> UnionResponse {
         return try await httpClient.performRequest(
             method: .get,
-            path: "/foo",
-            queryParams: [
-                "optional_baz": optionalBaz.map { .string($0) }, 
-                "optional_nullable_baz": optionalNullableBaz?.wrappedValue.map { .string($0) }, 
-                "required_baz": .string(requiredBaz), 
-                "required_nullable_baz": requiredNullableBaz.wrappedValue.map { .string($0) }
-            ],
+            path: "/union",
             requestOptions: requestOptions,
-            responseType: Foo.self
+            responseType: UnionResponse.self
         )
     }
 
-    public func updateFoo(id: String, xIdempotencyKey: String, request: Requests.UpdateFooRequest, requestOptions: RequestOptions? = nil) async throws -> Foo {
+    public func listUnions(requestOptions: RequestOptions? = nil) async throws -> UnionListResponse {
         return try await httpClient.performRequest(
-            method: .patch,
-            path: "/foo/\(id)",
-            headers: [
-                "X-Idempotency-Key": xIdempotencyKey
-            ],
-            body: request,
+            method: .get,
+            path: "/unions",
             requestOptions: requestOptions,
-            responseType: Foo.self
+            responseType: UnionListResponse.self
         )
     }
 }
