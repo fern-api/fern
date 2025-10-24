@@ -105,7 +105,7 @@ export class DocsDefinitionResolver {
         }
 
         // Check for audience overlap
-        return itemAudiences.some((audience) => this.targetAudiences!.includes(audience));
+        return itemAudiences.some((audience) => this.targetAudiences?.includes(audience));
     }
 
     /**

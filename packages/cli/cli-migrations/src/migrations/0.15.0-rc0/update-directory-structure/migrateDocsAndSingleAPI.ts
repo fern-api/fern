@@ -1,4 +1,3 @@
-import { docsYml } from "@fern-api/configuration-loader";
 import { AbsoluteFilePath, moveFolder } from "@fern-api/fs-utils";
 import { rm, writeFile } from "fs/promises";
 import yaml from "js-yaml";
