@@ -135,32 +135,34 @@ export async function loadAndUpdateGenerators({
                 context
             });
 
-            if (latestVersion == null) {
-                continue;
+            // Use the latest version if available, otherwise use the current version
+            const versionToUse = latestVersion ?? currentGeneratorVersion;
+
+            if (latestVersion != null) {
+                context.logger.debug(
+                    chalk.green(`Upgrading ${generatorName} from ${currentGeneratorVersion} to ${latestVersion}`)
+                );
+                generator.set("version", latestVersion);
             }
-            context.logger.debug(
-                chalk.green(`Upgrading ${generatorName} from ${currentGeneratorVersion} to ${latestVersion}`)
-            );
-            generator.set("version", latestVersion);
 
             if (!includeMajor) {
                 const latestMajorVersion = await getLatestGeneratorVersion({
                     generatorName: normalizedGeneratorName,
                     cliVersion,
-                    currentGeneratorVersion: latestVersion,
+                    currentGeneratorVersion: versionToUse,
                     channel,
                     includeMajor: true,
                     context
                 });
 
                 if (latestMajorVersion != null) {
-                    const currentParsed = semver.parse(latestVersion);
+                    const currentParsed = semver.parse(versionToUse);
                     const latestParsed = semver.parse(latestMajorVersion);
 
                     if (currentParsed != null && latestParsed != null && latestParsed.major > currentParsed.major) {
                         skippedMajorUpgrades.push({
                             generatorName,
-                            currentVersion: latestVersion,
+                            currentVersion: versionToUse,
                             latestMajorVersion
                         });
                     }
@@ -244,10 +246,10 @@ export async function upgradeGenerator({
                 generator != null
                     ? `fern generator upgrade --generator ${upgrade.generatorName} --include-major`
                     : `fern generator upgrade --include-major`;
-            cliContext.logger.info(chalk.dim(`    Run: ${upgradeCommand}`));
+            cliContext.logger.info(chalk.yellow(`    Run: ${upgradeCommand}`));
             const changelogUrl = getChangelogUrl(upgrade.generatorName);
             if (changelogUrl != null) {
-                cliContext.logger.info(chalk.dim(`    Changelog: ${changelogUrl}`));
+                cliContext.logger.info(chalk.yellow(`    Changelog: ${changelogUrl}`));
             }
         }
     }
