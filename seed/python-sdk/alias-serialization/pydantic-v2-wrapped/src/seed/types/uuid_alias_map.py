@@ -5,11 +5,10 @@ from __future__ import annotations
 import typing
 
 import pydantic
-from ..core.pydantic_utilities import UniversalBaseModel
 from .uuid_alias import UuidAlias
 
 
-class UuidAliasMap(UniversalBaseModel):
+class UuidAliasMap(pydantic.RootModel):
     """
     A map using UuidAlias as keys to test wrapped alias serialization
 

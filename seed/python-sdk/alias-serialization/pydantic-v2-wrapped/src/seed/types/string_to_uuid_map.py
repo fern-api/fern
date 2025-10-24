@@ -5,11 +5,10 @@ from __future__ import annotations
 import typing
 
 import pydantic
-from ..core.pydantic_utilities import UniversalBaseModel
 from .uuid_alias import UuidAlias
 
 
-class StringToUuidMap(UniversalBaseModel):
+class StringToUuidMap(pydantic.RootModel):
     """
     A map with UuidAlias as values instead of keys
 

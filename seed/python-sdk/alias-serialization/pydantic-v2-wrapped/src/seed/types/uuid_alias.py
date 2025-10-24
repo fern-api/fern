@@ -5,10 +5,9 @@ from __future__ import annotations
 import typing
 
 import pydantic
-from ..core.pydantic_utilities import UniversalBaseModel
 
 
-class UuidAlias(UniversalBaseModel):
+class UuidAlias(pydantic.RootModel):
     """
     A UUID alias that reproduces the customer serialization issue
 
@@ -26,4 +25,4 @@ class UuidAlias(UniversalBaseModel):
     def from_str(value: str) -> UuidAlias:
         return UuidAlias(root=value)
 
-    model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2
+    model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(frozen=True)  # type: ignore # Pydantic v2
