@@ -137,7 +137,7 @@ class SnippetDependencyTracker {
                         if (!this.snippetToPages.has(referencedFile)) {
                             this.snippetToPages.set(referencedFile, new Set());
                         }
-                        this.snippetToPages.get(referencedFile)!.add(markdownFile);
+                        this.snippetToPages.get(referencedFile)?.add(markdownFile);
                     }
                 } catch (error) {
                     this.context.logger.debug(`Failed to read markdown file ${markdownFile}: ${error}`);
@@ -199,7 +199,7 @@ class SnippetDependencyTracker {
      */
     hasSnippetDependencies(changedFiles: AbsoluteFilePath[]): boolean {
         for (const file of changedFiles) {
-            if (this.snippetToPages.has(file) && this.snippetToPages.get(file)!.size > 0) {
+            if (this.snippetToPages.has(file) && this.snippetToPages.get(file)?.size > 0) {
                 return true;
             }
         }
