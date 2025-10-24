@@ -101,7 +101,8 @@ class SnippetDependencyTracker {
      */
     public hasSnippetDependencies(changedFiles: AbsoluteFilePath[]): boolean {
         for (const file of changedFiles) {
-            if (this.snippetToPages.has(file) && this.snippetToPages.get(file)?.size > 0) {
+            const pages = this.snippetToPages.get(file);
+            if (pages && pages.size > 0) {
                 return true;
             }
         }
