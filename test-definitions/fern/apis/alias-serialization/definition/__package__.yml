@@ -1,0 +1,138 @@
+types:
+  UuidAlias:
+    docs: A UUID alias that reproduces the customer serialization issue
+    type: string
+    examples:
+      - name: One
+        value: "uuid:550e8400-e29b-41d4-a716-446655440000"
+      - name: Two
+        value: "uuid:123e4567-e89b-12d3-a456-426614174000"
+
+  UuidAliasMap:
+    docs: A map using UuidAlias as keys to test wrapped alias serialization
+    type: map<UuidAlias, string>
+    examples:
+      - name: One
+        value:
+          "uuid:key1": "value1"
+          "uuid:key2": "value2"
+
+  StringToUuidMap:
+    docs: A map with UuidAlias as values instead of keys
+    type: map<string, UuidAlias>
+    examples:
+      - name: One
+        value:
+          "key1": "uuid:value1"
+          "key2": "uuid:value2"
+
+  SerializationTestObject:
+    docs: Object to test alias serialization in different contexts
+    properties:
+      directAlias: UuidAlias
+      aliasInMap: map<UuidAlias, string>
+      stringToAlias: map<string, UuidAlias>
+      optionalAlias: optional<UuidAlias>
+      aliasList: list<UuidAlias>
+    examples:
+      - name: One
+        value:
+          directAlias: "uuid:direct-test"
+          aliasInMap:
+            "uuid:map-key1": "map-value1"
+            "uuid:map-key2": "map-value2"
+          stringToAlias:
+            "string-key1": "uuid:string-value1"
+            "string-key2": "uuid:string-value2"
+          optionalAlias: "uuid:optional-test"
+          aliasList:
+            - "uuid:list-item1"
+            - "uuid:list-item2"
+
+  NestedSerializationObject:
+    docs: Object containing other objects with aliases to test deep serialization
+    properties:
+      id: UuidAlias
+      nested: SerializationTestObject
+      nestedList: list<SerializationTestObject>
+    examples:
+      - name: One
+        value:
+          id: "uuid:nested-parent"
+          nested:
+            directAlias: "uuid:nested-direct"
+            aliasInMap:
+              "uuid:nested-key": "nested-value"
+            stringToAlias:
+              "nested-string": "uuid:nested-alias-value"
+            aliasList:
+              - "uuid:nested-list1"
+          nestedList:
+            - directAlias: "uuid:list-item1"
+              aliasInMap:
+                "uuid:list-map-key": "list-map-value"
+              stringToAlias:
+                "list-string": "uuid:list-alias-value"
+              aliasList:
+                - "uuid:list-nested1"
+
+service:
+  auth: false
+  base-path: /
+  endpoints:
+    testDirectAlias:
+      docs: Test endpoint for direct alias serialization
+      path: "/direct/{aliasId}"
+      path-parameters:
+        aliasId: UuidAlias
+      method: GET
+      response: UuidAlias
+
+    testAliasMap:
+      docs: Test endpoint for maps with alias keys
+      path: "/alias-map"
+      method: POST
+      request: UuidAliasMap
+      response: UuidAliasMap
+
+    testStringToAliasMap:
+      docs: Test endpoint for maps with alias values
+      path: "/string-to-alias"
+      method: POST
+      request: StringToUuidMap
+      response: StringToUuidMap
+
+    testSerializationObject:
+      docs: Test endpoint for complex object serialization
+      path: "/serialization-test"
+      method: POST
+      request: SerializationTestObject
+      response: SerializationTestObject
+
+    testNestedSerialization:
+      docs: Test endpoint for nested object serialization
+      path: "/nested-serialization"
+      method: POST
+      request: NestedSerializationObject
+      response: NestedSerializationObject
+
+    testQueryParam:
+      docs: Test endpoint with alias in query parameter
+      path: "/query-test"
+      method: GET
+      request:
+        name: QueryTestRequest
+        query-parameters:
+          aliasParam: UuidAlias
+          optionalAliasParam: optional<UuidAlias>
+      response: SerializationTestObject
+
+    testHeader:
+      docs: Test endpoint with alias in header
+      path: "/header-test"
+      method: GET
+      request:
+        name: HeaderTestRequest
+        headers:
+          X-Uuid-Alias: UuidAlias
+      response: UuidAlias
