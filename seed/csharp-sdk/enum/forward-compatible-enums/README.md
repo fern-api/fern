@@ -92,6 +92,39 @@ var response = await client.Headers.SendAsync(
 );
 ```
 
+### Forward Compatible Enums
+
+This SDK uses forward-compatible enums that can handle unknown values gracefully.
+
+```csharp
+using SeedEnum;
+
+var operand = Operand.GreaterThan;
+
+var customOperand = Operand.FromCustom("custom-value");
+```
+
+```csharp
+using SeedEnum;
+
+switch (operand.Value)
+{
+    case Operand.Values.GreaterThan:
+        Console.WriteLine("GreaterThan");
+        break;
+    default:
+        Console.WriteLine($"Unknown value: {operand.Value}");
+        break;
+}
+```
+
+```csharp
+using SeedEnum;
+
+string operandString = (string)Operand.GreaterThan;
+Operand operandFromString = (Operand)">";
+```
+
 ## Contributing
 
 While we value open-source contributions to this SDK, this library is generated programmatically.
