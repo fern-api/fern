@@ -241,9 +241,8 @@ client.{endpoint.endpoint_package_path}{endpoint.method_name}({"..., " if has_pa
                         ),
                     )
                 )
-                # todo(tedks): Just manually fix this line
-                writer.write_line("print(response.headers)  # access the response headers")
-                writer.write_line("print(response.data)  # access the underlying object")
+                writer.write_line("print(response.headers)")
+                writer.write_line("print(response.data)")
 
             if pagination_endpoint_id and (
                 endpoint := self._endpoint_metadata.get_endpoint_metadata(pagination_endpoint_id)

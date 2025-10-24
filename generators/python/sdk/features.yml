@@ -24,7 +24,7 @@ features:
     advanced: true
     description: |
       The SDK provides access to raw response data, including headers, through the `.with_raw_response` property.
-      The `.with_raw_response` property returns a "raw" client that can be used to access the `.headers` and `.data` attributes.
+      The `.with_raw_response` property returns a "raw" client whose response objects have `.headers` and `.data` properties.
 
   - id: RETRIES
     description: |
