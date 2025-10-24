@@ -22,41 +22,20 @@ interface SkippedMajorUpgrade {
     latestMajorVersion: string;
 }
 
-function getGeneratorIdentifierForChangelog(generatorName: string): string {
-    let normalized = generatorName;
-    if (normalized.startsWith("fernapi/")) {
-        normalized = normalized.replace("fernapi/", "");
-    }
-    if (normalized.startsWith("fern-")) {
-        normalized = normalized.replace("fern-", "");
-    }
-    normalized = normalized.replace(/-sdk$/, "");
-    normalized = normalized.replace(/-model$/, "");
-    normalized = normalized.replace(/-server$/, "");
-    normalized = normalized.replace(/-node$/, "");
-    normalized = normalized.replace(/-browser$/, "");
-    return normalized;
-}
-
 function getChangelogUrl(generatorName: string): string | undefined {
-    const identifier = getGeneratorIdentifierForChangelog(generatorName);
     const changelogMap: Record<string, string> = {
-        typescript: "typescript",
-        python: "python",
-        go: "go",
-        java: "java",
-        csharp: "csharp",
-        php: "php",
-        ruby: "ruby",
-        swift: "swift"
+        "fernapi/fern-typescript-sdk": "https://buildwithfern.com/learn/sdks/generators/typescript/changelog",
+        "fernapi/fern-typescript-node-sdk": "https://buildwithfern.com/learn/sdks/generators/typescript/changelog",
+        "fernapi/fern-python-sdk": "https://buildwithfern.com/learn/sdks/generators/python/changelog",
+        "fernapi/fern-go-sdk": "https://buildwithfern.com/learn/sdks/generators/go/changelog",
+        "fernapi/fern-java-sdk": "https://buildwithfern.com/learn/sdks/generators/java/changelog",
+        "fernapi/fern-csharp-sdk": "https://buildwithfern.com/learn/sdks/generators/csharp/changelog",
+        "fernapi/fern-php-sdk": "https://buildwithfern.com/learn/sdks/generators/php/changelog",
+        "fernapi/fern-ruby-sdk": "https://buildwithfern.com/learn/sdks/generators/ruby/changelog",
+        "fernapi/fern-swift-sdk": "https://buildwithfern.com/learn/sdks/generators/swift/changelog"
     };
 
-    const changelogSlug = changelogMap[identifier];
-    if (changelogSlug == null) {
-        return undefined;
-    }
-
-    return `https://buildwithfern.com/docs/sdks/overview/${changelogSlug}/changelog`;
+    return changelogMap[generatorName];
 }
 
 export async function loadAndUpdateGenerators({
