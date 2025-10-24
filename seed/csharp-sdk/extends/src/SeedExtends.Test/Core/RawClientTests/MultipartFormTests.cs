@@ -497,6 +497,185 @@ public class MultipartFormTests
     }
 
     [Test]
+    public async SystemTask ShouldAddFileParameter_FromFileInfo()
+    {
+        var tempFile = Path.GetTempFileName();
+        try
+        {
+            const string fileContent = "test file content";
+            await File.WriteAllTextAsync(tempFile, fileContent);
+            var newFileName = Path.ChangeExtension(tempFile, ".txt");
+            File.Move(tempFile, newFileName);
+            tempFile = newFileName;
+
+            var fileInfo = new System.IO.FileInfo(tempFile);
+            FileParameter file = fileInfo;
+
+            Assert.That(file.FileName, Is.EqualTo(Path.GetFileName(tempFile)));
+            Assert.That(file.ContentType, Is.EqualTo("text/plain"));
+            Assert.That(file.Stream, Is.Not.Null);
+
+            var multipartFormRequest = CreateMultipartFormRequest();
+            multipartFormRequest.AddFileParameterPart("file", file);
+
+            var httpContent = multipartFormRequest.CreateContent();
+            Assert.That(httpContent, Is.InstanceOf<MultipartFormDataContent>());
+            var multipartContent = (MultipartFormDataContent)httpContent;
+
+            var boundary = GetBoundary(multipartContent);
+            var expected = $"""
+                --{boundary}
+                Content-Type: text/plain
+                Content-Disposition: form-data; name=file; filename={Path.GetFileName(
+                    tempFile
+                )}; filename*=utf-8''{Path.GetFileName(tempFile)}
+
+                {fileContent}
+                 --{boundary}--
+                """;
+
+            var actual = await multipartContent.ReadAsStringAsync();
+            Assert.That(actual, Is.EqualTo(expected).IgnoreWhiteSpace);
+
+            file.Dispose();
+        }
+        finally
+        {
+            if (File.Exists(tempFile))
+            {
+                File.Delete(tempFile);
+            }
+        }
+    }
+
+    [Test]
+    public async SystemTask ShouldAddFileParameter_FromFileInfo_WithJsonExtension()
+    {
+        var tempFile = Path.GetTempFileName();
+        try
+        {
+            const string fileContent = "{\"key\":\"value\"}";
+            await File.WriteAllTextAsync(tempFile, fileContent);
+            var newFileName = Path.ChangeExtension(tempFile, ".json");
+            File.Move(tempFile, newFileName);
+            tempFile = newFileName;
+
+            var fileInfo = new System.IO.FileInfo(tempFile);
+            FileParameter file = fileInfo;
+
+            Assert.That(file.FileName, Is.EqualTo(Path.GetFileName(tempFile)));
+            Assert.That(file.ContentType, Is.EqualTo("application/json"));
+            Assert.That(file.Stream, Is.Not.Null);
+
+            file.Dispose();
+        }
+        finally
+        {
+            if (File.Exists(tempFile))
+            {
+                File.Delete(tempFile);
+            }
+        }
+    }
+
+    [Test]
+    public async SystemTask ShouldAddFileParameter_FromFileInfo_WithPdfExtension()
+    {
+        var tempFile = Path.GetTempFileName();
+        try
+        {
+            const string fileContent = "PDF content";
+            await File.WriteAllTextAsync(tempFile, fileContent);
+            var newFileName = Path.ChangeExtension(tempFile, ".pdf");
+            File.Move(tempFile, newFileName);
+            tempFile = newFileName;
+
+            var fileInfo = new System.IO.FileInfo(tempFile);
+            FileParameter file = fileInfo;
+
+            Assert.That(file.FileName, Is.EqualTo(Path.GetFileName(tempFile)));
+            Assert.That(file.ContentType, Is.EqualTo("application/pdf"));
+            Assert.That(file.Stream, Is.Not.Null);
+
+            file.Dispose();
+        }
+        finally
+        {
+            if (File.Exists(tempFile))
+            {
+                File.Delete(tempFile);
+            }
+        }
+    }
+
+    [Test]
+    public async SystemTask ShouldAddFileParameter_FromFileInfo_WithUnknownExtension()
+    {
+        var tempFile = Path.GetTempFileName();
+        try
+        {
+            const string fileContent = "unknown content";
+            await File.WriteAllTextAsync(tempFile, fileContent);
+            var newFileName = Path.ChangeExtension(tempFile, ".xyz");
+            File.Move(tempFile, newFileName);
+            tempFile = newFileName;
+
+            var fileInfo = new System.IO.FileInfo(tempFile);
+            FileParameter file = fileInfo;
+
+            Assert.That(file.FileName, Is.EqualTo(Path.GetFileName(tempFile)));
+            Assert.That(file.ContentType, Is.EqualTo("application/octet-stream"));
+            Assert.That(file.Stream, Is.Not.Null);
+
+            file.Dispose();
+        }
+        finally
+        {
+            if (File.Exists(tempFile))
+            {
+                File.Delete(tempFile);
+            }
+        }
+    }
+
+    [Test]
+    public async SystemTask ShouldAddFileParameter_FromFileInfo_WithNoExtension()
+    {
+        var tempFile = Path.GetTempFileName();
+        try
+        {
+            const string fileContent = "no extension content";
+            await File.WriteAllTextAsync(tempFile, fileContent);
+
+            var fileInfo = new System.IO.FileInfo(tempFile);
+            FileParameter file = fileInfo;
+
+            Assert.That(file.FileName, Is.EqualTo(Path.GetFileName(tempFile)));
+            Assert.That(file.ContentType, Is.EqualTo("application/octet-stream"));
+            Assert.That(file.Stream, Is.Not.Null);
+
+            file.Dispose();
+        }
+        finally
+        {
+            if (File.Exists(tempFile))
+            {
+                File.Delete(tempFile);
+            }
+        }
+    }
+
+    [Test]
+    public void ShouldThrowArgumentNullException_WhenFileInfoIsNull()
+    {
+        System.IO.FileInfo? nullFileInfo = null;
+        Assert.Throws<ArgumentNullException>(() =>
+        {
+            FileParameter file = nullFileInfo!;
+        });
+    }
+
+    [Test]
     public async SystemTask ShouldAddJsonPart_WithComplexObject()
     {
         var multipartFormRequest = CreateMultipartFormRequest();
