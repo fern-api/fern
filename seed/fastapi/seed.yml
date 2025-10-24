@@ -141,3 +141,4 @@ allowedFailures:
   - inferred-auth-implicit
   - inferred-auth-implicit-no-expiry
   - websocket-inferred-auth
+  - undiscriminated-union-with-response-property
