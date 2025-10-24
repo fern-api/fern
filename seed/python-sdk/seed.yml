@@ -55,6 +55,11 @@ fixtures:
       outputFolder: pydantic-v1-wrapped
     - customConfig:
         pydantic_config:
+          version: v1_on_v2
+          wrapped_aliases: true
+      outputFolder: pydantic-v1-on-v2-wrapped
+    - customConfig:
+        pydantic_config:
           version: v2
           wrapped_aliases: true
       outputFolder: pydantic-v2-wrapped
