@@ -1,0 +1,11 @@
+Pydantic version: 1.10.14
+UuidAlias MRO: (<class 'seed.types.uuid_alias.UuidAlias'>, <class 'seed.core.pydantic_utilities.UniversalBaseModel'>, <class 'pydantic.main.BaseModel'>, <class 'pydantic.utils.Representation'>, <class 'object'>)
+uuid_alias.__root__: uuid:test-value
+UuidAlias.json(): "uuid:test-value"
+UuidAlias.dict(): {'__root__': 'uuid:test-value'}
+model_dump error: 'UuidAlias' object has no attribute 'model_dump'
+super().json(): "uuid:test-value"
+UuidAlias.json method: <function UniversalBaseModel.json at 0x103d3bb00>
+UuidAlias.dict method: <function UniversalBaseModel.dict at 0x103d3bba0>
+Is instance of UniversalBaseModel: True
+UniversalBaseModel.json method: <function UniversalBaseModel.json at 0x103d3bb00>
