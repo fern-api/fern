@@ -20,7 +20,7 @@ With Swift Package Manager (SPM), add the following to the top-level `dependenci
 
 ```swift
 dependencies: [
-    .package(url: "https://github.com/file-upload/fern", from: "0.0.1"),
+    .package(url: "https://github.com/url-form-encoded/fern", from: "0.0.1"),
 ]
 ```
 
@@ -34,12 +34,15 @@ Instantiate and use the client with the following:
 
 ```swift
 import Foundation
-import FileUpload
+import Api
 
 private func main() async throws {
-    let client = FileUploadClient()
+    let client = ApiClient()
 
-    _ = try await client.service.justFile(request: .init(file: .init(data: Data("".utf8))))
+    _ = try await client.submitFormData(request: .init(
+        username: "username",
+        email: "email"
+    ))
 }
 
 try await main()
@@ -50,9 +53,9 @@ try await main()
 The SDK exports all request types as Swift structs. Simply import the SDK module to access them:
 
 ```swift
-import FileUpload
+import Api
 
-let request = Requests.MyRequest(
+let request = Requests.PostSubmitRequest(
     ...
 )
 ```
@@ -64,7 +67,7 @@ let request = Requests.MyRequest(
 If you would like to send additional headers as part of the request, use the `additionalHeaders` request option.
 
 ```swift
-try await client.service.justFile(..., requestOptions: .init(
+try await client.submitFormData(..., requestOptions: .init(
     additionalHeaders: [
         "X-Custom-Header": "custom value"
     ]
@@ -76,7 +79,7 @@ try await client.service.justFile(..., requestOptions: .init(
 If you would like to send additional query string parameters as part of the request, use the `additionalQueryParameters` request option.
 
 ```swift
-try await client.service.justFile(..., requestOptions: .init(
+try await client.submitFormData(..., requestOptions: .init(
     additionalQueryParameters: [
         "custom_query_param_key": "custom_query_param_value"
     ]
@@ -88,7 +91,7 @@ try await client.service.justFile(..., requestOptions: .init(
 The SDK defaults to a 60-second timeout. Use the `timeout` option to configure this behavior.
 
 ```swift
-try await client.service.justFile(..., requestOptions: .init(
+try await client.submitFormData(..., requestOptions: .init(
     timeout: 30
 ))
 ```
@@ -99,9 +102,9 @@ The SDK allows you to customize the underlying `URLSession` used for HTTP reques
 
 ```swift
 import Foundation
-import FileUpload
+import Api
 
-let client = FileUploadClient(
+let client = ApiClient(
     ...,
     urlSession: // Provide your implementation here
 )

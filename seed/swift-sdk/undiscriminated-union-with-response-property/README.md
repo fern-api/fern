@@ -20,7 +20,7 @@ With Swift Package Manager (SPM), add the following to the top-level `dependenci
 
 ```swift
 dependencies: [
-    .package(url: "https://github.com/file-upload/fern", from: "0.0.1"),
+    .package(url: "https://github.com/undiscriminated-union-with-response-property/fern", from: "0.0.1"),
 ]
 ```
 
@@ -34,27 +34,15 @@ Instantiate and use the client with the following:
 
 ```swift
 import Foundation
-import FileUpload
+import UndiscriminatedUnionWithResponseProperty
 
 private func main() async throws {
-    let client = FileUploadClient()
+    let client = UndiscriminatedUnionWithResponsePropertyClient()
 
-    _ = try await client.service.justFile(request: .init(file: .init(data: Data("".utf8))))
+    _ = try await client.getUnion()
 }
 
 try await main()
-```
-
-## Request Types
-
-The SDK exports all request types as Swift structs. Simply import the SDK module to access them:
-
-```swift
-import FileUpload
-
-let request = Requests.MyRequest(
-    ...
-)
 ```
 
 ## Advanced
@@ -64,7 +52,7 @@ let request = Requests.MyRequest(
 If you would like to send additional headers as part of the request, use the `additionalHeaders` request option.
 
 ```swift
-try await client.service.justFile(..., requestOptions: .init(
+try await client.getUnion(..., requestOptions: .init(
     additionalHeaders: [
         "X-Custom-Header": "custom value"
     ]
@@ -76,7 +64,7 @@ try await client.service.justFile(..., requestOptions: .init(
 If you would like to send additional query string parameters as part of the request, use the `additionalQueryParameters` request option.
 
 ```swift
-try await client.service.justFile(..., requestOptions: .init(
+try await client.getUnion(..., requestOptions: .init(
     additionalQueryParameters: [
         "custom_query_param_key": "custom_query_param_value"
     ]
@@ -88,7 +76,7 @@ try await client.service.justFile(..., requestOptions: .init(
 The SDK defaults to a 60-second timeout. Use the `timeout` option to configure this behavior.
 
 ```swift
-try await client.service.justFile(..., requestOptions: .init(
+try await client.getUnion(..., requestOptions: .init(
     timeout: 30
 ))
 ```
@@ -99,9 +87,9 @@ The SDK allows you to customize the underlying `URLSession` used for HTTP reques
 
 ```swift
 import Foundation
-import FileUpload
+import UndiscriminatedUnionWithResponseProperty
 
-let client = FileUploadClient(
+let client = UndiscriminatedUnionWithResponsePropertyClient(
     ...,
     urlSession: // Provide your implementation here
 )
