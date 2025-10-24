@@ -84,6 +84,35 @@ var response = await client.Service.SimpleAsync(
 );
 ```
 
+### Forward Compatible Enums
+
+This SDK uses forward-compatible enums that can handle unknown values gracefully.
+
+```csharp
+using SeedFileUpload;
+
+// Using a built-in value
+var objectType = ObjectType.Foo;
+
+// Using a custom value
+var customObjectType = ObjectType.FromCustom("custom-value");
+
+// Using in a switch statement
+switch (objectType.Value)
+{
+    case ObjectType.Values.Foo:
+        Console.WriteLine("Foo");
+        break;
+    default:
+        Console.WriteLine($"Unknown value: {objectType.Value}");
+        break;
+}
+
+// Explicit casting
+string objectTypeString = (string)ObjectType.Foo;
+ObjectType objectTypeFromString = (ObjectType)"FOO";
+```
+
 ## Contributing
 
 While we value open-source contributions to this SDK, this library is generated programmatically.
