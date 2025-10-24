@@ -14,8 +14,6 @@ import com.seed.crossPackageTypeNames.core.SeedCrossPackageTypeNamesHttpResponse
 import com.seed.crossPackageTypeNames.resources.foo.requests.FindRequest;
 import com.seed.crossPackageTypeNames.resources.foo.types.ImportingType;
 import java.io.IOException;
-import java.util.HashMap;
-import java.util.Map;
 import java.util.concurrent.CompletableFuture;
 import okhttp3.Call;
 import okhttp3.Callback;
@@ -48,17 +46,10 @@ public class AsyncRawFooClient {
             QueryStringMapper.addQueryParameter(
                     httpUrl, "optionalString", request.getOptionalString().get(), false);
         }
-        Map<String, Object> properties = new HashMap<>();
-        if (request.getPublicProperty().isPresent()) {
-            properties.put("publicProperty", request.getPublicProperty());
-        }
-        if (request.getPrivateProperty().isPresent()) {
-            properties.put("privateProperty", request.getPrivateProperty());
-        }
         RequestBody body;
         try {
             body = RequestBody.create(
-                    ObjectMappers.JSON_MAPPER.writeValueAsBytes(properties), MediaTypes.APPLICATION_JSON);
+                    ObjectMappers.JSON_MAPPER.writeValueAsBytes(request), MediaTypes.APPLICATION_JSON);
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
