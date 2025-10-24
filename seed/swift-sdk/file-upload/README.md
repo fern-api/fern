@@ -39,7 +39,7 @@ import FileUpload
 private func main() async throws {
     let client = FileUploadClient()
 
-    _ = try await client.service.simple()
+    _ = try await client.service.justFile(request: .init(file: .init(data: Data("".utf8))))
 }
 
 try await main()
@@ -64,7 +64,7 @@ let request = Requests.MyRequest(
 If you would like to send additional headers as part of the request, use the `additionalHeaders` request option.
 
 ```swift
-try await client.service.simple(..., requestOptions: .init(
+try await client.service.justFile(..., requestOptions: .init(
     additionalHeaders: [
         "X-Custom-Header": "custom value"
     ]
@@ -76,7 +76,7 @@ try await client.service.simple(..., requestOptions: .init(
 If you would like to send additional query string parameters as part of the request, use the `additionalQueryParameters` request option.
 
 ```swift
-try await client.service.simple(..., requestOptions: .init(
+try await client.service.justFile(..., requestOptions: .init(
     additionalQueryParameters: [
         "custom_query_param_key": "custom_query_param_value"
     ]
@@ -88,7 +88,7 @@ try await client.service.simple(..., requestOptions: .init(
 The SDK defaults to a 60-second timeout. Use the `timeout` option to configure this behavior.
 
 ```swift
-try await client.service.simple(..., requestOptions: .init(
+try await client.service.justFile(..., requestOptions: .init(
     timeout: 30
 ))
 ```
