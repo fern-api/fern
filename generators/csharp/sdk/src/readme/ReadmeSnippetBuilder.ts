@@ -133,6 +133,7 @@ try {
         }
 
         const enumName = firstEnum.name.name.pascalCase.safeName;
+        const enumCamelCaseName = firstEnum.name.name.camelCase.safeName;
         const enumNamespace = this.context.getNamespaceFromFernFilepath(firstEnum.name.fernFilepath);
         const firstEnumValue = firstEnum.shape.values[0]!;
         const firstEnumValueName = firstEnumValue.name.name.pascalCase.safeName;
@@ -142,28 +143,28 @@ try {
             this.writeCode(`
 using ${enumNamespace};
 
-var ${this.toCamelCase(enumName)} = ${enumName}.${firstEnumValueName};
+var ${enumCamelCaseName} = ${enumName}.${firstEnumValueName};
 
 var custom${enumName} = ${enumName}.FromCustom("custom-value");
 `),
             this.writeCode(`
 using ${enumNamespace};
 
-switch (${this.toCamelCase(enumName)}.Value)
+switch (${enumCamelCaseName}.Value)
 {
     case ${enumName}.Values.${firstEnumValueName}:
         Console.WriteLine("${firstEnumValueName}");
         break;
     default:
-        Console.WriteLine($"Unknown value: {${this.toCamelCase(enumName)}.Value}");
+        Console.WriteLine($"Unknown value: {${enumCamelCaseName}.Value}");
         break;
 }
 `),
             this.writeCode(`
 using ${enumNamespace};
 
-string ${this.toCamelCase(enumName)}String = (string)${enumName}.${firstEnumValueName};
-${enumName} ${this.toCamelCase(enumName)}FromString = (${enumName})"${firstEnumValueWire}";
+string ${enumCamelCaseName}String = (string)${enumName}.${firstEnumValueName};
+${enumName} ${enumCamelCaseName}FromString = (${enumName})"${firstEnumValueWire}";
 `)
         ];
     }
@@ -179,10 +180,6 @@ ${enumName} ${this.toCamelCase(enumName)}FromString = (${enumName})"${firstEnumV
             }
         }
         return undefined;
-    }
-
-    private toCamelCase(str: string): string {
-        return str.charAt(0).toLowerCase() + str.slice(1);
     }
 
     private getEndpointWithPagination(): EndpointWithFilepath | undefined {
