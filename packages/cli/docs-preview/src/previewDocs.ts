@@ -129,7 +129,7 @@ export async function getPreviewDocsDefinition({
                 };
             }),
         registerApi: async (opts) => apiCollector.addReferencedAPI(opts),
-        targetAudiences
+        targetAudiences: undefined
     });
 
     const writeDocsDefinition = await resolver.resolve();
