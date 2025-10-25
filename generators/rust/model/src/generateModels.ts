@@ -1,6 +1,7 @@
 import { RustFile } from "@fern-api/rust-base";
 import { AliasGenerator } from "./alias";
 import { EnumGenerator } from "./enum";
+import { FileUploadRequestBodyGenerator } from "./file-upload-request-body";
 import { InlinedRequestBodyGenerator } from "./inlined-request-body";
 import { ModelGeneratorContext } from "./ModelGeneratorContext";
 import { StructGenerator } from "./object";
@@ -45,6 +46,10 @@ export function generateModels({ context }: { context: ModelGeneratorContext }):
     // Generate inlined request body types from services
     const inlinedRequestBodyGenerator = new InlinedRequestBodyGenerator(context);
     files.push(...inlinedRequestBodyGenerator.generateFiles());
+
+    // Generate file upload request body types from services
+    const fileUploadRequestBodyGenerator = new FileUploadRequestBodyGenerator(context);
+    files.push(...fileUploadRequestBodyGenerator.generateFiles());
 
     // Generate query parameter request structs for query-only endpoints
     const queryRequestGenerator = new QueryParameterRequestGenerator(context);
