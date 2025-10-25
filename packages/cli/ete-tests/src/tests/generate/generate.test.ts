@@ -73,7 +73,7 @@ describe("fern generate", () => {
             cwd: join(fixturesDir, RelativeFilePath.of("docs")),
             reject: false
         });
-        expect(stdout).toContain("Login required.");
+        expect(stdout).toContain("Authentication required. Please run 'fern login' or set the FERN_TOKEN environment variable.");
     }, 180_000);
 
     it("generate docs with auth bypass fails", async () => {
