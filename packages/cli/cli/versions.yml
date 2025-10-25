@@ -2,6 +2,17 @@
 
 - changelogEntry:
     - summary: |
+        Improve authentication error message when running `fern generate --docs` without a token. The error now explicitly instructs users to run `fern login` or set the FERN_TOKEN environment variable.
+      type: fix
+    - summary: |
+        Add validation for empty FERN_TOKEN environment variable to ensure empty strings are treated the same as missing tokens.
+      type: fix
+  irVersion: 61
+  createdAt: "2025-10-25"
+  version: 0.95.2
+
+- changelogEntry:
+    - summary: |
         Re-enable excludeApis flag to skip bundling APIs with docs creation request.
       type: fix
   irVersion: 61

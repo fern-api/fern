@@ -69,11 +69,14 @@ describe("fern generate", () => {
 
     it("generate docs with no auth requires login", async () => {
         vi.stubEnv("FERN_TOKEN", undefined);
-        const { stdout } = await runFernCliWithoutAuthToken(["generate", "--docs"], {
+        const { stdout, stderr } = await runFernCliWithoutAuthToken(["generate", "--docs"], {
             cwd: join(fixturesDir, RelativeFilePath.of("docs")),
             reject: false
         });
-        expect(stdout).toContain("Login required.");
+        const output = stdout + stderr;
+        expect(output).toContain(
+            "Authentication required. Please run 'fern login' or set the FERN_TOKEN environment variable."
+        );
     }, 180_000);
 
     it("generate docs with auth bypass fails", async () => {
