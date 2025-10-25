@@ -2,6 +2,14 @@
 
 - changelogEntry:
     - summary: |
+        Re-enable excludeApis flag to skip bundling APIs with docs creation request.
+      type: fix
+  irVersion: 61
+  createdAt: "2025-10-24"
+  version: 0.95.1
+
+- changelogEntry:
+    - summary: |
         Print how to upgrade generators with major version changes and point them to the changelog.
       type: feat
   irVersion: 61
@@ -16,14 +24,6 @@
   irVersion: 61
   createdAt: "2025-10-23"
   version: 0.94.6
-
-- changelogEntry:
-    - summary: |
-        Re-enable excludeApis flag to skip bundling APIs with docs creation request.
-      type: fix
-  irVersion: 61
-  createdAt: "2025-10-24"
-  version: 0.95.1
 
 - changelogEntry:
     - summary: |
