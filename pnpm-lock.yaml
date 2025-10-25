@@ -5339,6 +5339,15 @@ importers:
 
   packages/cli/docs-preview:
     dependencies:
+      '@fern-api/cli-source-resolver':
+        specifier: workspace:*
+        version: link:../cli-source-resolver
+      '@fern-api/configuration':
+        specifier: workspace:*
+        version: link:../configuration
+      '@fern-api/core-utils':
+        specifier: workspace:*
+        version: link:../../commons/core-utils
       '@fern-api/docs-resolver':
         specifier: workspace:*
         version: link:../docs-resolver
@@ -5348,6 +5357,9 @@ importers:
       '@fern-api/fs-utils':
         specifier: workspace:*
         version: link:../../commons/fs-utils
+      '@fern-api/ir-generator':
+        specifier: workspace:*
+        version: link:../generation/ir-generator
       '@fern-api/ir-sdk':
         specifier: workspace:*
         version: link:../../ir-sdk
@@ -5366,6 +5378,9 @@ importers:
       '@fern-api/task-context':
         specifier: workspace:*
         version: link:../task-context
+      '@fern-api/workspace-loader':
+        specifier: workspace:*
+        version: link:../workspace/loader
       chalk:
         specifier: ^5.3.0
         version: 5.6.2

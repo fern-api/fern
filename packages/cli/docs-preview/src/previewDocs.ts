@@ -16,6 +16,7 @@ import { IntermediateRepresentation } from "@fern-api/ir-sdk";
 import { Project } from "@fern-api/project-loader";
 import { convertIrToFdrApi } from "@fern-api/register";
 import { TaskContext } from "@fern-api/task-context";
+import { FernWorkspace } from "@fern-api/workspace-loader";
 import { readFile } from "fs/promises";
 import { v4 as uuidv4 } from "uuid";
 
@@ -25,6 +26,7 @@ import {
     replaceReferencedCode,
     replaceReferencedMarkdown
 } from "../../docs-markdown-utils/src";
+import { generateLanguageSpecificDynamicIRs } from "./generateDynamicSnippets";
 
 export async function getPreviewDocsDefinition({
     domain,
@@ -124,7 +126,8 @@ export async function getPreviewDocsDefinition({
 
     const ossWorkspaces = await filterOssWorkspaces(project);
 
-    const apiCollector = new ReferencedAPICollector(context);
+    const useDynamicSnippets = docsWorkspace.config.experimental?.dynamicSnippets;
+    const apiCollector = new ReferencedAPICollector(context, useDynamicSnippets, project.config.organization);
     const apiCollectorV2 = new ReferencedAPICollectorV2(context);
 
     const filesV2: Record<string, DocsV1Read.File_> = {};
@@ -179,30 +182,59 @@ type APIDefinitionID = string;
 class ReferencedAPICollector {
     private readonly apis: Record<APIDefinitionID, APIV1Read.ApiDefinition> = {};
 
-    constructor(private readonly context: TaskContext) {}
+    constructor(
+        private readonly context: TaskContext,
+        private readonly useDynamicSnippets?: boolean,
+        private readonly organization?: string
+    ) {}
 
-    public addReferencedAPI({
+    public async addReferencedAPI({
         ir,
         snippetsConfig,
-        playgroundConfig
+        playgroundConfig,
+        workspace
     }: {
         ir: IntermediateRepresentation;
         snippetsConfig: APIV1Write.SnippetsConfig;
         playgroundConfig?: { oauth?: boolean };
-    }): APIDefinitionID {
+        workspace?: FernWorkspace;
+    }): Promise<APIDefinitionID> {
         try {
             const id = uuidv4();
+
+            let snippetHolder = new SDKSnippetHolder({
+                snippetsConfigWithSdkId: {},
+                snippetsBySdkId: {},
+                snippetTemplatesByEndpoint: {},
+                snippetTemplatesByEndpointId: {},
+                snippetsBySdkIdAndEndpointId: {}
+            });
+
+            if (this.useDynamicSnippets && workspace && this.organization) {
+                try {
+                    const dynamicIRsByLanguage = await generateLanguageSpecificDynamicIRs({
+                        workspace,
+                        organization: this.organization,
+                        context: this.context,
+                        snippetsConfig
+                    });
+
+                    if (dynamicIRsByLanguage) {
+                        this.context.logger.debug(
+                            `Generated dynamic IRs for ${Object.keys(dynamicIRsByLanguage).length} languages`
+                        );
+                    }
+                } catch (error) {
+                    this.context.logger.debug(
+                        `Failed to generate dynamic IRs: ${error instanceof Error ? error.message : String(error)}`
+                    );
+                }
+            }
 
             const dbApiDefinition = convertAPIDefinitionToDb(
                 convertIrToFdrApi({ ir, snippetsConfig, playgroundConfig, context: this.context }),
                 FdrAPI.ApiDefinitionId(id),
-                new SDKSnippetHolder({
-                    snippetsConfigWithSdkId: {},
-                    snippetsBySdkId: {},
-                    snippetTemplatesByEndpoint: {},
-                    snippetTemplatesByEndpointId: {},
-                    snippetsBySdkIdAndEndpointId: {}
-                })
+                snippetHolder
             );
 
             const readApiDefinition = convertDbAPIDefinitionToRead(dbApiDefinition);
