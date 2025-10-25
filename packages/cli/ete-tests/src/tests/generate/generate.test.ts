@@ -74,7 +74,9 @@ describe("fern generate", () => {
             reject: false
         });
         const output = stdout + stderr;
-        expect(output).toContain("Authentication required. Please run 'fern login' or set the FERN_TOKEN environment variable.");
+        expect(output).toContain(
+            "Authentication required. Please run 'fern login' or set the FERN_TOKEN environment variable."
+        );
     }, 180_000);
 
     it("generate docs with auth bypass fails", async () => {
