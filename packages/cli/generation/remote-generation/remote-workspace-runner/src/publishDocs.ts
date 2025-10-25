@@ -77,14 +77,14 @@ export async function publishDocs({
     const basePath = parseBasePath(domain);
     const useDynamicSnippets = docsWorkspace.config.experimental?.dynamicSnippets;
     const disableSnippetGen = preview || useDynamicSnippets;
-    const resolver = new DocsDefinitionResolver(
+    const resolver = new DocsDefinitionResolver({
         domain,
         docsWorkspace,
         ossWorkspaces,
         apiWorkspaces,
-        context,
+        taskContext: context,
         editThisPage,
-        async (files) => {
+        uploadFiles: async (files) => {
             const filesMap = new Map(files.map((file) => [file.absoluteFilePath, file]));
             const filesWithMimeType: FileWithMimeType[] = files
                 .map((fileMetadata) => ({
@@ -181,7 +181,7 @@ export async function publishDocs({
                 }
             }
         },
-        async ({ ir, snippetsConfig, playgroundConfig, apiName, workspace }) => {
+        registerApi: async ({ ir, snippetsConfig, playgroundConfig, apiName, workspace }) => {
             const apiDefinition = convertIrToFdrApi({ ir, snippetsConfig, playgroundConfig, context });
 
             // create dynamic IR + metadata for each generator language
@@ -242,7 +242,7 @@ export async function publishDocs({
             }
         },
         targetAudiences
-    );
+    });
 
     const docsDefinition = await resolver.resolve();
 

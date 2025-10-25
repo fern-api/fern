@@ -18,17 +18,17 @@ it.skip("converts to api reference node", async () => {
         throw new Error("Workspace is null");
     }
 
-    const resolver = new DocsDefinitionResolver(
-        "domain",
+    const resolver = new DocsDefinitionResolver({
+        domain: "domain",
         docsWorkspace,
-        [],
-        [],
-        context,
-        undefined,
-        async (_files) => [],
-        async (_opts) => "",
-        undefined // targetAudiences - not applicable for test
-    );
+        ossWorkspaces: [],
+        apiWorkspaces: [],
+        taskContext: context,
+        editThisPage: undefined,
+        uploadFiles: async (_files) => [],
+        registerApi: async (_opts) => "",
+        targetAudiences: undefined // not applicable for test
+    });
 
     const resolved = await resolver.resolve();
 

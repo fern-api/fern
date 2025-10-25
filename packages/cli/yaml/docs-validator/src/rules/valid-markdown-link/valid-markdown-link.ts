@@ -25,17 +25,17 @@ export const ValidMarkdownLinks: Rule = {
         const url = instanceUrls[0] ?? "http://localhost";
         const baseUrl = toBaseUrl(instanceUrls[0] ?? "http://localhost");
 
-        const docsDefinitionResolver = new DocsDefinitionResolver(
-            url,
-            workspace,
+        const docsDefinitionResolver = new DocsDefinitionResolver({
+            domain: url,
+            docsWorkspace: workspace,
             ossWorkspaces,
             apiWorkspaces,
-            NOOP_CONTEXT,
-            undefined, // editThisPage
-            undefined, // uploadFiles
-            undefined, // registerApi
-            undefined // targetAudiences - not applicable for validation
-        );
+            taskContext: NOOP_CONTEXT,
+            editThisPage: undefined,
+            uploadFiles: undefined,
+            registerApi: undefined,
+            targetAudiences: undefined // not applicable for validation
+        });
 
         const resolvedDocsDefinition = await docsDefinitionResolver.resolve();
 

@@ -108,14 +108,14 @@ export async function getPreviewDocsDefinition({
 
     const filesV2: Record<string, DocsV1Read.File_> = {};
 
-    const resolver = new DocsDefinitionResolver(
+    const resolver = new DocsDefinitionResolver({
         domain,
         docsWorkspace,
         ossWorkspaces,
         apiWorkspaces,
-        context,
-        undefined,
-        async (files) =>
+        taskContext: context,
+        editThisPage: undefined,
+        uploadFiles: async (files) =>
             files.map((file) => {
                 const fileId = uuidv4();
                 filesV2[fileId] = {
@@ -128,9 +128,9 @@ export async function getPreviewDocsDefinition({
                     fileId
                 };
             }),
-        async (opts) => apiCollector.addReferencedAPI(opts),
-        undefined // targetAudiences - not applicable for preview
-    );
+        registerApi: async (opts) => apiCollector.addReferencedAPI(opts),
+        targetAudiences: undefined // not applicable for preview
+    });
 
     const writeDocsDefinition = await resolver.resolve();
     const dbDocsDefinition = convertDocsDefinitionToDb({

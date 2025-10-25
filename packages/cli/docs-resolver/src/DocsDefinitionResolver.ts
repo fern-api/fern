@@ -70,19 +70,51 @@ const defaultConfigureAiChat: ConfigureAiChatFn = async ({ aiChatConfig }) => {
     return;
 };
 
+export interface DocsDefinitionResolverArgs {
+    domain: string;
+    docsWorkspace: DocsWorkspace;
+    ossWorkspaces: OSSWorkspace[];
+    apiWorkspaces: AbstractAPIWorkspace<unknown>[];
+    taskContext: TaskContext;
+    // Optional
+    editThisPage?: docsYml.RawSchemas.EditThisPageConfig;
+    uploadFiles?: UploadFilesFn;
+    registerApi?: RegisterApiFn;
+    targetAudiences?: string[];
+}
+
 export class DocsDefinitionResolver {
-    constructor(
-        private domain: string,
-        private docsWorkspace: DocsWorkspace,
-        private ossWorkspaces: OSSWorkspace[],
-        private apiWorkspaces: AbstractAPIWorkspace<unknown>[],
-        private taskContext: TaskContext,
-        // Optional
-        private editThisPage?: docsYml.RawSchemas.EditThisPageConfig,
-        private uploadFiles: UploadFilesFn = defaultUploadFiles,
-        private registerApi: RegisterApiFn = defaultRegisterApi,
-        private targetAudiences?: string[]
-    ) {}
+    private domain: string;
+    private docsWorkspace: DocsWorkspace;
+    private ossWorkspaces: OSSWorkspace[];
+    private apiWorkspaces: AbstractAPIWorkspace<unknown>[];
+    private taskContext: TaskContext;
+    private editThisPage?: docsYml.RawSchemas.EditThisPageConfig;
+    private uploadFiles: UploadFilesFn;
+    private registerApi: RegisterApiFn;
+    private targetAudiences?: string[];
+
+    constructor({
+        domain,
+        docsWorkspace,
+        ossWorkspaces,
+        apiWorkspaces,
+        taskContext,
+        editThisPage,
+        uploadFiles = defaultUploadFiles,
+        registerApi = defaultRegisterApi,
+        targetAudiences
+    }: DocsDefinitionResolverArgs) {
+        this.domain = domain;
+        this.docsWorkspace = docsWorkspace;
+        this.ossWorkspaces = ossWorkspaces;
+        this.apiWorkspaces = apiWorkspaces;
+        this.taskContext = taskContext;
+        this.editThisPage = editThisPage;
+        this.uploadFiles = uploadFiles;
+        this.registerApi = registerApi;
+        this.targetAudiences = targetAudiences;
+    }
 
     #idgen = NodeIdGenerator.init();
 
