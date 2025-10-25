@@ -1,0 +1,1 @@
+export { generateLanguageSpecificDynamicIRs } from "./generateDynamicSnippets";

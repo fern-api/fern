@@ -5351,6 +5351,9 @@ importers:
       '@fern-api/docs-resolver':
         specifier: workspace:*
         version: link:../docs-resolver
+      '@fern-api/dynamic-snippets-utils':
+        specifier: workspace:*
+        version: link:../dynamic-snippets-utils
       '@fern-api/fdr-sdk':
         specifier: 0.139.41-9a38b8587
         version: 0.139.41-9a38b8587(typescript@5.9.3)
@@ -5545,6 +5548,49 @@ importers:
       vitest:
         specifier: ^2.1.9
         version: 2.1.9(@types/node@18.15.3)(jsdom@20.0.3)(msw@2.11.3(@types/node@18.15.3)(typescript@5.9.3))(sass@1.93.2)(terser@5.44.0)
+
+  packages/cli/dynamic-snippets-utils:
+    dependencies:
+      '@fern-api/cli-source-resolver':
+        specifier: workspace:*
+        version: link:../cli-source-resolver
+      '@fern-api/configuration':
+        specifier: workspace:*
+        version: link:../configuration
+      '@fern-api/core-utils':
+        specifier: workspace:*
+        version: link:../../commons/core-utils
+      '@fern-api/fdr-sdk':
+        specifier: 0.139.33-c9426f366
+        version: 0.139.33-c9426f366(typescript@5.9.3)
+      '@fern-api/ir-generator':
+        specifier: workspace:*
+        version: link:../generation/ir-generator
+      '@fern-api/ir-sdk':
+        specifier: workspace:*
+        version: link:../../ir-sdk
+      '@fern-api/task-context':
+        specifier: workspace:*
+        version: link:../task-context
+      '@fern-api/workspace-loader':
+        specifier: workspace:*
+        version: link:../workspace/loader
+    devDependencies:
+      '@fern-api/configs':
+        specifier: workspace:*
+        version: link:../../configs
+      '@types/node':
+        specifier: 18.15.3
+        version: 18.15.3
+      depcheck:
+        specifier: ^1.4.7
+        version: 1.4.7
+      typescript:
+        specifier: 5.9.3
+        version: 5.9.3
+      vitest:
+        specifier: ^2.1.9
+        version: 2.1.9(@types/node@18.15.3)(msw@2.11.3(@types/node@18.15.3)(typescript@5.9.3))(sass@1.93.2)
 
   packages/cli/ete-tests:
     dependencies:
@@ -6388,6 +6434,9 @@ importers:
       '@fern-api/docs-resolver':
         specifier: workspace:*
         version: link:../../../docs-resolver
+      '@fern-api/dynamic-snippets-utils':
+        specifier: workspace:*
+        version: link:../../../dynamic-snippets-utils
       '@fern-api/fai-sdk':
         specifier: 0.0.6-2ee1b7e28
         version: 0.0.6-2ee1b7e28

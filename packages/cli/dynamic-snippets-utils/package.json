@@ -1,11 +1,11 @@
 {
-  "name": "@fern-api/docs-preview",
+  "name": "@fern-api/dynamic-snippets-utils",
   "version": "0.0.0",
   "private": true,
   "repository": {
     "type": "git",
     "url": "https://github.com/fern-api/fern.git",
-    "directory": "packages/cli/docs-preview"
+    "directory": "packages/cli/dynamic-snippets-utils"
   },
   "sideEffects": false,
   "type": "module",
@@ -27,45 +27,23 @@
     "compile": "tsc --build",
     "compile:debug": "tsc --build --sourceMap",
     "depcheck": "depcheck",
-    "test": "vitest --run",
+    "test": "vitest --passWithNoTests --run",
     "test:debug": "pnpm run test --inspect --no-file-parallelism",
-    "test:update": "vitest --run -u"
+    "test:update": "vitest --passWithNoTests --run -u"
   },
   "dependencies": {
     "@fern-api/cli-source-resolver": "workspace:*",
     "@fern-api/configuration": "workspace:*",
     "@fern-api/core-utils": "workspace:*",
-    "@fern-api/docs-resolver": "workspace:*",
-    "@fern-api/dynamic-snippets-utils": "workspace:*",
-    "@fern-api/fdr-sdk": "0.139.37-f5b57f86e",
-    "@fern-api/fs-utils": "workspace:*",
+    "@fern-api/fdr-sdk": "0.139.31-66c809cb8",
     "@fern-api/ir-generator": "workspace:*",
     "@fern-api/ir-sdk": "workspace:*",
-    "@fern-api/logger": "workspace:*",
-    "@fern-api/logging-execa": "workspace:*",
-    "@fern-api/project-loader": "workspace:*",
-    "@fern-api/register": "workspace:*",
     "@fern-api/task-context": "workspace:*",
-    "@fern-api/workspace-loader": "workspace:*",
-    "chalk": "^5.3.0",
-    "cors": "^2.8.5",
-    "decompress": "^4.2.1",
-    "express": "^4.21.2",
-    "tmp-promise": "^3.0.3",
-    "uuid": "^9.0.1",
-    "watcher": "^2.3.1",
-    "ws": "^8.17.1",
-    "xml2js": "^0.6.2"
+    "@fern-api/workspace-loader": "workspace:*"
   },
   "devDependencies": {
     "@fern-api/configs": "workspace:*",
-    "@types/cors": "^2.8.13",
-    "@types/decompress": "^4.2.7",
-    "@types/express": "^4.17.21",
     "@types/node": "18.15.3",
-    "@types/uuid": "^9.0.8",
-    "@types/ws": "^8.5.10",
-    "@types/xml2js": "^0.4.14",
     "depcheck": "^1.4.7",
     "typescript": "5.9.3",
     "vitest": "^2.1.9"

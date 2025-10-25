@@ -1,4 +1,5 @@
 import { DocsDefinitionResolver, filterOssWorkspaces } from "@fern-api/docs-resolver";
+import { generateLanguageSpecificDynamicIRs } from "@fern-api/dynamic-snippets-utils";
 import {
     APIV1Read,
     APIV1Write,
@@ -19,14 +20,12 @@ import { TaskContext } from "@fern-api/task-context";
 import { FernWorkspace } from "@fern-api/workspace-loader";
 import { readFile } from "fs/promises";
 import { v4 as uuidv4 } from "uuid";
-
 import {
     parseImagePaths,
     replaceImagePathsAndUrls,
     replaceReferencedCode,
     replaceReferencedMarkdown
 } from "../../docs-markdown-utils/src";
-import { generateLanguageSpecificDynamicIRs } from "./generateDynamicSnippets";
 
 export async function getPreviewDocsDefinition({
     domain,
