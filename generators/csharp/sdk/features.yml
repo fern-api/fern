@@ -31,3 +31,8 @@ features:
     advanced: true
     description: |
       The SDK defaults to a 30 second timeout. Use the `Timeout` option to configure this behavior.
+
+  - id: FORWARD_COMPATIBLE_ENUMS
+    advanced: true
+    description: |
+      This SDK uses forward-compatible enums that can handle unknown values gracefully.

@@ -88,7 +88,7 @@ import Exhaustive
             urlSession: stub.urlSession
         )
         let expectedResponse = []
-        let response = try await client.endpoints.container.getAndReturnSetOfPrimitives(request: )
+        let response = try await client.endpoints.container.getAndReturnSetOfPrimitives()
         try #require(response == expectedResponse)
     }
 
@@ -111,7 +111,7 @@ import Exhaustive
             urlSession: stub.urlSession
         )
         let expectedResponse = []
-        let response = try await client.endpoints.container.getAndReturnSetOfObjects(request: )
+        let response = try await client.endpoints.container.getAndReturnSetOfObjects()
         try #require(response == expectedResponse)
     }
 

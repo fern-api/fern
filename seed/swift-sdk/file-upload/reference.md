@@ -76,10 +76,7 @@ import FileUpload
 private func main() async throws {
     let client = FileUploadClient()
 
-    _ = try await client.service.optionalArgs(request: .init(
-        imageFile: .init(data: Data("".utf8)),
-        request: 
-    ))
+    _ = try await client.service.optionalArgs(request: .init(imageFile: .init(data: Data("".utf8))))
 }
 
 try await main()

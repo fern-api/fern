@@ -2125,12 +2125,18 @@ importers:
       '@fern-fern/ir-sdk':
         specifier: ^59.7.0
         version: 59.7.0
+      '@types/lodash-es':
+        specifier: ^4.17.12
+        version: 4.17.12
       '@types/node':
         specifier: 18.15.3
         version: 18.15.3
       depcheck:
         specifier: ^1.4.7
         version: 1.4.7
+      lodash-es:
+        specifier: ^4.17.21
+        version: 4.17.21
       typescript:
         specifier: 5.9.2
         version: 5.9.2
@@ -2140,9 +2146,6 @@ importers:
 
   generators/swift/codegen:
     dependencies:
-      '@fern-api/base-generator':
-        specifier: workspace:*
-        version: link:../../base
       '@fern-api/browser-compatible-base-generator':
         specifier: workspace:*
         version: link:../../browser-compatible-base

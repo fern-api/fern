@@ -31,7 +31,6 @@ private func main() async throws {
                 "tags"
             ]
         ),
-        userList: ,
         optionalDeadline: try! Date("2024-01-15T09:30:00Z", strategy: .iso8601),
         keyValue: [
             "keyValue": "keyValue"
@@ -54,8 +53,6 @@ private func main() async throws {
                 "tags"
             ]
         ),
-        excludeUser: ,
-        filter: ,
         neighbor: User(
             name: "name",
             tags: [

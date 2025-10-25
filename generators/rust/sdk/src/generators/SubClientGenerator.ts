@@ -1050,7 +1050,7 @@ export class SubClientGenerator {
 
     // Smart parameter source detection
     private getQueryParameterSource(queryParam: QueryParameter, endpoint?: HttpEndpoint): string {
-        const fieldName = queryParam.name.name.snakeCase.safeName;
+        const fieldName = this.context.escapeRustKeyword(queryParam.name.name.snakeCase.safeName);
 
         if (endpoint?.requestBody) {
             // MIXED or BODY-ONLY: Query params are in request struct

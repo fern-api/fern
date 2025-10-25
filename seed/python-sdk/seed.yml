@@ -134,6 +134,7 @@ fixtures:
       outputFolder: no-custom-config
     - customConfig:
         inline_path_params: true
+        recursion_limit: 1234
       outputFolder: inline-path-params
     - customConfig:
         timeout_in_seconds: infinity

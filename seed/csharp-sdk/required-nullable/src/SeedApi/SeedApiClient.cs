@@ -96,4 +96,63 @@ public partial class SeedApiClient
             );
         }
     }
+
+    /// <example><code>
+    /// await client.UpdateFooAsync(
+    ///     "id",
+    ///     new UpdateFooRequest
+    ///     {
+    ///         XIdempotencyKey = "X-Idempotency-Key",
+    ///         NullableText = "nullable_text",
+    ///         NullableNumber = 1.1,
+    ///         NonNullableText = "non_nullable_text",
+    ///     }
+    /// );
+    /// </code></example>
+    public async Task<Foo> UpdateFooAsync(
+        string id,
+        UpdateFooRequest request,
+        RequestOptions? options = null,
+        CancellationToken cancellationToken = default
+    )
+    {
+        var _headers = new Headers(
+            new Dictionary<string, string>() { { "X-Idempotency-Key", request.XIdempotencyKey } }
+        );
+        var response = await _client
+            .SendRequestAsync(
+                new JsonRequest
+                {
+                    BaseUrl = _client.Options.BaseUrl,
+                    Method = HttpMethodExtensions.Patch,
+                    Path = string.Format("foo/{0}", ValueConvert.ToPathParameterString(id)),
+                    Body = request,
+                    Headers = _headers,
+                    Options = options,
+                },
+                cancellationToken
+            )
+            .ConfigureAwait(false);
+        if (response.StatusCode is >= 200 and < 400)
+        {
+            var responseBody = await response.Raw.Content.ReadAsStringAsync();
+            try
+            {
+                return JsonUtils.Deserialize<Foo>(responseBody)!;
+            }
+            catch (JsonException e)
+            {
+                throw new SeedApiException("Failed to deserialize response", e);
+            }
+        }
+
+        {
+            var responseBody = await response.Raw.Content.ReadAsStringAsync();
+            throw new SeedApiApiException(
+                $"Error with status code {response.StatusCode}",
+                response.StatusCode,
+                responseBody
+            );
+        }
+    }
 }

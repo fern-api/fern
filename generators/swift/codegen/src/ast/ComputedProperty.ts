@@ -6,13 +6,13 @@ import { AstNode, Writer } from "./core";
 import { DocComment } from "./DocComment";
 import { Expression } from "./Expression";
 import { Statement } from "./Statement";
-import { Type } from "./Type";
+import { TypeReference } from "./TypeReference";
 
 export declare namespace ComputedProperty {
     interface Args {
         unsafeName: string;
         accessLevel?: AccessLevel;
-        type: Type;
+        type: TypeReference;
         body: Expression | CodeBlock;
         docs?: DocComment;
     }
@@ -21,7 +21,7 @@ export declare namespace ComputedProperty {
 export class ComputedProperty extends AstNode {
     public readonly unsafeName: string;
     public readonly accessLevel?: AccessLevel;
-    public readonly type: Type;
+    public readonly type: TypeReference;
     public readonly body: Expression | CodeBlock;
     public readonly docs?: DocComment;
 

@@ -1,41 +1,41 @@
 import Foundation
 
 public enum VariableType: Codable, Hashable, Sendable {
-    case integerType(IntegerType)
-    case doubleType(DoubleType)
+    case binaryTreeType(BinaryTreeType)
     case booleanType(BooleanType)
-    case stringType(StringType)
     case charType(CharType)
+    case doubleType(DoubleType)
+    case doublyLinkedListType(DoublyLinkedListType)
+    case integerType(IntegerType)
     case listType(ListType)
     case mapType(MapType)
-    case binaryTreeType(BinaryTreeType)
     case singlyLinkedListType(SinglyLinkedListType)
-    case doublyLinkedListType(DoublyLinkedListType)
+    case stringType(StringType)
 
     public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
         let discriminant = try container.decode(String.self, forKey: .type)
         switch discriminant {
-        case "integerType":
-            self = .integerType(try IntegerType(from: decoder))
-        case "doubleType":
-            self = .doubleType(try DoubleType(from: decoder))
+        case "binaryTreeType":
+            self = .binaryTreeType(try BinaryTreeType(from: decoder))
         case "booleanType":
             self = .booleanType(try BooleanType(from: decoder))
-        case "stringType":
-            self = .stringType(try StringType(from: decoder))
         case "charType":
             self = .charType(try CharType(from: decoder))
+        case "doubleType":
+            self = .doubleType(try DoubleType(from: decoder))
+        case "doublyLinkedListType":
+            self = .doublyLinkedListType(try DoublyLinkedListType(from: decoder))
+        case "integerType":
+            self = .integerType(try IntegerType(from: decoder))
         case "listType":
             self = .listType(try ListType(from: decoder))
         case "mapType":
             self = .mapType(try MapType(from: decoder))
-        case "binaryTreeType":
-            self = .binaryTreeType(try BinaryTreeType(from: decoder))
         case "singlyLinkedListType":
             self = .singlyLinkedListType(try SinglyLinkedListType(from: decoder))
-        case "doublyLinkedListType":
-            self = .doublyLinkedListType(try DoublyLinkedListType(from: decoder))
+        case "stringType":
+            self = .stringType(try StringType(from: decoder))
         default:
             throw DecodingError.dataCorrupted(
                 DecodingError.Context(
@@ -48,25 +48,25 @@ public enum VariableType: Codable, Hashable, Sendable {
 
     public func encode(to encoder: Encoder) throws -> Void {
         switch self {
-        case .integerType(let data):
-            try data.encode(to: encoder)
-        case .doubleType(let data):
+        case .binaryTreeType(let data):
             try data.encode(to: encoder)
         case .booleanType(let data):
             try data.encode(to: encoder)
-        case .stringType(let data):
-            try data.encode(to: encoder)
         case .charType(let data):
+            try data.encode(to: encoder)
+        case .doubleType(let data):
+            try data.encode(to: encoder)
+        case .doublyLinkedListType(let data):
+            try data.encode(to: encoder)
+        case .integerType(let data):
             try data.encode(to: encoder)
         case .listType(let data):
             try data.encode(to: encoder)
         case .mapType(let data):
             try data.encode(to: encoder)
-        case .binaryTreeType(let data):
-            try data.encode(to: encoder)
         case .singlyLinkedListType(let data):
             try data.encode(to: encoder)
-        case .doublyLinkedListType(let data):
+        case .stringType(let data):
             try data.encode(to: encoder)
         }
     }

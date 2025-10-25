@@ -49,6 +49,6 @@ class FieldValue_ContainerValue(UniversalBaseModel):
 
 
 FieldValue = typing.Union[FieldValue_PrimitiveValue, FieldValue_ObjectValue, FieldValue_ContainerValue]
-from .container_value import ContainerValue  # noqa: E402, F401, I001
+from .container_value import ContainerValue  # noqa: E402, I001
 
 update_forward_refs(FieldValue_ContainerValue)

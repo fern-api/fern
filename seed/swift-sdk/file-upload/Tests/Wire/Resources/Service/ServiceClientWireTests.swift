@@ -17,10 +17,7 @@ import FileUpload
             urlSession: stub.urlSession
         )
         let expectedResponse = "Foo"
-        let response = try await client.service.optionalArgs(request: .init(
-            imageFile: .init(data: Data("".utf8)),
-            request: 
-        ))
+        let response = try await client.service.optionalArgs(request: .init(imageFile: .init(data: Data("".utf8))))
         try #require(response == expectedResponse)
     }
 }

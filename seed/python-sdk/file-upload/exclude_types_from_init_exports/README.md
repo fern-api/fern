@@ -25,7 +25,7 @@ from seed import SeedFileUpload
 client = SeedFileUpload(
     base_url="https://yourhost.com/path/to/api",
 )
-client.service.simple()
+client.service.just_file()
 ```
 
 ## Async Client
@@ -43,7 +43,7 @@ client = AsyncSeedFileUpload(
 
 
 async def main() -> None:
-    await client.service.simple()
+    await client.service.just_file()
 
 
 asyncio.run(main())
@@ -58,7 +58,7 @@ will be thrown.
 from seed.core.api_error import ApiError
 
 try:
-    client.service.simple(...)
+    client.service.just_file(...)
 except ApiError as e:
     print(e.status_code)
     print(e.body)
@@ -77,7 +77,7 @@ from seed import SeedFileUpload
 client = SeedFileUpload(
     ...,
 )
-response = client.service.with_raw_response.simple(...)
+response = client.service.with_raw_response.just_file(...)
 print(response.headers)  # access the response headers
 print(response.data)  # access the underlying object
 ```
@@ -97,7 +97,7 @@ A request is deemed retryable when any of the following HTTP status codes is ret
 Use the `max_retries` request option to configure this behavior.
 
 ```python
-client.service.simple(..., request_options={
+client.service.just_file(..., request_options={
     "max_retries": 1
 })
 ```
@@ -117,7 +117,7 @@ client = SeedFileUpload(
 
 
 # Override timeout for a specific method
-client.service.simple(..., request_options={
+client.service.just_file(..., request_options={
     "timeout_in_seconds": 1
 })
 ```

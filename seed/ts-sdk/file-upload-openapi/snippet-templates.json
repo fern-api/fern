@@ -1,0 +1,109 @@
+[
+    {
+        "sdk": {
+            "package": "@fern/file-upload-openapi",
+            "version": "0.0.1",
+            "type": "typescript"
+        },
+        "endpointId": {
+            "path": "/upload-file",
+            "method": "POST",
+            "identifierOverride": "endpoint_fileUploadExample.uploadFile"
+        },
+        "snippetTemplate": {
+            "clientInstantiation": {
+                "imports": [
+                    "import { SeedApiClient } from \"@fern/file-upload-openapi\";"
+                ],
+                "templateString": "const client = new SeedApiClient($FERN_INPUT);",
+                "isOptional": false,
+                "inputDelimiter": ",",
+                "templateInputs": [
+                    {
+                        "value": {
+                            "imports": [],
+                            "templateString": "{ $FERN_INPUT }",
+                            "isOptional": true,
+                            "templateInputs": [
+                                {
+                                    "value": {
+                                        "imports": [],
+                                        "templateString": "environment: \"YOUR_BASE_URL\"",
+                                        "isOptional": false,
+                                        "templateInputs": [],
+                                        "type": "generic"
+                                    },
+                                    "type": "template"
+                                }
+                            ],
+                            "type": "generic"
+                        },
+                        "type": "template"
+                    }
+                ],
+                "type": "generic"
+            },
+            "functionInvocation": {
+                "imports": [],
+                "templateString": "await client.fileUploadExample.uploadFile(\n\t$FERN_INPUT\n)",
+                "isOptional": false,
+                "inputDelimiter": ",\n\t",
+                "templateInputs": [
+                    {
+                        "value": {
+                            "imports": [],
+                            "templateString": "{\n\t\t$FERN_INPUT\n\t}",
+                            "isOptional": true,
+                            "inputDelimiter": ",\n\t\t",
+                            "templateInputs": [
+                                {
+                                    "value": {
+                                        "imports": [],
+                                        "templateString": "name: $FERN_INPUT",
+                                        "isOptional": true,
+                                        "templateInputs": [
+                                            {
+                                                "location": "BODY",
+                                                "path": "name",
+                                                "type": "payload"
+                                            }
+                                        ],
+                                        "type": "generic"
+                                    },
+                                    "type": "template"
+                                },
+                                {
+                                    "value": {
+                                        "imports": [],
+                                        "templateString": "file: $FERN_INPUT",
+                                        "isOptional": true,
+                                        "templateInputs": [
+                                            {
+                                                "value": {
+                                                    "imports": [
+                                                        "import fs from \"fs\";"
+                                                    ],
+                                                    "templateString": "fs.createReadStream(\"/path/to/your/file\")",
+                                                    "isOptional": false,
+                                                    "templateInputs": [],
+                                                    "type": "generic"
+                                                },
+                                                "type": "template"
+                                            }
+                                        ],
+                                        "type": "generic"
+                                    },
+                                    "type": "template"
+                                }
+                            ],
+                            "type": "generic"
+                        },
+                        "type": "template"
+                    }
+                ],
+                "type": "generic"
+            },
+            "type": "v1"
+        }
+    }
+]

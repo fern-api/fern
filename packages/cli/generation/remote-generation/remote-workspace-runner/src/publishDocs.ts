@@ -254,7 +254,8 @@ export async function publishDocs({
     const registerDocsResponse = await fdr.docs.v2.write.finishDocsRegister(
         CjsFdrSdk.docs.v1.write.DocsRegistrationId(docsRegistrationId),
         {
-            docsDefinition
+            docsDefinition,
+            excludeApis: true
         }
     );
 

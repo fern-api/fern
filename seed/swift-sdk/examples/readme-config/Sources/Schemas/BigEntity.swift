@@ -7,7 +7,7 @@ public struct BigEntity: Codable, Hashable, Sendable {
     public let metadata: MetadataType?
     public let commonMetadata: Metadata?
     public let eventInfo: EventInfo?
-    public let data: DataType?
+    public let data: Data?
     public let migration: Migration?
     public let exception: Exception?
     public let test: Test?
@@ -24,7 +24,7 @@ public struct BigEntity: Codable, Hashable, Sendable {
         metadata: MetadataType? = nil,
         commonMetadata: Metadata? = nil,
         eventInfo: EventInfo? = nil,
-        data: DataType? = nil,
+        data: Data? = nil,
         migration: Migration? = nil,
         exception: Exception? = nil,
         test: Test? = nil,
@@ -57,7 +57,7 @@ public struct BigEntity: Codable, Hashable, Sendable {
         self.metadata = try container.decodeIfPresent(MetadataType.self, forKey: .metadata)
         self.commonMetadata = try container.decodeIfPresent(Metadata.self, forKey: .commonMetadata)
         self.eventInfo = try container.decodeIfPresent(EventInfo.self, forKey: .eventInfo)
-        self.data = try container.decodeIfPresent(DataType.self, forKey: .data)
+        self.data = try container.decodeIfPresent(Data.self, forKey: .data)
         self.migration = try container.decodeIfPresent(Migration.self, forKey: .migration)
         self.exception = try container.decodeIfPresent(Exception.self, forKey: .exception)
         self.test = try container.decodeIfPresent(Test.self, forKey: .test)

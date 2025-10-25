@@ -2,8 +2,8 @@ import Foundation
 
 public enum UnionWithSameStringTypes: Codable, Hashable, Sendable {
     case customFormat(CustomFormat)
-    case regularString(RegularString)
     case patternString(PatternString)
+    case regularString(RegularString)
 
     public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
@@ -11,10 +11,10 @@ public enum UnionWithSameStringTypes: Codable, Hashable, Sendable {
         switch discriminant {
         case "customFormat":
             self = .customFormat(try CustomFormat(from: decoder))
-        case "regularString":
-            self = .regularString(try RegularString(from: decoder))
         case "patternString":
             self = .patternString(try PatternString(from: decoder))
+        case "regularString":
+            self = .regularString(try RegularString(from: decoder))
         default:
             throw DecodingError.dataCorrupted(
                 DecodingError.Context(
@@ -29,9 +29,9 @@ public enum UnionWithSameStringTypes: Codable, Hashable, Sendable {
         switch self {
         case .customFormat(let data):
             try data.encode(to: encoder)
-        case .regularString(let data):
-            try data.encode(to: encoder)
         case .patternString(let data):
+            try data.encode(to: encoder)
+        case .regularString(let data):
             try data.encode(to: encoder)
         }
     }

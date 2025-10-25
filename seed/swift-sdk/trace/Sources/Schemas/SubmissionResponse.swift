@@ -1,29 +1,29 @@
 import Foundation
 
 public enum SubmissionResponse: Codable, Hashable, Sendable {
-    case serverInitialized(ServerInitialized)
-    case problemInitialized(ProblemInitialized)
-    case workspaceInitialized(WorkspaceInitialized)
-    case serverErrored(ServerErrored)
     case codeExecutionUpdate(CodeExecutionUpdate)
+    case problemInitialized(ProblemInitialized)
+    case serverErrored(ServerErrored)
+    case serverInitialized(ServerInitialized)
     case terminated(Terminated)
+    case workspaceInitialized(WorkspaceInitialized)
 
     public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
         let discriminant = try container.decode(String.self, forKey: .type)
         switch discriminant {
-        case "serverInitialized":
-            self = .serverInitialized(try ServerInitialized(from: decoder))
-        case "problemInitialized":
-            self = .problemInitialized(try ProblemInitialized(from: decoder))
-        case "workspaceInitialized":
-            self = .workspaceInitialized(try WorkspaceInitialized(from: decoder))
-        case "serverErrored":
-            self = .serverErrored(try ServerErrored(from: decoder))
         case "codeExecutionUpdate":
             self = .codeExecutionUpdate(try CodeExecutionUpdate(from: decoder))
+        case "problemInitialized":
+            self = .problemInitialized(try ProblemInitialized(from: decoder))
+        case "serverErrored":
+            self = .serverErrored(try ServerErrored(from: decoder))
+        case "serverInitialized":
+            self = .serverInitialized(try ServerInitialized(from: decoder))
         case "terminated":
             self = .terminated(try Terminated(from: decoder))
+        case "workspaceInitialized":
+            self = .workspaceInitialized(try WorkspaceInitialized(from: decoder))
         default:
             throw DecodingError.dataCorrupted(
                 DecodingError.Context(
@@ -36,17 +36,17 @@ public enum SubmissionResponse: Codable, Hashable, Sendable {
 
     public func encode(to encoder: Encoder) throws -> Void {
         switch self {
-        case .serverInitialized(let data):
+        case .codeExecutionUpdate(let data):
             try data.encode(to: encoder)
         case .problemInitialized(let data):
             try data.encode(to: encoder)
-        case .workspaceInitialized(let data):
-            try data.encode(to: encoder)
         case .serverErrored(let data):
             try data.encode(to: encoder)
-        case .codeExecutionUpdate(let data):
+        case .serverInitialized(let data):
             try data.encode(to: encoder)
         case .terminated(let data):
+            try data.encode(to: encoder)
+        case .workspaceInitialized(let data):
             try data.encode(to: encoder)
         }
     }
@@ -171,12 +171,12 @@ public enum SubmissionResponse: Codable, Hashable, Sendable {
 
     public struct CodeExecutionUpdate: Codable, Hashable, Sendable {
         public let type: String = "codeExecutionUpdate"
-        public let value: CodeExecutionUpdate
+        public let value: Trace.CodeExecutionUpdate
         /// Additional properties that are not explicitly defined in the schema
         public let additionalProperties: [String: JSONValue]
 
         public init(
-            value: CodeExecutionUpdate,
+            value: Trace.CodeExecutionUpdate,
             additionalProperties: [String: JSONValue] = .init()
         ) {
             self.value = value
@@ -185,7 +185,7 @@ public enum SubmissionResponse: Codable, Hashable, Sendable {
 
         public init(from decoder: Decoder) throws {
             let container = try decoder.container(keyedBy: CodingKeys.self)
-            self.value = try container.decode(CodeExecutionUpdate.self, forKey: .value)
+            self.value = try container.decode(Trace.CodeExecutionUpdate.self, forKey: .value)
             self.additionalProperties = try decoder.decodeAdditionalProperties(using: CodingKeys.self)
         }
 
