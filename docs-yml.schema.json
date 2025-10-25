@@ -379,6 +379,19 @@
     "docs.AudienceId": {
       "type": "string"
     },
+    "docs.Audience": {
+      "anyOf": [
+        {
+          "$ref": "#/definitions/docs.AudienceId"
+        },
+        {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/docs.AudienceId"
+          }
+        }
+      ]
+    },
     "docs.DocsInstance": {
       "type": "object",
       "properties": {
@@ -418,10 +431,7 @@
         "audiences": {
           "oneOf": [
             {
-              "type": "array",
-              "items": {
-                "$ref": "#/definitions/docs.AudienceId"
-              }
+              "$ref": "#/definitions/docs.Audience"
             },
             {
               "type": "null"
@@ -861,10 +871,7 @@
         "audiences": {
           "oneOf": [
             {
-              "type": "array",
-              "items": {
-                "$ref": "#/definitions/docs.AudienceId"
-              }
+              "$ref": "#/definitions/docs.Audience"
             },
             {
               "type": "null"
@@ -973,10 +980,7 @@
         "audiences": {
           "oneOf": [
             {
-              "type": "array",
-              "items": {
-                "$ref": "#/definitions/docs.AudienceId"
-              }
+              "$ref": "#/definitions/docs.Audience"
             },
             {
               "type": "null"
@@ -1867,10 +1871,7 @@
         "audiences": {
           "oneOf": [
             {
-              "type": "array",
-              "items": {
-                "$ref": "#/definitions/docs.AudienceId"
-              }
+              "$ref": "#/definitions/docs.Audience"
             },
             {
               "type": "null"

@@ -90,7 +90,6 @@ async function migrateAndWriteDocsYml({
     apiName: string;
 }): Promise<void> {
     const docsConfiguration = await loadRawDocsConfiguration({ absolutePathToWorkspace });
-
     if (docsConfiguration == null) {
         return;
     }

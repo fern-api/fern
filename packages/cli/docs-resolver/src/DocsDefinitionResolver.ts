@@ -1,5 +1,5 @@
 import { SourceResolverImpl } from "@fern-api/cli-source-resolver";
-import { docsYml, parseDocsConfiguration, WithoutQuestionMarks } from "@fern-api/configuration-loader";
+import { docsYml, parseAudiences, parseDocsConfiguration, WithoutQuestionMarks } from "@fern-api/configuration-loader";
 import { assertNever, isNonNullish, visitDiscriminatedUnion } from "@fern-api/core-utils";
 import {
     parseImagePaths,
@@ -198,7 +198,7 @@ export class DocsDefinitionResolver {
     private getRawProductAudiences(productName: string): string[] | undefined {
         const rawProducts = this.docsWorkspace.config.products;
         const product = rawProducts?.find((p) => p.displayName === productName);
-        return product?.audiences;
+        return parseAudiences(product?.audiences);
     }
 
     /**
@@ -207,7 +207,7 @@ export class DocsDefinitionResolver {
     private getRawVersionAudiences(versionName: string): string[] | undefined {
         const rawVersions = this.docsWorkspace.config.versions;
         const version = rawVersions?.find((v) => v.displayName === versionName);
-        return version?.audiences;
+        return parseAudiences(version?.audiences);
     }
 
     private _parsedDocsConfig: WithoutQuestionMarks<docsYml.ParsedDocsConfiguration> | undefined;

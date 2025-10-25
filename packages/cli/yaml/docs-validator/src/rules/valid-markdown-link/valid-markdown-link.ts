@@ -143,7 +143,12 @@ export const ValidMarkdownLinks: Rule = {
                 );
                 const ir = generateIntermediateRepresentation({
                     workspace: fernWorkspace,
-                    audiences: config.audiences ? { type: "select", audiences: config.audiences } : { type: "all" },
+                    audiences: config.audiences
+                        ? {
+                              type: "select",
+                              audiences: Array.isArray(config.audiences) ? config.audiences : [config.audiences]
+                          }
+                        : { type: "all" },
                     generationLanguage: undefined,
                     keywords: undefined,
                     smartCasing: false,

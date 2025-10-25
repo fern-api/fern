@@ -828,7 +828,9 @@ async function convertNavigationItem({
             icon: rawConfig.icon,
             apiName: rawConfig.apiName ?? undefined,
             audiences:
-                rawConfig.audiences != null ? { type: "select", audiences: rawConfig.audiences } : { type: "all" },
+                rawConfig.audiences != null
+                    ? { type: "select", audiences: parseAudiences(rawConfig.audiences) ?? [] }
+                    : { type: "all" },
             availability: rawConfig.availability,
             showErrors: rawConfig.displayErrors ?? true,
             snippetsConfiguration:
@@ -1188,4 +1190,20 @@ function parseRoles(raw: string | string[] | undefined): CjsFdrSdk.RoleId[] | un
     }
 
     return raw.map(CjsFdrSdk.RoleId);
+}
+
+export function parseAudiences(raw: string | string[] | undefined): string[] | undefined {
+    if (raw == null) {
+        return undefined;
+    }
+
+    if (typeof raw === "string") {
+        return [raw];
+    }
+
+    if (raw.length === 0) {
+        return undefined;
+    }
+
+    return raw;
 }

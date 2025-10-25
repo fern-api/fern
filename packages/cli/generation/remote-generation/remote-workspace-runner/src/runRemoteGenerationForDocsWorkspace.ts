@@ -91,6 +91,10 @@ export async function runRemoteGenerationForDocsWorkspace({
             disableTemplates,
             skipUpload,
             targetAudiences: maybeInstance.audiences
+                ? Array.isArray(maybeInstance.audiences)
+                    ? maybeInstance.audiences
+                    : [maybeInstance.audiences]
+                : undefined
         });
     });
     return;

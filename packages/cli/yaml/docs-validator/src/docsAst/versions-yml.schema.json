@@ -448,6 +448,19 @@
     "docs.AudienceId": {
       "type": "string"
     },
+    "docs.Audience": {
+      "anyOf": [
+        {
+          "$ref": "#/definitions/docs.AudienceId"
+        },
+        {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/docs.AudienceId"
+          }
+        }
+      ]
+    },
     "docs.VersionedSnippetLanguageConfiguration": {
       "type": "object",
       "properties": {
@@ -1099,10 +1112,7 @@
         "audiences": {
           "oneOf": [
             {
-              "type": "array",
-              "items": {
-                "$ref": "#/definitions/docs.AudienceId"
-              }
+              "$ref": "#/definitions/docs.Audience"
             },
             {
               "type": "null"

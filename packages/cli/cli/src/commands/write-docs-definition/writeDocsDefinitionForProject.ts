@@ -42,6 +42,10 @@ export async function writeDocsDefinitionForProject({
             uploadFiles: undefined,
             registerApi: undefined,
             targetAudiences: docsWorkspace.config.instances[0]?.audiences
+                ? Array.isArray(docsWorkspace.config.instances[0].audiences)
+                    ? docsWorkspace.config.instances[0].audiences
+                    : [docsWorkspace.config.instances[0].audiences]
+                : undefined
         });
         const docsDefinition = await docsResolver.resolve();
 

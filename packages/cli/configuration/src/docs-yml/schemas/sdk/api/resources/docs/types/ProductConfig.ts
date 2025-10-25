@@ -15,5 +15,5 @@ export interface ProductConfig extends FernDocsConfig.WithPermissions, FernDocsC
     /** The "slug" is this version's basePath. If not set, the slug will be generated from the display-name. */
     slug?: string;
     versions?: FernDocsConfig.VersionConfig[];
-    audiences?: FernDocsConfig.AudienceId[];
+    audiences?: FernDocsConfig.Audience;
 }
