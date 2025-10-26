@@ -46,6 +46,10 @@ export function mergeIntermediateRepresentation(
             ...(ir1.webhookGroups ?? {}),
             ...(ir2.webhookGroups ?? {})
         },
+        graphqlApis: {
+            ...(ir1.graphqlApis ?? {}),
+            ...(ir2.graphqlApis ?? {})
+        },
         subpackages: mergeSubpackages(ir1.subpackages, ir2.subpackages),
         websocketChannels,
         rootPackage: {
@@ -61,6 +65,7 @@ export function mergeIntermediateRepresentation(
             fernFilepath: ir1.rootPackage.fernFilepath ?? ir2.rootPackage.fernFilepath,
             webhooks: ir1.rootPackage.webhooks ?? ir2.rootPackage.webhooks,
             websocket: ir1.rootPackage.websocket ?? ir2.rootPackage.websocket,
+            graphql: ir1.rootPackage.graphql ?? ir2.rootPackage.graphql,
             hasEndpointsInTree: ir1.rootPackage.hasEndpointsInTree || ir2.rootPackage.hasEndpointsInTree,
             navigationConfig: ir1.rootPackage.navigationConfig ?? ir2.rootPackage.navigationConfig,
             docs: ir1.rootPackage.docs ?? ir2.rootPackage.docs
@@ -106,6 +111,7 @@ function mergeSubpackages(
                 ],
                 webhooks: mergedSubpackages[subpackageId].webhooks ?? subpackage.webhooks,
                 websocket: mergedSubpackages[subpackageId].websocket ?? subpackage.websocket,
+                graphql: mergedSubpackages[subpackageId].graphql ?? subpackage.graphql,
                 errors: [...(mergedSubpackages[subpackageId].errors ?? []), ...(subpackage.errors ?? [])],
                 types: [...(mergedSubpackages[subpackageId].types ?? []), ...(subpackage.types ?? [])]
             };

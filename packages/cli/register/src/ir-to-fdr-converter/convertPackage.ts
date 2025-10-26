@@ -23,17 +23,22 @@ export function convertPackage(
         irPackage.websocket != null && ir.websocketChannels != null
             ? ir.websocketChannels[irPackage.websocket]
             : undefined;
+    const graphql =
+        irPackage.graphql != null && ir.graphqlApis != null
+            ? ir.graphqlApis[irPackage.graphql]
+            : undefined;
     return {
         endpoints: service != null ? convertService(service, ir) : [],
         webhooks: webhooks != null ? convertWebhookGroup(webhooks) : [],
         websockets: websocket != null ? [convertWebSocketChannel(websocket, ir)] : [],
+        graphql: graphql != null ? convertGraphQLApi(graphql, ir) : undefined,
         types: irPackage.types.map((typeId) => FdrCjsSdk.TypeId(typeId)),
         subpackages: irPackage.subpackages.map((subpackageId) => FdrCjsSdk.api.v1.SubpackageId(subpackageId)),
         pointsTo:
             irPackage.navigationConfig != null
                 ? FdrCjsSdk.api.v1.SubpackageId(irPackage.navigationConfig.pointsTo)
                 : undefined
-    };
+    } as FdrCjsSdk.api.v1.register.ApiDefinitionPackage;
 }
 
 function convertWebhookGroup(webhookGroup: Ir.webhooks.WebhookGroup): FdrCjsSdk.api.v1.register.WebhookDefinition[] {
@@ -377,6 +382,85 @@ function convertWebSocketChannel(
             })
         ),
         examples
+    };
+}
+
+function convertGraphQLApi(
+    graphqlApi: Ir.graphql.GraphQlApi,
+    ir: Ir.ir.IntermediateRepresentation
+): any {
+    return {
+        id: graphqlApi.name.originalName,
+        endpoint: graphqlApi.endpoint,
+        queries: graphqlApi.queries.map((query) => ({
+            id: query.id,
+            name: query.name.originalName,
+            displayName: query.displayName,
+            operationType: "query",
+            description: query.docs,
+            arguments: query.arguments.map((arg) => ({
+                name: arg.name.wireValue,
+                description: arg.docs,
+                type: convertTypeReference(arg.valueType),
+                defaultValue: arg.defaultValue,
+                isRequired: arg.isRequired
+            })),
+            returnType: convertTypeReference(query.returnType),
+            deprecationReason: query.deprecationReason,
+            availability: convertIrAvailability(query.availability)
+        })),
+        mutations: graphqlApi.mutations.map((mutation) => ({
+            id: mutation.id,
+            name: mutation.name.originalName,
+            displayName: mutation.displayName,
+            operationType: "mutation",
+            description: mutation.docs,
+            arguments: mutation.arguments.map((arg) => ({
+                name: arg.name.wireValue,
+                description: arg.docs,
+                type: convertTypeReference(arg.valueType),
+                defaultValue: arg.defaultValue,
+                isRequired: arg.isRequired
+            })),
+            returnType: convertTypeReference(mutation.returnType),
+            deprecationReason: mutation.deprecationReason,
+            availability: convertIrAvailability(mutation.availability)
+        })),
+        subscriptions: graphqlApi.subscriptions.map((subscription) => ({
+            id: subscription.id,
+            name: subscription.name.originalName,
+            displayName: subscription.displayName,
+            operationType: "subscription",
+            description: subscription.docs,
+            arguments: subscription.arguments.map((arg) => ({
+                name: arg.name.wireValue,
+                description: arg.docs,
+                type: convertTypeReference(arg.valueType),
+                defaultValue: arg.defaultValue,
+                isRequired: arg.isRequired
+            })),
+            returnType: convertTypeReference(subscription.returnType),
+            deprecationReason: subscription.deprecationReason,
+            subscriptionProtocol: subscription.subscriptionProtocol,
+            availability: convertIrAvailability(subscription.availability)
+        })),
+        types: Object.entries(graphqlApi.types).map(([typeId, typeDecl]) => {
+            return typeDecl;
+        }),
+        auth: graphqlApi.auth,
+        defaultEnvironment:
+            ir.environments?.defaultEnvironment != null
+                ? FdrCjsSdk.EnvironmentId(ir.environments.defaultEnvironment)
+                : undefined,
+        environments: ir.environments != null ? [] : undefined,
+        requestHeaders: graphqlApi.headers.map((header) => ({
+            key: header.name.wireValue,
+            type: convertTypeReference(header.valueType),
+            description: header.docs,
+            availability: convertIrAvailability(header.availability)
+        })),
+        description: graphqlApi.docs,
+        availability: convertIrAvailability(graphqlApi.availability)
     };
 }
 

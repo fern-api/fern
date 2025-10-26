@@ -154,6 +154,7 @@ export function generateIntermediateRepresentation({
         types: {},
         errors: {},
         services: {},
+        graphqlApis: undefined,
         constants: generateFernConstants(casingsGenerator),
         environments,
         errorDiscriminationStrategy: convertErrorDiscriminationStrategy(
