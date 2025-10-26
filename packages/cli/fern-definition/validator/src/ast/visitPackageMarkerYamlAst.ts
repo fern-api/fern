@@ -15,6 +15,7 @@ export function visitPackageMarkerYamlAst(
         webhooks: noop,
         errors: noop,
         channel: noop,
+        graphql: noop,
         export: (export_) => {
             visitor.export?.(typeof export_ === "string" ? export_ : export_?.dependency, ["export"]);
         },

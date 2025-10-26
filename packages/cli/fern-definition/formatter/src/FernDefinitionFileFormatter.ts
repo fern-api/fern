@@ -125,6 +125,7 @@ export class FernDefinitionFileFormatter {
                 case "errors":
                 case "webhooks":
                 case "channel":
+                case "graphql":
                     return castedKey;
                 default:
                     assertNeverNoThrow(castedKey);
@@ -139,6 +140,7 @@ export class FernDefinitionFileFormatter {
         switch (previousLocation) {
             case "docs":
             case "imports":
+            case "graphql":
                 return undefined;
             case "service":
             case "endpoint":

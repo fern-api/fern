@@ -33,6 +33,7 @@ export function visitDefinitionFileYamlAst(
         },
         // TODO(dsinghvi): Implement visitor for channel
         channel: noop,
+        graphql: noop,
         errors: (errors) => {
             visitErrorDeclarations({ errorDeclarations: errors, visitor, nodePath: ["errors"] });
         }
