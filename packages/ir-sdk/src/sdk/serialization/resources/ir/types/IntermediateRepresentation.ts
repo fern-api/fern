@@ -17,6 +17,8 @@ import { WebhookGroupId } from "../../commons/types/WebhookGroupId";
 import { WebhookGroup } from "../../webhooks/types/WebhookGroup";
 import { WebSocketChannelId } from "../../commons/types/WebSocketChannelId";
 import { WebSocketChannel } from "../../websocket/types/WebSocketChannel";
+import { GraphQlApiId } from "../../commons/types/GraphQlApiId";
+import { GraphQlApi } from "../../graphql/types/GraphQlApi";
 import { ErrorId } from "../../commons/types/ErrorId";
 import { ErrorDeclaration } from "../../errors/types/ErrorDeclaration";
 import { SubpackageId } from "../../commons/types/SubpackageId";
@@ -53,6 +55,7 @@ export const IntermediateRepresentation: core.serialization.ObjectSchema<
     services: core.serialization.record(ServiceId, HttpService),
     webhookGroups: core.serialization.record(WebhookGroupId, WebhookGroup),
     websocketChannels: core.serialization.record(WebSocketChannelId, WebSocketChannel).optional(),
+    graphqlApis: core.serialization.record(GraphQlApiId, GraphQlApi).optional(),
     errors: core.serialization.record(ErrorId, ErrorDeclaration),
     subpackages: core.serialization.record(SubpackageId, Subpackage),
     rootPackage: Package,
@@ -86,6 +89,7 @@ export declare namespace IntermediateRepresentation {
         services: Record<ServiceId.Raw, HttpService.Raw>;
         webhookGroups: Record<WebhookGroupId.Raw, WebhookGroup.Raw>;
         websocketChannels?: Record<WebSocketChannelId.Raw, WebSocketChannel.Raw> | null;
+        graphqlApis?: Record<GraphQlApiId.Raw, GraphQlApi.Raw> | null;
         errors: Record<ErrorId.Raw, ErrorDeclaration.Raw>;
         subpackages: Record<SubpackageId.Raw, Subpackage.Raw>;
         rootPackage: Package.Raw;

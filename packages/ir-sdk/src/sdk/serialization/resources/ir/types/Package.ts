@@ -11,6 +11,7 @@ import { TypeId } from "../../commons/types/TypeId";
 import { ErrorId } from "../../commons/types/ErrorId";
 import { WebhookGroupId } from "../../commons/types/WebhookGroupId";
 import { WebSocketChannelId } from "../../commons/types/WebSocketChannelId";
+import { GraphQlApiId } from "../../commons/types/GraphQlApiId";
 import { SubpackageId } from "../../commons/types/SubpackageId";
 import { PackageNavigationConfig } from "./PackageNavigationConfig";
 import { WithDocs } from "../../commons/types/WithDocs";
@@ -23,6 +24,7 @@ export const Package: core.serialization.ObjectSchema<serializers.Package.Raw, F
         errors: core.serialization.list(ErrorId),
         webhooks: WebhookGroupId.optional(),
         websocket: WebSocketChannelId.optional(),
+        graphql: GraphQlApiId.optional(),
         subpackages: core.serialization.list(SubpackageId),
         hasEndpointsInTree: core.serialization.boolean(),
         navigationConfig: PackageNavigationConfig.optional(),
@@ -37,6 +39,7 @@ export declare namespace Package {
         errors: ErrorId.Raw[];
         webhooks?: WebhookGroupId.Raw | null;
         websocket?: WebSocketChannelId.Raw | null;
+        graphql?: GraphQlApiId.Raw | null;
         subpackages: SubpackageId.Raw[];
         hasEndpointsInTree: boolean;
         navigationConfig?: PackageNavigationConfig.Raw | null;

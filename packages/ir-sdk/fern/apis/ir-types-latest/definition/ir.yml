@@ -9,6 +9,7 @@ imports:
   environment: environment.yml
   errors: errors.yml
   generator: generator-exec/config.yml
+  graphql: graphql.yml
   http: http.yml
   proto: proto.yml
   publish: publish.yml
@@ -49,6 +50,9 @@ types:
       websocketChannels:
         docs: "The websocket channels served by this API"
         type: optional<map<commons.WebSocketChannelId, websocket.WebSocketChannel>>
+      graphqlApis:
+        docs: "The GraphQL APIs exposed by this API"
+        type: optional<map<commons.GraphQLApiId, graphql.GraphQLApi>>
       errors: map<commons.ErrorId, errors.ErrorDeclaration>
       subpackages: map<commons.SubpackageId, Subpackage>
       rootPackage: Package
@@ -188,6 +192,7 @@ types:
       errors: list<commons.ErrorId>
       webhooks: optional<commons.WebhookGroupId>
       websocket: optional<commons.WebSocketChannelId>
+      graphql: optional<commons.GraphQLApiId>
       subpackages: list<commons.SubpackageId>
       hasEndpointsInTree: boolean
       navigationConfig: optional<PackageNavigationConfig>
