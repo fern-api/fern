@@ -23,10 +23,7 @@ export function convertPackage(
         irPackage.websocket != null && ir.websocketChannels != null
             ? ir.websocketChannels[irPackage.websocket]
             : undefined;
-    const graphql =
-        irPackage.graphql != null && ir.graphqlApis != null
-            ? ir.graphqlApis[irPackage.graphql]
-            : undefined;
+    const graphql = irPackage.graphql != null && ir.graphqlApis != null ? ir.graphqlApis[irPackage.graphql] : undefined;
     return {
         endpoints: service != null ? convertService(service, ir) : [],
         webhooks: webhooks != null ? convertWebhookGroup(webhooks) : [],
@@ -385,10 +382,7 @@ function convertWebSocketChannel(
     };
 }
 
-function convertGraphQLApi(
-    graphqlApi: Ir.graphql.GraphQlApi,
-    ir: Ir.ir.IntermediateRepresentation
-): any {
+function convertGraphQLApi(graphqlApi: Ir.graphql.GraphQlApi, ir: Ir.ir.IntermediateRepresentation): unknown {
     return {
         id: graphqlApi.name.originalName,
         endpoint: graphqlApi.endpoint,
