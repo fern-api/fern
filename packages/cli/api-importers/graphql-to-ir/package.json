@@ -1,0 +1,51 @@
+{
+  "name": "@fern-api/graphql-to-ir",
+  "version": "0.0.0",
+  "private": true,
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/fern-api/fern.git"
+  },
+  "sideEffects": false,
+  "type": "module",
+  "exports": {
+    ".": {
+      "development": "./src/index.ts",
+      "source": "./src/index.ts",
+      "types": "./lib/index.d.ts",
+      "import": "./lib/index.js",
+      "default": "./lib/index.js"
+    }
+  },
+  "main": "lib/index.js",
+  "source": "src/index.ts",
+  "types": "lib/index.d.ts",
+  "files": ["lib"],
+  "scripts": {
+    "clean": "rm -rf ./lib && tsc --build --clean",
+    "compile": "tsc --build",
+    "compile:debug": "tsc --build --sourceMap",
+    "depcheck": "depcheck",
+    "test": "vitest --run --passWithNoTests",
+    "test:debug": "pnpm run test --inspect --no-file-parallelism",
+    "test:update": "vitest --run -u --passWithNoTests"
+  },
+  "dependencies": {
+    "@fern-api/casings-generator": "workspace:*",
+    "@fern-api/core-utils": "workspace:*",
+    "@fern-api/fern-definition-schema": "workspace:*",
+    "@fern-api/ir-sdk": "workspace:*",
+    "@fern-api/ir-utils": "workspace:*",
+    "@fern-api/task-context": "workspace:*",
+    "graphql": "^16.9.0",
+    "lodash-es": "^4.17.21"
+  },
+  "devDependencies": {
+    "@fern-api/configs": "workspace:*",
+    "@types/lodash-es": "^4.17.12",
+    "@types/node": "18.15.3",
+    "depcheck": "^1.4.7",
+    "typescript": "5.9.3",
+    "vitest": "^2.1.9"
+  }
+}

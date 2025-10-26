@@ -4234,6 +4234,52 @@ importers:
         specifier: ^2.1.9
         version: 2.1.9(@types/node@18.15.3)(msw@2.11.3(@types/node@18.15.3)(typescript@5.9.3))(sass@1.93.2)
 
+  packages/cli/api-importers/graphql-to-ir:
+    dependencies:
+      '@fern-api/casings-generator':
+        specifier: workspace:*
+        version: link:../../../commons/casings-generator
+      '@fern-api/core-utils':
+        specifier: workspace:*
+        version: link:../../../commons/core-utils
+      '@fern-api/fern-definition-schema':
+        specifier: workspace:*
+        version: link:../../fern-definition/schema
+      '@fern-api/ir-sdk':
+        specifier: workspace:*
+        version: link:../../../ir-sdk
+      '@fern-api/ir-utils':
+        specifier: workspace:*
+        version: link:../../../commons/ir-utils
+      '@fern-api/task-context':
+        specifier: workspace:*
+        version: link:../../task-context
+      graphql:
+        specifier: ^16.9.0
+        version: 16.11.0
+      lodash-es:
+        specifier: ^4.17.21
+        version: 4.17.21
+    devDependencies:
+      '@fern-api/configs':
+        specifier: workspace:*
+        version: link:../../../configs
+      '@types/lodash-es':
+        specifier: ^4.17.12
+        version: 4.17.12
+      '@types/node':
+        specifier: 18.15.3
+        version: 18.15.3
+      depcheck:
+        specifier: ^1.4.7
+        version: 1.4.7
+      typescript:
+        specifier: 5.9.3
+        version: 5.9.3
+      vitest:
+        specifier: ^2.1.9
+        version: 2.1.9(@types/node@18.15.3)(msw@2.11.3(@types/node@18.15.3)(typescript@5.9.3))(sass@1.93.2)
+
   packages/cli/api-importers/openapi-to-ir:
     dependencies:
       '@fern-api/core-utils':
@@ -19309,8 +19355,7 @@ snapshots:
 
   graphemer@1.4.0: {}
 
-  graphql@16.11.0:
-    optional: true
+  graphql@16.11.0: {}
 
   gray-matter@4.0.3:
     dependencies:
