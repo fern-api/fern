@@ -1,5 +1,5 @@
 use crate::api::*;
-use crate::{ApiError, ClientConfig, HttpClient, RequestOptions};
+use crate::{ApiError, ClientConfig, HttpClient, RequestOptions, SseStream};
 use reqwest::Method;
 
 pub struct CompletionsClient {
@@ -17,14 +17,15 @@ impl CompletionsClient {
         &self,
         request: &StreamCompletionRequest,
         options: Option<RequestOptions>,
-    ) -> Result<serde_json::Value, ApiError> {
+    ) -> Result<SseStream<StreamedCompletion>, ApiError> {
         self.http_client
-            .execute_request(
+            .execute_sse_request(
                 Method::POST,
                 "stream",
                 Some(serde_json::to_value(request).unwrap_or_default()),
                 None,
                 options,
+                Some("[[DONE]]".to_string()),
             )
             .await
     }
