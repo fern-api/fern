@@ -24,9 +24,9 @@
   "files": ["lib"],
   "scripts": {
     "build": "pnpm compile && vite build",
-    "clean": "rm -rf ./lib && tsc --build --clean",
-    "compile": "tsc --build",
-    "compile:debug": "tsc --build --sourceMap",
+    "clean": "rm -rf ./lib && npx tsc --build --clean",
+    "compile": "npx tsc --build",
+    "compile:debug": "npx tsc --build --sourceMap",
     "depcheck": "depcheck",
     "start": "pnpm compile && vite",
     "test": "vitest --passWithNoTests --run",
