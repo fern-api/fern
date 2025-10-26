@@ -21,7 +21,9 @@
   "main": "lib/index.js",
   "source": "src/index.ts",
   "types": "lib/index.d.ts",
-  "files": ["lib"],
+  "files": [
+    "lib"
+  ],
   "scripts": {
     "clean": "rm -rf ./lib && tsc --build --clean",
     "compile": "tsc --build",
@@ -38,6 +40,7 @@
     "@fern-api/configuration": "workspace:*",
     "@fern-api/core-utils": "workspace:*",
     "@fern-api/fern-definition-schema": "workspace:*",
+    "@fern-api/graphql-to-ir": "workspace:^",
     "@fern-api/ir-sdk": "workspace:*",
     "@fern-api/ir-utils": "workspace:*",
     "@fern-api/path-utils": "workspace:*",

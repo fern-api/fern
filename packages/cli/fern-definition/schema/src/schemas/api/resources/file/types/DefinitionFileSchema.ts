@@ -11,4 +11,5 @@ export interface DefinitionFileSchema extends FernDefinition.WithDocsSchema {
     errors?: Record<string, FernDefinition.ErrorDeclarationSchema>;
     webhooks?: Record<string, FernDefinition.WebhookSchema>;
     channel?: FernDefinition.WebSocketChannelSchema;
+    graphql?: string;
 }

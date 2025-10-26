@@ -5882,6 +5882,9 @@ importers:
       '@fern-api/fern-definition-schema':
         specifier: workspace:*
         version: link:../../fern-definition/schema
+      '@fern-api/graphql-to-ir':
+        specifier: workspace:^
+        version: link:../../api-importers/graphql-to-ir
       '@fern-api/ir-sdk':
         specifier: workspace:*
         version: link:../../../ir-sdk
