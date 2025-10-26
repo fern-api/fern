@@ -20,7 +20,9 @@
   "main": "lib/index.js",
   "source": "src/index.ts",
   "types": "lib/index.d.ts",
-  "files": ["lib"],
+  "files": [
+    "lib"
+  ],
   "scripts": {
     "clean": "rm -rf ./lib && tsc --build --clean",
     "compile": "tsc --build",
@@ -32,17 +34,13 @@
   },
   "dependencies": {
     "@fern-api/casings-generator": "workspace:*",
-    "@fern-api/core-utils": "workspace:*",
-    "@fern-api/fern-definition-schema": "workspace:*",
     "@fern-api/ir-sdk": "workspace:*",
     "@fern-api/ir-utils": "workspace:*",
     "@fern-api/task-context": "workspace:*",
-    "graphql": "^16.9.0",
-    "lodash-es": "^4.17.21"
+    "graphql": "^16.9.0"
   },
   "devDependencies": {
     "@fern-api/configs": "workspace:*",
-    "@types/lodash-es": "^4.17.12",
     "@types/node": "18.15.3",
     "depcheck": "^1.4.7",
     "typescript": "5.9.3",
