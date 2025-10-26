@@ -46,10 +46,13 @@ export function mergeIntermediateRepresentation(
             ...(ir1.webhookGroups ?? {}),
             ...(ir2.webhookGroups ?? {})
         },
-        graphqlApis: {
-            ...(ir1.graphqlApis ?? {}),
-            ...(ir2.graphqlApis ?? {})
-        },
+        graphqlApis:
+            ir1.graphqlApis != null || ir2.graphqlApis != null
+                ? {
+                      ...(ir1.graphqlApis ?? {}),
+                      ...(ir2.graphqlApis ?? {})
+                  }
+                : undefined,
         subpackages: mergeSubpackages(ir1.subpackages, ir2.subpackages),
         websocketChannels,
         rootPackage: {
