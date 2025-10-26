@@ -1,47 +1,47 @@
-import {
-    GraphQLSchema,
-    GraphQLObjectType,
-    GraphQLInterfaceType,
-    GraphQLUnionType,
-    GraphQLEnumType,
-    GraphQLInputObjectType,
-    GraphQLField,
-    GraphQLInputField,
-    GraphQLNamedType,
-    isObjectType,
-    isInterfaceType,
-    isUnionType,
-    isEnumType,
-    isInputObjectType,
-    isScalarType,
-    isListType,
-    isNonNullType,
-    GraphQLOutputType,
-    GraphQLInputType,
-    GraphQLType,
-} from "graphql";
 import { CasingsGenerator } from "@fern-api/casings-generator";
 import * as Ir from "@fern-api/ir-sdk";
 import { IdGenerator } from "@fern-api/ir-utils";
+import {
+    GraphQLEnumType,
+    GraphQLField,
+    GraphQLInputField,
+    GraphQLInputObjectType,
+    GraphQLInputType,
+    GraphQLInterfaceType,
+    GraphQLNamedType,
+    GraphQLObjectType,
+    GraphQLOutputType,
+    GraphQLSchema,
+    GraphQLType,
+    GraphQLUnionType,
+    isEnumType,
+    isInputObjectType,
+    isInterfaceType,
+    isListType,
+    isNonNullType,
+    isObjectType,
+    isScalarType,
+    isUnionType
+} from "graphql";
 
 function createDeclaredTypeName(typeName: string, casingsGenerator: CasingsGenerator): Ir.DeclaredTypeName {
     const fernFilepath: Ir.FernFilepath = {
         allParts: [],
         file: undefined,
-        packagePath: [],
+        packagePath: []
     };
     const name = casingsGenerator.generateName(typeName);
     const declaredTypeNameWithoutId: Omit<Ir.DeclaredTypeName, "typeId"> = {
         fernFilepath,
         name,
-        displayName: undefined,
+        displayName: undefined
     };
     const typeId = IdGenerator.generateTypeId(declaredTypeNameWithoutId);
     return {
         typeId,
         fernFilepath,
         name,
-        displayName: undefined,
+        displayName: undefined
     };
 }
 
@@ -85,10 +85,8 @@ export function convertGraphQLSchemaToIR(
         mutations: mutationType
             ? convertOperations(mutationType, Ir.graphql.GraphQlOperationType.Mutation, casingsGenerator)
             : [],
-        subscriptions: subscriptionType
-            ? convertSubscriptions(subscriptionType, casingsGenerator)
-            : [],
-        types: customTypes,
+        subscriptions: subscriptionType ? convertSubscriptions(subscriptionType, casingsGenerator) : [],
+        types: customTypes
     };
 }
 
@@ -110,7 +108,7 @@ function convertOperations(
             returnType: convertOutputType(field.type, casingsGenerator),
             docs: field.description ?? undefined,
             deprecationReason: field.deprecationReason ?? undefined,
-            availability: undefined,
+            availability: undefined
         });
     }
 
@@ -135,7 +133,7 @@ function convertSubscriptions(
             docs: field.description ?? undefined,
             deprecationReason: field.deprecationReason ?? undefined,
             availability: undefined,
-            subscriptionProtocol: undefined,
+            subscriptionProtocol: undefined
         });
     }
 
@@ -149,13 +147,13 @@ function convertArguments(
     return field.args.map((arg) => ({
         name: casingsGenerator.generateNameAndWireValue({
             name: arg.name,
-            wireValue: arg.name,
+            wireValue: arg.name
         }),
         valueType: convertInputType(arg.type, casingsGenerator),
         defaultValue: arg.defaultValue,
         isRequired: isNonNullType(arg.type),
         docs: arg.description ?? undefined,
-        availability: undefined,
+        availability: undefined
     }));
 }
 
@@ -177,17 +175,14 @@ function convertGraphQLType(
     return undefined;
 }
 
-function convertObjectType(
-    type: GraphQLObjectType,
-    casingsGenerator: CasingsGenerator
-): Ir.graphql.GraphQlObjectType {
+function convertObjectType(type: GraphQLObjectType, casingsGenerator: CasingsGenerator): Ir.graphql.GraphQlObjectType {
     const fields = type.getFields();
     return {
         name: createDeclaredTypeName(type.name, casingsGenerator),
         fields: Object.values(fields).map((field) => convertField(field, casingsGenerator)),
         interfaces: type.getInterfaces().map((iface) => iface.name),
         docs: type.description ?? undefined,
-        availability: undefined,
+        availability: undefined
     };
 }
 
@@ -201,7 +196,7 @@ function convertInterfaceType(
         fields: Object.values(fields).map((field) => convertField(field, casingsGenerator)),
         implementedBy: [],
         docs: type.description ?? undefined,
-        availability: undefined,
+        availability: undefined
     };
 }
 
@@ -210,7 +205,7 @@ function convertUnionType(type: GraphQLUnionType, casingsGenerator: CasingsGener
         name: createDeclaredTypeName(type.name, casingsGenerator),
         members: type.getTypes().map((memberType) => memberType.name),
         docs: type.description ?? undefined,
-        availability: undefined,
+        availability: undefined
     };
 }
 
@@ -220,14 +215,14 @@ function convertEnumType(type: GraphQLEnumType, casingsGenerator: CasingsGenerat
         values: type.getValues().map((value) => ({
             name: casingsGenerator.generateNameAndWireValue({
                 name: value.name,
-                wireValue: value.value ?? value.name,
+                wireValue: value.value ?? value.name
             }),
             docs: value.description ?? undefined,
             deprecationReason: value.deprecationReason ?? undefined,
-            availability: undefined,
+            availability: undefined
         })),
         docs: type.description ?? undefined,
-        availability: undefined,
+        availability: undefined
     };
 }
 
@@ -240,7 +235,7 @@ function convertInputObjectType(
         name: createDeclaredTypeName(type.name, casingsGenerator),
         fields: Object.values(fields).map((field) => convertInputField(field, casingsGenerator)),
         docs: type.description ?? undefined,
-        availability: undefined,
+        availability: undefined
     };
 }
 
@@ -251,27 +246,24 @@ function convertField(
     return {
         name: casingsGenerator.generateNameAndWireValue({
             name: field.name,
-            wireValue: field.name,
+            wireValue: field.name
         }),
         valueType: convertOutputType(field.type, casingsGenerator),
         arguments: convertArguments(field, casingsGenerator),
         docs: field.description ?? undefined,
-        deprecationReason: field.deprecationReason ?? undefined,
+        deprecationReason: field.deprecationReason ?? undefined
     };
 }
 
-function convertInputField(
-    field: GraphQLInputField,
-    casingsGenerator: CasingsGenerator
-): Ir.graphql.GraphQlInputField {
+function convertInputField(field: GraphQLInputField, casingsGenerator: CasingsGenerator): Ir.graphql.GraphQlInputField {
     return {
         name: casingsGenerator.generateNameAndWireValue({
             name: field.name,
-            wireValue: field.name,
+            wireValue: field.name
         }),
         valueType: convertInputType(field.type, casingsGenerator),
         defaultValue: field.defaultValue,
-        docs: field.description ?? undefined,
+        docs: field.description ?? undefined
     };
 }
 
@@ -315,7 +307,7 @@ function convertTypeReference(type: GraphQLType, casingsGenerator: CasingsGenera
                 fernFilepath: declaredTypeName.fernFilepath,
                 displayName: declaredTypeName.displayName,
                 default: undefined,
-                inline: undefined,
+                inline: undefined
             });
         }
     }

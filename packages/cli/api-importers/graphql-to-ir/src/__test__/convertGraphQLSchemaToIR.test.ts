@@ -1,20 +1,20 @@
-import { describe, it, expect } from "vitest";
-import { parseGraphQLSchema } from "../parseGraphQLSchema";
-import { convertGraphQLSchemaToIR } from "../convertGraphQLSchemaToIR";
 import { constructCasingsGenerator } from "@fern-api/casings-generator";
 import { TaskContext } from "@fern-api/task-context";
+import { describe, expect, it } from "vitest";
+import { convertGraphQLSchemaToIR } from "../convertGraphQLSchemaToIR";
+import { parseGraphQLSchema } from "../parseGraphQLSchema";
 
 describe("convertGraphQLSchemaToIR", () => {
     const casingsGenerator = constructCasingsGenerator({
         generationLanguage: undefined,
         keywords: undefined,
-        smartCasing: false,
+        smartCasing: false
     });
 
     const mockContext: TaskContext = {
         failAndThrow: (message: string) => {
             throw new Error(message);
-        },
+        }
     } as TaskContext;
 
     it("should parse a simple query", () => {

@@ -1,5 +1,5 @@
-import { buildSchema, GraphQLSchema } from "graphql";
 import { TaskContext } from "@fern-api/task-context";
+import { buildSchema, GraphQLSchema } from "graphql";
 
 export function parseGraphQLSchema(schemaContent: string, context: TaskContext): GraphQLSchema {
     try {
