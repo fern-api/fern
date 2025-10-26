@@ -115,14 +115,14 @@ export abstract class AbstractGeneratorAgent<GeneratorContext extends AbstractGe
         args: AbstractGeneratorAgent.GitHubConfigArgs<GeneratorContext>
     ): RawGithubConfig;
 
-    private async readFeatureConfig(): Promise<FernGeneratorCli.FeatureConfig> {
+    protected async readFeatureConfig(): Promise<FernGeneratorCli.FeatureConfig> {
         this.logger.debug("Reading feature configuration ...");
         const rawYaml = await this.getFeaturesConfig();
         const loaded = yaml.load(rawYaml) as FernGeneratorCli.FeatureConfig;
         return loaded;
     }
 
-    private getRemote(): FernGeneratorCli.Remote | undefined {
+    protected getRemote(): FernGeneratorCli.Remote | undefined {
         const outputMode = this.config.output.mode.type === "github" ? this.config.output.mode : undefined;
         if (outputMode?.repoUrl != null && outputMode?.installationToken != null) {
             return FernGeneratorCli.Remote.github({
