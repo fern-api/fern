@@ -31,6 +31,9 @@
     "test:debug": "pnpm run test --inspect --no-file-parallelism",
     "test:update": "vitest --passWithNoTests --run -u"
   },
+  "dependencies": {
+    "@fern-api/graphql-to-ir": "workspace:*"
+  },
   "devDependencies": {
     "@fern-api/api-workspace-commons": "workspace:*",
     "@fern-api/casings-generator": "workspace:*",
@@ -38,7 +41,6 @@
     "@fern-api/configuration": "workspace:*",
     "@fern-api/core-utils": "workspace:*",
     "@fern-api/fern-definition-schema": "workspace:*",
-    "@fern-api/graphql-to-ir": "workspace:^",
     "@fern-api/ir-sdk": "workspace:*",
     "@fern-api/ir-utils": "workspace:*",
     "@fern-api/path-utils": "workspace:*",
