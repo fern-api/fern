@@ -38,7 +38,7 @@
     "@fern-api/configs": "workspace:*",
     "@fern-api/core-utils": "workspace:*",
     "@fern-api/fs-utils": "workspace:*",
-    "@fern-api/generator-cli": "0.2.0",
+    "@fern-api/generator-cli": "0.3.0",
     "@fern-api/logger": "workspace:*",
     "@fern-api/swift-base": "workspace:*",
     "@fern-api/swift-codegen": "workspace:*",

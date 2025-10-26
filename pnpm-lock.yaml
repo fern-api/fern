@@ -2302,8 +2302,8 @@ importers:
         specifier: workspace:*
         version: link:../../../packages/commons/fs-utils
       '@fern-api/generator-cli':
-        specifier: 0.2.0
-        version: 0.2.0
+        specifier: 0.3.0
+        version: 0.3.0
       '@fern-api/logger':
         specifier: workspace:*
         version: link:../../../packages/cli/logger
@@ -9378,8 +9378,8 @@ packages:
   '@fern-api/fdr-sdk@0.139.33-c9426f366':
     resolution: {integrity: sha512-lBE+OmDBJ7YEsJvYMsej0CLg47nv3Kfq7aJNnOntAhGZ6rtYYvMMQGFN379lrXQ2TL//xxsyVeIBfJeUBwlzpQ==}
 
-  '@fern-api/generator-cli@0.2.0':
-    resolution: {integrity: sha512-A97uc+4RzdRIoIyxdUhiD8GR0XL3T9bU3X8Kg0xsiBve8P338Jh1rtkreUJ0mf3FPZTwFtO2E2JGK/Uzderhzw==}
+  '@fern-api/generator-cli@0.3.0':
+    resolution: {integrity: sha512-9FCrYy7j+SPDWNc82YIM6H6rlvUI6Zebzy3rqQj+JNz07cig6292X8AS58ydkM4Kj3NWEPHFW9qNo2KU/C9EHQ==}
     hasBin: true
 
   '@fern-api/logger@0.4.24-rc1':
@@ -16303,7 +16303,7 @@ snapshots:
       - encoding
       - typescript
 
-  '@fern-api/generator-cli@0.2.0':
+  '@fern-api/generator-cli@0.3.0':
     dependencies:
       '@octokit/rest': 20.1.2
       es-toolkit: 1.40.0
