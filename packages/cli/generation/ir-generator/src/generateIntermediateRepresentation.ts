@@ -1,9 +1,10 @@
+import { readFileSync } from "node:fs";
 import { FernWorkspace, visitAllDefinitionFiles, visitAllPackageMarkers } from "@fern-api/api-workspace-commons";
 import { constructCasingsGenerator } from "@fern-api/casings-generator";
 import { Audiences, FERN_PACKAGE_MARKER_FILENAME, generatorsYml } from "@fern-api/configuration";
 import { noop, visitObject } from "@fern-api/core-utils";
 import { isGeneric } from "@fern-api/fern-definition-schema";
-import { parseGraphQLSchema, convertGraphQLSchemaToIR } from "@fern-api/graphql-to-ir";
+import { convertGraphQLSchemaToIR, parseGraphQLSchema } from "@fern-api/graphql-to-ir";
 import {
     dynamic,
     HttpEndpoint,
@@ -390,23 +391,20 @@ export function generateIntermediateRepresentation({
                 if (graphqlSchemaPath == null) {
                     return;
                 }
-                
-                const absoluteGraphqlPath = join(
-                    workspace.absoluteFilePath,
-                    RelativeFilePath.of(graphqlSchemaPath)
-                );
-                
-                const fs = require("fs");
-                const schemaContent = fs.readFileSync(absoluteGraphqlPath, "utf-8");
+
+                const defDir = dirname(join(workspace.absoluteFilePath, file.relativeFilepath));
+                const absoluteGraphqlPath = join(defDir, RelativeFilePath.of(graphqlSchemaPath));
+
+                const schemaContent = readFileSync(absoluteGraphqlPath, "utf-8");
                 const graphqlSchema = parseGraphQLSchema(schemaContent, context);
                 const parsedGraphQL = convertGraphQLSchemaToIR(graphqlSchema, casingsGenerator);
-                
+
                 const graphqlApiId = IdGenerator.generateSubpackageId(file.fernFilepath);
-                
+
                 if (intermediateRepresentation.graphqlApis == null) {
                     intermediateRepresentation.graphqlApis = {};
                 }
-                
+
                 intermediateRepresentation.graphqlApis[graphqlApiId] = {
                     name: casingsGenerator.generateName("GraphQL API"),
                     displayName: undefined,
@@ -422,7 +420,7 @@ export function generateIntermediateRepresentation({
                     types: parsedGraphQL.types,
                     examples: []
                 };
-                
+
                 packageTreeGenerator.addSubpackage(file.fernFilepath);
             }
         });
