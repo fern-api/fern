@@ -13,7 +13,7 @@ RUN gem install rubocop rubocop-minitest
 
 RUN git config --global user.name "fern" && git config --global user.email "hey@buildwithfern.com"
 
-RUN npm install -f -g @fern-api/generator-cli
+RUN npm install -f -g @fern-api/generator-cli@0.2.0
 
 COPY generators/ruby-v2/sdk/features.yml /assets/features.yml
 COPY generators/ruby-v2/sdk/dist /dist
