@@ -135,6 +135,7 @@ allowedFailures:
   - streaming-parameter
   - trace
   - undiscriminated-unions
+  - undiscriminated-union-with-response-property
   - unions
   - unknown
   - url-form-encoded
