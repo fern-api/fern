@@ -7,7 +7,7 @@ import { Rule, RuleViolation } from "../../Rule";
 /**
  * Validates that a reference path exists in the OpenAPI specification
  */
-function validateReference(ref: string, spec: any): boolean {
+function validateReference(ref: string, spec: unknown): boolean {
     // Remove leading # and split by /
     const pathParts = ref
         .replace(/^#\//, "")
@@ -19,14 +19,14 @@ function validateReference(ref: string, spec: any): boolean {
                 .replace(/~0/g, "~")
         );
 
-    let current = spec;
+    let current: unknown = spec;
 
     for (const part of pathParts) {
         if (current == null || typeof current !== "object") {
             return false;
         }
 
-        current = current[part];
+        current = (current as Record<string, unknown>)[part];
 
         if (current === undefined) {
             return false;
@@ -59,7 +59,10 @@ function createInformativeErrorMessage(invalidRefs: string[]): string {
         if (!refsByType.has(category)) {
             refsByType.set(category, []);
         }
-        refsByType.get(category)!.push(ref);
+        const categoryRefs = refsByType.get(category);
+        if (categoryRefs) {
+            categoryRefs.push(ref);
+        }
     }
 
     let message = `Found ${invalidRefs.length} invalid OpenAPI reference${invalidRefs.length === 1 ? "" : "s"}:\n\n`;
@@ -108,9 +111,9 @@ export const ValidLocalReferencesRule: Rule = {
                                 }
 
                                 // Parse the OpenAPI document to get the actual structure
-                                let parsedSpec: any;
+                                let parsedSpec: unknown;
                                 try {
-                                    parsedSpec = yaml.load(contents) as any;
+                                    parsedSpec = yaml.load(contents);
                                 } catch (parseError) {
                                     logger.debug(`Could not parse OpenAPI spec file: ${spec.absoluteFilepath}`);
                                     continue;
