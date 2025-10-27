@@ -9,6 +9,7 @@ export declare namespace ScriptRunner {
         taskContext: TaskContext;
         outputDir: AbsoluteFilePath;
         id: string;
+        skipScripts?: string[];
     }
 
     type RunResponse = ScriptSuccessResponse | ScriptFailureResponse;
