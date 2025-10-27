@@ -71,7 +71,7 @@ export function convertObject({
     source: Source;
 }): SchemaWithExample {
     const allRequired = [...(required ?? [])];
-    const propertiesToConvert = { ...properties };
+    const propertiesToConvert = { ...getNonIgnoredProperties(properties, context) };
     let inlinedParentProperties: ObjectPropertyWithExample[] = [];
     const parents: ReferencedAllOfInfo[] = [];
 
@@ -388,6 +388,21 @@ export function wrapObject({
     return result;
 }
 
+function getNonIgnoredProperties(
+    properties: Record<string, OpenAPIV3.ReferenceObject | OpenAPIV3.SchemaObject>,
+    context: SchemaParserContext
+): Record<string, OpenAPIV3.ReferenceObject | OpenAPIV3.SchemaObject> {
+    return Object.fromEntries(
+        Object.entries(properties).filter(([_, propertySchema]) => {
+            const shouldIgnore = getExtension<boolean>(propertySchema, FernOpenAPIExtension.IGNORE);
+            if (shouldIgnore) {
+                context.logger.debug(`Ignoring property due to the ${FernOpenAPIExtension.IGNORE} extension.`);
+            }
+            return !shouldIgnore;
+        })
+    );
+}
+
 function getAllProperties({
     schema,
     context,
@@ -411,7 +426,9 @@ function getAllProperties({
             ...getAllProperties({ schema: allOfElement, context, breadcrumbs: resolvedBreadCrumbs, source, namespace })
         };
     }
-    for (const [propertyName, propertySchema] of Object.entries(resolvedSchema.properties ?? {})) {
+    for (const [propertyName, propertySchema] of Object.entries(
+        getNonIgnoredProperties(resolvedSchema.properties ?? {}, context)
+    )) {
         const convertedPropertySchema = convertSchema(
             propertySchema,
             false,

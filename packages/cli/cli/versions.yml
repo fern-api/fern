@@ -1,6 +1,14 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
 - changelogEntry:
     - summary: |
+        Add support for ignoring properties in OpenAPI schemas using the `x-fern-ignore` extension.
+      type: feat
+  irVersion: 61
+  createdAt: "2025-10-27"
+  version: 0.97.0
+
+- changelogEntry:
+    - summary: |
         Reformat how docs fern check errors are displayed, and error on:
         - OpenAPI v2.0 in docs
         - Non-component local refs in docs
