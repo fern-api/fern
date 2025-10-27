@@ -26,9 +26,9 @@ import org.jetbrains.annotations.NotNull;
 public final class Foo {
     private final Optional<String> bar;
 
-    private final Optional<String> nullableBar;
+    private final Optional<Nullable<String>> nullableBar;
 
-    private final Optional<String> nullableRequiredBar;
+    private final Nullable<String> nullableRequiredBar;
 
     private final String requiredBar;
 
@@ -36,8 +36,8 @@ public final class Foo {
 
     private Foo(
             Optional<String> bar,
-            Optional<String> nullableBar,
-            Optional<String> nullableRequiredBar,
+            Optional<Nullable<String>> nullableBar,
+            Nullable<String> nullableRequiredBar,
             String requiredBar,
             Map<String, Object> additionalProperties) {
         this.bar = bar;
@@ -53,7 +53,7 @@ public final class Foo {
     }
 
     @JsonIgnore
-    public Optional<String> getNullableBar() {
+    public Optional<Nullable<String>> getNullableBar() {
         if (nullableBar == null) {
             return Optional.empty();
         }
@@ -61,7 +61,7 @@ public final class Foo {
     }
 
     @JsonIgnore
-    public Optional<String> getNullableRequiredBar() {
+    public Nullable<String> getNullableRequiredBar() {
         if (nullableRequiredBar == null) {
             return Optional.empty();
         }
@@ -75,13 +75,13 @@ public final class Foo {
 
     @JsonInclude(value = JsonInclude.Include.CUSTOM, valueFilter = NullableNonemptyFilter.class)
     @JsonProperty("nullable_bar")
-    private Optional<String> _getNullableBar() {
+    private Optional<Nullable<String>> _getNullableBar() {
         return nullableBar;
     }
 
     @JsonInclude(value = JsonInclude.Include.CUSTOM, valueFilter = NullableNonemptyFilter.class)
     @JsonProperty("nullable_required_bar")
-    private Optional<String> _getNullableRequiredBar() {
+    private Nullable<String> _getNullableRequiredBar() {
         return nullableRequiredBar;
     }
 
@@ -130,15 +130,11 @@ public final class Foo {
 
         _FinalStage bar(String bar);
 
-        _FinalStage nullableBar(Optional<String> nullableBar);
-
-        _FinalStage nullableBar(String nullableBar);
+        _FinalStage nullableBar(Optional<Nullable<String>> nullableBar);
 
         _FinalStage nullableBar(Nullable<String> nullableBar);
 
-        _FinalStage nullableRequiredBar(Optional<String> nullableRequiredBar);
-
-        _FinalStage nullableRequiredBar(String nullableRequiredBar);
+        _FinalStage nullableBar(Nullable<Nullable<String>> nullableBar);
 
         _FinalStage nullableRequiredBar(Nullable<String> nullableRequiredBar);
     }
@@ -147,9 +143,7 @@ public final class Foo {
     public static final class Builder implements RequiredBarStage, _FinalStage {
         private String requiredBar;
 
-        private Optional<String> nullableRequiredBar = Optional.empty();
-
-        private Optional<String> nullableBar = Optional.empty();
+        private Optional<Nullable<String>> nullableBar = Optional.empty();
 
         private Optional<String> bar = Optional.empty();
 
@@ -175,51 +169,20 @@ public final class Foo {
         }
 
         @java.lang.Override
-        public _FinalStage nullableRequiredBar(Nullable<String> nullableRequiredBar) {
-            if (nullableRequiredBar.isNull()) {
-                this.nullableRequiredBar = null;
-            } else if (nullableRequiredBar.isEmpty()) {
-                this.nullableRequiredBar = Optional.empty();
-            } else {
-                this.nullableRequiredBar = Optional.of(nullableRequiredBar.get());
-            }
-            return this;
-        }
-
-        @java.lang.Override
-        public _FinalStage nullableRequiredBar(String nullableRequiredBar) {
-            this.nullableRequiredBar = Optional.ofNullable(nullableRequiredBar);
-            return this;
-        }
-
-        @java.lang.Override
-        @JsonSetter(value = "nullable_required_bar", nulls = Nulls.SKIP)
-        public _FinalStage nullableRequiredBar(Optional<String> nullableRequiredBar) {
-            this.nullableRequiredBar = nullableRequiredBar;
+        public _FinalStage nullableBar(Nullable<Nullable<String>> nullableBar) {
+            this.nullableBar = nullableBar;
             return this;
         }
 
         @java.lang.Override
         public _FinalStage nullableBar(Nullable<String> nullableBar) {
-            if (nullableBar.isNull()) {
-                this.nullableBar = null;
-            } else if (nullableBar.isEmpty()) {
-                this.nullableBar = Optional.empty();
-            } else {
-                this.nullableBar = Optional.of(nullableBar.get());
-            }
-            return this;
-        }
-
-        @java.lang.Override
-        public _FinalStage nullableBar(String nullableBar) {
             this.nullableBar = Optional.ofNullable(nullableBar);
             return this;
         }
 
         @java.lang.Override
         @JsonSetter(value = "nullable_bar", nulls = Nulls.SKIP)
-        public _FinalStage nullableBar(Optional<String> nullableBar) {
+        public _FinalStage nullableBar(Optional<Nullable<String>> nullableBar) {
             this.nullableBar = nullableBar;
             return this;
         }

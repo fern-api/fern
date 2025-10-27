@@ -54,13 +54,7 @@ public class AsyncRawSeedApiClient {
                     false);
         }
         QueryStringMapper.addQueryParameter(httpUrl, "required_baz", request.getRequiredBaz(), false);
-        if (request.getRequiredNullableBaz().isPresent()) {
-            QueryStringMapper.addQueryParameter(
-                    httpUrl,
-                    "required_nullable_baz",
-                    request.getRequiredNullableBaz().get(),
-                    false);
-        }
+        QueryStringMapper.addQueryParameter(httpUrl, "required_nullable_baz", request.getRequiredNullableBaz(), false);
         Request.Builder _requestBuilder = new Request.Builder()
                 .url(httpUrl.build())
                 .method("GET", null)

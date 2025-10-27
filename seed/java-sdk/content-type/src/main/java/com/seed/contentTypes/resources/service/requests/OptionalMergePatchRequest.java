@@ -32,7 +32,7 @@ public final class OptionalMergePatchRequest {
 
     private final Optional<Boolean> optionalBoolean;
 
-    private final Optional<String> nullableString;
+    private final Nullable<String> nullableString;
 
     private final Map<String, Object> additionalProperties;
 
@@ -41,7 +41,7 @@ public final class OptionalMergePatchRequest {
             Optional<String> optionalString,
             Optional<Integer> optionalInteger,
             Optional<Boolean> optionalBoolean,
-            Optional<String> nullableString,
+            Nullable<String> nullableString,
             Map<String, Object> additionalProperties) {
         this.requiredField = requiredField;
         this.optionalString = optionalString;
@@ -72,7 +72,7 @@ public final class OptionalMergePatchRequest {
     }
 
     @JsonIgnore
-    public Optional<String> getNullableString() {
+    public Nullable<String> getNullableString() {
         if (nullableString == null) {
             return Optional.empty();
         }
@@ -81,7 +81,7 @@ public final class OptionalMergePatchRequest {
 
     @JsonInclude(value = JsonInclude.Include.CUSTOM, valueFilter = NullableNonemptyFilter.class)
     @JsonProperty("nullableString")
-    private Optional<String> _getNullableString() {
+    private Nullable<String> _getNullableString() {
         return nullableString;
     }
 
@@ -144,18 +144,12 @@ public final class OptionalMergePatchRequest {
 
         _FinalStage optionalBoolean(Boolean optionalBoolean);
 
-        _FinalStage nullableString(Optional<String> nullableString);
-
-        _FinalStage nullableString(String nullableString);
-
         _FinalStage nullableString(Nullable<String> nullableString);
     }
 
     @JsonIgnoreProperties(ignoreUnknown = true)
     public static final class Builder implements RequiredFieldStage, _FinalStage {
         private String requiredField;
-
-        private Optional<String> nullableString = Optional.empty();
 
         private Optional<Boolean> optionalBoolean = Optional.empty();
 
@@ -182,31 +176,6 @@ public final class OptionalMergePatchRequest {
         @JsonSetter("requiredField")
         public _FinalStage requiredField(@NotNull String requiredField) {
             this.requiredField = Objects.requireNonNull(requiredField, "requiredField must not be null");
-            return this;
-        }
-
-        @java.lang.Override
-        public _FinalStage nullableString(Nullable<String> nullableString) {
-            if (nullableString.isNull()) {
-                this.nullableString = null;
-            } else if (nullableString.isEmpty()) {
-                this.nullableString = Optional.empty();
-            } else {
-                this.nullableString = Optional.of(nullableString.get());
-            }
-            return this;
-        }
-
-        @java.lang.Override
-        public _FinalStage nullableString(String nullableString) {
-            this.nullableString = Optional.ofNullable(nullableString);
-            return this;
-        }
-
-        @java.lang.Override
-        @JsonSetter(value = "nullableString", nulls = Nulls.SKIP)
-        public _FinalStage nullableString(Optional<String> nullableString) {
-            this.nullableString = nullableString;
             return this;
         }
 

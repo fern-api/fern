@@ -26,19 +26,19 @@ import org.jetbrains.annotations.NotNull;
 public final class GetFooRequest {
     private final Optional<String> optionalBaz;
 
-    private final Optional<String> optionalNullableBaz;
+    private final Optional<Nullable<String>> optionalNullableBaz;
 
     private final String requiredBaz;
 
-    private final Optional<String> requiredNullableBaz;
+    private final Nullable<String> requiredNullableBaz;
 
     private final Map<String, Object> additionalProperties;
 
     private GetFooRequest(
             Optional<String> optionalBaz,
-            Optional<String> optionalNullableBaz,
+            Optional<Nullable<String>> optionalNullableBaz,
             String requiredBaz,
-            Optional<String> requiredNullableBaz,
+            Nullable<String> requiredNullableBaz,
             Map<String, Object> additionalProperties) {
         this.optionalBaz = optionalBaz;
         this.optionalNullableBaz = optionalNullableBaz;
@@ -59,7 +59,7 @@ public final class GetFooRequest {
      * @return An optional baz
      */
     @JsonIgnore
-    public Optional<String> getOptionalNullableBaz() {
+    public Optional<Nullable<String>> getOptionalNullableBaz() {
         if (optionalNullableBaz == null) {
             return Optional.empty();
         }
@@ -78,7 +78,7 @@ public final class GetFooRequest {
      * @return A required baz
      */
     @JsonIgnore
-    public Optional<String> getRequiredNullableBaz() {
+    public Nullable<String> getRequiredNullableBaz() {
         if (requiredNullableBaz == null) {
             return Optional.empty();
         }
@@ -87,13 +87,13 @@ public final class GetFooRequest {
 
     @JsonInclude(value = JsonInclude.Include.CUSTOM, valueFilter = NullableNonemptyFilter.class)
     @JsonProperty("optional_nullable_baz")
-    private Optional<String> _getOptionalNullableBaz() {
+    private Optional<Nullable<String>> _getOptionalNullableBaz() {
         return optionalNullableBaz;
     }
 
     @JsonInclude(value = JsonInclude.Include.CUSTOM, valueFilter = NullableNonemptyFilter.class)
     @JsonProperty("required_nullable_baz")
-    private Optional<String> _getRequiredNullableBaz() {
+    private Nullable<String> _getRequiredNullableBaz() {
         return requiredNullableBaz;
     }
 
@@ -151,19 +151,15 @@ public final class GetFooRequest {
         /**
          * <p>An optional baz</p>
          */
-        _FinalStage optionalNullableBaz(Optional<String> optionalNullableBaz);
-
-        _FinalStage optionalNullableBaz(String optionalNullableBaz);
+        _FinalStage optionalNullableBaz(Optional<Nullable<String>> optionalNullableBaz);
 
         _FinalStage optionalNullableBaz(Nullable<String> optionalNullableBaz);
+
+        _FinalStage optionalNullableBaz(Nullable<Nullable<String>> optionalNullableBaz);
 
         /**
          * <p>A required baz</p>
          */
-        _FinalStage requiredNullableBaz(Optional<String> requiredNullableBaz);
-
-        _FinalStage requiredNullableBaz(String requiredNullableBaz);
-
         _FinalStage requiredNullableBaz(Nullable<String> requiredNullableBaz);
     }
 
@@ -171,9 +167,7 @@ public final class GetFooRequest {
     public static final class Builder implements RequiredBazStage, _FinalStage {
         private String requiredBaz;
 
-        private Optional<String> requiredNullableBaz = Optional.empty();
-
-        private Optional<String> optionalNullableBaz = Optional.empty();
+        private Optional<Nullable<String>> optionalNullableBaz = Optional.empty();
 
         private Optional<String> optionalBaz = Optional.empty();
 
@@ -204,38 +198,12 @@ public final class GetFooRequest {
         }
 
         /**
-         * <p>A required baz</p>
+         * <p>An optional baz</p>
          * @return Reference to {@code this} so that method calls can be chained together.
          */
         @java.lang.Override
-        public _FinalStage requiredNullableBaz(Nullable<String> requiredNullableBaz) {
-            if (requiredNullableBaz.isNull()) {
-                this.requiredNullableBaz = null;
-            } else if (requiredNullableBaz.isEmpty()) {
-                this.requiredNullableBaz = Optional.empty();
-            } else {
-                this.requiredNullableBaz = Optional.of(requiredNullableBaz.get());
-            }
-            return this;
-        }
-
-        /**
-         * <p>A required baz</p>
-         * @return Reference to {@code this} so that method calls can be chained together.
-         */
-        @java.lang.Override
-        public _FinalStage requiredNullableBaz(String requiredNullableBaz) {
-            this.requiredNullableBaz = Optional.ofNullable(requiredNullableBaz);
-            return this;
-        }
-
-        /**
-         * <p>A required baz</p>
-         */
-        @java.lang.Override
-        @JsonSetter(value = "required_nullable_baz", nulls = Nulls.SKIP)
-        public _FinalStage requiredNullableBaz(Optional<String> requiredNullableBaz) {
-            this.requiredNullableBaz = requiredNullableBaz;
+        public _FinalStage optionalNullableBaz(Nullable<Nullable<String>> optionalNullableBaz) {
+            this.optionalNullableBaz = optionalNullableBaz;
             return this;
         }
 
@@ -245,22 +213,6 @@ public final class GetFooRequest {
          */
         @java.lang.Override
         public _FinalStage optionalNullableBaz(Nullable<String> optionalNullableBaz) {
-            if (optionalNullableBaz.isNull()) {
-                this.optionalNullableBaz = null;
-            } else if (optionalNullableBaz.isEmpty()) {
-                this.optionalNullableBaz = Optional.empty();
-            } else {
-                this.optionalNullableBaz = Optional.of(optionalNullableBaz.get());
-            }
-            return this;
-        }
-
-        /**
-         * <p>An optional baz</p>
-         * @return Reference to {@code this} so that method calls can be chained together.
-         */
-        @java.lang.Override
-        public _FinalStage optionalNullableBaz(String optionalNullableBaz) {
             this.optionalNullableBaz = Optional.ofNullable(optionalNullableBaz);
             return this;
         }
@@ -270,7 +222,7 @@ public final class GetFooRequest {
          */
         @java.lang.Override
         @JsonSetter(value = "optional_nullable_baz", nulls = Nulls.SKIP)
-        public _FinalStage optionalNullableBaz(Optional<String> optionalNullableBaz) {
+        public _FinalStage optionalNullableBaz(Optional<Nullable<String>> optionalNullableBaz) {
             this.optionalNullableBaz = optionalNullableBaz;
             return this;
         }

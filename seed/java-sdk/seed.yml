@@ -216,6 +216,9 @@ fixtures:
     - customConfig:
         wrapped-aliases: true
       outputFolder: wrapped-aliases
+    - customConfig:
+        use-nullable-for-optional-fields: true
+      outputFolder: use-nullable-fields
     - outputFolder: no-custom-config
   java-nullable-named-request-types:
     - outputFolder: custom-config

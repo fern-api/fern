@@ -26,9 +26,9 @@ import org.jetbrains.annotations.NotNull;
 public final class UpdateFooRequest {
     private final String xIdempotencyKey;
 
-    private final Optional<String> nullableText;
+    private final Optional<Nullable<String>> nullableText;
 
-    private final Optional<Double> nullableNumber;
+    private final Optional<Nullable<Double>> nullableNumber;
 
     private final Optional<String> nonNullableText;
 
@@ -36,8 +36,8 @@ public final class UpdateFooRequest {
 
     private UpdateFooRequest(
             String xIdempotencyKey,
-            Optional<String> nullableText,
-            Optional<Double> nullableNumber,
+            Optional<Nullable<String>> nullableText,
+            Optional<Nullable<Double>> nullableNumber,
             Optional<String> nonNullableText,
             Map<String, Object> additionalProperties) {
         this.xIdempotencyKey = xIdempotencyKey;
@@ -56,7 +56,7 @@ public final class UpdateFooRequest {
      * @return Can be explicitly set to null to clear the value
      */
     @JsonIgnore
-    public Optional<String> getNullableText() {
+    public Optional<Nullable<String>> getNullableText() {
         if (nullableText == null) {
             return Optional.empty();
         }
@@ -67,7 +67,7 @@ public final class UpdateFooRequest {
      * @return Can be explicitly set to null to clear the value
      */
     @JsonIgnore
-    public Optional<Double> getNullableNumber() {
+    public Optional<Nullable<Double>> getNullableNumber() {
         if (nullableNumber == null) {
             return Optional.empty();
         }
@@ -84,13 +84,13 @@ public final class UpdateFooRequest {
 
     @JsonInclude(value = JsonInclude.Include.CUSTOM, valueFilter = NullableNonemptyFilter.class)
     @JsonProperty("nullable_text")
-    private Optional<String> _getNullableText() {
+    private Optional<Nullable<String>> _getNullableText() {
         return nullableText;
     }
 
     @JsonInclude(value = JsonInclude.Include.CUSTOM, valueFilter = NullableNonemptyFilter.class)
     @JsonProperty("nullable_number")
-    private Optional<Double> _getNullableNumber() {
+    private Optional<Nullable<Double>> _getNullableNumber() {
         return nullableNumber;
     }
 
@@ -138,20 +138,20 @@ public final class UpdateFooRequest {
         /**
          * <p>Can be explicitly set to null to clear the value</p>
          */
-        _FinalStage nullableText(Optional<String> nullableText);
-
-        _FinalStage nullableText(String nullableText);
+        _FinalStage nullableText(Optional<Nullable<String>> nullableText);
 
         _FinalStage nullableText(Nullable<String> nullableText);
+
+        _FinalStage nullableText(Nullable<Nullable<String>> nullableText);
 
         /**
          * <p>Can be explicitly set to null to clear the value</p>
          */
-        _FinalStage nullableNumber(Optional<Double> nullableNumber);
-
-        _FinalStage nullableNumber(Double nullableNumber);
+        _FinalStage nullableNumber(Optional<Nullable<Double>> nullableNumber);
 
         _FinalStage nullableNumber(Nullable<Double> nullableNumber);
+
+        _FinalStage nullableNumber(Nullable<Nullable<Double>> nullableNumber);
 
         /**
          * <p>Regular non-nullable field</p>
@@ -167,9 +167,9 @@ public final class UpdateFooRequest {
 
         private Optional<String> nonNullableText = Optional.empty();
 
-        private Optional<Double> nullableNumber = Optional.empty();
+        private Optional<Nullable<Double>> nullableNumber = Optional.empty();
 
-        private Optional<String> nullableText = Optional.empty();
+        private Optional<Nullable<String>> nullableText = Optional.empty();
 
         @JsonAnySetter
         private Map<String, Object> additionalProperties = new HashMap<>();
@@ -217,33 +217,7 @@ public final class UpdateFooRequest {
          * @return Reference to {@code this} so that method calls can be chained together.
          */
         @java.lang.Override
-        public _FinalStage nullableNumber(Nullable<Double> nullableNumber) {
-            if (nullableNumber.isNull()) {
-                this.nullableNumber = null;
-            } else if (nullableNumber.isEmpty()) {
-                this.nullableNumber = Optional.empty();
-            } else {
-                this.nullableNumber = Optional.of(nullableNumber.get());
-            }
-            return this;
-        }
-
-        /**
-         * <p>Can be explicitly set to null to clear the value</p>
-         * @return Reference to {@code this} so that method calls can be chained together.
-         */
-        @java.lang.Override
-        public _FinalStage nullableNumber(Double nullableNumber) {
-            this.nullableNumber = Optional.ofNullable(nullableNumber);
-            return this;
-        }
-
-        /**
-         * <p>Can be explicitly set to null to clear the value</p>
-         */
-        @java.lang.Override
-        @JsonSetter(value = "nullable_number", nulls = Nulls.SKIP)
-        public _FinalStage nullableNumber(Optional<Double> nullableNumber) {
+        public _FinalStage nullableNumber(Nullable<Nullable<Double>> nullableNumber) {
             this.nullableNumber = nullableNumber;
             return this;
         }
@@ -253,14 +227,18 @@ public final class UpdateFooRequest {
          * @return Reference to {@code this} so that method calls can be chained together.
          */
         @java.lang.Override
-        public _FinalStage nullableText(Nullable<String> nullableText) {
-            if (nullableText.isNull()) {
-                this.nullableText = null;
-            } else if (nullableText.isEmpty()) {
-                this.nullableText = Optional.empty();
-            } else {
-                this.nullableText = Optional.of(nullableText.get());
-            }
+        public _FinalStage nullableNumber(Nullable<Double> nullableNumber) {
+            this.nullableNumber = Optional.ofNullable(nullableNumber);
+            return this;
+        }
+
+        /**
+         * <p>Can be explicitly set to null to clear the value</p>
+         */
+        @java.lang.Override
+        @JsonSetter(value = "nullable_number", nulls = Nulls.SKIP)
+        public _FinalStage nullableNumber(Optional<Nullable<Double>> nullableNumber) {
+            this.nullableNumber = nullableNumber;
             return this;
         }
 
@@ -269,7 +247,17 @@ public final class UpdateFooRequest {
          * @return Reference to {@code this} so that method calls can be chained together.
          */
         @java.lang.Override
-        public _FinalStage nullableText(String nullableText) {
+        public _FinalStage nullableText(Nullable<Nullable<String>> nullableText) {
+            this.nullableText = nullableText;
+            return this;
+        }
+
+        /**
+         * <p>Can be explicitly set to null to clear the value</p>
+         * @return Reference to {@code this} so that method calls can be chained together.
+         */
+        @java.lang.Override
+        public _FinalStage nullableText(Nullable<String> nullableText) {
             this.nullableText = Optional.ofNullable(nullableText);
             return this;
         }
@@ -279,7 +267,7 @@ public final class UpdateFooRequest {
          */
         @java.lang.Override
         @JsonSetter(value = "nullable_text", nulls = Nulls.SKIP)
-        public _FinalStage nullableText(Optional<String> nullableText) {
+        public _FinalStage nullableText(Optional<Nullable<String>> nullableText) {
             this.nullableText = nullableText;
             return this;
         }

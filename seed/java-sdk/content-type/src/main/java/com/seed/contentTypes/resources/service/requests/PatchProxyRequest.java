@@ -9,8 +9,6 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
-import com.fasterxml.jackson.annotation.JsonSetter;
-import com.fasterxml.jackson.annotation.Nulls;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.seed.contentTypes.core.Nullable;
 import com.seed.contentTypes.core.NullableNonemptyFilter;
@@ -23,21 +21,21 @@ import java.util.Optional;
 @JsonInclude(JsonInclude.Include.NON_ABSENT)
 @JsonDeserialize(builder = PatchProxyRequest.Builder.class)
 public final class PatchProxyRequest {
-    private final Optional<String> application;
+    private final Nullable<String> application;
 
-    private final Optional<Boolean> requireAuth;
+    private final Nullable<Boolean> requireAuth;
 
     private final Map<String, Object> additionalProperties;
 
     private PatchProxyRequest(
-            Optional<String> application, Optional<Boolean> requireAuth, Map<String, Object> additionalProperties) {
+            Nullable<String> application, Nullable<Boolean> requireAuth, Map<String, Object> additionalProperties) {
         this.application = application;
         this.requireAuth = requireAuth;
         this.additionalProperties = additionalProperties;
     }
 
     @JsonIgnore
-    public Optional<String> getApplication() {
+    public Nullable<String> getApplication() {
         if (application == null) {
             return Optional.empty();
         }
@@ -45,7 +43,7 @@ public final class PatchProxyRequest {
     }
 
     @JsonIgnore
-    public Optional<Boolean> getRequireAuth() {
+    public Nullable<Boolean> getRequireAuth() {
         if (requireAuth == null) {
             return Optional.empty();
         }
@@ -54,13 +52,13 @@ public final class PatchProxyRequest {
 
     @JsonInclude(value = JsonInclude.Include.CUSTOM, valueFilter = NullableNonemptyFilter.class)
     @JsonProperty("application")
-    private Optional<String> _getApplication() {
+    private Nullable<String> _getApplication() {
         return application;
     }
 
     @JsonInclude(value = JsonInclude.Include.CUSTOM, valueFilter = NullableNonemptyFilter.class)
     @JsonProperty("require_auth")
-    private Optional<Boolean> _getRequireAuth() {
+    private Nullable<Boolean> _getRequireAuth() {
         return requireAuth;
     }
 
@@ -95,10 +93,6 @@ public final class PatchProxyRequest {
 
     @JsonIgnoreProperties(ignoreUnknown = true)
     public static final class Builder {
-        private Optional<String> application = Optional.empty();
-
-        private Optional<Boolean> requireAuth = Optional.empty();
-
         @JsonAnySetter
         private Map<String, Object> additionalProperties = new HashMap<>();
 
@@ -107,50 +101,6 @@ public final class PatchProxyRequest {
         public Builder from(PatchProxyRequest other) {
             application(other.getApplication());
             requireAuth(other.getRequireAuth());
-            return this;
-        }
-
-        @JsonSetter(value = "application", nulls = Nulls.SKIP)
-        public Builder application(Optional<String> application) {
-            this.application = application;
-            return this;
-        }
-
-        public Builder application(String application) {
-            this.application = Optional.ofNullable(application);
-            return this;
-        }
-
-        public Builder application(Nullable<String> application) {
-            if (application.isNull()) {
-                this.application = null;
-            } else if (application.isEmpty()) {
-                this.application = Optional.empty();
-            } else {
-                this.application = Optional.of(application.get());
-            }
-            return this;
-        }
-
-        @JsonSetter(value = "require_auth", nulls = Nulls.SKIP)
-        public Builder requireAuth(Optional<Boolean> requireAuth) {
-            this.requireAuth = requireAuth;
-            return this;
-        }
-
-        public Builder requireAuth(Boolean requireAuth) {
-            this.requireAuth = Optional.ofNullable(requireAuth);
-            return this;
-        }
-
-        public Builder requireAuth(Nullable<Boolean> requireAuth) {
-            if (requireAuth.isNull()) {
-                this.requireAuth = null;
-            } else if (requireAuth.isEmpty()) {
-                this.requireAuth = Optional.empty();
-            } else {
-                this.requireAuth = Optional.of(requireAuth.get());
-            }
             return this;
         }
 

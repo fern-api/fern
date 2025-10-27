@@ -1,0 +1,44 @@
+{
+    "endpoints": [
+        {
+            "example_identifier": "8729d6fb",
+            "id": {
+                "method": "GET",
+                "path": "/users",
+                "identifier_override": "endpoint_nullable.getUsers"
+            },
+            "snippet": {
+                "type": "java",
+                "sync_client": "package com.example.usage;\n\nimport com.seed.nullable.SeedNullableClient;\nimport com.seed.nullable.resources.nullable.requests.GetUsersRequest;\nimport java.util.Arrays;\nimport java.util.Optional;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedNullableClient client = SeedNullableClient\n            .builder()\n            .build();\n\n        client.nullable().getUsers(\n            GetUsersRequest\n                .builder()\n                .usernames(\n                    Arrays.asList(Optional.of(\"usernames\"))\n                )\n                .activated(\n                    Arrays.asList(Optional.of(true))\n                )\n                .tags(\n                    Arrays.asList(\"tags\")\n                )\n                .avatar(\"avatar\")\n                .extra(true)\n                .build()\n        );\n    }\n}\n",
+                "async_client": "package com.example.usage;\n\nimport com.seed.nullable.SeedNullableClient;\nimport com.seed.nullable.resources.nullable.requests.GetUsersRequest;\nimport java.util.Arrays;\nimport java.util.Optional;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedNullableClient client = SeedNullableClient\n            .builder()\n            .build();\n\n        client.nullable().getUsers(\n            GetUsersRequest\n                .builder()\n                .usernames(\n                    Arrays.asList(Optional.of(\"usernames\"))\n                )\n                .activated(\n                    Arrays.asList(Optional.of(true))\n                )\n                .tags(\n                    Arrays.asList(\"tags\")\n                )\n                .avatar(\"avatar\")\n                .extra(true)\n                .build()\n        );\n    }\n}\n"
+            }
+        },
+        {
+            "example_identifier": "537a1e4a",
+            "id": {
+                "method": "POST",
+                "path": "/users",
+                "identifier_override": "endpoint_nullable.createUser"
+            },
+            "snippet": {
+                "type": "java",
+                "sync_client": "package com.example.usage;\n\nimport com.seed.nullable.SeedNullableClient;\nimport com.seed.nullable.resources.nullable.requests.CreateUserRequest;\nimport com.seed.nullable.resources.nullable.types.Metadata;\nimport com.seed.nullable.resources.nullable.types.Status;\nimport java.time.OffsetDateTime;\nimport java.util.Arrays;\nimport java.util.HashMap;\nimport java.util.Optional;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedNullableClient client = SeedNullableClient\n            .builder()\n            .build();\n\n        client.nullable().createUser(\n            CreateUserRequest\n                .builder()\n                .username(\"username\")\n                .tags(\n                    Optional.of(\n                        Arrays.asList(\"tags\", \"tags\")\n                    )\n                )\n                .metadata(\n                    Metadata\n                        .builder()\n                        .createdAt(OffsetDateTime.parse(\"2024-01-15T09:30:00Z\"))\n                        .updatedAt(OffsetDateTime.parse(\"2024-01-15T09:30:00Z\"))\n                        .status(\n                            Status.active()\n                        )\n                        .avatar(\"avatar\")\n                        .activated(true)\n                        .values(\n                            new HashMap<String, Optional<String>>() {{\n                                put(\"values\", Optional.of(\"values\"));\n                            }}\n                        )\n                        .build()\n                )\n                .avatar(\"avatar\")\n                .build()\n        );\n    }\n}\n",
+                "async_client": "package com.example.usage;\n\nimport com.seed.nullable.SeedNullableClient;\nimport com.seed.nullable.resources.nullable.requests.CreateUserRequest;\nimport com.seed.nullable.resources.nullable.types.Metadata;\nimport com.seed.nullable.resources.nullable.types.Status;\nimport java.time.OffsetDateTime;\nimport java.util.Arrays;\nimport java.util.HashMap;\nimport java.util.Optional;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedNullableClient client = SeedNullableClient\n            .builder()\n            .build();\n\n        client.nullable().createUser(\n            CreateUserRequest\n                .builder()\n                .username(\"username\")\n                .tags(\n                    Optional.of(\n                        Arrays.asList(\"tags\", \"tags\")\n                    )\n                )\n                .metadata(\n                    Metadata\n                        .builder()\n                        .createdAt(OffsetDateTime.parse(\"2024-01-15T09:30:00Z\"))\n                        .updatedAt(OffsetDateTime.parse(\"2024-01-15T09:30:00Z\"))\n                        .status(\n                            Status.active()\n                        )\n                        .avatar(\"avatar\")\n                        .activated(true)\n                        .values(\n                            new HashMap<String, Optional<String>>() {{\n                                put(\"values\", Optional.of(\"values\"));\n                            }}\n                        )\n                        .build()\n                )\n                .avatar(\"avatar\")\n                .build()\n        );\n    }\n}\n"
+            }
+        },
+        {
+            "example_identifier": "11d350ff",
+            "id": {
+                "method": "DELETE",
+                "path": "/users",
+                "identifier_override": "endpoint_nullable.deleteUser"
+            },
+            "snippet": {
+                "type": "java",
+                "sync_client": "package com.example.usage;\n\nimport com.seed.nullable.SeedNullableClient;\nimport com.seed.nullable.resources.nullable.requests.DeleteUserRequest;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedNullableClient client = SeedNullableClient\n            .builder()\n            .build();\n\n        client.nullable().deleteUser(\n            DeleteUserRequest\n                .builder()\n                .username(\"xy\")\n                .build()\n        );\n    }\n}\n",
+                "async_client": "package com.example.usage;\n\nimport com.seed.nullable.SeedNullableClient;\nimport com.seed.nullable.resources.nullable.requests.DeleteUserRequest;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedNullableClient client = SeedNullableClient\n            .builder()\n            .build();\n\n        client.nullable().deleteUser(\n            DeleteUserRequest\n                .builder()\n                .username(\"xy\")\n                .build()\n        );\n    }\n}\n"
+            }
+        }
+    ],
+    "types": {}
+}

@@ -273,9 +273,12 @@ public final class PoetTypeNameMapper {
         public TypeName visitNullable(TypeReference typeReference) {
             if (customConfig.useNullableAnnotation()) {
                 return typeReference.visit(primitiveDisAllowedTypeReferenceConverter);
-            } else {
+            } else if (customConfig.useNullableForOptionalFields()) {
                 TypeName typeName = typeReference.visit(primitiveDisAllowedTypeReferenceConverter);
                 return ParameterizedTypeName.get(poetClassNameFactory.getNullableClassName(), typeName);
+            } else {
+                TypeName typeName = typeReference.visit(primitiveDisAllowedTypeReferenceConverter);
+                return ParameterizedTypeName.get(ClassName.get(Optional.class), typeName);
             }
         }
 
