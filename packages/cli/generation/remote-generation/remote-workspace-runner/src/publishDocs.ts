@@ -605,7 +605,7 @@ async function updateAiChatFromDocsDefinition({
         const faiClient = getFaiClient({ token: token.value });
 
         if (isPreview) {
-            const previewDomainWithPath = wrapWithHttps(url)
+            const previewDomainWithPath = wrapWithHttps(url);
             await faiClient.settings.enableAskAi({
                 domains: [previewDomainWithPath],
                 org_name: organization,
@@ -616,18 +616,14 @@ async function updateAiChatFromDocsDefinition({
                 const addResult = await fdr.docs.v2.write.addAlgoliaPreviewWhitelistEntry({
                     domain: previewHostname
                 });
-                if (addResult.ok) {
-                } else {
+                if (!addResult.ok) {
                     context.logger.warn(
                         `Failed to add domain ${previewHostname} to Algolia whitelist. Please try regenerating to test AI chat in preview.`
                     );
                 }
             }
         } else {
-            const domainsToEnable = [
-                wrapWithHttps(domain),
-                ...customDomains.map((cd) => wrapWithHttps(cd))
-            ];
+            const domainsToEnable = [wrapWithHttps(domain), ...customDomains.map((cd) => wrapWithHttps(cd))];
 
             await faiClient.settings.enableAskAi({
                 domains: domainsToEnable,
