@@ -71,7 +71,7 @@ export function convertObject({
     source: Source;
 }): SchemaWithExample {
     const allRequired = [...(required ?? [])];
-    const propertiesToConvert = { ...getNonIgnoredProperties(properties, context) };
+    const propertiesToConvert = { ...getNonIgnoredProperties({ properties, breadcrumbs, context }) };
     let inlinedParentProperties: ObjectPropertyWithExample[] = [];
     const parents: ReferencedAllOfInfo[] = [];
 
@@ -388,15 +388,22 @@ export function wrapObject({
     return result;
 }
 
-function getNonIgnoredProperties(
-    properties: Record<string, OpenAPIV3.ReferenceObject | OpenAPIV3.SchemaObject>,
-    context: SchemaParserContext
-): Record<string, OpenAPIV3.ReferenceObject | OpenAPIV3.SchemaObject> {
+function getNonIgnoredProperties({
+    properties,
+    breadcrumbs,
+    context
+}: {
+    properties: Record<string, OpenAPIV3.ReferenceObject | OpenAPIV3.SchemaObject>;
+    breadcrumbs: string[];
+    context: SchemaParserContext;
+}): Record<string, OpenAPIV3.ReferenceObject | OpenAPIV3.SchemaObject> {
     return Object.fromEntries(
-        Object.entries(properties).filter(([_, propertySchema]) => {
+        Object.entries(properties).filter(([key, propertySchema]) => {
             const shouldIgnore = getExtension<boolean>(propertySchema, FernOpenAPIExtension.IGNORE);
             if (shouldIgnore) {
-                context.logger.debug(`Ignoring property due to the ${FernOpenAPIExtension.IGNORE} extension.`);
+                context.logger.debug(
+                    `Property ${breadcrumbs.join(".")}.${key} is marked with x-fern-ignore. Skipping.`
+                );
             }
             return !shouldIgnore;
         })
@@ -427,7 +434,7 @@ function getAllProperties({
         };
     }
     for (const [propertyName, propertySchema] of Object.entries(
-        getNonIgnoredProperties(resolvedSchema.properties ?? {}, context)
+        getNonIgnoredProperties({ properties: resolvedSchema.properties ?? {}, breadcrumbs, context })
     )) {
         const convertedPropertySchema = convertSchema(
             propertySchema,
