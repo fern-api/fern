@@ -339,6 +339,11 @@ scripts:
       - poetry install
       - poetry run mypy ./src ./tests
       - poetry run pytest -rP .
+      # Cleanup after use
+      - "find . -name '.venv*' -type d -exec rm -rf {} + 2>/dev/null || true"
+      - "rm -rf ./*-py* 2>/dev/null || true"
+      # - "poetry cache clear --all pypi 2>/dev/null || true"
+      - "echo 'Virtual environment and cache cleanup completed'"
   # Test Pydantic V1
   - docker: fernapi/python-seed
     commands:
@@ -350,6 +355,11 @@ scripts:
       - poetry install
       - poetry run mypy ./src ./tests
       - poetry run pytest -rP .
+      # Cleanup after use
+      - "find . -name '.venv*' -type d -exec rm -rf {} + 2>/dev/null || true"
+      - "rm -rf ./*-py* 2>/dev/null || true"
+      # - "poetry cache clear --all pypi 2>/dev/null || true"
+      - "echo 'Virtual environment and cache cleanup completed'"
 allowedFailures:
   - any-auth
   - enum:real-enum # NOTE(tjb9dc): Failing due to format due to unescaped strings in the enum values
