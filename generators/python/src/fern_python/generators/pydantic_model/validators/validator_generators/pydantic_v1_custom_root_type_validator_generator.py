@@ -20,16 +20,16 @@ class PydanticV1CustomRootTypeValidatorGenerator(ValidatorGenerator):
         )
 
     def _write_validator_body(self, writer: AST.NodeWriter) -> None:
+        from fern_python.external_dependencies import PydanticVersionCompatibility
+
         ROOT_VARIABLE_NAME = "value"
         INDIVIDUAL_VALIDATOR_NAME = "validator"
 
-        # Check if we're dealing with Pydantic v2 RootModel (instance) or v1 dict
-        writer.write(f"if isinstance({PydanticModel.VALIDATOR_VALUES_PARAMETER_NAME}, cls):")
-        writer.write_line()
+        # Generate different code based on Pydantic version
+        is_v2 = self._model._version == PydanticVersionCompatibility.V2
 
-        # Pydantic v2: values is the RootModel instance
-        with writer.indent():
-            writer.write_line(f"# Pydantic v2: {PydanticModel.VALIDATOR_VALUES_PARAMETER_NAME} is the validated RootModel instance")
+        if is_v2:
+            # Pydantic v2: values is the validated RootModel instance
             writer.write(f"{ROOT_VARIABLE_NAME} = {PydanticModel.VALIDATOR_VALUES_PARAMETER_NAME}.root")
             writer.write_line()
 
@@ -56,15 +56,9 @@ class PydanticV1CustomRootTypeValidatorGenerator(ValidatorGenerator):
                 )
                 writer.write_line()
 
-            writer.write_line(f"# Return new instance since model is frozen")
             writer.write_line(f"return cls.model_construct(root={ROOT_VARIABLE_NAME})")
-
-        # Pydantic v1: values is a dict
-        writer.write("else:")
-        writer.write_line()
-
-        with writer.indent():
-            writer.write_line(f"# Pydantic v1: {PydanticModel.VALIDATOR_VALUES_PARAMETER_NAME} is a dict")
+        else:
+            # Pydantic v1: values is a dict
             writer.write(f"{ROOT_VARIABLE_NAME} = ")
             writer.write_node(
                 AST.FunctionInvocation(
