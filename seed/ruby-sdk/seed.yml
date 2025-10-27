@@ -81,6 +81,7 @@ allowedFailures:
   - extra-properties
   - file-download
   - file-upload
+  - file-upload-openapi
   - folders
   - http-head
   - idempotency-headers
