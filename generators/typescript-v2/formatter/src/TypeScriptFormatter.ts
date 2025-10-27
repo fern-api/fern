@@ -5,7 +5,7 @@ export class TypeScriptFormatter extends AbstractFormatter {
     public async format(content: string): Promise<string> {
         return this.format_(content);
     }
-
+// CHRISM - force change in v2
     public formatSync(content: string): string {
         return this.format_(content);
     }
