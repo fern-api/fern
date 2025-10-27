@@ -23,46 +23,88 @@ class PydanticV1CustomRootTypeValidatorGenerator(ValidatorGenerator):
         ROOT_VARIABLE_NAME = "value"
         INDIVIDUAL_VALIDATOR_NAME = "validator"
 
-        writer.write(f"{ROOT_VARIABLE_NAME} = ")
-        writer.write_node(
-            AST.FunctionInvocation(
-                function_definition=AST.Reference(
-                    qualified_name_excluding_import=("cast",),
-                    import_=AST.ReferenceImport(module=AST.Module.built_in(("typing",))),
-                ),
-                args=[
-                    AST.Expression(self._root_type),
-                    AST.Expression(f'{PydanticModel.VALIDATOR_VALUES_PARAMETER_NAME}.get("__root__")'),
-                ],
-            ),
-        )
+        # Check if we're dealing with Pydantic v2 RootModel (instance) or v1 dict
+        writer.write(f"if isinstance({PydanticModel.VALIDATOR_VALUES_PARAMETER_NAME}, cls):")
         writer.write_line()
 
-        writer.write(f"for {INDIVIDUAL_VALIDATOR_NAME} in ")
-        writer.write_line(
-            ".".join(
-                (
-                    *self._reference_to_validators_class,
-                    PydanticV1CustomRootTypeValidatorGenerator._VALIDATOR_CLASS_VALIDATORS_CLASS_VAR,
+        # Pydantic v2: values is the RootModel instance
+        with writer.indent():
+            writer.write_line(f"# Pydantic v2: {PydanticModel.VALIDATOR_VALUES_PARAMETER_NAME} is the validated RootModel instance")
+            writer.write(f"{ROOT_VARIABLE_NAME} = {PydanticModel.VALIDATOR_VALUES_PARAMETER_NAME}.root")
+            writer.write_line()
+
+            writer.write(f"for {INDIVIDUAL_VALIDATOR_NAME} in ")
+            writer.write_line(
+                ".".join(
+                    (
+                        *self._reference_to_validators_class,
+                        PydanticV1CustomRootTypeValidatorGenerator._VALIDATOR_CLASS_VALIDATORS_CLASS_VAR,
+                    )
                 )
+                + ":"
             )
-            + ":"
-        )
+
+            with writer.indent():
+                writer.write(f"{ROOT_VARIABLE_NAME} = ")
+                writer.write_node(
+                    AST.FunctionInvocation(
+                        function_definition=AST.Reference(
+                            qualified_name_excluding_import=(INDIVIDUAL_VALIDATOR_NAME,),
+                        ),
+                        args=[AST.Expression(ROOT_VARIABLE_NAME)],
+                    )
+                )
+                writer.write_line()
+
+            writer.write_line(f"# Return new instance since model is frozen")
+            writer.write_line(f"return cls.model_construct(root={ROOT_VARIABLE_NAME})")
+
+        # Pydantic v1: values is a dict
+        writer.write("else:")
+        writer.write_line()
 
         with writer.indent():
+            writer.write_line(f"# Pydantic v1: {PydanticModel.VALIDATOR_VALUES_PARAMETER_NAME} is a dict")
             writer.write(f"{ROOT_VARIABLE_NAME} = ")
             writer.write_node(
                 AST.FunctionInvocation(
                     function_definition=AST.Reference(
-                        qualified_name_excluding_import=(INDIVIDUAL_VALIDATOR_NAME,),
+                        qualified_name_excluding_import=("cast",),
+                        import_=AST.ReferenceImport(module=AST.Module.built_in(("typing",))),
                     ),
-                    args=[AST.Expression(ROOT_VARIABLE_NAME)],
-                )
+                    args=[
+                        AST.Expression(self._root_type),
+                        AST.Expression(f'{PydanticModel.VALIDATOR_VALUES_PARAMETER_NAME}.get("__root__")'),
+                    ],
+                ),
             )
             writer.write_line()
-        writer.write_line(
-            "return " + f'{{ **{PydanticModel.VALIDATOR_VALUES_PARAMETER_NAME}, "__root__": {ROOT_VARIABLE_NAME} }}'
-        )
+
+            writer.write(f"for {INDIVIDUAL_VALIDATOR_NAME} in ")
+            writer.write_line(
+                ".".join(
+                    (
+                        *self._reference_to_validators_class,
+                        PydanticV1CustomRootTypeValidatorGenerator._VALIDATOR_CLASS_VALIDATORS_CLASS_VAR,
+                    )
+                )
+                + ":"
+            )
+
+            with writer.indent():
+                writer.write(f"{ROOT_VARIABLE_NAME} = ")
+                writer.write_node(
+                    AST.FunctionInvocation(
+                        function_definition=AST.Reference(
+                            qualified_name_excluding_import=(INDIVIDUAL_VALIDATOR_NAME,),
+                        ),
+                        args=[AST.Expression(ROOT_VARIABLE_NAME)],
+                    )
+                )
+                writer.write_line()
+            writer.write_line(
+                "return " + f'{{ **{PydanticModel.VALIDATOR_VALUES_PARAMETER_NAME}, "__root__": {ROOT_VARIABLE_NAME} }}'
+            )
 
     def add_to_validators_class(self, validators_class: AST.ClassDeclaration) -> None:
         VALIDATOR_PARAMETER = "validator"

@@ -1,5 +1,18 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
 # For unreleased changes, use unreleased.yml
+- version: 1.10.2
+  changelogEntry:
+    - summary: Fix wrapped alias validators to work correctly with frozen RootModel in Pydantic v2.
+      type: fix
+      fixed:
+        - |
+          Wrapped alias validators now use `mode="wrap"` instead of `mode="after"` for Pydantic v2,
+          which properly handles frozen RootModel instances. The validator now calls Pydantic's
+          validation first, then applies custom validators, and returns a new instance using
+          `model_construct()`. User-facing validator API remains unchanged.
+  createdAt: "2025-10-27"
+  irVersion: 60
+
 - version: 1.10.1
   changelogEntry:
     - summary: Fix pydantic model alias generator to correctly serialize wrapped aliases in pydantic v2..

@@ -218,7 +218,23 @@ def universal_root_validator(
 ) -> Callable[[AnyCallable], AnyCallable]:
     def decorator(func: AnyCallable) -> AnyCallable:
         if IS_PYDANTIC_V2:
-            return cast(AnyCallable, pydantic.model_validator(mode="before" if pre else "after")(func))  # type: ignore[attr-defined]
+            if pre:
+                # For pre-validation, use "before" mode
+                return cast(AnyCallable, pydantic.model_validator(mode="before")(func))  # type: ignore[attr-defined]
+            else:
+                # For post-validation, use "wrap" mode to support frozen models
+                # Wrap the function to add handler parameter (required for wrap mode)
+                def wrapper(__v: Any, __h: Any) -> Any:
+                    # First validate using Pydantic's handler
+                    validated = __h(__v)
+                    # Then apply custom validators (need to get cls from validated instance)
+                    result = func(type(validated), validated)
+                    return result
+
+                # Copy function metadata
+                wrapper.__name__ = func.__name__
+                wrapper.__module__ = func.__module__
+                return cast(AnyCallable, pydantic.model_validator(mode="wrap")(wrapper))  # type: ignore[attr-defined]
         return cast(AnyCallable, pydantic.root_validator(pre=pre)(func))  # type: ignore[call-overload]
 
     return decorator
