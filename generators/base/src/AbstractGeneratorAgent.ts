@@ -88,6 +88,11 @@ export abstract class AbstractGeneratorAgent<GeneratorContext extends AbstractGe
         return this.cli.pushToGitHub({ githubConfig, withPullRequest: githubConfig.mode === "pull-request" });
     }
 
+    protected resolveGitHubConfig({ context }: { context: GeneratorContext }) {
+        const rawGithubConfig = this.getGitHubConfig({ context });
+        return resolveGitHubConfig({ rawGithubConfig, logger: this.logger });
+    }
+
     /**
      * Generates the reference.md content using the given builder.
      */

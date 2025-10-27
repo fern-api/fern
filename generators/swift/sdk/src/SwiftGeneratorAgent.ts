@@ -1,5 +1,5 @@
 import { AbstractGeneratorAgent, ReferenceConfigBuilder } from "@fern-api/base-generator";
-import { generateReadme, generateReference } from "@fern-api/generator-cli";
+import { generateReadme, generateReference, githubPr, githubPush } from "@fern-api/generator-cli";
 import { Logger } from "@fern-api/logger";
 import { FernGeneratorCli } from "@fern-fern/generator-cli-sdk";
 import { FernGeneratorExec } from "@fern-fern/generator-exec-sdk";
@@ -61,6 +61,15 @@ export class SwiftGeneratorAgent extends AbstractGeneratorAgent<SdkGeneratorCont
     public override async generateReference(builder: ReferenceConfigBuilder): Promise<string> {
         const referenceConfig = builder.build(this.getLanguage());
         return await generateReference({ referenceConfig });
+    }
+
+    public async pushToGitHubProgrammatic({ context }: { context: SdkGeneratorContext }): Promise<void> {
+        const githubConfig = this.resolveGitHubConfig({ context });
+        if (githubConfig.mode === "pull-request") {
+            await githubPr({ githubConfig });
+        } else {
+            await githubPush({ githubConfig });
+        }
     }
 
     public getLanguage(): FernGeneratorCli.Language {
