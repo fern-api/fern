@@ -60,6 +60,16 @@ export class SdkGeneratorContext extends AbstractGoGeneratorContext<SdkCustomCon
         return [];
     }
 
+    public getCoreAsIsFiles(): string[] {
+        const files = [];
+
+        if (this.needsPaginationHelpers()) {
+            files.push(AsIsFiles.Page);
+        }
+        
+        return files;
+    }
+
     public getRootAsIsFiles(): string[] {
         const files = [
             AsIsFiles.ErrorDecoder,
