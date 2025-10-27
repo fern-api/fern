@@ -51,13 +51,19 @@ class Animal(pydantic.RootModel):
                 )
             )
 
+    model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(frozen=True)  # type: ignore # Pydantic v2
+
 
 class _Animal:
     class Dog(resources_types_resources_union_types_dog_Dog):
         animal: typing.Literal["dog"] = "dog"
 
+        model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(frozen=True)  # type: ignore # Pydantic v2
+
     class Cat(resources_types_resources_union_types_cat_Cat):
         animal: typing.Literal["cat"] = "cat"
+
+        model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(frozen=True)  # type: ignore # Pydantic v2
 
 
 update_forward_refs(Animal)

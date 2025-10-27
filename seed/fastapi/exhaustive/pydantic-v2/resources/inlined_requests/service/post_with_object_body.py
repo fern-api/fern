@@ -12,4 +12,4 @@ class PostWithObjectBody(UniversalBaseModel):
     integer: int
     nested_object: ObjectWithOptionalField = pydantic.Field(alias="NestedObject")
 
-    model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="forbid")  # type: ignore # Pydantic v2
+    model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="forbid", frozen=True)  # type: ignore # Pydantic v2

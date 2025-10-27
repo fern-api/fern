@@ -60,7 +60,10 @@ fixtures:
       outputFolder: pydantic-v1
     - customConfig:
         pydantic_config:
+          frozen: true
+          require_optional_fields: false
           version: v2
+          wrapped_aliases: true
       outputFolder: pydantic-v2
     - customConfig:
         pydantic_config:

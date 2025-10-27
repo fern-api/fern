@@ -10,4 +10,4 @@ class Dog(UniversalBaseModel):
     name: str
     likes_to_woof: bool = pydantic.Field(alias="likesToWoof")
 
-    model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="forbid")  # type: ignore # Pydantic v2
+    model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="forbid", frozen=True)  # type: ignore # Pydantic v2
