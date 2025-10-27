@@ -15,7 +15,7 @@ export class LocalScriptRunner extends ScriptRunner {
         super(workspace, skipScripts, context);
     }
 
-    public async run({ taskContext, id, outputDir }: ScriptRunner.RunArgs): Promise<ScriptRunner.RunResponse> {
+    public async run({ taskContext, id, outputDir, skipScripts }: ScriptRunner.RunArgs): Promise<ScriptRunner.RunResponse> {
         if (this.skipScripts) {
             return { type: "success" };
         }
@@ -23,6 +23,12 @@ export class LocalScriptRunner extends ScriptRunner {
         const scripts = this.workspace.workspaceConfig.scripts ?? [];
 
         for (const script of scripts) {
+            // Check if this script should be skipped based on its name
+            if (skipScripts != null && script.name != null && skipScripts.includes(script.name)) {
+                taskContext.logger.info(`Skipping script "${script.name}" for ${id} (configured in fixture)`);
+                continue;
+            }
+
             const result = await this.runScript({
                 taskContext,
                 outputDir,
