@@ -1,6 +1,7 @@
 from ...context import FastApiGeneratorContext
 from .convert_to_singular_type import convert_to_singular_type
 from .endpoint_parameter import EndpointParameter
+from .utils import is_optional_or_nullable
 from fern_python.codegen import AST
 from fern_python.external_dependencies import FastAPI
 
@@ -21,16 +22,14 @@ class QueryEndpointParameter(EndpointParameter):
         return convert_to_singular_type(self._context, self._query_parameter.value_type)
 
     def get_default(self) -> AST.Expression:
-        value_type = self._query_parameter.value_type.get_as_union()
-        is_optional = value_type.type == "container" and (
-            value_type.container.get_as_union().type == "optional"
-            or value_type.container.get_as_union().type == "nullable"
+        is_optional = is_optional_or_nullable(self._query_parameter.value_type)
+        default = (
+            AST.Expression(AST.TypeHint.none())
+            if is_optional
+            else AST.Expression("[]")
+            if self._query_parameter.allow_multiple
+            else None
         )
-        default = None
-        if is_optional:
-            default = AST.Expression(AST.TypeHint.none())
-        elif self._query_parameter.allow_multiple and not is_optional:
-            default = AST.Expression("[]")
         return FastAPI.Query(
             default=default,
             variable_name=self.get_name(),

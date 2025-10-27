@@ -2,6 +2,7 @@ from typing import List
 
 from ....context import FastApiGeneratorContext
 from ..endpoint_parameter import EndpointParameter
+from ..utils import is_optional_or_nullable
 from fern_python.codegen import AST
 from fern_python.external_dependencies.fastapi import FastAPI
 
@@ -74,19 +75,9 @@ class FileUploadRequestBodyParameter(EndpointParameter):
         )
 
     def get_default(self) -> AST.Expression:
-        value_type = self._request_property.value_type.get_as_union()
-        is_optional = value_type.type == "container" and (
-            value_type.container.get_as_union().type == "optional"
-            or value_type.container.get_as_union().type == "nullable"
-        )
-        
-        default = None
-        if is_optional:
-            default = AST.Expression(AST.TypeHint.none())
-        
-        docs = None
-        if hasattr(self._request_property, 'docs') and self._request_property.docs is not None:
-            docs = self._request_property.docs
+        is_optional = is_optional_or_nullable(self._request_property.value_type)
+        default = AST.Expression(AST.TypeHint.none()) if is_optional else None
+        docs = getattr(self._request_property, "docs", None)
         
         return FastAPI.Body(
             default=default,
