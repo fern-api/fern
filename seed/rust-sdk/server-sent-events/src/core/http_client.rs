@@ -355,6 +355,15 @@ impl HttpClient {
     /// This method returns an `SseStream<T>` that automatically parses
     /// Server-Sent Events and deserializes the JSON data in each event.
     ///
+    /// # SSE-Specific Headers
+    ///
+    /// This method automatically sets the following headers **after** applying custom headers,
+    /// which means these headers will override any user-supplied values:
+    /// - `Accept: text/event-stream` - Required for SSE protocol
+    /// - `Cache-Control: no-store` - Prevents caching of streaming responses
+    ///
+    /// This ensures proper SSE behavior even if custom headers are provided.
+    ///
     /// # Example
     /// ```no_run
     /// use futures::StreamExt;

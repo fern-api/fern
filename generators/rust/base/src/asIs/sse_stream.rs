@@ -1,7 +1,7 @@
 use crate::ApiError;
 use futures::Stream;
 use pin_project::pin_project;
-use reqwest::Response;
+use reqwest::{header::CONTENT_TYPE, Response};
 use reqwest_sse::{error::EventError, Event, EventSource};
 use serde::de::DeserializeOwned;
 use std::{
@@ -14,13 +14,18 @@ use std::{
 ///
 /// Contains the SSE protocol fields (event, id, retry) that accompany the data payload.
 /// This struct provides access to SSE metadata for advanced use cases.
+///
+/// Per the SSE specification:
+/// - `event` defaults to "message" when not specified by the server
+/// - `id` is optional and used for reconnection support (Last-Event-ID header)
+/// - `retry` is optional and specifies reconnection timeout in milliseconds
 #[derive(Debug, Clone)]
 pub struct SseMetadata {
-    /// The event type (defaults to "message" if not specified)
+    /// The event type (defaults to "message" per SSE spec if not specified by server)
     pub event: String,
-    /// The event ID (for reconnection support)
-    pub id: String,
-    /// Retry timeout in milliseconds (optional)
+    /// The event ID for reconnection support (None if not specified)
+    pub id: Option<String>,
+    /// Retry timeout in milliseconds (None if not specified)
     pub retry: Option<u64>,
 }
 
@@ -75,6 +80,17 @@ pub struct SseEvent<T> {
 /// - SSE protocol errors (`ApiError::SseParseError`)
 /// - Network errors during streaming
 ///
+/// **Important:** When an error occurs for a single event (e.g., malformed JSON),
+/// the stream yields `Err` for that item but **continues streaming** subsequent events.
+/// The stream only ends when:
+/// - A terminator is received (if configured)
+/// - The server closes the connection
+/// - A fatal network error occurs
+///
+/// This allows the client to handle per-event errors gracefully without losing
+/// the entire stream. Compare this to other error handling strategies where a single
+/// bad event might terminate the stream.
+///
 /// # Terminator Support
 ///
 /// When a terminator string is specified (e.g., `[DONE]`), the stream automatically
@@ -103,16 +119,23 @@ where
     /// - Response Content-Type is not `text/event-stream`
     /// - SSE stream cannot be created from response
     pub(crate) async fn new(response: Response, terminator: Option<String>) -> Result<Self, ApiError> {
-        // Validate Content-Type header
+        // Validate Content-Type header (case-insensitive, handles parameters)
         let content_type = response
             .headers()
-            .get("content-type")
+            .get(CONTENT_TYPE)
             .and_then(|v| v.to_str().ok())
             .unwrap_or("");
 
-        if !content_type.contains("text/event-stream") {
+        // Extract main content type (before ';' parameter separator) and compare case-insensitively
+        let content_type_main = content_type
+            .split(';')
+            .next()
+            .unwrap_or("")
+            .trim();
+
+        if !content_type_main.eq_ignore_ascii_case("text/event-stream") {
             return Err(ApiError::SseParseError(format!(
-                "Expected Content-Type to contain 'text/event-stream', got '{}'",
+                "Expected Content-Type to be 'text/event-stream', got '{}'",
                 content_type
             )));
         }
@@ -154,7 +177,9 @@ where
     ///         Ok(event) => {
     ///             println!("Data: {:?}", event.data);
     ///             println!("Event type: {}", event.metadata.event);
-    ///             println!("Event ID: {}", event.metadata.id);
+    ///             if let Some(id) = &event.metadata.id {
+    ///                 println!("Event ID: {}", id);
+    ///             }
     ///         }
     ///         Err(e) => eprintln!("Error: {}", e),
     ///     }
@@ -233,8 +258,13 @@ where
 
                 // Extract metadata
                 let metadata = SseMetadata {
-                    event: event.event_type.clone(),
-                    id: event.last_event_id.clone().unwrap_or_default(),
+                    // Default to "message" if event type is empty (per SSE spec)
+                    event: if event.event_type.is_empty() {
+                        "message".to_string()
+                    } else {
+                        event.event_type.clone()
+                    },
+                    id: event.last_event_id.clone(),
                     retry: event.retry.map(|d| d.as_millis() as u64),
                 };
 

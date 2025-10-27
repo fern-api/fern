@@ -26,9 +26,5 @@ percent-encoding = "2.3"
 ordered-float = { version = "4.5", features = ["serde"] }
 pin-project = "1.1"
 
-[[bin]]
-name = "test_sse_with_metadata"
-path = "test_sse_with_metadata.rs"
-
 [dev-dependencies]
 tokio-test = "0.4"
