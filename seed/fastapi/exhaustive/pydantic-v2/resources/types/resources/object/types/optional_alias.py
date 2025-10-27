@@ -5,6 +5,7 @@ from __future__ import annotations
 import typing
 
 import pydantic
+from ......core.pydantic_utilities import universal_root_validator
 
 
 class OptionalAlias(pydantic.RootModel):
@@ -16,5 +17,36 @@ class OptionalAlias(pydantic.RootModel):
     @staticmethod
     def from_str(value: typing.Optional[str]) -> OptionalAlias:
         return OptionalAlias(root=value)
+
+    class Validators:
+        """
+        Use this class to add validators to the Pydantic model.
+
+            @OptionalAlias.Validators.validate
+            def validate(value: typing.Optional[str]) -> typing.Optional[str]:
+                ...
+        """
+
+        _validators: typing.ClassVar[typing.List[typing.Callable[[typing.Optional[str]], typing.Optional[str]]]] = []
+
+        @classmethod
+        def validate(cls, validator: typing.Callable[[typing.Optional[str]], typing.Optional[str]]) -> None:
+            cls._validators.append(validator)
+
+    @universal_root_validator(pre=False)
+    def _validate(cls, values: typing.Dict[str, typing.Any]) -> typing.Dict[str, typing.Any]:
+        if isinstance(values, cls):
+            # Pydantic v2: values is the validated RootModel instance
+            value = values.root
+            for validator in OptionalAlias.Validators._validators:
+                value = validator(value)
+            # Return new instance since model is frozen
+            return cls.model_construct(root=value)
+        else:
+            # Pydantic v1: values is a dict
+            value = typing.cast(typing.Optional[str], values.get("__root__"))
+            for validator in OptionalAlias.Validators._validators:
+                value = validator(value)
+            return {**values, "__root__": value}
 
     model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(frozen=True)  # type: ignore # Pydantic v2

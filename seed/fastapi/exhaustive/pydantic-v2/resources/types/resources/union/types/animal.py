@@ -6,7 +6,7 @@ import typing
 
 import pydantic
 import typing_extensions
-from ......core.pydantic_utilities import update_forward_refs
+from ......core.pydantic_utilities import universal_root_validator, update_forward_refs
 from .cat import Cat as resources_types_resources_union_types_cat_Cat
 from .dog import Dog as resources_types_resources_union_types_dog_Dog
 
@@ -50,6 +50,60 @@ class Animal(pydantic.RootModel):
                     **unioned_value.dict(exclude_unset=True, exclude={"animal"})
                 )
             )
+
+    class Partial(typing.TypedDict):
+        pass
+
+    class Validators:
+        """
+        Use this class to add validators to the Pydantic model.
+
+            @Animal.Validators.root()
+            def validate(values: Animal.Partial) -> Animal.Partial:
+                ...
+        """
+
+        _pre_validators: typing.ClassVar[typing.List[Animal.Validators._PreRootValidator]] = []
+        _post_validators: typing.ClassVar[typing.List[Animal.Validators._RootValidator]] = []
+
+        @typing.overload
+        @classmethod
+        def root(
+            cls, *, pre: typing.Literal[False] = False
+        ) -> typing.Callable[[Animal.Validators._RootValidator], Animal.Validators._RootValidator]: ...
+        @typing.overload
+        @classmethod
+        def root(
+            cls, *, pre: typing.Literal[True]
+        ) -> typing.Callable[[Animal.Validators._PreRootValidator], Animal.Validators._PreRootValidator]: ...
+        @classmethod
+        def root(cls, *, pre: bool = False) -> typing.Any:
+            def decorator(validator: typing.Any) -> typing.Any:
+                if pre:
+                    cls._pre_validators.append(validator)
+                else:
+                    cls._post_validators.append(validator)
+                return validator
+
+            return decorator
+
+        class _PreRootValidator(typing.Protocol):
+            def __call__(self, __values: typing.Any) -> typing.Any: ...
+
+        class _RootValidator(typing.Protocol):
+            def __call__(self, __values: Animal.Partial) -> Animal.Partial: ...
+
+    @universal_root_validator(pre=True)
+    def _pre_validate_types_animal(cls, values: Animal.Partial) -> Animal.Partial:
+        for validator in Animal.Validators._pre_validators:
+            values = validator(values)
+        return values
+
+    @universal_root_validator(pre=False)
+    def _post_validate_types_animal(cls, values: Animal.Partial) -> Animal.Partial:
+        for validator in Animal.Validators._post_validators:
+            values = validator(values)
+        return values
 
     model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(frozen=True)  # type: ignore # Pydantic v2
 
