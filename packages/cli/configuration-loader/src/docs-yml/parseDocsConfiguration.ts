@@ -1038,6 +1038,15 @@ function isRawChangelogConfig(item: unknown): item is docsYml.RawSchemas.Changel
     return isPlainObject(item) && typeof item.changelog === "string";
 }
 
+function isRawApiLibraryConfig(item: unknown): item is docsYml.RawSchemas.ApiLibraryConfiguration {
+    return (
+        isPlainObject(item) &&
+        typeof item["api-library"] === "string" &&
+        typeof item.title === "string" &&
+        typeof item.github === "string"
+    );
+}
+
 function isRawApiRefSectionConfiguration(item: unknown): item is docsYml.RawSchemas.ApiReferenceSectionConfiguration {
     return isPlainObject(item) && typeof item.section === "string" && Array.isArray(item.contents);
 }

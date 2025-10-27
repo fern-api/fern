@@ -372,6 +372,7 @@ types:
       - PageConfiguration
       - SectionConfiguration
       - ApiReferenceConfiguration
+      - ApiLibraryConfiguration
       - LinkConfiguration
       - ChangelogConfiguration
 
@@ -720,6 +721,12 @@ types:
       hidden: optional<boolean>
       skip-slug: optional<boolean>
       availability: optional<Availability>
+
+  ApiLibraryConfiguration:
+    properties:
+      "api-library": ProgrammingLanguage
+      title: string
+      github: string
 
   ApiReferenceConfiguration:
     extends: [WithPermissions, WithFeatureFlags]
