@@ -52,3 +52,10 @@ features:
     advanced: true
     description: |
       The SDK allows you to add custom headers to requests. You can configure headers at the client level or at the request level.
+
+  - id: ACCESS_RAW_RESPONSE_DATA
+    advanced: true
+    description: |
+      The SDK provides access to raw response data, including headers, through the `withRawResponse()` method.
+      The `withRawResponse()` method returns a raw client that wraps all responses with `body()` and `headers()` methods.
+      (A normal client's `response` is identical to a raw client's `response.body()`.)
