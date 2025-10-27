@@ -44,7 +44,7 @@ describe("getPreviewDocsDefinition - hot-reload image paths", () => {
 
     test("should preserve /_local prefix for images during hot-reload", async () => {
         const imageAbsolutePath = AbsoluteFilePath.of("/test/fern/img/home/diagram.jpg");
-        const existingFileId = "existing-file-id-123";
+        const existingFileId = FdrAPI.FileId("existing-file-id-123");
 
         const previousDocsDefinition: DocsV1Read.DocsDefinition = {
             pages: {
@@ -113,7 +113,7 @@ describe("getPreviewDocsDefinition - hot-reload image paths", () => {
 
     test("should add new images to filesV2 during hot-reload", async () => {
         const existingImagePath = AbsoluteFilePath.of("/test/fern/img/existing.png");
-        const existingFileId = "existing-file-id";
+        const existingFileId = FdrAPI.FileId("existing-file-id");
 
         const previousDocsDefinition: DocsV1Read.DocsDefinition = {
             pages: {
@@ -181,8 +181,9 @@ describe("getPreviewDocsDefinition - hot-reload image paths", () => {
         expect(newImageFileId).toBeDefined();
 
         if (newImageFileId) {
-            expect(result.filesV2?.[newImageFileId]?.url).toContain("/_local");
-            expect(result.filesV2?.[newImageFileId]?.url).toContain("/img/new-image.jpg");
+            const fileId = newImageFileId as FdrAPI.FileId;
+            expect(result.filesV2?.[fileId]?.url).toContain("/_local");
+            expect(result.filesV2?.[fileId]?.url).toContain("/img/new-image.jpg");
         }
 
         expect(result.pages[FdrAPI.PageId("pages/guide.md")]?.markdown).toContain(`file:${existingFileId}`);
@@ -203,7 +204,7 @@ describe("getPreviewDocsDefinition - hot-reload image paths", () => {
             apis: {},
             apisV2: {},
             files: {},
-            filesV2: undefined,
+            filesV2: {},
             config: {
                 aiChatConfig: undefined,
                 hideNavLinks: undefined,
@@ -252,8 +253,9 @@ describe("getPreviewDocsDefinition - hot-reload image paths", () => {
 
         const fileId = filesV2Keys[0];
         if (fileId) {
-            expect(result.filesV2?.[fileId]?.url).toContain("/_local");
-            expect(result.filesV2?.[fileId]?.url).toContain("/img/diagram.jpg");
+            const typedFileId = fileId as FdrAPI.FileId;
+            expect(result.filesV2?.[typedFileId]?.url).toContain("/_local");
+            expect(result.filesV2?.[typedFileId]?.url).toContain("/img/diagram.jpg");
         }
 
         expect(result.pages[FdrAPI.PageId("pages/guide.md")]?.markdown).toContain("file:");

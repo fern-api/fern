@@ -82,7 +82,7 @@ export async function getPreviewDocsDefinition({
 
             for (const filepath of filepaths) {
                 if (!fileIdsMap.has(filepath)) {
-                    const fileId = uuidv4();
+                    const fileId = FdrAPI.FileId(uuidv4());
                     previousDocsDefinition.filesV2[fileId] = {
                         type: "url",
                         url: FernNavigation.Url(`/_local${convertToFernHostAbsoluteFilePath(filepath)}`)
