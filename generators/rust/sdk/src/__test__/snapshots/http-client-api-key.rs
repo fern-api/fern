@@ -414,10 +414,16 @@ impl HttpClient {
         self.apply_auth_headers(&mut req, &options)?;
         self.apply_custom_headers(&mut req, &options)?;
 
-        // SSE-specific header
+        // SSE-specific headers
         req.headers_mut().insert(
             "Accept",
             "text/event-stream"
+                .parse()
+                .map_err(|_| ApiError::InvalidHeader)?,
+        );
+        req.headers_mut().insert(
+            "Cache-Control",
+            "no-store"
                 .parse()
                 .map_err(|_| ApiError::InvalidHeader)?,
         );
