@@ -3,5 +3,7 @@
  */
 
 export interface Script {
+    /** The name of the script. If provided, this enables fixtures to skip certain scripts. */
+    name?: string;
     commands: string[];
 }

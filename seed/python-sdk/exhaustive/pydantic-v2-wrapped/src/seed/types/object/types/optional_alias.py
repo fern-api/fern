@@ -5,10 +5,9 @@ from __future__ import annotations
 import typing
 
 import pydantic
-from ....core.pydantic_utilities import UniversalBaseModel
 
 
-class OptionalAlias(UniversalBaseModel):
+class OptionalAlias(pydantic.RootModel):
     root: typing.Optional[str]
 
     def get_as_str(self) -> typing.Optional[str]:
