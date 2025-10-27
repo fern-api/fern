@@ -65,7 +65,7 @@ export async function getPreviewDocsDefinition({
 
             const fileIdsMap = new Map(
                 Object.entries(previousDocsDefinition.filesV2 ?? {}).map(([id, file]) => {
-                    const path = "/" + file.url.replace("/_local/", "");
+                    const path = file.url.replace(/^\/_local/, "");
                     return [AbsoluteFilePath.of(path), id];
                 })
             );
