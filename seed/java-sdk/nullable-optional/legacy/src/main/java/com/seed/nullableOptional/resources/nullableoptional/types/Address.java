@@ -267,13 +267,7 @@ public final class Address {
 
         @java.lang.Override
         public _FinalStage country(Nullable<String> country) {
-            if (country.isNull()) {
-                this.country = null;
-            } else if (country.isEmpty()) {
-                this.country = Optional.empty();
-            } else {
-                this.country = Optional.of(country.get());
-            }
+            this.country = country;
             return this;
         }
 
@@ -305,13 +299,7 @@ public final class Address {
 
         @java.lang.Override
         public _FinalStage city(Nullable<String> city) {
-            if (city.isNull()) {
-                this.city = null;
-            } else if (city.isEmpty()) {
-                this.city = Optional.empty();
-            } else {
-                this.city = Optional.of(city.get());
-            }
+            this.city = city;
             return this;
         }
 

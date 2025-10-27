@@ -201,13 +201,7 @@ public final class UpdateComplexProfileRequest {
         }
 
         public Builder nullableRole(Nullable<UserRole> nullableRole) {
-            if (nullableRole.isNull()) {
-                this.nullableRole = null;
-            } else if (nullableRole.isEmpty()) {
-                this.nullableRole = Optional.empty();
-            } else {
-                this.nullableRole = Optional.of(nullableRole.get());
-            }
+            this.nullableRole = nullableRole;
             return this;
         }
 
@@ -223,13 +217,7 @@ public final class UpdateComplexProfileRequest {
         }
 
         public Builder nullableStatus(Nullable<UserStatus> nullableStatus) {
-            if (nullableStatus.isNull()) {
-                this.nullableStatus = null;
-            } else if (nullableStatus.isEmpty()) {
-                this.nullableStatus = Optional.empty();
-            } else {
-                this.nullableStatus = Optional.of(nullableStatus.get());
-            }
+            this.nullableStatus = nullableStatus;
             return this;
         }
 
@@ -245,13 +233,7 @@ public final class UpdateComplexProfileRequest {
         }
 
         public Builder nullableNotification(Nullable<NotificationMethod> nullableNotification) {
-            if (nullableNotification.isNull()) {
-                this.nullableNotification = null;
-            } else if (nullableNotification.isEmpty()) {
-                this.nullableNotification = Optional.empty();
-            } else {
-                this.nullableNotification = Optional.of(nullableNotification.get());
-            }
+            this.nullableNotification = nullableNotification;
             return this;
         }
 
@@ -267,13 +249,7 @@ public final class UpdateComplexProfileRequest {
         }
 
         public Builder nullableSearchResult(Nullable<SearchResult> nullableSearchResult) {
-            if (nullableSearchResult.isNull()) {
-                this.nullableSearchResult = null;
-            } else if (nullableSearchResult.isEmpty()) {
-                this.nullableSearchResult = Optional.empty();
-            } else {
-                this.nullableSearchResult = Optional.of(nullableSearchResult.get());
-            }
+            this.nullableSearchResult = nullableSearchResult;
             return this;
         }
 
@@ -289,13 +265,7 @@ public final class UpdateComplexProfileRequest {
         }
 
         public Builder nullableArray(Nullable<List<String>> nullableArray) {
-            if (nullableArray.isNull()) {
-                this.nullableArray = null;
-            } else if (nullableArray.isEmpty()) {
-                this.nullableArray = Optional.empty();
-            } else {
-                this.nullableArray = Optional.of(nullableArray.get());
-            }
+            this.nullableArray = nullableArray;
             return this;
         }
 

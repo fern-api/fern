@@ -518,13 +518,7 @@ public final class UserProfile {
 
         @java.lang.Override
         public _FinalStage optionalNullableObject(Nullable<Address> optionalNullableObject) {
-            if (optionalNullableObject.isNull()) {
-                this.optionalNullableObject = null;
-            } else if (optionalNullableObject.isEmpty()) {
-                this.optionalNullableObject = Optional.empty();
-            } else {
-                this.optionalNullableObject = Optional.of(optionalNullableObject.get());
-            }
+            this.optionalNullableObject = optionalNullableObject;
             return this;
         }
 
@@ -543,13 +537,7 @@ public final class UserProfile {
 
         @java.lang.Override
         public _FinalStage optionalNullableString(Nullable<String> optionalNullableString) {
-            if (optionalNullableString.isNull()) {
-                this.optionalNullableString = null;
-            } else if (optionalNullableString.isEmpty()) {
-                this.optionalNullableString = Optional.empty();
-            } else {
-                this.optionalNullableString = Optional.of(optionalNullableString.get());
-            }
+            this.optionalNullableString = optionalNullableString;
             return this;
         }
 
@@ -659,13 +647,7 @@ public final class UserProfile {
 
         @java.lang.Override
         public _FinalStage nullableMap(Nullable<Map<String, String>> nullableMap) {
-            if (nullableMap.isNull()) {
-                this.nullableMap = null;
-            } else if (nullableMap.isEmpty()) {
-                this.nullableMap = Optional.empty();
-            } else {
-                this.nullableMap = Optional.of(nullableMap.get());
-            }
+            this.nullableMap = nullableMap;
             return this;
         }
 
@@ -684,13 +666,7 @@ public final class UserProfile {
 
         @java.lang.Override
         public _FinalStage nullableList(Nullable<List<String>> nullableList) {
-            if (nullableList.isNull()) {
-                this.nullableList = null;
-            } else if (nullableList.isEmpty()) {
-                this.nullableList = Optional.empty();
-            } else {
-                this.nullableList = Optional.of(nullableList.get());
-            }
+            this.nullableList = nullableList;
             return this;
         }
 
@@ -709,13 +685,7 @@ public final class UserProfile {
 
         @java.lang.Override
         public _FinalStage nullableObject(Nullable<Address> nullableObject) {
-            if (nullableObject.isNull()) {
-                this.nullableObject = null;
-            } else if (nullableObject.isEmpty()) {
-                this.nullableObject = Optional.empty();
-            } else {
-                this.nullableObject = Optional.of(nullableObject.get());
-            }
+            this.nullableObject = nullableObject;
             return this;
         }
 
@@ -734,13 +704,7 @@ public final class UserProfile {
 
         @java.lang.Override
         public _FinalStage nullableDate(Nullable<OffsetDateTime> nullableDate) {
-            if (nullableDate.isNull()) {
-                this.nullableDate = null;
-            } else if (nullableDate.isEmpty()) {
-                this.nullableDate = Optional.empty();
-            } else {
-                this.nullableDate = Optional.of(nullableDate.get());
-            }
+            this.nullableDate = nullableDate;
             return this;
         }
 
@@ -759,13 +723,7 @@ public final class UserProfile {
 
         @java.lang.Override
         public _FinalStage nullableBoolean(Nullable<Boolean> nullableBoolean) {
-            if (nullableBoolean.isNull()) {
-                this.nullableBoolean = null;
-            } else if (nullableBoolean.isEmpty()) {
-                this.nullableBoolean = Optional.empty();
-            } else {
-                this.nullableBoolean = Optional.of(nullableBoolean.get());
-            }
+            this.nullableBoolean = nullableBoolean;
             return this;
         }
 
@@ -784,13 +742,7 @@ public final class UserProfile {
 
         @java.lang.Override
         public _FinalStage nullableInteger(Nullable<Integer> nullableInteger) {
-            if (nullableInteger.isNull()) {
-                this.nullableInteger = null;
-            } else if (nullableInteger.isEmpty()) {
-                this.nullableInteger = Optional.empty();
-            } else {
-                this.nullableInteger = Optional.of(nullableInteger.get());
-            }
+            this.nullableInteger = nullableInteger;
             return this;
         }
 
@@ -809,13 +761,7 @@ public final class UserProfile {
 
         @java.lang.Override
         public _FinalStage nullableString(Nullable<String> nullableString) {
-            if (nullableString.isNull()) {
-                this.nullableString = null;
-            } else if (nullableString.isEmpty()) {
-                this.nullableString = Optional.empty();
-            } else {
-                this.nullableString = Optional.of(nullableString.get());
-            }
+            this.nullableString = nullableString;
             return this;
         }
 

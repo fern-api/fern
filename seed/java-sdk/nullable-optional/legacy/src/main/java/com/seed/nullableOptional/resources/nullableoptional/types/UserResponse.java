@@ -256,13 +256,7 @@ public final class UserResponse {
 
         @java.lang.Override
         public _FinalStage updatedAt(Nullable<OffsetDateTime> updatedAt) {
-            if (updatedAt.isNull()) {
-                this.updatedAt = null;
-            } else if (updatedAt.isEmpty()) {
-                this.updatedAt = Optional.empty();
-            } else {
-                this.updatedAt = Optional.of(updatedAt.get());
-            }
+            this.updatedAt = updatedAt;
             return this;
         }
 
@@ -294,13 +288,7 @@ public final class UserResponse {
 
         @java.lang.Override
         public _FinalStage email(Nullable<String> email) {
-            if (email.isNull()) {
-                this.email = null;
-            } else if (email.isEmpty()) {
-                this.email = Optional.empty();
-            } else {
-                this.email = Optional.of(email.get());
-            }
+            this.email = email;
             return this;
         }
 

@@ -104,13 +104,7 @@ public final class PostWithNullableNamedRequestBodyTypeRequest {
         }
 
         public Builder body(Nullable<NullableObject> body) {
-            if (body.isNull()) {
-                this.body = null;
-            } else if (body.isEmpty()) {
-                this.body = Optional.empty();
-            } else {
-                this.body = Optional.of(body.get());
-            }
+            this.body = body;
             return this;
         }
 

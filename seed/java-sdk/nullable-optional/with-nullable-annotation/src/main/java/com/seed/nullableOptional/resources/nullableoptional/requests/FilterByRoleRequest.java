@@ -154,13 +154,7 @@ public final class FilterByRoleRequest {
         }
 
         public Builder secondaryRole(com.seed.nullableOptional.core.Nullable<UserRole> secondaryRole) {
-            if (secondaryRole.isNull()) {
-                this.secondaryRole = null;
-            } else if (secondaryRole.isEmpty()) {
-                this.secondaryRole = Optional.empty();
-            } else {
-                this.secondaryRole = Optional.of(secondaryRole.get());
-            }
+            this.secondaryRole = secondaryRole;
             return this;
         }
 

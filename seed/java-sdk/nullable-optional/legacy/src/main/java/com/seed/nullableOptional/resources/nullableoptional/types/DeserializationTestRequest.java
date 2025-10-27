@@ -393,13 +393,7 @@ public final class DeserializationTestRequest {
 
         @java.lang.Override
         public _FinalStage nullableObject(Nullable<Address> nullableObject) {
-            if (nullableObject.isNull()) {
-                this.nullableObject = null;
-            } else if (nullableObject.isEmpty()) {
-                this.nullableObject = Optional.empty();
-            } else {
-                this.nullableObject = Optional.of(nullableObject.get());
-            }
+            this.nullableObject = nullableObject;
             return this;
         }
 
@@ -418,13 +412,7 @@ public final class DeserializationTestRequest {
 
         @java.lang.Override
         public _FinalStage nullableMap(Nullable<Map<String, Integer>> nullableMap) {
-            if (nullableMap.isNull()) {
-                this.nullableMap = null;
-            } else if (nullableMap.isEmpty()) {
-                this.nullableMap = Optional.empty();
-            } else {
-                this.nullableMap = Optional.of(nullableMap.get());
-            }
+            this.nullableMap = nullableMap;
             return this;
         }
 
@@ -443,13 +431,7 @@ public final class DeserializationTestRequest {
 
         @java.lang.Override
         public _FinalStage nullableList(Nullable<List<String>> nullableList) {
-            if (nullableList.isNull()) {
-                this.nullableList = null;
-            } else if (nullableList.isEmpty()) {
-                this.nullableList = Optional.empty();
-            } else {
-                this.nullableList = Optional.of(nullableList.get());
-            }
+            this.nullableList = nullableList;
             return this;
         }
 
@@ -481,13 +463,7 @@ public final class DeserializationTestRequest {
 
         @java.lang.Override
         public _FinalStage nullableUnion(Nullable<NotificationMethod> nullableUnion) {
-            if (nullableUnion.isNull()) {
-                this.nullableUnion = null;
-            } else if (nullableUnion.isEmpty()) {
-                this.nullableUnion = Optional.empty();
-            } else {
-                this.nullableUnion = Optional.of(nullableUnion.get());
-            }
+            this.nullableUnion = nullableUnion;
             return this;
         }
 
@@ -519,13 +495,7 @@ public final class DeserializationTestRequest {
 
         @java.lang.Override
         public _FinalStage nullableEnum(Nullable<UserRole> nullableEnum) {
-            if (nullableEnum.isNull()) {
-                this.nullableEnum = null;
-            } else if (nullableEnum.isEmpty()) {
-                this.nullableEnum = Optional.empty();
-            } else {
-                this.nullableEnum = Optional.of(nullableEnum.get());
-            }
+            this.nullableEnum = nullableEnum;
             return this;
         }
 
@@ -544,13 +514,7 @@ public final class DeserializationTestRequest {
 
         @java.lang.Override
         public _FinalStage optionalNullableString(Nullable<String> optionalNullableString) {
-            if (optionalNullableString.isNull()) {
-                this.optionalNullableString = null;
-            } else if (optionalNullableString.isEmpty()) {
-                this.optionalNullableString = Optional.empty();
-            } else {
-                this.optionalNullableString = Optional.of(optionalNullableString.get());
-            }
+            this.optionalNullableString = optionalNullableString;
             return this;
         }
 
@@ -582,13 +546,7 @@ public final class DeserializationTestRequest {
 
         @java.lang.Override
         public _FinalStage nullableString(Nullable<String> nullableString) {
-            if (nullableString.isNull()) {
-                this.nullableString = null;
-            } else if (nullableString.isEmpty()) {
-                this.nullableString = Optional.empty();
-            } else {
-                this.nullableString = Optional.of(nullableString.get());
-            }
+            this.nullableString = nullableString;
             return this;
         }
 

@@ -138,13 +138,7 @@ public final class FilterByRoleRequest {
         }
 
         public Builder role(Nullable<UserRole> role) {
-            if (role.isNull()) {
-                this.role = null;
-            } else if (role.isEmpty()) {
-                this.role = Optional.empty();
-            } else {
-                this.role = Optional.of(role.get());
-            }
+            this.role = role;
             return this;
         }
 
@@ -171,13 +165,7 @@ public final class FilterByRoleRequest {
         }
 
         public Builder secondaryRole(Nullable<UserRole> secondaryRole) {
-            if (secondaryRole.isNull()) {
-                this.secondaryRole = null;
-            } else if (secondaryRole.isEmpty()) {
-                this.secondaryRole = Optional.empty();
-            } else {
-                this.secondaryRole = Optional.of(secondaryRole.get());
-            }
+            this.secondaryRole = secondaryRole;
             return this;
         }
 

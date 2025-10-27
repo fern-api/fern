@@ -170,13 +170,7 @@ public final class SearchUsersRequest {
 
         @java.lang.Override
         public _FinalStage isActive(com.seed.nullableOptional.core.Nullable<Boolean> isActive) {
-            if (isActive.isNull()) {
-                this.isActive = null;
-            } else if (isActive.isEmpty()) {
-                this.isActive = Optional.empty();
-            } else {
-                this.isActive = Optional.of(isActive.get());
-            }
+            this.isActive = isActive;
             return this;
         }
 

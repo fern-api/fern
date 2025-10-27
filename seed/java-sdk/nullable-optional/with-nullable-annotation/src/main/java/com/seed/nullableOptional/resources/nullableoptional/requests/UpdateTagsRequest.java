@@ -168,13 +168,7 @@ public final class UpdateTagsRequest {
         }
 
         public Builder labels(com.seed.nullableOptional.core.Nullable<List<String>> labels) {
-            if (labels.isNull()) {
-                this.labels = null;
-            } else if (labels.isEmpty()) {
-                this.labels = Optional.empty();
-            } else {
-                this.labels = Optional.of(labels.get());
-            }
+            this.labels = labels;
             return this;
         }
 

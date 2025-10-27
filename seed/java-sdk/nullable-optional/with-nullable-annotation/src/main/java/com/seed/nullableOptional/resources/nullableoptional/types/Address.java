@@ -253,13 +253,7 @@ public final class Address {
 
         @java.lang.Override
         public _FinalStage country(com.seed.nullableOptional.core.Nullable<String> country) {
-            if (country.isNull()) {
-                this.country = null;
-            } else if (country.isEmpty()) {
-                this.country = Optional.empty();
-            } else {
-                this.country = Optional.of(country.get());
-            }
+            this.country = country;
             return this;
         }
 

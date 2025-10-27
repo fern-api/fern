@@ -176,13 +176,7 @@ public final class SearchUsersRequest {
 
         @java.lang.Override
         public _FinalStage isActive(Nullable<Boolean> isActive) {
-            if (isActive.isNull()) {
-                this.isActive = null;
-            } else if (isActive.isEmpty()) {
-                this.isActive = Optional.empty();
-            } else {
-                this.isActive = Optional.of(isActive.get());
-            }
+            this.isActive = isActive;
             return this;
         }
 
@@ -214,13 +208,7 @@ public final class SearchUsersRequest {
 
         @java.lang.Override
         public _FinalStage department(Nullable<String> department) {
-            if (department.isNull()) {
-                this.department = null;
-            } else if (department.isEmpty()) {
-                this.department = Optional.empty();
-            } else {
-                this.department = Optional.of(department.get());
-            }
+            this.department = department;
             return this;
         }
 

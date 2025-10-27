@@ -210,13 +210,7 @@ public final class Document {
 
         @java.lang.Override
         public _FinalStage author(Nullable<String> author) {
-            if (author.isNull()) {
-                this.author = null;
-            } else if (author.isEmpty()) {
-                this.author = Optional.empty();
-            } else {
-                this.author = Optional.of(author.get());
-            }
+            this.author = author;
             return this;
         }
 

@@ -487,13 +487,7 @@ public final class UserProfile {
         @java.lang.Override
         public _FinalStage optionalNullableObject(
                 com.seed.nullableOptional.core.Nullable<Address> optionalNullableObject) {
-            if (optionalNullableObject.isNull()) {
-                this.optionalNullableObject = null;
-            } else if (optionalNullableObject.isEmpty()) {
-                this.optionalNullableObject = Optional.empty();
-            } else {
-                this.optionalNullableObject = Optional.of(optionalNullableObject.get());
-            }
+            this.optionalNullableObject = optionalNullableObject;
             return this;
         }
 
@@ -513,13 +507,7 @@ public final class UserProfile {
         @java.lang.Override
         public _FinalStage optionalNullableString(
                 com.seed.nullableOptional.core.Nullable<String> optionalNullableString) {
-            if (optionalNullableString.isNull()) {
-                this.optionalNullableString = null;
-            } else if (optionalNullableString.isEmpty()) {
-                this.optionalNullableString = Optional.empty();
-            } else {
-                this.optionalNullableString = Optional.of(optionalNullableString.get());
-            }
+            this.optionalNullableString = optionalNullableString;
             return this;
         }
 

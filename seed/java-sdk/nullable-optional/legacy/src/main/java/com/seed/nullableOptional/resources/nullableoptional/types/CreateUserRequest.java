@@ -176,13 +176,7 @@ public final class CreateUserRequest {
 
         @java.lang.Override
         public _FinalStage address(Nullable<Address> address) {
-            if (address.isNull()) {
-                this.address = null;
-            } else if (address.isEmpty()) {
-                this.address = Optional.empty();
-            } else {
-                this.address = Optional.of(address.get());
-            }
+            this.address = address;
             return this;
         }
 
@@ -214,13 +208,7 @@ public final class CreateUserRequest {
 
         @java.lang.Override
         public _FinalStage email(Nullable<String> email) {
-            if (email.isNull()) {
-                this.email = null;
-            } else if (email.isEmpty()) {
-                this.email = Optional.empty();
-            } else {
-                this.email = Optional.of(email.get());
-            }
+            this.email = email;
             return this;
         }
 

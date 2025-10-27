@@ -175,13 +175,7 @@ public final class ListUsersRequest {
         }
 
         public Builder sortBy(Nullable<String> sortBy) {
-            if (sortBy.isNull()) {
-                this.sortBy = null;
-            } else if (sortBy.isEmpty()) {
-                this.sortBy = Optional.empty();
-            } else {
-                this.sortBy = Optional.of(sortBy.get());
-            }
+            this.sortBy = sortBy;
             return this;
         }
 

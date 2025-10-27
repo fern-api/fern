@@ -147,13 +147,7 @@ public final class SearchRequest {
 
         @java.lang.Override
         public _FinalStage includeTypes(Nullable<List<String>> includeTypes) {
-            if (includeTypes.isNull()) {
-                this.includeTypes = null;
-            } else if (includeTypes.isEmpty()) {
-                this.includeTypes = Optional.empty();
-            } else {
-                this.includeTypes = Optional.of(includeTypes.get());
-            }
+            this.includeTypes = includeTypes;
             return this;
         }
 

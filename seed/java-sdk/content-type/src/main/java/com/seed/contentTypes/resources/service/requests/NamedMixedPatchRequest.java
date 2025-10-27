@@ -25,16 +25,16 @@ import java.util.Optional;
 public final class NamedMixedPatchRequest {
     private final Optional<String> appId;
 
-    private final Nullable<String> instructions;
+    private final Optional<String> instructions;
 
-    private final Nullable<Boolean> active;
+    private final Optional<Boolean> active;
 
     private final Map<String, Object> additionalProperties;
 
     private NamedMixedPatchRequest(
             Optional<String> appId,
-            Nullable<String> instructions,
-            Nullable<Boolean> active,
+            Optional<String> instructions,
+            Optional<Boolean> active,
             Map<String, Object> additionalProperties) {
         this.appId = appId;
         this.instructions = instructions;
@@ -48,7 +48,7 @@ public final class NamedMixedPatchRequest {
     }
 
     @JsonIgnore
-    public Nullable<String> getInstructions() {
+    public Optional<String> getInstructions() {
         if (instructions == null) {
             return Optional.empty();
         }
@@ -56,7 +56,7 @@ public final class NamedMixedPatchRequest {
     }
 
     @JsonIgnore
-    public Nullable<Boolean> getActive() {
+    public Optional<Boolean> getActive() {
         if (active == null) {
             return Optional.empty();
         }
@@ -65,13 +65,13 @@ public final class NamedMixedPatchRequest {
 
     @JsonInclude(value = JsonInclude.Include.CUSTOM, valueFilter = NullableNonemptyFilter.class)
     @JsonProperty("instructions")
-    private Nullable<String> _getInstructions() {
+    private Optional<String> _getInstructions() {
         return instructions;
     }
 
     @JsonInclude(value = JsonInclude.Include.CUSTOM, valueFilter = NullableNonemptyFilter.class)
     @JsonProperty("active")
-    private Nullable<Boolean> _getActive() {
+    private Optional<Boolean> _getActive() {
         return active;
     }
 
@@ -108,6 +108,10 @@ public final class NamedMixedPatchRequest {
     public static final class Builder {
         private Optional<String> appId = Optional.empty();
 
+        private Optional<String> instructions = Optional.empty();
+
+        private Optional<Boolean> active = Optional.empty();
+
         @JsonAnySetter
         private Map<String, Object> additionalProperties = new HashMap<>();
 
@@ -128,6 +132,38 @@ public final class NamedMixedPatchRequest {
 
         public Builder appId(String appId) {
             this.appId = Optional.ofNullable(appId);
+            return this;
+        }
+
+        @JsonSetter(value = "instructions", nulls = Nulls.SKIP)
+        public Builder instructions(Optional<String> instructions) {
+            this.instructions = instructions;
+            return this;
+        }
+
+        public Builder instructions(String instructions) {
+            this.instructions = Optional.ofNullable(instructions);
+            return this;
+        }
+
+        public Builder instructions(Nullable<String> instructions) {
+            this.instructions = instructions;
+            return this;
+        }
+
+        @JsonSetter(value = "active", nulls = Nulls.SKIP)
+        public Builder active(Optional<Boolean> active) {
+            this.active = active;
+            return this;
+        }
+
+        public Builder active(Boolean active) {
+            this.active = Optional.ofNullable(active);
+            return this;
+        }
+
+        public Builder active(Nullable<Boolean> active) {
+            this.active = active;
             return this;
         }
 

@@ -619,13 +619,7 @@ public final class ComplexProfile {
         @java.lang.Override
         public _FinalStage optionalNullableArray(
                 com.seed.nullableOptional.core.Nullable<List<String>> optionalNullableArray) {
-            if (optionalNullableArray.isNull()) {
-                this.optionalNullableArray = null;
-            } else if (optionalNullableArray.isEmpty()) {
-                this.optionalNullableArray = Optional.empty();
-            } else {
-                this.optionalNullableArray = Optional.of(optionalNullableArray.get());
-            }
+            this.optionalNullableArray = optionalNullableArray;
             return this;
         }
 
@@ -703,13 +697,7 @@ public final class ComplexProfile {
         @java.lang.Override
         public _FinalStage optionalNullableNotification(
                 com.seed.nullableOptional.core.Nullable<NotificationMethod> optionalNullableNotification) {
-            if (optionalNullableNotification.isNull()) {
-                this.optionalNullableNotification = null;
-            } else if (optionalNullableNotification.isEmpty()) {
-                this.optionalNullableNotification = Optional.empty();
-            } else {
-                this.optionalNullableNotification = Optional.of(optionalNullableNotification.get());
-            }
+            this.optionalNullableNotification = optionalNullableNotification;
             return this;
         }
 
@@ -750,13 +738,7 @@ public final class ComplexProfile {
         @java.lang.Override
         public _FinalStage optionalNullableStatus(
                 com.seed.nullableOptional.core.Nullable<UserStatus> optionalNullableStatus) {
-            if (optionalNullableStatus.isNull()) {
-                this.optionalNullableStatus = null;
-            } else if (optionalNullableStatus.isEmpty()) {
-                this.optionalNullableStatus = Optional.empty();
-            } else {
-                this.optionalNullableStatus = Optional.of(optionalNullableStatus.get());
-            }
+            this.optionalNullableStatus = optionalNullableStatus;
             return this;
         }
 
@@ -796,13 +778,7 @@ public final class ComplexProfile {
         @java.lang.Override
         public _FinalStage optionalNullableRole(
                 com.seed.nullableOptional.core.Nullable<UserRole> optionalNullableRole) {
-            if (optionalNullableRole.isNull()) {
-                this.optionalNullableRole = null;
-            } else if (optionalNullableRole.isEmpty()) {
-                this.optionalNullableRole = Optional.empty();
-            } else {
-                this.optionalNullableRole = Optional.of(optionalNullableRole.get());
-            }
+            this.optionalNullableRole = optionalNullableRole;
             return this;
         }
 

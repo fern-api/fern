@@ -137,13 +137,7 @@ public final class UpdateTagsRequest {
         }
 
         public Builder tags(Nullable<List<String>> tags) {
-            if (tags.isNull()) {
-                this.tags = null;
-            } else if (tags.isEmpty()) {
-                this.tags = Optional.empty();
-            } else {
-                this.tags = Optional.of(tags.get());
-            }
+            this.tags = tags;
             return this;
         }
 
@@ -170,13 +164,7 @@ public final class UpdateTagsRequest {
         }
 
         public Builder labels(Nullable<List<String>> labels) {
-            if (labels.isNull()) {
-                this.labels = null;
-            } else if (labels.isEmpty()) {
-                this.labels = Optional.empty();
-            } else {
-                this.labels = Optional.of(labels.get());
-            }
+            this.labels = labels;
             return this;
         }
 

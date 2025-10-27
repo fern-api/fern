@@ -170,13 +170,7 @@ public final class CreateUserRequest {
 
         @java.lang.Override
         public _FinalStage address(com.seed.nullableOptional.core.Nullable<Address> address) {
-            if (address.isNull()) {
-                this.address = null;
-            } else if (address.isEmpty()) {
-                this.address = Optional.empty();
-            } else {
-                this.address = Optional.of(address.get());
-            }
+            this.address = address;
             return this;
         }
 

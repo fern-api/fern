@@ -185,13 +185,7 @@ public final class Organization {
 
         @java.lang.Override
         public _FinalStage domain(Nullable<String> domain) {
-            if (domain.isNull()) {
-                this.domain = null;
-            } else if (domain.isEmpty()) {
-                this.domain = Optional.empty();
-            } else {
-                this.domain = Optional.of(domain.get());
-            }
+            this.domain = domain;
             return this;
         }
 

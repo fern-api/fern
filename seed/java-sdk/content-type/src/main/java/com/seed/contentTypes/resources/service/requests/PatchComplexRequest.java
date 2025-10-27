@@ -34,15 +34,15 @@ public final class PatchComplexRequest {
 
     private final Optional<List<String>> tags;
 
-    private final Optional<Nullable<String>> email;
+    private final Optional<String> email;
 
-    private final Optional<Nullable<String>> nickname;
+    private final Optional<String> nickname;
 
-    private final Optional<Nullable<String>> bio;
+    private final Optional<String> bio;
 
-    private final Optional<Nullable<String>> profileImageUrl;
+    private final Optional<String> profileImageUrl;
 
-    private final Optional<Nullable<Map<String, Object>>> settings;
+    private final Optional<Map<String, Object>> settings;
 
     private final Map<String, Object> additionalProperties;
 
@@ -52,11 +52,11 @@ public final class PatchComplexRequest {
             Optional<Boolean> active,
             Optional<Map<String, Object>> metadata,
             Optional<List<String>> tags,
-            Optional<Nullable<String>> email,
-            Optional<Nullable<String>> nickname,
-            Optional<Nullable<String>> bio,
-            Optional<Nullable<String>> profileImageUrl,
-            Optional<Nullable<Map<String, Object>>> settings,
+            Optional<String> email,
+            Optional<String> nickname,
+            Optional<String> bio,
+            Optional<String> profileImageUrl,
+            Optional<Map<String, Object>> settings,
             Map<String, Object> additionalProperties) {
         this.name = name;
         this.age = age;
@@ -97,7 +97,7 @@ public final class PatchComplexRequest {
     }
 
     @JsonIgnore
-    public Optional<Nullable<String>> getEmail() {
+    public Optional<String> getEmail() {
         if (email == null) {
             return Optional.empty();
         }
@@ -105,7 +105,7 @@ public final class PatchComplexRequest {
     }
 
     @JsonIgnore
-    public Optional<Nullable<String>> getNickname() {
+    public Optional<String> getNickname() {
         if (nickname == null) {
             return Optional.empty();
         }
@@ -113,7 +113,7 @@ public final class PatchComplexRequest {
     }
 
     @JsonIgnore
-    public Optional<Nullable<String>> getBio() {
+    public Optional<String> getBio() {
         if (bio == null) {
             return Optional.empty();
         }
@@ -121,7 +121,7 @@ public final class PatchComplexRequest {
     }
 
     @JsonIgnore
-    public Optional<Nullable<String>> getProfileImageUrl() {
+    public Optional<String> getProfileImageUrl() {
         if (profileImageUrl == null) {
             return Optional.empty();
         }
@@ -129,7 +129,7 @@ public final class PatchComplexRequest {
     }
 
     @JsonIgnore
-    public Optional<Nullable<Map<String, Object>>> getSettings() {
+    public Optional<Map<String, Object>> getSettings() {
         if (settings == null) {
             return Optional.empty();
         }
@@ -138,31 +138,31 @@ public final class PatchComplexRequest {
 
     @JsonInclude(value = JsonInclude.Include.CUSTOM, valueFilter = NullableNonemptyFilter.class)
     @JsonProperty("email")
-    private Optional<Nullable<String>> _getEmail() {
+    private Optional<String> _getEmail() {
         return email;
     }
 
     @JsonInclude(value = JsonInclude.Include.CUSTOM, valueFilter = NullableNonemptyFilter.class)
     @JsonProperty("nickname")
-    private Optional<Nullable<String>> _getNickname() {
+    private Optional<String> _getNickname() {
         return nickname;
     }
 
     @JsonInclude(value = JsonInclude.Include.CUSTOM, valueFilter = NullableNonemptyFilter.class)
     @JsonProperty("bio")
-    private Optional<Nullable<String>> _getBio() {
+    private Optional<String> _getBio() {
         return bio;
     }
 
     @JsonInclude(value = JsonInclude.Include.CUSTOM, valueFilter = NullableNonemptyFilter.class)
     @JsonProperty("profileImageUrl")
-    private Optional<Nullable<String>> _getProfileImageUrl() {
+    private Optional<String> _getProfileImageUrl() {
         return profileImageUrl;
     }
 
     @JsonInclude(value = JsonInclude.Include.CUSTOM, valueFilter = NullableNonemptyFilter.class)
     @JsonProperty("settings")
-    private Optional<Nullable<Map<String, Object>>> _getSettings() {
+    private Optional<Map<String, Object>> _getSettings() {
         return settings;
     }
 
@@ -226,15 +226,15 @@ public final class PatchComplexRequest {
 
         private Optional<List<String>> tags = Optional.empty();
 
-        private Optional<Nullable<String>> email = Optional.empty();
+        private Optional<String> email = Optional.empty();
 
-        private Optional<Nullable<String>> nickname = Optional.empty();
+        private Optional<String> nickname = Optional.empty();
 
-        private Optional<Nullable<String>> bio = Optional.empty();
+        private Optional<String> bio = Optional.empty();
 
-        private Optional<Nullable<String>> profileImageUrl = Optional.empty();
+        private Optional<String> profileImageUrl = Optional.empty();
 
-        private Optional<Nullable<Map<String, Object>>> settings = Optional.empty();
+        private Optional<Map<String, Object>> settings = Optional.empty();
 
         @JsonAnySetter
         private Map<String, Object> additionalProperties = new HashMap<>();
@@ -311,81 +311,81 @@ public final class PatchComplexRequest {
         }
 
         @JsonSetter(value = "email", nulls = Nulls.SKIP)
-        public Builder email(Optional<Nullable<String>> email) {
+        public Builder email(Optional<String> email) {
             this.email = email;
             return this;
         }
 
-        public Builder email(Nullable<String> email) {
+        public Builder email(String email) {
             this.email = Optional.ofNullable(email);
             return this;
         }
 
-        public Builder email(Nullable<Nullable<String>> email) {
+        public Builder email(Nullable<String> email) {
             this.email = email;
             return this;
         }
 
         @JsonSetter(value = "nickname", nulls = Nulls.SKIP)
-        public Builder nickname(Optional<Nullable<String>> nickname) {
+        public Builder nickname(Optional<String> nickname) {
             this.nickname = nickname;
             return this;
         }
 
-        public Builder nickname(Nullable<String> nickname) {
+        public Builder nickname(String nickname) {
             this.nickname = Optional.ofNullable(nickname);
             return this;
         }
 
-        public Builder nickname(Nullable<Nullable<String>> nickname) {
+        public Builder nickname(Nullable<String> nickname) {
             this.nickname = nickname;
             return this;
         }
 
         @JsonSetter(value = "bio", nulls = Nulls.SKIP)
-        public Builder bio(Optional<Nullable<String>> bio) {
+        public Builder bio(Optional<String> bio) {
             this.bio = bio;
             return this;
         }
 
-        public Builder bio(Nullable<String> bio) {
+        public Builder bio(String bio) {
             this.bio = Optional.ofNullable(bio);
             return this;
         }
 
-        public Builder bio(Nullable<Nullable<String>> bio) {
+        public Builder bio(Nullable<String> bio) {
             this.bio = bio;
             return this;
         }
 
         @JsonSetter(value = "profileImageUrl", nulls = Nulls.SKIP)
-        public Builder profileImageUrl(Optional<Nullable<String>> profileImageUrl) {
+        public Builder profileImageUrl(Optional<String> profileImageUrl) {
             this.profileImageUrl = profileImageUrl;
             return this;
         }
 
-        public Builder profileImageUrl(Nullable<String> profileImageUrl) {
+        public Builder profileImageUrl(String profileImageUrl) {
             this.profileImageUrl = Optional.ofNullable(profileImageUrl);
             return this;
         }
 
-        public Builder profileImageUrl(Nullable<Nullable<String>> profileImageUrl) {
+        public Builder profileImageUrl(Nullable<String> profileImageUrl) {
             this.profileImageUrl = profileImageUrl;
             return this;
         }
 
         @JsonSetter(value = "settings", nulls = Nulls.SKIP)
-        public Builder settings(Optional<Nullable<Map<String, Object>>> settings) {
+        public Builder settings(Optional<Map<String, Object>> settings) {
             this.settings = settings;
             return this;
         }
 
-        public Builder settings(Nullable<Map<String, Object>> settings) {
+        public Builder settings(Map<String, Object> settings) {
             this.settings = Optional.ofNullable(settings);
             return this;
         }
 
-        public Builder settings(Nullable<Nullable<Map<String, Object>>> settings) {
+        public Builder settings(Nullable<Map<String, Object>> settings) {
             this.settings = settings;
             return this;
         }
