@@ -3,7 +3,7 @@ import { resolve } from "node:path";
 
 import { AbsoluteFilePath } from "@fern-api/fs-utils";
 import { createSampleIr } from "@fern-api/test-utils";
-import { IntermediateRepresentation } from "@fern-fern/ir-v59-sdk/api";
+import { IntermediateRepresentation } from "@fern-fern/ir-sdk/api";
 import { formatEndpointPathForSwift } from "../format-endpoint-path-for-swift";
 
 const pathToTestDefinitions = resolve(__dirname, "../../../../../../../../test-definitions/fern/apis");
@@ -14,7 +14,7 @@ const testDefinitionNames = readdirSync(pathToTestDefinitions, { withFileTypes: 
 async function getIRForTestDefinition(testDefinitionName: string): Promise<IntermediateRepresentation> {
     const absolutePathToWorkspace = AbsoluteFilePath.of(resolve(pathToTestDefinitions, testDefinitionName));
     return (await createSampleIr(absolutePathToWorkspace, {
-        version: "v59" // make sure to upgrade this when the IR version is upgraded
+        version: "v60" // make sure to upgrade this when the IR version is upgraded
     })) as IntermediateRepresentation;
 }
 
