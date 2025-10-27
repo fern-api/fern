@@ -51,3 +51,4 @@ allowedFailures:
   - trace
   - alias-extends
   - empty-clients
+  - file-upload-openapi

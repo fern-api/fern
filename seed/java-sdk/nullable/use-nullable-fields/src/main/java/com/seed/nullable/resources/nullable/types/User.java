@@ -207,27 +207,17 @@ public final class User {
     public interface _FinalStage {
         User build();
 
-        _FinalStage tags(Nullable<List<String>> tags);
-
         _FinalStage metadata(Optional<Nullable<Metadata>> metadata);
 
         _FinalStage metadata(Nullable<Metadata> metadata);
-
-        _FinalStage metadata(Nullable<Nullable<Metadata>> metadata);
-
-        _FinalStage email(Nullable<String> email);
 
         _FinalStage numbers(Optional<Nullable<List<Integer>>> numbers);
 
         _FinalStage numbers(Nullable<List<Integer>> numbers);
 
-        _FinalStage numbers(Nullable<Nullable<List<Integer>>> numbers);
-
         _FinalStage strings(Optional<Nullable<Map<String, Object>>> strings);
 
         _FinalStage strings(Nullable<Map<String, Object>> strings);
-
-        _FinalStage strings(Nullable<Nullable<Map<String, Object>>> strings);
     }
 
     @JsonIgnoreProperties(ignoreUnknown = true)
@@ -284,12 +274,6 @@ public final class User {
         }
 
         @java.lang.Override
-        public _FinalStage strings(Nullable<Nullable<Map<String, Object>>> strings) {
-            this.strings = strings;
-            return this;
-        }
-
-        @java.lang.Override
         public _FinalStage strings(Nullable<Map<String, Object>> strings) {
             this.strings = Optional.ofNullable(strings);
             return this;
@@ -303,12 +287,6 @@ public final class User {
         }
 
         @java.lang.Override
-        public _FinalStage numbers(Nullable<Nullable<List<Integer>>> numbers) {
-            this.numbers = numbers;
-            return this;
-        }
-
-        @java.lang.Override
         public _FinalStage numbers(Nullable<List<Integer>> numbers) {
             this.numbers = Optional.ofNullable(numbers);
             return this;
@@ -318,12 +296,6 @@ public final class User {
         @JsonSetter(value = "numbers", nulls = Nulls.SKIP)
         public _FinalStage numbers(Optional<Nullable<List<Integer>>> numbers) {
             this.numbers = numbers;
-            return this;
-        }
-
-        @java.lang.Override
-        public _FinalStage metadata(Nullable<Nullable<Metadata>> metadata) {
-            this.metadata = metadata;
             return this;
         }
 

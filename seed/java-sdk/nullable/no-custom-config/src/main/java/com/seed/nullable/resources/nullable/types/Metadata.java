@@ -238,13 +238,7 @@ public final class Metadata {
 
         @java.lang.Override
         public _FinalStage activated(Nullable<Boolean> activated) {
-            if (activated.isNull()) {
-                this.activated = null;
-            } else if (activated.isEmpty()) {
-                this.activated = Optional.empty();
-            } else {
-                this.activated = Optional.of(activated.get());
-            }
+            this.activated = activated;
             return this;
         }
 
@@ -263,13 +257,7 @@ public final class Metadata {
 
         @java.lang.Override
         public _FinalStage avatar(Nullable<String> avatar) {
-            if (avatar.isNull()) {
-                this.avatar = null;
-            } else if (avatar.isEmpty()) {
-                this.avatar = Optional.empty();
-            } else {
-                this.avatar = Optional.of(avatar.get());
-            }
+            this.avatar = avatar;
             return this;
         }
 

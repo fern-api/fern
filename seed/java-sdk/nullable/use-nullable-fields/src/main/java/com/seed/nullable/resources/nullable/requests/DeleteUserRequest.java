@@ -106,11 +106,6 @@ public final class DeleteUserRequest {
             return this;
         }
 
-        public Builder username(Nullable<Nullable<String>> username) {
-            this.username = username;
-            return this;
-        }
-
         public DeleteUserRequest build() {
             return new DeleteUserRequest(username, additionalProperties);
         }

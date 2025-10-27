@@ -507,6 +507,12 @@ public final class BuilderGenerator {
             Consumer<FieldSpec> implFieldConsumer,
             Consumer<MethodSpec> implSetterConsumer,
             boolean implsOverride) {
+        // Skip additional setters if propertyTypeName is already a Nullable type
+        // to avoid type erasure conflicts (Nullable<T> vs Nullable<Nullable<T>>)
+        if (propertyTypeName.rawType.equals(nullableClassName)) {
+            return;
+        }
+
         FieldSpec fieldSpec = enrichedObjectProperty.fieldSpec;
         FieldSpec.Builder implFieldSpecBuilder = FieldSpec.builder(fieldSpec.type, fieldSpec.name, Modifier.PRIVATE);
 
@@ -536,20 +542,27 @@ public final class BuilderGenerator {
                     .build());
 
             if (enrichedObjectProperty.enrichedObjectProperty.nullable()) {
-                interfaceSetterConsumer.accept(createNullableItemTypeNameSetter(
-                                enrichedObjectProperty, nullableClassName, propertyTypeName, finalStageClassName)
-                        .addModifiers(Modifier.ABSTRACT)
-                        .build());
+                // Check if the inner type of Optional is already a Nullable to prevent double-wrapping
+                TypeName innerType = getOnlyTypeArgumentOrThrow(propertyTypeName);
+                boolean isInnerTypeNullable = innerType instanceof ParameterizedTypeName
+                    && ((ParameterizedTypeName) innerType).rawType.equals(nullableClassName);
 
-                implSetterConsumer.accept(createNullableItemTypeNameSetter(
-                                enrichedObjectProperty,
-                                nullableClassName,
-                                propertyTypeName,
-                                finalStageClassName,
-                                implsOverride)
-                        .addStatement("this.$L = $L", fieldSpec.name, fieldSpec.name)
-                        .addStatement("return this")
-                        .build());
+                if (!isInnerTypeNullable) {
+                    interfaceSetterConsumer.accept(createNullableItemTypeNameSetter(
+                                    enrichedObjectProperty, nullableClassName, propertyTypeName, finalStageClassName)
+                            .addModifiers(Modifier.ABSTRACT)
+                            .build());
+
+                    implSetterConsumer.accept(createNullableItemTypeNameSetter(
+                                    enrichedObjectProperty,
+                                    nullableClassName,
+                                    propertyTypeName,
+                                    finalStageClassName,
+                                    implsOverride)
+                            .addStatement("this.$L = $L", fieldSpec.name, fieldSpec.name)
+                            .addStatement("return this")
+                            .build());
+                }
             }
         } else if (isEqual(propertyTypeName, ClassName.get(Map.class))) {
             interfaceSetterConsumer.accept(
@@ -689,6 +702,15 @@ public final class BuilderGenerator {
             Consumer<FieldSpec> implFieldConsumer,
             Consumer<MethodSpec> implSetterConsumer,
             boolean implsOverride) {
+        // Skip additional setters if propertyTypeName is already a Nullable type
+        // to avoid type erasure conflicts (Nullable<T> vs Nullable<Nullable<T>>)
+        if (propertyTypeName instanceof ParameterizedTypeName) {
+            ParameterizedTypeName parameterizedTypeName = (ParameterizedTypeName) propertyTypeName;
+            if (parameterizedTypeName.rawType.equals(nullableClassName)) {
+                return;
+            }
+        }
+
         FieldSpec fieldSpec = enrichedObjectProperty.fieldSpec;
 
         interfaceSetterConsumer.accept(createNullableItemTypeNameSetter(

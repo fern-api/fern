@@ -198,13 +198,7 @@ public final class GetUsersRequest {
         }
 
         public Builder tags(Nullable<List<String>> tags) {
-            if (tags.isNull()) {
-                this.tags = null;
-            } else if (tags.isEmpty()) {
-                this.tags = Optional.empty();
-            } else {
-                this.tags = Optional.of(tags.get());
-            }
+            this.tags = tags;
             return this;
         }
 
@@ -236,13 +230,7 @@ public final class GetUsersRequest {
         }
 
         public Builder extra(Nullable<Boolean> extra) {
-            if (extra.isNull()) {
-                this.extra = null;
-            } else if (extra.isEmpty()) {
-                this.extra = Optional.empty();
-            } else {
-                this.extra = Optional.of(extra.get());
-            }
+            this.extra = extra;
             return this;
         }
 

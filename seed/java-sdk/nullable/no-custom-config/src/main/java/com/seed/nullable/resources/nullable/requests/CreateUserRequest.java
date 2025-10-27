@@ -167,13 +167,7 @@ public final class CreateUserRequest {
 
         @java.lang.Override
         public _FinalStage avatar(Nullable<String> avatar) {
-            if (avatar.isNull()) {
-                this.avatar = null;
-            } else if (avatar.isEmpty()) {
-                this.avatar = Optional.empty();
-            } else {
-                this.avatar = Optional.of(avatar.get());
-            }
+            this.avatar = avatar;
             return this;
         }
 

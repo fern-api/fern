@@ -155,13 +155,9 @@ public final class Metadata {
     public interface _FinalStage {
         Metadata build();
 
-        _FinalStage avatar(Nullable<String> avatar);
-
         _FinalStage activated(Optional<Nullable<Boolean>> activated);
 
         _FinalStage activated(Nullable<Boolean> activated);
-
-        _FinalStage activated(Nullable<Nullable<Boolean>> activated);
 
         _FinalStage values(Optional<Map<String, Optional<Nullable<String>>>> values);
 
@@ -227,12 +223,6 @@ public final class Metadata {
         @JsonSetter(value = "values", nulls = Nulls.SKIP)
         public _FinalStage values(Optional<Map<String, Optional<Nullable<String>>>> values) {
             this.values = values;
-            return this;
-        }
-
-        @java.lang.Override
-        public _FinalStage activated(Nullable<Nullable<Boolean>> activated) {
-            this.activated = activated;
             return this;
         }
 

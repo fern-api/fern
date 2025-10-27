@@ -294,13 +294,7 @@ public final class User {
 
         @java.lang.Override
         public _FinalStage strings(Nullable<Map<String, Object>> strings) {
-            if (strings.isNull()) {
-                this.strings = null;
-            } else if (strings.isEmpty()) {
-                this.strings = Optional.empty();
-            } else {
-                this.strings = Optional.of(strings.get());
-            }
+            this.strings = strings;
             return this;
         }
 
@@ -319,13 +313,7 @@ public final class User {
 
         @java.lang.Override
         public _FinalStage numbers(Nullable<List<Integer>> numbers) {
-            if (numbers.isNull()) {
-                this.numbers = null;
-            } else if (numbers.isEmpty()) {
-                this.numbers = Optional.empty();
-            } else {
-                this.numbers = Optional.of(numbers.get());
-            }
+            this.numbers = numbers;
             return this;
         }
 
@@ -355,13 +343,7 @@ public final class User {
 
         @java.lang.Override
         public _FinalStage metadata(Nullable<Metadata> metadata) {
-            if (metadata.isNull()) {
-                this.metadata = null;
-            } else if (metadata.isEmpty()) {
-                this.metadata = Optional.empty();
-            } else {
-                this.metadata = Optional.of(metadata.get());
-            }
+            this.metadata = metadata;
             return this;
         }
 
@@ -380,13 +362,7 @@ public final class User {
 
         @java.lang.Override
         public _FinalStage tags(Nullable<List<String>> tags) {
-            if (tags.isNull()) {
-                this.tags = null;
-            } else if (tags.isEmpty()) {
-                this.tags = Optional.empty();
-            } else {
-                this.tags = Optional.of(tags.get());
-            }
+            this.tags = tags;
             return this;
         }
 

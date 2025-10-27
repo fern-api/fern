@@ -107,13 +107,7 @@ public final class DeleteUserRequest {
         }
 
         public Builder username(Nullable<String> username) {
-            if (username.isNull()) {
-                this.username = null;
-            } else if (username.isEmpty()) {
-                this.username = Optional.empty();
-            } else {
-                this.username = Optional.of(username.get());
-            }
+            this.username = username;
             return this;
         }
 

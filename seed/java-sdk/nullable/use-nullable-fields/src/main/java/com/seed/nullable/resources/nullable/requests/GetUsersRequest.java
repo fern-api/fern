@@ -229,11 +229,6 @@ public final class GetUsersRequest {
             return this;
         }
 
-        public Builder extra(Nullable<Nullable<Boolean>> extra) {
-            this.extra = extra;
-            return this;
-        }
-
         public GetUsersRequest build() {
             return new GetUsersRequest(usernames, activated, tags, avatar, extra, additionalProperties);
         }

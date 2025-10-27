@@ -130,8 +130,6 @@ public final class CreateUserRequest {
         _FinalStage avatar(Optional<Nullable<String>> avatar);
 
         _FinalStage avatar(Nullable<String> avatar);
-
-        _FinalStage avatar(Nullable<Nullable<String>> avatar);
     }
 
     @JsonIgnoreProperties(ignoreUnknown = true)
@@ -162,12 +160,6 @@ public final class CreateUserRequest {
         @JsonSetter("username")
         public _FinalStage username(@NotNull String username) {
             this.username = Objects.requireNonNull(username, "username must not be null");
-            return this;
-        }
-
-        @java.lang.Override
-        public _FinalStage avatar(Nullable<Nullable<String>> avatar) {
-            this.avatar = avatar;
             return this;
         }
 

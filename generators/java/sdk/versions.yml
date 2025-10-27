@@ -1,10 +1,15 @@
-- version: 3.9.3
+- version: 3.10.0
   changelogEntry:
     - summary: |
-        Fix nullable fields to use `Nullable<T>` instead of `Optional<T>` for proper PATCH semantics.
-        Enables three-state behavior: omitted, explicitly null, and has value.
-      type: fix
-  createdAt: "2025-10-26"
+        Add `use-nullable-for-optional-fields` flag for three-state nullable semantics.
+        Enables `Nullable<T>` instead of `Optional<T>` for proper PATCH request handling.
+
+        ```yaml
+        customConfig:
+          use-nullable-for-optional-fields: true
+        ```
+      type: feat
+  createdAt: "2025-10-27"
   irVersion: 61
 
 - version: 3.9.2
