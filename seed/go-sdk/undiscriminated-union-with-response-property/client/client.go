@@ -4,10 +4,10 @@ package client
 
 import (
 	context "context"
-	fern "github.com/required-nullable/fern"
-	core "github.com/required-nullable/fern/core"
-	internal "github.com/required-nullable/fern/internal"
-	option "github.com/required-nullable/fern/option"
+	fern "github.com/undiscriminated-union-with-response-property/fern"
+	core "github.com/undiscriminated-union-with-response-property/fern/core"
+	internal "github.com/undiscriminated-union-with-response-property/fern/internal"
+	option "github.com/undiscriminated-union-with-response-property/fern/option"
 )
 
 type Client struct {
@@ -33,14 +33,12 @@ func NewClient(opts ...option.RequestOption) *Client {
 	}
 }
 
-func (c *Client) GetFoo(
+func (c *Client) GetUnion(
 	ctx context.Context,
-	request *fern.GetFooRequest,
 	opts ...option.RequestOption,
-) (*fern.Foo, error) {
-	response, err := c.WithRawResponse.GetFoo(
+) (*fern.MyUnion, error) {
+	response, err := c.WithRawResponse.GetUnion(
 		ctx,
-		request,
 		opts...,
 	)
 	if err != nil {
@@ -49,16 +47,12 @@ func (c *Client) GetFoo(
 	return response.Body, nil
 }
 
-func (c *Client) UpdateFoo(
+func (c *Client) ListUnions(
 	ctx context.Context,
-	id string,
-	request *fern.UpdateFooRequest,
 	opts ...option.RequestOption,
-) (*fern.Foo, error) {
-	response, err := c.WithRawResponse.UpdateFoo(
+) ([]*fern.MyUnion, error) {
+	response, err := c.WithRawResponse.ListUnions(
 		ctx,
-		id,
-		request,
 		opts...,
 	)
 	if err != nil {
