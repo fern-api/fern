@@ -182,6 +182,19 @@ client.foo().find(
 );
 ```
 
+### Access Raw Response Data
+
+The SDK provides access to raw response data, including headers, through the `withRawResponse()` method.
+The `withRawResponse()` method returns a raw client that wraps all responses with `body()` and `headers()` methods.
+(A normal client's `response` is identical to a raw client's `response.body()`.)
+
+```java
+FindHttpResponse response = client.foo().withRawResponse().find(...);
+
+System.out.println(response.body());
+System.out.println(response.headers().get("X-My-Header"));
+```
+
 ## Contributing
 
 While we value open-source contributions to this SDK, this library is generated programmatically.
