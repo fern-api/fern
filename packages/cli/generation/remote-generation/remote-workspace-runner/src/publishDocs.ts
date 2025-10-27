@@ -268,7 +268,9 @@ export async function publishDocs({
             url: url.replace("https://", ""),
             context,
             fdr,
-            preview
+            isPreview: preview,
+            domain,
+            customDomains
         });
 
         const link = terminalLink(url, url);
@@ -580,7 +582,9 @@ async function updateAiChatFromDocsDefinition({
     url,
     context,
     fdr,
-    preview
+    isPreview,
+    domain,
+    customDomains
 }: {
     docsDefinition: DocsDefinition;
     organization: string;
@@ -588,56 +592,48 @@ async function updateAiChatFromDocsDefinition({
     url: string;
     context: TaskContext;
     fdr: FernRegistryClient;
-    preview: boolean;
+    isPreview: boolean;
+    domain: string;
+    customDomains: string[];
 }): Promise<void> {
     if (docsDefinition.config.aiChatConfig == null) {
         return;
     }
     context.logger.debug("Processing AI Chat configuration from docs.yml");
 
-    const domain = new URL(wrapWithHttps(url)).hostname;
-
     if (docsDefinition.config.aiChatConfig.location != null) {
-        for (const location of docsDefinition.config.aiChatConfig.location) {
-            if (location === "docs") {
-                const faiClient = getFaiClient({ token: token.value });
-                const docsSettings = await faiClient.settings.getDocsSettings({
-                    domain
+        const faiClient = getFaiClient({ token: token.value });
+
+        if (isPreview) {
+            const previewDomainWithPath = wrapWithHttps(url)
+            await faiClient.settings.enableAskAi({
+                domains: [previewDomainWithPath],
+                org_name: organization,
+                locations: docsDefinition.config.aiChatConfig.location
+            });
+            if (docsDefinition.config.aiChatConfig.location?.includes("docs")) {
+                const previewHostname = new URL(wrapWithHttps(url)).hostname;
+                const addResult = await fdr.docs.v2.write.addAlgoliaPreviewWhitelistEntry({
+                    domain: previewHostname
                 });
-                if (docsSettings.job_id) {
-                    continue;
+                if (addResult.ok) {
                 } else {
-                    context.logger.debug(
-                        `Starting Ask Fern docs content ${docsSettings.ask_ai_enabled ? "reindexing" : "indexing"}...`
+                    context.logger.warn(
+                        `Failed to add domain ${previewHostname} to Algolia whitelist. Please try regenerating to test AI chat in preview.`
                     );
-                    const addResult = await fdr.docs.v2.write.addAlgoliaPreviewWhitelistEntry({
-                        domain
-                    });
-                    if (addResult.ok) {
-                        const indexingResult = docsSettings.ask_ai_enabled
-                            ? await faiClient.settings.reindexAskAi({
-                                  domain,
-                                  org_name: organization
-                              })
-                            : await faiClient.settings.toggleAskAi({
-                                  domain,
-                                  org_name: organization,
-                                  preview
-                              });
-                        if (indexingResult.success) {
-                            context.logger.info(
-                                chalk.green(
-                                    "Note: it may take a few minutes after publishing for Ask Fern answers to reflect new content."
-                                )
-                            );
-                        }
-                    } else {
-                        context.logger.warn(
-                            `Failed to add domain ${domain} to Algolia whitelist. Please try regenerating to test AI chat in preview.`
-                        );
-                    }
                 }
             }
+        } else {
+            const domainsToEnable = [
+                wrapWithHttps(domain),
+                ...customDomains.map((cd) => wrapWithHttps(cd))
+            ];
+
+            await faiClient.settings.enableAskAi({
+                domains: domainsToEnable,
+                org_name: organization,
+                locations: docsDefinition.config.aiChatConfig.location
+            });
         }
     }
 }
