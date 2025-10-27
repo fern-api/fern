@@ -238,11 +238,16 @@ class PydanticModel:
     def add_root_validator(
         self, *, validator_name: str, body: AST.CodeWriter, should_use_partial_type: bool = False, pre: bool = False
     ) -> None:
-        value_type = (
-            AST.TypeHint(type=self.get_reference_to_partial_class())
-            if should_use_partial_type
-            else AST.TypeHint.dict(AST.TypeHint.str_(), AST.TypeHint.any())
-        )
+        # For Pydantic v2 with wrap mode (post-validation), use Any since the wrapper handles types
+        # For Pydantic v1 or pre-validation, use the dict type
+        if self._version == PydanticVersionCompatibility.V2 and not pre:
+            value_type = AST.TypeHint.any()
+        else:
+            value_type = (
+                AST.TypeHint(type=self.get_reference_to_partial_class())
+                if should_use_partial_type
+                else AST.TypeHint.dict(AST.TypeHint.str_(), AST.TypeHint.any())
+            )
         self._class_declaration.add_method(
             decorator=AST.ClassMethodDecorator.CLASS_METHOD,
             no_implicit_decorator=True,
