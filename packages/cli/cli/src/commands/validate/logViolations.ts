@@ -48,15 +48,22 @@ export function logViolations({
     violations = deduplicatedViolations;
 
     const stats = getViolationStats(violations);
-    const violationsByNodePath = groupViolationsByNodePath(violations);
+    const violationsByGroup = groupViolationsByFilePathOrNodePath(violations);
 
     // log the violations in sorted order so that output across runs is easier
     // to compare and ete test snapshots work
-    for (const nodePath of Array.from(violationsByNodePath.keys()).sort()) {
-        const violations = violationsByNodePath.get(nodePath);
-        if (violations) {
-            const configRelativeFilepath = violations[0]?.relativeFilepath ?? "";
-            logViolationsGroup({ logWarnings, logBreadcrumbs, configRelativeFilepath, nodePath, violations, context });
+    for (const groupKey of Array.from(violationsByGroup.keys()).sort()) {
+        const violationGroup = violationsByGroup.get(groupKey);
+        if (violationGroup) {
+            const configRelativeFilepath = violationGroup.violations[0]?.relativeFilepath ?? "";
+            logViolationsGroup({
+                logWarnings,
+                logBreadcrumbs,
+                configRelativeFilepath,
+                nodePath: violationGroup.nodePath,
+                violations: violationGroup.violations,
+                context
+            });
         }
     }
 
@@ -70,14 +77,31 @@ export function logViolations({
     };
 }
 
-function groupViolationsByNodePath(violations: ValidationViolation[]): Map<NodePath, ValidationViolation[]> {
-    const record: Record<string, ValidationViolation[]> = {};
+interface ViolationGroup {
+    nodePath: NodePath;
+    violations: ValidationViolation[];
+}
+
+function groupViolationsByFilePathOrNodePath(violations: ValidationViolation[]): Map<string, ViolationGroup> {
+    const record: Record<string, ViolationGroup> = {};
+
     for (const violation of violations) {
-        const key = JSON.stringify(violation.nodePath);
-        const existingViolations = record[key] ?? [];
-        record[key] = [...existingViolations, violation];
+        // For file-level violations (empty nodePath), group by filepath
+        // For other violations, group by nodePath as before
+        const isFileLevel = violation.nodePath.length === 0;
+        const key = isFileLevel ? `file:${violation.relativeFilepath}` : `node:${JSON.stringify(violation.nodePath)}`;
+
+        if (!record[key]) {
+            record[key] = {
+                nodePath: violation.nodePath,
+                violations: []
+            };
+        }
+
+        record[key].violations.push(violation);
     }
-    return new Map(Object.entries(record).map(([key, violations]) => [JSON.parse(key), violations]));
+
+    return new Map(Object.entries(record));
 }
 
 function logViolationsGroup({
