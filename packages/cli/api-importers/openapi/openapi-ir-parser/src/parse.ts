@@ -124,7 +124,7 @@ export function parse({
                     assertNever(document);
             }
         } catch (error) {
-            context.logger.error(
+            context.logger.debug(
                 `Skipping parsing document ${document.type === "openapi" ? document.value.info?.title : document.source?.file}`
             );
             if (error instanceof Error) {

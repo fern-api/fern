@@ -5,6 +5,14 @@
       type: feat
   irVersion: 61
   createdAt: "2025-10-27"
+  version: 0.98.0
+
+- changelogEntry:
+    - summary: |
+        Remove noisy logging from fern generate --docs and add error message for missing local references.
+      type: feat
+  irVersion: 61
+  createdAt: "2025-10-27"
   version: 0.97.0
 
 - changelogEntry:
