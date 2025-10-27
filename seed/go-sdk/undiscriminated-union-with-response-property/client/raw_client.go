@@ -4,10 +4,10 @@ package client
 
 import (
 	context "context"
-	fern "github.com/required-nullable/fern"
-	core "github.com/required-nullable/fern/core"
-	internal "github.com/required-nullable/fern/internal"
-	option "github.com/required-nullable/fern/option"
+	fern "github.com/undiscriminated-union-with-response-property/fern"
+	core "github.com/undiscriminated-union-with-response-property/fern/core"
+	internal "github.com/undiscriminated-union-with-response-property/fern/internal"
+	option "github.com/undiscriminated-union-with-response-property/fern/option"
 	http "net/http"
 )
 
@@ -30,30 +30,22 @@ func NewRawClient(options *core.RequestOptions) *RawClient {
 	}
 }
 
-func (r *RawClient) GetFoo(
+func (r *RawClient) GetUnion(
 	ctx context.Context,
-	request *fern.GetFooRequest,
 	opts ...option.RequestOption,
-) (*core.Response[*fern.Foo], error) {
+) (*core.Response[*fern.MyUnion], error) {
 	options := core.NewRequestOptions(opts...)
 	baseURL := internal.ResolveBaseURL(
 		options.BaseURL,
 		r.baseURL,
 		"",
 	)
-	endpointURL := baseURL + "/foo"
-	queryParams, err := internal.QueryValues(request)
-	if err != nil {
-		return nil, err
-	}
-	if len(queryParams) > 0 {
-		endpointURL += "?" + queryParams.Encode()
-	}
+	endpointURL := baseURL + "/union"
 	headers := internal.MergeHeaders(
 		r.options.ToHeader(),
 		options.ToHeader(),
 	)
-	var response *fern.Foo
+	var response *fern.UnionResponse
 	raw, err := r.caller.Call(
 		ctx,
 		&internal.CallParams{
@@ -70,55 +62,48 @@ func (r *RawClient) GetFoo(
 	if err != nil {
 		return nil, err
 	}
-	return &core.Response[*fern.Foo]{
+	return &core.Response[*fern.MyUnion]{
 		StatusCode: raw.StatusCode,
 		Header:     raw.Header,
-		Body:       response,
+		Body:       response.Data,
 	}, nil
 }
 
-func (r *RawClient) UpdateFoo(
+func (r *RawClient) ListUnions(
 	ctx context.Context,
-	id string,
-	request *fern.UpdateFooRequest,
 	opts ...option.RequestOption,
-) (*core.Response[*fern.Foo], error) {
+) (*core.Response[[]*fern.MyUnion], error) {
 	options := core.NewRequestOptions(opts...)
 	baseURL := internal.ResolveBaseURL(
 		options.BaseURL,
 		r.baseURL,
 		"",
 	)
-	endpointURL := internal.EncodeURL(
-		baseURL+"/foo/%v",
-		id,
-	)
+	endpointURL := baseURL + "/unions"
 	headers := internal.MergeHeaders(
 		r.options.ToHeader(),
 		options.ToHeader(),
 	)
-	headers.Add("X-Idempotency-Key", request.XIdempotencyKey)
-	var response *fern.Foo
+	var response *fern.UnionListResponse
 	raw, err := r.caller.Call(
 		ctx,
 		&internal.CallParams{
 			URL:             endpointURL,
-			Method:          http.MethodPatch,
+			Method:          http.MethodGet,
 			Headers:         headers,
 			MaxAttempts:     options.MaxAttempts,
 			BodyProperties:  options.BodyProperties,
 			QueryParameters: options.QueryParameters,
 			Client:          options.HTTPClient,
-			Request:         request,
 			Response:        &response,
 		},
 	)
 	if err != nil {
 		return nil, err
 	}
-	return &core.Response[*fern.Foo]{
+	return &core.Response[[]*fern.MyUnion]{
 		StatusCode: raw.StatusCode,
 		Header:     raw.Header,
-		Body:       response,
+		Body:       response.Data,
 	}, nil
 }
