@@ -32,7 +32,7 @@ export const NoOpenApiV2InDocsRule: Rule = {
                                         severity: "error",
                                         name: "OpenAPI v2.0 not supported",
                                         message: `OpenAPI version 2.0 (Swagger) is not supported in docs generation. Please upgrade to OpenAPI 3.0 or later.`,
-                                        relativeFilepath: relativePath as any
+                                        relativeFilepath: relativePath
                                     });
                                 }
                             } catch (error) {

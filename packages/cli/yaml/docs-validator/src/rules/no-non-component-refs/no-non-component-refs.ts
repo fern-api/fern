@@ -47,7 +47,7 @@ export const NoNonComponentRefsRule: Rule = {
                                             severity: "error",
                                             name: "Invalid OpenAPI reference",
                                             message: `Reference "${ref}" points to a non-component location. OpenAPI references should point to reusable components under #/components/ (e.g., #/components/schemas/MySchema, #/components/responses/MyResponse). Direct references to paths, operations, or other spec sections are not supported.`,
-                                            relativeFilepath: relativePath as any
+                                            relativeFilepath: relativePath
                                         });
                                     }
                                 }
