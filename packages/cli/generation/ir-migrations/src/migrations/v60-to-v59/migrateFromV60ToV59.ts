@@ -35,7 +35,7 @@ export const V60_TO_V59_MIGRATION: IrMigration<
         [GeneratorName.CSHARP_MODEL]: GeneratorWasNeverUpdatedToConsumeNewIR,
         [GeneratorName.CSHARP_SDK]: GeneratorWasNeverUpdatedToConsumeNewIR,
         [GeneratorName.SWIFT_MODEL]: GeneratorWasNeverUpdatedToConsumeNewIR,
-        [GeneratorName.SWIFT_SDK]: GeneratorWasNeverUpdatedToConsumeNewIR,
+        [GeneratorName.SWIFT_SDK]: "0.21.0",
         [GeneratorName.PHP_MODEL]: GeneratorWasNeverUpdatedToConsumeNewIR,
         [GeneratorName.PHP_SDK]: GeneratorWasNeverUpdatedToConsumeNewIR,
         [GeneratorName.RUST_MODEL]: GeneratorWasNeverUpdatedToConsumeNewIR,
