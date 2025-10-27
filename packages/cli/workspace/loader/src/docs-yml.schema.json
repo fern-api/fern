@@ -376,6 +376,22 @@
       },
       "additionalProperties": false
     },
+    "docs.AudienceId": {
+      "type": "string"
+    },
+    "docs.Audience": {
+      "anyOf": [
+        {
+          "$ref": "#/definitions/docs.AudienceId"
+        },
+        {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/docs.AudienceId"
+          }
+        }
+      ]
+    },
     "docs.DocsInstance": {
       "type": "object",
       "properties": {
@@ -406,6 +422,16 @@
           "oneOf": [
             {
               "$ref": "#/definitions/docs.EditThisPageConfig"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "audiences": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/docs.Audience"
             },
             {
               "type": "null"
@@ -841,6 +867,16 @@
               "type": "null"
             }
           ]
+        },
+        "audiences": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/docs.Audience"
+            },
+            {
+              "type": "null"
+            }
+          ]
         }
       },
       "required": [
@@ -935,6 +971,16 @@
               "items": {
                 "$ref": "#/definitions/docs.VersionConfig"
               }
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "audiences": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/docs.Audience"
             },
             {
               "type": "null"
@@ -1173,9 +1219,6 @@
         "contents"
       ],
       "additionalProperties": false
-    },
-    "docs.AudienceId": {
-      "type": "string"
     },
     "docs.VersionedSnippetLanguageConfiguration": {
       "type": "object",
@@ -1828,10 +1871,7 @@
         "audiences": {
           "oneOf": [
             {
-              "type": "array",
-              "items": {
-                "$ref": "#/definitions/docs.AudienceId"
-              }
+              "$ref": "#/definitions/docs.Audience"
             },
             {
               "type": "null"

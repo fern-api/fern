@@ -2,6 +2,14 @@
 
 - changelogEntry:
     - summary: |
+        Support using audience tags in products and versions to generate a filtered instance of a docs site.
+      type: feat
+  irVersion: 61
+  createdAt: "2025-10-25"
+  version: 0.96.0
+
+- changelogEntry:
+    - summary: |
         Improve authentication error message when running `fern generate --docs` without a token. The error now explicitly instructs users to run `fern login` or set the FERN_TOKEN environment variable.
       type: fix
     - summary: |

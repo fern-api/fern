@@ -49,7 +49,8 @@ export async function publishDocs({
     editThisPage,
     isPrivate = false,
     disableTemplates = false,
-    skipUpload = false
+    skipUpload = false,
+    targetAudiences
 }: {
     token: FernToken;
     organization: string;
@@ -64,6 +65,7 @@ export async function publishDocs({
     isPrivate: boolean | undefined;
     disableTemplates: boolean | undefined;
     skipUpload: boolean | undefined;
+    targetAudiences?: string[];
 }): Promise<void> {
     const fdr = createFdrService({ token: token.value });
     const authConfig: CjsFdrSdk.docs.v2.write.AuthConfig = isPrivate
@@ -75,14 +77,14 @@ export async function publishDocs({
     const basePath = parseBasePath(domain);
     const useDynamicSnippets = docsWorkspace.config.experimental?.dynamicSnippets;
     const disableSnippetGen = preview || useDynamicSnippets;
-    const resolver = new DocsDefinitionResolver(
+    const resolver = new DocsDefinitionResolver({
         domain,
         docsWorkspace,
         ossWorkspaces,
         apiWorkspaces,
-        context,
+        taskContext: context,
         editThisPage,
-        async (files) => {
+        uploadFiles: async (files) => {
             const filesMap = new Map(files.map((file) => [file.absoluteFilePath, file]));
             const filesWithMimeType: FileWithMimeType[] = files
                 .map((fileMetadata) => ({
@@ -179,7 +181,7 @@ export async function publishDocs({
                 }
             }
         },
-        async ({ ir, snippetsConfig, playgroundConfig, apiName, workspace }) => {
+        registerApi: async ({ ir, snippetsConfig, playgroundConfig, apiName, workspace }) => {
             const apiDefinition = convertIrToFdrApi({ ir, snippetsConfig, playgroundConfig, context });
 
             // create dynamic IR + metadata for each generator language
@@ -238,8 +240,9 @@ export async function publishDocs({
                         }
                 }
             }
-        }
-    );
+        },
+        targetAudiences
+    });
 
     const docsDefinition = await resolver.resolve();
 

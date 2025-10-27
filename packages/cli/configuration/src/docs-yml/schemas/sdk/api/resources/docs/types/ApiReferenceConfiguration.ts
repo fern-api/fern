@@ -10,7 +10,7 @@ export interface ApiReferenceConfiguration extends FernDocsConfig.WithPermission
     apiName?: string;
     /** Path to an openrpc spec. */
     openrpc?: string;
-    audiences?: FernDocsConfig.AudienceId[];
+    audiences?: FernDocsConfig.Audience;
     /** Defaults to false */
     displayErrors?: boolean;
     snippets?: FernDocsConfig.SnippetsConfiguration;
