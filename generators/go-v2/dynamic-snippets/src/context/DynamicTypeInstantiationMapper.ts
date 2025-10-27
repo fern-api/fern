@@ -176,17 +176,101 @@ export class DynamicTypeInstantiationMapper {
         value: unknown;
         as?: DynamicTypeInstantiationMapper.ConvertedAs;
     }): go.TypeInstantiation {
+        const aliasTypeReference = go.typeReference({
+            name: this.context.getTypeName(aliasType.declaration.name),
+            importPath: this.context.getImportPath(aliasType.declaration.fernFilepath)
+        });
+
         switch (aliasType.typeReference.type) {
             case "literal":
                 return go.TypeInstantiation.reference(
                     go.invokeFunc({
-                        func: go.typeReference({
-                            name: this.context.getTypeName(aliasType.declaration.name),
-                            importPath: this.context.getImportPath(aliasType.declaration.fernFilepath)
-                        }),
+                        func: aliasTypeReference,
                         arguments_: [this.convertLiteralValue(aliasType.typeReference.value)]
                     })
                 );
+            case "map": {
+                // For map type aliases, wrap with &TypeName{...}
+                const mapType = aliasType.typeReference;
+                if (typeof value !== "object" || value == null) {
+                    this.context.errors.add({
+                        severity: Severity.Critical,
+                        message: `Expected object but got: ${value == null ? "null" : typeof value}`
+                    });
+                    return go.TypeInstantiation.nop();
+                }
+                const entries = Object.entries(value).map(([key, val]) => {
+                    this.context.errors.scope(key);
+                    try {
+                        return {
+                            key: this.convert({ typeReference: mapType.key, value: key, as: "key" }),
+                            value: this.convert({ typeReference: mapType.value, value: val })
+                        };
+                    } finally {
+                        this.context.errors.unscope();
+                    }
+                });
+
+                return go.TypeInstantiation.reference(
+                    go.codeblock((writer) => {
+                        writer.write("&");
+                        writer.writeNode(aliasTypeReference);
+                        if (entries.length === 0) {
+                            writer.write("{}");
+                            return;
+                        }
+                        writer.writeLine("{");
+                        writer.indent();
+                        for (const entry of entries) {
+                            entry.key.write(writer);
+                            writer.write(": ");
+                            entry.value.write(writer);
+                            writer.writeLine(",");
+                        }
+                        writer.dedent();
+                        writer.write("}");
+                    })
+                );
+            }
+            case "list":
+            case "set": {
+                // For list/set type aliases, wrap with &TypeName{...}
+                if (!Array.isArray(value)) {
+                    this.context.errors.add({
+                        severity: Severity.Critical,
+                        message: `Expected array but got: ${typeof value}`
+                    });
+                    return go.TypeInstantiation.nop();
+                }
+                const listType = aliasType.typeReference.value;
+                const values = value.map((v, index) => {
+                    this.context.errors.scope({ index });
+                    try {
+                        return this.convert({ typeReference: listType, value: v });
+                    } finally {
+                        this.context.errors.unscope();
+                    }
+                });
+
+                return go.TypeInstantiation.reference(
+                    go.codeblock((writer) => {
+                        writer.write("&");
+                        writer.writeNode(aliasTypeReference);
+                        if (values.length === 0) {
+                            writer.write("{}");
+                            return;
+                        }
+                        writer.writeLine("{");
+                        writer.indent();
+                        for (const val of values) {
+                            val.write(writer);
+                            writer.writeLine(",");
+                        }
+                        writer.dedent();
+                        writer.write("}");
+                    })
+                );
+            }
             default:
                 return this.convert({ typeReference: aliasType.typeReference, value, as });
         }
