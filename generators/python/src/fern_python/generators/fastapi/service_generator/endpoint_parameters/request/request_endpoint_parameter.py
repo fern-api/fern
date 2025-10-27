@@ -15,4 +15,4 @@ class RequestEndpointParameter(EndpointParameter):
         return self._get_request_param_name()
 
     def get_default(self) -> AST.Expression:
-        return FastAPI.Body()
+        return FastAPI.Body(default=None, variable_name=None, wire_value=None, docs=None)

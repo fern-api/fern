@@ -74,7 +74,26 @@ class FileUploadRequestBodyParameter(EndpointParameter):
         )
 
     def get_default(self) -> AST.Expression:
-        return FastAPI.Body(variable_name=self._parameter_name(), wire_value=self._request_property.name.wire_value)
+        value_type = self._request_property.value_type.get_as_union()
+        is_optional = value_type.type == "container" and (
+            value_type.container.get_as_union().type == "optional"
+            or value_type.container.get_as_union().type == "nullable"
+        )
+        
+        default = None
+        if is_optional:
+            default = AST.Expression(AST.TypeHint.none())
+        
+        docs = None
+        if hasattr(self._request_property, 'docs') and self._request_property.docs is not None:
+            docs = self._request_property.docs
+        
+        return FastAPI.Body(
+            default=default,
+            variable_name=self._parameter_name(),
+            wire_value=self._request_property.name.wire_value,
+            docs=docs,
+        )
 
 
 class FileUploadRequestEndpointParameters:

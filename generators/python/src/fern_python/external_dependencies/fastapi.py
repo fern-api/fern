@@ -78,22 +78,33 @@ class FastAPI:
     )
 
     @staticmethod
-    def Body(*, variable_name: Optional[str] = None, wire_value: Optional[str] = None) -> AST.Expression:
+    def Body(
+        *,
+        default: Optional[AST.Expression] = None,
+        variable_name: Optional[str] = None,
+        wire_value: Optional[str] = None,
+        docs: Optional[str] = None,
+    ) -> AST.Expression:
         body_function_definition = _export(
             "Body",
         )
 
+        kwargs: List[Tuple[str, AST.Expression]] = []
         if variable_name is not None and wire_value is not None and variable_name != wire_value:
-            return AST.Expression(
-                AST.FunctionInvocation(
-                    function_definition=body_function_definition,
-                    kwargs=[("alias", AST.Expression(AST.CodeWriter(f'"{wire_value}"')))],
+            kwargs.append(("alias", AST.Expression(AST.CodeWriter(f'"{wire_value}"'))))
+        if docs is not None:
+            kwargs.append(
+                (
+                    "description",
+                    AST.Expression(AST.CodeWriter('"' + docs.replace("\n", "\\n").replace("\r", "\\r") + '"')),
                 )
             )
+
         return AST.Expression(
             AST.FunctionInvocation(
                 function_definition=body_function_definition,
-                args=[AST.Expression(AST.CodeWriter("..."))],
+                args=[default if default is not None else AST.Expression("...")],
+                kwargs=kwargs,
             )
         )
 
