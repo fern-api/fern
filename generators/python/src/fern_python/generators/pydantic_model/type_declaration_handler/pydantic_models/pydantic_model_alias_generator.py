@@ -56,8 +56,10 @@ class PydanticModelAliasGenerator(AbstractAliasGenerator):
 
             # For wrapped aliases in Pydantic v2, use UniversalRootModel for transparent serialization
             base_model_override = None
+            is_root_model = False
             if is_pydantic_v2:
                 base_model_override = self._context.core_utilities.get_universal_root_model()
+                is_root_model = True
 
             with FernAwarePydanticModel(
                 class_name=self._context.get_class_name_for_type_id(self._name.type_id, as_request=False),
@@ -68,6 +70,7 @@ class PydanticModelAliasGenerator(AbstractAliasGenerator):
                 docstring=self._docs,
                 snippet=self._snippet,
                 pydantic_base_model_override=base_model_override,
+                is_root_model=is_root_model,
             ) as pydantic_model:
                 pydantic_model.set_root_type_v1_or_v2_only(self._alias.alias_of)
                 pydantic_model.add_method(

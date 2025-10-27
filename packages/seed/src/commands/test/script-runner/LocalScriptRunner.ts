@@ -15,7 +15,12 @@ export class LocalScriptRunner extends ScriptRunner {
         super(workspace, skipScripts, context);
     }
 
-    public async run({ taskContext, id, outputDir, skipScripts }: ScriptRunner.RunArgs): Promise<ScriptRunner.RunResponse> {
+    public async run({
+        taskContext,
+        id,
+        outputDir,
+        skipScripts
+    }: ScriptRunner.RunArgs): Promise<ScriptRunner.RunResponse> {
         if (this.skipScripts) {
             return { type: "success" };
         }

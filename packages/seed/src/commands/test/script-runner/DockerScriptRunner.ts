@@ -26,7 +26,12 @@ export class DockerScriptRunner extends ScriptRunner {
         }
     }
 
-    public async run({ taskContext, id, outputDir, skipScripts }: ScriptRunner.RunArgs): Promise<ScriptRunner.RunResponse> {
+    public async run({
+        taskContext,
+        id,
+        outputDir,
+        skipScripts
+    }: ScriptRunner.RunArgs): Promise<ScriptRunner.RunResponse> {
         await this.startContainersFn;
         for (const script of this.scripts) {
             // Check if this script should be skipped based on its name
