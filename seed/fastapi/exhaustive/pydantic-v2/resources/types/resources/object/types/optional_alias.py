@@ -35,18 +35,9 @@ class OptionalAlias(pydantic.RootModel):
 
     @universal_root_validator(pre=False)
     def _validate(cls, values: typing.Dict[str, typing.Any]) -> typing.Dict[str, typing.Any]:
-        if isinstance(values, cls):
-            # Pydantic v2: values is the validated RootModel instance
-            value = values.root
-            for validator in OptionalAlias.Validators._validators:
-                value = validator(value)
-            # Return new instance since model is frozen
-            return cls.model_construct(root=value)
-        else:
-            # Pydantic v1: values is a dict
-            value = typing.cast(typing.Optional[str], values.get("__root__"))
-            for validator in OptionalAlias.Validators._validators:
-                value = validator(value)
-            return {**values, "__root__": value}
+        value = values.root
+        for validator in OptionalAlias.Validators._validators:
+            value = validator(value)
+        return cls.model_construct(root=value)
 
     model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(frozen=True)  # type: ignore # Pydantic v2
