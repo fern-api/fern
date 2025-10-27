@@ -412,7 +412,7 @@ export function buildEnvironments(context: OpenApiIrConverterContext): void {
 
     // Endpoint level servers must always have a name attached. If they don't, we'll throw an error.
     if (endpointLevelSkippedServers.length > 0) {
-        context.logger.error(
+        context.logger.debug(
             `Skipping endpoint level servers ${endpointLevelSkippedServers
                 .map((server) => (typeof server === "string" ? server : server.url))
                 .join(", ")} because x-fern-server-name was not provided.`
@@ -445,7 +445,7 @@ export function buildEnvironments(context: OpenApiIrConverterContext): void {
         return !topLevelServerUrls.includes(serverUrl);
     });
     if (filteredSkippedServers.length > 0) {
-        context.logger.error(
+        context.logger.debug(
             `Skipping top level servers ${filteredSkippedServers
                 .map((server) => (typeof server === "string" ? server : server.url))
                 .join(", ")} because x-fern-server-name was not provided.`
