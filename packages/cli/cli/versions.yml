@@ -1,4 +1,13 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- changelogEntry:
+    - summary: |
+        Reformat how docs fern check errors are displayed, and error on:
+        - OpenAPI v2.0 in docs
+        - Non-component local refs in docs
+      type: fix
+  irVersion: 61
+  createdAt: "2025-10-25"
+  version: 0.96.1
 
 - changelogEntry:
     - summary: |
@@ -51,14 +60,6 @@
   irVersion: 61
   createdAt: "2025-10-23"
   version: 0.94.5
-
-- changelogEntry:
-    - summary: |
-        Restore support for x-fern-examples path parameters if there is no request body.
-      type: fix
-  irVersion: 61
-  createdAt: "2025-10-23"
-  version: 0.94.4
 
 - changelogEntry:
     - summary: |
