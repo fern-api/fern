@@ -11,7 +11,10 @@ on:
 env:
   PACKAGE_NAME: "@fern-api/swift-dynamic-snippets"
   GITHUB_TOKEN: ${{ secrets.FERN_GITHUB_TOKEN }}
-  NPM_TOKEN: ${{ secrets.FERN_NPM_TOKEN }}
+
+permissions:
+  id-token: write # Required for OIDC
+  contents: read
 
 jobs:
   run:
@@ -25,6 +28,9 @@ jobs:
 
       - name: 📥 Install
         uses: ./.github/actions/install
+
+      - name: Update npm
+        run: npm install -g npm@latest
 
       - uses: bufbuild/buf-setup-action@v1.34.0
         with:
@@ -48,8 +54,7 @@ jobs:
           cd generators/swift/dynamic-snippets
           pnpm --filter=${{ env.PACKAGE_NAME }} dist ${{ inputs.version }}
           cd dist
-          echo "//registry.npmjs.org/:_authToken=${{ env.NPM_TOKEN }}" > ~/.npmrc
-          npm publish --access public
+          npm publish --access public --tag latest
 
       - name: Update fern-platform dependency
         uses: ./.github/actions/update-fern-platform-dependency
