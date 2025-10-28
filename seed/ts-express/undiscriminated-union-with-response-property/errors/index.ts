@@ -1,0 +1,1 @@
+export { SeedUndiscriminatedUnionWithResponsePropertyError } from "./SeedUndiscriminatedUnionWithResponsePropertyError";
