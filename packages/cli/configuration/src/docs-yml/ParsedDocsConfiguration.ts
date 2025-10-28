@@ -202,7 +202,8 @@ export interface TabbedNavigation
 type TabbedNavigationChild =
     | TabbedNavigationChild.Layout
     | TabbedNavigationChild.Link
-    | TabbedNavigationChild.Changelog;
+    | TabbedNavigationChild.Changelog
+    | TabbedNavigationChild.Variants;
 
 export declare namespace TabbedNavigationChild {
     export interface Layout {
@@ -219,6 +220,18 @@ export declare namespace TabbedNavigationChild {
         type: "changelog";
         changelog: AbsoluteFilePath[];
     }
+
+    export interface Variants {
+        type: "variants";
+        variants: TabVariant[];
+    }
+}
+
+export interface TabVariant {
+    title: string | undefined;
+    subtitle: string | undefined;
+    icon: string | undefined;
+    layout: DocsNavigationItem[];
 }
 
 export type DocsNavigationItem =
