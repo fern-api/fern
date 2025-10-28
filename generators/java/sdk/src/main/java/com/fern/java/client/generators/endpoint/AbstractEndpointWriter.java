@@ -368,14 +368,20 @@ public abstract class AbstractEndpointWriter {
     }
 
     private PathParamInfo convertPathParameter(PathParameter pathParameter) {
+        TypeName typeName =
+                clientGeneratorContext.getPoetTypeNameMapper().convertToTypeName(true, pathParameter.getValueType());
+        ParameterSpec.Builder paramBuilder = ParameterSpec.builder(
+                typeName, pathParameter.getName().getCamelCase().getSafeName());
+
+        if (clientGeneratorContext.getCustomConfig().useNullableAnnotation()
+                && com.fern.java.utils.NullableAnnotationUtils.isNullableType(pathParameter.getValueType())
+                && !typeName.isPrimitive()) {
+            paramBuilder.addAnnotation(com.fern.java.utils.NullableAnnotationUtils.getNullableAnnotation());
+        }
+
         return PathParamInfo.builder()
                 .irParam(pathParameter)
-                .poetParam(ParameterSpec.builder(
-                                clientGeneratorContext
-                                        .getPoetTypeNameMapper()
-                                        .convertToTypeName(true, pathParameter.getValueType()),
-                                pathParameter.getName().getCamelCase().getSafeName())
-                        .build())
+                .poetParam(paramBuilder.build())
                 .build();
     }
 

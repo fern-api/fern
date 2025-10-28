@@ -521,6 +521,14 @@ public abstract class AbstractHttpResponseParserGenerator {
                                 .add(snippet.codeBlock)
                                 .build());
                 endpointMethodBuilder.returns(snippet.typeName);
+
+                if (clientGeneratorContext.getCustomConfig().useNullableAnnotation()
+                        && com.fern.java.utils.NullableAnnotationUtils.isNullableType(body.getResponseBodyType())
+                        && !snippet.typeName.isPrimitive()) {
+                    endpointMethodBuilder.addAnnotation(
+                            com.fern.java.utils.NullableAnnotationUtils.getNullableAnnotation());
+                }
+
                 return null;
             }
 
@@ -555,6 +563,14 @@ public abstract class AbstractHttpResponseParserGenerator {
             }
 
             endpointMethodBuilder.returns(responseType);
+
+            if (clientGeneratorContext.getCustomConfig().useNullableAnnotation()
+                    && com.fern.java.utils.NullableAnnotationUtils.isNullableType(body.getResponseBodyType())
+                    && !responseType.isPrimitive()) {
+                endpointMethodBuilder.addAnnotation(
+                        com.fern.java.utils.NullableAnnotationUtils.getNullableAnnotation());
+            }
+
             ObjectMapperUtils objectMapperUtils = new ObjectMapperUtils(clientGeneratorContext, generatedObjectMapper);
             handleSuccessfulResult(
                     httpResponseBuilder,
