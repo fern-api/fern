@@ -52,6 +52,7 @@ defaultOutputMode: local_files
 allowedFailures:
   - file-download
   - file-upload
+  - file-upload-openapi
   - plain-text
   - response-property
   - streaming

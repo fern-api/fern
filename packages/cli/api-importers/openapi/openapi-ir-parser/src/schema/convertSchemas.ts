@@ -1079,7 +1079,7 @@ export function convertSchemaObject(
             const filteredAllOfObjects = filteredAllOfs.filter((allOf) => {
                 const valid = isValidAllOfObject(allOf);
                 if (!valid) {
-                    context.logger.warn(`Skipping non-object allOf element: ${JSON.stringify(allOf)}`);
+                    context.logger.debug(`Skipping non-object allOf element: ${JSON.stringify(allOf)}`);
                 }
                 return valid;
             });

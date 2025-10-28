@@ -70,6 +70,7 @@ jobs:
             generator-name: openapi
           - files: |
               generators/python/
+              generators/python-v2/
               seed/pydantic/seed.yml
               seed/pydantic-v2/seed.yml
               seed/python-sdk/seed.yml
@@ -81,17 +82,20 @@ jobs:
             generator-name: postman
           - files: |
               generators/java/
+              generators/java-v2/
               seed/java-sdk/seed.yml
               seed/java-model/seed.yml
               seed/java-spring/seed.yml
             generator-name: java
           - files: |
               generators/typescript/
+              generators/typescript-v2/
               seed/ts-sdk/seed.yml
               seed/ts-express/seed.yml
             generator-name: typescript
           - files: |
               generators/go/
+              generators/go-v2/
               seed/go-sdk/seed.yml
               seed/go-model/seed.yml
               seed/go-fiber/seed.yml
@@ -400,7 +404,7 @@ jobs:
         uses: ./.github/actions/run-seed-process
         with:
           sdk-name: pydantic
-          generator-path: generators/python
+          generator-path: generators/python generators/python-v2
           fixtures-to-run: ${{toJson(matrix.fixtures)}}
           job-index: ${{ strategy.job-index }}
           collect-metrics: ${{ needs.setup.outputs.post-metrics }}
@@ -430,7 +434,7 @@ jobs:
         uses: ./.github/actions/run-seed-process
         with:
           sdk-name: python-sdk
-          generator-path: generators/python
+          generator-path: generators/python generators/python-v2
           fixtures-to-run: ${{toJson(matrix.fixtures)}}
           job-index: ${{ strategy.job-index }}
           collect-metrics: ${{ needs.setup.outputs.post-metrics }}
@@ -461,7 +465,7 @@ jobs:
         uses: ./.github/actions/run-seed-process
         with:
           sdk-name: fastapi
-          generator-path: generators/python
+          generator-path: generators/python generators/python-v2
           fixtures-to-run: ${{toJson(matrix.fixtures)}}
           job-index: ${{ strategy.job-index }}
           collect-metrics: ${{ needs.setup.outputs.post-metrics }}
@@ -581,7 +585,7 @@ jobs:
         uses: ./.github/actions/run-seed-process
         with:
           sdk-name: java-model
-          generator-path: generators/java
+          generator-path: generators/java generators/java-v2
           fixtures-to-run: ${{toJson(matrix.fixtures)}}
           job-index: ${{ strategy.job-index }}
           collect-metrics: ${{ needs.setup.outputs.post-metrics }}
@@ -611,7 +615,7 @@ jobs:
         uses: ./.github/actions/run-seed-process
         with:
           sdk-name: java-spring
-          generator-path: generators/java
+          generator-path: generators/java generators/java-v2
           fixtures-to-run: ${{toJson(matrix.fixtures)}}
           job-index: ${{ strategy.job-index }}
           collect-metrics: ${{ needs.setup.outputs.post-metrics }}
@@ -641,7 +645,7 @@ jobs:
         uses: ./.github/actions/run-seed-process
         with:
           sdk-name: ts-sdk
-          generator-path: generators/typescript
+          generator-path: generators/typescript generators/typescript-v2
           fixtures-to-run: ${{toJson(matrix.fixtures)}}
           job-index: ${{ strategy.job-index }}
           collect-metrics: ${{ needs.setup.outputs.post-metrics }}
@@ -672,7 +676,7 @@ jobs:
         uses: ./.github/actions/run-seed-process
         with:
           sdk-name: ts-express
-          generator-path: generators/typescript
+          generator-path: generators/typescript generators/typescript-v2
           fixtures-to-run: ${{toJson(matrix.fixtures)}}
           job-index: ${{ strategy.job-index }}
           collect-metrics: ${{ needs.setup.outputs.post-metrics }}
