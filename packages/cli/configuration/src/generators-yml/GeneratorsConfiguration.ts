@@ -1,4 +1,4 @@
-import { Values } from "@fern-api/core-utils";
+import { Values, visitDiscriminatedUnion } from "@fern-api/core-utils";
 import { RawSchemas } from "@fern-api/fern-definition-schema";
 import { AbsoluteFilePath } from "@fern-api/path-utils";
 
@@ -168,10 +168,10 @@ export function getPackageName({
     if (generatorInvocation.language === "go") {
         return getGoPackageName(generatorInvocation);
     }
-    return generatorInvocation.outputMode._visit<string | undefined>({
+    return visitDiscriminatedUnion(generatorInvocation.outputMode)._visit({
         downloadFiles: () => undefined,
         github: (val) =>
-            val.publishInfo?._visit<string | undefined>({
+            val.publishInfo ? visitDiscriminatedUnion(val.publishInfo)._visit({
                 maven: (val) => val.coordinate,
                 npm: (val) => val.packageName,
                 pypi: (val) => val.packageName,
@@ -180,9 +180,9 @@ export function getPackageName({
                 nuget: (val) => val.packageName,
                 crates: (val) => val.packageName,
                 _other: () => undefined
-            }),
+            }) : undefined,
         githubV2: (val) =>
-            val.publishInfo?._visit<string | undefined>({
+            val.githubV2.publishInfo ? visitDiscriminatedUnion(val.githubV2.publishInfo)._visit({
                 maven: (val) => val.coordinate,
                 npm: (val) => val.packageName,
                 pypi: (val) => val.packageName,
@@ -191,7 +191,7 @@ export function getPackageName({
                 nuget: (val) => val.packageName,
                 crates: (val) => val.packageName,
                 _other: () => undefined
-            }),
+            }) : undefined,
         publish: () => undefined,
         publishV2: () => undefined,
         _other: () => undefined
@@ -203,10 +203,10 @@ export function getPackageName({
  * of the GitHub repository.
  */
 function getGoPackageName(generatorInvocation: GeneratorInvocation): string | undefined {
-    return generatorInvocation.outputMode._visit<string | undefined>({
+    return visitDiscriminatedUnion(generatorInvocation.outputMode)._visit({
         downloadFiles: () => undefined,
         github: (val) => `github.com/${val.owner}/${val.repo}`,
-        githubV2: (val) => `github.com/${val.owner}/${val.repo}`,
+        githubV2: (val) => `github.com/${val.githubV2.owner}/${val.githubV2.repo}`,
         publish: () => undefined,
         publishV2: () => undefined,
         _other: () => undefined
