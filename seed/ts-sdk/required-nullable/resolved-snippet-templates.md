@@ -24,3 +24,20 @@ await client.getFoo({
 ```
 
 
+```typescript
+import { SeedApiClient } from "@fern/required-nullable";
+
+const client = new SeedApiClient({ environment: "YOUR_BASE_URL" });        
+await client.updateFoo(
+	"id",
+	{
+		X-Idempotency-Key: "X-Idempotency-Key",
+		nullable_text: "nullable_text",
+		nullable_number: 1.1,
+		non_nullable_text: "non_nullable_text"
+	}
+)
+
+```
+
+
