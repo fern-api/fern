@@ -37,7 +37,7 @@ export const ValidEndpointPathRule: Rule = {
                 );
                 violations.push({
                     severity: "error",
-                    message: `Path '${path}' must start with a slash`,
+                    message: `[valid-endpoint-path] Path '${path}' must start with a slash`,
                     path: `/paths/${path}`
                 });
             }

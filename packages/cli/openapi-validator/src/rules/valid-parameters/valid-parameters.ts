@@ -32,7 +32,7 @@ export const ValidParametersRule: Rule = {
                 if (!parameter.name || parameter.name.trim() === "") {
                     violations.push({
                         severity: "fatal",
-                        message: "Parameter must have a non-empty 'name' field",
+                        message: "[valid-parameters] Parameter must have a non-empty 'name' field",
                         path: `${basePath}/parameters/${index}`
                     });
                 }
@@ -40,13 +40,13 @@ export const ValidParametersRule: Rule = {
                 if (!parameter.in) {
                     violations.push({
                         severity: "fatal",
-                        message: `Parameter '${parameter.name}' must have an 'in' field`,
+                        message: `[valid-parameters] Parameter '${parameter.name}' must have an 'in' field`,
                         path: `${basePath}/parameters/${index}`
                     });
                 } else if (!["query", "header", "path", "cookie"].includes(parameter.in)) {
                     violations.push({
                         severity: "error",
-                        message: `Parameter '${parameter.name}' has invalid 'in' value: ${parameter.in}`,
+                        message: `[valid-parameters] Parameter '${parameter.name}' has invalid 'in' value: ${parameter.in}`,
                         path: `${basePath}/parameters/${index}/in`
                     });
                 }
@@ -54,7 +54,7 @@ export const ValidParametersRule: Rule = {
                 if (parameter.in === "path" && !parameter.required) {
                     violations.push({
                         severity: "error",
-                        message: `Path parameter '${parameter.name}' must have required: true`,
+                        message: `[valid-parameters] Path parameter '${parameter.name}' must have required: true`,
                         path: `${basePath}/parameters/${index}`
                     });
                 }
@@ -62,7 +62,7 @@ export const ValidParametersRule: Rule = {
                 if (!parameter.schema && !parameter.content) {
                     violations.push({
                         severity: "error",
-                        message: `Parameter '${parameter.name}' must have either 'schema' or 'content'`,
+                        message: `[valid-parameters] Parameter '${parameter.name}' must have either 'schema' or 'content'`,
                         path: `${basePath}/parameters/${index}`
                     });
                 }

@@ -15,7 +15,7 @@ export const ValidPathItemsRule: Rule = {
             if (!path.startsWith("/")) {
                 violations.push({
                     severity: "error",
-                    message: `Path '${path}' must start with a forward slash`,
+                    message: `[valid-path-items] Path '${path}' must start with a forward slash`,
                     path: `/paths/${path}`
                 });
             }
@@ -28,7 +28,7 @@ export const ValidPathItemsRule: Rule = {
                     if (paramName.includes("{") || paramName.includes("}")) {
                         violations.push({
                             severity: "error",
-                            message: `Path parameter '${paramName}' in path '${path}' contains invalid characters`,
+                            message: `[valid-path-items] Path parameter '${paramName}' in path '${path}' contains invalid characters`,
                             path: `/paths/${path}`
                         });
                     }

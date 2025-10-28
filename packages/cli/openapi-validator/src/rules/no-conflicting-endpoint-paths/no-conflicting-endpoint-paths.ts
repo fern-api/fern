@@ -52,7 +52,7 @@ export const NoConflictingEndpointPathsRule: Rule = {
                 );
                 violations.push({
                     severity: "error",
-                    message: `Conflicting path templates detected: ${originalPaths.join(", ")}. These paths would match the same URLs.`,
+                    message: `[no-conflicting-endpoint-paths] Conflicting path templates detected: ${originalPaths.join(", ")}. These paths would match the same URLs.`,
                     path: `/paths`
                 });
             }

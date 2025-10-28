@@ -52,7 +52,7 @@ export const ValidReferencesRule: Rule = {
                 if (!availableRefs.has(ref)) {
                     violations.push({
                         severity: "error",
-                        message: `Reference '${ref}' points to non-existent component`,
+                        message: `[valid-references] Reference '${ref}' points to non-existent component`,
                         path
                     });
                 }

@@ -31,7 +31,7 @@ export const ValidSchemasRule: Rule = {
                         ) {
                             violations.push({
                                 severity: "warning",
-                                message: `Property '${propName}' in schema '${schemaName}' has no type or composition keyword`,
+                                message: `[valid-schemas] Property '${propName}' in schema '${schemaName}' has no type or composition keyword`,
                                 path: `/components/schemas/${schemaName}/properties/${propName}`
                             });
                         }
@@ -43,7 +43,7 @@ export const ValidSchemasRule: Rule = {
                 if (schemaObj.enum.length === 0) {
                     violations.push({
                         severity: "warning",
-                        message: `Schema '${schemaName}' has an empty enum array`,
+                        message: `[valid-schemas] Schema '${schemaName}' has an empty enum array`,
                         path: `/components/schemas/${schemaName}/enum`
                     });
                 }
@@ -52,7 +52,7 @@ export const ValidSchemasRule: Rule = {
                 if (uniqueValues.size !== schemaObj.enum.length) {
                     violations.push({
                         severity: "error",
-                        message: `Schema '${schemaName}' has duplicate values in enum`,
+                        message: `[valid-schemas] Schema '${schemaName}' has duplicate values in enum`,
                         path: `/components/schemas/${schemaName}/enum`
                     });
                 }

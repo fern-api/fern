@@ -22,37 +22,37 @@ export const ValidExamplesRule: Rule = {
             if (schemaType === "string" && typeof example !== "string") {
                 violations.push({
                     severity: "warning",
-                    message: `Example value type mismatch: expected string, got ${typeof example}`,
+                    message: `[valid-examples] Example value type mismatch: expected string, got ${typeof example}`,
                     path
                 });
             } else if (schemaType === "number" && typeof example !== "number") {
                 violations.push({
                     severity: "warning",
-                    message: `Example value type mismatch: expected number, got ${typeof example}`,
+                    message: `[valid-examples] Example value type mismatch: expected number, got ${typeof example}`,
                     path
                 });
             } else if (schemaType === "integer" && (!Number.isInteger(example) || typeof example !== "number")) {
                 violations.push({
                     severity: "warning",
-                    message: `Example value type mismatch: expected integer, got ${typeof example}`,
+                    message: `[valid-examples] Example value type mismatch: expected integer, got ${typeof example}`,
                     path
                 });
             } else if (schemaType === "boolean" && typeof example !== "boolean") {
                 violations.push({
                     severity: "warning",
-                    message: `Example value type mismatch: expected boolean, got ${typeof example}`,
+                    message: `[valid-examples] Example value type mismatch: expected boolean, got ${typeof example}`,
                     path
                 });
             } else if (schemaType === "array" && !Array.isArray(example)) {
                 violations.push({
                     severity: "warning",
-                    message: `Example value type mismatch: expected array, got ${typeof example}`,
+                    message: `[valid-examples] Example value type mismatch: expected array, got ${typeof example}`,
                     path
                 });
             } else if (schemaType === "object" && (typeof example !== "object" || Array.isArray(example))) {
                 violations.push({
                     severity: "warning",
-                    message: `Example value type mismatch: expected object, got ${typeof example}`,
+                    message: `[valid-examples] Example value type mismatch: expected object, got ${typeof example}`,
                     path
                 });
             }

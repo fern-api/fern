@@ -58,7 +58,7 @@ export const NoDuplicateEnumValuesRule: Rule = {
                     );
                     violations.push({
                         severity: "error",
-                        message: `Schema '${schemaName}' has duplicate enum values: ${Array.from(duplicates).join(", ")}`,
+                        message: `[no-duplicate-enum-values] Schema '${schemaName}' has duplicate enum values: ${Array.from(duplicates).join(", ")}`,
                         path: `/components/schemas/${schemaName}/enum`
                     });
                 }
@@ -83,7 +83,7 @@ export const NoDuplicateEnumValuesRule: Rule = {
                             if (duplicates.size > 0) {
                                 violations.push({
                                     severity: "error",
-                                    message: `Property '${propName}' in schema '${schemaName}' has duplicate enum values: ${Array.from(duplicates).join(", ")}`,
+                                    message: `[no-duplicate-enum-values] Property '${propName}' in schema '${schemaName}' has duplicate enum values: ${Array.from(duplicates).join(", ")}`,
                                     path: `/components/schemas/${schemaName}/properties/${propName}/enum`
                                 });
                             }

@@ -34,7 +34,7 @@ export const ValidRequestBodyRule: Rule = {
                 if (!requestBody.content || Object.keys(requestBody.content).length === 0) {
                     violations.push({
                         severity: "error",
-                        message: `Request body for ${method.toUpperCase()} ${path} must have 'content' with at least one media type`,
+                        message: `[valid-request-body] Request body for ${method.toUpperCase()} ${path} must have 'content' with at least one media type`,
                         path: `/paths/${path}/${method}/requestBody`
                     });
                 }

@@ -10,7 +10,7 @@ export const RequiredPathsRule: Rule = {
         if (!document.paths) {
             violations.push({
                 severity: "error",
-                message: "OpenAPI document should have a 'paths' object or 'webhooks' object",
+                message: "[required-paths] OpenAPI document should have a 'paths' object or 'webhooks' object",
                 path: "/"
             });
         }

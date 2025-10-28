@@ -16,7 +16,7 @@ export const ValidServerUrlsRule: Rule = {
             if (!server.url) {
                 violations.push({
                     severity: "error",
-                    message: `Server at index ${index} must have a 'url' field`,
+                    message: `[valid-server-urls] Server at index ${index} must have a 'url' field`,
                     path: `/servers/${index}`
                 });
                 return;
@@ -25,7 +25,7 @@ export const ValidServerUrlsRule: Rule = {
             if (server.url.trim() === "") {
                 violations.push({
                     severity: "error",
-                    message: `Server URL at index ${index} cannot be empty`,
+                    message: `[valid-server-urls] Server URL at index ${index} cannot be empty`,
                     path: `/servers/${index}/url`
                 });
             }
@@ -35,7 +35,7 @@ export const ValidServerUrlsRule: Rule = {
                     if (!varObj.default) {
                         violations.push({
                             severity: "error",
-                            message: `Server variable '${varName}' must have a 'default' value`,
+                            message: `[valid-server-urls] Server variable '${varName}' must have a 'default' value`,
                             path: `/servers/${index}/variables/${varName}`
                         });
                     }

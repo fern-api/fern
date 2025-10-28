@@ -28,7 +28,7 @@ export const ValidResponsesRule: Rule = {
                 if (Object.keys(operation.responses).length === 0) {
                     violations.push({
                         severity: "error",
-                        message: `Responses for ${method.toUpperCase()} ${path} must have at least one response`,
+                        message: `[valid-responses] Responses for ${method.toUpperCase()} ${path} must have at least one response`,
                         path: `/paths/${path}/${method}/responses`
                     });
                 }
@@ -43,7 +43,7 @@ export const ValidResponsesRule: Rule = {
                     if (!responseObj.description) {
                         violations.push({
                             severity: "warning",
-                            message: `Response ${statusCode} for ${method.toUpperCase()} ${path} should have a description`,
+                            message: `[valid-responses] Response ${statusCode} for ${method.toUpperCase()} ${path} should have a description`,
                             path: `/paths/${path}/${method}/responses/${statusCode}`
                         });
                     }

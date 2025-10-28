@@ -28,7 +28,7 @@ export const ValidOperationsRule: Rule = {
                 if (!operation.responses) {
                     violations.push({
                         severity: "fatal",
-                        message: `Operation ${method.toUpperCase()} ${path} must have a 'responses' object`,
+                        message: `[valid-operations] Operation ${method.toUpperCase()} ${path} must have a 'responses' object`,
                         path: `/paths/${path}/${method}`
                     });
                 }
@@ -37,7 +37,7 @@ export const ValidOperationsRule: Rule = {
                     if (operation.operationId.trim() === "") {
                         violations.push({
                             severity: "warning",
-                            message: `Operation ${method.toUpperCase()} ${path} has an empty operationId`,
+                            message: `[valid-operations] Operation ${method.toUpperCase()} ${path} has an empty operationId`,
                             path: `/paths/${path}/${method}/operationId`
                         });
                     }

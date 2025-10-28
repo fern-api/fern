@@ -34,7 +34,7 @@ export const RequiredInfoRule: Rule = {
             );
             violations.push({
                 severity: "fatal",
-                message: "OpenAPI document must have an 'info' object",
+                message: "[required-info] OpenAPI document must have an 'info' object",
                 path: "/"
             });
             return violations;
@@ -52,7 +52,7 @@ export const RequiredInfoRule: Rule = {
             );
             violations.push({
                 severity: "fatal",
-                message: "Info object must have a non-empty 'title' field",
+                message: "[required-info] Info object must have a non-empty 'title' field",
                 path: "/info"
             });
         }
@@ -69,7 +69,7 @@ export const RequiredInfoRule: Rule = {
             );
             violations.push({
                 severity: "fatal",
-                message: "Info object must have a non-empty 'version' field",
+                message: "[required-info] Info object must have a non-empty 'version' field",
                 path: "/info"
             });
         }
