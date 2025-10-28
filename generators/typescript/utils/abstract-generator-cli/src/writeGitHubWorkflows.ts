@@ -127,14 +127,6 @@ jobs:
 
       - name: Set up node
         uses: actions/setup-node@v4${
-            useOidc
-                ? `
-                
-      # Ensure npm 11.5.1 or later is installed for OIDC support
-      - name: Update npm
-        run: npm install -g npm@latest`
-                : ""
-        }${
             usePnpm
                 ? `
 
@@ -156,12 +148,15 @@ jobs:
                 : `
           npm config set //registry.npmjs.org/:_authToken \${NPM_TOKEN}`
         }
+          publish() {  # use latest npm to ensure OIDC support
+            npx -y npm@latest publish "$@"
+          }
           if [[ \${GITHUB_REF} == *alpha* ]]; then
-            npm publish --access ${access} --tag alpha
+            publish --access ${access} --tag alpha
           elif [[ \${GITHUB_REF} == *beta* ]]; then
-            npm publish --access ${access} --tag beta
+            publish --access ${access} --tag beta
           else
-            npm publish --access ${access}
+            publish --access ${access}
           fi${
               useOidc
                   ? ""
