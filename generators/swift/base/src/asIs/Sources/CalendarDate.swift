@@ -89,7 +89,7 @@ public struct CalendarDate: Swift.Codable, Swift.Hashable, Swift.Sendable, Swift
     // MARK: - Error Types
 
     /// Errors that can occur when working with CalendarDate
-    public enum Error: Swift.Error, Swift.LocalizedError {
+    public enum Error: Swift.Error, Foundation.LocalizedError {
         case invalidFormat(Swift.String)
 
         public var errorDescription: Swift.String? {
