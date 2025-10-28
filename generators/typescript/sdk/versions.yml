@@ -3,8 +3,8 @@
 - version: 3.12.1
   changelogEntry:
     - summary: Update Biome to 2.3.1
-      type: feat
-  createdAt: "2025-10-27"
+      type: chore
+  createdAt: "2025-10-28"
   irVersion: 60
 
 - version: 3.12.0

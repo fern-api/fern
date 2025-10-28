@@ -57,8 +57,7 @@ RUN rm -rf /tmp/cache-warm
 
 WORKDIR /
 
-
-RUN npm install -f -g @fern-api/generator-cli
+RUN npm install -f -g @fern-api/generator-cli@0.2.0
 
 COPY generators/typescript/sdk/cli/dist/ /
 

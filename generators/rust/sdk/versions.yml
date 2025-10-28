@@ -1,5 +1,12 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
 
+- version: 0.9.0
+  createdAt: "2025-10-24"
+  changelogEntry:
+    - type: feat
+      summary: Add Server-Sent Events (SSE) streaming support with SseStream type
+  irVersion: 61
+
 - version: 0.8.4
   createdAt: "2025-10-25"
   changelogEntry:

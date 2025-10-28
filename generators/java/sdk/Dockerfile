@@ -29,6 +29,6 @@ RUN git config --global user.email "115122769+fern-api[bot]@users.noreply.github
 
 RUN test -f /bin/java-v2 || echo "java-v2 CLI not found or not executable"
 
-RUN npm install -f -g @fern-api/generator-cli
+RUN npm install -f -g @fern-api/generator-cli@0.2.0
 
 ENTRYPOINT ["sh", "/init.sh"]
