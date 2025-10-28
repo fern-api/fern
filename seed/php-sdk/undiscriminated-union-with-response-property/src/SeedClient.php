@@ -4,8 +4,7 @@ namespace Seed;
 
 use GuzzleHttp\ClientInterface;
 use Seed\Core\Client\RawClient;
-use Seed\Requests\GetFooRequest;
-use Seed\Types\Foo;
+use Seed\Types\UnionResponse;
 use Seed\Exceptions\SeedException;
 use Seed\Exceptions\SeedApiException;
 use Seed\Core\Json\JsonApiRequest;
@@ -13,7 +12,7 @@ use Seed\Core\Client\HttpMethod;
 use JsonException;
 use GuzzleHttp\Exception\RequestException;
 use Psr\Http\Client\ClientExceptionInterface;
-use Seed\Requests\UpdateFooRequest;
+use Seed\Types\UnionListResponse;
 
 class SeedClient
 {
@@ -64,7 +63,6 @@ class SeedClient
     }
 
     /**
-     * @param GetFooRequest $request
      * @param ?array{
      *   baseUrl?: string,
      *   maxRetries?: int,
@@ -73,36 +71,26 @@ class SeedClient
      *   queryParameters?: array<string, mixed>,
      *   bodyProperties?: array<string, mixed>,
      * } $options
-     * @return Foo
+     * @return UnionResponse
      * @throws SeedException
      * @throws SeedApiException
      */
-    public function getFoo(GetFooRequest $request, ?array $options = null): Foo
+    public function getUnion(?array $options = null): UnionResponse
     {
         $options = array_merge($this->options, $options ?? []);
-        $query = [];
-        $query['required_baz'] = $request->requiredBaz;
-        $query['required_nullable_baz'] = $request->requiredNullableBaz;
-        if ($request->optionalBaz != null) {
-            $query['optional_baz'] = $request->optionalBaz;
-        }
-        if ($request->optionalNullableBaz != null) {
-            $query['optional_nullable_baz'] = $request->optionalNullableBaz;
-        }
         try {
             $response = $this->client->sendRequest(
                 new JsonApiRequest(
                     baseUrl: $options['baseUrl'] ?? $this->client->options['baseUrl'] ?? '',
-                    path: "foo",
+                    path: "/union",
                     method: HttpMethod::GET,
-                    query: $query,
                 ),
                 $options,
             );
             $statusCode = $response->getStatusCode();
             if ($statusCode >= 200 && $statusCode < 400) {
                 $json = $response->getBody()->getContents();
-                return Foo::fromJson($json);
+                return UnionResponse::fromJson($json);
             }
         } catch (JsonException $e) {
             throw new SeedException(message: "Failed to deserialize response: {$e->getMessage()}", previous: $e);
@@ -127,8 +115,6 @@ class SeedClient
     }
 
     /**
-     * @param string $id
-     * @param UpdateFooRequest $request
      * @param ?array{
      *   baseUrl?: string,
      *   maxRetries?: int,
@@ -137,30 +123,26 @@ class SeedClient
      *   queryParameters?: array<string, mixed>,
      *   bodyProperties?: array<string, mixed>,
      * } $options
-     * @return Foo
+     * @return UnionListResponse
      * @throws SeedException
      * @throws SeedApiException
      */
-    public function updateFoo(string $id, UpdateFooRequest $request, ?array $options = null): Foo
+    public function listUnions(?array $options = null): UnionListResponse
     {
         $options = array_merge($this->options, $options ?? []);
-        $headers = [];
-        $headers['X-Idempotency-Key'] = $request->xIdempotencyKey;
         try {
             $response = $this->client->sendRequest(
                 new JsonApiRequest(
                     baseUrl: $options['baseUrl'] ?? $this->client->options['baseUrl'] ?? '',
-                    path: "foo/{$id}",
-                    method: HttpMethod::PATCH,
-                    headers: $headers,
-                    body: $request,
+                    path: "/unions",
+                    method: HttpMethod::GET,
                 ),
                 $options,
             );
             $statusCode = $response->getStatusCode();
             if ($statusCode >= 200 && $statusCode < 400) {
                 $json = $response->getBody()->getContents();
-                return Foo::fromJson($json);
+                return UnionListResponse::fromJson($json);
             }
         } catch (JsonException $e) {
             throw new SeedException(message: "Failed to deserialize response: {$e->getMessage()}", previous: $e);
