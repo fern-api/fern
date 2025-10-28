@@ -5,18 +5,14 @@ import com.seed.exhaustive.resources.endpoints.params.requests.GetWithPathAndQue
 
 public class Example26 {
     public static void main(String[] args) {
-        SeedExhaustiveClient client = SeedExhaustiveClient
-            .builder()
-            .token("<token>")
-            .url("https://api.fern.com")
-            .build();
+        SeedExhaustiveClient client = SeedExhaustiveClient.builder()
+                .token("<token>")
+                .url("https://api.fern.com")
+                .build();
 
-        client.endpoints().params().getWithPathAndQuery(
-            "param",
-            GetWithPathAndQuery
-                .builder()
-                .query("query")
-                .build()
-        );
+        client.endpoints()
+                .params()
+                .getWithPathAndQuery(
+                        "param", GetWithPathAndQuery.builder().query("query").build());
     }
 }
