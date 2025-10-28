@@ -383,7 +383,7 @@ scripts:
           mkdir -p .pnpm-cache
           echo "Enabling corepack and preparing pnpm..."
           corepack enable
-          corepack prepare pnpm@10.14.0 --activate
+          corepack prepare pnpm --activate
           echo "Running pnpm install..."
           if [ -f "pnpm-lock.yaml" ]; then
             pnpm install --prefer-offline --frozen-lockfile
@@ -399,7 +399,7 @@ scripts:
           mkdir -p .yarn-cache
           echo "Enabling corepack and preparing yarn..."
           corepack enable
-          corepack prepare yarn@1.22.22 --activate
+          corepack prepare yarn --activate
           echo "Running yarn install..."
           if [ -f "yarn.lock" ]; then
             yarn install --prefer-offline --frozen-lockfile

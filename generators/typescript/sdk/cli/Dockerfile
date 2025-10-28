@@ -8,6 +8,12 @@ ENV YARN_CACHE_FOLDER=/.yarn-cache
 ENV PNPM_HOME=/.pnpm
 ENV PATH=$PNPM_HOME:$PATH
 
+RUN npm install -g pnpm@10.20.0 --force
+RUN npm install -g yarn@1.22.22 --force
+RUN pnpm install -g prettier@3.4.2
+RUN pnpm install -g @biomejs/biome@2.3.1
+RUN pnpm install -f -g @fern-api/generator-cli@0.2.0
+
 WORKDIR /tmp/cache-warm
 
 RUN echo '{ \
@@ -44,20 +50,11 @@ RUN yarn install
 RUN rm -rf node_modules
 RUN rm -rf yarn.lock
 
-RUN npm install -g pnpm@10.14.0
-
-
 RUN pnpm install
-# make prettier globally available
-RUN pnpm install -g prettier@3.4.2
-# make biome globally available
-RUN pnpm install -g @biomejs/biome@2.3.1
 
 RUN rm -rf /tmp/cache-warm
 
 WORKDIR /
-
-RUN npm install -f -g @fern-api/generator-cli@0.2.0
 
 COPY generators/typescript/sdk/cli/dist/ /
 

@@ -320,7 +320,7 @@ export class SimpleTypescriptProject extends TypescriptProject {
                 draft["packageManager"] = "yarn@1.22.22";
             }
             if (this.packageManager === "pnpm") {
-                draft["packageManager"] = "pnpm@10.14.0";
+                draft["packageManager"] = "pnpm@10.20.0";
             }
             draft["engines"] = {
                 node: ">=18.0.0"
