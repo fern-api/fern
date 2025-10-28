@@ -1,5 +1,5 @@
 # Build base image with dependencies
-FROM python:3.13.9-slim-bookworm
+FROM python:3.13.9-slim-bookworm AS python-base
 
 ENV PYTHONPATH=${PYTHONPATH}:${PWD}
 ENV _TYPER_STANDARD_TRACEBACK=1
@@ -14,7 +14,7 @@ COPY ./src/__init__.py ./src/__init__.py
 COPY ./src/fern_python/__init__.py ./src/fern_python/__init__.py
 
 # Build final image
-FROM base AS final
+FROM python-base AS final
 
 # Copy specific assets and source code
 COPY ./core_utilities/pydantic /assets/core_utilities
