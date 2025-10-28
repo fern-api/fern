@@ -356,7 +356,9 @@ class PydanticModel:
             writer.write_node(
                 AST.Expression(AST.ClassInstantiation(Pydantic(self._version).ConfigDict(), kwargs=config_kwargs))
             )
-            writer.write("  # type: ignore # Pydantic v2")
+            # Only add type: ignore comment for compatibility modes, not pure v2
+            if self._version != PydanticVersionCompatibility.V2:
+                writer.write("  # type: ignore # Pydantic v2")
 
         if len(config_kwargs) > 0:
             return AST.Expression(AST.CodeWriter(write_extras))
