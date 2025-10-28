@@ -56,7 +56,14 @@ export async function visitNavigationAst({
                                     absolutePathToFernFolder,
                                     navigationItem: item,
                                     visitor,
-                                    nodePath: [...nodePath, `${tabIdx}`, "variants", `${variantIdx}`, "layout", `${itemIdx}`],
+                                    nodePath: [
+                                        ...nodePath,
+                                        `${tabIdx}`,
+                                        "variants",
+                                        `${variantIdx}`,
+                                        "layout",
+                                        `${itemIdx}`
+                                    ],
                                     absoluteFilepathToConfiguration,
                                     apiWorkspaces,
                                     context
