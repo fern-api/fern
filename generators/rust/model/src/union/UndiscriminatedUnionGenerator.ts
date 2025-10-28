@@ -1,27 +1,14 @@
 import { RelativeFilePath } from "@fern-api/fs-utils";
 import { RustFile } from "@fern-api/rust-base";
 import { Attribute, rust } from "@fern-api/rust-codegen";
-
 import {
     TypeDeclaration,
-    TypeReference,
     UndiscriminatedUnionMember,
     UndiscriminatedUnionTypeDeclaration
 } from "@fern-fern/ir-sdk/api";
-
 import { generateRustTypeForTypeReference } from "../converters/getRustTypeForTypeReference";
 import { ModelGeneratorContext } from "../ModelGeneratorContext";
-import {
-    extractNamedTypesFromTypeReference,
-    isCollectionType,
-    isDateTimeOnlyType,
-    isDateTimeType,
-    isDateType,
-    isUnknownType,
-    isUuidType,
-    typeSupportsHashAndEq,
-    typeSupportsPartialEq
-} from "../utils/primitiveTypeUtils";
+import { typeSupportsHashAndEq, typeSupportsPartialEq } from "../utils/primitiveTypeUtils";
 
 export class UndiscriminatedUnionGenerator {
     private readonly typeDeclaration: TypeDeclaration;
@@ -57,59 +44,6 @@ export class UndiscriminatedUnionGenerator {
         });
     }
 
-    private writeUseStatements(writer: rust.Writer): void {
-        // Add imports for variant types FIRST
-        const variantTypes = this.getVariantTypesUsedInUnion();
-        variantTypes.forEach((typeName) => {
-            const modulePath = this.context.getModulePathForType(typeName.snakeCase.unsafeName);
-            const moduleNameEscaped = this.context.escapeRustKeyword(modulePath);
-            writer.writeLine(`use crate::${moduleNameEscaped}::${typeName.pascalCase.unsafeName};`);
-        });
-
-        // Add chrono imports based on specific types needed
-        const hasDateOnly = this.hasDateFields();
-        const hasDateTimeOnly = this.hasDateTimeOnlyFields();
-
-        // TODO: @iamnamananand996 - use AST mechanism for all imports
-        if (hasDateOnly && hasDateTimeOnly) {
-            // Both date and datetime types present
-            writer.writeLine("use chrono::{DateTime, NaiveDate, Utc};");
-        } else if (hasDateOnly) {
-            // Only date type present, import NaiveDate only
-            writer.writeLine("use chrono::NaiveDate;");
-        } else if (hasDateTimeOnly) {
-            // Only datetime type present, import DateTime and Utc only
-            writer.writeLine("use chrono::{DateTime, Utc};");
-        }
-
-        // Add std::collections if we have maps or sets
-        if (this.hasCollectionFields()) {
-            const hasMaps = this.hasMapFields();
-            const hasSets = this.hasSetFields();
-
-            if (hasMaps && hasSets) {
-                writer.writeLine("use std::collections::{HashMap, HashSet};");
-            } else if (hasMaps) {
-                writer.writeLine("use std::collections::HashMap;");
-            } else if (hasSets) {
-                writer.writeLine("use std::collections::HashSet;");
-            }
-        }
-
-        // Add uuid if we have UUID fields
-        if (this.hasUuidFields()) {
-            writer.writeLine("use uuid::Uuid;");
-        }
-
-        // TODO: @iamnamananand996 build to use serde_json::Value ---> Value directly
-        // if (hasJsonValueFields(properties)) {
-        //     writer.writeLine("use serde_json::Value;");
-        // }
-
-        // Add serde imports LAST
-        writer.writeLine("use serde::{Deserialize, Serialize};");
-    }
-
     private generateUndiscriminatedUnionEnum(writer: rust.Writer): void {
         const typeName = this.context.getUniqueTypeNameForDeclaration(this.typeDeclaration);
 
@@ -133,6 +67,12 @@ export class UndiscriminatedUnionGenerator {
 
         // Generate helper methods
         this.generateImplementationBlock(writer, typeName);
+
+        // Generate Display implementation if all variants support Display
+        if (this.canImplementDisplay()) {
+            writer.newLine();
+            this.generateDisplayImplementation(writer, typeName);
+        }
     }
 
     private generateUnionAttributes(): rust.Attribute[] {
@@ -298,72 +238,6 @@ export class UndiscriminatedUnionGenerator {
         });
     }
 
-    // Helper methods to detect field types for imports
-    private hasDateTimeFields(): boolean {
-        return this.hasFieldsOfType(isDateTimeType);
-    }
-
-    private hasDateFields(): boolean {
-        return this.hasFieldsOfType(isDateType);
-    }
-
-    private hasDateTimeOnlyFields(): boolean {
-        return this.hasFieldsOfType(isDateTimeOnlyType);
-    }
-
-    private hasUuidFields(): boolean {
-        return this.hasFieldsOfType(isUuidType);
-    }
-
-    private hasCollectionFields(): boolean {
-        return this.hasFieldsOfType(isCollectionType);
-    }
-
-    private hasMapFields(): boolean {
-        return this.hasFieldsOfType((typeRef: TypeReference) => {
-            if (typeRef.type === "container") {
-                return typeRef.container.type === "map";
-            }
-            return false;
-        });
-    }
-
-    private hasSetFields(): boolean {
-        return this.hasFieldsOfType((typeRef: TypeReference) => {
-            if (typeRef.type === "container") {
-                return typeRef.container.type === "set";
-            }
-            return false;
-        });
-    }
-
-    private hasJsonValueFields(): boolean {
-        return this.hasFieldsOfType(isUnknownType);
-    }
-
-    private hasFieldsOfType(predicate: (typeRef: TypeReference) => boolean): boolean {
-        return this.undiscriminatedUnionTypeDeclaration.members.some((member) => predicate(member.type));
-    }
-
-    private getVariantTypesUsedInUnion(): {
-        snakeCase: { unsafeName: string };
-        pascalCase: { unsafeName: string };
-    }[] {
-        const variantTypeNames: {
-            snakeCase: { unsafeName: string };
-            pascalCase: { unsafeName: string };
-        }[] = [];
-        const visited = new Set<string>();
-
-        this.undiscriminatedUnionTypeDeclaration.members.forEach((member) => {
-            extractNamedTypesFromTypeReference(member.type, variantTypeNames, visited);
-        });
-
-        // Filter out the current type itself to prevent self-imports
-        const currentTypeName = this.context.getUniqueTypeNameForDeclaration(this.typeDeclaration);
-        return variantTypeNames.filter((typeName) => typeName.pascalCase.unsafeName !== currentTypeName);
-    }
-
     private canDerivePartialEq(): boolean {
         // Check if all variant types can support PartialEq derive
         return this.undiscriminatedUnionTypeDeclaration.members.every((member) => {
@@ -376,5 +250,65 @@ export class UndiscriminatedUnionGenerator {
         return this.undiscriminatedUnionTypeDeclaration.members.every((member) => {
             return typeSupportsHashAndEq(member.type, this.context);
         });
+    }
+
+    private canImplementDisplay(): boolean {
+        // Check if all variant types support Display
+        // For now, we'll implement Display if all variants are named types
+        return this.undiscriminatedUnionTypeDeclaration.members.every((member) => {
+            // Named types (enums, objects, etc.) should have Display implementations
+            if (member.type.type === "named") {
+                return true;
+            }
+            // Primitive types all support Display
+            if (member.type.type === "primitive") {
+                return true;
+            }
+            return false;
+        });
+    }
+
+    private generateDisplayImplementation(writer: rust.Writer, typeName: string): void {
+        writer.writeLine(`impl fmt::Display for ${typeName} {`);
+        writer.indent();
+        writer.writeLine("fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {");
+        writer.indent();
+        writer.writeLine("match self {");
+        writer.indent();
+
+        // Generate match arms for each variant
+        this.undiscriminatedUnionTypeDeclaration.members.forEach((member, index) => {
+            const variantName = this.getVariantNameForMember(member, index);
+
+            // Check if the type likely supports Display
+            if (member.type.type === "primitive") {
+                // Primitive types all support Display
+                writer.writeLine(`Self::${variantName}(value) => write!(f, "{}", value),`);
+            } else if (
+                member.type.type === "container" &&
+                (member.type.container.type === "list" ||
+                    member.type.container.type === "set" ||
+                    member.type.container.type === "map")
+            ) {
+                // Collections should use Debug format
+                writer.writeLine(`Self::${variantName}(value) => write!(f, "{:?}", value),`);
+            } else if (member.type.type === "named") {
+                // For named types, try to serialize to JSON as a fallback
+                // This ensures we always have a string representation
+                writer.writeLine(
+                    `Self::${variantName}(value) => write!(f, "{}", serde_json::to_string(value).unwrap_or_else(|_| format!("{:?}", value))),`
+                );
+            } else {
+                // Default to Debug format for unknown types
+                writer.writeLine(`Self::${variantName}(value) => write!(f, "{:?}", value),`);
+            }
+        });
+
+        writer.dedent();
+        writer.writeLine("}");
+        writer.dedent();
+        writer.writeLine("}");
+        writer.dedent();
+        writer.writeLine("}");
     }
 }

@@ -78,7 +78,6 @@ POST request with basic auth scheme
 
 ```rust
 use seed_basic_auth_environment_variables::prelude::*;
-use std::collections::HashMap;
 
 #[tokio::main]
 async fn main() {

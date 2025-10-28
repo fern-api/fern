@@ -42,8 +42,6 @@ export class ExampleEndpointFactory {
     }
 
     public buildEndpointExample(endpoint: EndpointWithExample): EndpointExample[] {
-        this.logger.debug(`Building endpoint example for ${endpoint.method.toUpperCase()} ${endpoint.path}`);
-
         // pares down the request/response to only multipart or json schemas.
         // other types are not supported in the builder.
         const requestSchemaIdResponse = getRequestSchema(endpoint.request);
@@ -189,7 +187,7 @@ export class ExampleEndpointFactory {
                 }
             });
             if (example != null && !isExamplePrimitive(example)) {
-                this.logger.warn(
+                this.logger.debug(
                     `Expected a primitive example but got ${example.type} for path parameter ${
                         pathParameter.name
                     } for ${endpoint.method.toUpperCase()} ${endpoint.path}`
@@ -221,7 +219,7 @@ export class ExampleEndpointFactory {
                 }
             });
             if (example != null && !isExamplePrimitive(example)) {
-                this.logger.warn(
+                this.logger.debug(
                     `Expected a primitive example but got ${example.type} for query parameter ${
                         queryParameter.name
                     } for ${endpoint.method.toUpperCase()} ${endpoint.path}`
@@ -252,7 +250,7 @@ export class ExampleEndpointFactory {
                 }
             });
             if (example != null && !isExamplePrimitive(example)) {
-                this.logger.warn(
+                this.logger.debug(
                     `Expected a primitive example but got ${example.type} for header ${
                         header.name
                     } for ${endpoint.method.toUpperCase()} ${endpoint.path}`
@@ -304,7 +302,7 @@ export class ExampleEndpointFactory {
             });
 
             if (example != null && !isExamplePrimitive(example)) {
-                this.logger.warn(
+                this.logger.debug(
                     `Expected a primitive example but got ${example.type} for global header ${
                         globalHeader.header
                     } for ${endpoint.method.toUpperCase()} ${endpoint.path}`

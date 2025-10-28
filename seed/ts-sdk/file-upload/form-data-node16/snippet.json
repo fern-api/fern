@@ -2,6 +2,28 @@
     "endpoints": [
         {
             "id": {
+                "path": "/just-file",
+                "method": "POST",
+                "identifier_override": "endpoint_service.justFile"
+            },
+            "snippet": {
+                "type": "typescript",
+                "client": "import { createReadStream } from \"fs\";\nimport { SeedFileUploadClient } from \"@fern/file-upload\";\nimport * as fs from \"fs\";\n\nconst client = new SeedFileUploadClient({ environment: \"YOUR_BASE_URL\" });\nawait client.service.justFile({\n    file: fs.createReadStream(\"/path/to/your/file\")\n});\n"
+            }
+        },
+        {
+            "id": {
+                "path": "/optional-args",
+                "method": "POST",
+                "identifier_override": "endpoint_service.optionalArgs"
+            },
+            "snippet": {
+                "type": "typescript",
+                "client": "import { createReadStream } from \"fs\";\nimport { SeedFileUploadClient } from \"@fern/file-upload\";\n\nconst client = new SeedFileUploadClient({ environment: \"YOUR_BASE_URL\" });\nawait client.service.optionalArgs({});\n"
+            }
+        },
+        {
+            "id": {
                 "path": "/snippet",
                 "method": "POST",
                 "identifier_override": "endpoint_service.simple"

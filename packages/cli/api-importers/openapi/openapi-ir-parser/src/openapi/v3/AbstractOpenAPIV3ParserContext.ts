@@ -13,6 +13,7 @@ export const PARAMETER_REFERENCE_PREFIX = "#/components/parameters/";
 export const RESPONSE_REFERENCE_PREFIX = "#/components/responses/";
 export const EXAMPLES_REFERENCE_PREFIX = "#/components/examples/";
 export const REQUEST_BODY_REFERENCE_PREFIX = "#/components/requestBodies/";
+export const SECURITY_SCHEME_REFERENCE_PREFIX = "#/components/securitySchemes/";
 
 export interface DiscriminatedUnionReference {
     discriminants: Set<string>;
@@ -129,7 +130,7 @@ export abstract class AbstractOpenAPIV3ParserContext implements SchemaParserCont
             }
         }
         if (resolvedSchema == null) {
-            this.logger.warn(`Encountered undefined reference: ${schema.$ref}`);
+            this.logger.debug(`Encountered undefined reference: ${schema.$ref}`);
             return {
                 "x-fern-type": "unknown"
                 // biome-ignore lint/suspicious/noExplicitAny: allow explicit any
@@ -219,6 +220,25 @@ export abstract class AbstractOpenAPIV3ParserContext implements SchemaParserCont
             return this.resolveExampleReference(resolvedExample);
         }
         return resolvedExample;
+    }
+
+    public resolveSecuritySchemeReference(securityScheme: OpenAPIV3.ReferenceObject): OpenAPIV3.SecuritySchemeObject {
+        if (
+            this.document.components == null ||
+            this.document.components.securitySchemes == null ||
+            !securityScheme.$ref.startsWith(SECURITY_SCHEME_REFERENCE_PREFIX)
+        ) {
+            throw new Error(`Failed to resolve ${securityScheme.$ref}`);
+        }
+        const securitySchemeKey = securityScheme.$ref.substring(SECURITY_SCHEME_REFERENCE_PREFIX.length);
+        const resolvedSecurityScheme = this.document.components.securitySchemes[securitySchemeKey];
+        if (resolvedSecurityScheme == null) {
+            throw new Error(`${securityScheme.$ref} is undefined`);
+        }
+        if (isReferenceObject(resolvedSecurityScheme)) {
+            return this.resolveSecuritySchemeReference(resolvedSecurityScheme);
+        }
+        return resolvedSecurityScheme;
     }
 
     public referenceExists(ref: string): boolean {

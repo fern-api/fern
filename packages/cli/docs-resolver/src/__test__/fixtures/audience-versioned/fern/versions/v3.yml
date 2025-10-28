@@ -1,0 +1,16 @@
+navigation:
+  - page: Beta Features
+    path: ../v3/beta.mdx
+    audiences:
+      - internal
+  - api: Beta API Reference
+    audiences:
+      - internal
+    layout:
+      - section:
+          title: Experimental Features
+          audiences:
+            - internal
+          contents:
+            - POST /experiments/run
+            - GET /experiments/{id}

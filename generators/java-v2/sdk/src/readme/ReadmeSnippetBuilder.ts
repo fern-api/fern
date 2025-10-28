@@ -1,5 +1,4 @@
 import { AbstractReadmeSnippetBuilder } from "@fern-api/base-generator";
-import { FernIr } from "@fern-api/dynamic-ir-sdk";
 import { java } from "@fern-api/java-ast";
 
 import { FernGeneratorCli } from "@fern-fern/generator-cli-sdk";
@@ -494,6 +493,10 @@ export class ReadmeSnippetBuilder extends AbstractReadmeSnippetBuilder {
         endpointSnippets: FernGeneratorExec.Endpoint[]
     ): Record<EndpointId, string> {
         const snippets: Record<EndpointId, string> = {};
+        const exampleStyle = this.context.ir.readmeConfig?.exampleStyle;
+
+        const snippetsByEndpointId: Record<EndpointId, FernGeneratorExec.Endpoint[]> = {};
+
         for (const endpointSnippet of Object.values(endpointSnippets)) {
             if (endpointSnippet.id.identifierOverride == null) {
                 throw new Error("Internal error; snippets must define the endpoint id to generate README.md");
@@ -501,12 +504,118 @@ export class ReadmeSnippetBuilder extends AbstractReadmeSnippetBuilder {
             if (endpointSnippet.snippet.type !== "java") {
                 throw new Error(`Internal error; expected java snippet but got: ${endpointSnippet.snippet.type}`);
             }
-            if (snippets[endpointSnippet.id.identifierOverride] != null) {
-                continue;
+
+            const endpointId = endpointSnippet.id.identifierOverride;
+            if (!snippetsByEndpointId[endpointId]) {
+                snippetsByEndpointId[endpointId] = [];
             }
-            snippets[endpointSnippet.id.identifierOverride] = endpointSnippet.snippet.syncClient;
+            snippetsByEndpointId[endpointId].push(endpointSnippet);
+        }
+
+        for (const [endpointId, endpointSnippetList] of Object.entries(snippetsByEndpointId)) {
+            let selectedSnippet: FernGeneratorExec.Endpoint;
+
+            if (exampleStyle === "minimal") {
+                selectedSnippet = endpointSnippetList.reduce((best, current) => {
+                    const currentIsMinimal =
+                        current.exampleIdentifier?.toLowerCase().includes("minimal") ||
+                        current.exampleIdentifier?.toLowerCase().includes("required");
+                    const bestIsMinimal =
+                        best.exampleIdentifier?.toLowerCase().includes("minimal") ||
+                        best.exampleIdentifier?.toLowerCase().includes("required");
+
+                    if (currentIsMinimal && !bestIsMinimal) {
+                        return current;
+                    }
+                    if (bestIsMinimal && !currentIsMinimal) {
+                        return best;
+                    }
+
+                    if (current.snippet.type === "java" && best.snippet.type === "java") {
+                        const currentLength = current.snippet.syncClient.length;
+                        const bestLength = best.snippet.syncClient.length;
+                        return currentLength < bestLength ? current : best;
+                    }
+                    return best;
+                });
+            } else {
+                selectedSnippet = endpointSnippetList.reduce((best, current) => {
+                    if (current.snippet.type === "java" && best.snippet.type === "java") {
+                        const currentLength = current.snippet.syncClient.length;
+                        const bestLength = best.snippet.syncClient.length;
+                        return currentLength > bestLength ? current : best;
+                    }
+                    return best;
+                });
+            }
+
+            if (selectedSnippet.snippet.type !== "java") {
+                throw new Error(`Internal error; expected java snippet but got: ${selectedSnippet.snippet.type}`);
+            }
+            let snippet = selectedSnippet.snippet.syncClient;
+
+            if (exampleStyle === "minimal") {
+                snippet = this.filterOptionalParametersFromSnippet(snippet, endpointId);
+            }
+
+            snippets[endpointId] = snippet;
         }
         return snippets;
+    }
+
+    private filterOptionalParametersFromSnippet(snippet: string, endpointId: string): string {
+        const endpoint = this.endpointsById[endpointId];
+        if (!endpoint?.endpoint.requestBody) {
+            return snippet;
+        }
+
+        const requestBody = endpoint.endpoint.requestBody;
+        const optionalFieldNames = new Set<string>();
+
+        if (requestBody.type === "reference") {
+            const requestBodyRef = requestBody;
+            if (requestBodyRef.requestBodyType.type === "named") {
+                const typeId = requestBodyRef.requestBodyType.typeId;
+                for (const type of Object.values(this.context.ir.types)) {
+                    if (type.name.typeId === typeId && type.shape.type === "object") {
+                        for (const property of type.shape.properties) {
+                            const valueType = property.valueType;
+                            if (
+                                valueType.type === "container" &&
+                                (valueType.container.type === "optional" || valueType.container.type === "nullable")
+                            ) {
+                                const fieldName = property.name.name.camelCase.unsafeName;
+                                optionalFieldNames.add(fieldName);
+                            }
+                        }
+                    }
+                }
+            }
+        }
+
+        if (optionalFieldNames.size === 0) {
+            return snippet;
+        }
+
+        const lines = snippet.split("\n");
+        const filteredLines: string[] = [];
+
+        for (const line of lines) {
+            let shouldInclude = true;
+            for (const optionalField of optionalFieldNames) {
+                const methodPattern = new RegExp(`\\.${optionalField}\\s*\\(`);
+                if (methodPattern.test(line)) {
+                    shouldInclude = false;
+                    break;
+                }
+            }
+
+            if (shouldInclude) {
+                filteredLines.push(line);
+            }
+        }
+
+        return filteredLines.join("\n");
     }
 
     private getEndpointsForFeature(featureId: FeatureId): EndpointWithFilepath[] {
@@ -545,7 +654,7 @@ export class ReadmeSnippetBuilder extends AbstractReadmeSnippetBuilder {
         return endpoint.name.camelCase.unsafeName;
     }
 
-    private getDefaultEnvironmentId(): FernIr.EnvironmentId | undefined {
+    private getDefaultEnvironmentId(): string | undefined {
         if (this.context.ir.environments == null) {
             return undefined;
         }

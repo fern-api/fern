@@ -1,0 +1,16 @@
+navigation:
+  - page: Analytics Dashboard
+    path: ../pages/analytics.mdx
+    # Test string format
+    audiences: internal
+  - api: Analytics API
+    # Test string format
+    audiences: internal
+    layout:
+      - section:
+          title: Data Collection
+          # Test string format at section level
+          audiences: internal
+          contents:
+            - POST /analytics/events
+            - GET /analytics/reports/{id}

@@ -2,6 +2,10 @@
 
 import type * as core from "../../../../../core/index.js";
 
+/**
+ * @example
+ *     {}
+ */
 export interface OptionalArgsRequest {
     imageFile?: core.file.Uploadable | undefined;
     request?: unknown;

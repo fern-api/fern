@@ -1,0 +1,10 @@
+navigation:
+  - page: External Overview
+    path: ../v1/overview.mdx
+  - api: Public API Reference
+    layout:
+      - section:
+          title: User Operations
+          contents:
+            - GET /users/{id}
+            - POST /users

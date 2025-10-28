@@ -183,10 +183,14 @@ def update_forward_refs(model: Type["Model"], **localns: Any) -> None:
 AnyCallable = Callable[..., Any]
 
 
-def universal_root_validator(pre: bool = False) -> Callable[[AnyCallable], AnyCallable]:
+def universal_root_validator(
+    pre: bool = False,
+) -> Callable[[AnyCallable], AnyCallable]:
     def decorator(func: AnyCallable) -> AnyCallable:
         if IS_PYDANTIC_V2:
-            return cast(AnyCallable, pydantic.model_validator(mode="before" if pre else "after")(func))  # type: ignore[attr-defined]
+            # In Pydantic v2, for RootModel we always use "before" mode
+            # The custom validators transform the input value before the model is created
+            return cast(AnyCallable, pydantic.model_validator(mode="before")(func))  # type: ignore[attr-defined]
         return cast(AnyCallable, pydantic.root_validator(pre=pre)(func))  # type: ignore[call-overload]
 
     return decorator

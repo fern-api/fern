@@ -8,7 +8,9 @@ import com.seed.requestParameters.core.RequestOptions;
 import com.seed.requestParameters.resources.user.requests.CreateUsernameReferencedRequest;
 import com.seed.requestParameters.resources.user.requests.CreateUsernameRequest;
 import com.seed.requestParameters.resources.user.requests.GetUsersRequest;
+import com.seed.requestParameters.resources.user.types.CreateUsernameBodyOptionalProperties;
 import com.seed.requestParameters.resources.user.types.User;
+import java.util.Optional;
 import java.util.concurrent.CompletableFuture;
 
 public class AsyncUserClient {
@@ -45,6 +47,19 @@ public class AsyncUserClient {
         return this.rawClient
                 .createUsernameWithReferencedType(request, requestOptions)
                 .thenApply(response -> response.body());
+    }
+
+    public CompletableFuture<Void> createUsernameOptional() {
+        return this.rawClient.createUsernameOptional().thenApply(response -> response.body());
+    }
+
+    public CompletableFuture<Void> createUsernameOptional(Optional<CreateUsernameBodyOptionalProperties> request) {
+        return this.rawClient.createUsernameOptional(request).thenApply(response -> response.body());
+    }
+
+    public CompletableFuture<Void> createUsernameOptional(
+            Optional<CreateUsernameBodyOptionalProperties> request, RequestOptions requestOptions) {
+        return this.rawClient.createUsernameOptional(request, requestOptions).thenApply(response -> response.body());
     }
 
     public CompletableFuture<User> getUsername(GetUsersRequest request) {

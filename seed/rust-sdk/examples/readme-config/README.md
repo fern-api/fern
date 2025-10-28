@@ -17,7 +17,7 @@ Add this to your `Cargo.toml`:
 
 ```toml
 [dependencies]
-seed_examples = "0.1.0"
+seed_examples = "0.0.1"
 ```
 
 Or install via cargo:
@@ -32,7 +32,7 @@ A full reference for this library is available [here](./reference.md).
 
 ## Base Readme Custom Section
 
-Base Readme Custom Content for seed_examples:0.1.0
+Base Readme Custom Content for seed_examples:0.0.1
 
 ## Override Section
 
@@ -40,16 +40,14 @@ Override Content
 
 ## Generator Invocation Custom Section
 
-Generator Invocation Custom Content for seed_examples:0.1.0
+Generator Invocation Custom Content for seed_examples:0.0.1
 
 ## Usage
 
 Instantiate and use the client with the following:
 
 ```rust
-use chrono::NaiveDate;
 use seed_examples::prelude::*;
-use std::collections::{HashMap, HashSet};
 
 #[tokio::main]
 async fn main() {

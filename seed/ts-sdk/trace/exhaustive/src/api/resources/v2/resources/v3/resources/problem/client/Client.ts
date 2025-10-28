@@ -210,7 +210,7 @@ export class Problem {
                 (await core.Supplier.get(this._options.baseUrl)) ??
                     (await core.Supplier.get(this._options.environment)) ??
                     environments.SeedTraceEnvironment.Prod,
-                `/problems-v2/problem-info/${encodeURIComponent(problemId)}`,
+                `/problems-v2/problem-info/${core.url.encodePathParam(problemId)}`,
             ),
             method: "GET",
             headers: _headers,
@@ -291,7 +291,7 @@ export class Problem {
                 (await core.Supplier.get(this._options.baseUrl)) ??
                     (await core.Supplier.get(this._options.environment)) ??
                     environments.SeedTraceEnvironment.Prod,
-                `/problems-v2/problem-info/${encodeURIComponent(problemId)}/version/${encodeURIComponent(problemVersion)}`,
+                `/problems-v2/problem-info/${core.url.encodePathParam(problemId)}/version/${core.url.encodePathParam(problemVersion)}`,
             ),
             method: "GET",
             headers: _headers,

@@ -22,7 +22,7 @@ types:
       version: string
       output: optional<GeneratorOutputSchema>
       github: optional<GithubConfigurationSchema>
-      config: unknown
+      config: optional<unknown>
       metadata: optional<GeneratorPublishMetadataSchema>
       keywords:
         type: optional<list<string>>

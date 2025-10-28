@@ -11,7 +11,7 @@ Add this to your `Cargo.toml`:
 
 ```toml
 [dependencies]
-seed_single_url_environment_default = "0.1.0"
+seed_single_url_environment_default = "0.0.1"
 ```
 
 Or install via cargo:

@@ -32,13 +32,21 @@ export async function writeDocsDefinitionForProject({
             })
         );
 
-        const docsResolver = new DocsDefinitionResolver(
-            docsWorkspace.config.instances[0]?.url ?? "http://localhost:8080",
+        const docsResolver = new DocsDefinitionResolver({
+            domain: docsWorkspace.config.instances[0]?.url ?? "http://localhost:8080",
             docsWorkspace,
             ossWorkspaces,
-            fernWorkspaces,
-            context
-        );
+            apiWorkspaces: fernWorkspaces,
+            taskContext: context,
+            editThisPage: undefined,
+            uploadFiles: undefined,
+            registerApi: undefined,
+            targetAudiences: docsWorkspace.config.instances[0]?.audiences
+                ? Array.isArray(docsWorkspace.config.instances[0].audiences)
+                    ? docsWorkspace.config.instances[0].audiences
+                    : [docsWorkspace.config.instances[0].audiences]
+                : undefined
+        });
         const docsDefinition = await docsResolver.resolve();
 
         // Write the docs definition to the specified output path

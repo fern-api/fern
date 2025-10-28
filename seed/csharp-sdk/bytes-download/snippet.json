@@ -1,4 +1,17 @@
 {
     "types": {},
-    "endpoints": []
+    "endpoints": [
+        {
+            "example_identifier": null,
+            "id": {
+                "path": "/snippet",
+                "method": "POST",
+                "identifier_override": "endpoint_service.simple"
+            },
+            "snippet": {
+                "type": "csharp",
+                "client": "using SeedBytesDownload;\n\nvar client = new SeedBytesDownloadClient();\nawait client.Service.SimpleAsync();\n"
+            }
+        }
+    ]
 }

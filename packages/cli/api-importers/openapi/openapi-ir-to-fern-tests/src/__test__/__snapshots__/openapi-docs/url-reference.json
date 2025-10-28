@@ -17,7 +17,27 @@
                 {
                   "response": {
                     "body": {
-                      "key": "value",
+                      "category": {
+                        "id": 6,
+                        "name": "name",
+                      },
+                      "id": 0,
+                      "name": "doggie",
+                      "photoUrls": [
+                        "photoUrls",
+                        "photoUrls",
+                      ],
+                      "status": "available",
+                      "tags": [
+                        {
+                          "id": 1,
+                          "name": "name",
+                        },
+                        {
+                          "id": 1,
+                          "name": "name",
+                        },
+                      ],
                     },
                   },
                 },
@@ -28,7 +48,7 @@
               "response": {
                 "docs": "A list of pets",
                 "status-code": 200,
-                "type": "unknown",
+                "type": "Pet",
               },
               "source": {
                 "openapi": "../openapi.yml",
@@ -40,12 +60,64 @@
           },
         },
         "types": {
+          "Category": {
+            "docs": "A category for a pet",
+            "inline": undefined,
+            "properties": {
+              "id": "optional<long>",
+              "name": "optional<string>",
+            },
+            "source": {
+              "openapi": "../openapi.yml",
+            },
+          },
           "Error": {
             "docs": undefined,
             "inline": undefined,
             "properties": {
               "code": "optional<integer>",
               "message": "optional<string>",
+            },
+            "source": {
+              "openapi": "../openapi.yml",
+            },
+          },
+          "Pet": {
+            "docs": "A pet for sale in the pet store",
+            "inline": undefined,
+            "properties": {
+              "category": "optional<Category>",
+              "id": "optional<long>",
+              "name": "string",
+              "photoUrls": "list<string>",
+              "status": {
+                "docs": "pet status in the store",
+                "type": "optional<PetStatus>",
+              },
+              "tags": "optional<list<Tag>>",
+            },
+            "source": {
+              "openapi": "../openapi.yml",
+            },
+          },
+          "PetStatus": {
+            "docs": "pet status in the store",
+            "enum": [
+              "available",
+              "pending",
+              "sold",
+            ],
+            "inline": true,
+            "source": {
+              "openapi": "../openapi.yml",
+            },
+          },
+          "Tag": {
+            "docs": "A tag for a pet",
+            "inline": undefined,
+            "properties": {
+              "id": "optional<long>",
+              "name": "optional<string>",
             },
             "source": {
               "openapi": "../openapi.yml",
@@ -65,12 +137,25 @@
       display-name: List all pets
       response:
         docs: A list of pets
-        type: unknown
+        type: Pet
         status-code: 200
       examples:
         - response:
             body:
-              key: value
+              id: 0
+              category:
+                id: 6
+                name: name
+              name: doggie
+              photoUrls:
+                - photoUrls
+                - photoUrls
+              tags:
+                - id: 1
+                  name: name
+                - id: 1
+                  name: name
+              status: available
   source:
     openapi: ../openapi.yml
 types:
@@ -78,6 +163,42 @@ types:
     properties:
       code: optional<integer>
       message: optional<string>
+    source:
+      openapi: ../openapi.yml
+  Category:
+    docs: A category for a pet
+    properties:
+      id: optional<long>
+      name: optional<string>
+    source:
+      openapi: ../openapi.yml
+  Tag:
+    docs: A tag for a pet
+    properties:
+      id: optional<long>
+      name: optional<string>
+    source:
+      openapi: ../openapi.yml
+  PetStatus:
+    enum:
+      - available
+      - pending
+      - sold
+    docs: pet status in the store
+    inline: true
+    source:
+      openapi: ../openapi.yml
+  Pet:
+    docs: A pet for sale in the pet store
+    properties:
+      id: optional<long>
+      category: optional<Category>
+      name: string
+      photoUrls: list<string>
+      tags: optional<list<Tag>>
+      status:
+        type: optional<PetStatus>
+        docs: pet status in the store
     source:
       openapi: ../openapi.yml
 ",

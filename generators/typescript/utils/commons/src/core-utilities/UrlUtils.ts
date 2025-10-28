@@ -9,6 +9,9 @@ export interface UrlUtils {
     toQueryString: {
         _invoke: (args: ts.Expression[]) => ts.CallExpression;
     };
+    encodePathParam: {
+        _invoke: (arg: ts.Expression) => ts.CallExpression;
+    };
 }
 
 export const MANIFEST: CoreUtility.Manifest = {
@@ -32,6 +35,13 @@ export class UrlUtilsImpl extends CoreUtility implements UrlUtils {
             "toQueryString",
             (toQueryString) => (args: ts.Expression[]) =>
                 ts.factory.createCallExpression(toQueryString.getExpression(), undefined, args)
+        )
+    };
+    public readonly encodePathParam = {
+        _invoke: this.withExportedName(
+            "encodePathParam",
+            (encodePathParam) => (arg: ts.Expression) =>
+                ts.factory.createCallExpression(encodePathParam.getExpression(), undefined, [arg])
         )
     };
 }

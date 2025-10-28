@@ -404,6 +404,12 @@ public abstract class AbstractGeneratorCli<T extends ICustomConfig, K extends ID
                                                 }
 
                                                 @Override
+                                                public Optional<MavenCoordinate> visitCrates(
+                                                        com.fern.ir.model.publish.CratesPublishTarget value) {
+                                                    return Optional.empty();
+                                                }
+
+                                                @Override
                                                 public Optional<MavenCoordinate> _visitUnknown(Object value) {
                                                     return Optional.empty();
                                                 }

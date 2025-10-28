@@ -2,20 +2,20 @@ import Foundation
 
 /// Example of an discriminated union
 public enum UserOrAdminDiscriminated: Codable, Hashable, Sendable {
-    case user(User)
     case admin(Admin)
     case empty(Empty)
+    case user(User)
 
     public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
         let discriminant = try container.decode(String.self, forKey: .type)
         switch discriminant {
-        case "user":
-            self = .user(try User(from: decoder))
         case "admin":
             self = .admin(try Admin(from: decoder))
         case "empty":
             self = .empty(try Empty(from: decoder))
+        case "user":
+            self = .user(try User(from: decoder))
         default:
             throw DecodingError.dataCorrupted(
                 DecodingError.Context(
@@ -28,11 +28,11 @@ public enum UserOrAdminDiscriminated: Codable, Hashable, Sendable {
 
     public func encode(to encoder: Encoder) throws -> Void {
         switch self {
-        case .user(let data):
-            try data.encode(to: encoder)
         case .admin(let data):
             try data.encode(to: encoder)
         case .empty(let data):
+            try data.encode(to: encoder)
+        case .user(let data):
             try data.encode(to: encoder)
         }
     }
@@ -95,12 +95,12 @@ public enum UserOrAdminDiscriminated: Codable, Hashable, Sendable {
 
     public struct Admin: Codable, Hashable, Sendable {
         public let type: String = "admin"
-        public let admin: Admin
+        public let admin: PropertyAccess.Admin
         /// Additional properties that are not explicitly defined in the schema
         public let additionalProperties: [String: JSONValue]
 
         public init(
-            admin: Admin,
+            admin: PropertyAccess.Admin,
             additionalProperties: [String: JSONValue] = .init()
         ) {
             self.admin = admin
@@ -109,7 +109,7 @@ public enum UserOrAdminDiscriminated: Codable, Hashable, Sendable {
 
         public init(from decoder: Decoder) throws {
             let container = try decoder.container(keyedBy: CodingKeys.self)
-            self.admin = try container.decode(Admin.self, forKey: .admin)
+            self.admin = try container.decode(PropertyAccess.Admin.self, forKey: .admin)
             self.additionalProperties = try decoder.decodeAdditionalProperties(using: CodingKeys.self)
         }
 

@@ -12,7 +12,7 @@ export async function getToken(): Promise<FernToken | undefined> {
 
 export async function getAccessToken(): Promise<FernOrganizationToken | undefined> {
     const tokenFromEnvVar = process.env[FERN_TOKEN_ENV_VAR];
-    if (tokenFromEnvVar == null) {
+    if (tokenFromEnvVar == null || tokenFromEnvVar.trim().length === 0) {
         return undefined;
     }
     return {

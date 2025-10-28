@@ -11,7 +11,7 @@ Add this to your `Cargo.toml`:
 
 ```toml
 [dependencies]
-seed_mixed_file_directory = "0.1.0"
+seed_mixed_file_directory = "0.0.1"
 ```
 
 Or install via cargo:
@@ -30,7 +30,6 @@ Instantiate and use the client with the following:
 
 ```rust
 use seed_mixed_file_directory::prelude::*;
-use std::collections::HashMap;
 
 #[tokio::main]
 async fn main() {

@@ -3,6 +3,15 @@ info:
   title: bytes-download
   version: ''
 paths:
+  /snippet:
+    post:
+      operationId: service_simple
+      tags:
+        - Service
+      parameters: []
+      responses:
+        '204':
+          description: ''
   /download-content/{id}:
     get:
       operationId: service_download

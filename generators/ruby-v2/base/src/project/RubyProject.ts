@@ -11,6 +11,7 @@ import { AbstractRubyGeneratorContext } from "../context/AbstractRubyGeneratorCo
 import { RubocopFile } from "./RubocopFile";
 
 const GEMFILE_FILENAME = "Gemfile";
+const CUSTOM_GEMFILE_FILENAME = "Gemfile.custom";
 const RAKEFILE_FILENAME = "Rakefile";
 const RUBOCOP_FILENAME = ".rubocop.yml";
 const CUSTOM_TEST_FILENAME = "custom.test.rb";
@@ -32,6 +33,7 @@ export class RubyProject extends AbstractProject<AbstractRubyGeneratorContext<Ba
         await this.createGemspecfile();
         await this.createCustomGemspecFile();
         await this.createGemfile();
+        await this.createCustomGemfile();
         await this.createRakefile();
         await this.writeRawFiles();
         await this.createAsIsFiles();
@@ -64,6 +66,14 @@ export class RubyProject extends AbstractProject<AbstractRubyGeneratorContext<Ba
         await writeFile(
             join(this.absolutePathToOutputDirectory, RelativeFilePath.of(GEMFILE_FILENAME)),
             await gemfile.toString()
+        );
+    }
+
+    private async createCustomGemfile(): Promise<void> {
+        const customGemfile = new CustomGemfile({ context: this.context });
+        await writeFile(
+            join(this.absolutePathToOutputDirectory, RelativeFilePath.of(CUSTOM_GEMFILE_FILENAME)),
+            await customGemfile.toString()
         );
     }
 
@@ -326,6 +336,42 @@ class Gemfile {
                 gem "webmock"
             end
 
+            # Load custom Gemfile configuration if it exists
+            custom_gemfile = File.join(__dir__, "${CUSTOM_GEMFILE_FILENAME}")
+            eval_gemfile(custom_gemfile) if File.exist?(custom_gemfile)
+        `;
+    }
+}
+
+declare namespace CustomGemfile {
+    interface Args {
+        context: AbstractRubyGeneratorContext<BaseRubyCustomConfigSchema>;
+    }
+}
+
+class CustomGemfile {
+    private context: AbstractRubyGeneratorContext<BaseRubyCustomConfigSchema>;
+
+    public constructor({ context }: CustomGemfile.Args) {
+        this.context = context;
+    }
+
+    public async toString(): Promise<string> {
+        return dedent`
+            # frozen_string_literal: true
+
+            # Custom Gemfile configuration file
+            # This file is automatically loaded by the main Gemfile. You can add custom gems,
+            # groups, or other Gemfile configurations here. If you do make changes to this file,
+            # you will need to add it to the .fernignore file to prevent your changes from being
+            # overwritten by the generator.
+
+            # Example usage:
+            # group :test, :development do
+            #   gem 'custom-gem', '~> 2.0'
+            # end
+
+            # Add your custom gem dependencies here
         `;
     }
 }

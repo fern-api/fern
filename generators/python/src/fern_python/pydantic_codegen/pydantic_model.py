@@ -14,6 +14,15 @@ from pydantic import BaseModel
 BASE_MODEL_PROPERTIES = set(dir(BaseModel))
 
 
+def escape_docstring(text: str) -> str:
+    """
+    Escape backslashes in docstrings to avoid SyntaxWarning for invalid escape sequences.
+    This is needed when docstrings contain raw text from OpenAPI specs that may have
+    backslashes (e.g., OTHER\_GIFT\_CARD).
+    """
+    return text.replace("\\", "\\\\")
+
+
 class PydanticModel:
     VALIDATOR_FIELD_VALUE_PARAMETER_NAME = "v"
     VALIDATOR_VALUES_PARAMETER_NAME = "values"
@@ -50,7 +59,7 @@ class PydanticModel:
         self._class_declaration = AST.ClassDeclaration(
             name=name,
             extends=base_models or [pydantic_base_model],
-            docstring=AST.Docstring(docstring) if docstring is not None else None,
+            docstring=AST.Docstring(escape_docstring(docstring)) if docstring is not None else None,
             snippet=snippet,
         )
 
@@ -229,11 +238,16 @@ class PydanticModel:
     def add_root_validator(
         self, *, validator_name: str, body: AST.CodeWriter, should_use_partial_type: bool = False, pre: bool = False
     ) -> None:
-        value_type = (
-            AST.TypeHint(type=self.get_reference_to_partial_class())
-            if should_use_partial_type
-            else AST.TypeHint.dict(AST.TypeHint.str_(), AST.TypeHint.any())
-        )
+        # For Pydantic v2 with wrap mode (post-validation), use Any since the wrapper handles types
+        # For Pydantic v1 or pre-validation, use the dict type
+        if self._version == PydanticVersionCompatibility.V2 and not pre:
+            value_type = AST.TypeHint.any()
+        else:
+            value_type = (
+                AST.TypeHint(type=self.get_reference_to_partial_class())
+                if should_use_partial_type
+                else AST.TypeHint.dict(AST.TypeHint.str_(), AST.TypeHint.any())
+            )
         self._class_declaration.add_method(
             decorator=AST.ClassMethodDecorator.CLASS_METHOD,
             no_implicit_decorator=True,
@@ -342,7 +356,9 @@ class PydanticModel:
             writer.write_node(
                 AST.Expression(AST.ClassInstantiation(Pydantic(self._version).ConfigDict(), kwargs=config_kwargs))
             )
-            writer.write("  # type: ignore # Pydantic v2")
+            # Only add type: ignore comment for compatibility modes, not pure v2
+            if self._version != PydanticVersionCompatibility.V2:
+                writer.write("  # type: ignore # Pydantic v2")
 
         if len(config_kwargs) > 0:
             return AST.Expression(AST.CodeWriter(write_extras))
@@ -522,7 +538,7 @@ def get_field_name_initializer(
         if description is not None:
             writer.write_newline_if_last_line_not()
             writer.write_line('"""')
-            writer.write_line(description)
+            writer.write_line(escape_docstring(description))
             writer.write_line('"""')
 
     return AST.Expression(AST.CodeWriter(write))

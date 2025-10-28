@@ -1,11 +1,11 @@
 use crate::{ApiError, ClientConfig, HttpClient, RequestOptions};
 use reqwest::Method;
 
-pub struct EndpointsUrlsClient {
+pub struct UrlsClient {
     pub http_client: HttpClient,
 }
 
-impl EndpointsUrlsClient {
+impl UrlsClient {
     pub fn new(config: ClientConfig) -> Result<Self, ApiError> {
         Ok(Self {
             http_client: HttpClient::new(config.clone())?,

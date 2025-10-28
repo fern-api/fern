@@ -9,13 +9,16 @@
   "include": ["./src/**/*"],
   "references": [
     {
-      "path": "../../ir-sdk"
-    },
-    {
       "path": "../../cli/workspace/loader"
     },
     {
       "path": "../../cli/task-context"
+    },
+    {
+      "path": "../ir-utils"
+    },
+    {
+      "path": "../../ir-sdk"
     },
     {
       "path": "../../cli/generation/ir-generator"

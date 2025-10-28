@@ -7,10 +7,12 @@ from importlib import import_module
 
 if typing.TYPE_CHECKING:
     from .create_username_body import CreateUsernameBody
+    from .create_username_body_optional_properties import CreateUsernameBodyOptionalProperties
     from .nested_user import NestedUser
     from .user import User
 _dynamic_imports: typing.Dict[str, str] = {
     "CreateUsernameBody": ".create_username_body",
+    "CreateUsernameBodyOptionalProperties": ".create_username_body_optional_properties",
     "NestedUser": ".nested_user",
     "User": ".user",
 }
@@ -37,4 +39,4 @@ def __dir__():
     return sorted(lazy_attrs)
 
 
-__all__ = ["CreateUsernameBody", "NestedUser", "User"]
+__all__ = ["CreateUsernameBody", "CreateUsernameBodyOptionalProperties", "NestedUser", "User"]

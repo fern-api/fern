@@ -3,5 +3,6 @@
 # isort: skip_file
 
 from .service import AbstractRootService
+from .update_foo_request import UpdateFooRequest
 
-__all__ = ["AbstractRootService"]
+__all__ = ["AbstractRootService", "UpdateFooRequest"]

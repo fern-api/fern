@@ -72,3 +72,4 @@ export function struct(args: Struct.Args): Struct {
 }
 
 export * from "./ast";
+export * from "./symbol";

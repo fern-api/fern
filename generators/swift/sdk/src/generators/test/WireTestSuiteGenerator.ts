@@ -7,7 +7,7 @@ import { WireTestFunctionGenerator } from "./WireTestFunctionGenerator";
 
 export declare namespace WireTestSuiteGenerator {
     interface Args {
-        suiteName: string;
+        symbol: swift.Symbol;
         subclientName: string;
         packageOrSubpackage: Package | Subpackage;
         sdkGeneratorContext: SdkGeneratorContext;
@@ -15,19 +15,19 @@ export declare namespace WireTestSuiteGenerator {
 }
 
 export class WireTestSuiteGenerator {
-    private readonly suiteName: string;
+    private readonly symbol: swift.Symbol;
     private readonly subclientName: string;
     private readonly packageOrSubpackage: Package | Subpackage;
     private readonly sdkGeneratorContext: SdkGeneratorContext;
     private readonly dynamicIr: dynamic.DynamicIntermediateRepresentation;
 
     public constructor({
-        suiteName,
+        symbol,
         subclientName,
         packageOrSubpackage,
         sdkGeneratorContext
     }: WireTestSuiteGenerator.Args) {
-        this.suiteName = suiteName;
+        this.symbol = symbol;
         this.subclientName = subclientName;
         this.packageOrSubpackage = packageOrSubpackage;
         this.sdkGeneratorContext = sdkGeneratorContext;
@@ -57,7 +57,7 @@ export class WireTestSuiteGenerator {
                     ]
                 }
             ],
-            name: this.suiteName,
+            name: this.symbol.name,
             properties: [],
             methods: this.generateTestFunctions()
         });
@@ -73,6 +73,7 @@ export class WireTestSuiteGenerator {
                 context: dynamicSnippetsGenerator.context
             });
             return new WireTestFunctionGenerator({
+                parentSymbol: this.symbol,
                 endpoint,
                 endpointSnippetGenerator,
                 dynamicIr: this.dynamicIr,

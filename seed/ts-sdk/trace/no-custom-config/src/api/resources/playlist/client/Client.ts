@@ -70,7 +70,7 @@ export class Playlist {
                 (await core.Supplier.get(this._options.baseUrl)) ??
                     (await core.Supplier.get(this._options.environment)) ??
                     environments.SeedTraceEnvironment.Prod,
-                `/v2/playlist/${encodeURIComponent(serviceParam)}/create`,
+                `/v2/playlist/${core.url.encodePathParam(serviceParam)}/create`,
             ),
             method: "POST",
             headers: _headers,
@@ -177,7 +177,7 @@ export class Playlist {
                 (await core.Supplier.get(this._options.baseUrl)) ??
                     (await core.Supplier.get(this._options.environment)) ??
                     environments.SeedTraceEnvironment.Prod,
-                `/v2/playlist/${encodeURIComponent(serviceParam)}/all`,
+                `/v2/playlist/${core.url.encodePathParam(serviceParam)}/all`,
             ),
             method: "GET",
             headers: _headers,
@@ -256,7 +256,7 @@ export class Playlist {
                 (await core.Supplier.get(this._options.baseUrl)) ??
                     (await core.Supplier.get(this._options.environment)) ??
                     environments.SeedTraceEnvironment.Prod,
-                `/v2/playlist/${encodeURIComponent(serviceParam)}/${encodeURIComponent(playlistId)}`,
+                `/v2/playlist/${core.url.encodePathParam(serviceParam)}/${core.url.encodePathParam(playlistId)}`,
             ),
             method: "GET",
             headers: _headers,
@@ -352,7 +352,7 @@ export class Playlist {
                 (await core.Supplier.get(this._options.baseUrl)) ??
                     (await core.Supplier.get(this._options.environment)) ??
                     environments.SeedTraceEnvironment.Prod,
-                `/v2/playlist/${encodeURIComponent(serviceParam)}/${encodeURIComponent(playlistId)}`,
+                `/v2/playlist/${core.url.encodePathParam(serviceParam)}/${core.url.encodePathParam(playlistId)}`,
             ),
             method: "PUT",
             headers: _headers,
@@ -439,7 +439,7 @@ export class Playlist {
                 (await core.Supplier.get(this._options.baseUrl)) ??
                     (await core.Supplier.get(this._options.environment)) ??
                     environments.SeedTraceEnvironment.Prod,
-                `/v2/playlist/${encodeURIComponent(serviceParam)}/${encodeURIComponent(playlistId)}`,
+                `/v2/playlist/${core.url.encodePathParam(serviceParam)}/${core.url.encodePathParam(playlistId)}`,
             ),
             method: "DELETE",
             headers: _headers,

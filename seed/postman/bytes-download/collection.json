@@ -17,7 +17,70 @@
       "_type": "container",
       "description": null,
       "name": "Service",
-      "item": []
+      "item": [
+        {
+          "_type": "endpoint",
+          "name": "Simple",
+          "request": {
+            "description": null,
+            "url": {
+              "raw": "{{baseUrl}}/snippet",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "snippet"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "type": "text",
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": null
+          },
+          "response": [
+            {
+              "name": "Success",
+              "status": "OK",
+              "code": 200,
+              "originalRequest": {
+                "description": null,
+                "url": {
+                  "raw": "{{baseUrl}}/snippet",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "snippet"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "type": "text",
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "auth": null,
+                "body": null
+              },
+              "description": null,
+              "body": "",
+              "_postman_previewlanguage": "json"
+            }
+          ]
+        }
+      ]
     }
   ]
 }

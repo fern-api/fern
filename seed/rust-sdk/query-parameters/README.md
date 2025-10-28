@@ -11,7 +11,7 @@ Add this to your `Cargo.toml`:
 
 ```toml
 [dependencies]
-seed_query_parameters = "0.1.0"
+seed_query_parameters = "0.0.1"
 ```
 
 Or install via cargo:
@@ -29,10 +29,7 @@ A full reference for this library is available [here](./reference.md).
 Instantiate and use the client with the following:
 
 ```rust
-use chrono::{DateTime, NaiveDate, Utc};
 use seed_query_parameters::prelude::*;
-use std::collections::{HashMap, HashSet};
-use uuid::Uuid;
 
 #[tokio::main]
 async fn main() {

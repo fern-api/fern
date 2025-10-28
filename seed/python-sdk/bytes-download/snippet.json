@@ -1,0 +1,18 @@
+{
+    "types": {},
+    "endpoints": [
+        {
+            "example_identifier": "default",
+            "id": {
+                "path": "/snippet",
+                "method": "POST",
+                "identifier_override": "endpoint_service.simple"
+            },
+            "snippet": {
+                "sync_client": "from seed import SeedBytesDownload\n\nclient = SeedBytesDownload(\n    base_url=\"https://yourhost.com/path/to/api\",\n)\nclient.service.simple()\n",
+                "async_client": "import asyncio\n\nfrom seed import AsyncSeedBytesDownload\n\nclient = AsyncSeedBytesDownload(\n    base_url=\"https://yourhost.com/path/to/api\",\n)\n\n\nasync def main() -> None:\n    await client.service.simple()\n\n\nasyncio.run(main())\n",
+                "type": "python"
+            }
+        }
+    ]
+}

@@ -49,7 +49,6 @@ async fn main() {
 
 ```rust
 use seed_enum::prelude::*;
-use std::collections::HashMap;
 
 #[tokio::main]
 async fn main() {

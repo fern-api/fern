@@ -457,15 +457,7 @@ export class SdkGeneratorContext extends AbstractGoGeneratorContext<SdkCustomCon
         arguments_: go.AstNode[];
         streamPayload: go.Type;
     }): go.FuncInvocation {
-        return go.invokeFunc({
-            func: go.typeReference({
-                name: "NewStreamer",
-                importPath: this.getRootImportPath(),
-                generics: [streamPayload]
-            }),
-            arguments_,
-            multiline: false
-        });
+        return this.callInternalFunc({ name: "NewStreamer", arguments_, generics: [streamPayload], multiline: false });
     }
 
     public callQueryValues(arguments_: go.AstNode[]): go.FuncInvocation {

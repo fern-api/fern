@@ -112,8 +112,9 @@ The Fern CLI lives in a directory called [cli](./packages/cli/cli/) and the entr
 
 ### Building the CLI from source
 
-For testing purposes, you can build a local version of the CLI by running `pnpm fern:build`. This compiles and builds a CLI
-that communicates with our production cloud environment.
+For local development and debugging, you can build an unminified version of the CLI by running `pnpm fern:build:unminified`. This compiles and builds a CLI that communicates with our production cloud environment but preserves readable code for easier debugging.
+
+If you need a minified production build instead, you can run `pnpm fern:build`.
 
 The CLI is outputted to `packages/cli/cli/dist/prod/cli.cjs`.
 

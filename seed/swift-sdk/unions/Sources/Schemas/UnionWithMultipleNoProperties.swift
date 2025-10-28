@@ -1,20 +1,20 @@
 import Foundation
 
 public enum UnionWithMultipleNoProperties: Codable, Hashable, Sendable {
-    case foo(Foo)
     case empty1(Empty1)
     case empty2(Empty2)
+    case foo(Foo)
 
     public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
         let discriminant = try container.decode(String.self, forKey: .type)
         switch discriminant {
-        case "foo":
-            self = .foo(try Foo(from: decoder))
         case "empty1":
             self = .empty1(try Empty1(from: decoder))
         case "empty2":
             self = .empty2(try Empty2(from: decoder))
+        case "foo":
+            self = .foo(try Foo(from: decoder))
         default:
             throw DecodingError.dataCorrupted(
                 DecodingError.Context(
@@ -27,11 +27,11 @@ public enum UnionWithMultipleNoProperties: Codable, Hashable, Sendable {
 
     public func encode(to encoder: Encoder) throws -> Void {
         switch self {
-        case .foo(let data):
-            try data.encode(to: encoder)
         case .empty1(let data):
             try data.encode(to: encoder)
         case .empty2(let data):
+            try data.encode(to: encoder)
+        case .foo(let data):
             try data.encode(to: encoder)
         }
     }

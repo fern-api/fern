@@ -1,7 +1,7 @@
 use crate::{ApiError, ClientConfig, HttpClient};
 
 pub mod types;
-pub use types::CommonsTypesClient;
+pub use types::TypesClient;
 pub struct CommonsClient {
     pub http_client: HttpClient,
 }
