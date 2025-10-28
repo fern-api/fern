@@ -6706,11 +6706,11 @@ importers:
         specifier: ^1.4.7
         version: 1.4.7
       typescript:
-        specifier: 5.8.3
-        version: 5.8.3
+        specifier: 5.9.3
+        version: 5.9.3
       vitest:
         specifier: ^2.1.9
-        version: 2.1.9(@types/node@18.15.3)(sass@1.93.2)
+        version: 2.1.9(@types/node@18.15.3)(msw@2.11.3(@types/node@18.15.3)(typescript@5.9.3))(sass@1.93.2)
 
   packages/cli/posthog-manager:
     dependencies:
