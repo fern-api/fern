@@ -547,9 +547,7 @@ class ObjectWithOptionalField(UniversalBaseModel):
         return values
 
     @universal_root_validator(pre=False)
-    def _post_validate_types_object_with_optional_field(
-        cls, values: ObjectWithOptionalField.Partial
-    ) -> ObjectWithOptionalField.Partial:
+    def _post_validate_types_object_with_optional_field(cls, values: typing.Any) -> typing.Any:
         for validator in ObjectWithOptionalField.Validators._post_validators:
             values = validator(values)
         return values

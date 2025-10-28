@@ -108,7 +108,7 @@ class DoubleOptional(UniversalBaseModel):
         return values
 
     @universal_root_validator(pre=False)
-    def _post_validate_types_double_optional(cls, values: DoubleOptional.Partial) -> DoubleOptional.Partial:
+    def _post_validate_types_double_optional(cls, values: typing.Any) -> typing.Any:
         for validator in DoubleOptional.Validators._post_validators:
             values = validator(values)
         return values

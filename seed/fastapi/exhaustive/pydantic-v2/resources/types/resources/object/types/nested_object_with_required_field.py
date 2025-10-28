@@ -157,9 +157,7 @@ class NestedObjectWithRequiredField(UniversalBaseModel):
         return values
 
     @universal_root_validator(pre=False)
-    def _post_validate_types_nested_object_with_required_field(
-        cls, values: NestedObjectWithRequiredField.Partial
-    ) -> NestedObjectWithRequiredField.Partial:
+    def _post_validate_types_nested_object_with_required_field(cls, values: typing.Any) -> typing.Any:
         for validator in NestedObjectWithRequiredField.Validators._post_validators:
             values = validator(values)
         return values

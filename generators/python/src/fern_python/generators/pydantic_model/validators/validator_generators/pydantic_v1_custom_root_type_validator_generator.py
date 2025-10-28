@@ -29,8 +29,9 @@ class PydanticV1CustomRootTypeValidatorGenerator(ValidatorGenerator):
         is_v2 = self._model._version == PydanticVersionCompatibility.V2
 
         if is_v2:
-            # Pydantic v2: values is the validated RootModel instance
-            writer.write(f"{ROOT_VARIABLE_NAME} = {PydanticModel.VALIDATOR_VALUES_PARAMETER_NAME}.root")
+            # Pydantic v2: with mode="before", values is the raw input value (not a model instance)
+            # For RootModel, this is the actual value directly
+            writer.write(f"{ROOT_VARIABLE_NAME} = {PydanticModel.VALIDATOR_VALUES_PARAMETER_NAME}")
             writer.write_line()
 
             writer.write(f"for {INDIVIDUAL_VALIDATOR_NAME} in ")
@@ -56,7 +57,7 @@ class PydanticV1CustomRootTypeValidatorGenerator(ValidatorGenerator):
                 )
                 writer.write_line()
 
-            writer.write_line(f"return cls.model_construct(root={ROOT_VARIABLE_NAME})")
+            writer.write_line(f"return {ROOT_VARIABLE_NAME}")
         else:
             # Pydantic v1: values is a dict
             writer.write(f"{ROOT_VARIABLE_NAME} = ")

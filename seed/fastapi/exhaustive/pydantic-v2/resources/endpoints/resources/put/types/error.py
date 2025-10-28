@@ -184,7 +184,7 @@ class Error(UniversalBaseModel):
         return values
 
     @universal_root_validator(pre=False)
-    def _post_validate_endpoints_error(cls, values: Error.Partial) -> Error.Partial:
+    def _post_validate_endpoints_error(cls, values: typing.Any) -> typing.Any:
         for validator in Error.Validators._post_validators:
             values = validator(values)
         return values

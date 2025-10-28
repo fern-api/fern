@@ -105,9 +105,7 @@ class BadObjectRequestInfo(UniversalBaseModel):
         return values
 
     @universal_root_validator(pre=False)
-    def _post_validate_bad_object_request_info(
-        cls, values: BadObjectRequestInfo.Partial
-    ) -> BadObjectRequestInfo.Partial:
+    def _post_validate_bad_object_request_info(cls, values: typing.Any) -> typing.Any:
         for validator in BadObjectRequestInfo.Validators._post_validators:
             values = validator(values)
         return values

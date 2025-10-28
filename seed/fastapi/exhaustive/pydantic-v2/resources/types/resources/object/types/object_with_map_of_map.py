@@ -107,9 +107,7 @@ class ObjectWithMapOfMap(UniversalBaseModel):
         return values
 
     @universal_root_validator(pre=False)
-    def _post_validate_types_object_with_map_of_map(
-        cls, values: ObjectWithMapOfMap.Partial
-    ) -> ObjectWithMapOfMap.Partial:
+    def _post_validate_types_object_with_map_of_map(cls, values: typing.Any) -> typing.Any:
         for validator in ObjectWithMapOfMap.Validators._post_validators:
             values = validator(values)
         return values

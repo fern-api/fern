@@ -100,7 +100,7 @@ class PutResponse(UniversalBaseModel):
         return values
 
     @universal_root_validator(pre=False)
-    def _post_validate_endpoints_put_response(cls, values: PutResponse.Partial) -> PutResponse.Partial:
+    def _post_validate_endpoints_put_response(cls, values: typing.Any) -> typing.Any:
         for validator in PutResponse.Validators._post_validators:
             values = validator(values)
         return values

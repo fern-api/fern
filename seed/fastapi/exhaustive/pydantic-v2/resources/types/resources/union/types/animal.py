@@ -100,7 +100,7 @@ class Animal(pydantic.RootModel):
         return values
 
     @universal_root_validator(pre=False)
-    def _post_validate_types_animal(cls, values: Animal.Partial) -> Animal.Partial:
+    def _post_validate_types_animal(cls, values: typing.Any) -> typing.Any:
         for validator in Animal.Validators._post_validators:
             values = validator(values)
         return values

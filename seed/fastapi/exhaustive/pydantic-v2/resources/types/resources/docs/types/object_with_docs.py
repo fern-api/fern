@@ -158,7 +158,7 @@ class ObjectWithDocs(UniversalBaseModel):
         return values
 
     @universal_root_validator(pre=False)
-    def _post_validate_types_object_with_docs(cls, values: ObjectWithDocs.Partial) -> ObjectWithDocs.Partial:
+    def _post_validate_types_object_with_docs(cls, values: typing.Any) -> typing.Any:
         for validator in ObjectWithDocs.Validators._post_validators:
             values = validator(values)
         return values

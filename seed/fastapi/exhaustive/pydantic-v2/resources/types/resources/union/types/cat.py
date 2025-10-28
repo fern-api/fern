@@ -124,7 +124,7 @@ class Cat(UniversalBaseModel):
         return values
 
     @universal_root_validator(pre=False)
-    def _post_validate_types_cat(cls, values: Cat.Partial) -> Cat.Partial:
+    def _post_validate_types_cat(cls, values: typing.Any) -> typing.Any:
         for validator in Cat.Validators._post_validators:
             values = validator(values)
         return values

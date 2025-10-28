@@ -34,10 +34,16 @@ class OptionalAlias(pydantic.RootModel):
             cls._validators.append(validator)
 
     @universal_root_validator(pre=False)
-    def _validate(cls, values: typing.Dict[str, typing.Any]) -> typing.Dict[str, typing.Any]:
+    def _validate(cls, values: typing.Any) -> typing.Any:
+        print(f"DEBUG _validate called! values={values}, type={type(values)}")
         value = values.root
+        print(f"DEBUG extracted value={value}")
         for validator in OptionalAlias.Validators._validators:
+            print(f"DEBUG calling validator={validator}")
             value = validator(value)
-        return cls.model_construct(root=value)
+            print(f"DEBUG after validator, value={value}")
+        result = cls.model_construct(root=value)
+        print(f"DEBUG returning result={result}")
+        return result
 
     model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(frozen=True)  # type: ignore # Pydantic v2

@@ -124,7 +124,7 @@ class Dog(UniversalBaseModel):
         return values
 
     @universal_root_validator(pre=False)
-    def _post_validate_types_dog(cls, values: Dog.Partial) -> Dog.Partial:
+    def _post_validate_types_dog(cls, values: typing.Any) -> typing.Any:
         for validator in Dog.Validators._post_validators:
             values = validator(values)
         return values
