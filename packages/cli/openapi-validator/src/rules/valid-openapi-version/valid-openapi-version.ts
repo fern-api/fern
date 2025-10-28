@@ -17,10 +17,10 @@ export const ValidOpenApiVersionRule: Rule = {
         }
 
         const version = document.openapi;
-        if (!version.startsWith("3.1.")) {
+        if (!version.startsWith("3.")) {
             violations.push({
                 severity: "error",
-                message: `OpenAPI version must be 3.1.x, found: ${version}`,
+                message: `OpenAPI version must be 3.x.x, found: ${version}`,
                 path: "/openapi"
             });
         }

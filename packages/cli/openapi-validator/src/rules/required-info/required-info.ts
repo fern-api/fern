@@ -57,23 +57,6 @@ export const RequiredInfoRule: Rule = {
             });
         }
 
-        if (!document.info.version || document.info.version.trim() === "") {
-            logger.debug(
-                `[required-info.ts:validate:58:13] Missing or empty version | ${JSON.stringify({
-                    file: "required-info.ts",
-                    function: "validate",
-                    line: 58,
-                    column: 13,
-                    state: { version: document.info.version, violation: "fatal - missing or empty version" }
-                })}`
-            );
-            violations.push({
-                severity: "fatal",
-                message: "Info object must have a non-empty 'version' field",
-                path: "/info"
-            });
-        }
-
         logger.debug(
             `[required-info.ts:validate:72:9] Required-info validation complete | ${JSON.stringify({
                 file: "required-info.ts",
