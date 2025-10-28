@@ -1,7 +1,7 @@
 import Foundation
 
 // MARK: - Data + String Extensions
-extension Foundation.Data {
+extension Data {
     /// Safely appends a UTF-8 encoded string to the data
     ///
     /// - Parameter string: The string to append

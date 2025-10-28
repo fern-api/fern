@@ -1,4 +1,7 @@
 import Foundation
+#if canImport(FoundationNetworking)
+import FoundationNetworking
+#endif
 
 final class HTTPClient: Sendable {
     private let clientConfig: ClientConfig

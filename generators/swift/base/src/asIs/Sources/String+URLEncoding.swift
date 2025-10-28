@@ -1,6 +1,6 @@
 import Foundation
 
-extension Swift.String {
+extension String {
     func urlPathEncoded() -> Swift.String {
         return self.addingPercentEncoding(withAllowedCharacters: .urlPathAllowed) ?? self
     }

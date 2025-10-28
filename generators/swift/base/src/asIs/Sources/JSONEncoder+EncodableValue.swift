@@ -1,6 +1,6 @@
 import Foundation
 
-extension Foundation.JSONEncoder {
+extension JSONEncoder {
     /// Helper for type-erasing Encodable values
     private struct AnyEncodable: Encodable {
         private let value: Swift.Any
