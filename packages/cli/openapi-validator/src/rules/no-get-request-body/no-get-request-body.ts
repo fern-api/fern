@@ -44,7 +44,7 @@ export const NoGetRequestBodyRule: Rule = {
                 );
                 violations.push({
                     severity: "error",
-                    message: `GET operation at '${path}' should not have a request body`,
+                    message: `[no-get-request-body] GET operation at '${path}' should not have a request body`,
                     path: `${path}/get/requestBody`
                 });
             }
@@ -61,7 +61,7 @@ export const NoGetRequestBodyRule: Rule = {
                 );
                 violations.push({
                     severity: "error",
-                    message: `HEAD operation at '${path}' should not have a request body`,
+                    message: `[no-get-request-body] HEAD operation at '${path}' should not have a request body`,
                     path: `${path}/head/requestBody`
                 });
             }

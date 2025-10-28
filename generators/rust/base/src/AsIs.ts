@@ -51,6 +51,10 @@ const AsIsFileSpecs = {
         relativePathToDir: "src/core",
         filename: "utils.rs"
     },
+    SseStream: {
+        relativePathToDir: "src/core",
+        filename: "sse_stream.rs"
+    },
     CoreMod: {
         relativePathToDir: "src/core",
         filename: "mod.rs"

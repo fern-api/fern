@@ -50,6 +50,11 @@ class BasePydanticModelCustomConfig(pydantic.BaseModel):
 
     use_pydantic_field_aliases: bool = True
 
+    # The recursion limit to set for the SDK. Must be greater than 1000 (the default recursion limit in Python).
+    # If set, the root __init__.py will include sys.setrecursionlimit() to ensure
+    # the recursion limit is at least this value.
+    recursion_limit: Optional[int] = pydantic.Field(None, gt=1000)
+
     @pydantic.model_validator(mode="after")
     def check_wrapped_aliases_v1_or_v2_only(self) -> Self:
         version_compat = self.version

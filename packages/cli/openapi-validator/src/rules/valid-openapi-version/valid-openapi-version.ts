@@ -10,7 +10,7 @@ export const ValidOpenApiVersionRule: Rule = {
         if (!document.openapi) {
             violations.push({
                 severity: "fatal",
-                message: "OpenAPI document must have an 'openapi' field",
+                message: "[valid-openapi-version] OpenAPI document must have an 'openapi' field",
                 path: "/"
             });
             return violations;
@@ -20,7 +20,7 @@ export const ValidOpenApiVersionRule: Rule = {
         if (!version.startsWith("3.")) {
             violations.push({
                 severity: "error",
-                message: `OpenAPI version must be 3.x.x, found: ${version}`,
+                message: `[valid-openapi-version] OpenAPI version must be 3.x.x, found: ${version}`,
                 path: "/openapi"
             });
         }

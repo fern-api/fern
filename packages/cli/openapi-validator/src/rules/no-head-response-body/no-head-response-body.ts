@@ -53,7 +53,7 @@ export const NoHeadResponseBodyRule: Rule = {
                         );
                         violations.push({
                             severity: "error",
-                            message: `HEAD operation at '${path}' should not have response body content for status ${statusCode}`,
+                            message: `[no-head-response-body] HEAD operation at '${path}' should not have response body content for status ${statusCode}`,
                             path: `${path}/head/responses/${statusCode}/content`
                         });
                     }

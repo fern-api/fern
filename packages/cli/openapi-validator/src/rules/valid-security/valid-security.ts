@@ -16,7 +16,7 @@ export const ValidSecurityRule: Rule = {
                     if (!securitySchemes[schemeName]) {
                         violations.push({
                             severity: "error",
-                            message: `Security requirement references undefined scheme '${schemeName}'`,
+                            message: `[valid-security] Security requirement references undefined scheme '${schemeName}'`,
                             path: `/security/${index}`
                         });
                     }
@@ -34,7 +34,7 @@ export const ValidSecurityRule: Rule = {
             if (!schemeObj.type) {
                 violations.push({
                     severity: "fatal",
-                    message: `Security scheme '${schemeName}' must have a 'type' field`,
+                    message: `[valid-security] Security scheme '${schemeName}' must have a 'type' field`,
                     path: `/components/securitySchemes/${schemeName}`
                 });
                 return;
@@ -44,7 +44,7 @@ export const ValidSecurityRule: Rule = {
                 if (!schemeObj.scheme) {
                     violations.push({
                         severity: "error",
-                        message: `HTTP security scheme '${schemeName}' must have a 'scheme' field`,
+                        message: `[valid-security] HTTP security scheme '${schemeName}' must have a 'scheme' field`,
                         path: `/components/securitySchemes/${schemeName}`
                     });
                 }
@@ -52,14 +52,14 @@ export const ValidSecurityRule: Rule = {
                 if (!schemeObj.name) {
                     violations.push({
                         severity: "error",
-                        message: `API key security scheme '${schemeName}' must have a 'name' field`,
+                        message: `[valid-security] API key security scheme '${schemeName}' must have a 'name' field`,
                         path: `/components/securitySchemes/${schemeName}`
                     });
                 }
                 if (!schemeObj.in) {
                     violations.push({
                         severity: "error",
-                        message: `API key security scheme '${schemeName}' must have an 'in' field`,
+                        message: `[valid-security] API key security scheme '${schemeName}' must have an 'in' field`,
                         path: `/components/securitySchemes/${schemeName}`
                     });
                 }
@@ -67,7 +67,7 @@ export const ValidSecurityRule: Rule = {
                 if (!schemeObj.flows) {
                     violations.push({
                         severity: "error",
-                        message: `OAuth2 security scheme '${schemeName}' must have a 'flows' field`,
+                        message: `[valid-security] OAuth2 security scheme '${schemeName}' must have a 'flows' field`,
                         path: `/components/securitySchemes/${schemeName}`
                     });
                 }
@@ -75,7 +75,7 @@ export const ValidSecurityRule: Rule = {
                 if (!schemeObj.openIdConnectUrl) {
                     violations.push({
                         severity: "error",
-                        message: `OpenID Connect security scheme '${schemeName}' must have an 'openIdConnectUrl' field`,
+                        message: `[valid-security] OpenID Connect security scheme '${schemeName}' must have an 'openIdConnectUrl' field`,
                         path: `/components/securitySchemes/${schemeName}`
                     });
                 }

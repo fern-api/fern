@@ -78,7 +78,7 @@ private func main() async throws {
 
     _ = try await client.service.listResources(
         pageLimit: 10,
-        beforeDate: try! CalendarDate("2023-01-01")
+        beforeDate: CalendarDate("2023-01-01")!
     )
 }
 
@@ -124,3 +124,4 @@ try await main()
 </dd>
 </dl>
 </details>
+

@@ -34,7 +34,7 @@ export const RequiredInfoRule: Rule = {
             );
             violations.push({
                 severity: "fatal",
-                message: "OpenAPI document must have an 'info' object",
+                message: "[required-info] OpenAPI document must have an 'info' object",
                 path: "/"
             });
             return violations;
@@ -52,11 +52,31 @@ export const RequiredInfoRule: Rule = {
             );
             violations.push({
                 severity: "fatal",
-                message: "Info object must have a non-empty 'title' field",
+                message: "[required-info] Info object must have a non-empty 'title' field",
                 path: "/info"
             });
         }
 
+<<<<<<< HEAD
+=======
+        if (!document.info.version || document.info.version.trim() === "") {
+            logger.debug(
+                `[required-info.ts:validate:58:13] Missing or empty version | ${JSON.stringify({
+                    file: "required-info.ts",
+                    function: "validate",
+                    line: 58,
+                    column: 13,
+                    state: { version: document.info.version, violation: "fatal - missing or empty version" }
+                })}`
+            );
+            violations.push({
+                severity: "fatal",
+                message: "[required-info] Info object must have a non-empty 'version' field",
+                path: "/info"
+            });
+        }
+
+>>>>>>> f1d2a6188d13cccbd15ff9bf95ec129c6201db35
         logger.debug(
             `[required-info.ts:validate:72:9] Required-info validation complete | ${JSON.stringify({
                 file: "required-info.ts",

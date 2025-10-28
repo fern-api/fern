@@ -1,4 +1,4 @@
-import { assertNever } from "./assertNever";
+import { assertNever } from "./assert";
 
 export type DiscriminatedUnionVisitor<T extends Record<Discriminant, string>, U, Discriminant extends string> = {
     [D in T[Discriminant]]: (value: Extract<T, Record<Discriminant, D>>) => U;

@@ -39,7 +39,7 @@ export const ValidTypeNameRule: Rule = {
                 );
                 violations.push({
                     severity: "error",
-                    message: `Schema name '${schemaName}' must begin with a letter`,
+                    message: `[valid-type-name] Schema name '${schemaName}' must begin with a letter`,
                     path: `/components/schemas/${schemaName}`
                 });
             }

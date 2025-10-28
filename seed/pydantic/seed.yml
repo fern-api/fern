@@ -51,6 +51,7 @@ fixtures:
   exhaustive:
     - customConfig:
         version: v1
+        recursion_limit: 1234
       outputFolder: pydantic-v1
     - customConfig:
         version: v2

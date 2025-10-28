@@ -60,7 +60,9 @@ export class ReferenceConfigAssembler {
                 if (endpointContainer.type === "none") {
                     throw new Error(`Internal error; missing package or subpackage for endpoint ${endpoint.id}`);
                 }
+                const rootClientSymbol = this.context.project.nameRegistry.getRootClientSymbolOrThrow();
                 const clientGeneratorContext = new ClientGeneratorContext({
+                    symbol: rootClientSymbol,
                     packageOrSubpackage:
                         endpointContainer.type === "root-package"
                             ? endpointContainer.package
@@ -68,6 +70,7 @@ export class ReferenceConfigAssembler {
                     sdkGeneratorContext: this.context
                 });
                 const endpointMethodGenerator = new EndpointMethodGenerator({
+                    parentClassSymbol: rootClientSymbol,
                     clientGeneratorContext,
                     sdkGeneratorContext: this.context
                 });
@@ -120,7 +123,7 @@ export class ReferenceConfigAssembler {
             parameters: endpointMethod.parameters.map((p) => ({
                 name: p.unsafeName,
                 type: p.type.toString(),
-                required: !p.type.isOptional,
+                required: p.type.variant.type !== "optional",
                 description: p.docsContent
             }))
         };
@@ -136,14 +139,14 @@ export class ReferenceConfigAssembler {
         if (endpointContainer.type === "none") {
             throw new Error(`Internal error; missing package or subpackage for endpoint ${endpoint.id}`);
         } else if (endpointContainer.type === "root-package") {
-            const rootClientName = this.context.project.srcSymbolRegistry.getRootClientSymbolOrThrow();
-            return `/${this.context.project.sourcesDirectory}/${rootClientName}.swift`;
+            const rootClientSymbol = this.context.project.nameRegistry.getRootClientSymbolOrThrow();
+            return `/${this.context.project.sourcesDirectory}/${rootClientSymbol.name}.swift`;
         } else if (endpointContainer.type === "subpackage") {
-            const subclientName = this.context.project.srcSymbolRegistry.getSubClientSymbolOrThrow(
+            const subClientSymbol = this.context.project.nameRegistry.getSubClientSymbolOrThrow(
                 endpointContainer.subpackageId
             );
             const fernFilepathDir = this.context.getDirectoryForFernFilepath(endpointContainer.subpackage.fernFilepath);
-            return `/${this.context.project.sourcesDirectory}/${this.context.resourcesDirectory}/${fernFilepathDir}/${subclientName}.swift`;
+            return `/${this.context.project.sourcesDirectory}/${this.context.resourcesDirectory}/${fernFilepathDir}/${subClientSymbol.name}.swift`;
         } else {
             assertNever(endpointContainer);
         }

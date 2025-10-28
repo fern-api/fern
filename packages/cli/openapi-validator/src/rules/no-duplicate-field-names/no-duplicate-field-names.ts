@@ -61,7 +61,7 @@ export const NoDuplicateFieldNamesRule: Rule = {
                     );
                     violations.push({
                         severity: "error",
-                        message: `Schema '${schemaName}' has duplicate property names (case-insensitive): ${Array.from(duplicates).join(", ")}`,
+                        message: `[no-duplicate-field-names] Schema '${schemaName}' has duplicate property names (case-insensitive): ${Array.from(duplicates).join(", ")}`,
                         path: `/components/schemas/${schemaName}/properties`
                     });
                 }
@@ -79,7 +79,7 @@ export const NoDuplicateFieldNamesRule: Rule = {
                         if (variantObj.properties && discriminatorProp in variantObj.properties) {
                             violations.push({
                                 severity: "error",
-                                message: `Discriminator property '${discriminatorProp}' conflicts with property in oneOf variant ${i} of schema '${schemaName}'`,
+                                message: `[no-duplicate-field-names] Discriminator property '${discriminatorProp}' conflicts with property in oneOf variant ${i} of schema '${schemaName}'`,
                                 path: `/components/schemas/${schemaName}/oneOf/${i}`
                             });
                         }

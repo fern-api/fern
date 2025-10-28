@@ -341,6 +341,7 @@ export class OSSWorkspace extends BaseOpenAPIWorkspace {
                     ? ` for ${errorCollector.relativeFilepathToSpec}`
                     : "";
 
+                // TODO(kenny): we should do something more useful with the warnings here, or remove.
                 if (errorStats.numErrors > 0) {
                     context.logger.log(
                         "error",

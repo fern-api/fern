@@ -19,7 +19,7 @@ export const NoCircularReferencesRule: Rule = {
             if (recursionStack.has(schemaName)) {
                 violations.push({
                     severity: "error",
-                    message: `Circular reference detected: ${path.join(" -> ")} -> ${schemaName}`,
+                    message: `[no-circular-references] Circular reference detected: ${path.join(" -> ")} -> ${schemaName}`,
                     path: `/components/schemas/${schemaName}`
                 });
                 return true;

@@ -11,9 +11,7 @@ private func main() async throws {
         serviceParam: 1,
         limit: 1,
         otherField: "otherField",
-        multiLineDocs: "multiLineDocs",
-        optionalMultipleField: ,
-        multipleField: 
+        multiLineDocs: "multiLineDocs"
     )
 }
 

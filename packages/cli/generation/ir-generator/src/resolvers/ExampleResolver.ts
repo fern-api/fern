@@ -38,9 +38,17 @@ export class ExampleResolverImpl implements ExampleResolver {
                 example,
                 file
             });
-            if (resolvedExample == null || typeof resolvedExample.resolvedExample === "string") {
+
+            if (resolvedExample == null) {
                 return resolvedExample;
             }
+            if (typeof resolvedExample.resolvedExample === "string") {
+                if (resolvedExample.resolvedExample.startsWith(`\\${EXAMPLE_REFERENCE_PREFIX}`)) {
+                    resolvedExample.resolvedExample = resolvedExample.resolvedExample.slice(1);
+                }
+                return resolvedExample;
+            }
+
             return this.resolveAllReferencesInExample({
                 example: resolvedExample.resolvedExample,
                 file: resolvedExample.file
@@ -94,14 +102,6 @@ export class ExampleResolverImpl implements ExampleResolver {
             };
         }
 
-        if (example.startsWith(`\\${EXAMPLE_REFERENCE_PREFIX}`)) {
-            return {
-                // remove backslash
-                resolvedExample: example.slice(1),
-                file
-            };
-        }
-
         if (!example.startsWith(EXAMPLE_REFERENCE_PREFIX)) {
             return {
                 resolvedExample: example,
@@ -109,6 +109,13 @@ export class ExampleResolverImpl implements ExampleResolver {
             };
         }
 
+        return this.resolveExampleReference(example, file);
+    }
+
+    private resolveExampleReference(
+        example: string,
+        file: FernFileContext
+    ): { resolvedExample: unknown; file: FernFileContext } | undefined {
         const parsedExampleReference = this.parseExampleReference(example);
         if (parsedExampleReference == null) {
             return undefined;

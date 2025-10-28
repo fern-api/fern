@@ -67,4 +67,17 @@ public final class ApiClient: Sendable {
             responseType: Foo.self
         )
     }
+
+    public func updateFoo(id: String, xIdempotencyKey: String, request: Requests.UpdateFooRequest, requestOptions: RequestOptions? = nil) async throws -> Foo {
+        return try await httpClient.performRequest(
+            method: .patch,
+            path: "/foo/\(id)",
+            headers: [
+                "X-Idempotency-Key": xIdempotencyKey
+            ],
+            body: request,
+            requestOptions: requestOptions,
+            responseType: Foo.self
+        )
+    }
 }

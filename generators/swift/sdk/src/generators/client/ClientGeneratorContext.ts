@@ -1,24 +1,28 @@
+import { Referencer } from "@fern-api/swift-base";
 import { swift } from "@fern-api/swift-codegen";
-
 import { Package, Subpackage } from "@fern-fern/ir-sdk/api";
-
 import { SdkGeneratorContext } from "../../SdkGeneratorContext";
 
 export declare namespace ClientGeneratorContext {
     interface Args {
+        symbol: swift.Symbol;
         packageOrSubpackage: Package | Subpackage;
         sdkGeneratorContext: SdkGeneratorContext;
     }
 }
 
 export class ClientGeneratorContext {
+    private readonly symbol: swift.Symbol;
     private readonly packageOrSubpackage: Package | Subpackage;
     private readonly sdkGeneratorContext: SdkGeneratorContext;
 
-    public readonly subClients: { property: swift.Property; clientName: string }[];
     public readonly httpClient: { property: swift.Property; clientName: string };
+    public readonly subClients: { property: swift.Property; clientName: string }[];
+    private readonly referencer: Referencer;
 
-    public constructor({ packageOrSubpackage, sdkGeneratorContext }: ClientGeneratorContext.Args) {
+    public constructor({ symbol, packageOrSubpackage, sdkGeneratorContext }: ClientGeneratorContext.Args) {
+        this.referencer = sdkGeneratorContext.createReferencer(symbol);
+        this.symbol = symbol;
         this.packageOrSubpackage = packageOrSubpackage;
         this.sdkGeneratorContext = sdkGeneratorContext;
         this.subClients = this.getSubClients();
@@ -29,17 +33,17 @@ export class ClientGeneratorContext {
         return this.sdkGeneratorContext
             .getSubpackagesOrThrow(this.packageOrSubpackage)
             .map(([subpackageId, subpackage]) => {
-                const clientName =
-                    this.sdkGeneratorContext.project.srcSymbolRegistry.getSubClientSymbolOrThrow(subpackageId);
+                const subClientSymbol =
+                    this.sdkGeneratorContext.project.nameRegistry.getSubClientSymbolOrThrow(subpackageId);
                 const property = swift.property({
                     unsafeName: subpackage.name.camelCase.unsafeName,
                     accessLevel: swift.AccessLevel.Public,
                     declarationType: swift.DeclarationType.Let,
-                    type: swift.Type.custom(clientName)
+                    type: this.referencer.referenceType(subClientSymbol)
                 });
                 return {
                     property,
-                    clientName
+                    clientName: subClientSymbol.name
                 };
             });
     }
@@ -55,7 +59,7 @@ export class ClientGeneratorContext {
                 unsafeName: name,
                 accessLevel: swift.AccessLevel.Private,
                 declarationType: swift.DeclarationType.Let,
-                type: swift.Type.custom("HTTPClient")
+                type: this.referencer.referenceAsIsType("HTTPClient")
             }),
             clientName: "HTTPClient"
         };

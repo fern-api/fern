@@ -100,7 +100,7 @@ export const NoUndefinedPathParametersRule: Rule = {
                         );
                         violations.push({
                             severity: "error",
-                            message: `Path parameter '{${paramName}}' in '${path}' is not defined in ${method.toUpperCase()} operation parameters`,
+                            message: `[no-undefined-path-parameters] Path parameter '{${paramName}}' in '${path}' is not defined in ${method.toUpperCase()} operation parameters`,
                             path: `${path}/${method}/parameters`
                         });
                     }
@@ -121,7 +121,7 @@ export const NoUndefinedPathParametersRule: Rule = {
                         );
                         violations.push({
                             severity: "warning",
-                            message: `Path parameter '${paramName}' is defined but not used in path '${path}'`,
+                            message: `[no-undefined-path-parameters] Path parameter '${paramName}' is defined but not used in path '${path}'`,
                             path: `${path}/${method}/parameters`
                         });
                     }

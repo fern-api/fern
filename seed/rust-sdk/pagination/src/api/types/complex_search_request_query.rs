@@ -45,3 +45,20 @@ impl SearchRequestQuery {
         }
     }
 }
+
+impl fmt::Display for SearchRequestQuery {
+    fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
+        match self {
+            Self::SingleFilterSearchRequest(value) => write!(
+                f,
+                "{}",
+                serde_json::to_string(value).unwrap_or_else(|_| format!("{:?}", value))
+            ),
+            Self::MultipleFilterSearchRequest(value) => write!(
+                f,
+                "{}",
+                serde_json::to_string(value).unwrap_or_else(|_| format!("{:?}", value))
+            ),
+        }
+    }
+}

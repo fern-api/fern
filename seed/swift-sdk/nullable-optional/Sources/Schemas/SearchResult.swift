@@ -2,20 +2,20 @@ import Foundation
 
 /// Undiscriminated union for testing
 public enum SearchResult: Codable, Hashable, Sendable {
-    case user(User)
-    case organization(Organization)
     case document(Document)
+    case organization(Organization)
+    case user(User)
 
     public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
         let discriminant = try container.decode(String.self, forKey: .type)
         switch discriminant {
-        case "user":
-            self = .user(try User(from: decoder))
-        case "organization":
-            self = .organization(try Organization(from: decoder))
         case "document":
             self = .document(try Document(from: decoder))
+        case "organization":
+            self = .organization(try Organization(from: decoder))
+        case "user":
+            self = .user(try User(from: decoder))
         default:
             throw DecodingError.dataCorrupted(
                 DecodingError.Context(
@@ -28,11 +28,11 @@ public enum SearchResult: Codable, Hashable, Sendable {
 
     public func encode(to encoder: Encoder) throws -> Void {
         switch self {
-        case .user(let data):
+        case .document(let data):
             try data.encode(to: encoder)
         case .organization(let data):
             try data.encode(to: encoder)
-        case .document(let data):
+        case .user(let data):
             try data.encode(to: encoder)
         }
     }

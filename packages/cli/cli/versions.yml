@@ -1,6 +1,134 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
 - changelogEntry:
     - summary: |
+        Fix image rendering in docs preview after hot-reload. Images now maintain the /_local prefix and render correctly when markdown files are updated during `fern docs dev`.
+      type: fix
+  irVersion: 61
+  createdAt: "2025-10-27"
+  version: 0.99.1
+
+- changelogEntry:
+    - summary: |
+        Support enablements for custom/prod domains from docs.yml. Separate Slack, Discord, and docs Ask Fern deployments.
+      type: feat
+  irVersion: 61
+  createdAt: "2025-10-27"
+  version: 0.99.0
+
+- changelogEntry:
+    - summary: |
+        Add support for ignoring properties in OpenAPI schemas using the `x-fern-ignore` extension.
+      type: feat
+  irVersion: 61
+  createdAt: "2025-10-27"
+  version: 0.98.0
+
+- changelogEntry:
+    - summary: |
+        Remove noisy logging from fern generate --docs and add error message for missing local references.
+      type: feat
+  irVersion: 61
+  createdAt: "2025-10-27"
+  version: 0.97.0
+
+- changelogEntry:
+    - summary: |
+        Reformat how docs fern check errors are displayed, and error on:
+        - OpenAPI v2.0 in docs
+        - Non-component local refs in docs
+      type: fix
+  irVersion: 61
+  createdAt: "2025-10-25"
+  version: 0.96.1
+
+- changelogEntry:
+    - summary: |
+        Support using audience tags in products and versions to generate a filtered instance of a docs site.
+      type: feat
+  irVersion: 61
+  createdAt: "2025-10-25"
+  version: 0.96.0
+
+- changelogEntry:
+    - summary: |
+        Improve authentication error message when running `fern generate --docs` without a token. The error now explicitly instructs users to run `fern login` or set the FERN_TOKEN environment variable.
+      type: fix
+    - summary: |
+        Add validation for empty FERN_TOKEN environment variable to ensure empty strings are treated the same as missing tokens.
+      type: fix
+  irVersion: 61
+  createdAt: "2025-10-25"
+  version: 0.95.2
+
+- changelogEntry:
+    - summary: |
+        Re-enable excludeApis flag to skip bundling APIs with docs creation request.
+      type: fix
+  irVersion: 61
+  createdAt: "2025-10-24"
+  version: 0.95.1
+
+- changelogEntry:
+    - summary: |
+        Print how to upgrade generators with major version changes and point them to the changelog.
+      type: feat
+  irVersion: 61
+  createdAt: "2025-10-24"
+  version: 0.95.0
+
+- changelogEntry:
+    - summary: |
+        Fixed bug in openapi-importer where file type params in multipart/form-data
+        were incorrectly marked as required.
+      type: fix
+  irVersion: 61
+  createdAt: "2025-10-23"
+  version: 0.94.6
+
+- changelogEntry:
+    - summary: |
+        Properly reload pages with Markdown snippets if you update the snippet in `fern docs dev`
+      type: fix
+  irVersion: 61
+  createdAt: "2025-10-23"
+  version: 0.94.5
+
+- changelogEntry:
+    - summary: |
+        Restore support for x-fern-examples path parameters if there is no request body.
+      type: fix
+  irVersion: 61
+  createdAt: "2025-10-23"
+  version: 0.94.4
+
+- changelogEntry:
+    - summary: |
+        Fix broken recursive unescaping of \ during handling of \$ in IR generation.
+      type: fix
+  irVersion: 61
+  createdAt: "2025-10-23"
+  version: 0.94.3
+
+- changelogEntry:
+    - summary: |
+        Improve IR hashing in IntermediateRepresentationChangeDetector.
+        Previously it looked at the entire IR. Now it only compares the
+        parts of the IR that describe the API interface.
+      type: fix
+  irVersion: 61
+  createdAt: "2025-10-23"
+  version: 0.94.2
+
+- changelogEntry:
+    - summary: |
+        Undo change to skip bundling APIs with docs creation request.
+      type: fix
+  irVersion: 61
+  createdAt: "2025-10-22"
+  version: 0.94.1
+
+- changelogEntry:
+    - summary: |
         Handle npm OIDC token publishing for local workspace generation.
       type: feat
   irVersion: 61
@@ -43,9 +171,9 @@
 
 - changelogEntry:
     - summary: |
-        Turns HTTP snippets on by default in docs generation. 
+        Turns HTTP snippets on by default in docs generation.
 
-        To turn HTTP snippets off, set `settings.http-snippets: false` in the `docs.yml` file. You can also specify an explicit list of snippets to include. 
+        To turn HTTP snippets off, set `settings.http-snippets: false` in the `docs.yml` file. You can also specify an explicit list of snippets to include.
 
         ```docs.yml
         # this will only generate typescript and python snippets, no curl
@@ -61,7 +189,7 @@
 
 - changelogEntry:
     - summary: |
-        For debugging purposes, generating a docs preview via `fern generate --docs --preview`, it is now possible to specify `--skip-upload` to 
+        For debugging purposes, generating a docs preview via `fern generate --docs --preview`, it is now possible to specify `--skip-upload` to
         skip the asset uploading step.
       type: feat
   irVersion: 61
@@ -197,7 +325,7 @@
 
         page-actions:
           default: cursor
-          options: 
+          options:
             chatgpt: false
             claude: true
             vscode: true
@@ -226,7 +354,7 @@
 
 - changelogEntry:
     - summary: |
-        Fixes `displayName` generation to be stricter for `oneOf` variants. 
+        Fixes `displayName` generation to be stricter for `oneOf` variants.
         Now, a display name will be set if a `summary` or `title` is provided for a variant, otherwise none will be generated.
       type: fix
   irVersion: 60

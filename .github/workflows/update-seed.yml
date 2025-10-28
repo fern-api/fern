@@ -73,6 +73,7 @@ jobs:
             generator-name: openapi
           - files: |
               generators/python/
+              generators/python-v2/
               seed/pydantic/
               seed/pydantic-v2/
               seed/python-sdk/
@@ -84,17 +85,20 @@ jobs:
             generator-name: postman
           - files: |
               generators/java/
+              generators/java-v2/
               seed/java-sdk/
               seed/java-model/
               seed/java-spring/
             generator-name: java
           - files: |
               generators/typescript/
+              generators/typescript-v2/
               seed/ts-sdk/
               seed/ts-express/
             generator-name: typescript
           - files: |
               generators/go/
+              generators/go-v2/
               seed/go-sdk/
               seed/go-model/
               seed/go-fiber/
@@ -434,7 +438,7 @@ jobs:
         uses: ./.github/actions/auto-update-seed
         with:
           generator-name: pydantic
-          generator-path: generators/python
+          generator-path: generators/python generators/python-v2
           allow-unexpected-failures: true
           fixtures-to-run: ${{ toJson(matrix.fixtures) }}
           index: ${{ strategy.job-index }}
@@ -599,7 +603,7 @@ jobs:
         uses: ./.github/actions/auto-update-seed
         with:
           generator-name: java-sdk
-          generator-path: generators/java
+          generator-path: generators/java generators/java-v2
           allow-unexpected-failures: true
           fixtures-to-run: ${{ toJson(matrix.fixtures) }}
           index: ${{ strategy.job-index }}
@@ -632,7 +636,7 @@ jobs:
         uses: ./.github/actions/auto-update-seed
         with:
           generator-name: java-model
-          generator-path: generators/java
+          generator-path: generators/java generators/java-v2
           allow-unexpected-failures: true
           fixtures-to-run: ${{ toJson(matrix.fixtures) }}
           index: ${{ strategy.job-index }}
@@ -665,7 +669,7 @@ jobs:
         uses: ./.github/actions/auto-update-seed
         with:
           generator-name: java-spring
-          generator-path: generators/java
+          generator-path: generators/java generators/java-v2
           allow-unexpected-failures: true
           fixtures-to-run: ${{ toJson(matrix.fixtures) }}
           index: ${{ strategy.job-index }}
@@ -698,7 +702,7 @@ jobs:
         uses: ./.github/actions/auto-update-seed
         with:
           generator-name: ts-sdk
-          generator-path: generators/typescript
+          generator-path: generators/typescript generators/typescript-v2
           allow-unexpected-failures: true
           fixtures-to-run: ${{ toJson(matrix.fixtures) }}
           index: ${{ strategy.job-index }}
@@ -731,7 +735,7 @@ jobs:
         uses: ./.github/actions/auto-update-seed
         with:
           generator-name: ts-express
-          generator-path: generators/typescript
+          generator-path: generators/typescript generators/typescript-v2
           allow-unexpected-failures: true
           fixtures-to-run: ${{ toJson(matrix.fixtures) }}
           index: ${{ strategy.job-index }}
@@ -764,7 +768,7 @@ jobs:
         uses: ./.github/actions/auto-update-seed
         with:
           generator-name: go-fiber
-          generator-path: generators/go
+          generator-path: generators/go generators/go-v2
           allow-unexpected-failures: true
           fixtures-to-run: ${{ toJson(matrix.fixtures) }}
           index: ${{ strategy.job-index }}
@@ -797,7 +801,7 @@ jobs:
         uses: ./.github/actions/auto-update-seed
         with:
           generator-name: go-model
-          generator-path: generators/go
+          generator-path: generators/go generators/go-v2
           allow-unexpected-failures: true
           fixtures-to-run: ${{ toJson(matrix.fixtures) }}
           index: ${{ strategy.job-index }}
@@ -830,7 +834,7 @@ jobs:
         uses: ./.github/actions/auto-update-seed
         with:
           generator-name: go-sdk
-          generator-path: generators/go
+          generator-path: generators/go generators/go-v2
           allow-unexpected-failures: true
           fixtures-to-run: ${{ toJson(matrix.fixtures) }}
           index: ${{ strategy.job-index }}

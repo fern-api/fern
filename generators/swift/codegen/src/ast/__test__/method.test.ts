@@ -2,14 +2,13 @@ import { describe, expect, it } from "vitest";
 
 import { swift } from "../..";
 import { AccessLevel } from "../AccessLevel";
-import { Type } from "../Type";
 
 describe("Method", () => {
     describe("write", () => {
         it("should write basic method with name and return type", () => {
             const method = swift.method({
                 unsafeName: "getName",
-                returnType: Type.string()
+                returnType: swift.TypeReference.unqualifiedToSwiftType("String")
             });
 
             expect(method.toString()).toMatchInlineSnapshot(`
@@ -22,7 +21,7 @@ describe("Method", () => {
             const method = swift.method({
                 unsafeName: "getValue",
                 accessLevel: AccessLevel.Public,
-                returnType: Type.int()
+                returnType: swift.TypeReference.unqualifiedToSwiftType("Int")
             });
 
             expect(method.toString()).toMatchInlineSnapshot(`
@@ -35,7 +34,7 @@ describe("Method", () => {
             const method = swift.method({
                 unsafeName: "create",
                 static_: true,
-                returnType: Type.custom("User")
+                returnType: swift.TypeReference.symbol("User")
             });
 
             expect(method.toString()).toMatchInlineSnapshot(`
@@ -49,7 +48,7 @@ describe("Method", () => {
                 unsafeName: "process",
                 accessLevel: AccessLevel.Private,
                 static_: true,
-                returnType: Type.bool()
+                returnType: swift.TypeReference.unqualifiedToSwiftType("Bool")
             });
 
             expect(method.toString()).toMatchInlineSnapshot(`
@@ -64,10 +63,10 @@ describe("Method", () => {
                 parameters: [
                     swift.functionParameter({
                         unsafeName: "value",
-                        type: Type.string()
+                        type: swift.TypeReference.unqualifiedToSwiftType("String")
                     })
                 ],
-                returnType: Type.void()
+                returnType: swift.TypeReference.unqualifiedToSwiftType("Void")
             });
 
             expect(method.toString()).toMatchInlineSnapshot(`
@@ -82,18 +81,18 @@ describe("Method", () => {
                 parameters: [
                     swift.functionParameter({
                         unsafeName: "id",
-                        type: Type.int()
+                        type: swift.TypeReference.unqualifiedToSwiftType("Int")
                     }),
                     swift.functionParameter({
                         unsafeName: "name",
-                        type: Type.string()
+                        type: swift.TypeReference.unqualifiedToSwiftType("String")
                     }),
                     swift.functionParameter({
                         unsafeName: "email",
-                        type: Type.string()
+                        type: swift.TypeReference.unqualifiedToSwiftType("String")
                     })
                 ],
-                returnType: Type.bool()
+                returnType: swift.TypeReference.unqualifiedToSwiftType("Bool")
             });
 
             expect(method.toString()).toMatchInlineSnapshot(
@@ -111,15 +110,15 @@ describe("Method", () => {
                     swift.functionParameter({
                         argumentLabel: "with",
                         unsafeName: "name",
-                        type: Type.string()
+                        type: swift.TypeReference.unqualifiedToSwiftType("String")
                     }),
                     swift.functionParameter({
                         argumentLabel: "email",
                         unsafeName: "emailAddress",
-                        type: Type.string()
+                        type: swift.TypeReference.unqualifiedToSwiftType("String")
                     })
                 ],
-                returnType: Type.custom("User")
+                returnType: swift.TypeReference.symbol("User")
             });
 
             expect(method.toString()).toMatchInlineSnapshot(
@@ -136,15 +135,15 @@ describe("Method", () => {
                 parameters: [
                     swift.functionParameter({
                         unsafeName: "id",
-                        type: Type.int()
+                        type: swift.TypeReference.unqualifiedToSwiftType("Int")
                     }),
                     swift.functionParameter({
                         argumentLabel: "includingDeleted",
                         unsafeName: "deleted",
-                        type: Type.optional(Type.bool())
+                        type: swift.TypeReference.optional(swift.TypeReference.unqualifiedToSwiftType("Bool"))
                     })
                 ],
-                returnType: Type.optional(Type.custom("User"))
+                returnType: swift.TypeReference.optional(swift.TypeReference.symbol("User"))
             });
 
             expect(method.toString()).toMatchInlineSnapshot(
@@ -162,20 +161,23 @@ describe("Method", () => {
                 parameters: [
                     swift.functionParameter({
                         unsafeName: "value",
-                        type: Type.string()
+                        type: swift.TypeReference.unqualifiedToSwiftType("String")
                     }),
                     swift.functionParameter({
                         argumentLabel: "with",
                         unsafeName: "options",
-                        type: Type.array(Type.string())
+                        type: swift.TypeReference.array(swift.TypeReference.unqualifiedToSwiftType("String"))
                     }),
                     swift.functionParameter({
                         argumentLabel: "timeout",
                         unsafeName: "timeoutValue",
-                        type: Type.optional(Type.double())
+                        type: swift.TypeReference.optional(swift.TypeReference.unqualifiedToSwiftType("Double"))
                     })
                 ],
-                returnType: Type.dictionary(Type.string(), Type.any())
+                returnType: swift.TypeReference.dictionary(
+                    swift.TypeReference.unqualifiedToSwiftType("String"),
+                    swift.TypeReference.unqualifiedToSwiftType("Any")
+                )
             });
 
             expect(method.toString()).toMatchInlineSnapshot(
@@ -189,7 +191,7 @@ describe("Method", () => {
         it("should write method with reserved keyword name", () => {
             const method = swift.method({
                 unsafeName: "class",
-                returnType: Type.string()
+                returnType: swift.TypeReference.unqualifiedToSwiftType("String")
             });
 
             expect(method.toString()).toMatchInlineSnapshot(`
@@ -204,15 +206,15 @@ describe("Method", () => {
                 parameters: [
                     swift.functionParameter({
                         unsafeName: "enum",
-                        type: Type.string()
+                        type: swift.TypeReference.unqualifiedToSwiftType("String")
                     }),
                     swift.functionParameter({
                         argumentLabel: "for",
                         unsafeName: "struct",
-                        type: Type.custom("Config")
+                        type: swift.TypeReference.symbol("Config")
                     })
                 ],
-                returnType: Type.string()
+                returnType: swift.TypeReference.unqualifiedToSwiftType("String")
             });
 
             expect(method.toString()).toMatchInlineSnapshot(
@@ -226,7 +228,15 @@ describe("Method", () => {
         it("should write method with complex return types", () => {
             const method = swift.method({
                 unsafeName: "getComplexData",
-                returnType: Type.array(Type.dictionary(Type.string(), Type.tuple([Type.int(), Type.bool()])))
+                returnType: swift.TypeReference.array(
+                    swift.TypeReference.dictionary(
+                        swift.TypeReference.unqualifiedToSwiftType("String"),
+                        swift.TypeReference.tuple([
+                            swift.TypeReference.unqualifiedToSwiftType("Int"),
+                            swift.TypeReference.unqualifiedToSwiftType("Bool")
+                        ])
+                    )
+                )
             });
 
             expect(method.toString()).toMatchInlineSnapshot(`
@@ -242,10 +252,10 @@ describe("Method", () => {
                     swift.functionParameter({
                         argumentLabel: "name",
                         unsafeName: "name",
-                        type: Type.string()
+                        type: swift.TypeReference.unqualifiedToSwiftType("String")
                     })
                 ],
-                returnType: Type.any()
+                returnType: swift.TypeReference.unqualifiedToSwiftType("Any")
             });
 
             expect(method.toString()).toMatchInlineSnapshot(`
@@ -263,15 +273,17 @@ describe("Method", () => {
                     swift.functionParameter({
                         argumentLabel: "from",
                         unsafeName: "data",
-                        type: Type.custom("Data")
+                        type: swift.TypeReference.unqualifiedToFoundationType("Data")
                     }),
                     swift.functionParameter({
                         argumentLabel: "with",
                         unsafeName: "options",
-                        type: Type.optional(Type.array(Type.string()))
+                        type: swift.TypeReference.optional(
+                            swift.TypeReference.array(swift.TypeReference.unqualifiedToSwiftType("String"))
+                        )
                     })
                 ],
-                returnType: Type.string()
+                returnType: swift.TypeReference.unqualifiedToSwiftType("String")
             });
 
             expect(method.toString()).toMatchInlineSnapshot(
@@ -290,22 +302,22 @@ describe("Method", () => {
                     swift.functionParameter({
                         argumentLabel: "with",
                         unsafeName: "name",
-                        type: Type.string()
+                        type: swift.TypeReference.unqualifiedToSwiftType("String")
                     }),
                     swift.functionParameter({
                         argumentLabel: "email",
                         unsafeName: "emailAddress",
-                        type: Type.optional(Type.string()),
+                        type: swift.TypeReference.optional(swift.TypeReference.unqualifiedToSwiftType("String")),
                         defaultValue: swift.Expression.rawValue("nil")
                     }),
                     swift.functionParameter({
                         argumentLabel: "isActive",
                         unsafeName: "active",
-                        type: Type.bool(),
+                        type: swift.TypeReference.unqualifiedToSwiftType("Bool"),
                         defaultValue: swift.Expression.rawValue("true")
                     })
                 ],
-                returnType: Type.custom("User")
+                returnType: swift.TypeReference.symbol("User")
             });
 
             expect(method.toString()).toMatchInlineSnapshot(
@@ -319,7 +331,7 @@ describe("Method", () => {
         it("should write method with body", () => {
             const method = swift.method({
                 unsafeName: "getUserName",
-                returnType: Type.string(),
+                returnType: swift.TypeReference.unqualifiedToSwiftType("String"),
                 body: swift.CodeBlock.withStatements([
                     swift.Statement.constantDeclaration({
                         unsafeName: "name",

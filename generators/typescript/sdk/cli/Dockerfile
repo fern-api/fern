@@ -27,7 +27,7 @@ RUN echo '{ \
     "formdata-node": "^6.0.3", \
     "jest-environment-jsdom": "^29.7.0", \
     "prettier": "3.4.2", \
-    "@biomejs/biome": "2.2.5", \
+    "@biomejs/biome": "2.3.1", \
     "ts-jest": "^29.1.1", \
     "typescript": "~5.7.2", \
     "form-data-encoder": "^4.0.2", \
@@ -51,14 +51,13 @@ RUN pnpm install
 # make prettier globally available
 RUN pnpm install -g prettier@3.4.2
 # make biome globally available
-RUN pnpm install -g @biomejs/biome@2.2.5
+RUN pnpm install -g @biomejs/biome@2.3.1
 
 RUN rm -rf /tmp/cache-warm
 
 WORKDIR /
 
-
-RUN npm install -f -g @fern-api/generator-cli
+RUN npm install -f -g @fern-api/generator-cli@0.2.0
 
 COPY generators/typescript/sdk/cli/dist/ /
 

@@ -18,7 +18,7 @@ export const ValidComponentsRule: Rule = {
                 if (!componentNameRegex.test(name)) {
                     violations.push({
                         severity: "error",
-                        message: `Component name '${name}' in ${componentType} contains invalid characters. Must match: ^[a-zA-Z0-9._-]+$`,
+                        message: `[valid-components] Component name '${name}' in ${componentType} contains invalid characters. Must match: ^[a-zA-Z0-9._-]+$`,
                         path: `/components/${componentType}/${name}`
                     });
                 }

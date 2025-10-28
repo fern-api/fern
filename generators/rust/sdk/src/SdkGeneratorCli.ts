@@ -488,6 +488,33 @@ export class SdkGeneratorCli extends AbstractRustGeneratorCli<SdkCustomConfigSch
             }
         }
 
+        // Add file upload request body types from services
+        for (const service of Object.values(context.ir.services)) {
+            for (const endpoint of service.endpoints) {
+                if (endpoint.requestBody?.type === "fileUpload") {
+                    // Get the unique type name (may have suffix if there's a collision)
+                    const uniqueRequestName = context.getFileUploadRequestTypeName(endpoint.id);
+
+                    // Use centralized method for consistent snake_case conversion (pass endpoint.id)
+                    const rawModuleName = context.getModuleNameForFileUploadRequestBody(endpoint.id);
+                    const escapedModuleName = context.escapeRustKeyword(rawModuleName);
+
+                    // Only add if we haven't seen this module name before
+                    if (!uniqueModuleNames.has(escapedModuleName)) {
+                        uniqueModuleNames.add(escapedModuleName);
+                        moduleDeclarations.push(new ModuleDeclaration({ name: escapedModuleName, isPublic: true }));
+                        useStatements.push(
+                            new UseStatement({
+                                path: escapedModuleName,
+                                items: [uniqueRequestName],
+                                isPublic: true
+                            })
+                        );
+                    }
+                }
+            }
+        }
+
         // Add query parameter request structs for query-only endpoints
         for (const [serviceId, service] of Object.entries(context.ir.services)) {
             for (const endpoint of service.endpoints) {
@@ -529,6 +556,12 @@ export class SdkGeneratorCli extends AbstractRustGeneratorCli<SdkCustomConfigSch
         try {
             const snippetCount = context.ir.dynamic?.endpoints ? Object.keys(context.ir.dynamic.endpoints).length : 0;
             context.logger.debug(`Generating README.md with ${snippetCount} endpoint example(s)...`);
+
+            // If there are no endpoints, generate a simplified README
+            if (!snippetCount) {
+                context.logger.debug(`Generated simplified README.md for SDK with no endpoints`);
+                return;
+            }
 
             // Generate README content using the agent
             const readmeContent = await context.generatorAgent.generateReadme({
@@ -627,7 +660,30 @@ export class SdkGeneratorCli extends AbstractRustGeneratorCli<SdkCustomConfigSch
     // ===========================
 
     private hasTypes(context: SdkGeneratorContext): boolean {
-        return Object.keys(context.ir.types).length > 0;
+        // Check for regular IR types
+        if (Object.keys(context.ir.types).length > 0) {
+            return true;
+        }
+
+        // Check for inline request bodies
+        for (const service of Object.values(context.ir.services)) {
+            for (const endpoint of service.endpoints) {
+                if (endpoint.requestBody?.type === "inlinedRequestBody") {
+                    return true;
+                }
+            }
+        }
+
+        // Check for query-only endpoints that generate request types
+        for (const service of Object.values(context.ir.services)) {
+            for (const endpoint of service.endpoints) {
+                if (endpoint.queryParameters?.length > 0 && !endpoint.requestBody) {
+                    return true;
+                }
+            }
+        }
+
+        return false;
     }
 
     private hasEnvironments(context: SdkGeneratorContext): boolean {

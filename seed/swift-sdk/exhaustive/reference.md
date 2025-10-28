@@ -143,7 +143,7 @@ import Exhaustive
 private func main() async throws {
     let client = ExhaustiveClient(token: "<token>")
 
-    _ = try await client.endpoints.container.getAndReturnSetOfPrimitives(request: )
+    _ = try await client.endpoints.container.getAndReturnSetOfPrimitives()
 }
 
 try await main()
@@ -200,7 +200,7 @@ import Exhaustive
 private func main() async throws {
     let client = ExhaustiveClient(token: "<token>")
 
-    _ = try await client.endpoints.container.getAndReturnSetOfObjects(request: )
+    _ = try await client.endpoints.container.getAndReturnSetOfObjects()
 }
 
 try await main()
@@ -444,18 +444,16 @@ private func main() async throws {
         double: 1.1,
         bool: true,
         datetime: try! Date("2024-01-15T09:30:00Z", strategy: .iso8601),
-        date: try! CalendarDate("2023-01-15"),
-        uuid: UUID(uuidString: "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32"),
+        date: CalendarDate("2023-01-15")!,
+        uuid: UUID(uuidString: "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32")!,
         base64: "SGVsbG8gd29ybGQh",
         list: [
             "list",
             "list"
         ],
-        set: ,
         map: [
             1: "map"
-        ],
-        bigint: 
+        ]
     ))
 }
 
@@ -520,18 +518,16 @@ private func main() async throws {
         double: 1.1,
         bool: true,
         datetime: try! Date("2024-01-15T09:30:00Z", strategy: .iso8601),
-        date: try! CalendarDate("2023-01-15"),
-        uuid: UUID(uuidString: "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32"),
+        date: CalendarDate("2023-01-15")!,
+        uuid: UUID(uuidString: "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32")!,
         base64: "SGVsbG8gd29ybGQh",
         list: [
             "list",
             "list"
         ],
-        set: ,
         map: [
             1: "map"
-        ],
-        bigint: 
+        ]
     ))
 }
 
@@ -843,18 +839,16 @@ private func main() async throws {
             double: 1.1,
             bool: true,
             datetime: try! Date("2024-01-15T09:30:00Z", strategy: .iso8601),
-            date: try! CalendarDate("2023-01-15"),
-            uuid: UUID(uuidString: "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32"),
+            date: CalendarDate("2023-01-15")!,
+            uuid: UUID(uuidString: "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32")!,
             base64: "SGVsbG8gd29ybGQh",
             list: [
                 "list",
                 "list"
             ],
-            set: ,
             map: [
                 1: "map"
-            ],
-            bigint: 
+            ]
         )
     )
 }
@@ -986,18 +980,16 @@ private func main() async throws {
         double: 1.1,
         bool: true,
         datetime: try! Date("2024-01-15T09:30:00Z", strategy: .iso8601),
-        date: try! CalendarDate("2023-01-15"),
-        uuid: UUID(uuidString: "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32"),
+        date: CalendarDate("2023-01-15")!,
+        uuid: UUID(uuidString: "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32")!,
         base64: "SGVsbG8gd29ybGQh",
         list: [
             "list",
             "list"
         ],
-        set: ,
         map: [
             1: "map"
-        ],
-        bigint: 
+        ]
     ))
 }
 
@@ -1186,18 +1178,16 @@ private func main() async throws {
             double: 1.1,
             bool: true,
             datetime: try! Date("2024-01-15T09:30:00Z", strategy: .iso8601),
-            date: try! CalendarDate("2023-01-15"),
-            uuid: UUID(uuidString: "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32"),
+            date: CalendarDate("2023-01-15")!,
+            uuid: UUID(uuidString: "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32")!,
             base64: "SGVsbG8gd29ybGQh",
             list: [
                 "list",
                 "list"
             ],
-            set: ,
             map: [
                 1: "map"
-            ],
-            bigint: 
+            ]
         )
     ))
 }
@@ -1267,18 +1257,16 @@ private func main() async throws {
                 double: 1.1,
                 bool: true,
                 datetime: try! Date("2024-01-15T09:30:00Z", strategy: .iso8601),
-                date: try! CalendarDate("2023-01-15"),
-                uuid: UUID(uuidString: "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32"),
+                date: CalendarDate("2023-01-15")!,
+                uuid: UUID(uuidString: "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32")!,
                 base64: "SGVsbG8gd29ybGQh",
                 list: [
                     "list",
                     "list"
                 ],
-                set: ,
                 map: [
                     1: "map"
-                ],
-                bigint: 
+                ]
             )
         )
     )
@@ -1356,18 +1344,16 @@ private func main() async throws {
                 double: 1.1,
                 bool: true,
                 datetime: try! Date("2024-01-15T09:30:00Z", strategy: .iso8601),
-                date: try! CalendarDate("2023-01-15"),
-                uuid: UUID(uuidString: "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32"),
+                date: CalendarDate("2023-01-15")!,
+                uuid: UUID(uuidString: "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32")!,
                 base64: "SGVsbG8gd29ybGQh",
                 list: [
                     "list",
                     "list"
                 ],
-                set: ,
                 map: [
                     1: "map"
-                ],
-                bigint: 
+                ]
             )
         ),
         NestedObjectWithRequiredField(
@@ -1379,18 +1365,16 @@ private func main() async throws {
                 double: 1.1,
                 bool: true,
                 datetime: try! Date("2024-01-15T09:30:00Z", strategy: .iso8601),
-                date: try! CalendarDate("2023-01-15"),
-                uuid: UUID(uuidString: "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32"),
+                date: CalendarDate("2023-01-15")!,
+                uuid: UUID(uuidString: "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32")!,
                 base64: "SGVsbG8gd29ybGQh",
                 list: [
                     "list",
                     "list"
                 ],
-                set: ,
                 map: [
                     1: "map"
-                ],
-                bigint: 
+                ]
             )
         )
     ])
@@ -2428,7 +2412,7 @@ import Exhaustive
 private func main() async throws {
     let client = ExhaustiveClient(token: "<token>")
 
-    _ = try await client.endpoints.primitive.getAndReturnDate(request: try! CalendarDate("2023-01-15"))
+    _ = try await client.endpoints.primitive.getAndReturnDate(request: CalendarDate("2023-01-15")!)
 }
 
 try await main()
@@ -2485,7 +2469,7 @@ import Exhaustive
 private func main() async throws {
     let client = ExhaustiveClient(token: "<token>")
 
-    _ = try await client.endpoints.primitive.getAndReturnUuid(request: UUID(uuidString: "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32"))
+    _ = try await client.endpoints.primitive.getAndReturnUuid(request: UUID(uuidString: "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32")!)
 }
 
 try await main()
@@ -2942,18 +2926,16 @@ private func main() async throws {
             double: 1.1,
             bool: true,
             datetime: try! Date("2024-01-15T09:30:00Z", strategy: .iso8601),
-            date: try! CalendarDate("2023-01-15"),
-            uuid: UUID(uuidString: "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32"),
+            date: CalendarDate("2023-01-15")!,
+            uuid: UUID(uuidString: "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32")!,
             base64: "SGVsbG8gd29ybGQh",
             list: [
                 "list",
                 "list"
             ],
-            set: ,
             map: [
                 1: "map"
-            ],
-            bigint: 
+            ]
         )
     ))
 }
@@ -3231,3 +3213,4 @@ try await main()
 </dd>
 </dl>
 </details>
+

@@ -421,7 +421,7 @@ export class ApiReferenceNodeConverter {
         if (endpoint != null) {
             const endpointId = this.#holder.getEndpointId(endpoint);
             if (endpointId == null) {
-                this.taskContext.logger.error(
+                this.taskContext.logger.debug(
                     `Expected Endpoint ID for ${endpoint.id} at path: ${stringifyEndpointPathPartsWithMethod(endpoint.method, endpoint.path.parts)}. Got undefined.`
                 );
             } else {
@@ -606,7 +606,7 @@ export class ApiReferenceNodeConverter {
             } else {
                 const endpointId = this.#holder.getEndpointId(endpoint);
                 if (endpointId == null) {
-                    this.taskContext.logger.error(
+                    this.taskContext.logger.debug(
                         `Expected Endpoint ID for ${endpoint.id} at path: ${stringifyEndpointPathPartsWithMethod(endpoint.method, endpoint.path.parts)}. Got undefined.`
                     );
                     return;
@@ -756,7 +756,7 @@ export class ApiReferenceNodeConverter {
                 : undefined;
 
         if (pkg == null) {
-            this.taskContext.logger.error(cannotFindSubpackageByLocatorError(packageId || "unknown", []));
+            this.taskContext.logger.debug(cannotFindSubpackageByLocatorError(packageId || "unknown", []));
             return [];
         }
 
