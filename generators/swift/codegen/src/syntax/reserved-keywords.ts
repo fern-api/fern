@@ -75,3 +75,33 @@ export function escapeReservedKeyword(word: string): string {
 export function sanitizeSelf(name: string): string {
     return name === "self" ? "self_" : name;
 }
+
+/**
+ * Checks if a string is a valid Swift identifier.
+ * Valid identifiers must start with a letter or underscore, followed by letters, digits, or underscores.
+ */
+export function isValidSwiftIdentifier(name: string): boolean {
+    return /^[A-Za-z_][A-Za-z0-9_]*$/.test(name);
+}
+
+/**
+ * Escapes an identifier to make it valid Swift syntax.
+ * - Reserved keywords are wrapped in backticks
+ * - Identifiers starting with digits are prefixed with underscore
+ * - The `self` keyword is suffixed with underscore (cannot be escaped with backticks)
+ */
+export function escapeSwiftIdentifier(name: string): string {
+    if (name === "self") {
+        return "self_";
+    }
+    
+    if (isReservedKeyword(name)) {
+        return `\`${name}\``;
+    }
+    
+    if (/^[0-9]/.test(name)) {
+        return `_${name}`;
+    }
+    
+    return name;
+}

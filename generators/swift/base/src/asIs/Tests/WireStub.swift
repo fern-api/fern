@@ -66,7 +66,7 @@ final class WireStub {
     }
 }
 
-private final class StubURLProtocol: Foundation.URLProtocol {
+private final class StubURLProtocol: URLProtocol {
     struct Response {
         let statusCode: Swift.Int
         let headers: [Swift.String: Swift.String]
