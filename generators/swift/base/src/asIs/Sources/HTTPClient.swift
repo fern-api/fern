@@ -1,6 +1,6 @@
 import Foundation
 
-final class HTTPClient: Sendable {
+final class HTTPClient: Swift.Sendable {
     private let clientConfig: ClientConfig
     private let jsonEncoder = Serde.jsonEncoder
     private let jsonDecoder = Serde.jsonDecoder
@@ -97,12 +97,12 @@ final class HTTPClient: Sendable {
         requestQueryParams: [Swift.String: QueryParameter?],
         requestBody: HTTP.RequestBody? = nil,
         requestOptions: RequestOptions? = nil
-    ) async throws -> Foundation.URLRequest {
+    ) async throws -> URLRequest {
         // Init with URL
         let url = buildRequestURL(
             path: path, requestQueryParams: requestQueryParams, requestOptions: requestOptions
         )
-        var request = Foundation.URLRequest(url: url)
+        var request = URLRequest(url: url)
 
         // Set timeout
         if let timeout = requestOptions?.timeout {
@@ -245,12 +245,12 @@ final class HTTPClient: Sendable {
     }
 
     private func executeRequestWithURLSession(
-        _ request: Foundation.URLRequest
+        _ request: URLRequest
     ) async throws -> (Foundation.Data, Swift.String?) {
         do {
             let (data, response) = try await clientConfig.urlSession.data(for: request)
 
-            guard let httpResponse = response as? Foundation.HTTPURLResponse else {
+            guard let httpResponse = response as? HTTPURLResponse else {
                 throw ClientError.invalidResponse
             }
 

@@ -1,6 +1,6 @@
 import Foundation
 
-public struct APIErrorResponse: Codable, Sendable {
+public struct APIErrorResponse: Swift.Codable, Swift.Sendable {
     public let code: Swift.Int
     public let type: Swift.String?
     public let message: Swift.String?

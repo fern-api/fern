@@ -10,7 +10,7 @@ enum MultipartFormField {
     case field(_ value: EncodableValue, fieldName: Swift.String)
 
     /// Create a text field from any Encodable value
-    static func field<T: Encodable>(_ value: T, fieldName: Swift.String) -> MultipartFormField {
+    static func field<T: Swift.Encodable>(_ value: T, fieldName: Swift.String) -> MultipartFormField {
         return .field(.init(value), fieldName: fieldName)
     }
 }

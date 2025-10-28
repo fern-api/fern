@@ -1,7 +1,7 @@
 import Foundation
 
 enum HTTP {
-    enum Method: String, CaseIterable {
+    enum Method: Swift.String, Swift.CaseIterable {
         case get = "GET"
         case post = "POST"
         case put = "PUT"
@@ -10,7 +10,7 @@ enum HTTP {
         case head = "HEAD"
     }
 
-    enum ContentType: String, CaseIterable {
+    enum ContentType: Swift.String, Swift.CaseIterable {
         case applicationJson = "application/json"
         case applicationOctetStream = "application/octet-stream"
         case multipartFormData = "multipart/form-data"

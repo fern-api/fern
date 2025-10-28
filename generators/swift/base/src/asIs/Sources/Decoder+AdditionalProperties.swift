@@ -1,7 +1,7 @@
 import Foundation
 
-extension Decoder {
-    func decodeAdditionalProperties<T: Decodable, C: CaseIterable & RawRepresentable>(
+extension Swift.Decoder {
+    func decodeAdditionalProperties<T: Swift.Decodable, C: Swift.CaseIterable & Swift.RawRepresentable>(
         using codingKeysType: C.Type
     ) throws
         -> [Swift.String: T] where C.RawValue == Swift.String
@@ -10,7 +10,7 @@ extension Decoder {
             knownKeys: Set(codingKeysType.allCases.map(\.rawValue)))
     }
 
-    func decodeAdditionalProperties<T: Decodable>(knownKeys: Set<Swift.String>) throws -> [Swift.String:
+    func decodeAdditionalProperties<T: Swift.Decodable>(knownKeys: Set<Swift.String>) throws -> [Swift.String:
         T]
     {
         let container = try container(keyedBy: StringKey.self)

@@ -1,15 +1,15 @@
 import Foundation
 
 final class WireStub {
-    private static func buildURLSession(wireStubId: Swift.String) -> Foundation.URLSession {
+    private static func buildURLSession(wireStubId: Swift.String) -> URLSession {
         let config = buildURLSessionConfiguration(wireStubId: wireStubId)
         let operationQueue = buildOperationQueue()
-        return Foundation.URLSession(configuration: config, delegate: nil, delegateQueue: operationQueue)
+        return URLSession(configuration: config, delegate: nil, delegateQueue: operationQueue)
     }
 
-    private static func buildURLSessionConfiguration(wireStubId: Swift.String) -> Foundation.URLSessionConfiguration
+    private static func buildURLSessionConfiguration(wireStubId: Swift.String) -> URLSessionConfiguration
     {
-        let config = Foundation.URLSessionConfiguration.ephemeral
+        let config = URLSessionConfiguration.ephemeral
         config.protocolClasses = [StubURLProtocol.self]
         config.requestCachePolicy = .reloadIgnoringLocalCacheData
         config.urlCache = nil
@@ -24,7 +24,7 @@ final class WireStub {
         return queue
     }
 
-    private let session: Foundation.URLSession
+    private let session: URLSession
     private let identifier: Foundation.UUID
 
     init() {
@@ -37,7 +37,7 @@ final class WireStub {
         #endif
     }
 
-    var urlSession: Foundation.URLSession {
+    var urlSession: URLSession {
         session
     }
 
@@ -54,7 +54,7 @@ final class WireStub {
         )
     }
 
-    func takeLastRequest() -> Foundation.URLRequest? {
+    func takeLastRequest() -> URLRequest? {
         StubURLProtocol.takeLastRequest(for: identifier)
     }
 
@@ -71,7 +71,7 @@ private final class StubURLProtocol: Foundation.URLProtocol {
         let statusCode: Swift.Int
         let headers: [Swift.String: Swift.String]
         let body: Foundation.Data
-        var lastRequest: Foundation.URLRequest?
+        var lastRequest: URLRequest?
     }
 
     private static var responses: [Foundation.UUID: Response] = [:]
@@ -93,7 +93,7 @@ private final class StubURLProtocol: Foundation.URLProtocol {
         lock.unlock()
     }
 
-    static func takeLastRequest(for id: Foundation.UUID) -> Foundation.URLRequest? {
+    static func takeLastRequest(for id: Foundation.UUID) -> URLRequest? {
         lock.lock()
         defer { lock.unlock() }
         guard var response = responses[id], let request = response.lastRequest else {
@@ -126,7 +126,7 @@ private final class StubURLProtocol: Foundation.URLProtocol {
         }
     #endif
 
-    override class func canInit(with request: Foundation.URLRequest) -> Swift.Bool {
+    override class func canInit(with request: URLRequest) -> Swift.Bool {
         #if canImport(Darwin)
             return request.value(forHTTPHeaderField: "WireStub-ID") != nil
         #else
@@ -136,7 +136,7 @@ private final class StubURLProtocol: Foundation.URLProtocol {
         #endif
     }
 
-    override class func canonicalRequest(for request: Foundation.URLRequest) -> Foundation.URLRequest {
+    override class func canonicalRequest(for request: URLRequest) -> URLRequest {
         request
     }
 
@@ -146,7 +146,7 @@ private final class StubURLProtocol: Foundation.URLProtocol {
             guard let idValue = request.value(forHTTPHeaderField: "WireStub-ID"),
                 let id = Foundation.UUID(uuidString: idValue)
             else {
-                client.urlProtocol(self, didFailWithError: Foundation.URLError(.cannotFindHost))
+                client.urlProtocol(self, didFailWithError: URLError(.cannotFindHost))
                 return
             }
         #else
@@ -155,7 +155,7 @@ private final class StubURLProtocol: Foundation.URLProtocol {
             let id = StubURLProtocol.activeStubIds.last
             StubURLProtocol.lock.unlock()
             guard let id else {
-                client.urlProtocol(self, didFailWithError: Foundation.URLError(.unknown))
+                client.urlProtocol(self, didFailWithError: URLError(.unknown))
                 return
             }
         #endif
@@ -163,7 +163,7 @@ private final class StubURLProtocol: Foundation.URLProtocol {
         StubURLProtocol.lock.lock()
         guard var response = StubURLProtocol.responses[id] else {
             StubURLProtocol.lock.unlock()
-            client.urlProtocol(self, didFailWithError: Foundation.URLError(.unknown))
+            client.urlProtocol(self, didFailWithError: URLError(.unknown))
             return
         }
         response.lastRequest = request
@@ -171,11 +171,11 @@ private final class StubURLProtocol: Foundation.URLProtocol {
         StubURLProtocol.lock.unlock()
 
         guard let url = request.url else {
-            client.urlProtocol(self, didFailWithError: Foundation.URLError(.badURL))
+            client.urlProtocol(self, didFailWithError: URLError(.badURL))
             return
         }
 
-        let httpResponse = Foundation.HTTPURLResponse(
+        let httpResponse = HTTPURLResponse(
             url: url,
             statusCode: response.statusCode,
             httpVersion: "HTTP/1.1",

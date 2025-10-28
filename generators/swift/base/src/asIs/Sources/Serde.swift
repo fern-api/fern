@@ -27,7 +27,7 @@ final class Serde {
                 return date
             }
 
-            throw DecodingError.dataCorruptedError(
+            throw Swift.DecodingError.dataCorruptedError(
                 in: container, debugDescription: "Invalid date format: \(dateString)")
         }
         return decoder
