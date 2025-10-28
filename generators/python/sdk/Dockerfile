@@ -1,5 +1,5 @@
 # Stage 1: Base Python image with dependencies
-FROM python:3.13.7-slim AS python-base
+FROM python:3.13.9-slim-bookworm
 
 # Install node and npm.
 ENV NODE_VERSION=20.19.4

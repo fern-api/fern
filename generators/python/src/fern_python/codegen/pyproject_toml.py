@@ -181,7 +181,6 @@ class PyProjectToml:
                     project_urls.append(f"Homepage = '{self.pypi_metadata.homepage_link}'")
 
             if self.license_ is not None:
-                # TODO(armandobelardo): verify poetry handles custom licenses on its side
                 if self.license_.get_as_union().type == "basic":
                     license_id = cast(BasicLicense, self.license_.get_as_union()).id
                     if license_id == LicenseId.MIT:
@@ -277,7 +276,7 @@ class PyProjectToml:
                     if "," in python_constraint:
                         # Split range constraints like ">=3.9,<4.0"
                         parts = python_constraint.split(",")
-                        marker_parts = []
+                        marker_parts: List[str] = []
                         for part in parts:
                             part = part.strip()
                             for op in [">=", "<=", ">", "<", "==", "!="]:
