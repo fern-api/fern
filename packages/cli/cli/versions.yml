@@ -1,6 +1,14 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
 - changelogEntry:
     - summary: |
+        Fix image rendering in docs preview after hot-reload. Images now maintain the /_local prefix and render correctly when markdown files are updated during `fern docs dev`.
+      type: fix
+  irVersion: 61
+  createdAt: "2025-10-27"
+  version: 0.99.1
+
+- changelogEntry:
+    - summary: |
         Support enablements for custom/prod domains from docs.yml. Separate Slack, Discord, and docs Ask Fern deployments.
       type: feat
   irVersion: 61
