@@ -325,7 +325,7 @@ fixtures:
 scripts:
   # Test Pydantic V2
   - name: test-pydantic-v2
-    docker: fernapi/python-seed
+    docker: fernapi/python-seed-uv
     commands:
       # Tests now run a mock server, you can always run seed with --skip-scripts to save time
       - export NPM_CONFIG_CACHE="$(pwd)/.cache"
@@ -335,7 +335,7 @@ scripts:
       - uv run --frozen pytest -rP .
   # Test Pydantic V1
   - name: test-pydantic-v1
-    docker: fernapi/python-seed
+    docker: fernapi/python-seed-uv
     commands:
       - export NPM_CONFIG_CACHE="$(pwd)/.cache"
       - export HOME="$(pwd)/"
