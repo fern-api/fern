@@ -356,6 +356,15 @@ impl HttpClient {
     /// This method returns an `SseStream<T>` that automatically parses
     /// Server-Sent Events and deserializes the JSON data in each event.
     ///
+    /// # SSE-Specific Headers
+    ///
+    /// This method automatically sets the following headers **after** applying custom headers,
+    /// which means these headers will override any user-supplied values:
+    /// - `Accept: text/event-stream` - Required for SSE protocol
+    /// - `Cache-Control: no-store` - Prevents caching of streaming responses
+    ///
+    /// This ensures proper SSE behavior even if custom headers are provided.
+    ///
     /// # Example
     /// ```no_run
     /// use futures::StreamExt;
@@ -414,10 +423,16 @@ impl HttpClient {
         self.apply_auth_headers(&mut req, &options)?;
         self.apply_custom_headers(&mut req, &options)?;
 
-        // SSE-specific header
+        // SSE-specific headers
         req.headers_mut().insert(
             "Accept",
             "text/event-stream"
+                .parse()
+                .map_err(|_| ApiError::InvalidHeader)?,
+        );
+        req.headers_mut().insert(
+            "Cache-Control",
+            "no-store"
                 .parse()
                 .map_err(|_| ApiError::InvalidHeader)?,
         );
