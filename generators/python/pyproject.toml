@@ -12,7 +12,7 @@ dependencies = [
     "fern-fern-ir-v60==60.3.1",
     "isort>=6.0.1,<7.0.0",
     "ordered-set>=4.1.0,<5.0.0",
-    "pydantic>=2.11.9",
+    "pydantic>=2.11.9,<3.0.0",
     "pyyaml>=6.0.3",
     "typer[all]>=0.6.1,<0.7.0",
 ]
@@ -34,7 +34,7 @@ addopts = "--ignore-glob=tests/**/generated --ignore-glob=tests/**/snapshots"
 
 [tool.ruff]
 line-length = 120
-target-version = "py38"
+target-version = "py39"
 include = ["*.py", "*.pyi"]
 
 [tool.ruff.lint]
