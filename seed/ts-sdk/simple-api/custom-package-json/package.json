@@ -74,7 +74,7 @@
         "command-exists": false,
         "execa": false
     },
-    "packageManager": "pnpm@10.14.0",
+    "packageManager": "pnpm@10.20.0",
     "engines": {
         "node": ">=16.0.0"
     },
