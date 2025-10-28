@@ -99,19 +99,20 @@ public abstract class AbstractClientGeneratorUtils {
     protected abstract AbstractDelegatingHttpEndpointMethodSpecs delegatingHttpEndpointMethodSpecs(
             HttpEndpointMethodSpecs delegate);
 
-    protected abstract ClassName clientImplName(ClassName rawClientImplName);
+    protected abstract ClassName clientImplName(ClassName baseClientName);
 
     protected abstract ClassName subpackageClientImplName(Subpackage subpackage);
 
     protected abstract AbstractHttpEndpointMethodSpecFactory endpointMethodSpecFactory(
             HttpService httpService, HttpEndpoint httpEndpoint);
 
-    protected abstract ClassName rawClientImplName(ClassName implClientName);
+    protected abstract ClassName rawClientImplName(ClassName baseClientName);
 
     public Result buildClients() {
         Optional<HttpService> maybeHttpService = fernPackage
                 .getService()
                 .map(serviceId -> generatorContext.getIr().getServices().get(serviceId));
+
         MethodSpec.Builder clientImplConstructor = MethodSpec.constructorBuilder()
                 .addModifiers(Modifier.PUBLIC)
                 .addParameter(ParameterSpec.builder(clientOptionsField.type, clientOptionsField.name)
@@ -196,6 +197,9 @@ public abstract class AbstractClientGeneratorUtils {
 
                 generatedWrappedRequests.addAll(httpEndpointMethodSpecFactory.getGeneratedWrappedRequests());
             }
+        } else {
+            System.out.println("[FERN-DEBUG]   -> Skipping Raw client generation (maybeHttpService is empty)");
+            System.out.println("[FERN-DEBUG]   -> This will likely cause inline HTTP generation or delegation issues!");
         }
 
         for (SubpackageId subpackageId : fernPackage.getSubpackages()) {

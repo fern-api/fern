@@ -1,3 +1,14 @@
+- version: 3.10.2
+  changelogEntry:
+    - summary: |
+        Fix sync client delegation bug causing compilation errors with array query parameters. The sync client
+        generator was incorrectly using the same class name for both raw and delegating clients, resulting in
+        inline HTTP code generation instead of proper delegation. Array query parameters now work correctly in
+        all subpackage clients using QueryStringMapper.
+      type: fix
+  createdAt: "2025-10-28"
+  irVersion: 61
+
 - version: 3.10.0
   changelogEntry:
     - summary: |
