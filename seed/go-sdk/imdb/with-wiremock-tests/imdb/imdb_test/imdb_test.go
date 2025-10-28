@@ -52,7 +52,6 @@ func VerifyRequestCount(
 		}
 		reqBody.WriteString("}")
 	}
-	reqBody.WriteString("}")
 	resp, err := http.Post(WiremockAdminURL+"/requests/find", "application/json", &reqBody)
 	require.NoError(t, err)
 	var result struct {
