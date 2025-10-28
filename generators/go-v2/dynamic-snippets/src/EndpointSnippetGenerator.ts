@@ -955,10 +955,6 @@ export class EndpointSnippetGenerator {
                       })
                   ]
                 : [])
-
-            // No need to create a mock response for the endpoint
-
-            // No need to register the stub with WireMock
         ];
     }
 

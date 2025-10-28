@@ -86,7 +86,7 @@ export class WireTestGenerator {
 
             this.context.project.addGoFiles(serviceTestFile);
         }
-        // Generate docker-compose.test.yml for WireMock
+        // Generate docker-compose.test.yml and wiremock-mappings.json for WireMock
         new WireTestSetupGenerator(this.context, this.context.ir).generate();
     }
 
@@ -172,100 +172,7 @@ export class WireTestGenerator {
             // This allows proper matching even when SDKs reorder query parameters alphabetically
             writer.writeNewLineIfLastLineNot();
             writer.newLine();
-            writer.write(
-                go.func({
-                    name: "VerifyRequestCount",
-                    parameters: [
-                        go.parameter({
-                            name: "t",
-                            type: go.Type.pointer(go.Type.reference(this.context.getTestingTypeReference()))
-                        }),
-                        go.parameter({
-                            name: "method",
-                            type: go.Type.string()
-                        }),
-                        go.parameter({
-                            name: "urlPath",
-                            type: go.Type.string()
-                        }),
-                        go.parameter({
-                            name: "queryParams",
-                            type: go.Type.map(go.Type.string(), go.Type.string())
-                        }),
-                        go.parameter({
-                            name: "expected",
-                            type: go.Type.int()
-                        })
-                    ],
-                    return_: [],
-                    body: go.codeblock((writer) => {
-                        // Build the request body for WireMock's requests/find endpoint
-                        writer.writeNode(go.codeblock('WiremockAdminURL := "http://localhost:8080/__admin"'));
-                        writer.newLine();
-                        writer.writeNode(go.codeblock("var reqBody bytes.Buffer"));
-                        writer.newLine();
-                        writer.writeNode(go.codeblock('reqBody.WriteString(`{"method":"`)'));
-                        writer.newLine();
-                        writer.writeNode(go.codeblock("reqBody.WriteString(method)"));
-                        writer.newLine();
-                        writer.writeNode(go.codeblock('reqBody.WriteString(`","urlPath":"`)'));
-                        writer.newLine();
-                        writer.writeNode(go.codeblock("reqBody.WriteString(urlPath)"));
-                        writer.newLine();
-                        writer.writeNode(go.codeblock('reqBody.WriteString(`"}`)'));
-                        writer.newLine();
-                        writer.writeNode(go.codeblock("if len(queryParams) > 0 {"));
-                        writer.newLine();
-                        writer.writeNode(go.codeblock('    reqBody.WriteString(`,"queryParameters":{`)'));
-                        writer.newLine();
-                        writer.writeNode(go.codeblock("    first := true"));
-                        writer.newLine();
-                        writer.writeNode(go.codeblock("    for key, value := range queryParams {"));
-                        writer.newLine();
-                        writer.writeNode(go.codeblock("        if !first {"));
-                        writer.newLine();
-                        writer.writeNode(go.codeblock('            reqBody.WriteString(",")'));
-                        writer.newLine();
-                        writer.writeNode(go.codeblock("        }"));
-                        writer.newLine();
-                        writer.writeNode(go.codeblock('        reqBody.WriteString(`"`)'));
-                        writer.newLine();
-                        writer.writeNode(go.codeblock("        reqBody.WriteString(key)"));
-                        writer.newLine();
-                        writer.writeNode(go.codeblock('        reqBody.WriteString(`":{"equalTo":"`)'));
-                        writer.newLine();
-                        writer.writeNode(go.codeblock("        reqBody.WriteString(value)"));
-                        writer.newLine();
-                        writer.writeNode(go.codeblock('        reqBody.WriteString(`"}`)'));
-                        writer.newLine();
-                        writer.writeNode(go.codeblock("        first = false"));
-                        writer.newLine();
-                        writer.writeNode(go.codeblock("    }"));
-                        writer.newLine();
-                        writer.writeNode(go.codeblock('    reqBody.WriteString("}")'));
-                        writer.newLine();
-                        writer.writeNode(go.codeblock("}"));
-                        writer.newLine();
-                        writer.writeNode(go.codeblock('reqBody.WriteString("}")'));
-                        writer.newLine();
-                        writer.writeNode(
-                            go.codeblock(
-                                'resp, err := http.Post(WiremockAdminURL+"/requests/find", "application/json", &reqBody)'
-                            )
-                        );
-                        writer.newLine();
-                        writer.writeNode(go.codeblock("require.NoError(t, err)"));
-                        writer.newLine();
-                        writer.writeNode(
-                            go.codeblock('var result struct { Requests []interface{} `json:"requests"` }')
-                        );
-                        writer.newLine();
-                        writer.writeNode(go.codeblock("json.NewDecoder(resp.Body).Decode(&result)"));
-                        writer.newLine();
-                        writer.writeNode(go.codeblock("require.Equal(t, expected, len(result.Requests))"));
-                    })
-                })
-            );
+            this.writeVerifyRequestCount(writer);
             writer.writeNewLineIfLastLineNot();
             writer.newLine();
             for (const endpointTestCaseCodeBlock of endpointTestCaseCodeBlocks) {
@@ -290,6 +197,103 @@ export class WireTestGenerator {
             customConfig: this.context.customConfig ?? {},
             formatter: undefined
         });
+    }
+
+    private writeVerifyRequestCount(writer: go.Writer) {
+        writer.write(
+            go.func({
+                name: "VerifyRequestCount",
+                parameters: [
+                    go.parameter({
+                        name: "t",
+                        type: go.Type.pointer(go.Type.reference(this.context.getTestingTypeReference()))
+                    }),
+                    go.parameter({
+                        name: "method",
+                        type: go.Type.string()
+                    }),
+                    go.parameter({
+                        name: "urlPath",
+                        type: go.Type.string()
+                    }),
+                    go.parameter({
+                        name: "queryParams",
+                        type: go.Type.map(go.Type.string(), go.Type.string())
+                    }),
+                    go.parameter({
+                        name: "expected",
+                        type: go.Type.int()
+                    })
+                ],
+                return_: [],
+                body: go.codeblock((writer) => {
+                    // Build the request body for WireMock's requests/find endpoint
+                    writer.writeNode(go.codeblock('WiremockAdminURL := "http://localhost:8080/__admin"'));
+                    writer.newLine();
+                    writer.writeNode(go.codeblock("var reqBody bytes.Buffer"));
+                    writer.newLine();
+                    writer.writeNode(go.codeblock('reqBody.WriteString(`{"method":"`)'));
+                    writer.newLine();
+                    writer.writeNode(go.codeblock("reqBody.WriteString(method)"));
+                    writer.newLine();
+                    writer.writeNode(go.codeblock('reqBody.WriteString(`","urlPath":"`)'));
+                    writer.newLine();
+                    writer.writeNode(go.codeblock("reqBody.WriteString(urlPath)"));
+                    writer.newLine();
+                    writer.writeNode(go.codeblock('reqBody.WriteString(`"}`)'));
+                    writer.newLine();
+                    writer.writeNode(go.codeblock("if len(queryParams) > 0 {"));
+                    writer.newLine();
+                    writer.writeNode(go.codeblock('    reqBody.WriteString(`,"queryParameters":{`)'));
+                    writer.newLine();
+                    writer.writeNode(go.codeblock("    first := true"));
+                    writer.newLine();
+                    writer.writeNode(go.codeblock("    for key, value := range queryParams {"));
+                    writer.newLine();
+                    writer.writeNode(go.codeblock("        if !first {"));
+                    writer.newLine();
+                    writer.writeNode(go.codeblock('            reqBody.WriteString(",")'));
+                    writer.newLine();
+                    writer.writeNode(go.codeblock("        }"));
+                    writer.newLine();
+                    writer.writeNode(go.codeblock('        reqBody.WriteString(`"`)'));
+                    writer.newLine();
+                    writer.writeNode(go.codeblock("        reqBody.WriteString(key)"));
+                    writer.newLine();
+                    writer.writeNode(go.codeblock('        reqBody.WriteString(`":{"equalTo":"`)'));
+                    writer.newLine();
+                    writer.writeNode(go.codeblock("        reqBody.WriteString(value)"));
+                    writer.newLine();
+                    writer.writeNode(go.codeblock('        reqBody.WriteString(`"}`)'));
+                    writer.newLine();
+                    writer.writeNode(go.codeblock("        first = false"));
+                    writer.newLine();
+                    writer.writeNode(go.codeblock("    }"));
+                    writer.newLine();
+                    writer.writeNode(go.codeblock('    reqBody.WriteString("}")'));
+                    writer.newLine();
+                    writer.writeNode(go.codeblock("}"));
+                    writer.newLine();
+                    writer.writeNode(go.codeblock('reqBody.WriteString("}")'));
+                    writer.newLine();
+                    writer.writeNode(
+                        go.codeblock(
+                            'resp, err := http.Post(WiremockAdminURL+"/requests/find", "application/json", &reqBody)'
+                        )
+                    );
+                    writer.newLine();
+                    writer.writeNode(go.codeblock("require.NoError(t, err)"));
+                    writer.newLine();
+                    writer.writeNode(
+                        go.codeblock('var result struct { Requests []interface{} `json:"requests"` }')
+                    );
+                    writer.newLine();
+                    writer.writeNode(go.codeblock("json.NewDecoder(resp.Body).Decode(&result)"));
+                    writer.newLine();
+                    writer.writeNode(go.codeblock("require.Equal(t, expected, len(result.Requests))"));
+                })
+            })
+        );
     }
 
     private async generateSnippetForExample(example: dynamic.EndpointExample): Promise<string> {
