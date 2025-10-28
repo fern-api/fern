@@ -1,3 +1,11 @@
+- version: 3.9.4
+  changelogEntry:
+    - summary: |
+        Documenting `.withRawResponse()` in `README.md`.
+      type: chore
+  createdAt: "2025-10-28"
+  irVersion: 61
+
 - version: 3.9.3
   changelogEntry:
     - summary: |

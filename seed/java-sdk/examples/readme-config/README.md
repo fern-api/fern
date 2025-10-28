@@ -247,3 +247,16 @@ client.service().createMovie(
         .build()
 );
 ```
+
+### Access Raw Response Data
+
+The SDK provides access to raw response data, including headers, through the `withRawResponse()` method.
+The `withRawResponse()` method returns a raw client that wraps all responses with `body()` and `headers()` methods.
+(A normal client's `response` is identical to a raw client's `response.body()`.)
+
+```java
+CreateMovieHttpResponse response = client.service().withRawResponse().createMovie(...);
+
+System.out.println(response.body());
+System.out.println(response.headers().get("X-My-Header"));
+```
