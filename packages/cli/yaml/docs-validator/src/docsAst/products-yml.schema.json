@@ -1368,7 +1368,7 @@
     "docs.TabId": {
       "type": "string"
     },
-    "docs.TabbedNavigationItem": {
+    "docs.TabbedNavigationItemWithLayout": {
       "type": "object",
       "properties": {
         "tab": {
@@ -1392,6 +1392,80 @@
         "tab"
       ],
       "additionalProperties": false
+    },
+    "docs.TabVariant": {
+      "type": "object",
+      "properties": {
+        "title": {
+          "oneOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "subtitle": {
+          "oneOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "icon": {
+          "oneOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "layout": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/docs.NavigationItem"
+          }
+        }
+      },
+      "required": [
+        "layout"
+      ],
+      "additionalProperties": false
+    },
+    "docs.TabbedNavigationItemWithVariants": {
+      "type": "object",
+      "properties": {
+        "tab": {
+          "$ref": "#/definitions/docs.TabId"
+        },
+        "variants": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/docs.TabVariant"
+          }
+        }
+      },
+      "required": [
+        "tab",
+        "variants"
+      ],
+      "additionalProperties": false
+    },
+    "docs.TabbedNavigationItem": {
+      "anyOf": [
+        {
+          "$ref": "#/definitions/docs.TabbedNavigationItemWithLayout"
+        },
+        {
+          "$ref": "#/definitions/docs.TabbedNavigationItemWithVariants"
+        }
+      ]
     },
     "docs.TabbedNavigationConfig": {
       "type": "array",
