@@ -683,7 +683,7 @@ async function convertNavigationTabConfiguration({
         throw new Error(`Tab ${item.tab} is not defined in the tabs config.`);
     }
 
-    if ("variants" in item && item.variants != null) {
+    if (tabbedNavigationItemHasVariants(item)) {
         const variants = await Promise.all(
             item.variants.map(async (variant) => {
                 const layout = await Promise.all(
@@ -720,7 +720,7 @@ async function convertNavigationTabConfiguration({
         };
     }
 
-    if ("layout" in item && item.layout != null) {
+    if (tabbedNavigationItemHasLayout(item)) {
         const layout = await Promise.all(
             item.layout.map((item) =>
                 convertNavigationItem({ rawConfig: item, absolutePathToFernFolder, absolutePathToConfig, context })
@@ -1115,6 +1115,18 @@ function isTabbedNavigationConfig(
         // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
         (navigationConfig[0] as docsYml.RawSchemas.TabbedNavigationItem).tab != null
     );
+}
+
+function tabbedNavigationItemHasLayout(
+    item: docsYml.RawSchemas.TabbedNavigationItem
+): item is docsYml.RawSchemas.TabbedNavigationItemWithLayout {
+    return "layout" in item && item.layout != null;
+}
+
+function tabbedNavigationItemHasVariants(
+    item: docsYml.RawSchemas.TabbedNavigationItem
+): item is docsYml.RawSchemas.TabbedNavigationItemWithVariants {
+    return "variants" in item && item.variants != null;
 }
 
 function convertNavbarLinks(

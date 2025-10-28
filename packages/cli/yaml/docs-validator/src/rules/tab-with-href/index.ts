@@ -26,8 +26,8 @@ export const TabWithHrefRule: Rule = {
                             continue;
                         }
 
-                        const hasLayout = "layout" in tabItem && tabItem.layout != null;
-                        const hasVariants = "variants" in tabItem && tabItem.variants != null;
+                        const hasLayout = tabbedNavigationItemHasLayout(tabItem);
+                        const hasVariants = tabbedNavigationItemHasVariants(tabItem);
 
                         if (tabConfig.href != null && (hasLayout || hasVariants)) {
                             ruleViolations.push({
@@ -62,4 +62,16 @@ function isTabbedNavigationConfig(
         // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
         (navigationConfig[0] as docsYml.RawSchemas.TabbedNavigationItem).tab != null
     );
+}
+
+function tabbedNavigationItemHasLayout(
+    item: docsYml.RawSchemas.TabbedNavigationItem
+): item is docsYml.RawSchemas.TabbedNavigationItemWithLayout {
+    return "layout" in item && item.layout != null;
+}
+
+function tabbedNavigationItemHasVariants(
+    item: docsYml.RawSchemas.TabbedNavigationItem
+): item is docsYml.RawSchemas.TabbedNavigationItemWithVariants {
+    return "variants" in item && item.variants != null;
 }
