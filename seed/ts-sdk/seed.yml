@@ -382,7 +382,7 @@ scripts:
         if grep -q '"packageManager": "pnpm' package.json; then
           mkdir -p .pnpm-cache
           echo "Preparing corepack and pnpm..."
-          corepack prepare pnpm@10.14.0 --activate
+          corepack prepare pnpm --activate
           echo "Running pnpm install..."
           if [ -f "pnpm-lock.yaml" ]; then
             corepack pnpm install --prefer-offline --frozen-lockfile
@@ -397,7 +397,7 @@ scripts:
         if grep -q '"packageManager": "yarn' package.json; then
           mkdir -p .yarn-cache
           echo "Preparing corepack and yarn..."
-          corepack prepare yarn@1.22.22 --activate
+          corepack prepare yarn --activate
           echo "Running yarn install..."
           if [ -f "yarn.lock" ]; then
             corepack yarn install --prefer-offline --frozen-lockfile
