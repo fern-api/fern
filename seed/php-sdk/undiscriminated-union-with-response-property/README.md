@@ -25,12 +25,9 @@ Instantiate and use the client with the following:
 namespace Example;
 
 use Seed\SeedClient;
-use Seed\Service\Requests\JustFileRequest;
 
 $client = new SeedClient();
-$client->service->justFile(
-    new JustFileRequest([]),
-);
+$client->getUnion();
 
 ```
 
@@ -43,7 +40,7 @@ use Seed\Exceptions\SeedApiException;
 use Seed\Exceptions\SeedException;
 
 try {
-    $response = $client->service->justFile(...);
+    $response = $client->getUnion(...);
 } catch (SeedApiException $e) {
     echo 'API Exception occurred: ' . $e->getMessage() . "\n";
     echo 'Status Code: ' . $e->getCode() . "\n";
@@ -99,7 +96,7 @@ A request is deemed retryable when any of the following HTTP status codes is ret
 Use the `maxRetries` request option to configure this behavior.
 
 ```php
-$response = $client->service->justFile(
+$response = $client->getUnion(
     ...,
     options: [
         'maxRetries' => 0 // Override maxRetries at the request level
@@ -112,7 +109,7 @@ $response = $client->service->justFile(
 The SDK defaults to a 30 second timeout. Use the `timeout` option to configure this behavior.
 
 ```php
-$response = $client->service->justFile(
+$response = $client->getUnion(
     ...,
     options: [
         'timeout' => 3.0 // Override timeout to 3 seconds
