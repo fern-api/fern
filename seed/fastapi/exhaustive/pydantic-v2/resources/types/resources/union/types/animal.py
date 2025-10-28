@@ -105,19 +105,19 @@ class Animal(pydantic.RootModel):
             values = validator(values)
         return values
 
-    model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(frozen=True)  # type: ignore # Pydantic v2
+    model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(frozen=True)
 
 
 class _Animal:
     class Dog(resources_types_resources_union_types_dog_Dog):
         animal: typing.Literal["dog"] = "dog"
 
-        model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(frozen=True)  # type: ignore # Pydantic v2
+        model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(frozen=True)
 
     class Cat(resources_types_resources_union_types_cat_Cat):
         animal: typing.Literal["cat"] = "cat"
 
-        model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(frozen=True)  # type: ignore # Pydantic v2
+        model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(frozen=True)
 
 
 update_forward_refs(Animal)
