@@ -20,7 +20,9 @@ export const ValidOperationsRule: Rule = {
             }
 
             HTTP_METHODS.forEach((method) => {
-                const operation = (pathItem as Record<string, unknown>)[method] as OpenAPIV3_1.OperationObject | undefined;
+                const operation = (pathItem as Record<string, unknown>)[method] as
+                    | OpenAPIV3_1.OperationObject
+                    | undefined;
                 if (!operation) {
                     return;
                 }
