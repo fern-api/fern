@@ -1,4 +1,5 @@
-import { AbstractGeneratorAgent } from "@fern-api/base-generator";
+import { AbstractGeneratorAgent, ReferenceConfigBuilder } from "@fern-api/base-generator";
+import { generateReadme, generateReference, githubPr, githubPush } from "@fern-api/generator-cli";
 import { Logger } from "@fern-api/logger";
 import { FernGeneratorCli } from "@fern-fern/generator-cli-sdk";
 import { FernGeneratorExec } from "@fern-fern/generator-exec-sdk";
@@ -27,6 +28,25 @@ export class SwiftGeneratorAgent extends AbstractGeneratorAgent<SdkGeneratorCont
         this.publishConfig = ir.publishConfig;
     }
 
+    /**
+     * Generates the README.md content using the given generator context.
+     */
+    public override async generateReadme({
+        context,
+        endpointSnippets
+    }: {
+        context: SdkGeneratorContext;
+        endpointSnippets: FernGeneratorExec.Endpoint[];
+    }): Promise<string> {
+        const readmeConfig = this.getReadmeConfig({
+            context,
+            remote: this.getRemote(),
+            featureConfig: await this.readFeatureConfig(),
+            endpointSnippets
+        });
+        return await generateReadme({ readmeConfig });
+    }
+
     public getReadmeConfig(
         args: AbstractGeneratorAgent.ReadmeConfigArgs<SdkGeneratorContext>
     ): FernGeneratorCli.ReadmeConfig {
@@ -36,6 +56,20 @@ export class SwiftGeneratorAgent extends AbstractGeneratorAgent<SdkGeneratorCont
             featureConfig: args.featureConfig,
             endpointSnippets: args.endpointSnippets
         });
+    }
+
+    public override async generateReference(builder: ReferenceConfigBuilder): Promise<string> {
+        const referenceConfig = builder.build(this.getLanguage());
+        return await generateReference({ referenceConfig });
+    }
+
+    public async pushToGitHubProgrammatic({ context }: { context: SdkGeneratorContext }): Promise<void> {
+        const githubConfig = this.resolveGitHubConfig({ context });
+        if (githubConfig.mode === "pull-request") {
+            await githubPr({ githubConfig });
+        } else {
+            await githubPush({ githubConfig });
+        }
     }
 
     public getLanguage(): FernGeneratorCli.Language {

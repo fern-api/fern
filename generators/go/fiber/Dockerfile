@@ -37,6 +37,6 @@ RUN CGO_ENABLED=0 go build -ldflags "-s -w" -trimpath -buildvcs=false -o /fern-g
 
 RUN test -f /bin/go-v2 || echo "go-v2 CLI not found or not executable"
 
-RUN npm install -f -g @fern-api/generator-cli
+RUN npm install -f -g @fern-api/generator-cli@0.2.0
 
 ENTRYPOINT ["/fern-go-fiber"]

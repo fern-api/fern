@@ -44,6 +44,7 @@ export * from "./TabsPlacement";
 export * from "./ContentAlignment";
 export * from "./HeaderPosition";
 export * from "./AudienceId";
+export * from "./Audience";
 export * from "./RoleId";
 export * from "./Role";
 export * from "./WithPermissions";

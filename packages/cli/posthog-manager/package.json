@@ -43,7 +43,7 @@
     "@types/node": "18.15.3",
     "@types/uuid": "^9.0.8",
     "depcheck": "^1.4.7",
-    "typescript": "5.8.3",
+    "typescript": "5.9.3",
     "vitest": "^2.1.9"
   }
 }

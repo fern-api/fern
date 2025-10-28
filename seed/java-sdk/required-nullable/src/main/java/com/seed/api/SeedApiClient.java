@@ -6,6 +6,7 @@ package com.seed.api;
 import com.seed.api.core.ClientOptions;
 import com.seed.api.core.RequestOptions;
 import com.seed.api.requests.GetFooRequest;
+import com.seed.api.requests.UpdateFooRequest;
 import com.seed.api.types.Foo;
 
 public class SeedApiClient {
@@ -31,6 +32,14 @@ public class SeedApiClient {
 
     public Foo getFoo(GetFooRequest request, RequestOptions requestOptions) {
         return this.rawClient.getFoo(request, requestOptions).body();
+    }
+
+    public Foo updateFoo(String id, UpdateFooRequest request) {
+        return this.rawClient.updateFoo(id, request).body();
+    }
+
+    public Foo updateFoo(String id, UpdateFooRequest request, RequestOptions requestOptions) {
+        return this.rawClient.updateFoo(id, request, requestOptions).body();
     }
 
     public static SeedApiClientBuilder builder() {

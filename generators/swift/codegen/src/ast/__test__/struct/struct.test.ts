@@ -3,7 +3,6 @@ import { describe, expect, it } from "vitest";
 import { swift } from "../../..";
 import { AccessLevel } from "../../AccessLevel";
 import { DeclarationType } from "../../DeclarationType";
-import { Type } from "../../Type";
 
 describe("Struct", () => {
     describe("write", () => {
@@ -12,13 +11,13 @@ describe("Struct", () => {
                 swift.property({
                     unsafeName: "id",
                     declarationType: DeclarationType.Let,
-                    type: Type.int()
+                    type: swift.TypeReference.unqualifiedToSwiftType("Int")
                 }),
                 swift.property({
                     unsafeName: "name",
                     accessLevel: AccessLevel.Public,
                     declarationType: DeclarationType.Let,
-                    type: Type.string()
+                    type: swift.TypeReference.unqualifiedToSwiftType("String")
                 })
             ];
 
@@ -56,18 +55,18 @@ describe("Struct", () => {
                     unsafeName: "staticProperty",
                     static_: true,
                     declarationType: DeclarationType.Let,
-                    type: Type.string()
+                    type: swift.TypeReference.unqualifiedToSwiftType("String")
                 }),
                 swift.property({
                     unsafeName: "optionalProperty",
                     declarationType: DeclarationType.Var,
-                    type: Type.optional(Type.int())
+                    type: swift.TypeReference.optional(swift.TypeReference.unqualifiedToSwiftType("Int"))
                 }),
                 swift.property({
                     unsafeName: "privateProperty",
                     accessLevel: AccessLevel.Private,
                     declarationType: DeclarationType.Let,
-                    type: Type.array(Type.string())
+                    type: swift.TypeReference.array(swift.TypeReference.unqualifiedToSwiftType("String"))
                 })
             ];
 
@@ -90,12 +89,12 @@ describe("Struct", () => {
                 swift.property({
                     unsafeName: "class",
                     declarationType: DeclarationType.Let,
-                    type: Type.string()
+                    type: swift.TypeReference.unqualifiedToSwiftType("String")
                 }),
                 swift.property({
                     unsafeName: "enum",
                     declarationType: DeclarationType.Let,
-                    type: Type.int()
+                    type: swift.TypeReference.unqualifiedToSwiftType("Int")
                 })
             ];
 
@@ -117,22 +116,33 @@ describe("Struct", () => {
                 swift.property({
                     unsafeName: "arrayProperty",
                     declarationType: DeclarationType.Let,
-                    type: Type.array(Type.string())
+                    type: swift.TypeReference.array(swift.TypeReference.unqualifiedToSwiftType("String"))
                 }),
                 swift.property({
                     unsafeName: "dictProperty",
                     declarationType: DeclarationType.Let,
-                    type: Type.dictionary(Type.string(), Type.int())
+                    type: swift.TypeReference.dictionary(
+                        swift.TypeReference.unqualifiedToSwiftType("String"),
+                        swift.TypeReference.unqualifiedToSwiftType("Int")
+                    )
                 }),
                 swift.property({
                     unsafeName: "tupleProperty",
                     declarationType: DeclarationType.Let,
-                    type: Type.tuple([Type.string(), Type.int()])
+                    type: swift.TypeReference.tuple([
+                        swift.TypeReference.unqualifiedToSwiftType("String"),
+                        swift.TypeReference.unqualifiedToSwiftType("Int")
+                    ])
                 }),
                 swift.property({
                     unsafeName: "nestedProperty",
                     declarationType: DeclarationType.Let,
-                    type: Type.array(Type.dictionary(Type.string(), Type.int()))
+                    type: swift.TypeReference.array(
+                        swift.TypeReference.dictionary(
+                            swift.TypeReference.unqualifiedToSwiftType("String"),
+                            swift.TypeReference.unqualifiedToSwiftType("Int")
+                        )
+                    )
                 })
             ];
 
@@ -158,19 +168,19 @@ describe("Struct", () => {
                     accessLevel: AccessLevel.Public,
                     static_: true,
                     declarationType: DeclarationType.Let,
-                    type: Type.string()
+                    type: swift.TypeReference.unqualifiedToSwiftType("String")
                 }),
                 swift.property({
                     unsafeName: "privateOptional",
                     accessLevel: AccessLevel.Private,
                     declarationType: DeclarationType.Var,
-                    type: Type.optional(Type.int())
+                    type: swift.TypeReference.optional(swift.TypeReference.unqualifiedToSwiftType("Int"))
                 }),
                 swift.property({
                     unsafeName: "fileprivateArray",
                     accessLevel: AccessLevel.Fileprivate,
                     declarationType: DeclarationType.Let,
-                    type: Type.array(Type.double())
+                    type: swift.TypeReference.array(swift.TypeReference.unqualifiedToSwiftType("Double"))
                 })
             ];
 
@@ -195,12 +205,12 @@ describe("Struct", () => {
                 properties: [
                     swift.property({
                         unsafeName: "id",
-                        type: Type.int64(),
+                        type: swift.TypeReference.unqualifiedToSwiftType("Int64"),
                         declarationType: DeclarationType.Let
                     }),
                     swift.property({
                         unsafeName: "petId",
-                        type: Type.string(),
+                        type: swift.TypeReference.unqualifiedToSwiftType("String"),
                         declarationType: DeclarationType.Let
                     })
                 ],
@@ -225,12 +235,12 @@ describe("Struct", () => {
                 properties: [
                     swift.property({
                         unsafeName: "id",
-                        type: Type.int(),
+                        type: swift.TypeReference.unqualifiedToSwiftType("Int"),
                         declarationType: DeclarationType.Let
                     }),
                     swift.property({
                         unsafeName: "name",
-                        type: Type.string(),
+                        type: swift.TypeReference.unqualifiedToSwiftType("String"),
                         declarationType: DeclarationType.Let
                     })
                 ],
@@ -266,20 +276,20 @@ describe("Struct", () => {
                     swift.property({
                         unsafeName: "id",
                         declarationType: DeclarationType.Let,
-                        type: Type.int()
+                        type: swift.TypeReference.unqualifiedToSwiftType("Int")
                     }),
                     swift.property({
                         unsafeName: "name",
                         accessLevel: AccessLevel.Private,
                         declarationType: DeclarationType.Var,
-                        type: Type.string()
+                        type: swift.TypeReference.unqualifiedToSwiftType("String")
                     })
                 ],
                 methods: [
                     swift.method({
                         unsafeName: "getId",
                         accessLevel: AccessLevel.Public,
-                        returnType: Type.int(),
+                        returnType: swift.TypeReference.unqualifiedToSwiftType("Int"),
                         body: swift.codeBlock((writer) => {
                             writer.writeLine("return self.id");
                         })
@@ -287,7 +297,7 @@ describe("Struct", () => {
                     swift.method({
                         unsafeName: "getName",
                         accessLevel: AccessLevel.Public,
-                        returnType: Type.string(),
+                        returnType: swift.TypeReference.unqualifiedToSwiftType("String"),
                         body: swift.codeBlock((writer) => {
                             writer.writeLine("return self.name");
                         })
@@ -300,15 +310,15 @@ describe("Struct", () => {
                             swift.functionParameter({
                                 argumentLabel: "with",
                                 unsafeName: "id",
-                                type: Type.int()
+                                type: swift.TypeReference.unqualifiedToSwiftType("Int")
                             }),
                             swift.functionParameter({
                                 argumentLabel: "name",
                                 unsafeName: "name",
-                                type: Type.string()
+                                type: swift.TypeReference.unqualifiedToSwiftType("String")
                             })
                         ],
-                        returnType: Type.custom("User"),
+                        returnType: swift.TypeReference.symbol("User"),
                         body: swift.codeBlock((writer) => {
                             writer.writeLine("return User(id: id, name: name)");
                         })
@@ -328,12 +338,12 @@ describe("Struct", () => {
                     swift.property({
                         unsafeName: "id",
                         declarationType: DeclarationType.Let,
-                        type: Type.int()
+                        type: swift.TypeReference.unqualifiedToSwiftType("Int")
                     }),
                     swift.property({
                         unsafeName: "name",
                         declarationType: DeclarationType.Let,
-                        type: Type.string()
+                        type: swift.TypeReference.unqualifiedToSwiftType("String")
                     })
                 ],
                 initializers: [
@@ -343,12 +353,12 @@ describe("Struct", () => {
                             swift.functionParameter({
                                 argumentLabel: "id",
                                 unsafeName: "id",
-                                type: Type.int()
+                                type: swift.TypeReference.unqualifiedToSwiftType("Int")
                             }),
                             swift.functionParameter({
                                 argumentLabel: "name",
                                 unsafeName: "name",
-                                type: Type.string()
+                                type: swift.TypeReference.unqualifiedToSwiftType("String")
                             })
                         ],
                         body: swift.CodeBlock.withStatements([
@@ -370,17 +380,17 @@ describe("Struct", () => {
                     swift.property({
                         unsafeName: "id",
                         declarationType: DeclarationType.Let,
-                        type: Type.int()
+                        type: swift.TypeReference.unqualifiedToSwiftType("Int")
                     }),
                     swift.property({
                         unsafeName: "name",
                         declarationType: DeclarationType.Let,
-                        type: Type.string()
+                        type: swift.TypeReference.unqualifiedToSwiftType("String")
                     }),
                     swift.property({
                         unsafeName: "price",
                         declarationType: DeclarationType.Let,
-                        type: Type.double()
+                        type: swift.TypeReference.unqualifiedToSwiftType("Double")
                     })
                 ],
                 initializers: [
@@ -390,17 +400,17 @@ describe("Struct", () => {
                             swift.functionParameter({
                                 argumentLabel: "id",
                                 unsafeName: "id",
-                                type: Type.int()
+                                type: swift.TypeReference.unqualifiedToSwiftType("Int")
                             }),
                             swift.functionParameter({
                                 argumentLabel: "name",
                                 unsafeName: "name",
-                                type: Type.string()
+                                type: swift.TypeReference.unqualifiedToSwiftType("String")
                             }),
                             swift.functionParameter({
                                 argumentLabel: "price",
                                 unsafeName: "price",
-                                type: Type.double()
+                                type: swift.TypeReference.unqualifiedToSwiftType("Double")
                             })
                         ],
                         body: swift.CodeBlock.withStatements([
@@ -416,7 +426,10 @@ describe("Struct", () => {
                             swift.functionParameter({
                                 argumentLabel: "from",
                                 unsafeName: "dictionary",
-                                type: Type.dictionary(Type.string(), Type.any())
+                                type: swift.TypeReference.dictionary(
+                                    swift.TypeReference.unqualifiedToSwiftType("String"),
+                                    swift.TypeReference.unqualifiedToSwiftType("Any")
+                                )
                             })
                         ],
                         body: swift.codeBlock((writer) => {
@@ -443,7 +456,7 @@ describe("Struct", () => {
                 methods: [
                     swift.method({
                         unsafeName: "doSomething",
-                        returnType: Type.void(),
+                        returnType: swift.TypeReference.unqualifiedToSwiftType("Void"),
                         body: swift.CodeBlock.withStatements([swift.Statement.raw(`print("doSomething")`)])
                     })
                 ]

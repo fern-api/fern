@@ -42,7 +42,7 @@ export const V61_TO_V60_MIGRATION: IrMigration<
     },
     jsonifyEarlierVersion: (ir) =>
         IrSerialization.V60.IntermediateRepresentation.jsonOrThrow(ir, {
-            unrecognizedObjectKeys: "strip",
+            unrecognizedObjectKeys: "passthrough", // Changed from "strip" to preserve isOptional flags
             skipValidation: true
         }),
     migrateBackwards: (
@@ -149,6 +149,7 @@ function convertPublishInfo(
 ): IrVersions.V60.dynamic.PublishInfo | undefined {
     return IrVersions.V61.dynamic.PublishInfo._visit<IrVersions.V60.dynamic.PublishInfo | undefined>(publishInfo, {
         go: IrVersions.V60.dynamic.PublishInfo.go,
+        swift: () => undefined,
         maven: IrVersions.V60.dynamic.PublishInfo.maven,
         npm: IrVersions.V60.dynamic.PublishInfo.npm,
         nuget: IrVersions.V60.dynamic.PublishInfo.nuget,

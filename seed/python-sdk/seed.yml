@@ -134,6 +134,7 @@ fixtures:
       outputFolder: no-custom-config
     - customConfig:
         inline_path_params: true
+        recursion_limit: 1234
       outputFolder: inline-path-params
     - customConfig:
         timeout_in_seconds: infinity
@@ -159,6 +160,8 @@ fixtures:
           version: v2
           wrapped_aliases: True
       outputFolder: pydantic-v2-wrapped
+      skipScripts:
+        - test-pydantic-v1
     - customConfig:
         pydantic_config:
           version: v1
@@ -328,7 +331,8 @@ fixtures:
       outputFolder: use-typeddict-requests
 scripts:
   # Test Pydantic V2
-  - docker: fernapi/python-seed
+  - name: test-pydantic-v2
+    docker: fernapi/python-seed
     commands:
       # Tests now run a mock server, you can always run seed with --skip-scripts to save time
       - export NPM_CONFIG_CACHE="$(pwd)/.cache"
@@ -340,7 +344,8 @@ scripts:
       - poetry run mypy ./src ./tests
       - poetry run pytest -rP .
   # Test Pydantic V1
-  - docker: fernapi/python-seed
+  - name: test-pydantic-v1
+    docker: fernapi/python-seed
     commands:
       - export NPM_CONFIG_CACHE="$(pwd)/.cache"
       - export HOME="$(pwd)/"

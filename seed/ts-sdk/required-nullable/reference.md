@@ -1,5 +1,5 @@
 # Reference
-<details><summary><code>client.<a href="/src/Client.ts">getFoo</a>({ ...params }) -> SeedApi.Foo</code></summary>
+<details><summary><code>client.<a href="/src/Client.ts">updateFoo</a>(id, { ...params }) -> SeedApi.Foo</code></summary>
 <dl>
 <dd>
 
@@ -12,9 +12,11 @@
 <dd>
 
 ```typescript
-await client.getFoo({
-    required_baz: "required_baz",
-    required_nullable_baz: "required_nullable_baz"
+await client.updateFoo("id", {
+    "X-Idempotency-Key": "X-Idempotency-Key",
+    nullable_text: "nullable_text",
+    nullable_number: 1.1,
+    non_nullable_text: "non_nullable_text"
 });
 
 ```
@@ -31,7 +33,15 @@ await client.getFoo({
 <dl>
 <dd>
 
-**request:** `SeedApi.GetFooRequest` 
+**id:** `string` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request:** `SeedApi.UpdateFooRequest` 
     
 </dd>
 </dl>

@@ -8,11 +8,10 @@ import {
     V2HttpRequestBodies
 } from "@fern-api/ir-sdk";
 import { constructHttpPath } from "@fern-api/ir-utils";
-import { AbstractConverter, ServersConverter } from "@fern-api/v3-importer-commons";
+import { FernOpenAPIExtension } from "@fern-api/openapi-ir-parser";
+import { AbstractConverter, Extensions, ServersConverter } from "@fern-api/v3-importer-commons";
 import { camelCase } from "lodash-es";
 import { OpenAPIV3_1 } from "openapi-types";
-import { FernOpenAPIExtension } from "../../../../../openapi/openapi-ir-parser/src/openapi/v3/extensions/fernExtensions";
-import { ServerFromOperationNameExtension } from "../../../../../v3-importer-commons/src/extensions/x-fern-server-name-from-operation";
 import { FernExamplesExtension } from "../../../extensions/x-fern-examples";
 import { FernStreamingExtension } from "../../../extensions/x-fern-streaming";
 import { ResponseBodyConverter } from "../ResponseBodyConverter";
@@ -546,7 +545,10 @@ export class OperationConverter extends AbstractOperationConverter {
                     {
                         displayName: undefined,
                         request:
-                            example.request != null
+                            example.request != null ||
+                            example["path-parameters"] != null ||
+                            example["query-parameters"] != null ||
+                            example.headers != null
                                 ? {
                                       docs: undefined,
                                       endpoint: {
@@ -559,7 +561,7 @@ export class OperationConverter extends AbstractOperationConverter {
                                       pathParameters: example["path-parameters"] ?? {},
                                       queryParameters: example["query-parameters"] ?? {},
                                       headers: example.headers ?? {},
-                                      requestBody: example.request
+                                      requestBody: example.request ?? undefined
                                   }
                                 : undefined,
                         response:
@@ -614,7 +616,7 @@ export class OperationConverter extends AbstractOperationConverter {
     }
 
     private getEndpointBaseUrl(): string | undefined {
-        const serverFromOperationNameExtension = new ServerFromOperationNameExtension({
+        const serverFromOperationNameExtension = new Extensions.ServerFromOperationNameExtension({
             breadcrumbs: this.breadcrumbs,
             operation: this.operation,
             context: this.context

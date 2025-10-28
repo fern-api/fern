@@ -29,12 +29,15 @@ function pathToDefinition(testDefinitionName: string) {
 describe("ObjectGenerator", () => {
     it("correctly generates nested enums for duplicate string literal values", async () => {
         const context = await createSampleGeneratorContext(pathToDefinition("duplicate-string-literals"));
+        const moduleName = "DuplicateStringLiterals";
         const objectName = "ObjectWithDuplicateStringLiterals";
-        const declaration = getObjectTypeDeclarationOrThrow(context, objectName);
+        const objectTypeDeclaration = getObjectTypeDeclarationOrThrow(context, objectName);
         const generator = new ObjectGenerator({
-            name: objectName,
-            properties: declaration.properties,
-            extendedProperties: declaration.extendedProperties,
+            symbol: swift.Symbol.create(`${moduleName}.${objectName}`, objectName, {
+                type: "struct"
+            }),
+            properties: objectTypeDeclaration.properties,
+            extendedProperties: objectTypeDeclaration.extendedProperties,
             context
         });
         const struct = generator.generate();
@@ -43,12 +46,15 @@ describe("ObjectGenerator", () => {
 
     it(`ensures that the special 'CodingKeys' enum does not collide with other string literal enums`, async () => {
         const context = await createSampleGeneratorContext(pathToDefinition("coding-keys-literal"));
+        const moduleName = "CodingKeysLiteral";
         const objectName = "ObjectWithCodingKeysLiteral";
-        const declaration = getObjectTypeDeclarationOrThrow(context, objectName);
+        const objectTypeDeclaration = getObjectTypeDeclarationOrThrow(context, objectName);
         const generator = new ObjectGenerator({
-            name: objectName,
-            properties: declaration.properties,
-            extendedProperties: declaration.extendedProperties,
+            symbol: swift.Symbol.create(`${moduleName}.${objectName}`, objectName, {
+                type: "struct"
+            }),
+            properties: objectTypeDeclaration.properties,
+            extendedProperties: objectTypeDeclaration.extendedProperties,
             context
         });
         const object = generator.generate();
@@ -57,12 +63,15 @@ describe("ObjectGenerator", () => {
 
     it(`correctly generates literals in container types`, async () => {
         const context = await createSampleGeneratorContext(pathToDefinition("literals-in-container-types"));
+        const moduleName = "LiteralsInContainerTypes";
         const objectName = "ObjectWithLiteralsInContainerTypes";
-        const declaration = getObjectTypeDeclarationOrThrow(context, objectName);
+        const objectTypeDeclaration = getObjectTypeDeclarationOrThrow(context, objectName);
         const generator = new ObjectGenerator({
-            name: objectName,
-            properties: declaration.properties,
-            extendedProperties: declaration.extendedProperties,
+            symbol: swift.Symbol.create(`${moduleName}.${objectName}`, objectName, {
+                type: "struct"
+            }),
+            properties: objectTypeDeclaration.properties,
+            extendedProperties: objectTypeDeclaration.extendedProperties,
             context
         });
         const object = generator.generate();
@@ -71,14 +80,17 @@ describe("ObjectGenerator", () => {
 
     it(`correctly handles name conflicts between nested types and schema types`, async () => {
         const context = await createSampleGeneratorContext(pathToDefinition("nested-type-collision-with-schema-type"));
-
+        const moduleName = "NestedTypeCollisionWithSchemaType";
         const fileComponents: swift.FileComponent[] = [];
 
         for (const declaration of Object.values(context.ir.types)) {
             declaration.shape._visit({
                 object: (otd) => {
+                    const objectName = declaration.name.name.pascalCase.unsafeName;
                     const generator = new ObjectGenerator({
-                        name: declaration.name.name.pascalCase.unsafeName,
+                        symbol: swift.Symbol.create(`${moduleName}.${objectName}`, objectName, {
+                            type: "struct"
+                        }),
                         properties: otd.properties,
                         extendedProperties: otd.extendedProperties,
                         context

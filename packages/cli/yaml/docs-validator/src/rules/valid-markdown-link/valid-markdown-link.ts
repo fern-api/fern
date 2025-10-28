@@ -25,13 +25,17 @@ export const ValidMarkdownLinks: Rule = {
         const url = instanceUrls[0] ?? "http://localhost";
         const baseUrl = toBaseUrl(instanceUrls[0] ?? "http://localhost");
 
-        const docsDefinitionResolver = new DocsDefinitionResolver(
-            url,
-            workspace,
+        const docsDefinitionResolver = new DocsDefinitionResolver({
+            domain: url,
+            docsWorkspace: workspace,
             ossWorkspaces,
             apiWorkspaces,
-            NOOP_CONTEXT
-        );
+            taskContext: NOOP_CONTEXT,
+            editThisPage: undefined,
+            uploadFiles: undefined,
+            registerApi: undefined,
+            targetAudiences: undefined // not applicable for validation
+        });
 
         const resolvedDocsDefinition = await docsDefinitionResolver.resolve();
 
@@ -139,7 +143,12 @@ export const ValidMarkdownLinks: Rule = {
                 );
                 const ir = generateIntermediateRepresentation({
                     workspace: fernWorkspace,
-                    audiences: config.audiences ? { type: "select", audiences: config.audiences } : { type: "all" },
+                    audiences: config.audiences
+                        ? {
+                              type: "select",
+                              audiences: Array.isArray(config.audiences) ? config.audiences : [config.audiences]
+                          }
+                        : { type: "all" },
                     generationLanguage: undefined,
                     keywords: undefined,
                     smartCasing: false,

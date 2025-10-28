@@ -44491,8 +44491,11 @@
           "examples": [
             {
               "description": "",
-              "path": "",
-              "pathParameters": {},
+              "path": "/org/01902fbf-6de7-a1cc-fb86-b1230a7af301/project/01902fc0-a119-26bc-827d-4138841301db/model",
+              "pathParameters": {
+                "org_id": "01902fbf-6de7-a1cc-fb86-b1230a7af301",
+                "project_id": "01902fc0-a119-26bc-827d-4138841301db"
+              },
               "queryParameters": {},
               "headers": {},
               "responseStatusCode": 200,

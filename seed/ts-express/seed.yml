@@ -93,6 +93,7 @@ allowedFailures:
   - bytes-upload
   - file-download
   - file-upload
+  - file-upload-openapi
   - multiple-request-bodies
   - plain-text
   - public-object

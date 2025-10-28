@@ -51,6 +51,12 @@ export namespace IntermediateRepresentationChangeDetector {
     export interface Error {
         message: string;
     }
+
+    export interface InternalIr {
+        types: Record<string, TypeDeclaration>;
+        errors: Record<string, ErrorDeclaration>;
+        services: Record<string, HttpService>;
+    }
 }
 
 export class ErrorCollector {
@@ -93,9 +99,12 @@ export class IntermediateRepresentationChangeDetector {
         from: IntermediateRepresentation;
         to: IntermediateRepresentation;
     }): Promise<IntermediateRepresentationChangeDetector.Result> {
-        // Hash both IRs to check if they're identical
-        const fromHash = hashJSON(from);
-        const toHash = hashJSON(to);
+        const fromInternal = this.toInternalIr(from);
+        const toInternal = this.toInternalIr(to);
+
+        // Hash the pruned IRs to check if they're identical
+        const fromHash = hashJSON(fromInternal);
+        const toHash = hashJSON(toInternal);
 
         if (fromHash === toHash) {
             return {
@@ -105,7 +114,7 @@ export class IntermediateRepresentationChangeDetector {
             };
         }
 
-        const result = this.checkBreaking({ from, to });
+        const result = this.checkBreaking({ from: fromInternal, to: toInternal });
         return {
             bump: result.isBreaking ? "major" : "minor",
             isBreaking: result.isBreaking,
@@ -113,12 +122,20 @@ export class IntermediateRepresentationChangeDetector {
         };
     }
 
+    private toInternalIr(ir: IntermediateRepresentation): IntermediateRepresentationChangeDetector.InternalIr {
+        return {
+            types: ir.types,
+            errors: ir.errors,
+            services: ir.services
+        };
+    }
+
     private checkBreaking({
         from,
         to
     }: {
-        from: IntermediateRepresentation;
-        to: IntermediateRepresentation;
+        from: IntermediateRepresentationChangeDetector.InternalIr;
+        to: IntermediateRepresentationChangeDetector.InternalIr;
     }): IntermediateRepresentationChangeDetector.Result {
         this.checkTypeBreakingChanges({
             from: from.types,

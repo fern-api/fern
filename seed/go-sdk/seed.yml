@@ -198,7 +198,6 @@ fixtures:
     - outputFolder: default-values
       customConfig:
         useDefaultRequestParameterValues: true
-  reserved-keywords: []
 scripts:
   - docker: fernapi/go-seed:1.0.0
     commands:
@@ -214,6 +213,7 @@ allowedFailures:
   - mixed-case:default-values
   - pagination-custom
   - request-parameters
+  - reserved-keywords
   - server-sent-event-examples
   - server-sent-events
   - streaming-parameter
@@ -237,3 +237,4 @@ allowedFailures:
   # Will include these back in once we fix dynamic snippets for inline file properties
   - file-upload:no-custom-config 
   - file-upload:package-name 
+  - file-upload-openapi

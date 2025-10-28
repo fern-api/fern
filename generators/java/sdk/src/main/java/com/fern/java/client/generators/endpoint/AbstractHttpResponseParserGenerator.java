@@ -878,6 +878,17 @@ public abstract class AbstractHttpResponseParserGenerator {
 
                 @Override
                 public GetSnippetOutput visitUnion(UnionTypeDeclaration union) {
+                    addPreviousIfPresent();
+                    if (propertyPath.isEmpty()) {
+                        if (currentOptional || previousWasOptional) {
+                            return new GetSnippetOutput(
+                                    com.fern.ir.model.types.TypeReference.container(
+                                            com.fern.ir.model.types.ContainerType.optional(typeReference)),
+                                    codeBlocks);
+                        }
+                        return new GetSnippetOutput(typeReference, codeBlocks);
+                    }
+
                     List<String> variantErrors = new ArrayList<>();
                     int variantIndex = 0;
 
@@ -942,6 +953,17 @@ public abstract class AbstractHttpResponseParserGenerator {
                 @Override
                 public GetSnippetOutput visitUndiscriminatedUnion(
                         UndiscriminatedUnionTypeDeclaration undiscriminatedUnion) {
+                    addPreviousIfPresent();
+                    if (propertyPath.isEmpty()) {
+                        if (currentOptional || previousWasOptional) {
+                            return new GetSnippetOutput(
+                                    com.fern.ir.model.types.TypeReference.container(
+                                            com.fern.ir.model.types.ContainerType.optional(typeReference)),
+                                    codeBlocks);
+                        }
+                        return new GetSnippetOutput(typeReference, codeBlocks);
+                    }
+
                     List<String> variantErrors = new ArrayList<>();
                     int variantIndex = 0;
 

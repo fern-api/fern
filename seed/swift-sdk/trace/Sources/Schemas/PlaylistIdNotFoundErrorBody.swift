@@ -28,12 +28,12 @@ public enum PlaylistIdNotFoundErrorBody: Codable, Hashable, Sendable {
 
     public struct PlaylistId: Codable, Hashable, Sendable {
         public let type: String = "playlistId"
-        public let value: PlaylistId
+        public let value: Trace.PlaylistId
         /// Additional properties that are not explicitly defined in the schema
         public let additionalProperties: [String: JSONValue]
 
         public init(
-            value: PlaylistId,
+            value: Trace.PlaylistId,
             additionalProperties: [String: JSONValue] = .init()
         ) {
             self.value = value
@@ -42,7 +42,7 @@ public enum PlaylistIdNotFoundErrorBody: Codable, Hashable, Sendable {
 
         public init(from decoder: Decoder) throws {
             let container = try decoder.container(keyedBy: CodingKeys.self)
-            self.value = try container.decode(PlaylistId.self, forKey: .value)
+            self.value = try container.decode(Trace.PlaylistId.self, forKey: .value)
             self.additionalProperties = try decoder.decodeAdditionalProperties(using: CodingKeys.self)
         }
 

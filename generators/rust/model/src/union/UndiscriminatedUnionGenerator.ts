@@ -67,6 +67,12 @@ export class UndiscriminatedUnionGenerator {
 
         // Generate helper methods
         this.generateImplementationBlock(writer, typeName);
+
+        // Generate Display implementation if all variants support Display
+        if (this.canImplementDisplay()) {
+            writer.newLine();
+            this.generateDisplayImplementation(writer, typeName);
+        }
     }
 
     private generateUnionAttributes(): rust.Attribute[] {
@@ -244,5 +250,65 @@ export class UndiscriminatedUnionGenerator {
         return this.undiscriminatedUnionTypeDeclaration.members.every((member) => {
             return typeSupportsHashAndEq(member.type, this.context);
         });
+    }
+
+    private canImplementDisplay(): boolean {
+        // Check if all variant types support Display
+        // For now, we'll implement Display if all variants are named types
+        return this.undiscriminatedUnionTypeDeclaration.members.every((member) => {
+            // Named types (enums, objects, etc.) should have Display implementations
+            if (member.type.type === "named") {
+                return true;
+            }
+            // Primitive types all support Display
+            if (member.type.type === "primitive") {
+                return true;
+            }
+            return false;
+        });
+    }
+
+    private generateDisplayImplementation(writer: rust.Writer, typeName: string): void {
+        writer.writeLine(`impl fmt::Display for ${typeName} {`);
+        writer.indent();
+        writer.writeLine("fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {");
+        writer.indent();
+        writer.writeLine("match self {");
+        writer.indent();
+
+        // Generate match arms for each variant
+        this.undiscriminatedUnionTypeDeclaration.members.forEach((member, index) => {
+            const variantName = this.getVariantNameForMember(member, index);
+
+            // Check if the type likely supports Display
+            if (member.type.type === "primitive") {
+                // Primitive types all support Display
+                writer.writeLine(`Self::${variantName}(value) => write!(f, "{}", value),`);
+            } else if (
+                member.type.type === "container" &&
+                (member.type.container.type === "list" ||
+                    member.type.container.type === "set" ||
+                    member.type.container.type === "map")
+            ) {
+                // Collections should use Debug format
+                writer.writeLine(`Self::${variantName}(value) => write!(f, "{:?}", value),`);
+            } else if (member.type.type === "named") {
+                // For named types, try to serialize to JSON as a fallback
+                // This ensures we always have a string representation
+                writer.writeLine(
+                    `Self::${variantName}(value) => write!(f, "{}", serde_json::to_string(value).unwrap_or_else(|_| format!("{:?}", value))),`
+                );
+            } else {
+                // Default to Debug format for unknown types
+                writer.writeLine(`Self::${variantName}(value) => write!(f, "{:?}", value),`);
+            }
+        });
+
+        writer.dedent();
+        writer.writeLine("}");
+        writer.dedent();
+        writer.writeLine("}");
+        writer.dedent();
+        writer.writeLine("}");
     }
 }

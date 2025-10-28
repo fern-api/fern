@@ -15,7 +15,9 @@ export async function askToLogin(context: TaskContext): Promise<FernToken> {
     }
     const token = await getToken();
     if (token == null) {
-        context.failAndThrow("Login required.");
+        context.failAndThrow(
+            "Authentication required. Please run 'fern login' or set the FERN_TOKEN environment variable."
+        );
     }
 
     return token;

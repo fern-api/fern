@@ -87,6 +87,35 @@ var response = await client.Admin.UpdateTestSubmissionStatusAsync(
 );
 ```
 
+### Forward Compatible Enums
+
+This SDK uses forward-compatible enums that can handle unknown values gracefully.
+
+```csharp
+using SeedTrace;
+
+// Using a built-in value
+var language = Language.Java;
+
+// Using a custom value
+var customLanguage = Language.FromCustom("custom-value");
+
+// Using in a switch statement
+switch (language.Value)
+{
+    case Language.Values.Java:
+        Console.WriteLine("Java");
+        break;
+    default:
+        Console.WriteLine($"Unknown value: {language.Value}");
+        break;
+}
+
+// Explicit casting
+string languageString = (string)Language.Java;
+Language languageFromString = (Language)"JAVA";
+```
+
 ## Contributing
 
 While we value open-source contributions to this SDK, this library is generated programmatically.

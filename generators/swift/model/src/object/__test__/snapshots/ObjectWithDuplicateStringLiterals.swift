@@ -52,12 +52,12 @@ public struct ObjectWithDuplicateStringLiterals: Codable, Hashable, Sendable {
         case usa
     }
 
-    public enum UsaLiteral: String, Codable, Hashable, CaseIterable, Sendable {
-        case usa = "USA"
-    }
-
     public enum UsaEnum: String, Codable, Hashable, CaseIterable, Sendable {
         case usa = "Usa"
+    }
+
+    public enum UsaLiteral: String, Codable, Hashable, CaseIterable, Sendable {
+        case usa = "USA"
     }
 
     /// Keys for encoding/decoding struct properties.

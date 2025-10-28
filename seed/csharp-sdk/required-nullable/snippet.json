@@ -12,6 +12,18 @@
                 "type": "csharp",
                 "client": "using SeedApi;\n\nvar client = new SeedApiClient();\nawait client.GetFooAsync(\n    new GetFooRequest\n    {\n        RequiredBaz = \"required_baz\",\n        RequiredNullableBaz = \"required_nullable_baz\",\n    }\n);\n"
             }
+        },
+        {
+            "example_identifier": null,
+            "id": {
+                "path": "/foo/{id}",
+                "method": "PATCH",
+                "identifier_override": "endpoint_.updateFoo"
+            },
+            "snippet": {
+                "type": "csharp",
+                "client": "using SeedApi;\n\nvar client = new SeedApiClient();\nawait client.UpdateFooAsync(\n    \"id\",\n    new UpdateFooRequest\n    {\n        XIdempotencyKey = \"X-Idempotency-Key\",\n        NullableText = \"nullable_text\",\n        NullableNumber = 1.1,\n        NonNullableText = \"non_nullable_text\",\n    }\n);\n"
+            }
         }
     ]
 }

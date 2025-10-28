@@ -49,7 +49,8 @@ export async function publishDocs({
     editThisPage,
     isPrivate = false,
     disableTemplates = false,
-    skipUpload = false
+    skipUpload = false,
+    targetAudiences
 }: {
     token: FernToken;
     organization: string;
@@ -64,6 +65,7 @@ export async function publishDocs({
     isPrivate: boolean | undefined;
     disableTemplates: boolean | undefined;
     skipUpload: boolean | undefined;
+    targetAudiences?: string[];
 }): Promise<void> {
     const fdr = createFdrService({ token: token.value });
     const authConfig: CjsFdrSdk.docs.v2.write.AuthConfig = isPrivate
@@ -75,14 +77,14 @@ export async function publishDocs({
     const basePath = parseBasePath(domain);
     const useDynamicSnippets = docsWorkspace.config.experimental?.dynamicSnippets;
     const disableSnippetGen = preview || useDynamicSnippets;
-    const resolver = new DocsDefinitionResolver(
+    const resolver = new DocsDefinitionResolver({
         domain,
         docsWorkspace,
         ossWorkspaces,
         apiWorkspaces,
-        context,
+        taskContext: context,
         editThisPage,
-        async (files) => {
+        uploadFiles: async (files) => {
             const filesMap = new Map(files.map((file) => [file.absoluteFilePath, file]));
             const filesWithMimeType: FileWithMimeType[] = files
                 .map((fileMetadata) => ({
@@ -179,7 +181,7 @@ export async function publishDocs({
                 }
             }
         },
-        async ({ ir, snippetsConfig, playgroundConfig, apiName, workspace }) => {
+        registerApi: async ({ ir, snippetsConfig, playgroundConfig, apiName, workspace }) => {
             const apiDefinition = convertIrToFdrApi({ ir, snippetsConfig, playgroundConfig, context });
 
             // create dynamic IR + metadata for each generator language
@@ -238,8 +240,9 @@ export async function publishDocs({
                         }
                 }
             }
-        }
-    );
+        },
+        targetAudiences
+    });
 
     const docsDefinition = await resolver.resolve();
 
@@ -265,7 +268,9 @@ export async function publishDocs({
             url: url.replace("https://", ""),
             context,
             fdr,
-            preview
+            isPreview: preview,
+            domain,
+            customDomains
         });
 
         const link = terminalLink(url, url);
@@ -443,6 +448,9 @@ async function generateLanguageSpecificDynamicIRs({
                         case "go":
                             packageName = dynamicGeneratorConfig.outputConfig.value.repoUrl;
                             break;
+                        case "swift":
+                            packageName = dynamicGeneratorConfig.outputConfig.value.repoUrl;
+                            break;
                         case "crates":
                             packageName = dynamicGeneratorConfig.outputConfig.value.packageName;
                             break;
@@ -574,7 +582,9 @@ async function updateAiChatFromDocsDefinition({
     url,
     context,
     fdr,
-    preview
+    isPreview,
+    domain,
+    customDomains
 }: {
     docsDefinition: DocsDefinition;
     organization: string;
@@ -582,56 +592,57 @@ async function updateAiChatFromDocsDefinition({
     url: string;
     context: TaskContext;
     fdr: FernRegistryClient;
-    preview: boolean;
+    isPreview: boolean;
+    domain: string;
+    customDomains: string[];
 }): Promise<void> {
     if (docsDefinition.config.aiChatConfig == null) {
         return;
     }
     context.logger.debug("Processing AI Chat configuration from docs.yml");
 
-    const domain = new URL(wrapWithHttps(url)).hostname;
-
     if (docsDefinition.config.aiChatConfig.location != null) {
-        for (const location of docsDefinition.config.aiChatConfig.location) {
-            if (location === "docs") {
-                const faiClient = getFaiClient({ token: token.value });
-                const docsSettings = await faiClient.settings.getDocsSettings({
-                    domain
+        const faiClient = getFaiClient({ token: token.value });
+
+        const domainsToEnable = isPreview
+            ? [wrapWithHttps(url).replace("https://", "")]
+            : [
+                  wrapWithHttps(domain).replace("https://", ""),
+                  ...customDomains.map((cd) => wrapWithHttps(cd).replace("https://", ""))
+              ];
+
+        context.logger.debug(
+            `Enabling Ask AI for domain${domainsToEnable.length > 1 ? "s" : ""}: ${domainsToEnable.join(", ")}`
+        );
+
+        if (docsDefinition.config.aiChatConfig.location.includes("docs")) {
+            for (const domainToEnable of domainsToEnable) {
+                const domainHostname = new URL(wrapWithHttps(domainToEnable)).hostname;
+                context.logger.debug(`Adding domain ${domainHostname} to Algolia whitelist`);
+                const addResult = await fdr.docs.v2.write.addAlgoliaPreviewWhitelistEntry({
+                    domain: domainHostname
                 });
-                if (docsSettings.job_id) {
-                    continue;
-                } else {
-                    context.logger.debug(
-                        `Starting Ask Fern docs content ${docsSettings.ask_ai_enabled ? "reindexing" : "indexing"}...`
+                if (!addResult.ok) {
+                    context.logger.warn(
+                        `Failed to add domain ${domainHostname} to Algolia whitelist${isPreview ? ". Please try regenerating to test AI chat in preview." : "."}`
                     );
-                    const addResult = await fdr.docs.v2.write.addAlgoliaPreviewWhitelistEntry({
-                        domain
-                    });
-                    if (addResult.ok) {
-                        const indexingResult = docsSettings.ask_ai_enabled
-                            ? await faiClient.settings.reindexAskAi({
-                                  domain,
-                                  org_name: organization
-                              })
-                            : await faiClient.settings.toggleAskAi({
-                                  domain,
-                                  org_name: organization,
-                                  preview
-                              });
-                        if (indexingResult.success) {
-                            context.logger.info(
-                                chalk.green(
-                                    "Note: it may take a few minutes after publishing for Ask Fern answers to reflect new content."
-                                )
-                            );
-                        }
-                    } else {
-                        context.logger.warn(
-                            `Failed to add domain ${domain} to Algolia whitelist. Please try regenerating to test AI chat in preview.`
-                        );
-                    }
                 }
             }
+        }
+
+        const indexingResult = await faiClient.settings.enableAskAi({
+            domains: domainsToEnable,
+            org_name: organization,
+            locations: docsDefinition.config.aiChatConfig.location,
+            preview: isPreview
+        });
+
+        if (indexingResult.success) {
+            context.logger.info(
+                chalk.green(
+                    `${isPreview ? "" : `Ask Fern enabled for ${domainsToEnable.join(", ")}. `}\nNote: it may take a few minutes after publishing for Ask Fern settings to reflect expected state.`
+                )
+            );
         }
     }
 }

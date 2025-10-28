@@ -20,6 +20,7 @@ overrides:
   '@fern-api/fdr-sdk': 0.139.33-c9426f366
   es-toolkit: ^1.39.10
   ts-essentials: ^10.1.1
+  form-data: ^4.0.4
 
 importers:
 
@@ -35,11 +36,11 @@ importers:
         specifier: ^7.26.0
         version: 7.27.1(@babel/core@7.28.4)
       '@biomejs/biome':
-        specifier: 2.2.5
-        version: 2.2.5
+        specifier: 2.3.1
+        version: 2.3.1
       '@blueprintjs/eslint-plugin':
         specifier: ^6.1.6
-        version: 6.1.16(eslint@8.57.1)(typescript@5.8.3)
+        version: 6.1.16(eslint@8.57.1)(typescript@5.9.3)
       '@blueprintjs/stylelint-plugin':
         specifier: ^4.1.14
         version: 4.1.18(stylelint@14.16.1)
@@ -81,7 +82,7 @@ importers:
         version: 5.0.0(postcss@8.5.6)(stylelint@14.16.1)
       tsup:
         specifier: ^8.5.0
-        version: 8.5.0(postcss@8.5.6)(tsx@4.20.6)(typescript@5.8.3)(yaml@2.3.3)
+        version: 8.5.0(postcss@8.5.6)(tsx@4.20.6)(typescript@5.9.3)(yaml@2.3.3)
       tsx:
         specifier: ^4.20.3
         version: 4.20.6
@@ -89,11 +90,11 @@ importers:
         specifier: ^2.5.5
         version: 2.5.8
       typescript:
-        specifier: 5.8.3
-        version: 5.8.3
+        specifier: 5.9.3
+        version: 5.9.3
       vitest:
         specifier: ^2.1.9
-        version: 2.1.9(@types/node@18.15.3)(sass@1.93.2)
+        version: 2.1.9(@types/node@18.15.3)(msw@2.11.3(@types/node@18.15.3)(typescript@5.9.3))(sass@1.93.2)
 
   generators/base:
     dependencies:
@@ -141,11 +142,11 @@ importers:
         specifier: ^1.4.7
         version: 1.4.7
       typescript:
-        specifier: 5.8.3
-        version: 5.8.3
+        specifier: 5.9.3
+        version: 5.9.3
       vitest:
         specifier: ^2.1.9
-        version: 2.1.9(@types/node@18.15.3)(sass@1.93.2)
+        version: 2.1.9(@types/node@18.15.3)(msw@2.11.3(@types/node@18.15.3)(typescript@5.9.3))(sass@1.93.2)
 
   generators/browser-compatible-base:
     dependencies:
@@ -178,11 +179,11 @@ importers:
         specifier: ^1.4.7
         version: 1.4.7
       typescript:
-        specifier: 5.8.3
-        version: 5.8.3
+        specifier: 5.9.3
+        version: 5.9.3
       vitest:
         specifier: ^2.1.9
-        version: 2.1.9(@types/node@18.15.3)(sass@1.93.2)
+        version: 2.1.9(@types/node@18.15.3)(msw@2.11.3(@types/node@18.15.3)(typescript@5.9.3))(sass@1.93.2)
 
   generators/csharp/base:
     devDependencies:
@@ -220,11 +221,11 @@ importers:
         specifier: ^4.17.21
         version: 4.17.21
       typescript:
-        specifier: 5.8.3
-        version: 5.8.3
+        specifier: 5.9.3
+        version: 5.9.3
       vitest:
         specifier: ^2.1.9
-        version: 2.1.9(@types/node@18.15.3)(sass@1.93.2)
+        version: 2.1.9(@types/node@18.15.3)(msw@2.11.3(@types/node@18.15.3)(typescript@5.9.3))(sass@1.93.2)
 
   generators/csharp/codegen:
     dependencies:
@@ -260,11 +261,11 @@ importers:
         specifier: ^1.4.7
         version: 1.4.7
       typescript:
-        specifier: 5.8.3
-        version: 5.8.3
+        specifier: 5.9.3
+        version: 5.9.3
       vitest:
         specifier: ^2.1.9
-        version: 2.1.9(@types/node@18.15.3)(sass@1.93.2)
+        version: 2.1.9(@types/node@18.15.3)(msw@2.11.3(@types/node@18.15.3)(typescript@5.9.3))(sass@1.93.2)
 
   generators/csharp/dynamic-snippets:
     devDependencies:
@@ -309,13 +310,13 @@ importers:
         version: 1.0.11
       tsup:
         specifier: ^8.5.0
-        version: 8.5.0(postcss@8.5.6)(tsx@4.20.6)(typescript@5.8.3)(yaml@2.3.3)
+        version: 8.5.0(postcss@8.5.6)(tsx@4.20.6)(typescript@5.9.3)(yaml@2.3.3)
       typescript:
-        specifier: 5.8.3
-        version: 5.8.3
+        specifier: 5.9.3
+        version: 5.9.3
       vitest:
         specifier: ^2.1.9
-        version: 2.1.9(@types/node@18.15.3)(sass@1.93.2)
+        version: 2.1.9(@types/node@18.15.3)(msw@2.11.3(@types/node@18.15.3)(typescript@5.9.3))(sass@1.93.2)
 
   generators/csharp/formatter:
     dependencies:
@@ -339,11 +340,11 @@ importers:
         specifier: ^5.1.1
         version: 5.1.1
       typescript:
-        specifier: 5.8.3
-        version: 5.8.3
+        specifier: 5.9.3
+        version: 5.9.3
       vitest:
         specifier: ^2.1.9
-        version: 2.1.9(@types/node@18.15.3)(sass@1.93.2)
+        version: 2.1.9(@types/node@18.15.3)(msw@2.11.3(@types/node@18.15.3)(typescript@5.9.3))(sass@1.93.2)
 
   generators/csharp/model:
     devDependencies:
@@ -379,13 +380,13 @@ importers:
         version: 1.4.7
       tsup:
         specifier: ^8.5.0
-        version: 8.5.0(postcss@8.5.6)(tsx@4.20.6)(typescript@5.8.3)(yaml@2.3.3)
+        version: 8.5.0(postcss@8.5.6)(tsx@4.20.6)(typescript@5.9.3)(yaml@2.3.3)
       typescript:
-        specifier: 5.8.3
-        version: 5.8.3
+        specifier: 5.9.3
+        version: 5.9.3
       vitest:
         specifier: ^2.1.9
-        version: 2.1.9(@types/node@18.15.3)(sass@1.93.2)
+        version: 2.1.9(@types/node@18.15.3)(msw@2.11.3(@types/node@18.15.3)(typescript@5.9.3))(sass@1.93.2)
       zod:
         specifier: ^3.22.3
         version: 3.25.76
@@ -436,16 +437,16 @@ importers:
         version: 1.4.7
       tsup:
         specifier: ^8.5.0
-        version: 8.5.0(postcss@8.5.6)(tsx@4.20.6)(typescript@5.8.3)(yaml@2.3.3)
+        version: 8.5.0(postcss@8.5.6)(tsx@4.20.6)(typescript@5.9.3)(yaml@2.3.3)
       typescript:
-        specifier: 5.8.3
-        version: 5.8.3
+        specifier: 5.9.3
+        version: 5.9.3
       url-join:
         specifier: ^5.0.0
         version: 5.0.0
       vitest:
         specifier: ^2.1.9
-        version: 2.1.9(@types/node@18.15.3)(sass@1.93.2)
+        version: 2.1.9(@types/node@18.15.3)(msw@2.11.3(@types/node@18.15.3)(typescript@5.9.3))(sass@1.93.2)
       zod:
         specifier: ^3.22.3
         version: 3.25.76
@@ -471,11 +472,11 @@ importers:
         specifier: ^1.4.7
         version: 1.4.7
       typescript:
-        specifier: 5.8.3
-        version: 5.8.3
+        specifier: 5.9.3
+        version: 5.9.3
       vitest:
         specifier: ^2.1.9
-        version: 2.1.9(@types/node@18.15.3)(sass@1.93.2)
+        version: 2.1.9(@types/node@18.15.3)(msw@2.11.3(@types/node@18.15.3)(typescript@5.9.3))(sass@1.93.2)
       zod:
         specifier: ^3.22.3
         version: 3.25.76
@@ -520,13 +521,13 @@ importers:
         version: 1.4.7
       tsup:
         specifier: ^8.5.0
-        version: 8.5.0(postcss@8.5.6)(tsx@4.20.6)(typescript@5.8.3)(yaml@2.3.3)
+        version: 8.5.0(postcss@8.5.6)(tsx@4.20.6)(typescript@5.9.3)(yaml@2.3.3)
       typescript:
-        specifier: 5.8.3
-        version: 5.8.3
+        specifier: 5.9.3
+        version: 5.9.3
       vitest:
         specifier: ^2.1.9
-        version: 2.1.9(@types/node@18.15.3)(sass@1.93.2)
+        version: 2.1.9(@types/node@18.15.3)(msw@2.11.3(@types/node@18.15.3)(typescript@5.9.3))(sass@1.93.2)
 
   generators/go-v2/dynamic-snippets:
     devDependencies:
@@ -568,13 +569,13 @@ importers:
         version: 1.0.11
       tsup:
         specifier: ^8.5.0
-        version: 8.5.0(postcss@8.5.6)(tsx@4.20.6)(typescript@5.8.3)(yaml@2.3.3)
+        version: 8.5.0(postcss@8.5.6)(tsx@4.20.6)(typescript@5.9.3)(yaml@2.3.3)
       typescript:
-        specifier: 5.8.3
-        version: 5.8.3
+        specifier: 5.9.3
+        version: 5.9.3
       vitest:
         specifier: ^2.1.9
-        version: 2.1.9(@types/node@18.15.3)(sass@1.93.2)
+        version: 2.1.9(@types/node@18.15.3)(msw@2.11.3(@types/node@18.15.3)(typescript@5.9.3))(sass@1.93.2)
 
   generators/go-v2/formatter:
     dependencies:
@@ -595,11 +596,11 @@ importers:
         specifier: ^1.4.7
         version: 1.4.7
       typescript:
-        specifier: 5.8.3
-        version: 5.8.3
+        specifier: 5.9.3
+        version: 5.9.3
       vitest:
         specifier: ^2.1.9
-        version: 2.1.9(@types/node@18.15.3)(sass@1.93.2)
+        version: 2.1.9(@types/node@18.15.3)(msw@2.11.3(@types/node@18.15.3)(typescript@5.9.3))(sass@1.93.2)
 
   generators/go-v2/model:
     devDependencies:
@@ -632,13 +633,13 @@ importers:
         version: 1.4.7
       tsup:
         specifier: ^8.5.0
-        version: 8.5.0(postcss@8.5.6)(tsx@4.20.6)(typescript@5.8.3)(yaml@2.3.3)
+        version: 8.5.0(postcss@8.5.6)(tsx@4.20.6)(typescript@5.9.3)(yaml@2.3.3)
       typescript:
-        specifier: 5.8.3
-        version: 5.8.3
+        specifier: 5.9.3
+        version: 5.9.3
       vitest:
         specifier: ^2.1.9
-        version: 2.1.9(@types/node@18.15.3)(sass@1.93.2)
+        version: 2.1.9(@types/node@18.15.3)(msw@2.11.3(@types/node@18.15.3)(typescript@5.9.3))(sass@1.93.2)
 
   generators/go-v2/sdk:
     devDependencies:
@@ -689,13 +690,13 @@ importers:
         version: 1.4.7
       tsup:
         specifier: ^8.5.0
-        version: 8.5.0(postcss@8.5.6)(tsx@4.20.6)(typescript@5.8.3)(yaml@2.3.3)
+        version: 8.5.0(postcss@8.5.6)(tsx@4.20.6)(typescript@5.9.3)(yaml@2.3.3)
       typescript:
-        specifier: 5.8.3
-        version: 5.8.3
+        specifier: 5.9.3
+        version: 5.9.3
       vitest:
         specifier: ^2.1.9
-        version: 2.1.9(@types/node@18.15.3)(sass@1.93.2)
+        version: 2.1.9(@types/node@18.15.3)(msw@2.11.3(@types/node@18.15.3)(typescript@5.9.3))(sass@1.93.2)
 
   generators/java-v2/ast:
     dependencies:
@@ -719,11 +720,11 @@ importers:
         specifier: ^1.4.7
         version: 1.4.7
       typescript:
-        specifier: 5.8.3
-        version: 5.8.3
+        specifier: 5.9.3
+        version: 5.9.3
       vitest:
         specifier: ^2.1.9
-        version: 2.1.9(@types/node@18.15.3)(sass@1.93.2)
+        version: 2.1.9(@types/node@18.15.3)(msw@2.11.3(@types/node@18.15.3)(typescript@5.9.3))(sass@1.93.2)
 
   generators/java-v2/base:
     devDependencies:
@@ -752,11 +753,11 @@ importers:
         specifier: ^1.4.7
         version: 1.4.7
       typescript:
-        specifier: 5.8.3
-        version: 5.8.3
+        specifier: 5.9.3
+        version: 5.9.3
       vitest:
         specifier: ^2.1.9
-        version: 2.1.9(@types/node@18.15.3)(sass@1.93.2)
+        version: 2.1.9(@types/node@18.15.3)(msw@2.11.3(@types/node@18.15.3)(typescript@5.9.3))(sass@1.93.2)
 
   generators/java-v2/dynamic-snippets:
     devDependencies:
@@ -801,13 +802,13 @@ importers:
         version: 1.0.11
       tsup:
         specifier: ^8.5.0
-        version: 8.5.0(postcss@8.5.6)(tsx@4.20.6)(typescript@5.8.3)(yaml@2.3.3)
+        version: 8.5.0(postcss@8.5.6)(tsx@4.20.6)(typescript@5.9.3)(yaml@2.3.3)
       typescript:
-        specifier: 5.8.3
-        version: 5.8.3
+        specifier: 5.9.3
+        version: 5.9.3
       vitest:
         specifier: ^2.1.9
-        version: 2.1.9(@types/node@18.15.3)(sass@1.93.2)
+        version: 2.1.9(@types/node@18.15.3)(msw@2.11.3(@types/node@18.15.3)(typescript@5.9.3))(sass@1.93.2)
 
   generators/java-v2/sdk:
     devDependencies:
@@ -858,13 +859,13 @@ importers:
         version: 4.17.21
       tsup:
         specifier: ^8.5.0
-        version: 8.5.0(postcss@8.5.6)(tsx@4.20.6)(typescript@5.8.3)(yaml@2.3.3)
+        version: 8.5.0(postcss@8.5.6)(tsx@4.20.6)(typescript@5.9.3)(yaml@2.3.3)
       typescript:
-        specifier: 5.8.3
-        version: 5.8.3
+        specifier: 5.9.3
+        version: 5.9.3
       vitest:
         specifier: ^2.1.9
-        version: 2.1.9(@types/node@18.15.3)(sass@1.93.2)
+        version: 2.1.9(@types/node@18.15.3)(msw@2.11.3(@types/node@18.15.3)(typescript@5.9.3))(sass@1.93.2)
 
   generators/openapi:
     devDependencies:
@@ -906,16 +907,16 @@ importers:
         version: 12.1.3
       tsup:
         specifier: ^8.5.0
-        version: 8.5.0(postcss@8.5.6)(tsx@4.20.6)(typescript@5.8.3)(yaml@2.3.3)
+        version: 8.5.0(postcss@8.5.6)(tsx@4.20.6)(typescript@5.9.3)(yaml@2.3.3)
       typescript:
-        specifier: 5.8.3
-        version: 5.8.3
+        specifier: 5.9.3
+        version: 5.9.3
       url-join:
         specifier: ^5.0.0
         version: 5.0.0
       vitest:
         specifier: ^2.1.9
-        version: 2.1.9(@types/node@18.15.3)(sass@1.93.2)
+        version: 2.1.9(@types/node@18.15.3)(msw@2.11.3(@types/node@18.15.3)(typescript@5.9.3))(sass@1.93.2)
 
   generators/php/base:
     devDependencies:
@@ -954,13 +955,13 @@ importers:
         version: 4.17.21
       tsup:
         specifier: ^8.5.0
-        version: 8.5.0(postcss@8.5.6)(tsx@4.20.6)(typescript@5.8.3)(yaml@2.3.3)
+        version: 8.5.0(postcss@8.5.6)(tsx@4.20.6)(typescript@5.9.3)(yaml@2.3.3)
       typescript:
-        specifier: 5.8.3
-        version: 5.8.3
+        specifier: 5.9.3
+        version: 5.9.3
       vitest:
         specifier: ^2.1.9
-        version: 2.1.9(@types/node@18.15.3)(sass@1.93.2)
+        version: 2.1.9(@types/node@18.15.3)(msw@2.11.3(@types/node@18.15.3)(typescript@5.9.3))(sass@1.93.2)
 
   generators/php/codegen:
     dependencies:
@@ -987,11 +988,11 @@ importers:
         specifier: ^1.4.7
         version: 1.4.7
       typescript:
-        specifier: 5.8.3
-        version: 5.8.3
+        specifier: 5.9.3
+        version: 5.9.3
       vitest:
         specifier: ^2.1.9
-        version: 2.1.9(@types/node@18.15.3)(sass@1.93.2)
+        version: 2.1.9(@types/node@18.15.3)(msw@2.11.3(@types/node@18.15.3)(typescript@5.9.3))(sass@1.93.2)
       zod:
         specifier: ^3.22.3
         version: 3.25.76
@@ -1039,13 +1040,13 @@ importers:
         version: 1.0.11
       tsup:
         specifier: ^8.5.0
-        version: 8.5.0(postcss@8.5.6)(tsx@4.20.6)(typescript@5.8.3)(yaml@2.3.3)
+        version: 8.5.0(postcss@8.5.6)(tsx@4.20.6)(typescript@5.9.3)(yaml@2.3.3)
       typescript:
-        specifier: 5.8.3
-        version: 5.8.3
+        specifier: 5.9.3
+        version: 5.9.3
       vitest:
         specifier: ^2.1.8
-        version: 2.1.9(@types/node@18.15.3)(sass@1.93.2)
+        version: 2.1.9(@types/node@18.15.3)(msw@2.11.3(@types/node@18.15.3)(typescript@5.9.3))(sass@1.93.2)
 
   generators/php/model:
     devDependencies:
@@ -1075,13 +1076,13 @@ importers:
         version: 1.4.7
       tsup:
         specifier: ^8.5.0
-        version: 8.5.0(postcss@8.5.6)(tsx@4.20.6)(typescript@5.8.3)(yaml@2.3.3)
+        version: 8.5.0(postcss@8.5.6)(tsx@4.20.6)(typescript@5.9.3)(yaml@2.3.3)
       typescript:
-        specifier: 5.8.3
-        version: 5.8.3
+        specifier: 5.9.3
+        version: 5.9.3
       vitest:
         specifier: ^2.1.9
-        version: 2.1.9(@types/node@18.15.3)(sass@1.93.2)
+        version: 2.1.9(@types/node@18.15.3)(msw@2.11.3(@types/node@18.15.3)(typescript@5.9.3))(sass@1.93.2)
       zod:
         specifier: ^3.22.3
         version: 3.25.76
@@ -1138,13 +1139,13 @@ importers:
         version: 4.17.21
       tsup:
         specifier: ^8.5.0
-        version: 8.5.0(postcss@8.5.6)(tsx@4.20.6)(typescript@5.8.3)(yaml@2.3.3)
+        version: 8.5.0(postcss@8.5.6)(tsx@4.20.6)(typescript@5.9.3)(yaml@2.3.3)
       typescript:
-        specifier: 5.8.3
-        version: 5.8.3
+        specifier: 5.9.3
+        version: 5.9.3
       vitest:
         specifier: ^2.1.9
-        version: 2.1.9(@types/node@18.15.3)(sass@1.93.2)
+        version: 2.1.9(@types/node@18.15.3)(msw@2.11.3(@types/node@18.15.3)(typescript@5.9.3))(sass@1.93.2)
       zod:
         specifier: ^3.22.3
         version: 3.25.76
@@ -1186,13 +1187,13 @@ importers:
         version: 4.17.21
       tsup:
         specifier: ^8.5.0
-        version: 8.5.0(postcss@8.5.6)(tsx@4.20.6)(typescript@5.8.3)(yaml@2.3.3)
+        version: 8.5.0(postcss@8.5.6)(tsx@4.20.6)(typescript@5.9.3)(yaml@2.3.3)
       typescript:
-        specifier: 5.8.3
-        version: 5.8.3
+        specifier: 5.9.3
+        version: 5.9.3
       vitest:
         specifier: ^2.1.9
-        version: 2.1.9(@types/node@18.15.3)(sass@1.93.2)
+        version: 2.1.9(@types/node@18.15.3)(msw@2.11.3(@types/node@18.15.3)(typescript@5.9.3))(sass@1.93.2)
       zod:
         specifier: ^3.22.3
         version: 3.25.76
@@ -1215,11 +1216,11 @@ importers:
         specifier: ^1.4.7
         version: 1.4.7
       typescript:
-        specifier: 5.8.3
-        version: 5.8.3
+        specifier: 5.9.3
+        version: 5.9.3
       vitest:
         specifier: ^2.1.9
-        version: 2.1.9(@types/node@18.15.3)(sass@1.93.2)
+        version: 2.1.9(@types/node@18.15.3)(msw@2.11.3(@types/node@18.15.3)(typescript@5.9.3))(sass@1.93.2)
 
   generators/python-v2/base:
     dependencies:
@@ -1261,11 +1262,11 @@ importers:
         specifier: ^1.4.7
         version: 1.4.7
       typescript:
-        specifier: 5.8.3
-        version: 5.8.3
+        specifier: 5.9.3
+        version: 5.9.3
       vitest:
         specifier: ^2.1.9
-        version: 2.1.9(@types/node@18.15.3)(sass@1.93.2)
+        version: 2.1.9(@types/node@18.15.3)(msw@2.11.3(@types/node@18.15.3)(typescript@5.9.3))(sass@1.93.2)
 
   generators/python-v2/browser-compatible-base:
     devDependencies:
@@ -1279,11 +1280,11 @@ importers:
         specifier: ^1.4.7
         version: 1.4.7
       typescript:
-        specifier: 5.8.3
-        version: 5.8.3
+        specifier: 5.9.3
+        version: 5.9.3
       vitest:
         specifier: ^2.1.9
-        version: 2.1.9(@types/node@18.15.3)(sass@1.93.2)
+        version: 2.1.9(@types/node@18.15.3)(msw@2.11.3(@types/node@18.15.3)(typescript@5.9.3))(sass@1.93.2)
       zod:
         specifier: ^3.22.3
         version: 3.25.76
@@ -1334,13 +1335,13 @@ importers:
         version: 1.0.11
       tsup:
         specifier: ^8.5.0
-        version: 8.5.0(postcss@8.5.6)(tsx@4.20.6)(typescript@5.8.3)(yaml@2.3.3)
+        version: 8.5.0(postcss@8.5.6)(tsx@4.20.6)(typescript@5.9.3)(yaml@2.3.3)
       typescript:
-        specifier: 5.8.3
-        version: 5.8.3
+        specifier: 5.9.3
+        version: 5.9.3
       vitest:
         specifier: ^2.1.9
-        version: 2.1.9(@types/node@18.15.3)(sass@1.93.2)
+        version: 2.1.9(@types/node@18.15.3)(msw@2.11.3(@types/node@18.15.3)(typescript@5.9.3))(sass@1.93.2)
 
   generators/python-v2/fastapi:
     devDependencies:
@@ -1355,13 +1356,13 @@ importers:
         version: 1.4.7
       tsup:
         specifier: ^8.5.0
-        version: 8.5.0(postcss@8.5.6)(tsx@4.20.6)(typescript@5.8.3)(yaml@2.3.3)
+        version: 8.5.0(postcss@8.5.6)(tsx@4.20.6)(typescript@5.9.3)(yaml@2.3.3)
       typescript:
-        specifier: 5.8.3
-        version: 5.8.3
+        specifier: 5.9.3
+        version: 5.9.3
       vitest:
         specifier: ^2.1.9
-        version: 2.1.9(@types/node@18.15.3)(sass@1.93.2)
+        version: 2.1.9(@types/node@18.15.3)(msw@2.11.3(@types/node@18.15.3)(typescript@5.9.3))(sass@1.93.2)
 
   generators/python-v2/formatter:
     devDependencies:
@@ -1381,11 +1382,11 @@ importers:
         specifier: ^1.4.7
         version: 1.4.7
       typescript:
-        specifier: 5.8.3
-        version: 5.8.3
+        specifier: 5.9.3
+        version: 5.9.3
       vitest:
         specifier: ^2.1.9
-        version: 2.1.9(@types/node@18.15.3)(sass@1.93.2)
+        version: 2.1.9(@types/node@18.15.3)(msw@2.11.3(@types/node@18.15.3)(typescript@5.9.3))(sass@1.93.2)
 
   generators/python-v2/pydantic-model:
     devDependencies:
@@ -1421,13 +1422,13 @@ importers:
         version: 1.4.7
       tsup:
         specifier: ^8.5.0
-        version: 8.5.0(postcss@8.5.6)(tsx@4.20.6)(typescript@5.8.3)(yaml@2.3.3)
+        version: 8.5.0(postcss@8.5.6)(tsx@4.20.6)(typescript@5.9.3)(yaml@2.3.3)
       typescript:
-        specifier: 5.8.3
-        version: 5.8.3
+        specifier: 5.9.3
+        version: 5.9.3
       vitest:
         specifier: ^2.1.9
-        version: 2.1.9(@types/node@18.15.3)(sass@1.93.2)
+        version: 2.1.9(@types/node@18.15.3)(msw@2.11.3(@types/node@18.15.3)(typescript@5.9.3))(sass@1.93.2)
       zod:
         specifier: ^3.22.4
         version: 3.25.76
@@ -1463,13 +1464,13 @@ importers:
         version: 1.4.7
       tsup:
         specifier: ^8.5.0
-        version: 8.5.0(postcss@8.5.6)(tsx@4.20.6)(typescript@5.8.3)(yaml@2.3.3)
+        version: 8.5.0(postcss@8.5.6)(tsx@4.20.6)(typescript@5.9.3)(yaml@2.3.3)
       typescript:
-        specifier: 5.8.3
-        version: 5.8.3
+        specifier: 5.9.3
+        version: 5.9.3
       vitest:
         specifier: ^2.1.9
-        version: 2.1.9(@types/node@18.15.3)(sass@1.93.2)
+        version: 2.1.9(@types/node@18.15.3)(msw@2.11.3(@types/node@18.15.3)(typescript@5.9.3))(sass@1.93.2)
       zod:
         specifier: ^3.22.4
         version: 3.25.76
@@ -1496,11 +1497,11 @@ importers:
         specifier: ^1.4.7
         version: 1.4.7
       typescript:
-        specifier: 5.8.3
-        version: 5.8.3
+        specifier: 5.9.3
+        version: 5.9.3
       vitest:
         specifier: ^2.1.9
-        version: 2.1.9(@types/node@18.15.3)(sass@1.93.2)
+        version: 2.1.9(@types/node@18.15.3)(msw@2.11.3(@types/node@18.15.3)(typescript@5.9.3))(sass@1.93.2)
 
   generators/ruby-v2/base:
     devDependencies:
@@ -1550,11 +1551,11 @@ importers:
         specifier: ^3.4.2
         version: 3.6.2
       typescript:
-        specifier: 5.8.3
-        version: 5.8.3
+        specifier: 5.9.3
+        version: 5.9.3
       vitest:
         specifier: ^2.1.9
-        version: 2.1.9(@types/node@18.15.3)(sass@1.93.2)
+        version: 2.1.9(@types/node@18.15.3)(msw@2.11.3(@types/node@18.15.3)(typescript@5.9.3))(sass@1.93.2)
 
   generators/ruby-v2/dynamic-snippets:
     devDependencies:
@@ -1599,13 +1600,13 @@ importers:
         version: 1.0.11
       tsup:
         specifier: ^8.5.0
-        version: 8.5.0(postcss@8.5.6)(tsx@4.20.6)(typescript@5.8.3)(yaml@2.3.3)
+        version: 8.5.0(postcss@8.5.6)(tsx@4.20.6)(typescript@5.9.3)(yaml@2.3.3)
       typescript:
-        specifier: 5.8.3
-        version: 5.8.3
+        specifier: 5.9.3
+        version: 5.9.3
       vitest:
         specifier: ^2.1.9
-        version: 2.1.9(@types/node@18.15.3)(sass@1.93.2)
+        version: 2.1.9(@types/node@18.15.3)(msw@2.11.3(@types/node@18.15.3)(typescript@5.9.3))(sass@1.93.2)
 
   generators/ruby-v2/model:
     devDependencies:
@@ -1638,13 +1639,13 @@ importers:
         version: 1.4.7
       tsup:
         specifier: ^8.5.0
-        version: 8.5.0(postcss@8.5.6)(tsx@4.20.6)(typescript@5.8.3)(yaml@2.3.3)
+        version: 8.5.0(postcss@8.5.6)(tsx@4.20.6)(typescript@5.9.3)(yaml@2.3.3)
       typescript:
-        specifier: 5.8.3
-        version: 5.8.3
+        specifier: 5.9.3
+        version: 5.9.3
       vitest:
         specifier: ^2.1.9
-        version: 2.1.9(@types/node@18.15.3)(sass@1.93.2)
+        version: 2.1.9(@types/node@18.15.3)(msw@2.11.3(@types/node@18.15.3)(typescript@5.9.3))(sass@1.93.2)
 
   generators/ruby-v2/sdk:
     devDependencies:
@@ -1710,13 +1711,13 @@ importers:
         version: 4.17.21
       tsup:
         specifier: ^8.5.0
-        version: 8.5.0(postcss@8.5.6)(tsx@4.20.6)(typescript@5.8.3)(yaml@2.3.3)
+        version: 8.5.0(postcss@8.5.6)(tsx@4.20.6)(typescript@5.9.3)(yaml@2.3.3)
       typescript:
-        specifier: 5.8.3
-        version: 5.8.3
+        specifier: 5.9.3
+        version: 5.9.3
       vitest:
         specifier: ^2.1.9
-        version: 2.1.9(@types/node@18.15.3)(sass@1.93.2)
+        version: 2.1.9(@types/node@18.15.3)(msw@2.11.3(@types/node@18.15.3)(typescript@5.9.3))(sass@1.93.2)
 
   generators/ruby/cli:
     dependencies:
@@ -1749,11 +1750,11 @@ importers:
         specifier: ^1.4.7
         version: 1.4.7
       typescript:
-        specifier: 5.8.3
-        version: 5.8.3
+        specifier: 5.9.3
+        version: 5.9.3
       vitest:
         specifier: ^2.1.9
-        version: 2.1.9(@types/node@18.15.3)(sass@1.93.2)
+        version: 2.1.9(@types/node@18.15.3)(msw@2.11.3(@types/node@18.15.3)(typescript@5.9.3))(sass@1.93.2)
 
   generators/ruby/codegen:
     dependencies:
@@ -1789,11 +1790,11 @@ importers:
         specifier: ^1.4.7
         version: 1.4.7
       typescript:
-        specifier: 5.8.3
-        version: 5.8.3
+        specifier: 5.9.3
+        version: 5.9.3
       vitest:
         specifier: ^2.1.9
-        version: 2.1.9(@types/node@18.15.3)(sass@1.93.2)
+        version: 2.1.9(@types/node@18.15.3)(msw@2.11.3(@types/node@18.15.3)(typescript@5.9.3))(sass@1.93.2)
 
   generators/ruby/model:
     devDependencies:
@@ -1829,13 +1830,13 @@ importers:
         version: 1.4.7
       tsup:
         specifier: ^8.5.0
-        version: 8.5.0(postcss@8.5.6)(tsx@4.20.6)(typescript@5.8.3)(yaml@2.3.3)
+        version: 8.5.0(postcss@8.5.6)(tsx@4.20.6)(typescript@5.9.3)(yaml@2.3.3)
       typescript:
-        specifier: 5.8.3
-        version: 5.8.3
+        specifier: 5.9.3
+        version: 5.9.3
       vitest:
         specifier: ^2.1.9
-        version: 2.1.9(@types/node@18.15.3)(sass@1.93.2)
+        version: 2.1.9(@types/node@18.15.3)(msw@2.11.3(@types/node@18.15.3)(typescript@5.9.3))(sass@1.93.2)
       zod:
         specifier: ^3.22.3
         version: 3.25.76
@@ -1877,13 +1878,13 @@ importers:
         version: 1.4.7
       tsup:
         specifier: ^8.5.0
-        version: 8.5.0(postcss@8.5.6)(tsx@4.20.6)(typescript@5.8.3)(yaml@2.3.3)
+        version: 8.5.0(postcss@8.5.6)(tsx@4.20.6)(typescript@5.9.3)(yaml@2.3.3)
       typescript:
-        specifier: 5.8.3
-        version: 5.8.3
+        specifier: 5.9.3
+        version: 5.9.3
       vitest:
         specifier: ^2.1.9
-        version: 2.1.9(@types/node@18.15.3)(sass@1.93.2)
+        version: 2.1.9(@types/node@18.15.3)(msw@2.11.3(@types/node@18.15.3)(typescript@5.9.3))(sass@1.93.2)
       zod:
         specifier: ^3.22.3
         version: 3.25.76
@@ -1925,11 +1926,11 @@ importers:
         specifier: ^1.4.7
         version: 1.4.7
       typescript:
-        specifier: 5.8.3
-        version: 5.8.3
+        specifier: 5.9.3
+        version: 5.9.3
       vitest:
         specifier: ^2.1.9
-        version: 2.1.9(@types/node@18.15.3)(sass@1.93.2)
+        version: 2.1.9(@types/node@18.15.3)(msw@2.11.3(@types/node@18.15.3)(typescript@5.9.3))(sass@1.93.2)
 
   generators/rust/codegen:
     dependencies:
@@ -1947,11 +1948,11 @@ importers:
         specifier: ^1.4.6
         version: 1.4.7
       typescript:
-        specifier: 5.8.3
-        version: 5.8.3
+        specifier: 5.9.3
+        version: 5.9.3
       vitest:
         specifier: ^2.1.9
-        version: 2.1.9(@types/node@18.15.3)(sass@1.93.2)
+        version: 2.1.9(@types/node@18.15.3)(msw@2.11.3(@types/node@18.15.3)(typescript@5.9.3))(sass@1.93.2)
 
   generators/rust/dynamic-snippets:
     dependencies:
@@ -1990,11 +1991,11 @@ importers:
         specifier: ^0.24.0
         version: 0.24.2
       typescript:
-        specifier: 5.8.3
-        version: 5.8.3
+        specifier: 5.9.3
+        version: 5.9.3
       vitest:
         specifier: ^2.1.9
-        version: 2.1.9(@types/node@18.15.3)(sass@1.93.2)
+        version: 2.1.9(@types/node@18.15.3)(msw@2.11.3(@types/node@18.15.3)(typescript@5.9.3))(sass@1.93.2)
 
   generators/rust/model:
     devDependencies:
@@ -2033,13 +2034,13 @@ importers:
         version: 1.4.7
       tsup:
         specifier: ^8.5.0
-        version: 8.5.0(postcss@8.5.6)(tsx@4.20.6)(typescript@5.8.3)(yaml@2.3.3)
+        version: 8.5.0(postcss@8.5.6)(tsx@4.20.6)(typescript@5.9.3)(yaml@2.3.3)
       typescript:
-        specifier: 5.8.3
-        version: 5.8.3
+        specifier: 5.9.3
+        version: 5.9.3
       vitest:
         specifier: ^2.1.9
-        version: 2.1.9(@types/node@18.15.3)(sass@1.93.2)
+        version: 2.1.9(@types/node@18.15.3)(msw@2.11.3(@types/node@18.15.3)(typescript@5.9.3))(sass@1.93.2)
       zod:
         specifier: ^3.22.4
         version: 3.25.76
@@ -2094,13 +2095,13 @@ importers:
         version: 1.4.7
       tsup:
         specifier: ^8.5.0
-        version: 8.5.0(postcss@8.5.6)(tsx@4.20.6)(typescript@5.8.3)(yaml@2.3.3)
+        version: 8.5.0(postcss@8.5.6)(tsx@4.20.6)(typescript@5.9.3)(yaml@2.3.3)
       typescript:
-        specifier: 5.8.3
-        version: 5.8.3
+        specifier: 5.9.3
+        version: 5.9.3
       vitest:
         specifier: ^2.1.9
-        version: 2.1.9(@types/node@18.15.3)(sass@1.93.2)
+        version: 2.1.9(@types/node@18.15.3)(msw@2.11.3(@types/node@18.15.3)(typescript@5.9.3))(sass@1.93.2)
       zod:
         specifier: ^3.22.4
         version: 3.25.76
@@ -2125,24 +2126,27 @@ importers:
       '@fern-fern/ir-sdk':
         specifier: ^59.7.0
         version: 59.7.0
+      '@types/lodash-es':
+        specifier: ^4.17.12
+        version: 4.17.12
       '@types/node':
         specifier: 18.15.3
         version: 18.15.3
       depcheck:
         specifier: ^1.4.7
         version: 1.4.7
+      lodash-es:
+        specifier: ^4.17.21
+        version: 4.17.21
       typescript:
         specifier: 5.9.2
         version: 5.9.2
       vitest:
         specifier: ^2.1.9
-        version: 2.1.9(@types/node@18.15.3)(sass@1.93.2)
+        version: 2.1.9(@types/node@18.15.3)(msw@2.11.3(@types/node@18.15.3)(typescript@5.9.2))(sass@1.93.2)
 
   generators/swift/codegen:
     dependencies:
-      '@fern-api/base-generator':
-        specifier: workspace:*
-        version: link:../../base
       '@fern-api/browser-compatible-base-generator':
         specifier: workspace:*
         version: link:../../browser-compatible-base
@@ -2179,7 +2183,7 @@ importers:
         version: 5.9.2
       vitest:
         specifier: ^2.1.9
-        version: 2.1.9(@types/node@18.15.3)(sass@1.93.2)
+        version: 2.1.9(@types/node@18.15.3)(msw@2.11.3(@types/node@18.15.3)(typescript@5.9.2))(sass@1.93.2)
 
   generators/swift/dynamic-snippets:
     devDependencies:
@@ -2230,7 +2234,7 @@ importers:
         version: 5.9.2
       vitest:
         specifier: ^2.1.9
-        version: 2.1.9(@types/node@18.15.3)(sass@1.93.2)
+        version: 2.1.9(@types/node@18.15.3)(msw@2.11.3(@types/node@18.15.3)(typescript@5.9.2))(sass@1.93.2)
 
   generators/swift/model:
     dependencies:
@@ -2279,7 +2283,7 @@ importers:
         version: 5.9.2
       vitest:
         specifier: ^2.1.9
-        version: 2.1.9(@types/node@18.15.3)(sass@1.93.2)
+        version: 2.1.9(@types/node@18.15.3)(msw@2.11.3(@types/node@18.15.3)(typescript@5.9.2))(sass@1.93.2)
       zod:
         specifier: ^3.22.3
         version: 3.25.76
@@ -2298,6 +2302,9 @@ importers:
       '@fern-api/fs-utils':
         specifier: workspace:*
         version: link:../../../packages/commons/fs-utils
+      '@fern-api/generator-cli':
+        specifier: 0.3.0
+        version: 0.3.0
       '@fern-api/logger':
         specifier: workspace:*
         version: link:../../../packages/cli/logger
@@ -2342,7 +2349,7 @@ importers:
         version: 5.9.2
       vitest:
         specifier: ^2.1.9
-        version: 2.1.9(@types/node@18.15.3)(sass@1.93.2)
+        version: 2.1.9(@types/node@18.15.3)(msw@2.11.3(@types/node@18.15.3)(typescript@5.9.2))(sass@1.93.2)
       zod:
         specifier: ^3.25.75
         version: 3.25.76
@@ -2383,11 +2390,11 @@ importers:
         specifier: ^4.17.21
         version: 4.17.21
       typescript:
-        specifier: 5.8.3
-        version: 5.8.3
+        specifier: 5.9.3
+        version: 5.9.3
       vitest:
         specifier: ^2.1.9
-        version: 2.1.9(@types/node@18.15.3)(sass@1.93.2)
+        version: 2.1.9(@types/node@18.15.3)(msw@2.11.3(@types/node@18.15.3)(typescript@5.9.3))(sass@1.93.2)
 
   generators/typescript-mcp/model:
     devDependencies:
@@ -2417,13 +2424,13 @@ importers:
         version: 1.4.7
       tsup:
         specifier: ^8.5.0
-        version: 8.5.0(postcss@8.5.6)(tsx@4.20.6)(typescript@5.8.3)(yaml@2.3.3)
+        version: 8.5.0(postcss@8.5.6)(tsx@4.20.6)(typescript@5.9.3)(yaml@2.3.3)
       typescript:
-        specifier: 5.8.3
-        version: 5.8.3
+        specifier: 5.9.3
+        version: 5.9.3
       vitest:
         specifier: ^2.1.9
-        version: 2.1.9(@types/node@18.15.3)(sass@1.93.2)
+        version: 2.1.9(@types/node@18.15.3)(msw@2.11.3(@types/node@18.15.3)(typescript@5.9.3))(sass@1.93.2)
 
   generators/typescript-mcp/server:
     devDependencies:
@@ -2462,13 +2469,13 @@ importers:
         version: 1.4.7
       tsup:
         specifier: ^8.5.0
-        version: 8.5.0(postcss@8.5.6)(tsx@4.20.6)(typescript@5.8.3)(yaml@2.3.3)
+        version: 8.5.0(postcss@8.5.6)(tsx@4.20.6)(typescript@5.9.3)(yaml@2.3.3)
       typescript:
-        specifier: 5.8.3
-        version: 5.8.3
+        specifier: 5.9.3
+        version: 5.9.3
       vitest:
         specifier: ^2.1.9
-        version: 2.1.9(@types/node@18.15.3)(sass@1.93.2)
+        version: 2.1.9(@types/node@18.15.3)(msw@2.11.3(@types/node@18.15.3)(typescript@5.9.3))(sass@1.93.2)
 
   generators/typescript-v2/ast:
     dependencies:
@@ -2492,11 +2499,11 @@ importers:
         specifier: ^1.4.7
         version: 1.4.7
       typescript:
-        specifier: 5.8.3
-        version: 5.8.3
+        specifier: 5.9.3
+        version: 5.9.3
       vitest:
         specifier: ^2.1.9
-        version: 2.1.9(@types/node@18.15.3)(sass@1.93.2)
+        version: 2.1.9(@types/node@18.15.3)(msw@2.11.3(@types/node@18.15.3)(typescript@5.9.3))(sass@1.93.2)
 
   generators/typescript-v2/base:
     devDependencies:
@@ -2510,11 +2517,11 @@ importers:
         specifier: ^1.4.7
         version: 1.4.7
       typescript:
-        specifier: 5.8.3
-        version: 5.8.3
+        specifier: 5.9.3
+        version: 5.9.3
       vitest:
         specifier: ^2.1.9
-        version: 2.1.9(@types/node@18.15.3)(sass@1.93.2)
+        version: 2.1.9(@types/node@18.15.3)(msw@2.11.3(@types/node@18.15.3)(typescript@5.9.3))(sass@1.93.2)
 
   generators/typescript-v2/browser-compatible-base:
     devDependencies:
@@ -2534,11 +2541,11 @@ importers:
         specifier: ^4.17.21
         version: 4.17.21
       typescript:
-        specifier: 5.8.3
-        version: 5.8.3
+        specifier: 5.9.3
+        version: 5.9.3
       vitest:
         specifier: ^2.1.9
-        version: 2.1.9(@types/node@18.15.3)(sass@1.93.2)
+        version: 2.1.9(@types/node@18.15.3)(msw@2.11.3(@types/node@18.15.3)(typescript@5.9.3))(sass@1.93.2)
 
   generators/typescript-v2/dynamic-snippets:
     devDependencies:
@@ -2580,13 +2587,13 @@ importers:
         version: 1.0.11
       tsup:
         specifier: ^8.5.0
-        version: 8.5.0(postcss@8.5.6)(tsx@4.20.6)(typescript@5.8.3)(yaml@2.3.3)
+        version: 8.5.0(postcss@8.5.6)(tsx@4.20.6)(typescript@5.9.3)(yaml@2.3.3)
       typescript:
-        specifier: 5.8.3
-        version: 5.8.3
+        specifier: 5.9.3
+        version: 5.9.3
       vitest:
         specifier: ^2.1.9
-        version: 2.1.9(@types/node@18.15.3)(sass@1.93.2)
+        version: 2.1.9(@types/node@18.15.3)(msw@2.11.3(@types/node@18.15.3)(typescript@5.9.3))(sass@1.93.2)
 
   generators/typescript-v2/formatter:
     dependencies:
@@ -2610,11 +2617,11 @@ importers:
         specifier: ^1.4.7
         version: 1.4.7
       typescript:
-        specifier: 5.8.3
-        version: 5.8.3
+        specifier: 5.9.3
+        version: 5.9.3
       vitest:
         specifier: ^2.1.9
-        version: 2.1.9(@types/node@18.15.3)(sass@1.93.2)
+        version: 2.1.9(@types/node@18.15.3)(msw@2.11.3(@types/node@18.15.3)(typescript@5.9.3))(sass@1.93.2)
 
   generators/typescript/express/cli:
     devDependencies:
@@ -2656,13 +2663,13 @@ importers:
         version: 4.17.21
       tsup:
         specifier: ^8.5.0
-        version: 8.5.0(postcss@8.5.6)(tsx@4.20.6)(typescript@5.8.3)(yaml@2.3.3)
+        version: 8.5.0(postcss@8.5.6)(tsx@4.20.6)(typescript@5.9.3)(yaml@2.3.3)
       typescript:
-        specifier: 5.8.3
-        version: 5.8.3
+        specifier: 5.9.3
+        version: 5.9.3
       vitest:
         specifier: ^2.1.9
-        version: 2.1.9(@types/node@18.15.3)(sass@1.93.2)
+        version: 2.1.9(@types/node@18.15.3)(msw@2.11.3(@types/node@18.15.3)(typescript@5.9.3))(sass@1.93.2)
       zod:
         specifier: ^3.22.3
         version: 3.25.76
@@ -2698,11 +2705,11 @@ importers:
         specifier: ^1.4.7
         version: 1.4.7
       typescript:
-        specifier: 5.8.3
-        version: 5.8.3
+        specifier: 5.9.3
+        version: 5.9.3
       vitest:
         specifier: ^2.1.9
-        version: 2.1.9(@types/node@18.15.3)(sass@1.93.2)
+        version: 2.1.9(@types/node@18.15.3)(msw@2.11.3(@types/node@18.15.3)(typescript@5.9.3))(sass@1.93.2)
 
   generators/typescript/express/express-error-generator:
     dependencies:
@@ -2732,11 +2739,11 @@ importers:
         specifier: ^1.4.7
         version: 1.4.7
       typescript:
-        specifier: 5.8.3
-        version: 5.8.3
+        specifier: 5.9.3
+        version: 5.9.3
       vitest:
         specifier: ^2.1.9
-        version: 2.1.9(@types/node@18.15.3)(sass@1.93.2)
+        version: 2.1.9(@types/node@18.15.3)(msw@2.11.3(@types/node@18.15.3)(typescript@5.9.3))(sass@1.93.2)
 
   generators/typescript/express/express-error-schema-generator:
     dependencies:
@@ -2769,11 +2776,11 @@ importers:
         specifier: ^1.4.7
         version: 1.4.7
       typescript:
-        specifier: 5.8.3
-        version: 5.8.3
+        specifier: 5.9.3
+        version: 5.9.3
       vitest:
         specifier: ^2.1.9
-        version: 2.1.9(@types/node@18.15.3)(sass@1.93.2)
+        version: 2.1.9(@types/node@18.15.3)(msw@2.11.3(@types/node@18.15.3)(typescript@5.9.3))(sass@1.93.2)
 
   generators/typescript/express/express-inlined-request-body-generator:
     dependencies:
@@ -2797,11 +2804,11 @@ importers:
         specifier: ^1.4.7
         version: 1.4.7
       typescript:
-        specifier: 5.8.3
-        version: 5.8.3
+        specifier: 5.9.3
+        version: 5.9.3
       vitest:
         specifier: ^2.1.9
-        version: 2.1.9(@types/node@18.15.3)(sass@1.93.2)
+        version: 2.1.9(@types/node@18.15.3)(msw@2.11.3(@types/node@18.15.3)(typescript@5.9.3))(sass@1.93.2)
 
   generators/typescript/express/express-inlined-request-body-schema-generator:
     dependencies:
@@ -2831,11 +2838,11 @@ importers:
         specifier: ^1.4.7
         version: 1.4.7
       typescript:
-        specifier: 5.8.3
-        version: 5.8.3
+        specifier: 5.9.3
+        version: 5.9.3
       vitest:
         specifier: ^2.1.9
-        version: 2.1.9(@types/node@18.15.3)(sass@1.93.2)
+        version: 2.1.9(@types/node@18.15.3)(msw@2.11.3(@types/node@18.15.3)(typescript@5.9.3))(sass@1.93.2)
 
   generators/typescript/express/express-register-generator:
     dependencies:
@@ -2871,11 +2878,11 @@ importers:
         specifier: ^1.4.7
         version: 1.4.7
       typescript:
-        specifier: 5.8.3
-        version: 5.8.3
+        specifier: 5.9.3
+        version: 5.9.3
       vitest:
         specifier: ^2.1.9
-        version: 2.1.9(@types/node@18.15.3)(sass@1.93.2)
+        version: 2.1.9(@types/node@18.15.3)(msw@2.11.3(@types/node@18.15.3)(typescript@5.9.3))(sass@1.93.2)
 
   generators/typescript/express/express-service-generator:
     dependencies:
@@ -2905,11 +2912,11 @@ importers:
         specifier: ^1.4.7
         version: 1.4.7
       typescript:
-        specifier: 5.8.3
-        version: 5.8.3
+        specifier: 5.9.3
+        version: 5.9.3
       vitest:
         specifier: ^2.1.9
-        version: 2.1.9(@types/node@18.15.3)(sass@1.93.2)
+        version: 2.1.9(@types/node@18.15.3)(msw@2.11.3(@types/node@18.15.3)(typescript@5.9.3))(sass@1.93.2)
 
   generators/typescript/express/generator:
     dependencies:
@@ -2984,11 +2991,11 @@ importers:
         specifier: ^1.4.7
         version: 1.4.7
       typescript:
-        specifier: 5.8.3
-        version: 5.8.3
+        specifier: 5.9.3
+        version: 5.9.3
       vitest:
         specifier: ^2.1.9
-        version: 2.1.9(@types/node@18.15.3)(sass@1.93.2)
+        version: 2.1.9(@types/node@18.15.3)(msw@2.11.3(@types/node@18.15.3)(typescript@5.9.3))(sass@1.93.2)
 
   generators/typescript/express/generic-express-error-generators:
     dependencies:
@@ -3015,11 +3022,11 @@ importers:
         specifier: ^1.4.7
         version: 1.4.7
       typescript:
-        specifier: 5.8.3
-        version: 5.8.3
+        specifier: 5.9.3
+        version: 5.9.3
       vitest:
         specifier: ^2.1.9
-        version: 2.1.9(@types/node@18.15.3)(sass@1.93.2)
+        version: 2.1.9(@types/node@18.15.3)(msw@2.11.3(@types/node@18.15.3)(typescript@5.9.3))(sass@1.93.2)
 
   generators/typescript/model/type-generator:
     dependencies:
@@ -3049,11 +3056,11 @@ importers:
         specifier: ^1.4.7
         version: 1.4.7
       typescript:
-        specifier: 5.8.3
-        version: 5.8.3
+        specifier: 5.9.3
+        version: 5.9.3
       vitest:
         specifier: ^2.1.9
-        version: 2.1.9(@types/node@18.15.3)(sass@1.93.2)
+        version: 2.1.9(@types/node@18.15.3)(msw@2.11.3(@types/node@18.15.3)(typescript@5.9.3))(sass@1.93.2)
 
   generators/typescript/model/type-reference-converters:
     dependencies:
@@ -3083,11 +3090,11 @@ importers:
         specifier: ^1.4.7
         version: 1.4.7
       typescript:
-        specifier: 5.8.3
-        version: 5.8.3
+        specifier: 5.9.3
+        version: 5.9.3
       vitest:
         specifier: ^2.1.9
-        version: 2.1.9(@types/node@18.15.3)(sass@1.93.2)
+        version: 2.1.9(@types/node@18.15.3)(msw@2.11.3(@types/node@18.15.3)(typescript@5.9.3))(sass@1.93.2)
 
   generators/typescript/model/type-reference-example-generator:
     dependencies:
@@ -3117,11 +3124,11 @@ importers:
         specifier: ^1.4.7
         version: 1.4.7
       typescript:
-        specifier: 5.8.3
-        version: 5.8.3
+        specifier: 5.9.3
+        version: 5.9.3
       vitest:
         specifier: ^2.1.9
-        version: 2.1.9(@types/node@18.15.3)(sass@1.93.2)
+        version: 2.1.9(@types/node@18.15.3)(msw@2.11.3(@types/node@18.15.3)(typescript@5.9.3))(sass@1.93.2)
 
   generators/typescript/model/type-schema-generator:
     dependencies:
@@ -3154,11 +3161,11 @@ importers:
         specifier: ^1.4.7
         version: 1.4.7
       typescript:
-        specifier: 5.8.3
-        version: 5.8.3
+        specifier: 5.9.3
+        version: 5.9.3
       vitest:
         specifier: ^2.1.9
-        version: 2.1.9(@types/node@18.15.3)(sass@1.93.2)
+        version: 2.1.9(@types/node@18.15.3)(msw@2.11.3(@types/node@18.15.3)(typescript@5.9.3))(sass@1.93.2)
 
   generators/typescript/model/union-generator:
     dependencies:
@@ -3188,11 +3195,11 @@ importers:
         specifier: ^1.4.7
         version: 1.4.7
       typescript:
-        specifier: 5.8.3
-        version: 5.8.3
+        specifier: 5.9.3
+        version: 5.9.3
       vitest:
         specifier: ^2.1.9
-        version: 2.1.9(@types/node@18.15.3)(sass@1.93.2)
+        version: 2.1.9(@types/node@18.15.3)(msw@2.11.3(@types/node@18.15.3)(typescript@5.9.3))(sass@1.93.2)
 
   generators/typescript/model/union-schema-generator:
     dependencies:
@@ -3222,75 +3229,11 @@ importers:
         specifier: ^1.4.7
         version: 1.4.7
       typescript:
-        specifier: 5.8.3
-        version: 5.8.3
+        specifier: 5.9.3
+        version: 5.9.3
       vitest:
         specifier: ^2.1.9
-        version: 2.1.9(@types/node@18.15.3)(sass@1.93.2)
-
-  generators/typescript/playground/browser:
-    dependencies:
-      form-data:
-        specifier: 4.0.4
-        version: 4.0.4
-      js-base64:
-        specifier: ^3.7.6
-        version: 3.7.8
-      node-fetch:
-        specifier: 2.7.0
-        version: 2.7.0
-      qs:
-        specifier: 6.13.0
-        version: 6.13.0
-      react:
-        specifier: ^18.2.0
-        version: 18.3.1
-      react-dom:
-        specifier: ^18.2.0
-        version: 18.3.1(react@18.3.1)
-      url-join:
-        specifier: ^5.0.0
-        version: 5.0.0
-    devDependencies:
-      '@fern-api/configs':
-        specifier: workspace:*
-        version: link:../../../../packages/configs
-      '@types/node':
-        specifier: 18.15.3
-        version: 18.15.3
-      '@types/node-fetch':
-        specifier: 2.6.9
-        version: 2.6.9
-      '@types/qs':
-        specifier: 6.9.15
-        version: 6.9.15
-      '@types/react':
-        specifier: ^18.2.43
-        version: 18.3.26
-      '@types/react-dom':
-        specifier: ^18.2.17
-        version: 18.3.7(@types/react@18.3.26)
-      '@types/url-join':
-        specifier: 4.0.1
-        version: 4.0.1
-      '@vitejs/plugin-react':
-        specifier: ^4.2.1
-        version: 4.7.0(vite@5.4.21(@types/node@18.15.3)(sass@1.93.2))
-      depcheck:
-        specifier: ^1.4.7
-        version: 1.4.7
-      sass:
-        specifier: ^1.72.0
-        version: 1.93.2
-      vite:
-        specifier: ^5.4.12
-        version: 5.4.21(@types/node@18.15.3)(sass@1.93.2)
-      vite-plugin-checker:
-        specifier: ^0.6.4
-        version: 0.6.4(eslint@8.57.1)(meow@9.0.0)(optionator@0.9.4)(stylelint@14.16.1)(typescript@5.9.2)(vite@5.4.21(@types/node@18.15.3)(sass@1.93.2))
-      vitest:
-        specifier: ^2.1.9
-        version: 2.1.9(@types/node@18.15.3)(sass@1.93.2)
+        version: 2.1.9(@types/node@18.15.3)(msw@2.11.3(@types/node@18.15.3)(typescript@5.9.3))(sass@1.93.2)
 
   generators/typescript/sdk/cli:
     devDependencies:
@@ -3335,13 +3278,13 @@ importers:
         version: 1.4.7
       tsup:
         specifier: ^8.5.0
-        version: 8.5.0(postcss@8.5.6)(tsx@4.20.6)(typescript@5.8.3)(yaml@2.3.3)
+        version: 8.5.0(postcss@8.5.6)(tsx@4.20.6)(typescript@5.9.3)(yaml@2.3.3)
       typescript:
-        specifier: 5.8.3
-        version: 5.8.3
+        specifier: 5.9.3
+        version: 5.9.3
       vitest:
         specifier: ^2.1.9
-        version: 2.1.9(@types/node@18.15.3)(sass@1.93.2)
+        version: 2.1.9(@types/node@18.15.3)(msw@2.11.3(@types/node@18.15.3)(typescript@5.9.3))(sass@1.93.2)
 
   generators/typescript/sdk/client-class-generator:
     dependencies:
@@ -3383,11 +3326,11 @@ importers:
         specifier: ^1.4.7
         version: 1.4.7
       typescript:
-        specifier: 5.8.3
-        version: 5.8.3
+        specifier: 5.9.3
+        version: 5.9.3
       vitest:
         specifier: ^2.1.9
-        version: 2.1.9(@types/node@18.15.3)(sass@1.93.2)
+        version: 2.1.9(@types/node@18.15.3)(msw@2.11.3(@types/node@18.15.3)(typescript@5.9.3))(sass@1.93.2)
 
   generators/typescript/sdk/endpoint-error-union-generator:
     dependencies:
@@ -3420,11 +3363,11 @@ importers:
         specifier: ^1.4.7
         version: 1.4.7
       typescript:
-        specifier: 5.8.3
-        version: 5.8.3
+        specifier: 5.9.3
+        version: 5.9.3
       vitest:
         specifier: ^2.1.9
-        version: 2.1.9(@types/node@18.15.3)(sass@1.93.2)
+        version: 2.1.9(@types/node@18.15.3)(msw@2.11.3(@types/node@18.15.3)(typescript@5.9.3))(sass@1.93.2)
 
   generators/typescript/sdk/environments-generator:
     dependencies:
@@ -3451,11 +3394,11 @@ importers:
         specifier: ^1.4.7
         version: 1.4.7
       typescript:
-        specifier: 5.8.3
-        version: 5.8.3
+        specifier: 5.9.3
+        version: 5.9.3
       vitest:
         specifier: ^2.1.9
-        version: 2.1.9(@types/node@18.15.3)(sass@1.93.2)
+        version: 2.1.9(@types/node@18.15.3)(msw@2.11.3(@types/node@18.15.3)(typescript@5.9.3))(sass@1.93.2)
 
   generators/typescript/sdk/generator:
     dependencies:
@@ -3566,11 +3509,11 @@ importers:
         specifier: ^1.4.7
         version: 1.4.7
       typescript:
-        specifier: 5.8.3
-        version: 5.8.3
+        specifier: 5.9.3
+        version: 5.9.3
       vitest:
         specifier: ^2.1.9
-        version: 2.1.9(@types/node@18.15.3)(sass@1.93.2)
+        version: 2.1.9(@types/node@18.15.3)(msw@2.11.3(@types/node@18.15.3)(typescript@5.9.3))(sass@1.93.2)
 
   generators/typescript/sdk/generic-sdk-error-generators:
     dependencies:
@@ -3597,11 +3540,11 @@ importers:
         specifier: ^1.4.7
         version: 1.4.7
       typescript:
-        specifier: 5.8.3
-        version: 5.8.3
+        specifier: 5.9.3
+        version: 5.9.3
       vitest:
         specifier: ^2.1.9
-        version: 2.1.9(@types/node@18.15.3)(sass@1.93.2)
+        version: 2.1.9(@types/node@18.15.3)(msw@2.11.3(@types/node@18.15.3)(typescript@5.9.3))(sass@1.93.2)
 
   generators/typescript/sdk/request-wrapper-generator:
     dependencies:
@@ -3631,11 +3574,11 @@ importers:
         specifier: ^1.4.7
         version: 1.4.7
       typescript:
-        specifier: 5.8.3
-        version: 5.8.3
+        specifier: 5.9.3
+        version: 5.9.3
       vitest:
         specifier: ^2.1.9
-        version: 2.1.9(@types/node@18.15.3)(sass@1.93.2)
+        version: 2.1.9(@types/node@18.15.3)(msw@2.11.3(@types/node@18.15.3)(typescript@5.9.3))(sass@1.93.2)
 
   generators/typescript/sdk/sdk-endpoint-type-schemas-generator:
     dependencies:
@@ -3674,11 +3617,11 @@ importers:
         specifier: ^1.4.7
         version: 1.4.7
       typescript:
-        specifier: 5.8.3
-        version: 5.8.3
+        specifier: 5.9.3
+        version: 5.9.3
       vitest:
         specifier: ^2.1.9
-        version: 2.1.9(@types/node@18.15.3)(sass@1.93.2)
+        version: 2.1.9(@types/node@18.15.3)(msw@2.11.3(@types/node@18.15.3)(typescript@5.9.3))(sass@1.93.2)
 
   generators/typescript/sdk/sdk-error-generator:
     dependencies:
@@ -3708,11 +3651,11 @@ importers:
         specifier: ^1.4.7
         version: 1.4.7
       typescript:
-        specifier: 5.8.3
-        version: 5.8.3
+        specifier: 5.9.3
+        version: 5.9.3
       vitest:
         specifier: ^2.1.9
-        version: 2.1.9(@types/node@18.15.3)(sass@1.93.2)
+        version: 2.1.9(@types/node@18.15.3)(msw@2.11.3(@types/node@18.15.3)(typescript@5.9.3))(sass@1.93.2)
 
   generators/typescript/sdk/sdk-error-schema-generator:
     dependencies:
@@ -3745,11 +3688,11 @@ importers:
         specifier: ^1.4.7
         version: 1.4.7
       typescript:
-        specifier: 5.8.3
-        version: 5.8.3
+        specifier: 5.9.3
+        version: 5.9.3
       vitest:
         specifier: ^2.1.9
-        version: 2.1.9(@types/node@18.15.3)(sass@1.93.2)
+        version: 2.1.9(@types/node@18.15.3)(msw@2.11.3(@types/node@18.15.3)(typescript@5.9.3))(sass@1.93.2)
 
   generators/typescript/sdk/sdk-inlined-request-body-schema-generator:
     dependencies:
@@ -3779,11 +3722,11 @@ importers:
         specifier: ^1.4.7
         version: 1.4.7
       typescript:
-        specifier: 5.8.3
-        version: 5.8.3
+        specifier: 5.9.3
+        version: 5.9.3
       vitest:
         specifier: ^2.1.9
-        version: 2.1.9(@types/node@18.15.3)(sass@1.93.2)
+        version: 2.1.9(@types/node@18.15.3)(msw@2.11.3(@types/node@18.15.3)(typescript@5.9.3))(sass@1.93.2)
 
   generators/typescript/sdk/websocket-type-schema-generator:
     dependencies:
@@ -3813,11 +3756,11 @@ importers:
         specifier: ^1.4.7
         version: 1.4.7
       typescript:
-        specifier: 5.8.3
-        version: 5.8.3
+        specifier: 5.9.3
+        version: 5.9.3
       vitest:
         specifier: ^2.1.9
-        version: 2.1.9(@types/node@18.15.3)(sass@1.93.2)
+        version: 2.1.9(@types/node@18.15.3)(msw@2.11.3(@types/node@18.15.3)(typescript@5.9.3))(sass@1.93.2)
 
   generators/typescript/utils/abstract-error-class-generator:
     dependencies:
@@ -3841,11 +3784,11 @@ importers:
         specifier: ^1.4.7
         version: 1.4.7
       typescript:
-        specifier: 5.8.3
-        version: 5.8.3
+        specifier: 5.9.3
+        version: 5.9.3
       vitest:
         specifier: ^2.1.9
-        version: 2.1.9(@types/node@18.15.3)(sass@1.93.2)
+        version: 2.1.9(@types/node@18.15.3)(msw@2.11.3(@types/node@18.15.3)(typescript@5.9.3))(sass@1.93.2)
 
   generators/typescript/utils/abstract-generator-cli:
     dependencies:
@@ -3890,11 +3833,11 @@ importers:
         specifier: ^1.4.7
         version: 1.4.7
       typescript:
-        specifier: 5.8.3
-        version: 5.8.3
+        specifier: 5.9.3
+        version: 5.9.3
       vitest:
         specifier: ^2.1.9
-        version: 2.1.9(@types/node@18.15.3)(sass@1.93.2)
+        version: 2.1.9(@types/node@18.15.3)(msw@2.11.3(@types/node@18.15.3)(typescript@5.9.3))(sass@1.93.2)
 
   generators/typescript/utils/abstract-schema-generator:
     dependencies:
@@ -3918,11 +3861,11 @@ importers:
         specifier: ^1.4.7
         version: 1.4.7
       typescript:
-        specifier: 5.8.3
-        version: 5.8.3
+        specifier: 5.9.3
+        version: 5.9.3
       vitest:
         specifier: ^2.1.9
-        version: 2.1.9(@types/node@18.15.3)(sass@1.93.2)
+        version: 2.1.9(@types/node@18.15.3)(msw@2.11.3(@types/node@18.15.3)(typescript@5.9.3))(sass@1.93.2)
 
   generators/typescript/utils/commons:
     dependencies:
@@ -3997,11 +3940,11 @@ importers:
         specifier: ^1.0.3
         version: 1.0.3
       typescript:
-        specifier: 5.8.3
-        version: 5.8.3
+        specifier: 5.9.3
+        version: 5.9.3
       vitest:
         specifier: ^2.1.9
-        version: 2.1.9(@types/node@18.15.3)(sass@1.93.2)
+        version: 2.1.9(@types/node@18.15.3)(msw@2.11.3(@types/node@18.15.3)(typescript@5.9.3))(sass@1.93.2)
 
   generators/typescript/utils/contexts:
     dependencies:
@@ -4037,11 +3980,11 @@ importers:
         specifier: ^1.4.7
         version: 1.4.7
       typescript:
-        specifier: 5.8.3
-        version: 5.8.3
+        specifier: 5.9.3
+        version: 5.9.3
       vitest:
         specifier: ^2.1.9
-        version: 2.1.9(@types/node@18.15.3)(sass@1.93.2)
+        version: 2.1.9(@types/node@18.15.3)(msw@2.11.3(@types/node@18.15.3)(typescript@5.9.3))(sass@1.93.2)
 
   generators/typescript/utils/resolvers:
     dependencies:
@@ -4062,11 +4005,11 @@ importers:
         specifier: ^1.4.7
         version: 1.4.7
       typescript:
-        specifier: 5.8.3
-        version: 5.8.3
+        specifier: 5.9.3
+        version: 5.9.3
       vitest:
         specifier: ^2.1.9
-        version: 2.1.9(@types/node@18.15.3)(sass@1.93.2)
+        version: 2.1.9(@types/node@18.15.3)(msw@2.11.3(@types/node@18.15.3)(typescript@5.9.3))(sass@1.93.2)
 
   packages/cli/api-importers/asyncapi-to-ir:
     dependencies:
@@ -4102,11 +4045,11 @@ importers:
         specifier: ^1.4.7
         version: 1.4.7
       typescript:
-        specifier: 5.8.3
-        version: 5.8.3
+        specifier: 5.9.3
+        version: 5.9.3
       vitest:
         specifier: ^2.1.9
-        version: 2.1.9(@types/node@18.15.3)(sass@1.93.2)
+        version: 2.1.9(@types/node@18.15.3)(msw@2.11.3(@types/node@18.15.3)(typescript@5.9.3))(sass@1.93.2)
 
   packages/cli/api-importers/commons:
     dependencies:
@@ -4139,11 +4082,11 @@ importers:
         specifier: ^1.4.7
         version: 1.4.7
       typescript:
-        specifier: 5.8.3
-        version: 5.8.3
+        specifier: 5.9.3
+        version: 5.9.3
       vitest:
         specifier: ^2.1.9
-        version: 2.1.9(@types/node@18.15.3)(sass@1.93.2)
+        version: 2.1.9(@types/node@18.15.3)(msw@2.11.3(@types/node@18.15.3)(typescript@5.9.3))(sass@1.93.2)
 
   packages/cli/api-importers/conjure/conjure-sdk:
     devDependencies:
@@ -4157,11 +4100,11 @@ importers:
         specifier: ^1.4.7
         version: 1.4.7
       typescript:
-        specifier: 5.8.3
-        version: 5.8.3
+        specifier: 5.9.3
+        version: 5.9.3
       vitest:
         specifier: ^2.1.9
-        version: 2.1.9(@types/node@18.15.3)(sass@1.93.2)
+        version: 2.1.9(@types/node@18.15.3)(msw@2.11.3(@types/node@18.15.3)(typescript@5.9.3))(sass@1.93.2)
 
   packages/cli/api-importers/conjure/conjure-to-fern:
     dependencies:
@@ -4197,11 +4140,11 @@ importers:
         specifier: ^1.4.7
         version: 1.4.7
       typescript:
-        specifier: 5.8.3
-        version: 5.8.3
+        specifier: 5.9.3
+        version: 5.9.3
       vitest:
         specifier: ^2.1.9
-        version: 2.1.9(@types/node@18.15.3)(sass@1.93.2)
+        version: 2.1.9(@types/node@18.15.3)(msw@2.11.3(@types/node@18.15.3)(typescript@5.9.3))(sass@1.93.2)
 
   packages/cli/api-importers/conjure/conjure-to-fern-tests:
     dependencies:
@@ -4225,11 +4168,11 @@ importers:
         specifier: ^1.4.7
         version: 1.4.7
       typescript:
-        specifier: 5.8.3
-        version: 5.8.3
+        specifier: 5.9.3
+        version: 5.9.3
       vitest:
         specifier: ^2.1.9
-        version: 2.1.9(@types/node@18.15.3)(sass@1.93.2)
+        version: 2.1.9(@types/node@18.15.3)(msw@2.11.3(@types/node@18.15.3)(typescript@5.9.3))(sass@1.93.2)
 
   packages/cli/api-importers/openapi-to-ir:
     dependencies:
@@ -4245,6 +4188,9 @@ importers:
       '@fern-api/ir-utils':
         specifier: workspace:*
         version: link:../../../commons/ir-utils
+      '@fern-api/openapi-ir-parser':
+        specifier: workspace:*
+        version: link:../openapi/openapi-ir-parser
       '@fern-api/v3-importer-commons':
         specifier: workspace:*
         version: link:../v3-importer-commons
@@ -4271,11 +4217,11 @@ importers:
         specifier: ^1.4.7
         version: 1.4.7
       typescript:
-        specifier: 5.8.3
-        version: 5.8.3
+        specifier: 5.9.3
+        version: 5.9.3
       vitest:
         specifier: ^2.1.9
-        version: 2.1.9(@types/node@18.15.3)(sass@1.93.2)
+        version: 2.1.9(@types/node@18.15.3)(msw@2.11.3(@types/node@18.15.3)(typescript@5.9.3))(sass@1.93.2)
 
   packages/cli/api-importers/openapi/openapi-ir:
     dependencies:
@@ -4296,11 +4242,11 @@ importers:
         specifier: ^1.4.7
         version: 1.4.7
       typescript:
-        specifier: 5.8.3
-        version: 5.8.3
+        specifier: 5.9.3
+        version: 5.9.3
       vitest:
         specifier: ^2.1.9
-        version: 2.1.9(@types/node@18.15.3)(sass@1.93.2)
+        version: 2.1.9(@types/node@18.15.3)(msw@2.11.3(@types/node@18.15.3)(typescript@5.9.3))(sass@1.93.2)
 
   packages/cli/api-importers/openapi/openapi-ir-parser:
     dependencies:
@@ -4348,11 +4294,11 @@ importers:
         specifier: ^1.4.7
         version: 1.4.7
       typescript:
-        specifier: 5.8.3
-        version: 5.8.3
+        specifier: 5.9.3
+        version: 5.9.3
       vitest:
         specifier: ^2.1.9
-        version: 2.1.9(@types/node@18.15.3)(sass@1.93.2)
+        version: 2.1.9(@types/node@18.15.3)(msw@2.11.3(@types/node@18.15.3)(typescript@5.9.3))(sass@1.93.2)
 
   packages/cli/api-importers/openapi/openapi-ir-to-fern:
     dependencies:
@@ -4397,11 +4343,11 @@ importers:
         specifier: ^1.4.7
         version: 1.4.7
       typescript:
-        specifier: 5.8.3
-        version: 5.8.3
+        specifier: 5.9.3
+        version: 5.9.3
       vitest:
         specifier: ^2.1.9
-        version: 2.1.9(@types/node@18.15.3)(sass@1.93.2)
+        version: 2.1.9(@types/node@18.15.3)(msw@2.11.3(@types/node@18.15.3)(typescript@5.9.3))(sass@1.93.2)
 
   packages/cli/api-importers/openapi/openapi-ir-to-fern-tests:
     dependencies:
@@ -4440,11 +4386,11 @@ importers:
         specifier: ^1.4.7
         version: 1.4.7
       typescript:
-        specifier: 5.8.3
-        version: 5.8.3
+        specifier: 5.9.3
+        version: 5.9.3
       vitest:
         specifier: ^2.1.9
-        version: 2.1.9(@types/node@18.15.3)(sass@1.93.2)
+        version: 2.1.9(@types/node@18.15.3)(msw@2.11.3(@types/node@18.15.3)(typescript@5.9.3))(sass@1.93.2)
 
   packages/cli/api-importers/openrpc-to-ir:
     dependencies:
@@ -4477,11 +4423,11 @@ importers:
         specifier: ^1.4.7
         version: 1.4.7
       typescript:
-        specifier: 5.8.3
-        version: 5.8.3
+        specifier: 5.9.3
+        version: 5.9.3
       vitest:
         specifier: ^2.1.9
-        version: 2.1.9(@types/node@18.15.3)(sass@1.93.2)
+        version: 2.1.9(@types/node@18.15.3)(msw@2.11.3(@types/node@18.15.3)(typescript@5.9.3))(sass@1.93.2)
 
   packages/cli/api-importers/v3-importer-commons:
     dependencies:
@@ -4544,11 +4490,11 @@ importers:
         specifier: ^1.4.7
         version: 1.4.7
       typescript:
-        specifier: 5.8.3
-        version: 5.8.3
+        specifier: 5.9.3
+        version: 5.9.3
       vitest:
         specifier: ^2.1.9
-        version: 2.1.9(@types/node@18.15.3)(sass@1.93.2)
+        version: 2.1.9(@types/node@18.15.3)(msw@2.11.3(@types/node@18.15.3)(typescript@5.9.3))(sass@1.93.2)
 
   packages/cli/api-importers/v3-importer-tests:
     dependencies:
@@ -4581,11 +4527,11 @@ importers:
         specifier: ^1.4.7
         version: 1.4.7
       typescript:
-        specifier: 5.8.3
-        version: 5.8.3
+        specifier: 5.9.3
+        version: 5.9.3
       vitest:
         specifier: ^2.1.9
-        version: 2.1.9(@types/node@18.15.3)(sass@1.93.2)
+        version: 2.1.9(@types/node@18.15.3)(msw@2.11.3(@types/node@18.15.3)(typescript@5.9.3))(sass@1.93.2)
 
   packages/cli/auth:
     dependencies:
@@ -4624,11 +4570,11 @@ importers:
         specifier: ^1.4.7
         version: 1.4.7
       typescript:
-        specifier: 5.8.3
-        version: 5.8.3
+        specifier: 5.9.3
+        version: 5.9.3
       vitest:
         specifier: ^2.1.9
-        version: 2.1.9(@types/node@18.15.3)(sass@1.93.2)
+        version: 2.1.9(@types/node@18.15.3)(msw@2.11.3(@types/node@18.15.3)(typescript@5.9.3))(sass@1.93.2)
 
   packages/cli/cli:
     devDependencies:
@@ -4865,10 +4811,10 @@ importers:
         version: 3.0.3
       tsup:
         specifier: ^8.5.0
-        version: 8.5.0(postcss@8.5.6)(tsx@4.20.6)(typescript@5.8.3)(yaml@2.3.3)
+        version: 8.5.0(postcss@8.5.6)(tsx@4.20.6)(typescript@5.9.3)(yaml@2.3.3)
       typescript:
-        specifier: 5.8.3
-        version: 5.8.3
+        specifier: 5.9.3
+        version: 5.9.3
       undici:
         specifier: ^6.21.1
         version: 6.22.0
@@ -4880,7 +4826,7 @@ importers:
         version: 5.0.1
       vitest:
         specifier: ^2.1.9
-        version: 2.1.9(@types/node@18.15.3)(sass@1.93.2)
+        version: 2.1.9(@types/node@18.15.3)(msw@2.11.3(@types/node@18.15.3)(typescript@5.9.3))(sass@1.93.2)
       yaml:
         specifier: 2.3.3
         version: 2.3.3
@@ -4904,11 +4850,11 @@ importers:
         specifier: ^1.4.7
         version: 1.4.7
       typescript:
-        specifier: 5.8.3
-        version: 5.8.3
+        specifier: 5.9.3
+        version: 5.9.3
       vitest:
         specifier: ^2.1.9
-        version: 2.1.9(@types/node@18.15.3)(sass@1.93.2)
+        version: 2.1.9(@types/node@18.15.3)(msw@2.11.3(@types/node@18.15.3)(typescript@5.9.3))(sass@1.93.2)
 
   packages/cli/cli-migrations:
     dependencies:
@@ -4974,11 +4920,11 @@ importers:
         specifier: ^3.0.3
         version: 3.0.3
       typescript:
-        specifier: 5.8.3
-        version: 5.8.3
+        specifier: 5.9.3
+        version: 5.9.3
       vitest:
         specifier: ^2.1.9
-        version: 2.1.9(@types/node@18.15.3)(sass@1.93.2)
+        version: 2.1.9(@types/node@18.15.3)(msw@2.11.3(@types/node@18.15.3)(typescript@5.9.3))(sass@1.93.2)
 
   packages/cli/cli-source-resolver:
     dependencies:
@@ -5008,11 +4954,11 @@ importers:
         specifier: ^1.4.7
         version: 1.4.7
       typescript:
-        specifier: 5.8.3
-        version: 5.8.3
+        specifier: 5.9.3
+        version: 5.9.3
       vitest:
         specifier: ^2.1.9
-        version: 2.1.9(@types/node@18.15.3)(sass@1.93.2)
+        version: 2.1.9(@types/node@18.15.3)(msw@2.11.3(@types/node@18.15.3)(typescript@5.9.3))(sass@1.93.2)
 
   packages/cli/configuration:
     dependencies:
@@ -5045,11 +4991,11 @@ importers:
         specifier: ^1.4.7
         version: 1.4.7
       typescript:
-        specifier: 5.8.3
-        version: 5.8.3
+        specifier: 5.9.3
+        version: 5.9.3
       vitest:
         specifier: ^2.1.9
-        version: 2.1.9(@types/node@18.15.3)(sass@1.93.2)
+        version: 2.1.9(@types/node@18.15.3)(msw@2.11.3(@types/node@18.15.3)(typescript@5.9.3))(sass@1.93.2)
 
   packages/cli/configuration-loader:
     dependencies:
@@ -5124,11 +5070,11 @@ importers:
         specifier: ^1.4.7
         version: 1.4.7
       typescript:
-        specifier: 5.8.3
-        version: 5.8.3
+        specifier: 5.9.3
+        version: 5.9.3
       vitest:
         specifier: ^2.1.9
-        version: 2.1.9(@types/node@18.15.3)(sass@1.93.2)
+        version: 2.1.9(@types/node@18.15.3)(msw@2.11.3(@types/node@18.15.3)(typescript@5.9.3))(sass@1.93.2)
 
   packages/cli/docs-importers/commons:
     dependencies:
@@ -5161,11 +5107,11 @@ importers:
         specifier: ^1.4.7
         version: 1.4.7
       typescript:
-        specifier: 5.8.3
-        version: 5.8.3
+        specifier: 5.9.3
+        version: 5.9.3
       vitest:
         specifier: ^2.1.9
-        version: 2.1.9(@types/node@18.15.3)(sass@1.93.2)
+        version: 2.1.9(@types/node@18.15.3)(msw@2.11.3(@types/node@18.15.3)(typescript@5.9.3))(sass@1.93.2)
 
   packages/cli/docs-importers/mintlify:
     dependencies:
@@ -5204,11 +5150,11 @@ importers:
         specifier: ^1.4.7
         version: 1.4.7
       typescript:
-        specifier: 5.8.3
-        version: 5.8.3
+        specifier: 5.9.3
+        version: 5.9.3
       vitest:
         specifier: ^2.1.9
-        version: 2.1.9(@types/node@18.15.3)(sass@1.93.2)
+        version: 2.1.9(@types/node@18.15.3)(msw@2.11.3(@types/node@18.15.3)(typescript@5.9.3))(sass@1.93.2)
 
   packages/cli/docs-importers/readme:
     dependencies:
@@ -5244,7 +5190,7 @@ importers:
         version: 3.2.0
       puppeteer:
         specifier: ^24.21.0
-        version: 24.26.0(typescript@5.8.3)
+        version: 24.26.0(typescript@5.9.3)
       rehype-parse:
         specifier: ^9.0.0
         version: 9.0.1
@@ -5283,11 +5229,11 @@ importers:
         specifier: ^1.4.7
         version: 1.4.7
       typescript:
-        specifier: 5.8.3
-        version: 5.8.3
+        specifier: 5.9.3
+        version: 5.9.3
       vitest:
         specifier: ^2.1.9
-        version: 2.1.9(@types/node@18.15.3)(sass@1.93.2)
+        version: 2.1.9(@types/node@18.15.3)(msw@2.11.3(@types/node@18.15.3)(typescript@5.9.3))(sass@1.93.2)
 
   packages/cli/docs-markdown-utils:
     dependencies:
@@ -5362,11 +5308,11 @@ importers:
         specifier: ^5.2.0
         version: 5.2.0
       typescript:
-        specifier: 5.8.3
-        version: 5.8.3
+        specifier: 5.9.3
+        version: 5.9.3
       vitest:
         specifier: ^2.1.9
-        version: 2.1.9(@types/node@18.15.3)(sass@1.93.2)
+        version: 2.1.9(@types/node@18.15.3)(msw@2.11.3(@types/node@18.15.3)(typescript@5.9.3))(sass@1.93.2)
       zod:
         specifier: ^3.22.3
         version: 3.25.76
@@ -5378,7 +5324,7 @@ importers:
         version: link:../docs-resolver
       '@fern-api/fdr-sdk':
         specifier: 0.139.33-c9426f366
-        version: 0.139.33-c9426f366(typescript@5.8.3)
+        version: 0.139.33-c9426f366(typescript@5.9.3)
       '@fern-api/fs-utils':
         specifier: workspace:*
         version: link:../../commons/fs-utils
@@ -5456,11 +5402,11 @@ importers:
         specifier: ^1.4.7
         version: 1.4.7
       typescript:
-        specifier: 5.8.3
-        version: 5.8.3
+        specifier: 5.9.3
+        version: 5.9.3
       vitest:
         specifier: ^2.1.9
-        version: 2.1.9(@types/node@18.15.3)(sass@1.93.2)
+        version: 2.1.9(@types/node@18.15.3)(msw@2.11.3(@types/node@18.15.3)(typescript@5.9.3))(sass@1.93.2)
 
   packages/cli/docs-resolver:
     dependencies:
@@ -5484,10 +5430,10 @@ importers:
         version: link:../docs-markdown-utils
       '@fern-api/docs-parsers':
         specifier: 0.0.65
-        version: 0.0.65(typescript@5.8.3)
+        version: 0.0.65(typescript@5.9.3)
       '@fern-api/fdr-sdk':
         specifier: 0.139.33-c9426f366
-        version: 0.139.33-c9426f366(typescript@5.8.3)
+        version: 0.139.33-c9426f366(typescript@5.9.3)
       '@fern-api/fs-utils':
         specifier: workspace:*
         version: link:../../commons/fs-utils
@@ -5559,11 +5505,11 @@ importers:
         specifier: ^1.4.7
         version: 1.4.7
       typescript:
-        specifier: 5.8.3
-        version: 5.8.3
+        specifier: 5.9.3
+        version: 5.9.3
       vitest:
         specifier: ^2.1.9
-        version: 2.1.9(@types/node@18.15.3)(sass@1.93.2)
+        version: 2.1.9(@types/node@18.15.3)(msw@2.11.3(@types/node@18.15.3)(typescript@5.9.3))(sass@1.93.2)
 
   packages/cli/ete-tests:
     dependencies:
@@ -5623,11 +5569,11 @@ importers:
         specifier: ^1.4.7
         version: 1.4.7
       typescript:
-        specifier: 5.8.3
-        version: 5.8.3
+        specifier: 5.9.3
+        version: 5.9.3
       vitest:
         specifier: ^2.1.9
-        version: 2.1.9(@types/node@18.15.3)(sass@1.93.2)
+        version: 2.1.9(@types/node@18.15.3)(msw@2.11.3(@types/node@18.15.3)(typescript@5.9.3))(sass@1.93.2)
 
   packages/cli/fern-definition/formatter:
     dependencies:
@@ -5666,11 +5612,11 @@ importers:
         specifier: ^1.4.7
         version: 1.4.7
       typescript:
-        specifier: 5.8.3
-        version: 5.8.3
+        specifier: 5.9.3
+        version: 5.9.3
       vitest:
         specifier: ^2.1.9
-        version: 2.1.9(@types/node@18.15.3)(sass@1.93.2)
+        version: 2.1.9(@types/node@18.15.3)(msw@2.11.3(@types/node@18.15.3)(typescript@5.9.3))(sass@1.93.2)
 
   packages/cli/fern-definition/ir-to-jsonschema:
     dependencies:
@@ -5721,11 +5667,11 @@ importers:
         specifier: ^1.4.7
         version: 1.4.7
       typescript:
-        specifier: 5.8.3
-        version: 5.8.3
+        specifier: 5.9.3
+        version: 5.9.3
       vitest:
         specifier: ^2.1.9
-        version: 2.1.9(@types/node@18.15.3)(sass@1.93.2)
+        version: 2.1.9(@types/node@18.15.3)(msw@2.11.3(@types/node@18.15.3)(typescript@5.9.3))(sass@1.93.2)
 
   packages/cli/fern-definition/schema:
     dependencies:
@@ -5746,11 +5692,11 @@ importers:
         specifier: ^1.4.7
         version: 1.4.7
       typescript:
-        specifier: 5.8.3
-        version: 5.8.3
+        specifier: 5.9.3
+        version: 5.9.3
       vitest:
         specifier: ^2.1.9
-        version: 2.1.9(@types/node@18.15.3)(sass@1.93.2)
+        version: 2.1.9(@types/node@18.15.3)(msw@2.11.3(@types/node@18.15.3)(typescript@5.9.3))(sass@1.93.2)
 
   packages/cli/fern-definition/validator:
     dependencies:
@@ -5816,11 +5762,11 @@ importers:
         specifier: ^1.4.7
         version: 1.4.7
       typescript:
-        specifier: 5.8.3
-        version: 5.8.3
+        specifier: 5.9.3
+        version: 5.9.3
       vitest:
         specifier: ^2.1.9
-        version: 2.1.9(@types/node@18.15.3)(sass@1.93.2)
+        version: 2.1.9(@types/node@18.15.3)(msw@2.11.3(@types/node@18.15.3)(typescript@5.9.3))(sass@1.93.2)
 
   packages/cli/generation/ir-generator:
     devDependencies:
@@ -5879,8 +5825,8 @@ importers:
         specifier: ^1.0.10
         version: 1.0.11
       typescript:
-        specifier: 5.8.3
-        version: 5.8.3
+        specifier: 5.9.3
+        version: 5.9.3
       url-join:
         specifier: ^5.0.0
         version: 5.0.0
@@ -5889,7 +5835,7 @@ importers:
         version: 9.0.1
       vitest:
         specifier: ^2.1.9
-        version: 2.1.9(@types/node@18.15.3)(sass@1.93.2)
+        version: 2.1.9(@types/node@18.15.3)(msw@2.11.3(@types/node@18.15.3)(typescript@5.9.3))(sass@1.93.2)
 
   packages/cli/generation/ir-generator-tests:
     dependencies:
@@ -5934,11 +5880,11 @@ importers:
         specifier: ^1.4.7
         version: 1.4.7
       typescript:
-        specifier: 5.8.3
-        version: 5.8.3
+        specifier: 5.9.3
+        version: 5.9.3
       vitest:
         specifier: ^2.1.9
-        version: 2.1.9(@types/node@18.15.3)(sass@1.93.2)
+        version: 2.1.9(@types/node@18.15.3)(msw@2.11.3(@types/node@18.15.3)(typescript@5.9.3))(sass@1.93.2)
 
   packages/cli/generation/ir-migrations:
     dependencies:
@@ -6169,11 +6115,11 @@ importers:
         specifier: ^1.4.7
         version: 1.4.7
       typescript:
-        specifier: 5.8.3
-        version: 5.8.3
+        specifier: 5.9.3
+        version: 5.9.3
       vitest:
         specifier: ^2.1.9
-        version: 2.1.9(@types/node@18.15.3)(sass@1.93.2)
+        version: 2.1.9(@types/node@18.15.3)(msw@2.11.3(@types/node@18.15.3)(typescript@5.9.3))(sass@1.93.2)
 
   packages/cli/generation/local-generation/docker-utils:
     dependencies:
@@ -6203,11 +6149,11 @@ importers:
         specifier: ^1.4.7
         version: 1.4.7
       typescript:
-        specifier: 5.8.3
-        version: 5.8.3
+        specifier: 5.9.3
+        version: 5.9.3
       vitest:
         specifier: ^2.1.9
-        version: 2.1.9(@types/node@18.15.3)(sass@1.93.2)
+        version: 2.1.9(@types/node@18.15.3)(msw@2.11.3(@types/node@18.15.3)(typescript@5.9.3))(sass@1.93.2)
 
   packages/cli/generation/local-generation/local-workspace-runner:
     dependencies:
@@ -6327,11 +6273,11 @@ importers:
         specifier: ^1.4.7
         version: 1.4.7
       typescript:
-        specifier: 5.8.3
-        version: 5.8.3
+        specifier: 5.9.3
+        version: 5.9.3
       vitest:
         specifier: ^2.1.9
-        version: 2.1.9(@types/node@18.15.3)(sass@1.93.2)
+        version: 2.1.9(@types/node@18.15.3)(msw@2.11.3(@types/node@18.15.3)(typescript@5.9.3))(sass@1.93.2)
 
   packages/cli/generation/protoc-gen-fern:
     dependencies:
@@ -6376,11 +6322,11 @@ importers:
         specifier: ^1.4.7
         version: 1.4.7
       typescript:
-        specifier: 5.8.3
-        version: 5.8.3
+        specifier: 5.9.3
+        version: 5.9.3
       vitest:
         specifier: ^2.1.9
-        version: 2.1.9(@types/node@18.15.3)(sass@1.93.2)
+        version: 2.1.9(@types/node@18.15.3)(msw@2.11.3(@types/node@18.15.3)(typescript@5.9.3))(sass@1.93.2)
 
   packages/cli/generation/protoc-gen-fern/bin: {}
 
@@ -6405,8 +6351,8 @@ importers:
         specifier: workspace:*
         version: link:../../../docs-resolver
       '@fern-api/fai-sdk':
-        specifier: 0.0.2-9f9be72b3
-        version: 0.0.2-9f9be72b3
+        specifier: 0.0.6-2ee1b7e28
+        version: 0.0.6-2ee1b7e28
       '@fern-api/fs-utils':
         specifier: workspace:*
         version: link:../../../../commons/fs-utils
@@ -6453,7 +6399,7 @@ importers:
         specifier: ^4.2.1
         version: 4.2.1
       form-data:
-        specifier: 4.0.4
+        specifier: ^4.0.4
         version: 4.0.4
       image-size:
         specifier: ^1.2.1
@@ -6508,11 +6454,11 @@ importers:
         specifier: ^1.4.7
         version: 1.4.7
       typescript:
-        specifier: 5.8.3
-        version: 5.8.3
+        specifier: 5.9.3
+        version: 5.9.3
       vitest:
         specifier: ^2.1.9
-        version: 2.1.9(@types/node@18.15.3)(sass@1.93.2)
+        version: 2.1.9(@types/node@18.15.3)(msw@2.11.3(@types/node@18.15.3)(typescript@5.9.3))(sass@1.93.2)
 
   packages/cli/generation/source-resolver:
     dependencies:
@@ -6533,11 +6479,11 @@ importers:
         specifier: ^1.4.7
         version: 1.4.7
       typescript:
-        specifier: 5.8.3
-        version: 5.8.3
+        specifier: 5.9.3
+        version: 5.9.3
       vitest:
         specifier: ^2.1.9
-        version: 2.1.9(@types/node@18.15.3)(sass@1.93.2)
+        version: 2.1.9(@types/node@18.15.3)(msw@2.11.3(@types/node@18.15.3)(typescript@5.9.3))(sass@1.93.2)
 
   packages/cli/init:
     dependencies:
@@ -6609,11 +6555,11 @@ importers:
         specifier: ^1.4.7
         version: 1.4.7
       typescript:
-        specifier: 5.8.3
-        version: 5.8.3
+        specifier: 5.9.3
+        version: 5.9.3
       vitest:
         specifier: ^2.1.9
-        version: 2.1.9(@types/node@18.15.3)(sass@1.93.2)
+        version: 2.1.9(@types/node@18.15.3)(msw@2.11.3(@types/node@18.15.3)(typescript@5.9.3))(sass@1.93.2)
 
   packages/cli/logger:
     dependencies:
@@ -6631,11 +6577,11 @@ importers:
         specifier: ^1.4.7
         version: 1.4.7
       typescript:
-        specifier: 5.8.3
-        version: 5.8.3
+        specifier: 5.9.3
+        version: 5.9.3
       vitest:
         specifier: ^2.1.9
-        version: 2.1.9(@types/node@18.15.3)(sass@1.93.2)
+        version: 2.1.9(@types/node@18.15.3)(msw@2.11.3(@types/node@18.15.3)(typescript@5.9.3))(sass@1.93.2)
 
   packages/cli/login:
     dependencies:
@@ -6689,11 +6635,11 @@ importers:
         specifier: ^1.4.7
         version: 1.4.7
       typescript:
-        specifier: 5.8.3
-        version: 5.8.3
+        specifier: 5.9.3
+        version: 5.9.3
       vitest:
         specifier: ^2.1.9
-        version: 2.1.9(@types/node@18.15.3)(sass@1.93.2)
+        version: 2.1.9(@types/node@18.15.3)(msw@2.11.3(@types/node@18.15.3)(typescript@5.9.3))(sass@1.93.2)
 
   packages/cli/mock:
     dependencies:
@@ -6735,11 +6681,11 @@ importers:
         specifier: ^1.4.7
         version: 1.4.7
       typescript:
-        specifier: 5.8.3
-        version: 5.8.3
+        specifier: 5.9.3
+        version: 5.9.3
       vitest:
         specifier: ^2.1.9
-        version: 2.1.9(@types/node@18.15.3)(sass@1.93.2)
+        version: 2.1.9(@types/node@18.15.3)(msw@2.11.3(@types/node@18.15.3)(typescript@5.9.3))(sass@1.93.2)
 
   packages/cli/openapi-validator:
     dependencies:
@@ -6797,11 +6743,11 @@ importers:
         specifier: ^1.4.7
         version: 1.4.7
       typescript:
-        specifier: 5.8.3
-        version: 5.8.3
+        specifier: 5.9.3
+        version: 5.9.3
       vitest:
         specifier: ^2.1.9
-        version: 2.1.9(@types/node@18.15.3)(sass@1.93.2)
+        version: 2.1.9(@types/node@18.15.3)(msw@2.11.3(@types/node@18.15.3)(typescript@5.9.3))(sass@1.93.2)
 
   packages/cli/project-loader:
     dependencies:
@@ -6834,11 +6780,11 @@ importers:
         specifier: ^1.4.7
         version: 1.4.7
       typescript:
-        specifier: 5.8.3
-        version: 5.8.3
+        specifier: 5.9.3
+        version: 5.9.3
       vitest:
         specifier: ^2.1.9
-        version: 2.1.9(@types/node@18.15.3)(sass@1.93.2)
+        version: 2.1.9(@types/node@18.15.3)(msw@2.11.3(@types/node@18.15.3)(typescript@5.9.3))(sass@1.93.2)
 
   packages/cli/register:
     dependencies:
@@ -6901,11 +6847,11 @@ importers:
         specifier: ^1.4.7
         version: 1.4.7
       typescript:
-        specifier: 5.8.3
-        version: 5.8.3
+        specifier: 5.9.3
+        version: 5.9.3
       vitest:
         specifier: ^2.1.9
-        version: 2.1.9(@types/node@18.15.3)(sass@1.93.2)
+        version: 2.1.9(@types/node@18.15.3)(msw@2.11.3(@types/node@18.15.3)(typescript@5.9.3))(sass@1.93.2)
 
   packages/cli/semver-utils:
     dependencies:
@@ -6923,11 +6869,11 @@ importers:
         specifier: ^1.4.7
         version: 1.4.7
       typescript:
-        specifier: 5.8.3
-        version: 5.8.3
+        specifier: 5.9.3
+        version: 5.9.3
       vitest:
         specifier: ^2.1.9
-        version: 2.1.9(@types/node@18.15.3)(sass@1.93.2)
+        version: 2.1.9(@types/node@18.15.3)(msw@2.11.3(@types/node@18.15.3)(typescript@5.9.3))(sass@1.93.2)
 
   packages/cli/task-context:
     dependencies:
@@ -6945,11 +6891,11 @@ importers:
         specifier: ^1.4.7
         version: 1.4.7
       typescript:
-        specifier: 5.8.3
-        version: 5.8.3
+        specifier: 5.9.3
+        version: 5.9.3
       vitest:
         specifier: ^2.1.9
-        version: 2.1.9(@types/node@18.15.3)(sass@1.93.2)
+        version: 2.1.9(@types/node@18.15.3)(msw@2.11.3(@types/node@18.15.3)(typescript@5.9.3))(sass@1.93.2)
 
   packages/cli/workspace/browser-compatible-fern-workspace:
     dependencies:
@@ -6988,11 +6934,11 @@ importers:
         specifier: ^1.4.7
         version: 1.4.7
       typescript:
-        specifier: 5.8.3
-        version: 5.8.3
+        specifier: 5.9.3
+        version: 5.9.3
       vitest:
         specifier: ^2.1.9
-        version: 2.1.9(@types/node@18.15.3)(sass@1.93.2)
+        version: 2.1.9(@types/node@18.15.3)(msw@2.11.3(@types/node@18.15.3)(typescript@5.9.3))(sass@1.93.2)
 
   packages/cli/workspace/commons:
     dependencies:
@@ -7049,11 +6995,11 @@ importers:
         specifier: ^1.4.7
         version: 1.4.7
       typescript:
-        specifier: 5.8.3
-        version: 5.8.3
+        specifier: 5.9.3
+        version: 5.9.3
       vitest:
         specifier: ^2.1.9
-        version: 2.1.9(@types/node@18.15.3)(sass@1.93.2)
+        version: 2.1.9(@types/node@18.15.3)(msw@2.11.3(@types/node@18.15.3)(typescript@5.9.3))(sass@1.93.2)
 
   packages/cli/workspace/lazy-fern-workspace:
     dependencies:
@@ -7191,11 +7137,11 @@ importers:
         specifier: ^1.4.7
         version: 1.4.7
       typescript:
-        specifier: 5.8.3
-        version: 5.8.3
+        specifier: 5.9.3
+        version: 5.9.3
       vitest:
         specifier: ^2.1.9
-        version: 2.1.9(@types/node@18.15.3)(sass@1.93.2)
+        version: 2.1.9(@types/node@18.15.3)(msw@2.11.3(@types/node@18.15.3)(typescript@5.9.3))(sass@1.93.2)
 
   packages/cli/workspace/loader:
     dependencies:
@@ -7249,11 +7195,11 @@ importers:
         specifier: ^1.4.7
         version: 1.4.7
       typescript:
-        specifier: 5.8.3
-        version: 5.8.3
+        specifier: 5.9.3
+        version: 5.9.3
       vitest:
         specifier: ^2.1.9
-        version: 2.1.9(@types/node@18.15.3)(sass@1.93.2)
+        version: 2.1.9(@types/node@18.15.3)(msw@2.11.3(@types/node@18.15.3)(typescript@5.9.3))(sass@1.93.2)
 
   packages/cli/workspace/oss-validator:
     dependencies:
@@ -7289,11 +7235,11 @@ importers:
         specifier: ^1.4.7
         version: 1.4.7
       typescript:
-        specifier: 5.8.3
-        version: 5.8.3
+        specifier: 5.9.3
+        version: 5.9.3
       vitest:
         specifier: ^2.1.9
-        version: 2.1.9(@types/node@18.15.3)(sass@1.93.2)
+        version: 2.1.9(@types/node@18.15.3)(msw@2.11.3(@types/node@18.15.3)(typescript@5.9.3))(sass@1.93.2)
 
   packages/cli/yaml/docs-validator:
     dependencies:
@@ -7311,7 +7257,7 @@ importers:
         version: link:../../docs-resolver
       '@fern-api/fdr-sdk':
         specifier: 0.139.33-c9426f366
-        version: 0.139.33-c9426f366(typescript@5.8.3)
+        version: 0.139.33-c9426f366(typescript@5.9.3)
       '@fern-api/fern-definition-schema':
         specifier: workspace:*
         version: link:../../fern-definition/schema
@@ -7413,11 +7359,11 @@ importers:
         specifier: ^1.4.7
         version: 1.4.7
       typescript:
-        specifier: 5.8.3
-        version: 5.8.3
+        specifier: 5.9.3
+        version: 5.9.3
       vitest:
         specifier: ^2.1.9
-        version: 2.1.9(@types/node@18.15.3)(sass@1.93.2)
+        version: 2.1.9(@types/node@18.15.3)(msw@2.11.3(@types/node@18.15.3)(typescript@5.9.3))(sass@1.93.2)
 
   packages/cli/yaml/generators-validator:
     dependencies:
@@ -7468,11 +7414,11 @@ importers:
         specifier: ^1.4.7
         version: 1.4.7
       typescript:
-        specifier: 5.8.3
-        version: 5.8.3
+        specifier: 5.9.3
+        version: 5.9.3
       vitest:
         specifier: ^2.1.9
-        version: 2.1.9(@types/node@18.15.3)(sass@1.93.2)
+        version: 2.1.9(@types/node@18.15.3)(msw@2.11.3(@types/node@18.15.3)(typescript@5.9.3))(sass@1.93.2)
 
   packages/commons/casings-generator:
     dependencies:
@@ -7502,11 +7448,11 @@ importers:
         specifier: ^1.4.7
         version: 1.4.7
       typescript:
-        specifier: 5.8.3
-        version: 5.8.3
+        specifier: 5.9.3
+        version: 5.9.3
       vitest:
         specifier: ^2.1.9
-        version: 2.1.9(@types/node@18.15.3)(sass@1.93.2)
+        version: 2.1.9(@types/node@18.15.3)(msw@2.11.3(@types/node@18.15.3)(typescript@5.9.3))(sass@1.93.2)
 
   packages/commons/core-utils:
     dependencies:
@@ -7569,11 +7515,11 @@ importers:
         specifier: ^1.4.7
         version: 1.4.7
       typescript:
-        specifier: 5.8.3
-        version: 5.8.3
+        specifier: 5.9.3
+        version: 5.9.3
       vitest:
         specifier: ^2.1.9
-        version: 2.1.9(@types/node@18.15.3)(sass@1.93.2)
+        version: 2.1.9(@types/node@18.15.3)(msw@2.11.3(@types/node@18.15.3)(typescript@5.9.3))(sass@1.93.2)
 
   packages/commons/fs-utils:
     dependencies:
@@ -7609,11 +7555,11 @@ importers:
         specifier: ^1.4.7
         version: 1.4.7
       typescript:
-        specifier: 5.8.3
-        version: 5.8.3
+        specifier: 5.9.3
+        version: 5.9.3
       vitest:
         specifier: ^2.1.9
-        version: 2.1.9(@types/node@18.15.3)(sass@1.93.2)
+        version: 2.1.9(@types/node@18.15.3)(msw@2.11.3(@types/node@18.15.3)(typescript@5.9.3))(sass@1.93.2)
 
   packages/commons/ir-utils:
     dependencies:
@@ -7649,11 +7595,11 @@ importers:
         specifier: ^1.4.7
         version: 1.4.7
       typescript:
-        specifier: 5.8.3
-        version: 5.8.3
+        specifier: 5.9.3
+        version: 5.9.3
       vitest:
         specifier: ^2.1.9
-        version: 2.1.9(@types/node@18.15.3)(sass@1.93.2)
+        version: 2.1.9(@types/node@18.15.3)(msw@2.11.3(@types/node@18.15.3)(typescript@5.9.3))(sass@1.93.2)
 
   packages/commons/loadable:
     dependencies:
@@ -7671,11 +7617,11 @@ importers:
         specifier: ^1.4.7
         version: 1.4.7
       typescript:
-        specifier: 5.8.3
-        version: 5.8.3
+        specifier: 5.9.3
+        version: 5.9.3
       vitest:
         specifier: ^2.1.9
-        version: 2.1.9(@types/node@18.15.3)(sass@1.93.2)
+        version: 2.1.9(@types/node@18.15.3)(msw@2.11.3(@types/node@18.15.3)(typescript@5.9.3))(sass@1.93.2)
 
   packages/commons/logging-execa:
     dependencies:
@@ -7699,11 +7645,11 @@ importers:
         specifier: ^1.4.7
         version: 1.4.7
       typescript:
-        specifier: 5.8.3
-        version: 5.8.3
+        specifier: 5.9.3
+        version: 5.9.3
       vitest:
         specifier: ^2.1.9
-        version: 2.1.9(@types/node@18.15.3)(sass@1.93.2)
+        version: 2.1.9(@types/node@18.15.3)(msw@2.11.3(@types/node@18.15.3)(typescript@5.9.3))(sass@1.93.2)
 
   packages/commons/path-utils:
     devDependencies:
@@ -7717,11 +7663,11 @@ importers:
         specifier: ^1.4.7
         version: 1.4.7
       typescript:
-        specifier: 5.8.3
-        version: 5.8.3
+        specifier: 5.9.3
+        version: 5.9.3
       vitest:
         specifier: ^2.1.9
-        version: 2.1.9(@types/node@18.15.3)(sass@1.93.2)
+        version: 2.1.9(@types/node@18.15.3)(msw@2.11.3(@types/node@18.15.3)(typescript@5.9.3))(sass@1.93.2)
 
   packages/commons/test-utils:
     devDependencies:
@@ -7759,17 +7705,17 @@ importers:
         specifier: ^1.4.7
         version: 1.4.7
       typescript:
-        specifier: 5.8.3
-        version: 5.8.3
+        specifier: 5.9.3
+        version: 5.9.3
       vitest:
         specifier: ^2.1.9
-        version: 2.1.9(@types/node@18.15.3)(sass@1.93.2)
+        version: 2.1.9(@types/node@18.15.3)(msw@2.11.3(@types/node@18.15.3)(typescript@5.9.3))(sass@1.93.2)
 
   packages/configs:
     devDependencies:
       vitest:
         specifier: ^2.1.9
-        version: 2.1.9(@types/node@18.15.3)(sass@1.93.2)
+        version: 2.1.9(@types/node@18.15.3)(msw@2.11.3(@types/node@18.15.3)(typescript@5.9.3))(sass@1.93.2)
 
   packages/core:
     dependencies:
@@ -7799,11 +7745,11 @@ importers:
         specifier: ^1.4.7
         version: 1.4.7
       typescript:
-        specifier: 5.8.3
-        version: 5.8.3
+        specifier: 5.9.3
+        version: 5.9.3
       vitest:
         specifier: ^2.1.9
-        version: 2.1.9(@types/node@18.15.3)(sass@1.93.2)
+        version: 2.1.9(@types/node@18.15.3)(msw@2.11.3(@types/node@18.15.3)(typescript@5.9.3))(sass@1.93.2)
 
   packages/ir-sdk:
     devDependencies:
@@ -7817,11 +7763,11 @@ importers:
         specifier: ^1.4.7
         version: 1.4.7
       typescript:
-        specifier: 5.8.3
-        version: 5.8.3
+        specifier: 5.9.3
+        version: 5.9.3
       vitest:
         specifier: ^2.1.9
-        version: 2.1.9(@types/node@18.15.3)(sass@1.93.2)
+        version: 2.1.9(@types/node@18.15.3)(msw@2.11.3(@types/node@18.15.3)(typescript@5.9.3))(sass@1.93.2)
 
   packages/scripts:
     devDependencies:
@@ -7844,11 +7790,11 @@ importers:
         specifier: ^1.4.7
         version: 1.4.7
       typescript:
-        specifier: 5.8.3
-        version: 5.8.3
+        specifier: 5.9.3
+        version: 5.9.3
       vitest:
         specifier: ^2.1.9
-        version: 2.1.9(@types/node@18.15.3)(sass@1.93.2)
+        version: 2.1.9(@types/node@18.15.3)(msw@2.11.3(@types/node@18.15.3)(typescript@5.9.3))(sass@1.93.2)
       yaml:
         specifier: 2.3.3
         version: 2.3.3
@@ -7950,13 +7896,13 @@ importers:
         version: 3.0.3
       tsup:
         specifier: ^8.5.0
-        version: 8.5.0(postcss@8.5.6)(tsx@4.20.6)(typescript@5.8.3)(yaml@2.3.3)
+        version: 8.5.0(postcss@8.5.6)(tsx@4.20.6)(typescript@5.9.3)(yaml@2.3.3)
       typescript:
-        specifier: 5.8.3
-        version: 5.8.3
+        specifier: 5.9.3
+        version: 5.9.3
       vitest:
         specifier: ^2.1.9
-        version: 2.1.9(@types/node@18.15.3)(sass@1.93.2)
+        version: 2.1.9(@types/node@18.15.3)(msw@2.11.3(@types/node@18.15.3)(typescript@5.9.3))(sass@1.93.2)
       yargs:
         specifier: ^17.4.1
         version: 17.7.2
@@ -8007,13 +7953,13 @@ importers:
         version: 1.0.11
       tsup:
         specifier: ^8.5.0
-        version: 8.5.0(postcss@8.5.6)(tsx@4.20.6)(typescript@5.8.3)(yaml@2.3.3)
+        version: 8.5.0(postcss@8.5.6)(tsx@4.20.6)(typescript@5.9.3)(yaml@2.3.3)
       typescript:
-        specifier: 5.8.3
-        version: 5.8.3
+        specifier: 5.9.3
+        version: 5.9.3
       vitest:
         specifier: ^2.1.9
-        version: 2.1.9(@types/node@18.15.3)(sass@1.93.2)
+        version: 2.1.9(@types/node@18.15.3)(msw@2.11.3(@types/node@18.15.3)(typescript@5.9.3))(sass@1.93.2)
 
 packages:
 
@@ -8453,18 +8399,6 @@ packages:
     peerDependencies:
       '@babel/core': ^7.0.0-0
 
-  '@babel/plugin-transform-react-jsx-self@7.27.1':
-    resolution: {integrity: sha512-6UzkCs+ejGdZ5mFFC/OCUrv028ab2fp1znZmCZjAOBKiBK2jXD1O+BPSfX8X2qjJ75fZBMSnQn3Rq2mrBJK2mw==}
-    engines: {node: '>=6.9.0'}
-    peerDependencies:
-      '@babel/core': ^7.0.0-0
-
-  '@babel/plugin-transform-react-jsx-source@7.27.1':
-    resolution: {integrity: sha512-zbwoTsBruTeKB9hSq73ha66iFeJHuaFkUbwvqElnygoNbj/jHRsSeokowZFN3CZ64IvEqcmmkVe89OPXc7ldAw==}
-    engines: {node: '>=6.9.0'}
-    peerDependencies:
-      '@babel/core': ^7.0.0-0
-
   '@babel/plugin-transform-regenerator@7.28.4':
     resolution: {integrity: sha512-+ZEdQlBoRg9m2NnzvEeLgtvBMO4tkFBw5SQIUgLICgTrumLoU7lr+Oghi6km2PFj+dbUt2u1oby2w3BDO9YQnA==}
     engines: {node: '>=6.9.0'}
@@ -8582,55 +8516,55 @@ packages:
     resolution: {integrity: sha512-bkFqkLhh3pMBUQQkpVgWDWq/lqzc2678eUyDlTBhRqhCHFguYYGM0Efga7tYk4TogG/3x0EEl66/OQ+WGbWB/Q==}
     engines: {node: '>=6.9.0'}
 
-  '@biomejs/biome@2.2.5':
-    resolution: {integrity: sha512-zcIi+163Rc3HtyHbEO7CjeHq8DjQRs40HsGbW6vx2WI0tg8mYQOPouhvHSyEnCBAorfYNnKdR64/IxO7xQ5faw==}
+  '@biomejs/biome@2.3.1':
+    resolution: {integrity: sha512-A29evf1R72V5bo4o2EPxYMm5mtyGvzp2g+biZvRFx29nWebGyyeOSsDWGx3tuNNMFRepGwxmA9ZQ15mzfabK2w==}
     engines: {node: '>=14.21.3'}
     hasBin: true
 
-  '@biomejs/cli-darwin-arm64@2.2.5':
-    resolution: {integrity: sha512-MYT+nZ38wEIWVcL5xLyOhYQQ7nlWD0b/4mgATW2c8dvq7R4OQjt/XGXFkXrmtWmQofaIM14L7V8qIz/M+bx5QQ==}
+  '@biomejs/cli-darwin-arm64@2.3.1':
+    resolution: {integrity: sha512-ombSf3MnTUueiYGN1SeI9tBCsDUhpWzOwS63Dove42osNh0PfE1cUtHFx6eZ1+MYCCLwXzlFlYFdrJ+U7h6LcA==}
     engines: {node: '>=14.21.3'}
     cpu: [arm64]
     os: [darwin]
 
-  '@biomejs/cli-darwin-x64@2.2.5':
-    resolution: {integrity: sha512-FLIEl73fv0R7dI10EnEiZLw+IMz3mWLnF95ASDI0kbx6DDLJjWxE5JxxBfmG+udz1hIDd3fr5wsuP7nwuTRdAg==}
+  '@biomejs/cli-darwin-x64@2.3.1':
+    resolution: {integrity: sha512-pcOfwyoQkrkbGvXxRvZNe5qgD797IowpJPovPX5biPk2FwMEV+INZqfCaz4G5bVq9hYnjwhRMamg11U4QsRXrQ==}
     engines: {node: '>=14.21.3'}
     cpu: [x64]
     os: [darwin]
 
-  '@biomejs/cli-linux-arm64-musl@2.2.5':
-    resolution: {integrity: sha512-5Ov2wgAFwqDvQiESnu7b9ufD1faRa+40uwrohgBopeY84El2TnBDoMNXx6iuQdreoFGjwW8vH6k68G21EpNERw==}
+  '@biomejs/cli-linux-arm64-musl@2.3.1':
+    resolution: {integrity: sha512-+DZYv8l7FlUtTrWs1Tdt1KcNCAmRO87PyOnxKGunbWm5HKg1oZBSbIIPkjrCtDZaeqSG1DiGx7qF+CPsquQRcg==}
     engines: {node: '>=14.21.3'}
     cpu: [arm64]
     os: [linux]
 
-  '@biomejs/cli-linux-arm64@2.2.5':
-    resolution: {integrity: sha512-5DjiiDfHqGgR2MS9D+AZ8kOfrzTGqLKywn8hoXpXXlJXIECGQ32t+gt/uiS2XyGBM2XQhR6ztUvbjZWeccFMoQ==}
+  '@biomejs/cli-linux-arm64@2.3.1':
+    resolution: {integrity: sha512-td5O8pFIgLs8H1sAZsD6v+5quODihyEw4nv2R8z7swUfIK1FKk+15e4eiYVLcAE4jUqngvh4j3JCNgg0Y4o4IQ==}
     engines: {node: '>=14.21.3'}
     cpu: [arm64]
     os: [linux]
 
-  '@biomejs/cli-linux-x64-musl@2.2.5':
-    resolution: {integrity: sha512-AVqLCDb/6K7aPNIcxHaTQj01sl1m989CJIQFQEaiQkGr2EQwyOpaATJ473h+nXDUuAcREhccfRpe/tu+0wu0eQ==}
+  '@biomejs/cli-linux-x64-musl@2.3.1':
+    resolution: {integrity: sha512-Y3Ob4nqgv38Mh+6EGHltuN+Cq8aj/gyMTJYzkFZV2AEj+9XzoXB9VNljz9pjfFNHUxvLEV4b55VWyxozQTBaUQ==}
     engines: {node: '>=14.21.3'}
     cpu: [x64]
     os: [linux]
 
-  '@biomejs/cli-linux-x64@2.2.5':
-    resolution: {integrity: sha512-fq9meKm1AEXeAWan3uCg6XSP5ObA6F/Ovm89TwaMiy1DNIwdgxPkNwxlXJX8iM6oRbFysYeGnT0OG8diCWb9ew==}
+  '@biomejs/cli-linux-x64@2.3.1':
+    resolution: {integrity: sha512-PYWgEO7up7XYwSAArOpzsVCiqxBCXy53gsReAb1kKYIyXaoAlhBaBMvxR/k2Rm9aTuZ662locXUmPk/Aj+Xu+Q==}
     engines: {node: '>=14.21.3'}
     cpu: [x64]
     os: [linux]
 
-  '@biomejs/cli-win32-arm64@2.2.5':
-    resolution: {integrity: sha512-xaOIad4wBambwJa6mdp1FigYSIF9i7PCqRbvBqtIi9y29QtPVQ13sDGtUnsRoe6SjL10auMzQ6YAe+B3RpZXVg==}
+  '@biomejs/cli-win32-arm64@2.3.1':
+    resolution: {integrity: sha512-RHIG/zgo+69idUqVvV3n8+j58dKYABRpMyDmfWu2TITC+jwGPiEaT0Q3RKD+kQHiS80mpBrST0iUGeEXT0bU9A==}
     engines: {node: '>=14.21.3'}
     cpu: [arm64]
     os: [win32]
 
-  '@biomejs/cli-win32-x64@2.2.5':
-    resolution: {integrity: sha512-F/jhuXCssPFAuciMhHKk00xnCAxJRS/pUzVfXYmOMUp//XW7mO6QeCjsjvnm8L4AO/dG2VOB0O+fJPiJ2uXtIw==}
+  '@biomejs/cli-win32-x64@2.3.1':
+    resolution: {integrity: sha512-izl30JJ5Dp10mi90Eko47zhxE6pYyWPcnX1NQxKpL/yMhXxf95oLTzfpu4q+MDBh/gemNqyJEwjBpe0MT5iWPA==}
     engines: {node: '>=14.21.3'}
     cpu: [x64]
     os: [win32]
@@ -8656,6 +8590,12 @@ packages:
 
   '@bufbuild/protoplugin@2.2.5':
     resolution: {integrity: sha512-Z68KTDLiidUYoJ8kjs6YfhK8r58W93pOFIfGqlnK1RZQTQRtbH6WRWjSqtuiy4WjJpJZ5qE0lKtFGR+bHU8Vaw==}
+
+  '@bundled-es-modules/cookie@2.0.1':
+    resolution: {integrity: sha512-8o+5fRPLNbjbdGRRmJj3h6Hh1AQJf2dk3qQ/5ZFb+PXkRNiSoMGGUKlsgLfrxneb72axVJyIYji64E2+nNfYyw==}
+
+  '@bundled-es-modules/statuses@1.0.1':
+    resolution: {integrity: sha512-yn7BklA5acgcBr+7w064fGV+SGIFySjCKpqjcWgBAIfrAkY+4GQTJJHQMeT3V/sgz23VTEVV8TtOmkvJAhFVfg==}
 
   '@cspell/cspell-bundled-dicts@8.19.4':
     resolution: {integrity: sha512-2ZRcZP/ncJ5q953o8i+R0fb8+14PDt5UefUNMrFZZHvfTI0jukAASOQeLY+WT6ASZv6CgbPrApAdbppy9FaXYQ==}
@@ -9381,12 +9321,16 @@ packages:
   '@fern-api/dynamic-ir-sdk@61.4.0':
     resolution: {integrity: sha512-pJ8oswOmhVBi7I7OnFXndb2TqXMKweQby1/YmbJi8Usp/c+mFwEvnCYfvTvj6an34mG1k7HiS4ACZHtDp/SMJw==}
 
-  '@fern-api/fai-sdk@0.0.2-9f9be72b3':
-    resolution: {integrity: sha512-fZ07G3LKibyKfrvyO1SueBJoWi7octiYprMSWokZCTzTxpVjaotX9GHO1G8jdAeg0rEJneDsh5TxG1Fgz+pUYg==}
+  '@fern-api/fai-sdk@0.0.6-2ee1b7e28':
+    resolution: {integrity: sha512-3qhAAuc4ZJWLaFtyZzaYXfF9OQ5iviNrvLDXtjKScKUNS134fR3v3c3xedCidTq5KedapuBECziUaOmmd6KXVA==}
     engines: {node: '>=18.0.0'}
 
   '@fern-api/fdr-sdk@0.139.33-c9426f366':
     resolution: {integrity: sha512-lBE+OmDBJ7YEsJvYMsej0CLg47nv3Kfq7aJNnOntAhGZ6rtYYvMMQGFN379lrXQ2TL//xxsyVeIBfJeUBwlzpQ==}
+
+  '@fern-api/generator-cli@0.3.0':
+    resolution: {integrity: sha512-9FCrYy7j+SPDWNc82YIM6H6rlvUI6Zebzy3rqQj+JNz07cig6292X8AS58ydkM4Kj3NWEPHFW9qNo2KU/C9EHQ==}
+    hasBin: true
 
   '@fern-api/logger@0.4.24-rc1':
     resolution: {integrity: sha512-yh0E2F3K3IPnJZcE4dv+u8I51iKgTgv/reinKo4K5YmYEG1iLtw5vBEYMOPkQmsYFPAKIh++OMB/6TrsahMWew==}
@@ -9843,6 +9787,10 @@ packages:
       '@types/react': '>=16'
       react: '>=16'
 
+  '@mswjs/interceptors@0.39.8':
+    resolution: {integrity: sha512-2+BzZbjRO7Ct61k8fMNHEtoKjeWI9pIlHFTqBwZ5icHpqszIgEZbjb1MW5Z0+bITTCTl3gk4PDBxs9tA/csXvA==}
+    engines: {node: '>=18'}
+
   '@napi-rs/wasm-runtime@0.2.4':
     resolution: {integrity: sha512-9zESzOO5aDByvhIAsOy9TbpZ0Ur2AJbUI7UT73kcUTS2mxAMHOBaa1st/jAymNoCtvrit99kkzT1FZuXVcgfIQ==}
 
@@ -9923,6 +9871,67 @@ packages:
 
   '@nx/workspace@21.6.5':
     resolution: {integrity: sha512-7Y1Ikf1N9Yvers3laIdz2biaZHElgml/PvogLU4Z3cOEPl40OuaWcCJBN9v+0/kVvPsJ+gX66+3RdMRZV59fxA==}
+
+  '@octokit/auth-token@4.0.0':
+    resolution: {integrity: sha512-tY/msAuJo6ARbK6SPIxZrPBms3xPbfwBrulZe0Wtr/DIY9lje2HeV1uoebShn6mx7SjCHif6EjMvoREj+gZ+SA==}
+    engines: {node: '>= 18'}
+
+  '@octokit/core@5.2.2':
+    resolution: {integrity: sha512-/g2d4sW9nUDJOMz3mabVQvOGhVa4e/BN/Um7yca9Bb2XTzPPnfTWHWQg+IsEYO7M3Vx+EXvaM/I2pJWIMun1bg==}
+    engines: {node: '>= 18'}
+
+  '@octokit/endpoint@9.0.6':
+    resolution: {integrity: sha512-H1fNTMA57HbkFESSt3Y9+FBICv+0jFceJFPWDePYlR/iMGrwM5ph+Dd4XRQs+8X+PUFURLQgX9ChPfhJ/1uNQw==}
+    engines: {node: '>= 18'}
+
+  '@octokit/graphql@7.1.1':
+    resolution: {integrity: sha512-3mkDltSfcDUoa176nlGoA32RGjeWjl3K7F/BwHwRMJUW/IteSa4bnSV8p2ThNkcIcZU2umkZWxwETSSCJf2Q7g==}
+    engines: {node: '>= 18'}
+
+  '@octokit/openapi-types@24.2.0':
+    resolution: {integrity: sha512-9sIH3nSUttelJSXUrmGzl7QUBFul0/mB8HRYl3fOlgHbIWG+WnYDXU3v/2zMtAvuzZ/ed00Ei6on975FhBfzrg==}
+
+  '@octokit/plugin-paginate-rest@11.4.4-cjs.2':
+    resolution: {integrity: sha512-2dK6z8fhs8lla5PaOTgqfCGBxgAv/le+EhPs27KklPhm1bKObpu6lXzwfUEQ16ajXzqNrKMujsFyo9K2eaoISw==}
+    engines: {node: '>= 18'}
+    peerDependencies:
+      '@octokit/core': '5'
+
+  '@octokit/plugin-request-log@4.0.1':
+    resolution: {integrity: sha512-GihNqNpGHorUrO7Qa9JbAl0dbLnqJVrV8OXe2Zm5/Y4wFkZQDfTreBzVmiRfJVfE4mClXdihHnbpyyO9FSX4HA==}
+    engines: {node: '>= 18'}
+    peerDependencies:
+      '@octokit/core': '5'
+
+  '@octokit/plugin-rest-endpoint-methods@13.3.2-cjs.1':
+    resolution: {integrity: sha512-VUjIjOOvF2oELQmiFpWA1aOPdawpyaCUqcEBc/UOUnj3Xp6DJGrJ1+bjUIIDzdHjnFNO6q57ODMfdEZnoBkCwQ==}
+    engines: {node: '>= 18'}
+    peerDependencies:
+      '@octokit/core': ^5
+
+  '@octokit/request-error@5.1.1':
+    resolution: {integrity: sha512-v9iyEQJH6ZntoENr9/yXxjuezh4My67CBSu9r6Ve/05Iu5gNgnisNWOsoJHTP6k0Rr0+HQIpnH+kyammu90q/g==}
+    engines: {node: '>= 18'}
+
+  '@octokit/request@8.4.1':
+    resolution: {integrity: sha512-qnB2+SY3hkCmBxZsR/MPCybNmbJe4KAlfWErXq+rBKkQJlbjdJeS85VI9r8UqeLYLvnAenU8Q1okM/0MBsAGXw==}
+    engines: {node: '>= 18'}
+
+  '@octokit/rest@20.1.2':
+    resolution: {integrity: sha512-GmYiltypkHHtihFwPRxlaorG5R9VAHuk/vbszVoRTGXnAsY60wYLkh/E2XiFmdZmqrisw+9FaazS1i5SbdWYgA==}
+    engines: {node: '>= 18'}
+
+  '@octokit/types@13.10.0':
+    resolution: {integrity: sha512-ifLaO34EbbPj0Xgro4G5lP5asESjwHracYJvVaPIyXMuiuXLlhic3S47cBdTb+jfODkTE5YtGCLt3Ay3+J97sA==}
+
+  '@open-draft/deferred-promise@2.2.0':
+    resolution: {integrity: sha512-CecwLWx3rhxVQF6V4bAgPS5t+So2sTbPgAzafKkVizyi7tlwpcFpdFqq+wqF2OwNBmqFuu6tOyouTuxgpMfzmA==}
+
+  '@open-draft/logger@0.3.0':
+    resolution: {integrity: sha512-X2g45fzhxH238HKO4xbSr7+wBS8Fvw6ixhTDuvLd5mqh6bJJCFAPwU9mPDxbcrRtfxv4u5IHCEH77BmxvXmmxQ==}
+
+  '@open-draft/until@2.1.0':
+    resolution: {integrity: sha512-U69T3ItWHvLwGg5eJ0n3I62nWuE6ilHlmz7zM0npLBRvPRd7e6NYmg54vvRtP5mZG7kZqZCFVdsTWo7BPtBujg==}
 
   '@open-rpc/meta-schema@1.14.9':
     resolution: {integrity: sha512-2/CbDzOVpcaSnMs28TsRv8MKJwJi0TTYFlQ6q6qobAH26oIuhYgcZooKf4l71emgntU6MMcFQCA0h4mJ4dBCdA==}
@@ -10039,9 +10048,6 @@ packages:
   '@redocly/openapi-core@1.34.5':
     resolution: {integrity: sha512-0EbE8LRbkogtcCXU7liAyC00n9uNG9hJ+eMyHFdUsy9lB/WGqnEBgwjA9q2cyzAVcdTkQqTBBU1XePNnN3OijA==}
     engines: {node: '>=18.17.0', npm: '>=9.5.0'}
-
-  '@rolldown/pluginutils@1.0.0-beta.27':
-    resolution: {integrity: sha512-+d0F4MKMCbeVUJwG96uQ4SgAznZNSq93I3V+9NHA4OpvqG8mRCpGdKmK8l/dl02h2CCDHwW2FqilnTyDcAnqjA==}
 
   '@rollup/rollup-android-arm-eabi@4.52.5':
     resolution: {integrity: sha512-8c1vW4ocv3UOMp9K+gToY5zL2XiiVw3k7f1ksf4yO1FlDFQ1C2u72iACFnSOceJFsWskc2WZNqeRhFRPzv+wtQ==}
@@ -10179,18 +10185,6 @@ packages:
     resolution: {integrity: sha512-9JgOaunvQdsQ/qW2OPmE5+hCeUB52lQSolecrFrthct55QekhmXEwT203s20RL+UHtCQc15y3VXpby9E7Kkh/g==}
     deprecated: This is a stub types definition. axios provides its own type definitions, so you do not need this installed.
 
-  '@types/babel__core@7.20.5':
-    resolution: {integrity: sha512-qoQprZvz5wQFJwMDqeseRXWv3rqMvhgpbXFfVyWhbx9X47POIA6i/+dXefEmZKoAgOaTdaIgNSMqMIU61yRyzA==}
-
-  '@types/babel__generator@7.27.0':
-    resolution: {integrity: sha512-ufFd2Xi92OAVPYsy+P4n7/U7e68fex0+Ee8gSG9KX7eo084CWiQ4sdxktvdl0bOPupXtVJPY19zk6EwWqUQ8lg==}
-
-  '@types/babel__template@7.4.4':
-    resolution: {integrity: sha512-h/NUaSyG5EyxBIp8YRxo4RMe2/qQgvyowRwVMzhYhBCONbW8PUsg4lkFMrhgZhUe5z3L3MiLDuvyJ/CaPa2A8A==}
-
-  '@types/babel__traverse@7.28.0':
-    resolution: {integrity: sha512-8PvcXf70gTDZBgt9ptxJ8elBeBjcLOAcOtoO/mPJjtji1+CdGbHgm77om1GrsPxsiE+uXIpNSK64UYaIwQXd4Q==}
-
   '@types/body-parser@1.19.6':
     resolution: {integrity: sha512-HLFeCYgz89uk22N5Qg3dvGvsv46B8GLvKKo1zKG4NybA8U2DiEO3w9lqGg29t/tfLRJpJ6iQxnVw4OnB7MoM9g==}
 
@@ -10200,6 +10194,9 @@ packages:
 
   '@types/connect@3.4.38':
     resolution: {integrity: sha512-K6uROf1LD88uDQqJCktA4yzL1YYAK6NgfsI0v/mTgyPKWsX1CnJ0XPSDhViejru1GcRkLWb8RlzFYJRqGUbaug==}
+
+  '@types/cookie@0.6.0':
+    resolution: {integrity: sha512-4Kh9a6B2bQciAhf7FSuMRRkUWecJgJu9nPnx3yzpsfXX/c50REIqpHY4C82bXP90qrLtXtkDxTZosYO3UpOwlA==}
 
   '@types/cors@2.8.19':
     resolution: {integrity: sha512-mFNylyeyqN93lfe/9CSxOGREz8cpzAhH+E93xJ4xWQf62V8sQ/24reV2nyzUWM6H6Xji+GGHpkbLe7pVoUEskg==}
@@ -10337,11 +10334,6 @@ packages:
   '@types/range-parser@1.2.7':
     resolution: {integrity: sha512-hKormJbkJqzQGhziax5PItDUTMAM9uE2XXQmM37dyd4hVM+5aVl7oVxMVUiVQn2oCQFN/LKCZdvSM0pFRqbSmQ==}
 
-  '@types/react-dom@18.3.7':
-    resolution: {integrity: sha512-MEe3UeoENYVFXzoXEWsvcpg6ZvlrFNlOQ7EOsvhI3CfAXwzPfO8Qwuxd40nepsYKqyyVQnTdEfv68q91yLcKrQ==}
-    peerDependencies:
-      '@types/react': ^18.0.0
-
   '@types/react@18.3.26':
     resolution: {integrity: sha512-RFA/bURkcKzx/X9oumPG9Vp3D3JUgus/d0b67KB0t5S/raciymilkOa66olh78MUI92QLbEJevO7rvqU/kjwKA==}
 
@@ -10359,6 +10351,9 @@ packages:
 
   '@types/serve-static@1.15.9':
     resolution: {integrity: sha512-dOTIuqpWLyl3BBXU3maNQsS4A3zuuoYRNIvYSxxhebPfXg2mzWQEPne/nlJ37yOse6uGgR386uTpdsx4D0QZWA==}
+
+  '@types/statuses@2.0.6':
+    resolution: {integrity: sha512-xMAgYwceFhRA2zY+XbEA7mxYbA093wdiW8Vu6gZPGWy9cmOyU9XesH1tNcEWsKFd5Vzrqx5T3D38PWx1FIIXkA==}
 
   '@types/stream-chain@2.1.0':
     resolution: {integrity: sha512-guDyAl6s/CAzXUOWpGK2bHvdiopLIwpGu8v10+lb9hnQOyo4oj/ZUQFOvqFjKGsE3wJP1fpIesCcMvbXuWsqOg==}
@@ -10465,12 +10460,6 @@ packages:
 
   '@ungap/structured-clone@1.3.0':
     resolution: {integrity: sha512-WmoN8qaIAo7WTYWbAZuG8PYEhn5fkz7dZrqTBZ7dtt//lL2Gwms1IcnQ5yHqjDfX8Ft5j4YzDM23f87zBfDe9g==}
-
-  '@vitejs/plugin-react@4.7.0':
-    resolution: {integrity: sha512-gUu9hwfWvvEDBBmgtAowQCojwZmJ5mcLn3aufeCsitijs3+f2NsrPtlAWIR6OPiqljl96GVCUbLe0HyqIpVaoA==}
-    engines: {node: ^14.18.0 || >=16.0.0}
-    peerDependencies:
-      vite: ^4.2.0 || ^5.0.0 || ^6.0.0 || ^7.0.0
 
   '@vitest/expect@2.1.9':
     resolution: {integrity: sha512-UJCIkTBenHeKT1TTlKMJWy1laZewsRIzYighyYiJKZreqtdxSos/S1t+ktRMQWu2CKqaarrkeszJx1cgC5tGZw==}
@@ -10621,10 +10610,6 @@ packages:
 
   any-promise@1.3.0:
     resolution: {integrity: sha512-7UvmKalWRt1wgjL1RrGxoSJW/0QZFIegpeGvZG9kjp8vrRu55XTHbwnqq2GpXm9uLbcuhxm3IqX9OB4MZR1b2A==}
-
-  anymatch@3.1.3:
-    resolution: {integrity: sha512-KMReFUr0B4t+D+OBkjR3KYqvocp2XaSzO55UcB6mgQMd3KbcE+mWTyvVV7D/zsdEbNnV6acZUutkiHQXvTr1Rw==}
-    engines: {node: '>= 8'}
 
   arch@2.2.0:
     resolution: {integrity: sha512-Of/R0wqp83cgHozfIYLbBMnej79U/SVGOOyuB3VVFv1NRM/PSFMK12x9KVtiYzJqmnU5WR2qp0Z5rHb7sWGnFQ==}
@@ -10800,9 +10785,8 @@ packages:
     resolution: {integrity: sha512-4Bcg1P8xhUuqcii/S0Z9wiHIrQVPMermM1any+MX5GeGD7faD3/msQUDGLol9wOcz4/jbg/WJnGqoJF6LiBdtg==}
     engines: {node: '>=10.0.0'}
 
-  binary-extensions@2.3.0:
-    resolution: {integrity: sha512-Ceh+7ox5qe7LJuLHoY0feh3pHuUDHAcRUeyL2VYghZwfpkNIy/+8Ocg0a3UuSoYzavmylwuLWQOf3hl0jjMMIw==}
-    engines: {node: '>=8'}
+  before-after-hook@2.2.3:
+    resolution: {integrity: sha512-NzUnlZexiaH/46WDhANlyR2bXRopNg4F/zuSA3OpZnllCUgRaOF2znDioDWrmbNVsuZk6l9pMquQB38cfBZwkQ==}
 
   bl@1.2.3:
     resolution: {integrity: sha512-pvcNpa0UU69UT341rO6AYy4FVAIkUHuZXRIWbq+zHnsVcRzDDjIAhGuuYoi0d//cwIwtt4pkpKycWEfjdV+vww==}
@@ -10957,10 +10941,6 @@ packages:
     resolution: {integrity: sha512-OAlb+T7V4Op9OwdkjmguYRqncdlx5JiofwOAUkmTF+jNdHwzTaTs4sRAGpzLF3oOz5xAyDGrPgeIDFQmDOTiJw==}
     engines: {node: '>= 16'}
 
-  chokidar@3.6.0:
-    resolution: {integrity: sha512-7VT13fmjotKpGipCW9JEQAusEPE+Ei8nl6/g4FBAmIm0GOOLMua9NDDo/DWp0ZAxCr3cPq5ZpBqmPAQgDda2Pw==}
-    engines: {node: '>= 8.10.0'}
-
   chokidar@4.0.3:
     resolution: {integrity: sha512-Qgzu8kfBvo+cA4962jnP1KkS6Dop5NS6g7R5LFYJr4b8Ub94PPQXUksCw9PvXoeXPRRddRNC5C1JQUR2SMGtnA==}
     engines: {node: '>= 14.16.0'}
@@ -11108,6 +11088,10 @@ packages:
 
   cookie@0.7.1:
     resolution: {integrity: sha512-6DnInpx7SJ2AK3+CTUE/ZM0vWTUboZCegxhC2xiIydHR9jNuTAASBrfEpHhiGOZw/nX51bHt6YQl8jsGo4y/0w==}
+    engines: {node: '>= 0.6'}
+
+  cookie@0.7.2:
+    resolution: {integrity: sha512-yki5XnKuf750l50uGTllt6kKILY4nQ1eNIQatoXEByZ5dWgnKqbnqmTrBE5B4N7lrMJKQ2ytWMiTO2o0v6Ew/w==}
     engines: {node: '>= 0.6'}
 
   core-js-compat@3.46.0:
@@ -11321,6 +11305,9 @@ packages:
   depd@2.0.0:
     resolution: {integrity: sha512-g7nH6P6dyDioJogAAGprGpCtVImJhpPk/roCzdb3fIh61/s/nPsfR6onyMwkCAR/OlC3yBC0lESvUoQEAssIrw==}
     engines: {node: '>= 0.8'}
+
+  deprecation@2.3.1:
+    resolution: {integrity: sha512-xmHIy4F3scKVwMsQ4WnVaS8bHOx0DmVwRywosKhaILI0ywMDWPtBSku2HNxRvF7jtwDRsoEwYQSfbxj8b7RlJQ==}
 
   deps-regex@0.2.0:
     resolution: {integrity: sha512-PwuBojGMQAYbWkMXOY9Pd/NWCDNHVH12pnS7WHqZkTSeMESe4hwnKKRp0yR87g37113x4JPbo/oIvXY+s/f56Q==}
@@ -11790,10 +11777,6 @@ packages:
     resolution: {integrity: sha512-gIXjKqtFuWEgzFRJA9WCQeSJLZDjgJUOMCMzxtvFq/37KojM1BFGufqsCy0r4qSQmYLsZYMeyRqzIWOMup03sw==}
     engines: {node: '>=14'}
 
-  form-data@4.0.0:
-    resolution: {integrity: sha512-ETEklSGi5t0QMZuiXoA/Q6vcnxcLQP5vdugSpuAyi6SVGi2clPPp+xgEhuMaHC+zGgn31Kd235W35f7Hykkaww==}
-    engines: {node: '>= 6'}
-
   form-data@4.0.4:
     resolution: {integrity: sha512-KrGhL9Q4zjj0kiUt5OO4Mr/A/jlI2jDYs5eHBpYHPcBEVSiipAvn2Ko2HnPe20rmcuuvMHNdZFp+4IlGTMF0Ow==}
     engines: {node: '>= 6'}
@@ -11987,6 +11970,10 @@ packages:
   graphemer@1.4.0:
     resolution: {integrity: sha512-EtKwoO6kxCL9WO5xipiHTZlSzBm7WLT627TqC/uVRd0HKmq8NXyebnNYxDoBi7wt8eTWrUrKXCOVaFq9x1kgag==}
 
+  graphql@16.11.0:
+    resolution: {integrity: sha512-mS1lbMsxgQj6hge1XZ6p7GPhbrtFwUFYi3wRzXAC/FmYnyXMTvvI3td3rjmQ2u8ewXueaSvRPWaEcgVVOT9Jnw==}
+    engines: {node: ^12.22.0 || ^14.16.0 || ^16.0.0 || >=17.0.0}
+
   gray-matter@4.0.3:
     resolution: {integrity: sha512-5v6yZd4JK3eMI3FqqCouswVqwugaA9r4dNZB1wwcmrD02QkV5H0y7XBQW8QwQqEaZY1pM9aqORSORhJRdNK44Q==}
     engines: {node: '>=6.0'}
@@ -12079,6 +12066,9 @@ packages:
 
   hastscript@9.0.1:
     resolution: {integrity: sha512-g7df9rMFX/SPi34tyGCyUBREQoKkapwdY/T04Qn9TDWfHhAYt4/I0gMVirzK5wEzeUqIjEB+LXC/ypb7Aqno5w==}
+
+  headers-polyfill@4.0.3:
+    resolution: {integrity: sha512-IScLbePpkvO846sIwOtOTDjutRMWdXdJmXdMvk6gCBHxFO8d+QKOQedyZSxFTTFYRSmlgSTDtXqqq4pcenBXLQ==}
 
   heap-js@2.7.1:
     resolution: {integrity: sha512-EQfezRg0NCZGNlhlDR3Evrw1FVL2G3LhU7EgPoxufQKruNBSYA8MiRPHeWbU+36o+Fhel0wMwM+sLEiBAlNLJA==}
@@ -12233,10 +12223,6 @@ packages:
     resolution: {integrity: sha512-n4ZT37wG78iz03xPRKJrHTdZbe3IicyucEtdRsV5yglwc3GyUfbAfpSeD0FJ41NbUNSt5wbhqfp1fS+BgnvDFQ==}
     engines: {node: '>= 0.4'}
 
-  is-binary-path@2.1.0:
-    resolution: {integrity: sha512-ZMERYes6pDydyuGidse7OsHxtbI7WVeUEozgR/g7rd0xUimYNlvZRE/K2MgZTjWy725IfelLeVcEM97mmtRGXw==}
-    engines: {node: '>=8'}
-
   is-boolean-object@1.2.2:
     resolution: {integrity: sha512-wa56o2/ElJMYqjCjGkXri7it5FbebW5usLw/nPmCMs5DeZ7eziSYZhSmPRn0txqeW4LnAmQQU7FgqLpsEFKM4A==}
     engines: {node: '>= 0.4'}
@@ -12314,6 +12300,9 @@ packages:
   is-negative-zero@2.0.3:
     resolution: {integrity: sha512-5KoIu2Ngpyek75jXodFvnafB6DJgr3u8uuK0LEZJjrU19DrMD3EVERaR8sjz8CCGgpZvxPl9SuE1GMVPFHx1mw==}
     engines: {node: '>= 0.4'}
+
+  is-node-process@1.2.0:
+    resolution: {integrity: sha512-Vg4o6/fqPxIjtxgUH5QLJhwZ7gW5diGCVlXpuUfELC62CuxM1iHcRe51f2W1FDy04Ai4KJkagKjx3XaqyfRKXw==}
 
   is-number-object@1.1.1:
     resolution: {integrity: sha512-lZhclumE1G6VYD8VHe35wFaIif+CTy5SJIi5+3y4psDgWu4wPDoBhF8NxUOinEc7pHgiTsT6MaBb92rKhhD+Xw==}
@@ -12448,9 +12437,6 @@ packages:
 
   js-base64@3.7.7:
     resolution: {integrity: sha512-7rCnleh0z2CkXhH67J8K1Ytz0b2Y+yxTPL+/KOJoa20hfnVQ/3/T6W/KflYI4bRHRagNeXeU2bkNGI3v1oS/lw==}
-
-  js-base64@3.7.8:
-    resolution: {integrity: sha512-hNngCeKxIUQiEUN3GPJOkz4wF/YvdUdbNL9hsBcMQTkKzboD7T/q3OYOuuPZLUE6dBxSGpwhk5mwuDud7JVAow==}
 
   js-levenshtein@1.1.6:
     resolution: {integrity: sha512-X2BB11YZtrRqY4EnQcLX5Rh373zbK4alC1FW7D7MBhL2gtcC17cTnr6DmfHZeS0s2rTHjUTMMHfG7gO8SSdw+g==}
@@ -12974,6 +12960,16 @@ packages:
   ms@2.1.3:
     resolution: {integrity: sha512-6FlzubTLZG3J2a/NVCAleEhjzq5oxgHyaCU9yYXvcLsvoVaHJq/s5xXI6/XXP6tz7R9xAOtHnSO/tXtF3WRTlA==}
 
+  msw@2.11.3:
+    resolution: {integrity: sha512-878imp8jxIpfzuzxYfX0qqTq1IFQz/1/RBHs/PyirSjzi+xKM/RRfIpIqHSCWjH0GxidrjhgiiXC+DWXNDvT9w==}
+    engines: {node: '>=18'}
+    hasBin: true
+    peerDependencies:
+      typescript: '>= 4.8.x'
+    peerDependenciesMeta:
+      typescript:
+        optional: true
+
   multimatch@5.0.0:
     resolution: {integrity: sha512-ypMKuglUrZUD99Tk2bUQ+xNQj43lPEfAeX2o9cTteAmShXy2VHDJpuwu1o0xqoKCt9jLVAvwyFKdLTPXKAfJyA==}
     engines: {node: '>=10'}
@@ -13151,6 +13147,9 @@ packages:
   ora@7.0.1:
     resolution: {integrity: sha512-0TUxTiFJWv+JnjWm4o9yvuskpEJLXTcng8MJuKd+SzAzp2o+OP3HWqNhB4OdJRt1Vsd9/mR0oyaEYlOnL7XIRw==}
     engines: {node: '>=16'}
+
+  outvariant@1.4.3:
+    resolution: {integrity: sha512-+Sl2UErvtsoajRDKCE5/dBz4DIvHXQQnAxtQTF04OJxY0+DyZXSo5P5Bb7XYWOh81syohlYL24hbDwxedPUJCA==}
 
   own-keys@1.0.1:
     resolution: {integrity: sha512-qFOyK5PjiWZd+QQIh+1jhdb9LpxTF0qs7Pm8o5QHYZ0M3vKqSqzsZaEB6oWlxZ+q2sJBMI/Ktgd2N5ZwQoRHfg==}
@@ -13503,17 +13502,8 @@ packages:
     resolution: {integrity: sha512-y3bGgqKj3QBdxLbLkomlohkvsA8gdAiUQlSBJnBhfn+BPxg4bc62d8TcBW15wavDfgexCgccckhcZvywyQYPOw==}
     hasBin: true
 
-  react-dom@18.3.1:
-    resolution: {integrity: sha512-5m4nQKp+rZRb09LNH59GM4BxTh9251/ylbKIbpe7TpGxfJ+9kv6BLkLBXIjjspbgbnIBNqlI23tRnTWT0snUIw==}
-    peerDependencies:
-      react: ^18.3.1
-
   react-is@18.3.1:
     resolution: {integrity: sha512-/LLMVyas0ljjAtoYiPqYiL8VWXzUUdThrmU5+n20DZv+a+ClRoevUzw5JxU+Ieh5/c87ytoTBV9G1FiKfNJdmg==}
-
-  react-refresh@0.17.0:
-    resolution: {integrity: sha512-z6F7K9bV85EfseRCp2bzrpyQ0Gkw1uLoCel9XBVWPg/TjRj94SkJzUTGfOa4bs7iJvBWtQG0Wq7wnI0syw3EBQ==}
-    engines: {node: '>=0.10.0'}
 
   react@18.3.1:
     resolution: {integrity: sha512-wS+hAgJShR0KhEvPJArfuPVN1+Hz1t0Y6n5jLrGQbkb4urgPE/0Rve+1kMB1v/oWgHgm4WIcV+i7F2pTVj+2iQ==}
@@ -13674,6 +13664,9 @@ packages:
     resolution: {integrity: sha512-I9fPXU9geO9bHOt9pHHOhOkYerIMsmVaWB0rA2AI9ERh/+x/i7MV5HKBNrg+ljO5eoPVgCcnFuRjJ9uH6I/3eg==}
     engines: {node: ^12.20.0 || ^14.13.1 || >=16.0.0}
 
+  rettime@0.7.0:
+    resolution: {integrity: sha512-LPRKoHnLKd/r3dVxcwO7vhCW+orkOGj9ViueosEBK6ie89CijnfRlhaDhHq/3Hxu4CkWQtxwlBG0mzTQY6uQjw==}
+
   reusify@1.1.0:
     resolution: {integrity: sha512-g6QUff04oZpHs0eG5p83rFLhHeV00ug/Yf9nZM6fLeUrPguBTkTQOdpAWWspMh55TZfVQDPaN3NQJfbVRAxdIw==}
     engines: {iojs: '>=1.0.0', node: '>=0.10.0'}
@@ -13736,9 +13729,6 @@ packages:
 
   sax@1.4.1:
     resolution: {integrity: sha512-+aWOz7yVScEGoKNd4PA10LZ8sk0A/z5+nXQG5giUO5rprX9jgYsTdov9qCchZiPIZezbZH+jRut8nPodFAX4Jg==}
-
-  scheduler@0.23.2:
-    resolution: {integrity: sha512-UOShsPwz7NrMUqhR6t0hWjFduvOzbtv7toDH1/hIrfRNIDBnnBWd0CwJTGvTpngVlmwGCdP9/Zl/tVrDqcuYzQ==}
 
   section-matter@1.0.0:
     resolution: {integrity: sha512-vfD3pmTzGpufjScBh50YHKzEu2lxBWhVEHsNGoEXmCmn2hKGfeNLYMzCJpe8cD7gqX7TJluOVpBkAequ6dgMmA==}
@@ -13942,6 +13932,9 @@ packages:
 
   streamx@2.23.0:
     resolution: {integrity: sha512-kn+e44esVfn2Fa/O0CPFcex27fjIL6MkVae0Mm6q+E6f0hWv578YCERbv+4m02cjxvDsPKLnmxral/rR6lBMAg==}
+
+  strict-event-emitter@0.5.1:
+    resolution: {integrity: sha512-vMgjE/GGEPEFnhFub6pa4FmJBRBVOLpIII2hvCZ8Kzb7K0hlHo7mQv6xYrBvCL2LtAIBwFUK8wvuJgTVSQ5MFQ==}
 
   string-width@4.2.3:
     resolution: {integrity: sha512-wKyQRQpjJ0sIp62ErSZdGsjMJWsap5oRNihHhu6G7JVO/9jIB6UyevL+tXuOqrng8j/cxKTWyWUwvSTriiZz/g==}
@@ -14153,9 +14146,6 @@ packages:
   through@2.3.8:
     resolution: {integrity: sha512-w89qg7PI8wAdvX60bMDP+bFoD5Dvhm9oLheFp5O4a2QF0cSBGsBX4qZmadPMvVqlLJBBci+WqGGOAPvcDeNSVg==}
 
-  tiny-invariant@1.3.3:
-    resolution: {integrity: sha512-+FbBPE1o9QAYvviau/qC5SE3caw21q3xkvWKBtja5vgqOWIHHJ3ioaq1VPfn/Szqctz2bU/oYeKd9/z5BL+PVg==}
-
   tiny-readdir@2.7.4:
     resolution: {integrity: sha512-721U+zsYwDirjr8IM6jqpesD/McpZooeFi3Zc6mcjy1pse2C+v19eHPFRqz4chGXZFw7C3KITDjAtHETc2wj7Q==}
 
@@ -14192,6 +14182,13 @@ packages:
     resolution: {integrity: sha512-TARUb7z1pGvlLxgPk++7wJ6aycXF3GJ0sNSBTAsTuJrQG5QuZlkUQP+zl+nbjAh4gMX9yDw9ZYklMd7vAfJKEw==}
     engines: {node: '>=0.10.0'}
 
+  tldts-core@7.0.17:
+    resolution: {integrity: sha512-DieYoGrP78PWKsrXr8MZwtQ7GLCUeLxihtjC1jZsW1DnvSMdKPitJSe8OSYDM2u5H6g3kWJZpePqkp43TfLh0g==}
+
+  tldts@7.0.17:
+    resolution: {integrity: sha512-Y1KQBgDd/NUc+LfOtKS6mNsC9CCaH+m2P1RoIZy7RAPo3C3/t8X45+zgut31cRZtZ3xKPjfn3TkGTrctC2TQIQ==}
+    hasBin: true
+
   tmp-promise@3.0.3:
     resolution: {integrity: sha512-RwM7MoPojPxsOBYnyd2hy0bxtIlVrihNs9pj5SUvY8Zz1sQcQG2tG1hSr8PDxfgEB8RNKDhqbIlroIarSNDNsQ==}
 
@@ -14214,6 +14211,10 @@ packages:
   token-types@6.1.1:
     resolution: {integrity: sha512-kh9LVIWH5CnL63Ipf0jhlBIy0UsrMj/NJDfpsy1SqOXlLKEVyXXYrnFxFT1yOOYVGBSApeVnjPw/sBz5BfEjAQ==}
     engines: {node: '>=14.16'}
+
+  tough-cookie@6.0.0:
+    resolution: {integrity: sha512-kXuRi1mtaKMrsLUxz3sQYvVl37B0Ns6MzfrtV5DvJceE9bPyspOqk9xxv7XbZWcfLWbFmm997vl83qUWVJA64w==}
+    engines: {node: '>=16'}
 
   tr46@1.0.1:
     resolution: {integrity: sha512-dTpowEjclQ7Kgx5SdBkqRzVhERQXov8/l9Ft9dVM9fmg0W0KQSVaXX9T4i6twCPNtYiZM53lpSSUAwJbFPOHxA==}
@@ -14362,6 +14363,10 @@ packages:
     resolution: {integrity: sha512-RAH822pAdBgcNMAfWnCBU3CFZcfZ/i1eZjwFU/dsLKumyuuP3niueg2UAukXYF0E2AAoc82ZSSf9J0WQBinzHA==}
     engines: {node: '>=12.20'}
 
+  type-fest@4.41.0:
+    resolution: {integrity: sha512-TeTSQ6H5YHvpqVwBRcnLDCBnDOHWYu7IvGbHT6N8AOymcr9PJGjc1GTtiWZTYg0NCgYwvnYWEkVChQAr9bjfwA==}
+    engines: {node: '>=16'}
+
   type-is@1.6.18:
     resolution: {integrity: sha512-TkRKr9sUTxEH8MdfuCSP7VizJyzRNMjj2J2do2Jr3Kym598JVdEksuzPQCnlFPW4ky9Q+iA+ma9BGm06XQBy8g==}
     engines: {node: '>= 0.6'}
@@ -14390,13 +14395,13 @@ packages:
     engines: {node: '>=14.17'}
     hasBin: true
 
-  typescript@5.8.3:
-    resolution: {integrity: sha512-p1diW6TqL9L07nNxvRMM7hMMw4c5XOo/1ibL4aAIGmSAt9slTE1Xgw5KWuof2uTOvCg9BY7ZRi+GaF+7sfgPeQ==}
+  typescript@5.9.2:
+    resolution: {integrity: sha512-CWBzXQrc/qOkhidw1OzBTQuYRbfyxDXJMVJ1XNwUHGROVmuaeiEm3OslpZ1RV96d7SKKjZKrSJu3+t/xlw3R9A==}
     engines: {node: '>=14.17'}
     hasBin: true
 
-  typescript@5.9.2:
-    resolution: {integrity: sha512-CWBzXQrc/qOkhidw1OzBTQuYRbfyxDXJMVJ1XNwUHGROVmuaeiEm3OslpZ1RV96d7SKKjZKrSJu3+t/xlw3R9A==}
+  typescript@5.9.3:
+    resolution: {integrity: sha512-jl1vZzPDinLr9eUt3J/t7V6FgNEw9QjvBPdysz9KfQDD41fQrC2Y4vKQdiaUpFT4bXlb1RHhLpp8wtm6M5TgSw==}
     engines: {node: '>=14.17'}
     hasBin: true
 
@@ -14474,6 +14479,9 @@ packages:
   unist-util-visit@5.0.0:
     resolution: {integrity: sha512-MR04uvD+07cwl/yhVuVWAtw+3GOR/knlL55Nd/wAdblk27GCVt3lqpTivy/tkJcZoNPzTwS1Y+KMojlLDhoTzg==}
 
+  universal-user-agent@6.0.1:
+    resolution: {integrity: sha512-yCzhz6FN2wU1NiiQRogkTQszlQSlpWaw8SvVegAc+bDxbzHgh1vX8uIe8OYyMH6DwH+sdTJsgMl36+mSMdRJIQ==}
+
   universalify@2.0.1:
     resolution: {integrity: sha512-gptHNQghINnc/vTGIk0SOFGFNXw7JVrlRUtConJRlvaw6DuX0wO5Jeko9sWrMBhh+PsYAZ7oXAiOnf/UKogyiw==}
     engines: {node: '>= 10.0.0'}
@@ -14481,6 +14489,9 @@ packages:
   unpipe@1.0.0:
     resolution: {integrity: sha512-pjy2bYhSsufwWlKwPc+l3cN7+wuJlK6uz0YdJEOlQDbl6jo/YlPi4mb8agUkVC8BF7V8NuzeyPNqRksA3hztKQ==}
     engines: {node: '>= 0.8'}
+
+  until-async@3.0.2:
+    resolution: {integrity: sha512-IiSk4HlzAMqTUseHHe3VhIGyuFmN90zMTpD3Z3y8jeQbzLIq500MVM7Jq2vUAnTKAFPJrqwkzr6PoTcPhGcOiw==}
 
   update-browserslist-db@1.1.3:
     resolution: {integrity: sha512-UxhIZQ+QInVdunkDAaiazvvT/+fXL5Osr0JZlJulepYu6Jd7qJtDZjlur0emRlT71EN3ScPoE7gvsuIKKNavKw==}
@@ -14540,37 +14551,6 @@ packages:
     engines: {node: ^18.0.0 || >=20.0.0}
     hasBin: true
 
-  vite-plugin-checker@0.6.4:
-    resolution: {integrity: sha512-2zKHH5oxr+ye43nReRbC2fny1nyARwhxdm0uNYp/ERy4YvU9iZpNOsueoi/luXw5gnpqRSvjcEPxXbS153O2wA==}
-    engines: {node: '>=14.16'}
-    peerDependencies:
-      eslint: '>=7'
-      meow: ^9.0.0
-      optionator: ^0.9.1
-      stylelint: '>=13'
-      typescript: '*'
-      vite: '>=2.0.0'
-      vls: '*'
-      vti: '*'
-      vue-tsc: '>=1.3.9'
-    peerDependenciesMeta:
-      eslint:
-        optional: true
-      meow:
-        optional: true
-      optionator:
-        optional: true
-      stylelint:
-        optional: true
-      typescript:
-        optional: true
-      vls:
-        optional: true
-      vti:
-        optional: true
-      vue-tsc:
-        optional: true
-
   vite@5.4.21:
     resolution: {integrity: sha512-o5a9xKjbtuhY6Bi5S3+HvbRERmouabWbyUcpXXUA1u+GNUKoROi9byOJ8M0nHbHYHkYICiMlqxkg1KkYmm25Sw==}
     engines: {node: ^18.0.0 || >=20.0.0}
@@ -14627,26 +14607,8 @@ packages:
       jsdom:
         optional: true
 
-  vscode-jsonrpc@6.0.0:
-    resolution: {integrity: sha512-wnJA4BnEjOSyFMvjZdpiOwhSq9uDoK8e/kpRJDTaMYzwlkrhG1fwDIZI94CLsLzlCK5cIbMMtFlJlfR57Lavmg==}
-    engines: {node: '>=8.0.0 || >=10.0.0'}
-
-  vscode-languageclient@7.0.0:
-    resolution: {integrity: sha512-P9AXdAPlsCgslpP9pRxYPqkNYV7Xq8300/aZDpO35j1fJm/ncize8iGswzYlcvFw5DQUx4eVk+KvfXdL0rehNg==}
-    engines: {vscode: ^1.52.0}
-
-  vscode-languageserver-protocol@3.16.0:
-    resolution: {integrity: sha512-sdeUoAawceQdgIfTI+sdcwkiK2KU+2cbEYA0agzM2uqaUy2UpnnGHtWTHVEtS0ES4zHU0eMFRGN+oQgDxlD66A==}
-
   vscode-languageserver-textdocument@1.0.12:
     resolution: {integrity: sha512-cxWNPesCnQCcMPeenjKKsOCKQZ/L6Tv19DTRIGuLWe32lyzWhihGVJ/rcckZXJxfdKCFvRLS3fpBIsV/ZGX4zA==}
-
-  vscode-languageserver-types@3.16.0:
-    resolution: {integrity: sha512-k8luDIWJWyenLc5ToFQQMaSrqCHiLwyKPHKPQZ5zz21vM+vIVUSvsRpcbiECH4WR88K2XZqc4ScRcZ7nk/jbeA==}
-
-  vscode-languageserver@7.0.0:
-    resolution: {integrity: sha512-60HTx5ID+fLRcgdHfmz0LDZAXYEV68fzwG0JWwEPBode9NuMYTIxuYXPg4ngO8i8+Ou0lM7y6GzaYWbiDL0drw==}
-    hasBin: true
 
   vscode-uri@3.1.0:
     resolution: {integrity: sha512-/BpdSx+yCQGnCvecbyXdxHDkuk55/G3xwnC0GqY4gmQ3j+A+g8kzzgB4Nk/SINjqn6+waqw3EgbVF2QKExkRxQ==}
@@ -15346,16 +15308,6 @@ snapshots:
       '@babel/core': 7.28.4
       '@babel/helper-plugin-utils': 7.27.1
 
-  '@babel/plugin-transform-react-jsx-self@7.27.1(@babel/core@7.28.4)':
-    dependencies:
-      '@babel/core': 7.28.4
-      '@babel/helper-plugin-utils': 7.27.1
-
-  '@babel/plugin-transform-react-jsx-source@7.27.1(@babel/core@7.28.4)':
-    dependencies:
-      '@babel/core': 7.28.4
-      '@babel/helper-plugin-utils': 7.27.1
-
   '@babel/plugin-transform-regenerator@7.28.4(@babel/core@7.28.4)':
     dependencies:
       '@babel/core': 7.28.4
@@ -15568,48 +15520,48 @@ snapshots:
       '@babel/helper-string-parser': 7.27.1
       '@babel/helper-validator-identifier': 7.27.1
 
-  '@biomejs/biome@2.2.5':
+  '@biomejs/biome@2.3.1':
     optionalDependencies:
-      '@biomejs/cli-darwin-arm64': 2.2.5
-      '@biomejs/cli-darwin-x64': 2.2.5
-      '@biomejs/cli-linux-arm64': 2.2.5
-      '@biomejs/cli-linux-arm64-musl': 2.2.5
-      '@biomejs/cli-linux-x64': 2.2.5
-      '@biomejs/cli-linux-x64-musl': 2.2.5
-      '@biomejs/cli-win32-arm64': 2.2.5
-      '@biomejs/cli-win32-x64': 2.2.5
+      '@biomejs/cli-darwin-arm64': 2.3.1
+      '@biomejs/cli-darwin-x64': 2.3.1
+      '@biomejs/cli-linux-arm64': 2.3.1
+      '@biomejs/cli-linux-arm64-musl': 2.3.1
+      '@biomejs/cli-linux-x64': 2.3.1
+      '@biomejs/cli-linux-x64-musl': 2.3.1
+      '@biomejs/cli-win32-arm64': 2.3.1
+      '@biomejs/cli-win32-x64': 2.3.1
 
-  '@biomejs/cli-darwin-arm64@2.2.5':
+  '@biomejs/cli-darwin-arm64@2.3.1':
     optional: true
 
-  '@biomejs/cli-darwin-x64@2.2.5':
+  '@biomejs/cli-darwin-x64@2.3.1':
     optional: true
 
-  '@biomejs/cli-linux-arm64-musl@2.2.5':
+  '@biomejs/cli-linux-arm64-musl@2.3.1':
     optional: true
 
-  '@biomejs/cli-linux-arm64@2.2.5':
+  '@biomejs/cli-linux-arm64@2.3.1':
     optional: true
 
-  '@biomejs/cli-linux-x64-musl@2.2.5':
+  '@biomejs/cli-linux-x64-musl@2.3.1':
     optional: true
 
-  '@biomejs/cli-linux-x64@2.2.5':
+  '@biomejs/cli-linux-x64@2.3.1':
     optional: true
 
-  '@biomejs/cli-win32-arm64@2.2.5':
+  '@biomejs/cli-win32-arm64@2.3.1':
     optional: true
 
-  '@biomejs/cli-win32-x64@2.2.5':
+  '@biomejs/cli-win32-x64@2.3.1':
     optional: true
 
   '@blueprintjs/colors@5.1.9':
     dependencies:
       tslib: 2.6.3
 
-  '@blueprintjs/eslint-plugin@6.1.16(eslint@8.57.1)(typescript@5.8.3)':
+  '@blueprintjs/eslint-plugin@6.1.16(eslint@8.57.1)(typescript@5.9.3)':
     dependencies:
-      '@typescript-eslint/utils': 8.46.2(eslint@8.57.1)(typescript@5.8.3)
+      '@typescript-eslint/utils': 8.46.2(eslint@8.57.1)(typescript@5.9.3)
       eslint: 8.57.1
     transitivePeerDependencies:
       - supports-color
@@ -15634,6 +15586,16 @@ snapshots:
       typescript: 5.4.5
     transitivePeerDependencies:
       - supports-color
+
+  '@bundled-es-modules/cookie@2.0.1':
+    dependencies:
+      cookie: 0.7.2
+    optional: true
+
+  '@bundled-es-modules/statuses@1.0.1':
+    dependencies:
+      statuses: 2.0.1
+    optional: true
 
   '@cspell/cspell-bundled-dicts@8.19.4':
     dependencies:
@@ -16125,14 +16087,14 @@ snapshots:
       lodash-es: 4.17.21
       strip-ansi: 7.1.2
 
-  '@fern-api/docs-parsers@0.0.65(typescript@5.8.3)':
+  '@fern-api/docs-parsers@0.0.65(typescript@5.9.3)':
     dependencies:
       '@fern-api/logger': 0.4.24-rc1
       '@fern-api/ui-core-utils': 0.0.0
       '@open-rpc/meta-schema': 1.14.9
       es-toolkit: 1.40.0
       openapi-types: 12.1.3
-      ts-essentials: 10.1.1(typescript@5.8.3)
+      ts-essentials: 10.1.1(typescript@5.9.3)
       uuid: 9.0.1
       whatwg-mimetype: 4.0.0
     transitivePeerDependencies:
@@ -16144,9 +16106,9 @@ snapshots:
 
   '@fern-api/dynamic-ir-sdk@61.4.0': {}
 
-  '@fern-api/fai-sdk@0.0.2-9f9be72b3': {}
+  '@fern-api/fai-sdk@0.0.6-2ee1b7e28': {}
 
-  '@fern-api/fdr-sdk@0.139.33-c9426f366(typescript@5.8.3)':
+  '@fern-api/fdr-sdk@0.139.33-c9426f366(typescript@5.9.3)':
     dependencies:
       '@fern-api/ui-core-utils': 0.139.33-c9426f366
       '@types/readable-stream': 4.0.21
@@ -16162,11 +16124,16 @@ snapshots:
       qs: 6.13.0
       readable-stream: 4.7.0
       tinycolor2: 1.6.0
-      ts-essentials: 10.1.1(typescript@5.8.3)
+      ts-essentials: 10.1.1(typescript@5.9.3)
       url-join: 5.0.0
     transitivePeerDependencies:
       - encoding
       - typescript
+
+  '@fern-api/generator-cli@0.3.0':
+    dependencies:
+      '@octokit/rest': 20.1.2
+      es-toolkit: 1.40.0
 
   '@fern-api/logger@0.4.24-rc1':
     dependencies:
@@ -16176,7 +16143,7 @@ snapshots:
   '@fern-api/sdk@0.12.3':
     dependencies:
       '@fern-api/template-resolver': 0.7.5
-      form-data: 4.0.0
+      form-data: 4.0.4
       formdata-node: 6.0.3
       js-base64: 3.7.2
       node-fetch: 2.7.0
@@ -16229,7 +16196,7 @@ snapshots:
 
   '@fern-fern/fdr-test-sdk@0.0.5297':
     dependencies:
-      form-data: 4.0.0
+      form-data: 4.0.4
       js-base64: 3.7.2
       node-fetch: 2.7.0
       qs: 6.13.0
@@ -16239,7 +16206,7 @@ snapshots:
 
   '@fern-fern/fiddle-sdk@0.0.656':
     dependencies:
-      form-data: 4.0.0
+      form-data: 4.0.4
       js-base64: 3.7.2
       node-fetch: 2.7.0
       qs: 6.13.0
@@ -16269,7 +16236,7 @@ snapshots:
 
   '@fern-fern/generator-exec-sdk@0.0.1167':
     dependencies:
-      form-data: 4.0.0
+      form-data: 4.0.4
       node-fetch: 2.7.0
       qs: 6.13.0
       url-join: 5.0.0
@@ -16518,7 +16485,7 @@ snapshots:
 
   '@fern-fern/snippet-sdk@0.0.6434':
     dependencies:
-      form-data: 4.0.0
+      form-data: 4.0.4
       js-base64: 3.7.2
       node-fetch: 2.7.0
       qs: 6.13.0
@@ -16741,6 +16708,16 @@ snapshots:
       '@types/react': 18.3.26
       react: 18.3.1
 
+  '@mswjs/interceptors@0.39.8':
+    dependencies:
+      '@open-draft/deferred-promise': 2.2.0
+      '@open-draft/logger': 0.3.0
+      '@open-draft/until': 2.1.0
+      is-node-process: 1.2.0
+      outvariant: 1.4.3
+      strict-event-emitter: 0.5.1
+    optional: true
+
   '@napi-rs/wasm-runtime@0.2.4':
     dependencies:
       '@emnapi/core': 1.6.0
@@ -16854,6 +16831,81 @@ snapshots:
       - '@swc-node/register'
       - '@swc/core'
       - debug
+
+  '@octokit/auth-token@4.0.0': {}
+
+  '@octokit/core@5.2.2':
+    dependencies:
+      '@octokit/auth-token': 4.0.0
+      '@octokit/graphql': 7.1.1
+      '@octokit/request': 8.4.1
+      '@octokit/request-error': 5.1.1
+      '@octokit/types': 13.10.0
+      before-after-hook: 2.2.3
+      universal-user-agent: 6.0.1
+
+  '@octokit/endpoint@9.0.6':
+    dependencies:
+      '@octokit/types': 13.10.0
+      universal-user-agent: 6.0.1
+
+  '@octokit/graphql@7.1.1':
+    dependencies:
+      '@octokit/request': 8.4.1
+      '@octokit/types': 13.10.0
+      universal-user-agent: 6.0.1
+
+  '@octokit/openapi-types@24.2.0': {}
+
+  '@octokit/plugin-paginate-rest@11.4.4-cjs.2(@octokit/core@5.2.2)':
+    dependencies:
+      '@octokit/core': 5.2.2
+      '@octokit/types': 13.10.0
+
+  '@octokit/plugin-request-log@4.0.1(@octokit/core@5.2.2)':
+    dependencies:
+      '@octokit/core': 5.2.2
+
+  '@octokit/plugin-rest-endpoint-methods@13.3.2-cjs.1(@octokit/core@5.2.2)':
+    dependencies:
+      '@octokit/core': 5.2.2
+      '@octokit/types': 13.10.0
+
+  '@octokit/request-error@5.1.1':
+    dependencies:
+      '@octokit/types': 13.10.0
+      deprecation: 2.3.1
+      once: 1.4.0
+
+  '@octokit/request@8.4.1':
+    dependencies:
+      '@octokit/endpoint': 9.0.6
+      '@octokit/request-error': 5.1.1
+      '@octokit/types': 13.10.0
+      universal-user-agent: 6.0.1
+
+  '@octokit/rest@20.1.2':
+    dependencies:
+      '@octokit/core': 5.2.2
+      '@octokit/plugin-paginate-rest': 11.4.4-cjs.2(@octokit/core@5.2.2)
+      '@octokit/plugin-request-log': 4.0.1(@octokit/core@5.2.2)
+      '@octokit/plugin-rest-endpoint-methods': 13.3.2-cjs.1(@octokit/core@5.2.2)
+
+  '@octokit/types@13.10.0':
+    dependencies:
+      '@octokit/openapi-types': 24.2.0
+
+  '@open-draft/deferred-promise@2.2.0':
+    optional: true
+
+  '@open-draft/logger@0.3.0':
+    dependencies:
+      is-node-process: 1.2.0
+      outvariant: 1.4.3
+    optional: true
+
+  '@open-draft/until@2.1.0':
+    optional: true
 
   '@open-rpc/meta-schema@1.14.9': {}
 
@@ -16971,8 +17023,6 @@ snapshots:
     transitivePeerDependencies:
       - supports-color
 
-  '@rolldown/pluginutils@1.0.0-beta.27': {}
-
   '@rollup/rollup-android-arm-eabi@4.52.5':
     optional: true
 
@@ -17068,27 +17118,6 @@ snapshots:
     transitivePeerDependencies:
       - debug
 
-  '@types/babel__core@7.20.5':
-    dependencies:
-      '@babel/parser': 7.28.4
-      '@babel/types': 7.28.4
-      '@types/babel__generator': 7.27.0
-      '@types/babel__template': 7.4.4
-      '@types/babel__traverse': 7.28.0
-
-  '@types/babel__generator@7.27.0':
-    dependencies:
-      '@babel/types': 7.28.4
-
-  '@types/babel__template@7.4.4':
-    dependencies:
-      '@babel/parser': 7.28.4
-      '@babel/types': 7.28.4
-
-  '@types/babel__traverse@7.28.0':
-    dependencies:
-      '@babel/types': 7.28.4
-
   '@types/body-parser@1.19.6':
     dependencies:
       '@types/connect': 3.4.38
@@ -17101,6 +17130,9 @@ snapshots:
   '@types/connect@3.4.38':
     dependencies:
       '@types/node': 18.15.3
+
+  '@types/cookie@0.6.0':
+    optional: true
 
   '@types/cors@2.8.19':
     dependencies:
@@ -17238,10 +17270,6 @@ snapshots:
 
   '@types/range-parser@1.2.7': {}
 
-  '@types/react-dom@18.3.7(@types/react@18.3.26)':
-    dependencies:
-      '@types/react': 18.3.26
-
   '@types/react@18.3.26':
     dependencies:
       '@types/prop-types': 15.7.15
@@ -17267,6 +17295,9 @@ snapshots:
       '@types/http-errors': 2.0.5
       '@types/node': 18.15.3
       '@types/send': 0.17.5
+
+  '@types/statuses@2.0.6':
+    optional: true
 
   '@types/stream-chain@2.1.0':
     dependencies:
@@ -17332,12 +17363,12 @@ snapshots:
       '@types/node': 18.15.3
     optional: true
 
-  '@typescript-eslint/project-service@8.46.2(typescript@5.8.3)':
+  '@typescript-eslint/project-service@8.46.2(typescript@5.9.3)':
     dependencies:
-      '@typescript-eslint/tsconfig-utils': 8.46.2(typescript@5.8.3)
+      '@typescript-eslint/tsconfig-utils': 8.46.2(typescript@5.9.3)
       '@typescript-eslint/types': 8.46.2
       debug: 4.4.3
-      typescript: 5.8.3
+      typescript: 5.9.3
     transitivePeerDependencies:
       - supports-color
 
@@ -17346,16 +17377,16 @@ snapshots:
       '@typescript-eslint/types': 8.46.2
       '@typescript-eslint/visitor-keys': 8.46.2
 
-  '@typescript-eslint/tsconfig-utils@8.46.2(typescript@5.8.3)':
+  '@typescript-eslint/tsconfig-utils@8.46.2(typescript@5.9.3)':
     dependencies:
-      typescript: 5.8.3
+      typescript: 5.9.3
 
   '@typescript-eslint/types@8.46.2': {}
 
-  '@typescript-eslint/typescript-estree@8.46.2(typescript@5.8.3)':
+  '@typescript-eslint/typescript-estree@8.46.2(typescript@5.9.3)':
     dependencies:
-      '@typescript-eslint/project-service': 8.46.2(typescript@5.8.3)
-      '@typescript-eslint/tsconfig-utils': 8.46.2(typescript@5.8.3)
+      '@typescript-eslint/project-service': 8.46.2(typescript@5.9.3)
+      '@typescript-eslint/tsconfig-utils': 8.46.2(typescript@5.9.3)
       '@typescript-eslint/types': 8.46.2
       '@typescript-eslint/visitor-keys': 8.46.2
       debug: 4.4.3
@@ -17363,19 +17394,19 @@ snapshots:
       is-glob: 4.0.3
       minimatch: 9.0.5
       semver: 7.7.3
-      ts-api-utils: 2.1.0(typescript@5.8.3)
-      typescript: 5.8.3
+      ts-api-utils: 2.1.0(typescript@5.9.3)
+      typescript: 5.9.3
     transitivePeerDependencies:
       - supports-color
 
-  '@typescript-eslint/utils@8.46.2(eslint@8.57.1)(typescript@5.8.3)':
+  '@typescript-eslint/utils@8.46.2(eslint@8.57.1)(typescript@5.9.3)':
     dependencies:
       '@eslint-community/eslint-utils': 4.9.0(eslint@8.57.1)
       '@typescript-eslint/scope-manager': 8.46.2
       '@typescript-eslint/types': 8.46.2
-      '@typescript-eslint/typescript-estree': 8.46.2(typescript@5.8.3)
+      '@typescript-eslint/typescript-estree': 8.46.2(typescript@5.9.3)
       eslint: 8.57.1
-      typescript: 5.8.3
+      typescript: 5.9.3
     transitivePeerDependencies:
       - supports-color
 
@@ -17393,18 +17424,6 @@ snapshots:
 
   '@ungap/structured-clone@1.3.0': {}
 
-  '@vitejs/plugin-react@4.7.0(vite@5.4.21(@types/node@18.15.3)(sass@1.93.2))':
-    dependencies:
-      '@babel/core': 7.28.4
-      '@babel/plugin-transform-react-jsx-self': 7.27.1(@babel/core@7.28.4)
-      '@babel/plugin-transform-react-jsx-source': 7.27.1(@babel/core@7.28.4)
-      '@rolldown/pluginutils': 1.0.0-beta.27
-      '@types/babel__core': 7.20.5
-      react-refresh: 0.17.0
-      vite: 5.4.21(@types/node@18.15.3)(sass@1.93.2)
-    transitivePeerDependencies:
-      - supports-color
-
   '@vitest/expect@2.1.9':
     dependencies:
       '@vitest/spy': 2.1.9
@@ -17412,12 +17431,22 @@ snapshots:
       chai: 5.3.3
       tinyrainbow: 1.2.0
 
-  '@vitest/mocker@2.1.9(vite@5.4.21(@types/node@18.15.3)(sass@1.93.2))':
+  '@vitest/mocker@2.1.9(msw@2.11.3(@types/node@18.15.3)(typescript@5.9.2))(vite@5.4.21(@types/node@18.15.3)(sass@1.93.2))':
     dependencies:
       '@vitest/spy': 2.1.9
       estree-walker: 3.0.3
       magic-string: 0.30.19
     optionalDependencies:
+      msw: 2.11.3(@types/node@18.15.3)(typescript@5.9.2)
+      vite: 5.4.21(@types/node@18.15.3)(sass@1.93.2)
+
+  '@vitest/mocker@2.1.9(msw@2.11.3(@types/node@18.15.3)(typescript@5.9.3))(vite@5.4.21(@types/node@18.15.3)(sass@1.93.2))':
+    dependencies:
+      '@vitest/spy': 2.1.9
+      estree-walker: 3.0.3
+      magic-string: 0.30.19
+    optionalDependencies:
+      msw: 2.11.3(@types/node@18.15.3)(typescript@5.9.3)
       vite: 5.4.21(@types/node@18.15.3)(sass@1.93.2)
 
   '@vitest/pretty-format@2.1.9':
@@ -17565,11 +17594,6 @@ snapshots:
   ansi-styles@6.2.3: {}
 
   any-promise@1.3.0: {}
-
-  anymatch@3.1.3:
-    dependencies:
-      normalize-path: 3.0.0
-      picomatch: 2.3.1
 
   arch@2.2.0: {}
 
@@ -17733,7 +17757,7 @@ snapshots:
 
   basic-ftp@5.0.5: {}
 
-  binary-extensions@2.3.0: {}
+  before-after-hook@2.2.3: {}
 
   bl@1.2.3:
     dependencies:
@@ -17911,18 +17935,6 @@ snapshots:
 
   check-error@2.1.1: {}
 
-  chokidar@3.6.0:
-    dependencies:
-      anymatch: 3.1.3
-      braces: 3.0.3
-      glob-parent: 5.1.2
-      is-binary-path: 2.1.0
-      is-glob: 4.0.3
-      normalize-path: 3.0.0
-      readdirp: 3.6.0
-    optionalDependencies:
-      fsevents: 2.3.3
-
   chokidar@4.0.3:
     dependencies:
       readdirp: 4.1.2
@@ -18049,6 +18061,9 @@ snapshots:
 
   cookie@0.7.1: {}
 
+  cookie@0.7.2:
+    optional: true
+
   core-js-compat@3.46.0:
     dependencies:
       browserslist: 4.26.3
@@ -18068,14 +18083,14 @@ snapshots:
       path-type: 4.0.0
       yaml: 2.3.3
 
-  cosmiconfig@9.0.0(typescript@5.8.3):
+  cosmiconfig@9.0.0(typescript@5.9.3):
     dependencies:
       env-paths: 2.2.1
       import-fresh: 3.3.1
       js-yaml: 4.1.0
       parse-json: 5.2.0
     optionalDependencies:
-      typescript: 5.8.3
+      typescript: 5.9.3
 
   cross-env@7.0.3:
     dependencies:
@@ -18332,6 +18347,8 @@ snapshots:
       - supports-color
 
   depd@2.0.0: {}
+
+  deprecation@2.3.1: {}
 
   deps-regex@0.2.0: {}
 
@@ -18979,12 +18996,6 @@ snapshots:
       cross-spawn: 7.0.5
       signal-exit: 4.1.0
 
-  form-data@4.0.0:
-    dependencies:
-      asynckit: 0.4.0
-      combined-stream: 1.0.8
-      mime-types: 2.1.35
-
   form-data@4.0.4:
     dependencies:
       asynckit: 0.4.0
@@ -19201,6 +19212,9 @@ snapshots:
 
   graphemer@1.4.0: {}
 
+  graphql@16.11.0:
+    optional: true
+
   gray-matter@4.0.3:
     dependencies:
       js-yaml: 3.14.1
@@ -19395,6 +19409,9 @@ snapshots:
       property-information: 7.1.0
       space-separated-tokens: 2.0.2
 
+  headers-polyfill@4.0.3:
+    optional: true
+
   heap-js@2.7.1: {}
 
   homedir-polyfill@1.0.3:
@@ -19467,7 +19484,8 @@ snapshots:
 
   immer@10.1.3: {}
 
-  immutable@5.1.4: {}
+  immutable@5.1.4:
+    optional: true
 
   import-fresh@3.3.1:
     dependencies:
@@ -19549,10 +19567,6 @@ snapshots:
     dependencies:
       has-bigints: 1.1.0
 
-  is-binary-path@2.1.0:
-    dependencies:
-      binary-extensions: 2.3.0
-
   is-boolean-object@1.2.2:
     dependencies:
       call-bound: 1.0.4
@@ -19616,6 +19630,9 @@ snapshots:
   is-natural-number@4.0.1: {}
 
   is-negative-zero@2.0.3: {}
+
+  is-node-process@1.2.0:
+    optional: true
 
   is-number-object@1.1.1:
     dependencies:
@@ -19727,8 +19744,6 @@ snapshots:
   js-base64@3.7.2: {}
 
   js-base64@3.7.7: {}
-
-  js-base64@3.7.8: {}
 
   js-levenshtein@1.1.6: {}
 
@@ -20501,6 +20516,60 @@ snapshots:
 
   ms@2.1.3: {}
 
+  msw@2.11.3(@types/node@18.15.3)(typescript@5.9.2):
+    dependencies:
+      '@bundled-es-modules/cookie': 2.0.1
+      '@bundled-es-modules/statuses': 1.0.1
+      '@inquirer/confirm': 5.1.19(@types/node@18.15.3)
+      '@mswjs/interceptors': 0.39.8
+      '@open-draft/deferred-promise': 2.2.0
+      '@types/cookie': 0.6.0
+      '@types/statuses': 2.0.6
+      graphql: 16.11.0
+      headers-polyfill: 4.0.3
+      is-node-process: 1.2.0
+      outvariant: 1.4.3
+      path-to-regexp: 6.3.0
+      picocolors: 1.1.1
+      rettime: 0.7.0
+      strict-event-emitter: 0.5.1
+      tough-cookie: 6.0.0
+      type-fest: 4.41.0
+      until-async: 3.0.2
+      yargs: 17.7.2
+    optionalDependencies:
+      typescript: 5.9.2
+    transitivePeerDependencies:
+      - '@types/node'
+    optional: true
+
+  msw@2.11.3(@types/node@18.15.3)(typescript@5.9.3):
+    dependencies:
+      '@bundled-es-modules/cookie': 2.0.1
+      '@bundled-es-modules/statuses': 1.0.1
+      '@inquirer/confirm': 5.1.19(@types/node@18.15.3)
+      '@mswjs/interceptors': 0.39.8
+      '@open-draft/deferred-promise': 2.2.0
+      '@types/cookie': 0.6.0
+      '@types/statuses': 2.0.6
+      graphql: 16.11.0
+      headers-polyfill: 4.0.3
+      is-node-process: 1.2.0
+      outvariant: 1.4.3
+      path-to-regexp: 6.3.0
+      picocolors: 1.1.1
+      rettime: 0.7.0
+      strict-event-emitter: 0.5.1
+      tough-cookie: 6.0.0
+      type-fest: 4.41.0
+      until-async: 3.0.2
+      yargs: 17.7.2
+    optionalDependencies:
+      typescript: 5.9.3
+    transitivePeerDependencies:
+      - '@types/node'
+    optional: true
+
   multimatch@5.0.0:
     dependencies:
       '@types/minimatch': 3.0.5
@@ -20758,6 +20827,9 @@ snapshots:
       stdin-discarder: 0.1.0
       string-width: 6.1.0
       strip-ansi: 7.1.2
+
+  outvariant@1.4.3:
+    optional: true
 
   own-keys@1.0.1:
     dependencies:
@@ -21053,11 +21125,11 @@ snapshots:
       - supports-color
       - utf-8-validate
 
-  puppeteer@24.26.0(typescript@5.8.3):
+  puppeteer@24.26.0(typescript@5.9.3):
     dependencies:
       '@puppeteer/browsers': 2.10.12
       chromium-bidi: 10.5.1(devtools-protocol@0.0.1508733)
-      cosmiconfig: 9.0.0(typescript@5.8.3)
+      cosmiconfig: 9.0.0(typescript@5.9.3)
       devtools-protocol: 0.0.1508733
       puppeteer-core: 24.26.0
       typed-query-selector: 2.12.0
@@ -21098,15 +21170,7 @@ snapshots:
       minimist: 1.2.8
       strip-json-comments: 2.0.1
 
-  react-dom@18.3.1(react@18.3.1):
-    dependencies:
-      loose-envify: 1.4.0
-      react: 18.3.1
-      scheduler: 0.23.2
-
   react-is@18.3.1: {}
-
-  react-refresh@0.17.0: {}
 
   react@18.3.1:
     dependencies:
@@ -21354,6 +21418,9 @@ snapshots:
       onetime: 5.1.2
       signal-exit: 3.0.7
 
+  rettime@0.7.0:
+    optional: true
+
   reusify@1.1.0: {}
 
   rimraf@3.0.2:
@@ -21444,12 +21511,9 @@ snapshots:
       source-map-js: 1.2.1
     optionalDependencies:
       '@parcel/watcher': 2.5.1
+    optional: true
 
   sax@1.4.1: {}
-
-  scheduler@0.23.2:
-    dependencies:
-      loose-envify: 1.4.0
 
   section-matter@1.0.0:
     dependencies:
@@ -21690,6 +21754,9 @@ snapshots:
     transitivePeerDependencies:
       - bare-abort-controller
       - react-native-b4a
+
+  strict-event-emitter@0.5.1:
+    optional: true
 
   string-width@4.2.3:
     dependencies:
@@ -22015,8 +22082,6 @@ snapshots:
 
   through@2.3.8: {}
 
-  tiny-invariant@1.3.3: {}
-
   tiny-readdir@2.7.4:
     dependencies:
       promise-make-counter: 1.0.2
@@ -22047,6 +22112,14 @@ snapshots:
 
   titleize@1.0.0: {}
 
+  tldts-core@7.0.17:
+    optional: true
+
+  tldts@7.0.17:
+    dependencies:
+      tldts-core: 7.0.17
+    optional: true
+
   tmp-promise@3.0.3:
     dependencies:
       tmp: 0.2.5
@@ -22071,6 +22144,11 @@ snapshots:
       '@tokenizer/token': 0.3.0
       ieee754: 1.2.1
 
+  tough-cookie@6.0.0:
+    dependencies:
+      tldts: 7.0.17
+    optional: true
+
   tr46@1.0.1:
     dependencies:
       punycode: 2.3.1
@@ -22089,13 +22167,13 @@ snapshots:
 
   trough@2.2.0: {}
 
-  ts-api-utils@2.1.0(typescript@5.8.3):
+  ts-api-utils@2.1.0(typescript@5.9.3):
     dependencies:
-      typescript: 5.8.3
+      typescript: 5.9.3
 
-  ts-essentials@10.1.1(typescript@5.8.3):
+  ts-essentials@10.1.1(typescript@5.9.3):
     optionalDependencies:
-      typescript: 5.8.3
+      typescript: 5.9.3
 
   ts-interface-checker@0.1.13: {}
 
@@ -22117,34 +22195,6 @@ snapshots:
   tslib@2.6.3: {}
 
   tslib@2.8.1: {}
-
-  tsup@8.5.0(postcss@8.5.6)(tsx@4.20.6)(typescript@5.8.3)(yaml@2.3.3):
-    dependencies:
-      bundle-require: 5.1.0(esbuild@0.25.11)
-      cac: 6.7.14
-      chokidar: 4.0.3
-      consola: 3.4.2
-      debug: 4.4.3
-      esbuild: 0.25.11
-      fix-dts-default-cjs-exports: 1.0.1
-      joycon: 3.1.1
-      picocolors: 1.1.1
-      postcss-load-config: 6.0.1(postcss@8.5.6)(tsx@4.20.6)(yaml@2.3.3)
-      resolve-from: 5.0.0
-      rollup: 4.52.5
-      source-map: 0.8.0-beta.0
-      sucrase: 3.35.0
-      tinyexec: 0.3.2
-      tinyglobby: 0.2.15
-      tree-kill: 1.2.2
-    optionalDependencies:
-      postcss: 8.5.6
-      typescript: 5.8.3
-    transitivePeerDependencies:
-      - jiti
-      - supports-color
-      - tsx
-      - yaml
 
   tsup@8.5.0(postcss@8.5.6)(tsx@4.20.6)(typescript@5.9.2)(yaml@2.3.3):
     dependencies:
@@ -22168,6 +22218,34 @@ snapshots:
     optionalDependencies:
       postcss: 8.5.6
       typescript: 5.9.2
+    transitivePeerDependencies:
+      - jiti
+      - supports-color
+      - tsx
+      - yaml
+
+  tsup@8.5.0(postcss@8.5.6)(tsx@4.20.6)(typescript@5.9.3)(yaml@2.3.3):
+    dependencies:
+      bundle-require: 5.1.0(esbuild@0.25.11)
+      cac: 6.7.14
+      chokidar: 4.0.3
+      consola: 3.4.2
+      debug: 4.4.3
+      esbuild: 0.25.11
+      fix-dts-default-cjs-exports: 1.0.1
+      joycon: 3.1.1
+      picocolors: 1.1.1
+      postcss-load-config: 6.0.1(postcss@8.5.6)(tsx@4.20.6)(yaml@2.3.3)
+      resolve-from: 5.0.0
+      rollup: 4.52.5
+      source-map: 0.8.0-beta.0
+      sucrase: 3.35.0
+      tinyexec: 0.3.2
+      tinyglobby: 0.2.15
+      tree-kill: 1.2.2
+    optionalDependencies:
+      postcss: 8.5.6
+      typescript: 5.9.3
     transitivePeerDependencies:
       - jiti
       - supports-color
@@ -22226,6 +22304,9 @@ snapshots:
 
   type-fest@2.19.0: {}
 
+  type-fest@4.41.0:
+    optional: true
+
   type-is@1.6.18:
     dependencies:
       media-typer: 0.3.0
@@ -22268,9 +22349,9 @@ snapshots:
 
   typescript@5.4.5: {}
 
-  typescript@5.8.3: {}
-
   typescript@5.9.2: {}
+
+  typescript@5.9.3: {}
 
   ua-parser-js@1.0.41: {}
 
@@ -22365,9 +22446,14 @@ snapshots:
       unist-util-is: 6.0.1
       unist-util-visit-parents: 6.0.2
 
+  universal-user-agent@6.0.1: {}
+
   universalify@2.0.1: {}
 
   unpipe@1.0.0: {}
+
+  until-async@3.0.2:
+    optional: true
 
   update-browserslist-db@1.1.3(browserslist@4.26.3):
     dependencies:
@@ -22438,31 +22524,6 @@ snapshots:
       - supports-color
       - terser
 
-  vite-plugin-checker@0.6.4(eslint@8.57.1)(meow@9.0.0)(optionator@0.9.4)(stylelint@14.16.1)(typescript@5.9.2)(vite@5.4.21(@types/node@18.15.3)(sass@1.93.2)):
-    dependencies:
-      '@babel/code-frame': 7.27.1
-      ansi-escapes: 4.3.2
-      chalk: 4.1.2
-      chokidar: 3.6.0
-      commander: 8.3.0
-      fast-glob: 3.3.3
-      fs-extra: 11.3.2
-      npm-run-path: 4.0.1
-      semver: 7.7.3
-      strip-ansi: 6.0.1
-      tiny-invariant: 1.3.3
-      vite: 5.4.21(@types/node@18.15.3)(sass@1.93.2)
-      vscode-languageclient: 7.0.0
-      vscode-languageserver: 7.0.0
-      vscode-languageserver-textdocument: 1.0.12
-      vscode-uri: 3.1.0
-    optionalDependencies:
-      eslint: 8.57.1
-      meow: 9.0.0
-      optionator: 0.9.4
-      stylelint: 14.16.1
-      typescript: 5.9.2
-
   vite@5.4.21(@types/node@18.15.3)(sass@1.93.2):
     dependencies:
       esbuild: 0.21.5
@@ -22473,10 +22534,10 @@ snapshots:
       fsevents: 2.3.3
       sass: 1.93.2
 
-  vitest@2.1.9(@types/node@18.15.3)(sass@1.93.2):
+  vitest@2.1.9(@types/node@18.15.3)(msw@2.11.3(@types/node@18.15.3)(typescript@5.9.2))(sass@1.93.2):
     dependencies:
       '@vitest/expect': 2.1.9
-      '@vitest/mocker': 2.1.9(vite@5.4.21(@types/node@18.15.3)(sass@1.93.2))
+      '@vitest/mocker': 2.1.9(msw@2.11.3(@types/node@18.15.3)(typescript@5.9.2))(vite@5.4.21(@types/node@18.15.3)(sass@1.93.2))
       '@vitest/pretty-format': 2.1.9
       '@vitest/runner': 2.1.9
       '@vitest/snapshot': 2.1.9
@@ -22508,26 +22569,42 @@ snapshots:
       - supports-color
       - terser
 
-  vscode-jsonrpc@6.0.0: {}
-
-  vscode-languageclient@7.0.0:
+  vitest@2.1.9(@types/node@18.15.3)(msw@2.11.3(@types/node@18.15.3)(typescript@5.9.3))(sass@1.93.2):
     dependencies:
-      minimatch: 3.1.2
-      semver: 7.7.3
-      vscode-languageserver-protocol: 3.16.0
-
-  vscode-languageserver-protocol@3.16.0:
-    dependencies:
-      vscode-jsonrpc: 6.0.0
-      vscode-languageserver-types: 3.16.0
+      '@vitest/expect': 2.1.9
+      '@vitest/mocker': 2.1.9(msw@2.11.3(@types/node@18.15.3)(typescript@5.9.3))(vite@5.4.21(@types/node@18.15.3)(sass@1.93.2))
+      '@vitest/pretty-format': 2.1.9
+      '@vitest/runner': 2.1.9
+      '@vitest/snapshot': 2.1.9
+      '@vitest/spy': 2.1.9
+      '@vitest/utils': 2.1.9
+      chai: 5.3.3
+      debug: 4.4.3
+      expect-type: 1.2.2
+      magic-string: 0.30.19
+      pathe: 1.1.2
+      std-env: 3.10.0
+      tinybench: 2.9.0
+      tinyexec: 0.3.2
+      tinypool: 1.1.1
+      tinyrainbow: 1.2.0
+      vite: 5.4.21(@types/node@18.15.3)(sass@1.93.2)
+      vite-node: 2.1.9(@types/node@18.15.3)(sass@1.93.2)
+      why-is-node-running: 2.3.0
+    optionalDependencies:
+      '@types/node': 18.15.3
+    transitivePeerDependencies:
+      - less
+      - lightningcss
+      - msw
+      - sass
+      - sass-embedded
+      - stylus
+      - sugarss
+      - supports-color
+      - terser
 
   vscode-languageserver-textdocument@1.0.12: {}
-
-  vscode-languageserver-types@3.16.0: {}
-
-  vscode-languageserver@7.0.0:
-    dependencies:
-      vscode-languageserver-protocol: 3.16.0
 
   vscode-uri@3.1.0: {}
 

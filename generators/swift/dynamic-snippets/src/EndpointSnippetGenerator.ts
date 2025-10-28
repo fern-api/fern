@@ -106,12 +106,13 @@ export class EndpointSnippetGenerator {
         const authArgs = auth ? this.getRootClientAuthArgs({ auth, snippet }) : [];
         rootClientArgs.push(...authArgs);
         rootClientArgs.push(...additionalArgs);
+        const nonNopRootClientArgs = rootClientArgs.filter((arg) => !arg.value.isNop());
         return swift.Statement.constantDeclaration({
             unsafeName: CLIENT_CONST_NAME,
             value: swift.Expression.classInitialization({
                 unsafeName: this.context.getRootClientClassName(),
-                arguments_: rootClientArgs,
-                multiline: rootClientArgs.length > 1 ? true : undefined
+                arguments_: nonNopRootClientArgs,
+                multiline: nonNopRootClientArgs.length > 1 ? true : undefined
             })
         });
     }
@@ -254,14 +255,14 @@ export class EndpointSnippetGenerator {
         endpoint: FernIr.dynamic.Endpoint;
         snippet: FernIr.dynamic.EndpointSnippetRequest;
     }) {
-        const arguments_ = this.getMethodArguments({ endpoint, snippet });
+        const nonNopArguments = this.getMethodArguments({ endpoint, snippet }).filter((arg) => !arg.value.isNop());
         return swift.Expression.try(
             swift.Expression.await(
                 swift.Expression.methodCall({
                     target: swift.Expression.rawValue(CLIENT_CONST_NAME),
                     methodName: this.getMethodName({ endpoint }),
-                    arguments_,
-                    multiline: arguments_.length > 1 ? true : undefined
+                    arguments_: nonNopArguments,
+                    multiline: nonNopArguments.length > 1 ? true : undefined
                 })
             )
         );
@@ -430,12 +431,12 @@ export class EndpointSnippetGenerator {
                 : [];
         this.context.errors.unscope();
 
-        const arguments_ = requestBodyFields;
+        const nonNopArguments = requestBodyFields.filter((arg) => !arg.value.isNop());
 
         return swift.Expression.contextualMethodCall({
             methodName: "init",
-            arguments_,
-            multiline: arguments_.length > 1 ? true : undefined
+            arguments_: nonNopArguments,
+            multiline: nonNopArguments.length > 1 ? true : undefined
         });
     }
 

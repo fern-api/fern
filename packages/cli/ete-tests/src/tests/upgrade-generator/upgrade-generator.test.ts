@@ -210,4 +210,27 @@ describe("fern generator upgrade", () => {
             ).stderr
         ).toMatchSnapshot();
     }, 60_000);
+
+    it("fern generator upgrade shows major version message", async () => {
+        const tmpDir = await tmp.dir();
+        const directory = AbsoluteFilePath.of(tmpDir.path);
+
+        await cp(FIXTURES_DIR, directory, { recursive: true });
+
+        const result = await runFernCli(
+            ["generator", "upgrade", "--group", "shouldnt-upgrade", "--generator", "fernapi/fern-python-sdk"],
+            {
+                cwd: directory,
+                reject: false
+            }
+        );
+
+        expect(result.stdout).toContain("Major version upgrades available:");
+        expect(result.stdout).toContain("fernapi/fern-python-sdk");
+        expect(result.stdout).toContain("2.16.0");
+        expect(result.stdout).toContain(
+            "Run: fern generator upgrade --generator fernapi/fern-python-sdk --include-major"
+        );
+        expect(result.stdout).toContain("https://buildwithfern.com/learn/sdks/generators/python/changelog");
+    }, 60_000);
 });

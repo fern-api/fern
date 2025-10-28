@@ -45,7 +45,7 @@ async function createConjureFile({
     return {
         relativeFilepath,
         absoluteFilepath,
-        fileContents: serialization.DefinitionFile.parseOrThrow(yaml.load(rawContents), {
+        fileContents: serialization.conjure.DefinitionFile.parseOrThrow(yaml.load(rawContents), {
             unrecognizedObjectKeys: "passthrough",
             allowUnrecognizedEnumValues: true,
             allowUnrecognizedUnionMembers: true

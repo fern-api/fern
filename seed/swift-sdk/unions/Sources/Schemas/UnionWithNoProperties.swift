@@ -1,17 +1,17 @@
 import Foundation
 
 public enum UnionWithNoProperties: Codable, Hashable, Sendable {
-    case foo(Foo)
     case empty(Empty)
+    case foo(Foo)
 
     public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
         let discriminant = try container.decode(String.self, forKey: .type)
         switch discriminant {
-        case "foo":
-            self = .foo(try Foo(from: decoder))
         case "empty":
             self = .empty(try Empty(from: decoder))
+        case "foo":
+            self = .foo(try Foo(from: decoder))
         default:
             throw DecodingError.dataCorrupted(
                 DecodingError.Context(
@@ -24,9 +24,9 @@ public enum UnionWithNoProperties: Codable, Hashable, Sendable {
 
     public func encode(to encoder: Encoder) throws -> Void {
         switch self {
-        case .foo(let data):
-            try data.encode(to: encoder)
         case .empty(let data):
+            try data.encode(to: encoder)
+        case .foo(let data):
             try data.encode(to: encoder)
         }
     }

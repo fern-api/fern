@@ -38,12 +38,12 @@ public struct ObjectWithCodingKeysLiteral: Codable, Hashable, Sendable {
         try container.encode(self.literalField2, forKey: .literalField2)
     }
 
-    public enum CodingKeysLiteral: String, Codable, Hashable, CaseIterable, Sendable {
-        case codingKeys = "CodingKeys"
-    }
-
     public enum CodingKeysEnum: String, Codable, Hashable, CaseIterable, Sendable {
         case codingKeys
+    }
+
+    public enum CodingKeysLiteral: String, Codable, Hashable, CaseIterable, Sendable {
+        case codingKeys = "CodingKeys"
     }
 
     /// Keys for encoding/decoding struct properties.

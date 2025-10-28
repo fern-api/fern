@@ -103,6 +103,7 @@ allowedFailures:
   - examples:readme-config
   - exhaustive
   - extra-properties
+  - file-upload-openapi
   - idempotency-headers
   - imdb
   - inferred-auth-explicit

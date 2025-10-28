@@ -1,6 +1,4 @@
-use crate::api::*;
-use crate::{ApiError, ClientConfig, HttpClient, RequestOptions};
-use reqwest::Method;
+use crate::{ApiError, ClientConfig, HttpClient};
 
 pub struct AstClient {
     pub http_client: HttpClient,
