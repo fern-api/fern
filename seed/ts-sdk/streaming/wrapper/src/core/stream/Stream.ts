@@ -45,6 +45,7 @@ export class Stream<T> implements AsyncIterable<T> {
     private messageTerminator: string;
     private streamTerminator: string | undefined;
     private controller: AbortController = new AbortController();
+    private decoder: TextDecoder | undefined;
 
     constructor({ stream, parse, eventShape, signal }: Stream.Args & { parse: (val: unknown) => Promise<T> }) {
         this.stream = stream;
@@ -57,6 +58,11 @@ export class Stream<T> implements AsyncIterable<T> {
             this.messageTerminator = eventShape.messageTerminator;
         }
         signal?.addEventListener("abort", () => this.controller.abort());
+
+        // Initialize shared TextDecoder
+        if (typeof TextDecoder !== "undefined") {
+            this.decoder = new TextDecoder("utf-8");
+        }
     }
 
     private async *iterMessages(): AsyncGenerator<T, void> {
@@ -69,7 +75,7 @@ export class Stream<T> implements AsyncIterable<T> {
 
             let terminatorIndex: number;
             while ((terminatorIndex = buf.indexOf(this.messageTerminator)) >= 0) {
-                let line = buf.slice(0, terminatorIndex + 1);
+                let line = buf.slice(0, terminatorIndex);
                 buf = buf.slice(terminatorIndex + this.messageTerminator.length);
 
                 if (!line.trim()) {
@@ -103,10 +109,9 @@ export class Stream<T> implements AsyncIterable<T> {
 
     private decodeChunk(chunk: any): string {
         let decoded = "";
-        // If TextDecoder is present, use it
-        if (typeof TextDecoder !== "undefined") {
-            const decoder = new TextDecoder("utf8");
-            decoded += decoder.decode(chunk);
+        // If TextDecoder is available, use the streaming decoder instance
+        if (this.decoder != null) {
+            decoded += this.decoder.decode(chunk, { stream: true });
         }
         // Buffer is present in Node.js environment
         else if (RUNTIME.type === "node" && typeof chunk !== "undefined") {

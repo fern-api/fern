@@ -1,4 +1,11 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 3.12.2
+  changelogEntry:
+    - summary: |
+        Add streaming tests; fix custom message terminators in streams; fix multi-byte character handling across chunk breaks in streams.
+      type: fix
+  createdAt: "2025-10-28"
+  irVersion: 60
 
 - version: 3.12.2
   changelogEntry:
