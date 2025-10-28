@@ -1,7 +1,7 @@
 import Foundation
 
 /// A type that can represent any JSON value.
-public enum JSONValue: Codable, Hashable, Sendable {
+public enum JSONValue: Swift.Codable, Swift.Hashable, Swift.Sendable {
     case string(Swift.String)
     case number(Swift.Double)
     case bool(Swift.Bool)
@@ -9,7 +9,7 @@ public enum JSONValue: Codable, Hashable, Sendable {
     case array([JSONValue])
     case object([Swift.String: JSONValue])
 
-    public init(from decoder: Decoder) throws {
+    public init(from decoder: Swift.Decoder) throws {
         let container = try decoder.singleValueContainer()
 
         if container.decodeNil() {
@@ -27,8 +27,8 @@ public enum JSONValue: Codable, Hashable, Sendable {
         } else if let object = try? container.decode([Swift.String: JSONValue].self) {
             self = .object(object)
         } else {
-            throw DecodingError.dataCorrupted(
-                DecodingError.Context(
+            throw Swift.DecodingError.dataCorrupted(
+                Swift.DecodingError.Context(
                     codingPath: decoder.codingPath,
                     debugDescription: "Unable to decode JSONValue"
                 )
@@ -36,7 +36,7 @@ public enum JSONValue: Codable, Hashable, Sendable {
         }
     }
 
-    public func encode(to encoder: Encoder) throws {
+    public func encode(to encoder: Swift.Encoder) throws {
         var container = encoder.singleValueContainer()
 
         switch self {

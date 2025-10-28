@@ -1,7 +1,4 @@
 import Foundation
-#if canImport(FoundationNetworking)
-import FoundationNetworking
-#endif
 
 final class WireStub {
     private static func buildURLSession(wireStubId: Swift.String) -> Foundation.URLSession {

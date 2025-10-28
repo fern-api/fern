@@ -17,7 +17,7 @@ enum HTTP {
     }
 
     enum RequestBody {
-        case jsonEncodable(Swift.Any)
+        case jsonEncodable(any Swift.Encodable)
         case data(Foundation.Data)
         case multipartFormData(MultipartFormData)
     }

@@ -1,7 +1,7 @@
 import Foundation
 
 /// Represents a calendar date without time information, following RFC 3339 section 5.6 (`YYYY-MM-DD` format)
-public struct CalendarDate: Codable, Hashable, Sendable, CustomStringConvertible, Comparable {
+public struct CalendarDate: Swift.Codable, Swift.Hashable, Swift.Sendable, Swift.CustomStringConvertible, Swift.Comparable {
     /// The year component (expected range: 1-9999)
     public let year: Swift.Int
 
@@ -36,7 +36,7 @@ public struct CalendarDate: Codable, Hashable, Sendable, CustomStringConvertible
 
     // MARK: - Codable
 
-    public init(from decoder: Decoder) throws {
+    public init(from decoder: Swift.Decoder) throws {
         let container = try decoder.singleValueContainer()
         let dateString = try container.decode(Swift.String.self)
         guard let calendarDate = CalendarDate(dateString) else {
@@ -45,7 +45,7 @@ public struct CalendarDate: Codable, Hashable, Sendable, CustomStringConvertible
         self = calendarDate
     }
 
-    public func encode(to encoder: Encoder) throws {
+    public func encode(to encoder: Swift.Encoder) throws {
         var container = encoder.singleValueContainer()
         try container.encode(description)
     }
@@ -89,7 +89,7 @@ public struct CalendarDate: Codable, Hashable, Sendable, CustomStringConvertible
     // MARK: - Error Types
 
     /// Errors that can occur when working with CalendarDate
-    public enum Error: Swift.Error, LocalizedError {
+    public enum Error: Swift.Error, Swift.LocalizedError {
         case invalidFormat(Swift.String)
 
         public var errorDescription: Swift.String? {

@@ -13,7 +13,7 @@ enum QueryParameter {
     case calendarDate(CalendarDate)
     case stringArray([Swift.String])
     case uuid(Foundation.UUID)
-    case unknown(Swift.Any)
+    case unknown(Any)
 
     func toString() -> Swift.String {
         switch self {

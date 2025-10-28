@@ -1,7 +1,4 @@
 import Foundation
-#if canImport(FoundationNetworking)
-import FoundationNetworking
-#endif
 
 public final class ClientConfig: Sendable {
     public typealias CredentialProvider = @Sendable () async throws -> Swift.String

@@ -1,7 +1,4 @@
 import Foundation
-#if canImport(FoundationNetworking)
-import FoundationNetworking
-#endif
 
 final class HTTPClient: Sendable {
     private let clientConfig: ClientConfig
@@ -19,7 +16,7 @@ final class HTTPClient: Sendable {
         contentType requestContentType: HTTP.ContentType = .applicationJson,
         headers requestHeaders: [Swift.String: Swift.String?] = [:],
         queryParams requestQueryParams: [Swift.String: QueryParameter?] = [:],
-        body requestBody: Swift.Any? = nil,
+        body requestBody: Any? = nil,
         requestOptions: RequestOptions? = nil
     ) async throws {
         _ = try await performRequest(
@@ -35,13 +32,13 @@ final class HTTPClient: Sendable {
     }
 
     /// Performs a request with the specified response type.
-    func performRequest<T: Decodable>(
+    func performRequest<T: Swift.Decodable>(
         method: HTTP.Method,
         path: Swift.String,
         contentType requestContentType: HTTP.ContentType = .applicationJson,
         headers requestHeaders: [Swift.String: Swift.String?] = [:],
         queryParams requestQueryParams: [Swift.String: QueryParameter?] = [:],
-        body requestBody: Swift.Any? = nil,
+        body requestBody: Any? = nil,
         requestOptions: RequestOptions? = nil,
         responseType: T.Type
     ) async throws -> T {
@@ -50,7 +47,7 @@ final class HTTPClient: Sendable {
                 return .multipartFormData(multipartData)
             } else if let data = body as? Foundation.Data {
                 return .data(data)
-            } else if let encodable = body as? Swift.Any {
+            } else if let encodable = body as? any Swift.Encodable {
                 return .jsonEncodable(encodable)
             } else {
                 preconditionFailure("Unsupported body type: \(type(of: body))")
@@ -310,7 +307,7 @@ final class HTTPClient: Sendable {
         }
 
         // Try to parse as simple JSON with message field
-        if let json = try? Foundation.JSONSerialization.jsonObject(with: data) as? [Swift.String: Swift.Any],
+        if let json = try? Foundation.JSONSerialization.jsonObject(with: data) as? [Swift.String: Any],
             let message = json["message"] as? Swift.String
         {
             return APIErrorResponse(code: statusCode, message: message)

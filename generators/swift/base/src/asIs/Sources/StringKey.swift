@@ -1,6 +1,6 @@
 import Foundation
 
-struct StringKey: CodingKey, Hashable {
+struct StringKey: Swift.CodingKey, Swift.Hashable {
     var stringValue: Swift.String
     var intValue: Swift.Int? { Swift.Int(stringValue) }
 
