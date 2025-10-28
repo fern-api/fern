@@ -1188,7 +1188,11 @@ export class DocsDefinitionResolver {
         return visitDiscriminatedUnion(item.child)._visit<Promise<FernNavigation.V1.TabChild>>({
             link: ({ href }) => this.toTabLinkNode(item, href),
             layout: ({ layout }) => this.toTabNode(prefix, item, layout, parentSlug),
-            changelog: ({ changelog }) => this.toTabChangelogNode(item, changelog, parentSlug)
+            changelog: ({ changelog }) => this.toTabChangelogNode(item, changelog, parentSlug),
+            variants: ({ variants }) => {
+                const flattenedLayout = variants.flatMap((variant) => variant.layout);
+                return this.toTabNode(prefix, item, flattenedLayout, parentSlug);
+            }
         });
     }
 

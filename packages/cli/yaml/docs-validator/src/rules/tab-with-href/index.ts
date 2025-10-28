@@ -26,18 +26,21 @@ export const TabWithHrefRule: Rule = {
                             continue;
                         }
 
-                        if (tabConfig.href != null && tabItem.layout != null) {
+                        const hasLayout = "layout" in tabItem && tabItem.layout != null;
+                        const hasVariants = "variants" in tabItem && tabItem.variants != null;
+
+                        if (tabConfig.href != null && (hasLayout || hasVariants)) {
                             ruleViolations.push({
                                 severity: "fatal",
-                                message: `Tab "${tabItem.tab}" has both a href and layout. Only one should be used.`
+                                message: `Tab "${tabItem.tab}" has both a href and ${hasLayout ? "layout" : "variants"}. Only one should be used.`
                             });
                             continue;
                         }
 
-                        if (tabConfig.href == null && tabItem.layout == null) {
+                        if (tabConfig.href == null && !hasLayout && !hasVariants) {
                             ruleViolations.push({
                                 severity: "fatal",
-                                message: `Tab "${tabItem.tab}" is missing a href or layout.`
+                                message: `Tab "${tabItem.tab}" is missing a href, layout, or variants.`
                             });
                             continue;
                         }

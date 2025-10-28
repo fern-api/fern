@@ -37,9 +37,9 @@ export async function visitNavigationAst({
     if (navigationConfigIsTabbed(navigation)) {
         await Promise.all(
             navigation.map(async (tab) => {
-                if (tab.layout != null) {
+                if ("layout" in tab && tab.layout != null) {
                     await Promise.all(
-                        tab.layout.map(async (item) => {
+                        tab.layout.map(async (item: docsYml.RawSchemas.NavigationItem) => {
                             await visitNavigationItem({
                                 navigationItem: item,
                                 visitor,
@@ -47,6 +47,19 @@ export async function visitNavigationAst({
                                 context
                             });
                         })
+                    );
+                } else if ("variants" in tab && tab.variants != null) {
+                    await Promise.all(
+                        tab.variants.flatMap((variant) =>
+                            variant.layout.map(async (item: docsYml.RawSchemas.NavigationItem) => {
+                                await visitNavigationItem({
+                                    navigationItem: item,
+                                    visitor,
+                                    apiWorkspaces,
+                                    context
+                                });
+                            })
+                        )
                     );
                 }
             })

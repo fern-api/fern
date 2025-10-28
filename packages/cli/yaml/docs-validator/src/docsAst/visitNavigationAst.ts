@@ -34,9 +34,9 @@ export async function visitNavigationAst({
     if (navigationConfigIsTabbed(navigation)) {
         await Promise.all(
             navigation.map(async (tab, tabIdx) => {
-                if (tab.layout != null) {
+                if ("layout" in tab && tab.layout != null) {
                     await Promise.all(
-                        tab.layout.map(async (item, itemIdx) => {
+                        tab.layout.map(async (item: docsYml.RawSchemas.NavigationItem, itemIdx: number) => {
                             await visitNavigationItem({
                                 absolutePathToFernFolder,
                                 navigationItem: item,
@@ -47,6 +47,22 @@ export async function visitNavigationAst({
                                 context
                             });
                         })
+                    );
+                } else if ("variants" in tab && tab.variants != null) {
+                    await Promise.all(
+                        tab.variants.flatMap((variant, variantIdx) =>
+                            variant.layout.map(async (item: docsYml.RawSchemas.NavigationItem, itemIdx: number) => {
+                                await visitNavigationItem({
+                                    absolutePathToFernFolder,
+                                    navigationItem: item,
+                                    visitor,
+                                    nodePath: [...nodePath, `${tabIdx}`, "variants", `${variantIdx}`, "layout", `${itemIdx}`],
+                                    absoluteFilepathToConfiguration,
+                                    apiWorkspaces,
+                                    context
+                                });
+                            })
+                        )
                     );
                 }
             })
