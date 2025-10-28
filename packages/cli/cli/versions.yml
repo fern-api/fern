@@ -1,6 +1,14 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
 - changelogEntry:
     - summary: |
+        Support enablements for custom/prod domains from docs.yml. Separate Slack, Discord, and docs Ask Fern deployments.
+      type: feat
+  irVersion: 61
+  createdAt: "2025-10-27"
+  version: 0.99.0
+
+- changelogEntry:
+    - summary: |
         Add support for ignoring properties in OpenAPI schemas using the `x-fern-ignore` extension.
       type: feat
   irVersion: 61
