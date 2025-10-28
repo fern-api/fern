@@ -1,6 +1,4 @@
-use chrono::NaiveDate;
 use seed_examples::prelude::*;
-use std::collections::{HashMap, HashSet};
 
 #[tokio::main]
 async fn main() {

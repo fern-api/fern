@@ -6,7 +6,7 @@ public enum UnionWithPrimitive: Codable, Hashable, Sendable {
 
     public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        let discriminant = try container.decode(String.self, forKey: .type)
+        let discriminant = try container.decode(Swift.String.self, forKey: .type)
         switch discriminant {
         case "integer":
             self = .integer(try Integer(from: decoder))
@@ -32,14 +32,14 @@ public enum UnionWithPrimitive: Codable, Hashable, Sendable {
     }
 
     public struct Integer: Codable, Hashable, Sendable {
-        public let type: String = "integer"
+        public let type: Swift.String = "integer"
         public let value: Int
         /// Additional properties that are not explicitly defined in the schema
-        public let additionalProperties: [String: JSONValue]
+        public let additionalProperties: [Swift.String: JSONValue]
 
         public init(
             value: Int,
-            additionalProperties: [String: JSONValue] = .init()
+            additionalProperties: [Swift.String: JSONValue] = .init()
         ) {
             self.value = value
             self.additionalProperties = additionalProperties
@@ -66,14 +66,14 @@ public enum UnionWithPrimitive: Codable, Hashable, Sendable {
     }
 
     public struct String: Codable, Hashable, Sendable {
-        public let type: String = "string"
-        public let value: String
+        public let type: Swift.String = "string"
+        public let value: Swift.String
         /// Additional properties that are not explicitly defined in the schema
-        public let additionalProperties: [String: JSONValue]
+        public let additionalProperties: [Swift.String: JSONValue]
 
         public init(
-            value: String,
-            additionalProperties: [String: JSONValue] = .init()
+            value: Swift.String,
+            additionalProperties: [Swift.String: JSONValue] = .init()
         ) {
             self.value = value
             self.additionalProperties = additionalProperties
@@ -81,7 +81,7 @@ public enum UnionWithPrimitive: Codable, Hashable, Sendable {
 
         public init(from decoder: Decoder) throws {
             let container = try decoder.container(keyedBy: CodingKeys.self)
-            self.value = try container.decode(String.self, forKey: .value)
+            self.value = try container.decode(Swift.String.self, forKey: .value)
             self.additionalProperties = try decoder.decodeAdditionalProperties(using: CodingKeys.self)
         }
 

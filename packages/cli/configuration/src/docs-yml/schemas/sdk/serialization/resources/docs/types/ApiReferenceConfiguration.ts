@@ -5,7 +5,7 @@
 import * as serializers from "../../../index";
 import * as FernDocsConfig from "../../../../api/index";
 import * as core from "../../../../core";
-import { AudienceId } from "./AudienceId";
+import { Audience } from "./Audience";
 import { SnippetsConfiguration } from "./SnippetsConfiguration";
 import { Availability } from "./Availability";
 import { PlaygroundSettings } from "./PlaygroundSettings";
@@ -20,7 +20,7 @@ export const ApiReferenceConfiguration: core.serialization.ObjectSchema<
         api: core.serialization.string(),
         apiName: core.serialization.property("api-name", core.serialization.string().optional()),
         openrpc: core.serialization.string().optional(),
-        audiences: core.serialization.list(AudienceId).optional(),
+        audiences: Audience.optional(),
         displayErrors: core.serialization.property("display-errors", core.serialization.boolean().optional()),
         snippets: SnippetsConfiguration.optional(),
         summary: core.serialization.string().optional(),
@@ -43,7 +43,7 @@ export declare namespace ApiReferenceConfiguration {
         api: string;
         "api-name"?: string | null;
         openrpc?: string | null;
-        audiences?: AudienceId.Raw[] | null;
+        audiences?: Audience.Raw | null;
         "display-errors"?: boolean | null;
         snippets?: SnippetsConfiguration.Raw | null;
         summary?: string | null;

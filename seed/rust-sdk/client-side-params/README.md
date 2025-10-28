@@ -11,7 +11,7 @@ Add this to your `Cargo.toml`:
 
 ```toml
 [dependencies]
-seed_client_side_params = "0.1.0"
+seed_client_side_params = "0.0.1"
 ```
 
 Or install via cargo:
@@ -30,7 +30,6 @@ Instantiate and use the client with the following:
 
 ```rust
 use seed_client_side_params::prelude::*;
-use std::collections::HashMap;
 
 #[tokio::main]
 async fn main() {

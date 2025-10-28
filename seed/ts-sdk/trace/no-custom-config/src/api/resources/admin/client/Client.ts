@@ -58,7 +58,7 @@ export class Admin {
                 (await core.Supplier.get(this._options.baseUrl)) ??
                     (await core.Supplier.get(this._options.environment)) ??
                     environments.SeedTraceEnvironment.Prod,
-                `/admin/store-test-submission-status/${encodeURIComponent(submissionId)}`,
+                `/admin/store-test-submission-status/${core.url.encodePathParam(submissionId)}`,
             ),
             method: "POST",
             headers: _headers,
@@ -143,7 +143,7 @@ export class Admin {
                 (await core.Supplier.get(this._options.baseUrl)) ??
                     (await core.Supplier.get(this._options.environment)) ??
                     environments.SeedTraceEnvironment.Prod,
-                `/admin/store-test-submission-status-v2/${encodeURIComponent(submissionId)}`,
+                `/admin/store-test-submission-status-v2/${core.url.encodePathParam(submissionId)}`,
             ),
             method: "POST",
             headers: _headers,
@@ -224,7 +224,7 @@ export class Admin {
                 (await core.Supplier.get(this._options.baseUrl)) ??
                     (await core.Supplier.get(this._options.environment)) ??
                     environments.SeedTraceEnvironment.Prod,
-                `/admin/store-workspace-submission-status/${encodeURIComponent(submissionId)}`,
+                `/admin/store-workspace-submission-status/${core.url.encodePathParam(submissionId)}`,
             ),
             method: "POST",
             headers: _headers,
@@ -309,7 +309,7 @@ export class Admin {
                 (await core.Supplier.get(this._options.baseUrl)) ??
                     (await core.Supplier.get(this._options.environment)) ??
                     environments.SeedTraceEnvironment.Prod,
-                `/admin/store-workspace-submission-status-v2/${encodeURIComponent(submissionId)}`,
+                `/admin/store-workspace-submission-status-v2/${core.url.encodePathParam(submissionId)}`,
             ),
             method: "POST",
             headers: _headers,
@@ -478,7 +478,7 @@ export class Admin {
                 (await core.Supplier.get(this._options.baseUrl)) ??
                     (await core.Supplier.get(this._options.environment)) ??
                     environments.SeedTraceEnvironment.Prod,
-                `/admin/store-test-trace/submission/${encodeURIComponent(submissionId)}/testCase/${encodeURIComponent(testCaseId)}`,
+                `/admin/store-test-trace/submission/${core.url.encodePathParam(submissionId)}/testCase/${core.url.encodePathParam(testCaseId)}`,
             ),
             method: "POST",
             headers: _headers,
@@ -636,7 +636,7 @@ export class Admin {
                 (await core.Supplier.get(this._options.baseUrl)) ??
                     (await core.Supplier.get(this._options.environment)) ??
                     environments.SeedTraceEnvironment.Prod,
-                `/admin/store-test-trace-v2/submission/${encodeURIComponent(submissionId)}/testCase/${encodeURIComponent(testCaseId)}`,
+                `/admin/store-test-trace-v2/submission/${core.url.encodePathParam(submissionId)}/testCase/${core.url.encodePathParam(testCaseId)}`,
             ),
             method: "POST",
             headers: _headers,
@@ -797,7 +797,7 @@ export class Admin {
                 (await core.Supplier.get(this._options.baseUrl)) ??
                     (await core.Supplier.get(this._options.environment)) ??
                     environments.SeedTraceEnvironment.Prod,
-                `/admin/store-workspace-trace/submission/${encodeURIComponent(submissionId)}`,
+                `/admin/store-workspace-trace/submission/${core.url.encodePathParam(submissionId)}`,
             ),
             method: "POST",
             headers: _headers,
@@ -952,7 +952,7 @@ export class Admin {
                 (await core.Supplier.get(this._options.baseUrl)) ??
                     (await core.Supplier.get(this._options.environment)) ??
                     environments.SeedTraceEnvironment.Prod,
-                `/admin/store-workspace-trace-v2/submission/${encodeURIComponent(submissionId)}`,
+                `/admin/store-workspace-trace-v2/submission/${core.url.encodePathParam(submissionId)}`,
             ),
             method: "POST",
             headers: _headers,

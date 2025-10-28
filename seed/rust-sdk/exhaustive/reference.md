@@ -14,7 +14,6 @@
 
 ```rust
 use seed_exhaustive::prelude::*;
-use std::collections::HashSet;
 
 #[tokio::main]
 async fn main() {
@@ -54,7 +53,6 @@ async fn main() {
 
 ```rust
 use seed_exhaustive::prelude::*;
-use std::collections::{HashMap, HashSet};
 
 #[tokio::main]
 async fn main() {
@@ -104,7 +102,6 @@ async fn main() {
 
 ```rust
 use seed_exhaustive::prelude::*;
-use std::collections::HashSet;
 
 #[tokio::main]
 async fn main() {
@@ -144,7 +141,6 @@ async fn main() {
 
 ```rust
 use seed_exhaustive::prelude::*;
-use std::collections::{HashMap, HashSet};
 
 #[tokio::main]
 async fn main() {
@@ -189,7 +185,6 @@ async fn main() {
 
 ```rust
 use seed_exhaustive::prelude::*;
-use std::collections::HashMap;
 
 #[tokio::main]
 async fn main() {
@@ -232,7 +227,6 @@ async fn main() {
 
 ```rust
 use seed_exhaustive::prelude::*;
-use std::collections::HashMap;
 
 #[tokio::main]
 async fn main() {
@@ -280,7 +274,6 @@ async fn main() {
 
 ```rust
 use seed_exhaustive::prelude::*;
-use std::collections::HashMap;
 
 #[tokio::main]
 async fn main() {
@@ -325,10 +318,7 @@ async fn main() {
 <dd>
 
 ```rust
-use chrono::{DateTime, NaiveDate, Utc};
 use seed_exhaustive::prelude::*;
-use std::collections::{HashMap, HashSet};
-use uuid::Uuid;
 
 #[tokio::main]
 async fn main() {
@@ -388,10 +378,7 @@ async fn main() {
 <dd>
 
 ```rust
-use chrono::{DateTime, NaiveDate, Utc};
 use seed_exhaustive::prelude::*;
-use std::collections::{HashMap, HashSet};
-use uuid::Uuid;
 
 #[tokio::main]
 async fn main() {
@@ -547,7 +534,6 @@ async fn main() {
 
 ```rust
 use seed_exhaustive::prelude::*;
-use std::collections::HashMap;
 
 #[tokio::main]
 async fn main() {
@@ -592,7 +578,6 @@ async fn main() {
 
 ```rust
 use seed_exhaustive::prelude::*;
-use std::collections::HashMap;
 
 #[tokio::main]
 async fn main() {
@@ -652,10 +637,7 @@ async fn main() {
 <dd>
 
 ```rust
-use chrono::{DateTime, NaiveDate, Utc};
 use seed_exhaustive::prelude::*;
-use std::collections::{HashMap, HashSet};
-use uuid::Uuid;
 
 #[tokio::main]
 async fn main() {
@@ -786,10 +768,7 @@ async fn main() {
 <dd>
 
 ```rust
-use chrono::{DateTime, NaiveDate, Utc};
 use seed_exhaustive::prelude::*;
-use std::collections::{HashMap, HashSet};
-use uuid::Uuid;
 
 #[tokio::main]
 async fn main() {
@@ -850,7 +829,6 @@ async fn main() {
 
 ```rust
 use seed_exhaustive::prelude::*;
-use std::collections::HashMap;
 
 #[tokio::main]
 async fn main() {
@@ -895,7 +873,6 @@ async fn main() {
 
 ```rust
 use seed_exhaustive::prelude::*;
-use std::collections::HashMap;
 
 #[tokio::main]
 async fn main() {
@@ -942,10 +919,7 @@ async fn main() {
 <dd>
 
 ```rust
-use chrono::{DateTime, NaiveDate, Utc};
 use seed_exhaustive::prelude::*;
-use std::collections::{HashMap, HashSet};
-use uuid::Uuid;
 
 #[tokio::main]
 async fn main() {
@@ -1008,10 +982,7 @@ async fn main() {
 <dd>
 
 ```rust
-use chrono::{DateTime, NaiveDate, Utc};
 use seed_exhaustive::prelude::*;
-use std::collections::{HashMap, HashSet};
-use uuid::Uuid;
 
 #[tokio::main]
 async fn main() {
@@ -1090,10 +1061,7 @@ async fn main() {
 <dd>
 
 ```rust
-use chrono::{DateTime, NaiveDate, Utc};
 use seed_exhaustive::prelude::*;
-use std::collections::{HashMap, HashSet};
-use uuid::Uuid;
 
 #[tokio::main]
 async fn main() {
@@ -1981,7 +1949,6 @@ async fn main() {
 <dd>
 
 ```rust
-use chrono::{DateTime, Utc};
 use seed_exhaustive::prelude::*;
 
 #[tokio::main]
@@ -2026,7 +1993,6 @@ async fn main() {
 <dd>
 
 ```rust
-use chrono::NaiveDate;
 use seed_exhaustive::prelude::*;
 
 #[tokio::main]
@@ -2070,7 +2036,6 @@ async fn main() {
 
 ```rust
 use seed_exhaustive::prelude::*;
-use uuid::Uuid;
 
 #[tokio::main]
 async fn main() {
@@ -2204,7 +2169,6 @@ async fn main() {
 
 ```rust
 use seed_exhaustive::prelude::*;
-use std::collections::HashMap;
 
 #[tokio::main]
 async fn main() {
@@ -2407,10 +2371,7 @@ POST with custom object in request body, response is an object
 <dd>
 
 ```rust
-use chrono::{DateTime, NaiveDate, Utc};
 use seed_exhaustive::prelude::*;
-use std::collections::{HashMap, HashSet};
-use uuid::Uuid;
 
 #[tokio::main]
 async fn main() {
@@ -2520,7 +2481,6 @@ POST request with no auth
 
 ```rust
 use seed_exhaustive::prelude::*;
-use std::collections::HashMap;
 
 #[tokio::main]
 async fn main() {

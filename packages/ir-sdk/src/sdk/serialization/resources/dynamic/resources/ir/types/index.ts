@@ -3,6 +3,7 @@ export * from "./GeneratorConfig";
 export * from "./GeneratorOutputConfig";
 export * from "./PublishInfo";
 export * from "./GoPublishInfo";
+export * from "./SwiftPublishInfo";
 export * from "./MavenPublishInfo";
 export * from "./NpmPublishInfo";
 export * from "./NugetPublishInfo";

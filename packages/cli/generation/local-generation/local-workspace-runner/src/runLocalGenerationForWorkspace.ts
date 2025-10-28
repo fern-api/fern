@@ -331,10 +331,16 @@ function getPublishTarget({
         return defaultPublishTarget;
     }
     if (outputSchema.location === "npm") {
+        const token = (outputSchema.token || "${NPM_TOKEN}").trim();
+        const useOidc = token === "<USE_OIDC>" || token === "OIDC";
         return PublishTarget.npm({
             packageName: outputSchema["package-name"],
             version: version ?? "0.0.0",
-            tokenEnvironmentVariable: outputSchema.token || "NPM_TOKEN"
+            tokenEnvironmentVariable: useOidc
+                ? "<USE_OIDC>"
+                : token.startsWith("${") && token.endsWith("}")
+                  ? token.slice(2, -1).trim()
+                  : ""
         });
     } else if (outputSchema.location === "maven") {
         return PublishTarget.maven({

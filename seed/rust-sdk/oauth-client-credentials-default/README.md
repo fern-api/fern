@@ -11,7 +11,7 @@ Add this to your `Cargo.toml`:
 
 ```toml
 [dependencies]
-seed_oauth_client_credentials_default = "0.1.0"
+seed_oauth_client_credentials_default = "0.0.1"
 ```
 
 Or install via cargo:
@@ -30,7 +30,6 @@ Instantiate and use the client with the following:
 
 ```rust
 use seed_oauth_client_credentials_default::prelude::*;
-use std::collections::HashMap;
 
 #[tokio::main]
 async fn main() {

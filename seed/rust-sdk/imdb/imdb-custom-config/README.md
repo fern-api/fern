@@ -11,7 +11,7 @@ Add this to your `Cargo.toml`:
 
 ```toml
 [dependencies]
-custom_imdb_sdk = "0.1.0"
+custom_imdb_sdk = "2.1.0"
 ```
 
 Or install via cargo:
@@ -30,7 +30,6 @@ Instantiate and use the client with the following:
 
 ```rust
 use custom_imdb_sdk::prelude::*;
-use std::collections::HashMap;
 
 #[tokio::main]
 async fn main() {

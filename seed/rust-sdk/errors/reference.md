@@ -14,7 +14,6 @@
 
 ```rust
 use seed_errors::prelude::*;
-use std::collections::HashMap;
 
 #[tokio::main]
 async fn main() {
@@ -57,7 +56,6 @@ async fn main() {
 
 ```rust
 use seed_errors::prelude::*;
-use std::collections::HashMap;
 
 #[tokio::main]
 async fn main() {
@@ -100,7 +98,6 @@ async fn main() {
 
 ```rust
 use seed_errors::prelude::*;
-use std::collections::HashMap;
 
 #[tokio::main]
 async fn main() {

@@ -7,6 +7,7 @@ import uuid
 from ..core.client_wrapper import AsyncClientWrapper, SyncClientWrapper
 from ..core.request_options import RequestOptions
 from .raw_client import AsyncRawUserClient, RawUserClient
+from .types.create_username_body_optional_properties import CreateUsernameBodyOptionalProperties
 from .types.nested_user import NestedUser
 from .types.user import User
 
@@ -119,6 +120,39 @@ class UserClient:
         _response = self._raw_client.create_username_with_referenced_type(
             tags=tags, username=username, password=password, name=name, request_options=request_options
         )
+        return _response.data
+
+    def create_username_optional(
+        self,
+        *,
+        request: typing.Optional[CreateUsernameBodyOptionalProperties] = None,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> None:
+        """
+        Parameters
+        ----------
+        request : typing.Optional[CreateUsernameBodyOptionalProperties]
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        None
+
+        Examples
+        --------
+        from seed import SeedRequestParameters
+        from seed.user import CreateUsernameBodyOptionalProperties
+
+        client = SeedRequestParameters(
+            base_url="https://yourhost.com/path/to/api",
+        )
+        client.user.create_username_optional(
+            request=CreateUsernameBodyOptionalProperties(),
+        )
+        """
+        _response = self._raw_client.create_username_optional(request=request, request_options=request_options)
         return _response.data
 
     def get_username(
@@ -389,6 +423,47 @@ class AsyncUserClient:
         _response = await self._raw_client.create_username_with_referenced_type(
             tags=tags, username=username, password=password, name=name, request_options=request_options
         )
+        return _response.data
+
+    async def create_username_optional(
+        self,
+        *,
+        request: typing.Optional[CreateUsernameBodyOptionalProperties] = None,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> None:
+        """
+        Parameters
+        ----------
+        request : typing.Optional[CreateUsernameBodyOptionalProperties]
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        None
+
+        Examples
+        --------
+        import asyncio
+
+        from seed import AsyncSeedRequestParameters
+        from seed.user import CreateUsernameBodyOptionalProperties
+
+        client = AsyncSeedRequestParameters(
+            base_url="https://yourhost.com/path/to/api",
+        )
+
+
+        async def main() -> None:
+            await client.user.create_username_optional(
+                request=CreateUsernameBodyOptionalProperties(),
+            )
+
+
+        asyncio.run(main())
+        """
+        _response = await self._raw_client.create_username_optional(request=request, request_options=request_options)
         return _response.data
 
     async def get_username(

@@ -50,7 +50,7 @@
     "depcheck": "^1.4.7",
     "lodash-es": "^4.17.21",
     "string.prototype.replaceall": "^1.0.10",
-    "typescript": "5.8.3",
+    "typescript": "5.9.3",
     "url-join": "^5.0.0",
     "uuid": "^9.0.1",
     "vitest": "^2.1.9"

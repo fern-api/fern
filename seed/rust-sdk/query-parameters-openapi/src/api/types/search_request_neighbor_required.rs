@@ -85,3 +85,22 @@ impl SearchRequestNeighborRequired {
         }
     }
 }
+
+impl fmt::Display for SearchRequestNeighborRequired {
+    fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
+        match self {
+            Self::User(value) => write!(
+                f,
+                "{}",
+                serde_json::to_string(value).unwrap_or_else(|_| format!("{:?}", value))
+            ),
+            Self::NestedUser(value) => write!(
+                f,
+                "{}",
+                serde_json::to_string(value).unwrap_or_else(|_| format!("{:?}", value))
+            ),
+            Self::String(value) => write!(f, "{}", value),
+            Self::Integer(value) => write!(f, "{}", value),
+        }
+    }
+}

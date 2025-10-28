@@ -1,18 +1,18 @@
 import Foundation
 
 public enum UnionWithoutKey: Codable, Hashable, Sendable {
-    case foo(Foo)
     /// This is a bar field.
     case bar(Bar)
+    case foo(Foo)
 
     public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
         let discriminant = try container.decode(String.self, forKey: .type)
         switch discriminant {
-        case "foo":
-            self = .foo(try Foo(from: decoder))
         case "bar":
             self = .bar(try Bar(from: decoder))
+        case "foo":
+            self = .foo(try Foo(from: decoder))
         default:
             throw DecodingError.dataCorrupted(
                 DecodingError.Context(
@@ -25,9 +25,9 @@ public enum UnionWithoutKey: Codable, Hashable, Sendable {
 
     public func encode(to encoder: Encoder) throws -> Void {
         switch self {
-        case .foo(let data):
-            try data.encode(to: encoder)
         case .bar(let data):
+            try data.encode(to: encoder)
+        case .foo(let data):
             try data.encode(to: encoder)
         }
     }

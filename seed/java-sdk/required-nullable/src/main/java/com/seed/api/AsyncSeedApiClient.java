@@ -6,6 +6,7 @@ package com.seed.api;
 import com.seed.api.core.ClientOptions;
 import com.seed.api.core.RequestOptions;
 import com.seed.api.requests.GetFooRequest;
+import com.seed.api.requests.UpdateFooRequest;
 import com.seed.api.types.Foo;
 import java.util.concurrent.CompletableFuture;
 
@@ -32,6 +33,14 @@ public class AsyncSeedApiClient {
 
     public CompletableFuture<Foo> getFoo(GetFooRequest request, RequestOptions requestOptions) {
         return this.rawClient.getFoo(request, requestOptions).thenApply(response -> response.body());
+    }
+
+    public CompletableFuture<Foo> updateFoo(String id, UpdateFooRequest request) {
+        return this.rawClient.updateFoo(id, request).thenApply(response -> response.body());
+    }
+
+    public CompletableFuture<Foo> updateFoo(String id, UpdateFooRequest request, RequestOptions requestOptions) {
+        return this.rawClient.updateFoo(id, request, requestOptions).thenApply(response -> response.body());
     }
 
     public static AsyncSeedApiClientBuilder builder() {

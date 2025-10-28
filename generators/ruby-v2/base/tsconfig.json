@@ -8,13 +8,22 @@
   "include": ["./src/**/*"],
   "references": [
     {
+      "path": "../ast"
+    },
+    {
+      "path": "../../../packages/commons/core-utils"
+    },
+    {
+      "path": "../../browser-compatible-base"
+    },
+    {
+      "path": "../../../packages/commons/path-utils"
+    },
+    {
       "path": "../../../packages/commons/fs-utils"
     },
     {
       "path": "../../base"
-    },
-    {
-      "path": "../ast"
     }
   ]
 }

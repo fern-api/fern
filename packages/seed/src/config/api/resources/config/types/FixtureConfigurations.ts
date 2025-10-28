@@ -15,4 +15,6 @@ export interface FixtureConfigurations {
     /** Overrides the default output mode */
     outputMode?: FernSeedConfig.OutputMode;
     license?: unknown;
+    /** List of script names to skip. */
+    skipScripts?: string[];
 }

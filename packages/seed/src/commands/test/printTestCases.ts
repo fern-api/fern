@@ -6,7 +6,7 @@ export function printTestCases(result: TestRunner.TestResult[]): void {
     const items = result.map((r) => {
         return {
             Name: r.id,
-            "Output Folder": r.id === r.outputFolder ? " -- " : r.outputFolder,
+            "Output Folder": !r.outputFolder ? " -- " : r.outputFolder,
             Result: r.type,
             "Generation Time": r.metrics.generationTime,
             "Compile Time": r.metrics.compileTime,

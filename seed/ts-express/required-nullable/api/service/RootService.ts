@@ -25,6 +25,22 @@ export interface RootServiceMethods {
         },
         next: express.NextFunction,
     ): void | Promise<void>;
+    updateFoo(
+        req: express.Request<
+            {
+                id: string;
+            },
+            SeedApi.Foo,
+            SeedApi.UpdateFooRequest,
+            never
+        >,
+        res: {
+            send: (responseBody: SeedApi.Foo) => Promise<void>;
+            cookie: (cookie: string, value: string, options?: express.CookieOptions) => void;
+            locals: any;
+        },
+        next: express.NextFunction,
+    ): void | Promise<void>;
 }
 
 export class RootService {
@@ -76,6 +92,47 @@ export class RootService {
                     res.status(500).json("Internal Server Error");
                 }
                 next(error);
+            }
+        });
+        this.router.patch("/foo/:id", async (req, res, next) => {
+            const request = serializers.UpdateFooRequest.parse(req.body);
+            if (request.ok) {
+                req.body = request.value;
+                try {
+                    await this.methods.updateFoo(
+                        req as any,
+                        {
+                            send: async (responseBody) => {
+                                res.status(200).json(
+                                    serializers.Foo.jsonOrThrow(responseBody, { unrecognizedObjectKeys: "strip" }),
+                                );
+                            },
+                            cookie: res.cookie.bind(res),
+                            locals: res.locals,
+                        },
+                        next,
+                    );
+                    if (!res.writableEnded) {
+                        next();
+                    }
+                } catch (error) {
+                    if (error instanceof errors.SeedApiError) {
+                        console.warn(
+                            `Endpoint 'updateFoo' unexpectedly threw ${error.constructor.name}. If this was intentional, please add ${error.constructor.name} to the endpoint's errors list in your Fern Definition.`,
+                        );
+                        await error.send(res);
+                    } else {
+                        res.status(500).json("Internal Server Error");
+                    }
+                    next(error);
+                }
+            } else {
+                res.status(422).json({
+                    errors: request.errors.map(
+                        (error) => `${["request", ...error.path].join(" -> ")}: ${error.message}`,
+                    ),
+                });
+                next(request.errors);
             }
         });
         return this.router;

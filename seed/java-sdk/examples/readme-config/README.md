@@ -61,8 +61,6 @@ package com.example.usage;
 
 import com.seed.examples.SeedExamplesClient;
 import com.seed.examples.resources.types.types.Movie;
-import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.HashMap;
 
 public class Example {
@@ -75,24 +73,20 @@ public class Example {
         client.service().createMovie(
             Movie
                 .builder()
-                .id("movie-c06a4ad7")
-                .title("The Boy and the Heron")
-                .from("Hayao Miyazaki")
-                .rating(8.0)
+                .id("id")
+                .title("title")
+                .from("from")
+                .rating(1.1)
                 .type("movie")
-                .tag("tag-wf9as23d")
+                .tag("tag")
                 .metadata(
                     new HashMap<String, Object>() {{
-                        put("actors", new ArrayList<Object>(Arrays.asList("Christian Bale", "Florence Pugh", "Willem Dafoe")));
-                        put("releaseDate", "2023-12-08");
-                        put("ratings", new 
-                        HashMap<String, Object>() {{put("rottenTomatoes", 97);
-                            put("imdb", 7.6);
+                        put("metadata", new 
+                        HashMap<String, Object>() {{put("key", "value");
                         }});
                     }}
                 )
                 .revenue(1000000L)
-                .prequel("movie-cv9b914f")
                 .build()
         );
     }
@@ -144,7 +138,7 @@ try{
 
 ### Custom Client
 
-This SDK is built to work with any instance of `OkHttpClient`. By default, if no client is provided, the SDK will construct one. 
+This SDK is built to work with any instance of `OkHttpClient`. By default, if no client is provided, the SDK will construct one.
 However, you can pass your own client like so:
 
 ```java
@@ -163,7 +157,9 @@ SeedExamplesClient client = SeedExamplesClient
 
 The SDK is instrumented with automatic retries with exponential backoff. A request will be retried as long
 as the request is deemed retryable and the number of retry attempts has not grown larger than the configured
-retry limit (default: 2).
+retry limit (default: 2). Before defaulting to exponential backoff, the SDK will first attempt to respect
+the `Retry-After` header (as either in seconds or as an HTTP date), and then the `X-RateLimit-Reset` header
+(as a Unix timestamp in epoch seconds); failing both of those, it will fall back to exponential backoff.
 
 A request is deemed retryable when any of the following HTTP status codes is returned:
 

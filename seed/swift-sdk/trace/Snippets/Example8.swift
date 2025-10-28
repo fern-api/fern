@@ -8,10 +8,10 @@ private func main() async throws {
     )
 
     _ = try await client.admin.storeTracedWorkspaceV2(
-        submissionId: UUID(uuidString: "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32"),
+        submissionId: UUID(uuidString: "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32")!,
         request: [
             TraceResponseV2(
-                submissionId: UUID(uuidString: "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32"),
+                submissionId: UUID(uuidString: "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32")!,
                 lineNumber: 1,
                 file: TracedFile(
                     filename: "filename",
@@ -56,7 +56,7 @@ private func main() async throws {
                 stdout: "stdout"
             ),
             TraceResponseV2(
-                submissionId: UUID(uuidString: "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32"),
+                submissionId: UUID(uuidString: "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32")!,
                 lineNumber: 1,
                 file: TracedFile(
                     filename: "filename",

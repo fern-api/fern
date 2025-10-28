@@ -11,7 +11,7 @@ Add this to your `Cargo.toml`:
 
 ```toml
 [dependencies]
-environment_test_sdk = "0.1.0"
+environment_test_sdk = "0.2.0"
 ```
 
 Or install via cargo:

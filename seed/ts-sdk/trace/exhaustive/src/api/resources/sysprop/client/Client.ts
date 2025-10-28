@@ -55,7 +55,7 @@ export class Sysprop {
                 (await core.Supplier.get(this._options.baseUrl)) ??
                     (await core.Supplier.get(this._options.environment)) ??
                     environments.SeedTraceEnvironment.Prod,
-                `/sysprop/num-warm-instances/${encodeURIComponent(language)}/${encodeURIComponent(numWarmInstances)}`,
+                `/sysprop/num-warm-instances/${core.url.encodePathParam(language)}/${core.url.encodePathParam(numWarmInstances)}`,
             ),
             method: "PUT",
             headers: _headers,

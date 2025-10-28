@@ -25,6 +25,19 @@
                 "sync_client": "package com.example.usage;\n\nimport com.seed.api.SeedApiClient;\nimport com.seed.api.requests.GetFooRequest;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedApiClient client = SeedApiClient\n            .builder()\n            .build();\n\n        client.getFoo(\n            GetFooRequest\n                .builder()\n                .requiredBaz(\"required_baz\")\n                .optionalBaz(\"optional_baz\")\n                .optionalNullableBaz(\"optional_nullable_baz\")\n                .requiredNullableBaz(\"required_nullable_baz\")\n                .build()\n        );\n    }\n}\n",
                 "async_client": "package com.example.usage;\n\nimport com.seed.api.SeedApiClient;\nimport com.seed.api.requests.GetFooRequest;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedApiClient client = SeedApiClient\n            .builder()\n            .build();\n\n        client.getFoo(\n            GetFooRequest\n                .builder()\n                .requiredBaz(\"required_baz\")\n                .optionalBaz(\"optional_baz\")\n                .optionalNullableBaz(\"optional_nullable_baz\")\n                .requiredNullableBaz(\"required_nullable_baz\")\n                .build()\n        );\n    }\n}\n"
             }
+        },
+        {
+            "example_identifier": "5d30f4b0",
+            "id": {
+                "method": "PATCH",
+                "path": "/foo/{id}",
+                "identifier_override": "endpoint_.updateFoo"
+            },
+            "snippet": {
+                "type": "java",
+                "sync_client": "package com.example.usage;\n\nimport com.seed.api.SeedApiClient;\nimport com.seed.api.requests.UpdateFooRequest;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedApiClient client = SeedApiClient\n            .builder()\n            .build();\n\n        client.updateFoo(\n            \"id\",\n            UpdateFooRequest\n                .builder()\n                .xIdempotencyKey(\"X-Idempotency-Key\")\n                .nullableText(\"nullable_text\")\n                .nullableNumber(1.1)\n                .nonNullableText(\"non_nullable_text\")\n                .build()\n        );\n    }\n}\n",
+                "async_client": "package com.example.usage;\n\nimport com.seed.api.SeedApiClient;\nimport com.seed.api.requests.UpdateFooRequest;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedApiClient client = SeedApiClient\n            .builder()\n            .build();\n\n        client.updateFoo(\n            \"id\",\n            UpdateFooRequest\n                .builder()\n                .xIdempotencyKey(\"X-Idempotency-Key\")\n                .nullableText(\"nullable_text\")\n                .nullableNumber(1.1)\n                .nonNullableText(\"non_nullable_text\")\n                .build()\n        );\n    }\n}\n"
+            }
         }
     ],
     "types": {}

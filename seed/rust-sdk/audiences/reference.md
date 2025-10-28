@@ -84,7 +84,6 @@ async fn main() {
 
 ```rust
 use seed_audiences::prelude::*;
-use std::collections::HashMap;
 
 #[tokio::main]
 async fn main() {

@@ -1,29 +1,32 @@
+import { Referencer } from "@fern-api/swift-base";
 import { swift } from "@fern-api/swift-codegen";
 import { Subpackage } from "@fern-fern/ir-sdk/api";
-
 import { SdkGeneratorContext } from "../../SdkGeneratorContext";
 import { ClientGeneratorContext } from "./ClientGeneratorContext";
 import { EndpointMethodGenerator } from "./EndpointMethodGenerator";
 
 export declare namespace SubClientGenerator {
     interface Args {
-        clientName: string;
+        symbol: swift.Symbol;
         subpackage: Subpackage;
         sdkGeneratorContext: SdkGeneratorContext;
     }
 }
 
 export class SubClientGenerator {
-    private readonly clientName: string;
+    private readonly symbol: swift.Symbol;
     private readonly subpackage: Subpackage;
     private readonly sdkGeneratorContext: SdkGeneratorContext;
     private readonly clientGeneratorContext: ClientGeneratorContext;
+    private readonly referencer: Referencer;
 
-    public constructor({ clientName, subpackage, sdkGeneratorContext }: SubClientGenerator.Args) {
-        this.clientName = clientName;
+    public constructor({ symbol, subpackage, sdkGeneratorContext }: SubClientGenerator.Args) {
+        this.referencer = sdkGeneratorContext.createReferencer(symbol);
+        this.symbol = symbol;
         this.subpackage = subpackage;
         this.sdkGeneratorContext = sdkGeneratorContext;
         this.clientGeneratorContext = new ClientGeneratorContext({
+            symbol,
             packageOrSubpackage: subpackage,
             sdkGeneratorContext
         });
@@ -37,7 +40,7 @@ export class SubClientGenerator {
 
     public generate(): swift.Class {
         return swift.class_({
-            name: this.clientName,
+            name: this.symbol.name,
             final: true,
             accessLevel: swift.AccessLevel.Public,
             conformances: [swift.Protocol.Sendable],
@@ -56,7 +59,7 @@ export class SubClientGenerator {
                 swift.functionParameter({
                     argumentLabel: "config",
                     unsafeName: "config",
-                    type: swift.Type.custom("ClientConfig")
+                    type: this.referencer.referenceAsIsType("ClientConfig")
                 })
             ],
             body: swift.CodeBlock.withStatements([
@@ -86,6 +89,7 @@ export class SubClientGenerator {
 
     private generateMethods(): swift.Method[] {
         const endpointMethodGenerator = new EndpointMethodGenerator({
+            parentClassSymbol: this.symbol,
             clientGeneratorContext: this.clientGeneratorContext,
             sdkGeneratorContext: this.sdkGeneratorContext
         });

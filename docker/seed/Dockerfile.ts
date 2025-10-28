@@ -23,8 +23,8 @@ RUN echo '{ \
     "form-data": "^4.0.4", \
     "formdata-node": "^6.0.3", \
     "jest-environment-jsdom": "^29.7.0", \
-    "prettier": "^3.4.2", \
-    "@biomejs/biome": "2.2.5", \
+    "prettier": "3.4.2", \
+    "@biomejs/biome": "2.3.1", \
     "ts-jest": "^29.1.1", \
     "typescript": "", \
     "form-data-encoder": "^4.0.2", \
@@ -50,7 +50,7 @@ RUN rm -rf /tmp/cache-warm
 WORKDIR /
 
 RUN pnpm install -g typescript@~5.7.2
-RUN pnpm install -g prettier@^3.4.2
-RUN pnpm install -g @biomejs/biome@2.2.5
+RUN pnpm install -g prettier@3.4.2
+RUN pnpm install -g @biomejs/biome@2.3.1
 
 ENTRYPOINT ["tail", "-f", "/dev/null"]

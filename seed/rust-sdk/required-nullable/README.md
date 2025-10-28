@@ -11,7 +11,7 @@ Add this to your `Cargo.toml`:
 
 ```toml
 [dependencies]
-seed_api = "0.1.0"
+seed_api = "0.0.1"
 ```
 
 Or install via cargo:
@@ -65,6 +65,18 @@ match client.get_foo(None)?.await {
         println!("Other error: {:?}", e);
     }
 }
+```
+
+## Request Types
+
+The SDK exports all request types as Rust structs. Simply import them from the crate to access them:
+
+```rust
+use seed_api::prelude::{*};
+
+let request = UpdateFooRequest {
+    ...
+};
 ```
 
 ## Advanced

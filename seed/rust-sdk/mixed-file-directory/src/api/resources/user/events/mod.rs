@@ -1,16 +1,16 @@
 use crate::{ApiError, ClientConfig, HttpClient};
 
 pub mod metadata;
-pub use metadata::UserEventsMetadataClient;
-pub struct UserEventsClient {
+pub use metadata::MetadataClient;
+pub struct EventsClient {
     pub http_client: HttpClient,
-    pub metadata: UserEventsMetadataClient,
+    pub metadata: MetadataClient,
 }
-impl UserEventsClient {
+impl EventsClient {
     pub fn new(config: ClientConfig) -> Result<Self, ApiError> {
         Ok(Self {
             http_client: HttpClient::new(config.clone())?,
-            metadata: UserEventsMetadataClient::new(config.clone())?,
+            metadata: MetadataClient::new(config.clone())?,
         })
     }
 }

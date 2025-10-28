@@ -47,3 +47,12 @@ impl MetadataUnion {
     }
 
 }
+
+impl fmt::Display for MetadataUnion {
+    fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
+        match self {
+            Self::OptionalMetadata(value) => write!(f, "{}", serde_json::to_string(value).unwrap_or_else(|_| format!("{:?}", value))),
+            Self::NamedMetadata(value) => write!(f, "{}", serde_json::to_string(value).unwrap_or_else(|_| format!("{:?}", value))),
+        }
+    }
+}

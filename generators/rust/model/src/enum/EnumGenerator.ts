@@ -54,11 +54,6 @@ export class EnumGenerator {
         return writer.toString();
     }
 
-    private writeUseStatements(writer: rust.Writer): void {
-        writer.writeLine("use serde::{Deserialize, Serialize};");
-        writer.writeLine("use std::fmt;");
-    }
-
     private generateEnumForTypeDeclaration(): rust.Enum {
         return rust.enum_({
             name: this.context.getUniqueTypeNameForDeclaration(this.typeDeclaration),
@@ -117,7 +112,8 @@ export class EnumGenerator {
         this.enumTypeDeclaration.values.forEach((enumValue) => {
             const variantName = enumValue.name.name.pascalCase.unsafeName;
             const wireValue = enumValue.name.wireValue;
-            writer.writeLine(`Self::${variantName} => "${wireValue}",`);
+            // Use JSON.stringify to properly escape special characters in string literals
+            writer.writeLine(`Self::${variantName} => ${JSON.stringify(wireValue)},`);
         });
 
         writer.dedent();

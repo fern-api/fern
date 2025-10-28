@@ -78,7 +78,7 @@ export async function testGenerator({
 
     const failedFixtures = results
         .filter((res) => res.type === "failure")
-        .map((res) => (res.id === res.outputFolder ? res.id : `${res.id}:${res.outputFolder}`));
+        .map((res) => (res.id === res.outputFolder || !res.outputFolder ? res.id : `${res.id}:${res.outputFolder}`));
     const unexpectedFixtures = difference(failedFixtures, generator.workspaceConfig.allowedFailures ?? []);
 
     if (failedFixtures.length === 0) {

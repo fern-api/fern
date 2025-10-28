@@ -1,4 +1,103 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+
+- version: 3.12.1
+  changelogEntry:
+    - summary: Update Biome to 2.3.1
+      type: chore
+  createdAt: "2025-10-28"
+  irVersion: 60
+
+- version: 3.12.0
+  changelogEntry:
+    - summary: |
+        Add support for [publishing to npmjs.org using OIDC from GitHub Actions](https://docs.npmjs.com/trusted-publishers).
+
+        To use OIDC for publishing to npmjs.org, you need to follow two steps:
+        1. Follow the instructions in ["Step 1: Add a trusted publisher on npmjs.com"](https://docs.npmjs.com/trusted-publishers#step-1-add-a-trusted-publisher-on-npmjscom).
+        2. Set the `output.token` field to `OIDC` in _generators.yml_ to enable this feature:
+
+            ```yml
+            # In generators.yml
+            groups:
+              ts-sdk:
+                generators:
+                  - name: fernapi/fern-typescript-sdk
+                    output:
+                      location: npm
+                      package-name: your-package-name
+                      token: OIDC # previously this would be set to something like ${NPM_TOKEN}
+                    ...
+            ```
+
+            This will take care of ["Step 2: Configure your CI/CD workflow"](https://docs.npmjs.com/trusted-publishers#step-2-configure-your-cicd-workflow).
+
+        For local generation, you'll need Fern CLI version 0.94.0 or later.
+      type: feat
+    - summary: |
+        Update GitHub Actions `setup-node` action to v4 in the generated CI workflow.
+      type: feat
+  createdAt: "2025-10-21"
+  irVersion: 60
+
+- version: 3.11.1
+  changelogEntry:
+    - summary: |
+        Generate streaming response section in README.md for streaming response endpoints.
+      type: fix
+  createdAt: "2025-10-21"
+  irVersion: 60
+
+- version: 3.11.0
+  changelogEntry:
+    - summary: |
+        Add `linter` and `formatter` configuration options to configure code linters and formatters for the generated SDK.
+        - `linter`:
+          - `biome`: Use Biome as the code linter. This is the default.
+          - `none`: Do not include a code linter.
+        - `formatter`:
+          - `biome`: Use Biome as the code formatter. This is the default.
+          - `prettier`: Use Prettier as the code formatter.
+
+        For consistency, the _package.json_ scripts will always include the following scripts:
+        - `lint`: Run the configured linter.
+        - `lint:fix`: Run the configured linter with auto-fix.
+        - `format`: Run the configured formatter.
+        - `format:check`: Run the configured formatter in check mode.
+        - `check`: Run both the linter and formatter in check mode.
+        - `check:fix`: Run both the linter and formatter with auto-fix.
+        When the `linter` is set to `none`, `lint` and `lint:fix` scripts will echo a message indicating that no linter is configured.
+      type: feat
+  createdAt: "2025-10-21"
+  irVersion: 60
+
+- version: 3.10.0
+  changelogEntry:
+    - summary: |
+        Generate file upload section in README.md for multipart-form file uploads.
+      type: feat
+  createdAt: "2025-10-20"
+  irVersion: 60
+
+- version: 3.9.3
+  changelogEntry:
+    - summary: |
+        Fix a compilation error when a path parameter is nullable or optional.
+      type: fix
+  createdAt: "2025-10-17"
+  irVersion: 60
+
+- version: 3.9.2
+  changelogEntry:
+    - summary: |
+        Match the logic in wire test generation where the static example generation omits the request parameter for empty objects when optional.
+        This fixes some wire tests that were failing due to mismatched request bodies.
+      type: fix
+    - summary: |
+        Return `undefined` when passing in `undefined` to `toJson` when `useBigInt` is enabled.
+      type: fix
+  createdAt: "2025-10-17"
+  irVersion: 60
+
 - version: 3.9.1
   changelogEntry:
     - summary: |

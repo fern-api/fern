@@ -2,7 +2,7 @@ import Foundation
 
 /// Defines properties with default values and validation rules.
 public struct Type: Codable, Hashable, Sendable {
-    public let decimal: Double
+    public let decimal: Swift.Double
     public let even: Int
     public let name: String
     public let shape: Shape
@@ -10,7 +10,7 @@ public struct Type: Codable, Hashable, Sendable {
     public let additionalProperties: [String: JSONValue]
 
     public init(
-        decimal: Double,
+        decimal: Swift.Double,
         even: Int,
         name: String,
         shape: Shape,
@@ -25,7 +25,7 @@ public struct Type: Codable, Hashable, Sendable {
 
     public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.decimal = try container.decode(Double.self, forKey: .decimal)
+        self.decimal = try container.decode(Swift.Double.self, forKey: .decimal)
         self.even = try container.decode(Int.self, forKey: .even)
         self.name = try container.decode(String.self, forKey: .name)
         self.shape = try container.decode(Shape.self, forKey: .shape)

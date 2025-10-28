@@ -3,7 +3,9 @@
 /**
  * @example
  *     {
- *         name: "Alice"
+ *         name: "Alice",
+ *         age: 30,
+ *         location: "Wonderland"
  *     }
  */
 export interface User {

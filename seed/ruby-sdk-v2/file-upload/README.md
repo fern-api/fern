@@ -17,7 +17,7 @@ require "seed"
 
 client = Seed::Client.new();
 
-client.service.simple();
+client.service.just_file();
 ```
 
 ## Environments
@@ -45,7 +45,7 @@ client = Seed::Client.new(
 )
 
 begin
-    result = client.service.simple
+    result = client.service.just_file
 rescue Seed::Errors::TimeoutError
     puts "API didn't respond before our timeout elapsed"
 rescue Seed::Errors::ServiceUnavailableError
@@ -68,7 +68,7 @@ The SDK defaults to a 60 second timeout. Use the `timeout` option to configure t
 ```ruby
 require "seed"
 
-response = client.service.simple(
+response = client.service.just_file(
     ...,
     timeout: 30  # 30 second timeout
 )

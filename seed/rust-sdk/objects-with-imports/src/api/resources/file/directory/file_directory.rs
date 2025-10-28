@@ -1,12 +1,10 @@
-use crate::api::*;
-use crate::{ApiError, ClientConfig, HttpClient, RequestOptions};
-use reqwest::Method;
+use crate::{ApiError, ClientConfig, HttpClient};
 
-pub struct FileDirectoryClient {
+pub struct DirectoryClient {
     pub http_client: HttpClient,
 }
 
-impl FileDirectoryClient {
+impl DirectoryClient {
     pub fn new(config: ClientConfig) -> Result<Self, ApiError> {
         Ok(Self {
             http_client: HttpClient::new(config.clone())?,

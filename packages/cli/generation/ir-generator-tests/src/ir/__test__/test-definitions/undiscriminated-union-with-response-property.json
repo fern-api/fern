@@ -1,0 +1,2769 @@
+{
+    "selfHosted": false,
+    "fdrApiDefinitionId": null,
+    "apiVersion": null,
+    "apiName": {
+        "originalName": "undiscriminated-union-with-response-property",
+        "camelCase": {
+            "unsafeName": "undiscriminatedUnionWithResponseProperty",
+            "safeName": "undiscriminatedUnionWithResponseProperty"
+        },
+        "snakeCase": {
+            "unsafeName": "undiscriminated_union_with_response_property",
+            "safeName": "undiscriminated_union_with_response_property"
+        },
+        "screamingSnakeCase": {
+            "unsafeName": "UNDISCRIMINATED_UNION_WITH_RESPONSE_PROPERTY",
+            "safeName": "UNDISCRIMINATED_UNION_WITH_RESPONSE_PROPERTY"
+        },
+        "pascalCase": {
+            "unsafeName": "UndiscriminatedUnionWithResponseProperty",
+            "safeName": "UndiscriminatedUnionWithResponseProperty"
+        }
+    },
+    "apiDisplayName": null,
+    "apiDocs": null,
+    "auth": {
+        "requirement": "ALL",
+        "schemes": [],
+        "docs": null
+    },
+    "headers": [],
+    "idempotencyHeaders": [],
+    "types": {
+        "type_:UnionResponse": {
+            "inline": null,
+            "name": {
+                "name": {
+                    "originalName": "UnionResponse",
+                    "camelCase": {
+                        "unsafeName": "unionResponse",
+                        "safeName": "unionResponse"
+                    },
+                    "snakeCase": {
+                        "unsafeName": "union_response",
+                        "safeName": "union_response"
+                    },
+                    "screamingSnakeCase": {
+                        "unsafeName": "UNION_RESPONSE",
+                        "safeName": "UNION_RESPONSE"
+                    },
+                    "pascalCase": {
+                        "unsafeName": "UnionResponse",
+                        "safeName": "UnionResponse"
+                    }
+                },
+                "fernFilepath": {
+                    "allParts": [],
+                    "packagePath": [],
+                    "file": null
+                },
+                "displayName": null,
+                "typeId": "type_:UnionResponse"
+            },
+            "shape": {
+                "_type": "object",
+                "extends": [],
+                "properties": [
+                    {
+                        "name": {
+                            "name": {
+                                "originalName": "data",
+                                "camelCase": {
+                                    "unsafeName": "data",
+                                    "safeName": "data"
+                                },
+                                "snakeCase": {
+                                    "unsafeName": "data",
+                                    "safeName": "data"
+                                },
+                                "screamingSnakeCase": {
+                                    "unsafeName": "DATA",
+                                    "safeName": "DATA"
+                                },
+                                "pascalCase": {
+                                    "unsafeName": "Data",
+                                    "safeName": "Data"
+                                }
+                            },
+                            "wireValue": "data"
+                        },
+                        "valueType": {
+                            "_type": "named",
+                            "name": {
+                                "originalName": "MyUnion",
+                                "camelCase": {
+                                    "unsafeName": "myUnion",
+                                    "safeName": "myUnion"
+                                },
+                                "snakeCase": {
+                                    "unsafeName": "my_union",
+                                    "safeName": "my_union"
+                                },
+                                "screamingSnakeCase": {
+                                    "unsafeName": "MY_UNION",
+                                    "safeName": "MY_UNION"
+                                },
+                                "pascalCase": {
+                                    "unsafeName": "MyUnion",
+                                    "safeName": "MyUnion"
+                                }
+                            },
+                            "fernFilepath": {
+                                "allParts": [],
+                                "packagePath": [],
+                                "file": null
+                            },
+                            "displayName": null,
+                            "typeId": "type_:MyUnion",
+                            "default": null,
+                            "inline": null
+                        },
+                        "propertyAccess": null,
+                        "v2Examples": {
+                            "userSpecifiedExamples": {},
+                            "autogeneratedExamples": {}
+                        },
+                        "availability": null,
+                        "docs": null
+                    }
+                ],
+                "extra-properties": false,
+                "extendedProperties": []
+            },
+            "referencedTypes": [
+                "type_:MyUnion",
+                "type_:VariantA",
+                "type_:VariantB",
+                "type_:VariantC"
+            ],
+            "encoding": {
+                "json": {},
+                "proto": null
+            },
+            "source": null,
+            "userProvidedExamples": [],
+            "autogeneratedExamples": [],
+            "v2Examples": null,
+            "availability": null,
+            "docs": null
+        },
+        "type_:UnionListResponse": {
+            "inline": null,
+            "name": {
+                "name": {
+                    "originalName": "UnionListResponse",
+                    "camelCase": {
+                        "unsafeName": "unionListResponse",
+                        "safeName": "unionListResponse"
+                    },
+                    "snakeCase": {
+                        "unsafeName": "union_list_response",
+                        "safeName": "union_list_response"
+                    },
+                    "screamingSnakeCase": {
+                        "unsafeName": "UNION_LIST_RESPONSE",
+                        "safeName": "UNION_LIST_RESPONSE"
+                    },
+                    "pascalCase": {
+                        "unsafeName": "UnionListResponse",
+                        "safeName": "UnionListResponse"
+                    }
+                },
+                "fernFilepath": {
+                    "allParts": [],
+                    "packagePath": [],
+                    "file": null
+                },
+                "displayName": null,
+                "typeId": "type_:UnionListResponse"
+            },
+            "shape": {
+                "_type": "object",
+                "extends": [],
+                "properties": [
+                    {
+                        "name": {
+                            "name": {
+                                "originalName": "data",
+                                "camelCase": {
+                                    "unsafeName": "data",
+                                    "safeName": "data"
+                                },
+                                "snakeCase": {
+                                    "unsafeName": "data",
+                                    "safeName": "data"
+                                },
+                                "screamingSnakeCase": {
+                                    "unsafeName": "DATA",
+                                    "safeName": "DATA"
+                                },
+                                "pascalCase": {
+                                    "unsafeName": "Data",
+                                    "safeName": "Data"
+                                }
+                            },
+                            "wireValue": "data"
+                        },
+                        "valueType": {
+                            "_type": "container",
+                            "container": {
+                                "_type": "list",
+                                "list": {
+                                    "_type": "named",
+                                    "name": {
+                                        "originalName": "MyUnion",
+                                        "camelCase": {
+                                            "unsafeName": "myUnion",
+                                            "safeName": "myUnion"
+                                        },
+                                        "snakeCase": {
+                                            "unsafeName": "my_union",
+                                            "safeName": "my_union"
+                                        },
+                                        "screamingSnakeCase": {
+                                            "unsafeName": "MY_UNION",
+                                            "safeName": "MY_UNION"
+                                        },
+                                        "pascalCase": {
+                                            "unsafeName": "MyUnion",
+                                            "safeName": "MyUnion"
+                                        }
+                                    },
+                                    "fernFilepath": {
+                                        "allParts": [],
+                                        "packagePath": [],
+                                        "file": null
+                                    },
+                                    "displayName": null,
+                                    "typeId": "type_:MyUnion",
+                                    "default": null,
+                                    "inline": null
+                                }
+                            }
+                        },
+                        "propertyAccess": null,
+                        "v2Examples": {
+                            "userSpecifiedExamples": {},
+                            "autogeneratedExamples": {}
+                        },
+                        "availability": null,
+                        "docs": null
+                    }
+                ],
+                "extra-properties": false,
+                "extendedProperties": []
+            },
+            "referencedTypes": [
+                "type_:MyUnion",
+                "type_:VariantA",
+                "type_:VariantB",
+                "type_:VariantC"
+            ],
+            "encoding": {
+                "json": {},
+                "proto": null
+            },
+            "source": null,
+            "userProvidedExamples": [],
+            "autogeneratedExamples": [],
+            "v2Examples": null,
+            "availability": null,
+            "docs": null
+        },
+        "type_:MyUnion": {
+            "inline": null,
+            "name": {
+                "name": {
+                    "originalName": "MyUnion",
+                    "camelCase": {
+                        "unsafeName": "myUnion",
+                        "safeName": "myUnion"
+                    },
+                    "snakeCase": {
+                        "unsafeName": "my_union",
+                        "safeName": "my_union"
+                    },
+                    "screamingSnakeCase": {
+                        "unsafeName": "MY_UNION",
+                        "safeName": "MY_UNION"
+                    },
+                    "pascalCase": {
+                        "unsafeName": "MyUnion",
+                        "safeName": "MyUnion"
+                    }
+                },
+                "fernFilepath": {
+                    "allParts": [],
+                    "packagePath": [],
+                    "file": null
+                },
+                "displayName": null,
+                "typeId": "type_:MyUnion"
+            },
+            "shape": {
+                "_type": "undiscriminatedUnion",
+                "members": [
+                    {
+                        "type": {
+                            "_type": "named",
+                            "name": {
+                                "originalName": "VariantA",
+                                "camelCase": {
+                                    "unsafeName": "variantA",
+                                    "safeName": "variantA"
+                                },
+                                "snakeCase": {
+                                    "unsafeName": "variant_a",
+                                    "safeName": "variant_a"
+                                },
+                                "screamingSnakeCase": {
+                                    "unsafeName": "VARIANT_A",
+                                    "safeName": "VARIANT_A"
+                                },
+                                "pascalCase": {
+                                    "unsafeName": "VariantA",
+                                    "safeName": "VariantA"
+                                }
+                            },
+                            "fernFilepath": {
+                                "allParts": [],
+                                "packagePath": [],
+                                "file": null
+                            },
+                            "displayName": "Variant A",
+                            "typeId": "type_:VariantA",
+                            "default": null,
+                            "inline": null
+                        },
+                        "docs": null
+                    },
+                    {
+                        "type": {
+                            "_type": "named",
+                            "name": {
+                                "originalName": "VariantB",
+                                "camelCase": {
+                                    "unsafeName": "variantB",
+                                    "safeName": "variantB"
+                                },
+                                "snakeCase": {
+                                    "unsafeName": "variant_b",
+                                    "safeName": "variant_b"
+                                },
+                                "screamingSnakeCase": {
+                                    "unsafeName": "VARIANT_B",
+                                    "safeName": "VARIANT_B"
+                                },
+                                "pascalCase": {
+                                    "unsafeName": "VariantB",
+                                    "safeName": "VariantB"
+                                }
+                            },
+                            "fernFilepath": {
+                                "allParts": [],
+                                "packagePath": [],
+                                "file": null
+                            },
+                            "displayName": "Variant B",
+                            "typeId": "type_:VariantB",
+                            "default": null,
+                            "inline": null
+                        },
+                        "docs": null
+                    },
+                    {
+                        "type": {
+                            "_type": "named",
+                            "name": {
+                                "originalName": "VariantC",
+                                "camelCase": {
+                                    "unsafeName": "variantC",
+                                    "safeName": "variantC"
+                                },
+                                "snakeCase": {
+                                    "unsafeName": "variant_c",
+                                    "safeName": "variant_c"
+                                },
+                                "screamingSnakeCase": {
+                                    "unsafeName": "VARIANT_C",
+                                    "safeName": "VARIANT_C"
+                                },
+                                "pascalCase": {
+                                    "unsafeName": "VariantC",
+                                    "safeName": "VariantC"
+                                }
+                            },
+                            "fernFilepath": {
+                                "allParts": [],
+                                "packagePath": [],
+                                "file": null
+                            },
+                            "displayName": "Variant C",
+                            "typeId": "type_:VariantC",
+                            "default": null,
+                            "inline": null
+                        },
+                        "docs": null
+                    }
+                ]
+            },
+            "referencedTypes": [
+                "type_:VariantA",
+                "type_:VariantB",
+                "type_:VariantC"
+            ],
+            "encoding": {
+                "json": {},
+                "proto": null
+            },
+            "source": null,
+            "userProvidedExamples": [],
+            "autogeneratedExamples": [],
+            "v2Examples": null,
+            "availability": null,
+            "docs": "Undiscriminated union with multiple object variants.\nThis reproduces the Pipedream issue where Emitter is a union of\nDeployedComponent, HttpInterface, and TimerInterface."
+        },
+        "type_:VariantA": {
+            "inline": null,
+            "name": {
+                "name": {
+                    "originalName": "VariantA",
+                    "camelCase": {
+                        "unsafeName": "variantA",
+                        "safeName": "variantA"
+                    },
+                    "snakeCase": {
+                        "unsafeName": "variant_a",
+                        "safeName": "variant_a"
+                    },
+                    "screamingSnakeCase": {
+                        "unsafeName": "VARIANT_A",
+                        "safeName": "VARIANT_A"
+                    },
+                    "pascalCase": {
+                        "unsafeName": "VariantA",
+                        "safeName": "VariantA"
+                    }
+                },
+                "fernFilepath": {
+                    "allParts": [],
+                    "packagePath": [],
+                    "file": null
+                },
+                "displayName": null,
+                "typeId": "type_:VariantA"
+            },
+            "shape": {
+                "_type": "object",
+                "extends": [],
+                "properties": [
+                    {
+                        "name": {
+                            "name": {
+                                "originalName": "type",
+                                "camelCase": {
+                                    "unsafeName": "type",
+                                    "safeName": "type"
+                                },
+                                "snakeCase": {
+                                    "unsafeName": "type",
+                                    "safeName": "type"
+                                },
+                                "screamingSnakeCase": {
+                                    "unsafeName": "TYPE",
+                                    "safeName": "TYPE"
+                                },
+                                "pascalCase": {
+                                    "unsafeName": "Type",
+                                    "safeName": "Type"
+                                }
+                            },
+                            "wireValue": "type"
+                        },
+                        "valueType": {
+                            "_type": "container",
+                            "container": {
+                                "_type": "literal",
+                                "literal": {
+                                    "type": "string",
+                                    "string": "A"
+                                }
+                            }
+                        },
+                        "propertyAccess": null,
+                        "v2Examples": {
+                            "userSpecifiedExamples": {},
+                            "autogeneratedExamples": {}
+                        },
+                        "availability": null,
+                        "docs": null
+                    },
+                    {
+                        "name": {
+                            "name": {
+                                "originalName": "valueA",
+                                "camelCase": {
+                                    "unsafeName": "valueA",
+                                    "safeName": "valueA"
+                                },
+                                "snakeCase": {
+                                    "unsafeName": "value_a",
+                                    "safeName": "value_a"
+                                },
+                                "screamingSnakeCase": {
+                                    "unsafeName": "VALUE_A",
+                                    "safeName": "VALUE_A"
+                                },
+                                "pascalCase": {
+                                    "unsafeName": "ValueA",
+                                    "safeName": "ValueA"
+                                }
+                            },
+                            "wireValue": "valueA"
+                        },
+                        "valueType": {
+                            "_type": "primitive",
+                            "primitive": {
+                                "v1": "STRING",
+                                "v2": {
+                                    "type": "string",
+                                    "default": null,
+                                    "validation": null
+                                }
+                            }
+                        },
+                        "propertyAccess": null,
+                        "v2Examples": {
+                            "userSpecifiedExamples": {},
+                            "autogeneratedExamples": {}
+                        },
+                        "availability": null,
+                        "docs": null
+                    }
+                ],
+                "extra-properties": false,
+                "extendedProperties": []
+            },
+            "referencedTypes": [],
+            "encoding": {
+                "json": {},
+                "proto": null
+            },
+            "source": null,
+            "userProvidedExamples": [],
+            "autogeneratedExamples": [],
+            "v2Examples": null,
+            "availability": null,
+            "docs": null
+        },
+        "type_:VariantB": {
+            "inline": null,
+            "name": {
+                "name": {
+                    "originalName": "VariantB",
+                    "camelCase": {
+                        "unsafeName": "variantB",
+                        "safeName": "variantB"
+                    },
+                    "snakeCase": {
+                        "unsafeName": "variant_b",
+                        "safeName": "variant_b"
+                    },
+                    "screamingSnakeCase": {
+                        "unsafeName": "VARIANT_B",
+                        "safeName": "VARIANT_B"
+                    },
+                    "pascalCase": {
+                        "unsafeName": "VariantB",
+                        "safeName": "VariantB"
+                    }
+                },
+                "fernFilepath": {
+                    "allParts": [],
+                    "packagePath": [],
+                    "file": null
+                },
+                "displayName": null,
+                "typeId": "type_:VariantB"
+            },
+            "shape": {
+                "_type": "object",
+                "extends": [],
+                "properties": [
+                    {
+                        "name": {
+                            "name": {
+                                "originalName": "type",
+                                "camelCase": {
+                                    "unsafeName": "type",
+                                    "safeName": "type"
+                                },
+                                "snakeCase": {
+                                    "unsafeName": "type",
+                                    "safeName": "type"
+                                },
+                                "screamingSnakeCase": {
+                                    "unsafeName": "TYPE",
+                                    "safeName": "TYPE"
+                                },
+                                "pascalCase": {
+                                    "unsafeName": "Type",
+                                    "safeName": "Type"
+                                }
+                            },
+                            "wireValue": "type"
+                        },
+                        "valueType": {
+                            "_type": "container",
+                            "container": {
+                                "_type": "literal",
+                                "literal": {
+                                    "type": "string",
+                                    "string": "B"
+                                }
+                            }
+                        },
+                        "propertyAccess": null,
+                        "v2Examples": {
+                            "userSpecifiedExamples": {},
+                            "autogeneratedExamples": {}
+                        },
+                        "availability": null,
+                        "docs": null
+                    },
+                    {
+                        "name": {
+                            "name": {
+                                "originalName": "valueB",
+                                "camelCase": {
+                                    "unsafeName": "valueB",
+                                    "safeName": "valueB"
+                                },
+                                "snakeCase": {
+                                    "unsafeName": "value_b",
+                                    "safeName": "value_b"
+                                },
+                                "screamingSnakeCase": {
+                                    "unsafeName": "VALUE_B",
+                                    "safeName": "VALUE_B"
+                                },
+                                "pascalCase": {
+                                    "unsafeName": "ValueB",
+                                    "safeName": "ValueB"
+                                }
+                            },
+                            "wireValue": "valueB"
+                        },
+                        "valueType": {
+                            "_type": "primitive",
+                            "primitive": {
+                                "v1": "INTEGER",
+                                "v2": {
+                                    "type": "integer",
+                                    "default": null,
+                                    "validation": null
+                                }
+                            }
+                        },
+                        "propertyAccess": null,
+                        "v2Examples": {
+                            "userSpecifiedExamples": {},
+                            "autogeneratedExamples": {}
+                        },
+                        "availability": null,
+                        "docs": null
+                    }
+                ],
+                "extra-properties": false,
+                "extendedProperties": []
+            },
+            "referencedTypes": [],
+            "encoding": {
+                "json": {},
+                "proto": null
+            },
+            "source": null,
+            "userProvidedExamples": [],
+            "autogeneratedExamples": [],
+            "v2Examples": null,
+            "availability": null,
+            "docs": null
+        },
+        "type_:VariantC": {
+            "inline": null,
+            "name": {
+                "name": {
+                    "originalName": "VariantC",
+                    "camelCase": {
+                        "unsafeName": "variantC",
+                        "safeName": "variantC"
+                    },
+                    "snakeCase": {
+                        "unsafeName": "variant_c",
+                        "safeName": "variant_c"
+                    },
+                    "screamingSnakeCase": {
+                        "unsafeName": "VARIANT_C",
+                        "safeName": "VARIANT_C"
+                    },
+                    "pascalCase": {
+                        "unsafeName": "VariantC",
+                        "safeName": "VariantC"
+                    }
+                },
+                "fernFilepath": {
+                    "allParts": [],
+                    "packagePath": [],
+                    "file": null
+                },
+                "displayName": null,
+                "typeId": "type_:VariantC"
+            },
+            "shape": {
+                "_type": "object",
+                "extends": [],
+                "properties": [
+                    {
+                        "name": {
+                            "name": {
+                                "originalName": "type",
+                                "camelCase": {
+                                    "unsafeName": "type",
+                                    "safeName": "type"
+                                },
+                                "snakeCase": {
+                                    "unsafeName": "type",
+                                    "safeName": "type"
+                                },
+                                "screamingSnakeCase": {
+                                    "unsafeName": "TYPE",
+                                    "safeName": "TYPE"
+                                },
+                                "pascalCase": {
+                                    "unsafeName": "Type",
+                                    "safeName": "Type"
+                                }
+                            },
+                            "wireValue": "type"
+                        },
+                        "valueType": {
+                            "_type": "container",
+                            "container": {
+                                "_type": "literal",
+                                "literal": {
+                                    "type": "string",
+                                    "string": "C"
+                                }
+                            }
+                        },
+                        "propertyAccess": null,
+                        "v2Examples": {
+                            "userSpecifiedExamples": {},
+                            "autogeneratedExamples": {}
+                        },
+                        "availability": null,
+                        "docs": null
+                    },
+                    {
+                        "name": {
+                            "name": {
+                                "originalName": "valueC",
+                                "camelCase": {
+                                    "unsafeName": "valueC",
+                                    "safeName": "valueC"
+                                },
+                                "snakeCase": {
+                                    "unsafeName": "value_c",
+                                    "safeName": "value_c"
+                                },
+                                "screamingSnakeCase": {
+                                    "unsafeName": "VALUE_C",
+                                    "safeName": "VALUE_C"
+                                },
+                                "pascalCase": {
+                                    "unsafeName": "ValueC",
+                                    "safeName": "ValueC"
+                                }
+                            },
+                            "wireValue": "valueC"
+                        },
+                        "valueType": {
+                            "_type": "primitive",
+                            "primitive": {
+                                "v1": "BOOLEAN",
+                                "v2": {
+                                    "type": "boolean",
+                                    "default": null
+                                }
+                            }
+                        },
+                        "propertyAccess": null,
+                        "v2Examples": {
+                            "userSpecifiedExamples": {},
+                            "autogeneratedExamples": {}
+                        },
+                        "availability": null,
+                        "docs": null
+                    }
+                ],
+                "extra-properties": false,
+                "extendedProperties": []
+            },
+            "referencedTypes": [],
+            "encoding": {
+                "json": {},
+                "proto": null
+            },
+            "source": null,
+            "userProvidedExamples": [],
+            "autogeneratedExamples": [],
+            "v2Examples": null,
+            "availability": null,
+            "docs": null
+        }
+    },
+    "errors": {},
+    "services": {
+        "service_": {
+            "availability": null,
+            "name": {
+                "fernFilepath": {
+                    "allParts": [],
+                    "packagePath": [],
+                    "file": null
+                }
+            },
+            "displayName": null,
+            "basePath": {
+                "head": "/",
+                "parts": []
+            },
+            "headers": [],
+            "pathParameters": [],
+            "encoding": {
+                "json": {},
+                "proto": null
+            },
+            "transport": {
+                "type": "http"
+            },
+            "endpoints": [
+                {
+                    "id": "endpoint_.getUnion",
+                    "name": {
+                        "originalName": "getUnion",
+                        "camelCase": {
+                            "unsafeName": "getUnion",
+                            "safeName": "getUnion"
+                        },
+                        "snakeCase": {
+                            "unsafeName": "get_union",
+                            "safeName": "get_union"
+                        },
+                        "screamingSnakeCase": {
+                            "unsafeName": "GET_UNION",
+                            "safeName": "GET_UNION"
+                        },
+                        "pascalCase": {
+                            "unsafeName": "GetUnion",
+                            "safeName": "GetUnion"
+                        }
+                    },
+                    "displayName": null,
+                    "auth": false,
+                    "security": null,
+                    "idempotent": false,
+                    "baseUrl": null,
+                    "v2BaseUrls": null,
+                    "method": "GET",
+                    "basePath": null,
+                    "path": {
+                        "head": "/union",
+                        "parts": []
+                    },
+                    "fullPath": {
+                        "head": "/union",
+                        "parts": []
+                    },
+                    "pathParameters": [],
+                    "allPathParameters": [],
+                    "queryParameters": [],
+                    "headers": [],
+                    "requestBody": null,
+                    "v2RequestBodies": null,
+                    "sdkRequest": null,
+                    "response": {
+                        "body": {
+                            "type": "json",
+                            "value": {
+                                "type": "nestedPropertyAsResponse",
+                                "responseBodyType": {
+                                    "_type": "named",
+                                    "name": {
+                                        "originalName": "UnionResponse",
+                                        "camelCase": {
+                                            "unsafeName": "unionResponse",
+                                            "safeName": "unionResponse"
+                                        },
+                                        "snakeCase": {
+                                            "unsafeName": "union_response",
+                                            "safeName": "union_response"
+                                        },
+                                        "screamingSnakeCase": {
+                                            "unsafeName": "UNION_RESPONSE",
+                                            "safeName": "UNION_RESPONSE"
+                                        },
+                                        "pascalCase": {
+                                            "unsafeName": "UnionResponse",
+                                            "safeName": "UnionResponse"
+                                        }
+                                    },
+                                    "fernFilepath": {
+                                        "allParts": [],
+                                        "packagePath": [],
+                                        "file": null
+                                    },
+                                    "displayName": null,
+                                    "typeId": "type_:UnionResponse",
+                                    "default": null,
+                                    "inline": null
+                                },
+                                "responseProperty": {
+                                    "name": {
+                                        "name": {
+                                            "originalName": "data",
+                                            "camelCase": {
+                                                "unsafeName": "data",
+                                                "safeName": "data"
+                                            },
+                                            "snakeCase": {
+                                                "unsafeName": "data",
+                                                "safeName": "data"
+                                            },
+                                            "screamingSnakeCase": {
+                                                "unsafeName": "DATA",
+                                                "safeName": "DATA"
+                                            },
+                                            "pascalCase": {
+                                                "unsafeName": "Data",
+                                                "safeName": "Data"
+                                            }
+                                        },
+                                        "wireValue": "data"
+                                    },
+                                    "valueType": {
+                                        "_type": "named",
+                                        "name": {
+                                            "originalName": "MyUnion",
+                                            "camelCase": {
+                                                "unsafeName": "myUnion",
+                                                "safeName": "myUnion"
+                                            },
+                                            "snakeCase": {
+                                                "unsafeName": "my_union",
+                                                "safeName": "my_union"
+                                            },
+                                            "screamingSnakeCase": {
+                                                "unsafeName": "MY_UNION",
+                                                "safeName": "MY_UNION"
+                                            },
+                                            "pascalCase": {
+                                                "unsafeName": "MyUnion",
+                                                "safeName": "MyUnion"
+                                            }
+                                        },
+                                        "fernFilepath": {
+                                            "allParts": [],
+                                            "packagePath": [],
+                                            "file": null
+                                        },
+                                        "displayName": null,
+                                        "typeId": "type_:MyUnion",
+                                        "default": null,
+                                        "inline": null
+                                    },
+                                    "propertyAccess": null,
+                                    "v2Examples": {
+                                        "userSpecifiedExamples": {},
+                                        "autogeneratedExamples": {}
+                                    },
+                                    "availability": null,
+                                    "docs": null
+                                },
+                                "docs": null,
+                                "v2Examples": null
+                            }
+                        },
+                        "status-code": null
+                    },
+                    "v2Responses": null,
+                    "errors": [],
+                    "userSpecifiedExamples": [],
+                    "autogeneratedExamples": [
+                        {
+                            "example": {
+                                "id": "a27b537b",
+                                "url": "/union",
+                                "name": null,
+                                "endpointHeaders": [],
+                                "endpointPathParameters": [],
+                                "queryParameters": [],
+                                "servicePathParameters": [],
+                                "serviceHeaders": [],
+                                "rootPathParameters": [],
+                                "request": null,
+                                "response": {
+                                    "type": "ok",
+                                    "value": {
+                                        "type": "body",
+                                        "value": {
+                                            "shape": {
+                                                "type": "named",
+                                                "shape": {
+                                                    "type": "object",
+                                                    "properties": [
+                                                        {
+                                                            "name": {
+                                                                "name": {
+                                                                    "originalName": "data",
+                                                                    "camelCase": {
+                                                                        "unsafeName": "data",
+                                                                        "safeName": "data"
+                                                                    },
+                                                                    "snakeCase": {
+                                                                        "unsafeName": "data",
+                                                                        "safeName": "data"
+                                                                    },
+                                                                    "screamingSnakeCase": {
+                                                                        "unsafeName": "DATA",
+                                                                        "safeName": "DATA"
+                                                                    },
+                                                                    "pascalCase": {
+                                                                        "unsafeName": "Data",
+                                                                        "safeName": "Data"
+                                                                    }
+                                                                },
+                                                                "wireValue": "data"
+                                                            },
+                                                            "originalTypeDeclaration": {
+                                                                "name": {
+                                                                    "originalName": "UnionResponse",
+                                                                    "camelCase": {
+                                                                        "unsafeName": "unionResponse",
+                                                                        "safeName": "unionResponse"
+                                                                    },
+                                                                    "snakeCase": {
+                                                                        "unsafeName": "union_response",
+                                                                        "safeName": "union_response"
+                                                                    },
+                                                                    "screamingSnakeCase": {
+                                                                        "unsafeName": "UNION_RESPONSE",
+                                                                        "safeName": "UNION_RESPONSE"
+                                                                    },
+                                                                    "pascalCase": {
+                                                                        "unsafeName": "UnionResponse",
+                                                                        "safeName": "UnionResponse"
+                                                                    }
+                                                                },
+                                                                "fernFilepath": {
+                                                                    "allParts": [],
+                                                                    "packagePath": [],
+                                                                    "file": null
+                                                                },
+                                                                "displayName": null,
+                                                                "typeId": "type_:UnionResponse"
+                                                            },
+                                                            "value": {
+                                                                "shape": {
+                                                                    "type": "named",
+                                                                    "shape": {
+                                                                        "type": "undiscriminatedUnion",
+                                                                        "index": 0,
+                                                                        "singleUnionType": {
+                                                                            "shape": {
+                                                                                "type": "named",
+                                                                                "shape": {
+                                                                                    "type": "object",
+                                                                                    "properties": [
+                                                                                        {
+                                                                                            "name": {
+                                                                                                "name": {
+                                                                                                    "originalName": "type",
+                                                                                                    "camelCase": {
+                                                                                                        "unsafeName": "type",
+                                                                                                        "safeName": "type"
+                                                                                                    },
+                                                                                                    "snakeCase": {
+                                                                                                        "unsafeName": "type",
+                                                                                                        "safeName": "type"
+                                                                                                    },
+                                                                                                    "screamingSnakeCase": {
+                                                                                                        "unsafeName": "TYPE",
+                                                                                                        "safeName": "TYPE"
+                                                                                                    },
+                                                                                                    "pascalCase": {
+                                                                                                        "unsafeName": "Type",
+                                                                                                        "safeName": "Type"
+                                                                                                    }
+                                                                                                },
+                                                                                                "wireValue": "type"
+                                                                                            },
+                                                                                            "originalTypeDeclaration": {
+                                                                                                "name": {
+                                                                                                    "originalName": "VariantA",
+                                                                                                    "camelCase": {
+                                                                                                        "unsafeName": "variantA",
+                                                                                                        "safeName": "variantA"
+                                                                                                    },
+                                                                                                    "snakeCase": {
+                                                                                                        "unsafeName": "variant_a",
+                                                                                                        "safeName": "variant_a"
+                                                                                                    },
+                                                                                                    "screamingSnakeCase": {
+                                                                                                        "unsafeName": "VARIANT_A",
+                                                                                                        "safeName": "VARIANT_A"
+                                                                                                    },
+                                                                                                    "pascalCase": {
+                                                                                                        "unsafeName": "VariantA",
+                                                                                                        "safeName": "VariantA"
+                                                                                                    }
+                                                                                                },
+                                                                                                "fernFilepath": {
+                                                                                                    "allParts": [],
+                                                                                                    "packagePath": [],
+                                                                                                    "file": null
+                                                                                                },
+                                                                                                "displayName": null,
+                                                                                                "typeId": "type_:VariantA"
+                                                                                            },
+                                                                                            "value": {
+                                                                                                "shape": {
+                                                                                                    "type": "container",
+                                                                                                    "container": {
+                                                                                                        "type": "literal",
+                                                                                                        "literal": {
+                                                                                                            "type": "string",
+                                                                                                            "string": {
+                                                                                                                "original": "A"
+                                                                                                            }
+                                                                                                        }
+                                                                                                    }
+                                                                                                },
+                                                                                                "jsonExample": "A"
+                                                                                            },
+                                                                                            "propertyAccess": null
+                                                                                        },
+                                                                                        {
+                                                                                            "name": {
+                                                                                                "name": {
+                                                                                                    "originalName": "valueA",
+                                                                                                    "camelCase": {
+                                                                                                        "unsafeName": "valueA",
+                                                                                                        "safeName": "valueA"
+                                                                                                    },
+                                                                                                    "snakeCase": {
+                                                                                                        "unsafeName": "value_a",
+                                                                                                        "safeName": "value_a"
+                                                                                                    },
+                                                                                                    "screamingSnakeCase": {
+                                                                                                        "unsafeName": "VALUE_A",
+                                                                                                        "safeName": "VALUE_A"
+                                                                                                    },
+                                                                                                    "pascalCase": {
+                                                                                                        "unsafeName": "ValueA",
+                                                                                                        "safeName": "ValueA"
+                                                                                                    }
+                                                                                                },
+                                                                                                "wireValue": "valueA"
+                                                                                            },
+                                                                                            "originalTypeDeclaration": {
+                                                                                                "name": {
+                                                                                                    "originalName": "VariantA",
+                                                                                                    "camelCase": {
+                                                                                                        "unsafeName": "variantA",
+                                                                                                        "safeName": "variantA"
+                                                                                                    },
+                                                                                                    "snakeCase": {
+                                                                                                        "unsafeName": "variant_a",
+                                                                                                        "safeName": "variant_a"
+                                                                                                    },
+                                                                                                    "screamingSnakeCase": {
+                                                                                                        "unsafeName": "VARIANT_A",
+                                                                                                        "safeName": "VARIANT_A"
+                                                                                                    },
+                                                                                                    "pascalCase": {
+                                                                                                        "unsafeName": "VariantA",
+                                                                                                        "safeName": "VariantA"
+                                                                                                    }
+                                                                                                },
+                                                                                                "fernFilepath": {
+                                                                                                    "allParts": [],
+                                                                                                    "packagePath": [],
+                                                                                                    "file": null
+                                                                                                },
+                                                                                                "displayName": null,
+                                                                                                "typeId": "type_:VariantA"
+                                                                                            },
+                                                                                            "value": {
+                                                                                                "shape": {
+                                                                                                    "type": "primitive",
+                                                                                                    "primitive": {
+                                                                                                        "type": "string",
+                                                                                                        "string": {
+                                                                                                            "original": "valueA"
+                                                                                                        }
+                                                                                                    }
+                                                                                                },
+                                                                                                "jsonExample": "valueA"
+                                                                                            },
+                                                                                            "propertyAccess": null
+                                                                                        }
+                                                                                    ],
+                                                                                    "extraProperties": null
+                                                                                },
+                                                                                "typeName": {
+                                                                                    "name": {
+                                                                                        "originalName": "VariantA",
+                                                                                        "camelCase": {
+                                                                                            "unsafeName": "variantA",
+                                                                                            "safeName": "variantA"
+                                                                                        },
+                                                                                        "snakeCase": {
+                                                                                            "unsafeName": "variant_a",
+                                                                                            "safeName": "variant_a"
+                                                                                        },
+                                                                                        "screamingSnakeCase": {
+                                                                                            "unsafeName": "VARIANT_A",
+                                                                                            "safeName": "VARIANT_A"
+                                                                                        },
+                                                                                        "pascalCase": {
+                                                                                            "unsafeName": "VariantA",
+                                                                                            "safeName": "VariantA"
+                                                                                        }
+                                                                                    },
+                                                                                    "fernFilepath": {
+                                                                                        "allParts": [],
+                                                                                        "packagePath": [],
+                                                                                        "file": null
+                                                                                    },
+                                                                                    "displayName": null,
+                                                                                    "typeId": "type_:VariantA"
+                                                                                }
+                                                                            },
+                                                                            "jsonExample": {
+                                                                                "type": "A",
+                                                                                "valueA": "valueA"
+                                                                            }
+                                                                        }
+                                                                    },
+                                                                    "typeName": {
+                                                                        "name": {
+                                                                            "originalName": "MyUnion",
+                                                                            "camelCase": {
+                                                                                "unsafeName": "myUnion",
+                                                                                "safeName": "myUnion"
+                                                                            },
+                                                                            "snakeCase": {
+                                                                                "unsafeName": "my_union",
+                                                                                "safeName": "my_union"
+                                                                            },
+                                                                            "screamingSnakeCase": {
+                                                                                "unsafeName": "MY_UNION",
+                                                                                "safeName": "MY_UNION"
+                                                                            },
+                                                                            "pascalCase": {
+                                                                                "unsafeName": "MyUnion",
+                                                                                "safeName": "MyUnion"
+                                                                            }
+                                                                        },
+                                                                        "fernFilepath": {
+                                                                            "allParts": [],
+                                                                            "packagePath": [],
+                                                                            "file": null
+                                                                        },
+                                                                        "displayName": null,
+                                                                        "typeId": "type_:MyUnion"
+                                                                    }
+                                                                },
+                                                                "jsonExample": {
+                                                                    "type": "A",
+                                                                    "valueA": "valueA"
+                                                                }
+                                                            },
+                                                            "propertyAccess": null
+                                                        }
+                                                    ],
+                                                    "extraProperties": null
+                                                },
+                                                "typeName": {
+                                                    "name": {
+                                                        "originalName": "UnionResponse",
+                                                        "camelCase": {
+                                                            "unsafeName": "unionResponse",
+                                                            "safeName": "unionResponse"
+                                                        },
+                                                        "snakeCase": {
+                                                            "unsafeName": "union_response",
+                                                            "safeName": "union_response"
+                                                        },
+                                                        "screamingSnakeCase": {
+                                                            "unsafeName": "UNION_RESPONSE",
+                                                            "safeName": "UNION_RESPONSE"
+                                                        },
+                                                        "pascalCase": {
+                                                            "unsafeName": "UnionResponse",
+                                                            "safeName": "UnionResponse"
+                                                        }
+                                                    },
+                                                    "fernFilepath": {
+                                                        "allParts": [],
+                                                        "packagePath": [],
+                                                        "file": null
+                                                    },
+                                                    "displayName": null,
+                                                    "typeId": "type_:UnionResponse"
+                                                }
+                                            },
+                                            "jsonExample": {
+                                                "data": {
+                                                    "type": "A",
+                                                    "valueA": "valueA"
+                                                }
+                                            }
+                                        }
+                                    }
+                                },
+                                "docs": null
+                            }
+                        }
+                    ],
+                    "pagination": null,
+                    "transport": null,
+                    "v2Examples": null,
+                    "source": null,
+                    "audiences": null,
+                    "retries": null,
+                    "availability": null,
+                    "docs": null
+                },
+                {
+                    "id": "endpoint_.listUnions",
+                    "name": {
+                        "originalName": "listUnions",
+                        "camelCase": {
+                            "unsafeName": "listUnions",
+                            "safeName": "listUnions"
+                        },
+                        "snakeCase": {
+                            "unsafeName": "list_unions",
+                            "safeName": "list_unions"
+                        },
+                        "screamingSnakeCase": {
+                            "unsafeName": "LIST_UNIONS",
+                            "safeName": "LIST_UNIONS"
+                        },
+                        "pascalCase": {
+                            "unsafeName": "ListUnions",
+                            "safeName": "ListUnions"
+                        }
+                    },
+                    "displayName": null,
+                    "auth": false,
+                    "security": null,
+                    "idempotent": false,
+                    "baseUrl": null,
+                    "v2BaseUrls": null,
+                    "method": "GET",
+                    "basePath": null,
+                    "path": {
+                        "head": "/unions",
+                        "parts": []
+                    },
+                    "fullPath": {
+                        "head": "/unions",
+                        "parts": []
+                    },
+                    "pathParameters": [],
+                    "allPathParameters": [],
+                    "queryParameters": [],
+                    "headers": [],
+                    "requestBody": null,
+                    "v2RequestBodies": null,
+                    "sdkRequest": null,
+                    "response": {
+                        "body": {
+                            "type": "json",
+                            "value": {
+                                "type": "nestedPropertyAsResponse",
+                                "responseBodyType": {
+                                    "_type": "named",
+                                    "name": {
+                                        "originalName": "UnionListResponse",
+                                        "camelCase": {
+                                            "unsafeName": "unionListResponse",
+                                            "safeName": "unionListResponse"
+                                        },
+                                        "snakeCase": {
+                                            "unsafeName": "union_list_response",
+                                            "safeName": "union_list_response"
+                                        },
+                                        "screamingSnakeCase": {
+                                            "unsafeName": "UNION_LIST_RESPONSE",
+                                            "safeName": "UNION_LIST_RESPONSE"
+                                        },
+                                        "pascalCase": {
+                                            "unsafeName": "UnionListResponse",
+                                            "safeName": "UnionListResponse"
+                                        }
+                                    },
+                                    "fernFilepath": {
+                                        "allParts": [],
+                                        "packagePath": [],
+                                        "file": null
+                                    },
+                                    "displayName": null,
+                                    "typeId": "type_:UnionListResponse",
+                                    "default": null,
+                                    "inline": null
+                                },
+                                "responseProperty": {
+                                    "name": {
+                                        "name": {
+                                            "originalName": "data",
+                                            "camelCase": {
+                                                "unsafeName": "data",
+                                                "safeName": "data"
+                                            },
+                                            "snakeCase": {
+                                                "unsafeName": "data",
+                                                "safeName": "data"
+                                            },
+                                            "screamingSnakeCase": {
+                                                "unsafeName": "DATA",
+                                                "safeName": "DATA"
+                                            },
+                                            "pascalCase": {
+                                                "unsafeName": "Data",
+                                                "safeName": "Data"
+                                            }
+                                        },
+                                        "wireValue": "data"
+                                    },
+                                    "valueType": {
+                                        "_type": "container",
+                                        "container": {
+                                            "_type": "list",
+                                            "list": {
+                                                "_type": "named",
+                                                "name": {
+                                                    "originalName": "MyUnion",
+                                                    "camelCase": {
+                                                        "unsafeName": "myUnion",
+                                                        "safeName": "myUnion"
+                                                    },
+                                                    "snakeCase": {
+                                                        "unsafeName": "my_union",
+                                                        "safeName": "my_union"
+                                                    },
+                                                    "screamingSnakeCase": {
+                                                        "unsafeName": "MY_UNION",
+                                                        "safeName": "MY_UNION"
+                                                    },
+                                                    "pascalCase": {
+                                                        "unsafeName": "MyUnion",
+                                                        "safeName": "MyUnion"
+                                                    }
+                                                },
+                                                "fernFilepath": {
+                                                    "allParts": [],
+                                                    "packagePath": [],
+                                                    "file": null
+                                                },
+                                                "displayName": null,
+                                                "typeId": "type_:MyUnion",
+                                                "default": null,
+                                                "inline": null
+                                            }
+                                        }
+                                    },
+                                    "propertyAccess": null,
+                                    "v2Examples": {
+                                        "userSpecifiedExamples": {},
+                                        "autogeneratedExamples": {}
+                                    },
+                                    "availability": null,
+                                    "docs": null
+                                },
+                                "docs": null,
+                                "v2Examples": null
+                            }
+                        },
+                        "status-code": null
+                    },
+                    "v2Responses": null,
+                    "errors": [],
+                    "userSpecifiedExamples": [],
+                    "autogeneratedExamples": [
+                        {
+                            "example": {
+                                "id": "47ede44b",
+                                "url": "/unions",
+                                "name": null,
+                                "endpointHeaders": [],
+                                "endpointPathParameters": [],
+                                "queryParameters": [],
+                                "servicePathParameters": [],
+                                "serviceHeaders": [],
+                                "rootPathParameters": [],
+                                "request": null,
+                                "response": {
+                                    "type": "ok",
+                                    "value": {
+                                        "type": "body",
+                                        "value": {
+                                            "shape": {
+                                                "type": "named",
+                                                "shape": {
+                                                    "type": "object",
+                                                    "properties": [
+                                                        {
+                                                            "name": {
+                                                                "name": {
+                                                                    "originalName": "data",
+                                                                    "camelCase": {
+                                                                        "unsafeName": "data",
+                                                                        "safeName": "data"
+                                                                    },
+                                                                    "snakeCase": {
+                                                                        "unsafeName": "data",
+                                                                        "safeName": "data"
+                                                                    },
+                                                                    "screamingSnakeCase": {
+                                                                        "unsafeName": "DATA",
+                                                                        "safeName": "DATA"
+                                                                    },
+                                                                    "pascalCase": {
+                                                                        "unsafeName": "Data",
+                                                                        "safeName": "Data"
+                                                                    }
+                                                                },
+                                                                "wireValue": "data"
+                                                            },
+                                                            "originalTypeDeclaration": {
+                                                                "name": {
+                                                                    "originalName": "UnionListResponse",
+                                                                    "camelCase": {
+                                                                        "unsafeName": "unionListResponse",
+                                                                        "safeName": "unionListResponse"
+                                                                    },
+                                                                    "snakeCase": {
+                                                                        "unsafeName": "union_list_response",
+                                                                        "safeName": "union_list_response"
+                                                                    },
+                                                                    "screamingSnakeCase": {
+                                                                        "unsafeName": "UNION_LIST_RESPONSE",
+                                                                        "safeName": "UNION_LIST_RESPONSE"
+                                                                    },
+                                                                    "pascalCase": {
+                                                                        "unsafeName": "UnionListResponse",
+                                                                        "safeName": "UnionListResponse"
+                                                                    }
+                                                                },
+                                                                "fernFilepath": {
+                                                                    "allParts": [],
+                                                                    "packagePath": [],
+                                                                    "file": null
+                                                                },
+                                                                "displayName": null,
+                                                                "typeId": "type_:UnionListResponse"
+                                                            },
+                                                            "value": {
+                                                                "shape": {
+                                                                    "type": "container",
+                                                                    "container": {
+                                                                        "type": "list",
+                                                                        "list": [
+                                                                            {
+                                                                                "shape": {
+                                                                                    "type": "named",
+                                                                                    "shape": {
+                                                                                        "type": "undiscriminatedUnion",
+                                                                                        "index": 0,
+                                                                                        "singleUnionType": {
+                                                                                            "shape": {
+                                                                                                "type": "named",
+                                                                                                "shape": {
+                                                                                                    "type": "object",
+                                                                                                    "properties": [
+                                                                                                        {
+                                                                                                            "name": {
+                                                                                                                "name": {
+                                                                                                                    "originalName": "type",
+                                                                                                                    "camelCase": {
+                                                                                                                        "unsafeName": "type",
+                                                                                                                        "safeName": "type"
+                                                                                                                    },
+                                                                                                                    "snakeCase": {
+                                                                                                                        "unsafeName": "type",
+                                                                                                                        "safeName": "type"
+                                                                                                                    },
+                                                                                                                    "screamingSnakeCase": {
+                                                                                                                        "unsafeName": "TYPE",
+                                                                                                                        "safeName": "TYPE"
+                                                                                                                    },
+                                                                                                                    "pascalCase": {
+                                                                                                                        "unsafeName": "Type",
+                                                                                                                        "safeName": "Type"
+                                                                                                                    }
+                                                                                                                },
+                                                                                                                "wireValue": "type"
+                                                                                                            },
+                                                                                                            "originalTypeDeclaration": {
+                                                                                                                "name": {
+                                                                                                                    "originalName": "VariantA",
+                                                                                                                    "camelCase": {
+                                                                                                                        "unsafeName": "variantA",
+                                                                                                                        "safeName": "variantA"
+                                                                                                                    },
+                                                                                                                    "snakeCase": {
+                                                                                                                        "unsafeName": "variant_a",
+                                                                                                                        "safeName": "variant_a"
+                                                                                                                    },
+                                                                                                                    "screamingSnakeCase": {
+                                                                                                                        "unsafeName": "VARIANT_A",
+                                                                                                                        "safeName": "VARIANT_A"
+                                                                                                                    },
+                                                                                                                    "pascalCase": {
+                                                                                                                        "unsafeName": "VariantA",
+                                                                                                                        "safeName": "VariantA"
+                                                                                                                    }
+                                                                                                                },
+                                                                                                                "fernFilepath": {
+                                                                                                                    "allParts": [],
+                                                                                                                    "packagePath": [],
+                                                                                                                    "file": null
+                                                                                                                },
+                                                                                                                "displayName": null,
+                                                                                                                "typeId": "type_:VariantA"
+                                                                                                            },
+                                                                                                            "value": {
+                                                                                                                "shape": {
+                                                                                                                    "type": "container",
+                                                                                                                    "container": {
+                                                                                                                        "type": "literal",
+                                                                                                                        "literal": {
+                                                                                                                            "type": "string",
+                                                                                                                            "string": {
+                                                                                                                                "original": "A"
+                                                                                                                            }
+                                                                                                                        }
+                                                                                                                    }
+                                                                                                                },
+                                                                                                                "jsonExample": "A"
+                                                                                                            },
+                                                                                                            "propertyAccess": null
+                                                                                                        },
+                                                                                                        {
+                                                                                                            "name": {
+                                                                                                                "name": {
+                                                                                                                    "originalName": "valueA",
+                                                                                                                    "camelCase": {
+                                                                                                                        "unsafeName": "valueA",
+                                                                                                                        "safeName": "valueA"
+                                                                                                                    },
+                                                                                                                    "snakeCase": {
+                                                                                                                        "unsafeName": "value_a",
+                                                                                                                        "safeName": "value_a"
+                                                                                                                    },
+                                                                                                                    "screamingSnakeCase": {
+                                                                                                                        "unsafeName": "VALUE_A",
+                                                                                                                        "safeName": "VALUE_A"
+                                                                                                                    },
+                                                                                                                    "pascalCase": {
+                                                                                                                        "unsafeName": "ValueA",
+                                                                                                                        "safeName": "ValueA"
+                                                                                                                    }
+                                                                                                                },
+                                                                                                                "wireValue": "valueA"
+                                                                                                            },
+                                                                                                            "originalTypeDeclaration": {
+                                                                                                                "name": {
+                                                                                                                    "originalName": "VariantA",
+                                                                                                                    "camelCase": {
+                                                                                                                        "unsafeName": "variantA",
+                                                                                                                        "safeName": "variantA"
+                                                                                                                    },
+                                                                                                                    "snakeCase": {
+                                                                                                                        "unsafeName": "variant_a",
+                                                                                                                        "safeName": "variant_a"
+                                                                                                                    },
+                                                                                                                    "screamingSnakeCase": {
+                                                                                                                        "unsafeName": "VARIANT_A",
+                                                                                                                        "safeName": "VARIANT_A"
+                                                                                                                    },
+                                                                                                                    "pascalCase": {
+                                                                                                                        "unsafeName": "VariantA",
+                                                                                                                        "safeName": "VariantA"
+                                                                                                                    }
+                                                                                                                },
+                                                                                                                "fernFilepath": {
+                                                                                                                    "allParts": [],
+                                                                                                                    "packagePath": [],
+                                                                                                                    "file": null
+                                                                                                                },
+                                                                                                                "displayName": null,
+                                                                                                                "typeId": "type_:VariantA"
+                                                                                                            },
+                                                                                                            "value": {
+                                                                                                                "shape": {
+                                                                                                                    "type": "primitive",
+                                                                                                                    "primitive": {
+                                                                                                                        "type": "string",
+                                                                                                                        "string": {
+                                                                                                                            "original": "valueA"
+                                                                                                                        }
+                                                                                                                    }
+                                                                                                                },
+                                                                                                                "jsonExample": "valueA"
+                                                                                                            },
+                                                                                                            "propertyAccess": null
+                                                                                                        }
+                                                                                                    ],
+                                                                                                    "extraProperties": null
+                                                                                                },
+                                                                                                "typeName": {
+                                                                                                    "name": {
+                                                                                                        "originalName": "VariantA",
+                                                                                                        "camelCase": {
+                                                                                                            "unsafeName": "variantA",
+                                                                                                            "safeName": "variantA"
+                                                                                                        },
+                                                                                                        "snakeCase": {
+                                                                                                            "unsafeName": "variant_a",
+                                                                                                            "safeName": "variant_a"
+                                                                                                        },
+                                                                                                        "screamingSnakeCase": {
+                                                                                                            "unsafeName": "VARIANT_A",
+                                                                                                            "safeName": "VARIANT_A"
+                                                                                                        },
+                                                                                                        "pascalCase": {
+                                                                                                            "unsafeName": "VariantA",
+                                                                                                            "safeName": "VariantA"
+                                                                                                        }
+                                                                                                    },
+                                                                                                    "fernFilepath": {
+                                                                                                        "allParts": [],
+                                                                                                        "packagePath": [],
+                                                                                                        "file": null
+                                                                                                    },
+                                                                                                    "displayName": null,
+                                                                                                    "typeId": "type_:VariantA"
+                                                                                                }
+                                                                                            },
+                                                                                            "jsonExample": {
+                                                                                                "type": "A",
+                                                                                                "valueA": "valueA"
+                                                                                            }
+                                                                                        }
+                                                                                    },
+                                                                                    "typeName": {
+                                                                                        "name": {
+                                                                                            "originalName": "MyUnion",
+                                                                                            "camelCase": {
+                                                                                                "unsafeName": "myUnion",
+                                                                                                "safeName": "myUnion"
+                                                                                            },
+                                                                                            "snakeCase": {
+                                                                                                "unsafeName": "my_union",
+                                                                                                "safeName": "my_union"
+                                                                                            },
+                                                                                            "screamingSnakeCase": {
+                                                                                                "unsafeName": "MY_UNION",
+                                                                                                "safeName": "MY_UNION"
+                                                                                            },
+                                                                                            "pascalCase": {
+                                                                                                "unsafeName": "MyUnion",
+                                                                                                "safeName": "MyUnion"
+                                                                                            }
+                                                                                        },
+                                                                                        "fernFilepath": {
+                                                                                            "allParts": [],
+                                                                                            "packagePath": [],
+                                                                                            "file": null
+                                                                                        },
+                                                                                        "displayName": null,
+                                                                                        "typeId": "type_:MyUnion"
+                                                                                    }
+                                                                                },
+                                                                                "jsonExample": {
+                                                                                    "type": "A",
+                                                                                    "valueA": "valueA"
+                                                                                }
+                                                                            },
+                                                                            {
+                                                                                "shape": {
+                                                                                    "type": "named",
+                                                                                    "shape": {
+                                                                                        "type": "undiscriminatedUnion",
+                                                                                        "index": 0,
+                                                                                        "singleUnionType": {
+                                                                                            "shape": {
+                                                                                                "type": "named",
+                                                                                                "shape": {
+                                                                                                    "type": "object",
+                                                                                                    "properties": [
+                                                                                                        {
+                                                                                                            "name": {
+                                                                                                                "name": {
+                                                                                                                    "originalName": "type",
+                                                                                                                    "camelCase": {
+                                                                                                                        "unsafeName": "type",
+                                                                                                                        "safeName": "type"
+                                                                                                                    },
+                                                                                                                    "snakeCase": {
+                                                                                                                        "unsafeName": "type",
+                                                                                                                        "safeName": "type"
+                                                                                                                    },
+                                                                                                                    "screamingSnakeCase": {
+                                                                                                                        "unsafeName": "TYPE",
+                                                                                                                        "safeName": "TYPE"
+                                                                                                                    },
+                                                                                                                    "pascalCase": {
+                                                                                                                        "unsafeName": "Type",
+                                                                                                                        "safeName": "Type"
+                                                                                                                    }
+                                                                                                                },
+                                                                                                                "wireValue": "type"
+                                                                                                            },
+                                                                                                            "originalTypeDeclaration": {
+                                                                                                                "name": {
+                                                                                                                    "originalName": "VariantA",
+                                                                                                                    "camelCase": {
+                                                                                                                        "unsafeName": "variantA",
+                                                                                                                        "safeName": "variantA"
+                                                                                                                    },
+                                                                                                                    "snakeCase": {
+                                                                                                                        "unsafeName": "variant_a",
+                                                                                                                        "safeName": "variant_a"
+                                                                                                                    },
+                                                                                                                    "screamingSnakeCase": {
+                                                                                                                        "unsafeName": "VARIANT_A",
+                                                                                                                        "safeName": "VARIANT_A"
+                                                                                                                    },
+                                                                                                                    "pascalCase": {
+                                                                                                                        "unsafeName": "VariantA",
+                                                                                                                        "safeName": "VariantA"
+                                                                                                                    }
+                                                                                                                },
+                                                                                                                "fernFilepath": {
+                                                                                                                    "allParts": [],
+                                                                                                                    "packagePath": [],
+                                                                                                                    "file": null
+                                                                                                                },
+                                                                                                                "displayName": null,
+                                                                                                                "typeId": "type_:VariantA"
+                                                                                                            },
+                                                                                                            "value": {
+                                                                                                                "shape": {
+                                                                                                                    "type": "container",
+                                                                                                                    "container": {
+                                                                                                                        "type": "literal",
+                                                                                                                        "literal": {
+                                                                                                                            "type": "string",
+                                                                                                                            "string": {
+                                                                                                                                "original": "A"
+                                                                                                                            }
+                                                                                                                        }
+                                                                                                                    }
+                                                                                                                },
+                                                                                                                "jsonExample": "A"
+                                                                                                            },
+                                                                                                            "propertyAccess": null
+                                                                                                        },
+                                                                                                        {
+                                                                                                            "name": {
+                                                                                                                "name": {
+                                                                                                                    "originalName": "valueA",
+                                                                                                                    "camelCase": {
+                                                                                                                        "unsafeName": "valueA",
+                                                                                                                        "safeName": "valueA"
+                                                                                                                    },
+                                                                                                                    "snakeCase": {
+                                                                                                                        "unsafeName": "value_a",
+                                                                                                                        "safeName": "value_a"
+                                                                                                                    },
+                                                                                                                    "screamingSnakeCase": {
+                                                                                                                        "unsafeName": "VALUE_A",
+                                                                                                                        "safeName": "VALUE_A"
+                                                                                                                    },
+                                                                                                                    "pascalCase": {
+                                                                                                                        "unsafeName": "ValueA",
+                                                                                                                        "safeName": "ValueA"
+                                                                                                                    }
+                                                                                                                },
+                                                                                                                "wireValue": "valueA"
+                                                                                                            },
+                                                                                                            "originalTypeDeclaration": {
+                                                                                                                "name": {
+                                                                                                                    "originalName": "VariantA",
+                                                                                                                    "camelCase": {
+                                                                                                                        "unsafeName": "variantA",
+                                                                                                                        "safeName": "variantA"
+                                                                                                                    },
+                                                                                                                    "snakeCase": {
+                                                                                                                        "unsafeName": "variant_a",
+                                                                                                                        "safeName": "variant_a"
+                                                                                                                    },
+                                                                                                                    "screamingSnakeCase": {
+                                                                                                                        "unsafeName": "VARIANT_A",
+                                                                                                                        "safeName": "VARIANT_A"
+                                                                                                                    },
+                                                                                                                    "pascalCase": {
+                                                                                                                        "unsafeName": "VariantA",
+                                                                                                                        "safeName": "VariantA"
+                                                                                                                    }
+                                                                                                                },
+                                                                                                                "fernFilepath": {
+                                                                                                                    "allParts": [],
+                                                                                                                    "packagePath": [],
+                                                                                                                    "file": null
+                                                                                                                },
+                                                                                                                "displayName": null,
+                                                                                                                "typeId": "type_:VariantA"
+                                                                                                            },
+                                                                                                            "value": {
+                                                                                                                "shape": {
+                                                                                                                    "type": "primitive",
+                                                                                                                    "primitive": {
+                                                                                                                        "type": "string",
+                                                                                                                        "string": {
+                                                                                                                            "original": "valueA"
+                                                                                                                        }
+                                                                                                                    }
+                                                                                                                },
+                                                                                                                "jsonExample": "valueA"
+                                                                                                            },
+                                                                                                            "propertyAccess": null
+                                                                                                        }
+                                                                                                    ],
+                                                                                                    "extraProperties": null
+                                                                                                },
+                                                                                                "typeName": {
+                                                                                                    "name": {
+                                                                                                        "originalName": "VariantA",
+                                                                                                        "camelCase": {
+                                                                                                            "unsafeName": "variantA",
+                                                                                                            "safeName": "variantA"
+                                                                                                        },
+                                                                                                        "snakeCase": {
+                                                                                                            "unsafeName": "variant_a",
+                                                                                                            "safeName": "variant_a"
+                                                                                                        },
+                                                                                                        "screamingSnakeCase": {
+                                                                                                            "unsafeName": "VARIANT_A",
+                                                                                                            "safeName": "VARIANT_A"
+                                                                                                        },
+                                                                                                        "pascalCase": {
+                                                                                                            "unsafeName": "VariantA",
+                                                                                                            "safeName": "VariantA"
+                                                                                                        }
+                                                                                                    },
+                                                                                                    "fernFilepath": {
+                                                                                                        "allParts": [],
+                                                                                                        "packagePath": [],
+                                                                                                        "file": null
+                                                                                                    },
+                                                                                                    "displayName": null,
+                                                                                                    "typeId": "type_:VariantA"
+                                                                                                }
+                                                                                            },
+                                                                                            "jsonExample": {
+                                                                                                "type": "A",
+                                                                                                "valueA": "valueA"
+                                                                                            }
+                                                                                        }
+                                                                                    },
+                                                                                    "typeName": {
+                                                                                        "name": {
+                                                                                            "originalName": "MyUnion",
+                                                                                            "camelCase": {
+                                                                                                "unsafeName": "myUnion",
+                                                                                                "safeName": "myUnion"
+                                                                                            },
+                                                                                            "snakeCase": {
+                                                                                                "unsafeName": "my_union",
+                                                                                                "safeName": "my_union"
+                                                                                            },
+                                                                                            "screamingSnakeCase": {
+                                                                                                "unsafeName": "MY_UNION",
+                                                                                                "safeName": "MY_UNION"
+                                                                                            },
+                                                                                            "pascalCase": {
+                                                                                                "unsafeName": "MyUnion",
+                                                                                                "safeName": "MyUnion"
+                                                                                            }
+                                                                                        },
+                                                                                        "fernFilepath": {
+                                                                                            "allParts": [],
+                                                                                            "packagePath": [],
+                                                                                            "file": null
+                                                                                        },
+                                                                                        "displayName": null,
+                                                                                        "typeId": "type_:MyUnion"
+                                                                                    }
+                                                                                },
+                                                                                "jsonExample": {
+                                                                                    "type": "A",
+                                                                                    "valueA": "valueA"
+                                                                                }
+                                                                            }
+                                                                        ],
+                                                                        "itemType": {
+                                                                            "_type": "named",
+                                                                            "name": {
+                                                                                "originalName": "MyUnion",
+                                                                                "camelCase": {
+                                                                                    "unsafeName": "myUnion",
+                                                                                    "safeName": "myUnion"
+                                                                                },
+                                                                                "snakeCase": {
+                                                                                    "unsafeName": "my_union",
+                                                                                    "safeName": "my_union"
+                                                                                },
+                                                                                "screamingSnakeCase": {
+                                                                                    "unsafeName": "MY_UNION",
+                                                                                    "safeName": "MY_UNION"
+                                                                                },
+                                                                                "pascalCase": {
+                                                                                    "unsafeName": "MyUnion",
+                                                                                    "safeName": "MyUnion"
+                                                                                }
+                                                                            },
+                                                                            "fernFilepath": {
+                                                                                "allParts": [],
+                                                                                "packagePath": [],
+                                                                                "file": null
+                                                                            },
+                                                                            "displayName": null,
+                                                                            "typeId": "type_:MyUnion",
+                                                                            "default": null,
+                                                                            "inline": null
+                                                                        }
+                                                                    }
+                                                                },
+                                                                "jsonExample": [
+                                                                    {
+                                                                        "type": "A",
+                                                                        "valueA": "valueA"
+                                                                    },
+                                                                    {
+                                                                        "type": "A",
+                                                                        "valueA": "valueA"
+                                                                    }
+                                                                ]
+                                                            },
+                                                            "propertyAccess": null
+                                                        }
+                                                    ],
+                                                    "extraProperties": null
+                                                },
+                                                "typeName": {
+                                                    "name": {
+                                                        "originalName": "UnionListResponse",
+                                                        "camelCase": {
+                                                            "unsafeName": "unionListResponse",
+                                                            "safeName": "unionListResponse"
+                                                        },
+                                                        "snakeCase": {
+                                                            "unsafeName": "union_list_response",
+                                                            "safeName": "union_list_response"
+                                                        },
+                                                        "screamingSnakeCase": {
+                                                            "unsafeName": "UNION_LIST_RESPONSE",
+                                                            "safeName": "UNION_LIST_RESPONSE"
+                                                        },
+                                                        "pascalCase": {
+                                                            "unsafeName": "UnionListResponse",
+                                                            "safeName": "UnionListResponse"
+                                                        }
+                                                    },
+                                                    "fernFilepath": {
+                                                        "allParts": [],
+                                                        "packagePath": [],
+                                                        "file": null
+                                                    },
+                                                    "displayName": null,
+                                                    "typeId": "type_:UnionListResponse"
+                                                }
+                                            },
+                                            "jsonExample": {
+                                                "data": [
+                                                    {
+                                                        "type": "A",
+                                                        "valueA": "valueA"
+                                                    },
+                                                    {
+                                                        "type": "A",
+                                                        "valueA": "valueA"
+                                                    }
+                                                ]
+                                            }
+                                        }
+                                    }
+                                },
+                                "docs": null
+                            }
+                        }
+                    ],
+                    "pagination": null,
+                    "transport": null,
+                    "v2Examples": null,
+                    "source": null,
+                    "audiences": null,
+                    "retries": null,
+                    "availability": null,
+                    "docs": null
+                }
+            ],
+            "audiences": null
+        }
+    },
+    "constants": {
+        "errorInstanceIdKey": {
+            "name": {
+                "originalName": "errorInstanceId",
+                "camelCase": {
+                    "unsafeName": "errorInstanceID",
+                    "safeName": "errorInstanceID"
+                },
+                "snakeCase": {
+                    "unsafeName": "error_instance_id",
+                    "safeName": "error_instance_id"
+                },
+                "screamingSnakeCase": {
+                    "unsafeName": "ERROR_INSTANCE_ID",
+                    "safeName": "ERROR_INSTANCE_ID"
+                },
+                "pascalCase": {
+                    "unsafeName": "ErrorInstanceID",
+                    "safeName": "ErrorInstanceID"
+                }
+            },
+            "wireValue": "errorInstanceId"
+        }
+    },
+    "environments": null,
+    "errorDiscriminationStrategy": {
+        "type": "statusCode"
+    },
+    "basePath": null,
+    "pathParameters": [],
+    "variables": [],
+    "serviceTypeReferenceInfo": {
+        "typesReferencedOnlyByService": {
+            "service_": [
+                "type_:UnionResponse",
+                "type_:UnionListResponse",
+                "type_:MyUnion",
+                "type_:VariantA",
+                "type_:VariantB",
+                "type_:VariantC"
+            ]
+        },
+        "sharedTypes": []
+    },
+    "webhookGroups": {},
+    "websocketChannels": {},
+    "readmeConfig": null,
+    "sourceConfig": null,
+    "publishConfig": null,
+    "dynamic": {
+        "version": "1.0.0",
+        "types": {
+            "type_:UnionResponse": {
+                "type": "object",
+                "declaration": {
+                    "name": {
+                        "originalName": "UnionResponse",
+                        "camelCase": {
+                            "unsafeName": "unionResponse",
+                            "safeName": "unionResponse"
+                        },
+                        "snakeCase": {
+                            "unsafeName": "union_response",
+                            "safeName": "union_response"
+                        },
+                        "screamingSnakeCase": {
+                            "unsafeName": "UNION_RESPONSE",
+                            "safeName": "UNION_RESPONSE"
+                        },
+                        "pascalCase": {
+                            "unsafeName": "UnionResponse",
+                            "safeName": "UnionResponse"
+                        }
+                    },
+                    "fernFilepath": {
+                        "allParts": [],
+                        "packagePath": [],
+                        "file": null
+                    }
+                },
+                "properties": [
+                    {
+                        "name": {
+                            "name": {
+                                "originalName": "data",
+                                "camelCase": {
+                                    "unsafeName": "data",
+                                    "safeName": "data"
+                                },
+                                "snakeCase": {
+                                    "unsafeName": "data",
+                                    "safeName": "data"
+                                },
+                                "screamingSnakeCase": {
+                                    "unsafeName": "DATA",
+                                    "safeName": "DATA"
+                                },
+                                "pascalCase": {
+                                    "unsafeName": "Data",
+                                    "safeName": "Data"
+                                }
+                            },
+                            "wireValue": "data"
+                        },
+                        "typeReference": {
+                            "type": "named",
+                            "value": "type_:MyUnion"
+                        },
+                        "propertyAccess": null,
+                        "variable": null
+                    }
+                ],
+                "additionalProperties": false
+            },
+            "type_:UnionListResponse": {
+                "type": "object",
+                "declaration": {
+                    "name": {
+                        "originalName": "UnionListResponse",
+                        "camelCase": {
+                            "unsafeName": "unionListResponse",
+                            "safeName": "unionListResponse"
+                        },
+                        "snakeCase": {
+                            "unsafeName": "union_list_response",
+                            "safeName": "union_list_response"
+                        },
+                        "screamingSnakeCase": {
+                            "unsafeName": "UNION_LIST_RESPONSE",
+                            "safeName": "UNION_LIST_RESPONSE"
+                        },
+                        "pascalCase": {
+                            "unsafeName": "UnionListResponse",
+                            "safeName": "UnionListResponse"
+                        }
+                    },
+                    "fernFilepath": {
+                        "allParts": [],
+                        "packagePath": [],
+                        "file": null
+                    }
+                },
+                "properties": [
+                    {
+                        "name": {
+                            "name": {
+                                "originalName": "data",
+                                "camelCase": {
+                                    "unsafeName": "data",
+                                    "safeName": "data"
+                                },
+                                "snakeCase": {
+                                    "unsafeName": "data",
+                                    "safeName": "data"
+                                },
+                                "screamingSnakeCase": {
+                                    "unsafeName": "DATA",
+                                    "safeName": "DATA"
+                                },
+                                "pascalCase": {
+                                    "unsafeName": "Data",
+                                    "safeName": "Data"
+                                }
+                            },
+                            "wireValue": "data"
+                        },
+                        "typeReference": {
+                            "type": "list",
+                            "value": {
+                                "type": "named",
+                                "value": "type_:MyUnion"
+                            }
+                        },
+                        "propertyAccess": null,
+                        "variable": null
+                    }
+                ],
+                "additionalProperties": false
+            },
+            "type_:MyUnion": {
+                "type": "undiscriminatedUnion",
+                "declaration": {
+                    "name": {
+                        "originalName": "MyUnion",
+                        "camelCase": {
+                            "unsafeName": "myUnion",
+                            "safeName": "myUnion"
+                        },
+                        "snakeCase": {
+                            "unsafeName": "my_union",
+                            "safeName": "my_union"
+                        },
+                        "screamingSnakeCase": {
+                            "unsafeName": "MY_UNION",
+                            "safeName": "MY_UNION"
+                        },
+                        "pascalCase": {
+                            "unsafeName": "MyUnion",
+                            "safeName": "MyUnion"
+                        }
+                    },
+                    "fernFilepath": {
+                        "allParts": [],
+                        "packagePath": [],
+                        "file": null
+                    }
+                },
+                "types": [
+                    {
+                        "type": "named",
+                        "value": "type_:VariantA"
+                    },
+                    {
+                        "type": "named",
+                        "value": "type_:VariantB"
+                    },
+                    {
+                        "type": "named",
+                        "value": "type_:VariantC"
+                    }
+                ]
+            },
+            "type_:VariantA": {
+                "type": "object",
+                "declaration": {
+                    "name": {
+                        "originalName": "VariantA",
+                        "camelCase": {
+                            "unsafeName": "variantA",
+                            "safeName": "variantA"
+                        },
+                        "snakeCase": {
+                            "unsafeName": "variant_a",
+                            "safeName": "variant_a"
+                        },
+                        "screamingSnakeCase": {
+                            "unsafeName": "VARIANT_A",
+                            "safeName": "VARIANT_A"
+                        },
+                        "pascalCase": {
+                            "unsafeName": "VariantA",
+                            "safeName": "VariantA"
+                        }
+                    },
+                    "fernFilepath": {
+                        "allParts": [],
+                        "packagePath": [],
+                        "file": null
+                    }
+                },
+                "properties": [
+                    {
+                        "name": {
+                            "name": {
+                                "originalName": "type",
+                                "camelCase": {
+                                    "unsafeName": "type",
+                                    "safeName": "type"
+                                },
+                                "snakeCase": {
+                                    "unsafeName": "type",
+                                    "safeName": "type"
+                                },
+                                "screamingSnakeCase": {
+                                    "unsafeName": "TYPE",
+                                    "safeName": "TYPE"
+                                },
+                                "pascalCase": {
+                                    "unsafeName": "Type",
+                                    "safeName": "Type"
+                                }
+                            },
+                            "wireValue": "type"
+                        },
+                        "typeReference": {
+                            "type": "literal",
+                            "value": {
+                                "type": "string",
+                                "value": "A"
+                            }
+                        },
+                        "propertyAccess": null,
+                        "variable": null
+                    },
+                    {
+                        "name": {
+                            "name": {
+                                "originalName": "valueA",
+                                "camelCase": {
+                                    "unsafeName": "valueA",
+                                    "safeName": "valueA"
+                                },
+                                "snakeCase": {
+                                    "unsafeName": "value_a",
+                                    "safeName": "value_a"
+                                },
+                                "screamingSnakeCase": {
+                                    "unsafeName": "VALUE_A",
+                                    "safeName": "VALUE_A"
+                                },
+                                "pascalCase": {
+                                    "unsafeName": "ValueA",
+                                    "safeName": "ValueA"
+                                }
+                            },
+                            "wireValue": "valueA"
+                        },
+                        "typeReference": {
+                            "type": "primitive",
+                            "value": "STRING"
+                        },
+                        "propertyAccess": null,
+                        "variable": null
+                    }
+                ],
+                "additionalProperties": false
+            },
+            "type_:VariantB": {
+                "type": "object",
+                "declaration": {
+                    "name": {
+                        "originalName": "VariantB",
+                        "camelCase": {
+                            "unsafeName": "variantB",
+                            "safeName": "variantB"
+                        },
+                        "snakeCase": {
+                            "unsafeName": "variant_b",
+                            "safeName": "variant_b"
+                        },
+                        "screamingSnakeCase": {
+                            "unsafeName": "VARIANT_B",
+                            "safeName": "VARIANT_B"
+                        },
+                        "pascalCase": {
+                            "unsafeName": "VariantB",
+                            "safeName": "VariantB"
+                        }
+                    },
+                    "fernFilepath": {
+                        "allParts": [],
+                        "packagePath": [],
+                        "file": null
+                    }
+                },
+                "properties": [
+                    {
+                        "name": {
+                            "name": {
+                                "originalName": "type",
+                                "camelCase": {
+                                    "unsafeName": "type",
+                                    "safeName": "type"
+                                },
+                                "snakeCase": {
+                                    "unsafeName": "type",
+                                    "safeName": "type"
+                                },
+                                "screamingSnakeCase": {
+                                    "unsafeName": "TYPE",
+                                    "safeName": "TYPE"
+                                },
+                                "pascalCase": {
+                                    "unsafeName": "Type",
+                                    "safeName": "Type"
+                                }
+                            },
+                            "wireValue": "type"
+                        },
+                        "typeReference": {
+                            "type": "literal",
+                            "value": {
+                                "type": "string",
+                                "value": "B"
+                            }
+                        },
+                        "propertyAccess": null,
+                        "variable": null
+                    },
+                    {
+                        "name": {
+                            "name": {
+                                "originalName": "valueB",
+                                "camelCase": {
+                                    "unsafeName": "valueB",
+                                    "safeName": "valueB"
+                                },
+                                "snakeCase": {
+                                    "unsafeName": "value_b",
+                                    "safeName": "value_b"
+                                },
+                                "screamingSnakeCase": {
+                                    "unsafeName": "VALUE_B",
+                                    "safeName": "VALUE_B"
+                                },
+                                "pascalCase": {
+                                    "unsafeName": "ValueB",
+                                    "safeName": "ValueB"
+                                }
+                            },
+                            "wireValue": "valueB"
+                        },
+                        "typeReference": {
+                            "type": "primitive",
+                            "value": "INTEGER"
+                        },
+                        "propertyAccess": null,
+                        "variable": null
+                    }
+                ],
+                "additionalProperties": false
+            },
+            "type_:VariantC": {
+                "type": "object",
+                "declaration": {
+                    "name": {
+                        "originalName": "VariantC",
+                        "camelCase": {
+                            "unsafeName": "variantC",
+                            "safeName": "variantC"
+                        },
+                        "snakeCase": {
+                            "unsafeName": "variant_c",
+                            "safeName": "variant_c"
+                        },
+                        "screamingSnakeCase": {
+                            "unsafeName": "VARIANT_C",
+                            "safeName": "VARIANT_C"
+                        },
+                        "pascalCase": {
+                            "unsafeName": "VariantC",
+                            "safeName": "VariantC"
+                        }
+                    },
+                    "fernFilepath": {
+                        "allParts": [],
+                        "packagePath": [],
+                        "file": null
+                    }
+                },
+                "properties": [
+                    {
+                        "name": {
+                            "name": {
+                                "originalName": "type",
+                                "camelCase": {
+                                    "unsafeName": "type",
+                                    "safeName": "type"
+                                },
+                                "snakeCase": {
+                                    "unsafeName": "type",
+                                    "safeName": "type"
+                                },
+                                "screamingSnakeCase": {
+                                    "unsafeName": "TYPE",
+                                    "safeName": "TYPE"
+                                },
+                                "pascalCase": {
+                                    "unsafeName": "Type",
+                                    "safeName": "Type"
+                                }
+                            },
+                            "wireValue": "type"
+                        },
+                        "typeReference": {
+                            "type": "literal",
+                            "value": {
+                                "type": "string",
+                                "value": "C"
+                            }
+                        },
+                        "propertyAccess": null,
+                        "variable": null
+                    },
+                    {
+                        "name": {
+                            "name": {
+                                "originalName": "valueC",
+                                "camelCase": {
+                                    "unsafeName": "valueC",
+                                    "safeName": "valueC"
+                                },
+                                "snakeCase": {
+                                    "unsafeName": "value_c",
+                                    "safeName": "value_c"
+                                },
+                                "screamingSnakeCase": {
+                                    "unsafeName": "VALUE_C",
+                                    "safeName": "VALUE_C"
+                                },
+                                "pascalCase": {
+                                    "unsafeName": "ValueC",
+                                    "safeName": "ValueC"
+                                }
+                            },
+                            "wireValue": "valueC"
+                        },
+                        "typeReference": {
+                            "type": "primitive",
+                            "value": "BOOLEAN"
+                        },
+                        "propertyAccess": null,
+                        "variable": null
+                    }
+                ],
+                "additionalProperties": false
+            }
+        },
+        "headers": [],
+        "endpoints": {
+            "endpoint_.getUnion": {
+                "auth": null,
+                "declaration": {
+                    "name": {
+                        "originalName": "getUnion",
+                        "camelCase": {
+                            "unsafeName": "getUnion",
+                            "safeName": "getUnion"
+                        },
+                        "snakeCase": {
+                            "unsafeName": "get_union",
+                            "safeName": "get_union"
+                        },
+                        "screamingSnakeCase": {
+                            "unsafeName": "GET_UNION",
+                            "safeName": "GET_UNION"
+                        },
+                        "pascalCase": {
+                            "unsafeName": "GetUnion",
+                            "safeName": "GetUnion"
+                        }
+                    },
+                    "fernFilepath": {
+                        "allParts": [],
+                        "packagePath": [],
+                        "file": null
+                    }
+                },
+                "location": {
+                    "method": "GET",
+                    "path": "/union"
+                },
+                "request": {
+                    "type": "body",
+                    "pathParameters": [],
+                    "body": null
+                },
+                "response": {
+                    "type": "json"
+                },
+                "examples": null
+            },
+            "endpoint_.listUnions": {
+                "auth": null,
+                "declaration": {
+                    "name": {
+                        "originalName": "listUnions",
+                        "camelCase": {
+                            "unsafeName": "listUnions",
+                            "safeName": "listUnions"
+                        },
+                        "snakeCase": {
+                            "unsafeName": "list_unions",
+                            "safeName": "list_unions"
+                        },
+                        "screamingSnakeCase": {
+                            "unsafeName": "LIST_UNIONS",
+                            "safeName": "LIST_UNIONS"
+                        },
+                        "pascalCase": {
+                            "unsafeName": "ListUnions",
+                            "safeName": "ListUnions"
+                        }
+                    },
+                    "fernFilepath": {
+                        "allParts": [],
+                        "packagePath": [],
+                        "file": null
+                    }
+                },
+                "location": {
+                    "method": "GET",
+                    "path": "/unions"
+                },
+                "request": {
+                    "type": "body",
+                    "pathParameters": [],
+                    "body": null
+                },
+                "response": {
+                    "type": "json"
+                },
+                "examples": null
+            }
+        },
+        "pathParameters": [],
+        "environments": null,
+        "variables": null,
+        "generatorConfig": null
+    },
+    "audiences": null,
+    "subpackages": {},
+    "rootPackage": {
+        "fernFilepath": {
+            "allParts": [],
+            "packagePath": [],
+            "file": null
+        },
+        "websocket": null,
+        "service": "service_",
+        "types": [
+            "type_:UnionResponse",
+            "type_:UnionListResponse",
+            "type_:MyUnion",
+            "type_:VariantA",
+            "type_:VariantB",
+            "type_:VariantC"
+        ],
+        "errors": [],
+        "subpackages": [],
+        "webhooks": null,
+        "navigationConfig": null,
+        "hasEndpointsInTree": true,
+        "docs": null
+    },
+    "sdkConfig": {
+        "isAuthMandatory": false,
+        "hasStreamingEndpoints": false,
+        "hasPaginatedEndpoints": false,
+        "hasFileDownloadEndpoints": false,
+        "platformHeaders": {
+            "language": "X-Fern-Language",
+            "sdkName": "X-Fern-SDK-Name",
+            "sdkVersion": "X-Fern-SDK-Version",
+            "userAgent": null
+        }
+    }
+}

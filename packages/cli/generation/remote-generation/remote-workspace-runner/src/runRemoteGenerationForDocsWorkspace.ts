@@ -89,7 +89,12 @@ export async function runRemoteGenerationForDocsWorkspace({
             editThisPage: maybeInstance.editThisPage,
             isPrivate: maybeInstance.private,
             disableTemplates,
-            skipUpload
+            skipUpload,
+            targetAudiences: maybeInstance.audiences
+                ? Array.isArray(maybeInstance.audiences)
+                    ? maybeInstance.audiences
+                    : [maybeInstance.audiences]
+                : undefined
         });
     });
     return;

@@ -24,6 +24,18 @@
         },
         {
             "id": {
+                "path": "/user/username-optional",
+                "method": "POST",
+                "identifier_override": "endpoint_user.createUsernameOptional"
+            },
+            "snippet": {
+                "type": "typescript",
+                "client": "import { SeedRequestParametersClient, SeedRequestParameters } from \"@fern/request-parameters\";\n\nconst client = new SeedRequestParametersClient({ environment: \"YOUR_BASE_URL\" });\nawait client.user.createUsernameOptional();\n"
+            },
+            "example_identifier": "empty-object"
+        },
+        {
+            "id": {
                 "path": "/user",
                 "method": "GET",
                 "identifier_override": "endpoint_user.getUsername"

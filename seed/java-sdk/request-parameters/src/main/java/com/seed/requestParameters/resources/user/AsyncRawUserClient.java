@@ -3,6 +3,7 @@
  */
 package com.seed.requestParameters.resources.user;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
 import com.seed.requestParameters.core.ClientOptions;
 import com.seed.requestParameters.core.MediaTypes;
 import com.seed.requestParameters.core.ObjectMappers;
@@ -14,10 +15,10 @@ import com.seed.requestParameters.core.SeedRequestParametersHttpResponse;
 import com.seed.requestParameters.resources.user.requests.CreateUsernameReferencedRequest;
 import com.seed.requestParameters.resources.user.requests.CreateUsernameRequest;
 import com.seed.requestParameters.resources.user.requests.GetUsersRequest;
+import com.seed.requestParameters.resources.user.types.CreateUsernameBodyOptionalProperties;
 import com.seed.requestParameters.resources.user.types.User;
 import java.io.IOException;
-import java.util.HashMap;
-import java.util.Map;
+import java.util.Optional;
 import java.util.concurrent.CompletableFuture;
 import okhttp3.Call;
 import okhttp3.Callback;
@@ -48,14 +49,10 @@ public class AsyncRawUserClient {
                 .addPathSegments("user")
                 .addPathSegments("username");
         QueryStringMapper.addQueryParameter(httpUrl, "tags", request.getTags(), false);
-        Map<String, Object> properties = new HashMap<>();
-        properties.put("username", request.getUsername());
-        properties.put("password", request.getPassword());
-        properties.put("name", request.getName());
         RequestBody body;
         try {
             body = RequestBody.create(
-                    ObjectMappers.JSON_MAPPER.writeValueAsBytes(properties), MediaTypes.APPLICATION_JSON);
+                    ObjectMappers.JSON_MAPPER.writeValueAsBytes(request), MediaTypes.APPLICATION_JSON);
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
@@ -125,6 +122,73 @@ public class AsyncRawUserClient {
                 .headers(Headers.of(clientOptions.headers(requestOptions)))
                 .addHeader("Content-Type", "application/json");
         Request okhttpRequest = _requestBuilder.build();
+        OkHttpClient client = clientOptions.httpClient();
+        if (requestOptions != null && requestOptions.getTimeout().isPresent()) {
+            client = clientOptions.httpClientWithTimeout(requestOptions);
+        }
+        CompletableFuture<SeedRequestParametersHttpResponse<Void>> future = new CompletableFuture<>();
+        client.newCall(okhttpRequest).enqueue(new Callback() {
+            @Override
+            public void onResponse(@NotNull Call call, @NotNull Response response) throws IOException {
+                try (ResponseBody responseBody = response.body()) {
+                    if (response.isSuccessful()) {
+                        future.complete(new SeedRequestParametersHttpResponse<>(null, response));
+                        return;
+                    }
+                    String responseBodyString = responseBody != null ? responseBody.string() : "{}";
+                    future.completeExceptionally(new SeedRequestParametersApiException(
+                            "Error with status code " + response.code(),
+                            response.code(),
+                            ObjectMappers.JSON_MAPPER.readValue(responseBodyString, Object.class),
+                            response));
+                    return;
+                } catch (IOException e) {
+                    future.completeExceptionally(
+                            new SeedRequestParametersException("Network error executing HTTP request", e));
+                }
+            }
+
+            @Override
+            public void onFailure(@NotNull Call call, @NotNull IOException e) {
+                future.completeExceptionally(
+                        new SeedRequestParametersException("Network error executing HTTP request", e));
+            }
+        });
+        return future;
+    }
+
+    public CompletableFuture<SeedRequestParametersHttpResponse<Void>> createUsernameOptional() {
+        return createUsernameOptional(Optional.empty());
+    }
+
+    public CompletableFuture<SeedRequestParametersHttpResponse<Void>> createUsernameOptional(
+            Optional<CreateUsernameBodyOptionalProperties> request) {
+        return createUsernameOptional(request, null);
+    }
+
+    public CompletableFuture<SeedRequestParametersHttpResponse<Void>> createUsernameOptional(
+            Optional<CreateUsernameBodyOptionalProperties> request, RequestOptions requestOptions) {
+        HttpUrl httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
+                .newBuilder()
+                .addPathSegments("user")
+                .addPathSegments("username-optional")
+                .build();
+        RequestBody body;
+        try {
+            body = RequestBody.create("", null);
+            if (request.isPresent()) {
+                body = RequestBody.create(
+                        ObjectMappers.JSON_MAPPER.writeValueAsBytes(request), MediaTypes.APPLICATION_JSON);
+            }
+        } catch (JsonProcessingException e) {
+            throw new SeedRequestParametersException("Failed to serialize request", e);
+        }
+        Request okhttpRequest = new Request.Builder()
+                .url(httpUrl)
+                .method("POST", body)
+                .headers(Headers.of(clientOptions.headers(requestOptions)))
+                .addHeader("Content-Type", "application/json")
+                .build();
         OkHttpClient client = clientOptions.httpClient();
         if (requestOptions != null && requestOptions.getTimeout().isPresent()) {
             client = clientOptions.httpClientWithTimeout(requestOptions);

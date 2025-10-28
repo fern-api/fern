@@ -8,7 +8,9 @@ import com.seed.requestParameters.core.RequestOptions;
 import com.seed.requestParameters.resources.user.requests.CreateUsernameReferencedRequest;
 import com.seed.requestParameters.resources.user.requests.CreateUsernameRequest;
 import com.seed.requestParameters.resources.user.requests.GetUsersRequest;
+import com.seed.requestParameters.resources.user.types.CreateUsernameBodyOptionalProperties;
 import com.seed.requestParameters.resources.user.types.User;
+import java.util.Optional;
 
 public class UserClient {
     protected final ClientOptions clientOptions;
@@ -42,6 +44,19 @@ public class UserClient {
     public void createUsernameWithReferencedType(
             CreateUsernameReferencedRequest request, RequestOptions requestOptions) {
         this.rawClient.createUsernameWithReferencedType(request, requestOptions).body();
+    }
+
+    public void createUsernameOptional() {
+        this.rawClient.createUsernameOptional().body();
+    }
+
+    public void createUsernameOptional(Optional<CreateUsernameBodyOptionalProperties> request) {
+        this.rawClient.createUsernameOptional(request).body();
+    }
+
+    public void createUsernameOptional(
+            Optional<CreateUsernameBodyOptionalProperties> request, RequestOptions requestOptions) {
+        this.rawClient.createUsernameOptional(request, requestOptions).body();
     }
 
     public User getUsername(GetUsersRequest request) {

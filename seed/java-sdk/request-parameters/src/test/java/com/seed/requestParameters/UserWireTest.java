@@ -13,6 +13,7 @@ import java.math.BigInteger;
 import java.time.OffsetDateTime;
 import java.util.Arrays;
 import java.util.HashMap;
+import java.util.Optional;
 import java.util.UUID;
 import okhttp3.mockwebserver.MockResponse;
 import okhttp3.mockwebserver.MockWebServer;
@@ -113,6 +114,44 @@ public class UserWireTest {
                 + "  \"password\": \"password\",\n"
                 + "  \"name\": \"test\"\n"
                 + "}";
+        JsonNode actualJson = objectMapper.readTree(actualRequestBody);
+        JsonNode expectedJson = objectMapper.readTree(expectedRequestBody);
+        Assertions.assertEquals(expectedJson, actualJson, "Request body structure does not match expected");
+        if (actualJson.has("type") || actualJson.has("_type") || actualJson.has("kind")) {
+            String discriminator = null;
+            if (actualJson.has("type")) discriminator = actualJson.get("type").asText();
+            else if (actualJson.has("_type"))
+                discriminator = actualJson.get("_type").asText();
+            else if (actualJson.has("kind"))
+                discriminator = actualJson.get("kind").asText();
+            Assertions.assertNotNull(discriminator, "Union type should have a discriminator field");
+            Assertions.assertFalse(discriminator.isEmpty(), "Union discriminator should not be empty");
+        }
+
+        if (!actualJson.isNull()) {
+            Assertions.assertTrue(
+                    actualJson.isObject() || actualJson.isArray() || actualJson.isValueNode(),
+                    "request should be a valid JSON value");
+        }
+
+        if (actualJson.isArray()) {
+            Assertions.assertTrue(actualJson.size() >= 0, "Array should have valid size");
+        }
+        if (actualJson.isObject()) {
+            Assertions.assertTrue(actualJson.size() >= 0, "Object should have valid field count");
+        }
+    }
+
+    @Test
+    public void testCreateUsernameOptional() throws Exception {
+        server.enqueue(new MockResponse().setResponseCode(200).setBody("{}"));
+        client.user().createUsernameOptional(Optional.of(Optional.empty()));
+        RecordedRequest request = server.takeRequest();
+        Assertions.assertNotNull(request);
+        Assertions.assertEquals("POST", request.getMethod());
+        // Validate request body
+        String actualRequestBody = request.getBody().readUtf8();
+        String expectedRequestBody = "" + "{}";
         JsonNode actualJson = objectMapper.readTree(actualRequestBody);
         JsonNode expectedJson = objectMapper.readTree(expectedRequestBody);
         Assertions.assertEquals(expectedJson, actualJson, "Request body structure does not match expected");

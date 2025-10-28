@@ -137,6 +137,50 @@ client.user().createUsernameWithReferencedType(
 </dl>
 </details>
 
+<details><summary><code>client.user.createUsernameOptional(request)</code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```java
+client.user().createUsernameOptional(
+    Optional.of(
+        Optional.empty()
+    )
+);
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**request:** `Optional<CreateUsernameBodyOptionalProperties>` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
 <details><summary><code>client.user.getUsername() -> User</code></summary>
 <dl>
 <dd>

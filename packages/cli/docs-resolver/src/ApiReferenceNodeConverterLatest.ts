@@ -415,7 +415,7 @@ export class ApiReferenceNodeConverterLatest {
                 this.taskContext.logger.error(`Duplicate endpoint found in the API Reference layout: ${endpoint.id}`);
             }
             if (endpoint.id == null) {
-                this.taskContext.logger.error(
+                this.taskContext.logger.debug(
                     `Expected Endpoint ID for ${endpoint.id} at path: ${stringifyEndpointPathPartsWithMethod(endpoint.method, endpoint.path)}. Got undefined.`
                 );
             } else {
@@ -567,7 +567,7 @@ export class ApiReferenceNodeConverterLatest {
         // Convert unvisited endpoints
         Object.entries(pkg.endpoints).forEach(([endpointId, endpoint]) => {
             if (endpointId == null) {
-                this.taskContext.logger.error(
+                this.taskContext.logger.debug(
                     `Expected Endpoint ID for ${endpoint.id} at path: ${stringifyEndpointPathPartsWithMethod(endpoint.method, endpoint.path)}. Got undefined.`
                 );
                 return;
@@ -807,7 +807,7 @@ export class ApiReferenceNodeConverterLatest {
         const pkg = packageId != null ? this.#resolveSubpackage(packageId) : undefined;
 
         if (pkg == null) {
-            this.taskContext.logger.error(cannotFindSubpackageByLocatorError(packageId || "unknown", []));
+            this.taskContext.logger.debug(cannotFindSubpackageByLocatorError(packageId || "unknown", []));
             return [];
         }
 

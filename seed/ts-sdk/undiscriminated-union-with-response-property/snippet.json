@@ -1,0 +1,27 @@
+{
+    "endpoints": [
+        {
+            "id": {
+                "path": "/union",
+                "method": "GET",
+                "identifier_override": "endpoint_.getUnion"
+            },
+            "snippet": {
+                "type": "typescript",
+                "client": "import { SeedUndiscriminatedUnionWithResponsePropertyClient } from \"@fern/undiscriminated-union-with-response-property\";\n\nconst client = new SeedUndiscriminatedUnionWithResponsePropertyClient({ environment: \"YOUR_BASE_URL\" });\nawait client.getUnion();\n"
+            }
+        },
+        {
+            "id": {
+                "path": "/unions",
+                "method": "GET",
+                "identifier_override": "endpoint_.listUnions"
+            },
+            "snippet": {
+                "type": "typescript",
+                "client": "import { SeedUndiscriminatedUnionWithResponsePropertyClient } from \"@fern/undiscriminated-union-with-response-property\";\n\nconst client = new SeedUndiscriminatedUnionWithResponsePropertyClient({ environment: \"YOUR_BASE_URL\" });\nawait client.listUnions();\n"
+            }
+        }
+    ],
+    "types": {}
+}

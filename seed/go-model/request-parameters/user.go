@@ -192,3 +192,70 @@ func (c *CreateUsernameBody) String() string {
 	}
 	return fmt.Sprintf("%#v", c)
 }
+
+type CreateUsernameBodyOptionalProperties struct {
+	Username *string `json:"username,omitempty" url:"username,omitempty"`
+	Password *string `json:"password,omitempty" url:"password,omitempty"`
+	Name     *string `json:"name,omitempty" url:"name,omitempty"`
+
+	extraProperties map[string]any
+	rawJSON         json.RawMessage
+}
+
+func (c *CreateUsernameBodyOptionalProperties) GetUsername() *string {
+	if c == nil {
+		return nil
+	}
+	return c.Username
+}
+
+func (c *CreateUsernameBodyOptionalProperties) GetPassword() *string {
+	if c == nil {
+		return nil
+	}
+	return c.Password
+}
+
+func (c *CreateUsernameBodyOptionalProperties) GetName() *string {
+	if c == nil {
+		return nil
+	}
+	return c.Name
+}
+
+func (c *CreateUsernameBodyOptionalProperties) GetExtraProperties() map[string]any {
+	if c == nil {
+		return nil
+	}
+	return c.extraProperties
+}
+
+func (c *CreateUsernameBodyOptionalProperties) UnmarshalJSON(
+	data []byte,
+) error {
+	type unmarshaler CreateUsernameBodyOptionalProperties
+	var value unmarshaler
+	if err := json.Unmarshal(data, &value); err != nil {
+		return err
+	}
+	*c = CreateUsernameBodyOptionalProperties(value)
+	extraProperties, err := internal.ExtractExtraProperties(data, *c)
+	if err != nil {
+		return err
+	}
+	c.extraProperties = extraProperties
+	c.rawJSON = json.RawMessage(data)
+	return nil
+}
+
+func (c *CreateUsernameBodyOptionalProperties) String() string {
+	if len(c.rawJSON) > 0 {
+		if value, err := internal.StringifyJSON(c.rawJSON); err == nil {
+			return value
+		}
+	}
+	if value, err := internal.StringifyJSON(c); err == nil {
+		return value
+	}
+	return fmt.Sprintf("%#v", c)
+}

@@ -14,5 +14,5 @@ impl ObjectsWithImportsClient {
     }
 }
 
-pub use commons::*;
-pub use file::*;
+pub use commons::CommonsClient;
+pub use file::FileClient;

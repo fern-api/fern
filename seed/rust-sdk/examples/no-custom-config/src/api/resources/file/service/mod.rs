@@ -1,2 +1,2 @@
 pub mod file_service;
-pub use file_service::FileServiceClient;
+pub use file_service::ServiceClient2;

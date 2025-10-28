@@ -3,8 +3,8 @@ import Foundation
 /// Discriminated union for testing nullable unions
 public enum NotificationMethod: Codable, Hashable, Sendable {
     case email(Email)
-    case sms(Sms)
     case push(Push)
+    case sms(Sms)
 
     public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
@@ -12,10 +12,10 @@ public enum NotificationMethod: Codable, Hashable, Sendable {
         switch discriminant {
         case "email":
             self = .email(try Email(from: decoder))
-        case "sms":
-            self = .sms(try Sms(from: decoder))
         case "push":
             self = .push(try Push(from: decoder))
+        case "sms":
+            self = .sms(try Sms(from: decoder))
         default:
             throw DecodingError.dataCorrupted(
                 DecodingError.Context(
@@ -30,9 +30,9 @@ public enum NotificationMethod: Codable, Hashable, Sendable {
         switch self {
         case .email(let data):
             try data.encode(to: encoder)
-        case .sms(let data):
-            try data.encode(to: encoder)
         case .push(let data):
+            try data.encode(to: encoder)
+        case .sms(let data):
             try data.encode(to: encoder)
         }
     }

@@ -42,7 +42,7 @@ export class Service {
             url: core.url.join(
                 (await core.Supplier.get(this._options.baseUrl)) ??
                     (await core.Supplier.get(this._options.environment)),
-                `/resource/${encodeURIComponent(resourceId)}`,
+                `/resource/${core.url.encodePathParam(resourceId)}`,
             ),
             method: "GET",
             headers: _headers,

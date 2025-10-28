@@ -27,6 +27,11 @@ class FastAPICustomConfig(pydantic.BaseModel):
     Whether to generate Pydantic models that implement inheritance when a model utilizes the Fern `extends` keyword.
     """
 
+    # The recursion limit to set for the SDK. Must be greater than 1000 (the default recursion limit in Python).
+    # If set, the root __init__.py will include sys.setrecursionlimit() to ensure
+    # the recursion limit is at least this value.
+    recursion_limit: Optional[int] = pydantic.Field(None, gt=1000)
+
     @pydantic.model_validator(mode="after")
     def propagate_use_inheritance_for_extended_models(self) -> "FastAPICustomConfig":
         self.pydantic_config.use_inheritance_for_extended_models = self.use_inheritance_for_extended_models

@@ -27,6 +27,32 @@
             }
         },
         {
+            "example_identifier": "empty-object",
+            "id": {
+                "method": "POST",
+                "path": "/user/username-optional",
+                "identifier_override": "endpoint_user.createUsernameOptional"
+            },
+            "snippet": {
+                "type": "java",
+                "sync_client": "package com.example.usage;\n\nimport com.seed.requestParameters.SeedRequestParametersClient;\nimport java.util.Optional;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedRequestParametersClient client = SeedRequestParametersClient\n            .builder()\n            .build();\n\n        client.user().createUsernameOptional(\n            Optional.of(\n                Optional.empty()\n            )\n        );\n    }\n}\n",
+                "async_client": "package com.example.usage;\n\nimport com.seed.requestParameters.SeedRequestParametersClient;\nimport java.util.Optional;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedRequestParametersClient client = SeedRequestParametersClient\n            .builder()\n            .build();\n\n        client.user().createUsernameOptional(\n            Optional.of(\n                Optional.empty()\n            )\n        );\n    }\n}\n"
+            }
+        },
+        {
+            "example_identifier": "eb3b4c34",
+            "id": {
+                "method": "POST",
+                "path": "/user/username-optional",
+                "identifier_override": "endpoint_user.createUsernameOptional"
+            },
+            "snippet": {
+                "type": "java",
+                "sync_client": "package com.example.usage;\n\nimport com.seed.requestParameters.SeedRequestParametersClient;\nimport com.seed.requestParameters.resources.user.types.CreateUsernameBodyOptionalProperties;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedRequestParametersClient client = SeedRequestParametersClient\n            .builder()\n            .build();\n\n        client.user().createUsernameOptional(\n            CreateUsernameBodyOptionalProperties\n                .builder()\n                .username(\"username\")\n                .password(\"password\")\n                .name(\"test\")\n                .build()\n        );\n    }\n}\n",
+                "async_client": "package com.example.usage;\n\nimport com.seed.requestParameters.SeedRequestParametersClient;\nimport com.seed.requestParameters.resources.user.types.CreateUsernameBodyOptionalProperties;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedRequestParametersClient client = SeedRequestParametersClient\n            .builder()\n            .build();\n\n        client.user().createUsernameOptional(\n            CreateUsernameBodyOptionalProperties\n                .builder()\n                .username(\"username\")\n                .password(\"password\")\n                .name(\"test\")\n                .build()\n        );\n    }\n}\n"
+            }
+        },
+        {
             "example_identifier": "99ddae46",
             "id": {
                 "method": "GET",

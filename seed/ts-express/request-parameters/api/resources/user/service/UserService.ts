@@ -38,6 +38,20 @@ export interface UserServiceMethods {
         },
         next: express.NextFunction,
     ): void | Promise<void>;
+    createUsernameOptional(
+        req: express.Request<
+            never,
+            never,
+            (SeedRequestParameters.CreateUsernameBodyOptionalProperties | null) | undefined,
+            never
+        >,
+        res: {
+            send: () => Promise<void>;
+            cookie: (cookie: string, value: string, options?: express.CookieOptions) => void;
+            locals: any;
+        },
+        next: express.NextFunction,
+    ): void | Promise<void>;
     getUsername(
         req: express.Request<
             never,
@@ -154,6 +168,45 @@ export class UserService {
                     if (error instanceof errors.SeedRequestParametersError) {
                         console.warn(
                             `Endpoint 'createUsernameWithReferencedType' unexpectedly threw ${error.constructor.name}. If this was intentional, please add ${error.constructor.name} to the endpoint's errors list in your Fern Definition.`,
+                        );
+                        await error.send(res);
+                    } else {
+                        res.status(500).json("Internal Server Error");
+                    }
+                    next(error);
+                }
+            } else {
+                res.status(422).json({
+                    errors: request.errors.map(
+                        (error) => `${["request", ...error.path].join(" -> ")}: ${error.message}`,
+                    ),
+                });
+                next(request.errors);
+            }
+        });
+        this.router.post("/username-optional", async (req, res, next) => {
+            const request = serializers.user.createUsernameOptional.Request.parse(req.body);
+            if (request.ok) {
+                req.body = request.value;
+                try {
+                    await this.methods.createUsernameOptional(
+                        req as any,
+                        {
+                            send: async () => {
+                                res.sendStatus(204);
+                            },
+                            cookie: res.cookie.bind(res),
+                            locals: res.locals,
+                        },
+                        next,
+                    );
+                    if (!res.writableEnded) {
+                        next();
+                    }
+                } catch (error) {
+                    if (error instanceof errors.SeedRequestParametersError) {
+                        console.warn(
+                            `Endpoint 'createUsernameOptional' unexpectedly threw ${error.constructor.name}. If this was intentional, please add ${error.constructor.name} to the endpoint's errors list in your Fern Definition.`,
                         );
                         await error.send(res);
                     } else {

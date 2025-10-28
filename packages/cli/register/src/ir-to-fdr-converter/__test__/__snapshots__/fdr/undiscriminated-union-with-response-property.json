@@ -1,0 +1,305 @@
+{
+  "types": {
+    "type_:UnionResponse": {
+      "name": "UnionResponse",
+      "shape": {
+        "type": "object",
+        "extends": [],
+        "properties": [
+          {
+            "key": "data",
+            "valueType": {
+              "type": "id",
+              "value": "type_:MyUnion"
+            }
+          }
+        ]
+      }
+    },
+    "type_:UnionListResponse": {
+      "name": "UnionListResponse",
+      "shape": {
+        "type": "object",
+        "extends": [],
+        "properties": [
+          {
+            "key": "data",
+            "valueType": {
+              "type": "list",
+              "itemType": {
+                "type": "id",
+                "value": "type_:MyUnion"
+              }
+            }
+          }
+        ]
+      }
+    },
+    "type_:MyUnion": {
+      "description": "Undiscriminated union with multiple object variants.\nThis reproduces the Pipedream issue where Emitter is a union of\nDeployedComponent, HttpInterface, and TimerInterface.",
+      "name": "MyUnion",
+      "shape": {
+        "type": "undiscriminatedUnion",
+        "variants": [
+          {
+            "typeName": "VariantA",
+            "type": {
+              "type": "id",
+              "value": "type_:VariantA"
+            },
+            "displayName": "Variant A"
+          },
+          {
+            "typeName": "VariantB",
+            "type": {
+              "type": "id",
+              "value": "type_:VariantB"
+            },
+            "displayName": "Variant B"
+          },
+          {
+            "typeName": "VariantC",
+            "type": {
+              "type": "id",
+              "value": "type_:VariantC"
+            },
+            "displayName": "Variant C"
+          }
+        ]
+      }
+    },
+    "type_:VariantA": {
+      "name": "VariantA",
+      "shape": {
+        "type": "object",
+        "extends": [],
+        "properties": [
+          {
+            "key": "type",
+            "valueType": {
+              "type": "literal",
+              "value": {
+                "type": "stringLiteral",
+                "value": "A"
+              }
+            }
+          },
+          {
+            "key": "valueA",
+            "valueType": {
+              "type": "primitive",
+              "value": {
+                "type": "string"
+              }
+            }
+          }
+        ]
+      }
+    },
+    "type_:VariantB": {
+      "name": "VariantB",
+      "shape": {
+        "type": "object",
+        "extends": [],
+        "properties": [
+          {
+            "key": "type",
+            "valueType": {
+              "type": "literal",
+              "value": {
+                "type": "stringLiteral",
+                "value": "B"
+              }
+            }
+          },
+          {
+            "key": "valueB",
+            "valueType": {
+              "type": "primitive",
+              "value": {
+                "type": "integer"
+              }
+            }
+          }
+        ]
+      }
+    },
+    "type_:VariantC": {
+      "name": "VariantC",
+      "shape": {
+        "type": "object",
+        "extends": [],
+        "properties": [
+          {
+            "key": "type",
+            "valueType": {
+              "type": "literal",
+              "value": {
+                "type": "stringLiteral",
+                "value": "C"
+              }
+            }
+          },
+          {
+            "key": "valueC",
+            "valueType": {
+              "type": "primitive",
+              "value": {
+                "type": "boolean"
+              }
+            }
+          }
+        ]
+      }
+    }
+  },
+  "subpackages": {},
+  "rootPackage": {
+    "endpoints": [
+      {
+        "auth": false,
+        "method": "GET",
+        "id": "getUnion",
+        "originalEndpointId": "endpoint_.getUnion",
+        "name": "Get Union",
+        "path": {
+          "pathParameters": [],
+          "parts": [
+            {
+              "type": "literal",
+              "value": "/"
+            },
+            {
+              "type": "literal",
+              "value": "/union"
+            }
+          ]
+        },
+        "queryParameters": [],
+        "headers": [],
+        "requestsV2": {},
+        "response": {
+          "type": {
+            "type": "reference",
+            "value": {
+              "type": "id",
+              "value": "type_:UnionResponse"
+            }
+          }
+        },
+        "responsesV2": {},
+        "errorsV2": [],
+        "examples": [
+          {
+            "path": "/union",
+            "pathParameters": {},
+            "queryParameters": {},
+            "headers": {},
+            "responseStatusCode": 200,
+            "responseBody": {
+              "data": {
+                "type": "A",
+                "valueA": "valueA"
+              }
+            },
+            "responseBodyV3": {
+              "type": "json",
+              "value": {
+                "data": {
+                  "type": "A",
+                  "valueA": "valueA"
+                }
+              }
+            },
+            "codeSamples": []
+          }
+        ]
+      },
+      {
+        "auth": false,
+        "method": "GET",
+        "id": "listUnions",
+        "originalEndpointId": "endpoint_.listUnions",
+        "name": "List Unions",
+        "path": {
+          "pathParameters": [],
+          "parts": [
+            {
+              "type": "literal",
+              "value": "/"
+            },
+            {
+              "type": "literal",
+              "value": "/unions"
+            }
+          ]
+        },
+        "queryParameters": [],
+        "headers": [],
+        "requestsV2": {},
+        "response": {
+          "type": {
+            "type": "reference",
+            "value": {
+              "type": "id",
+              "value": "type_:UnionListResponse"
+            }
+          }
+        },
+        "responsesV2": {},
+        "errorsV2": [],
+        "examples": [
+          {
+            "path": "/unions",
+            "pathParameters": {},
+            "queryParameters": {},
+            "headers": {},
+            "responseStatusCode": 200,
+            "responseBody": {
+              "data": [
+                {
+                  "type": "A",
+                  "valueA": "valueA"
+                },
+                {
+                  "type": "A",
+                  "valueA": "valueA"
+                }
+              ]
+            },
+            "responseBodyV3": {
+              "type": "json",
+              "value": {
+                "data": [
+                  {
+                    "type": "A",
+                    "valueA": "valueA"
+                  },
+                  {
+                    "type": "A",
+                    "valueA": "valueA"
+                  }
+                ]
+              }
+            },
+            "codeSamples": []
+          }
+        ]
+      }
+    ],
+    "webhooks": [],
+    "websockets": [],
+    "types": [
+      "type_:UnionResponse",
+      "type_:UnionListResponse",
+      "type_:MyUnion",
+      "type_:VariantA",
+      "type_:VariantB",
+      "type_:VariantC"
+    ],
+    "subpackages": []
+  },
+  "authSchemes": {},
+  "snippetsConfiguration": {},
+  "globalHeaders": []
+}

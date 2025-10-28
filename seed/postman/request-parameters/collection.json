@@ -204,6 +204,127 @@
         },
         {
           "_type": "endpoint",
+          "name": "Create Username Optional",
+          "request": {
+            "description": null,
+            "url": {
+              "raw": "{{baseUrl}}/user/username-optional",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "user",
+                "username-optional"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "type": "text",
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "name": "Success",
+              "status": "OK",
+              "code": 200,
+              "originalRequest": {
+                "description": null,
+                "url": {
+                  "raw": "{{baseUrl}}/user/username-optional",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "user",
+                    "username-optional"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "type": "text",
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "auth": null,
+                "body": {
+                  "mode": "raw",
+                  "raw": "{}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "description": null,
+              "body": "",
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "name": "Success",
+              "status": "OK",
+              "code": 200,
+              "originalRequest": {
+                "description": null,
+                "url": {
+                  "raw": "{{baseUrl}}/user/username-optional",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "user",
+                    "username-optional"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "type": "text",
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "auth": null,
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n    \"username\": \"username\",\n    \"password\": \"password\",\n    \"name\": \"test\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "description": null,
+              "body": "",
+              "_postman_previewlanguage": "json"
+            }
+          ]
+        },
+        {
+          "_type": "endpoint",
           "name": "Get Username",
           "request": {
             "description": null,

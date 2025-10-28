@@ -30,9 +30,6 @@
       "path": "../../configuration"
     },
     {
-      "path": "../../cli-logger"
-    },
-    {
       "path": "../../../commons/casings-generator"
     },
     {

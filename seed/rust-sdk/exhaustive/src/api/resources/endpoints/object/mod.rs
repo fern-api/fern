@@ -1,2 +1,2 @@
 pub mod endpoints_object;
-pub use endpoints_object::EndpointsObjectClient;
+pub use endpoints_object::ObjectClient;

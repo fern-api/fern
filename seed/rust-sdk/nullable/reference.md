@@ -106,9 +106,7 @@ async fn main() {
 <dd>
 
 ```rust
-use chrono::{DateTime, Utc};
 use seed_nullable::prelude::*;
-use std::collections::{HashMap, HashSet};
 
 #[tokio::main]
 async fn main() {
@@ -207,7 +205,6 @@ async fn main() {
 
 ```rust
 use seed_nullable::prelude::*;
-use std::collections::HashMap;
 
 #[tokio::main]
 async fn main() {

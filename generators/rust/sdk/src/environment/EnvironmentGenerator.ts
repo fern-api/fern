@@ -82,12 +82,8 @@ export class EnvironmentGenerator {
     private generateMultiUrlEnvironment(config: MultipleBaseUrlsEnvironments): RustFile {
         const useStatements = [
             new UseStatement({
-                path: "serde",
-                items: ["Deserialize", "Serialize"]
-            }),
-            new UseStatement({
-                path: "std::collections",
-                items: ["HashMap"]
+                path: "crate::prelude",
+                items: ["*"]
             })
         ];
 
@@ -236,9 +232,11 @@ export class EnvironmentGenerator {
 
     private createMultiUrlGetUrlMethod(config: MultipleBaseUrlsEnvironments): Method {
         const matchArms = config.environments.map((env) => {
-            const pattern = Pattern.struct(`Self::${env.name.pascalCase.safeName}`, [{ name: "urls" }]);
+            // Use tuple pattern for tuple enum variants
+            const pattern = Pattern.raw(`Self::${env.name.pascalCase.safeName}(urls)`);
             const fieldName = config.baseUrls[0]?.name.snakeCase.safeName || "default";
-            const expression = Expression.fieldAccess(Expression.reference("urls"), fieldName);
+            // Need to add reference since we're borrowing from urls
+            const expression = Expression.reference(`&urls.${fieldName}`);
             return MatchArm.withExpression(pattern, expression);
         });
 

@@ -19,7 +19,6 @@ The TypeScript generator is a **legacy implementation** with the following chara
 - `model/` - TypeScript type and interface generation
 - `utils/` - Shared TypeScript utilities
 - `asIs/` - Direct code generation utilities
-- `playground/` - Testing and development utilities
 - `README.md` - Comprehensive configuration documentation
 
 ### Express Generator Structure
