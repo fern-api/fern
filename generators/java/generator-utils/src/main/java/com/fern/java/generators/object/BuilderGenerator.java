@@ -516,7 +516,34 @@ public final class BuilderGenerator {
         MethodSpec.Builder defaultMethodImplBuilder =
                 getDefaultSetterForImpl(enrichedObjectProperty, finalStageClassName, implsOverride);
 
-        if (isEqual(propertyTypeName, ClassName.get(Optional.class))) {
+        // Handle Nullable<T> fields (when use-nullable-for-optional-fields is enabled)
+        if (isEqual(propertyTypeName, nullableClassName)) {
+            TypeName itemTypeName = getOnlyTypeArgumentOrThrow(propertyTypeName);
+
+            // Add setter for direct T value (convenience method)
+            interfaceSetterConsumer.accept(
+                    createOptionalItemTypeNameSetter(enrichedObjectProperty, propertyTypeName, finalStageClassName)
+                            .addModifiers(Modifier.ABSTRACT)
+                            .build());
+
+            // Initialize field with Nullable.empty()
+            implFieldConsumer.accept(implFieldSpecBuilder
+                    .initializer("$T.empty()", nullableClassName)
+                    .build());
+
+            // Default setter that takes Nullable<T> directly
+            implSetterConsumer.accept(defaultMethodImplBuilder
+                    .addStatement("this.$L = $L", fieldSpec.name, fieldSpec.name)
+                    .addStatement("return this")
+                    .build());
+
+            // Convenience setter that takes T and wraps in Nullable.of()
+            implSetterConsumer.accept(createOptionalItemTypeNameSetter(
+                            enrichedObjectProperty, propertyTypeName, finalStageClassName, implsOverride)
+                    .addStatement("this.$L = $T.of($L)", fieldSpec.name, nullableClassName, fieldSpec.name)
+                    .addStatement("return this")
+                    .build());
+        } else if (isEqual(propertyTypeName, ClassName.get(Optional.class))) {
             interfaceSetterConsumer.accept(
                     createOptionalItemTypeNameSetter(enrichedObjectProperty, propertyTypeName, finalStageClassName)
                             .addModifiers(Modifier.ABSTRACT)
