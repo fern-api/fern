@@ -135,5 +135,8 @@
     "qs": "^6.13.0",
     "ts-essentials": "^10.1.1",
     "url-join": "^5.0.0"
+  },
+  "dependencies": {
+    "yaml": "^2.4.5"
   }
 }

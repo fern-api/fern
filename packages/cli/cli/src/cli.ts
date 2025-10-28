@@ -17,6 +17,7 @@ import { askToLogin, login, logout } from "@fern-api/login";
 import { protocGenFern } from "@fern-api/protoc-gen-fern";
 import { FernCliError, LoggableFernCliError } from "@fern-api/task-context";
 import getPort from "get-port";
+import type { OpenAPIV3_1 } from "openapi-types";
 import { Argv } from "yargs";
 import { hideBin } from "yargs/helpers";
 import yargs from "yargs/yargs";
@@ -964,23 +965,86 @@ function addValidateCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext)
                     description: "Run validation locally without sending data to Fern API.",
                     default: false
                 })
+                .option("v2", {
+                    boolean: true,
+                    description: "Use v2 format",
+                    default: false
+                })
                 .option("from-openapi", {
                     boolean: true,
                     description: "Whether to use the new parser and go directly from OpenAPI to IR",
                     default: false
+                })
+                .option("input", {
+                    string: true,
+                    description: "Path to the OpenAPI YAML file to validate (used with --v2)",
+                    alias: "i"
                 }),
         async (argv) => {
-            await validateWorkspaces({
-                project: await loadProjectAndRegisterWorkspacesWithContext(cliContext, {
-                    commandLineApiWorkspace: argv.api,
-                    defaultToAllApiWorkspaces: true
-                }),
-                cliContext,
-                logWarnings: argv.warnings,
-                brokenLinks: argv.brokenLinks,
-                errorOnBrokenLinks: argv.strictBrokenLinks,
-                directFromOpenapi: argv.fromOpenapi
-            });
+            if (argv.v2) {
+                if (!argv.input) {
+                    cliContext.logger.error("--input is required when using --v2");
+                    cliContext.failAndThrow();
+                    return;
+                }
+
+                try {
+                    // Load and parse the YAML file
+                    const fs = await import("fs");
+                    const YAML = await import("yaml");
+
+                    const fileContents = fs.readFileSync(argv.input, "utf8");
+                    const parsed = YAML.parse(fileContents) as OpenAPIV3_1.Document;
+
+                    // Dynamically import the validation function
+                    let validateOpenApiDocument;
+                    try {
+                        const validatorModule = await import("@fern-api/openapi-validator");
+                        validateOpenApiDocument = validatorModule.validateOpenApiDocument;
+                    } catch (importError) {
+                        // Fallback: try relative import
+                        const validatorModule = await import("../../openapi-validator/src/validateOpenApiDocument");
+                        validateOpenApiDocument = validatorModule.validateOpenApiDocument;
+                    }
+
+                    // Validate the OpenAPI document
+                    const violations = validateOpenApiDocument(parsed, cliContext.logger, {});
+
+                    // Print the results
+                    if (violations.length === 0) {
+                        cliContext.logger.info("✅ No validation errors found!");
+                    } else {
+                        cliContext.logger.info(`Found ${violations.length} validation issue(s):`);
+                        violations.forEach((violation, index: number) => {
+                            const severityIcon =
+                                violation.severity === "fatal" ? "💀" : violation.severity === "error" ? "❌" : "⚠️";
+                            cliContext.logger.info(
+                                `${index + 1}. ${severityIcon} [${violation.severity.toUpperCase()}] ${violation.message}`
+                            );
+                            if (violation.nodePath.length > 0) {
+                                cliContext.logger.info(`   Path: ${violation.nodePath.join(".")}`);
+                            }
+                        });
+                    }
+                } catch (error) {
+                    cliContext.logger.error(
+                        `Failed to validate OpenAPI document: ${error instanceof Error ? error.message : String(error)}`
+                    );
+                    cliContext.failAndThrow();
+                }
+            } else {
+                await validateWorkspaces({
+                    project: await loadProjectAndRegisterWorkspacesWithContext(cliContext, {
+                        commandLineApiWorkspace: argv.api,
+                        defaultToAllApiWorkspaces: true
+                    }),
+                    cliContext,
+                    logWarnings: argv.warnings,
+                    brokenLinks: argv.brokenLinks,
+                    errorOnBrokenLinks: argv.strictBrokenLinks,
+                    directFromOpenapi: argv.fromOpenapi
+                });
+            }
         }
     );
 }

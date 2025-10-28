@@ -83,6 +83,9 @@
       "path": "../yaml/generators-validator"
     },
     {
+      "path": "../openapi-validator"
+    },
+    {
       "path": "../../commons/fs-utils"
     },
     {

@@ -24,6 +24,10 @@ overrides:
 importers:
 
   .:
+    dependencies:
+      yaml:
+        specifier: ^2.4.5
+        version: 2.8.1
     devDependencies:
       '@babel/core':
         specifier: ^7.26.0
@@ -81,7 +85,7 @@ importers:
         version: 5.0.0(postcss@8.5.6)(stylelint@14.16.1)
       tsup:
         specifier: ^8.5.0
-        version: 8.5.0(postcss@8.5.6)(tsx@4.20.6)(typescript@5.8.3)(yaml@2.3.3)
+        version: 8.5.0(postcss@8.5.6)(tsx@4.20.6)(typescript@5.8.3)(yaml@2.8.1)
       tsx:
         specifier: ^4.20.3
         version: 4.20.6
@@ -4737,6 +4741,9 @@ importers:
       '@fern-api/openapi-ir-to-fern':
         specifier: workspace:*
         version: link:../api-importers/openapi/openapi-ir-to-fern
+      '@fern-api/openapi-validator':
+        specifier: workspace:*
+        version: link:../openapi-validator
       '@fern-api/oss-validator':
         specifier: workspace:*
         version: link:../workspace/oss-validator
@@ -14787,6 +14794,11 @@ packages:
     resolution: {integrity: sha512-zw0VAJxgeZ6+++/su5AFoqBbZbrEakwu+X0M5HmcwUiBL7AzcuPKjj5we4xfQLp78LkEMpD0cOnUhmgOVy3KdQ==}
     engines: {node: '>= 14'}
 
+  yaml@2.8.1:
+    resolution: {integrity: sha512-lcYcMxX2PO9XMGvAJkJ3OsNMw+/7FKes7/hgerGUYWIoWu5j/+YQqcZr5JnPZWzOsEBgMbSbiSTn/dv/69Mkpw==}
+    engines: {node: '>= 14.6'}
+    hasBin: true
+
   yargs-parser@20.2.9:
     resolution: {integrity: sha512-y11nGElTIV+CT3Zv9t7VKl+Q3hTQoT9a1Qzezhhl6Rp21gJ/IVTW7Z3y9EWXhuUBC2Shnf+DX0antecpAwSP8w==}
     engines: {node: '>=10'}
@@ -20939,6 +20951,14 @@ snapshots:
       tsx: 4.20.6
       yaml: 2.3.3
 
+  postcss-load-config@6.0.1(postcss@8.5.6)(tsx@4.20.6)(yaml@2.8.1):
+    dependencies:
+      lilconfig: 3.1.3
+    optionalDependencies:
+      postcss: 8.5.6
+      tsx: 4.20.6
+      yaml: 2.8.1
+
   postcss-media-query-parser@0.2.3: {}
 
   postcss-resolve-nested-selector@0.1.6: {}
@@ -22146,6 +22166,34 @@ snapshots:
       - tsx
       - yaml
 
+  tsup@8.5.0(postcss@8.5.6)(tsx@4.20.6)(typescript@5.8.3)(yaml@2.8.1):
+    dependencies:
+      bundle-require: 5.1.0(esbuild@0.25.11)
+      cac: 6.7.14
+      chokidar: 4.0.3
+      consola: 3.4.2
+      debug: 4.4.3
+      esbuild: 0.25.11
+      fix-dts-default-cjs-exports: 1.0.1
+      joycon: 3.1.1
+      picocolors: 1.1.1
+      postcss-load-config: 6.0.1(postcss@8.5.6)(tsx@4.20.6)(yaml@2.8.1)
+      resolve-from: 5.0.0
+      rollup: 4.52.5
+      source-map: 0.8.0-beta.0
+      sucrase: 3.35.0
+      tinyexec: 0.3.2
+      tinyglobby: 0.2.15
+      tree-kill: 1.2.2
+    optionalDependencies:
+      postcss: 8.5.6
+      typescript: 5.8.3
+    transitivePeerDependencies:
+      - jiti
+      - supports-color
+      - tsx
+      - yaml
+
   tsup@8.5.0(postcss@8.5.6)(tsx@4.20.6)(typescript@5.9.2)(yaml@2.3.3):
     dependencies:
       bundle-require: 5.1.0(esbuild@0.25.11)
@@ -22671,6 +22719,8 @@ snapshots:
   yaml-ast-parser@0.0.43: {}
 
   yaml@2.3.3: {}
+
+  yaml@2.8.1: {}
 
   yargs-parser@20.2.9: {}
 
