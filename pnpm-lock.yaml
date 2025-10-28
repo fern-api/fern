@@ -3394,6 +3394,9 @@ importers:
 
   generators/typescript/sdk/environments-generator:
     dependencies:
+      '@fern-api/core-utils':
+        specifier: workspace:*
+        version: link:../../../../packages/commons/core-utils
       '@fern-fern/ir-sdk':
         specifier: 61.2.0
         version: 61.2.0

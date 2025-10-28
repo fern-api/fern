@@ -31,6 +31,7 @@
     "test:update": "vitest --passWithNoTests --run -u"
   },
   "dependencies": {
+    "@fern-api/core-utils": "workspace:*",
     "@fern-fern/ir-sdk": "61.2.0",
     "@fern-typescript/commons": "workspace:*",
     "@fern-typescript/contexts": "workspace:*",
