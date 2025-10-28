@@ -681,7 +681,6 @@ export class WireTestGenerator {
         return `map[string]string{${queryParamEntries.join(", ")}}`;
     }
 
-
     private getDynamicEndpointExample(endpoint: HttpEndpoint): dynamic.EndpointExample | null {
         const example = this.dynamicIr.endpoints[endpoint.id];
         if (!example) {
