@@ -7,8 +7,14 @@ describe("EnumWithAssociatedValues", () => {
             const enum_ = swift.enumWithAssociatedValues({
                 name: "NetworkResponse",
                 cases: [
-                    { unsafeName: "success", associatedValue: [swift.Type.string()] },
-                    { unsafeName: "error", associatedValue: [swift.Type.int(), swift.Type.string()] }
+                    { unsafeName: "success", associatedValue: [swift.TypeReference.unqualifiedToSwiftType("String")] },
+                    {
+                        unsafeName: "error",
+                        associatedValue: [
+                            swift.TypeReference.unqualifiedToSwiftType("Int"),
+                            swift.TypeReference.unqualifiedToSwiftType("String")
+                        ]
+                    }
                 ]
             });
 
@@ -26,8 +32,8 @@ describe("EnumWithAssociatedValues", () => {
                 accessLevel: AccessLevel.Public,
                 conformances: [swift.Protocol.Codable, swift.Protocol.Equatable],
                 cases: [
-                    { unsafeName: "success", associatedValue: [swift.Type.string()] },
-                    { unsafeName: "failure", associatedValue: [swift.Type.string()] }
+                    { unsafeName: "success", associatedValue: [swift.TypeReference.unqualifiedToSwiftType("String")] },
+                    { unsafeName: "failure", associatedValue: [swift.TypeReference.unqualifiedToSwiftType("String")] }
                 ]
             });
 
@@ -46,9 +52,15 @@ describe("EnumWithAssociatedValues", () => {
                     {
                         unsafeName: "complex",
                         associatedValue: [
-                            swift.Type.array(swift.Type.string()),
-                            swift.Type.dictionary(swift.Type.string(), swift.Type.int()),
-                            swift.Type.tuple([swift.Type.string(), swift.Type.bool()])
+                            swift.TypeReference.array(swift.TypeReference.unqualifiedToSwiftType("String")),
+                            swift.TypeReference.dictionary(
+                                swift.TypeReference.unqualifiedToSwiftType("String"),
+                                swift.TypeReference.unqualifiedToSwiftType("Int")
+                            ),
+                            swift.TypeReference.tuple([
+                                swift.TypeReference.unqualifiedToSwiftType("String"),
+                                swift.TypeReference.unqualifiedToSwiftType("Bool")
+                            ])
                         ]
                     }
                 ]
@@ -65,8 +77,8 @@ describe("EnumWithAssociatedValues", () => {
             const enum_ = swift.enumWithAssociatedValues({
                 name: "KeywordEnum",
                 cases: [
-                    { unsafeName: "class", associatedValue: [swift.Type.string()] },
-                    { unsafeName: "struct", associatedValue: [swift.Type.int()] }
+                    { unsafeName: "class", associatedValue: [swift.TypeReference.unqualifiedToSwiftType("String")] },
+                    { unsafeName: "struct", associatedValue: [swift.TypeReference.unqualifiedToSwiftType("Int")] }
                 ]
             });
 
@@ -84,14 +96,14 @@ describe("EnumWithAssociatedValues", () => {
                 accessLevel: AccessLevel.Public,
                 conformances: [swift.Protocol.Equatable],
                 cases: [
-                    { unsafeName: "success", associatedValue: [swift.Type.string()] },
-                    { unsafeName: "failure", associatedValue: [swift.Type.string()] }
+                    { unsafeName: "success", associatedValue: [swift.TypeReference.unqualifiedToSwiftType("String")] },
+                    { unsafeName: "failure", associatedValue: [swift.TypeReference.unqualifiedToSwiftType("String")] }
                 ],
                 methods: [
                     swift.method({
                         unsafeName: "isSuccess",
                         accessLevel: AccessLevel.Public,
-                        returnType: swift.Type.bool(),
+                        returnType: swift.TypeReference.unqualifiedToSwiftType("Bool"),
                         body: swift.codeBlock((writer) => {
                             writer.writeLine("switch self {");
                             writer.writeLine("case .success:");
@@ -104,7 +116,7 @@ describe("EnumWithAssociatedValues", () => {
                     swift.method({
                         unsafeName: "getValue",
                         accessLevel: AccessLevel.Public,
-                        returnType: swift.Type.optional(swift.Type.string()),
+                        returnType: swift.TypeReference.optional(swift.TypeReference.unqualifiedToSwiftType("String")),
                         body: swift.codeBlock((writer) => {
                             writer.writeLine("switch self {");
                             writer.writeLine("case .success(let value):");
@@ -125,8 +137,14 @@ describe("EnumWithAssociatedValues", () => {
                 name: "NetworkResponse",
                 accessLevel: AccessLevel.Public,
                 cases: [
-                    { unsafeName: "success", associatedValue: [swift.Type.string()] },
-                    { unsafeName: "error", associatedValue: [swift.Type.int(), swift.Type.string()] }
+                    { unsafeName: "success", associatedValue: [swift.TypeReference.unqualifiedToSwiftType("String")] },
+                    {
+                        unsafeName: "error",
+                        associatedValue: [
+                            swift.TypeReference.unqualifiedToSwiftType("Int"),
+                            swift.TypeReference.unqualifiedToSwiftType("String")
+                        ]
+                    }
                 ],
                 initializers: [
                     swift.initializer({
@@ -135,7 +153,7 @@ describe("EnumWithAssociatedValues", () => {
                             swift.functionParameter({
                                 argumentLabel: "successValue",
                                 unsafeName: "value",
-                                type: swift.Type.string()
+                                type: swift.TypeReference.unqualifiedToSwiftType("String")
                             })
                         ],
                         body: swift.codeBlock((writer) => {
@@ -149,7 +167,10 @@ describe("EnumWithAssociatedValues", () => {
                             swift.functionParameter({
                                 argumentLabel: "from",
                                 unsafeName: "dictionary",
-                                type: swift.Type.dictionary(swift.Type.string(), swift.Type.any())
+                                type: swift.TypeReference.dictionary(
+                                    swift.TypeReference.unqualifiedToSwiftType("String"),
+                                    swift.TypeReference.unqualifiedToSwiftType("Any")
+                                )
                             })
                         ],
                         body: swift.codeBlock((writer) => {
@@ -175,8 +196,11 @@ describe("EnumWithAssociatedValues", () => {
                 accessLevel: AccessLevel.Public,
                 conformances: [swift.Protocol.Codable],
                 cases: [
-                    { unsafeName: "success", associatedValue: [swift.Type.custom("Data")] },
-                    { unsafeName: "error", associatedValue: [swift.Type.custom("ErrorInfo")] }
+                    {
+                        unsafeName: "success",
+                        associatedValue: [swift.TypeReference.unqualifiedToFoundationType("Data")]
+                    },
+                    { unsafeName: "error", associatedValue: [swift.TypeReference.symbol("ErrorInfo")] }
                 ],
                 nestedTypes: [
                     swift.struct({
@@ -187,12 +211,12 @@ describe("EnumWithAssociatedValues", () => {
                             swift.property({
                                 unsafeName: "id",
                                 declarationType: swift.DeclarationType.Let,
-                                type: swift.Type.string()
+                                type: swift.TypeReference.unqualifiedToSwiftType("String")
                             }),
                             swift.property({
                                 unsafeName: "value",
                                 declarationType: swift.DeclarationType.Let,
-                                type: swift.Type.string()
+                                type: swift.TypeReference.unqualifiedToSwiftType("String")
                             })
                         ]
                     }),
@@ -204,12 +228,12 @@ describe("EnumWithAssociatedValues", () => {
                             swift.property({
                                 unsafeName: "code",
                                 declarationType: swift.DeclarationType.Let,
-                                type: swift.Type.int()
+                                type: swift.TypeReference.unqualifiedToSwiftType("Int")
                             }),
                             swift.property({
                                 unsafeName: "message",
                                 declarationType: swift.DeclarationType.Let,
-                                type: swift.Type.string()
+                                type: swift.TypeReference.unqualifiedToSwiftType("String")
                             })
                         ]
                     })
@@ -225,9 +249,9 @@ describe("EnumWithAssociatedValues", () => {
                 accessLevel: AccessLevel.Public,
                 conformances: [swift.Protocol.Codable, swift.Protocol.Equatable],
                 cases: [
-                    { unsafeName: "loading", associatedValue: [swift.Type.custom("Progress")] },
-                    { unsafeName: "loaded", associatedValue: [swift.Type.custom("Content")] },
-                    { unsafeName: "failed", associatedValue: [swift.Type.custom("ErrorDetails")] }
+                    { unsafeName: "loading", associatedValue: [swift.TypeReference.symbol("Progress")] },
+                    { unsafeName: "loaded", associatedValue: [swift.TypeReference.symbol("Content")] },
+                    { unsafeName: "failed", associatedValue: [swift.TypeReference.symbol("ErrorDetails")] }
                 ],
                 initializers: [
                     swift.initializer({
@@ -236,7 +260,7 @@ describe("EnumWithAssociatedValues", () => {
                             swift.functionParameter({
                                 argumentLabel: "content",
                                 unsafeName: "content",
-                                type: swift.Type.custom("Content")
+                                type: swift.TypeReference.symbol("Content")
                             })
                         ],
                         body: swift.codeBlock((writer) => {
@@ -248,7 +272,7 @@ describe("EnumWithAssociatedValues", () => {
                     swift.method({
                         unsafeName: "isLoading",
                         accessLevel: AccessLevel.Public,
-                        returnType: swift.Type.bool(),
+                        returnType: swift.TypeReference.unqualifiedToSwiftType("Bool"),
                         body: swift.codeBlock((writer) => {
                             writer.writeLine("if case .loading = self { return true }");
                             writer.writeLine("return false");
@@ -264,7 +288,7 @@ describe("EnumWithAssociatedValues", () => {
                             swift.property({
                                 unsafeName: "percentage",
                                 declarationType: swift.DeclarationType.Let,
-                                type: swift.Type.double()
+                                type: swift.TypeReference.unqualifiedToSwiftType("Double")
                             })
                         ]
                     })

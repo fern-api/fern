@@ -37,8 +37,8 @@
     "@fern-api/logger": "workspace:*",
     "@fern-api/typescript-ast": "workspace:*",
     "@fern-fern/generator-cli-sdk": "^0.1.5",
-    "@fern-fern/ir-sdk": "61.2.0",
     "@fern-fern/generator-exec-sdk": "catalog:",
+    "@fern-fern/ir-sdk": "61.2.0",
     "@fern-fern/snippet-sdk": "catalog:",
     "@fern-typescript/commons": "workspace:*",
     "@fern-typescript/contexts": "workspace:*",
@@ -68,7 +68,7 @@
     "@types/lodash-es": "^4.17.12",
     "@types/node": "18.15.3",
     "depcheck": "^1.4.7",
-    "typescript": "5.8.3",
+    "typescript": "5.9.3",
     "vitest": "^2.1.9"
   }
 }

@@ -1,3 +1,32 @@
+- version: 3.9.2
+  changelogEntry:
+    - summary: |
+        Fix nullable field serialization in PATCH requests with wrapped request bodies. Explicit null values
+        (Nullable.ofNull()) are now correctly serialized as `{"field": null}` instead of being omitted like
+        Nullable.empty().
+      type: fix
+  createdAt: "2025-10-23"
+  irVersion: 61
+
+- version: 3.9.1
+  changelogEntry:
+    - summary: |
+        Fix raw client methods to return union types instead of first variant when using response
+        properties (x-fern-sdk-return-value) with discriminated or undiscriminated unions.
+      type: fix
+  createdAt: "2025-10-23"
+  irVersion: 61
+
+- version: 3.9.0
+  changelogEntry:
+    - summary: |
+        Add support for README example style configuration via `exampleStyle` field. When set to "minimal",
+        generated README.md files show streamlined code examples with only required parameters, reducing
+        verbosity for better readability. Defaults to "comprehensive" to maintain backward compatibility.
+      type: feat
+  createdAt: "2025-10-21"
+  irVersion: 61
+
 - version: 3.8.12
   changelogEntry:
     - summary: |

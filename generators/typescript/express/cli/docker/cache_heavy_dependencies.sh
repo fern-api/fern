@@ -18,6 +18,7 @@ echo '{
     "esbuild": "0.16.15",
     "express": "4.18.2",
     "@biomejs/biome": "2.2.5",
+    "prettier": "3.4.2",
     "typescript": "5.7.2",
     "url-join": "4.0.1"
   }
@@ -31,6 +32,9 @@ rm -rf yarn.lock
 npm install -g pnpm@10.14.0
 
 pnpm install
+
+# make prettier globally available
+pnpm install -g prettier@3.4.2
 # make biome globally available
 pnpm install -g @biomejs/biome@2.2.5
 

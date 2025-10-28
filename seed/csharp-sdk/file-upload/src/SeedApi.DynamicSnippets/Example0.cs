@@ -12,7 +12,9 @@ public class Example0
             }
         );
 
-        await client.Service.SimpleAsync();
+        await client.Service.JustFileAsync(
+            new JustFileRequest()
+        );
     }
 
 }

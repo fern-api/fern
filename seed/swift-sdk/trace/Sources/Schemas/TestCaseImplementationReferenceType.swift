@@ -1,17 +1,17 @@
 import Foundation
 
 public enum TestCaseImplementationReferenceType: Codable, Hashable, Sendable {
-    case templateId(TemplateId)
     case implementation(Implementation)
+    case templateId(TemplateId)
 
     public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
         let discriminant = try container.decode(String.self, forKey: .type)
         switch discriminant {
-        case "templateId":
-            self = .templateId(try TemplateId(from: decoder))
         case "implementation":
             self = .implementation(try Implementation(from: decoder))
+        case "templateId":
+            self = .templateId(try TemplateId(from: decoder))
         default:
             throw DecodingError.dataCorrupted(
                 DecodingError.Context(
@@ -24,9 +24,9 @@ public enum TestCaseImplementationReferenceType: Codable, Hashable, Sendable {
 
     public func encode(to encoder: Encoder) throws -> Void {
         switch self {
-        case .templateId(let data):
-            try data.encode(to: encoder)
         case .implementation(let data):
+            try data.encode(to: encoder)
+        case .templateId(let data):
             try data.encode(to: encoder)
         }
     }

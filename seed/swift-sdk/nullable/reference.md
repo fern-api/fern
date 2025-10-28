@@ -20,10 +20,7 @@ private func main() async throws {
     let client = NullableClient()
 
     _ = try await client.nullable.getUsers(
-        usernames: ,
         avatar: "avatar",
-        activated: ,
-        tags: ,
         extra: .value(true)
     )
 }
@@ -229,3 +226,4 @@ try await main()
 </dd>
 </dl>
 </details>
+

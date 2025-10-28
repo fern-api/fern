@@ -53,6 +53,8 @@ public class Example {
             GetFooRequest
                 .builder()
                 .requiredBaz("required_baz")
+                .optionalBaz("optional_baz")
+                .optionalNullableBaz("optional_nullable_baz")
                 .requiredNullableBaz("required_nullable_baz")
                 .build()
         );

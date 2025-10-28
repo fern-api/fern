@@ -7,10 +7,20 @@
   },
   "include": ["src/**/*"],
   "references": [
-    { "path": "../../browser-compatible-base" },
-    { "path": "../../../packages/commons/core-utils" },
-    { "path": "../base" },
-    { "path": "../codegen" },
-    { "path": "../../../packages/ir-sdk" }
+    {
+      "path": "../codegen"
+    },
+    {
+      "path": "../base"
+    },
+    {
+      "path": "../../../packages/commons/core-utils"
+    },
+    {
+      "path": "../../browser-compatible-base"
+    },
+    {
+      "path": "../../../packages/commons/path-utils"
+    }
   ]
 }

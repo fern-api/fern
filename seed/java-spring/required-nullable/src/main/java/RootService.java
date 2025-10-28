@@ -5,8 +5,13 @@
 import java.lang.String;
 import java.util.Optional;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PatchMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import requests.UpdateFooRequest;
 import types.Foo;
 
 @RequestMapping(
@@ -21,4 +26,12 @@ public interface RootService {
       @RequestParam("optional_nullable_baz") Optional<String> optionalNullableBaz,
       @RequestParam("required_baz") String requiredBaz,
       @RequestParam("required_nullable_baz") Optional<String> requiredNullableBaz);
+
+  @PatchMapping(
+      value = "/foo/{id}",
+      produces = "application/json",
+      consumes = "application/json"
+  )
+  Foo updateFoo(@RequestHeader("X-Idempotency-Key") String xIdempotencyKey,
+      @PathVariable("id") String id, @RequestBody UpdateFooRequest body);
 }

@@ -1,0 +1,17 @@
+{
+  "type": "object",
+  "properties": {
+    "type": {
+      "const": "B"
+    },
+    "valueB": {
+      "type": "integer"
+    }
+  },
+  "required": [
+    "type",
+    "valueB"
+  ],
+  "additionalProperties": false,
+  "definitions": {}
+}

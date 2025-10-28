@@ -52,6 +52,7 @@ defaultOutputMode: local_files
 allowedFailures:
   - file-download
   - file-upload
+  - file-upload-openapi
   - plain-text
   - response-property
   - streaming
@@ -66,3 +67,4 @@ allowedFailures:
   - bytes-download
   - bytes-upload
   - multiple-request-bodies
+  - undiscriminated-union-with-response-property

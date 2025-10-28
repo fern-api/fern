@@ -41,6 +41,7 @@ Instantiate and use the client with the following:
 package com.example.usage;
 
 import com.seed.fileUpload.SeedFileUploadClient;
+import com.seed.fileUpload.resources.service.requests.JustFileRequest;
 
 public class Example {
     public static void main(String[] args) {
@@ -48,7 +49,11 @@ public class Example {
             .builder()
             .build();
 
-        client.service().simple();
+        client.service().justFile(
+            JustFileRequest
+                .builder()
+                .build()
+        );
     }
 }
 ```
@@ -74,7 +79,7 @@ When the API returns a non-success status code (4xx or 5xx response), an API exc
 import com.seed.fileUpload.core.SeedFileUploadApiException;
 
 try{
-    client.service().simple(...);
+    client.service().justFile(...);
 } catch (SeedFileUploadApiException e){
     // Do something with the API exception...
 }
@@ -137,7 +142,7 @@ SeedFileUploadClient client = SeedFileUploadClient
     .build();
 
 // Request level
-client.service().simple(
+client.service().justFile(
     ...,
     RequestOptions
         .builder()
@@ -163,7 +168,7 @@ SeedFileUploadClient client = SeedFileUploadClient
 ;
 
 // Request level
-client.service().simple(
+client.service().justFile(
     ...,
     RequestOptions
         .builder()

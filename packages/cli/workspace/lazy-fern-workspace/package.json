@@ -80,7 +80,7 @@
     "@types/swagger2openapi": "^7.0.4",
     "@types/tar": "^6.1.11",
     "depcheck": "^1.4.7",
-    "typescript": "5.8.3",
+    "typescript": "5.9.3",
     "vitest": "^2.1.9"
   }
 }

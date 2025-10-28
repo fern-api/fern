@@ -126,6 +126,9 @@ types:
 
   Script:
     properties:
+      name:
+        docs: The name of the script. If provided, this enables fixtures to skip certain scripts.
+        type: optional<string>
       commands: list<string>
 
   DockerScriptConfig:
@@ -164,6 +167,9 @@ types:
         type: optional<OutputMode>
         docs: Overrides the default output mode
       license: optional<unknown>
+      skipScripts:
+        docs: List of script names to skip.
+        type: optional<list<string>>
 
   ReadmeConfig:
     properties:

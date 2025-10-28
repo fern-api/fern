@@ -11,4 +11,5 @@ export interface DocsInstance {
     private?: boolean;
     /** If `edit-this-page` is set, Fern will add an "Edit this page" link to the bottom of each page that links to the given GitHub repository. */
     editThisPage?: FernDocsConfig.EditThisPageConfig;
+    audiences?: FernDocsConfig.Audience;
 }

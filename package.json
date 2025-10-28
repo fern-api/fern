@@ -78,7 +78,7 @@
     "@babel/core": "^7.26.0",
     "@babel/preset-env": "^7.26.0",
     "@babel/preset-typescript": "^7.26.0",
-    "@biomejs/biome": "2.2.5",
+    "@biomejs/biome": "2.3.1",
     "@blueprintjs/eslint-plugin": "^6.1.6",
     "@blueprintjs/stylelint-plugin": "^4.1.14",
     "@fern-api/configs": "workspace:*",
@@ -96,7 +96,7 @@
     "tsup": "^8.5.0",
     "tsx": "^4.20.3",
     "turbo": "^2.5.5",
-    "typescript": "5.8.3",
+    "typescript": "5.9.3",
     "vitest": "^2.1.9"
   },
   "resolutions": {
@@ -124,8 +124,8 @@
       "node-fetch@2.x>whatwg-url": "^14.0.0",
       "qs": "6.13.0",
       "url-join": "^5.0.0",
-      "@fern-fern/fdr-cjs-sdk": "0.139.31-66c809cb8",
-      "@fern-api/fdr-sdk": "0.139.31-66c809cb8",
+      "@fern-fern/fdr-cjs-sdk": "0.139.33-c9426f366",
+      "@fern-api/fdr-sdk": "0.139.33-c9426f366",
       "es-toolkit": "^1.39.10",
       "ts-essentials": "^10.1.1"
     }

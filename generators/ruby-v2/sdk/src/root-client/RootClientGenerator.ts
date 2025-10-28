@@ -56,10 +56,8 @@ export class RootClientGenerator extends FileGenerator<RubyFile, SdkCustomConfig
         });
         parameters.push(baseUrlParameter);
 
-        const authenticationParameter = this.getAuthenticationParameter();
-        if (authenticationParameter != null) {
-            parameters.push(authenticationParameter);
-        }
+        const authenticationParameters = this.getAuthenticationParameters();
+        parameters.push(...authenticationParameters);
 
         const method = ruby.method({
             name: "initialize",
@@ -92,11 +90,13 @@ export class RootClientGenerator extends FileGenerator<RubyFile, SdkCustomConfig
         return method;
     }
 
-    private getAuthenticationParameter(): ruby.KeywordParameter | undefined {
+    private getAuthenticationParameters(): ruby.KeywordParameter[] {
+        const parameters: ruby.KeywordParameter[] = [];
+
         for (const scheme of this.context.ir.auth.schemes) {
             switch (scheme.type) {
-                case "bearer":
-                    return ruby.parameters.keyword({
+                case "bearer": {
+                    const param = ruby.parameters.keyword({
                         name: TOKEN_PARAMETER_NAME,
                         type: ruby.Type.string(),
                         initializer:
@@ -107,12 +107,30 @@ export class RootClientGenerator extends FileGenerator<RubyFile, SdkCustomConfig
                                 : undefined,
                         docs: undefined
                     });
+                    parameters.push(param);
+                    break;
+                }
+                case "header": {
+                    const param = ruby.parameters.keyword({
+                        name: scheme.name.name.snakeCase.safeName,
+                        type: ruby.Type.string(),
+                        initializer:
+                            scheme.headerEnvVar != null
+                                ? ruby.codeblock((writer) => {
+                                      writer.write(`ENV.fetch("${scheme.headerEnvVar}", nil)`);
+                                  })
+                                : undefined,
+                        docs: undefined
+                    });
+                    parameters.push(param);
+                    break;
+                }
                 default:
-                    return undefined;
+                    break;
             }
         }
 
-        return undefined;
+        return parameters;
     }
 
     private getRawClientHeaders(): ruby.TypeLiteral {
@@ -138,6 +156,17 @@ export class RootClientGenerator extends FileGenerator<RubyFile, SdkCustomConfig
                         value: ruby.TypeLiteral.string(`Bearer #{${TOKEN_PARAMETER_NAME}}`)
                     });
                     break;
+                case "header": {
+                    const headerParamName = header.name.name.snakeCase.safeName;
+                    const headerName = header.name.wireValue;
+                    const headerValue =
+                        header.prefix != null ? `${header.prefix} #{${headerParamName}}` : `#{${headerParamName}}`;
+                    headers.push({
+                        key: ruby.TypeLiteral.string(headerName),
+                        value: ruby.TypeLiteral.string(headerValue)
+                    });
+                    break;
+                }
                 default:
                     break;
             }

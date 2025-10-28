@@ -1,20 +1,20 @@
 import Foundation
 
 public enum UnionWithTime: Codable, Hashable, Sendable {
-    case value(Value)
     case date(Date)
     case datetime(Datetime)
+    case value(Value)
 
     public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
         let discriminant = try container.decode(String.self, forKey: .type)
         switch discriminant {
-        case "value":
-            self = .value(try Value(from: decoder))
         case "date":
             self = .date(try Date(from: decoder))
         case "datetime":
             self = .datetime(try Datetime(from: decoder))
+        case "value":
+            self = .value(try Value(from: decoder))
         default:
             throw DecodingError.dataCorrupted(
                 DecodingError.Context(
@@ -27,11 +27,11 @@ public enum UnionWithTime: Codable, Hashable, Sendable {
 
     public func encode(to encoder: Encoder) throws -> Void {
         switch self {
-        case .value(let data):
-            try data.encode(to: encoder)
         case .date(let data):
             try data.encode(to: encoder)
         case .datetime(let data):
+            try data.encode(to: encoder)
+        case .value(let data):
             try data.encode(to: encoder)
         }
     }
@@ -106,12 +106,12 @@ public enum UnionWithTime: Codable, Hashable, Sendable {
 
     public struct Datetime: Codable, Hashable, Sendable {
         public let type: String = "datetime"
-        public let value: Date
+        public let value: Foundation.Date
         /// Additional properties that are not explicitly defined in the schema
         public let additionalProperties: [String: JSONValue]
 
         public init(
-            value: Date,
+            value: Foundation.Date,
             additionalProperties: [String: JSONValue] = .init()
         ) {
             self.value = value
@@ -120,7 +120,7 @@ public enum UnionWithTime: Codable, Hashable, Sendable {
 
         public init(from decoder: Decoder) throws {
             let container = try decoder.container(keyedBy: CodingKeys.self)
-            self.value = try container.decode(Date.self, forKey: .value)
+            self.value = try container.decode(Foundation.Date.self, forKey: .value)
             self.additionalProperties = try decoder.decodeAdditionalProperties(using: CodingKeys.self)
         }
 

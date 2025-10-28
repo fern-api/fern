@@ -39,9 +39,6 @@ class TestCaseImplementationReference_Implementation(UniversalBaseModel):
             extra = pydantic.Extra.allow
 
 
-from .....commons.types.list_type import ListType  # noqa: E402, F401, I001
-from .....commons.types.map_type import MapType  # noqa: E402, F401, I001
-
 TestCaseImplementationReference = typing.Union[
     TestCaseImplementationReference_TemplateId, TestCaseImplementationReference_Implementation
 ]

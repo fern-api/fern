@@ -36,7 +36,7 @@
     "@types/node": "18.15.3",
     "@wasm-fmt/ruff_fmt": "^0.6.1",
     "depcheck": "^1.4.7",
-    "typescript": "5.8.3",
+    "typescript": "5.9.3",
     "vitest": "^2.1.9"
   }
 }

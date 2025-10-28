@@ -1,5 +1,22 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
 
+- version: 1.0.0-rc30
+  createdAt: "2025-10-21"
+  changelogEntry:
+    - type: feat
+      summary: |
+        Add support for custom Gemfiles.
+  irVersion: 59
+
+- version: 1.0.0-rc29
+  createdAt: "2025-10-21"
+  changelogEntry:
+    - type: feat
+      summary: |
+        Add support for API key (header-based) authentication in Ruby SDK generator.
+        Supports multiple authentication schemes in the same API.
+  irVersion: 59
+
 - version: 1.0.0-rc28
   createdAt: "2025-10-01"
   changelogEntry:

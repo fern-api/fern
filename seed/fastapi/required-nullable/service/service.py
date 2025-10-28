@@ -11,6 +11,7 @@ from ..core.abstract_fern_service import AbstractFernService
 from ..core.exceptions.fern_http_exception import FernHTTPException
 from ..core.route_args import get_route_args
 from ..types.foo import Foo
+from .update_foo_request import UpdateFooRequest
 
 
 class AbstractRootService(AbstractFernService):
@@ -32,6 +33,9 @@ class AbstractRootService(AbstractFernService):
         required_nullable_baz: typing.Optional[str] = None,
     ) -> Foo: ...
 
+    @abc.abstractmethod
+    def update_foo(self, *, body: UpdateFooRequest, id: str, x_idempotency_key: str) -> Foo: ...
+
     """
     Below are internal methods used by Fern to register your implementation.
     You can ignore them.
@@ -40,6 +44,7 @@ class AbstractRootService(AbstractFernService):
     @classmethod
     def _init_fern(cls, router: fastapi.APIRouter) -> None:
         cls.__init_get_foo(router=router)
+        cls.__init_update_foo(router=router)
 
     @classmethod
     def __init_get_foo(cls, router: fastapi.APIRouter) -> None:
@@ -89,4 +94,44 @@ class AbstractRootService(AbstractFernService):
             response_model=Foo,
             description=AbstractRootService.get_foo.__doc__,
             **get_route_args(cls.get_foo, default_tag=""),
+        )(wrapper)
+
+    @classmethod
+    def __init_update_foo(cls, router: fastapi.APIRouter) -> None:
+        endpoint_function = inspect.signature(cls.update_foo)
+        new_parameters: typing.List[inspect.Parameter] = []
+        for index, (parameter_name, parameter) in enumerate(endpoint_function.parameters.items()):
+            if index == 0:
+                new_parameters.append(parameter.replace(default=fastapi.Depends(cls)))
+            elif parameter_name == "body":
+                new_parameters.append(parameter.replace(default=fastapi.Body(...)))
+            elif parameter_name == "id":
+                new_parameters.append(parameter.replace(default=fastapi.Path(...)))
+            elif parameter_name == "x_idempotency_key":
+                new_parameters.append(parameter.replace(default=fastapi.Header(alias="X-Idempotency-Key")))
+            else:
+                new_parameters.append(parameter)
+        setattr(cls.update_foo, "__signature__", endpoint_function.replace(parameters=new_parameters))
+
+        @functools.wraps(cls.update_foo)
+        def wrapper(*args: typing.Any, **kwargs: typing.Any) -> Foo:
+            try:
+                return cls.update_foo(*args, **kwargs)
+            except FernHTTPException as e:
+                logging.getLogger(f"{cls.__module__}.{cls.__name__}").warn(
+                    f"Endpoint 'update_foo' unexpectedly threw {e.__class__.__name__}. "
+                    + f"If this was intentional, please add {e.__class__.__name__} to "
+                    + "the endpoint's errors list in your Fern Definition."
+                )
+                raise e
+
+        # this is necessary for FastAPI to find forward-ref'ed type hints.
+        # https://github.com/tiangolo/fastapi/pull/5077
+        wrapper.__globals__.update(cls.update_foo.__globals__)
+
+        router.patch(
+            path="/foo/{id}",
+            response_model=Foo,
+            description=AbstractRootService.update_foo.__doc__,
+            **get_route_args(cls.update_foo, default_tag=""),
         )(wrapper)

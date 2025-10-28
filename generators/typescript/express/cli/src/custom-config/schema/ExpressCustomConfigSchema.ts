@@ -14,6 +14,8 @@ export const ExpressCustomConfigSchema = z.strictObject({
     noOptionalProperties: z.optional(z.boolean()),
     packagePath: z.optional(z.string()),
     packageManager: z.optional(z.enum(["pnpm", "yarn"])),
+    linter: z.optional(z.enum(["biome", "none"])),
+    formatter: z.optional(z.enum(["prettier", "biome"])),
 
     // beta (not in docs)
     outputSourceFiles: z.optional(z.boolean()),

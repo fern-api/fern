@@ -35,7 +35,7 @@
   },
   "dependencies": {
     "@fern-api/core-utils": "workspace:*",
-    "@fern-api/dynamic-ir-sdk": "61.0.0",
+    "@fern-api/dynamic-ir-sdk": "^61.4.0",
     "@fern-api/fern-definition-schema": "workspace:*",
     "@fern-api/logger": "workspace:*",
     "@fern-api/path-utils": "workspace:*",
@@ -45,7 +45,7 @@
     "@fern-api/configs": "workspace:*",
     "@types/node": "18.15.3",
     "depcheck": "^1.4.7",
-    "typescript": "5.8.3",
+    "typescript": "5.9.3",
     "vitest": "^2.1.9"
   }
 }

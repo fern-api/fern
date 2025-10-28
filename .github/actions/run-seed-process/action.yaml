@@ -22,6 +22,10 @@ inputs:
     description: Whether to collect metrics
     required: false
     default: "false"
+  determinism-exclude-paths:
+    description: "JSON array of paths to exclude from determinism verification step, typically package manager/lock files"
+    required: false
+    default: '["seed/*/.mock/*"]'
 
 outputs:
   start_time:
@@ -82,13 +86,23 @@ runs:
       run: |
         echo "end_time=$EPOCHSECONDS" >> $GITHUB_OUTPUT
 
+    # Run after seed is built, do this separately so we can keep seed time collection limited to seed generation
+    # Note: tests failing can be a cause of this reporting as non-deterministic
+    - name: Verify Determinism
+      id: verify-determinism
+      if: ${{ always() && !cancelled() && inputs.collect-metrics == 'true' }}
+      uses: ./.github/actions/verify-determinism
+      with:
+        determinism-exclude-paths: ${{ inputs.determinism-exclude-paths }}
+
     # Collect the outputs from this matrix iteration
-    - name: Collect Metrics
+    - name: Collect All Metrics
       # Save metrics even if the tests fail
       if: ${{ always() && !cancelled() && inputs.collect-metrics == 'true' }}
-      uses: ./.github/actions/artifact-seed-test-times
+      uses: ./.github/actions/artifact-seed-metrics
       with:
         sdk-name: ${{ inputs.sdk-name }}
         job-index: ${{ inputs.job-index }}
         start-time: ${{ steps.start-seed-timer.outputs.start_time }}
         end-time: ${{ steps.end-seed-timer.outputs.end_time }}
+        deterministic: ${{ steps.verify-determinism.outputs.deterministic}}

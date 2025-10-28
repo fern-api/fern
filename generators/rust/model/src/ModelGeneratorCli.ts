@@ -148,6 +148,23 @@ export class ModelGeneratorCli extends AbstractRustGeneratorCli<ModelCustomConfi
             }
         }
 
+        // Add file upload request body types
+        for (const service of Object.values(context.ir.services)) {
+            for (const endpoint of service.endpoints) {
+                if (endpoint.requestBody?.type === "fileUpload") {
+                    const filename = context.getFilenameForFileUploadRequestBody(endpoint.id);
+                    const rawModuleName = filename.replace(".rs", "");
+                    const escapedModuleName = context.escapeRustKeyword(rawModuleName);
+                    const typeName = context.getFileUploadRequestTypeName(endpoint.id);
+
+                    if (!uniqueModuleNames.has(escapedModuleName)) {
+                        uniqueModuleNames.add(escapedModuleName);
+                        moduleExports.push({ moduleName: escapedModuleName, typeName });
+                    }
+                }
+            }
+        }
+
         // Add query request types
         for (const [serviceId, service] of Object.entries(context.ir.services)) {
             for (const endpoint of service.endpoints) {

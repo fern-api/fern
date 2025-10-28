@@ -30,6 +30,9 @@
     ],
     "scripts": {
         "format": "biome format --write --skip-parse-errors --no-errors-on-unmatched --max-diagnostics=none",
+        "format:check": "biome format --skip-parse-errors --no-errors-on-unmatched --max-diagnostics=none",
+        "lint": "biome lint --skip-parse-errors --no-errors-on-unmatched --max-diagnostics=none",
+        "lint:fix": "biome lint --fix --unsafe --skip-parse-errors --no-errors-on-unmatched --max-diagnostics=none",
         "check": "biome check --skip-parse-errors --no-errors-on-unmatched --max-diagnostics=none",
         "check:fix": "biome check --fix --unsafe --skip-parse-errors --no-errors-on-unmatched --max-diagnostics=none",
         "build": "pnpm build:cjs && pnpm build:esm",
@@ -49,8 +52,8 @@
         "jest-environment-jsdom": "^29.7.0",
         "msw": "2.11.2",
         "@types/node": "^18.19.70",
-        "@biomejs/biome": "2.2.5",
-        "typescript": "~5.7.2"
+        "typescript": "~5.7.2",
+        "@biomejs/biome": "2.2.5"
     },
     "browser": {
         "fs": false,

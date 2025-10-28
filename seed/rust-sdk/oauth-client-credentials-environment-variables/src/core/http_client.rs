@@ -349,4 +349,95 @@ impl HttpClient {
         // Return streaming response
         Ok(ByteStream::new(response))
     }
+
+    /// Execute a request and return an SSE stream
+    ///
+    /// This method returns an `SseStream<T>` that automatically parses
+    /// Server-Sent Events and deserializes the JSON data in each event.
+    ///
+    /// # SSE-Specific Headers
+    ///
+    /// This method automatically sets the following headers **after** applying custom headers,
+    /// which means these headers will override any user-supplied values:
+    /// - `Accept: text/event-stream` - Required for SSE protocol
+    /// - `Cache-Control: no-store` - Prevents caching of streaming responses
+    ///
+    /// This ensures proper SSE behavior even if custom headers are provided.
+    ///
+    /// # Example
+    /// ```no_run
+    /// use futures::StreamExt;
+    ///
+    /// let stream = client.execute_sse_request::<CompletionChunk>(
+    ///     Method::POST,
+    ///     "/stream",
+    ///     Some(serde_json::json!({"query": "Hello"})),
+    ///     None,
+    ///     None,
+    ///     Some("[[DONE]]".to_string()),
+    /// ).await?;
+    ///
+    /// let mut stream = std::pin::pin!(stream);
+    /// while let Some(chunk) = stream.next().await {
+    ///     let chunk = chunk?;
+    ///     println!("Received: {:?}", chunk);
+    /// }
+    /// ```
+    pub async fn execute_sse_request<T>(
+        &self,
+        method: Method,
+        path: &str,
+        body: Option<serde_json::Value>,
+        query_params: Option<Vec<(String, String)>>,
+        options: Option<RequestOptions>,
+        terminator: Option<String>,
+    ) -> Result<crate::SseStream<T>, ApiError>
+    where
+        T: DeserializeOwned + Send + 'static,
+    {
+        let url = join_url(&self.config.base_url, path);
+        let mut request = self.client.request(method, &url);
+
+        // Apply query parameters if provided
+        if let Some(params) = query_params {
+            request = request.query(&params);
+        }
+
+        // Apply additional query parameters from options
+        if let Some(opts) = &options {
+            if !opts.additional_query_params.is_empty() {
+                request = request.query(&opts.additional_query_params);
+            }
+        }
+
+        // Apply body if provided
+        if let Some(body) = body {
+            request = request.json(&body);
+        }
+
+        // Build the request
+        let mut req = request.build().map_err(|e| ApiError::Network(e))?;
+
+        // Apply authentication and headers
+        self.apply_auth_headers(&mut req, &options)?;
+        self.apply_custom_headers(&mut req, &options)?;
+
+        // SSE-specific headers
+        req.headers_mut().insert(
+            "Accept",
+            "text/event-stream"
+                .parse()
+                .map_err(|_| ApiError::InvalidHeader)?,
+        );
+        req.headers_mut().insert(
+            "Cache-Control",
+            "no-store".parse().map_err(|_| ApiError::InvalidHeader)?,
+        );
+
+        // Execute with retries
+        let response = self.execute_with_retries(req, &options).await?;
+
+        // Return SSE stream
+        crate::SseStream::new(response, terminator).await
+    }
 }

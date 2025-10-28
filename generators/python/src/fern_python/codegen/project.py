@@ -48,6 +48,7 @@ class Project:
         user_defined_toml: Optional[str] = None,
         exclude_types_from_init_exports: Optional[bool] = False,
         lazy_imports: bool = True,
+        recursion_limit: Optional[int] = None,
     ) -> None:
         relative_path_to_project = relative_path_to_project.replace(".", "/")
         if flat_layout:
@@ -62,7 +63,9 @@ class Project:
         self._root_filepath = filepath
         self._relative_path_to_project = relative_path_to_project
         self._project_config = project_config
-        self._module_manager = ModuleManager(sorted_modules=sorted_modules, lazy_imports=lazy_imports)
+        self._module_manager = ModuleManager(
+            sorted_modules=sorted_modules, lazy_imports=lazy_imports, recursion_limit=recursion_limit
+        )
         self._python_version = python_version
         self._dependency_manager = DependencyManager()
         self._whitelabel = whitelabel

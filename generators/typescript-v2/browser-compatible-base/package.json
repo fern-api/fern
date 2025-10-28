@@ -38,7 +38,7 @@
     "@types/lodash-es": "^4.17.12",
     "depcheck": "^1.4.7",
     "lodash-es": "^4.17.21",
-    "typescript": "5.8.3",
+    "typescript": "5.9.3",
     "vitest": "^2.1.9"
   }
 }
