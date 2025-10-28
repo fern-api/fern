@@ -76,7 +76,7 @@ export class Stream<T> implements AsyncIterable<T> {
 
             let terminatorIndex: number;
             while ((terminatorIndex = buf.indexOf(this.messageTerminator)) >= 0) {
-                let line = buf.slice(0, terminatorIndex + 1);
+                let line = buf.slice(0, terminatorIndex);
                 buf = buf.slice(terminatorIndex + this.messageTerminator.length);
 
                 if (!line.trim()) {
