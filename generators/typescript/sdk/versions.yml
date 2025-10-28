@@ -1,5 +1,12 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
 
+- version: 3.12.2
+  changelogEntry:
+    - summary: Fix `.github/workflows/ci.yml` file when using OIDC for npm publishing.
+      type: fix
+  createdAt: "2025-10-28"
+  irVersion: 60
+
 - version: 3.12.1
   changelogEntry:
     - summary: Update Biome to 2.3.1
