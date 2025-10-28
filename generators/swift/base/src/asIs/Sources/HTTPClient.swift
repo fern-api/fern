@@ -12,11 +12,11 @@ final class HTTPClient: Sendable {
     /// Performs a request with no response.
     func performRequest(
         method: HTTP.Method,
-        path: String,
+        path: Swift.String,
         contentType requestContentType: HTTP.ContentType = .applicationJson,
-        headers requestHeaders: [String: String?] = [:],
-        queryParams requestQueryParams: [String: QueryParameter?] = [:],
-        body requestBody: Any? = nil,
+        headers requestHeaders: [Swift.String: Swift.String?] = [:],
+        queryParams requestQueryParams: [Swift.String: QueryParameter?] = [:],
+        body requestBody: Swift.Any? = nil,
         requestOptions: RequestOptions? = nil
     ) async throws {
         _ = try await performRequest(
@@ -27,27 +27,27 @@ final class HTTPClient: Sendable {
             queryParams: requestQueryParams,
             body: requestBody,
             requestOptions: requestOptions,
-            responseType: Data.self
+            responseType: Foundation.Data.self
         )
     }
 
     /// Performs a request with the specified response type.
     func performRequest<T: Decodable>(
         method: HTTP.Method,
-        path: String,
+        path: Swift.String,
         contentType requestContentType: HTTP.ContentType = .applicationJson,
-        headers requestHeaders: [String: String?] = [:],
-        queryParams requestQueryParams: [String: QueryParameter?] = [:],
-        body requestBody: Any? = nil,
+        headers requestHeaders: [Swift.String: Swift.String?] = [:],
+        queryParams requestQueryParams: [Swift.String: QueryParameter?] = [:],
+        body requestBody: Swift.Any? = nil,
         requestOptions: RequestOptions? = nil,
         responseType: T.Type
     ) async throws -> T {
         let requestBody: HTTP.RequestBody? = requestBody.map { body in
             if let multipartData = body as? MultipartFormData {
                 return .multipartFormData(multipartData)
-            } else if let data = body as? Data {
+            } else if let data = body as? Foundation.Data {
                 return .data(data)
-            } else if let encodable = body as? any Encodable {
+            } else if let encodable = body as? Swift.Any {
                 return .jsonEncodable(encodable)
             } else {
                 preconditionFailure("Unsupported body type: \(type(of: body))")
@@ -66,7 +66,7 @@ final class HTTPClient: Sendable {
 
         let (data, _) = try await executeRequestWithURLSession(request)
 
-        if responseType == Data.self {
+        if responseType == Foundation.Data.self {
             if let data = data as? T {
                 return data
             } else {
@@ -74,8 +74,8 @@ final class HTTPClient: Sendable {
             }
         }
 
-        if responseType == String.self {
-            if let string = String(data: data, encoding: .utf8) as? T {
+        if responseType == Swift.String.self {
+            if let string = Swift.String(data: data, encoding: .utf8) as? T {
                 return string
             } else {
                 throw ClientError.invalidResponse
@@ -91,22 +91,22 @@ final class HTTPClient: Sendable {
 
     private func buildRequest(
         method: HTTP.Method,
-        path: String,
+        path: Swift.String,
         requestContentType: HTTP.ContentType,
-        requestHeaders: [String: String?],
-        requestQueryParams: [String: QueryParameter?],
+        requestHeaders: [Swift.String: Swift.String?],
+        requestQueryParams: [Swift.String: QueryParameter?],
         requestBody: HTTP.RequestBody? = nil,
         requestOptions: RequestOptions? = nil
-    ) async throws -> URLRequest {
+    ) async throws -> Foundation.URLRequest {
         // Init with URL
         let url = buildRequestURL(
             path: path, requestQueryParams: requestQueryParams, requestOptions: requestOptions
         )
-        var request = URLRequest(url: url)
+        var request = Foundation.URLRequest(url: url)
 
         // Set timeout
         if let timeout = requestOptions?.timeout {
-            request.timeoutInterval = TimeInterval(timeout)
+            request.timeoutInterval = Foundation.TimeInterval(timeout)
         }
 
         // Set method
@@ -135,25 +135,25 @@ final class HTTPClient: Sendable {
     }
 
     private func buildRequestURL(
-        path: String,
-        requestQueryParams: [String: QueryParameter?],
+        path: Swift.String,
+        requestQueryParams: [Swift.String: QueryParameter?],
         requestOptions: RequestOptions? = nil
-    ) -> URL {
-        let endpointURL: String = "\(clientConfig.baseURL)\(path)"
-        guard var components: URLComponents = URLComponents(string: endpointURL) else {
+    ) -> Foundation.URL {
+        let endpointURL: Swift.String = "\(clientConfig.baseURL)\(path)"
+        guard var components: Foundation.URLComponents = Foundation.URLComponents(string: endpointURL) else {
             preconditionFailure(
                 "Invalid URL '\(endpointURL)' - this indicates an unexpected error in the SDK."
             )
         }
         if !requestQueryParams.isEmpty {
             components.queryItems = requestQueryParams.map { key, value in
-                URLQueryItem(name: key, value: value?.toString())
+                Foundation.URLQueryItem(name: key, value: value?.toString())
             }
         }
         if let additionalQueryParams = requestOptions?.additionalQueryParameters {
             components.queryItems?.append(
                 contentsOf: additionalQueryParams.map { key, value in
-                    URLQueryItem(name: key, value: value)
+                    Foundation.URLQueryItem(name: key, value: value)
                 })
         }
         guard let url = components.url else {
@@ -167,9 +167,9 @@ final class HTTPClient: Sendable {
     private func buildRequestHeaders(
         requestBody: HTTP.RequestBody?,
         requestContentType: HTTP.ContentType,
-        requestHeaders: [String: String?],
+        requestHeaders: [Swift.String: Swift.String?],
         requestOptions: RequestOptions? = nil
-    ) async throws -> [String: String] {
+    ) async throws -> [Swift.String: Swift.String] {
         var headers = clientConfig.headers ?? [:]
 
         headers["Content-Type"] = buildContentTypeHeader(
@@ -200,7 +200,7 @@ final class HTTPClient: Sendable {
     private func buildContentTypeHeader(
         requestBody: HTTP.RequestBody?,
         requestContentType: HTTP.ContentType,
-    ) -> String {
+    ) -> Swift.String {
         var contentType = requestContentType.rawValue
         if let requestBody, case .multipartFormData(let multipartData) = requestBody {
             if contentType != HTTP.ContentType.multipartFormData.rawValue {
@@ -214,7 +214,7 @@ final class HTTPClient: Sendable {
         return contentType
     }
 
-    private func getBearerAuthToken(_ requestOptions: RequestOptions?) async throws -> String? {
+    private func getBearerAuthToken(_ requestOptions: RequestOptions?) async throws -> Swift.String? {
         if let tokenString = requestOptions?.token {
             return tokenString
         }
@@ -227,7 +227,7 @@ final class HTTPClient: Sendable {
     private func buildRequestBody(
         requestBody: HTTP.RequestBody,
         requestOptions: RequestOptions? = nil
-    ) -> Data {
+    ) -> Foundation.Data {
         switch requestBody {
         case .jsonEncodable(let encodableBody):
             do {
@@ -245,12 +245,12 @@ final class HTTPClient: Sendable {
     }
 
     private func executeRequestWithURLSession(
-        _ request: URLRequest
-    ) async throws -> (Data, String?) {
+        _ request: Foundation.URLRequest
+    ) async throws -> (Foundation.Data, Swift.String?) {
         do {
             let (data, response) = try await clientConfig.urlSession.data(for: request)
 
-            guard let httpResponse = response as? HTTPURLResponse else {
+            guard let httpResponse = response as? Foundation.HTTPURLResponse else {
                 throw ClientError.invalidResponse
             }
 
@@ -279,7 +279,7 @@ final class HTTPClient: Sendable {
         }
     }
 
-    private func handleErrorResponse(statusCode: Int, data: Data) throws {
+    private func handleErrorResponse(statusCode: Swift.Int, data: Foundation.Data) throws {
         let errorResponse = parseErrorResponse(statusCode: statusCode, from: data)
 
         switch statusCode {
@@ -300,21 +300,21 @@ final class HTTPClient: Sendable {
         }
     }
 
-    private func parseErrorResponse(statusCode: Int, from data: Data) -> APIErrorResponse? {
+    private func parseErrorResponse(statusCode: Swift.Int, from data: Foundation.Data) -> APIErrorResponse? {
         // Try to parse as JSON error response first
         if let errorResponse = try? jsonDecoder.decode(APIErrorResponse.self, from: data) {
             return errorResponse
         }
 
         // Try to parse as simple JSON with message field
-        if let json = try? JSONSerialization.jsonObject(with: data) as? [String: Any],
-            let message = json["message"] as? String
+        if let json = try? Foundation.JSONSerialization.jsonObject(with: data) as? [Swift.String: Swift.Any],
+            let message = json["message"] as? Swift.String
         {
             return APIErrorResponse(code: statusCode, message: message)
         }
 
         // Try to parse as plain text
-        if let errorMessage = String(data: data, encoding: .utf8), !errorMessage.isEmpty {
+        if let errorMessage = Swift.String(data: data, encoding: .utf8), !errorMessage.isEmpty {
             return APIErrorResponse(code: statusCode, message: errorMessage)
         }
 

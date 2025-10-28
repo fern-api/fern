@@ -1,11 +1,11 @@
 import Foundation
 
 public struct APIErrorResponse: Codable, Sendable {
-    public let code: Int
-    public let type: String?
-    public let message: String?
+    public let code: Swift.Int
+    public let type: Swift.String?
+    public let message: Swift.String?
 
-    public init(code: Int, type: String? = nil, message: String? = nil) {
+    public init(code: Swift.Int, type: Swift.String? = nil, message: Swift.String? = nil) {
         self.code = code
         self.type = type
         self.message = message

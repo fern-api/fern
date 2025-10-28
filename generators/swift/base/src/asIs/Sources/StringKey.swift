@@ -1,18 +1,18 @@
 import Foundation
 
 struct StringKey: CodingKey, Hashable {
-    var stringValue: String
-    var intValue: Int? { Int(stringValue) }
+    var stringValue: Swift.String
+    var intValue: Swift.Int? { Swift.Int(stringValue) }
 
-    init(_ string: String) {
+    init(_ string: Swift.String) {
         self.stringValue = string
     }
 
-    init?(stringValue: String) {
+    init?(stringValue: Swift.String) {
         self.stringValue = stringValue
     }
 
-    init?(intValue: Int) {
-        self.stringValue = String(intValue)
+    init?(intValue: Swift.Int) {
+        self.stringValue = Swift.String(intValue)
     }
 }

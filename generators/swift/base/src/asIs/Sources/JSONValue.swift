@@ -2,29 +2,29 @@ import Foundation
 
 /// A type that can represent any JSON value.
 public enum JSONValue: Codable, Hashable, Sendable {
-    case string(String)
-    case number(Double)
-    case bool(Bool)
+    case string(Swift.String)
+    case number(Swift.Double)
+    case bool(Swift.Bool)
     case null
     case array([JSONValue])
-    case object([String: JSONValue])
+    case object([Swift.String: JSONValue])
 
     public init(from decoder: Decoder) throws {
         let container = try decoder.singleValueContainer()
 
         if container.decodeNil() {
             self = .null
-        } else if let bool = try? container.decode(Bool.self) {
+        } else if let bool = try? container.decode(Swift.Bool.self) {
             self = .bool(bool)
-        } else if let int = try? container.decode(Int.self) {
-            self = .number(Double(int))
-        } else if let double = try? container.decode(Double.self) {
+        } else if let int = try? container.decode(Swift.Int.self) {
+            self = .number(Swift.Double(int))
+        } else if let double = try? container.decode(Swift.Double.self) {
             self = .number(double)
-        } else if let string = try? container.decode(String.self) {
+        } else if let string = try? container.decode(Swift.String.self) {
             self = .string(string)
         } else if let array = try? container.decode([JSONValue].self) {
             self = .array(array)
-        } else if let object = try? container.decode([String: JSONValue].self) {
+        } else if let object = try? container.decode([Swift.String: JSONValue].self) {
             self = .object(object)
         } else {
             throw DecodingError.dataCorrupted(
@@ -58,19 +58,19 @@ public enum JSONValue: Codable, Hashable, Sendable {
 
 // MARK: - Convenience initializers
 extension JSONValue {
-    public init(_ value: String) {
+    public init(_ value: Swift.String) {
         self = .string(value)
     }
 
-    public init(_ value: Int) {
-        self = .number(Double(value))
+    public init(_ value: Swift.Int) {
+        self = .number(Swift.Double(value))
     }
 
-    public init(_ value: Double) {
+    public init(_ value: Swift.Double) {
         self = .number(value)
     }
 
-    public init(_ value: Bool) {
+    public init(_ value: Swift.Bool) {
         self = .bool(value)
     }
 
@@ -78,35 +78,35 @@ extension JSONValue {
         self = .array(value)
     }
 
-    public init(_ value: [String: JSONValue]) {
+    public init(_ value: [Swift.String: JSONValue]) {
         self = .object(value)
     }
 }
 
 // MARK: - Value extraction
 extension JSONValue {
-    public var stringValue: String? {
+    public var stringValue: Swift.String? {
         if case .string(let value) = self {
             return value
         }
         return nil
     }
 
-    public var numberValue: Double? {
+    public var numberValue: Swift.Double? {
         if case .number(let value) = self {
             return value
         }
         return nil
     }
 
-    public var intValue: Int? {
+    public var intValue: Swift.Int? {
         if case .number(let value) = self {
-            return Int(value)
+            return Swift.Int(value)
         }
         return nil
     }
 
-    public var boolValue: Bool? {
+    public var boolValue: Swift.Bool? {
         if case .bool(let value) = self {
             return value
         }
@@ -120,14 +120,14 @@ extension JSONValue {
         return nil
     }
 
-    public var objectValue: [String: JSONValue]? {
+    public var objectValue: [Swift.String: JSONValue]? {
         if case .object(let value) = self {
             return value
         }
         return nil
     }
 
-    public var isNull: Bool {
+    public var isNull: Swift.Bool {
         if case .null = self {
             return true
         }

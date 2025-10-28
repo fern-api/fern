@@ -39,7 +39,7 @@ where Wrapped: Codable & Hashable & Sendable {
     }
 
     /// Returns true if this contains an explicit null value
-    public var isNull: Bool {
+    public var isNull: Swift.Bool {
         switch self {
         case .value(_):
             return false

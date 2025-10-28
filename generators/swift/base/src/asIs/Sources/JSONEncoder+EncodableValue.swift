@@ -1,11 +1,11 @@
 import Foundation
 
-extension JSONEncoder {
+extension Foundation.JSONEncoder {
     /// Helper for type-erasing Encodable values
     private struct AnyEncodable: Encodable {
-        private let value: any Encodable
+        private let value: Swift.Any
 
-        init(_ value: any Encodable) {
+        init(_ value: Swift.Any) {
             self.value = value
         }
 
@@ -14,7 +14,7 @@ extension JSONEncoder {
         }
     }
 
-    func encode(value: EncodableValue) throws -> Data {
+    func encode(value: EncodableValue) throws -> Foundation.Data {
         return try self.encode(AnyEncodable(value.value))
     }
 }
