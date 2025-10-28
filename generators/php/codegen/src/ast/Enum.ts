@@ -1,10 +1,10 @@
+import { escapePhpString } from "../php";
 import { ClassReference } from "./ClassReference";
 import { CodeBlock } from "./CodeBlock";
 import { Comment } from "./Comment";
 import { AstNode } from "./core/AstNode";
 import { Writer } from "./core/Writer";
 import { Method } from "./Method";
-import { escapePhpString } from "../php";
 import { Type } from "./Type";
 
 export declare namespace Enum {
