@@ -1119,14 +1119,18 @@ function isTabbedNavigationConfig(
 
 function tabbedNavigationItemHasLayout(
     item: docsYml.RawSchemas.TabbedNavigationItem
-): item is docsYml.RawSchemas.TabbedNavigationItemWithLayout {
-    return "layout" in item && item.layout != null;
+): item is docsYml.RawSchemas.TabbedNavigationItemWithLayout & {
+    layout: docsYml.RawSchemas.NavigationItem[];
+} {
+    return "layout" in item && Array.isArray(item.layout);
 }
 
 function tabbedNavigationItemHasVariants(
     item: docsYml.RawSchemas.TabbedNavigationItem
-): item is docsYml.RawSchemas.TabbedNavigationItemWithVariants {
-    return "variants" in item && item.variants != null;
+): item is docsYml.RawSchemas.TabbedNavigationItemWithVariants & {
+    variants: docsYml.RawSchemas.TabVariant[];
+} {
+    return "variants" in item && Array.isArray(item.variants);
 }
 
 function convertNavbarLinks(
