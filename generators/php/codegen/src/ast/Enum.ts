@@ -5,6 +5,7 @@ import { AstNode } from "./core/AstNode";
 import { Writer } from "./core/Writer";
 import { Method } from "./Method";
 import { Type } from "./Type";
+import { escapePhpString } from "../php";
 
 export declare namespace Enum {
     interface Args {
@@ -71,8 +72,8 @@ export class Enum extends AstNode {
             writer.write(`case ${member.name}`);
             if (member.value != null) {
                 if (typeof member.value === "string") {
-                    // Escape backslashes and double quotes in the string value
-                    const escapedValue = member.value.replace(/\\/g, "\\\\").replace(/"/g, '\\"');
+                    // Use escapePhpString to escape the string value
+                    const escapedValue = escapePhpString(member.value);
                     writer.write(` = "${escapedValue}"`);
                 } else {
                     writer.write(` = ${member.value}`);
