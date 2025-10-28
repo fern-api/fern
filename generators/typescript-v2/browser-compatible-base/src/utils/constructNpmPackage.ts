@@ -1,3 +1,4 @@
+import { visitDiscriminatedUnion } from "@fern-api/core-utils";
 import { FernGeneratorExec } from "@fern-fern/generator-exec-sdk";
 
 import { type NpmPackage } from "../NpmPackage";
@@ -37,13 +38,15 @@ export function constructNpmPackage({
                 private: isPackagePrivate,
                 publishInfo: undefined,
                 repoUrl: getRepoUrlFromUrl(outputMode.repoUrl),
-                license: generatorConfig.license?._visit({
-                    basic: (basic) => basic.id,
-                    custom: (custom) => `See ${custom.filename}`,
-                    _other: () => {
-                        return undefined;
-                    }
-                })
+                license: generatorConfig.license
+                    ? visitDiscriminatedUnion(generatorConfig.license)._visit({
+                          basic: (basic) => basic.id,
+                          custom: (custom) => `See ${custom.filename}`,
+                          _other: () => {
+                              return undefined;
+                          }
+                      })
+                    : undefined
             };
         default:
             throw new Error(`Encountered unknown output mode: ${outputMode}`);

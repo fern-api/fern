@@ -1,4 +1,4 @@
-import { assertNever } from "@fern-api/core-utils";
+import { assertNever, visitDiscriminatedUnion } from "@fern-api/core-utils";
 import { HttpEndpoint, HttpResponseBody, PrimitiveTypeV1, TypeReference } from "@fern-fern/ir-sdk/api";
 import { SdkContext } from "@fern-typescript/contexts";
 import { ts } from "ts-morph";
@@ -44,7 +44,7 @@ export function getSuccessReturnType(
                 TypeReference.primitive({ v1: PrimitiveTypeV1.String, v2: undefined })
             ).typeNode;
         case "streaming": {
-            const dataEventType = response.value._visit({
+            const dataEventType = visitDiscriminatedUnion(response.value)._visit({
                 json: (json) => context.type.getReferenceToType(json.payload),
                 sse: (sse) => context.type.getReferenceToType(sse.payload),
                 text: () =>

@@ -32,6 +32,7 @@
   },
   "devDependencies": {
     "@fern-api/configs": "workspace:*",
+    "@fern-api/core-utils": "workspace:*",
     "@fern-fern/generator-exec-sdk": "catalog:",
     "@types/lodash-es": "^4.17.12",
     "depcheck": "^1.4.7",

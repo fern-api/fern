@@ -1,4 +1,4 @@
-import { noop } from "@fern-api/core-utils";
+import { noop, visitDiscriminatedUnion } from "@fern-api/core-utils";
 import { BaseSwiftCustomConfigSchema, EnumWithAssociatedValues, swift } from "@fern-api/swift-codegen";
 import { TypeDeclaration } from "@fern-fern/ir-sdk/api";
 import { NameRegistry } from "../project";
@@ -14,7 +14,7 @@ export function registerDiscriminatedUnionVariants({
     typeDeclaration: TypeDeclaration;
     context: AbstractSwiftGeneratorContext<BaseSwiftCustomConfigSchema>;
 }) {
-    typeDeclaration.shape._visit({
+    visitDiscriminatedUnion(typeDeclaration.shape)._visit({
         union: (utd) => {
             const variants = utd.types.map((singleUnionType) => {
                 const symbolName = EnumWithAssociatedValues.sanitizeToPascalCase(

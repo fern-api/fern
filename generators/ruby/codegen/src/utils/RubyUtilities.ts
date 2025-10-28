@@ -1,3 +1,4 @@
+import { visitDiscriminatedUnion } from "@fern-api/core-utils";
 import { RelativeFilePath } from "@fern-api/fs-utils";
 import { FernGeneratorExec } from "@fern-fern/generator-exec-sdk";
 import { BasicLicense, CustomLicense } from "@fern-fern/generator-exec-sdk/api";
@@ -85,17 +86,19 @@ export function generateGemspec(
     hasFileBasedDependencies = false,
     hasEndpoints = false
 ): GeneratedRubyFile {
-    const license = licenseConfig?._visit({
-        basic: (l: BasicLicense) => {
-            return { licenseType: l.id, licenseFilePath: "LICENSE" };
-        },
-        custom: (l: CustomLicense) => {
-            return { licenseFilePath: l.filename };
-        },
-        _other: () => {
-            throw new Error("Unknown license configuration provided.");
-        }
-    });
+    const license = licenseConfig
+        ? visitDiscriminatedUnion(licenseConfig)._visit({
+              basic: (l: BasicLicense) => {
+                  return { licenseType: l.id, licenseFilePath: "LICENSE" };
+              },
+              custom: (l: CustomLicense) => {
+                  return { licenseFilePath: l.filename };
+              },
+              _other: () => {
+                  throw new Error("Unknown license configuration provided.");
+              }
+          })
+        : undefined;
     const gemspec = new Gemspec({
         clientName,
         gemName,

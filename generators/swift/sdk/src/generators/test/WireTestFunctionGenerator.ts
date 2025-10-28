@@ -1,4 +1,4 @@
-import { assertDefined } from "@fern-api/core-utils";
+import { assertDefined, visitDiscriminatedUnion } from "@fern-api/core-utils";
 import { Referencer } from "@fern-api/swift-base";
 import { LiteralEnum, swift } from "@fern-api/swift-codegen";
 import { EndpointSnippetGenerator } from "@fern-api/swift-dynamic-snippets";
@@ -69,7 +69,7 @@ export class WireTestFunctionGenerator {
                 if (exampleEndpointCall == null || exampleEndpointCall.response.type === "error") {
                     return null;
                 }
-                const exampleTypeRef = exampleEndpointCall.response.value._visit({
+                const exampleTypeRef = visitDiscriminatedUnion(exampleEndpointCall.response.value)._visit({
                     body: (exampleTypeRef) => exampleTypeRef,
                     stream: () => null,
                     sse: () => null,
@@ -177,11 +177,11 @@ export class WireTestFunctionGenerator {
         exampleTypeRef: ExampleTypeReference,
         fromScope: swift.Symbol | string
     ): swift.Expression {
-        return exampleTypeRef.shape._visit({
+        return visitDiscriminatedUnion(exampleTypeRef.shape)._visit({
             container: (exampleContainer) =>
-                exampleContainer._visit({
+                visitDiscriminatedUnion(exampleContainer)._visit({
                     literal: (literalContainer) => {
-                        return literalContainer.literal._visit({
+                        return visitDiscriminatedUnion(literalContainer.literal)._visit({
                             string: (val) =>
                                 swift.Expression.enumCaseShorthand(LiteralEnum.generateEnumCaseLabel(val.original)),
                             // Only string literals are supported
@@ -261,7 +261,7 @@ export class WireTestFunctionGenerator {
                     _other: () => swift.Expression.nop()
                 }),
             primitive: (examplePrimitive) =>
-                examplePrimitive._visit({
+                visitDiscriminatedUnion(examplePrimitive)._visit({
                     string: (escapedString) => swift.Expression.stringLiteral(escapedString.original),
                     boolean: (bool) => swift.Expression.boolLiteral(bool),
                     integer: (value) => swift.Expression.numberLiteral(value),
@@ -290,7 +290,7 @@ export class WireTestFunctionGenerator {
             named: (exampleNamedType) => {
                 const { typeId } = exampleNamedType.typeName;
                 const symbol = this.sdkGeneratorContext.project.nameRegistry.getSchemaTypeSymbolOrThrow(typeId);
-                return exampleNamedType.shape._visit({
+                return visitDiscriminatedUnion(exampleNamedType.shape)._visit({
                     alias: (exampleAliasType) => {
                         return this.generateExampleResponse(exampleAliasType.value, fromScope);
                     },
@@ -320,7 +320,7 @@ export class WireTestFunctionGenerator {
                         });
                     },
                     union: (exampleUnionType) => {
-                        return exampleUnionType.singleUnionType.shape._visit({
+                        return visitDiscriminatedUnion(exampleUnionType.singleUnionType.shape)._visit({
                             noProperties: () =>
                                 swift.Expression.contextualMethodCall({
                                     methodName:
@@ -409,9 +409,9 @@ export class WireTestFunctionGenerator {
         typeReference: ExampleTypeReference,
         fromScope: swift.Symbol | string
     ): swift.TypeReference {
-        return typeReference.shape._visit({
+        return visitDiscriminatedUnion(typeReference.shape)._visit({
             container: (exampleContainer) => {
-                return exampleContainer._visit({
+                return visitDiscriminatedUnion(exampleContainer)._visit({
                     // TODO(kafkas): Implement this
                     literal: () => this.referencer.referenceAsIsType("JSONValue"),
                     map: (exampleMapContainer) =>
@@ -446,7 +446,7 @@ export class WireTestFunctionGenerator {
                 });
             },
             primitive: (examplePrimitive) => {
-                return examplePrimitive._visit({
+                return visitDiscriminatedUnion(examplePrimitive)._visit({
                     string: () => this.referencer.referenceSwiftType("String"),
                     boolean: () => this.referencer.referenceSwiftType("Bool"),
                     integer: () => this.referencer.referenceSwiftType("Int"),

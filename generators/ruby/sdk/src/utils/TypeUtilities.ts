@@ -1,10 +1,11 @@
+import { visitDiscriminatedUnion } from "@fern-api/core-utils";
 import { TypeReference } from "@fern-fern/ir-sdk/api";
 
 // Should this be in the codegen package?
 export function isTypeOptional(typeReference: TypeReference): boolean {
-    return typeReference._visit<boolean>({
+    return visitDiscriminatedUnion(typeReference)._visit<boolean>({
         container: (ct) =>
-            ct._visit({
+            visitDiscriminatedUnion(ct)._visit({
                 list: () => false,
                 map: () => false,
                 optional: () => true,

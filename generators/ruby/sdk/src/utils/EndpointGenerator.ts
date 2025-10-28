@@ -1,3 +1,4 @@
+import { visitDiscriminatedUnion } from "@fern-api/core-utils";
 import {
     AliasReference,
     Argument,
@@ -174,107 +175,116 @@ export class EndpointGenerator {
         const defaultBodyParameterName = "body";
         this.bodyAsProperties = [];
         this.bodyLiteralsAsProperties = new Map();
-        this.endpoint.requestBody?._visit({
-            inlinedRequestBody: (irb: InlinedRequestBody) => {
-                const properties: Property[] = irb.extends
-                    .flatMap((dtn) => generatedClasses.get(dtn.typeId)?.properties)
-                    .filter((p) => p !== undefined) as Property[];
-                const exampleRequestProperties =
-                    this.example?.request?.type === "inlinedRequestBody" ? this.example.request.properties : undefined;
-                const allProperties = [
-                    ...properties,
-                    ...irb.properties.map((prop) => {
-                        const requestEx = this.eg.convertExampleTypeReference(
-                            exampleRequestProperties?.find((erp) => prop.name.wireValue === erp.name.wireValue)?.value
-                        );
-                        return new Property({
-                            name: prop.name.name.snakeCase.safeName,
-                            wireValue: prop.name.wireValue,
-                            type: crf.fromTypeReference(prop.valueType),
-                            isOptional: isTypeOptional(prop.valueType),
-                            documentation: prop instanceof Property ? prop.documentation : prop.docs,
-                            example: requestEx
-                        });
-                    })
-                ];
+        if (this.endpoint.requestBody) {
+            visitDiscriminatedUnion(this.endpoint.requestBody)._visit({
+                inlinedRequestBody: (irb: InlinedRequestBody) => {
+                    const properties: Property[] = irb.extends
+                        .flatMap((dtn) => generatedClasses.get(dtn.typeId)?.properties)
+                        .filter((p) => p !== undefined) as Property[];
+                    const exampleRequestProperties =
+                        this.example?.request?.type === "inlinedRequestBody"
+                            ? this.example.request.properties
+                            : undefined;
+                    const allProperties = [
+                        ...properties,
+                        ...irb.properties.map((prop) => {
+                            const requestEx = this.eg.convertExampleTypeReference(
+                                exampleRequestProperties?.find((erp) => prop.name.wireValue === erp.name.wireValue)
+                                    ?.value
+                            );
+                            return new Property({
+                                name: prop.name.name.snakeCase.safeName,
+                                wireValue: prop.name.wireValue,
+                                type: crf.fromTypeReference(prop.valueType),
+                                isOptional: isTypeOptional(prop.valueType),
+                                documentation: prop instanceof Property ? prop.documentation : prop.docs,
+                                example: requestEx
+                            });
+                        })
+                    ];
 
-                allProperties.forEach((prop) => {
-                    if (prop.type.length === 1 && prop.type[0] instanceof LiteralClassReference) {
-                        if (prop.wireValue != null) {
-                            this.bodyLiteralsAsProperties.set(prop.wireValue, prop.type[0] as LiteralClassReference);
+                    allProperties.forEach((prop) => {
+                        if (prop.type.length === 1 && prop.type[0] instanceof LiteralClassReference) {
+                            if (prop.wireValue != null) {
+                                this.bodyLiteralsAsProperties.set(
+                                    prop.wireValue,
+                                    prop.type[0] as LiteralClassReference
+                                );
+                            }
+                        } else {
+                            this.bodyAsProperties.push(prop);
                         }
+                    });
+                },
+                reference: (rbr: HttpRequestBodyReference) => {
+                    const requestEx = this.eg.convertExampleTypeReference(
+                        this.example?.request?.type === "reference" ? this.example.request : undefined
+                    );
+                    if (!this.referenceIsLiteral(rbr.requestBodyType)) {
+                        this.bodyAsProperties.push(
+                            new Property({
+                                name:
+                                    this.endpoint.sdkRequest?.requestParameterName.snakeCase.safeName ??
+                                    defaultBodyParameterName,
+                                type: crf.fromTypeReference(rbr.requestBodyType),
+                                isOptional: isTypeOptional(rbr.requestBodyType),
+                                documentation: rbr.docs,
+                                example: requestEx
+                            })
+                        );
                     } else {
-                        this.bodyAsProperties.push(prop);
+                        this.bodyLiteralsAsProperties.set(
+                            this.endpoint.sdkRequest?.requestParameterName.snakeCase.safeName ??
+                                defaultBodyParameterName,
+                            crf.fromTypeReference(rbr.requestBodyType) as LiteralClassReference
+                        );
                     }
-                });
-            },
-            reference: (rbr: HttpRequestBodyReference) => {
-                const requestEx = this.eg.convertExampleTypeReference(
-                    this.example?.request?.type === "reference" ? this.example.request : undefined
-                );
-                if (!this.referenceIsLiteral(rbr.requestBodyType)) {
+                },
+                fileUpload: (fur: FileUploadRequest) => {
+                    return fur.properties.forEach((prop) => {
+                        this.bodyAsProperties.push(
+                            prop._visit<Property>({
+                                file: (fp: FileProperty) =>
+                                    new Property({
+                                        name: fp.key.name.snakeCase.safeName,
+                                        isOptional: fp.isOptional,
+                                        wireValue: fp.key.wireValue,
+                                        type: [StringClassReference, FileClassReference],
+                                        example: "my_file.txt"
+                                    }),
+                                // TODO: add examples for fileUpload parameters
+                                bodyProperty: (prop: InlinedRequestBodyProperty) =>
+                                    new Property({
+                                        name: prop.name.name.snakeCase.safeName,
+                                        isOptional: isTypeOptional(prop.valueType),
+                                        wireValue: prop.name.wireValue,
+                                        type: crf.fromTypeReference(prop.valueType),
+                                        documentation: prop.docs
+                                    }),
+                                _other: () => {
+                                    throw new Error("Unknown file upload property type.");
+                                }
+                            })
+                        );
+                    });
+                },
+                bytes: (br: BytesRequest) => {
                     this.bodyAsProperties.push(
                         new Property({
                             name:
                                 this.endpoint.sdkRequest?.requestParameterName.snakeCase.safeName ??
                                 defaultBodyParameterName,
-                            type: crf.fromTypeReference(rbr.requestBodyType),
-                            isOptional: isTypeOptional(rbr.requestBodyType),
-                            documentation: rbr.docs,
-                            example: requestEx
+                            type: [B64StringClassReference, FileClassReference],
+                            isOptional: br.isOptional,
+                            documentation: "Base64 encoded bytes, or an IO object (e.g. Faraday::UploadIO, etc.)"
                         })
                     );
-                } else {
-                    this.bodyLiteralsAsProperties.set(
-                        this.endpoint.sdkRequest?.requestParameterName.snakeCase.safeName ?? defaultBodyParameterName,
-                        crf.fromTypeReference(rbr.requestBodyType) as LiteralClassReference
-                    );
+                },
+                _other: () => {
+                    throw new Error("Unknown request body type.");
                 }
-            },
-            fileUpload: (fur: FileUploadRequest) => {
-                return fur.properties.forEach((prop) => {
-                    this.bodyAsProperties.push(
-                        prop._visit<Property>({
-                            file: (fp: FileProperty) =>
-                                new Property({
-                                    name: fp.key.name.snakeCase.safeName,
-                                    isOptional: fp.isOptional,
-                                    wireValue: fp.key.wireValue,
-                                    type: [StringClassReference, FileClassReference],
-                                    example: "my_file.txt"
-                                }),
-                            // TODO: add examples for fileUpload parameters
-                            bodyProperty: (prop: InlinedRequestBodyProperty) =>
-                                new Property({
-                                    name: prop.name.name.snakeCase.safeName,
-                                    isOptional: isTypeOptional(prop.valueType),
-                                    wireValue: prop.name.wireValue,
-                                    type: crf.fromTypeReference(prop.valueType),
-                                    documentation: prop.docs
-                                }),
-                            _other: () => {
-                                throw new Error("Unknown file upload property type.");
-                            }
-                        })
-                    );
-                });
-            },
-            bytes: (br: BytesRequest) => {
-                this.bodyAsProperties.push(
-                    new Property({
-                        name:
-                            this.endpoint.sdkRequest?.requestParameterName.snakeCase.safeName ??
-                            defaultBodyParameterName,
-                        type: [B64StringClassReference, FileClassReference],
-                        isOptional: br.isOptional,
-                        documentation: "Base64 encoded bytes, or an IO object (e.g. Faraday::UploadIO, etc.)"
-                    })
-                );
-            },
-            _other: () => {
-                throw new Error("Unknown request body type.");
-            }
-        });
+            });
+        }
 
         // Remove reserved properties from the function signature
         this.bodyAsProperties = this.bodyAsProperties.filter(

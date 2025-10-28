@@ -1,3 +1,4 @@
+import { visitDiscriminatedUnion } from "@fern-api/core-utils";
 import { CONSOLE_LOGGER, createLogger, Logger, LogLevel } from "@fern-api/logger";
 
 import { FernGeneratorExec, GeneratorNotificationService } from "./GeneratorNotificationService";
@@ -34,11 +35,13 @@ export abstract class AbstractGeneratorContext {
             }
         });
 
-        this.version = config?.output?.mode?._visit({
-            downloadFiles: () => undefined,
-            github: (github) => github.version,
-            publish: (publish) => publish.version,
-            _other: () => undefined
-        });
+        this.version = config?.output?.mode
+            ? visitDiscriminatedUnion(config.output.mode)._visit({
+                  downloadFiles: () => undefined,
+                  github: (github) => github.version,
+                  publish: (publish) => publish.version,
+                  _other: () => undefined
+              })
+            : undefined;
     }
 }

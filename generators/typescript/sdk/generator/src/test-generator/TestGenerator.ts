@@ -1,4 +1,4 @@
-import { assertNever } from "@fern-api/core-utils";
+import { assertNever, visitDiscriminatedUnion } from "@fern-api/core-utils";
 import {
     AuthScheme,
     ErrorDeclaration,
@@ -469,7 +469,7 @@ export function mockAuth(server: MockServer) {
     private getAuthClientOptions(context: SdkContext): Record<string, Code> {
         const authOptions: Record<string, Code> = {};
         this.ir.auth.schemes.forEach((schema) => {
-            schema._visit({
+            visitDiscriminatedUnion(schema)._visit({
                 bearer: (schema) => {
                     authOptions[schema.token.camelCase.unsafeName] = code`"test"`;
                 },
@@ -558,25 +558,27 @@ export function mockAuth(server: MockServer) {
             result[pathParameter.name.camelCase.safeName] = code`${literalOf(pathParameter.value.jsonExample)}`;
         });
 
-        request.request?._visit({
-            inlinedRequestBody: (value) => {
-                value.properties.forEach((p) => {
-                    return (result[p.name.name.camelCase.safeName] = this.createRawJsonExample({
-                        example: p.value,
-                        isForRequest: true,
-                        isForResponse: false
-                    }));
-                });
-            },
-            reference: (value) => {
-                Object.entries(this.getAuthRequestParameters(value)).forEach(([key, val]) => {
-                    result[key] = val;
-                });
-            },
-            _other: () => {
-                // noop
-            }
-        });
+        if (request.request) {
+            visitDiscriminatedUnion(request.request)._visit({
+                inlinedRequestBody: (value) => {
+                    value.properties.forEach((p) => {
+                        return (result[p.name.name.camelCase.safeName] = this.createRawJsonExample({
+                            example: p.value,
+                            isForRequest: true,
+                            isForResponse: false
+                        }));
+                    });
+                },
+                reference: (value) => {
+                    Object.entries(this.getAuthRequestParameters(value)).forEach(([key, val]) => {
+                        result[key] = val;
+                    });
+                },
+                _other: () => {
+                    // noop
+                }
+            });
+        }
 
         const authProviderParams = new Set<string>(
             context.authProvider.getPropertiesForAuthTokenParams(auth).map((p) => p.name)
@@ -587,12 +589,12 @@ export function mockAuth(server: MockServer) {
     private getAuthRequestParameters({ shape }: ExampleTypeReference): Record<string, Code> {
         const getAuthRequestParameters = this.getAuthRequestParameters.bind(this);
         const createRawJsonExample = this.createRawJsonExample.bind(this);
-        return shape._visit<Record<string, Code>>({
+        return visitDiscriminatedUnion(shape)._visit<Record<string, Code>>({
             primitive: () => {
                 return {};
             },
             container: (value) => {
-                return value._visit({
+                return visitDiscriminatedUnion(value)._visit({
                     list: () => ({}),
                     map: () => ({}),
                     nullable: (value) => {
@@ -613,7 +615,7 @@ export function mockAuth(server: MockServer) {
                 });
             },
             named: (value) => {
-                return value.shape._visit<Record<string, Code>>({
+                return visitDiscriminatedUnion(value.shape)._visit<Record<string, Code>>({
                     alias: (value) => {
                         return getAuthRequestParameters(value.value);
                     },
@@ -683,30 +685,32 @@ export function mockAuth(server: MockServer) {
             }
             baseOptions[header.name.name.camelCase.unsafeName] = code`"test"`;
         });
-        this.ir.apiVersion?._visit({
-            header: (v) => {
-                const propName = v.header.name.name.camelCase.unsafeName;
-                const defaultValue = v.value.default?.name.wireValue;
-                if (defaultValue) {
-                    baseOptions[propName] = code`${literalOf(defaultValue)}`;
-                    return;
-                }
-                if (context.type.isOptional(v.header.valueType)) {
-                    return;
-                }
-                if (context.type.isNullable(v.header.valueType)) {
-                    baseOptions[propName] = code`null`;
-                    return;
-                }
-                const fallbackValue = v.value.values[0]?.name.wireValue;
-                if (fallbackValue) {
-                    baseOptions[propName] = code`${literalOf(fallbackValue)}`;
-                    return;
-                }
-            },
-            // biome-ignore lint/suspicious/noEmptyBlockStatements: allow
-            _other: () => {}
-        });
+        if (this.ir.apiVersion) {
+            visitDiscriminatedUnion(this.ir.apiVersion)._visit({
+                header: (v) => {
+                    const propName = v.header.name.name.camelCase.unsafeName;
+                    const defaultValue = v.value.default?.name.wireValue;
+                    if (defaultValue) {
+                        baseOptions[propName] = code`${literalOf(defaultValue)}`;
+                        return;
+                    }
+                    if (context.type.isOptional(v.header.valueType)) {
+                        return;
+                    }
+                    if (context.type.isNullable(v.header.valueType)) {
+                        baseOptions[propName] = code`null`;
+                        return;
+                    }
+                    const fallbackValue = v.value.values[0]?.name.wireValue;
+                    if (fallbackValue) {
+                        baseOptions[propName] = code`${literalOf(fallbackValue)}`;
+                        return;
+                    }
+                },
+                // biome-ignore lint/suspicious/noEmptyBlockStatements: allow
+                _other: () => {}
+            });
+        }
 
         const tests = service.endpoints
             .filter((e) => this.shouldBuildTest(e))
@@ -1018,7 +1022,7 @@ describe("${serviceName}", () => {
         if (!request) {
             return undefined;
         }
-        const requestExample = request._visit({
+        const requestExample = visitDiscriminatedUnion(request)._visit({
             inlinedRequestBody: (value) => {
                 return code`${literalOf(
                     Object.fromEntries([
@@ -1075,9 +1079,9 @@ describe("${serviceName}", () => {
             return undefined;
         }
         const createRawJsonExample = this.createRawJsonExample.bind(this);
-        const responseExample = response._visit<Code | undefined>({
+        const responseExample = visitDiscriminatedUnion(response)._visit<Code | undefined>({
             ok: (value) => {
-                return value._visit({
+                return visitDiscriminatedUnion(value)._visit({
                     body: (value) => {
                         if (!value) {
                             return undefined;
@@ -1160,7 +1164,7 @@ describe("${serviceName}", () => {
                 });
             },
             container: (value) => {
-                return value._visit({
+                return visitDiscriminatedUnion(value)._visit({
                     list: (value) => {
                         return code`${arrayOf(
                             ...value.list
@@ -1200,7 +1204,7 @@ describe("${serviceName}", () => {
                         )}`;
                     },
                     literal: (value) => {
-                        return value.literal._visit({
+                        return visitDiscriminatedUnion(value.literal)._visit({
                             integer: (value) => code`${literalOf(value)}`,
                             long: (value) => {
                                 if (this.useBigInt) {
@@ -1231,7 +1235,7 @@ describe("${serviceName}", () => {
                 });
             },
             named: (value) => {
-                return value.shape._visit<Code>({
+                return visitDiscriminatedUnion(value.shape)._visit<Code>({
                     alias: (value) => {
                         return createRawJsonExample({ example: value.value, isForRequest, isForResponse });
                     },
@@ -1286,7 +1290,7 @@ describe("${serviceName}", () => {
                         )}`;
                     },
                     union: (value) => {
-                        return value.singleUnionType.shape._visit({
+                        return visitDiscriminatedUnion(value.singleUnionType.shape)._visit({
                             noProperties: () => code`${literalOf(jsonExample)}`,
                             singleProperty: () => code`${literalOf(jsonExample)}`,
                             samePropertiesAsObject: (memberValue) => {
@@ -1364,7 +1368,7 @@ function getExampleResponseStatusCode({
     response: ExampleResponse;
     ir: IntermediateRepresentation;
 }): number {
-    return response._visit({
+    return visitDiscriminatedUnion(response)._visit({
         ok: () => 200,
         error: (exampleError) => {
             const error = getExampleErrorDeclarationOrThrow({ exampleError, ir });
@@ -1406,9 +1410,9 @@ function getExpectedResponse({
     context: SdkContext;
     neverThrowErrors: boolean;
 }): Code {
-    return response._visit({
+    return visitDiscriminatedUnion(response)._visit({
         ok: (response) => {
-            const result = response._visit({
+            const result = visitDiscriminatedUnion(response)._visit({
                 body: (value) => {
                     if (!value) {
                         return code`undefined`;

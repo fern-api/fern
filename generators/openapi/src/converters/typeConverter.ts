@@ -1,3 +1,4 @@
+import { visitDiscriminatedUnion } from "@fern-api/core-utils";
 import {
     AliasTypeDeclaration,
     ContainerType,
@@ -449,7 +450,7 @@ function convertContainerType(containerType: ContainerType): OpenApiComponentSch
             };
         },
         literal: (literalType) => {
-            return literalType._visit({
+            return visitDiscriminatedUnion(literalType)._visit({
                 boolean: (val) => {
                     return {
                         type: "boolean",

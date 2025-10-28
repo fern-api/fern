@@ -1,5 +1,5 @@
 import { AbstractGeneratorContext, FernGeneratorExec, GeneratorNotificationService } from "@fern-api/base-generator";
-import { assertDefined, assertNever } from "@fern-api/core-utils";
+import { assertDefined, assertNever, visitDiscriminatedUnion } from "@fern-api/core-utils";
 import { RelativeFilePath } from "@fern-api/fs-utils";
 import { BaseSwiftCustomConfigSchema, swift } from "@fern-api/swift-codegen";
 import {
@@ -193,7 +193,7 @@ export abstract class AbstractSwiftGeneratorContext<
 
     public getPropertiesOfDiscriminatedUnionVariant(typeId: TypeId): ObjectProperty[] {
         const typeDeclaration = this.getTypeDeclarationOrThrow(typeId);
-        return typeDeclaration.shape._visit({
+        return visitDiscriminatedUnion(typeDeclaration.shape)._visit({
             alias: () => [],
             enum: () => [],
             object: (otd) => [...(otd.extendedProperties ?? []), ...otd.properties],
@@ -250,9 +250,9 @@ export abstract class AbstractSwiftGeneratorContext<
         const referencer = this.createReferencer(fromSymbol);
         switch (typeReference.type) {
             case "container":
-                return typeReference.container._visit({
+                return visitDiscriminatedUnion(typeReference.container)._visit({
                     literal: (literal) =>
-                        literal._visit({
+                        visitDiscriminatedUnion(literal)._visit({
                             boolean: () => referencer.referenceAsIsType("JSONValue"),
                             string: (literalValue) => {
                                 const symbol = this.project.nameRegistry.getNestedLiteralEnumSymbolOrThrow(

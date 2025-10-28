@@ -1,4 +1,4 @@
-import { assertDefined, assertNever } from "@fern-api/core-utils";
+import { assertDefined, assertNever, visitDiscriminatedUnion } from "@fern-api/core-utils";
 import { Referencer } from "@fern-api/swift-base";
 import { swift } from "@fern-api/swift-codegen";
 import { HttpEndpoint, HttpMethod, TypeReference } from "@fern-fern/ir-sdk/api";
@@ -177,7 +177,7 @@ export class EndpointMethodGenerator {
         if (!endpoint.response || !endpoint.response.body) {
             return this.referencer.referenceSwiftType("Void");
         }
-        return endpoint.response.body._visit({
+        return visitDiscriminatedUnion(endpoint.response.body)._visit({
             json: (resp) =>
                 this.sdkGeneratorContext.getSwiftTypeReferenceFromScope(resp.responseBodyType, this.parentClassSymbol),
             fileDownload: () => this.referencer.referenceFoundationType("Data"),

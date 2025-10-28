@@ -1,4 +1,4 @@
-import { noop } from "@fern-api/core-utils";
+import { noop, visitDiscriminatedUnion } from "@fern-api/core-utils";
 import { BaseSwiftCustomConfigSchema, swift } from "@fern-api/swift-codegen";
 import { ObjectProperty, TypeDeclaration, TypeReference } from "@fern-fern/ir-sdk/api";
 
@@ -16,7 +16,7 @@ export function registerLiteralEnums({
     typeDeclaration: TypeDeclaration;
     context: AbstractSwiftGeneratorContext<BaseSwiftCustomConfigSchema>;
 }) {
-    typeDeclaration.shape._visit({
+    visitDiscriminatedUnion(typeDeclaration.shape)._visit({
         object: (otd) => {
             const allProperties = [...(otd.extendedProperties ?? []), ...otd.properties];
             registerLiteralEnumsForObjectProperties({
@@ -31,7 +31,7 @@ export function registerLiteralEnums({
                     parentSymbol,
                     type.discriminantValue.wireValue
                 );
-                type.shape._visit({
+                visitDiscriminatedUnion(type.shape)._visit({
                     noProperties: noop,
                     samePropertiesAsObject: (declaredTypeName) => {
                         const variantProperties = context.getPropertiesOfDiscriminatedUnionVariant(
@@ -98,11 +98,11 @@ export function registerLiteralEnumsForTypeReference({
     registry: NameRegistry;
     typeReference: TypeReference;
 }) {
-    typeReference._visit({
+    visitDiscriminatedUnion(typeReference)._visit({
         container: (ct) => {
-            ct._visit({
+            visitDiscriminatedUnion(ct)._visit({
                 literal: (literal) => {
-                    literal._visit({
+                    visitDiscriminatedUnion(literal)._visit({
                         string: (literalValue) => {
                             registry.registerNestedLiteralEnumSymbol({
                                 parentSymbol,

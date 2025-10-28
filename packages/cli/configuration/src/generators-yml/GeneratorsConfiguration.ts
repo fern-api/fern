@@ -171,27 +171,31 @@ export function getPackageName({
     return visitDiscriminatedUnion(generatorInvocation.outputMode)._visit({
         downloadFiles: () => undefined,
         github: (val) =>
-            val.publishInfo ? visitDiscriminatedUnion(val.publishInfo)._visit({
-                maven: (val) => val.coordinate,
-                npm: (val) => val.packageName,
-                pypi: (val) => val.packageName,
-                postman: () => undefined,
-                rubygems: (val) => val.packageName,
-                nuget: (val) => val.packageName,
-                crates: (val) => val.packageName,
-                _other: () => undefined
-            }) : undefined,
+            val.publishInfo
+                ? visitDiscriminatedUnion(val.publishInfo)._visit({
+                      maven: (val) => val.coordinate,
+                      npm: (val) => val.packageName,
+                      pypi: (val) => val.packageName,
+                      postman: () => undefined,
+                      rubygems: (val) => val.packageName,
+                      nuget: (val) => val.packageName,
+                      crates: (val) => val.packageName,
+                      _other: () => undefined
+                  })
+                : undefined,
         githubV2: (val) =>
-            val.githubV2.publishInfo ? visitDiscriminatedUnion(val.githubV2.publishInfo)._visit({
-                maven: (val) => val.coordinate,
-                npm: (val) => val.packageName,
-                pypi: (val) => val.packageName,
-                postman: () => undefined,
-                rubygems: (val) => val.packageName,
-                nuget: (val) => val.packageName,
-                crates: (val) => val.packageName,
-                _other: () => undefined
-            }) : undefined,
+            val.githubV2.publishInfo
+                ? visitDiscriminatedUnion(val.githubV2.publishInfo)._visit({
+                      maven: (val) => val.coordinate,
+                      npm: (val) => val.packageName,
+                      pypi: (val) => val.packageName,
+                      postman: () => undefined,
+                      rubygems: (val) => val.packageName,
+                      nuget: (val) => val.packageName,
+                      crates: (val) => val.packageName,
+                      _other: () => undefined
+                  })
+                : undefined,
         publish: () => undefined,
         publishV2: () => undefined,
         _other: () => undefined

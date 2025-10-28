@@ -1,4 +1,4 @@
-import { assertNever } from "@fern-api/core-utils";
+import { assertNever, visitDiscriminatedUnion } from "@fern-api/core-utils";
 import { join, RelativeFilePath } from "@fern-api/fs-utils";
 import { FileGenerator, PhpFile } from "@fern-api/php-base";
 import { php } from "@fern-api/php-codegen";
@@ -202,7 +202,7 @@ export class RootClientGenerator extends FileGenerator<PhpFile, SdkCustomConfigS
 
         if (this.context.ir.apiVersion != null) {
             const apiVersion = this.context.ir.apiVersion;
-            const headerKey = apiVersion._visit({
+            const headerKey = visitDiscriminatedUnion(apiVersion)._visit({
                 header: (header) => {
                     return header.header.name.wireValue;
                 },
@@ -210,7 +210,7 @@ export class RootClientGenerator extends FileGenerator<PhpFile, SdkCustomConfigS
                     return undefined;
                 }
             });
-            const headerValue = apiVersion._visit({
+            const headerValue = visitDiscriminatedUnion(apiVersion)._visit({
                 header: (header) => {
                     return header.value.default?.name.wireValue;
                 },

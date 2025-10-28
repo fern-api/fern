@@ -1,3 +1,4 @@
+import { visitDiscriminatedUnion } from "@fern-api/core-utils";
 import { Environments, EnvironmentsConfig } from "@fern-fern/ir-sdk/api";
 import { GeneratedEnvironments } from "@fern-typescript/contexts";
 
@@ -24,7 +25,7 @@ export class EnvironmentsGenerator {
         if (
             environmentsConfig == null ||
             environmentsConfig.environments == null ||
-            environmentsConfig.environments._visit({
+            visitDiscriminatedUnion(environmentsConfig.environments)._visit({
                 singleBaseUrl: (value) => {
                     return value.environments.length === 0;
                 },

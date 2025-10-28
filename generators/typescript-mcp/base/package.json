@@ -33,6 +33,7 @@
   "devDependencies": {
     "@fern-api/base-generator": "workspace:*",
     "@fern-api/configs": "workspace:*",
+    "@fern-api/core-utils": "workspace:*",
     "@fern-api/fs-utils": "workspace:*",
     "@fern-api/logging-execa": "workspace:*",
     "@fern-api/typescript-ast": "workspace:*",

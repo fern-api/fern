@@ -31,6 +31,7 @@
     "test:update": "vitest --passWithNoTests --run -u"
   },
   "dependencies": {
+    "@fern-api/core-utils": "workspace:*",
     "@fern-api/fs-utils": "workspace:*",
     "@fern-fern/generator-exec-sdk": "catalog:",
     "@fern-fern/ir-sdk": "^39",

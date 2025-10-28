@@ -1,3 +1,4 @@
+import { visitDiscriminatedUnion } from "@fern-api/core-utils";
 import { TypescriptCustomConfigSchema } from "@fern-api/typescript-ast";
 
 import { PrimitiveTypeV1, SdkRequest, SingleUnionType, TypeReference } from "@fern-fern/ir-sdk/api";
@@ -19,7 +20,7 @@ export class ZodTypeMapper {
 
     // TODO: finish implementing this
     public convert({ reference }: ZodTypeMapper.Args): string {
-        return reference._visit({
+        return visitDiscriminatedUnion(reference)._visit({
             container: (value) => "any",
             named: (value) => "any",
             primitive: (value) => this.convertPrimitiveTypeV1(value.v1),
@@ -30,26 +31,31 @@ export class ZodTypeMapper {
 
     // TODO: finish implementing this
     public convertSdkRequest(sdkRequest: SdkRequest): string {
-        return sdkRequest?.shape._visit({
-            justRequestBody: (value) =>
-                value._visit({
-                    typeReference: (value) =>
-                        value.requestBodyType._visit({
-                            container: (value) => "any",
-                            named: (value) => {
-                                const { name: schemaName, fernFilepath: schemaFilepath } = value;
-                                return this.context.project.builder.getSchemaVariableName(schemaName, schemaFilepath);
-                            },
-                            primitive: (value) => this.convertPrimitiveTypeV1(value.v1),
-                            unknown: () => "unknown",
-                            _other: (value) => "any"
-                        }),
-                    bytes: (value) => "any",
-                    _other: (value) => "any"
-                }),
-            wrapper: (value) => "any",
-            _other: (value) => "any"
-        });
+        return sdkRequest?.shape
+            ? visitDiscriminatedUnion(sdkRequest.shape)._visit({
+                  justRequestBody: (value) =>
+                      visitDiscriminatedUnion(value)._visit({
+                          typeReference: (value) =>
+                              visitDiscriminatedUnion(value.requestBodyType)._visit({
+                                  container: (value) => "any",
+                                  named: (value) => {
+                                      const { name: schemaName, fernFilepath: schemaFilepath } = value;
+                                      return this.context.project.builder.getSchemaVariableName(
+                                          schemaName,
+                                          schemaFilepath
+                                      );
+                                  },
+                                  primitive: (value) => this.convertPrimitiveTypeV1(value.v1),
+                                  unknown: () => "unknown",
+                                  _other: (value) => "any"
+                              }),
+                          bytes: (value) => "any",
+                          _other: (value) => "any"
+                      }),
+                  wrapper: (value) => "any",
+                  _other: (value) => "any"
+              })
+            : "any";
     }
 
     // TODO: finish implementing this
@@ -74,7 +80,7 @@ export class ZodTypeMapper {
 
     // TODO: finish implementing this
     public convertSingleUnionType(singleUnionType: SingleUnionType): string {
-        return singleUnionType.shape._visit({
+        return visitDiscriminatedUnion(singleUnionType.shape)._visit({
             samePropertiesAsObject: (value) => "any",
             singleProperty: (value) => "any",
             noProperties: () => "any",

@@ -6,6 +6,7 @@ import {
     parseGeneratorConfig,
     parseIR
 } from "@fern-api/base-generator";
+import { visitDiscriminatedUnion } from "@fern-api/core-utils";
 import { AbsoluteFilePath } from "@fern-api/fs-utils";
 import { IntermediateRepresentation } from "@fern-fern/ir-sdk/api";
 import * as IrSerialization from "@fern-fern/ir-sdk/serialization";
@@ -84,7 +85,7 @@ export async function writePostmanCollection(pathToConfig: string): Promise<void
 
             const publishConfig = ir.publishConfig;
             if (publishConfig?.type === "direct" && publishConfig.target.type === "postman") {
-                await publishConfig._visit({
+                await visitDiscriminatedUnion(publishConfig)._visit({
                     _other: () => undefined,
                     direct: async () => {
                         await publishCollection({

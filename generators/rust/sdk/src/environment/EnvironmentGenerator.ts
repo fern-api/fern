@@ -1,3 +1,4 @@
+import { visitDiscriminatedUnion } from "@fern-api/core-utils";
 import { RelativeFilePath } from "@fern-api/fs-utils";
 import { RustFile } from "@fern-api/rust-base";
 import {
@@ -46,7 +47,7 @@ export class EnvironmentGenerator {
             return null;
         }
 
-        return environmentsConfig.environments._visit({
+        return visitDiscriminatedUnion(environmentsConfig.environments)._visit({
             singleBaseUrl: (config) => this.generateSingleUrlEnvironment(config),
             multipleBaseUrls: (config) => this.generateMultiUrlEnvironment(config),
             _other: () => {

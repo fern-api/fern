@@ -1,4 +1,4 @@
-import { assertNever } from "@fern-api/core-utils";
+import { assertNever, visitDiscriminatedUnion } from "@fern-api/core-utils";
 import { RelativeFilePath } from "@fern-api/fs-utils";
 import { python } from "@fern-api/python-ast";
 import { core, dt, pydantic, WriteablePythonFile } from "@fern-api/python-base";
@@ -100,9 +100,9 @@ export class WrappedAliasGenerator {
     }
 
     private getGetterName(typeReference: TypeReference): string {
-        return typeReference._visit({
+        return visitDiscriminatedUnion(typeReference)._visit({
             container: (container) =>
-                container._visit({
+                visitDiscriminatedUnion(container)._visit({
                     list: () => "get_as_list",
                     map: () => "get_as_map",
                     set: () => "get_as_set",
@@ -114,7 +114,7 @@ export class WrappedAliasGenerator {
             named: (typeName) => "get_as_" + typeName.name.snakeCase.unsafeName,
             primitive: (primitive) => {
                 if (primitive.v2 != null) {
-                    return primitive.v2?._visit({
+                    return visitDiscriminatedUnion(primitive.v2)._visit({
                         integer: () => "get_as_int",
                         double: () => "get_as_float",
                         string: () => "get_as_str",
@@ -192,9 +192,9 @@ export class WrappedAliasGenerator {
     }
 
     private getBuilderName(typeReference: TypeReference): string {
-        return typeReference._visit({
+        return visitDiscriminatedUnion(typeReference)._visit({
             container: (container) =>
-                container._visit({
+                visitDiscriminatedUnion(container)._visit({
                     list: () => "from_list",
                     map: () => "from_map",
                     set: () => "from_set",
@@ -206,7 +206,7 @@ export class WrappedAliasGenerator {
             named: (typeName) => "from_" + typeName.name.snakeCase.unsafeName,
             primitive: (primitive) => {
                 if (primitive.v2 != null) {
-                    return primitive.v2?._visit({
+                    return visitDiscriminatedUnion(primitive.v2)._visit({
                         integer: () => "from_int",
                         double: () => "from_float",
                         string: () => "from_str",

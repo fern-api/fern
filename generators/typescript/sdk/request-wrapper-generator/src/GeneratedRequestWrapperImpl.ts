@@ -1,4 +1,4 @@
-import { noop, SetRequired } from "@fern-api/core-utils";
+import { noop, SetRequired, visitDiscriminatedUnion } from "@fern-api/core-utils";
 import { FernIr } from "@fern-fern/ir-sdk";
 import {
     ExampleEndpointCall,
@@ -413,7 +413,7 @@ export class GeneratedRequestWrapperImpl implements GeneratedRequestWrapper {
             return [];
         }
 
-        return requestBody._visit({
+        return visitDiscriminatedUnion(requestBody)._visit({
             inlinedRequestBody: (inlinedRequestBody: FernIr.InlinedRequestBody) => {
                 return generateInlinePropertiesModule({
                     properties: inlinedRequestBody.properties.map((prop) => ({

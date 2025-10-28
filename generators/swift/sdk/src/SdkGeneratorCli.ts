@@ -1,5 +1,5 @@
 import { File, GeneratorNotificationService } from "@fern-api/base-generator";
-import { assertNever, extractErrorMessage, noop } from "@fern-api/core-utils";
+import { assertNever, extractErrorMessage, noop, visitDiscriminatedUnion } from "@fern-api/core-utils";
 import { join, RelativeFilePath } from "@fern-api/fs-utils";
 import { AbstractSwiftGeneratorCli } from "@fern-api/swift-base";
 import { sanitizeSelf, swift } from "@fern-api/swift-codegen";
@@ -236,9 +236,9 @@ export class SdkGeneratorCLI extends AbstractSwiftGeneratorCli<SdkCustomConfigSc
 
                     const properties: swift.Property[] = endpoint.requestBody.properties
                         .map((p) =>
-                            p._visit({
+                            visitDiscriminatedUnion(p)._visit({
                                 file: (fileProperty) => {
-                                    return fileProperty._visit({
+                                    return visitDiscriminatedUnion(fileProperty)._visit({
                                         file: (property) => {
                                             return swift.property({
                                                 unsafeName: sanitizeSelf(property.key.name.camelCase.unsafeName),
@@ -323,9 +323,9 @@ export class SdkGeneratorCLI extends AbstractSwiftGeneratorCli<SdkCustomConfigSc
 
                     const multipartFormFields: swift.Expression[] = endpoint.requestBody.properties
                         .map((p) =>
-                            p._visit({
+                            visitDiscriminatedUnion(p)._visit({
                                 file: (fileProperty) => {
-                                    return fileProperty._visit({
+                                    return visitDiscriminatedUnion(fileProperty)._visit({
                                         file: (property) => {
                                             return swift.Expression.contextualMethodCall({
                                                 methodName: "file",
@@ -411,7 +411,7 @@ export class SdkGeneratorCLI extends AbstractSwiftGeneratorCli<SdkCustomConfigSc
 
     private generateSourceSchemaFiles(context: SdkGeneratorContext): void {
         for (const [typeId, typeDeclaration] of Object.entries(context.ir.types)) {
-            typeDeclaration.shape._visit({
+            visitDiscriminatedUnion(typeDeclaration.shape)._visit({
                 alias: (atd) => {
                     const symbol = context.project.nameRegistry.getSchemaTypeSymbolOrThrow(typeId);
                     if (atd.aliasOf.type === "container" && atd.aliasOf.container.type === "literal") {

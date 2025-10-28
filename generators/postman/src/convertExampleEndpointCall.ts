@@ -1,3 +1,4 @@
+import { visitDiscriminatedUnion } from "@fern-api/core-utils";
 import {
     ErrorDeclaration,
     ExampleEndpointCall,
@@ -40,18 +41,19 @@ export function convertExampleEndpointCall({
     return {
         ...getNameAndStatus({ example, allErrors }),
         originalRequest: generatedRequest,
-        description:
-            httpEndpoint.response?.body?._visit({
-                fileDownload: (value) => value.docs,
-                json: (value) => value.docs,
-                streamParameter: (value) => value.streamResponse.docs,
-                streaming: (value) => value.docs,
-                text: (value) => value.docs,
-                _other: () => undefined
-            }) ?? undefined,
-        body: example.response._visit({
+        description: httpEndpoint.response?.body
+            ? visitDiscriminatedUnion(httpEndpoint.response.body)._visit({
+                  fileDownload: (value) => value.docs,
+                  json: (value) => value.docs,
+                  streamParameter: (value) => value.streamResponse.docs,
+                  streaming: (value) => value.docs,
+                  text: (value) => value.docs,
+                  _other: () => undefined
+              })
+            : undefined,
+        body: visitDiscriminatedUnion(example.response)._visit({
             ok: (value) => {
-                return value._visit({
+                return visitDiscriminatedUnion(value)._visit({
                     body: (value) => maybeStringify({ jsonExample: value?.jsonExample }),
                     sse: (value) => maybeStringify({ jsonExample: value.map((event) => event?.data.jsonExample) }),
                     stream: (value) => maybeStringify({ jsonExample: value.map((event) => event.jsonExample) }),
