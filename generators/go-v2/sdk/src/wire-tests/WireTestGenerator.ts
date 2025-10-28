@@ -284,9 +284,7 @@ export class WireTestGenerator {
                     writer.newLine();
                     writer.writeNode(go.codeblock("require.NoError(t, err)"));
                     writer.newLine();
-                    writer.writeNode(
-                        go.codeblock('var result struct { Requests []interface{} `json:"requests"` }')
-                    );
+                    writer.writeNode(go.codeblock('var result struct { Requests []interface{} `json:"requests"` }'));
                     writer.newLine();
                     writer.writeNode(go.codeblock("json.NewDecoder(resp.Body).Decode(&result)"));
                     writer.newLine();
