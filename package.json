@@ -127,7 +127,8 @@
       "@fern-fern/fdr-cjs-sdk": "0.139.33-c9426f366",
       "@fern-api/fdr-sdk": "0.139.33-c9426f366",
       "es-toolkit": "^1.39.10",
-      "ts-essentials": "^10.1.1"
+      "ts-essentials": "^10.1.1",
+      "form-data": "^4.0.4"
     }
   },
   "catalog": {

@@ -20,6 +20,7 @@ overrides:
   '@fern-api/fdr-sdk': 0.139.33-c9426f366
   es-toolkit: ^1.39.10
   ts-essentials: ^10.1.1
+  form-data: ^4.0.4
 
 importers:
 
@@ -6398,7 +6399,7 @@ importers:
         specifier: ^4.2.1
         version: 4.2.1
       form-data:
-        specifier: 4.0.4
+        specifier: ^4.0.4
         version: 4.0.4
       image-size:
         specifier: ^1.2.1
@@ -11751,10 +11752,6 @@ packages:
     resolution: {integrity: sha512-gIXjKqtFuWEgzFRJA9WCQeSJLZDjgJUOMCMzxtvFq/37KojM1BFGufqsCy0r4qSQmYLsZYMeyRqzIWOMup03sw==}
     engines: {node: '>=14'}
 
-  form-data@4.0.0:
-    resolution: {integrity: sha512-ETEklSGi5t0QMZuiXoA/Q6vcnxcLQP5vdugSpuAyi6SVGi2clPPp+xgEhuMaHC+zGgn31Kd235W35f7Hykkaww==}
-    engines: {node: '>= 6'}
-
   form-data@4.0.4:
     resolution: {integrity: sha512-KrGhL9Q4zjj0kiUt5OO4Mr/A/jlI2jDYs5eHBpYHPcBEVSiipAvn2Ko2HnPe20rmcuuvMHNdZFp+4IlGTMF0Ow==}
     engines: {node: '>= 6'}
@@ -16121,7 +16118,7 @@ snapshots:
   '@fern-api/sdk@0.12.3':
     dependencies:
       '@fern-api/template-resolver': 0.7.5
-      form-data: 4.0.0
+      form-data: 4.0.4
       formdata-node: 6.0.3
       js-base64: 3.7.2
       node-fetch: 2.7.0
@@ -16174,7 +16171,7 @@ snapshots:
 
   '@fern-fern/fdr-test-sdk@0.0.5297':
     dependencies:
-      form-data: 4.0.0
+      form-data: 4.0.4
       js-base64: 3.7.2
       node-fetch: 2.7.0
       qs: 6.13.0
@@ -16184,7 +16181,7 @@ snapshots:
 
   '@fern-fern/fiddle-sdk@0.0.656':
     dependencies:
-      form-data: 4.0.0
+      form-data: 4.0.4
       js-base64: 3.7.2
       node-fetch: 2.7.0
       qs: 6.13.0
@@ -16214,7 +16211,7 @@ snapshots:
 
   '@fern-fern/generator-exec-sdk@0.0.1167':
     dependencies:
-      form-data: 4.0.0
+      form-data: 4.0.4
       node-fetch: 2.7.0
       qs: 6.13.0
       url-join: 5.0.0
@@ -16463,7 +16460,7 @@ snapshots:
 
   '@fern-fern/snippet-sdk@0.0.6434':
     dependencies:
-      form-data: 4.0.0
+      form-data: 4.0.4
       js-base64: 3.7.2
       node-fetch: 2.7.0
       qs: 6.13.0
@@ -18973,12 +18970,6 @@ snapshots:
     dependencies:
       cross-spawn: 7.0.5
       signal-exit: 4.1.0
-
-  form-data@4.0.0:
-    dependencies:
-      asynckit: 0.4.0
-      combined-stream: 1.0.8
-      mime-types: 2.1.35
 
   form-data@4.0.4:
     dependencies:
