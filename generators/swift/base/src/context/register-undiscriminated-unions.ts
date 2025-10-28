@@ -1,8 +1,7 @@
 import { assertNever, assertNonNull } from "@fern-api/core-utils";
-import { BaseSwiftCustomConfigSchema, swift } from "@fern-api/swift-codegen";
+import { BaseSwiftCustomConfigSchema, NameRegistry, swift } from "@fern-api/swift-codegen";
 import { TypeDeclaration } from "@fern-fern/ir-sdk/api";
 import { camelCase, upperFirst } from "lodash-es";
-import { NameRegistry } from "../project";
 import type { AbstractSwiftGeneratorContext } from ".";
 
 const CASE_LABELS_BY_SWIFT_SYMBOL_NAME: Record<swift.SwiftTypeSymbolName, string> = {

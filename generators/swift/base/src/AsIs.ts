@@ -4,25 +4,6 @@ import { entries } from "@fern-api/core-utils";
 import { RelativeFilePath } from "@fern-api/fs-utils";
 import { swift } from "@fern-api/swift-codegen";
 
-export type AsIsSymbolName =
-    | "JSONValue"
-    | "CalendarDate"
-    | "HTTP"
-    | "HTTPClient"
-    | "MultipartFormData"
-    | "MultipartFormDataConvertible"
-    | "MultipartFormField"
-    | "QueryParameter"
-    | "EncodableValue"
-    | "Serde"
-    | "StringKey"
-    | "APIErrorResponse"
-    | "ClientConfig"
-    | "ClientError"
-    | "FormFile"
-    | "Nullable"
-    | "RequestOptions";
-
 /**
  * Configuration specification for a static Swift file that gets included as-is in the generated SDK.
  * This serves as the raw configuration that gets transformed into a fully resolved {@link AsIsFileDefinition}
@@ -190,7 +171,7 @@ const SourceAsIsFileSpecs = {
         filenameWithoutExtension: "RequestOptions",
         symbols: [{ name: "RequestOptions", shape: { type: "struct" } }]
     }
-} satisfies Record<string, AsIsFileSpec<AsIsSymbolName>>;
+} satisfies Record<string, AsIsFileSpec<swift.AsIsSymbolName>>;
 
 /**
  * Union type of all available static file identifiers.
@@ -234,7 +215,7 @@ function createSourceAsIsFiles(): SourceAsIsFileDefinitionsById {
     const result = {} as SourceAsIsFileDefinitionsById;
 
     for (const [key, spec] of entries(SourceAsIsFileSpecs)) {
-        const { relativePathToDir, filenameWithoutExtension, symbols } = spec as AsIsFileSpec<AsIsSymbolName>;
+        const { relativePathToDir, filenameWithoutExtension, symbols } = spec as AsIsFileSpec<swift.AsIsSymbolName>;
         result[key] = {
             filenameWithoutExtension,
             directory: RelativeFilePath.of(relativePathToDir),

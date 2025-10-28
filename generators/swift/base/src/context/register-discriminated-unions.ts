@@ -1,7 +1,6 @@
 import { noop } from "@fern-api/core-utils";
-import { BaseSwiftCustomConfigSchema, EnumWithAssociatedValues, swift } from "@fern-api/swift-codegen";
+import { BaseSwiftCustomConfigSchema, EnumWithAssociatedValues, NameRegistry, swift } from "@fern-api/swift-codegen";
 import { TypeDeclaration } from "@fern-fern/ir-sdk/api";
-import { NameRegistry } from "../project";
 import type { AbstractSwiftGeneratorContext } from ".";
 
 export function registerDiscriminatedUnionVariants({

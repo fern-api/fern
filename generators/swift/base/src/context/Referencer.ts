@@ -1,5 +1,4 @@
 import { swift } from "@fern-api/swift-codegen";
-import { AsIsSymbolName } from "../AsIs";
 import type { SwiftProject } from "../project";
 
 export class Referencer {
@@ -27,7 +26,7 @@ export class Referencer {
         return swift.TypeReference.symbol(symbolRef);
     }
 
-    public referenceAsIsType(symbolName: AsIsSymbolName) {
+    public referenceAsIsType(symbolName: swift.AsIsSymbolName) {
         const symbol = this.project.nameRegistry.getAsIsSymbolOrThrow(symbolName);
         const symbolRef = this.project.nameRegistry.reference({
             fromSymbol: this.fromSymbol,
@@ -55,7 +54,7 @@ export class Referencer {
         });
     }
 
-    public resolvesToTheAsIsType(typeReference: swift.TypeReference, asIsSymbolName: AsIsSymbolName) {
+    public resolvesToTheAsIsType(typeReference: swift.TypeReference, asIsSymbolName: swift.AsIsSymbolName) {
         const resolvedSymbol = this.resolveToSymbolIfSymbolType(typeReference);
         const registeredSymbol = this.project.nameRegistry.getAsIsSymbolOrThrow(asIsSymbolName);
         return resolvedSymbol?.id === registeredSymbol.id;
