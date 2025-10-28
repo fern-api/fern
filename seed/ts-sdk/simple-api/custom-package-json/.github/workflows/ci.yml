@@ -64,12 +64,15 @@ jobs:
       - name: Publish to npm
         run: |
           npm config set //registry.npmjs.org/:_authToken ${NPM_TOKEN}
+          publish() {  # use latest npm to ensure OIDC support
+            npx -y npm@latest publish "$@"
+          }
           if [[ ${GITHUB_REF} == *alpha* ]]; then
-            npm publish --access restricted --tag alpha
+            publish --access restricted --tag alpha
           elif [[ ${GITHUB_REF} == *beta* ]]; then
-            npm publish --access restricted --tag beta
+            publish --access restricted --tag beta
           else
-            npm publish --access restricted
+            publish --access restricted
           fi
         env:
           NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
