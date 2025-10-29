@@ -81,6 +81,7 @@ runs:
     # CHRISM - verify we can still seed tee results in log
     # CHRISM - what happens to summary between matricies? WHat happens across re-runs?
     - name: Summarize Test Results
+      if: always() && !cancelled()
       shell: bash
       run: |
         # Verify file exists from previous step
