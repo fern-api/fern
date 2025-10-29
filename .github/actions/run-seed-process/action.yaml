@@ -90,7 +90,7 @@ runs:
           # CHRISM - is tac included in github actions??
           UNEXPECTED_FAILURES=$(tail -n 100 output.log | tac | grep -m 1 "unexpected failures, including:" | sed -n 's/.*unexpected failures, including: \(.*\)\./\1/p' || echo "")
           if [ -z "$UNEXPECTED_FAILURES" ]; then
-            echo "**${{ inputs.generator-name }} Unexpected Test Failures:** ${UNEXPECTED_FAILURES}" >> $GITHUB_STEP_SUMMARY
+            echo "**${{ inputs.sdk-name }} Unexpected Test Failures:** ${UNEXPECTED_FAILURES}" >> $GITHUB_STEP_SUMMARY
           else
             echo "No unexpected errors parsed from output"
           fi
