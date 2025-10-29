@@ -95,10 +95,6 @@ export class SdkGeneratorContext extends AbstractGoGeneratorContext<SdkCustomCon
         return files;
     }
 
-    public getTestAsIsFiles(): string[] {
-        return [AsIsFiles.MainTest];
-    }
-
     public getClientClassName(subpackage?: Subpackage): string {
         if (subpackage == null && this.customConfig.clientName != null) {
             return this.customConfig.clientName;
