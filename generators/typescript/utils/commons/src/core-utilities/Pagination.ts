@@ -5,7 +5,7 @@ import { MANIFEST as FetcherManifest } from "./Fetcher";
 
 export interface Pagination {
     readonly Page: {
-        _getReferenceToType: (itemType: ts.TypeNode) => ts.TypeNode;
+        _getReferenceToType: (responseType: ts.TypeNode, itemType: ts.TypeNode) => ts.TypeNode;
     };
 
     readonly Pageable: {
@@ -18,7 +18,7 @@ export interface Pagination {
             getItems: ts.Expression;
             loadPage: ts.Expression;
         }) => ts.Expression;
-        _getReferenceToType: (response: ts.TypeNode, itemType: ts.TypeNode) => ts.TypeNode;
+        _getReferenceToType: (responseType: ts.TypeNode, itemType: ts.TypeNode) => ts.TypeNode;
     };
 }
 
@@ -39,8 +39,8 @@ export class PaginationImpl extends CoreUtility implements Pagination {
     public Page = {
         _getReferenceToType: this.withExportedName(
             "Page",
-            (APIResponse) => (itemType: ts.TypeNode) =>
-                ts.factory.createTypeReferenceNode(APIResponse.getEntityName(), [itemType])
+            (APIResponse) => (itemType: ts.TypeNode, responseType: ts.TypeNode) =>
+                ts.factory.createTypeReferenceNode(APIResponse.getEntityName(), [itemType, responseType])
         )
     };
     public Pageable = {
