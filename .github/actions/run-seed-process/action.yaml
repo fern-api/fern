@@ -34,12 +34,6 @@ outputs:
   end_time:
     description: The end time of the seed tests, used for metric collection
     value: ${{ steps.end-seed-timer.outputs.end_time }}
-  test_result:
-    description: The result of the seed tests (success or failure)
-    value: ${{ steps.run-seed.outcome }}
-  failed_fixtures:
-    description: List of failed fixtures from this test run
-    value: ${{ steps.capture-failures.outputs.failed_fixtures }}
 
 runs:
   using: "composite"
@@ -88,45 +82,25 @@ runs:
         sdk-name: ${{ inputs.sdk-name }}
         generator-path: ${{ inputs.generator-path }}
 
-    - name: Capture test failures
-      id: capture-failures
+    - name: Report test failures to job summary
+      id: report-failures
       if: always() && !cancelled()
       shell: bash
       run: |
-        mkdir -p .seed-failures
-
         if [[ "${{ steps.run-seed.outcome }}" == "failure" ]] || [[ "${{ steps.run-seed-leftovers.outcome }}" == "failure" ]]; then
-          echo "FAILED" > .seed-failures/status-${{ inputs.job-index }}.txt
-          echo "sdk-name=${{ inputs.sdk-name }}" >> .seed-failures/status-${{ inputs.job-index }}.txt
-          echo "job-index=${{ inputs.job-index }}" >> .seed-failures/status-${{ inputs.job-index }}.txt
-          echo "fixtures=${{ inputs.fixtures-to-run }}" >> .seed-failures/status-${{ inputs.job-index }}.txt
-          
+          echo "## ❌ ${{ inputs.sdk-name }} Test Failures" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "**Fixtures tested:** ${{ inputs.fixtures-to-run }}" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+
           if [ -f .seed-test-output/failed-fixtures.txt ]; then
-            cp .seed-test-output/failed-fixtures.txt .seed-failures/failed-fixtures-${{ inputs.job-index }}.txt
             FAILED_FIXTURES=$(cat .seed-test-output/failed-fixtures.txt)
-            echo "failed_fixtures=$FAILED_FIXTURES" >> $GITHUB_OUTPUT
+            echo "**Failed test cases:** $FAILED_FIXTURES" >> $GITHUB_STEP_SUMMARY
           else
-            echo "failed_fixtures=FAILED" >> $GITHUB_OUTPUT
+            echo "**Status:** Tests failed but specific fixture names could not be extracted. Check the logs above for details." >> $GITHUB_STEP_SUMMARY
           fi
-        else
-          echo "SUCCESS" > .seed-failures/status-${{ inputs.job-index }}.txt
-          echo "failed_fixtures=" >> $GITHUB_OUTPUT
-        fi
 
-    - name: Upload failure information
-      if: always() && !cancelled()
-      uses: actions/upload-artifact@v4
-      with:
-        name: seed-failures-${{ inputs.sdk-name }}-${{ inputs.job-index }}
-        path: .seed-failures/
-        retention-days: 1
-
-    - name: Fail job if tests failed
-      if: always() && !cancelled()
-      shell: bash
-      run: |
-        if [[ "${{ steps.run-seed.outcome }}" == "failure" ]] || [[ "${{ steps.run-seed-leftovers.outcome }}" == "failure" ]]; then
-          echo "Seed tests failed"
+          echo "" >> $GITHUB_STEP_SUMMARY
           exit 1
         fi
 
