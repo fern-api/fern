@@ -12,7 +12,6 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonSetter;
 import com.fasterxml.jackson.annotation.Nulls;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
-import com.seed.nullableOptional.core.Nullable;
 import com.seed.nullableOptional.core.NullableNonemptyFilter;
 import com.seed.nullableOptional.core.ObjectMappers;
 import com.seed.nullableOptional.resources.nullableoptional.types.NotificationMethod;
@@ -24,6 +23,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Optional;
+import org.jetbrains.annotations.Nullable;
 
 @JsonInclude(JsonInclude.Include.NON_ABSENT)
 @JsonDeserialize(builder = UpdateComplexProfileRequest.Builder.class)
@@ -190,7 +190,7 @@ public final class UpdateComplexProfileRequest {
         }
 
         @JsonSetter(value = "nullableRole", nulls = Nulls.SKIP)
-        public Builder nullableRole(Optional<UserRole> nullableRole) {
+        public Builder nullableRole(@Nullable Optional<UserRole> nullableRole) {
             this.nullableRole = nullableRole;
             return this;
         }
@@ -200,7 +200,7 @@ public final class UpdateComplexProfileRequest {
             return this;
         }
 
-        public Builder nullableRole(Nullable<UserRole> nullableRole) {
+        public Builder nullableRole(com.seed.nullableOptional.core.Nullable<UserRole> nullableRole) {
             if (nullableRole.isNull()) {
                 this.nullableRole = null;
             } else if (nullableRole.isEmpty()) {
@@ -212,7 +212,7 @@ public final class UpdateComplexProfileRequest {
         }
 
         @JsonSetter(value = "nullableStatus", nulls = Nulls.SKIP)
-        public Builder nullableStatus(Optional<UserStatus> nullableStatus) {
+        public Builder nullableStatus(@Nullable Optional<UserStatus> nullableStatus) {
             this.nullableStatus = nullableStatus;
             return this;
         }
@@ -222,7 +222,7 @@ public final class UpdateComplexProfileRequest {
             return this;
         }
 
-        public Builder nullableStatus(Nullable<UserStatus> nullableStatus) {
+        public Builder nullableStatus(com.seed.nullableOptional.core.Nullable<UserStatus> nullableStatus) {
             if (nullableStatus.isNull()) {
                 this.nullableStatus = null;
             } else if (nullableStatus.isEmpty()) {
@@ -234,7 +234,7 @@ public final class UpdateComplexProfileRequest {
         }
 
         @JsonSetter(value = "nullableNotification", nulls = Nulls.SKIP)
-        public Builder nullableNotification(Optional<NotificationMethod> nullableNotification) {
+        public Builder nullableNotification(@Nullable Optional<NotificationMethod> nullableNotification) {
             this.nullableNotification = nullableNotification;
             return this;
         }
@@ -244,7 +244,8 @@ public final class UpdateComplexProfileRequest {
             return this;
         }
 
-        public Builder nullableNotification(Nullable<NotificationMethod> nullableNotification) {
+        public Builder nullableNotification(
+                com.seed.nullableOptional.core.Nullable<NotificationMethod> nullableNotification) {
             if (nullableNotification.isNull()) {
                 this.nullableNotification = null;
             } else if (nullableNotification.isEmpty()) {
@@ -256,7 +257,7 @@ public final class UpdateComplexProfileRequest {
         }
 
         @JsonSetter(value = "nullableSearchResult", nulls = Nulls.SKIP)
-        public Builder nullableSearchResult(Optional<SearchResult> nullableSearchResult) {
+        public Builder nullableSearchResult(@Nullable Optional<SearchResult> nullableSearchResult) {
             this.nullableSearchResult = nullableSearchResult;
             return this;
         }
@@ -266,7 +267,8 @@ public final class UpdateComplexProfileRequest {
             return this;
         }
 
-        public Builder nullableSearchResult(Nullable<SearchResult> nullableSearchResult) {
+        public Builder nullableSearchResult(
+                com.seed.nullableOptional.core.Nullable<SearchResult> nullableSearchResult) {
             if (nullableSearchResult.isNull()) {
                 this.nullableSearchResult = null;
             } else if (nullableSearchResult.isEmpty()) {
@@ -278,7 +280,7 @@ public final class UpdateComplexProfileRequest {
         }
 
         @JsonSetter(value = "nullableArray", nulls = Nulls.SKIP)
-        public Builder nullableArray(Optional<List<String>> nullableArray) {
+        public Builder nullableArray(@Nullable Optional<List<String>> nullableArray) {
             this.nullableArray = nullableArray;
             return this;
         }
@@ -288,7 +290,7 @@ public final class UpdateComplexProfileRequest {
             return this;
         }
 
-        public Builder nullableArray(Nullable<List<String>> nullableArray) {
+        public Builder nullableArray(com.seed.nullableOptional.core.Nullable<List<String>> nullableArray) {
             if (nullableArray.isNull()) {
                 this.nullableArray = null;
             } else if (nullableArray.isEmpty()) {

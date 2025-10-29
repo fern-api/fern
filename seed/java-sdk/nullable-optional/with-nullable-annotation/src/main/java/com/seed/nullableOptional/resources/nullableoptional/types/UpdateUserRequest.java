@@ -12,13 +12,13 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonSetter;
 import com.fasterxml.jackson.annotation.Nulls;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
-import com.seed.nullableOptional.core.Nullable;
 import com.seed.nullableOptional.core.NullableNonemptyFilter;
 import com.seed.nullableOptional.core.ObjectMappers;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Optional;
+import org.jetbrains.annotations.Nullable;
 
 @JsonInclude(JsonInclude.Include.NON_ABSENT)
 @JsonDeserialize(builder = UpdateUserRequest.Builder.class)
@@ -151,7 +151,7 @@ public final class UpdateUserRequest {
         }
 
         @JsonSetter(value = "email", nulls = Nulls.SKIP)
-        public Builder email(Optional<String> email) {
+        public Builder email(@Nullable Optional<String> email) {
             this.email = email;
             return this;
         }
@@ -161,7 +161,7 @@ public final class UpdateUserRequest {
             return this;
         }
 
-        public Builder email(Nullable<String> email) {
+        public Builder email(com.seed.nullableOptional.core.Nullable<String> email) {
             if (email.isNull()) {
                 this.email = null;
             } else if (email.isEmpty()) {
@@ -184,7 +184,7 @@ public final class UpdateUserRequest {
         }
 
         @JsonSetter(value = "address", nulls = Nulls.SKIP)
-        public Builder address(Optional<Address> address) {
+        public Builder address(@Nullable Optional<Address> address) {
             this.address = address;
             return this;
         }
@@ -194,7 +194,7 @@ public final class UpdateUserRequest {
             return this;
         }
 
-        public Builder address(Nullable<Address> address) {
+        public Builder address(com.seed.nullableOptional.core.Nullable<Address> address) {
             if (address.isNull()) {
                 this.address = null;
             } else if (address.isEmpty()) {

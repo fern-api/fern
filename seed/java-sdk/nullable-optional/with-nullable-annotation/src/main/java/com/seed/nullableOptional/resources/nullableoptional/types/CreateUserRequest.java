@@ -26,6 +26,7 @@ import org.jetbrains.annotations.Nullable;
 public final class CreateUserRequest {
     private final String username;
 
+    @Nullable
     private final String email;
 
     private final Optional<String> phone;
@@ -36,7 +37,7 @@ public final class CreateUserRequest {
 
     private CreateUserRequest(
             String username,
-            String email,
+            @Nullable String email,
             Optional<String> phone,
             Optional<Address> address,
             Map<String, Object> additionalProperties) {
@@ -124,13 +125,13 @@ public final class CreateUserRequest {
     public interface _FinalStage {
         CreateUserRequest build();
 
-        _FinalStage email(@com.seed.nullableOptional.core.Nullable String email);
+        _FinalStage email(@Nullable String email);
 
         _FinalStage phone(Optional<String> phone);
 
         _FinalStage phone(String phone);
 
-        _FinalStage address(Optional<Address> address);
+        _FinalStage address(@Nullable Optional<Address> address);
 
         _FinalStage address(Address address);
 
@@ -188,7 +189,7 @@ public final class CreateUserRequest {
 
         @java.lang.Override
         @JsonSetter(value = "address", nulls = Nulls.SKIP)
-        public _FinalStage address(Optional<Address> address) {
+        public _FinalStage address(@Nullable Optional<Address> address) {
             this.address = address;
             return this;
         }
@@ -208,7 +209,7 @@ public final class CreateUserRequest {
 
         @java.lang.Override
         @JsonSetter("email")
-        public _FinalStage email(@com.seed.nullableOptional.core.Nullable String email) {
+        public _FinalStage email(@Nullable String email) {
             this.email = email;
             return this;
         }
