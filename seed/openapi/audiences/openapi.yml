@@ -8,7 +8,21 @@ paths:
       operationId: folderA_service_getDirectThread
       tags:
         - FolderAService
-      parameters: []
+      parameters:
+        - name: ids
+          in: query
+          required: true
+          schema:
+            type: array
+            items:
+              type: string
+        - name: tags
+          in: query
+          required: true
+          schema:
+            type: array
+            items:
+              type: string
       responses:
         '200':
           description: ''
