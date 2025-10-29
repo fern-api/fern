@@ -1,5 +1,11 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
 # For unreleased changes, use unreleased.yml
+- version: 5.0.0-rc0
+  changelogEntry:
+    - summary: Switch to `uv` for package management and builds; convert `pyproject.toml` to PEP 621 syntax, allowing it to be used with `poetry` or `uv`.
+      type: feat
+  createdAt: "2025-10-30"
+  irVersion: 60
 
 - version: 4.32.3-rc1
   changelogEntry:
