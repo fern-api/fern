@@ -94,7 +94,7 @@ runs:
       shell: bash
       run: |
         mkdir -p .seed-failures
-        
+
         if [[ "${{ steps.run-seed.outcome }}" == "failure" ]] || [[ "${{ steps.run-seed-leftovers.outcome }}" == "failure" ]]; then
           echo "FAILED" > .seed-failures/status-${{ inputs.job-index }}.txt
           echo "sdk-name=${{ inputs.sdk-name }}" >> .seed-failures/status-${{ inputs.job-index }}.txt
@@ -120,7 +120,7 @@ runs:
         name: seed-failures-${{ inputs.sdk-name }}-${{ inputs.job-index }}
         path: .seed-failures/
         retention-days: 1
-    
+
     - name: Fail job if tests failed
       if: always() && !cancelled()
       shell: bash

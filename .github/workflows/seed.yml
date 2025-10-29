@@ -1083,9 +1083,9 @@ jobs:
         if: always()
         run: |
           RESULT="${{ fromJSON(toJSON(needs))[matrix.job-name].result }}"
-          
+
           echo "## ${{ matrix.job-name }} Test Results" >> $GITHUB_STEP_SUMMARY
-          
+
           if [ "$RESULT" = "success" ] || [ "$RESULT" = "skipped" ]; then
             if [ "$RESULT" = "success" ]; then
               echo "✅ All tests passed" >> $GITHUB_STEP_SUMMARY
@@ -1123,7 +1123,7 @@ jobs:
               echo "No failure artifacts found. Check individual job logs for details." >> $GITHUB_STEP_SUMMARY
             fi
           fi
-          
+
           echo "" >> $GITHUB_STEP_SUMMARY
 
       - name: Report ${{ matrix.job-name }} seed test results
