@@ -1,7 +1,7 @@
 import { assertDefined, SymbolRegistry as Namespace } from "@fern-api/core-utils";
-import { LiteralEnum, swift } from "@fern-api/swift-codegen";
 import { uniqWith } from "lodash-es";
-import { AsIsSymbolName } from "../../AsIs";
+import { swift } from "..";
+import { LiteralEnum } from "../helpers";
 import { RequestsNamespace } from "./requests-namespace";
 import { SourceModuleNamespace } from "./source-module-namespace";
 import { TestModuleNamespace } from "./test-module-namespace";
@@ -50,7 +50,7 @@ export class NameRegistry {
         this.undiscriminatedUnionVariantsByParentSymbolId = new Map();
     }
 
-    public getAsIsSymbolOrThrow(symbolName: AsIsSymbolName): swift.Symbol {
+    public getAsIsSymbolOrThrow(symbolName: swift.AsIsSymbolName): swift.Symbol {
         const symbol = this.sourceAsIsSymbolsByName.get(symbolName);
         assertDefined(symbol, `As is symbol not found for name "${symbolName}"`);
         return symbol;

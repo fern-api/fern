@@ -1,21 +1,19 @@
-import { noop } from "@fern-api/core-utils";
-import { BaseSwiftCustomConfigSchema, EnumWithAssociatedValues, NameRegistry, swift } from "@fern-api/swift-codegen";
-import { TypeDeclaration } from "@fern-fern/ir-sdk/api";
-import type { AbstractSwiftGeneratorContext } from ".";
+import { noop, visitDiscriminatedUnion } from "@fern-api/core-utils";
+import { FernIr } from "@fern-api/dynamic-ir-sdk";
+import { EnumWithAssociatedValues, NameRegistry, swift } from "@fern-api/swift-codegen";
 
 export function registerDiscriminatedUnionVariants({
     parentSymbol,
     registry,
-    typeDeclaration
+    namedType
 }: {
     parentSymbol: swift.Symbol;
     registry: NameRegistry;
-    typeDeclaration: TypeDeclaration;
-    context: AbstractSwiftGeneratorContext<BaseSwiftCustomConfigSchema>;
+    namedType: FernIr.dynamic.NamedType;
 }) {
-    typeDeclaration.shape._visit({
-        union: (utd) => {
-            const variants = utd.types.map((singleUnionType) => {
+    visitDiscriminatedUnion(namedType, "type")._visit({
+        discriminatedUnion: (utd) => {
+            const variants = Object.values(utd.types).map((singleUnionType) => {
                 const symbolName = EnumWithAssociatedValues.sanitizeToPascalCase(
                     singleUnionType.discriminantValue.name.pascalCase.unsafeName
                 );
@@ -27,7 +25,7 @@ export function registerDiscriminatedUnionVariants({
                     caseName: caseName,
                     symbolName,
                     discriminantWireValue: singleUnionType.discriminantValue.wireValue,
-                    docsContent: singleUnionType.docs
+                    docsContent: undefined
                 };
             });
             registry.registerDiscriminatedUnionVariants({ parentSymbol, variants });

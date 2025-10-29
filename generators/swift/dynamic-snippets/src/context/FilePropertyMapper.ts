@@ -17,9 +17,11 @@ export class FilePropertyMapper {
     }
 
     public getFilePropertyInfo({
+        fromSymbol,
         body,
         value
     }: {
+        fromSymbol: swift.Symbol;
         body: FernIr.dynamic.FileUploadRequestBody;
         value: unknown;
     }): FilePropertyInfo {
@@ -49,7 +51,7 @@ export class FilePropertyMapper {
                 case "bodyProperty": {
                     const arg = swift.functionArgument({
                         label: sanitizeSelf(property.name.name.camelCase.unsafeName),
-                        value: this.getBodyProperty({ property, record })
+                        value: this.getBodyProperty({ fromSymbol, property, record })
                     });
                     result.bodyPropertyFields.push(arg);
                     break;
@@ -105,9 +107,11 @@ export class FilePropertyMapper {
     }
 
     private getBodyProperty({
+        fromSymbol,
         property,
         record
     }: {
+        fromSymbol: swift.Symbol;
         property: FernIr.dynamic.NamedParameter;
         record: Record<string, unknown>;
     }): swift.Expression {
@@ -116,6 +120,7 @@ export class FilePropertyMapper {
             return swift.Expression.nop();
         }
         return this.context.dynamicTypeLiteralMapper.convert({
+            fromSymbol,
             typeReference: property.typeReference,
             value: bodyPropertyValue
         });
