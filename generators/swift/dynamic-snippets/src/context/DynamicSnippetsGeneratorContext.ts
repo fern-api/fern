@@ -5,7 +5,7 @@ import {
 } from "@fern-api/browser-compatible-base-generator";
 import { assertDefined, visitDiscriminatedUnion } from "@fern-api/core-utils";
 import { FernIr } from "@fern-api/dynamic-ir-sdk";
-import { BaseSwiftCustomConfigSchema, NameRegistry, swift } from "@fern-api/swift-codegen";
+import { BaseSwiftCustomConfigSchema, NameRegistry, Referencer, swift } from "@fern-api/swift-codegen";
 import { pascalCase } from "../util/pascal-case";
 import { DynamicTypeLiteralMapper } from "./DynamicTypeLiteralMapper";
 import { DynamicTypeMapper } from "./DynamicTypeMapper";
@@ -127,8 +127,61 @@ export class DynamicSnippetsGeneratorContext extends AbstractDynamicSnippetsGene
         typeReference: FernIr.dynamic.TypeReference,
         fromSymbol: swift.Symbol | string
     ): swift.TypeReference {
-        // TODO(kafkas): Implement
-        throw new Error("Not implemented");
+        typeReference;
+        const referencer = this.createReferencer(fromSymbol);
+        return visitDiscriminatedUnion(typeReference, "type")._visit({
+            list: (ref) => swift.TypeReference.array(this.getSwiftTypeReferenceFromScope(ref, fromSymbol)),
+            literal: (ref) => {
+                return visitDiscriminatedUnion(ref.value, "type")._visit({
+                    boolean: () => referencer.referenceAsIsType("JSONValue"),
+                    string: (literalType) => {
+                        const symbol = this.nameRegistry.getNestedLiteralEnumSymbolOrThrow(
+                            fromSymbol,
+                            literalType.value
+                        );
+                        return referencer.referenceType(symbol);
+                    },
+                    _other: () => referencer.referenceAsIsType("JSONValue")
+                });
+            },
+            map: (ref) =>
+                swift.TypeReference.dictionary(
+                    this.getSwiftTypeReferenceFromScope(ref.key, fromSymbol),
+                    this.getSwiftTypeReferenceFromScope(ref.value, fromSymbol)
+                ),
+            named: (ref) => {
+                const toSymbol = this.nameRegistry.getSchemaTypeSymbolOrThrow(ref.value);
+                const symbolRef = this.nameRegistry.reference({ fromSymbol, toSymbol });
+                return swift.TypeReference.symbol(symbolRef);
+            },
+            nullable: (ref) => swift.TypeReference.nullable(this.getSwiftTypeReferenceFromScope(ref, fromSymbol)),
+            optional: (ref) => swift.TypeReference.optional(this.getSwiftTypeReferenceFromScope(ref, fromSymbol)),
+            primitive: (ref) => {
+                return visitDiscriminatedUnion(ref, "value")._visit({
+                    STRING: () => referencer.referenceSwiftType("String"),
+                    BOOLEAN: () => referencer.referenceSwiftType("Bool"),
+                    INTEGER: () => referencer.referenceSwiftType("Int"),
+                    UINT: () => referencer.referenceSwiftType("UInt"),
+                    UINT_64: () => referencer.referenceSwiftType("UInt64"),
+                    LONG: () => referencer.referenceSwiftType("Int64"),
+                    FLOAT: () => referencer.referenceSwiftType("Float"),
+                    DOUBLE: () => referencer.referenceSwiftType("Double"),
+                    BIG_INTEGER: () => referencer.referenceSwiftType("String"),
+                    DATE: () => referencer.referenceAsIsType("CalendarDate"),
+                    DATE_TIME: () => referencer.referenceFoundationType("Date"),
+                    BASE_64: () => referencer.referenceSwiftType("String"),
+                    UUID: () => referencer.referenceFoundationType("UUID"),
+                    _other: () => referencer.referenceAsIsType("JSONValue")
+                });
+            },
+            set: () => referencer.referenceAsIsType("JSONValue"),
+            unknown: () => referencer.referenceAsIsType("JSONValue"),
+            _other: () => referencer.referenceAsIsType("JSONValue")
+        });
+    }
+
+    public createReferencer(fromSymbol: swift.Symbol | string) {
+        return new Referencer(this.nameRegistry, fromSymbol);
     }
 
     public clone(): DynamicSnippetsGeneratorContext {
