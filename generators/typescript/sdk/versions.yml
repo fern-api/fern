@@ -1,10 +1,10 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
-- version: 3.16.1
+- version: 3.17.0
   changelogEntry:
     - summary: |
         Add `Page` to the top-level `exports.ts` files, which allows for `import { Page } from '...';` to work.
         Remove `Pageable`, and use only `core.Page` for pagination everywhere.
-      type: fix
+      type: feat
   createdAt: "2025-10-29"
   irVersion: 60
 
