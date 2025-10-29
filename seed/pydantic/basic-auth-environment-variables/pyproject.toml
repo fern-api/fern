@@ -30,7 +30,7 @@ packages = [
     { include = "seed/basic_auth_environment_variables", from = "src"}
 ]
 
-[project.urls]
+[tool.poetry.urls]
 Repository = 'https://github.com/basic-auth-environment-variables/fern'
 
 [tool.poetry.dependencies]
