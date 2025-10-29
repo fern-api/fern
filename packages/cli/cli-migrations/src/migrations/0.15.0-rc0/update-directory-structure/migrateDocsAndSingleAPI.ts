@@ -9,6 +9,10 @@ import { getAbsolutePathToGeneratorsConfiguration, loadRawGeneratorsConfiguratio
 import { convertLegacyGeneratorsConfiguration } from "./generators-configuration/convertLegacyGeneratorsConfiguration";
 import { migrateDocsInstances } from "./migrateDocsInstances";
 
+function ensureFinalNewline(content: string): string {
+    return content.endsWith("\n") ? content : content + "\n";
+}
+
 /**
  * fern/  <------ path to fern directory
  *   api/ <------ path to workspace
@@ -54,7 +58,7 @@ async function migrateAndWriteDocsYml({
         apiName: undefined
     });
     const absolutePathToDocsConfig = getAbsolutePathToDocsYaml({ absolutePathToWorkspace });
-    await writeFile(absolutePathToDocsConfig, yaml.dump(convertedDocsConfig));
+    await writeFile(absolutePathToDocsConfig, ensureFinalNewline(yaml.dump(convertedDocsConfig)));
 }
 
 async function migrateAndWriteGeneratorsYml({
@@ -71,6 +75,6 @@ async function migrateAndWriteGeneratorsYml({
         generatorsConfiguration,
         pathModificationStrategy: "MoveUp"
     });
-    await writeFile(absolutePathToGeneratorsConfiguration, yaml.dump(convertedResponse.value));
+    await writeFile(absolutePathToGeneratorsConfiguration, ensureFinalNewline(yaml.dump(convertedResponse.value)));
     return convertedResponse.docsURLs;
 }

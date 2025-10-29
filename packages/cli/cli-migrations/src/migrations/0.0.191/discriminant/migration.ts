@@ -4,6 +4,10 @@ import { readFile, writeFile } from "fs/promises";
 import { Migration } from "../../../types/Migration";
 import { getAllYamlFiles } from "./getAllYamlFiles";
 
+function ensureFinalNewline(content: string): string {
+    return content.endsWith("\n") ? content : content + "\n";
+}
+
 export const migration: Migration = {
     name: "discriminant",
     summary: "Adds 'discriminant: \"_type\"' to all discriminated types.",
@@ -13,7 +17,7 @@ export const migration: Migration = {
             try {
                 const fileContents = await getFileContents(yamlFilepath);
                 const newContents = addDiscriminantToFile(fileContents);
-                await writeFile(yamlFilepath, newContents);
+                await writeFile(yamlFilepath, ensureFinalNewline(newContents));
             } catch (error) {
                 context.failAndThrow("Failed to migrate " + yamlFilepath, error);
             }

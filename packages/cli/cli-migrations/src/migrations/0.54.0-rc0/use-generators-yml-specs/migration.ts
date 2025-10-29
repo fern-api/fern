@@ -16,6 +16,10 @@ import YAML from "yaml";
 
 import { Migration } from "../../../types/Migration";
 
+function ensureFinalNewline(content: string): string {
+    return content.endsWith("\n") ? content : content + "\n";
+}
+
 export const migration: Migration = {
     name: "generators-yml-use-api-specs",
     summary: "API specification must use the api.specs[] array syntax.",
@@ -229,7 +233,7 @@ async function addApiConfigurationToSingleWorkspace({
     if (schemaComment && documentToWrite.indexOf(schemaComment) === -1) {
         documentToWrite = `${schemaComment}${documentToWrite}`;
     }
-    await writeFile(generatorsYmlFile.absolutePath, documentToWrite);
+    await writeFile(generatorsYmlFile.absolutePath, ensureFinalNewline(documentToWrite));
     context.logger.info(chalk.green(`Updated ${generatorsYmlFile.absolutePath}`));
 }
 

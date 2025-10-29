@@ -16,6 +16,10 @@ import YAML from "yaml";
 
 import { CliContext } from "../../cli-context/CliContext";
 
+function ensureFinalNewline(content: string): string {
+    return content.endsWith("\n") ? content : content + "\n";
+}
+
 interface SkippedMajorUpgrade {
     generatorName: string;
     currentVersion: string;
@@ -227,7 +231,10 @@ export async function upgradeGenerator({
                 });
 
                 if (absolutePathToGeneratorsConfiguration != null && result.updatedConfiguration != null) {
-                    await writeFile(absolutePathToGeneratorsConfiguration, result.updatedConfiguration);
+                    await writeFile(
+                        absolutePathToGeneratorsConfiguration,
+                        ensureFinalNewline(result.updatedConfiguration)
+                    );
                 }
 
                 allSkippedMajorUpgrades.push(...result.skippedMajorUpgrades);

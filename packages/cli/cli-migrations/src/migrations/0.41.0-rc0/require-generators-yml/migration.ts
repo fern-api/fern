@@ -16,6 +16,10 @@ import YAML from "yaml";
 
 import { Migration } from "../../../types/Migration";
 
+function ensureFinalNewline(content: string): string {
+    return content.endsWith("\n") ? content : content + "\n";
+}
+
 export const migration: Migration = {
     name: "require-generators-yml",
     summary: "A generators.yml file is now required if you are using OpenAPI, AsyncAPI, or gRPC.",
@@ -113,7 +117,7 @@ async function addApiConfigurationToSingleWorkspace({
                     RelativeFilePath.of(openapiDirectory.contents[0]?.name)
                 )
             });
-            await writeFile(existingGeneratorsYml.absolutePath, parsedDocument.toString());
+            await writeFile(existingGeneratorsYml.absolutePath, ensureFinalNewline(parsedDocument.toString()));
             context.logger.info(chalk.green(`Updated ${existingGeneratorsYml.absolutePath}`));
         }
     }

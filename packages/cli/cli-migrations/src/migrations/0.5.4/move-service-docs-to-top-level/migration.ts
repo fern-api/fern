@@ -6,6 +6,10 @@ import YAML from "yaml";
 import { Migration } from "../../../types/Migration";
 import { getAllYamlFiles } from "./getAllYamlFiles";
 
+function ensureFinalNewline(content: string): string {
+    return content.endsWith("\n") ? content : content + "\n";
+}
+
 export const migration: Migration = {
     name: "move-service-docs-to-top-level",
     summary: "Move service-level docs to the top-level of the file.",
@@ -50,5 +54,5 @@ async function migrateYamlFile(filepath: AbsoluteFilePath, context: TaskContext)
 
     parsedDocument.contents.items.unshift(docsPair);
 
-    await writeFile(filepath, parsedDocument.toString());
+    await writeFile(filepath, ensureFinalNewline(parsedDocument.toString()));
 }

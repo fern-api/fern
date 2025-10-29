@@ -6,6 +6,10 @@ import YAML from "yaml";
 import { Migration } from "../../../types/Migration";
 import { getAllGeneratorYamlFiles } from "./getAllGeneratorYamlFiles";
 
+function ensureFinalNewline(content: string): string {
+    return content.endsWith("\n") ? content : content + "\n";
+}
+
 export const migration: Migration = {
     name: "add-publishing-to-release-generators",
     summary: "Adds publishing and github keys to release generators configuration",
@@ -66,5 +70,5 @@ async function migrateGeneratorsYml(filepath: AbsoluteFilePath, context: TaskCon
 
         releaseGenerator.delete("outputs");
     });
-    await writeFile(filepath, parsedDocument.toString());
+    await writeFile(filepath, ensureFinalNewline(parsedDocument.toString()));
 }

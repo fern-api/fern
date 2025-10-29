@@ -11,6 +11,10 @@ import { ReadableStream } from "stream/web";
 
 import { CliContext } from "../../cli-context/CliContext";
 
+function ensureFinalNewline(content: string): string {
+    return content.endsWith("\n") ? content : content + "\n";
+}
+
 async function fetchAndWriteFile(url: string, path: string, logger: Logger): Promise<void> {
     const resp = await fetch(url);
     if (resp.ok && resp.body) {
@@ -22,9 +26,9 @@ async function fetchAndWriteFile(url: string, path: string, logger: Logger): Pro
         // Read and format file
         const fileContents = await readFile(path, "utf8");
         try {
-            await writeFile(path, JSON.stringify(JSON.parse(fileContents), undefined, 2), "utf8");
+            await writeFile(path, ensureFinalNewline(JSON.stringify(JSON.parse(fileContents), undefined, 2)), "utf8");
         } catch (e) {
-            await writeFile(path, yaml.dump(yaml.load(fileContents)), "utf8");
+            await writeFile(path, ensureFinalNewline(yaml.dump(yaml.load(fileContents))), "utf8");
         }
         logger.debug("File written successfully");
     }

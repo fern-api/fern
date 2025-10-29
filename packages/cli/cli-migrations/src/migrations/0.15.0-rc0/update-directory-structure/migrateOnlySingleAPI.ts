@@ -8,6 +8,10 @@ import {
     loadRawGeneratorsConfiguration
 } from "./generators-configuration";
 
+function ensureFinalNewline(content: string): string {
+    return content.endsWith("\n") ? content : content + "\n";
+}
+
 /**
  * fern/  <------ path to fern directory
  *   api/ <------ path to workspace
@@ -42,5 +46,5 @@ async function migrateAndWriteGeneratorsYml({
         generatorsConfiguration,
         pathModificationStrategy: "MoveUp"
     });
-    await writeFile(absolutePathToGeneratorsConfiguration, yaml.dump(convertedResponse.value));
+    await writeFile(absolutePathToGeneratorsConfiguration, ensureFinalNewline(yaml.dump(convertedResponse.value)));
 }

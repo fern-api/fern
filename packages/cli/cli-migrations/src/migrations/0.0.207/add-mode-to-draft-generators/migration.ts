@@ -6,6 +6,10 @@ import YAML from "yaml";
 import { Migration } from "../../../types/Migration";
 import { getAllGeneratorYamlFiles } from "./getAllGeneratorYamlFiles";
 
+function ensureFinalNewline(content: string): string {
+    return content.endsWith("\n") ? content : content + "\n";
+}
+
 export const migration: Migration = {
     name: "add-mode-to-draft-generators",
     summary: "Adds 'mode' to draft generators in generators.yml, which can either be 'download-files' or 'publish'.",
@@ -56,5 +60,5 @@ async function migrateGeneratorsYml(filepath: AbsoluteFilePath, context: TaskCon
             );
         }
     });
-    await writeFile(filepath, parsedDocument.toString());
+    await writeFile(filepath, ensureFinalNewline(parsedDocument.toString()));
 }
