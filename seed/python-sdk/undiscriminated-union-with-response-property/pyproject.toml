@@ -30,7 +30,7 @@ packages = [
     { include = "seed", from = "src"}
 ]
 
-[project.urls]
+[tool.poetry.urls]
 Repository = 'https://github.com/undiscriminated-union-with-response-property/fern'
 
 [tool.poetry.dependencies]
