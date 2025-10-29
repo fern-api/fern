@@ -1,6 +1,6 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
 # For unreleased changes, use unreleased.yml
-- version: 4.32.1
+- version: 4.32.2
   changelogEntry:
     - summary: Update pyproject.toml headers to propagate project urls to pypi metadata generation
       type: chore
