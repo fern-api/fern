@@ -8,7 +8,6 @@ import { FernIr } from "@fern-api/dynamic-ir-sdk";
 import { BaseSwiftCustomConfigSchema, NameRegistry, Referencer, swift } from "@fern-api/swift-codegen";
 import { pascalCase } from "../util/pascal-case";
 import { DynamicTypeLiteralMapper } from "./DynamicTypeLiteralMapper";
-import { DynamicTypeMapper } from "./DynamicTypeMapper";
 import { FilePropertyMapper } from "./FilePropertyMapper";
 import { registerDiscriminatedUnionVariants } from "./register-discriminated-unions";
 import { registerLiteralEnums, registerLiteralEnumsForObjectProperties } from "./register-literal-enums";
@@ -17,7 +16,6 @@ import { registerUndiscriminatedUnionVariants } from "./register-undiscriminated
 export class DynamicSnippetsGeneratorContext extends AbstractDynamicSnippetsGeneratorContext {
     public ir: FernIr.dynamic.DynamicIntermediateRepresentation;
     public customConfig: BaseSwiftCustomConfigSchema | undefined;
-    public dynamicTypeMapper: DynamicTypeMapper;
     public dynamicTypeLiteralMapper: DynamicTypeLiteralMapper;
     public filePropertyMapper: FilePropertyMapper;
     public nameRegistry: NameRegistry;
@@ -35,7 +33,6 @@ export class DynamicSnippetsGeneratorContext extends AbstractDynamicSnippetsGene
         this.ir = ir;
         this.customConfig =
             config.customConfig != null ? (config.customConfig as BaseSwiftCustomConfigSchema) : undefined;
-        this.dynamicTypeMapper = new DynamicTypeMapper({ context: this });
         this.dynamicTypeLiteralMapper = new DynamicTypeLiteralMapper({ context: this });
         this.filePropertyMapper = new FilePropertyMapper({ context: this });
         this.nameRegistry = this.initRegistry(ir);
@@ -147,9 +144,8 @@ export class DynamicSnippetsGeneratorContext extends AbstractDynamicSnippetsGene
 
     public getSwiftTypeReferenceFromScope(
         typeReference: FernIr.dynamic.TypeReference,
-        fromSymbol: swift.Symbol | string
+        fromSymbol: swift.Symbol
     ): swift.TypeReference {
-        typeReference;
         const referencer = this.createReferencer(fromSymbol);
         return visitDiscriminatedUnion(typeReference, "type")._visit({
             list: (ref) => swift.TypeReference.array(this.getSwiftTypeReferenceFromScope(ref, fromSymbol)),
@@ -202,7 +198,7 @@ export class DynamicSnippetsGeneratorContext extends AbstractDynamicSnippetsGene
         });
     }
 
-    public createReferencer(fromSymbol: swift.Symbol | string) {
+    public createReferencer(fromSymbol: swift.Symbol) {
         return new Referencer(this.nameRegistry, fromSymbol);
     }
 
