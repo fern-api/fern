@@ -11,7 +11,7 @@ import { DynamicTypeLiteralMapper } from "./DynamicTypeLiteralMapper";
 import { DynamicTypeMapper } from "./DynamicTypeMapper";
 import { FilePropertyMapper } from "./FilePropertyMapper";
 import { registerDiscriminatedUnionVariants } from "./register-discriminated-unions";
-import { registerLiteralEnums } from "./register-literal-enums";
+import { registerLiteralEnums, registerLiteralEnumsForObjectProperties } from "./register-literal-enums";
 import { registerUndiscriminatedUnionVariants } from "./register-undiscriminated-unions";
 
 export class DynamicSnippetsGeneratorContext extends AbstractDynamicSnippetsGeneratorContext {
@@ -20,8 +20,6 @@ export class DynamicSnippetsGeneratorContext extends AbstractDynamicSnippetsGene
     public dynamicTypeMapper: DynamicTypeMapper;
     public dynamicTypeLiteralMapper: DynamicTypeLiteralMapper;
     public filePropertyMapper: FilePropertyMapper;
-
-    // TODO(kafkas): Implement
     public nameRegistry: NameRegistry;
 
     public constructor({
@@ -100,7 +98,31 @@ export class DynamicSnippetsGeneratorContext extends AbstractDynamicSnippetsGene
             });
         });
 
-        // TODO(kafkas): Implement
+        nameRegistry.registerRequestsContainerSymbol();
+
+        Object.entries(ir.endpoints).forEach(([endpointId, endpoint]) => {
+            if (endpoint.request.type === "inlined") {
+                if (endpoint.request.body?.type === "properties") {
+                    const requestTypeSymbol = nameRegistry.registerRequestTypeSymbol({
+                        endpointId,
+                        requestNamePascalCase: endpoint.request.declaration.name.pascalCase.unsafeName
+                    });
+                    registerLiteralEnumsForObjectProperties({
+                        parentSymbol: requestTypeSymbol,
+                        registry: nameRegistry,
+                        properties: endpoint.request.body.value
+                    });
+                }
+                if (endpoint.request.body?.type === "fileUpload") {
+                    nameRegistry.registerRequestTypeSymbol({
+                        endpointId,
+                        requestNamePascalCase: endpoint.request.declaration.name.pascalCase.unsafeName
+                    });
+                }
+            }
+        });
+
+        // TODO(kafkas): Register subclient symbols
 
         return nameRegistry;
     }
