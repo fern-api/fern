@@ -1,24 +1,5 @@
 import { TypeSymbolShape } from "./symbol-registry";
 
-export type AsIsSymbolName =
-    | "JSONValue"
-    | "CalendarDate"
-    | "HTTP"
-    | "HTTPClient"
-    | "MultipartFormData"
-    | "MultipartFormDataConvertible"
-    | "MultipartFormField"
-    | "QueryParameter"
-    | "EncodableValue"
-    | "Serde"
-    | "StringKey"
-    | "APIErrorResponse"
-    | "ClientConfig"
-    | "ClientError"
-    | "FormFile"
-    | "Nullable"
-    | "RequestOptions";
-
 export type SwiftTypeSymbolName =
     | "String"
     | "Bool"
