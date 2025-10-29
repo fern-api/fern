@@ -1,14 +1,4 @@
-export class ContributingGenerator {
-    private packageManager: "pnpm" | "yarn";
-
-    constructor({ packageManager }: { packageManager: "pnpm" | "yarn" }) {
-        this.packageManager = packageManager;
-    }
-
-    public generate(): string {
-        const packageManager = this.packageManager;
-
-        return `# Contributing
+# Contributing
 
 Thanks for your interest in contributing to this SDK! This document provides guidelines for contributing to the project.
 
@@ -17,57 +7,58 @@ Thanks for your interest in contributing to this SDK! This document provides gui
 ### Prerequisites
 
 - Node.js 20 or higher
-- ${packageManager} package manager
+- pnpm package manager
 
 ### Installation
 
 Install the project dependencies:
 
-\`\`\`bash
-${packageManager} install
-\`\`\`
+```bash
+pnpm install
+```
 
 ### Building
 
 Build the project:
 
-\`\`\`bash
-${packageManager} build
-\`\`\`
+```bash
+pnpm build
+```
 
 ### Testing
 
 Run the test suite:
 
-\`\`\`bash
-${packageManager} test
-\`\`\`
+```bash
+pnpm test
+```
 
 Run specific test types:
-- \`${packageManager} test:unit\` - Run unit tests
-- \`${packageManager} test:wire\` - Run wire/integration tests
+
+- `pnpm test:unit` - Run unit tests
+- `pnpm test:wire` - Run wire/integration tests
 
 ### Linting and Formatting
 
 Check code style:
 
-\`\`\`bash
-${packageManager} run lint
-${packageManager} run format:check
-\`\`\`
+```bash
+pnpm run lint
+pnpm run format:check
+```
 
 Fix code style issues:
 
-\`\`\`bash
-${packageManager} run lint:fix
-${packageManager} run format:fix
-\`\`\`
+```bash
+pnpm run lint:fix
+pnpm run format:fix
+```
 
 Or use the combined check command:
 
-\`\`\`bash
-${packageManager} run check:fix
-\`\`\`
+```bash
+pnpm run check:fix
+```
 
 ## About Generated Code
 
@@ -76,23 +67,24 @@ ${packageManager} run check:fix
 ### Generated Files
 
 The following directories contain generated code:
-- \`src/api/\` - API client classes and types
-- \`src/serialization/\` - Serialization/deserialization logic
-- Most TypeScript files in \`src/\`
+
+- `src/api/` - API client classes and types
+- `src/serialization/` - Serialization/deserialization logic
+- Most TypeScript files in `src/`
 
 ### How to Customize
 
 If you need to customize the SDK, you have two options:
 
-#### Option 1: Use \`.fernignore\`
+#### Option 1: Use `.fernignore`
 
 For custom code that should persist across SDK regenerations:
 
-1. Create a \`.fernignore\` file in the project root
-2. Add file patterns for files you want to preserve (similar to \`.gitignore\` syntax)
+1. Create a `.fernignore` file in the project root
+2. Add file patterns for files you want to preserve (similar to `.gitignore` syntax)
 3. Add your custom code to those files
 
-Files listed in \`.fernignore\` will not be overwritten when the SDK is regenerated.
+Files listed in `.fernignore` will not be overwritten when the SDK is regenerated.
 
 For more information, see the [Fern documentation on custom code](https://buildwithfern.com/learn/sdks/overview/custom-code).
 
@@ -101,11 +93,12 @@ For more information, see the [Fern documentation on custom code](https://buildw
 If you want to change how code is generated for all users of this SDK:
 
 1. The TypeScript SDK generator lives in the [Fern repository](https://github.com/fern-api/fern)
-2. Generator code is located at \`generators/typescript/sdk/\`
+2. Generator code is located at `generators/typescript/sdk/`
 3. Follow the [Fern contributing guidelines](https://github.com/fern-api/fern/blob/main/CONTRIBUTING.md)
 4. Submit a pull request with your changes to the generator
 
 This approach is best for:
+
 - Bug fixes in generated code
 - New features that would benefit all users
 - Improvements to code generation patterns
@@ -116,9 +109,9 @@ This approach is best for:
 
 1. Create a new branch for your changes
 2. Make your modifications
-3. Run tests to ensure nothing breaks: \`${packageManager} test\`
-4. Run linting and formatting: \`${packageManager} run check:fix\`
-5. Build the project: \`${packageManager} build\`
+3. Run tests to ensure nothing breaks: `pnpm test`
+4. Run linting and formatting: `pnpm run check:fix`
+5. Build the project: `pnpm build`
 6. Commit your changes with a clear commit message
 7. Push your branch and create a pull request
 
@@ -128,7 +121,7 @@ Write clear, descriptive commit messages that explain what changed and why.
 
 ### Code Style
 
-This project uses automated code formatting and linting. Run \`${packageManager} run check:fix\` before committing to ensure your code meets the project's style guidelines.
+This project uses automated code formatting and linting. Run `pnpm run check:fix` before committing to ensure your code meets the project's style guidelines.
 
 ## Questions or Issues?
 
@@ -141,6 +134,3 @@ If you have questions or run into issues:
 ## License
 
 By contributing to this project, you agree that your contributions will be licensed under the same license as the project.
-`;
-    }
-}
