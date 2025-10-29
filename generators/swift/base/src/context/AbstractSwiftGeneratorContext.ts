@@ -1,7 +1,7 @@
 import { AbstractGeneratorContext, FernGeneratorExec, GeneratorNotificationService } from "@fern-api/base-generator";
 import { assertDefined, assertNever } from "@fern-api/core-utils";
 import { RelativeFilePath } from "@fern-api/fs-utils";
-import { BaseSwiftCustomConfigSchema, swift, UndiscriminatedUnion } from "@fern-api/swift-codegen";
+import { BaseSwiftCustomConfigSchema, Referencer, swift, UndiscriminatedUnion } from "@fern-api/swift-codegen";
 import {
     FernFilepath,
     HttpEndpoint,
@@ -20,7 +20,6 @@ import {
 
 import { AsIsFileDefinition, SourceAsIsFiles, TestAsIsFiles } from "../AsIs";
 import { SwiftProject } from "../project";
-import { Referencer } from "./Referencer";
 import { registerDiscriminatedUnionVariants } from "./register-discriminated-unions";
 import { registerLiteralEnums, registerLiteralEnumsForObjectProperties } from "./register-literal-enums";
 import { registerUndiscriminatedUnionVariants } from "./register-undiscriminated-unions";
@@ -357,6 +356,6 @@ export abstract class AbstractSwiftGeneratorContext<
     }
 
     public createReferencer(fromSymbol: swift.Symbol | string) {
-        return new Referencer(this.project, fromSymbol);
+        return new Referencer(this.project.nameRegistry, fromSymbol);
     }
 }

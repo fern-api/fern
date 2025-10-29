@@ -1,17 +1,17 @@
-import { swift } from "@fern-api/swift-codegen";
-import type { SwiftProject } from "../project";
+import { swift } from "..";
+import { NameRegistry } from "../name-registry";
 
 export class Referencer {
-    private readonly project: SwiftProject;
+    private readonly nameRegistry: NameRegistry;
     private readonly fromSymbol: swift.Symbol | string;
 
-    public constructor(project: SwiftProject, fromSymbol: swift.Symbol | string) {
-        this.project = project;
+    public constructor(nameRegistry: NameRegistry, fromSymbol: swift.Symbol | string) {
+        this.nameRegistry = nameRegistry;
         this.fromSymbol = fromSymbol;
     }
 
     public referenceSwiftType(symbolName: swift.SwiftTypeSymbolName) {
-        const symbolRef = this.project.nameRegistry.reference({
+        const symbolRef = this.nameRegistry.reference({
             fromSymbol: this.fromSymbol,
             toSymbol: swift.Symbol.swiftType(symbolName)
         });
@@ -19,7 +19,7 @@ export class Referencer {
     }
 
     public referenceFoundationType(symbolName: swift.FoundationTypeSymbolName) {
-        const symbolRef = this.project.nameRegistry.reference({
+        const symbolRef = this.nameRegistry.reference({
             fromSymbol: this.fromSymbol,
             toSymbol: swift.Symbol.foundationType(symbolName)
         });
@@ -27,8 +27,8 @@ export class Referencer {
     }
 
     public referenceAsIsType(symbolName: swift.AsIsSymbolName) {
-        const symbol = this.project.nameRegistry.getAsIsSymbolOrThrow(symbolName);
-        const symbolRef = this.project.nameRegistry.reference({
+        const symbol = this.nameRegistry.getAsIsSymbolOrThrow(symbolName);
+        const symbolRef = this.nameRegistry.reference({
             fromSymbol: this.fromSymbol,
             toSymbol: symbol
         });
@@ -36,7 +36,7 @@ export class Referencer {
     }
 
     public referenceType(symbol: swift.Symbol | string) {
-        const symbolRef = this.project.nameRegistry.reference({
+        const symbolRef = this.nameRegistry.reference({
             fromSymbol: this.fromSymbol,
             toSymbol: symbol
         });
@@ -48,7 +48,7 @@ export class Referencer {
         if (reference === null) {
             return null;
         }
-        return this.project.nameRegistry.resolveReference({
+        return this.nameRegistry.resolveReference({
             fromSymbol: this.fromSymbol,
             reference
         });
@@ -56,7 +56,7 @@ export class Referencer {
 
     public resolvesToTheAsIsType(typeReference: swift.TypeReference, asIsSymbolName: swift.AsIsSymbolName) {
         const resolvedSymbol = this.resolveToSymbolIfSymbolType(typeReference);
-        const registeredSymbol = this.project.nameRegistry.getAsIsSymbolOrThrow(asIsSymbolName);
+        const registeredSymbol = this.nameRegistry.getAsIsSymbolOrThrow(asIsSymbolName);
         return resolvedSymbol?.id === registeredSymbol.id;
     }
 
