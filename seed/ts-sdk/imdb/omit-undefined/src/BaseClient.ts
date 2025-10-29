@@ -13,6 +13,7 @@ export interface BaseClientOptions {
     timeoutInSeconds?: number;
     /** The default number of times to retry the request. Defaults to 2. */
     maxRetries?: number;
+    fetch?: typeof fetch;
 }
 
 export interface BaseRequestOptions {

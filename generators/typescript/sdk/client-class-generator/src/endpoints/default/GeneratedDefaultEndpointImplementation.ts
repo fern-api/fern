@@ -503,6 +503,7 @@ export class GeneratedDefaultEndpointImplementation implements GeneratedEndpoint
                     this.generatedSdkClientClass
                 )
             }),
+            fetchFn: this.generatedSdkClientClass.getReferenceToFetch(),
 
             withCredentials: this.includeCredentialsOnCrossOriginRequests,
             endpointMetadata: this.generateEndpointMetadata

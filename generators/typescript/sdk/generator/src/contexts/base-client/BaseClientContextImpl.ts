@@ -286,6 +286,13 @@ export class BaseClientContextImpl implements BaseClientContext {
             docs: ["The default number of times to retry the request. Defaults to 2."]
         });
 
+        properties.push({
+            kind: StructureKind.PropertySignature,
+            name: "fetch",
+            type: "typeof fetch",
+            hasQuestionToken: true
+        });
+
         if (this.allowCustomFetcher) {
             properties.push({
                 kind: StructureKind.PropertySignature,
