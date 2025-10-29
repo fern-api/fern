@@ -4,6 +4,7 @@ namespace Seed\FolderA\Service;
 
 use GuzzleHttp\ClientInterface;
 use Seed\Core\Client\RawClient;
+use Seed\FolderA\Service\Requests\GetDirectThreadRequest;
 use Seed\FolderA\Service\Types\Response;
 use Seed\Exceptions\SeedException;
 use Seed\Exceptions\SeedApiException;
@@ -50,6 +51,7 @@ class ServiceClient
     }
 
     /**
+     * @param GetDirectThreadRequest $request
      * @param ?array{
      *   baseUrl?: string,
      *   maxRetries?: int,
@@ -62,15 +64,19 @@ class ServiceClient
      * @throws SeedException
      * @throws SeedApiException
      */
-    public function getDirectThread(?array $options = null): Response
+    public function getDirectThread(GetDirectThreadRequest $request, ?array $options = null): Response
     {
         $options = array_merge($this->options, $options ?? []);
+        $query = [];
+        $query['ids'] = $request->ids;
+        $query['tags'] = $request->tags;
         try {
             $response = $this->client->sendRequest(
                 new JsonApiRequest(
                     baseUrl: $options['baseUrl'] ?? $this->client->options['baseUrl'] ?? '',
                     path: "",
                     method: HttpMethod::GET,
+                    query: $query,
                 ),
                 $options,
             );
