@@ -1,6 +1,14 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
 - changelogEntry:
     - summary: |
+        Preserve trailing newline in fern.config.json during `fern upgrade`. Fixes issue where tools requiring a newline at EOF failed after running upgrade.
+      type: fix
+  irVersion: 61
+  createdAt: "2025-10-29"
+  version: 0.99.2
+
+- changelogEntry:
+    - summary: |
         Fix image rendering in docs preview after hot-reload. Images now maintain the /_local prefix and render correctly when markdown files are updated during `fern docs dev`.
       type: fix
   irVersion: 61
