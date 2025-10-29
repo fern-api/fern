@@ -9,4 +9,4 @@ from .....core.pydantic_utilities import UniversalBaseModel
 class ObjectWithMapOfMap(UniversalBaseModel):
     map_: typing.Dict[str, typing.Dict[str, str]] = pydantic.Field(alias="map")
 
-    model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow")  # type: ignore # Pydantic v2
+    model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow")
