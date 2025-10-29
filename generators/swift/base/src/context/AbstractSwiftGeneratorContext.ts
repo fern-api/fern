@@ -1,7 +1,7 @@
 import { AbstractGeneratorContext, FernGeneratorExec, GeneratorNotificationService } from "@fern-api/base-generator";
 import { assertDefined, assertNever } from "@fern-api/core-utils";
 import { RelativeFilePath } from "@fern-api/fs-utils";
-import { BaseSwiftCustomConfigSchema, swift } from "@fern-api/swift-codegen";
+import { BaseSwiftCustomConfigSchema, swift, UndiscriminatedUnion } from "@fern-api/swift-codegen";
 import {
     FernFilepath,
     HttpEndpoint,
@@ -23,7 +23,7 @@ import { SwiftProject } from "../project";
 import { Referencer } from "./Referencer";
 import { registerDiscriminatedUnionVariants } from "./register-discriminated-unions";
 import { registerLiteralEnums, registerLiteralEnumsForObjectProperties } from "./register-literal-enums";
-import { inferCaseNameForTypeReference, registerUndiscriminatedUnionVariants } from "./register-undiscriminated-unions";
+import { registerUndiscriminatedUnionVariants } from "./register-undiscriminated-unions";
 
 export abstract class AbstractSwiftGeneratorContext<
     CustomConfig extends BaseSwiftCustomConfigSchema
@@ -306,7 +306,11 @@ export abstract class AbstractSwiftGeneratorContext<
     }
 
     public inferCaseNameForTypeReference(parentSymbol: swift.Symbol, typeReference: swift.TypeReference): string {
-        return inferCaseNameForTypeReference(parentSymbol, typeReference, this.project.nameRegistry);
+        return UndiscriminatedUnion.inferCaseNameForTypeReference(
+            parentSymbol,
+            typeReference,
+            this.project.nameRegistry
+        );
     }
 
     public getEndpointMethodDetails(endpoint: HttpEndpoint) {

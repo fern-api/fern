@@ -63,7 +63,8 @@ export class EndpointSnippetGenerator {
     }
 
     private generateImportModuleStatement() {
-        return swift.Statement.import(this.context.getModuleName());
+        const sourceModuleSymbol = this.context.nameRegistry.getRegisteredSourceModuleSymbolOrThrow();
+        return swift.Statement.import(sourceModuleSymbol.name);
     }
 
     private generateMainFunctionDeclarationWithEndpointSnippet({
@@ -107,10 +108,11 @@ export class EndpointSnippetGenerator {
         rootClientArgs.push(...authArgs);
         rootClientArgs.push(...additionalArgs);
         const nonNopRootClientArgs = rootClientArgs.filter((arg) => !arg.value.isNop());
+        const rootClientSymbol = this.context.nameRegistry.getRootClientSymbolOrThrow();
         return swift.Statement.constantDeclaration({
             unsafeName: CLIENT_CONST_NAME,
             value: swift.Expression.classInitialization({
-                unsafeName: this.context.getRootClientClassName(),
+                unsafeName: rootClientSymbol.name,
                 arguments_: nonNopRootClientArgs,
                 multiline: nonNopRootClientArgs.length > 1 ? true : undefined
             })
