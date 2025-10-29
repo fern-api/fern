@@ -247,16 +247,6 @@ const (
 	sseLineSeparator = "\n"
 )
 
-// SseStreamReader reads Server-Sent Events (SSE) from a stream.
-//
-// SSE Format (per the SSE specification):
-//   - Individual messages/events are separated by blank lines (\n\n) - this is fixed
-//   - Lines within a message are separated by newlines (\n) - this is fixed
-//   - Multiple data: lines within a message are concatenated together
-//
-// The options.delimiter parameter controls how multiple data: lines are joined:
-//   - Default: "\n" (preserves newlines between data lines for multi-line JSON)
-//   - Can be set to "" (no separator), " " (space), or any other string
 type SseStreamReader struct {
 	scanner *bufio.Scanner
 	options *streamOptions

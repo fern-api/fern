@@ -17,14 +17,19 @@ type StreamFormat string
 const (
 	StreamFormatSSE   StreamFormat = "sse"
 	StreamFormatEmpty StreamFormat = ""
+
+	// sseEventSeparator is the standard SSE event separator (blank line).
+	// SSE messages are always separated by \n\n according to the SSE specification.
+	sseEventSeparator = "\n\n"
+
+	// sseLineSeparator is the standard separator for lines within an SSE event.
+	// Lines within a single SSE message are always separated by \n.
+	sseLineSeparator = "\n"
 )
 
 const (
 	defaultMaxBufSize = 64 * 1024 // 64KB
 )
-
-// defaultStreamDelimiter is the default stream delimiter used to split messages.
-const defaultStreamDelimiter = "\n\n"
 
 // Stream represents a stream of messages sent from a server.
 type Stream[T any] struct {
@@ -118,9 +123,6 @@ func newStreamReader(reader io.Reader, options *streamOptions) streamReader {
 		if options.maxBufSize == 0 {
 			options.maxBufSize = defaultMaxBufSize
 		}
-		if options.delimiter == "" {
-			options.delimiter = string(defaultStreamDelimiter)
-		}
 		if options.format == StreamFormatSSE {
 			return newSseStreamReader(reader, options)
 		}
@@ -154,9 +156,9 @@ func (b *BufferStreamReader) ReadFromStream() ([]byte, error) {
 		result = append(result, line...)
 
 		// Check if we have the complete delimiter
-		if strings.HasSuffix(string(result), defaultStreamDelimiter) {
+		if strings.HasSuffix(string(result), sseEventSeparator) {
 			// Remove the delimiter from the result
-			return result[:len(result)-len(defaultStreamDelimiter)], nil
+			return result[:len(result)-len(sseEventSeparator)], nil
 		}
 	}
 }
@@ -237,26 +239,6 @@ func (s *streamOptions) isEmpty() bool {
 	return s.delimiter == "" && s.prefix == "" && s.terminator == "" && s.format == StreamFormatEmpty
 }
 
-const (
-	// sseEventSeparator is the standard SSE event separator (blank line).
-	// SSE messages are always separated by \n\n according to the SSE specification.
-	sseEventSeparator = "\n\n"
-
-	// sseLineSeparator is the standard separator for lines within an SSE event.
-	// Lines within a single SSE message are always separated by \n.
-	sseLineSeparator = "\n"
-)
-
-// SseStreamReader reads Server-Sent Events (SSE) from a stream.
-//
-// SSE Format (per the SSE specification):
-//   - Individual messages/events are separated by blank lines (\n\n) - this is fixed
-//   - Lines within a message are separated by newlines (\n) - this is fixed
-//   - Multiple data: lines within a message are concatenated together
-//
-// The options.delimiter parameter controls how multiple data: lines are joined:
-//   - Default: "\n" (preserves newlines between data lines for multi-line JSON)
-//   - Can be set to "" (no separator), " " (space), or any other string
 type SseStreamReader struct {
 	scanner *bufio.Scanner
 	options *streamOptions
