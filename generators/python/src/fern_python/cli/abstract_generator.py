@@ -281,10 +281,9 @@ jobs:
                 publish_info_union.should_generate_publish_workflow is None
                 or publish_info_union.should_generate_publish_workflow
             ):
-                workflow_yaml += f"""
-  publish:
-    needs: [compile, test]
-    if: github.event_name == 'push' && contains(github.ref, 'refs/tags/')
+                workflow_yaml += """
+  build:
+    name: Build distribution
     runs-on: ubuntu-latest
     steps:
       - name: Checkout repo
@@ -298,13 +297,35 @@ jobs:
           curl -sSL https://install.python-poetry.org | python - -y --version 1.5.1
       - name: Install dependencies
         run: poetry install
-      - name: Publish to pypi
-        run: |
-          poetry config repositories.{AbstractGenerator._REMOTE_PYPI_REPO_NAME} {publish_info_union.registry_url}
-          poetry --no-interaction -v publish --build --repository {AbstractGenerator._REMOTE_PYPI_REPO_NAME} --username "${publish_info_union.username_environment_variable}" --password "${publish_info_union.password_environment_variable}"
-        env:
-          {publish_info_union.username_environment_variable}: ${{{{ secrets.{publish_info_union.username_environment_variable} }}}}
-          {publish_info_union.password_environment_variable}: ${{{{ secrets.{publish_info_union.password_environment_variable} }}}}
+      - name: Build package
+        run: poetry build
+      - name: Store the distribution packages
+        uses: actions/upload-artifact@v4
+        with:
+          name: python-package-distributions
+          path: dist/
+"""
+                workflow_yaml += f"""
+  publish:
+    name: Publish to PyPI
+    needs: [compile, test, build]
+    if: github.event_name == 'push' && contains(github.ref, 'refs/tags/')
+    runs-on: ubuntu-latest
+    environment:
+      name: pypi
+      url: https://pypi.org/p/${{{{ github.event.repository.name }}}}
+    permissions:
+      id-token: write
+    steps:
+      - name: Download all the dists
+        uses: actions/download-artifact@v4
+        with:
+          name: python-package-distributions
+          path: dist/
+      - name: Publish to pypi with attestations
+        uses: pypa/gh-action-pypi-publish@release/v1
+        with:
+          repository-url: {publish_info_union.registry_url}
 """
         return workflow_yaml
 
