@@ -30,7 +30,7 @@ packages = [
     { include = "seed/error_property", from = "src"}
 ]
 
-[project.urls]
+[tool.poetry.urls]
 Repository = 'https://github.com/error-property/fern'
 
 [tool.poetry.dependencies]
