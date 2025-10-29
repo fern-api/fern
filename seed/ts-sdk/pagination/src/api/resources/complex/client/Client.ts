@@ -41,7 +41,7 @@ export class Complex {
         index: string,
         request: SeedPagination.SearchRequest,
         requestOptions?: Complex.RequestOptions,
-    ): Promise<core.Page<SeedPagination.Conversation>> {
+    ): Promise<core.Page<SeedPagination.Conversation, SeedPagination.PaginatedConversationResponse>> {
         const list = core.HttpResponsePromise.interceptFunction(
             async (
                 request: SeedPagination.SearchRequest,

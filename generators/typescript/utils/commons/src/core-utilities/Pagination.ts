@@ -5,6 +5,10 @@ import { MANIFEST as FetcherManifest } from "./Fetcher";
 
 export interface Pagination {
     readonly Page: {
+        _getReferenceToType: (responseType: ts.TypeNode, itemType: ts.TypeNode) => ts.TypeNode;
+    };
+
+    readonly Pageable: {
         _construct: (args: {
             responseType: ts.TypeNode;
             itemType: ts.TypeNode;
@@ -33,9 +37,16 @@ export const MANIFEST: CoreUtility.Manifest = {
 export class PaginationImpl extends CoreUtility implements Pagination {
     public readonly MANIFEST = MANIFEST;
     public Page = {
-        _construct: this.withExportedName(
+        _getReferenceToType: this.withExportedName(
             "Page",
-            (Page) =>
+            (APIResponse) => (itemType: ts.TypeNode, responseType: ts.TypeNode) =>
+                ts.factory.createTypeReferenceNode(APIResponse.getEntityName(), [itemType, responseType])
+        )
+    };
+    public Pageable = {
+        _construct: this.withExportedName(
+            "Pageable",
+            (Pageable) =>
                 ({
                     responseType,
                     itemType,
@@ -54,7 +65,7 @@ export class PaginationImpl extends CoreUtility implements Pagination {
                     loadPage: ts.Expression;
                 }): ts.Expression => {
                     return ts.factory.createNewExpression(
-                        Page.getExpression(),
+                        Pageable.getExpression(),
                         [responseType, itemType],
                         [
                             ts.factory.createObjectLiteralExpression(
@@ -87,9 +98,9 @@ export class PaginationImpl extends CoreUtility implements Pagination {
                 }
         ),
         _getReferenceToType: this.withExportedName(
-            "Page",
-            (Page) => (responseType: ts.TypeNode, itemType: ts.TypeNode) =>
-                ts.factory.createTypeReferenceNode(Page.getEntityName(), [responseType, itemType])
+            "Pageable",
+            (APIResponse) => (itemType: ts.TypeNode, response: ts.TypeNode) =>
+                ts.factory.createTypeReferenceNode(APIResponse.getEntityName(), [response, itemType])
         )
     };
 }

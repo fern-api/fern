@@ -34,7 +34,7 @@ export class Users {
     public async listWithCursorPagination(
         request: SeedPagination.ListUsersCursorPaginationRequest = {},
         requestOptions?: Users.RequestOptions,
-    ): Promise<core.Page<SeedPagination.User>> {
+    ): Promise<core.Page<SeedPagination.User, SeedPagination.ListUsersPaginationResponse>> {
         const list = core.HttpResponsePromise.interceptFunction(
             async (
                 request: SeedPagination.ListUsersCursorPaginationRequest,
@@ -130,7 +130,7 @@ export class Users {
     public async listWithMixedTypeCursorPagination(
         request: SeedPagination.ListUsersMixedTypeCursorPaginationRequest = {},
         requestOptions?: Users.RequestOptions,
-    ): Promise<core.Page<SeedPagination.User>> {
+    ): Promise<core.Page<SeedPagination.User, SeedPagination.ListUsersMixedTypePaginationResponse>> {
         const list = core.HttpResponsePromise.interceptFunction(
             async (
                 request: SeedPagination.ListUsersMixedTypeCursorPaginationRequest,
@@ -215,7 +215,7 @@ export class Users {
     public async listWithBodyCursorPagination(
         request: SeedPagination.ListUsersBodyCursorPaginationRequest = {},
         requestOptions?: Users.RequestOptions,
-    ): Promise<core.Page<SeedPagination.User>> {
+    ): Promise<core.Page<SeedPagination.User, SeedPagination.ListUsersPaginationResponse>> {
         const list = core.HttpResponsePromise.interceptFunction(
             async (
                 request: SeedPagination.ListUsersBodyCursorPaginationRequest,
@@ -303,7 +303,7 @@ export class Users {
     public async listWithOffsetPagination(
         request: SeedPagination.ListUsersOffsetPaginationRequest = {},
         requestOptions?: Users.RequestOptions,
-    ): Promise<core.Page<SeedPagination.User>> {
+    ): Promise<core.Page<SeedPagination.User, SeedPagination.ListUsersPaginationResponse>> {
         const list = core.HttpResponsePromise.interceptFunction(
             async (
                 request: SeedPagination.ListUsersOffsetPaginationRequest,
@@ -399,7 +399,7 @@ export class Users {
     public async listWithDoubleOffsetPagination(
         request: SeedPagination.ListUsersDoubleOffsetPaginationRequest = {},
         requestOptions?: Users.RequestOptions,
-    ): Promise<core.Page<SeedPagination.User>> {
+    ): Promise<core.Page<SeedPagination.User, SeedPagination.ListUsersPaginationResponse>> {
         const list = core.HttpResponsePromise.interceptFunction(
             async (
                 request: SeedPagination.ListUsersDoubleOffsetPaginationRequest,
@@ -494,7 +494,7 @@ export class Users {
     public async listWithBodyOffsetPagination(
         request: SeedPagination.ListUsersBodyOffsetPaginationRequest = {},
         requestOptions?: Users.RequestOptions,
-    ): Promise<core.Page<SeedPagination.User>> {
+    ): Promise<core.Page<SeedPagination.User, SeedPagination.ListUsersPaginationResponse>> {
         const list = core.HttpResponsePromise.interceptFunction(
             async (
                 request: SeedPagination.ListUsersBodyOffsetPaginationRequest,
@@ -578,7 +578,7 @@ export class Users {
     public async listWithOffsetStepPagination(
         request: SeedPagination.ListUsersOffsetStepPaginationRequest = {},
         requestOptions?: Users.RequestOptions,
-    ): Promise<core.Page<SeedPagination.User>> {
+    ): Promise<core.Page<SeedPagination.User, SeedPagination.ListUsersPaginationResponse>> {
         const list = core.HttpResponsePromise.interceptFunction(
             async (
                 request: SeedPagination.ListUsersOffsetStepPaginationRequest,
@@ -670,7 +670,7 @@ export class Users {
     public async listWithOffsetPaginationHasNextPage(
         request: SeedPagination.ListWithOffsetPaginationHasNextPageRequest = {},
         requestOptions?: Users.RequestOptions,
-    ): Promise<core.Page<SeedPagination.User>> {
+    ): Promise<core.Page<SeedPagination.User, SeedPagination.ListUsersPaginationResponse>> {
         const list = core.HttpResponsePromise.interceptFunction(
             async (
                 request: SeedPagination.ListWithOffsetPaginationHasNextPageRequest,
@@ -760,7 +760,7 @@ export class Users {
     public async listWithExtendedResults(
         request: SeedPagination.ListUsersExtendedRequest = {},
         requestOptions?: Users.RequestOptions,
-    ): Promise<core.Page<SeedPagination.User>> {
+    ): Promise<core.Page<SeedPagination.User, SeedPagination.ListUsersExtendedResponse>> {
         const list = core.HttpResponsePromise.interceptFunction(
             async (
                 request: SeedPagination.ListUsersExtendedRequest,
@@ -843,7 +843,7 @@ export class Users {
     public async listWithExtendedResultsAndOptionalData(
         request: SeedPagination.ListUsersExtendedRequestForOptionalData = {},
         requestOptions?: Users.RequestOptions,
-    ): Promise<core.Page<SeedPagination.User>> {
+    ): Promise<core.Page<SeedPagination.User, SeedPagination.ListUsersExtendedOptionalListResponse>> {
         const list = core.HttpResponsePromise.interceptFunction(
             async (
                 request: SeedPagination.ListUsersExtendedRequestForOptionalData,
@@ -926,7 +926,7 @@ export class Users {
     public async listUsernames(
         request: SeedPagination.ListUsernamesRequest = {},
         requestOptions?: Users.RequestOptions,
-    ): Promise<core.Page<string>> {
+    ): Promise<core.Page<string, SeedPagination.UsernameCursor>> {
         const list = core.HttpResponsePromise.interceptFunction(
             async (
                 request: SeedPagination.ListUsernamesRequest,
@@ -1010,7 +1010,7 @@ export class Users {
     public async listWithGlobalConfig(
         request: SeedPagination.ListWithGlobalConfigRequest = {},
         requestOptions?: Users.RequestOptions,
-    ): Promise<core.Page<string>> {
+    ): Promise<core.Page<string, SeedPagination.UsernameContainer>> {
         const list = core.HttpResponsePromise.interceptFunction(
             async (
                 request: SeedPagination.ListWithGlobalConfigRequest,

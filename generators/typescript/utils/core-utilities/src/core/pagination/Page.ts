@@ -3,10 +3,10 @@ import { HttpResponsePromise, type RawResponse } from "../fetcher/index";
 /**
  * A page of results from a paginated API.
  *
- * @template R The type of the API response.
  * @template T The type of the items in the page.
+ * @template R The type of the API response.
  */
-export class Page<R, T> implements AsyncIterable<T> {
+export class Page<T, R = unknown> implements AsyncIterable<T> {
     public data: T[];
     public rawResponse: RawResponse;
     public response: R;

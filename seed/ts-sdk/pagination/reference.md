@@ -1,6 +1,6 @@
 # Reference
 ## Conversations
-<details><summary><code>client.complex.<a href="/src/api/resources/complex/client/Client.ts">search</a>(index, { ...params }) -> core.Page<SeedPagination.Conversation></code></summary>
+<details><summary><code>client.complex.<a href="/src/api/resources/complex/client/Client.ts">search</a>(index, { ...params }) -> core.Page<SeedPagination.Conversation, SeedPagination.PaginatedConversationResponse></code></summary>
 <dl>
 <dd>
 
@@ -87,7 +87,7 @@ while (page.hasNextPage()) {
 </details>
 
 ## InlineUsers InlineUsers
-<details><summary><code>client.inlineUsers.inlineUsers.<a href="/src/api/resources/inlineUsers/resources/inlineUsers/client/Client.ts">listWithCursorPagination</a>({ ...params }) -> core.Page<SeedPagination.ListUsersPaginationResponse.Data.Users.Item></code></summary>
+<details><summary><code>client.inlineUsers.inlineUsers.<a href="/src/api/resources/inlineUsers/resources/inlineUsers/client/Client.ts">listWithCursorPagination</a>({ ...params }) -> core.Page<SeedPagination.ListUsersPaginationResponse.Data.Users.Item, SeedPagination.ListUsersPaginationResponse></code></summary>
 <dl>
 <dd>
 
@@ -155,7 +155,7 @@ while (page.hasNextPage()) {
 </dl>
 </details>
 
-<details><summary><code>client.inlineUsers.inlineUsers.<a href="/src/api/resources/inlineUsers/resources/inlineUsers/client/Client.ts">listWithMixedTypeCursorPagination</a>({ ...params }) -> core.Page<SeedPagination.ListUsersMixedTypePaginationResponse.Data.Users.Item></code></summary>
+<details><summary><code>client.inlineUsers.inlineUsers.<a href="/src/api/resources/inlineUsers/resources/inlineUsers/client/Client.ts">listWithMixedTypeCursorPagination</a>({ ...params }) -> core.Page<SeedPagination.ListUsersMixedTypePaginationResponse.Data.Users.Item, SeedPagination.ListUsersMixedTypePaginationResponse></code></summary>
 <dl>
 <dd>
 
@@ -217,7 +217,7 @@ while (page.hasNextPage()) {
 </dl>
 </details>
 
-<details><summary><code>client.inlineUsers.inlineUsers.<a href="/src/api/resources/inlineUsers/resources/inlineUsers/client/Client.ts">listWithBodyCursorPagination</a>({ ...params }) -> core.Page<SeedPagination.ListUsersPaginationResponse.Data.Users.Item></code></summary>
+<details><summary><code>client.inlineUsers.inlineUsers.<a href="/src/api/resources/inlineUsers/resources/inlineUsers/client/Client.ts">listWithBodyCursorPagination</a>({ ...params }) -> core.Page<SeedPagination.ListUsersPaginationResponse.Data.Users.Item, SeedPagination.ListUsersPaginationResponse></code></summary>
 <dl>
 <dd>
 
@@ -283,7 +283,7 @@ while (page.hasNextPage()) {
 </dl>
 </details>
 
-<details><summary><code>client.inlineUsers.inlineUsers.<a href="/src/api/resources/inlineUsers/resources/inlineUsers/client/Client.ts">listWithOffsetPagination</a>({ ...params }) -> core.Page<SeedPagination.ListUsersPaginationResponse.Data.Users.Item></code></summary>
+<details><summary><code>client.inlineUsers.inlineUsers.<a href="/src/api/resources/inlineUsers/resources/inlineUsers/client/Client.ts">listWithOffsetPagination</a>({ ...params }) -> core.Page<SeedPagination.ListUsersPaginationResponse.Data.Users.Item, SeedPagination.ListUsersPaginationResponse></code></summary>
 <dl>
 <dd>
 
@@ -351,7 +351,7 @@ while (page.hasNextPage()) {
 </dl>
 </details>
 
-<details><summary><code>client.inlineUsers.inlineUsers.<a href="/src/api/resources/inlineUsers/resources/inlineUsers/client/Client.ts">listWithDoubleOffsetPagination</a>({ ...params }) -> core.Page<SeedPagination.ListUsersPaginationResponse.Data.Users.Item></code></summary>
+<details><summary><code>client.inlineUsers.inlineUsers.<a href="/src/api/resources/inlineUsers/resources/inlineUsers/client/Client.ts">listWithDoubleOffsetPagination</a>({ ...params }) -> core.Page<SeedPagination.ListUsersPaginationResponse.Data.Users.Item, SeedPagination.ListUsersPaginationResponse></code></summary>
 <dl>
 <dd>
 
@@ -419,7 +419,7 @@ while (page.hasNextPage()) {
 </dl>
 </details>
 
-<details><summary><code>client.inlineUsers.inlineUsers.<a href="/src/api/resources/inlineUsers/resources/inlineUsers/client/Client.ts">listWithBodyOffsetPagination</a>({ ...params }) -> core.Page<SeedPagination.ListUsersPaginationResponse.Data.Users.Item></code></summary>
+<details><summary><code>client.inlineUsers.inlineUsers.<a href="/src/api/resources/inlineUsers/resources/inlineUsers/client/Client.ts">listWithBodyOffsetPagination</a>({ ...params }) -> core.Page<SeedPagination.ListUsersPaginationResponse.Data.Users.Item, SeedPagination.ListUsersPaginationResponse></code></summary>
 <dl>
 <dd>
 
@@ -485,7 +485,7 @@ while (page.hasNextPage()) {
 </dl>
 </details>
 
-<details><summary><code>client.inlineUsers.inlineUsers.<a href="/src/api/resources/inlineUsers/resources/inlineUsers/client/Client.ts">listWithOffsetStepPagination</a>({ ...params }) -> core.Page<SeedPagination.ListUsersPaginationResponse.Data.Users.Item></code></summary>
+<details><summary><code>client.inlineUsers.inlineUsers.<a href="/src/api/resources/inlineUsers/resources/inlineUsers/client/Client.ts">listWithOffsetStepPagination</a>({ ...params }) -> core.Page<SeedPagination.ListUsersPaginationResponse.Data.Users.Item, SeedPagination.ListUsersPaginationResponse></code></summary>
 <dl>
 <dd>
 
@@ -551,7 +551,7 @@ while (page.hasNextPage()) {
 </dl>
 </details>
 
-<details><summary><code>client.inlineUsers.inlineUsers.<a href="/src/api/resources/inlineUsers/resources/inlineUsers/client/Client.ts">listWithOffsetPaginationHasNextPage</a>({ ...params }) -> core.Page<SeedPagination.ListUsersPaginationResponse.Data.Users.Item></code></summary>
+<details><summary><code>client.inlineUsers.inlineUsers.<a href="/src/api/resources/inlineUsers/resources/inlineUsers/client/Client.ts">listWithOffsetPaginationHasNextPage</a>({ ...params }) -> core.Page<SeedPagination.ListUsersPaginationResponse.Data.Users.Item, SeedPagination.ListUsersPaginationResponse></code></summary>
 <dl>
 <dd>
 
@@ -617,7 +617,7 @@ while (page.hasNextPage()) {
 </dl>
 </details>
 
-<details><summary><code>client.inlineUsers.inlineUsers.<a href="/src/api/resources/inlineUsers/resources/inlineUsers/client/Client.ts">listWithExtendedResults</a>({ ...params }) -> core.Page<SeedPagination.UserListContainer.Users.Item></code></summary>
+<details><summary><code>client.inlineUsers.inlineUsers.<a href="/src/api/resources/inlineUsers/resources/inlineUsers/client/Client.ts">listWithExtendedResults</a>({ ...params }) -> core.Page<SeedPagination.UserListContainer.Users.Item, SeedPagination.ListUsersExtendedResponse></code></summary>
 <dl>
 <dd>
 
@@ -679,7 +679,7 @@ while (page.hasNextPage()) {
 </dl>
 </details>
 
-<details><summary><code>client.inlineUsers.inlineUsers.<a href="/src/api/resources/inlineUsers/resources/inlineUsers/client/Client.ts">listWithExtendedResultsAndOptionalData</a>({ ...params }) -> core.Page<SeedPagination.UserOptionalListContainer.Users.Item></code></summary>
+<details><summary><code>client.inlineUsers.inlineUsers.<a href="/src/api/resources/inlineUsers/resources/inlineUsers/client/Client.ts">listWithExtendedResultsAndOptionalData</a>({ ...params }) -> core.Page<SeedPagination.UserOptionalListContainer.Users.Item, SeedPagination.ListUsersExtendedOptionalListResponse></code></summary>
 <dl>
 <dd>
 
@@ -741,7 +741,7 @@ while (page.hasNextPage()) {
 </dl>
 </details>
 
-<details><summary><code>client.inlineUsers.inlineUsers.<a href="/src/api/resources/inlineUsers/resources/inlineUsers/client/Client.ts">listUsernames</a>({ ...params }) -> core.Page<string></code></summary>
+<details><summary><code>client.inlineUsers.inlineUsers.<a href="/src/api/resources/inlineUsers/resources/inlineUsers/client/Client.ts">listUsernames</a>({ ...params }) -> core.Page<string, SeedPagination.UsernameCursor></code></summary>
 <dl>
 <dd>
 
@@ -803,7 +803,7 @@ while (page.hasNextPage()) {
 </dl>
 </details>
 
-<details><summary><code>client.inlineUsers.inlineUsers.<a href="/src/api/resources/inlineUsers/resources/inlineUsers/client/Client.ts">listWithGlobalConfig</a>({ ...params }) -> core.Page<string></code></summary>
+<details><summary><code>client.inlineUsers.inlineUsers.<a href="/src/api/resources/inlineUsers/resources/inlineUsers/client/Client.ts">listWithGlobalConfig</a>({ ...params }) -> core.Page<string, SeedPagination.UsernameContainer></code></summary>
 <dl>
 <dd>
 
@@ -866,7 +866,7 @@ while (page.hasNextPage()) {
 </details>
 
 ## Users
-<details><summary><code>client.users.<a href="/src/api/resources/users/client/Client.ts">listWithCursorPagination</a>({ ...params }) -> core.Page<SeedPagination.User></code></summary>
+<details><summary><code>client.users.<a href="/src/api/resources/users/client/Client.ts">listWithCursorPagination</a>({ ...params }) -> core.Page<SeedPagination.User, SeedPagination.ListUsersPaginationResponse></code></summary>
 <dl>
 <dd>
 
@@ -934,7 +934,7 @@ while (page.hasNextPage()) {
 </dl>
 </details>
 
-<details><summary><code>client.users.<a href="/src/api/resources/users/client/Client.ts">listWithMixedTypeCursorPagination</a>({ ...params }) -> core.Page<SeedPagination.User></code></summary>
+<details><summary><code>client.users.<a href="/src/api/resources/users/client/Client.ts">listWithMixedTypeCursorPagination</a>({ ...params }) -> core.Page<SeedPagination.User, SeedPagination.ListUsersMixedTypePaginationResponse></code></summary>
 <dl>
 <dd>
 
@@ -996,7 +996,7 @@ while (page.hasNextPage()) {
 </dl>
 </details>
 
-<details><summary><code>client.users.<a href="/src/api/resources/users/client/Client.ts">listWithBodyCursorPagination</a>({ ...params }) -> core.Page<SeedPagination.User></code></summary>
+<details><summary><code>client.users.<a href="/src/api/resources/users/client/Client.ts">listWithBodyCursorPagination</a>({ ...params }) -> core.Page<SeedPagination.User, SeedPagination.ListUsersPaginationResponse></code></summary>
 <dl>
 <dd>
 
@@ -1062,7 +1062,7 @@ while (page.hasNextPage()) {
 </dl>
 </details>
 
-<details><summary><code>client.users.<a href="/src/api/resources/users/client/Client.ts">listWithOffsetPagination</a>({ ...params }) -> core.Page<SeedPagination.User></code></summary>
+<details><summary><code>client.users.<a href="/src/api/resources/users/client/Client.ts">listWithOffsetPagination</a>({ ...params }) -> core.Page<SeedPagination.User, SeedPagination.ListUsersPaginationResponse></code></summary>
 <dl>
 <dd>
 
@@ -1130,7 +1130,7 @@ while (page.hasNextPage()) {
 </dl>
 </details>
 
-<details><summary><code>client.users.<a href="/src/api/resources/users/client/Client.ts">listWithDoubleOffsetPagination</a>({ ...params }) -> core.Page<SeedPagination.User></code></summary>
+<details><summary><code>client.users.<a href="/src/api/resources/users/client/Client.ts">listWithDoubleOffsetPagination</a>({ ...params }) -> core.Page<SeedPagination.User, SeedPagination.ListUsersPaginationResponse></code></summary>
 <dl>
 <dd>
 
@@ -1198,7 +1198,7 @@ while (page.hasNextPage()) {
 </dl>
 </details>
 
-<details><summary><code>client.users.<a href="/src/api/resources/users/client/Client.ts">listWithBodyOffsetPagination</a>({ ...params }) -> core.Page<SeedPagination.User></code></summary>
+<details><summary><code>client.users.<a href="/src/api/resources/users/client/Client.ts">listWithBodyOffsetPagination</a>({ ...params }) -> core.Page<SeedPagination.User, SeedPagination.ListUsersPaginationResponse></code></summary>
 <dl>
 <dd>
 
@@ -1264,7 +1264,7 @@ while (page.hasNextPage()) {
 </dl>
 </details>
 
-<details><summary><code>client.users.<a href="/src/api/resources/users/client/Client.ts">listWithOffsetStepPagination</a>({ ...params }) -> core.Page<SeedPagination.User></code></summary>
+<details><summary><code>client.users.<a href="/src/api/resources/users/client/Client.ts">listWithOffsetStepPagination</a>({ ...params }) -> core.Page<SeedPagination.User, SeedPagination.ListUsersPaginationResponse></code></summary>
 <dl>
 <dd>
 
@@ -1330,7 +1330,7 @@ while (page.hasNextPage()) {
 </dl>
 </details>
 
-<details><summary><code>client.users.<a href="/src/api/resources/users/client/Client.ts">listWithOffsetPaginationHasNextPage</a>({ ...params }) -> core.Page<SeedPagination.User></code></summary>
+<details><summary><code>client.users.<a href="/src/api/resources/users/client/Client.ts">listWithOffsetPaginationHasNextPage</a>({ ...params }) -> core.Page<SeedPagination.User, SeedPagination.ListUsersPaginationResponse></code></summary>
 <dl>
 <dd>
 
@@ -1396,7 +1396,7 @@ while (page.hasNextPage()) {
 </dl>
 </details>
 
-<details><summary><code>client.users.<a href="/src/api/resources/users/client/Client.ts">listWithExtendedResults</a>({ ...params }) -> core.Page<SeedPagination.User></code></summary>
+<details><summary><code>client.users.<a href="/src/api/resources/users/client/Client.ts">listWithExtendedResults</a>({ ...params }) -> core.Page<SeedPagination.User, SeedPagination.ListUsersExtendedResponse></code></summary>
 <dl>
 <dd>
 
@@ -1458,7 +1458,7 @@ while (page.hasNextPage()) {
 </dl>
 </details>
 
-<details><summary><code>client.users.<a href="/src/api/resources/users/client/Client.ts">listWithExtendedResultsAndOptionalData</a>({ ...params }) -> core.Page<SeedPagination.User></code></summary>
+<details><summary><code>client.users.<a href="/src/api/resources/users/client/Client.ts">listWithExtendedResultsAndOptionalData</a>({ ...params }) -> core.Page<SeedPagination.User, SeedPagination.ListUsersExtendedOptionalListResponse></code></summary>
 <dl>
 <dd>
 
@@ -1520,7 +1520,7 @@ while (page.hasNextPage()) {
 </dl>
 </details>
 
-<details><summary><code>client.users.<a href="/src/api/resources/users/client/Client.ts">listUsernames</a>({ ...params }) -> core.Page<string></code></summary>
+<details><summary><code>client.users.<a href="/src/api/resources/users/client/Client.ts">listUsernames</a>({ ...params }) -> core.Page<string, SeedPagination.UsernameCursor></code></summary>
 <dl>
 <dd>
 
@@ -1582,7 +1582,7 @@ while (page.hasNextPage()) {
 </dl>
 </details>
 
-<details><summary><code>client.users.<a href="/src/api/resources/users/client/Client.ts">listWithGlobalConfig</a>({ ...params }) -> core.Page<string></code></summary>
+<details><summary><code>client.users.<a href="/src/api/resources/users/client/Client.ts">listWithGlobalConfig</a>({ ...params }) -> core.Page<string, SeedPagination.UsernameContainer></code></summary>
 <dl>
 <dd>
 
