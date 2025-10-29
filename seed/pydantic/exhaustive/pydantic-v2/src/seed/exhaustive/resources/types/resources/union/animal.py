@@ -13,7 +13,7 @@ class Animal_Dog(UniversalBaseModel):
     name: str
     likes_to_woof: bool = pydantic.Field(alias="likesToWoof")
 
-    model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow")  # type: ignore # Pydantic v2
+    model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow")
 
 
 class Animal_Cat(UniversalBaseModel):
@@ -21,7 +21,7 @@ class Animal_Cat(UniversalBaseModel):
     name: str
     likes_to_meow: bool = pydantic.Field(alias="likesToMeow")
 
-    model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow")  # type: ignore # Pydantic v2
+    model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow")
 
 
 Animal = typing.Union[Animal_Dog, Animal_Cat]
