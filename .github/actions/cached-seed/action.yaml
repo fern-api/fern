@@ -54,4 +54,43 @@ runs:
           --parallel 16 \
           ${FORMATTED_FIXTURES_COMMAND} \
           ${{ inputs.skip-scripts == 'true' && '--skip-scripts' || '' }} \
-          ${{ inputs.allow-unexpected-failures == 'true' && '--allow-unexpected-failures' || '' }} 
+          ${{ inputs.allow-unexpected-failures == 'true' && '--allow-unexpected-failures' || '' }} | tee output.log
+
+    # CHRISM - verify we can still seed tee results in log
+    # CHRISM - what happens to summary between matricies? WHat happens across re-runs?
+    - name: Summarize Test Results
+      shell: bash
+      run: |
+        # Verify file exists from previous step
+        if [ -f "output.log" ]; then 
+          # Focusing on last 100 lines of file (should be more than enough), reverse search (bottom-up) for string including unexpected failures
+          # CHRISM - is tac included in github actions??
+          UNEXPECTED_FAILURES=$(tail -n 100 output.log | tac | grep -m 1 "unexpected failures, including:" | sed -n 's/.*unexpected failures, including: \(.*\)\./\1/p' || echo "")
+        else 
+          echo "No output available to parse for test group"
+        fi
+
+
+// CHRISM HERE
+        if [ $EXIT_CODE -ne 0 ]; then
+          
+          if [ -n "$UNEXPECTED_FAILURES" ]; then
+            echo "$UNEXPECTED_FAILURES" > .seed-test-output/failed-fixtures.txt
+          fi
+        fi
+
+
+        if [[ "${{ steps.run-seed.outcome }}" == "failure" ]] || [[ "${{ steps.run-seed-leftovers.outcome }}" == "failure" ]]; then
+          echo "## ❌ ${{ inputs.sdk-name }} Test Failures" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "**Fixtures tested:** ${{ inputs.fixtures-to-run }}" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          if [ -f .seed-test-output/failed-fixtures.txt ]; then
+            FAILED_FIXTURES=$(cat .seed-test-output/failed-fixtures.txt)
+            echo "**Failed test cases:** $FAILED_FIXTURES" >> $GITHUB_STEP_SUMMARY
+          else
+            echo "**Status:** Tests failed but specific fixture names could not be extracted. Check the logs above for details." >> $GITHUB_STEP_SUMMARY
+          fi
+          echo "" >> $GITHUB_STEP_SUMMARY
+          exit 1
+        fi
