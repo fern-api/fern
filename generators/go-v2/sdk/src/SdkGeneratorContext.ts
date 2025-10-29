@@ -60,6 +60,16 @@ export class SdkGeneratorContext extends AbstractGoGeneratorContext<SdkCustomCon
         return [];
     }
 
+    public getCoreAsIsFiles(): string[] {
+        const files = [];
+
+        if (this.needsPaginationHelpers()) {
+            files.push(AsIsFiles.Page);
+        }
+
+        return files;
+    }
+
     public getRootAsIsFiles(): string[] {
         const files = [
             AsIsFiles.ErrorDecoder,
@@ -468,11 +478,11 @@ export class SdkGeneratorContext extends AbstractGoGeneratorContext<SdkCustomCon
         return this.callInternalFunc({ name: "QueryValuesWithDefaults", arguments_, multiline: true });
     }
 
-    public getPageTypeReference(valueType: go.Type): go.TypeReference {
+    public getPageTypeReference(cursorType: go.Type, valueType: go.Type): go.TypeReference {
         return go.typeReference({
             name: "Page",
             importPath: this.getCoreImportPath(),
-            generics: [valueType]
+            generics: [cursorType, valueType]
         });
     }
 

@@ -57,9 +57,6 @@ var (
 	//go:embed sdk/core/optional_test.go
 	optionalTestFile string
 
-	//go:embed sdk/core/page.go
-	pageFile string
-
 	//go:embed sdk/utils/pointer.go
 	pointerFile string
 

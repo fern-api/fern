@@ -3,6 +3,7 @@ import { go } from "@fern-api/go-ast";
 import { HttpEndpoint, Pagination } from "@fern-fern/ir-sdk/api";
 
 import { SdkGeneratorContext } from "../../SdkGeneratorContext";
+import { getPageType } from "./getPaginationInfo";
 import { getResponseBodyType } from "./getResponseBodyType";
 
 export function getEndpointPageReturnType({
@@ -31,7 +32,12 @@ function getCorePageReturnType({
     pagination: Pagination;
 }): go.Type {
     return go.Type.pointer(
-        go.Type.reference(context.getPageTypeReference(getPaginationValueType({ context, pagination })))
+        go.Type.reference(
+            context.getPageTypeReference(
+                getPageType({ context, pagination }),
+                getPaginationValueType({ context, pagination })
+            )
+        )
     );
 }
 
