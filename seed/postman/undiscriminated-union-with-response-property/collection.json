@@ -1,0 +1,141 @@
+{
+  "info": {
+    "name": "Undiscriminated Union With Response Property",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": null
+  },
+  "variable": [
+    {
+      "key": "baseUrl",
+      "value": "",
+      "type": "string"
+    }
+  ],
+  "auth": null,
+  "item": [
+    {
+      "_type": "endpoint",
+      "name": "Get Union",
+      "request": {
+        "description": null,
+        "url": {
+          "raw": "{{baseUrl}}/union",
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "union"
+          ],
+          "query": [],
+          "variable": []
+        },
+        "header": [
+          {
+            "type": "text",
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "method": "GET",
+        "auth": null,
+        "body": null
+      },
+      "response": [
+        {
+          "name": "Success",
+          "status": "OK",
+          "code": 200,
+          "originalRequest": {
+            "description": null,
+            "url": {
+              "raw": "{{baseUrl}}/union",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "union"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "type": "text",
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null,
+            "body": null
+          },
+          "description": null,
+          "body": "{\n    \"data\": {\n        \"type\": \"A\",\n        \"valueA\": \"valueA\"\n    }\n}",
+          "_postman_previewlanguage": "json"
+        }
+      ]
+    },
+    {
+      "_type": "endpoint",
+      "name": "List Unions",
+      "request": {
+        "description": null,
+        "url": {
+          "raw": "{{baseUrl}}/unions",
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "unions"
+          ],
+          "query": [],
+          "variable": []
+        },
+        "header": [
+          {
+            "type": "text",
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "method": "GET",
+        "auth": null,
+        "body": null
+      },
+      "response": [
+        {
+          "name": "Success",
+          "status": "OK",
+          "code": 200,
+          "originalRequest": {
+            "description": null,
+            "url": {
+              "raw": "{{baseUrl}}/unions",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "unions"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "type": "text",
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null,
+            "body": null
+          },
+          "description": null,
+          "body": "{\n    \"data\": [\n        {\n            \"type\": \"A\",\n            \"valueA\": \"valueA\"\n        },\n        {\n            \"type\": \"A\",\n            \"valueA\": \"valueA\"\n        }\n    ]\n}",
+          "_postman_previewlanguage": "json"
+        }
+      ]
+    }
+  ]
+}

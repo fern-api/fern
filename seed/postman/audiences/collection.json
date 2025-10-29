@@ -29,12 +29,23 @@
               "request": {
                 "description": null,
                 "url": {
-                  "raw": "{{baseUrl}}",
+                  "raw": "{{baseUrl}}?ids=ids&tags=tags",
                   "host": [
                     "{{baseUrl}}"
                   ],
                   "path": [],
-                  "query": [],
+                  "query": [
+                    {
+                      "key": "ids",
+                      "description": null,
+                      "value": "ids"
+                    },
+                    {
+                      "key": "tags",
+                      "description": null,
+                      "value": "tags"
+                    }
+                  ],
                   "variable": []
                 },
                 "header": [
@@ -56,12 +67,23 @@
                   "originalRequest": {
                     "description": null,
                     "url": {
-                      "raw": "{{baseUrl}}",
+                      "raw": "{{baseUrl}}?ids=ids&tags=tags",
                       "host": [
                         "{{baseUrl}}"
                       ],
                       "path": [],
-                      "query": [],
+                      "query": [
+                        {
+                          "key": "ids",
+                          "description": null,
+                          "value": "ids"
+                        },
+                        {
+                          "key": "tags",
+                          "description": null,
+                          "value": "tags"
+                        }
+                      ],
                       "variable": []
                     },
                     "header": [
