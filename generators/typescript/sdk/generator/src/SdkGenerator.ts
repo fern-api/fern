@@ -57,6 +57,7 @@ import { Directory, Project, SourceFile, ts } from "ts-morph";
 import { v4 as uuidv4 } from "uuid";
 import { BaseClientContextImpl } from "./contexts/base-client/BaseClientContextImpl";
 import { SdkContextImpl } from "./contexts/SdkContextImpl";
+import { ContributingGenerator } from "./contributing/ContributingGenerator";
 import { BaseClientTypeDeclarationReferencer } from "./declaration-referencers/BaseClientTypeDeclarationReferencer";
 import { EndpointDeclarationReferencer } from "./declaration-referencers/EndpointDeclarationReferencer";
 import { EnvironmentsDeclarationReferencer } from "./declaration-referencers/EnvironmentsDeclarationReferencer";
@@ -688,6 +689,12 @@ export class SdkGenerator {
             } catch (e) {
                 this.context.logger.warn("Failed to generate reference.md, this is OK");
             }
+
+            try {
+                await this.generateContributing();
+            } catch (e) {
+                this.context.logger.warn("Failed to generate CONTRIBUTING.md, this is OK");
+            }
         }
 
         return this.config.shouldBundle
@@ -1145,6 +1152,20 @@ export class SdkGenerator {
                 const context = this.generateSdkContext({ sourceFile, importsManager });
                 const referenceContent = await this.generatorAgent.generateReference(this.referenceConfigBuilder);
                 sourceFile.replaceWithText(referenceContent);
+            },
+            packagePath: "/"
+        });
+    }
+
+    private async generateContributing(): Promise<void> {
+        await this.withRawFile({
+            filepath: this.generatorAgent.getExportedContributingFilePath(),
+            run: async ({ sourceFile, importsManager }) => {
+                const contributingGenerator = new ContributingGenerator({
+                    packageManager: this.config.packageManager
+                });
+                const contributingContent = contributingGenerator.generate();
+                sourceFile.replaceWithText(contributingContent);
             },
             packagePath: "/"
         });
