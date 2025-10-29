@@ -80,7 +80,10 @@ export class GeneratedDefaultEndpointImplementation implements GeneratedEndpoint
         const paginationInfo = this.response.getPaginationInfo(context);
         const mainReturnType =
             paginationInfo != null
-                ? context.coreUtilities.pagination.Page._getReferenceToType(paginationInfo.itemType)
+                ? context.coreUtilities.pagination.Page._getReferenceToType(
+                      paginationInfo.responseType,
+                      paginationInfo.itemType
+                  )
                 : this.response.getReturnType(context);
         return {
             parameters: [
@@ -387,7 +390,7 @@ export class GeneratedDefaultEndpointImplementation implements GeneratedEndpoint
             );
             statements.push(
                 ts.factory.createReturnStatement(
-                    context.coreUtilities.pagination.Pageable._construct({
+                    context.coreUtilities.pagination.Page._construct({
                         responseType: paginationInfo.responseType,
                         itemType: paginationInfo.itemType,
                         response: ts.factory.createPropertyAccessExpression(initialResponseVar, "data"),
