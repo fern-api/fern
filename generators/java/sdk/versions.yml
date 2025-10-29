@@ -1,9 +1,7 @@
 - version: 3.10.4
   changelogEntry:
     - summary: |
-        Fix AbstractEndpointWriter.stringify() missing BOOLEAN and LONG primitive handling.
-        Prevents "boolean cannot be dereferenced" compilation errors when boolean query
-        parameters are used in certain code generation paths.
+        Fix compilation errors when using boolean or long query parameters.
       type: fix
   createdAt: "2025-10-29"
   irVersion: 61
