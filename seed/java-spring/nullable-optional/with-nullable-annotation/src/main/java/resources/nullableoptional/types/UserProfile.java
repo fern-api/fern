@@ -36,18 +36,25 @@ public final class UserProfile {
 
   private final String username;
 
+  @Nullable
   private final String nullableString;
 
+  @Nullable
   private final Integer nullableInteger;
 
+  @Nullable
   private final Boolean nullableBoolean;
 
+  @Nullable
   private final OffsetDateTime nullableDate;
 
+  @Nullable
   private final Address nullableObject;
 
+  @Nullable
   private final List<String> nullableList;
 
+  @Nullable
   private final Map<String, String> nullableMap;
 
   private final Optional<String> optionalString;
@@ -68,13 +75,15 @@ public final class UserProfile {
 
   private final Optional<Address> optionalNullableObject;
 
-  private UserProfile(String id, String username, String nullableString, Integer nullableInteger,
-      Boolean nullableBoolean, OffsetDateTime nullableDate, Address nullableObject,
-      List<String> nullableList, Map<String, String> nullableMap, Optional<String> optionalString,
-      Optional<Integer> optionalInteger, Optional<Boolean> optionalBoolean,
-      Optional<OffsetDateTime> optionalDate, Optional<Address> optionalObject,
-      Optional<List<String>> optionalList, Optional<Map<String, String>> optionalMap,
-      Optional<String> optionalNullableString, Optional<Address> optionalNullableObject) {
+  private UserProfile(String id, String username, @Nullable String nullableString,
+      @Nullable Integer nullableInteger, @Nullable Boolean nullableBoolean,
+      @Nullable OffsetDateTime nullableDate, @Nullable Address nullableObject,
+      @Nullable List<String> nullableList, @Nullable Map<String, String> nullableMap,
+      Optional<String> optionalString, Optional<Integer> optionalInteger,
+      Optional<Boolean> optionalBoolean, Optional<OffsetDateTime> optionalDate,
+      Optional<Address> optionalObject, Optional<List<String>> optionalList,
+      Optional<Map<String, String>> optionalMap, Optional<String> optionalNullableString,
+      Optional<Address> optionalNullableObject) {
     this.id = id;
     this.username = username;
     this.nullableString = nullableString;
@@ -292,23 +301,23 @@ public final class UserProfile {
   public interface _FinalStage {
     UserProfile build();
 
-    _FinalStage nullableString(@core.Nullable String nullableString);
+    _FinalStage nullableString(@Nullable String nullableString);
 
-    _FinalStage nullableInteger(@core.Nullable Integer nullableInteger);
+    _FinalStage nullableInteger(@Nullable Integer nullableInteger);
 
-    _FinalStage nullableBoolean(@core.Nullable Boolean nullableBoolean);
+    _FinalStage nullableBoolean(@Nullable Boolean nullableBoolean);
 
-    _FinalStage nullableDate(@core.Nullable OffsetDateTime nullableDate);
+    _FinalStage nullableDate(@Nullable OffsetDateTime nullableDate);
 
-    _FinalStage nullableObject(@core.Nullable Address nullableObject);
+    _FinalStage nullableObject(@Nullable Address nullableObject);
 
-    _FinalStage nullableList(List<String> nullableList);
+    _FinalStage nullableList(@Nullable List<String> nullableList);
 
     _FinalStage addNullableList(String nullableList);
 
     _FinalStage addAllNullableList(List<String> nullableList);
 
-    _FinalStage nullableMap(Map<String, String> nullableMap);
+    _FinalStage nullableMap(@Nullable Map<String, String> nullableMap);
 
     _FinalStage putAllNullableMap(Map<String, String> nullableMap);
 
@@ -594,7 +603,7 @@ public final class UserProfile {
         value = "nullableMap",
         nulls = Nulls.SKIP
     )
-    public _FinalStage nullableMap(Map<String, String> nullableMap) {
+    public _FinalStage nullableMap(@Nullable Map<String, String> nullableMap) {
       this.nullableMap.clear();
       if (nullableMap != null) {
         this.nullableMap.putAll(nullableMap);
@@ -621,7 +630,7 @@ public final class UserProfile {
         value = "nullableList",
         nulls = Nulls.SKIP
     )
-    public _FinalStage nullableList(List<String> nullableList) {
+    public _FinalStage nullableList(@Nullable List<String> nullableList) {
       this.nullableList.clear();
       if (nullableList != null) {
         this.nullableList.addAll(nullableList);
@@ -631,35 +640,35 @@ public final class UserProfile {
 
     @java.lang.Override
     @JsonSetter("nullableObject")
-    public _FinalStage nullableObject(@core.Nullable Address nullableObject) {
+    public _FinalStage nullableObject(@Nullable Address nullableObject) {
       this.nullableObject = nullableObject;
       return this;
     }
 
     @java.lang.Override
     @JsonSetter("nullableDate")
-    public _FinalStage nullableDate(@core.Nullable OffsetDateTime nullableDate) {
+    public _FinalStage nullableDate(@Nullable OffsetDateTime nullableDate) {
       this.nullableDate = nullableDate;
       return this;
     }
 
     @java.lang.Override
     @JsonSetter("nullableBoolean")
-    public _FinalStage nullableBoolean(@core.Nullable Boolean nullableBoolean) {
+    public _FinalStage nullableBoolean(@Nullable Boolean nullableBoolean) {
       this.nullableBoolean = nullableBoolean;
       return this;
     }
 
     @java.lang.Override
     @JsonSetter("nullableInteger")
-    public _FinalStage nullableInteger(@core.Nullable Integer nullableInteger) {
+    public _FinalStage nullableInteger(@Nullable Integer nullableInteger) {
       this.nullableInteger = nullableInteger;
       return this;
     }
 
     @java.lang.Override
     @JsonSetter("nullableString")
-    public _FinalStage nullableString(@core.Nullable String nullableString) {
+    public _FinalStage nullableString(@Nullable String nullableString) {
       this.nullableString = nullableString;
       return this;
     }
