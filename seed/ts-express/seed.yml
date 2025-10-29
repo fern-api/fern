@@ -89,8 +89,8 @@ fixtures:
         retainOriginalCasing: true
       outputFolder: retain-original-casing
 allowedFailures:
-  - bytes-download
-  - bytes-upload
+  # - bytes-download # CHRISM - temp
+  # - bytes-upload # CHRISM - temp
   - file-download
   - file-upload
   - file-upload-openapi
