@@ -23,10 +23,10 @@ Instantiate and use the client with the following:
 import { SeedPaginationClient } from "@fern/pagination-custom";
 
 const client = new SeedPaginationClient({ environment: "YOUR_BASE_URL", token: "YOUR_TOKEN" });
-const response = await client.users.listUsernamesCustom({
+const pageableResponse = await client.users.listUsernamesCustom({
     starting_after: "starting_after"
 });
-for await (const item of response) {
+for await (const item of pageableResponse) {
     console.log(item);
 }
 
@@ -37,6 +37,9 @@ let page = await client.users.listUsernamesCustom({
 while (page.hasNextPage()) {
     page = page.getNextPage();
 }
+
+// You can also access the underlying response
+const response = page.response;
 ```
 
 ## Request And Response Types
@@ -80,10 +83,10 @@ List endpoints are paginated. The SDK provides an iterator so that you can simpl
 import { SeedPaginationClient } from "@fern/pagination-custom";
 
 const client = new SeedPaginationClient({ environment: "YOUR_BASE_URL", token: "YOUR_TOKEN" });
-const response = await client.users.listUsernamesCustom({
+const pageableResponse = await client.users.listUsernamesCustom({
     starting_after: "starting_after"
 });
-for await (const item of response) {
+for await (const item of pageableResponse) {
     console.log(item);
 }
 
@@ -94,6 +97,9 @@ let page = await client.users.listUsernamesCustom({
 while (page.hasNextPage()) {
     page = page.getNextPage();
 }
+
+// You can also access the underlying response
+const response = page.response;
 ```
 
 ## Advanced
