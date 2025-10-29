@@ -7,10 +7,18 @@
   createdAt: "2025-10-29"
   irVersion: 60
 
+- version: 3.15.0
+  changelogEntry:
+    - summary: |
+        Export types for `ReconnectingWebSocket`, `ReconnectingWebSocket.Event`, `ReconnectingWebSocket.CloseEvent`, and `ReconnectingWebSocket.ErrorEvent`.
+      type: feat
+  createdAt: "2025-10-29"
+  irVersion: 60
+
 - version: 3.14.0
   changelogEntry:
     - summary: |
-        Expose the underyling response on the `Page` type.
+        Expose the underlying response on the `Page` type.
       type: feat
   createdAt: "2025-10-29"
   irVersion: 60
