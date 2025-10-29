@@ -252,7 +252,7 @@ requires-dist = [
     { name = "fern-fern-ir-v60", specifier = "==60.3.1", index = "https://pypi.buildwithfern.com/" },
     { name = "isort", specifier = ">=6.0.1,<7.0.0" },
     { name = "ordered-set", specifier = ">=4.1.0,<5.0.0" },
-    { name = "pydantic", specifier = ">=2.11.9" },
+    { name = "pydantic", specifier = ">=2.11.9,<3.0.0" },
     { name = "pyyaml", specifier = ">=6.0.3" },
     { name = "typer", extras = ["all"], specifier = ">=0.6.1,<0.7.0" },
 ]

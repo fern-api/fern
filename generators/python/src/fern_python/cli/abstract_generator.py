@@ -80,6 +80,12 @@ class AbstractGenerator(ABC):
         if generator_config.custom_config is not None and "recursion_limit" in generator_config.custom_config:
             recursion_limit = generator_config.custom_config.get("recursion_limit")
 
+        pydantic_version = None
+        if generator_config.custom_config is not None and "pydantic_config" in generator_config.custom_config:
+            pydantic_config = generator_config.custom_config.get("pydantic_config")
+            if isinstance(pydantic_config, dict) and "version" in pydantic_config:
+                pydantic_version = pydantic_config.get("version")
+
         with Project(
             filepath=generator_config.output.path,
             relative_path_to_project=os.path.join(
@@ -102,6 +108,7 @@ class AbstractGenerator(ABC):
             exclude_types_from_init_exports=exclude_types_from_init_exports,
             lazy_imports=self.should_use_lazy_imports(generator_config=generator_config),
             recursion_limit=recursion_limit,
+            pydantic_version=pydantic_version,
         ) as project:
             self.run(
                 generator_exec_wrapper=generator_exec_wrapper,

@@ -40,6 +40,7 @@ class PyProjectToml:
         license_: Optional[LicenseConfig],
         extras: typing.Dict[str, List[str]] = {},
         user_defined_toml: Optional[str] = None,
+        pydantic_version: Optional[str] = None,
     ):
         self._name = name
         self._project_block = PyProjectToml.ProjectBlock(
@@ -57,6 +58,7 @@ class PyProjectToml:
         self._package = package
         self._extras = extras
         self._user_defined_toml = user_defined_toml
+        self._pydantic_version = pydantic_version
 
     def write(self) -> None:
         # Generate the main [project] block with dependencies and optional dependencies
@@ -68,7 +70,7 @@ class PyProjectToml:
 
         # Add other blocks
         blocks: List[PyProjectToml.Block] = [
-            PyProjectToml.PluginConfigurationBlock(),
+            PyProjectToml.PluginConfigurationBlock(pydantic_version=self._pydantic_version),
             PyProjectToml.BuildSystemBlock(package=self._package),
             PyProjectToml.PoetryBlock(package=self._package),
         ]
@@ -299,15 +301,26 @@ class PyProjectToml:
 
     @dataclass(frozen=True)
     class PluginConfigurationBlock(Block):
+        pydantic_version: Optional[str] = None
+
         def to_string(self) -> str:
-            return """
+            s = """
 [tool.pytest.ini_options]
 testpaths = [ "tests" ]
 asyncio_mode = "auto"
 
 [tool.mypy]
 plugins = ["pydantic.mypy"]
+"""
+            # Only add mypy overrides for pydantic v1
+            if self.pydantic_version == "v1":
+                s += """
+[[tool.mypy.overrides]]
+module = "pydantic.*"
+follow_imports = "skip"
+"""
 
+            s += """
 [tool.ruff]
 line-length = 120
 
@@ -332,6 +345,7 @@ ignore = [
 [tool.ruff.lint.isort]
 section-order = ["future", "standard-library", "third-party", "first-party"]
 """
+            return s
 
     @dataclass(frozen=True)
     class BuildSystemBlock(Block):

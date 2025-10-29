@@ -374,3 +374,28 @@ class TestPyProjectTomlIntegration:
             toml_path = Path(tmpdir) / "pyproject.toml"
             content = toml_path.read_text()
             assert content == snapshot
+
+    def test_pyproject_with_pydantic_v1(self, snapshot: SnapshotAssertion) -> None:
+        """Test pyproject.toml generation with pydantic_version set to v1."""
+        with tempfile.TemporaryDirectory() as tmpdir:
+            dep_manager = DependencyManager()
+            package = PyProjectTomlPackageConfig(include="my_package")
+
+            pyproject = PyProjectToml(
+                name="test-package",
+                version="1.0.0",
+                package=package,
+                path=tmpdir,
+                dependency_manager=dep_manager,
+                python_version="^3.9",
+                pypi_metadata=None,
+                github_output_mode=None,
+                license_=None,
+                pydantic_version="v1",
+            )
+
+            pyproject.write()
+
+            toml_path = Path(tmpdir) / "pyproject.toml"
+            content = toml_path.read_text()
+            assert content == snapshot
