@@ -66,7 +66,7 @@ export class SdkGeneratorContext extends AbstractGoGeneratorContext<SdkCustomCon
         if (this.needsPaginationHelpers()) {
             files.push(AsIsFiles.Page);
         }
-        
+
         return files;
     }
 
@@ -478,11 +478,11 @@ export class SdkGeneratorContext extends AbstractGoGeneratorContext<SdkCustomCon
         return this.callInternalFunc({ name: "QueryValuesWithDefaults", arguments_, multiline: true });
     }
 
-    public getPageTypeReference(valueType: go.Type): go.TypeReference {
+    public getPageTypeReference(cursorType: go.Type, valueType: go.Type): go.TypeReference {
         return go.typeReference({
             name: "Page",
             importPath: this.getCoreImportPath(),
-            generics: [valueType]
+            generics: [cursorType, valueType]
         });
     }
 
