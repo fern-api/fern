@@ -570,9 +570,6 @@ func (g *Generator) generate(ir *fernir.IntermediateRepresentation, mode Mode) (
 			files = append(files, newMultipartFile(g.coordinator))
 			files = append(files, newMultipartTestFile(g.coordinator))
 		}
-		if ir.SdkConfig.HasStreamingEndpoints {
-			files = append(files, newStreamFile(g.coordinator))
-		}
 		clientTestFile, err := newClientTestFile(g.config.FullImportPath, rootPackageName, g.coordinator, g.config.ClientName, g.config.ClientConstructorName)
 		if err != nil {
 			return nil, err
@@ -1250,14 +1247,6 @@ func newOptionalTestFile(coordinator *coordinator.Client) *File {
 		coordinator,
 		"core/optional_test.go",
 		[]byte(optionalTestFile),
-	)
-}
-
-func newStreamFile(coordinator *coordinator.Client) *File {
-	return NewFile(
-		coordinator,
-		"core/stream.go",
-		[]byte(streamFile),
 	)
 }
 

@@ -65,9 +65,6 @@ var (
 
 	//go:embed sdk/internal/query_test.go
 	queryTestFile string
-
-	//go:embed sdk/core/stream.go
-	streamFile string
 )
 
 // WriteOptionalHelpers writes the Optional[T] helper functions.
@@ -1292,7 +1289,7 @@ func (f *fileWriter) WriteClient(
 		f.P()
 
 		// Prepare a response variable.
-		if endpoint.ResponseType != "" && endpoint.StreamingInfo == nil && endpoint.PaginationInfo == nil {
+		if endpoint.ResponseType != "" && endpoint.PaginationInfo == nil {
 			f.P(fmt.Sprintf(endpoint.ResponseInitializerFormat, endpoint.ResponseType))
 		}
 

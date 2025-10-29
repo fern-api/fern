@@ -671,6 +671,4 @@ export abstract class AbstractGoGeneratorContext<
     public abstract getCoreAsIsFiles(): string[];
 
     public abstract getRootAsIsFiles(): string[];
-
-    public abstract getTestAsIsFiles(): string[];
 }
