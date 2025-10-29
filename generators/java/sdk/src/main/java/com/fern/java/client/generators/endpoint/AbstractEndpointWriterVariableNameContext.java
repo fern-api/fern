@@ -189,12 +189,6 @@ public abstract class AbstractEndpointWriterVariableNameContext {
         ParameterSpec.Builder paramBuilder = ParameterSpec.builder(
                 typeName, pathParameter.getName().getCamelCase().getSafeName());
 
-        if (clientGeneratorContext.getCustomConfig().useNullableAnnotation()
-                && com.fern.java.utils.NullableAnnotationUtils.isNullableType(pathParameter.getValueType())
-                && !typeName.isPrimitive()) {
-            paramBuilder.addAnnotation(com.fern.java.utils.NullableAnnotationUtils.getNullableAnnotation());
-        }
-
         return HttpUrlBuilder.PathParamInfo.builder()
                 .irParam(pathParameter)
                 .poetParam(paramBuilder.build())

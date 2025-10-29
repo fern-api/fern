@@ -977,9 +977,11 @@ public final class BuilderGenerator {
                 .returns(returnClass);
 
         ParameterSpec.Builder paramBuilder = ParameterSpec.builder(poetTypeName, fieldSpec.name);
-        if (enrichedProperty.enrichedObjectProperty.nullable()
-                || enrichedProperty.enrichedObjectProperty.aliasOfNullable()) {
-            paramBuilder.addAnnotation(nullableClassName);
+        if ((enrichedProperty.enrichedObjectProperty.nullable()
+                        || enrichedProperty.enrichedObjectProperty.aliasOfNullable())
+                && enrichedProperty.enrichedObjectProperty.useNullableAnnotation()
+                && !poetTypeName.isPrimitive()) {
+            paramBuilder.addAnnotation(com.fern.java.utils.NullableAnnotationUtils.getNullableAnnotation());
         }
         interfaceSetter.addParameter(paramBuilder.build());
 
