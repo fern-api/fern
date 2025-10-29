@@ -1005,7 +1005,7 @@ jobs:
       - name: Clean up seed groups
         id: clean-up-seed-groups
         run: |
-          set -e
+          set -eo pipefail
           
           # Define mapping from changes outputs to generator workspace names
           declare -A GENERATOR_MAP
@@ -1085,7 +1085,7 @@ jobs:
             
             # Get available fixtures for this generator
             echo "Getting available fixtures for $GENERATOR..."
-            AVAILABLE_FIXTURES_JSON=$(pnpm seed:local get-available-fixtures --generator "$GENERATOR" --include-output-folders 2>&1 | tail -1)
+            AVAILABLE_FIXTURES_JSON=$(node --enable-source-maps packages/seed/dist/cli.cjs get-available-fixtures --generator "$GENERATOR" --include-output-folders)
             
             if [[ -z "$AVAILABLE_FIXTURES_JSON" ]]; then
               echo "Failed to get available fixtures for $GENERATOR, skipping"
@@ -1093,7 +1093,7 @@ jobs:
             fi
             
             # Extract fixtures array from JSON
-            AVAILABLE_FIXTURES=$(echo "$AVAILABLE_FIXTURES_JSON" | jq -r '.fixtures[]' 2>/dev/null || echo "")
+            AVAILABLE_FIXTURES=$(echo "$AVAILABLE_FIXTURES_JSON" | jq -r '.fixtures[]')
             
             if [[ -z "$AVAILABLE_FIXTURES" ]]; then
               echo "No available fixtures found for $GENERATOR, skipping"
@@ -1135,14 +1135,8 @@ jobs:
                 mv "${TEMP_FILE}.new" "$TEMP_FILE"
               done
               
-              # Recalculate group times (set to 0 for simplicity, will be updated by nightly job)
-              jq '.groups = [.groups[] | .groupTotalTimeSeconds = 0]' "$TEMP_FILE" > "${TEMP_FILE}.new"
-              mv "${TEMP_FILE}.new" "$TEMP_FILE"
-              
-              # Update total test time to 0 (will be updated by nightly job)
-              jq '.totalTestTimeSeconds = 0' "$TEMP_FILE" > "$SEED_GROUPS_FILE"
-              
-              rm "$TEMP_FILE"
+              # Save the updated file
+              mv "$TEMP_FILE" "$SEED_GROUPS_FILE"
               CHANGES_MADE=true
             else
               echo "No fixtures to remove for $GENERATOR"
