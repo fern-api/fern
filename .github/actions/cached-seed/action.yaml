@@ -55,18 +55,3 @@ runs:
           ${FORMATTED_FIXTURES_COMMAND} \
           ${{ inputs.skip-scripts == 'true' && '--skip-scripts' || '' }} \
           ${{ inputs.allow-unexpected-failures == 'true' && '--allow-unexpected-failures' || '' }} | tee output.log
-
-    # CHRISM - verify we can still seed tee results in log
-    # CHRISM - what happens to summary between matricies? WHat happens across re-runs?
-    - name: Summarize Test Results
-      shell: bash
-      run: |
-        # Verify file exists from previous step
-        if [ -f "output.log" ]; then 
-          # Focusing on last 100 lines of file (should be more than enough), reverse search (bottom-up) for string including unexpected failures
-          # CHRISM - is tac included in github actions??
-          UNEXPECTED_FAILURES=$(tail -n 100 output.log | tac | grep -m 1 "unexpected failures, including:" | sed -n 's/.*unexpected failures, including: \(.*\)\./\1/p' || echo "")
-          echo "**${{ inputs.sdk-name }} Unexpected Test Failures:** ${UNEXPECTED_FAILURES}" >> $GITHUB_STEP_SUMMARY
-        else 
-          echo "No output available to parse for test group"
-        fi

@@ -78,6 +78,25 @@ runs:
         sdk-name: ${{ inputs.sdk-name }}
         generator-path: ${{ inputs.generator-path }}
 
+    # CHRISM - verify we can still seed tee results in log
+    # CHRISM - what happens to summary between matricies? WHat happens across re-runs?
+    - name: Summarize Test Results
+      shell: bash
+      run: |
+        # Verify file exists from previous step
+        if [ -f "output.log" ]; then 
+          # Focusing on last 100 lines of file (should be more than enough), reverse search (bottom-up) for string including unexpected failures
+          # CHRISM - is tac included in github actions??
+          UNEXPECTED_FAILURES=$(tail -n 100 output.log | tac | grep -m 1 "unexpected failures, including:" | sed -n 's/.*unexpected failures, including: \(.*\)\./\1/p' || echo "")
+          if [ -z "$UNEXPECTED_FAILURES" ]; then
+            echo "**${{ inputs.generator-name }} Unexpected Test Failures:** ${UNEXPECTED_FAILURES}" >> $GITHUB_STEP_SUMMARY
+          else
+            echo "No unexpected errors parsed from output"
+          fi
+        else 
+          echo "No output available to parse for test group"
+        fi
+
     - name: Record end time
       id: end-seed-timer
       # Log end time even if the tests fail
