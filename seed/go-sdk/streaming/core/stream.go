@@ -17,14 +17,11 @@ type StreamFormat string
 const (
 	StreamFormatSSE   StreamFormat = "sse"
 	StreamFormatEmpty StreamFormat = ""
+)
 
-	// sseEventSeparator is the standard SSE event separator (blank line).
-	// SSE messages are always separated by \n\n according to the SSE specification.
+const (
 	sseEventSeparator = "\n\n"
-
-	// sseLineSeparator is the standard separator for lines within an SSE event.
-	// Lines within a single SSE message are always separated by \n.
-	sseLineSeparator = "\n"
+	sseLineSeparator  = "\n"
 )
 
 const (
@@ -144,23 +141,12 @@ func newBufferStreamReader(reader io.Reader) *BufferStreamReader {
 }
 
 func (b *BufferStreamReader) ReadFromStream() ([]byte, error) {
-	var result []byte
-	for {
-		line, err := b.reader.ReadBytes('\n')
-		if err != nil {
-			if len(result) > 0 {
-				return result, nil
-			}
-			return nil, err
-		}
-		result = append(result, line...)
-
-		// Check if we have the complete delimiter
-		if strings.HasSuffix(string(result), sseEventSeparator) {
-			// Remove the delimiter from the result
-			return result[:len(result)-len(sseEventSeparator)], nil
-		}
+	line, err := b.reader.ReadBytes('\n')
+	if err != nil {
+		return nil, err
 	}
+	// Strip the trailing newline
+	return bytes.TrimSuffix(line, []byte("\n")), nil
 }
 
 // ScannerStreamReader reads data from a *bufio.Scanner, which allows for
@@ -210,11 +196,12 @@ func (s *ScannerStreamReader) parse(bytes []byte) (int, []byte, error) {
 		}
 	}
 	data := bytes[startIndex:]
-	delimIndex := strings.Index(string(data), s.options.delimiter)
+	lineDelimiter := s.options.getLineDelimiter()
+	delimIndex := strings.Index(string(data), lineDelimiter)
 	if delimIndex < 0 {
 		return startIndex + len(data), data, nil
 	}
-	endIndex := delimIndex + len(s.options.delimiter)
+	endIndex := delimIndex + len(lineDelimiter)
 	parsedData := data[:endIndex]
 	n := startIndex + endIndex
 	return n, parsedData, nil
@@ -237,6 +224,13 @@ type streamOptions struct {
 
 func (s *streamOptions) isEmpty() bool {
 	return s.delimiter == "" && s.prefix == "" && s.terminator == "" && s.format == StreamFormatEmpty
+}
+
+func (s *streamOptions) getLineDelimiter() string {
+	if s.delimiter != "" {
+		return s.delimiter
+	}
+	return sseLineSeparator
 }
 
 type SseStreamReader struct {
@@ -311,7 +305,7 @@ func (s *SseStreamReader) nextEvent() (*SseEvent, error) {
 	return &event, io.EOF
 }
 
-func (s *SseStreamReader) parseSseLine(_bytes []byte, event *SseEvent) error {
+func (s *SseStreamReader) parseSseLine(_bytes []byte, event *SseEvent) {
 	if bytes.HasPrefix(_bytes, sseDataPrefix) {
 		if len(event.data) > 0 {
 			// Join multiple data: lines using the configured delimiter
@@ -319,7 +313,7 @@ func (s *SseStreamReader) parseSseLine(_bytes []byte, event *SseEvent) error {
 			// - "\n" (default): preserves line breaks for multi-line JSON
 			// - "": concatenates without separator
 			// - Any other string: custom separator
-			lineDelimiter := s.getLineDelimiter()
+			lineDelimiter := s.options.getLineDelimiter()
 			event.data = append(event.data, lineDelimiter...)
 		}
 		event.data = append(event.data, _bytes[len(sseDataPrefix):]...)
@@ -330,16 +324,6 @@ func (s *SseStreamReader) parseSseLine(_bytes []byte, event *SseEvent) error {
 	} else if bytes.HasPrefix(_bytes, sseRetryPrefix) {
 		event.retry = append(event.retry, _bytes[len(sseRetryPrefix):]...)
 	}
-	return nil
-}
-
-// getLineDelimiter returns the delimiter to use when joining multiple data: lines
-// within a single SSE message. Defaults to \n if not specified.
-func (s *SseStreamReader) getLineDelimiter() string {
-	if s.options != nil && s.options.delimiter != "" {
-		return s.options.delimiter
-	}
-	return sseLineSeparator
 }
 
 func (event *SseEvent) size() int {
