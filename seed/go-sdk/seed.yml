@@ -9,9 +9,9 @@ buildScripts:
       - go build -v ./...
   testScript:
     commands:
-      - docker compose -f wiremock/docker-compose.test.yml down && docker compose -f wiremock/docker-compose.test.yml up -d || true 
+      - if [ -f wiremock/docker-compose.test.yml ]; then docker compose -f wiremock/docker-compose.test.yml down && docker compose -f wiremock/docker-compose.test.yml up -d; fi
       - go test -v ./...
-      - docker compose -f wiremock/docker-compose.test.yml down
+      - if [ -f wiremock/docker-compose.test.yml ]; then docker compose -f wiremock/docker-compose.test.yml down; fi 
 publish:
   workingDirectory: generators/go
   preBuildCommands:
@@ -202,9 +202,9 @@ fixtures:
 scripts:
   - docker: fernapi/go-seed:1.0.0
     commands:
-      - docker compose -f wiremock/docker-compose.test.yml down && docker compose -f wiremock/docker-compose.test.yml up -d || true
+      - if [ -f wiremock/docker-compose.test.yml ]; then docker compose -f wiremock/docker-compose.test.yml down && docker compose -f wiremock/docker-compose.test.yml up -d; fi
       - CGO_ENABLED=0 go test ./...
-      - docker compose -f wiremock/docker-compose.test.yml down || true
+      - if [ -f wiremock/docker-compose.test.yml ]; then docker compose -f wiremock/docker-compose.test.yml down; fi
 allowedFailures:
   - alias-extends
   - bytes-download

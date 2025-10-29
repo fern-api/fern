@@ -1,6 +1,6 @@
 {
   "name": "@fern-api/mock-utils",
-  "version": "0.0.0",
+  "version": "0.0.1",
   "description": "Fern utils for generated WireMock testing stubs",
   "main": "lib/index.js",
   "types": "lib/index.d.ts",

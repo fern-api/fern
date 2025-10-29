@@ -1,17 +1,25 @@
 import { FernIr } from "@fern-fern/ir-sdk";
 import { IntermediateRepresentation } from "@fern-fern/ir-sdk/api";
+import { IntermediateRepresentation as IRSerializer } from "@fern-fern/ir-sdk/serialization";
 import { readFileSync } from "fs";
 import { join } from "path";
 import { WireMock } from "../index";
 
+const loadIr = (irPath: string): IntermediateRepresentation => {
+    const irJson = JSON.parse(readFileSync(irPath, "utf-8"));
+    const ir = IRSerializer.parse(irJson);
+    if (!ir.ok) {
+        throw new Error(`IR ${irPath} is invalid: ${JSON.stringify(ir.errors, null, 2)}`);
+    }
+    return ir.value;
+};
+
 describe("new WireMock().convertToWireMock", () => {
     it("should convert hackernews IR to WireMock format", () => {
         // Read the input IR JSON
-        const irPath = join(__dirname, "fixtures", "hackernews", "ir.json");
-        const irJson = JSON.parse(readFileSync(irPath, "utf-8")) as IntermediateRepresentation;
-
+        const ir = loadIr(join(__dirname, "fixtures", "hackernews", "ir.json"));
         // Convert IR to WireMock format
-        const result = new WireMock().convertToWireMock(irJson);
+        const result = new WireMock().convertToWireMock(ir);
 
         // Basic structure checks
         expect(result).toHaveProperty("mappings");
@@ -24,7 +32,7 @@ describe("new WireMock().convertToWireMock", () => {
 
         // Build a map of IR endpoints for validation
         const endpointsByName = new Map<string, FernIr.HttpEndpoint>();
-        for (const service of Object.values(irJson.services)) {
+        for (const service of Object.values(ir.services)) {
             for (const endpoint of service.endpoints) {
                 const endpointName = endpoint.name.originalName;
                 endpointsByName.set(endpointName, endpoint);
@@ -91,11 +99,9 @@ describe("new WireMock().convertToWireMock", () => {
         // Second mapping is get-movie endpoint
 
         // Read the input IR JSON
-        const irPath = join(__dirname, "fixtures", "imdb", "ir.json");
-        const irJson = JSON.parse(readFileSync(irPath, "utf-8"));
-
+        const ir = loadIr(join(__dirname, "fixtures", "imdb", "ir.json"));
         // Convert IR to WireMock format
-        const result = new WireMock().convertToWireMock(irJson);
+        const result = new WireMock().convertToWireMock(ir);
         // Check createMovie endpoint (first mapping)
         expect(result.mappings[0].request.urlPathTemplate).toBe("/movies/create-movie");
         expect(result.mappings[0].response.status).toBe(201);
@@ -107,17 +113,24 @@ describe("new WireMock().convertToWireMock", () => {
         expect(JSON.parse(result.mappings[1].response.body)).toEqual({ id: "id", title: "title", rating: 1.1 });
 
         expect(result.meta?.total).toBe(2); // There should be 2 unique endpoints
+
+        // There should be valid uuids
+        for (const mapping of result.mappings) {
+            expect(mapping.uuid).toBeDefined();
+            expect(mapping.uuid).toMatch(
+                /^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}$/
+            );
+            expect(mapping.id).toBe(mapping.uuid);
+        }
     });
     it("should convert imdb IR without leading slash on fullpath to WireMock format", () => {
         // First mapping is create-movie endpoint
         // Second mapping is get-movie endpoint
 
         // Read the input IR JSON
-        const irPath = join(__dirname, "fixtures", "imdb", "ir_without_leading_slash.json");
-        const irJson = JSON.parse(readFileSync(irPath, "utf-8"));
-
+        const ir = loadIr(join(__dirname, "fixtures", "imdb", "ir_without_leading_slash.json"));
         // Convert IR to WireMock format
-        const result = new WireMock().convertToWireMock(irJson);
+        const result = new WireMock().convertToWireMock(ir);
 
         // Check createMovie endpoint (first mapping)
         expect(result.mappings[0].request.urlPathTemplate).toBe("/movies/create-movie");
