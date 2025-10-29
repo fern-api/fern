@@ -4,10 +4,6 @@ import { readFile, writeFile } from "fs/promises";
 import { Migration } from "../../../types/Migration";
 import { getAllGeneratorYamlFiles } from "./getAllGeneratorYamlFiles";
 
-function ensureFinalNewline(content: string): string {
-    return content.endsWith("\n") ? content : content + "\n";
-}
-
 export const migration: Migration = {
     name: "add-suffix-to-docs-domain",
     summary: "Adds a docs.buildwithfern.com suffix to the docs domain",
@@ -34,5 +30,5 @@ async function migrateYamlFile(filepath: AbsoluteFilePath): Promise<void> {
       domain: "${domain}.${domainSuffix}"`;
     });
 
-    await writeFile(filepath, ensureFinalNewline(updatedSnapshot.toString()));
+    await writeFile(filepath, updatedSnapshot.toString());
 }

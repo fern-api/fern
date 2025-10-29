@@ -6,10 +6,6 @@ import YAML from "yaml";
 import { Migration } from "../../../types/Migration";
 import { getAllYamlFiles } from "./getAllYamlFiles";
 
-function ensureFinalNewline(content: string): string {
-    return content.endsWith("\n") ? content : content + "\n";
-}
-
 export const migration: Migration = {
     name: "add-inline-requests",
     summary: "Replace endpoint requests with inline definitions",
@@ -68,7 +64,7 @@ async function migrateYamlFile(filepath: AbsoluteFilePath, context: TaskContext)
                 context.failWithoutThrowing("Failed to convert endpoint", e);
             }
         }
-        await writeFile(filepath, ensureFinalNewline(parsedDocument.toString()));
+        await writeFile(filepath, parsedDocument.toString());
     }
 }
 

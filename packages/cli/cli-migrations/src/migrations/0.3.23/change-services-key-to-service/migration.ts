@@ -6,10 +6,6 @@ import YAML from "yaml";
 import { Migration } from "../../../types/Migration";
 import { getAllYamlFiles } from "./getAllYamlFiles";
 
-function ensureFinalNewline(content: string): string {
-    return content.endsWith("\n") ? content : content + "\n";
-}
-
 export const migration: Migration = {
     name: "change-services-key-to-service",
     summary: 'Rename the "services" key to "service". Only one service is allowed per file.',
@@ -62,5 +58,5 @@ async function migrateYamlFile(filepath: AbsoluteFilePath, context: TaskContext)
         }
     }
 
-    await writeFile(filepath, ensureFinalNewline(parsedDocument.toString()));
+    await writeFile(filepath, parsedDocument.toString());
 }

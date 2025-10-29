@@ -8,10 +8,6 @@ import { getAllGeneratorYamlFiles } from "./getAllGeneratorYamlFiles";
 import * as NewSchemas from "./new-generators-configuration";
 import * as OldSchemas from "./old-generators-configuration";
 
-function ensureFinalNewline(content: string): string {
-    return content.endsWith("\n") ? content : content + "\n";
-}
-
 export const migration: Migration = {
     name: "add-generator-groups",
     summary: "Adds groups to generators configuration",
@@ -50,7 +46,7 @@ async function migrateGeneratorsYml(filepath: AbsoluteFilePath): Promise<void> {
             )
         };
     }
-    await writeFile(filepath, ensureFinalNewline(yaml.dump(newGeneratorsConfiguration)));
+    await writeFile(filepath, yaml.dump(newGeneratorsConfiguration));
 }
 
 function convertDraftGeneratorInvocation(

@@ -8,10 +8,6 @@ import {
     PathModificationStrategy
 } from "./generators-configuration/convertLegacyGeneratorsConfiguration";
 
-function ensureFinalNewline(content: string): string {
-    return content.endsWith("\n") ? content : content + "\n";
-}
-
 const APIS_DIRECTORY = "apis";
 
 /**
@@ -63,5 +59,5 @@ async function migrateAndWriteGeneratorsYml({
         generatorsConfiguration,
         pathModificationStrategy: PathModificationStrategy.Nest
     });
-    await writeFile(absolutePathToGeneratorsConfiguration, ensureFinalNewline(yaml.dump(convertedResponse.value)));
+    await writeFile(absolutePathToGeneratorsConfiguration, yaml.dump(convertedResponse.value));
 }

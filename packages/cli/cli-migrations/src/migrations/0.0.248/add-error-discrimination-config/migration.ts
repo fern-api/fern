@@ -5,10 +5,6 @@ import YAML from "yaml";
 import { Migration } from "../../../types/Migration";
 import { getAllRootApiYamlFiles } from "./getAllRootApiYamlFiles";
 
-function ensureFinalNewline(content: string): string {
-    return content.endsWith("\n") ? content : content + "\n";
-}
-
 export const migration: Migration = {
     name: "add-error-discrimination-config",
     summary: "Adds error discrimination configuration",
@@ -36,5 +32,5 @@ async function migrateRootApiFile(filepath: AbsoluteFilePath): Promise<void> {
         "property-name": errorDiscriminant.value
     });
     parsedDocument.delete("error-discriminant");
-    await writeFile(filepath, ensureFinalNewline(parsedDocument.toString()));
+    await writeFile(filepath, parsedDocument.toString());
 }

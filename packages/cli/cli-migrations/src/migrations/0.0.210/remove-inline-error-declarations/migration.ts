@@ -6,10 +6,6 @@ import YAML from "yaml";
 import { Migration } from "../../../types/Migration";
 import { getAllYamlFiles } from "./getAllYamlFiles";
 
-function ensureFinalNewline(content: string): string {
-    return content.endsWith("\n") ? content : content + "\n";
-}
-
 export const migration: Migration = {
     name: "remove-inline-error-declarations",
     summary: "moves inlined error declarations to be types.",
@@ -79,5 +75,5 @@ async function migrateFile(filepath: AbsoluteFilePath, context: TaskContext): Pr
         }
     }
 
-    await writeFile(filepath, ensureFinalNewline(parsedDocument.toString()));
+    await writeFile(filepath, parsedDocument.toString());
 }

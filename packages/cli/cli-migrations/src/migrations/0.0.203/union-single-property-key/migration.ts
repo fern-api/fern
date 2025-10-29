@@ -6,10 +6,6 @@ import YAML from "yaml";
 import { Migration } from "../../../types/Migration";
 import { getAllYamlFiles } from "./getAllYamlFiles";
 
-function ensureFinalNewline(content: string): string {
-    return content.endsWith("\n") ? content : content + "\n";
-}
-
 export const migration: Migration = {
     name: "union-single-property-migration",
     summary: "migrates union types to set the `key` property on non-object subtypes to the discriminant value.",
@@ -60,5 +56,5 @@ async function migrateFile(filepath: AbsoluteFilePath, context: TaskContext): Pr
         }
     }
 
-    await writeFile(filepath, ensureFinalNewline(parsedDocument.toString()));
+    await writeFile(filepath, parsedDocument.toString());
 }

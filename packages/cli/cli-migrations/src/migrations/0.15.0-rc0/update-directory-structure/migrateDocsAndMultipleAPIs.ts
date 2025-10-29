@@ -13,10 +13,6 @@ import {
 import { PathModificationStrategy } from "./generators-configuration/convertLegacyGeneratorsConfiguration";
 import { migrateDocsInstances } from "./migrateDocsInstances";
 
-function ensureFinalNewline(content: string): string {
-    return content.endsWith("\n") ? content : content + "\n";
-}
-
 const APIS_DIRECTORY = "apis";
 
 type NewType = AbsoluteFilePath;
@@ -80,7 +76,7 @@ async function migrateAndWriteGeneratorsYml({
         generatorsConfiguration,
         pathModificationStrategy: PathModificationStrategy.Nest
     });
-    await writeFile(absolutePathToGeneratorsConfiguration, ensureFinalNewline(yaml.dump(convertedResponse.value)));
+    await writeFile(absolutePathToGeneratorsConfiguration, yaml.dump(convertedResponse.value));
     return convertedResponse.docsURLs;
 }
 
@@ -103,5 +99,5 @@ async function migrateAndWriteDocsYml({
         apiName
     });
     const absolutePathToDocsConfig = getAbsolutePathToDocsYaml({ absolutePathToWorkspace });
-    await writeFile(absolutePathToDocsConfig, ensureFinalNewline(yaml.dump(convertedDocsConfig)));
+    await writeFile(absolutePathToDocsConfig, yaml.dump(convertedDocsConfig));
 }
