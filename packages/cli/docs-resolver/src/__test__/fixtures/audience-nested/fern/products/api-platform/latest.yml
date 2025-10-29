@@ -1,0 +1,19 @@
+navigation:
+  - page: Platform v2.0 Overview
+    path: ../../platform/v2/overview.mdx
+  - api: Platform API v2.0
+    audiences:
+      - internal
+    layout:
+      - section:
+          title: Core Operations
+          contents:
+            - GET /v2/status
+            - POST /v2/initialize
+      - section:
+          title: Advanced Management
+          audiences:
+            - internal
+          contents:
+            - GET /v2/admin/metrics
+            - POST /v2/admin/reset

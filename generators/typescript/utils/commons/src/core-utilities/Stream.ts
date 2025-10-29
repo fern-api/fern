@@ -47,7 +47,7 @@ export const MANIFEST: CoreUtility.Manifest = {
     },
     dependsOn: [RuntimeManifest],
     getFilesPatterns: () => {
-        return { patterns: "src/core/stream/**" };
+        return { patterns: ["src/core/stream/**", "tests/unit/stream/**"] };
     }
 };
 

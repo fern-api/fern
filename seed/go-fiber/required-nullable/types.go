@@ -138,3 +138,13 @@ func (f *Foo) String() string {
 	}
 	return fmt.Sprintf("%#v", f)
 }
+
+type UpdateFooRequest struct {
+	XIdempotencyKey string `header:"X-Idempotency-Key"`
+	// Can be explicitly set to null to clear the value
+	NullableText *string `json:"nullable_text,omitempty" url:"-"`
+	// Can be explicitly set to null to clear the value
+	NullableNumber *float64 `json:"nullable_number,omitempty" url:"-"`
+	// Regular non-nullable field
+	NonNullableText *string `json:"non_nullable_text,omitempty" url:"-"`
+}

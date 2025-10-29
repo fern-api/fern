@@ -488,6 +488,33 @@ export class SdkGeneratorCli extends AbstractRustGeneratorCli<SdkCustomConfigSch
             }
         }
 
+        // Add file upload request body types from services
+        for (const service of Object.values(context.ir.services)) {
+            for (const endpoint of service.endpoints) {
+                if (endpoint.requestBody?.type === "fileUpload") {
+                    // Get the unique type name (may have suffix if there's a collision)
+                    const uniqueRequestName = context.getFileUploadRequestTypeName(endpoint.id);
+
+                    // Use centralized method for consistent snake_case conversion (pass endpoint.id)
+                    const rawModuleName = context.getModuleNameForFileUploadRequestBody(endpoint.id);
+                    const escapedModuleName = context.escapeRustKeyword(rawModuleName);
+
+                    // Only add if we haven't seen this module name before
+                    if (!uniqueModuleNames.has(escapedModuleName)) {
+                        uniqueModuleNames.add(escapedModuleName);
+                        moduleDeclarations.push(new ModuleDeclaration({ name: escapedModuleName, isPublic: true }));
+                        useStatements.push(
+                            new UseStatement({
+                                path: escapedModuleName,
+                                items: [uniqueRequestName],
+                                isPublic: true
+                            })
+                        );
+                    }
+                }
+            }
+        }
+
         // Add query parameter request structs for query-only endpoints
         for (const [serviceId, service] of Object.entries(context.ir.services)) {
             for (const endpoint of service.endpoints) {

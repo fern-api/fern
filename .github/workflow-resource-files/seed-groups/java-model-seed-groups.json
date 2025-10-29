@@ -1,153 +1,154 @@
 {
-  "totalTestTimeSeconds": 27312,
+  "totalTestTimeSeconds": 27117,
   "groups": [
     {
       "fixtures": [
-        "java-inline-types",
-        "url-form-encoded",
-        "bearer-token-environment-variable",
-        "inferred-auth-implicit-no-expiry",
-        "oauth-client-credentials-default",
-        "websocket-inferred-auth",
-        "object",
-        "oauth-client-credentials-with-variables",
-        "request-parameters"
+        "client-side-params",
+        "file-upload-openapi",
+        "bytes-upload",
+        "api-wide-base-path",
+        "oauth-client-credentials-environment-variables",
+        "unknown",
+        "objects-with-imports",
+        "circular-references-advanced",
+        "single-url-environment-default"
       ],
-      "groupTotalTimeSeconds": 2692
+      "groupTotalTimeSeconds": 2643
     },
     {
       "fixtures": [
-        "undiscriminated-unions",
-        "version-no-default",
+        "java-inline-types",
+        "bearer-token-environment-variable",
+        "alias",
+        "accept-header",
+        "basic-auth-environment-variables",
+        "undiscriminated-union-with-response-property",
+        "simple-fhir",
+        "simple-api",
+        "server-sent-events",
+        "file-upload"
+      ],
+      "groupTotalTimeSeconds": 2735
+    },
+    {
+      "fixtures": [
+        "any-auth",
+        "multi-url-environment",
+        "url-form-encoded",
         "optional",
-        "version",
-        "imdb:enable-public-constructors",
+        "java-custom-package-prefix",
+        "folders",
+        "streaming",
+        "oauth-client-credentials-default",
+        "request-parameters",
+        "property-access"
+      ],
+      "groupTotalTimeSeconds": 2729
+    },
+    {
+      "fixtures": [
+        "extra-properties",
+        "java-builder-extension",
+        "version-no-default",
+        "bytes-download",
+        "undiscriminated-unions",
+        "http-head",
+        "literal",
+        "examples",
+        "pagination-custom",
+        "query-parameters"
+      ],
+      "groupTotalTimeSeconds": 2729
+    },
+    {
+      "fixtures": [
         "websocket-bearer-auth",
-        "circular-references-advanced",
-        "objects-with-imports",
-        "inferred-auth-implicit",
+        "variables",
+        "path-parameters",
+        "file-download",
+        "license",
+        "pagination",
+        "streaming-parameter",
+        "oauth-client-credentials-custom",
+        "websocket-inferred-auth",
+        "reserved-keywords"
+      ],
+      "groupTotalTimeSeconds": 2730
+    },
+    {
+      "fixtures": [
+        "basic-auth",
+        "java-single-property-endpoint",
+        "content-type",
+        "plain-text",
+        "enum",
+        "errors",
+        "oauth-client-credentials-nested-root",
+        "circular-references",
+        "package-yml",
+        "empty-clients"
+      ],
+      "groupTotalTimeSeconds": 2682
+    },
+    {
+      "fixtures": [
+        "java-pagination-deep-cursor-path",
+        "no-environment",
+        "auth-environment-variables",
+        "inferred-auth-implicit-no-expiry",
+        "websocket",
+        "audiences",
+        "oauth-client-credentials",
+        "exhaustive",
+        "server-sent-event-examples",
         "alias-extends"
+      ],
+      "groupTotalTimeSeconds": 2682
+    },
+    {
+      "fixtures": [
+        "error-property",
+        "literals-unions",
+        "query-parameters-openapi",
+        "query-parameters-openapi-as-objects",
+        "imdb:disable-required-property-builder-checks",
+        "oauth-client-credentials-with-variables",
+        "multi-url-environment-no-default",
+        "inferred-auth-explicit",
+        "extends",
+        "object"
+      ],
+      "groupTotalTimeSeconds": 2736
+    },
+    {
+      "fixtures": [
+        "mixed-case",
+        "multiple-request-bodies",
+        "idempotency-headers",
+        "version",
+        "nullable-optional",
+        "mixed-file-directory",
+        "unions",
+        "cross-package-type-names",
+        "trace",
+        "public-object"
       ],
       "groupTotalTimeSeconds": 2719
     },
     {
       "fixtures": [
-        "any-auth",
-        "query-parameters-openapi",
-        "bytes-download",
-        "java-nullable-named-request-types",
-        "java-single-property-endpoint",
-        "error-property",
-        "single-url-environment-no-default",
-        "oauth-client-credentials-environment-variables",
-        "cross-package-type-names",
-        "reserved-keywords"
-      ],
-      "groupTotalTimeSeconds": 2751
-    },
-    {
-      "fixtures": [
-        "basic-auth-environment-variables",
-        "java-custom-package-prefix",
-        "accept-header",
-        "query-parameters-openapi-as-objects",
-        "java-builder-extension",
-        "custom-auth",
         "multi-line-docs",
-        "inferred-auth-explicit",
-        "enum",
-        "empty-clients"
-      ],
-      "groupTotalTimeSeconds": 2741
-    },
-    {
-      "fixtures": [
-        "multi-url-environment-no-default",
-        "java-pagination-deep-cursor-path",
-        "bytes-upload",
-        "http-head",
-        "mixed-file-directory",
-        "pagination",
-        "variables",
-        "multi-url-environment",
-        "oauth-client-credentials-nested-root"
-      ],
-      "groupTotalTimeSeconds": 2676
-    },
-    {
-      "fixtures": [
-        "single-url-environment-default",
-        "alias",
-        "api-wide-base-path",
-        "content-type",
-        "websocket",
-        "basic-auth",
-        "circular-references",
-        "simple-fhir",
-        "oauth-client-credentials-custom",
-        "exhaustive"
-      ],
-      "groupTotalTimeSeconds": 2737
-    },
-    {
-      "fixtures": [
-        "path-parameters",
-        "license",
-        "server-sent-event-examples",
-        "auth-environment-variables",
-        "literals-unions",
         "validation",
-        "response-property",
-        "file-upload",
-        "audiences",
-        "server-sent-events"
-      ],
-      "groupTotalTimeSeconds": 2745
-    },
-    {
-      "fixtures": [
-        "errors",
-        "nullable-optional",
-        "required-nullable",
-        "file-download",
-        "client-side-params",
-        "idempotency-headers",
-        "extra-properties",
-        "streaming",
-        "property-access",
-        "examples"
-      ],
-      "groupTotalTimeSeconds": 2752
-    },
-    {
-      "fixtures": [
-        "multiple-request-bodies",
-        "no-environment",
-        "unions",
-        "public-object",
-        "imdb:disable-required-property-builder-checks",
-        "undiscriminated-union-with-response-property",
-        "unknown",
-        "literal",
-        "simple-api",
-        "trace"
-      ],
-      "groupTotalTimeSeconds": 2748
-    },
-    {
-      "fixtures": [
-        "pagination-custom",
-        "mixed-case",
-        "extends",
-        "plain-text",
+        "imdb:enable-public-constructors",
+        "java-nullable-named-request-types",
         "nullable",
-        "streaming-parameter",
-        "package-yml",
-        "oauth-client-credentials",
-        "folders",
-        "query-parameters"
+        "custom-auth",
+        "single-url-environment-no-default",
+        "inferred-auth-implicit",
+        "required-nullable",
+        "response-property"
       ],
-      "groupTotalTimeSeconds": 2751
+      "groupTotalTimeSeconds": 2732
     }
   ]
 }

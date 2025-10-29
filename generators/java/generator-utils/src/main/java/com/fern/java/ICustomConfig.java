@@ -95,6 +95,12 @@ public interface ICustomConfig {
         return false;
     }
 
+    @Value.Default
+    @JsonProperty("use-nullable-for-optional-fields")
+    default Boolean useNullableForOptionalFields() {
+        return false;
+    }
+
     @JsonProperty("package-prefix")
     Optional<String> packagePrefix();
 

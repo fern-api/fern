@@ -130,7 +130,7 @@ export abstract class AbstractOpenAPIV3ParserContext implements SchemaParserCont
             }
         }
         if (resolvedSchema == null) {
-            this.logger.warn(`Encountered undefined reference: ${schema.$ref}`);
+            this.logger.debug(`Encountered undefined reference: ${schema.$ref}`);
             return {
                 "x-fern-type": "unknown"
                 // biome-ignore lint/suspicious/noExplicitAny: allow explicit any

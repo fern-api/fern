@@ -64,7 +64,7 @@ will be thrown.
 from seed.core.api_error import ApiError
 
 try:
-    client.get_foo()
+    client.get_foo(...)
 except ApiError as e:
     print(e.status_code)
     print(e.body)
@@ -83,7 +83,7 @@ from seed import SeedApi
 client = SeedApi(
     ...,
 )
-response = client.with_raw_response.get_foo()
+response = client.with_raw_response.get_foo(...)
 print(response.headers)  # access the response headers
 print(response.data)  # access the underlying object
 ```
@@ -103,7 +103,7 @@ A request is deemed retryable when any of the following HTTP status codes is ret
 Use the `max_retries` request option to configure this behavior.
 
 ```python
-client.get_foo(request_options={
+client.get_foo(..., request_options={
     "max_retries": 1
 })
 ```
@@ -123,7 +123,7 @@ client = SeedApi(
 
 
 # Override timeout for a specific method
-client.get_foo(request_options={
+client.get_foo(..., request_options={
     "timeout_in_seconds": 1
 })
 ```

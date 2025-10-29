@@ -7,6 +7,7 @@ import {
     HttpEndpoint,
     HttpService,
     IntermediateRepresentation,
+    ObjectProperty,
     Package,
     PrimitiveTypeV1,
     ServiceId,
@@ -18,17 +19,11 @@ import {
 } from "@fern-fern/ir-sdk/api";
 
 import { AsIsFileDefinition, SourceAsIsFiles, TestAsIsFiles } from "../AsIs";
-import { SourceSymbolRegistry, SwiftProject } from "../project";
-import { TestSymbolRegistry } from "../project/TestSymbolRegistry";
-
-/**
- * Registry for local type information used by individual generators to resolve type references
- * and handle nested type collisions within their specific context.
- */
-export interface LocalTypeRegistry {
-    getSwiftTypeForStringLiteral(literalValue: string): swift.Type;
-    hasNestedTypeWithName(symbolName: string): boolean;
-}
+import { SwiftProject } from "../project";
+import { Referencer } from "./Referencer";
+import { registerDiscriminatedUnionVariants } from "./register-discriminated-unions";
+import { registerLiteralEnums, registerLiteralEnumsForObjectProperties } from "./register-literal-enums";
+import { inferCaseNameForTypeReference, registerUndiscriminatedUnionVariants } from "./register-undiscriminated-unions";
 
 export abstract class AbstractSwiftGeneratorContext<
     CustomConfig extends BaseSwiftCustomConfigSchema
@@ -42,48 +37,89 @@ export abstract class AbstractSwiftGeneratorContext<
         public readonly generatorNotificationService: GeneratorNotificationService
     ) {
         super(config, generatorNotificationService);
-        this.project = this.initProject(ir);
+        this.project = new SwiftProject({ context: this });
+        this.registerProjectSymbols(this.project, ir);
     }
 
-    private initProject(ir: IntermediateRepresentation): SwiftProject {
-        const project = new SwiftProject({ context: this });
-        this.registerSourceSymbols(project.srcSymbolRegistry, ir);
-        this.registerTestSymbols(project.testSymbolRegistry, project.srcSymbolRegistry);
-        return project;
+    private registerProjectSymbols(project: SwiftProject, ir: IntermediateRepresentation) {
+        this.registerSourceSymbols(project, ir);
+        this.registerTestSymbols(project);
     }
 
-    /**
-     * Register symbols in priority order - high-priority symbols first to avoid collisions.
-     * Root client and environment symbols are registered first as they're most critical,
-     * followed by schema types and inline request types which are commonly referenced, and
-     * finally subclient symbols last since they're unlikely to be used directly by end users.
-     */
-    private registerSourceSymbols(symbolRegistry: SourceSymbolRegistry, ir: IntermediateRepresentation) {
-        symbolRegistry.registerModuleSymbol({
+    private registerSourceSymbols(project: SwiftProject, ir: IntermediateRepresentation) {
+        const { nameRegistry } = project;
+        nameRegistry.registerSourceModuleSymbol({
             configModuleName: this.customConfig.moduleName,
-            apiNamePascalCase: ir.apiName.pascalCase.unsafeName
+            apiNamePascalCase: ir.apiName.pascalCase.unsafeName,
+            asIsSymbols: Object.values(SourceAsIsFiles).flatMap((file) => file.symbols)
         });
-        symbolRegistry.registerRootClientSymbol({
+        nameRegistry.registerRootClientSymbol({
             configClientClassName: this.customConfig.clientClassName,
             apiNamePascalCase: ir.apiName.pascalCase.unsafeName
         });
-        symbolRegistry.registerEnvironmentSymbol({
+        nameRegistry.registerEnvironmentSymbol({
             configEnvironmentEnumName: this.customConfig.environmentEnumName,
             apiNamePascalCase: ir.apiName.pascalCase.unsafeName
         });
-        Object.entries(ir.types).forEach(([typeId, typeDeclaration]) => {
-            symbolRegistry.registerSchemaTypeSymbol(typeId, typeDeclaration.name.name.pascalCase.unsafeName);
+
+        // Must first register top-level symbols
+        const registeredSchemaTypes = Object.entries(ir.types).map(([typeId, typeDeclaration]) => {
+            const symbolShape: swift.TypeSymbolShape = typeDeclaration.shape._visit<swift.TypeSymbolShape>({
+                alias: () => ({ type: "struct" }),
+                enum: () => ({ type: "enum-with-raw-values" }),
+                object: () => ({ type: "struct" }),
+                union: () => ({ type: "enum-with-associated-values" }),
+                undiscriminatedUnion: () => ({ type: "enum-with-associated-values" }),
+                _other: () => ({ type: "other" })
+            });
+            const schemaTypeSymbol = nameRegistry.registerSchemaTypeSymbol(
+                typeId,
+                typeDeclaration.name.name.pascalCase.unsafeName,
+                symbolShape
+            );
+            return { typeDeclaration, registeredSymbol: schemaTypeSymbol };
         });
-        symbolRegistry.registerRequestsContainerSymbol();
+
+        registeredSchemaTypes.forEach(({ typeDeclaration, registeredSymbol }) => {
+            registerDiscriminatedUnionVariants({
+                parentSymbol: registeredSymbol,
+                registry: nameRegistry,
+                typeDeclaration,
+                context: this
+            });
+            registerLiteralEnums({
+                parentSymbol: registeredSymbol,
+                registry: nameRegistry,
+                typeDeclaration,
+                context: this
+            });
+            registerUndiscriminatedUnionVariants({
+                parentSymbol: registeredSymbol,
+                registry: nameRegistry,
+                typeDeclaration,
+                context: this
+            });
+        });
+
+        nameRegistry.registerRequestsContainerSymbol();
+
         Object.entries(ir.services).forEach(([_, service]) => {
             service.endpoints.forEach((endpoint) => {
                 if (endpoint.requestBody?.type === "inlinedRequestBody") {
-                    symbolRegistry.registerRequestTypeSymbol({
+                    const requestTypeSymbol = nameRegistry.registerRequestTypeSymbol({
                         endpointId: endpoint.id,
                         requestNamePascalCase: endpoint.requestBody.name.pascalCase.unsafeName
                     });
+                    registerLiteralEnumsForObjectProperties({
+                        parentSymbol: requestTypeSymbol,
+                        registry: nameRegistry,
+                        properties: [
+                            ...(endpoint.requestBody.extendedProperties ?? []),
+                            ...endpoint.requestBody.properties
+                        ]
+                    });
                 } else if (endpoint.requestBody?.type === "fileUpload") {
-                    symbolRegistry.registerRequestTypeSymbol({
+                    nameRegistry.registerRequestTypeSymbol({
                         endpointId: endpoint.id,
                         requestNamePascalCase: endpoint.requestBody.name.pascalCase.unsafeName
                     });
@@ -91,7 +127,7 @@ export abstract class AbstractSwiftGeneratorContext<
             });
         });
         Object.entries(ir.subpackages).forEach(([subpackageId, subpackage]) => {
-            symbolRegistry.registerSubClientSymbol({
+            nameRegistry.registerSubClientSymbol({
                 subpackageId,
                 fernFilepathPartNamesPascalCase: subpackage.fernFilepath.allParts.map(
                     (name) => name.pascalCase.unsafeName
@@ -101,26 +137,36 @@ export abstract class AbstractSwiftGeneratorContext<
         });
     }
 
-    private registerTestSymbols(testSymbolRegistry: TestSymbolRegistry, sourceSymbolRegistry: SourceSymbolRegistry) {
-        sourceSymbolRegistry.getAllSubClientSymbols().forEach((s) => {
-            testSymbolRegistry.registerWireTestSuiteSymbol(s.name);
+    private registerTestSymbols(project: SwiftProject) {
+        const { nameRegistry } = project;
+        const sourceModuleSymbol = nameRegistry.getRegisteredSourceModuleSymbolOrThrow();
+        nameRegistry.registerTestModuleSymbol({
+            sourceModuleName: sourceModuleSymbol.name,
+            asIsSymbols: Object.values(TestAsIsFiles).flatMap((file) => file.symbols)
+        });
+        nameRegistry.getAllSubClientSymbols().forEach((s) => {
+            nameRegistry.registerWireTestSuiteSymbol(s.name);
         });
     }
 
     public get packageName(): string {
-        return this.project.srcSymbolRegistry.getModuleSymbolOrThrow();
+        const symbol = this.project.nameRegistry.getRegisteredSourceModuleSymbolOrThrow();
+        return symbol.name;
     }
 
     public get libraryName(): string {
-        return this.project.srcSymbolRegistry.getModuleSymbolOrThrow();
+        const symbol = this.project.nameRegistry.getRegisteredSourceModuleSymbolOrThrow();
+        return symbol.name;
     }
 
-    public get srcTargetName(): string {
-        return this.project.srcSymbolRegistry.getModuleSymbolOrThrow();
+    public get sourceTargetName(): string {
+        const symbol = this.project.nameRegistry.getRegisteredSourceModuleSymbolOrThrow();
+        return symbol.name;
     }
 
     public get testTargetName(): string {
-        return `${this.srcTargetName}Tests`;
+        const symbol = this.project.nameRegistry.getRegisteredTestModuleSymbolOrThrow();
+        return symbol.name;
     }
 
     public get requestsDirectory(): RelativeFilePath {
@@ -143,6 +189,18 @@ export abstract class AbstractSwiftGeneratorContext<
         const typeDeclaration = this.ir.types[typeId];
         assertDefined(typeDeclaration, `Type declaration with the id '${typeId}' not found`);
         return typeDeclaration;
+    }
+
+    public getPropertiesOfDiscriminatedUnionVariant(typeId: TypeId): ObjectProperty[] {
+        const typeDeclaration = this.getTypeDeclarationOrThrow(typeId);
+        return typeDeclaration.shape._visit({
+            alias: () => [],
+            enum: () => [],
+            object: (otd) => [...(otd.extendedProperties ?? []), ...otd.properties],
+            union: () => [],
+            undiscriminatedUnion: () => [],
+            _other: () => []
+        });
     }
 
     public getHttpServiceOrThrow(serviceId: ServiceId): HttpService {
@@ -175,64 +233,80 @@ export abstract class AbstractSwiftGeneratorContext<
         return Object.values(TestAsIsFiles);
     }
 
-    public getSwiftTypeForTypeReference(
+    public getSwiftTypeReferenceFromSourceModuleScope(typeReference: TypeReference): swift.TypeReference {
+        const symbol = this.project.nameRegistry.getRegisteredSourceModuleSymbolOrThrow();
+        return this.getSwiftTypeReferenceFromScope(typeReference, symbol.id);
+    }
+
+    public getSwiftTypeReferenceFromTestModuleScope(typeReference: TypeReference): swift.TypeReference {
+        const symbol = this.project.nameRegistry.getRegisteredTestModuleSymbolOrThrow();
+        return this.getSwiftTypeReferenceFromScope(typeReference, symbol.id);
+    }
+
+    public getSwiftTypeReferenceFromScope(
         typeReference: TypeReference,
-        localTypeRegistry?: LocalTypeRegistry
-    ): swift.Type {
+        fromSymbol: swift.Symbol | string
+    ): swift.TypeReference {
+        const referencer = this.createReferencer(fromSymbol);
         switch (typeReference.type) {
             case "container":
                 return typeReference.container._visit({
                     literal: (literal) =>
                         literal._visit({
-                            boolean: () => swift.Type.jsonValue(), // TODO(kafkas): Implement boolean literals
-                            string: (literalValue) =>
-                                localTypeRegistry?.getSwiftTypeForStringLiteral(literalValue) ?? swift.Type.jsonValue(),
-                            _other: () => swift.Type.jsonValue()
+                            boolean: () => referencer.referenceAsIsType("JSONValue"),
+                            string: (literalValue) => {
+                                const symbol = this.project.nameRegistry.getNestedLiteralEnumSymbolOrThrow(
+                                    fromSymbol,
+                                    literalValue
+                                );
+                                return referencer.referenceType(symbol);
+                            },
+                            _other: () => referencer.referenceAsIsType("JSONValue")
                         }),
                     map: (type) =>
-                        swift.Type.dictionary(
-                            this.getSwiftTypeForTypeReference(type.keyType, localTypeRegistry),
-                            this.getSwiftTypeForTypeReference(type.valueType, localTypeRegistry)
+                        swift.TypeReference.dictionary(
+                            this.getSwiftTypeReferenceFromScope(type.keyType, fromSymbol),
+                            this.getSwiftTypeReferenceFromScope(type.valueType, fromSymbol)
                         ),
-                    set: () => swift.Type.jsonValue(), // TODO(kafkas): Implement set type
-                    nullable: (ref) => swift.Type.nullable(this.getSwiftTypeForTypeReference(ref, localTypeRegistry)),
-                    optional: (ref) => swift.Type.optional(this.getSwiftTypeForTypeReference(ref, localTypeRegistry)),
-                    list: (ref) => swift.Type.array(this.getSwiftTypeForTypeReference(ref, localTypeRegistry)),
-                    _other: () => swift.Type.jsonValue()
+                    set: () => referencer.referenceAsIsType("JSONValue"),
+                    nullable: (ref) =>
+                        swift.TypeReference.nullable(this.getSwiftTypeReferenceFromScope(ref, fromSymbol)),
+                    optional: (ref) =>
+                        swift.TypeReference.optional(this.getSwiftTypeReferenceFromScope(ref, fromSymbol)),
+                    list: (ref) => swift.TypeReference.array(this.getSwiftTypeReferenceFromScope(ref, fromSymbol)),
+                    _other: () => referencer.referenceAsIsType("JSONValue")
                 });
             case "primitive":
                 return PrimitiveTypeV1._visit(typeReference.primitive.v1, {
-                    string: () => swift.Type.string(),
-                    boolean: () => swift.Type.bool(),
-                    integer: () => swift.Type.int(),
-                    uint: () => swift.Type.uint(),
-                    uint64: () => swift.Type.uint64(),
-                    long: () => swift.Type.int64(),
-                    float: () => swift.Type.float(),
-                    double: () => swift.Type.double(),
-                    bigInteger: () => swift.Type.string(), // TODO(kafkas): We may need to implement our own value type for this
-                    date: () => swift.Type.calendarDate(),
-                    dateTime: () => swift.Type.date(),
-                    base64: () => swift.Type.string(),
-                    uuid: () => swift.Type.uuid(),
-                    _other: () => swift.Type.jsonValue()
+                    string: () => referencer.referenceSwiftType("String"),
+                    boolean: () => referencer.referenceSwiftType("Bool"),
+                    integer: () => referencer.referenceSwiftType("Int"),
+                    uint: () => referencer.referenceSwiftType("UInt"),
+                    uint64: () => referencer.referenceSwiftType("UInt64"),
+                    long: () => referencer.referenceSwiftType("Int64"),
+                    float: () => referencer.referenceSwiftType("Float"),
+                    double: () => referencer.referenceSwiftType("Double"),
+                    bigInteger: () => referencer.referenceSwiftType("String"),
+                    date: () => referencer.referenceAsIsType("CalendarDate"),
+                    dateTime: () => referencer.referenceFoundationType("Date"),
+                    base64: () => referencer.referenceSwiftType("String"),
+                    uuid: () => referencer.referenceFoundationType("UUID"),
+                    _other: () => referencer.referenceAsIsType("JSONValue")
                 });
             case "named": {
-                const symbolName = this.project.srcSymbolRegistry.getSchemaTypeSymbolOrThrow(typeReference.typeId);
-                const hasNestedTypeWithSameName = localTypeRegistry?.hasNestedTypeWithName?.(symbolName);
-                return swift.Type.custom(
-                    hasNestedTypeWithSameName ? this.getFullyQualifiedNameForSchemaType(symbolName) : symbolName
-                );
+                const toSymbol = this.project.nameRegistry.getSchemaTypeSymbolOrThrow(typeReference.typeId);
+                const symbolRef = this.project.nameRegistry.reference({ fromSymbol, toSymbol });
+                return swift.TypeReference.symbol(symbolRef);
             }
             case "unknown":
-                return swift.Type.jsonValue();
+                return referencer.referenceAsIsType("JSONValue");
             default:
                 assertNever(typeReference);
         }
     }
 
-    public getFullyQualifiedNameForSchemaType(symbolName: string): string {
-        return `${this.srcTargetName}.${symbolName}`;
+    public inferCaseNameForTypeReference(parentSymbol: swift.Symbol, typeReference: swift.TypeReference): string {
+        return inferCaseNameForTypeReference(parentSymbol, typeReference, this.project.nameRegistry);
     }
 
     public getEndpointMethodDetails(endpoint: HttpEndpoint) {
@@ -276,5 +350,9 @@ export abstract class AbstractSwiftGeneratorContext<
             }
         }
         return { type: "none" };
+    }
+
+    public createReferencer(fromSymbol: swift.Symbol | string) {
+        return new Referencer(this.project, fromSymbol);
     }
 }

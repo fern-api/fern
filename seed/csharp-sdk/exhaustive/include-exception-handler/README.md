@@ -86,6 +86,35 @@ var response = await client.Endpoints.Container.GetAndReturnListOfPrimitivesAsyn
 );
 ```
 
+### Forward Compatible Enums
+
+This SDK uses forward-compatible enums that can handle unknown values gracefully.
+
+```csharp
+using SeedExhaustive.Endpoints;
+
+// Using a built-in value
+var errorCategory = ErrorCategory.ApiError;
+
+// Using a custom value
+var customErrorCategory = ErrorCategory.FromCustom("custom-value");
+
+// Using in a switch statement
+switch (errorCategory.Value)
+{
+    case ErrorCategory.Values.ApiError:
+        Console.WriteLine("ApiError");
+        break;
+    default:
+        Console.WriteLine($"Unknown value: {errorCategory.Value}");
+        break;
+}
+
+// Explicit casting
+string errorCategoryString = (string)ErrorCategory.ApiError;
+ErrorCategory errorCategoryFromString = (ErrorCategory)"API_ERROR";
+```
+
 ## Contributing
 
 While we value open-source contributions to this SDK, this library is generated programmatically.

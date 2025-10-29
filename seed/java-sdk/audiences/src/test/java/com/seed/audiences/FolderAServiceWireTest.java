@@ -3,7 +3,9 @@ package com.seed.audiences;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.seed.audiences.core.ObjectMappers;
+import com.seed.audiences.resources.foldera.service.requests.GetDirectThreadRequest;
 import com.seed.audiences.resources.foldera.service.types.Response;
+import java.util.Arrays;
 import okhttp3.mockwebserver.MockResponse;
 import okhttp3.mockwebserver.MockWebServer;
 import okhttp3.mockwebserver.RecordedRequest;
@@ -34,7 +36,12 @@ public class FolderAServiceWireTest {
         server.enqueue(new MockResponse()
                 .setResponseCode(200)
                 .setBody("{\"foo\":{\"foo\":{\"bar_property\":\"d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32\"}}}"));
-        Response response = client.folderA().service().getDirectThread();
+        Response response = client.folderA()
+                .service()
+                .getDirectThread(GetDirectThreadRequest.builder()
+                        .ids(Arrays.asList("ids"))
+                        .tags(Arrays.asList("tags"))
+                        .build());
         RecordedRequest request = server.takeRequest();
         Assertions.assertNotNull(request);
         Assertions.assertEquals("GET", request.getMethod());

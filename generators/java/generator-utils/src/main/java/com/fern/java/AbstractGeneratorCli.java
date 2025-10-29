@@ -37,6 +37,7 @@ import com.fern.java.output.gradle.GradlePublishingConfig;
 import com.fern.java.output.gradle.GradleRepository;
 import java.io.File;
 import java.io.IOException;
+import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.ArrayList;
@@ -246,7 +247,6 @@ public abstract class AbstractGeneratorCli<T extends ICustomConfig, K extends ID
             if (exitCode != 0) {
                 throw new RuntimeException("Command failed with non-zero exit code: " + Arrays.toString(command));
             }
-            process.waitFor();
         } catch (InterruptedException e) {
             throw new RuntimeException("Failed to run command", e);
         }
@@ -439,7 +439,11 @@ public abstract class AbstractGeneratorCli<T extends ICustomConfig, K extends ID
                 generatedFile -> generatedFile.write(outputDirectory, true, customConfig.packagePrefix()));
         if (publishResult.generateFullProject()) {
             runCommandBlocking(new String[] {"gradle", "wrapper"}, outputDirectory, Collections.emptyMap());
-            runCommandBlocking(new String[] {"gradle", "spotlessApply"}, outputDirectory, Collections.emptyMap());
+            Path gradlewPath = outputDirectory.resolve("gradlew");
+            if (Files.exists(gradlewPath)) {
+                runCommandBlocking(
+                        new String[] {"./gradlew", ":spotlessApply"}, outputDirectory, Collections.emptyMap());
+            }
         }
     }
 
@@ -481,7 +485,10 @@ public abstract class AbstractGeneratorCli<T extends ICustomConfig, K extends ID
         // write files to disk
         generatedFiles.forEach(generatedFile -> generatedFile.write(outputDirectory, false, Optional.empty()));
         runCommandBlocking(new String[] {"gradle", "wrapper"}, outputDirectory, Collections.emptyMap());
-        runCommandBlocking(new String[] {"gradle", "spotlessApply"}, outputDirectory, Collections.emptyMap());
+        Path gradlewPath = outputDirectory.resolve("gradlew");
+        if (Files.exists(gradlewPath)) {
+            runCommandBlocking(new String[] {"./gradlew", ":spotlessApply"}, outputDirectory, Collections.emptyMap());
+        }
     }
 
     public boolean customConfigPublishToCentral(GeneratorConfig _generatorConfig) {
@@ -524,7 +531,10 @@ public abstract class AbstractGeneratorCli<T extends ICustomConfig, K extends ID
 
         generatedFiles.forEach(generatedFile -> generatedFile.write(outputDirectory, false, Optional.empty()));
         runCommandBlocking(new String[] {"gradle", "wrapper"}, outputDirectory, Collections.emptyMap());
-        runCommandBlocking(new String[] {"gradle", "spotlessApply"}, outputDirectory, Collections.emptyMap());
+        Path gradlewPath = outputDirectory.resolve("gradlew");
+        if (Files.exists(gradlewPath)) {
+            runCommandBlocking(new String[] {"./gradlew", ":spotlessApply"}, outputDirectory, Collections.emptyMap());
+        }
 
         // run publish
         if (!generatorConfig.getDryRun()) {

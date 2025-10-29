@@ -4,6 +4,11 @@ set -e
 
 project_name=heavy_deps_project
 
+npm install -g pnpm@10.20.0 --force
+npm install -g yarn@1.22.22 --force
+pnpm install -g prettier@3.4.2
+pnpm install -g @biomejs/biome@2.3.1
+
 mkdir $project_name
 cd $project_name
 
@@ -17,7 +22,7 @@ echo '{
     "axios": "0.27.2",
     "esbuild": "0.16.15",
     "express": "4.18.2",
-    "@biomejs/biome": "2.2.5",
+    "@biomejs/biome": "2.3.1",
     "prettier": "3.4.2",
     "typescript": "5.7.2",
     "url-join": "4.0.1"
@@ -29,15 +34,7 @@ yarn install --ignore-scripts
 rm -rf node_modules
 rm -rf yarn.lock
 
-npm install -g pnpm@10.14.0
-
 pnpm install
-
-# make prettier globally available
-pnpm install -g prettier@3.4.2
-# make biome globally available
-pnpm install -g @biomejs/biome@2.2.5
-
 
 cd ..
 rm -rf $project_name

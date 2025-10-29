@@ -88,6 +88,11 @@ export abstract class AbstractGeneratorAgent<GeneratorContext extends AbstractGe
         return this.cli.pushToGitHub({ githubConfig, withPullRequest: githubConfig.mode === "pull-request" });
     }
 
+    protected resolveGitHubConfig({ context }: { context: GeneratorContext }) {
+        const rawGithubConfig = this.getGitHubConfig({ context });
+        return resolveGitHubConfig({ rawGithubConfig, logger: this.logger });
+    }
+
     /**
      * Generates the reference.md content using the given builder.
      */
@@ -115,14 +120,14 @@ export abstract class AbstractGeneratorAgent<GeneratorContext extends AbstractGe
         args: AbstractGeneratorAgent.GitHubConfigArgs<GeneratorContext>
     ): RawGithubConfig;
 
-    private async readFeatureConfig(): Promise<FernGeneratorCli.FeatureConfig> {
+    protected async readFeatureConfig(): Promise<FernGeneratorCli.FeatureConfig> {
         this.logger.debug("Reading feature configuration ...");
         const rawYaml = await this.getFeaturesConfig();
         const loaded = yaml.load(rawYaml) as FernGeneratorCli.FeatureConfig;
         return loaded;
     }
 
-    private getRemote(): FernGeneratorCli.Remote | undefined {
+    protected getRemote(): FernGeneratorCli.Remote | undefined {
         const outputMode = this.config.output.mode.type === "github" ? this.config.output.mode : undefined;
         if (outputMode?.repoUrl != null && outputMode?.installationToken != null) {
             return FernGeneratorCli.Remote.github({

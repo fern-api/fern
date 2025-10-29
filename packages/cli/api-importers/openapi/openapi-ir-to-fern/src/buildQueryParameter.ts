@@ -536,8 +536,10 @@ function hasSamePrimitiveValueType({ array, primitive }: { array: Schema; primit
     );
 }
 
+type RawTypeReferenceDetailed = Exclude<RawSchemas.TypeReferenceSchema, string>;
+
 function isRawTypeReferenceDetailedSchema(
     rawTypeReference: RawSchemas.TypeReferenceSchema
-): rawTypeReference is RawSchemas.TypeReferenceDetailedSchema {
-    return (rawTypeReference as RawSchemas.TypeReferenceDetailedSchema).type != null;
+): rawTypeReference is RawTypeReferenceDetailed {
+    return typeof rawTypeReference === "object" && rawTypeReference !== null && "type" in rawTypeReference;
 }

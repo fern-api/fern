@@ -26,6 +26,7 @@ import org.jetbrains.annotations.Nullable;
 public final class Address {
     private final String street;
 
+    @Nullable
     private final String city;
 
     private final Optional<String> state;
@@ -42,7 +43,7 @@ public final class Address {
 
     private Address(
             String street,
-            String city,
+            @Nullable String city,
             Optional<String> state,
             String zipCode,
             Optional<String> country,
@@ -165,19 +166,19 @@ public final class Address {
     public interface _FinalStage {
         Address build();
 
-        _FinalStage city(@com.seed.nullableOptional.core.Nullable String city);
+        _FinalStage city(@Nullable String city);
 
         _FinalStage state(Optional<String> state);
 
         _FinalStage state(String state);
 
-        _FinalStage country(Optional<String> country);
+        _FinalStage country(@Nullable Optional<String> country);
 
         _FinalStage country(String country);
 
         _FinalStage country(com.seed.nullableOptional.core.Nullable<String> country);
 
-        _FinalStage buildingId(@com.seed.nullableOptional.core.Nullable String buildingId);
+        _FinalStage buildingId(@Nullable String buildingId);
 
         _FinalStage tenantId(Optional<String> tenantId);
 
@@ -246,7 +247,7 @@ public final class Address {
 
         @java.lang.Override
         @JsonSetter("buildingId")
-        public _FinalStage buildingId(@com.seed.nullableOptional.core.Nullable String buildingId) {
+        public _FinalStage buildingId(@Nullable String buildingId) {
             this.buildingId = buildingId;
             return this;
         }
@@ -271,7 +272,7 @@ public final class Address {
 
         @java.lang.Override
         @JsonSetter(value = "country", nulls = Nulls.SKIP)
-        public _FinalStage country(Optional<String> country) {
+        public _FinalStage country(@Nullable Optional<String> country) {
             this.country = country;
             return this;
         }
@@ -291,7 +292,7 @@ public final class Address {
 
         @java.lang.Override
         @JsonSetter("city")
-        public _FinalStage city(@com.seed.nullableOptional.core.Nullable String city) {
+        public _FinalStage city(@Nullable String city) {
             this.city = city;
             return this;
         }

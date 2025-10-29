@@ -53,8 +53,8 @@ public class AsyncClientGeneratorUtils extends AbstractClientGeneratorUtils {
     }
 
     @Override
-    protected ClassName clientImplName(ClassName rawClientImplName) {
-        return ClassName.get(rawClientImplName.packageName(), "Async" + rawClientImplName.simpleName());
+    protected ClassName clientImplName(ClassName baseClientName) {
+        return ClassName.get(baseClientName.packageName(), "Async" + baseClientName.simpleName());
     }
 
     @Override
@@ -79,7 +79,7 @@ public class AsyncClientGeneratorUtils extends AbstractClientGeneratorUtils {
     }
 
     @Override
-    protected ClassName rawClientImplName(ClassName implClientName) {
-        return ClassName.get(implClientName.packageName(), "AsyncRaw" + implClientName.simpleName());
+    protected ClassName rawClientImplName(ClassName baseClientName) {
+        return ClassName.get(baseClientName.packageName(), "AsyncRaw" + baseClientName.simpleName());
     }
 }

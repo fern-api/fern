@@ -23,7 +23,7 @@ Instantiate and use the client with the following:
 import { SeedPaginationClient } from "@fern/pagination";
 
 const client = new SeedPaginationClient({ environment: "YOUR_BASE_URL", token: "YOUR_TOKEN" });
-const response = await client.complex.search("index", {
+const pageableResponse = await client.complex.search("index", {
     pagination: {
         per_page: 1,
         starting_after: "starting_after"
@@ -34,7 +34,7 @@ const response = await client.complex.search("index", {
         value: "value"
     }
 });
-for await (const item of response) {
+for await (const item of pageableResponse) {
     console.log(item);
 }
 
@@ -53,6 +53,9 @@ let page = await client.complex.search("index", {
 while (page.hasNextPage()) {
     page = page.getNextPage();
 }
+
+// You can also access the underlying response
+const response = page.response;
 ```
 
 ## Request And Response Types
@@ -96,7 +99,7 @@ List endpoints are paginated. The SDK provides an iterator so that you can simpl
 import { SeedPaginationClient } from "@fern/pagination";
 
 const client = new SeedPaginationClient({ environment: "YOUR_BASE_URL", token: "YOUR_TOKEN" });
-const response = await client.complex.search("index", {
+const pageableResponse = await client.complex.search("index", {
     pagination: {
         per_page: 1,
         starting_after: "starting_after"
@@ -107,7 +110,7 @@ const response = await client.complex.search("index", {
         value: "value"
     }
 });
-for await (const item of response) {
+for await (const item of pageableResponse) {
     console.log(item);
 }
 
@@ -126,6 +129,9 @@ let page = await client.complex.search("index", {
 while (page.hasNextPage()) {
     page = page.getNextPage();
 }
+
+// You can also access the underlying response
+const response = page.response;
 ```
 
 ## Advanced

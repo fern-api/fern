@@ -1,3 +1,4 @@
+import { escapePhpString } from "../php";
 import { ClassReference } from "./ClassReference";
 import { CodeBlock } from "./CodeBlock";
 import { Comment } from "./Comment";
@@ -71,7 +72,9 @@ export class Enum extends AstNode {
             writer.write(`case ${member.name}`);
             if (member.value != null) {
                 if (typeof member.value === "string") {
-                    writer.write(` = "${member.value}"`);
+                    // Use escapePhpString to escape the string value
+                    const escapedValue = escapePhpString(member.value);
+                    writer.write(` = "${escapedValue}"`);
                 } else {
                     writer.write(` = ${member.value}`);
                 }

@@ -1,0 +1,31 @@
+instances: []
+products:
+  - display-name: Core Platform
+    icon: fa-solid fa-server
+    subtitle: Core platform services and APIs
+    path: ./products/core-platform.yml
+    audiences:
+      - external
+      - internal
+    slug: core-platform
+  - display-name: Analytics
+    icon: fa-solid fa-chart-line
+    subtitle: Internal analytics and monitoring
+    path: ./products/analytics.yml
+    audiences:
+      - internal
+    slug: analytics
+  - display-name: Mobile SDK
+    icon: fa-solid fa-mobile-screen
+    subtitle: Mobile application development kit
+    path: ./products/mobile-sdk.yml
+    audiences:
+      - external
+    slug: mobile-sdk
+  - display-name: Enterprise Features
+    icon: fa-solid fa-building
+    subtitle: Advanced enterprise capabilities
+    path: ./products/enterprise-features.yml
+    audiences:
+      - enterprise
+    slug: enterprise

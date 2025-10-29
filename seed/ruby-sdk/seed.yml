@@ -81,6 +81,7 @@ allowedFailures:
   - extra-properties
   - file-download
   - file-upload
+  - file-upload-openapi
   - folders
   - http-head
   - idempotency-headers
@@ -134,6 +135,7 @@ allowedFailures:
   - streaming-parameter
   - trace
   - undiscriminated-unions
+  - undiscriminated-union-with-response-property
   - unions
   - unknown
   - url-form-encoded

@@ -1,6 +1,16 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
 - changelogEntry:
     - summary: |
+        Fixed nullable annotation generation in builder setters when `use-nullable-annotation` is enabled.
+        Builder setter parameters for nullable fields now correctly use `@org.jetbrains.annotations.Nullable`
+        instead of incorrectly attempting to use the `Nullable<T>` container class as an annotation.
+      type: fix
+  createdAt: "2025-10-28"
+  irVersion: 61
+  version: 1.8.3
+
+- changelogEntry:
+    - summary: |
         Upgrade to irV60
       type: internal
   createdAt: "2025-09-25"

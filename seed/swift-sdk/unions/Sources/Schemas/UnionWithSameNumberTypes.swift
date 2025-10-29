@@ -1,20 +1,20 @@
 import Foundation
 
 public enum UnionWithSameNumberTypes: Codable, Hashable, Sendable {
-    case positiveInt(PositiveInt)
-    case negativeInt(NegativeInt)
     case anyNumber(AnyNumber)
+    case negativeInt(NegativeInt)
+    case positiveInt(PositiveInt)
 
     public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
         let discriminant = try container.decode(String.self, forKey: .type)
         switch discriminant {
-        case "positiveInt":
-            self = .positiveInt(try PositiveInt(from: decoder))
-        case "negativeInt":
-            self = .negativeInt(try NegativeInt(from: decoder))
         case "anyNumber":
             self = .anyNumber(try AnyNumber(from: decoder))
+        case "negativeInt":
+            self = .negativeInt(try NegativeInt(from: decoder))
+        case "positiveInt":
+            self = .positiveInt(try PositiveInt(from: decoder))
         default:
             throw DecodingError.dataCorrupted(
                 DecodingError.Context(
@@ -27,11 +27,11 @@ public enum UnionWithSameNumberTypes: Codable, Hashable, Sendable {
 
     public func encode(to encoder: Encoder) throws -> Void {
         switch self {
-        case .positiveInt(let data):
+        case .anyNumber(let data):
             try data.encode(to: encoder)
         case .negativeInt(let data):
             try data.encode(to: encoder)
-        case .anyNumber(let data):
+        case .positiveInt(let data):
             try data.encode(to: encoder)
         }
     }

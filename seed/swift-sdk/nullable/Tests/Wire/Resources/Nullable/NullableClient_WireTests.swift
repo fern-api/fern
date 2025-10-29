@@ -1,6 +1,6 @@
 import Foundation
 import Testing
-import NullableApi
+import Nullable
 
 @Suite("NullableClient_ Wire Tests") struct NullableClient_WireTests {
     @Test func getUsers1() async throws -> Void {
@@ -148,10 +148,7 @@ import NullableApi
             )
         ]
         let response = try await client.nullable.getUsers(
-            usernames: ,
             avatar: "avatar",
-            activated: ,
-            tags: ,
             extra: .value(true)
         )
         try #require(response == expectedResponse)

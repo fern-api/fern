@@ -5,10 +5,12 @@ package com.seed.audiences.resources.foldera.service;
 
 import com.seed.audiences.core.ClientOptions;
 import com.seed.audiences.core.ObjectMappers;
+import com.seed.audiences.core.QueryStringMapper;
 import com.seed.audiences.core.RequestOptions;
 import com.seed.audiences.core.SeedAudiencesApiException;
 import com.seed.audiences.core.SeedAudiencesException;
 import com.seed.audiences.core.SeedAudiencesHttpResponse;
+import com.seed.audiences.resources.foldera.service.requests.GetDirectThreadRequest;
 import com.seed.audiences.resources.foldera.service.types.Response;
 import java.io.IOException;
 import java.util.concurrent.CompletableFuture;
@@ -28,20 +30,23 @@ public class AsyncRawServiceClient {
         this.clientOptions = clientOptions;
     }
 
-    public CompletableFuture<SeedAudiencesHttpResponse<Response>> getDirectThread() {
-        return getDirectThread(null);
+    public CompletableFuture<SeedAudiencesHttpResponse<Response>> getDirectThread(GetDirectThreadRequest request) {
+        return getDirectThread(request, null);
     }
 
-    public CompletableFuture<SeedAudiencesHttpResponse<Response>> getDirectThread(RequestOptions requestOptions) {
-        HttpUrl httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
-                .newBuilder()
-                .build();
-        Request okhttpRequest = new Request.Builder()
-                .url(httpUrl)
+    public CompletableFuture<SeedAudiencesHttpResponse<Response>> getDirectThread(
+            GetDirectThreadRequest request, RequestOptions requestOptions) {
+        HttpUrl.Builder httpUrl =
+                HttpUrl.parse(this.clientOptions.environment().getUrl()).newBuilder();
+
+        QueryStringMapper.addQueryParameter(httpUrl, "ids", request.getIds(), true);
+        QueryStringMapper.addQueryParameter(httpUrl, "tags", request.getTags(), true);
+        Request.Builder _requestBuilder = new Request.Builder()
+                .url(httpUrl.build())
                 .method("GET", null)
                 .headers(Headers.of(clientOptions.headers(requestOptions)))
-                .addHeader("Accept", "application/json")
-                .build();
+                .addHeader("Accept", "application/json");
+        Request okhttpRequest = _requestBuilder.build();
         OkHttpClient client = clientOptions.httpClient();
         if (requestOptions != null && requestOptions.getTimeout().isPresent()) {
             client = clientOptions.httpClientWithTimeout(requestOptions);

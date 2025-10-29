@@ -1,98 +1,98 @@
 import Foundation
 
 public enum BigUnion: Codable, Hashable, Sendable {
-    case normalSweet(NormalSweet)
-    case thankfulFactor(ThankfulFactor)
-    case jumboEnd(JumboEnd)
-    case hastyPain(HastyPain)
-    case mistySnow(MistySnow)
-    case distinctFailure(DistinctFailure)
-    case practicalPrinciple(PracticalPrinciple)
-    case limpingStep(LimpingStep)
-    case vibrantExcitement(VibrantExcitement)
     case activeDiamond(ActiveDiamond)
-    case popularLimit(PopularLimit)
+    case attractiveScript(AttractiveScript)
+    case circularCard(CircularCard)
+    case colorfulCover(ColorfulCover)
+    case diligentDeal(DiligentDeal)
+    case disloyalValue(DisloyalValue)
+    case distinctFailure(DistinctFailure)
     case falseMirror(FalseMirror)
+    case frozenSleep(FrozenSleep)
+    case gaseousRoad(GaseousRoad)
+    case gruesomeCoach(GruesomeCoach)
+    case harmoniousPlay(HarmoniousPlay)
+    case hastyPain(HastyPain)
+    case hoarseMouse(HoarseMouse)
+    case jumboEnd(JumboEnd)
+    case limpingStep(LimpingStep)
+    case mistySnow(MistySnow)
+    case normalSweet(NormalSweet)
+    case popularLimit(PopularLimit)
+    case potableBad(PotableBad)
+    case practicalPrinciple(PracticalPrinciple)
     case primaryBlock(PrimaryBlock)
     case rotatingRatio(RotatingRatio)
-    case colorfulCover(ColorfulCover)
-    case disloyalValue(DisloyalValue)
-    case gruesomeCoach(GruesomeCoach)
+    case thankfulFactor(ThankfulFactor)
     case totalWork(TotalWork)
-    case harmoniousPlay(HarmoniousPlay)
+    case triangularRepair(TriangularRepair)
     case uniqueStress(UniqueStress)
     case unwillingSmoke(UnwillingSmoke)
-    case frozenSleep(FrozenSleep)
-    case diligentDeal(DiligentDeal)
-    case attractiveScript(AttractiveScript)
-    case hoarseMouse(HoarseMouse)
-    case circularCard(CircularCard)
-    case potableBad(PotableBad)
-    case triangularRepair(TriangularRepair)
-    case gaseousRoad(GaseousRoad)
+    case vibrantExcitement(VibrantExcitement)
 
     public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
         let discriminant = try container.decode(String.self, forKey: .type)
         switch discriminant {
-        case "normalSweet":
-            self = .normalSweet(try NormalSweet(from: decoder))
-        case "thankfulFactor":
-            self = .thankfulFactor(try ThankfulFactor(from: decoder))
-        case "jumboEnd":
-            self = .jumboEnd(try JumboEnd(from: decoder))
-        case "hastyPain":
-            self = .hastyPain(try HastyPain(from: decoder))
-        case "mistySnow":
-            self = .mistySnow(try MistySnow(from: decoder))
-        case "distinctFailure":
-            self = .distinctFailure(try DistinctFailure(from: decoder))
-        case "practicalPrinciple":
-            self = .practicalPrinciple(try PracticalPrinciple(from: decoder))
-        case "limpingStep":
-            self = .limpingStep(try LimpingStep(from: decoder))
-        case "vibrantExcitement":
-            self = .vibrantExcitement(try VibrantExcitement(from: decoder))
         case "activeDiamond":
             self = .activeDiamond(try ActiveDiamond(from: decoder))
-        case "popularLimit":
-            self = .popularLimit(try PopularLimit(from: decoder))
+        case "attractiveScript":
+            self = .attractiveScript(try AttractiveScript(from: decoder))
+        case "circularCard":
+            self = .circularCard(try CircularCard(from: decoder))
+        case "colorfulCover":
+            self = .colorfulCover(try ColorfulCover(from: decoder))
+        case "diligentDeal":
+            self = .diligentDeal(try DiligentDeal(from: decoder))
+        case "disloyalValue":
+            self = .disloyalValue(try DisloyalValue(from: decoder))
+        case "distinctFailure":
+            self = .distinctFailure(try DistinctFailure(from: decoder))
         case "falseMirror":
             self = .falseMirror(try FalseMirror(from: decoder))
+        case "frozenSleep":
+            self = .frozenSleep(try FrozenSleep(from: decoder))
+        case "gaseousRoad":
+            self = .gaseousRoad(try GaseousRoad(from: decoder))
+        case "gruesomeCoach":
+            self = .gruesomeCoach(try GruesomeCoach(from: decoder))
+        case "harmoniousPlay":
+            self = .harmoniousPlay(try HarmoniousPlay(from: decoder))
+        case "hastyPain":
+            self = .hastyPain(try HastyPain(from: decoder))
+        case "hoarseMouse":
+            self = .hoarseMouse(try HoarseMouse(from: decoder))
+        case "jumboEnd":
+            self = .jumboEnd(try JumboEnd(from: decoder))
+        case "limpingStep":
+            self = .limpingStep(try LimpingStep(from: decoder))
+        case "mistySnow":
+            self = .mistySnow(try MistySnow(from: decoder))
+        case "normalSweet":
+            self = .normalSweet(try NormalSweet(from: decoder))
+        case "popularLimit":
+            self = .popularLimit(try PopularLimit(from: decoder))
+        case "potableBad":
+            self = .potableBad(try PotableBad(from: decoder))
+        case "practicalPrinciple":
+            self = .practicalPrinciple(try PracticalPrinciple(from: decoder))
         case "primaryBlock":
             self = .primaryBlock(try PrimaryBlock(from: decoder))
         case "rotatingRatio":
             self = .rotatingRatio(try RotatingRatio(from: decoder))
-        case "colorfulCover":
-            self = .colorfulCover(try ColorfulCover(from: decoder))
-        case "disloyalValue":
-            self = .disloyalValue(try DisloyalValue(from: decoder))
-        case "gruesomeCoach":
-            self = .gruesomeCoach(try GruesomeCoach(from: decoder))
+        case "thankfulFactor":
+            self = .thankfulFactor(try ThankfulFactor(from: decoder))
         case "totalWork":
             self = .totalWork(try TotalWork(from: decoder))
-        case "harmoniousPlay":
-            self = .harmoniousPlay(try HarmoniousPlay(from: decoder))
+        case "triangularRepair":
+            self = .triangularRepair(try TriangularRepair(from: decoder))
         case "uniqueStress":
             self = .uniqueStress(try UniqueStress(from: decoder))
         case "unwillingSmoke":
             self = .unwillingSmoke(try UnwillingSmoke(from: decoder))
-        case "frozenSleep":
-            self = .frozenSleep(try FrozenSleep(from: decoder))
-        case "diligentDeal":
-            self = .diligentDeal(try DiligentDeal(from: decoder))
-        case "attractiveScript":
-            self = .attractiveScript(try AttractiveScript(from: decoder))
-        case "hoarseMouse":
-            self = .hoarseMouse(try HoarseMouse(from: decoder))
-        case "circularCard":
-            self = .circularCard(try CircularCard(from: decoder))
-        case "potableBad":
-            self = .potableBad(try PotableBad(from: decoder))
-        case "triangularRepair":
-            self = .triangularRepair(try TriangularRepair(from: decoder))
-        case "gaseousRoad":
-            self = .gaseousRoad(try GaseousRoad(from: decoder))
+        case "vibrantExcitement":
+            self = .vibrantExcitement(try VibrantExcitement(from: decoder))
         default:
             throw DecodingError.dataCorrupted(
                 DecodingError.Context(
@@ -105,63 +105,63 @@ public enum BigUnion: Codable, Hashable, Sendable {
 
     public func encode(to encoder: Encoder) throws -> Void {
         switch self {
-        case .normalSweet(let data):
+        case .activeDiamond(let data):
             try data.encode(to: encoder)
-        case .thankfulFactor(let data):
+        case .attractiveScript(let data):
             try data.encode(to: encoder)
-        case .jumboEnd(let data):
+        case .circularCard(let data):
             try data.encode(to: encoder)
-        case .hastyPain(let data):
+        case .colorfulCover(let data):
             try data.encode(to: encoder)
-        case .mistySnow(let data):
+        case .diligentDeal(let data):
+            try data.encode(to: encoder)
+        case .disloyalValue(let data):
             try data.encode(to: encoder)
         case .distinctFailure(let data):
             try data.encode(to: encoder)
-        case .practicalPrinciple(let data):
+        case .falseMirror(let data):
+            try data.encode(to: encoder)
+        case .frozenSleep(let data):
+            try data.encode(to: encoder)
+        case .gaseousRoad(let data):
+            try data.encode(to: encoder)
+        case .gruesomeCoach(let data):
+            try data.encode(to: encoder)
+        case .harmoniousPlay(let data):
+            try data.encode(to: encoder)
+        case .hastyPain(let data):
+            try data.encode(to: encoder)
+        case .hoarseMouse(let data):
+            try data.encode(to: encoder)
+        case .jumboEnd(let data):
             try data.encode(to: encoder)
         case .limpingStep(let data):
             try data.encode(to: encoder)
-        case .vibrantExcitement(let data):
+        case .mistySnow(let data):
             try data.encode(to: encoder)
-        case .activeDiamond(let data):
+        case .normalSweet(let data):
             try data.encode(to: encoder)
         case .popularLimit(let data):
             try data.encode(to: encoder)
-        case .falseMirror(let data):
+        case .potableBad(let data):
+            try data.encode(to: encoder)
+        case .practicalPrinciple(let data):
             try data.encode(to: encoder)
         case .primaryBlock(let data):
             try data.encode(to: encoder)
         case .rotatingRatio(let data):
             try data.encode(to: encoder)
-        case .colorfulCover(let data):
-            try data.encode(to: encoder)
-        case .disloyalValue(let data):
-            try data.encode(to: encoder)
-        case .gruesomeCoach(let data):
+        case .thankfulFactor(let data):
             try data.encode(to: encoder)
         case .totalWork(let data):
             try data.encode(to: encoder)
-        case .harmoniousPlay(let data):
+        case .triangularRepair(let data):
             try data.encode(to: encoder)
         case .uniqueStress(let data):
             try data.encode(to: encoder)
         case .unwillingSmoke(let data):
             try data.encode(to: encoder)
-        case .frozenSleep(let data):
-            try data.encode(to: encoder)
-        case .diligentDeal(let data):
-            try data.encode(to: encoder)
-        case .attractiveScript(let data):
-            try data.encode(to: encoder)
-        case .hoarseMouse(let data):
-            try data.encode(to: encoder)
-        case .circularCard(let data):
-            try data.encode(to: encoder)
-        case .potableBad(let data):
-            try data.encode(to: encoder)
-        case .triangularRepair(let data):
-            try data.encode(to: encoder)
-        case .gaseousRoad(let data):
+        case .vibrantExcitement(let data):
             try data.encode(to: encoder)
         }
     }

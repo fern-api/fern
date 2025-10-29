@@ -92,6 +92,35 @@ var response = await client.CreateAsync(
 );
 ```
 
+### Forward Compatible Enums
+
+This SDK uses forward-compatible enums that can handle unknown values gracefully.
+
+```csharp
+using SeedValidation;
+
+// Using a built-in value
+var shape = Shape.Square;
+
+// Using a custom value
+var customShape = Shape.FromCustom("custom-value");
+
+// Using in a switch statement
+switch (shape.Value)
+{
+    case Shape.Values.Square:
+        Console.WriteLine("Square");
+        break;
+    default:
+        Console.WriteLine($"Unknown value: {shape.Value}");
+        break;
+}
+
+// Explicit casting
+string shapeString = (string)Shape.Square;
+Shape shapeFromString = (Shape)"SQUARE";
+```
+
 ## Contributing
 
 While we value open-source contributions to this SDK, this library is generated programmatically.

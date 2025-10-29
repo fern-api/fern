@@ -381,35 +381,33 @@ scripts:
         fi
         if grep -q '"packageManager": "pnpm' package.json; then
           mkdir -p .pnpm-cache
-          echo "Enabling corepack and preparing pnpm..."
-          corepack enable
-          corepack prepare pnpm@10.14.0 --activate
+          echo "Preparing corepack and pnpm..."
+          corepack prepare pnpm --activate
           echo "Running pnpm install..."
           if [ -f "pnpm-lock.yaml" ]; then
-            pnpm install --prefer-offline --frozen-lockfile
+            corepack pnpm install --prefer-offline --frozen-lockfile
           else
-            pnpm install --prefer-offline
+            corepack pnpm install --prefer-offline
           fi
           echo "Running pnpm build..."
-          if grep -q '"build":' package.json; then pnpm build; fi
+          if grep -q '"build":' package.json; then corepack pnpm build; fi
           echo "Running pnpm test..."
-          if grep -q '"test":' package.json; then pnpm test; fi
+          if grep -q '"test":' package.json; then corepack pnpm test; fi
         fi
         if grep -q '"packageManager": "yarn' package.json; then
           mkdir -p .yarn-cache
-          echo "Enabling corepack and preparing yarn..."
-          corepack enable
-          corepack prepare yarn@1.22.22 --activate
+          echo "Preparing corepack and yarn..."
+          corepack prepare yarn --activate
           echo "Running yarn install..."
           if [ -f "yarn.lock" ]; then
-            yarn install --prefer-offline --frozen-lockfile
+            corepack yarn install --prefer-offline --frozen-lockfile
           else
-            yarn install --prefer-offline
+            corepack yarn install --prefer-offline
           fi
           echo "Running yarn build..."
-          if grep -q '"build":' package.json; then yarn build; fi
+          if grep -q '"build":' package.json; then corepack yarn build; fi
           echo "Running yarn test..."
-          if grep -q '"test":' package.json; then yarn test; fi
+          if grep -q '"test":' package.json; then corepack yarn test; fi
         fi
 allowedFailures:
   - bytes-download

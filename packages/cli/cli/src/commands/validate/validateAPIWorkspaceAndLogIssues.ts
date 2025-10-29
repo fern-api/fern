@@ -26,7 +26,7 @@ export async function validateAPIWorkspaceWithoutExiting({
     const generatorViolations = await validateGeneratorsWorkspace(workspace, context.logger);
     const violations = [...apiViolations, ...generatorViolations];
     if (ossWorkspace) {
-        violations.concat(await validateOSSWorkspace(ossWorkspace, context));
+        violations.push(...(await validateOSSWorkspace(ossWorkspace, context)));
     }
     const elapsedMillis = performance.now() - startTime;
     const { hasErrors } = logViolations({

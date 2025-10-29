@@ -30,6 +30,7 @@ public final class SearchRequest {
 
     private final Optional<Map<String, String>> filters;
 
+    @Nullable
     private final List<String> includeTypes;
 
     private final Map<String, Object> additionalProperties;
@@ -37,7 +38,7 @@ public final class SearchRequest {
     private SearchRequest(
             String query,
             Optional<Map<String, String>> filters,
-            List<String> includeTypes,
+            @Nullable List<String> includeTypes,
             Map<String, Object> additionalProperties) {
         this.query = query;
         this.filters = filters;
@@ -109,7 +110,7 @@ public final class SearchRequest {
 
         _FinalStage filters(Map<String, String> filters);
 
-        _FinalStage includeTypes(List<String> includeTypes);
+        _FinalStage includeTypes(@Nullable List<String> includeTypes);
 
         _FinalStage addIncludeTypes(String includeTypes);
 
@@ -160,7 +161,7 @@ public final class SearchRequest {
 
         @java.lang.Override
         @JsonSetter(value = "includeTypes", nulls = Nulls.SKIP)
-        public _FinalStage includeTypes(List<String> includeTypes) {
+        public _FinalStage includeTypes(@Nullable List<String> includeTypes) {
             this.includeTypes.clear();
             if (includeTypes != null) {
                 this.includeTypes.addAll(includeTypes);

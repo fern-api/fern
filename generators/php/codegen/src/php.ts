@@ -107,6 +107,19 @@ export function mergeArrays(...args: MergeArrays.Args): MergeArrays {
     return new MergeArrays(args);
 }
 
+/**
+ * Escapes a string for safe usage in PHP code (e.g., enum values, string literals).
+ */
+export function escapePhpString(str: string): string {
+    return str
+        .replace(/\\/g, "\\\\")
+        .replace(/"/g, '\\"')
+        .replace(/\n/g, "\\n")
+        .replace(/\r/g, "\\r")
+        .replace(/\t/g, "\\t")
+        .replace(/\$/g, "\\$");
+}
+
 export function this_(): AstNode {
     return new CodeBlock((writer) => {
         writer.write("$this");

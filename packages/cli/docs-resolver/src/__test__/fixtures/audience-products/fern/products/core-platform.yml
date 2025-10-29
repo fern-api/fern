@@ -1,0 +1,17 @@
+navigation:
+  - page: Platform Overview
+    path: ../core/overview.mdx
+  - api: Core API
+    layout:
+      - section:
+          title: Public Core APIs
+          contents:
+            - GET /core/status
+            - POST /core/initialize
+      - section:
+          title: Internal Core APIs
+          audiences:
+            - internal
+          contents:
+            - GET /core/metrics
+            - POST /core/admin/reset
