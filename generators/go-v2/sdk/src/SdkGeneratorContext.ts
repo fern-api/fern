@@ -67,6 +67,10 @@ export class SdkGeneratorContext extends AbstractGoGeneratorContext<SdkCustomCon
             files.push(AsIsFiles.Page);
         }
 
+        if (this.ir.sdkConfig.hasStreamingEndpoints) {
+            files.push(AsIsFiles.Stream);
+        }
+
         return files;
     }
 
