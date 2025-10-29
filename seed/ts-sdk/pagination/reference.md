@@ -13,7 +13,7 @@
 <dd>
 
 ```typescript
-const response = await client.complex.search("index", {
+const pageableResponse = await client.complex.search("index", {
     pagination: {
         per_page: 1,
         starting_after: "starting_after"
@@ -24,7 +24,7 @@ const response = await client.complex.search("index", {
         value: "value"
     }
 });
-for await (const item of response) {
+for await (const item of pageableResponse) {
     console.log(item);
 }
 
@@ -43,6 +43,9 @@ let page = await client.complex.search("index", {
 while (page.hasNextPage()) {
     page = page.getNextPage();
 }
+
+// You can also access the underlying response
+const response = page.response;
 
 ```
 </dd>
@@ -100,13 +103,13 @@ while (page.hasNextPage()) {
 <dd>
 
 ```typescript
-const response = await client.inlineUsers.inlineUsers.listWithCursorPagination({
+const pageableResponse = await client.inlineUsers.inlineUsers.listWithCursorPagination({
     page: 1,
     per_page: 1,
     order: "asc",
     starting_after: "starting_after"
 });
-for await (const item of response) {
+for await (const item of pageableResponse) {
     console.log(item);
 }
 
@@ -120,6 +123,9 @@ let page = await client.inlineUsers.inlineUsers.listWithCursorPagination({
 while (page.hasNextPage()) {
     page = page.getNextPage();
 }
+
+// You can also access the underlying response
+const response = page.response;
 
 ```
 </dd>
@@ -168,10 +174,10 @@ while (page.hasNextPage()) {
 <dd>
 
 ```typescript
-const response = await client.inlineUsers.inlineUsers.listWithMixedTypeCursorPagination({
+const pageableResponse = await client.inlineUsers.inlineUsers.listWithMixedTypeCursorPagination({
     cursor: "cursor"
 });
-for await (const item of response) {
+for await (const item of pageableResponse) {
     console.log(item);
 }
 
@@ -182,6 +188,9 @@ let page = await client.inlineUsers.inlineUsers.listWithMixedTypeCursorPaginatio
 while (page.hasNextPage()) {
     page = page.getNextPage();
 }
+
+// You can also access the underlying response
+const response = page.response;
 
 ```
 </dd>
@@ -230,12 +239,12 @@ while (page.hasNextPage()) {
 <dd>
 
 ```typescript
-const response = await client.inlineUsers.inlineUsers.listWithBodyCursorPagination({
+const pageableResponse = await client.inlineUsers.inlineUsers.listWithBodyCursorPagination({
     pagination: {
         cursor: "cursor"
     }
 });
-for await (const item of response) {
+for await (const item of pageableResponse) {
     console.log(item);
 }
 
@@ -248,6 +257,9 @@ let page = await client.inlineUsers.inlineUsers.listWithBodyCursorPagination({
 while (page.hasNextPage()) {
     page = page.getNextPage();
 }
+
+// You can also access the underlying response
+const response = page.response;
 
 ```
 </dd>
@@ -296,13 +308,13 @@ while (page.hasNextPage()) {
 <dd>
 
 ```typescript
-const response = await client.inlineUsers.inlineUsers.listWithOffsetPagination({
+const pageableResponse = await client.inlineUsers.inlineUsers.listWithOffsetPagination({
     page: 1,
     per_page: 1,
     order: "asc",
     starting_after: "starting_after"
 });
-for await (const item of response) {
+for await (const item of pageableResponse) {
     console.log(item);
 }
 
@@ -316,6 +328,9 @@ let page = await client.inlineUsers.inlineUsers.listWithOffsetPagination({
 while (page.hasNextPage()) {
     page = page.getNextPage();
 }
+
+// You can also access the underlying response
+const response = page.response;
 
 ```
 </dd>
@@ -364,13 +379,13 @@ while (page.hasNextPage()) {
 <dd>
 
 ```typescript
-const response = await client.inlineUsers.inlineUsers.listWithDoubleOffsetPagination({
+const pageableResponse = await client.inlineUsers.inlineUsers.listWithDoubleOffsetPagination({
     page: 1.1,
     per_page: 1.1,
     order: "asc",
     starting_after: "starting_after"
 });
-for await (const item of response) {
+for await (const item of pageableResponse) {
     console.log(item);
 }
 
@@ -384,6 +399,9 @@ let page = await client.inlineUsers.inlineUsers.listWithDoubleOffsetPagination({
 while (page.hasNextPage()) {
     page = page.getNextPage();
 }
+
+// You can also access the underlying response
+const response = page.response;
 
 ```
 </dd>
@@ -432,12 +450,12 @@ while (page.hasNextPage()) {
 <dd>
 
 ```typescript
-const response = await client.inlineUsers.inlineUsers.listWithBodyOffsetPagination({
+const pageableResponse = await client.inlineUsers.inlineUsers.listWithBodyOffsetPagination({
     pagination: {
         page: 1
     }
 });
-for await (const item of response) {
+for await (const item of pageableResponse) {
     console.log(item);
 }
 
@@ -450,6 +468,9 @@ let page = await client.inlineUsers.inlineUsers.listWithBodyOffsetPagination({
 while (page.hasNextPage()) {
     page = page.getNextPage();
 }
+
+// You can also access the underlying response
+const response = page.response;
 
 ```
 </dd>
@@ -498,12 +519,12 @@ while (page.hasNextPage()) {
 <dd>
 
 ```typescript
-const response = await client.inlineUsers.inlineUsers.listWithOffsetStepPagination({
+const pageableResponse = await client.inlineUsers.inlineUsers.listWithOffsetStepPagination({
     page: 1,
     limit: 1,
     order: "asc"
 });
-for await (const item of response) {
+for await (const item of pageableResponse) {
     console.log(item);
 }
 
@@ -516,6 +537,9 @@ let page = await client.inlineUsers.inlineUsers.listWithOffsetStepPagination({
 while (page.hasNextPage()) {
     page = page.getNextPage();
 }
+
+// You can also access the underlying response
+const response = page.response;
 
 ```
 </dd>
@@ -564,12 +588,12 @@ while (page.hasNextPage()) {
 <dd>
 
 ```typescript
-const response = await client.inlineUsers.inlineUsers.listWithOffsetPaginationHasNextPage({
+const pageableResponse = await client.inlineUsers.inlineUsers.listWithOffsetPaginationHasNextPage({
     page: 1,
     limit: 1,
     order: "asc"
 });
-for await (const item of response) {
+for await (const item of pageableResponse) {
     console.log(item);
 }
 
@@ -582,6 +606,9 @@ let page = await client.inlineUsers.inlineUsers.listWithOffsetPaginationHasNextP
 while (page.hasNextPage()) {
     page = page.getNextPage();
 }
+
+// You can also access the underlying response
+const response = page.response;
 
 ```
 </dd>
@@ -630,10 +657,10 @@ while (page.hasNextPage()) {
 <dd>
 
 ```typescript
-const response = await client.inlineUsers.inlineUsers.listWithExtendedResults({
+const pageableResponse = await client.inlineUsers.inlineUsers.listWithExtendedResults({
     cursor: "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32"
 });
-for await (const item of response) {
+for await (const item of pageableResponse) {
     console.log(item);
 }
 
@@ -644,6 +671,9 @@ let page = await client.inlineUsers.inlineUsers.listWithExtendedResults({
 while (page.hasNextPage()) {
     page = page.getNextPage();
 }
+
+// You can also access the underlying response
+const response = page.response;
 
 ```
 </dd>
@@ -692,10 +722,10 @@ while (page.hasNextPage()) {
 <dd>
 
 ```typescript
-const response = await client.inlineUsers.inlineUsers.listWithExtendedResultsAndOptionalData({
+const pageableResponse = await client.inlineUsers.inlineUsers.listWithExtendedResultsAndOptionalData({
     cursor: "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32"
 });
-for await (const item of response) {
+for await (const item of pageableResponse) {
     console.log(item);
 }
 
@@ -706,6 +736,9 @@ let page = await client.inlineUsers.inlineUsers.listWithExtendedResultsAndOption
 while (page.hasNextPage()) {
     page = page.getNextPage();
 }
+
+// You can also access the underlying response
+const response = page.response;
 
 ```
 </dd>
@@ -754,10 +787,10 @@ while (page.hasNextPage()) {
 <dd>
 
 ```typescript
-const response = await client.inlineUsers.inlineUsers.listUsernames({
+const pageableResponse = await client.inlineUsers.inlineUsers.listUsernames({
     starting_after: "starting_after"
 });
-for await (const item of response) {
+for await (const item of pageableResponse) {
     console.log(item);
 }
 
@@ -768,6 +801,9 @@ let page = await client.inlineUsers.inlineUsers.listUsernames({
 while (page.hasNextPage()) {
     page = page.getNextPage();
 }
+
+// You can also access the underlying response
+const response = page.response;
 
 ```
 </dd>
@@ -816,10 +852,10 @@ while (page.hasNextPage()) {
 <dd>
 
 ```typescript
-const response = await client.inlineUsers.inlineUsers.listWithGlobalConfig({
+const pageableResponse = await client.inlineUsers.inlineUsers.listWithGlobalConfig({
     offset: 1
 });
-for await (const item of response) {
+for await (const item of pageableResponse) {
     console.log(item);
 }
 
@@ -830,6 +866,9 @@ let page = await client.inlineUsers.inlineUsers.listWithGlobalConfig({
 while (page.hasNextPage()) {
     page = page.getNextPage();
 }
+
+// You can also access the underlying response
+const response = page.response;
 
 ```
 </dd>
@@ -879,13 +918,13 @@ while (page.hasNextPage()) {
 <dd>
 
 ```typescript
-const response = await client.users.listWithCursorPagination({
+const pageableResponse = await client.users.listWithCursorPagination({
     page: 1,
     per_page: 1,
     order: "asc",
     starting_after: "starting_after"
 });
-for await (const item of response) {
+for await (const item of pageableResponse) {
     console.log(item);
 }
 
@@ -899,6 +938,9 @@ let page = await client.users.listWithCursorPagination({
 while (page.hasNextPage()) {
     page = page.getNextPage();
 }
+
+// You can also access the underlying response
+const response = page.response;
 
 ```
 </dd>
@@ -947,10 +989,10 @@ while (page.hasNextPage()) {
 <dd>
 
 ```typescript
-const response = await client.users.listWithMixedTypeCursorPagination({
+const pageableResponse = await client.users.listWithMixedTypeCursorPagination({
     cursor: "cursor"
 });
-for await (const item of response) {
+for await (const item of pageableResponse) {
     console.log(item);
 }
 
@@ -961,6 +1003,9 @@ let page = await client.users.listWithMixedTypeCursorPagination({
 while (page.hasNextPage()) {
     page = page.getNextPage();
 }
+
+// You can also access the underlying response
+const response = page.response;
 
 ```
 </dd>
@@ -1009,12 +1054,12 @@ while (page.hasNextPage()) {
 <dd>
 
 ```typescript
-const response = await client.users.listWithBodyCursorPagination({
+const pageableResponse = await client.users.listWithBodyCursorPagination({
     pagination: {
         cursor: "cursor"
     }
 });
-for await (const item of response) {
+for await (const item of pageableResponse) {
     console.log(item);
 }
 
@@ -1027,6 +1072,9 @@ let page = await client.users.listWithBodyCursorPagination({
 while (page.hasNextPage()) {
     page = page.getNextPage();
 }
+
+// You can also access the underlying response
+const response = page.response;
 
 ```
 </dd>
@@ -1075,13 +1123,13 @@ while (page.hasNextPage()) {
 <dd>
 
 ```typescript
-const response = await client.users.listWithOffsetPagination({
+const pageableResponse = await client.users.listWithOffsetPagination({
     page: 1,
     per_page: 1,
     order: "asc",
     starting_after: "starting_after"
 });
-for await (const item of response) {
+for await (const item of pageableResponse) {
     console.log(item);
 }
 
@@ -1095,6 +1143,9 @@ let page = await client.users.listWithOffsetPagination({
 while (page.hasNextPage()) {
     page = page.getNextPage();
 }
+
+// You can also access the underlying response
+const response = page.response;
 
 ```
 </dd>
@@ -1143,13 +1194,13 @@ while (page.hasNextPage()) {
 <dd>
 
 ```typescript
-const response = await client.users.listWithDoubleOffsetPagination({
+const pageableResponse = await client.users.listWithDoubleOffsetPagination({
     page: 1.1,
     per_page: 1.1,
     order: "asc",
     starting_after: "starting_after"
 });
-for await (const item of response) {
+for await (const item of pageableResponse) {
     console.log(item);
 }
 
@@ -1163,6 +1214,9 @@ let page = await client.users.listWithDoubleOffsetPagination({
 while (page.hasNextPage()) {
     page = page.getNextPage();
 }
+
+// You can also access the underlying response
+const response = page.response;
 
 ```
 </dd>
@@ -1211,12 +1265,12 @@ while (page.hasNextPage()) {
 <dd>
 
 ```typescript
-const response = await client.users.listWithBodyOffsetPagination({
+const pageableResponse = await client.users.listWithBodyOffsetPagination({
     pagination: {
         page: 1
     }
 });
-for await (const item of response) {
+for await (const item of pageableResponse) {
     console.log(item);
 }
 
@@ -1229,6 +1283,9 @@ let page = await client.users.listWithBodyOffsetPagination({
 while (page.hasNextPage()) {
     page = page.getNextPage();
 }
+
+// You can also access the underlying response
+const response = page.response;
 
 ```
 </dd>
@@ -1277,12 +1334,12 @@ while (page.hasNextPage()) {
 <dd>
 
 ```typescript
-const response = await client.users.listWithOffsetStepPagination({
+const pageableResponse = await client.users.listWithOffsetStepPagination({
     page: 1,
     limit: 1,
     order: "asc"
 });
-for await (const item of response) {
+for await (const item of pageableResponse) {
     console.log(item);
 }
 
@@ -1295,6 +1352,9 @@ let page = await client.users.listWithOffsetStepPagination({
 while (page.hasNextPage()) {
     page = page.getNextPage();
 }
+
+// You can also access the underlying response
+const response = page.response;
 
 ```
 </dd>
@@ -1343,12 +1403,12 @@ while (page.hasNextPage()) {
 <dd>
 
 ```typescript
-const response = await client.users.listWithOffsetPaginationHasNextPage({
+const pageableResponse = await client.users.listWithOffsetPaginationHasNextPage({
     page: 1,
     limit: 1,
     order: "asc"
 });
-for await (const item of response) {
+for await (const item of pageableResponse) {
     console.log(item);
 }
 
@@ -1361,6 +1421,9 @@ let page = await client.users.listWithOffsetPaginationHasNextPage({
 while (page.hasNextPage()) {
     page = page.getNextPage();
 }
+
+// You can also access the underlying response
+const response = page.response;
 
 ```
 </dd>
@@ -1409,10 +1472,10 @@ while (page.hasNextPage()) {
 <dd>
 
 ```typescript
-const response = await client.users.listWithExtendedResults({
+const pageableResponse = await client.users.listWithExtendedResults({
     cursor: "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32"
 });
-for await (const item of response) {
+for await (const item of pageableResponse) {
     console.log(item);
 }
 
@@ -1423,6 +1486,9 @@ let page = await client.users.listWithExtendedResults({
 while (page.hasNextPage()) {
     page = page.getNextPage();
 }
+
+// You can also access the underlying response
+const response = page.response;
 
 ```
 </dd>
@@ -1471,10 +1537,10 @@ while (page.hasNextPage()) {
 <dd>
 
 ```typescript
-const response = await client.users.listWithExtendedResultsAndOptionalData({
+const pageableResponse = await client.users.listWithExtendedResultsAndOptionalData({
     cursor: "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32"
 });
-for await (const item of response) {
+for await (const item of pageableResponse) {
     console.log(item);
 }
 
@@ -1485,6 +1551,9 @@ let page = await client.users.listWithExtendedResultsAndOptionalData({
 while (page.hasNextPage()) {
     page = page.getNextPage();
 }
+
+// You can also access the underlying response
+const response = page.response;
 
 ```
 </dd>
@@ -1533,10 +1602,10 @@ while (page.hasNextPage()) {
 <dd>
 
 ```typescript
-const response = await client.users.listUsernames({
+const pageableResponse = await client.users.listUsernames({
     starting_after: "starting_after"
 });
-for await (const item of response) {
+for await (const item of pageableResponse) {
     console.log(item);
 }
 
@@ -1547,6 +1616,9 @@ let page = await client.users.listUsernames({
 while (page.hasNextPage()) {
     page = page.getNextPage();
 }
+
+// You can also access the underlying response
+const response = page.response;
 
 ```
 </dd>
@@ -1595,10 +1667,10 @@ while (page.hasNextPage()) {
 <dd>
 
 ```typescript
-const response = await client.users.listWithGlobalConfig({
+const pageableResponse = await client.users.listWithGlobalConfig({
     offset: 1
 });
-for await (const item of response) {
+for await (const item of pageableResponse) {
     console.log(item);
 }
 
@@ -1609,6 +1681,9 @@ let page = await client.users.listWithGlobalConfig({
 while (page.hasNextPage()) {
     page = page.getNextPage();
 }
+
+// You can also access the underlying response
+const response = page.response;
 
 ```
 </dd>
