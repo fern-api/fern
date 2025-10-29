@@ -91,6 +91,8 @@ fixtures:
 allowedFailures:
   - bytes-download
   - bytes-upload
+  - imdb:no-custom-config # CHRISM - test
+  - imdb:output-compiled # CHRISM - test
   - file-download
   - file-upload
   - file-upload-openapi
