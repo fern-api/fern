@@ -5,6 +5,7 @@ package com.seed.audiences.resources.foldera.service;
 
 import com.seed.audiences.core.ClientOptions;
 import com.seed.audiences.core.RequestOptions;
+import com.seed.audiences.resources.foldera.service.requests.GetDirectThreadRequest;
 import com.seed.audiences.resources.foldera.service.types.Response;
 import java.util.concurrent.CompletableFuture;
 
@@ -25,11 +26,11 @@ public class AsyncServiceClient {
         return this.rawClient;
     }
 
-    public CompletableFuture<Response> getDirectThread() {
-        return this.rawClient.getDirectThread().thenApply(response -> response.body());
+    public CompletableFuture<Response> getDirectThread(GetDirectThreadRequest request) {
+        return this.rawClient.getDirectThread(request).thenApply(response -> response.body());
     }
 
-    public CompletableFuture<Response> getDirectThread(RequestOptions requestOptions) {
-        return this.rawClient.getDirectThread(requestOptions).thenApply(response -> response.body());
+    public CompletableFuture<Response> getDirectThread(GetDirectThreadRequest request, RequestOptions requestOptions) {
+        return this.rawClient.getDirectThread(request, requestOptions).thenApply(response -> response.body());
     }
 }

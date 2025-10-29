@@ -197,9 +197,6 @@ public abstract class AbstractClientGeneratorUtils {
 
                 generatedWrappedRequests.addAll(httpEndpointMethodSpecFactory.getGeneratedWrappedRequests());
             }
-        } else {
-            System.out.println("[FERN-DEBUG]   -> Skipping Raw client generation (maybeHttpService is empty)");
-            System.out.println("[FERN-DEBUG]   -> This will likely cause inline HTTP generation or delegation issues!");
         }
 
         for (SubpackageId subpackageId : fernPackage.getSubpackages()) {
