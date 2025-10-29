@@ -9,4 +9,4 @@ from ....core.pydantic_utilities import UniversalBaseModel
 class ObjectWithRequiredField(UniversalBaseModel):
     string: str
 
-    model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2
+    model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)
