@@ -2,7 +2,8 @@
 - version: 3.16.1
   changelogEntry:
     - summary: |
-        Adding `Page` and `Pageable` to the top-level `exports.ts` files, which allows for `import { Page, Pageable } from '...';` to work.
+        Add `Page` to the top-level `exports.ts` files, which allows for `import { Page } from '...';` to work.
+        Remove `Pageable`, and use only `core.Page` for pagination everywhere.
       type: fix
   createdAt: "2025-10-29"
   irVersion: 60
