@@ -1,3 +1,12 @@
+- version: 3.10.2
+  changelogEntry:
+    - summary: |
+        Fix sync client delegation causing array query parameter compilation errors. Generator was using
+        incorrect class names, breaking delegation and causing inline HTTP generation.
+      type: fix
+  createdAt: "2025-10-28"
+  irVersion: 61
+
 - version: 3.10.1
   changelogEntry:
     - summary: |
