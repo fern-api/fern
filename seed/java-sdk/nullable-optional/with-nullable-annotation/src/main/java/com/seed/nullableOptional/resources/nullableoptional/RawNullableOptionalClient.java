@@ -36,6 +36,7 @@ import okhttp3.Request;
 import okhttp3.RequestBody;
 import okhttp3.Response;
 import okhttp3.ResponseBody;
+import org.jetbrains.annotations.Nullable;
 
 public class RawNullableOptionalClient {
     protected final ClientOptions clientOptions;
@@ -600,6 +601,7 @@ public class RawNullableOptionalClient {
     /**
      * Get notification settings which may be null
      */
+    @Nullable
     public SeedNullableOptionalHttpResponse<NotificationMethod> getNotificationSettings(
             String userId, RequestOptions requestOptions) {
         HttpUrl httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
@@ -704,6 +706,7 @@ public class RawNullableOptionalClient {
     /**
      * Get search results with nullable unions
      */
+    @Nullable
     public SeedNullableOptionalHttpResponse<List<SearchResult>> getSearchResults(
             SearchRequest request, RequestOptions requestOptions) {
         HttpUrl httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())

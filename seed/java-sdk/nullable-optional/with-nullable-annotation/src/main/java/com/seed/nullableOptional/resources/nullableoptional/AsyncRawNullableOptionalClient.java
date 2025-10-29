@@ -40,6 +40,7 @@ import okhttp3.RequestBody;
 import okhttp3.Response;
 import okhttp3.ResponseBody;
 import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
 public class AsyncRawNullableOptionalClient {
     protected final ClientOptions clientOptions;
@@ -768,6 +769,7 @@ public class AsyncRawNullableOptionalClient {
     /**
      * Get notification settings which may be null
      */
+    @Nullable
     public CompletableFuture<SeedNullableOptionalHttpResponse<NotificationMethod>> getNotificationSettings(
             String userId, RequestOptions requestOptions) {
         HttpUrl httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
@@ -904,6 +906,7 @@ public class AsyncRawNullableOptionalClient {
     /**
      * Get search results with nullable unions
      */
+    @Nullable
     public CompletableFuture<SeedNullableOptionalHttpResponse<List<SearchResult>>> getSearchResults(
             SearchRequest request, RequestOptions requestOptions) {
         HttpUrl httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
