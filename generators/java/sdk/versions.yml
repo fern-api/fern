@@ -1,3 +1,11 @@
+- version: 3.10.3
+  changelogEntry:
+    - summary: |
+        Use Gradle wrapper for Spotless formatting instead of requiring gradle in PATH.
+      type: fix
+  createdAt: "2025-10-29"
+  irVersion: 61
+
 - version: 3.10.2
   changelogEntry:
     - summary: |
