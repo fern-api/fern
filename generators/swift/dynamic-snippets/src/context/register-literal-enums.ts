@@ -100,7 +100,7 @@ export function registerLiteralEnumsForTypeReference({
             registerLiteralEnumsForTypeReference({
                 parentSymbol,
                 registry,
-                typeReference: lt
+                typeReference: lt.value
             });
         },
         literal: (typeReference) => {
@@ -132,14 +132,14 @@ export function registerLiteralEnumsForTypeReference({
             registerLiteralEnumsForTypeReference({
                 parentSymbol,
                 registry,
-                typeReference
+                typeReference: typeReference.value
             });
         },
         optional: (typeReference) => {
             registerLiteralEnumsForTypeReference({
                 parentSymbol,
                 registry,
-                typeReference
+                typeReference: typeReference.value
             });
         },
         primitive: noop,
@@ -147,7 +147,7 @@ export function registerLiteralEnumsForTypeReference({
             registerLiteralEnumsForTypeReference({
                 parentSymbol,
                 registry,
-                typeReference
+                typeReference: typeReference.value
             });
         },
         unknown: noop,

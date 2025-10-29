@@ -55,7 +55,7 @@ export class DynamicTypeLiteralMapper {
                 if (named == null) {
                     return swift.Expression.nop();
                 }
-                return this.convertNamed({ fromSymbol, named, value: value, as });
+                return this.convertNamed({ fromSymbol, typeId: typeReference.value, named, value: value, as });
             }
             case "nullable":
                 return this.convertNullable({ fromSymbol, nullable: typeReference, value: value, as });
@@ -145,11 +145,13 @@ export class DynamicTypeLiteralMapper {
 
     private convertNamed({
         fromSymbol,
+        typeId,
         named,
         value,
         as
     }: {
         fromSymbol: swift.Symbol;
+        typeId: string;
         named: FernIr.dynamic.NamedType;
         value: unknown;
         as?: DynamicTypeLiteralMapper.ConvertedAs;
@@ -171,7 +173,7 @@ export class DynamicTypeLiteralMapper {
             case "enum":
                 return this.convertEnum({ enum_: named, value });
             case "object":
-                return this.convertObject({ fromSymbol, object_: named, value });
+                return this.convertObject({ fromSymbol, typeId, object_: named, value });
             case "undiscriminatedUnion":
                 return this.convertUndiscriminatedUnion({ fromSymbol, undiscriminatedUnion: named, value });
             default:
@@ -229,6 +231,7 @@ export class DynamicTypeLiteralMapper {
             return swift.Expression.nop();
         }
         return swift.Expression.methodCall({
+            // TODO(kafkas): Pull from registry
             target: swift.Expression.reference(discriminatedUnion.declaration.name.pascalCase.unsafeName),
             methodName: EnumWithAssociatedValues.sanitizeToCamelCase(
                 unionVariant.discriminantValue.name.camelCase.unsafeName
@@ -270,6 +273,7 @@ export class DynamicTypeLiteralMapper {
                 }
                 const converted = this.convertNamed({
                     fromSymbol,
+                    typeId: unionVariant.typeId,
                     named,
                     value: discriminatedUnionTypeInstance.value
                 });
@@ -375,15 +379,18 @@ export class DynamicTypeLiteralMapper {
 
     private convertObject({
         fromSymbol,
+        typeId,
         object_,
         value
     }: {
         fromSymbol: swift.Symbol;
+        typeId: string;
         object_: FernIr.dynamic.ObjectType;
         value: unknown;
     }): swift.Expression {
+        const symbol = this.context.nameRegistry.getSchemaTypeSymbolOrThrow(typeId);
         return swift.Expression.structInitialization({
-            unsafeName: object_.declaration.name.pascalCase.unsafeName,
+            unsafeName: symbol.name,
             arguments_: this.context
                 .getExampleObjectProperties({
                     parameters: object_.properties,
