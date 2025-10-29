@@ -10,11 +10,17 @@ module Seed
         end
 
         # @return [Seed::FolderA::Service::Types::Response]
-        def get_direct_thread(request_options: {}, **_params)
+        def get_direct_thread(request_options: {}, **params)
+          params = Seed::Internal::Types::Utils.symbolize_keys(params)
+          _query_param_names = %i[ids tags]
+          _query = params.slice(*_query_param_names)
+          params.except(*_query_param_names)
+
           _request = Seed::Internal::JSON::Request.new(
             base_url: request_options[:base_url],
             method: "GET",
-            path: ""
+            path: "",
+            query: _query
           )
           begin
             _response = @client.send(_request)
