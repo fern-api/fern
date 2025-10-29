@@ -981,6 +981,191 @@ jobs:
           job-index: ${{ strategy.job-index }}
           collect-metrics: ${{ needs.setup.outputs.post-metrics }}
 
+  cleanup-seed-groups:
+    runs-on: ubuntu-latest
+    timeout-minutes: 60
+    needs: [setup, changes, get-all-test-matrices]
+    if: >-
+      ${{
+        github.event_name == 'pull_request'
+      }}
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+          token: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Install dependencies
+        uses: ./.github/actions/install
+
+      - name: Build seed CLI
+        run: pnpm seed:local --version
+
+      - name: Clean up seed groups
+        id: clean-up-seed-groups
+        run: |
+          set -e
+          
+          # Define mapping from changes outputs to generator workspace names
+          declare -A GENERATOR_MAP
+          GENERATOR_MAP["ruby"]="ruby-model ruby-sdk"
+          GENERATOR_MAP["ruby-v2"]="ruby-sdk-v2"
+          GENERATOR_MAP["python"]="pydantic python-sdk fastapi"
+          GENERATOR_MAP["postman"]="postman"
+          GENERATOR_MAP["java"]="java-sdk java-model java-spring"
+          GENERATOR_MAP["typescript"]="ts-sdk ts-express"
+          GENERATOR_MAP["go"]="go-fiber go-model go-sdk"
+          GENERATOR_MAP["csharp"]="csharp-model csharp-sdk"
+          GENERATOR_MAP["php"]="php-model php-sdk"
+          GENERATOR_MAP["swift"]="swift-sdk"
+          GENERATOR_MAP["rust"]="rust-model rust-sdk"
+          GENERATOR_MAP["openapi"]="openapi"
+          GENERATOR_MAP["seed"]="ruby-model ruby-sdk ruby-sdk-v2 pydantic python-sdk fastapi openapi postman java-sdk java-model java-spring ts-sdk ts-express go-fiber go-model go-sdk csharp-model csharp-sdk php-model php-sdk swift-sdk rust-model rust-sdk"
+          
+          # Collect all generators that have changes
+          GENERATORS_TO_CHECK=()
+          
+          if [[ "${{ needs.changes.outputs.ruby }}" == "true" ]]; then
+            GENERATORS_TO_CHECK+=(${GENERATOR_MAP["ruby"]})
+          fi
+          if [[ "${{ needs.changes.outputs.ruby-v2 }}" == "true" ]]; then
+            GENERATORS_TO_CHECK+=(${GENERATOR_MAP["ruby-v2"]})
+          fi
+          if [[ "${{ needs.changes.outputs.python }}" == "true" ]]; then
+            GENERATORS_TO_CHECK+=(${GENERATOR_MAP["python"]})
+          fi
+          if [[ "${{ needs.changes.outputs.postman }}" == "true" ]]; then
+            GENERATORS_TO_CHECK+=(${GENERATOR_MAP["postman"]})
+          fi
+          if [[ "${{ needs.changes.outputs.java }}" == "true" ]]; then
+            GENERATORS_TO_CHECK+=(${GENERATOR_MAP["java"]})
+          fi
+          if [[ "${{ needs.changes.outputs.typescript }}" == "true" ]]; then
+            GENERATORS_TO_CHECK+=(${GENERATOR_MAP["typescript"]})
+          fi
+          if [[ "${{ needs.changes.outputs.go }}" == "true" ]]; then
+            GENERATORS_TO_CHECK+=(${GENERATOR_MAP["go"]})
+          fi
+          if [[ "${{ needs.changes.outputs.csharp }}" == "true" ]]; then
+            GENERATORS_TO_CHECK+=(${GENERATOR_MAP["csharp"]})
+          fi
+          if [[ "${{ needs.changes.outputs.php }}" == "true" ]]; then
+            GENERATORS_TO_CHECK+=(${GENERATOR_MAP["php"]})
+          fi
+          if [[ "${{ needs.changes.outputs.swift }}" == "true" ]]; then
+            GENERATORS_TO_CHECK+=(${GENERATOR_MAP["swift"]})
+          fi
+          if [[ "${{ needs.changes.outputs.rust }}" == "true" ]]; then
+            GENERATORS_TO_CHECK+=(${GENERATOR_MAP["rust"]})
+          fi
+          if [[ "${{ needs.changes.outputs.openapi }}" == "true" ]]; then
+            GENERATORS_TO_CHECK+=(${GENERATOR_MAP["openapi"]})
+          fi
+          if [[ "${{ needs.changes.outputs.seed }}" == "true" ]]; then
+            GENERATORS_TO_CHECK+=(${GENERATOR_MAP["seed"]})
+          fi
+          
+          # Remove duplicates
+          GENERATORS_TO_CHECK=($(echo "${GENERATORS_TO_CHECK[@]}" | tr ' ' '\n' | sort -u | tr '\n' ' '))
+          
+          echo "Generators to check: ${GENERATORS_TO_CHECK[@]}"
+          
+          # For each generator with changes, check if fixtures in seed-groups.json are available
+          CHANGES_MADE=false
+          for GENERATOR in "${GENERATORS_TO_CHECK[@]}"; do
+            echo "Checking generator: $GENERATOR"
+            
+            SEED_GROUPS_FILE=".github/workflow-resource-files/seed-groups/${GENERATOR}-seed-groups.json"
+            
+            if [[ ! -f "$SEED_GROUPS_FILE" ]]; then
+              echo "Seed groups file not found for $GENERATOR, skipping"
+              continue
+            fi
+            
+            # Get available fixtures for this generator
+            echo "Getting available fixtures for $GENERATOR..."
+            AVAILABLE_FIXTURES_JSON=$(pnpm seed:local get-available-fixtures --generator "$GENERATOR" --include-output-folders 2>&1 | tail -1)
+            
+            if [[ -z "$AVAILABLE_FIXTURES_JSON" ]]; then
+              echo "Failed to get available fixtures for $GENERATOR, skipping"
+              continue
+            fi
+            
+            # Extract fixtures array from JSON
+            AVAILABLE_FIXTURES=$(echo "$AVAILABLE_FIXTURES_JSON" | jq -r '.fixtures[]' 2>/dev/null || echo "")
+            
+            if [[ -z "$AVAILABLE_FIXTURES" ]]; then
+              echo "No available fixtures found for $GENERATOR, skipping"
+              continue
+            fi
+            
+            echo "Available fixtures for $GENERATOR:"
+            echo "$AVAILABLE_FIXTURES"
+            
+            # Get all fixtures from seed-groups.json
+            SEED_GROUP_FIXTURES=$(jq -r '.groups[].fixtures[]' "$SEED_GROUPS_FILE" 2>/dev/null || echo "")
+            
+            if [[ -z "$SEED_GROUP_FIXTURES" ]]; then
+              echo "No fixtures in seed groups file for $GENERATOR, skipping"
+              continue
+            fi
+            
+            # Find fixtures that are in seed-groups.json but not in available fixtures
+            FIXTURES_TO_REMOVE=()
+            while IFS= read -r fixture; do
+              if ! echo "$AVAILABLE_FIXTURES" | grep -qx "$fixture"; then
+                FIXTURES_TO_REMOVE+=("$fixture")
+                echo "Fixture '$fixture' not found in available fixtures for $GENERATOR"
+              fi
+            done <<< "$SEED_GROUP_FIXTURES"
+            
+            # Remove fixtures from seed-groups.json
+            if [[ ${#FIXTURES_TO_REMOVE[@]} -gt 0 ]]; then
+              echo "Removing ${#FIXTURES_TO_REMOVE[@]} fixtures from $SEED_GROUPS_FILE"
+              
+              # Create a temporary file with updated content
+              TEMP_FILE=$(mktemp)
+              cp "$SEED_GROUPS_FILE" "$TEMP_FILE"
+              
+              for fixture in "${FIXTURES_TO_REMOVE[@]}"; do
+                echo "Removing fixture: $fixture"
+                # Use jq to remove the fixture from all groups
+                jq --arg fixture "$fixture" '.groups = [.groups[] | .fixtures = [.fixtures[] | select(. != $fixture)] | select(.fixtures | length > 0)]' "$TEMP_FILE" > "${TEMP_FILE}.new"
+                mv "${TEMP_FILE}.new" "$TEMP_FILE"
+              done
+              
+              # Recalculate group times (set to 0 for simplicity, will be updated by nightly job)
+              jq '.groups = [.groups[] | .groupTotalTimeSeconds = 0]' "$TEMP_FILE" > "${TEMP_FILE}.new"
+              mv "${TEMP_FILE}.new" "$TEMP_FILE"
+              
+              # Update total test time to 0 (will be updated by nightly job)
+              jq '.totalTestTimeSeconds = 0' "$TEMP_FILE" > "$SEED_GROUPS_FILE"
+              
+              rm "$TEMP_FILE"
+              CHANGES_MADE=true
+            else
+              echo "No fixtures to remove for $GENERATOR"
+            fi
+          done
+          
+          if [[ "$CHANGES_MADE" == "true" ]]; then
+            echo "Changes were made to seed-groups.json files"
+            echo "changes-made=true" >> $GITHUB_OUTPUT
+          else
+            echo "No changes were made to seed-groups.json files"
+            echo "changes-made=false" >> $GITHUB_OUTPUT
+          fi
+
+      - name: Commit and push changes
+        if: steps.clean-up-seed-groups.outputs.changes-made == 'true'
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add .github/workflow-resource-files/seed-groups/
+          git commit -m "chore: remove unavailable fixtures from seed-groups.json files"
+          git push
+
   # Round up all tests into job with defined name for PR merge requirements
   seed-test-results:
     runs-on: ubuntu-latest
