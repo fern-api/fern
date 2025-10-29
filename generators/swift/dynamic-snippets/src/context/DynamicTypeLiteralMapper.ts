@@ -1,13 +1,7 @@
 import { DiscriminatedUnionTypeInstance, Severity } from "@fern-api/browser-compatible-base-generator";
 import { assertNever } from "@fern-api/core-utils";
 import { FernIr } from "@fern-api/dynamic-ir-sdk";
-import {
-    EnumWithAssociatedValues,
-    LiteralEnum,
-    sanitizeSelf,
-    swift,
-    UndiscriminatedUnion
-} from "@fern-api/swift-codegen";
+import { EnumWithAssociatedValues, LiteralEnum, sanitizeSelf, swift } from "@fern-api/swift-codegen";
 
 import { DynamicSnippetsGeneratorContext } from "./DynamicSnippetsGeneratorContext";
 
@@ -164,18 +158,28 @@ export class DynamicTypeLiteralMapper {
                     value,
                     as
                 });
-            case "discriminatedUnion":
+            case "discriminatedUnion": {
+                const unionSymbol = this.context.nameRegistry.getSchemaTypeSymbolOrThrow(typeId);
                 return this.convertDiscriminatedUnion({
                     fromSymbol,
+                    unionSymbol,
                     discriminatedUnion: named,
                     value
                 });
+            }
             case "enum":
                 return this.convertEnum({ enum_: named, value });
             case "object":
                 return this.convertObject({ fromSymbol, typeId, object_: named, value });
-            case "undiscriminatedUnion":
-                return this.convertUndiscriminatedUnion({ fromSymbol, undiscriminatedUnion: named, value });
+            case "undiscriminatedUnion": {
+                const unionSymbol = this.context.nameRegistry.getSchemaTypeSymbolOrThrow(typeId);
+                return this.convertUndiscriminatedUnion({
+                    fromSymbol,
+                    unionSymbol,
+                    undiscriminatedUnion: named,
+                    value
+                });
+            }
             default:
                 assertNever(named);
         }
@@ -208,10 +212,12 @@ export class DynamicTypeLiteralMapper {
     private convertDiscriminatedUnion({
         fromSymbol,
         discriminatedUnion,
+        unionSymbol,
         value
     }: {
         fromSymbol: swift.Symbol;
         discriminatedUnion: FernIr.dynamic.DiscriminatedUnionType;
+        unionSymbol: swift.Symbol;
         value: unknown;
     }): swift.Expression {
         const discriminatedUnionTypeInstance = this.context.resolveDiscriminatedUnionTypeInstance({
@@ -230,12 +236,16 @@ export class DynamicTypeLiteralMapper {
         if (unionProperties == null) {
             return swift.Expression.nop();
         }
+        const variants = this.context.nameRegistry.getAllDiscriminatedUnionVariantsOrThrow(unionSymbol);
+        const matchingVariant = variants.find(
+            (v) => v.discriminantWireValue === unionVariant.discriminantValue.wireValue
+        );
+        if (matchingVariant == null) {
+            return swift.Expression.nop();
+        }
         return swift.Expression.methodCall({
-            // TODO(kafkas): Pull from registry
-            target: swift.Expression.reference(discriminatedUnion.declaration.name.pascalCase.unsafeName),
-            methodName: EnumWithAssociatedValues.sanitizeToCamelCase(
-                unionVariant.discriminantValue.name.camelCase.unsafeName
-            ),
+            target: swift.Expression.reference(unionSymbol.name),
+            methodName: matchingVariant.caseName,
             arguments_: [
                 swift.functionArgument({
                     value: swift.Expression.contextualMethodCall({
@@ -421,15 +431,18 @@ export class DynamicTypeLiteralMapper {
 
     private convertUndiscriminatedUnion({
         fromSymbol,
+        unionSymbol,
         undiscriminatedUnion,
         value
     }: {
         fromSymbol: swift.Symbol;
+        unionSymbol: swift.Symbol;
         undiscriminatedUnion: FernIr.dynamic.UndiscriminatedUnionType;
         value: unknown;
     }): swift.Expression {
         const result = this.findMatchingUndiscriminatedUnionType({
             fromSymbol,
+            unionSymbol,
             undiscriminatedUnion,
             value
         });
@@ -441,25 +454,27 @@ export class DynamicTypeLiteralMapper {
 
     private findMatchingUndiscriminatedUnionType({
         fromSymbol,
+        unionSymbol,
         undiscriminatedUnion,
         value
     }: {
         fromSymbol: swift.Symbol;
+        unionSymbol: swift.Symbol;
         undiscriminatedUnion: FernIr.dynamic.UndiscriminatedUnionType;
         value: unknown;
     }): swift.Expression | undefined {
+        const variants = this.context.nameRegistry.getAllUndiscriminatedUnionVariantsOrThrow(unionSymbol);
         for (const typeReference of undiscriminatedUnion.types) {
             try {
                 const converted = this.convert({ fromSymbol, typeReference, value });
                 const swiftType = this.context.getSwiftTypeReferenceFromScope(typeReference, fromSymbol);
+                const matchingVariant = variants.find((v) => v.swiftType.equals(swiftType));
+                if (matchingVariant == null) {
+                    continue;
+                }
                 return swift.Expression.methodCall({
-                    // TODO(kafkas): Pull from registry
-                    target: swift.Expression.reference(undiscriminatedUnion.declaration.name.pascalCase.unsafeName),
-                    methodName: UndiscriminatedUnion.inferCaseNameForTypeReference(
-                        fromSymbol,
-                        swiftType,
-                        this.context.nameRegistry
-                    ),
+                    target: swift.Expression.reference(unionSymbol.name),
+                    methodName: matchingVariant.caseName,
                     arguments_: [
                         swift.functionArgument({
                             value: converted

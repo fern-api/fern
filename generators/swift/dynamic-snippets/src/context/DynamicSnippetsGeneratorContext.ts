@@ -119,8 +119,6 @@ export class DynamicSnippetsGeneratorContext extends AbstractDynamicSnippetsGene
             }
         });
 
-        // TODO(kafkas): Register subclient symbols
-
         return nameRegistry;
     }
 
