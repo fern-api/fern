@@ -1,4 +1,14 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+
+- version: 1.13.17
+  changelogEntry:
+    - summary: |
+        - expose raw paginated response
+        - fix server-sent events streaming functionality
+      type: fix      type: fix
+  createdAt: "2025-10-29"
+  irVersion: 60
+
 - version: 1.13.16
   changelogEntry:
     - summary: |
