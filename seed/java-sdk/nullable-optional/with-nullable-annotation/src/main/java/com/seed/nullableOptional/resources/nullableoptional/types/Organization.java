@@ -28,6 +28,7 @@ public final class Organization {
 
     private final String name;
 
+    @Nullable
     private final String domain;
 
     private final Optional<Integer> employeeCount;
@@ -37,7 +38,7 @@ public final class Organization {
     private Organization(
             String id,
             String name,
-            String domain,
+            @Nullable String domain,
             Optional<Integer> employeeCount,
             Map<String, Object> additionalProperties) {
         this.id = id;
@@ -119,7 +120,7 @@ public final class Organization {
     public interface _FinalStage {
         Organization build();
 
-        _FinalStage domain(@com.seed.nullableOptional.core.Nullable String domain);
+        _FinalStage domain(@Nullable String domain);
 
         _FinalStage employeeCount(Optional<Integer> employeeCount);
 
@@ -179,7 +180,7 @@ public final class Organization {
 
         @java.lang.Override
         @JsonSetter("domain")
-        public _FinalStage domain(@com.seed.nullableOptional.core.Nullable String domain) {
+        public _FinalStage domain(@Nullable String domain) {
             this.domain = domain;
             return this;
         }

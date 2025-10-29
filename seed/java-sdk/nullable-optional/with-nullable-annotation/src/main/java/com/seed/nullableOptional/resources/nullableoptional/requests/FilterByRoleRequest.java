@@ -25,6 +25,7 @@ import org.jetbrains.annotations.Nullable;
 @JsonInclude(JsonInclude.Include.NON_ABSENT)
 @JsonDeserialize(builder = FilterByRoleRequest.Builder.class)
 public final class FilterByRoleRequest {
+    @Nullable
     private final UserRole role;
 
     private final Optional<UserStatus> status;
@@ -34,7 +35,7 @@ public final class FilterByRoleRequest {
     private final Map<String, Object> additionalProperties;
 
     private FilterByRoleRequest(
-            UserRole role,
+            @Nullable UserRole role,
             Optional<UserStatus> status,
             Optional<UserRole> secondaryRole,
             Map<String, Object> additionalProperties) {
@@ -126,7 +127,7 @@ public final class FilterByRoleRequest {
 
         @java.lang.Override
         @JsonSetter("role")
-        public Builder role(@com.seed.nullableOptional.core.Nullable UserRole role) {
+        public Builder role(@Nullable UserRole role) {
             this.role = role;
             return this;
         }
@@ -143,7 +144,7 @@ public final class FilterByRoleRequest {
         }
 
         @JsonSetter(value = "secondaryRole", nulls = Nulls.SKIP)
-        public Builder secondaryRole(Optional<UserRole> secondaryRole) {
+        public Builder secondaryRole(@Nullable Optional<UserRole> secondaryRole) {
             this.secondaryRole = secondaryRole;
             return this;
         }

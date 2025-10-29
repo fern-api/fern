@@ -184,14 +184,14 @@ public abstract class AbstractEndpointWriterVariableNameContext {
     }
 
     private HttpUrlBuilder.PathParamInfo convertPathParameter(PathParameter pathParameter) {
+        TypeName typeName =
+                clientGeneratorContext.getPoetTypeNameMapper().convertToTypeName(true, pathParameter.getValueType());
+        ParameterSpec.Builder paramBuilder = ParameterSpec.builder(
+                typeName, pathParameter.getName().getCamelCase().getSafeName());
+
         return HttpUrlBuilder.PathParamInfo.builder()
                 .irParam(pathParameter)
-                .poetParam(ParameterSpec.builder(
-                                clientGeneratorContext
-                                        .getPoetTypeNameMapper()
-                                        .convertToTypeName(true, pathParameter.getValueType()),
-                                pathParameter.getName().getCamelCase().getSafeName())
-                        .build())
+                .poetParam(paramBuilder.build())
                 .build();
     }
 }

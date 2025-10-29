@@ -113,7 +113,8 @@ export async function publishDocs({
                     width: image.width,
                     height: image.height,
                     blurDataUrl: image.blurDataUrl,
-                    alt: undefined
+                    alt: undefined,
+                    fileHash: undefined
                 };
                 images.push(imageFilePath);
             });
