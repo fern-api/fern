@@ -1,6 +1,6 @@
 # Reference
 ## FolderA Service
-<details><summary><code>client.FolderA.Service.<a href="/src/SeedAudiences/FolderA/Service/ServiceClient.cs">GetDirectThreadAsync</a>() -> FolderA.Response</code></summary>
+<details><summary><code>client.FolderA.Service.<a href="/src/SeedAudiences/FolderA/Service/ServiceClient.cs">GetDirectThreadAsync</a>(FolderA.GetDirectThreadRequest { ... }) -> FolderA.Response</code></summary>
 <dl>
 <dd>
 
@@ -13,8 +13,25 @@
 <dd>
 
 ```csharp
-await client.FolderA.Service.GetDirectThreadAsync();
+await client.FolderA.Service.GetDirectThreadAsync(
+    new GetDirectThreadRequest { Ids = ["ids"], Tags = ["tags"] }
+);
 ```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**request:** `FolderA.GetDirectThreadRequest` 
+    
 </dd>
 </dl>
 </dd>
