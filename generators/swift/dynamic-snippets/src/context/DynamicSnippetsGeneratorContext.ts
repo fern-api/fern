@@ -146,7 +146,7 @@ export class DynamicSnippetsGeneratorContext extends AbstractDynamicSnippetsGene
     ): swift.TypeReference {
         const referencer = this.createReferencer(fromSymbol);
         return visitDiscriminatedUnion(typeReference, "type")._visit({
-            list: (ref) => swift.TypeReference.array(this.getSwiftTypeReferenceFromScope(ref, fromSymbol)),
+            list: (ref) => swift.TypeReference.array(this.getSwiftTypeReferenceFromScope(ref.value, fromSymbol)),
             literal: (ref) => {
                 return visitDiscriminatedUnion(ref.value, "type")._visit({
                     boolean: () => referencer.referenceAsIsType("JSONValue"),
@@ -170,8 +170,8 @@ export class DynamicSnippetsGeneratorContext extends AbstractDynamicSnippetsGene
                 const symbolRef = this.nameRegistry.reference({ fromSymbol, toSymbol });
                 return swift.TypeReference.symbol(symbolRef);
             },
-            nullable: (ref) => swift.TypeReference.nullable(this.getSwiftTypeReferenceFromScope(ref, fromSymbol)),
-            optional: (ref) => swift.TypeReference.optional(this.getSwiftTypeReferenceFromScope(ref, fromSymbol)),
+            nullable: (ref) => swift.TypeReference.nullable(this.getSwiftTypeReferenceFromScope(ref.value, fromSymbol)),
+            optional: (ref) => swift.TypeReference.optional(this.getSwiftTypeReferenceFromScope(ref.value, fromSymbol)),
             primitive: (ref) => {
                 return visitDiscriminatedUnion(ref, "value")._visit({
                     STRING: () => referencer.referenceSwiftType("String"),
