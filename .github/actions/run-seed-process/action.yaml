@@ -34,6 +34,12 @@ outputs:
   end_time:
     description: The end time of the seed tests, used for metric collection
     value: ${{ steps.end-seed-timer.outputs.end_time }}
+  test_result:
+    description: The result of the seed tests (success or failure)
+    value: ${{ steps.run-seed.outcome }}
+  failed_fixtures:
+    description: List of failed fixtures from this test run
+    value: ${{ steps.capture-failures.outputs.failed_fixtures }}
 
 runs:
   using: "composite"
@@ -63,7 +69,9 @@ runs:
       uses: actions/checkout@v4
 
     - name: Run seed
+      id: run-seed
       if: ${{ steps.json-to-string.outputs.as-string != 'leftovers' }}
+      continue-on-error: true
       uses: ./.github/actions/cached-seed
       with:
         generator-name: ${{ inputs.sdk-name }}
@@ -72,11 +80,55 @@ runs:
         skip-scripts: ${{ inputs.skip-scripts }}
 
     - name: Handle Seed Leftover Tests
+      id: run-seed-leftovers
       if: ${{ steps.json-to-string.outputs.as-string == 'leftovers' }}
+      continue-on-error: true
       uses: ./.github/actions/handle-leftover-seed-tests
       with:
         sdk-name: ${{ inputs.sdk-name }}
         generator-path: ${{ inputs.generator-path }}
+
+    - name: Capture test failures
+      id: capture-failures
+      if: always() && !cancelled()
+      shell: bash
+      run: |
+        mkdir -p .seed-failures
+        
+        if [[ "${{ steps.run-seed.outcome }}" == "failure" ]] || [[ "${{ steps.run-seed-leftovers.outcome }}" == "failure" ]]; then
+          echo "FAILED" > .seed-failures/status-${{ inputs.job-index }}.txt
+          echo "sdk-name=${{ inputs.sdk-name }}" >> .seed-failures/status-${{ inputs.job-index }}.txt
+          echo "job-index=${{ inputs.job-index }}" >> .seed-failures/status-${{ inputs.job-index }}.txt
+          echo "fixtures=${{ inputs.fixtures-to-run }}" >> .seed-failures/status-${{ inputs.job-index }}.txt
+          
+          if [ -f .seed-test-output/failed-fixtures.txt ]; then
+            cp .seed-test-output/failed-fixtures.txt .seed-failures/failed-fixtures-${{ inputs.job-index }}.txt
+            FAILED_FIXTURES=$(cat .seed-test-output/failed-fixtures.txt)
+            echo "failed_fixtures=$FAILED_FIXTURES" >> $GITHUB_OUTPUT
+          else
+            echo "failed_fixtures=FAILED" >> $GITHUB_OUTPUT
+          fi
+        else
+          echo "SUCCESS" > .seed-failures/status-${{ inputs.job-index }}.txt
+          echo "failed_fixtures=" >> $GITHUB_OUTPUT
+        fi
+
+    - name: Upload failure information
+      if: always() && !cancelled()
+      uses: actions/upload-artifact@v4
+      with:
+        name: seed-failures-${{ inputs.sdk-name }}-${{ inputs.job-index }}
+        path: .seed-failures/
+        retention-days: 1
+    
+    - name: Fail job if tests failed
+      if: always() && !cancelled()
+      shell: bash
+      run: |
+        if [[ "${{ steps.run-seed.outcome }}" == "failure" ]] || [[ "${{ steps.run-seed-leftovers.outcome }}" == "failure" ]]; then
+          echo "Seed tests failed"
+          exit 1
+        fi
 
     - name: Record end time
       id: end-seed-timer

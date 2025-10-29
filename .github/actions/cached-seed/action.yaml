@@ -71,6 +71,7 @@ runs:
       run: go install github.com/fern-api/protoc-gen-openapi/cmd/protoc-gen-openapi@latest
 
     - name: Seed Test
+      id: seed-test
       if: steps.cache.outputs.cache-hit != 'true' || inputs.cache-disabled == 'true'
       shell: bash
       env:
@@ -81,12 +82,38 @@ runs:
           FORMATTED_FIXTURES_COMMAND="--fixture ${{ inputs.fixtures-to-run }}"
         fi
 
-        pnpm seed:local test \
+        set +e
+        OUTPUT=$(pnpm seed:local test \
           --generator ${{ inputs.generator-name }} \
           --parallel 16 \
           ${FORMATTED_FIXTURES_COMMAND} \
           ${{ inputs.skip-scripts == 'true' && '--skip-scripts' || '' }} \
-          ${{ inputs.allow-unexpected-failures == 'true' && '--allow-unexpected-failures' || '' }}
+          ${{ inputs.allow-unexpected-failures == 'true' && '--allow-unexpected-failures' || '' }} 2>&1)
+        EXIT_CODE=$?
+        set -e
+        
+        echo "$OUTPUT"
+        
+        mkdir -p .seed-test-output
+        echo "$OUTPUT" > .seed-test-output/output.txt
+        echo "$EXIT_CODE" > .seed-test-output/exit-code.txt
+        
+        if [ $EXIT_CODE -ne 0 ]; then
+          UNEXPECTED_FAILURES=$(echo "$OUTPUT" | grep "unexpected failures, including:" | sed -n 's/.*unexpected failures, including: \(.*\)\./\1/p' || echo "")
+          if [ -n "$UNEXPECTED_FAILURES" ]; then
+            echo "$UNEXPECTED_FAILURES" > .seed-test-output/failed-fixtures.txt
+          fi
+        fi
+        
+        exit $EXIT_CODE
+    
+    - name: Save test output
+      if: always() && (steps.cache.outputs.cache-hit != 'true' || inputs.cache-disabled == 'true')
+      shell: bash
+      run: |
+        if [ -d .seed-test-output ]; then
+          echo "Test output saved to .seed-test-output/"
+        fi
 
     - name: Save cache
       if: steps.cache.outputs.cache-hit != 'true' && inputs.cache-disabled != 'true'
