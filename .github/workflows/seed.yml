@@ -1006,7 +1006,7 @@ jobs:
         id: clean-up-seed-groups
         run: |
           set -eo pipefail
-          
+
           # Define mapping from changes outputs to generator workspace names
           declare -A GENERATOR_MAP
           GENERATOR_MAP["ruby"]="ruby-model ruby-sdk"
@@ -1022,10 +1022,10 @@ jobs:
           GENERATOR_MAP["rust"]="rust-model rust-sdk"
           GENERATOR_MAP["openapi"]="openapi"
           GENERATOR_MAP["seed"]="ruby-model ruby-sdk ruby-sdk-v2 pydantic python-sdk fastapi openapi postman java-sdk java-model java-spring ts-sdk ts-express go-fiber go-model go-sdk csharp-model csharp-sdk php-model php-sdk swift-sdk rust-model rust-sdk"
-          
+
           # Collect all generators that have changes
           GENERATORS_TO_CHECK=()
-          
+
           if [[ "${{ needs.changes.outputs.ruby }}" == "true" ]]; then
             GENERATORS_TO_CHECK+=(${GENERATOR_MAP["ruby"]})
           fi
@@ -1065,12 +1065,12 @@ jobs:
           if [[ "${{ needs.changes.outputs.seed }}" == "true" ]]; then
             GENERATORS_TO_CHECK+=(${GENERATOR_MAP["seed"]})
           fi
-          
+
           # Remove duplicates
           GENERATORS_TO_CHECK=($(echo "${GENERATORS_TO_CHECK[@]}" | tr ' ' '\n' | sort -u | tr '\n' ' '))
-          
+
           echo "Generators to check: ${GENERATORS_TO_CHECK[@]}"
-          
+
           # For each generator with changes, check if fixtures in seed-groups.json are available
           CHANGES_MADE=false
           for GENERATOR in "${GENERATORS_TO_CHECK[@]}"; do
@@ -1142,7 +1142,7 @@ jobs:
               echo "No fixtures to remove for $GENERATOR"
             fi
           done
-          
+
           if [[ "$CHANGES_MADE" == "true" ]]; then
             echo "Changes were made to seed-groups.json files"
             echo "changes-made=true" >> $GITHUB_OUTPUT
