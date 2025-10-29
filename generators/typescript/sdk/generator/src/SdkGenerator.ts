@@ -1162,8 +1162,7 @@ export class SdkGenerator {
             filepath: this.generatorAgent.getExportedContributingFilePath(),
             run: async ({ sourceFile, importsManager }) => {
                 const contributingGenerator = new ContributingGenerator({
-                    packageManager: this.config.packageManager,
-                    testFramework: this.config.testFramework
+                    packageManager: this.config.packageManager
                 });
                 const contributingContent = contributingGenerator.generate();
                 sourceFile.replaceWithText(contributingContent);

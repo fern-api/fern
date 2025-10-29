@@ -1,18 +1,12 @@
 export class ContributingGenerator {
     private packageManager: "pnpm" | "yarn";
-    private testFramework: "jest" | "vitest";
 
-    constructor({
-        packageManager,
-        testFramework
-    }: { packageManager: "pnpm" | "yarn"; testFramework: "jest" | "vitest" }) {
+    constructor({ packageManager }: { packageManager: "pnpm" | "yarn" }) {
         this.packageManager = packageManager;
-        this.testFramework = testFramework;
     }
 
     public generate(): string {
         const packageManager = this.packageManager;
-        const testFramework = this.testFramework;
 
         return `# Contributing
 
@@ -22,7 +16,7 @@ Thanks for your interest in contributing to this SDK! This document provides gui
 
 ### Prerequisites
 
-- Node.js 18 or higher
+- Node.js 20 or higher
 - ${packageManager} package manager
 
 ### Installation
@@ -40,10 +34,6 @@ Build the project:
 \`\`\`bash
 ${packageManager} build
 \`\`\`
-
-This will compile both CommonJS and ES Module versions of the SDK:
-- \`${packageManager} build:cjs\` - Build CommonJS version
-- \`${packageManager} build:esm\` - Build ES Module version
 
 ### Testing
 

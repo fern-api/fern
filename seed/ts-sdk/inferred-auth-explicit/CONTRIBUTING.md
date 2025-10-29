@@ -6,7 +6,7 @@ Thanks for your interest in contributing to this SDK! This document provides gui
 
 ### Prerequisites
 
-- Node.js 18 or higher
+- Node.js 20 or higher
 - pnpm package manager
 
 ### Installation
@@ -24,10 +24,6 @@ Build the project:
 ```bash
 pnpm build
 ```
-
-This will compile both CommonJS and ES Module versions of the SDK:
-- `pnpm build:cjs` - Build CommonJS version
-- `pnpm build:esm` - Build ES Module version
 
 ### Testing
 
