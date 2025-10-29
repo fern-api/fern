@@ -35,11 +35,11 @@ export class DynamicSnippetsGeneratorContext extends AbstractDynamicSnippetsGene
             config.customConfig != null ? (config.customConfig as BaseSwiftCustomConfigSchema) : undefined;
         this.dynamicTypeLiteralMapper = new DynamicTypeLiteralMapper({ context: this });
         this.filePropertyMapper = new FilePropertyMapper({ context: this });
-        this.nameRegistry = this.initRegistry(ir);
+        this.nameRegistry = NameRegistry.create();
+        this.registerSourceSymbols(this.nameRegistry, ir);
     }
 
-    private initRegistry(ir: FernIr.dynamic.DynamicIntermediateRepresentation) {
-        const nameRegistry = NameRegistry.create();
+    private registerSourceSymbols(nameRegistry: NameRegistry, ir: FernIr.dynamic.DynamicIntermediateRepresentation) {
         const apiNamePascalCase = pascalCase(this.config.workspaceName);
         nameRegistry.registerSourceModuleSymbol({
             configModuleName: this.customConfig?.moduleName,
