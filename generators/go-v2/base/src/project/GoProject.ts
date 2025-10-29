@@ -144,7 +144,7 @@ export class GoProject extends AbstractProject<AbstractGoGeneratorContext<BaseGo
             getImportPath: (dirname) => this.getImportPath(dirname)
         });
     }
-    
+
     private async writeCoreFiles(): Promise<void> {
         await this.writeAsIsFiles({
             filenames: this.context.getCoreAsIsFiles(),
