@@ -78,7 +78,6 @@ runs:
         sdk-name: ${{ inputs.sdk-name }}
         generator-path: ${{ inputs.generator-path }}
 
-    # CHRISM - what happens to summary between matricies? WHat happens across re-runs?
     - name: Summarize Test Results
       if: always() && !cancelled()
       shell: bash
@@ -86,7 +85,6 @@ runs:
         # Verify file exists from previous step
         if [ -f "output.log" ]; then 
           # Focusing on last 100 lines of file (should be more than enough), reverse search (bottom-up) for string including unexpected failures
-          # CHRISM - is tac included in github actions??
           UNEXPECTED_FAILURES=$(tail -n 100 output.log | tac | grep -m 1 "unexpected failures, including:" | sed -n 's/.*unexpected failures, including: \(.*\)\./\1/p' || echo "")
           if [ -n "$UNEXPECTED_FAILURES" ]; then
             echo "**${{ inputs.sdk-name }} Unexpected Test Failures:** ${UNEXPECTED_FAILURES}" >> $GITHUB_STEP_SUMMARY
