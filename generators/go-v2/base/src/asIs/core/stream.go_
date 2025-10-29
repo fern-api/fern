@@ -24,7 +24,7 @@ const (
 )
 
 // defaultStreamDelimiter is the default stream delimiter used to split messages.
-const defaultStreamDelimiter = '\n'
+const defaultStreamDelimiter = "\n\n"
 
 // Stream represents a stream of messages sent from a server.
 type Stream[T any] struct {
@@ -142,7 +142,23 @@ func newBufferStreamReader(reader io.Reader) *BufferStreamReader {
 }
 
 func (b *BufferStreamReader) ReadFromStream() ([]byte, error) {
-	return b.reader.ReadBytes(defaultStreamDelimiter)
+	var result []byte
+	for {
+		line, err := b.reader.ReadBytes('\n')
+		if err != nil {
+			if len(result) > 0 {
+				return result, nil
+			}
+			return nil, err
+		}
+		result = append(result, line...)
+
+		// Check if we have the complete delimiter
+		if strings.HasSuffix(string(result), defaultStreamDelimiter) {
+			// Remove the delimiter from the result
+			return result[:len(result)-len(defaultStreamDelimiter)], nil
+		}
+	}
 }
 
 // ScannerStreamReader reads data from a *bufio.Scanner, which allows for
@@ -242,8 +258,8 @@ func newSseStreamReader(
 		if atEOF && len(data) == 0 {
 			return 0, nil, nil
 		}
-		if i := strings.Index(string(data), stream.options.delimiter+stream.options.delimiter); i >= 0 {
-			return i + 1, data[0:i], nil
+		if i := strings.Index(string(data), stream.options.delimiter); i >= 0 {
+			return i + len(stream.options.delimiter), data[0:i], nil
 		}
 
 		if atEOF || stream.isTerminated(data) {
