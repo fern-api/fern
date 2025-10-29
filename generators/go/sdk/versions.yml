@@ -5,7 +5,7 @@
     - summary: |
         - expose raw paginated response
         - fix server-sent events streaming functionality
-      type: fix      type: fix
+      type: fix
   createdAt: "2025-10-29"
   irVersion: 60
 
