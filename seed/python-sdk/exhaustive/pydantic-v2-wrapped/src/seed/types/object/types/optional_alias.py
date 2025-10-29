@@ -17,4 +17,4 @@ class OptionalAlias(pydantic.RootModel):
     def from_str(value: typing.Optional[str]) -> OptionalAlias:
         return OptionalAlias(root=value)
 
-    model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(frozen=True)  # type: ignore # Pydantic v2
+    model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(frozen=True)

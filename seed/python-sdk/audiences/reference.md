@@ -1,6 +1,6 @@
 # Reference
 ## FolderA Service
-<details><summary><code>client.folder_a.service.<a href="src/seed/folder_a/service/client.py">get_direct_thread</a>()</code></summary>
+<details><summary><code>client.folder_a.service.<a href="src/seed/folder_a/service/client.py">get_direct_thread</a>(...)</code></summary>
 <dl>
 <dd>
 
@@ -19,7 +19,10 @@ from seed.environment import SeedAudiencesEnvironment
 client = SeedAudiences(
     environment=SeedAudiencesEnvironment.ENVIRONMENT_A,
 )
-client.folder_a.service.get_direct_thread()
+client.folder_a.service.get_direct_thread(
+    ids="ids",
+    tags="tags",
+)
 
 ```
 </dd>
@@ -31,6 +34,22 @@ client.folder_a.service.get_direct_thread()
 
 <dl>
 <dd>
+
+<dl>
+<dd>
+
+**ids:** `typing.Union[str, typing.Sequence[str]]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**tags:** `typing.Union[str, typing.Sequence[str]]` 
+    
+</dd>
+</dl>
 
 <dl>
 <dd>
