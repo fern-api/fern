@@ -380,11 +380,15 @@ types:
       variants: list<TabVariant>
 
   TabVariant:
+    extends: [WithPermissions, WithFeatureFlags]
     properties:
-      title: optional<string>
+      title: string
       subtitle: optional<string>
       icon: optional<string>
       layout: list<NavigationItem>
+      slug: optional<string>
+      skip-slug: optional<boolean>
+      hidden: optional<boolean>
 
   NavigationItem:
     discriminated: false

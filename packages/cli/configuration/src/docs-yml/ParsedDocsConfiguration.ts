@@ -227,11 +227,14 @@ export declare namespace TabbedNavigationChild {
     }
 }
 
-export interface TabVariant {
-    title: string | undefined;
+export interface TabVariant extends CjsFdrSdk.navigation.v1.WithPermissions, CjsFdrSdk.navigation.latest.WithFeatureFlags {
+    title: string;
     subtitle: string | undefined;
     icon: string | undefined;
     layout: DocsNavigationItem[];
+    slug: string | undefined;
+    skipUrlSlug: boolean | undefined;
+    hidden: boolean | undefined;
 }
 
 export type DocsNavigationItem =

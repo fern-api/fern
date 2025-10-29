@@ -4,9 +4,12 @@
 
 import * as FernDocsConfig from "../../../index";
 
-export interface TabVariant {
-    title?: string;
+export interface TabVariant extends FernDocsConfig.WithPermissions, FernDocsConfig.WithFeatureFlags {
+    title: string;
     subtitle?: string;
     icon?: string;
     layout: FernDocsConfig.NavigationItem[];
+    slug?: string;
+    skipSlug?: boolean;
+    hidden?: boolean;
 }

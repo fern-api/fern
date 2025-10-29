@@ -684,7 +684,7 @@ async function convertNavigationTabConfiguration({
     }
 
     if (tabbedNavigationItemHasVariants(item)) {
-        const variants = await Promise.all(
+        const variants: docsYml.TabVariant[] = await Promise.all(
             item.variants.map(async (variant) => {
                 const layout = await Promise.all(
                     variant.layout.map((layoutItem) =>
@@ -700,7 +700,13 @@ async function convertNavigationTabConfiguration({
                     title: variant.title,
                     subtitle: variant.subtitle,
                     icon: variant.icon,
-                    layout
+                    layout,
+                    slug: variant.slug,
+                    skipUrlSlug: variant.skipSlug,
+                    hidden: variant.hidden,
+                    viewers: parseRoles(variant.viewers),
+                    orphaned: variant.orphaned,
+                    featureFlags: convertFeatureFlag(variant.featureFlag)
                 };
             })
         );

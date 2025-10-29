@@ -5,20 +5,31 @@
 import * as serializers from "../../../index";
 import * as FernDocsConfig from "../../../../api/index";
 import * as core from "../../../../core";
+import { WithPermissions } from "./WithPermissions";
+import { WithFeatureFlags } from "./WithFeatureFlags";
 
 export const TabVariant: core.serialization.ObjectSchema<serializers.TabVariant.Raw, FernDocsConfig.TabVariant> =
-    core.serialization.object({
-        title: core.serialization.string().optional(),
-        subtitle: core.serialization.string().optional(),
-        icon: core.serialization.string().optional(),
-        layout: core.serialization.list(core.serialization.lazy(() => serializers.NavigationItem)),
-    });
+    core.serialization
+        .object({
+            title: core.serialization.string(),
+            subtitle: core.serialization.string().optional(),
+            icon: core.serialization.string().optional(),
+            layout: core.serialization.list(core.serialization.lazy(() => serializers.NavigationItem)),
+            slug: core.serialization.string().optional(),
+            skipSlug: core.serialization.property("skip-slug", core.serialization.boolean().optional()),
+            hidden: core.serialization.boolean().optional(),
+        })
+        .extend(WithPermissions)
+        .extend(WithFeatureFlags);
 
 export declare namespace TabVariant {
-    export interface Raw {
-        title?: string | null;
+    export interface Raw extends WithPermissions.Raw, WithFeatureFlags.Raw {
+        title: string;
         subtitle?: string | null;
         icon?: string | null;
         layout: serializers.NavigationItem.Raw[];
+        slug?: string | null;
+        "skip-slug"?: boolean | null;
+        hidden?: boolean | null;
     }
 }

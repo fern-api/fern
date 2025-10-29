@@ -4,8 +4,8 @@ default-group: local
 groups:
   local:
     generators:
-      - name: fernapi/fern-typescript-sdk
-        version: 0.45.1
+      - name: fernapi/fern-typescript-node-sdk
+        version: 0.51.7
         output:
           location: local-file-system
           path: ../../../packages/cli/configuration/src/docs-yml/schemas/sdk
@@ -16,8 +16,8 @@ groups:
           noSerdeLayer: false
   publish:
     generators:
-      - name: fernapi/fern-typescript-sdk
-        version: 0.8.13
+      - name: fernapi/fern-typescript-node-sdk
+        version: 0.51.7
         output:
           location: npm
           url: npm.buildwithfern.com

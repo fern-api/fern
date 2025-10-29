@@ -940,7 +940,7 @@ export class DocsDefinitionResolver {
             children: [{
                 type: "varianted",
                 id,
-                children: await Promise.all(items.map((item) => this.toVariantNode(item, id, parentSlug))),
+                children: await Promise.all(items.map((item, idx) => this.toVariantNode(item, id, parentSlug, idx === 0))),
             }]
         };
     }
@@ -948,26 +948,30 @@ export class DocsDefinitionResolver {
     private async toVariantNode(
         item: docsYml.TabVariant,
         prefix: string,
-        parentSlug: FernNavigation.V1.SlugGenerator
+        parentSlug: FernNavigation.V1.SlugGenerator,
+        isDefault: boolean
     ): Promise<FernNavigation.V1.VariantNode> {
-        const id = this.#idgen.get(`${prefix}/variant/${item.title ?? "untitled"}`);
+        const id = this.#idgen.get(`${prefix}/variant/${item.slug ?? kebabCase(item.title)}`);
         const children = await Promise.all(item.layout.map((item) => this.toVariantChild(item, id, parentSlug)));
         return {
             type: "variant",
             id,
-            variantId: FernNavigation.V1.VariantId(item.title ?? "untitled"),
+            variantId: FernNavigation.V1.VariantId(item.title),
             subtitle: item.subtitle ?? "",
-            default: false,
+            default: isDefault,
             image: undefined,
             children,
-            title: item.title ?? "",
-            slug: parentSlug.append(item.title ?? "untitled").get(),
-            icon: item.icon ?? undefined,
-            hidden: undefined,
+            title: item.title,
+            slug: parentSlug.apply({
+                urlSlug: item.slug ?? kebabCase(item.title),
+                skipUrlSlug: item.skipUrlSlug
+            }).get(),
+            icon: item.icon,
+            hidden: item.hidden,
             authed: undefined,
-            viewers: undefined,
-            orphaned: undefined,
-            featureFlags: undefined,
+            viewers: item.viewers,
+            orphaned: item.orphaned,
+            featureFlags: item.featureFlags,
             pointsTo: undefined
         };
     }
