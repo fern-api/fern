@@ -95,7 +95,7 @@ import UndiscriminatedUnions
             urlSession: stub.urlSession
         )
         let expectedResponse = true
-        let response = try await client.union.updateMetadata(request: MetadataUnion.optionalStringToJsonDictionary(
+        let response = try await client.union.updateMetadata(request: MetadataUnion.optionalMetadata(
             [
                 "string": .object([
                     "key": .string("value")
@@ -119,7 +119,7 @@ import UndiscriminatedUnions
             urlSession: stub.urlSession
         )
         let expectedResponse = true
-        let response = try await client.union.updateMetadata(request: MetadataUnion.optionalStringToJsonDictionary(
+        let response = try await client.union.updateMetadata(request: MetadataUnion.optionalMetadata(
             [
                 "string": .object([
                     "key": .string("value")
@@ -144,7 +144,7 @@ import UndiscriminatedUnions
         )
         let expectedResponse = true
         let response = try await client.union.call(request: Request(
-            union: MetadataUnion.optionalStringToJsonDictionary(
+            union: MetadataUnion.optionalMetadata(
                 [
                     "string": .object([
                         "key": .string("value")
@@ -170,7 +170,7 @@ import UndiscriminatedUnions
         )
         let expectedResponse = true
         let response = try await client.union.call(request: Request(
-            union: MetadataUnion.optionalStringToJsonDictionary(
+            union: MetadataUnion.optionalMetadata(
                 [
                     "union": .object([
                         "key": .string("value")

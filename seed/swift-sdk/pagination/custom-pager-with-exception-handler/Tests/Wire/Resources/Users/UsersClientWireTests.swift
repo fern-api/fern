@@ -173,7 +173,7 @@ import Pagination
                 )
             ]
         )
-        let response = try await client.users.listWithBodyCursorPagination(request: .init(pagination: WithCursor(
+        let response = try await client.users.listWithBodyCursorPagination(request: .init(pagination: WithCursorType(
             cursor: "cursor"
         )))
         try #require(response == expectedResponse)
@@ -374,7 +374,7 @@ import Pagination
                 )
             ]
         )
-        let response = try await client.users.listWithBodyOffsetPagination(request: .init(pagination: WithPage(
+        let response = try await client.users.listWithBodyOffsetPagination(request: .init(pagination: WithPageType(
             page: 1
         )))
         try #require(response == expectedResponse)
