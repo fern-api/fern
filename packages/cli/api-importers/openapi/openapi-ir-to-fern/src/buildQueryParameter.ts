@@ -244,12 +244,15 @@ function getQueryParameterTypeReference({
                 });
             }
         } else if (context.objectQueryParameters) {
+            const shouldDeclareInline = schema.type !== "reference";
             return {
                 value: buildTypeReference({
                     schema,
                     context,
                     fileContainingReference,
-                    declarationFile: RelativeFilePath.of(FERN_PACKAGE_MARKER_FILENAME),
+                    ...(shouldDeclareInline
+                        ? { declarationFile: RelativeFilePath.of(FERN_PACKAGE_MARKER_FILENAME) }
+                        : {}),
                     namespace,
                     declarationDepth: 0
                 }),
@@ -280,7 +283,6 @@ function getQueryParameterTypeReference({
                         }),
                         context,
                         fileContainingReference,
-                        declarationFile: RelativeFilePath.of(FERN_PACKAGE_MARKER_FILENAME),
                         namespace,
                         declarationDepth: 0
                     }),
@@ -292,7 +294,6 @@ function getQueryParameterTypeReference({
                         schema,
                         context,
                         fileContainingReference,
-                        declarationFile: RelativeFilePath.of(FERN_PACKAGE_MARKER_FILENAME),
                         namespace,
                         declarationDepth: 0
                     }),
@@ -432,12 +433,15 @@ function getQueryParameterTypeReference({
             // TODO: (jsklan) currently this is hidden behind the objectQueryParameters flag,
             // But eventually we should probably enable this by default
             if (context.objectQueryParameters) {
+                const shouldDeclareInline = !isOrContainsReferenceSchema(schema);
                 return {
                     value: buildTypeReference({
                         schema,
                         context,
                         fileContainingReference,
-                        declarationFile: RelativeFilePath.of(FERN_PACKAGE_MARKER_FILENAME),
+                        ...(shouldDeclareInline
+                            ? { declarationFile: RelativeFilePath.of(FERN_PACKAGE_MARKER_FILENAME) }
+                            : {}),
                         namespace,
                         declarationDepth: 0
                     }),
@@ -466,12 +470,15 @@ function getQueryParameterTypeReference({
             }
         } else if (schema.value.type === "object") {
             if (context.objectQueryParameters) {
+                const shouldDeclareInline = !isOrContainsReferenceSchema(schema);
                 return {
                     value: buildTypeReference({
                         schema,
                         context,
                         fileContainingReference,
-                        declarationFile: RelativeFilePath.of(FERN_PACKAGE_MARKER_FILENAME),
+                        ...(shouldDeclareInline
+                            ? { declarationFile: RelativeFilePath.of(FERN_PACKAGE_MARKER_FILENAME) }
+                            : {}),
                         namespace,
                         declarationDepth: 0
                     }),
@@ -542,4 +549,14 @@ function isRawTypeReferenceDetailedSchema(
     rawTypeReference: RawSchemas.TypeReferenceSchema
 ): rawTypeReference is RawTypeReferenceDetailed {
     return typeof rawTypeReference === "object" && rawTypeReference !== null && "type" in rawTypeReference;
+}
+
+function isOrContainsReferenceSchema(schema: Schema): boolean {
+    if (schema.type === "reference") {
+        return true;
+    }
+    if (schema.type === "optional" || schema.type === "nullable") {
+        return isOrContainsReferenceSchema(schema.value);
+    }
+    return false;
 }
