@@ -37,14 +37,7 @@ export function convertWebhookOperation({
         return [];
     }
 
-    let operationId = operation.operationId;
-
-    if (operationId == null) {
-        operationId = generateWebhookOperationId({ path, method, sdkMethodName });
-        context.logger.debug(
-            `Generated synthetic operation ID for webhook ${method.toUpperCase()} ${path}: ${operationId}`
-        );
-    }
+    const operationId = operation.operationId ?? generateWebhookOperationId({ path, method, sdkMethodName });
 
     if (method !== "POST" && method !== "GET") {
         context.logger.error(`Skipping webhook ${method.toUpperCase()} ${path}: Not POST or GET`);
