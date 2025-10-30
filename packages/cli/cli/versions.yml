@@ -1,10 +1,18 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
 - changelogEntry:
     - summary: |
+        Fix OpenAPI auth scheme hard-coded names.
+      type: fix
+  irVersion: 61
+  createdAt: "2025-10-29"
+  version: 0.100.1
+
+- changelogEntry:
+    - summary: |
         Add support for explicit default tab variants in tabbed navigation. You can now specify which tab variant should be the default using the `default: true` property instead of relying on the first tab being default.
       type: feat
   irVersion: 61
-  createdAt: "2025-10-30"
+  createdAt: "2025-10-29"
   version: 0.100.0
 
 - changelogEntry:
