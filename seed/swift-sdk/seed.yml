@@ -70,6 +70,18 @@ fixtures:
           timeouts:
             - GET /movie/{movieId}
       outputFolder: readme-config
+  nullable:
+    - customConfig: null
+      outputFolder: no-custom-config
+    - customConfig:
+        decodeNullableToOptional: true
+      outputFolder: decode-nullable-to-optional
+  nullable-optional:
+    - customConfig: null
+      outputFolder: no-custom-config
+    - customConfig:
+        decodeNullableToOptional: true
+      outputFolder: decode-nullable-to-optional
   pagination:
     - customConfig: null
       outputFolder: no-custom-config
@@ -80,6 +92,12 @@ fixtures:
         custom-pager-name: MyPager
         include-exception-handler: true
       outputFolder: custom-pager-with-exception-handler
+  required-nullable:
+    - customConfig: null
+      outputFolder: no-custom-config
+    - customConfig:
+        decodeNullableToOptional: true
+      outputFolder: decode-nullable-to-optional
   single-url-environment-default:
     - customConfig: null
       outputFolder: no-custom-config
