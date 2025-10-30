@@ -92,7 +92,7 @@ import Nullable
                     updatedAt: try! Date("2024-01-15T09:30:00Z", strategy: .iso8601),
                     avatar: Optional("avatar"),
                     activated: Optional(Optional(true)),
-                    status: .active(),
+                    status: .active(.init()),
                     values: Optional([
                         "values": Optional(Optional("values"))
                     ])
@@ -125,7 +125,7 @@ import Nullable
                     updatedAt: try! Date("2024-01-15T09:30:00Z", strategy: .iso8601),
                     avatar: Optional("avatar"),
                     activated: Optional(Optional(true)),
-                    status: .active(),
+                    status: .active(.init()),
                     values: Optional([
                         "values": Optional(Optional("values"))
                     ])
@@ -209,7 +209,7 @@ import Nullable
                 updatedAt: try! Date("2024-01-15T09:30:00Z", strategy: .iso8601),
                 avatar: Optional("avatar"),
                 activated: Optional(Optional(true)),
-                status: .active(),
+                status: .active(.init()),
                 values: Optional([
                     "values": Optional(Optional("values"))
                 ])
