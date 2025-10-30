@@ -318,6 +318,10 @@ plugins = ["pydantic.mypy"]
 [[tool.mypy.overrides]]
 module = "pydantic.*"
 follow_imports = "skip"
+
+[[tool.mypy.overrides]]
+module = "pydantic.v1.*"
+ignore_missing_imports = true
 """
 
             s += """
