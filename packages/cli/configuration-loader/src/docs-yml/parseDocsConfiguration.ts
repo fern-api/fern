@@ -4,8 +4,8 @@ import { AbsoluteFilePath, dirname, doesPathExist, listFiles, resolve } from "@f
 import { TaskContext } from "@fern-api/task-context";
 import { FernRegistry as CjsFdrSdk } from "@fern-fern/fdr-cjs-sdk";
 import { readFile } from "fs/promises";
-import path from "path";
 import yaml from "js-yaml";
+import path from "path";
 
 import { WithoutQuestionMarks } from "../commons/WithoutQuestionMarks";
 import { convertColorsConfiguration } from "./convertColorsConfiguration";
