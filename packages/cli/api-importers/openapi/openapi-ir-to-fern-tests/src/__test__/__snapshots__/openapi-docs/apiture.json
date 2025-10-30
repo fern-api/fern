@@ -17148,7 +17148,7 @@ docs: Banking Transfers
     "contents": {
       "auth": "apiKey",
       "auth-schemes": {
-        "BearerAuthScheme": {
+        "accessToken": {
           "scheme": "bearer",
         },
         "apiKey": {
@@ -17185,7 +17185,7 @@ auth-schemes:
     header: API-Key
     name: apiKey
     type: string
-  BearerAuthScheme:
+  accessToken:
     scheme: bearer
 auth: apiKey
 ",
