@@ -162,6 +162,19 @@
         }
       ]
     },
+    "languages": {
+      "oneOf": [
+        {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/docs.Language"
+          }
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
     "ai-chat": {
       "oneOf": [
         {
@@ -269,6 +282,16 @@
       "oneOf": [
         {
           "$ref": "#/definitions/docs.DocsSettingsConfig"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "theme": {
+      "oneOf": [
+        {
+          "$ref": "#/definitions/docs.ThemeConfig"
         },
         {
           "type": "null"
@@ -2201,6 +2224,82 @@
     "docs.NavbarGithubConfig": {
       "type": "string"
     },
+    "docs.NavbarLinkConfig": {
+      "type": "object",
+      "properties": {
+        "viewers": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/docs.Role"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "href": {
+          "oneOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "url": {
+          "oneOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "text": {
+          "oneOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "icon": {
+          "oneOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "rightIcon": {
+          "oneOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "rounded": {
+          "oneOf": [
+            {
+              "type": "boolean"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        }
+      },
+      "additionalProperties": false
+    },
     "docs.NavbarLink": {
       "type": "object",
       "properties": {
@@ -2211,6 +2310,7 @@
             "outlined",
             "minimal",
             "github",
+            "dropdown",
             "primary",
             "secondary"
           ]
@@ -2221,6 +2321,16 @@
           "properties": {
             "type": {
               "const": "filled"
+            },
+            "viewers": {
+              "oneOf": [
+                {
+                  "$ref": "#/definitions/docs.Role"
+                },
+                {
+                  "type": "null"
+                }
+              ]
             },
             "href": {
               "oneOf": [
@@ -2292,6 +2402,16 @@
             "type": {
               "const": "outlined"
             },
+            "viewers": {
+              "oneOf": [
+                {
+                  "$ref": "#/definitions/docs.Role"
+                },
+                {
+                  "type": "null"
+                }
+              ]
+            },
             "href": {
               "oneOf": [
                 {
@@ -2361,6 +2481,16 @@
           "properties": {
             "type": {
               "const": "minimal"
+            },
+            "viewers": {
+              "oneOf": [
+                {
+                  "$ref": "#/definitions/docs.Role"
+                },
+                {
+                  "type": "null"
+                }
+              ]
             },
             "href": {
               "oneOf": [
@@ -2443,7 +2573,84 @@
         {
           "properties": {
             "type": {
+              "const": "dropdown"
+            },
+            "viewers": {
+              "oneOf": [
+                {
+                  "$ref": "#/definitions/docs.Role"
+                },
+                {
+                  "type": "null"
+                }
+              ]
+            },
+            "links": {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/docs.NavbarLinkConfig"
+              }
+            },
+            "text": {
+              "oneOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ]
+            },
+            "icon": {
+              "oneOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ]
+            },
+            "rightIcon": {
+              "oneOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ]
+            },
+            "rounded": {
+              "oneOf": [
+                {
+                  "type": "boolean"
+                },
+                {
+                  "type": "null"
+                }
+              ]
+            }
+          },
+          "required": [
+            "type",
+            "links"
+          ]
+        },
+        {
+          "properties": {
+            "type": {
               "const": "primary"
+            },
+            "viewers": {
+              "oneOf": [
+                {
+                  "$ref": "#/definitions/docs.Role"
+                },
+                {
+                  "type": "null"
+                }
+              ]
             },
             "href": {
               "oneOf": [
@@ -2514,6 +2721,16 @@
           "properties": {
             "type": {
               "const": "secondary"
+            },
+            "viewers": {
+              "oneOf": [
+                {
+                  "$ref": "#/definitions/docs.Role"
+                },
+                {
+                  "type": "null"
+                }
+              ]
             },
             "href": {
               "oneOf": [
@@ -2901,6 +3118,26 @@
         "jvm",
         "ts",
         "js"
+      ]
+    },
+    "docs.Language": {
+      "type": "string",
+      "enum": [
+        "en",
+        "es",
+        "fr",
+        "de",
+        "it",
+        "pt",
+        "ja",
+        "zh",
+        "ko",
+        "el",
+        "no",
+        "pl",
+        "ru",
+        "sv",
+        "tr"
       ]
     },
     "docs.AIChatModel": {
@@ -3848,8 +4085,59 @@
               "type": "null"
             }
           ]
+        },
+        "disable-explorer-proxy": {
+          "oneOf": [
+            {
+              "type": "boolean"
+            },
+            {
+              "type": "null"
+            }
+          ]
         }
       },
+      "additionalProperties": false
+    },
+    "docs.SidebarThemeConfig": {
+      "type": "string",
+      "enum": [
+        "default",
+        "minimal"
+      ]
+    },
+    "docs.BodyThemeConfig": {
+      "type": "string",
+      "enum": [
+        "default",
+        "canvas"
+      ]
+    },
+    "docs.TabsThemeConfig": {
+      "type": "string",
+      "enum": [
+        "default",
+        "bubble"
+      ]
+    },
+    "docs.ThemeConfig": {
+      "type": "object",
+      "properties": {
+        "sidebar": {
+          "$ref": "#/definitions/docs.SidebarThemeConfig"
+        },
+        "body": {
+          "$ref": "#/definitions/docs.BodyThemeConfig"
+        },
+        "tabs": {
+          "$ref": "#/definitions/docs.TabsThemeConfig"
+        }
+      },
+      "required": [
+        "sidebar",
+        "body",
+        "tabs"
+      ],
       "additionalProperties": false
     },
     "docs.IntegrationsConfig": {
