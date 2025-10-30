@@ -24,7 +24,7 @@
     "requirement": "ALL",
     "schemes": [
       {
-        "key": "BearerAuthScheme",
+        "key": "bearerAuth",
         "token": {
           "originalName": "token",
           "camelCase": {
@@ -33082,7 +33082,7 @@
     "endpoints": {
       "endpoint_search.vals": {
         "auth": {
-          "key": "BearerAuthScheme",
+          "key": "bearerAuth",
           "token": {
             "originalName": "token",
             "camelCase": {
@@ -33338,7 +33338,7 @@
       },
       "endpoint_alias.username": {
         "auth": {
-          "key": "BearerAuthScheme",
+          "key": "bearerAuth",
           "token": {
             "originalName": "token",
             "camelCase": {
@@ -33468,7 +33468,7 @@
       },
       "endpoint_alias.val": {
         "auth": {
-          "key": "BearerAuthScheme",
+          "key": "bearerAuth",
           "token": {
             "originalName": "token",
             "camelCase": {
@@ -33626,7 +33626,7 @@
       },
       "endpoint_me.get": {
         "auth": {
-          "key": "BearerAuthScheme",
+          "key": "bearerAuth",
           "token": {
             "originalName": "token",
             "camelCase": {
@@ -33727,7 +33727,7 @@
       },
       "endpoint_me.likes": {
         "auth": {
-          "key": "BearerAuthScheme",
+          "key": "bearerAuth",
           "token": {
             "originalName": "token",
             "camelCase": {
@@ -33955,7 +33955,7 @@
       },
       "endpoint_me.comments": {
         "auth": {
-          "key": "BearerAuthScheme",
+          "key": "bearerAuth",
           "token": {
             "originalName": "token",
             "camelCase": {
@@ -34273,7 +34273,7 @@
       },
       "endpoint_me.references": {
         "auth": {
-          "key": "BearerAuthScheme",
+          "key": "bearerAuth",
           "token": {
             "originalName": "token",
             "camelCase": {
@@ -34563,7 +34563,7 @@
       },
       "endpoint_blobs.list": {
         "auth": {
-          "key": "BearerAuthScheme",
+          "key": "bearerAuth",
           "token": {
             "originalName": "token",
             "camelCase": {
@@ -34766,7 +34766,7 @@
       },
       "endpoint_blobs.get": {
         "auth": {
-          "key": "BearerAuthScheme",
+          "key": "bearerAuth",
           "token": {
             "originalName": "token",
             "camelCase": {
@@ -34896,7 +34896,7 @@
       },
       "endpoint_blobs.store": {
         "auth": {
-          "key": "BearerAuthScheme",
+          "key": "bearerAuth",
           "token": {
             "originalName": "token",
             "camelCase": {
@@ -35033,7 +35033,7 @@
       },
       "endpoint_blobs.delete": {
         "auth": {
-          "key": "BearerAuthScheme",
+          "key": "bearerAuth",
           "token": {
             "originalName": "token",
             "camelCase": {
@@ -35163,7 +35163,7 @@
       },
       "endpoint_users.get": {
         "auth": {
-          "key": "BearerAuthScheme",
+          "key": "bearerAuth",
           "token": {
             "originalName": "token",
             "camelCase": {
@@ -35293,7 +35293,7 @@
       },
       "endpoint_users.vals": {
         "auth": {
-          "key": "BearerAuthScheme",
+          "key": "bearerAuth",
           "token": {
             "originalName": "token",
             "camelCase": {
@@ -35550,7 +35550,7 @@
       },
       "endpoint_sqlite.execute": {
         "auth": {
-          "key": "BearerAuthScheme",
+          "key": "bearerAuth",
           "token": {
             "originalName": "token",
             "camelCase": {
@@ -35754,7 +35754,7 @@
       },
       "endpoint_sqlite.batch": {
         "auth": {
-          "key": "BearerAuthScheme",
+          "key": "bearerAuth",
           "token": {
             "originalName": "token",
             "camelCase": {
@@ -35992,7 +35992,7 @@
       },
       "endpoint_vals.evalPost": {
         "auth": {
-          "key": "BearerAuthScheme",
+          "key": "bearerAuth",
           "token": {
             "originalName": "token",
             "camelCase": {
@@ -36229,7 +36229,7 @@
       },
       "endpoint_vals.evalGet": {
         "auth": {
-          "key": "BearerAuthScheme",
+          "key": "bearerAuth",
           "token": {
             "originalName": "token",
             "camelCase": {
@@ -36461,7 +36461,7 @@
       },
       "endpoint_vals.runGet": {
         "auth": {
-          "key": "BearerAuthScheme",
+          "key": "bearerAuth",
           "token": {
             "originalName": "token",
             "camelCase": {
@@ -36693,7 +36693,7 @@
       },
       "endpoint_vals.runPost": {
         "auth": {
-          "key": "BearerAuthScheme",
+          "key": "bearerAuth",
           "token": {
             "originalName": "token",
             "camelCase": {
@@ -36931,7 +36931,7 @@
       },
       "endpoint_vals.create": {
         "auth": {
-          "key": "BearerAuthScheme",
+          "key": "bearerAuth",
           "token": {
             "originalName": "token",
             "camelCase": {
@@ -37259,7 +37259,7 @@
       },
       "endpoint_vals.put": {
         "auth": {
-          "key": "BearerAuthScheme",
+          "key": "bearerAuth",
           "token": {
             "originalName": "token",
             "camelCase": {
@@ -37491,7 +37491,7 @@
       },
       "endpoint_vals.get": {
         "auth": {
-          "key": "BearerAuthScheme",
+          "key": "bearerAuth",
           "token": {
             "originalName": "token",
             "camelCase": {
@@ -37621,7 +37621,7 @@
       },
       "endpoint_vals.update": {
         "auth": {
-          "key": "BearerAuthScheme",
+          "key": "bearerAuth",
           "token": {
             "originalName": "token",
             "camelCase": {
@@ -37950,7 +37950,7 @@
       },
       "endpoint_vals.delete": {
         "auth": {
-          "key": "BearerAuthScheme",
+          "key": "bearerAuth",
           "token": {
             "originalName": "token",
             "camelCase": {
@@ -38080,7 +38080,7 @@
       },
       "endpoint_vals.list": {
         "auth": {
-          "key": "BearerAuthScheme",
+          "key": "bearerAuth",
           "token": {
             "originalName": "token",
             "camelCase": {
@@ -38337,7 +38337,7 @@
       },
       "endpoint_vals.createVersion": {
         "auth": {
-          "key": "BearerAuthScheme",
+          "key": "bearerAuth",
           "token": {
             "originalName": "token",
             "camelCase": {
@@ -38694,7 +38694,7 @@
       },
       "endpoint_vals.getVersion": {
         "auth": {
-          "key": "BearerAuthScheme",
+          "key": "bearerAuth",
           "token": {
             "originalName": "token",
             "camelCase": {
@@ -38979,7 +38979,7 @@
       },
       "endpoint_vals.deleteVersion": {
         "auth": {
-          "key": "BearerAuthScheme",
+          "key": "bearerAuth",
           "token": {
             "originalName": "token",
             "camelCase": {
@@ -39137,7 +39137,7 @@
       },
       "endpoint_vals.cancel": {
         "auth": {
-          "key": "BearerAuthScheme",
+          "key": "bearerAuth",
           "token": {
             "originalName": "token",
             "camelCase": {
@@ -39295,7 +39295,7 @@
       },
       "endpoint_emails.send": {
         "auth": {
-          "key": "BearerAuthScheme",
+          "key": "bearerAuth",
           "token": {
             "originalName": "token",
             "camelCase": {

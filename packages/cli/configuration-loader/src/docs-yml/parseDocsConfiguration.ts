@@ -124,6 +124,7 @@ export async function parseDocsConfiguration({
         navbarLinks: convertNavbarLinks(navbarLinks),
         footerLinks: convertFooterLinks(footerLinks),
         defaultLanguage,
+        languages: rawDocsConfiguration.languages,
         announcement: rawDocsConfiguration.announcement,
 
         /* seo */
@@ -141,6 +142,7 @@ export async function parseDocsConfiguration({
         typography,
         layout: convertLayoutConfig(layout),
         settings: convertSettingsConfig(rawDocsConfiguration.settings),
+        theme: convertThemeConfig(rawDocsConfiguration.theme),
         analyticsConfig: {
             ...rawDocsConfiguration.analytics,
             intercom: rawDocsConfiguration.analytics?.intercom
@@ -332,6 +334,20 @@ function convertPageActionOption(
     }
 }
 
+function convertThemeConfig(
+    theme: docsYml.RawSchemas.ThemeConfig | undefined
+): docsYml.ParsedDocsConfiguration["theme"] {
+    if (theme == null) {
+        return undefined;
+    }
+
+    return {
+        sidebar: theme.sidebar ?? "default",
+        tabs: theme.tabs ?? "default",
+        body: theme.body ?? "default"
+    };
+}
+
 function convertSettingsConfig(
     settings: docsYml.RawSchemas.DocsSettingsConfig | undefined
 ): docsYml.ParsedDocsConfiguration["settings"] {
@@ -346,7 +362,8 @@ function convertSettingsConfig(
         hide404Page: settings.hide404Page ?? false,
         httpSnippets: settings.httpSnippets ?? true,
         searchText: settings.searchText ?? "Search",
-        useJavascriptAsTypescript: settings.useJavascriptAsTypescript ?? false
+        useJavascriptAsTypescript: settings.useJavascriptAsTypescript ?? false,
+        disableExplorerProxy: settings.disableExplorerProxy ?? false
     };
 }
 
@@ -1203,7 +1220,44 @@ function convertNavbarLinks(
 ): CjsFdrSdk.docs.v1.commons.NavbarLink[] | undefined {
     return navbarLinks?.map((navbarLink): WithoutQuestionMarks<CjsFdrSdk.docs.v1.commons.NavbarLink> => {
         if (navbarLink.type === "github") {
-            return { type: "github", url: CjsFdrSdk.Url(navbarLink.value) };
+            // Handle GitHub navbar links specially as they have a different structure
+            const githubValue = navbarLink.value;
+            if (typeof githubValue === "string") {
+                return {
+                    type: "github",
+                    url: CjsFdrSdk.Url(githubValue),
+                    viewers: undefined
+                };
+            } else {
+                return {
+                    type: "github",
+                    url: CjsFdrSdk.Url(githubValue.url),
+                    viewers: convertRoleToRoleIds(githubValue.viewers)
+                };
+            }
+        }
+
+        const viewers = convertRoleToRoleIds(navbarLink.viewers);
+
+        if (navbarLink.type === "dropdown") {
+            return {
+                type: "dropdown",
+                text: navbarLink.text,
+                icon: navbarLink.icon,
+                rightIcon: navbarLink.rightIcon,
+                rounded: navbarLink.rounded,
+                viewers,
+                links:
+                    navbarLink.links?.map((link) => ({
+                        href: link.href,
+                        url: CjsFdrSdk.Url(link.url ?? link.href ?? "/"),
+                        text: link.text,
+                        icon: link.icon,
+                        rightIcon: link.rightIcon,
+                        rounded: link.rounded,
+                        viewers: convertRoleToRoleIds(link.viewers)
+                    })) ?? []
+            };
         }
 
         return {
@@ -1212,9 +1266,20 @@ function convertNavbarLinks(
             url: CjsFdrSdk.Url(navbarLink.href ?? navbarLink.url ?? "/"),
             icon: navbarLink.icon,
             rightIcon: navbarLink.rightIcon,
-            rounded: navbarLink.rounded
+            rounded: navbarLink.rounded,
+            viewers
         };
     });
+}
+
+function convertRoleToRoleIds(role: docsYml.RawSchemas.Role | undefined): CjsFdrSdk.RoleId[] | undefined {
+    if (role == null) {
+        return undefined;
+    }
+    if (Array.isArray(role)) {
+        return role.map((r) => CjsFdrSdk.RoleId(r));
+    }
+    return [CjsFdrSdk.RoleId(role)];
 }
 
 function convertFooterLinks(

@@ -24,6 +24,24 @@ types:
       - ts
       - js
 
+  Language:
+    enum:
+      - en
+      - es
+      - fr
+      - de
+      - it
+      - pt
+      - ja
+      - zh
+      - ko
+      - el
+      - no
+      - pl
+      - ru
+      - sv
+      - tr
+
   AnalyticsConfig:
     properties:
       segment: optional<SegmentConfig>
@@ -142,6 +160,8 @@ types:
       experimental: optional<ExperimentalConfig>
       "default-language": optional<ProgrammingLanguage>
 
+      languages: optional<list<Language>>
+
       # Deprecated
       "ai-chat": optional<AIChatConfig>
 
@@ -161,6 +181,7 @@ types:
       typography: optional<DocsTypographyConfig>
       layout: optional<LayoutConfig>
       settings: optional<DocsSettingsConfig>
+      theme: optional<ThemeConfig>
 
       # integrations
       integrations: optional<IntegrationsConfig>
@@ -540,6 +561,28 @@ types:
       http-snippets: optional<HttpSnippetsConfig>
       hide-404-page: optional<boolean>
       use-javascript-as-typescript: optional<boolean>
+      disable-explorer-proxy: optional<boolean>
+
+  ThemeConfig:
+    properties:
+      sidebar: SidebarThemeConfig
+      body: BodyThemeConfig
+      tabs: TabsThemeConfig
+
+  TabsThemeConfig:
+    enum:
+      - default
+      - bubble
+
+  BodyThemeConfig:
+    enum:
+      - default
+      - canvas
+
+  SidebarThemeConfig:
+    enum:
+      - default
+      - minimal
 
   HttpSnippetsConfig:
     discriminated: false
@@ -1008,12 +1051,27 @@ types:
       outlined: NavbarLinkConfig
       minimal: NavbarLinkConfig
       github: NavbarGithubConfig
+      dropdown: NavbarDropdownConfig
 
       # deprecated
       primary: NavbarLinkConfig # use `outlined` instead
       secondary: NavbarLinkConfig # use `minimal` instead
 
+  WithViewers:
+    properties:
+      viewers: optional<Role>
+
+  NavbarDropdownConfig:
+    extends: [WithViewers]
+    properties:
+      links: list<NavbarLinkConfig>
+      text: optional<string>
+      icon: optional<string>
+      rightIcon: optional<string>
+      rounded: optional<boolean>
+
   NavbarLinkConfig:
+    extends: [WithViewers]
     properties:
       href: optional<string>
       url:
@@ -1026,8 +1084,15 @@ types:
       rounded: optional<boolean>
 
   NavbarGithubConfig:
-    type: string
-    availability: in-development
+    discriminated: false
+    union:
+      - string
+      - NavbarGithubConfigWithOptions
+
+  NavbarGithubConfigWithOptions:
+    extends: [WithViewers]
+    properties:
+      url: string
 
   FooterLinksConfig:
     properties:

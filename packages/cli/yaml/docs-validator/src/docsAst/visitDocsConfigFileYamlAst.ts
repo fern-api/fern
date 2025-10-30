@@ -303,7 +303,9 @@ export async function visitDocsConfigFileYamlAst({
                 })
             );
         },
-        roles: noop
+        roles: noop,
+        languages: noop,
+        theme: noop
     });
 }
 
