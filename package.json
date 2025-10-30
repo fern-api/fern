@@ -124,8 +124,8 @@
       "node-fetch@2.x>whatwg-url": "^14.0.0",
       "qs": "6.13.0",
       "url-join": "^5.0.0",
-      "@fern-fern/fdr-cjs-sdk": "0.139.33-21b1b47db",
-      "@fern-api/fdr-sdk": "0.139.33-21b1b47db",
+      "@fern-fern/fdr-cjs-sdk": "0.139.37-f5b57f86e",
+      "@fern-api/fdr-sdk": "0.139.37-f5b57f86e",
       "es-toolkit": "^1.39.10",
       "ts-essentials": "^10.1.1",
       "form-data": "^4.0.4"
