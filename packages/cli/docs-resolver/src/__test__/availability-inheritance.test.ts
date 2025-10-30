@@ -89,7 +89,10 @@ describe("availability inheritance", () => {
         expect(node.availability).toBe("stable");
 
         // Helper function to find a node by title/path in the tree
-        const findNodeByTitle = (children: FernNavigation.V1.ApiPackageChild[], title: string): FernNavigation.V1.ApiPackageChild | undefined => {
+        const findNodeByTitle = (
+            children: FernNavigation.V1.ApiPackageChild[],
+            title: string
+        ): FernNavigation.V1.ApiPackageChild | undefined => {
             for (const child of children) {
                 const childTitle = child.type === "endpointPair" ? child.nonStream.title : child.title;
                 if (childTitle === title) {
@@ -113,7 +116,7 @@ describe("availability inheritance", () => {
 
         // Helper function to find endpoint by partial title match
         const findEndpointByTitle = (children: FernNavigation.V1.ApiPackageChild[], titlePart: string) => {
-            return children.find(child => {
+            return children.find((child) => {
                 const title = child.type === "endpointPair" ? child.nonStream.title : child.title;
                 return title.includes(titlePart);
             });
