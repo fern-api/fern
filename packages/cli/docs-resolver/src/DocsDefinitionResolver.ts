@@ -965,7 +965,11 @@ export class DocsDefinitionResolver {
         parentSlug: FernNavigation.V1.SlugGenerator
     ): Promise<FernNavigation.V1.VariantNode> {
         const id = this.#idgen.get(`${prefix}/variant/${item.slug ?? kebabCase(item.title)}`);
-        const children = await Promise.all(item.layout.map((item) => this.toVariantChild(item, id, parentSlug)));
+        const variantSlug = parentSlug.apply({
+            urlSlug: item.slug ?? kebabCase(item.title),
+            skipUrlSlug: item.skipUrlSlug
+        });
+        const children = await Promise.all(item.layout.map((item) => this.toVariantChild(item, id, variantSlug)));
         return {
             type: "variant",
             id,
@@ -975,12 +979,7 @@ export class DocsDefinitionResolver {
             image: undefined,
             children,
             title: item.title,
-            slug: parentSlug
-                .apply({
-                    urlSlug: item.slug ?? kebabCase(item.title),
-                    skipUrlSlug: item.skipUrlSlug
-                })
-                .get(),
+            slug: variantSlug.get(),
             icon: item.icon,
             hidden: item.hidden,
             authed: undefined,
