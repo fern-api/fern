@@ -1127,7 +1127,7 @@ function convertNavbarLinks(
                         icon: link.icon,
                         rightIcon: link.rightIcon,
                         rounded: link.rounded,
-                        viewers: convertRoleToRoleIds((link as any).viewers)
+                        viewers: convertRoleToRoleIds(link.viewers)
                     })) ?? []
             };
         }
