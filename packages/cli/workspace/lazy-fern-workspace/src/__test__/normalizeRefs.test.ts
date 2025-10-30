@@ -96,8 +96,8 @@ describe("normalizeRefsDeep", () => {
             allOf: [{ $ref: "#/components/schemas/Entry\\\n    Fields" }, { $ref: "#/components/schemas/User" }]
         };
         normalizeRefsDeep(obj);
-        expect(obj.allOf[0].$ref).toBe("#/components/schemas/EntryFields");
-        expect(obj.allOf[1].$ref).toBe("#/components/schemas/User");
+        expect(obj.allOf[0]?.$ref).toBe("#/components/schemas/EntryFields");
+        expect(obj.allOf[1]?.$ref).toBe("#/components/schemas/User");
     });
 
     it("should handle deeply nested structures", () => {
@@ -115,7 +115,7 @@ describe("normalizeRefsDeep", () => {
             }
         };
         normalizeRefsDeep(obj);
-        expect(obj.components.schemas.TestSchema.properties.field.allOf[0].$ref).toBe(
+        expect(obj.components.schemas.TestSchema.properties.field.allOf[0]?.$ref).toBe(
             "#/components/schemas/EntryFields"
         );
     });
