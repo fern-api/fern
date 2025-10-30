@@ -1237,6 +1237,196 @@ types:
     inline: true
 ",
     },
+    "webhooks.yml": {
+      "absoluteFilepath": "/DUMMY_PATH",
+      "contents": {
+        "imports": {
+          "root": "__package__.yml",
+        },
+        "webhooks": {
+          "v1EndUserCreatedPost29a75ca0": {
+            "audiences": [],
+            "display-name": "End user created webhook",
+            "docs": "A webhook sent when a new end user is created",
+            "examples": [
+              {
+                "docs": undefined,
+                "name": undefined,
+                "payload": {
+                  "data": {
+                    "created_at": "2023-12-08T19:06:04.890000",
+                    "end_user_id": "5f7e0e2c1e7c7e000f0f9c3a",
+                    "profile": {
+                      "email": "ada.lovelace@ada.cx",
+                      "first_name": "Ada",
+                      "language": "en-US",
+                      "last_name": "Lovelace",
+                      "metadata": {
+                        "example_key1": "example_string_value",
+                        "example_key2": true,
+                        "example_key3": 123,
+                      },
+                      "system_properties": {
+                        "browser": "Chrome",
+                        "browser_version": "119.0.0.0",
+                        "device": "macos",
+                        "introshown": false,
+                        "last_answer_id": "650071321ef45533437f6f29",
+                        "last_question_asked": "What is my account balance?",
+                        "sunshine_conversation_id": "12345abc",
+                        "sunshine_end_user_channel": "whatsapp",
+                        "sunshine_first_message_id": "65736922f17d0bf841d8eeb4",
+                        "sunshine_signed_up_at": "2023-12-08T19:06:04.890000",
+                        "sunshine_user_id": "5f7e0e2c1e7c7e000f0f9c3a",
+                        "user_agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/119.0.0.0 Safari/537.36",
+                      },
+                    },
+                    "updated_at": "2023-12-08T19:06:04.890000",
+                  },
+                  "timestamp": "2024-01-17T22:23:35.835",
+                  "type": "v1.end_user.created",
+                },
+              },
+            ],
+            "headers": {},
+            "method": "POST",
+            "payload": "root.EndUserCreatedWebhookPayload",
+          },
+          "v1EndUserUpdatedPost83bfd265": {
+            "audiences": [],
+            "display-name": "End user updated webhook",
+            "docs": "A webhook sent when an end user is updated",
+            "examples": [
+              {
+                "docs": undefined,
+                "name": undefined,
+                "payload": {
+                  "data": {
+                    "created_at": "2023-12-08T19:06:04.890000",
+                    "end_user_id": "5f7e0e2c1e7c7e000f0f9c3a",
+                    "profile": {
+                      "email": "ada.lovelace@ada.cx",
+                      "first_name": "Ada",
+                      "language": "en-US",
+                      "last_name": "Lovelace",
+                      "metadata": {
+                        "example_key1": "example_string_value",
+                        "example_key2": true,
+                        "example_key3": 123,
+                      },
+                      "system_properties": {
+                        "browser": "Chrome",
+                        "browser_version": "119.0.0.0",
+                        "device": "macos",
+                        "introshown": false,
+                        "last_answer_id": "650071321ef45533437f6f29",
+                        "last_question_asked": "What is my account balance?",
+                        "sunshine_conversation_id": "12345abc",
+                        "sunshine_end_user_channel": "whatsapp",
+                        "sunshine_first_message_id": "65736922f17d0bf841d8eeb4",
+                        "sunshine_signed_up_at": "2023-12-08T19:06:04.890000",
+                        "sunshine_user_id": "5f7e0e2c1e7c7e000f0f9c3a",
+                        "user_agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/119.0.0.0 Safari/537.36",
+                      },
+                    },
+                    "updated_at": "2023-12-08T19:06:04.890000",
+                  },
+                  "timestamp": "2024-01-17T22:23:35.835",
+                  "type": "v1.end_user.updated",
+                },
+              },
+            ],
+            "headers": {},
+            "method": "POST",
+            "payload": "root.EndUserUpdatedWebhookPayload",
+          },
+        },
+      },
+      "rawContents": "imports:
+  root: __package__.yml
+webhooks:
+  v1EndUserCreatedPost29a75ca0:
+    audiences: []
+    method: POST
+    display-name: End user created webhook
+    headers: {}
+    payload: root.EndUserCreatedWebhookPayload
+    examples:
+      - payload:
+          type: v1.end_user.created
+          timestamp: '2024-01-17T22:23:35.835'
+          data:
+            end_user_id: 5f7e0e2c1e7c7e000f0f9c3a
+            profile:
+              first_name: Ada
+              last_name: Lovelace
+              email: ada.lovelace@ada.cx
+              language: en-US
+              metadata:
+                example_key1: example_string_value
+                example_key2: true
+                example_key3: 123
+              system_properties:
+                user_agent: >-
+                  Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7)
+                  AppleWebKit/537.36 (KHTML, like Gecko) Chrome/119.0.0.0
+                  Safari/537.36
+                device: macos
+                browser: Chrome
+                browser_version: 119.0.0.0
+                introshown: false
+                last_answer_id: 650071321ef45533437f6f29
+                last_question_asked: What is my account balance?
+                sunshine_first_message_id: 65736922f17d0bf841d8eeb4
+                sunshine_conversation_id: 12345abc
+                sunshine_end_user_channel: whatsapp
+                sunshine_signed_up_at: '2023-12-08T19:06:04.890000'
+                sunshine_user_id: 5f7e0e2c1e7c7e000f0f9c3a
+            created_at: '2023-12-08T19:06:04.890000'
+            updated_at: '2023-12-08T19:06:04.890000'
+    docs: A webhook sent when a new end user is created
+  v1EndUserUpdatedPost83bfd265:
+    audiences: []
+    method: POST
+    display-name: End user updated webhook
+    headers: {}
+    payload: root.EndUserUpdatedWebhookPayload
+    examples:
+      - payload:
+          type: v1.end_user.updated
+          timestamp: '2024-01-17T22:23:35.835'
+          data:
+            end_user_id: 5f7e0e2c1e7c7e000f0f9c3a
+            profile:
+              first_name: Ada
+              last_name: Lovelace
+              email: ada.lovelace@ada.cx
+              language: en-US
+              metadata:
+                example_key1: example_string_value
+                example_key2: true
+                example_key3: 123
+              system_properties:
+                user_agent: >-
+                  Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7)
+                  AppleWebKit/537.36 (KHTML, like Gecko) Chrome/119.0.0.0
+                  Safari/537.36
+                device: macos
+                browser: Chrome
+                browser_version: 119.0.0.0
+                introshown: false
+                last_answer_id: 650071321ef45533437f6f29
+                last_question_asked: What is my account balance?
+                sunshine_first_message_id: 65736922f17d0bf841d8eeb4
+                sunshine_conversation_id: 12345abc
+                sunshine_end_user_channel: whatsapp
+                sunshine_signed_up_at: '2023-12-08T19:06:04.890000'
+                sunshine_user_id: 5f7e0e2c1e7c7e000f0f9c3a
+            created_at: '2023-12-08T19:06:04.890000'
+            updated_at: '2023-12-08T19:06:04.890000'
+    docs: A webhook sent when an end user is updated
+",
+    },
   },
   "packageMarkers": {},
   "rootApiFile": {
