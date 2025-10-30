@@ -205,7 +205,7 @@ class AbstractGenerator(ABC):
         publisher.publish_package(publish_config=publish_config)
 
     def _write_files_for_github_repo(
-        self, project: Project, output_mode: GithubOutputMode, write_unit_tests: bool, publish_config: GeneratorPublishConfig,
+        self, project: Project, output_mode: GithubOutputMode, write_unit_tests: bool, publish_config: GeneratorPublishConfig | None,
     ) -> None:
         project.add_file(
             ".gitignore",
