@@ -12,7 +12,10 @@ from fern_python.external_dependencies.ruff import RUFF_DEPENDENCY
 from fern_python.generator_exec_wrapper import GeneratorExecWrapper
 
 import fern.ir.resources as ir_types
-from fern.generator_exec import GeneratorConfig, PypiMetadata
+from fern.generator_exec import (
+    GeneratorConfig,
+    PypiMetadata,
+)
 from fern.generator_exec.config import (
     GeneratorPublishConfig,
     GithubOutputMode,
@@ -211,6 +214,12 @@ class AbstractGenerator(ABC):
         write_unit_tests: bool,
         publish_config: GeneratorPublishConfig | None,
     ) -> None:
+        import logging
+
+        logger = logging.getLogger("fern_python.cli.abstract_generator._write_files_for_github_repo")
+        logger.debug("Starting to write files for GitHub repository...")
+
+        logger.debug("Adding .gitignore file to project.")
         project.add_file(
             ".gitignore",
             textwrap.dedent(
@@ -223,25 +232,58 @@ class AbstractGenerator(ABC):
                 """
             ),
         )
-        # Use OIDC workflow if token is set to 'OIDC', otherwise use legacy workflow
+        # INSERT_YOUR_CODE
+        logger.debug(f"Full publish_config: {publish_config!r}")
+
         use_oidc_workflow = False
+        logger.debug("Checking publish_config for OIDC workflow selection.")
         if publish_config is not None:
-            if publish_config.registries_v_2 is not None and publish_config.registries_v_2.pypi is not None:
-                use_oidc_workflow = publish_config.registries_v_2.pypi.password == "OIDC"
+            logger.debug("publish_config is present.")
+            if publish_config.registries_v_2 is not None:
+                logger.debug("publish_config.registries_v_2 is not None.")
+                if publish_config.registries_v_2.pypi is not None:
+                    logger.debug("publish_config.registries_v_2.pypi is not None.")
+                    logger.debug(
+                        f"publish_config.registries_v_2.pypi.password: {publish_config.registries_v_2.pypi.password!r}"
+                    )
+                    use_oidc_workflow = publish_config.registries_v_2.pypi.password == "OIDC"
+                    if use_oidc_workflow:
+                        logger.info("OIDC workflow selected for GitHub CI configuration.")
+                    else:
+                        logger.info("Legacy workflow selected for GitHub CI configuration (non-OIDC).")
+                else:
+                    logger.warning("publish_config.registries_v_2.pypi is None; not using OIDC workflow.")
+            else:
+                logger.warning("publish_config.registries_v_2 is None; not using OIDC workflow.")
+        else:
+            logger.info("publish_config is None; not using OIDC workflow.")
+
+        # Add the CI workflow with logs for which workflow logic is selected.
+        workflow_path = ".github/workflows/ci.yml"
+        logger.debug(f"Adding workflow file: {workflow_path} (use_oidc_workflow={use_oidc_workflow})")
+        if use_oidc_workflow:
+            workflow_content = self._get_github_workflow(output_mode, write_unit_tests)
+            logger.debug(f"CI workflow content from _get_github_workflow (OIDC):\n{workflow_content}")
+        else:
+            workflow_content = self._get_github_workflow_legacy(output_mode, write_unit_tests)
+            logger.debug(f"CI workflow content from _get_github_workflow_legacy (legacy):\n{workflow_content}")
 
         project.add_file(
-            ".github/workflows/ci.yml",
-            self._get_github_workflow(output_mode, write_unit_tests)
-            if use_oidc_workflow
-            else self._get_github_workflow_legacy(output_mode, write_unit_tests),
+            workflow_path,
+            workflow_content,
         )
-        project.add_file("tests/custom/test_client.py", self._get_client_test())
+
+        # Always write the client test, with logging of intent
+        logger.debug("Adding test file: tests/custom/test_client.py")
+        client_test_content = self._get_client_test()
+        logger.debug(f"Client test file contents:\n{client_test_content}")
+        project.add_file("tests/custom/test_client.py", client_test_content)
+        logger.debug("Finished writing files for GitHub repository.")
 
     def _get_github_workflow_legacy(self, output_mode: GithubOutputMode, write_unit_tests: bool) -> str:
         workflow_yaml = """name: ci
 on: [push]
 jobs:
-  compile:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout repo
@@ -249,8 +291,6 @@ jobs:
       - name: Set up python
         uses: actions/setup-python@v4
         with:
-          python-version: 3.8
-      - name: Bootstrap poetry
         run: |
           curl -sSL https://install.python-poetry.org | python - -y --version 1.5.1
       - name: Install dependencies
