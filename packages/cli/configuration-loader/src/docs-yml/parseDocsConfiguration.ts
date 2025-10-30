@@ -1,6 +1,6 @@
 import { docsYml } from "@fern-api/configuration";
 import { assertNever, isPlainObject } from "@fern-api/core-utils";
-import { AbsoluteFilePath, dirname, doesPathExist, getDirectoryContents, listFiles, resolve } from "@fern-api/fs-utils";
+import { AbsoluteFilePath, dirname, doesPathExist, listFiles, resolve } from "@fern-api/fs-utils";
 import { TaskContext } from "@fern-api/task-context";
 import { FernRegistry as CjsFdrSdk } from "@fern-fern/fdr-cjs-sdk";
 import { readFile } from "fs/promises";
@@ -10,6 +10,7 @@ import yaml from "js-yaml";
 import { WithoutQuestionMarks } from "../commons/WithoutQuestionMarks";
 import { convertColorsConfiguration } from "./convertColorsConfiguration";
 import { getAllPages, loadAllPages } from "./getAllPages";
+import { buildNavigationForDirectory, nameToSlug, nameToTitle } from "./navigationUtils";
 
 export async function parseDocsConfiguration({
     rawDocsConfiguration,
@@ -830,91 +831,6 @@ async function convertNavigationConfiguration({
 
 const DEFAULT_CHANGELOG_TITLE = "Changelog";
 
-/**
- * Converts a filename or directory name to a slug.
- * Removes file extension, converts to lowercase, and keeps hyphens.
- */
-function nameToSlug(name: string): string {
-    return name
-        .replace(/\.(md|mdx)$/i, "") // Remove markdown extension
-        .toLowerCase()
-        .replace(/\s+/g, "-") // Replace spaces with hyphens
-        .replace(/[^a-z0-9-]/g, ""); // Remove non-alphanumeric except hyphens
-}
-
-/**
- * Converts a filename or directory name to a human-readable title.
- * Removes file extension and replaces hyphens/underscores with spaces.
- */
-function nameToTitle(name: string): string {
-    return name
-        .replace(/\.(md|mdx)$/i, "") // Remove markdown extension
-        .replace(/[-_]/g, " ") // Replace hyphens and underscores with spaces
-        .replace(/\b\w/g, (char) => char.toUpperCase()); // Capitalize first letter of each word
-}
-
-/**
- * Recursively builds navigation items for a directory.
- * Creates page items for markdown files and section items for subdirectories.
- */
-async function buildNavigationForDirectory(
-    directoryPath: AbsoluteFilePath
-): Promise<docsYml.DocsNavigationItem[]> {
-    const contents = await getDirectoryContents(directoryPath);
-
-    const markdownFiles = contents.filter(
-        (item) => item.type === "file" && (item.name.endsWith(".md") || item.name.endsWith(".mdx"))
-    );
-    const subdirectories = contents.filter((item) => item.type === "directory");
-
-    const pages: docsYml.DocsNavigationItem[] = markdownFiles.map((file) => {
-        return {
-            type: "page" as const,
-            title: nameToTitle(file.name),
-            absolutePath: file.absolutePath,
-            slug: nameToSlug(file.name),
-            icon: undefined,
-            hidden: undefined,
-            noindex: undefined,
-            viewers: undefined,
-            orphaned: undefined,
-            featureFlags: undefined,
-            availability: undefined
-        };
-    });
-
-    const sections: docsYml.DocsNavigationItem[] = await Promise.all(
-        subdirectories.map(async (dir) => {
-            const subContents = await buildNavigationForDirectory(dir.absolutePath);
-
-            return {
-                type: "section" as const,
-                title: nameToTitle(dir.name),
-                slug: nameToSlug(dir.name),
-                icon: undefined,
-                contents: subContents,
-                collapsed: undefined,
-                hidden: undefined,
-                skipUrlSlug: false,
-                overviewAbsolutePath: undefined,
-                viewers: undefined,
-                orphaned: undefined,
-                featureFlags: undefined,
-                availability: undefined
-            };
-        })
-    );
-
-    const allItems = [...pages, ...sections];
-    allItems.sort((a, b) => {
-        const aTitle = a.type === "page" || a.type === "section" ? a.title : "";
-        const bTitle = b.type === "page" || b.type === "section" ? b.title : "";
-        return aTitle.localeCompare(bTitle, undefined, { sensitivity: "base" });
-    });
-
-    return allItems;
-}
-
 async function expandFolderConfiguration({
     rawConfig,
     absolutePathToFernFolder,
@@ -932,11 +848,11 @@ async function expandFolderConfiguration({
         context.failAndThrow(`Folder not found: ${rawConfig.folder}`);
     }
 
-    const contents = await buildNavigationForDirectory(folderPath);
+    const contents = await buildNavigationForDirectory({ directoryPath: folderPath });
 
     const folderName = path.basename(folderPath);
-    const title = rawConfig.title ?? nameToTitle(folderName);
-    const slug = rawConfig.slug ?? nameToSlug(folderName);
+    const title = rawConfig.title ?? nameToTitle({ name: folderName });
+    const slug = rawConfig.slug ?? nameToSlug({ name: folderName });
 
     return {
         type: "section",
