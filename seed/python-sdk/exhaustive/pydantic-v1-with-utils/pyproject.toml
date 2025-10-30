@@ -30,7 +30,7 @@ packages = [
     { include = "seed", from = "src"}
 ]
 
-[tool.poetry.urls]
+[project.urls]
 Repository = 'https://github.com/exhaustive/fern'
 
 [tool.poetry.dependencies]
@@ -62,6 +62,10 @@ ignore_missing_imports = true
 [[tool.mypy.overrides]]
 module = "pydantic.*"
 follow_imports = "skip"
+
+[[tool.mypy.overrides]]
+module = "pydantic.v1.*"
+ignore_missing_imports = true
 
 [tool.ruff]
 line-length = 120

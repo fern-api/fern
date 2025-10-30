@@ -30,7 +30,7 @@ packages = [
     { include = "seed/websocket_auth", from = "src"}
 ]
 
-[tool.poetry.urls]
+[project.urls]
 Repository = 'https://github.com/websocket-inferred-auth/fern'
 
 [tool.poetry.dependencies]

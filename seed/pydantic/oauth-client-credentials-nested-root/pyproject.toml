@@ -30,7 +30,7 @@ packages = [
     { include = "seed/oauth_client_credentials", from = "src"}
 ]
 
-[tool.poetry.urls]
+[project.urls]
 Repository = 'https://github.com/oauth-client-credentials-nested-root/fern'
 
 [tool.poetry.dependencies]

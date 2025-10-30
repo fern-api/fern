@@ -30,7 +30,7 @@ packages = [
     { include = "seed/websocket_bearer_auth", from = "src"}
 ]
 
-[tool.poetry.urls]
+[project.urls]
 Repository = 'https://github.com/websocket-bearer-auth/fern'
 
 [tool.poetry.dependencies]

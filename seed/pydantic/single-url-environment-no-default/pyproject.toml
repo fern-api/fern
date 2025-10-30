@@ -30,7 +30,7 @@ packages = [
     { include = "seed/single_url_environment_no_default", from = "src"}
 ]
 
-[tool.poetry.urls]
+[project.urls]
 Repository = 'https://github.com/single-url-environment-no-default/fern'
 
 [tool.poetry.dependencies]

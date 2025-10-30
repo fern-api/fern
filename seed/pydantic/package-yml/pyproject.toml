@@ -30,7 +30,7 @@ packages = [
     { include = "seed/package_yml", from = "src"}
 ]
 
-[tool.poetry.urls]
+[project.urls]
 Repository = 'https://github.com/package-yml/fern'
 
 [tool.poetry.dependencies]

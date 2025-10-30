@@ -30,7 +30,7 @@ packages = [
     { include = "seed/nursery_api", from = "src"}
 ]
 
-[tool.poetry.urls]
+[project.urls]
 Repository = 'https://github.com/reserved-keywords/fern'
 
 [tool.poetry.dependencies]

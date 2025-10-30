@@ -30,7 +30,7 @@ packages = [
     { include = "seed/server_sent_events", from = "src"}
 ]
 
-[tool.poetry.urls]
+[project.urls]
 Repository = 'https://github.com/server-sent-events/fern'
 
 [tool.poetry.dependencies]

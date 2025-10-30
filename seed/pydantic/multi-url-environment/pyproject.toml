@@ -30,7 +30,7 @@ packages = [
     { include = "seed/multi_url_environment", from = "src"}
 ]
 
-[tool.poetry.urls]
+[project.urls]
 Repository = 'https://github.com/multi-url-environment/fern'
 
 [tool.poetry.dependencies]

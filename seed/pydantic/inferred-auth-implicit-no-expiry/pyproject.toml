@@ -30,7 +30,7 @@ packages = [
     { include = "seed/inferred_auth_implicit_no_expiry", from = "src"}
 ]
 
-[tool.poetry.urls]
+[project.urls]
 Repository = 'https://github.com/inferred-auth-implicit-no-expiry/fern'
 
 [tool.poetry.dependencies]

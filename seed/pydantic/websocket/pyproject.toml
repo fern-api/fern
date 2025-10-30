@@ -30,7 +30,7 @@ packages = [
     { include = "seed/websocket", from = "src"}
 ]
 
-[tool.poetry.urls]
+[project.urls]
 Repository = 'https://github.com/websocket/fern'
 
 [tool.poetry.dependencies]

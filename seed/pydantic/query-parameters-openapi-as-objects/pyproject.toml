@@ -30,7 +30,7 @@ packages = [
     { include = "seed/api", from = "src"}
 ]
 
-[tool.poetry.urls]
+[project.urls]
 Repository = 'https://github.com/query-parameters-openapi-as-objects/fern'
 
 [tool.poetry.dependencies]

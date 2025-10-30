@@ -30,7 +30,7 @@ packages = [
     { include = "seed/extra_properties", from = "src"}
 ]
 
-[tool.poetry.urls]
+[project.urls]
 Repository = 'https://github.com/extra-properties/fern'
 
 [tool.poetry.dependencies]
