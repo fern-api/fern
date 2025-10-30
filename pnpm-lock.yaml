@@ -432,6 +432,9 @@ importers:
       '@types/node':
         specifier: 18.15.3
         version: 18.15.3
+      '@types/url-join':
+        specifier: 4.0.1
+        version: 4.0.1
       depcheck:
         specifier: ^1.4.7
         version: 1.4.7
@@ -896,6 +899,9 @@ importers:
       '@types/node':
         specifier: 18.15.3
         version: 18.15.3
+      '@types/url-join':
+        specifier: ^4.0.3
+        version: 4.0.3
       depcheck:
         specifier: ^1.4.7
         version: 1.4.7
@@ -1789,6 +1795,9 @@ importers:
       '@types/node':
         specifier: 18.15.3
         version: 18.15.3
+      '@types/url-join':
+        specifier: ^4.0.3
+        version: 4.0.3
       depcheck:
         specifier: ^1.4.7
         version: 1.4.7
@@ -5516,6 +5525,9 @@ importers:
       '@types/node':
         specifier: 18.15.3
         version: 18.15.3
+      '@types/url-join':
+        specifier: ^4.0.3
+        version: 4.0.3
       depcheck:
         specifier: ^1.4.7
         version: 1.4.7
@@ -5773,6 +5785,9 @@ importers:
       '@types/node':
         specifier: 18.15.3
         version: 18.15.3
+      '@types/url-join':
+        specifier: ^4.0.3
+        version: 4.0.3
       depcheck:
         specifier: ^1.4.7
         version: 1.4.7
@@ -6465,6 +6480,9 @@ importers:
       '@types/terminal-link':
         specifier: ^1.2.0
         version: 1.2.0
+      '@types/url-join':
+        specifier: ^4.0.3
+        version: 4.0.3
       depcheck:
         specifier: ^1.4.7
         version: 1.4.7
@@ -7345,6 +7363,9 @@ importers:
       '@types/unist':
         specifier: ^3.0.3
         version: 3.0.3
+      '@types/url-join':
+        specifier: ^4.0.3
+        version: 4.0.3
       depcheck:
         specifier: ^1.4.7
         version: 1.4.7
@@ -10617,6 +10638,9 @@ packages:
 
   '@types/url-join@4.0.1':
     resolution: {integrity: sha512-wDXw9LEEUHyV+7UWy7U315nrJGJ7p1BzaCxDpEoLr789Dk1WDVMMlf3iBfbG2F8NdWnYyFbtTxUn2ZNbm1Q4LQ==}
+
+  '@types/url-join@4.0.3':
+    resolution: {integrity: sha512-3l1qMm3wqO0iyC5gkADzT95UVW7C/XXcdvUcShOideKF0ddgVRErEQQJXBd2kvQm+aSgqhBGHGB38TgMeT57Ww==}
 
   '@types/uuid@9.0.8':
     resolution: {integrity: sha512-jg+97EGIcY9AGHJJRaaPVgetKDsrTgbRjQ5Msgjh/DQKEFl0DtyRr/VCOyD1T2R1MNeWPK/u7JoGhlDZnKBAfA==}
@@ -18419,6 +18443,8 @@ snapshots:
   '@types/unist@3.0.3': {}
 
   '@types/url-join@4.0.1': {}
+
+  '@types/url-join@4.0.3': {}
 
   '@types/uuid@9.0.8': {}
 
