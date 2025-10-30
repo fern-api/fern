@@ -34,16 +34,6 @@
   createdAt: "2025-10-28"
   irVersion: 61
 
-- version: 3.10.0
-  changelogEntry:
-    - summary: |
-        Add support for three-state nullable fields in PATCH requests via `use-nullable-for-optional-fields` config.
-        When enabled, optional fields use `Nullable<T>` instead of `Optional<T>` to distinguish between
-        omitted fields, explicit null values, and actual values.
-      type: feat
-  createdAt: "2025-10-28"
-  irVersion: 61
-
 - version: 3.9.4
   changelogEntry:
     - summary: |
