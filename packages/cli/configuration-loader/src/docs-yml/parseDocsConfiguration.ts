@@ -140,7 +140,7 @@ export async function parseDocsConfiguration({
         typography,
         layout: convertLayoutConfig(layout),
         settings: convertSettingsConfig(rawDocsConfiguration.settings),
-        theme: rawDocsConfiguration.theme,
+        theme: convertThemeConfig(rawDocsConfiguration.theme),
         analyticsConfig: {
             ...rawDocsConfiguration.analytics,
             intercom: rawDocsConfiguration.analytics?.intercom
@@ -330,6 +330,20 @@ function convertPageActionOption(
         default:
             assertNever(option);
     }
+}
+
+function convertThemeConfig(
+    theme: docsYml.RawSchemas.ThemeConfig | undefined
+): docsYml.ParsedDocsConfiguration["theme"] {
+    if (theme == null) {
+        return undefined;
+    }
+
+    return {
+        sidebar: theme.sidebar ?? "default",
+        tabs: theme.tabs ?? "default",
+        body: theme.body ?? "default"
+    };
 }
 
 function convertSettingsConfig(
