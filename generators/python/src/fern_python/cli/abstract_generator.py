@@ -291,7 +291,6 @@ class AbstractGenerator(ABC):
         workflow_yaml = """name: ci
 on: [push]
 jobs:
-  compile:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout repo
@@ -299,8 +298,6 @@ jobs:
       - name: Set up python
         uses: actions/setup-python@v4
         with:
-          python-version: 3.8
-      - name: Bootstrap poetry
         run: |
           curl -sSL https://install.python-poetry.org | python - -y --version 1.5.1
       - name: Install dependencies

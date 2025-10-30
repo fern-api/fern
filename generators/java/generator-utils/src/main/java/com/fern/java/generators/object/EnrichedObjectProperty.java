@@ -91,24 +91,9 @@ public interface EnrichedObjectProperty {
         }
 
         if (nullable() && !shouldUseNullableAnnotation) {
-            // Determine the correct empty type based on the field's actual type
-            TypeName emptyType;
-            if (poetTypeName() instanceof com.squareup.javapoet.ParameterizedTypeName) {
-                com.squareup.javapoet.ParameterizedTypeName paramType =
-                        (com.squareup.javapoet.ParameterizedTypeName) poetTypeName();
-                // Check if this is a Nullable type by comparing the class name
-                if (paramType.rawType.simpleName().equals("Nullable")) {
-                    // Use the actual Nullable class from the field type
-                    emptyType = paramType.rawType;
-                } else {
-                    emptyType = ClassName.get(Optional.class);
-                }
-            } else {
-                emptyType = ClassName.get(Optional.class);
-            }
             getterBuilder
                     .beginControlFlow("if ($L == null)", fieldSpec().get().name)
-                    .addStatement("return $T.empty()", emptyType)
+                    .addStatement("return $T.empty()", Optional.class)
                     .endControlFlow();
         } else if (aliasOfNullable() && wrappedAliases()) {
             getterBuilder
