@@ -1426,15 +1426,38 @@
     "docs.TabVariant": {
       "type": "object",
       "properties": {
-        "title": {
+        "viewers": {
           "oneOf": [
             {
-              "type": "string"
+              "$ref": "#/definitions/docs.Role"
             },
             {
               "type": "null"
             }
           ]
+        },
+        "orphaned": {
+          "oneOf": [
+            {
+              "type": "boolean"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "feature-flag": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/docs.FeatureFlagConfiguration"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "title": {
+          "type": "string"
         },
         "subtitle": {
           "oneOf": [
@@ -1461,9 +1484,50 @@
           "items": {
             "$ref": "#/definitions/docs.NavigationItem"
           }
+        },
+        "slug": {
+          "oneOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "skip-slug": {
+          "oneOf": [
+            {
+              "type": "boolean"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "hidden": {
+          "oneOf": [
+            {
+              "type": "boolean"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "default": {
+          "oneOf": [
+            {
+              "type": "boolean"
+            },
+            {
+              "type": "null"
+            }
+          ]
         }
       },
       "required": [
+        "title",
         "layout"
       ],
       "additionalProperties": false
