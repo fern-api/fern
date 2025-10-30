@@ -1000,7 +1000,7 @@ jobs:
         uses: ./.github/actions/install
 
       - name: Build seed CLI
-        run: pnpm --filter @fern-api/seed-cli dist:cli
+        run: pnpm seed:local
 
       - name: Clean up seed groups
         id: clean-up-seed-groups
