@@ -7,7 +7,6 @@
   createdAt: "2025-10-31"
   version: 0.101.1
 
-
 - changelogEntry:
     - summary: |
         Adds new `docs.yml` configurations:
