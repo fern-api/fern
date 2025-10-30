@@ -34,10 +34,12 @@ func NewClient(options *core.RequestOptions) *Client {
 
 func (c *Client) GetDirectThread(
 	ctx context.Context,
+	request *foldera.GetDirectThreadRequest,
 	opts ...option.RequestOption,
 ) (*foldera.Response, error) {
 	response, err := c.WithRawResponse.GetDirectThread(
 		ctx,
+		request,
 		opts...,
 	)
 	if err != nil {

@@ -127,7 +127,7 @@ import UndiscriminatedUnions
 private func main() async throws {
     let client = UndiscriminatedUnionsClient()
 
-    _ = try await client.union.updateMetadata(request: MetadataUnion.optionalStringToJsonDictionary(
+    _ = try await client.union.updateMetadata(request: MetadataUnion.optionalMetadata(
         [
             "string": .object([
                 "key": .string("value")
@@ -191,7 +191,7 @@ private func main() async throws {
     let client = UndiscriminatedUnionsClient()
 
     _ = try await client.union.call(request: Request(
-        union: MetadataUnion.optionalStringToJsonDictionary(
+        union: MetadataUnion.optionalMetadata(
             [
                 "string": .object([
                     "key": .string("value")

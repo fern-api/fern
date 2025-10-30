@@ -362,11 +362,34 @@ types:
     type: list<TabbedNavigationItem>
 
   TabbedNavigationItem:
+    discriminated: false
+    union:
+      - TabbedNavigationItemWithLayout
+      - TabbedNavigationItemWithVariants
+
+  TabbedNavigationItemWithLayout:
     properties:
       tab: TabId
       layout:
         type: optional<list<NavigationItem>>
         docs: If `href` is set, `layout` must be null.
+
+  TabbedNavigationItemWithVariants:
+    properties:
+      tab: TabId
+      variants: list<TabVariant>
+
+  TabVariant:
+    extends: [WithPermissions, WithFeatureFlags]
+    properties:
+      title: string
+      subtitle: optional<string>
+      icon: optional<string>
+      layout: list<NavigationItem>
+      slug: optional<string>
+      skip-slug: optional<boolean>
+      hidden: optional<boolean>
+      default: optional<boolean>
 
   NavigationItem:
     discriminated: false
@@ -811,6 +834,7 @@ types:
       icon: optional<string>
       hidden: optional<boolean>
       skip-slug: optional<boolean>
+      availability: optional<Availability>
       playground:
         type: optional<PlaygroundSettings>
         docs: Settings for the api playground that affects all endpoints.
@@ -830,6 +854,7 @@ types:
         docs: |
           Relative path to the markdown file. This summary is displayed at the top of the API section.
       contents: optional<list<ApiReferenceLayoutItem>>
+      availability: optional<Availability>
       slug: optional<string>
       icon: optional<string>
       hidden: optional<boolean>
@@ -846,6 +871,7 @@ types:
       slug: optional<string>
       icon: optional<string>
       hidden: optional<boolean>
+      availability: optional<Availability>
       playground:
         type: optional<PlaygroundSettings>
         docs: Settings for the api playground that affect this endpoint specifically.

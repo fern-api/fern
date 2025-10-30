@@ -17,13 +17,19 @@ public partial class ServiceClient
     }
 
     /// <example><code>
-    /// await client.FolderA.Service.GetDirectThreadAsync();
+    /// await client.FolderA.Service.GetDirectThreadAsync(
+    ///     new GetDirectThreadRequest { Ids = ["ids"], Tags = ["tags"] }
+    /// );
     /// </code></example>
     public async Task<Response> GetDirectThreadAsync(
+        GetDirectThreadRequest request,
         RequestOptions? options = null,
         CancellationToken cancellationToken = default
     )
     {
+        var _query = new Dictionary<string, object>();
+        _query["ids"] = request.Ids;
+        _query["tags"] = request.Tags;
         var response = await _client
             .SendRequestAsync(
                 new JsonRequest
@@ -31,6 +37,7 @@ public partial class ServiceClient
                     BaseUrl = _client.Options.BaseUrl,
                     Method = HttpMethod.Get,
                     Path = "",
+                    Query = _query,
                     Options = options,
                 },
                 cancellationToken

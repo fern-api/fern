@@ -1,10 +1,9 @@
 import { mkdir } from "node:fs/promises";
 import { AbstractProject, File } from "@fern-api/base-generator";
 import { AbsoluteFilePath, join, RelativeFilePath } from "@fern-api/fs-utils";
-import { BaseSwiftCustomConfigSchema, swift } from "@fern-api/swift-codegen";
+import { BaseSwiftCustomConfigSchema, NameRegistry, swift } from "@fern-api/swift-codegen";
 import { AbstractSwiftGeneratorContext } from "../context";
 import { FileRegistry } from "./file-registry";
-import { NameRegistry } from "./name-registry";
 import { SwiftFile } from "./SwiftFile";
 
 interface FileCandidate {

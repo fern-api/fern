@@ -5,19 +5,14 @@
 import * as serializers from "../../../index";
 import * as FernDocsConfig from "../../../../api/index";
 import * as core from "../../../../core";
-import { TabId } from "./TabId";
+import { TabbedNavigationItemWithLayout } from "./TabbedNavigationItemWithLayout";
+import { TabbedNavigationItemWithVariants } from "./TabbedNavigationItemWithVariants";
 
-export const TabbedNavigationItem: core.serialization.ObjectSchema<
+export const TabbedNavigationItem: core.serialization.Schema<
     serializers.TabbedNavigationItem.Raw,
     FernDocsConfig.TabbedNavigationItem
-> = core.serialization.object({
-    tab: TabId,
-    layout: core.serialization.list(core.serialization.lazy(() => serializers.NavigationItem)).optional(),
-});
+> = core.serialization.undiscriminatedUnion([TabbedNavigationItemWithLayout, TabbedNavigationItemWithVariants]);
 
 export declare namespace TabbedNavigationItem {
-    export interface Raw {
-        tab: TabId.Raw;
-        layout?: serializers.NavigationItem.Raw[] | null;
-    }
+    export type Raw = TabbedNavigationItemWithLayout.Raw | TabbedNavigationItemWithVariants.Raw;
 }

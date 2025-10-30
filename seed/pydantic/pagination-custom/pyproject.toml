@@ -30,7 +30,7 @@ packages = [
     { include = "seed/pagination", from = "src"}
 ]
 
-[project.urls]
+[tool.poetry.urls]
 Repository = 'https://github.com/pagination-custom/fern'
 
 [tool.poetry.dependencies]

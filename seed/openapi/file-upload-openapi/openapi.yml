@@ -1,0 +1,41 @@
+openapi: 3.0.1
+info:
+  title: api
+  version: ''
+paths:
+  /upload-file:
+    post:
+      description: Upload a file to the database
+      operationId: fileUploadExample_uploadFile
+      tags:
+        - FileUploadExample
+      parameters: []
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/FileId'
+              examples:
+                Example1:
+                  value: string
+      requestBody:
+        required: true
+        content:
+          multipart/form-data:
+            schema:
+              type: object
+              properties:
+                name:
+                  type: string
+                file:
+                  type: string
+                  format: binary
+components:
+  schemas:
+    FileId:
+      title: FileId
+      type: string
+      description: The unique identifier for a File in the database
+  securitySchemes: {}

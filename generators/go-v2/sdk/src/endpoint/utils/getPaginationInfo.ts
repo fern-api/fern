@@ -530,23 +530,13 @@ function getPagePropertyInitializer({
                     );
                     writer.writeLine(" {");
                     writer.indent();
-                    writer.writeLine("var err error");
-                    writer.write("if next, err = ");
                     writer.writeNode(
-                        go.invokeFunc({
-                            func: go.typeReference({
-                                name: "Atoi",
-                                importPath: "strconv"
-                            }),
-                            arguments_: [getQueryParameter({ key: pagination.page.property.name.wireValue })],
-                            multiline: false
+                        getPageValueParser({
+                            pageType,
+                            valueVariable: "next",
+                            queryParameterValue: getQueryParameter({ key: pagination.page.property.name.wireValue })
                         })
                     );
-                    writer.writeLine("; err != nil {");
-                    writer.indent();
-                    writer.writeLine("return nil, err");
-                    writer.dedent();
-                    writer.writeLine("}");
                     writer.dedent();
                     writer.writeLine("}");
                     return;
@@ -568,6 +558,14 @@ function getPagePropertyInitializer({
 function getOffsetInitializer({ pageType }: { pageType: go.Type }): go.AstNode {
     const underlying = pageType.underlying();
     switch (underlying.internalType.type) {
+        case "string":
+            return go.codeblock('var next string = "1"');
+        case "uuid":
+            return go.codeblock("var next uuid.UUID");
+        case "int":
+            return go.codeblock("next := 1");
+        case "int64":
+            return go.codeblock("var next int64 = 1");
         case "float64":
             return go.codeblock("var next float64 = 1");
         default:
@@ -575,7 +573,117 @@ function getOffsetInitializer({ pageType }: { pageType: go.Type }): go.AstNode {
     }
 }
 
-function getPageType({ context, pagination }: { context: SdkGeneratorContext; pagination: Pagination }): go.Type {
+function getPageValueParser({
+    pageType,
+    valueVariable,
+    queryParameterValue
+}: {
+    pageType: go.Type;
+    valueVariable: string;
+    queryParameterValue: go.AstNode;
+}): go.AstNode {
+    const underlying = pageType.underlying();
+
+    return go.codeblock((writer) => {
+        writer.writeLine("var err error");
+
+        switch (underlying.internalType.type) {
+            case "string":
+                writer.write(`${valueVariable} = `);
+                writer.writeNode(queryParameterValue);
+                return;
+
+            case "uuid":
+                writer.write(`if ${valueVariable}, err = `);
+                writer.writeNode(
+                    go.invokeFunc({
+                        func: go.typeReference({
+                            name: "Parse",
+                            importPath: "github.com/google/uuid"
+                        }),
+                        arguments_: [queryParameterValue],
+                        multiline: false
+                    })
+                );
+                break;
+
+            case "int":
+                writer.write(`if ${valueVariable}, err = `);
+                writer.writeNode(
+                    go.invokeFunc({
+                        func: go.typeReference({
+                            name: "Atoi",
+                            importPath: "strconv"
+                        }),
+                        arguments_: [queryParameterValue],
+                        multiline: false
+                    })
+                );
+                break;
+
+            case "int64":
+                writer.write(`if ${valueVariable}, err = `);
+                writer.writeNode(
+                    go.invokeFunc({
+                        func: go.typeReference({
+                            name: "ParseInt",
+                            importPath: "strconv"
+                        }),
+                        arguments_: [queryParameterValue, go.codeblock("10"), go.codeblock("64")],
+                        multiline: false
+                    })
+                );
+                break;
+
+            case "float64":
+                writer.write(`if ${valueVariable}, err = `);
+                writer.writeNode(
+                    go.invokeFunc({
+                        func: go.typeReference({
+                            name: "ParseFloat",
+                            importPath: "strconv"
+                        }),
+                        arguments_: [queryParameterValue, go.codeblock("64")],
+                        multiline: false
+                    })
+                );
+                break;
+
+            default:
+                // Fallback to Atoi for unknown types
+                writer.write(`if ${valueVariable}, err = `);
+                writer.writeNode(
+                    go.invokeFunc({
+                        func: go.typeReference({
+                            name: "Atoi",
+                            importPath: "strconv"
+                        }),
+                        arguments_: [queryParameterValue],
+                        multiline: false
+                    })
+                );
+                break;
+        }
+
+        // For types that can fail parsing, add error handling
+        const needsErrorHandling = ["uuid", "int", "int64", "float64"].includes(underlying.internalType.type);
+        if (needsErrorHandling) {
+            writer.writeLine("; err != nil {");
+            writer.indent();
+            writer.writeLine("return nil, err");
+            writer.dedent();
+            writer.writeLine("}");
+        }
+    });
+}
+
+export function getPageType({
+    context,
+    pagination
+}: {
+    context: SdkGeneratorContext;
+    pagination: Pagination;
+}): go.Type {
     switch (pagination.type) {
         case "cursor":
         case "offset":
@@ -612,7 +720,7 @@ function getPageRequestType({ context, pageType }: { context: SdkGeneratorContex
         go.Type.reference(
             go.typeReference({
                 name: "PageRequest",
-                importPath: context.getInternalImportPath(),
+                importPath: context.getCoreImportPath(),
                 generics: [pageType]
             })
         )
@@ -642,7 +750,7 @@ function getPageResponseTypeReference({
 }): go.TypeReference {
     return go.typeReference({
         name: "PageResponse",
-        importPath: context.getInternalImportPath(),
+        importPath: context.getCoreImportPath(),
         generics: [pageType, getResponseElementType({ context, pagination })]
     });
 }

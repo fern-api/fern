@@ -59,6 +59,50 @@ paths:
                     nullable_required_bar: nullable_required_bar
                     required_bar: required_bar
       summary: Get foo
+  /foo/{id}:
+    patch:
+      operationId: updateFoo
+      tags:
+        - ''
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+        - name: X-Idempotency-Key
+          in: header
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Foo'
+      summary: Update foo
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                nullable_text:
+                  type: string
+                  nullable: true
+                  description: Can be explicitly set to null to clear the value
+                nullable_number:
+                  type: number
+                  format: double
+                  nullable: true
+                  description: Can be explicitly set to null to clear the value
+                non_nullable_text:
+                  type: string
+                  nullable: true
+                  description: Regular non-nullable field
 components:
   schemas:
     Foo:

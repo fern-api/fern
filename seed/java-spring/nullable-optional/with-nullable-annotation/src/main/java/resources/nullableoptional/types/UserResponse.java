@@ -30,18 +30,20 @@ public final class UserResponse {
 
   private final String username;
 
+  @Nullable
   private final String email;
 
   private final Optional<String> phone;
 
   private final OffsetDateTime createdAt;
 
+  @Nullable
   private final OffsetDateTime updatedAt;
 
   private final Optional<Address> address;
 
-  private UserResponse(String id, String username, String email, Optional<String> phone,
-      OffsetDateTime createdAt, OffsetDateTime updatedAt, Optional<Address> address) {
+  private UserResponse(String id, String username, @Nullable String email, Optional<String> phone,
+      OffsetDateTime createdAt, @Nullable OffsetDateTime updatedAt, Optional<Address> address) {
     this.id = id;
     this.username = username;
     this.email = email;
@@ -147,13 +149,13 @@ public final class UserResponse {
   public interface _FinalStage {
     UserResponse build();
 
-    _FinalStage email(@core.Nullable String email);
+    _FinalStage email(@Nullable String email);
 
     _FinalStage phone(Optional<String> phone);
 
     _FinalStage phone(String phone);
 
-    _FinalStage updatedAt(@core.Nullable OffsetDateTime updatedAt);
+    _FinalStage updatedAt(@Nullable OffsetDateTime updatedAt);
 
     _FinalStage address(Optional<Address> address);
 
@@ -232,7 +234,7 @@ public final class UserResponse {
 
     @java.lang.Override
     @JsonSetter("updatedAt")
-    public _FinalStage updatedAt(@core.Nullable OffsetDateTime updatedAt) {
+    public _FinalStage updatedAt(@Nullable OffsetDateTime updatedAt) {
       this.updatedAt = updatedAt;
       return this;
     }
@@ -255,7 +257,7 @@ public final class UserResponse {
 
     @java.lang.Override
     @JsonSetter("email")
-    public _FinalStage email(@core.Nullable String email) {
+    public _FinalStage email(@Nullable String email) {
       this.email = email;
       return this;
     }

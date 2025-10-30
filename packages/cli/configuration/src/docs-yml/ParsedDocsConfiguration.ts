@@ -202,7 +202,8 @@ export interface TabbedNavigation
 type TabbedNavigationChild =
     | TabbedNavigationChild.Layout
     | TabbedNavigationChild.Link
-    | TabbedNavigationChild.Changelog;
+    | TabbedNavigationChild.Changelog
+    | TabbedNavigationChild.Variants;
 
 export declare namespace TabbedNavigationChild {
     export interface Layout {
@@ -219,6 +220,24 @@ export declare namespace TabbedNavigationChild {
         type: "changelog";
         changelog: AbsoluteFilePath[];
     }
+
+    export interface Variants {
+        type: "variants";
+        variants: TabVariant[];
+    }
+}
+
+export interface TabVariant
+    extends CjsFdrSdk.navigation.v1.WithPermissions,
+        CjsFdrSdk.navigation.latest.WithFeatureFlags {
+    title: string;
+    subtitle: string | undefined;
+    icon: string | undefined;
+    layout: DocsNavigationItem[];
+    slug: string | undefined;
+    skipUrlSlug: boolean | undefined;
+    hidden: boolean | undefined;
+    default: boolean | undefined;
 }
 
 export type DocsNavigationItem =
@@ -328,6 +347,7 @@ export declare namespace ParsedApiReferenceLayoutItem {
         hidden: boolean | undefined;
         icon: string | undefined;
         skipUrlSlug: boolean | undefined;
+        availability: Availability | undefined;
         playground: PlaygroundSettings | undefined;
     }
     export interface Package
@@ -342,6 +362,7 @@ export declare namespace ParsedApiReferenceLayoutItem {
         hidden: boolean | undefined;
         icon: string | undefined;
         skipUrlSlug: boolean | undefined;
+        availability: Availability | undefined;
         playground: PlaygroundSettings | undefined;
     }
 
@@ -354,6 +375,7 @@ export declare namespace ParsedApiReferenceLayoutItem {
         icon: string | undefined;
         slug: string | undefined;
         hidden: boolean | undefined;
+        availability: Availability | undefined;
         playground: PlaygroundSettings | undefined;
     }
 

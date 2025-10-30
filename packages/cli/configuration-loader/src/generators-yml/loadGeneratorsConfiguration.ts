@@ -41,7 +41,18 @@ export async function loadRawGeneratorsConfiguration({
         throw new Error(parsed.errors.map((e) => e.message).join("\n"));
     } catch (e) {
         if (e instanceof yaml.YAMLException) {
-            context.failAndThrow(`Failed to parse ${path.relative(process.cwd(), filepath)}: ${e.reason}`);
+            const relativePath = path.relative(process.cwd(), filepath);
+            let errorMessage = `Failed to parse ${relativePath}: ${e.reason}`;
+
+            if (e.mark != null) {
+                errorMessage += `\n  at line ${e.mark.line + 1}, column ${e.mark.column + 1}`;
+
+                if (e.mark.snippet) {
+                    errorMessage += `\n\n${e.mark.snippet}`;
+                }
+            }
+
+            context.failAndThrow(errorMessage);
         } else {
             throw e;
         }

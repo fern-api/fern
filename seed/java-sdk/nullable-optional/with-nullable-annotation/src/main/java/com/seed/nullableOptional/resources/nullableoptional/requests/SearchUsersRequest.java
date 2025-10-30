@@ -26,6 +26,7 @@ import org.jetbrains.annotations.Nullable;
 public final class SearchUsersRequest {
     private final String query;
 
+    @Nullable
     private final String department;
 
     private final Optional<String> role;
@@ -36,7 +37,7 @@ public final class SearchUsersRequest {
 
     private SearchUsersRequest(
             String query,
-            String department,
+            @Nullable String department,
             Optional<String> role,
             Optional<Boolean> isActive,
             Map<String, Object> additionalProperties) {
@@ -124,13 +125,13 @@ public final class SearchUsersRequest {
     public interface _FinalStage {
         SearchUsersRequest build();
 
-        _FinalStage department(@com.seed.nullableOptional.core.Nullable String department);
+        _FinalStage department(@Nullable String department);
 
         _FinalStage role(Optional<String> role);
 
         _FinalStage role(String role);
 
-        _FinalStage isActive(Optional<Boolean> isActive);
+        _FinalStage isActive(@Nullable Optional<Boolean> isActive);
 
         _FinalStage isActive(Boolean isActive);
 
@@ -188,7 +189,7 @@ public final class SearchUsersRequest {
 
         @java.lang.Override
         @JsonSetter(value = "isActive", nulls = Nulls.SKIP)
-        public _FinalStage isActive(Optional<Boolean> isActive) {
+        public _FinalStage isActive(@Nullable Optional<Boolean> isActive) {
             this.isActive = isActive;
             return this;
         }
@@ -208,7 +209,7 @@ public final class SearchUsersRequest {
 
         @java.lang.Override
         @JsonSetter("department")
-        public _FinalStage department(@com.seed.nullableOptional.core.Nullable String department) {
+        public _FinalStage department(@Nullable String department) {
             this.department = department;
             return this;
         }

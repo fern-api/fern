@@ -53,8 +53,8 @@ public class SyncClientGeneratorUtils extends AbstractClientGeneratorUtils {
     }
 
     @Override
-    protected ClassName clientImplName(ClassName rawClientImplName) {
-        return rawClientImplName;
+    protected ClassName clientImplName(ClassName baseClientName) {
+        return baseClientName;
     }
 
     @Override
@@ -78,7 +78,7 @@ public class SyncClientGeneratorUtils extends AbstractClientGeneratorUtils {
     }
 
     @Override
-    protected ClassName rawClientImplName(ClassName implClientName) {
-        return ClassName.get(implClientName.packageName(), "Raw" + implClientName.simpleName());
+    protected ClassName rawClientImplName(ClassName baseClientName) {
+        return ClassName.get(baseClientName.packageName(), "Raw" + baseClientName.simpleName());
     }
 }

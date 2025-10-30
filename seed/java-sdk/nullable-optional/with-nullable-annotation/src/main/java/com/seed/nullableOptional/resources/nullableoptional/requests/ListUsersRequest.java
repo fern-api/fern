@@ -12,13 +12,13 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonSetter;
 import com.fasterxml.jackson.annotation.Nulls;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
-import com.seed.nullableOptional.core.Nullable;
 import com.seed.nullableOptional.core.NullableNonemptyFilter;
 import com.seed.nullableOptional.core.ObjectMappers;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Optional;
+import org.jetbrains.annotations.Nullable;
 
 @JsonInclude(JsonInclude.Include.NON_ABSENT)
 @JsonDeserialize(builder = ListUsersRequest.Builder.class)
@@ -164,7 +164,7 @@ public final class ListUsersRequest {
         }
 
         @JsonSetter(value = "sortBy", nulls = Nulls.SKIP)
-        public Builder sortBy(Optional<String> sortBy) {
+        public Builder sortBy(@Nullable Optional<String> sortBy) {
             this.sortBy = sortBy;
             return this;
         }
@@ -174,7 +174,7 @@ public final class ListUsersRequest {
             return this;
         }
 
-        public Builder sortBy(Nullable<String> sortBy) {
+        public Builder sortBy(com.seed.nullableOptional.core.Nullable<String> sortBy) {
             if (sortBy.isNull()) {
                 this.sortBy = null;
             } else if (sortBy.isEmpty()) {

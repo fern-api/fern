@@ -1,4 +1,52 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 3.17.0
+  changelogEntry:
+    - summary: |
+        Add `Page` to the top-level `exports.ts` files, which allows for `import { Page } from '...';` to work.
+        Remove `Pageable`, and use only `core.Page` for pagination everywhere.
+      type: feat
+  createdAt: "2025-10-29"
+  irVersion: 60
+
+- version: 3.16.0
+  changelogEntry:
+    - summary: |
+        Generate a CONTRIBUTING.md file.
+      type: feat
+  createdAt: "2025-10-29"
+  irVersion: 60
+
+- version: 3.15.0
+  changelogEntry:
+    - summary: |
+        Export types for `ReconnectingWebSocket`, `ReconnectingWebSocket.Event`, `ReconnectingWebSocket.CloseEvent`, and `ReconnectingWebSocket.ErrorEvent`.
+      type: feat
+  createdAt: "2025-10-29"
+  irVersion: 60
+
+- version: 3.14.0
+  changelogEntry:
+    - summary: |
+        Expose the underlying response on the `Page` type.
+      type: feat
+  createdAt: "2025-10-29"
+  irVersion: 60
+
+- version: 3.13.0
+  changelogEntry:
+    - summary: |
+        Improve pnpm and yarn caching in generator Docker images.
+      type: feat
+  createdAt: "2025-10-28"
+  irVersion: 60
+
+- version: 3.12.3
+  changelogEntry:
+    - summary: Fix `.github/workflows/ci.yml` file when using OIDC for npm publishing.
+      type: fix
+  createdAt: "2025-10-28"
+  irVersion: 60
+
 - version: 3.12.2
   changelogEntry:
     - summary: |

@@ -1,3 +1,49 @@
+- version: 3.10.4
+  changelogEntry:
+    - summary: |
+        Fix compilation errors when using boolean or long query parameters.
+      type: fix
+  createdAt: "2025-10-29"
+  irVersion: 61
+
+- version: 3.10.3
+  changelogEntry:
+    - summary: |
+        Use Gradle wrapper for Spotless formatting instead of requiring gradle in PATH.
+      type: fix
+  createdAt: "2025-10-29"
+  irVersion: 61
+
+- version: 3.10.2
+  changelogEntry:
+    - summary: |
+        Fix sync client delegation causing array query parameter compilation errors. Generator was using
+        incorrect class names, breaking delegation and causing inline HTTP generation.
+      type: fix
+  createdAt: "2025-10-28"
+  irVersion: 61
+
+- version: 3.10.1
+  changelogEntry:
+    - summary: |
+        Fixed nullable annotation generation in builder setters when `use-nullable-annotation` is enabled.
+        Builder setter parameters for nullable fields now correctly use `@org.jetbrains.annotations.Nullable`
+        instead of incorrectly attempting to use the `Nullable<T>` container class as an annotation.
+        Also removed `@Nullable` from path parameters as they are always required in REST APIs.
+      type: fix
+  createdAt: "2025-10-28"
+  irVersion: 61
+
+- version: 3.10.0
+  changelogEntry:
+    - summary: |
+        Add support for three-state nullable fields in PATCH requests via `use-nullable-for-optional-fields` config.
+        When enabled, optional fields use `Nullable<T>` instead of `Optional<T>` to distinguish between
+        omitted fields, explicit null values, and actual values.
+      type: feat
+  createdAt: "2025-10-28"
+  irVersion: 61
+
 - version: 3.9.4
   changelogEntry:
     - summary: |

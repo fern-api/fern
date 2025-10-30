@@ -1076,7 +1076,7 @@ jobs:
   commit-seed-changes-by-push:
     if: >-
       ${{
-        always() && needs.setup.outputs.update-by-push == 'true' &&
+        always() && !cancelled() && needs.setup.outputs.update-by-push == 'true' &&
         !contains(needs.*.result, 'failure') && !contains(needs.*.result, 'cancelled')
       }}
     needs:
@@ -1151,7 +1151,7 @@ jobs:
   commit-seed-changes-by-pr:
     if: >-
       ${{
-        always() &&
+        always() && !cancelled() &&
         github.ref == 'refs/heads/main' &&
         needs.setup.outputs.update-by-pr == 'true' &&
         !contains(needs.*.result, 'failure') && 
