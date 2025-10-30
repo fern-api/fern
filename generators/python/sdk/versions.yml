@@ -1,7 +1,7 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
 # For unreleased changes, use unreleased.yml
 
-- version: 4.33.0
+- version: 4.32.3-rc0
   changelogEntry:
     - summary: Add support for publishing to PyPI with attestations in auto-generated GHA ci.yml
       type: feat
