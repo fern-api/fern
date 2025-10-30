@@ -985,89 +985,76 @@ jobs:
     runs-on: ubuntu-latest
     timeout-minutes: 60
     needs: [setup, changes, get-all-test-matrices]
+    permissions:
+      contents: write
     if: >-
       ${{
-        github.event_name == 'pull_request'
+        (github.event_name == 'pull_request' && github.event.pull_request.draft == false) || github.event_name == 'workflow_dispatch'
       }}
     steps:
       - name: Checkout repo
         uses: actions/checkout@v4
         with:
-          fetch-depth: 0
+          fetch-depth: 1
+          ref: ${{ github.head_ref }}
           token: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Install dependencies
         uses: ./.github/actions/install
 
       - name: Build seed CLI
-        run: pnpm seed:local --version
+        run: pnpm --filter @fern-api/seed-cli dist:cli
 
       - name: Clean up seed groups
         id: clean-up-seed-groups
         run: |
           set -eo pipefail
 
-          # Define mapping from changes outputs to generator workspace names
-          declare -A GENERATOR_MAP
-          GENERATOR_MAP["ruby"]="ruby-model ruby-sdk"
-          GENERATOR_MAP["ruby-v2"]="ruby-sdk-v2"
-          GENERATOR_MAP["python"]="pydantic python-sdk fastapi"
-          GENERATOR_MAP["postman"]="postman"
-          GENERATOR_MAP["java"]="java-sdk java-model java-spring"
-          GENERATOR_MAP["typescript"]="ts-sdk ts-express"
-          GENERATOR_MAP["go"]="go-fiber go-model go-sdk"
-          GENERATOR_MAP["csharp"]="csharp-model csharp-sdk"
-          GENERATOR_MAP["php"]="php-model php-sdk"
-          GENERATOR_MAP["swift"]="swift-sdk"
-          GENERATOR_MAP["rust"]="rust-model rust-sdk"
-          GENERATOR_MAP["openapi"]="openapi"
-          GENERATOR_MAP["seed"]="ruby-model ruby-sdk ruby-sdk-v2 pydantic python-sdk fastapi openapi postman java-sdk java-model java-spring ts-sdk ts-express go-fiber go-model go-sdk csharp-model csharp-sdk php-model php-sdk swift-sdk rust-model rust-sdk"
-
           # Collect all generators that have changes
           GENERATORS_TO_CHECK=()
 
-          if [[ "${{ needs.changes.outputs.ruby }}" == "true" ]]; then
-            GENERATORS_TO_CHECK+=(${GENERATOR_MAP["ruby"]})
-          fi
-          if [[ "${{ needs.changes.outputs.ruby-v2 }}" == "true" ]]; then
-            GENERATORS_TO_CHECK+=(${GENERATOR_MAP["ruby-v2"]})
-          fi
-          if [[ "${{ needs.changes.outputs.python }}" == "true" ]]; then
-            GENERATORS_TO_CHECK+=(${GENERATOR_MAP["python"]})
-          fi
-          if [[ "${{ needs.changes.outputs.postman }}" == "true" ]]; then
-            GENERATORS_TO_CHECK+=(${GENERATOR_MAP["postman"]})
-          fi
-          if [[ "${{ needs.changes.outputs.java }}" == "true" ]]; then
-            GENERATORS_TO_CHECK+=(${GENERATOR_MAP["java"]})
-          fi
-          if [[ "${{ needs.changes.outputs.typescript }}" == "true" ]]; then
-            GENERATORS_TO_CHECK+=(${GENERATOR_MAP["typescript"]})
-          fi
-          if [[ "${{ needs.changes.outputs.go }}" == "true" ]]; then
-            GENERATORS_TO_CHECK+=(${GENERATOR_MAP["go"]})
-          fi
-          if [[ "${{ needs.changes.outputs.csharp }}" == "true" ]]; then
-            GENERATORS_TO_CHECK+=(${GENERATOR_MAP["csharp"]})
-          fi
-          if [[ "${{ needs.changes.outputs.php }}" == "true" ]]; then
-            GENERATORS_TO_CHECK+=(${GENERATOR_MAP["php"]})
-          fi
-          if [[ "${{ needs.changes.outputs.swift }}" == "true" ]]; then
-            GENERATORS_TO_CHECK+=(${GENERATOR_MAP["swift"]})
-          fi
-          if [[ "${{ needs.changes.outputs.rust }}" == "true" ]]; then
-            GENERATORS_TO_CHECK+=(${GENERATOR_MAP["rust"]})
-          fi
-          if [[ "${{ needs.changes.outputs.openapi }}" == "true" ]]; then
-            GENERATORS_TO_CHECK+=(${GENERATOR_MAP["openapi"]})
-          fi
+          # Check seed changes first (includes all generators)
           if [[ "${{ needs.changes.outputs.seed }}" == "true" ]]; then
-            GENERATORS_TO_CHECK+=(${GENERATOR_MAP["seed"]})
+            GENERATORS_TO_CHECK=(ruby-model ruby-sdk ruby-sdk-v2 pydantic python-sdk fastapi openapi postman java-sdk java-model java-spring ts-sdk ts-express go-fiber go-model go-sdk csharp-model csharp-sdk php-model php-sdk swift-sdk rust-model rust-sdk)
+          else
+            # Check individual language changes
+            if [[ "${{ needs.changes.outputs.ruby }}" == "true" ]]; then
+              GENERATORS_TO_CHECK+=(ruby-model ruby-sdk)
+            fi
+            if [[ "${{ needs.changes.outputs.ruby-v2 }}" == "true" ]]; then
+              GENERATORS_TO_CHECK+=(ruby-sdk-v2)
+            fi
+            if [[ "${{ needs.changes.outputs.python }}" == "true" ]]; then
+              GENERATORS_TO_CHECK+=(pydantic python-sdk fastapi)
+            fi
+            if [[ "${{ needs.changes.outputs.postman }}" == "true" ]]; then
+              GENERATORS_TO_CHECK+=(postman)
+            fi
+            if [[ "${{ needs.changes.outputs.java }}" == "true" ]]; then
+              GENERATORS_TO_CHECK+=(java-sdk java-model java-spring)
+            fi
+            if [[ "${{ needs.changes.outputs.typescript }}" == "true" ]]; then
+              GENERATORS_TO_CHECK+=(ts-sdk ts-express)
+            fi
+            if [[ "${{ needs.changes.outputs.go }}" == "true" ]]; then
+              GENERATORS_TO_CHECK+=(go-fiber go-model go-sdk)
+            fi
+            if [[ "${{ needs.changes.outputs.csharp }}" == "true" ]]; then
+              GENERATORS_TO_CHECK+=(csharp-model csharp-sdk)
+            fi
+            if [[ "${{ needs.changes.outputs.php }}" == "true" ]]; then
+              GENERATORS_TO_CHECK+=(php-model php-sdk)
+            fi
+            if [[ "${{ needs.changes.outputs.swift }}" == "true" ]]; then
+              GENERATORS_TO_CHECK+=(swift-sdk)
+            fi
+            if [[ "${{ needs.changes.outputs.rust }}" == "true" ]]; then
+              GENERATORS_TO_CHECK+=(rust-model rust-sdk)
+            fi
+            if [[ "${{ needs.changes.outputs.openapi }}" == "true" ]]; then
+              GENERATORS_TO_CHECK+=(openapi)
+            fi
           fi
-
-          # Remove duplicates
-          GENERATORS_TO_CHECK=($(echo "${GENERATORS_TO_CHECK[@]}" | tr ' ' '\n' | sort -u | tr '\n' ' '))
 
           echo "Generators to check: ${GENERATORS_TO_CHECK[@]}"
 
@@ -1151,14 +1138,14 @@ jobs:
             echo "changes-made=false" >> $GITHUB_OUTPUT
           fi
 
-      - name: Commit and push changes
+      - name: Add and Commit Changes
         if: steps.clean-up-seed-groups.outputs.changes-made == 'true'
-        run: |
-          git config user.name "github-actions[bot]"
-          git config user.email "github-actions[bot]@users.noreply.github.com"
-          git add .github/workflow-resource-files/seed-groups/
-          git commit -m "chore: remove unavailable fixtures from seed-groups.json files"
-          git push
+        uses: EndBug/add-and-commit@v9
+        with:
+          add: ".github/workflow-resource-files/seed-groups/*"
+          push: true
+          fetch: false
+          message: "Automated update of seed group files"
 
   # Round up all tests into job with defined name for PR merge requirements
   seed-test-results:
