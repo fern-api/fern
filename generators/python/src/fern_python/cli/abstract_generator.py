@@ -205,7 +205,11 @@ class AbstractGenerator(ABC):
         publisher.publish_package(publish_config=publish_config)
 
     def _write_files_for_github_repo(
-        self, project: Project, output_mode: GithubOutputMode, write_unit_tests: bool, publish_config: GeneratorPublishConfig | None,
+        self,
+        project: Project,
+        output_mode: GithubOutputMode,
+        write_unit_tests: bool,
+        publish_config: GeneratorPublishConfig | None,
     ) -> None:
         project.add_file(
             ".gitignore",
@@ -222,12 +226,14 @@ class AbstractGenerator(ABC):
         # Use OIDC workflow if token is set to 'OIDC', otherwise use legacy workflow
         use_oidc_workflow = False
         if publish_config is not None:
-          if publish_config.registries_v_2 is not None and publish_config.registries_v_2.pypi is not None:
-            use_oidc_workflow = publish_config.registries_v_2.pypi.password == "OIDC"
-        
+            if publish_config.registries_v_2 is not None and publish_config.registries_v_2.pypi is not None:
+                use_oidc_workflow = publish_config.registries_v_2.pypi.password == "OIDC"
+
         project.add_file(
             ".github/workflows/ci.yml",
-            self._get_github_workflow(output_mode, write_unit_tests) if use_oidc_workflow else self._get_github_workflow_legacy(output_mode, write_unit_tests),
+            self._get_github_workflow(output_mode, write_unit_tests)
+            if use_oidc_workflow
+            else self._get_github_workflow_legacy(output_mode, write_unit_tests),
         )
         project.add_file("tests/custom/test_client.py", self._get_client_test())
 
