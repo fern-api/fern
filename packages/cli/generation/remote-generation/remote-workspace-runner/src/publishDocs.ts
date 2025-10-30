@@ -256,7 +256,7 @@ export async function publishDocs({
         CjsFdrSdk.docs.v1.write.DocsRegistrationId(docsRegistrationId),
         {
             docsDefinition,
-            excludeApis: true
+            excludeApis: false
         }
     );
 
