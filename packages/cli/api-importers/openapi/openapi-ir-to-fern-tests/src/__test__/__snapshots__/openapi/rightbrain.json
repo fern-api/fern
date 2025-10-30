@@ -24150,9 +24150,9 @@ service:
   "packageMarkers": {},
   "rootApiFile": {
     "contents": {
-      "auth": "BearerAuthScheme",
+      "auth": "HTTPBearer",
       "auth-schemes": {
-        "BearerAuthScheme": {
+        "HTTPBearer": {
           "scheme": "bearer",
         },
       },
@@ -24168,9 +24168,9 @@ error-discrimination:
   strategy: status-code
 display-name: brain core api
 auth-schemes:
-  BearerAuthScheme:
+  HTTPBearer:
     scheme: bearer
-auth: BearerAuthScheme
+auth: HTTPBearer
 ",
   },
 }

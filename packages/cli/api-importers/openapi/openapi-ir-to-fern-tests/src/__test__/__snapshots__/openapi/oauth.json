@@ -229,9 +229,9 @@ service:
   "packageMarkers": {},
   "rootApiFile": {
     "contents": {
-      "auth": "BearerAuthScheme",
+      "auth": "oauth2",
       "auth-schemes": {
-        "BearerAuthScheme": {
+        "oauth2": {
           "scheme": "bearer",
         },
       },
@@ -254,9 +254,9 @@ environments:
   Default: https://api.example.com/v1
 default-environment: Default
 auth-schemes:
-  BearerAuthScheme:
+  oauth2:
     scheme: bearer
-auth: BearerAuthScheme
+auth: oauth2
 ",
   },
 }

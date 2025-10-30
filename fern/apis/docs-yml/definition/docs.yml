@@ -383,11 +383,34 @@ types:
     type: list<TabbedNavigationItem>
 
   TabbedNavigationItem:
+    discriminated: false
+    union:
+      - TabbedNavigationItemWithLayout
+      - TabbedNavigationItemWithVariants
+
+  TabbedNavigationItemWithLayout:
     properties:
       tab: TabId
       layout:
         type: optional<list<NavigationItem>>
         docs: If `href` is set, `layout` must be null.
+
+  TabbedNavigationItemWithVariants:
+    properties:
+      tab: TabId
+      variants: list<TabVariant>
+
+  TabVariant:
+    extends: [WithPermissions, WithFeatureFlags]
+    properties:
+      title: string
+      subtitle: optional<string>
+      icon: optional<string>
+      layout: list<NavigationItem>
+      slug: optional<string>
+      skip-slug: optional<boolean>
+      hidden: optional<boolean>
+      default: optional<boolean>
 
   NavigationItem:
     discriminated: false

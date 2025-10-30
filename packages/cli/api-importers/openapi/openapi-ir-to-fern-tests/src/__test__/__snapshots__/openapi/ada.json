@@ -1241,9 +1241,9 @@ types:
   "packageMarkers": {},
   "rootApiFile": {
     "contents": {
-      "auth": "BearerAuthScheme",
+      "auth": "BearerAuth",
       "auth-schemes": {
-        "BearerAuthScheme": {
+        "BearerAuth": {
           "scheme": "bearer",
         },
       },
@@ -1266,9 +1266,9 @@ environments:
   Default: https://example.ada.support/api
 default-environment: Default
 auth-schemes:
-  BearerAuthScheme:
+  BearerAuth:
     scheme: bearer
-auth: BearerAuthScheme
+auth: BearerAuth
 ",
   },
 }

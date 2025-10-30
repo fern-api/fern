@@ -1,0 +1,64 @@
+openapi: 3.0.3
+info:
+  title: Callbacks Test API
+  version: 1.0.0
+  description: API to test callbacks without operationId
+
+paths:
+  /subscribe:
+    post:
+      operationId: subscribe
+      summary: Subscribe to notifications
+      description: Subscribe to receive webhook notifications
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                callbackUrl:
+                  type: string
+                  format: uri
+                  description: URL to receive webhook notifications
+              required:
+                - callbackUrl
+      responses:
+        "200":
+          description: Successfully subscribed
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  subscriptionId:
+                    type: string
+      callbacks:
+        onEvent:
+          "{$request.body#/callbackUrl}":
+            post:
+              summary: Event notification
+              description: Webhook callback for event notifications
+              requestBody:
+                required: true
+                content:
+                  application/json:
+                    schema:
+                      type: object
+                      properties:
+                        eventType:
+                          type: string
+                        eventId:
+                          type: string
+                        timestamp:
+                          type: string
+                          format: date-time
+                        data:
+                          type: object
+                      required:
+                        - eventType
+                        - eventId
+                        - timestamp
+              responses:
+                "200":
+                  description: Webhook received successfully

@@ -11,12 +11,12 @@ import { getSchemaUtils } from "../schema-utils";
 import { isProperty } from "./property";
 import {
     BaseObjectSchema,
-    inferObjectSchemaFromPropertySchemas,
-    inferParsedObjectFromPropertySchemas,
-    inferRawObjectFromPropertySchemas,
     ObjectSchema,
     ObjectUtils,
     PropertySchemas,
+    inferObjectSchemaFromPropertySchemas,
+    inferParsedObjectFromPropertySchemas,
+    inferRawObjectFromPropertySchemas,
 } from "./types";
 
 interface ObjectPropertyWithRawKey {
@@ -358,6 +358,7 @@ function isSchemaOptional(schema: Schema<any, any>): boolean {
         case SchemaType.ANY:
         case SchemaType.UNKNOWN:
         case SchemaType.OPTIONAL:
+        case SchemaType.OPTIONAL_NULLABLE:
             return true;
         default:
             return false;

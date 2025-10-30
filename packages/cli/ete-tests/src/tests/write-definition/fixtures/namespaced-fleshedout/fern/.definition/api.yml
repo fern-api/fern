@@ -1,6 +1,6 @@
-auth: BearerAuthScheme
+auth: bearerAuth
 auth-schemes:
-  BearerAuthScheme:
+  bearerAuth:
     scheme: bearer
     token:
       env: CO_API_KEY

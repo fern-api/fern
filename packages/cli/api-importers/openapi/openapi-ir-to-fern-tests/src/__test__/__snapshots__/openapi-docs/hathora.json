@@ -6133,9 +6133,9 @@ service:
   "packageMarkers": {},
   "rootApiFile": {
     "contents": {
-      "auth": "BearerAuthScheme",
+      "auth": "auth0",
       "auth-schemes": {
-        "BearerAuthScheme": {
+        "auth0": {
           "scheme": "bearer",
         },
       },
@@ -6158,9 +6158,9 @@ environments:
   Default: https://api.hathora.dev
 default-environment: Default
 auth-schemes:
-  BearerAuthScheme:
+  auth0:
     scheme: bearer
-auth: BearerAuthScheme
+auth: auth0
 ",
   },
 }
