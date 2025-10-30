@@ -9,7 +9,9 @@ import {
     Availability,
     DocsInstance,
     ExperimentalConfig,
+    Language,
     PlaygroundSettings,
+    ThemeConfig,
     VersionAvailability
 } from "./schemas";
 
@@ -41,9 +43,11 @@ export interface ParsedDocsConfiguration {
     typography: TypographyConfig | undefined;
     layout: CjsFdrSdk.docs.v1.commons.DocsLayoutConfig | undefined;
     settings: CjsFdrSdk.docs.v1.commons.DocsSettingsConfig | undefined;
+    languages: Language[] | undefined;
     defaultLanguage: CjsFdrSdk.docs.v1.commons.ProgrammingLanguage | undefined;
     analyticsConfig: CjsFdrSdk.docs.v1.commons.AnalyticsConfig | undefined;
     announcement: AnnouncementConfig | undefined;
+    theme: ThemeConfig | undefined;
 
     /* integrations */
     integrations: CjsFdrSdk.docs.v1.commons.IntegrationsConfig | undefined;

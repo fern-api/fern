@@ -5,15 +5,15 @@
 import * as serializers from "../../../index";
 import * as FernDocsConfig from "../../../../api/index";
 import * as core from "../../../../core";
+import { NavbarLinkConfig } from "./NavbarLinkConfig";
 import { WithViewers } from "./WithViewers";
 
-export const NavbarLinkConfig: core.serialization.ObjectSchema<
-    serializers.NavbarLinkConfig.Raw,
-    FernDocsConfig.NavbarLinkConfig
+export const NavbarDropdownConfig: core.serialization.ObjectSchema<
+    serializers.NavbarDropdownConfig.Raw,
+    FernDocsConfig.NavbarDropdownConfig
 > = core.serialization
     .object({
-        href: core.serialization.string().optional(),
-        url: core.serialization.string().optional(),
+        links: core.serialization.list(NavbarLinkConfig),
         text: core.serialization.string().optional(),
         icon: core.serialization.string().optional(),
         rightIcon: core.serialization.string().optional(),
@@ -21,10 +21,9 @@ export const NavbarLinkConfig: core.serialization.ObjectSchema<
     })
     .extend(WithViewers);
 
-export declare namespace NavbarLinkConfig {
+export declare namespace NavbarDropdownConfig {
     export interface Raw extends WithViewers.Raw {
-        href?: string | null;
-        url?: string | null;
+        links: NavbarLinkConfig.Raw[];
         text?: string | null;
         icon?: string | null;
         rightIcon?: string | null;

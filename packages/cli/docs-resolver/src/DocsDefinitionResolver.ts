@@ -557,10 +557,21 @@ export class DocsDefinitionResolver {
             navigation: undefined, // <-- this is now deprecated
             root,
             colorsV3: this.convertColorConfigImageReferences(),
-            navbarLinks: this.parsedDocsConfig.navbarLinks?.map((navbarLink) => ({
-                ...navbarLink,
-                url: DocsV1Write.Url(navbarLink.url)
-            })),
+            navbarLinks: this.parsedDocsConfig.navbarLinks?.map((navbarLink) => {
+                if (navbarLink.type === "dropdown") {
+                    return {
+                        ...navbarLink,
+                        links: navbarLink.links?.map((link) => ({
+                            ...link,
+                            url: DocsV1Write.Url(link.url)
+                        }))
+                    };
+                }
+                return {
+                    ...navbarLink,
+                    url: DocsV1Write.Url(navbarLink.url)
+                };
+            }),
             typographyV2: this.convertDocsTypographyConfiguration(),
             layout: this.parsedDocsConfig.layout,
             settings: this.parsedDocsConfig.settings,
@@ -574,6 +585,7 @@ export class DocsDefinitionResolver {
                 value: DocsV1Write.Url(footerLink.value)
             })),
             defaultLanguage: this.parsedDocsConfig.defaultLanguage,
+            languages: this.parsedDocsConfig.languages,
             analyticsConfig: {
                 ...this.parsedDocsConfig.analyticsConfig,
                 segment: this.parsedDocsConfig.analyticsConfig?.segment,

@@ -1042,8 +1042,15 @@ types:
       rounded: optional<boolean>
 
   NavbarGithubConfig:
-    type: string
-    availability: in-development
+    discriminated: false
+    union:
+      - string
+      - NavbarGithubConfigWithOptions
+
+  NavbarGithubConfigWithOptions:
+    extends: [WithViewers]
+    properties:
+      url: string
 
   FooterLinksConfig:
     properties:

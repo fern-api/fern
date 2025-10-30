@@ -4,4 +4,6 @@
 
 import * as FernDocsConfig from "../../../index";
 
-export type NavbarGithubConfig = string | FernDocsConfig.NavbarGithubConfigWithOptions;
+export interface NavbarGithubConfigWithOptions extends FernDocsConfig.WithViewers {
+    url: string;
+}

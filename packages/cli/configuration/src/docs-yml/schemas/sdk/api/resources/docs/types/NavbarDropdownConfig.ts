@@ -4,10 +4,8 @@
 
 import * as FernDocsConfig from "../../../index";
 
-export interface NavbarLinkConfig extends FernDocsConfig.WithViewers {
-    href?: string;
-    /** Use `href` instead. */
-    url?: string;
+export interface NavbarDropdownConfig extends FernDocsConfig.WithViewers {
+    links: FernDocsConfig.NavbarLinkConfig[];
     text?: string;
     icon?: string;
     rightIcon?: string;
