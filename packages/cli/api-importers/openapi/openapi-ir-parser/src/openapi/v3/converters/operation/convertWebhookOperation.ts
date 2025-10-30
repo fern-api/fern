@@ -1,4 +1,5 @@
 import { NamedFullExample, Source, WebhookExampleCall, WebhookWithExample } from "@fern-api/openapi-ir";
+import { createHash } from "crypto";
 
 import { getExtension } from "../../../../getExtension";
 import { convertToFullExample } from "../../../../schema/examples/convertToFullExample";
@@ -36,10 +37,13 @@ export function convertWebhookOperation({
         return [];
     }
 
-    const operationId = operation.operationId;
+    let operationId = operation.operationId;
+
     if (operationId == null) {
-        context.logger.error(`Skipping webhook ${path} because no operation id present`);
-        return [];
+        operationId = generateWebhookOperationId({ path, method, sdkMethodName });
+        context.logger.debug(
+            `Generated synthetic operation ID for webhook ${method.toUpperCase()} ${path}: ${operationId}`
+        );
     }
 
     if (method !== "POST" && method !== "GET") {
@@ -108,4 +112,40 @@ function convertWebhookExamples(payloadExamples: NamedFullExample[] | undefined)
         });
     }
     return webhookExampleCalls;
+}
+
+function generateWebhookOperationId({
+    path,
+    method,
+    sdkMethodName
+}: {
+    path: string;
+    method: string;
+    sdkMethodName: { methodName: string } | undefined;
+}): string {
+    const base = sdkMethodName?.methodName ?? sanitizePathExpression(path);
+    const hash = createHash("sha256").update(path).digest("hex").slice(0, 8);
+    return toCamelCase(`${base}_${method.toLowerCase()}_${hash}`);
+}
+
+function sanitizePathExpression(path: string): string {
+    return path
+        .replace(/[{$}#]/g, "")
+        .replace(/[^a-zA-Z0-9]+/g, "_")
+        .replace(/^_+|_+$/g, "")
+        .replace(/_+/g, "_")
+        .toLowerCase()
+        .slice(0, 64);
+}
+
+function toCamelCase(str: string): string {
+    return str
+        .split("_")
+        .map((word, index) => {
+            if (index === 0) {
+                return word.toLowerCase();
+            }
+            return word.charAt(0).toUpperCase() + word.slice(1).toLowerCase();
+        })
+        .join("");
 }
