@@ -980,6 +980,7 @@ function parseApiReferenceLayoutItem(
                 slug: item.slug,
                 hidden: item.hidden,
                 skipUrlSlug: item.skipSlug,
+                availability: item.availability,
                 icon: item.icon,
                 playground: item.playground,
                 viewers: parseRoles(item.viewers),
@@ -996,6 +997,7 @@ function parseApiReferenceLayoutItem(
                 icon: item.icon,
                 slug: item.slug,
                 hidden: item.hidden,
+                availability: item.availability,
                 playground: item.playground,
                 viewers: parseRoles(item.viewers),
                 orphaned: item.orphaned,
@@ -1017,6 +1019,7 @@ function parseApiReferenceLayoutItem(
                 skipUrlSlug: value.skipSlug,
                 icon: value.icon,
                 playground: value.playground,
+                availability: value.availability,
                 viewers: parseRoles(value.viewers),
                 orphaned: value.orphaned,
                 featureFlags: convertFeatureFlag(value.featureFlag)
@@ -1033,6 +1036,7 @@ function parseApiReferenceLayoutItem(
             skipUrlSlug: false,
             icon: undefined,
             playground: undefined,
+            availability: undefined,
             viewers: undefined,
             orphaned: undefined,
             featureFlags: undefined

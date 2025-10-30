@@ -345,6 +345,7 @@ export declare namespace ParsedApiReferenceLayoutItem {
         hidden: boolean | undefined;
         icon: string | undefined;
         skipUrlSlug: boolean | undefined;
+        availability: Availability | undefined;
         playground: PlaygroundSettings | undefined;
     }
     export interface Package
@@ -359,6 +360,7 @@ export declare namespace ParsedApiReferenceLayoutItem {
         hidden: boolean | undefined;
         icon: string | undefined;
         skipUrlSlug: boolean | undefined;
+        availability: Availability | undefined;
         playground: PlaygroundSettings | undefined;
     }
 
@@ -371,6 +373,7 @@ export declare namespace ParsedApiReferenceLayoutItem {
         icon: string | undefined;
         slug: string | undefined;
         hidden: boolean | undefined;
+        availability: Availability | undefined;
         playground: PlaygroundSettings | undefined;
     }
 
