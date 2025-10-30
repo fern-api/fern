@@ -24,7 +24,7 @@
     "requirement": "ALL",
     "schemes": [
       {
-        "key": "BearerAuthScheme",
+        "key": "BearerAuth",
         "token": {
           "originalName": "apiKey",
           "camelCase": {
@@ -19877,7 +19877,7 @@
     "endpoints": {
       "endpoint_auth.andRedirect": {
         "auth": {
-          "key": "BearerAuthScheme",
+          "key": "BearerAuth",
           "token": {
             "originalName": "apiKey",
             "camelCase": {
@@ -20111,7 +20111,7 @@
       },
       "endpoint_extensions.get": {
         "auth": {
-          "key": "BearerAuthScheme",
+          "key": "BearerAuth",
           "token": {
             "originalName": "apiKey",
             "camelCase": {
@@ -20314,7 +20314,7 @@
       },
       "endpoint_extensions.post": {
         "auth": {
-          "key": "BearerAuthScheme",
+          "key": "BearerAuth",
           "token": {
             "originalName": "apiKey",
             "camelCase": {
@@ -20518,7 +20518,7 @@
       },
       "endpoint_extensions.delete": {
         "auth": {
-          "key": "BearerAuthScheme",
+          "key": "BearerAuth",
           "token": {
             "originalName": "apiKey",
             "camelCase": {
@@ -20721,7 +20721,7 @@
       },
       "endpoint_extensions.getById": {
         "auth": {
-          "key": "BearerAuthScheme",
+          "key": "BearerAuth",
           "token": {
             "originalName": "apiKey",
             "camelCase": {
@@ -20851,7 +20851,7 @@
       },
       "endpoint_profiles.get": {
         "auth": {
-          "key": "BearerAuthScheme",
+          "key": "BearerAuth",
           "token": {
             "originalName": "apiKey",
             "camelCase": {
@@ -21088,7 +21088,7 @@
       },
       "endpoint_profiles.post": {
         "auth": {
-          "key": "BearerAuthScheme",
+          "key": "BearerAuth",
           "token": {
             "originalName": "apiKey",
             "camelCase": {
@@ -21326,7 +21326,7 @@
       },
       "endpoint_profiles.delete": {
         "auth": {
-          "key": "BearerAuthScheme",
+          "key": "BearerAuth",
           "token": {
             "originalName": "apiKey",
             "camelCase": {
@@ -21563,7 +21563,7 @@
       },
       "endpoint_profiles.getById": {
         "auth": {
-          "key": "BearerAuthScheme",
+          "key": "BearerAuth",
           "token": {
             "originalName": "apiKey",
             "camelCase": {
@@ -21693,7 +21693,7 @@
       },
       "endpoint_sessions.list": {
         "auth": {
-          "key": "BearerAuthScheme",
+          "key": "BearerAuth",
           "token": {
             "originalName": "apiKey",
             "camelCase": {
@@ -21992,7 +21992,7 @@
       },
       "endpoint_sessions.post": {
         "auth": {
-          "key": "BearerAuthScheme",
+          "key": "BearerAuth",
           "token": {
             "originalName": "apiKey",
             "camelCase": {
@@ -22199,7 +22199,7 @@
       },
       "endpoint_sessions.getinfo": {
         "auth": {
-          "key": "BearerAuthScheme",
+          "key": "BearerAuth",
           "token": {
             "originalName": "apiKey",
             "camelCase": {
@@ -22329,7 +22329,7 @@
       },
       "endpoint_sessions.terminate": {
         "auth": {
-          "key": "BearerAuthScheme",
+          "key": "BearerAuth",
           "token": {
             "originalName": "apiKey",
             "camelCase": {
@@ -22459,7 +22459,7 @@
       },
       "endpoint_sessions.events": {
         "auth": {
-          "key": "BearerAuthScheme",
+          "key": "BearerAuth",
           "token": {
             "originalName": "apiKey",
             "camelCase": {
@@ -22589,7 +22589,7 @@
       },
       "endpoint_windows.get-window-info": {
         "auth": {
-          "key": "BearerAuthScheme",
+          "key": "BearerAuth",
           "token": {
             "originalName": "apiKey",
             "camelCase": {
@@ -22911,7 +22911,7 @@
       },
       "endpoint_windows.prompt-content": {
         "auth": {
-          "key": "BearerAuthScheme",
+          "key": "BearerAuth",
           "token": {
             "originalName": "apiKey",
             "camelCase": {
@@ -23296,7 +23296,7 @@
       },
       "endpoint_windows.scrape-content": {
         "auth": {
-          "key": "BearerAuthScheme",
+          "key": "BearerAuth",
           "token": {
             "originalName": "apiKey",
             "camelCase": {
@@ -23454,7 +23454,7 @@
       },
       "endpoint_windows.summarize-content": {
         "auth": {
-          "key": "BearerAuthScheme",
+          "key": "BearerAuth",
           "token": {
             "originalName": "apiKey",
             "camelCase": {
