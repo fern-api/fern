@@ -1,6 +1,6 @@
 # Reference
 ## FolderA Service
-<details><summary><code>client.folderA.service.<a href="/Sources/Resources/FolderA/Service/ServiceClient.swift">getDirectThread</a>(requestOptions: RequestOptions?) -> Response</code></summary>
+<details><summary><code>client.folderA.service.<a href="/Sources/Resources/FolderA/Service/ServiceClient.swift">getDirectThread</a>(ids: String, tags: String, requestOptions: RequestOptions?) -> Response</code></summary>
 <dl>
 <dd>
 
@@ -33,6 +33,22 @@ try await main()
 
 <dl>
 <dd>
+
+<dl>
+<dd>
+
+**ids:** `String` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**tags:** `String` 
+    
+</dd>
+</dl>
 
 <dl>
 <dd>

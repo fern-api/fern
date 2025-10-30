@@ -10,6 +10,11 @@ import (
 	big "math/big"
 )
 
+type GetDirectThreadRequest struct {
+	Ids  []string `query:"ids"`
+	Tags []string `query:"tags"`
+}
+
 var (
 	responseFieldFoo = big.NewInt(1 << 0)
 )

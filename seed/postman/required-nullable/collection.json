@@ -149,6 +149,110 @@
           "_postman_previewlanguage": "json"
         }
       ]
+    },
+    {
+      "_type": "endpoint",
+      "name": "Update foo",
+      "request": {
+        "description": null,
+        "url": {
+          "raw": "{{baseUrl}}/foo/:id",
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "foo",
+            ":id"
+          ],
+          "query": [],
+          "variable": [
+            {
+              "key": "id",
+              "description": null,
+              "value": "id"
+            }
+          ]
+        },
+        "header": [
+          {
+            "key": "X-Idempotency-Key",
+            "description": null,
+            "type": "text",
+            "value": "\"X-Idempotency-Key\""
+          },
+          {
+            "type": "text",
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "method": "PATCH",
+        "auth": null,
+        "body": {
+          "mode": "raw",
+          "raw": "{\n    \"nullable_text\": \"nullable_text\",\n    \"nullable_number\": 1.1,\n    \"non_nullable_text\": \"non_nullable_text\"\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        }
+      },
+      "response": [
+        {
+          "name": "Success",
+          "status": "OK",
+          "code": 200,
+          "originalRequest": {
+            "description": null,
+            "url": {
+              "raw": "{{baseUrl}}/foo/:id",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "foo",
+                ":id"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "key": "id",
+                  "description": null,
+                  "value": "id"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "X-Idempotency-Key",
+                "description": null,
+                "type": "text",
+                "value": "\"X-Idempotency-Key\""
+              },
+              {
+                "type": "text",
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "method": "PATCH",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n    \"nullable_text\": \"nullable_text\",\n    \"nullable_number\": 1.1,\n    \"non_nullable_text\": \"non_nullable_text\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "description": "successful operation",
+          "body": "{\n    \"bar\": \"bar\",\n    \"nullable_bar\": \"nullable_bar\",\n    \"nullable_required_bar\": \"nullable_required_bar\",\n    \"required_bar\": \"required_bar\"\n}",
+          "_postman_previewlanguage": "json"
+        }
+      ]
     }
   ]
 }

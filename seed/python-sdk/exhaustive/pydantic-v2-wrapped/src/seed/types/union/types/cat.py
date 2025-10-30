@@ -12,4 +12,4 @@ class Cat(UniversalBaseModel):
     name: str
     likes_to_meow: typing_extensions.Annotated[bool, FieldMetadata(alias="likesToMeow")]
 
-    model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2
+    model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)

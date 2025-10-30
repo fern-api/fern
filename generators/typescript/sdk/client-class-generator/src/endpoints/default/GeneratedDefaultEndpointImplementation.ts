@@ -409,9 +409,9 @@ export class GeneratedDefaultEndpointImplementation implements GeneratedEndpoint
             );
             statements.push(
                 ts.factory.createReturnStatement(
-                    context.coreUtilities.pagination.Pageable._construct({
-                        responseType: paginationInfo.responseType,
+                    context.coreUtilities.pagination.Page._construct({
                         itemType: paginationInfo.itemType,
+                        responseType: paginationInfo.responseType,
                         response: ts.factory.createPropertyAccessExpression(initialResponseVar, "data"),
                         rawResponse: ts.factory.createPropertyAccessExpression(initialResponseVar, "rawResponse"),
                         hasNextPage: this.createLambdaWithResponse({ body: paginationInfo.hasNextPage }),

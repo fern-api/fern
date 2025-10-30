@@ -1,8 +1,7 @@
 import { noop } from "@fern-api/core-utils";
-import { BaseSwiftCustomConfigSchema, swift } from "@fern-api/swift-codegen";
+import { BaseSwiftCustomConfigSchema, NameRegistry, swift } from "@fern-api/swift-codegen";
 import { ObjectProperty, TypeDeclaration, TypeReference } from "@fern-fern/ir-sdk/api";
 
-import { NameRegistry } from "../project";
 import { AbstractSwiftGeneratorContext } from "./AbstractSwiftGeneratorContext";
 
 export function registerLiteralEnums({

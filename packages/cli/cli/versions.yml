@@ -1,6 +1,14 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
 - changelogEntry:
     - summary: |
+        Improve YAML parsing error messages to include line number, column number, and a snippet of the problematic YAML when duplicate mapping keys or other syntax errors are encountered in generators.yml.
+      type: fix
+  irVersion: 61
+  createdAt: "2025-10-29"
+  version: 0.99.3
+
+- changelogEntry:
+    - summary: |
         Preserve trailing newline in fern.config.json during `fern upgrade`. Fixes issue where tools requiring a newline at EOF failed after running upgrade.
       type: fix
   irVersion: 61

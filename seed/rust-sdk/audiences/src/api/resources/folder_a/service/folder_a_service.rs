@@ -1,5 +1,5 @@
 use crate::api::*;
-use crate::{ApiError, ClientConfig, HttpClient, RequestOptions};
+use crate::{ApiError, ClientConfig, HttpClient, QueryBuilder, RequestOptions};
 use reqwest::Method;
 
 pub struct ServiceClient {
@@ -15,10 +15,20 @@ impl ServiceClient {
 
     pub async fn get_direct_thread(
         &self,
+        request: &GetDirectThreadQueryRequest,
         options: Option<RequestOptions>,
     ) -> Result<Response, ApiError> {
         self.http_client
-            .execute_request(Method::GET, "", None, None, options)
+            .execute_request(
+                Method::GET,
+                "",
+                None,
+                QueryBuilder::new()
+                    .string("ids", request.ids.clone())
+                    .string("tags", request.tags.clone())
+                    .build(),
+                options,
+            )
             .await
     }
 }

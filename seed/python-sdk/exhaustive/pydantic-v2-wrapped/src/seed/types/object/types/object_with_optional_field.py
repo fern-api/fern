@@ -29,4 +29,4 @@ class ObjectWithOptionalField(UniversalBaseModel):
     map_: typing_extensions.Annotated[typing.Optional[typing.Dict[int, str]], FieldMetadata(alias="map")] = None
     bigint: typing.Optional[str] = None
 
-    model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2
+    model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)
