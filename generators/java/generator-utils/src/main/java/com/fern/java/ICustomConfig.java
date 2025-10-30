@@ -95,6 +95,12 @@ public interface ICustomConfig {
         return false;
     }
 
+    @Value.Default
+    @JsonProperty("collapse-optional-nullable")
+    default Boolean collapseOptionalNullable() {
+        return false;
+    }
+    
     @JsonProperty("package-prefix")
     Optional<String> packagePrefix();
 
