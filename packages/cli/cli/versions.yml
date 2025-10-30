@@ -5,7 +5,7 @@
       type: fix
   irVersion: 61
   createdAt: "2025-10-29"
-  version: 0.100.1
+  version: 0.100.2
 
 - changelogEntry:
     - summary: |
