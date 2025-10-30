@@ -181,6 +181,10 @@
   module = "pydantic.*"
   follow_imports = "skip"
   
+  [[tool.mypy.overrides]]
+  module = "pydantic.v1.*"
+  ignore_missing_imports = true
+  
   [tool.ruff]
   line-length = 120
   
