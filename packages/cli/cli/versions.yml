@@ -4,7 +4,7 @@
         Adds new `docs.yml` configurations:
 
         - `theme.[sidebar, body, tabs]`: controls the theme of the docs
-        - `settings.disableExplorerProxy`: controls whether the explorer uses a proxy
+        - `settings.disable-explorer-proxy`: controls whether the explorer uses a proxy
         - `languages`: initializes localization within fern docs 
         - `navbarLinks.[dropdown]`: adds a dropdown option for navbar links
         - `navbarLinks.[].viewers`: allows navbar links to be controlled with RBAC
