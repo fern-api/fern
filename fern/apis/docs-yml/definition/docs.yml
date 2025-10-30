@@ -399,6 +399,7 @@ types:
       - ApiReferenceConfiguration
       - LinkConfiguration
       - ChangelogConfiguration
+      - FolderConfiguration
 
   LogoConfiguration:
     properties:
@@ -753,6 +754,24 @@ types:
       icon: optional<string>
       hidden: optional<boolean>
       skip-slug: optional<boolean>
+      availability: optional<Availability>
+
+  FolderConfiguration:
+    extends: [WithPermissions, WithFeatureFlags]
+    properties:
+      folder:
+        type: string
+        docs: |
+          The relative path to a folder containing markdown files. Fern will automatically discover and add all markdown files from this folder to the navigation.
+      title:
+        type: optional<string>
+        docs: |
+          The title to display for this folder section. If not provided, the folder name will be used.
+      slug: optional<string>
+      icon: optional<string>
+      hidden: optional<boolean>
+      skip-slug: optional<boolean>
+      collapsed: optional<boolean>
       availability: optional<Availability>
 
   ApiReferenceConfiguration:
