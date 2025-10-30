@@ -940,7 +940,7 @@ export class DocsDefinitionResolver {
             children: [{
                 type: "varianted",
                 id,
-                children: await Promise.all(items.map((item, idx) => this.toVariantNode(item, id, parentSlug, idx === 0))),
+                children: await Promise.all(items.map((item) => this.toVariantNode(item, id, parentSlug))),
             }]
         };
     }
@@ -949,7 +949,6 @@ export class DocsDefinitionResolver {
         item: docsYml.TabVariant,
         prefix: string,
         parentSlug: FernNavigation.V1.SlugGenerator,
-        isDefault: boolean
     ): Promise<FernNavigation.V1.VariantNode> {
         const id = this.#idgen.get(`${prefix}/variant/${item.slug ?? kebabCase(item.title)}`);
         const children = await Promise.all(item.layout.map((item) => this.toVariantChild(item, id, parentSlug)));
@@ -958,7 +957,7 @@ export class DocsDefinitionResolver {
             id,
             variantId: FernNavigation.V1.VariantId(item.title),
             subtitle: item.subtitle ?? "",
-            default: isDefault,
+            default: item.default ?? false,
             image: undefined,
             children,
             title: item.title,

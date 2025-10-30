@@ -12,4 +12,5 @@ export interface TabVariant extends FernDocsConfig.WithPermissions, FernDocsConf
     slug?: string;
     skipSlug?: boolean;
     hidden?: boolean;
+    default?: boolean;
 }

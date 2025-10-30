@@ -1,6 +1,9 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
 - changelogEntry:
     - summary: |
+        Add support for explicit default tab variants in tabbed navigation. You can now specify which tab variant should be the default using the `default: true` property instead of relying on the first tab being default.
+      type: feat
+    - summary: |
         Improve YAML parsing error messages to include line number, column number, and a snippet of the problematic YAML when duplicate mapping keys or other syntax errors are encountered in generators.yml.
       type: fix
   irVersion: 61

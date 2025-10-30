@@ -235,6 +235,7 @@ export interface TabVariant extends CjsFdrSdk.navigation.v1.WithPermissions, Cjs
     slug: string | undefined;
     skipUrlSlug: boolean | undefined;
     hidden: boolean | undefined;
+    default: boolean | undefined;
 }
 
 export type DocsNavigationItem =

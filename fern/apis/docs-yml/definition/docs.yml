@@ -389,6 +389,7 @@ types:
       slug: optional<string>
       skip-slug: optional<boolean>
       hidden: optional<boolean>
+      default: optional<boolean>
 
   NavigationItem:
     discriminated: false
