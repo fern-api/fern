@@ -17,4 +17,6 @@ export interface OffsetPagination {
     hasNextPage: FernIr.ResponseProperty | undefined;
     /** The step size used to increment the page offset between every new page. */
     step: FernIr.RequestProperty | undefined;
+    /** A request property that indicates the number of items to return per page. */
+    perPage: FernIr.RequestProperty | undefined;
 }

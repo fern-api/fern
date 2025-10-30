@@ -44,6 +44,14 @@ export function convertOffsetPagination({
                       endpoint: endpointName,
                       propertyComponents: paginationPropertyComponents.hasNextPage
                   })
+                : undefined,
+        perPage:
+            paginationPropertyComponents.perPage != null
+                ? propertyResolver.resolveRequestPropertyOrThrow({
+                      file,
+                      endpoint: endpointName,
+                      propertyComponents: paginationPropertyComponents.perPage
+                  })
                 : undefined
     });
 }

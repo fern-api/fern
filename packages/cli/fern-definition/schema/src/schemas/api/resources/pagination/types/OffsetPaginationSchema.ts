@@ -11,4 +11,6 @@ export interface OffsetPaginationSchema {
     step?: string;
     /** The path to the response property indicating next page presence. */
     "has-next-page"?: string;
+    /** The path to the request property for the page size. */
+    "per-page"?: string;
 }

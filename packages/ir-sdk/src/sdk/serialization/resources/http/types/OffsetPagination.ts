@@ -16,6 +16,7 @@ export const OffsetPagination: core.serialization.ObjectSchema<
     results: ResponseProperty,
     hasNextPage: ResponseProperty.optional(),
     step: RequestProperty.optional(),
+    perPage: RequestProperty.optional(),
 });
 
 export declare namespace OffsetPagination {
@@ -24,5 +25,6 @@ export declare namespace OffsetPagination {
         results: ResponseProperty.Raw;
         hasNextPage?: ResponseProperty.Raw | null;
         step?: RequestProperty.Raw | null;
+        perPage?: RequestProperty.Raw | null;
     }
 }

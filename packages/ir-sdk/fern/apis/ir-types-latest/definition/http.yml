@@ -66,7 +66,7 @@ types:
       security:
         type: optional<list<HttpEndpointSecurityItem>>
         docs: |
-          A list of auth scheme collections. 
+          A list of auth scheme collections.
           To satisfy the security requirements, the caller must satisfy at least one collection of schemes.
       idempotent: boolean
       pagination: optional<Pagination>
@@ -422,6 +422,10 @@ types:
       step:
         docs: |
           The step size used to increment the page offset between every new page.
+        type: optional<RequestProperty>
+      perPage:
+        docs: |
+          A request property that indicates the number of items to return per page.
         type: optional<RequestProperty>
 
   CustomPagination:

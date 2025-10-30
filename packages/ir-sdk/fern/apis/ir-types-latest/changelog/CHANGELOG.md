@@ -5,6 +5,10 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [v61.5.0] - 2025-10-30
+
+- Feature: Add `perPage` to offset pagination to support more accurate `hasNextPage()` calculation.
+
 ## [v61.4.0] - 2025-10-14
 
 - Feature: Add `CratesPublishTarget` for Rust crates.io publishing support
@@ -46,7 +50,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [v60.1.0] - 2025-09-18
 
-- Feature: added `x-fern-retries` OpenAPI extension flag 
+- Feature: added `x-fern-retries` OpenAPI extension flag
 
 ## [v60.0.1] - 2025-09-15
 

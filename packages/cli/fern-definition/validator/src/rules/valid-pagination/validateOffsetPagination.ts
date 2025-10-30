@@ -43,6 +43,16 @@ export function validateOffsetPagination({
         })
     );
 
+    violations.push(
+        ...validatePerPageProperty({
+            endpointId,
+            endpoint,
+            typeResolver,
+            file,
+            offsetPagination
+        })
+    );
+
     const resolvedResponseType = resolveResponseType({ endpoint, typeResolver, file });
     if (resolvedResponseType == null) {
         violations.push({
@@ -125,6 +135,35 @@ function validateStepProperty({
         requestProperty: offsetPagination.step,
         propertyValidator: {
             propertyID: "step",
+            validate: isValidOffsetType
+        }
+    });
+}
+
+function validatePerPageProperty({
+    endpointId,
+    endpoint,
+    typeResolver,
+    file,
+    offsetPagination
+}: {
+    endpointId: string;
+    endpoint: RawSchemas.HttpEndpointSchema;
+    typeResolver: TypeResolver;
+    file: FernFileContext;
+    offsetPagination: RawSchemas.OffsetPaginationSchema;
+}): RuleViolation[] {
+    if (offsetPagination["per-page"] == null) {
+        return [];
+    }
+    return validateRequestProperty({
+        endpointId,
+        endpoint,
+        typeResolver,
+        file,
+        requestProperty: offsetPagination["per-page"],
+        propertyValidator: {
+            propertyID: "per-page",
             validate: isValidOffsetType
         }
     });

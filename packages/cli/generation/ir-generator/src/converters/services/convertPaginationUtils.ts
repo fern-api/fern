@@ -23,6 +23,7 @@ export interface OffsetPaginationPropertyComponents {
     results: string[];
     step: string[] | undefined;
     hasNextPage: string[] | undefined;
+    perPage: string[] | undefined;
 }
 
 export interface CustomPaginationPropertyComponents {
@@ -42,6 +43,10 @@ export function getPaginationPropertyComponents(
             hasNextPage:
                 endpointPagination["has-next-page"] != null
                     ? getResponsePropertyComponents(endpointPagination["has-next-page"])
+                    : undefined,
+            perPage:
+                endpointPagination["per-page"] != null
+                    ? getRequestPropertyComponents(endpointPagination["per-page"])
                     : undefined
         };
     } else if (isRawCursorPaginationSchema(endpointPagination)) {
