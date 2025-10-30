@@ -46,3 +46,44 @@ jobs:
       - name: Run Tests
         run: |
           composer test
+
+  publish:
+    needs: [ compile, unit-tests ]
+    if: github.event_name == 'push' && contains(github.ref, 'refs/tags/')
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v4
+      
+      - name: Setup PHP
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: "8.1"
+
+      - name: Install tools
+        run: |
+          composer install
+
+      - name: Check if Packagist package exists
+        id: packagist_check
+        run: |
+          PACKAGE_NAME="${{ secrets.PACKAGIST_PACKAGE }}"
+          STATUS=$(curl -s -o /dev/null -w "%{http_code}" "https://packagist.org/packages/$PACKAGE_NAME.json")
+          echo "status=$STATUS" >> $GITHUB_OUTPUT
+
+      - name: Create Packagist Package (first publish)
+        if: steps.packagist_check.outputs.status == '404'
+        env:
+          PACKAGIST_TOKEN: ${{ secrets.PACKAGIST_TOKEN }}
+        run: |
+          curl -X POST -H "Content-Type: application/json" \
+            -d '{"repository":{"url":"https://github.com/${{ github.repository }}"}}' \
+            "https://packagist.org/api/create-package?username=${{ secrets.PACKAGIST_USERNAME }}&apiToken=${{ secrets.PACKAGIST_TOKEN }}"
+
+      - name: Publish to Packagist
+        env:
+          PACKAGIST_TOKEN: ${{ secrets.PACKAGIST_TOKEN }}
+        run: |
+          curl -X POST -H "Content-Type: application/json" \
+            -d '{"repository":{"url":"https://github.com/${{ github.repository }}"}}' \
+            https://packagist.org/api/update-package?username=${{ secrets.PACKAGIST_USERNAME }}\&apiToken=${{ secrets.PACKAGIST_TOKEN }}
