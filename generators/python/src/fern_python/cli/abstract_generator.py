@@ -373,13 +373,10 @@ jobs:
         uses: actions/setup-python@v4
         with:
           python-version: 3.8
-      - name: Bootstrap poetry
-        run: |
-          curl -sSL https://install.python-poetry.org | python - -y --version 1.5.1
-      - name: Install dependencies
-        run: poetry install
+      - name: Install uv
+        run: pip install uv==0.8.23
       - name: Compile
-        run: poetry run mypy .
+        run: uv run --frozen mypy .
   test:
     runs-on: ubuntu-latest
     steps:
@@ -389,23 +386,20 @@ jobs:
         uses: actions/setup-python@v4
         with:
           python-version: 3.8
-      - name: Bootstrap poetry
-        run: |
-          curl -sSL https://install.python-poetry.org | python - -y --version 1.5.1
-      - name: Install dependencies
-        run: poetry install
+      - name: Install uv
+        run: pip install uv==0.8.23
 """
         if write_unit_tests:
             workflow_yaml += """
       - name: Install Fern
         run: npm install -g fern-api
       - name: Test
-        run: fern test --command "poetry run pytest -rP ."
+        run: fern test --command "uv run --frozen pytest -rP ."
 """
         else:
             workflow_yaml += """
       - name: Test
-        run: poetry run pytest -rP .
+        run: uv run --frozen pytest -rP .
 """
         if output_mode.publish_info is not None:
             publish_info_union = output_mode.publish_info.get_as_union()
@@ -427,13 +421,10 @@ jobs:
         uses: actions/setup-python@v4
         with:
           python-version: 3.8
-      - name: Bootstrap poetry
-        run: |
-          curl -sSL https://install.python-poetry.org | python - -y --version 1.5.1
-      - name: Install dependencies
-        run: poetry install
+      - name: Install uv
+        run: pip install uv==0.8.23
       - name: Build package
-        run: poetry build
+        run: uv build
       - name: Store the distribution packages
         uses: actions/upload-artifact@v4
         with:
