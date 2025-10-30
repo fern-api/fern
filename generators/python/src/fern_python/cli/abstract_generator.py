@@ -14,15 +14,7 @@ from fern_python.generator_exec_wrapper import GeneratorExecWrapper
 import fern.ir.resources as ir_types
 from fern.generator_exec import (
     GeneratorConfig,
-    GeneratorRegistriesConfigV2,
-    MavenRegistryConfig,
-    MavenRegistryConfigV2,
-    NpmRegistryConfig,
-    NpmRegistryConfigV2,
-    NugetRegistryConfig,
     PypiMetadata,
-    PypiRegistryConfig,
-    RubyGemsRegistryConfig,
 )
 from fern.generator_exec.config import (
     GeneratorPublishConfig,
@@ -223,9 +215,10 @@ class AbstractGenerator(ABC):
         publish_config: GeneratorPublishConfig | None,
     ) -> None:
         import logging
+
         logger = logging.getLogger("fern_python.cli.abstract_generator._write_files_for_github_repo")
         logger.debug("Starting to write files for GitHub repository...")
-        
+
         logger.debug("Adding .gitignore file to project.")
         project.add_file(
             ".gitignore",
