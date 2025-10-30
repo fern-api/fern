@@ -937,18 +937,20 @@ export class DocsDefinitionResolver {
         return {
             type: "sidebarRoot",
             id,
-            children: [{
-                type: "varianted",
-                id,
-                children: await Promise.all(items.map((item) => this.toVariantNode(item, id, parentSlug))),
-            }]
+            children: [
+                {
+                    type: "varianted",
+                    id,
+                    children: await Promise.all(items.map((item) => this.toVariantNode(item, id, parentSlug)))
+                }
+            ]
         };
     }
 
     private async toVariantNode(
         item: docsYml.TabVariant,
         prefix: string,
-        parentSlug: FernNavigation.V1.SlugGenerator,
+        parentSlug: FernNavigation.V1.SlugGenerator
     ): Promise<FernNavigation.V1.VariantNode> {
         const id = this.#idgen.get(`${prefix}/variant/${item.slug ?? kebabCase(item.title)}`);
         const children = await Promise.all(item.layout.map((item) => this.toVariantChild(item, id, parentSlug)));
@@ -961,10 +963,12 @@ export class DocsDefinitionResolver {
             image: undefined,
             children,
             title: item.title,
-            slug: parentSlug.apply({
-                urlSlug: item.slug ?? kebabCase(item.title),
-                skipUrlSlug: item.skipUrlSlug
-            }).get(),
+            slug: parentSlug
+                .apply({
+                    urlSlug: item.slug ?? kebabCase(item.title),
+                    skipUrlSlug: item.skipUrlSlug
+                })
+                .get(),
             icon: item.icon,
             hidden: item.hidden,
             authed: undefined,
@@ -985,7 +989,7 @@ export class DocsDefinitionResolver {
             apiSection: async (value) => this.toApiSectionNode({ item: value, parentSlug }),
             section: async (value) => this.toSectionNode({ prefix, item: value, parentSlug }),
             link: async (value) => this.toLinkNode(value),
-            changelog: async (value) => this.toChangelogNode(value, parentSlug),
+            changelog: async (value) => this.toChangelogNode(value, parentSlug)
         });
     }
 
@@ -1009,7 +1013,7 @@ export class DocsDefinitionResolver {
             section: async (value) =>
                 this.toSectionNode({ prefix, item: value, parentSlug, hideChildren, parentAvailability }),
             link: async (value) => this.toLinkNode(value),
-            changelog: async (value) => this.toChangelogNode(value, parentSlug, hideChildren),
+            changelog: async (value) => this.toChangelogNode(value, parentSlug, hideChildren)
         });
     }
 

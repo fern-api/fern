@@ -227,7 +227,9 @@ export declare namespace TabbedNavigationChild {
     }
 }
 
-export interface TabVariant extends CjsFdrSdk.navigation.v1.WithPermissions, CjsFdrSdk.navigation.latest.WithFeatureFlags {
+export interface TabVariant
+    extends CjsFdrSdk.navigation.v1.WithPermissions,
+        CjsFdrSdk.navigation.latest.WithFeatureFlags {
     title: string;
     subtitle: string | undefined;
     icon: string | undefined;
@@ -245,7 +247,7 @@ export type DocsNavigationItem =
     | DocsNavigationItem.Link
     | DocsNavigationItem.Changelog;
 
-export declare namespace DocsNavigationItem {   
+export declare namespace DocsNavigationItem {
     export interface Page
         extends CjsFdrSdk.navigation.v1.WithPermissions,
             CjsFdrSdk.navigation.latest.WithFeatureFlags {

@@ -704,6 +704,7 @@ async function convertNavigationTabConfiguration({
                     slug: variant.slug,
                     skipUrlSlug: variant.skipSlug,
                     hidden: variant.hidden,
+                    default: variant.default,
                     viewers: parseRoles(variant.viewers),
                     orphaned: variant.orphaned,
                     featureFlags: convertFeatureFlag(variant.featureFlag)
