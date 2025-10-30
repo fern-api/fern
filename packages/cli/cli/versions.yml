@@ -1,6 +1,14 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
 - changelogEntry:
     - summary: |
+        Generate synthetic operationIds for OpenAPI callbacks that don't have an explicit operationId. This ensures callbacks are properly rendered in documentation even when the OpenAPI spec doesn't include an operationId for the callback operation.
+      type: fix
+  irVersion: 61
+  createdAt: "2025-10-29"
+  version: 0.100.2
+
+- changelogEntry:
+    - summary: |
         Fix OpenAPI auth scheme hard-coded names.
       type: fix
   irVersion: 61
