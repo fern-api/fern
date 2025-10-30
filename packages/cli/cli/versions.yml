@@ -1,6 +1,14 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
 - changelogEntry:
     - summary: |
+        Adds support for availability defined in API reference sections and packages.
+      type: feat
+  irVersion: 61
+  createdAt: "2025-10-29"
+  version: 0.99.4
+
+- changelogEntry:
+    - summary: |
         Improve YAML parsing error messages to include line number, column number, and a snippet of the problematic YAML when duplicate mapping keys or other syntax errors are encountered in generators.yml.
       type: fix
   irVersion: 61
