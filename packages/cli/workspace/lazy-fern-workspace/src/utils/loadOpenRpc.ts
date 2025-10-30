@@ -5,6 +5,7 @@ import { readFile } from "fs/promises";
 import yaml from "js-yaml";
 
 import { mergeWithOverrides } from "../loaders/mergeWithOverrides";
+import { normalizeRefsDeep } from "./normalizeRefs";
 
 export async function loadOpenRpc({
     context,
@@ -18,18 +19,19 @@ export async function loadOpenRpc({
     const contents = (await readFile(absoluteFilePath)).toString();
     let parsed: OpenrpcDocument;
     try {
-        // Try parsing as JSON first
         parsed = JSON.parse(contents) as OpenrpcDocument;
     } catch (e) {
-        // If JSON parsing fails, try YAML
         parsed = yaml.load(contents) as OpenrpcDocument;
     }
+    normalizeRefsDeep(parsed);
     if (absoluteFilePathToOverrides != null) {
-        return await mergeWithOverrides<OpenrpcDocument>({
+        const merged = await mergeWithOverrides<OpenrpcDocument>({
             absoluteFilePathToOverrides,
             context,
             data: parsed
         });
+        normalizeRefsDeep(merged);
+        return merged;
     }
     return parsed;
 }

@@ -4,6 +4,7 @@ import { TaskContext } from "@fern-api/task-context";
 import { OpenAPI } from "openapi-types";
 
 import { mergeWithOverrides } from "../loaders/mergeWithOverrides";
+import { normalizeRefsDeep } from "./normalizeRefs";
 import { parseOpenAPI } from "./parseOpenAPI";
 
 // NOTE: This will affect any property that is explicitly named with this. This will preserve null values underneath
@@ -30,6 +31,8 @@ export async function loadOpenAPI({
         absolutePathToOpenAPI
     });
 
+    normalizeRefsDeep(parsed);
+
     let overridesFilepath = undefined;
     if (absolutePathToOpenAPIOverrides != null) {
         overridesFilepath = absolutePathToOpenAPIOverrides;
@@ -52,8 +55,7 @@ export async function loadOpenAPI({
             data: parsed,
             allowNullKeys: OPENAPI_EXAMPLES_KEYS
         });
-        // Run the merged document through the parser again to ensure that any override
-        // references are resolved.
+        normalizeRefsDeep(merged);
         return await parseOpenAPI({
             absolutePathToOpenAPI,
             absolutePathToOpenAPIOverrides,
