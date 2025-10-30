@@ -12,4 +12,5 @@ export interface DocsSettingsConfig {
     httpSnippets?: FernDocsConfig.HttpSnippetsConfig;
     hide404Page?: boolean;
     useJavascriptAsTypescript?: boolean;
+    disableExplorerProxy?: boolean;
 }

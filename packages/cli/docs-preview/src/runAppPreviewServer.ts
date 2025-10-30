@@ -29,6 +29,7 @@ const EMPTY_DOCS_DEFINITION: DocsV1Read.DocsDefinition = {
         root: undefined,
         title: undefined,
         defaultLanguage: undefined,
+        languages: undefined,
         announcement: undefined,
         navbarLinks: undefined,
         footerLinks: undefined,
