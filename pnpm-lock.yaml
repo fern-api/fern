@@ -4974,6 +4974,15 @@ importers:
       '@fern-fern/fiddle-sdk':
         specifier: 0.0.656
         version: 0.0.656
+      node-fetch:
+        specifier: '2'
+        version: 2.7.0
+      qs:
+        specifier: 6.13.0
+        version: 6.13.0
+      readable-stream:
+        specifier: ^4.7.0
+        version: 4.7.0
       zod:
         specifier: ^3.22.3
         version: 3.25.76
@@ -4984,6 +4993,15 @@ importers:
       '@types/node':
         specifier: 18.15.3
         version: 18.15.3
+      '@types/node-fetch':
+        specifier: '2'
+        version: 2.6.9
+      '@types/qs':
+        specifier: 6.9.15
+        version: 6.9.15
+      '@types/readable-stream':
+        specifier: ^4.0.22
+        version: 4.0.22
       depcheck:
         specifier: ^1.4.7
         version: 1.4.7
@@ -10545,8 +10563,8 @@ packages:
   '@types/react@18.3.25':
     resolution: {integrity: sha512-oSVZmGtDPmRZtVDqvdKUi/qgCsWp5IDY29wp8na8Bj4B3cc99hfNzvNhlMkVVxctkAOGUA3Km7MMpBHAnWfcIA==}
 
-  '@types/readable-stream@4.0.21':
-    resolution: {integrity: sha512-19eKVv9tugr03IgfXlA9UVUVRbW6IuqRO5B92Dl4a6pT7K8uaGrNS0GkxiZD0BOk6PLuXl5FhWl//eX/pzYdTQ==}
+  '@types/readable-stream@4.0.22':
+    resolution: {integrity: sha512-/FFhJpfCLAPwAcN3mFycNUa77ddnr8jTgF5VmSNetaemWB2cIlfCA9t0YTM3JAT0wOcv8D4tjPo7pkDhK3EJIg==}
 
   '@types/semver@7.7.1':
     resolution: {integrity: sha512-FmgJfu+MOcQ370SD0ev7EI8TlCAfKYU+B4m5T3yXc1CiRN94g/SZPtsCkk506aUDtlMnFZvasDwHHUcZUEaYuA==}
@@ -16907,7 +16925,7 @@ snapshots:
   '@fern-api/fdr-sdk@0.139.33-21b1b47db(typescript@5.9.3)':
     dependencies:
       '@fern-api/ui-core-utils': 0.139.33-21b1b47db
-      '@types/readable-stream': 4.0.21
+      '@types/readable-stream': 4.0.22
       '@ungap/structured-clone': 1.3.0
       dayjs: 1.11.18
       es-toolkit: 1.39.10
@@ -18342,7 +18360,7 @@ snapshots:
       '@types/prop-types': 15.7.15
       csstype: 3.1.3
 
-  '@types/readable-stream@4.0.21':
+  '@types/readable-stream@4.0.22':
     dependencies:
       '@types/node': 18.19.129
 

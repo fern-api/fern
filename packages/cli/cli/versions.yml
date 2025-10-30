@@ -1,6 +1,14 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
 - changelogEntry:
     - summary: |
+        Add support for explicit default tab variants in tabbed navigation. You can now specify which tab variant should be the default using the `default: true` property instead of relying on the first tab being default.
+      type: feat
+  irVersion: 61
+  createdAt: "2025-10-30"
+  version: 0.100.0
+
+- changelogEntry:
+    - summary: |
         Adds support for availability defined in API reference sections and packages.
       type: feat
   irVersion: 61

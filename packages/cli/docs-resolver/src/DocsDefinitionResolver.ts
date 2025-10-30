@@ -928,6 +928,71 @@ export class DocsDefinitionResolver {
         };
     }
 
+    private async toSidebarRootNodeWithVariants(
+        prefix: string,
+        items: docsYml.TabVariant[],
+        parentSlug: FernNavigation.V1.SlugGenerator
+    ): Promise<FernNavigation.V1.SidebarRootNode> {
+        const id = this.#idgen.get(`${prefix}/root`);
+        return {
+            type: "sidebarRoot",
+            id,
+            children: [
+                {
+                    type: "varianted",
+                    id,
+                    children: await Promise.all(items.map((item) => this.toVariantNode(item, id, parentSlug)))
+                }
+            ]
+        };
+    }
+
+    private async toVariantNode(
+        item: docsYml.TabVariant,
+        prefix: string,
+        parentSlug: FernNavigation.V1.SlugGenerator
+    ): Promise<FernNavigation.V1.VariantNode> {
+        const id = this.#idgen.get(`${prefix}/variant/${item.slug ?? kebabCase(item.title)}`);
+        const children = await Promise.all(item.layout.map((item) => this.toVariantChild(item, id, parentSlug)));
+        return {
+            type: "variant",
+            id,
+            variantId: FernNavigation.V1.VariantId(item.title),
+            subtitle: item.subtitle ?? "",
+            default: item.default ?? false,
+            image: undefined,
+            children,
+            title: item.title,
+            slug: parentSlug
+                .apply({
+                    urlSlug: item.slug ?? kebabCase(item.title),
+                    skipUrlSlug: item.skipUrlSlug
+                })
+                .get(),
+            icon: item.icon,
+            hidden: item.hidden,
+            authed: undefined,
+            viewers: item.viewers,
+            orphaned: item.orphaned,
+            featureFlags: item.featureFlags,
+            pointsTo: undefined
+        };
+    }
+
+    private async toVariantChild(
+        item: docsYml.DocsNavigationItem,
+        prefix: string,
+        parentSlug: FernNavigation.V1.SlugGenerator
+    ): Promise<FernNavigation.V1.VariantChild> {
+        return visitDiscriminatedUnion(item)._visit<Promise<FernNavigation.V1.VariantChild>>({
+            page: async (value) => this.toPageNode({ item: value, parentSlug }),
+            apiSection: async (value) => this.toApiSectionNode({ item: value, parentSlug }),
+            section: async (value) => this.toSectionNode({ prefix, item: value, parentSlug }),
+            link: async (value) => this.toLinkNode(value),
+            changelog: async (value) => this.toChangelogNode(value, parentSlug)
+        });
+    }
+
     private async toNavigationChild({
         prefix,
         item,
@@ -1188,7 +1253,8 @@ export class DocsDefinitionResolver {
         return visitDiscriminatedUnion(item.child)._visit<Promise<FernNavigation.V1.TabChild>>({
             link: ({ href }) => this.toTabLinkNode(item, href),
             layout: ({ layout }) => this.toTabNode(prefix, item, layout, parentSlug),
-            changelog: ({ changelog }) => this.toTabChangelogNode(item, changelog, parentSlug)
+            changelog: ({ changelog }) => this.toTabChangelogNode(item, changelog, parentSlug),
+            variants: ({ variants }) => this.toTabNodeWithVariants(prefix, item, variants, parentSlug)
         });
     }
 
@@ -1248,6 +1314,33 @@ export class DocsDefinitionResolver {
             orphaned: item.orphaned,
             pointsTo: undefined,
             child: await this.toSidebarRootNode(id, layout, slug),
+            featureFlags: item.featureFlags
+        };
+    }
+
+    private async toTabNodeWithVariants(
+        prefix: string,
+        item: docsYml.TabbedNavigation,
+        variants: docsYml.TabVariant[],
+        parentSlug: FernNavigation.V1.SlugGenerator
+    ): Promise<FernNavigation.V1.TabNode> {
+        const id = this.#idgen.get(`${prefix}/tab`);
+        const slug = parentSlug.apply({
+            urlSlug: item.slug ?? kebabCase(item.title),
+            skipUrlSlug: item.skipUrlSlug
+        });
+        return {
+            type: "tab",
+            id,
+            title: item.title,
+            slug: slug.get(),
+            icon: item.icon,
+            hidden: item.hidden,
+            authed: undefined,
+            viewers: item.viewers,
+            orphaned: item.orphaned,
+            pointsTo: undefined,
+            child: await this.toSidebarRootNodeWithVariants(id, variants, slug),
             featureFlags: item.featureFlags
         };
     }
