@@ -332,7 +332,14 @@ export class WireTestFunctionGenerator {
                                     methodName:
                                         exampleUnionType.singleUnionType.wireDiscriminantValue.name.camelCase
                                             .unsafeName,
-                                    arguments_: []
+                                    arguments_: [
+                                        swift.functionArgument({
+                                            value: swift.Expression.contextualMethodCall({
+                                                methodName: "init",
+                                                arguments_: []
+                                            })
+                                        })
+                                    ]
                                 }),
                             samePropertiesAsObject: (exampleObjectTypeWithId) =>
                                 swift.Expression.contextualMethodCall({
