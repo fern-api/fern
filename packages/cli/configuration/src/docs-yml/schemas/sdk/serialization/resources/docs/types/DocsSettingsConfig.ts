@@ -24,6 +24,10 @@ export const DocsSettingsConfig: core.serialization.ObjectSchema<
         "use-javascript-as-typescript",
         core.serialization.boolean().optional(),
     ),
+    disableExplorerProxy: core.serialization.property(
+        "disable-explorer-proxy",
+        core.serialization.boolean().optional(),
+    ),
 });
 
 export declare namespace DocsSettingsConfig {
@@ -35,5 +39,6 @@ export declare namespace DocsSettingsConfig {
         "http-snippets"?: HttpSnippetsConfig.Raw | null;
         "hide-404-page"?: boolean | null;
         "use-javascript-as-typescript"?: boolean | null;
+        "disable-explorer-proxy"?: boolean | null;
     }
 }

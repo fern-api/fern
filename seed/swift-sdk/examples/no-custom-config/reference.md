@@ -639,7 +639,7 @@ private func main() async throws {
             ),
             name: "name"
         ),
-        metadata: Metadata.html(
+        metadata: MetadataType.html(
             .init(
                 extra: [
                     "extra": "extra"

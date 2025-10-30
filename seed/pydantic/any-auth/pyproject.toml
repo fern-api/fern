@@ -30,7 +30,7 @@ packages = [
     { include = "seed/any_auth", from = "src"}
 ]
 
-[project.urls]
+[tool.poetry.urls]
 Repository = 'https://github.com/any-auth/fern'
 
 [tool.poetry.dependencies]

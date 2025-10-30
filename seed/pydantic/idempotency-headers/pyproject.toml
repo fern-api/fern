@@ -30,7 +30,7 @@ packages = [
     { include = "seed/idempotency_headers", from = "src"}
 ]
 
-[project.urls]
+[tool.poetry.urls]
 Repository = 'https://github.com/idempotency-headers/fern'
 
 [tool.poetry.dependencies]

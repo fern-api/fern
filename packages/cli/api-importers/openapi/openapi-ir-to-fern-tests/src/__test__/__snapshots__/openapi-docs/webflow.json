@@ -56034,9 +56034,15 @@ service:
   "packageMarkers": {},
   "rootApiFile": {
     "contents": {
-      "auth": "BearerAuthScheme",
+      "auth": "OAuth2",
       "auth-schemes": {
-        "BearerAuthScheme": {
+        "ApiKey": {
+          "scheme": "bearer",
+          "token": {
+            "name": "access_token",
+          },
+        },
+        "OAuth2": {
           "scheme": "bearer",
         },
       },
@@ -56059,9 +56065,13 @@ environments:
   Default: https://api.webflow.com/v2
 default-environment: Default
 auth-schemes:
-  BearerAuthScheme:
+  OAuth2:
     scheme: bearer
-auth: BearerAuthScheme
+  ApiKey:
+    scheme: bearer
+    token:
+      name: access_token
+auth: OAuth2
 ",
   },
 }

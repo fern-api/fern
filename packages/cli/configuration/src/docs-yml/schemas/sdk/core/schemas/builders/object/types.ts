@@ -1,4 +1,4 @@
-import { BaseSchema, inferParsed, inferRaw, Schema } from "../../Schema";
+import { BaseSchema, Schema, inferParsed, inferRaw } from "../../Schema";
 import { addQuestionMarksToNullableProperties } from "../../utils/addQuestionMarksToNullableProperties";
 import { ObjectLikeUtils } from "../object-like";
 import { SchemaUtils } from "../schema-utils";

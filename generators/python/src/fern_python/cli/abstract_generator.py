@@ -218,13 +218,104 @@ class AbstractGenerator(ABC):
                 """
             ),
         )
+        # Use OIDC workflow if token is set to 'OIDC', otherwise use legacy workflow
+        use_oidc_workflow = False
+        if output_mode.publish_info is not None:
+            publish_info_union = output_mode.publish_info.get_as_union()
+            if publish_info_union.type == "pypi":
+                use_oidc_workflow = publish_info_union.password_environment_variable == "OIDC"
+        
         project.add_file(
             ".github/workflows/ci.yml",
-            self._get_github_workflow(output_mode, write_unit_tests),
+            self._get_github_workflow(output_mode, write_unit_tests) if use_oidc_workflow else self._get_github_workflow_legacy(output_mode, write_unit_tests),
         )
         project.add_file("tests/custom/test_client.py", self._get_client_test())
 
+    def _get_github_workflow_legacy(self, output_mode: GithubOutputMode, write_unit_tests: bool) -> str:
+        workflow_yaml = """name: ci
+on: [push]
+jobs:
+  compile:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v4
+      - name: Set up python
+        uses: actions/setup-python@v4
+        with:
+          python-version: 3.8
+      - name: Bootstrap poetry
+        run: |
+          curl -sSL https://install.python-poetry.org | python - -y --version 1.5.1
+      - name: Install dependencies
+        run: poetry install
+      - name: Compile
+        run: poetry run mypy .
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v4
+      - name: Set up python
+        uses: actions/setup-python@v4
+        with:
+          python-version: 3.8
+      - name: Bootstrap poetry
+        run: |
+          curl -sSL https://install.python-poetry.org | python - -y --version 1.5.1
+      - name: Install dependencies
+        run: poetry install
+"""
+        if write_unit_tests:
+            workflow_yaml += """
+      - name: Install Fern
+        run: npm install -g fern-api
+      - name: Test
+        run: fern test --command "poetry run pytest -rP ."
+"""
+        else:
+            workflow_yaml += """
+      - name: Test
+        run: poetry run pytest -rP .
+"""
+        if output_mode.publish_info is not None:
+            publish_info_union = output_mode.publish_info.get_as_union()
+            if publish_info_union.type != "pypi":
+                raise RuntimeError("Publish info is for " + publish_info_union.type)
+            # First condition is for resilience in the event that Fiddle isn't upgraded to include the new flag
+            if (
+                publish_info_union.should_generate_publish_workflow is None
+                or publish_info_union.should_generate_publish_workflow
+            ):
+                workflow_yaml += f"""
+  publish:
+    needs: [compile, test]
+    if: github.event_name == 'push' && contains(github.ref, 'refs/tags/')
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v4
+      - name: Set up python
+        uses: actions/setup-python@v4
+        with:
+          python-version: 3.8
+      - name: Bootstrap poetry
+        run: |
+          curl -sSL https://install.python-poetry.org | python - -y --version 1.5.1
+      - name: Install dependencies
+        run: poetry install
+      - name: Publish to pypi
+        run: |
+          poetry config repositories.{AbstractGenerator._REMOTE_PYPI_REPO_NAME} {publish_info_union.registry_url}
+          poetry --no-interaction -v publish --build --repository {AbstractGenerator._REMOTE_PYPI_REPO_NAME} --username "${publish_info_union.username_environment_variable}" --password "${publish_info_union.password_environment_variable}"
+        env:
+          {publish_info_union.username_environment_variable}: ${{{{ secrets.{publish_info_union.username_environment_variable} }}}}
+          {publish_info_union.password_environment_variable}: ${{{{ secrets.{publish_info_union.password_environment_variable} }}}}
+"""
+        return workflow_yaml
+
     def _get_github_workflow(self, output_mode: GithubOutputMode, write_unit_tests: bool) -> str:
+        # new workflow that supports automated OIDC-attestation signing and publishing to PyPI
         workflow_yaml = """name: ci
 
 on: [push]

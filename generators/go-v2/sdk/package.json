@@ -47,6 +47,7 @@
     "@fern-api/go-base": "workspace:*",
     "@fern-api/go-dynamic-snippets": "workspace:*",
     "@fern-api/logger": "workspace:*",
+    "@fern-api/mock-utils": "workspace:*",
     "@fern-fern/generator-cli-sdk": "^0.1.5",
     "@fern-fern/generator-exec-sdk": "^0.0.1167",
     "@fern-fern/ir-sdk": "^60.3.1",

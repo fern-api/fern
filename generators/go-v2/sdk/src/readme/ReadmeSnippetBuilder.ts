@@ -247,6 +247,17 @@ export class ReadmeSnippetBuilder extends AbstractReadmeSnippetBuilder {
                     return err
                 }
             }
+
+            // Alternatively, access the next cursor directly from the raw response.
+            ctx := context.TODO()
+            page, err := ${this.getMethodCall(endpoint)}(
+                ctx,
+                ...
+            )
+            if err != nil {
+                return err
+            }
+            nextCursor := page.RawResponse.Next
         `);
     }
 

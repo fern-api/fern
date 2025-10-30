@@ -302,6 +302,9 @@
       "path": "./packages/commons/test-utils"
     },
     {
+      "path": "./packages/commons/mock-utils"
+    },
+    {
       "path": "./packages/cli/configuration"
     },
     {

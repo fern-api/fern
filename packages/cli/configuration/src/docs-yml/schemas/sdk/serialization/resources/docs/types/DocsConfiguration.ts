@@ -20,6 +20,7 @@ import { FooterLinksConfig } from "./FooterLinksConfig";
 import { PageActionsConfig } from "./PageActionsConfig";
 import { ExperimentalConfig } from "./ExperimentalConfig";
 import { ProgrammingLanguage } from "./ProgrammingLanguage";
+import { Language } from "./Language";
 import { AiChatConfig } from "./AiChatConfig";
 import { MetadataConfig } from "./MetadataConfig";
 import { RedirectConfig } from "./RedirectConfig";
@@ -29,6 +30,7 @@ import { ColorsConfiguration } from "./ColorsConfiguration";
 import { DocsTypographyConfig } from "./DocsTypographyConfig";
 import { LayoutConfig } from "./LayoutConfig";
 import { DocsSettingsConfig } from "./DocsSettingsConfig";
+import { ThemeConfig } from "./ThemeConfig";
 import { IntegrationsConfig } from "./IntegrationsConfig";
 import { CssConfig } from "./CssConfig";
 import { JsConfig } from "./JsConfig";
@@ -52,6 +54,7 @@ export const DocsConfiguration: core.serialization.ObjectSchema<
     pageActions: core.serialization.property("page-actions", PageActionsConfig.optional()),
     experimental: ExperimentalConfig.optional(),
     defaultLanguage: core.serialization.property("default-language", ProgrammingLanguage.optional()),
+    languages: core.serialization.list(Language).optional(),
     aiChat: core.serialization.property("ai-chat", AiChatConfig.optional()),
     aiSearch: core.serialization.property("ai-search", AiChatConfig.optional()),
     metadata: MetadataConfig.optional(),
@@ -63,6 +66,7 @@ export const DocsConfiguration: core.serialization.ObjectSchema<
     typography: DocsTypographyConfig.optional(),
     layout: LayoutConfig.optional(),
     settings: DocsSettingsConfig.optional(),
+    theme: ThemeConfig.optional(),
     integrations: IntegrationsConfig.optional(),
     css: CssConfig.optional(),
     js: JsConfig.optional(),
@@ -85,6 +89,7 @@ export declare namespace DocsConfiguration {
         "page-actions"?: PageActionsConfig.Raw | null;
         experimental?: ExperimentalConfig.Raw | null;
         "default-language"?: ProgrammingLanguage.Raw | null;
+        languages?: Language.Raw[] | null;
         "ai-chat"?: AiChatConfig.Raw | null;
         "ai-search"?: AiChatConfig.Raw | null;
         metadata?: MetadataConfig.Raw | null;
@@ -96,6 +101,7 @@ export declare namespace DocsConfiguration {
         typography?: DocsTypographyConfig.Raw | null;
         layout?: LayoutConfig.Raw | null;
         settings?: DocsSettingsConfig.Raw | null;
+        theme?: ThemeConfig.Raw | null;
         integrations?: IntegrationsConfig.Raw | null;
         css?: CssConfig.Raw | null;
         js?: JsConfig.Raw | null;

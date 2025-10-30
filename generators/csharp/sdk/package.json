@@ -51,6 +51,7 @@
     "@fern-fern/generator-exec-sdk": "^0.0.1167",
     "@fern-fern/ir-sdk": "^61.0.0",
     "@types/node": "18.15.3",
+    "@types/url-join": "4.0.1",
     "depcheck": "^1.4.7",
     "tsup": "^8.5.0",
     "typescript": "5.9.3",

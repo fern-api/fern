@@ -100,7 +100,7 @@ export class Complex {
             },
         );
         const dataWithRawResponse = await list(request).withRawResponse();
-        return new core.Pageable<SeedPagination.PaginatedConversationResponse, SeedPagination.Conversation>({
+        return new core.Page<SeedPagination.Conversation, SeedPagination.PaginatedConversationResponse>({
             response: dataWithRawResponse.data,
             rawResponse: dataWithRawResponse.rawResponse,
             hasNextPage: (response) =>
