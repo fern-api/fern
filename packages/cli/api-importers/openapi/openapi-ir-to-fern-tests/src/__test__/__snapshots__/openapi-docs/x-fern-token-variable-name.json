@@ -130,9 +130,12 @@
   "packageMarkers": {},
   "rootApiFile": {
     "contents": {
-      "auth": "BearerAuthScheme",
+      "auth": "api_key",
       "auth-schemes": {
-        "BearerAuthScheme": {
+        "access_token": {
+          "scheme": "bearer",
+        },
+        "api_key": {
           "scheme": "bearer",
           "token": {
             "name": "apiKey",
@@ -158,11 +161,13 @@ error-discrimination:
   strategy: status-code
 display-name: Test extension `x-fern-token-variable-name`.
 auth-schemes:
-  BearerAuthScheme:
+  api_key:
     scheme: bearer
     token:
       name: apiKey
-auth: BearerAuthScheme
+  access_token:
+    scheme: bearer
+auth: api_key
 headers:
   X-API-Key:
     type: string

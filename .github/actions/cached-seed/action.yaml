@@ -20,58 +20,26 @@ inputs:
     description: Whether to allow unexpected failures during seed generation
     required: false
     default: "false"
-  cache-disabled:
-    description: "Whether to skip caching and always regenerate"
-    required: false
-    default: "true"
 
 runs:
   using: "composite"
   steps:
-    - name: Generate input hash
-      if: inputs.cache-disabled != 'true'
-      id: hash
-      shell: bash
-      run: |
-        HASH=$(./scripts/hash.sh \
-          packages/seed \
-          test-definitions \
-          packages/ir-sdk/fern/apis \
-          packages/cli/generation/ir-generator \
-          ${{ inputs.generator-path }} \
-          seed/${{ inputs.generator-name }}/seed.yml \
-          --exclude versions.yml)
-        echo "hash=${HASH}" >> $GITHUB_OUTPUT
-
-    - name: Check cache
-      if: inputs.cache-disabled != 'true'
-      id: cache
-      uses: actions/cache/restore@v4
-      with:
-        path: seed/${{ inputs.generator-name }}
-        key: seed-${{ inputs.generator-name }}-${{ steps.hash.outputs.hash }}
-
     - name: Install
-      if: steps.cache.outputs.cache-hit != 'true' || inputs.cache-disabled == 'true'
       uses: ./.github/actions/install
 
     - uses: bufbuild/buf-setup-action@v1.34.0
-      if: steps.cache.outputs.cache-hit != 'true' || inputs.cache-disabled == 'true'
       with:
         github_token: ${{ github.token }}
 
     - uses: actions/setup-go@v5
-      if: steps.cache.outputs.cache-hit != 'true' || inputs.cache-disabled == 'true'
       with:
         go-version: "stable"
 
     - name: Install protoc-gen-openapi
-      if: steps.cache.outputs.cache-hit != 'true' || inputs.cache-disabled == 'true'
       shell: bash
       run: go install github.com/fern-api/protoc-gen-openapi/cmd/protoc-gen-openapi@latest
 
     - name: Seed Test
-      if: steps.cache.outputs.cache-hit != 'true' || inputs.cache-disabled == 'true'
       shell: bash
       env:
         FORCE_COLOR: "2"
@@ -86,11 +54,4 @@ runs:
           --parallel 16 \
           ${FORMATTED_FIXTURES_COMMAND} \
           ${{ inputs.skip-scripts == 'true' && '--skip-scripts' || '' }} \
-          ${{ inputs.allow-unexpected-failures == 'true' && '--allow-unexpected-failures' || '' }}
-
-    - name: Save cache
-      if: steps.cache.outputs.cache-hit != 'true' && inputs.cache-disabled != 'true'
-      uses: actions/cache/save@v4
-      with:
-        path: seed/${{ inputs.generator-name }}
-        key: seed-${{ inputs.generator-name }}-${{ steps.hash.outputs.hash }}
+          ${{ inputs.allow-unexpected-failures == 'true' && '--allow-unexpected-failures' || '' }} | tee output.log

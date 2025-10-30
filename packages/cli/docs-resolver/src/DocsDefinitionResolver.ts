@@ -1,5 +1,5 @@
 import { SourceResolverImpl } from "@fern-api/cli-source-resolver";
-import { docsYml, parseDocsConfiguration, WithoutQuestionMarks } from "@fern-api/configuration-loader";
+import { docsYml, parseAudiences, parseDocsConfiguration, WithoutQuestionMarks } from "@fern-api/configuration-loader";
 import { assertNever, isNonNullish, visitDiscriminatedUnion } from "@fern-api/core-utils";
 import {
     parseImagePaths,
@@ -70,20 +70,145 @@ const defaultConfigureAiChat: ConfigureAiChatFn = async ({ aiChatConfig }) => {
     return;
 };
 
+export interface DocsDefinitionResolverArgs {
+    domain: string;
+    docsWorkspace: DocsWorkspace;
+    ossWorkspaces: OSSWorkspace[];
+    apiWorkspaces: AbstractAPIWorkspace<unknown>[];
+    taskContext: TaskContext;
+    // Optional
+    editThisPage?: docsYml.RawSchemas.EditThisPageConfig;
+    uploadFiles?: UploadFilesFn;
+    registerApi?: RegisterApiFn;
+    targetAudiences?: string[];
+}
+
 export class DocsDefinitionResolver {
-    constructor(
-        private domain: string,
-        private docsWorkspace: DocsWorkspace,
-        private ossWorkspaces: OSSWorkspace[],
-        private apiWorkspaces: AbstractAPIWorkspace<unknown>[],
-        private taskContext: TaskContext,
-        // Optional
-        private editThisPage?: docsYml.RawSchemas.EditThisPageConfig,
-        private uploadFiles: UploadFilesFn = defaultUploadFiles,
-        private registerApi: RegisterApiFn = defaultRegisterApi
-    ) {}
+    private domain: string;
+    private docsWorkspace: DocsWorkspace;
+    private ossWorkspaces: OSSWorkspace[];
+    private apiWorkspaces: AbstractAPIWorkspace<unknown>[];
+    private taskContext: TaskContext;
+    private editThisPage?: docsYml.RawSchemas.EditThisPageConfig;
+    private uploadFiles: UploadFilesFn;
+    private registerApi: RegisterApiFn;
+    private targetAudiences?: string[];
+
+    constructor({
+        domain,
+        docsWorkspace,
+        ossWorkspaces,
+        apiWorkspaces,
+        taskContext,
+        editThisPage,
+        uploadFiles = defaultUploadFiles,
+        registerApi = defaultRegisterApi,
+        targetAudiences
+    }: DocsDefinitionResolverArgs) {
+        this.domain = domain;
+        this.docsWorkspace = docsWorkspace;
+        this.ossWorkspaces = ossWorkspaces;
+        this.apiWorkspaces = apiWorkspaces;
+        this.taskContext = taskContext;
+        this.editThisPage = editThisPage;
+        this.uploadFiles = uploadFiles;
+        this.registerApi = registerApi;
+        this.targetAudiences = targetAudiences;
+    }
 
     #idgen = NodeIdGenerator.init();
+
+    /**
+     * Checks if an item should be included based on its audiences and the target audiences.
+     * An item is included if:
+     * 1. It has no audiences specified (visible to all), OR
+     * 2. There are no target audiences (showing all content), OR
+     * 3. There's at least one audience overlap between the item and target audiences
+     */
+    private shouldIncludeByAudience(itemAudiences?: string[]): boolean {
+        // If no audiences specified on the item, it's visible to all
+        if (!itemAudiences || itemAudiences.length === 0) {
+            return true;
+        }
+
+        // If no target audiences specified, show all content
+        if (!this.targetAudiences || this.targetAudiences.length === 0) {
+            return true;
+        }
+
+        // Check for audience overlap
+        return itemAudiences.some((audience) => this.targetAudiences?.includes(audience));
+    }
+
+    /**
+     * Applies audience-based filtering to the parsed docs configuration.
+     * Filters products, versions, and navigation items based on target audiences.
+     */
+    private applyAudienceFiltering(
+        config: WithoutQuestionMarks<docsYml.ParsedDocsConfiguration>
+    ): WithoutQuestionMarks<docsYml.ParsedDocsConfiguration> {
+        // Apply filtering by modifying the navigation in place
+        const filteredNavigation = this.filterNavigationByAudience(config.navigation);
+
+        return {
+            ...config,
+            navigation: filteredNavigation
+        };
+    }
+
+    /**
+     * Filters navigation configuration based on target audiences.
+     */
+    private filterNavigationByAudience(
+        navigation: docsYml.DocsNavigationConfiguration
+    ): docsYml.DocsNavigationConfiguration {
+        if (navigation.type === "untabbed") {
+            return navigation; // No filtering needed for untabbed navigation
+        }
+
+        if (navigation.type === "tabbed") {
+            return navigation; // No filtering needed for tabbed navigation
+        }
+
+        if (navigation.type === "versioned") {
+            return {
+                ...navigation,
+                versions: navigation.versions.filter((version) =>
+                    this.shouldIncludeByAudience(this.getRawVersionAudiences(version.version))
+                )
+            };
+        }
+
+        if (navigation.type === "productgroup") {
+            return {
+                ...navigation,
+                products: navigation.products.filter((product) => {
+                    const productAudiences = this.getRawProductAudiences(product.product);
+                    return this.shouldIncludeByAudience(productAudiences);
+                })
+            };
+        }
+
+        return navigation;
+    }
+
+    /**
+     * Gets the raw audiences for a product by looking up the original configuration.
+     */
+    private getRawProductAudiences(productName: string): string[] | undefined {
+        const rawProducts = this.docsWorkspace.config.products;
+        const product = rawProducts?.find((p) => p.displayName === productName);
+        return parseAudiences(product?.audiences);
+    }
+
+    /**
+     * Gets the raw audiences for a version by looking up the original configuration.
+     */
+    private getRawVersionAudiences(versionName: string): string[] | undefined {
+        const rawVersions = this.docsWorkspace.config.versions;
+        const version = rawVersions?.find((v) => v.displayName === versionName);
+        return parseAudiences(version?.audiences);
+    }
 
     private _parsedDocsConfig: WithoutQuestionMarks<docsYml.ParsedDocsConfiguration> | undefined;
     private get parsedDocsConfig(): WithoutQuestionMarks<docsYml.ParsedDocsConfiguration> {
@@ -104,6 +229,11 @@ export class DocsDefinitionResolver {
             absolutePathToFernFolder: this.docsWorkspace.absoluteFilePath,
             absoluteFilepathToDocsConfig: this.docsWorkspace.absoluteFilepathToDocsConfig
         });
+
+        // Apply audience-based filtering to the navigation if target audiences are specified
+        if (this.targetAudiences && this.targetAudiences.length > 0) {
+            this._parsedDocsConfig = this.applyAudienceFiltering(this._parsedDocsConfig);
+        }
 
         // Store raw markdown content before any processing
         for (const [relativePath, markdown] of Object.entries(this.parsedDocsConfig.pages)) {
@@ -486,6 +616,7 @@ export class DocsDefinitionResolver {
                     ? { text: this.parsedDocsConfig.announcement.message }
                     : undefined,
             pageActions: this.parsedDocsConfig.pageActions,
+            theme: undefined,
             // deprecated
             logo: undefined,
             logoV2: undefined,
@@ -797,6 +928,71 @@ export class DocsDefinitionResolver {
         };
     }
 
+    private async toSidebarRootNodeWithVariants(
+        prefix: string,
+        items: docsYml.TabVariant[],
+        parentSlug: FernNavigation.V1.SlugGenerator
+    ): Promise<FernNavigation.V1.SidebarRootNode> {
+        const id = this.#idgen.get(`${prefix}/root`);
+        return {
+            type: "sidebarRoot",
+            id,
+            children: [
+                {
+                    type: "varianted",
+                    id,
+                    children: await Promise.all(items.map((item) => this.toVariantNode(item, id, parentSlug)))
+                }
+            ]
+        };
+    }
+
+    private async toVariantNode(
+        item: docsYml.TabVariant,
+        prefix: string,
+        parentSlug: FernNavigation.V1.SlugGenerator
+    ): Promise<FernNavigation.V1.VariantNode> {
+        const id = this.#idgen.get(`${prefix}/variant/${item.slug ?? kebabCase(item.title)}`);
+        const children = await Promise.all(item.layout.map((item) => this.toVariantChild(item, id, parentSlug)));
+        return {
+            type: "variant",
+            id,
+            variantId: FernNavigation.V1.VariantId(item.title),
+            subtitle: item.subtitle ?? "",
+            default: item.default ?? false,
+            image: undefined,
+            children,
+            title: item.title,
+            slug: parentSlug
+                .apply({
+                    urlSlug: item.slug ?? kebabCase(item.title),
+                    skipUrlSlug: item.skipUrlSlug
+                })
+                .get(),
+            icon: item.icon,
+            hidden: item.hidden,
+            authed: undefined,
+            viewers: item.viewers,
+            orphaned: item.orphaned,
+            featureFlags: item.featureFlags,
+            pointsTo: undefined
+        };
+    }
+
+    private async toVariantChild(
+        item: docsYml.DocsNavigationItem,
+        prefix: string,
+        parentSlug: FernNavigation.V1.SlugGenerator
+    ): Promise<FernNavigation.V1.VariantChild> {
+        return visitDiscriminatedUnion(item)._visit<Promise<FernNavigation.V1.VariantChild>>({
+            page: async (value) => this.toPageNode({ item: value, parentSlug }),
+            apiSection: async (value) => this.toApiSectionNode({ item: value, parentSlug }),
+            section: async (value) => this.toSectionNode({ prefix, item: value, parentSlug }),
+            link: async (value) => this.toLinkNode(value),
+            changelog: async (value) => this.toChangelogNode(value, parentSlug)
+        });
+    }
+
     private async toNavigationChild({
         prefix,
         item,
@@ -1057,7 +1253,8 @@ export class DocsDefinitionResolver {
         return visitDiscriminatedUnion(item.child)._visit<Promise<FernNavigation.V1.TabChild>>({
             link: ({ href }) => this.toTabLinkNode(item, href),
             layout: ({ layout }) => this.toTabNode(prefix, item, layout, parentSlug),
-            changelog: ({ changelog }) => this.toTabChangelogNode(item, changelog, parentSlug)
+            changelog: ({ changelog }) => this.toTabChangelogNode(item, changelog, parentSlug),
+            variants: ({ variants }) => this.toTabNodeWithVariants(prefix, item, variants, parentSlug)
         });
     }
 
@@ -1117,6 +1314,33 @@ export class DocsDefinitionResolver {
             orphaned: item.orphaned,
             pointsTo: undefined,
             child: await this.toSidebarRootNode(id, layout, slug),
+            featureFlags: item.featureFlags
+        };
+    }
+
+    private async toTabNodeWithVariants(
+        prefix: string,
+        item: docsYml.TabbedNavigation,
+        variants: docsYml.TabVariant[],
+        parentSlug: FernNavigation.V1.SlugGenerator
+    ): Promise<FernNavigation.V1.TabNode> {
+        const id = this.#idgen.get(`${prefix}/tab`);
+        const slug = parentSlug.apply({
+            urlSlug: item.slug ?? kebabCase(item.title),
+            skipUrlSlug: item.skipUrlSlug
+        });
+        return {
+            type: "tab",
+            id,
+            title: item.title,
+            slug: slug.get(),
+            icon: item.icon,
+            hidden: item.hidden,
+            authed: undefined,
+            viewers: item.viewers,
+            orphaned: item.orphaned,
+            pointsTo: undefined,
+            child: await this.toSidebarRootNodeWithVariants(id, variants, slug),
             featureFlags: item.featureFlags
         };
     }

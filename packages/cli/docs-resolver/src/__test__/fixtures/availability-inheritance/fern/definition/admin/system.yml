@@ -1,0 +1,23 @@
+# yaml-language-server: $schema=https://raw.githubusercontent.com/fern-api/fern/main/fern.schema.json
+
+service:
+  auth: false
+  base-path: /admin/system
+  endpoints:
+    healthCheck:
+      docs: System health check (should inherit from admin section)
+      method: GET
+      path: /health
+      response: HealthStatus
+
+    reboot:
+      docs: Reboot the system (alpha availability)
+      method: POST
+      path: /reboot
+      availability: alpha
+
+types:
+  HealthStatus:
+    properties:
+      status: string
+      uptime: integer

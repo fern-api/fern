@@ -106,9 +106,7 @@ import Trace
             serviceParam: 1,
             limit: 1,
             otherField: "otherField",
-            multiLineDocs: "multiLineDocs",
-            optionalMultipleField: ,
-            multipleField: 
+            multiLineDocs: "multiLineDocs"
         )
         try #require(response == expectedResponse)
     }

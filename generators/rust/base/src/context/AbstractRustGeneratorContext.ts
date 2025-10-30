@@ -122,6 +122,39 @@ export abstract class AbstractRustGeneratorContext<
         }
         this.logger.debug(`Registered ${inlineRequestCount} inline request filenames and type names`);
 
+        // Priority 2.5: File upload request bodies from ALL services
+        let fileUploadRequestCount = 0;
+        for (const service of Object.values(ir.services)) {
+            for (const endpoint of service.endpoints) {
+                if (endpoint.requestBody?.type === "fileUpload") {
+                    // Use endpoint name to generate request type name (like TypeScript generator)
+                    const requestName = `${endpoint.name.pascalCase.safeName}Request`;
+                    const baseFilename = convertPascalToSnakeCase(requestName);
+
+                    // Register both filename and type name
+                    const registeredFilename = this.project.filenameRegistry.registerFileUploadRequestFilename(
+                        endpoint.id,
+                        baseFilename
+                    );
+                    const registeredTypeName = this.project.filenameRegistry.registerFileUploadRequestTypeName(
+                        endpoint.id,
+                        requestName
+                    );
+
+                    // Log if collision was resolved
+                    if (registeredFilename !== baseFilename || registeredTypeName !== requestName) {
+                        this.logger.debug(
+                            `File upload request collision resolved: ` +
+                                `${requestName} → ${registeredTypeName}, ` +
+                                `${baseFilename}.rs → ${registeredFilename}.rs`
+                        );
+                    }
+                    fileUploadRequestCount++;
+                }
+            }
+        }
+        this.logger.debug(`Registered ${fileUploadRequestCount} file upload request filenames and type names`);
+
         // Priority 3: Query request types from ALL services
         let queryRequestCount = 0;
         for (const [serviceId, service] of Object.entries(ir.services)) {
@@ -559,6 +592,32 @@ export abstract class AbstractRustGeneratorContext<
      */
     public getQueryRequestUniqueTypeName(endpointId: string): string {
         return this.project.filenameRegistry.getQueryRequestTypeNameOrThrow(endpointId);
+    }
+
+    /**
+     * Get filename for file upload request body using endpoint ID.
+     * @param endpointId - The unique endpoint ID from IR (NOT the request name string)
+     */
+    public getFilenameForFileUploadRequestBody(endpointId: string): string {
+        return this.project.filenameRegistry.getFileUploadRequestFilenameOrThrow(endpointId);
+    }
+
+    /**
+     * Get module name for file upload request body from filename.
+     * This extracts the module name by removing the .rs extension from the filename.
+     */
+    public getModuleNameForFileUploadRequestBody(endpointId: string): string {
+        const filename = this.getFilenameForFileUploadRequestBody(endpointId);
+        return filename.replace(".rs", "");
+    }
+
+    /**
+     * Get unique type name for file upload request body using endpoint ID.
+     * @param endpointId - The unique endpoint ID from IR
+     * @returns The unique type name (e.g., UploadFileRequest2 if there's a collision)
+     */
+    public getFileUploadRequestTypeName(endpointId: string): string {
+        return this.project.filenameRegistry.getFileUploadRequestTypeNameOrThrow(endpointId);
     }
 
     /**

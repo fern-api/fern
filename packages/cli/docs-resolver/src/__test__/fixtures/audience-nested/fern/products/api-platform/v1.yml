@@ -1,0 +1,10 @@
+navigation:
+  - page: Platform v1.0 Overview
+    path: ../../platform/v1/overview.mdx
+  - api: Platform API v1.0
+    layout:
+      - section:
+          title: Basic Operations
+          contents:
+            - GET /v1/status
+            - POST /v1/initialize

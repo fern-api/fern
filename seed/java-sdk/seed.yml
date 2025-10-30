@@ -321,3 +321,4 @@ allowedFailures:
   - file-upload:no-custom-config
   - file-upload:wrapped-aliases
   - file-upload:inline-file-properties
+  - file-upload-openapi

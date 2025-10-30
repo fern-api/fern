@@ -25,7 +25,7 @@ export class PackageSwiftGenerator {
                 arguments_: [
                     swift.functionArgument({
                         label: "name",
-                        value: swift.Expression.stringLiteral(this.sdkGeneratorContext.srcTargetName)
+                        value: swift.Expression.stringLiteral(this.sdkGeneratorContext.sourceTargetName)
                     }),
                     swift.functionArgument({
                         label: "path",
@@ -48,7 +48,7 @@ export class PackageSwiftGenerator {
                         swift.functionArgument({
                             label: "dependencies",
                             value: swift.Expression.arrayLiteral({
-                                elements: [swift.Expression.stringLiteral(this.sdkGeneratorContext.srcTargetName)]
+                                elements: [swift.Expression.stringLiteral(this.sdkGeneratorContext.sourceTargetName)]
                             })
                         }),
                         swift.functionArgument({
@@ -144,7 +144,7 @@ export class PackageSwiftGenerator {
                                                     value: swift.Expression.arrayLiteral({
                                                         elements: [
                                                             swift.Expression.stringLiteral(
-                                                                this.sdkGeneratorContext.srcTargetName
+                                                                this.sdkGeneratorContext.sourceTargetName
                                                             )
                                                         ]
                                                     })

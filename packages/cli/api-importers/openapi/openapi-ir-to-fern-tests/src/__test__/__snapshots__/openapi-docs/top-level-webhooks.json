@@ -111,9 +111,12 @@ types:
   "packageMarkers": {},
   "rootApiFile": {
     "contents": {
-      "auth": "BearerAuthScheme",
+      "auth": "api_key",
       "auth-schemes": {
-        "BearerAuthScheme": {
+        "access_token": {
+          "scheme": "bearer",
+        },
+        "api_key": {
           "scheme": "bearer",
         },
       },
@@ -152,9 +155,11 @@ version:
     - 2.0.0
     - Latest
 auth-schemes:
-  BearerAuthScheme:
+  api_key:
     scheme: bearer
-auth: BearerAuthScheme
+  access_token:
+    scheme: bearer
+auth: api_key
 headers:
   X-API-Key:
     type: string

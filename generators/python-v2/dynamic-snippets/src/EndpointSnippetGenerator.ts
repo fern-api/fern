@@ -131,6 +131,16 @@ export class EndpointSnippetGenerator {
         if (environmentValue == null) {
             return [];
         }
+
+        if (environment != null && this.context.isMultiEnvironmentValues(environment)) {
+            return [
+                {
+                    name: "environment",
+                    value: environmentValue
+                }
+            ];
+        }
+
         return [
             {
                 name: this.getEnvironmentOptionName({ environment }),

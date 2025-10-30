@@ -49,8 +49,6 @@ import com.squareup.javapoet.FieldSpec;
 import com.squareup.javapoet.ParameterizedTypeName;
 import com.squareup.javapoet.TypeName;
 import java.nio.file.Files;
-import java.util.HashMap;
-import java.util.Map;
 import java.util.Optional;
 import okhttp3.*;
 
@@ -138,10 +136,10 @@ public final class WrappedRequestEndpointWriter extends AbstractEndpointWriter {
             } else if (generatedWrappedRequest.requestBodyGetter().get() instanceof InlinedRequestBodyGetters) {
                 InlinedRequestBodyGetters inlinedRequestBodyGetter = ((InlinedRequestBodyGetters)
                         generatedWrappedRequest.requestBodyGetter().get());
-                initializeRequestBodyProperties(inlinedRequestBodyGetter, requestBodyCodeBlock);
+                // Serialize the request object directly instead of manually building a properties map.
                 initializeRequestBody(
                         generatedObjectMapper,
-                        variables.getRequestBodyPropertiesName(),
+                        requestParameterName,
                         requestBodyCodeBlock,
                         sendContentType,
                         contentType);
@@ -220,34 +218,6 @@ public final class WrappedRequestEndpointWriter extends AbstractEndpointWriter {
         requestBodyCodeBlock.addStatement(
                 "$T $L = $L.build()", Request.class, variables.getOkhttpRequestName(), REQUEST_BUILDER_NAME);
         return requestBodyCodeBlock.build();
-    }
-
-    private void initializeRequestBodyProperties(
-            InlinedRequestBodyGetters inlinedRequestBody, CodeBlock.Builder requestBodyCodeBlock) {
-        requestBodyCodeBlock.addStatement(
-                "$T $L = new $T<>()",
-                ParameterizedTypeName.get(Map.class, String.class, Object.class),
-                variables.getRequestBodyPropertiesName(),
-                HashMap.class);
-        for (EnrichedObjectProperty bodyProperty : inlinedRequestBody.properties()) {
-            if (typeNameIsOptional(bodyProperty.poetTypeName())) {
-                requestBodyCodeBlock
-                        .beginControlFlow(
-                                "if ($L.$N().isPresent())", requestParameterName, bodyProperty.getterProperty())
-                        .addStatement(
-                                "$L.put($S, $L)",
-                                variables.getRequestBodyPropertiesName(),
-                                bodyProperty.wireKey().get(),
-                                requestParameterName + "." + bodyProperty.getterProperty().name + "()")
-                        .endControlFlow();
-            } else {
-                requestBodyCodeBlock.addStatement(
-                        "$L.put($S, $L)",
-                        variables.getRequestBodyPropertiesName(),
-                        bodyProperty.wireKey().get(),
-                        requestParameterName + "." + bodyProperty.getterProperty().name + "()");
-            }
-        }
     }
 
     private void initializeRequestBody(

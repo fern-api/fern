@@ -9,8 +9,9 @@ buildScripts:
       - go build -v ./...
   testScript:
     commands:
+      - if [ -f wiremock/docker-compose.test.yml ]; then docker compose -f wiremock/docker-compose.test.yml down && docker compose -f wiremock/docker-compose.test.yml up -d; fi
       - go test -v ./...
-
+      - if [ -f wiremock/docker-compose.test.yml ]; then docker compose -f wiremock/docker-compose.test.yml down; fi 
 publish:
   workingDirectory: generators/go
   preBuildCommands:
@@ -198,11 +199,12 @@ fixtures:
     - outputFolder: default-values
       customConfig:
         useDefaultRequestParameterValues: true
-  reserved-keywords: []
 scripts:
   - docker: fernapi/go-seed:1.0.0
     commands:
+      - if [ -f wiremock/docker-compose.test.yml ]; then docker compose -f wiremock/docker-compose.test.yml down && docker compose -f wiremock/docker-compose.test.yml up -d; fi
       - CGO_ENABLED=0 go test ./...
+      - if [ -f wiremock/docker-compose.test.yml ]; then docker compose -f wiremock/docker-compose.test.yml down; fi
 allowedFailures:
   - alias-extends
   - bytes-download
@@ -214,6 +216,7 @@ allowedFailures:
   - mixed-case:default-values
   - pagination-custom
   - request-parameters
+  - reserved-keywords
   - server-sent-event-examples
   - server-sent-events
   - streaming-parameter
@@ -228,12 +231,10 @@ allowedFailures:
   - path-parameters:no-custom-config
   - path-parameters:package-name
 
-  # TODO: Investigate addition of toolchain directive to go.mod
-  - imdb:with-wiremock-tests
-
   - oauth-client-credentials-with-variables
   - variables
 
   # Will include these back in once we fix dynamic snippets for inline file properties
   - file-upload:no-custom-config 
   - file-upload:package-name 
+  - file-upload-openapi

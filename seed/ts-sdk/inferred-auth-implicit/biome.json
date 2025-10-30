@@ -1,5 +1,5 @@
 {
-    "$schema": "https://biomejs.dev/schemas/2.2.5/schema.json",
+    "$schema": "https://biomejs.dev/schemas/2.3.1/schema.json",
     "root": true,
     "vcs": {
         "enabled": false
@@ -7,16 +7,21 @@
     "files": {
         "ignoreUnknown": true,
         "includes": [
-            "./**",
-            "!dist",
-            "!lib",
-            "!*.tsbuildinfo",
-            "!_tmp_*",
-            "!*.tmp",
-            "!.tmp/",
-            "!*.log",
-            "!.DS_Store",
-            "!Thumbs.db"
+            "**",
+            "!!dist",
+            "!!**/dist",
+            "!!lib",
+            "!!**/lib",
+            "!!_tmp_*",
+            "!!**/_tmp_*",
+            "!!*.tmp",
+            "!!**/*.tmp",
+            "!!.tmp/",
+            "!!**/.tmp/",
+            "!!*.log",
+            "!!**/*.log",
+            "!!**/.DS_Store",
+            "!!**/Thumbs.db"
         ]
     },
     "formatter": {

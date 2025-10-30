@@ -3,6 +3,7 @@ import { ts } from "ts-morph";
 import { DependencyManager, DependencyType } from "../dependency-manager/DependencyManager";
 import { CoreUtility } from "./CoreUtility";
 import { MANIFEST as RuntimeManifest } from "./Runtime";
+import { MANIFEST as UrlManifest } from "./UrlUtils";
 
 export interface Websocket {
     readonly ReconnectingWebSocket: {
@@ -41,7 +42,7 @@ export const MANIFEST: CoreUtility.Manifest = {
         dependencyManager.addDependency("ws", "^8.16.0");
         dependencyManager.addDependency("@types/ws", "^8.5.10", { type: DependencyType.DEV });
     },
-    dependsOn: [RuntimeManifest],
+    dependsOn: [RuntimeManifest, UrlManifest],
     getFilesPatterns: () => {
         return { patterns: "src/core/websocket/**" };
     }

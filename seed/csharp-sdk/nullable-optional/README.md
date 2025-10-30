@@ -101,6 +101,35 @@ var response = await client.NullableOptional.CreateUserAsync(
 );
 ```
 
+### Forward Compatible Enums
+
+This SDK uses forward-compatible enums that can handle unknown values gracefully.
+
+```csharp
+using SeedNullableOptional;
+
+// Using a built-in value
+var userRole = UserRole.Admin;
+
+// Using a custom value
+var customUserRole = UserRole.FromCustom("custom-value");
+
+// Using in a switch statement
+switch (userRole.Value)
+{
+    case UserRole.Values.Admin:
+        Console.WriteLine("Admin");
+        break;
+    default:
+        Console.WriteLine($"Unknown value: {userRole.Value}");
+        break;
+}
+
+// Explicit casting
+string userRoleString = (string)UserRole.Admin;
+UserRole userRoleFromString = (UserRole)"ADMIN";
+```
+
 ## Contributing
 
 While we value open-source contributions to this SDK, this library is generated programmatically.

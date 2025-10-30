@@ -34,10 +34,6 @@ export class ModelGeneratorContext extends AbstractGoGeneratorContext<ModelCusto
         return [AsIsFiles.ExtraProperties, AsIsFiles.ExtraPropertiesTest, AsIsFiles.Stringer, AsIsFiles.Time];
     }
 
-    public getTestAsIsFiles(): string[] {
-        return [];
-    }
-
     public getRootAsIsFiles(): string[] {
         return [];
     }

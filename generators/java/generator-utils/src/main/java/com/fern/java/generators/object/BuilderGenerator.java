@@ -347,6 +347,10 @@ public final class BuilderGenerator {
                 && builderNotNullChecks
                 && !isNullableField) {
             parameterSpecBuilder.addAnnotation(ClassName.get("org.jetbrains.annotations", "NotNull"));
+        } else if (isNotNullableType(enrichedObjectProperty.enrichedObjectProperty.poetTypeName())
+                && enrichedObjectProperty.enrichedObjectProperty.useNullableAnnotation()
+                && isNullableField) {
+            parameterSpecBuilder.addAnnotation(ClassName.get("org.jetbrains.annotations", "Nullable"));
         }
         MethodSpec.Builder methodBuilder = MethodSpec.methodBuilder(enrichedObjectProperty.fieldSpec.name)
                 .addModifiers(Modifier.PUBLIC)
@@ -453,9 +457,18 @@ public final class BuilderGenerator {
             EnrichedObjectPropertyWithField enrichedProperty, ClassName returnClass, boolean isOverridden) {
         TypeName poetTypeName = enrichedProperty.enrichedObjectProperty.poetTypeName();
         FieldSpec fieldSpec = enrichedProperty.fieldSpec;
+        ParameterSpec.Builder paramBuilder = ParameterSpec.builder(poetTypeName, fieldSpec.name);
+
+        boolean isNullableField = enrichedProperty.enrichedObjectProperty.nullable()
+                || enrichedProperty.enrichedObjectProperty.aliasOfNullable();
+        if (isNotNullableType(poetTypeName)
+                && enrichedProperty.enrichedObjectProperty.useNullableAnnotation()
+                && isNullableField) {
+            paramBuilder.addAnnotation(ClassName.get("org.jetbrains.annotations", "Nullable"));
+        }
+
         MethodSpec.Builder setter = MethodSpec.methodBuilder(fieldSpec.name)
-                .addParameter(
-                        ParameterSpec.builder(poetTypeName, fieldSpec.name).build())
+                .addParameter(paramBuilder.build())
                 .addModifiers(Modifier.PUBLIC)
                 .returns(returnClass);
         if (isOverridden) {
@@ -516,7 +529,34 @@ public final class BuilderGenerator {
         MethodSpec.Builder defaultMethodImplBuilder =
                 getDefaultSetterForImpl(enrichedObjectProperty, finalStageClassName, implsOverride);
 
-        if (isEqual(propertyTypeName, ClassName.get(Optional.class))) {
+        // Handle Nullable<T> fields (when use-nullable-for-optional-fields is enabled)
+        if (isEqual(propertyTypeName, nullableClassName)) {
+            TypeName itemTypeName = getOnlyTypeArgumentOrThrow(propertyTypeName);
+
+            // Add setter for direct T value (convenience method)
+            interfaceSetterConsumer.accept(
+                    createOptionalItemTypeNameSetter(enrichedObjectProperty, propertyTypeName, finalStageClassName)
+                            .addModifiers(Modifier.ABSTRACT)
+                            .build());
+
+            // Initialize field with Nullable.empty()
+            implFieldConsumer.accept(implFieldSpecBuilder
+                    .initializer("$T.empty()", nullableClassName)
+                    .build());
+
+            // Default setter that takes Nullable<T> directly
+            implSetterConsumer.accept(defaultMethodImplBuilder
+                    .addStatement("this.$L = $L", fieldSpec.name, fieldSpec.name)
+                    .addStatement("return this")
+                    .build());
+
+            // Convenience setter that takes T and wraps in Nullable.of()
+            implSetterConsumer.accept(createOptionalItemTypeNameSetter(
+                            enrichedObjectProperty, propertyTypeName, finalStageClassName, implsOverride)
+                    .addStatement("this.$L = $T.of($L)", fieldSpec.name, nullableClassName, fieldSpec.name)
+                    .addStatement("return this")
+                    .build());
+        } else if (isEqual(propertyTypeName, ClassName.get(Optional.class))) {
             interfaceSetterConsumer.accept(
                     createOptionalItemTypeNameSetter(enrichedObjectProperty, propertyTypeName, finalStageClassName)
                             .addModifiers(Modifier.ABSTRACT)
@@ -937,9 +977,11 @@ public final class BuilderGenerator {
                 .returns(returnClass);
 
         ParameterSpec.Builder paramBuilder = ParameterSpec.builder(poetTypeName, fieldSpec.name);
-        if (enrichedProperty.enrichedObjectProperty.nullable()
-                || enrichedProperty.enrichedObjectProperty.aliasOfNullable()) {
-            paramBuilder.addAnnotation(nullableClassName);
+        if ((enrichedProperty.enrichedObjectProperty.nullable()
+                        || enrichedProperty.enrichedObjectProperty.aliasOfNullable())
+                && enrichedProperty.enrichedObjectProperty.useNullableAnnotation()
+                && !poetTypeName.isPrimitive()) {
+            paramBuilder.addAnnotation(com.fern.java.utils.NullableAnnotationUtils.getNullableAnnotation());
         }
         interfaceSetter.addParameter(paramBuilder.build());
 

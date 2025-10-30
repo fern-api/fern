@@ -32,7 +32,7 @@ impl QueryClient {
                         request.alias_optional_prompt.clone(),
                     )
                     .structured_query("query", request.query.clone())
-                    .string("stream", request.stream.clone())
+                    .bool("stream", request.stream.clone())
                     .serialize("optional_stream", request.optional_stream.clone())
                     .serialize("alias_stream", Some(request.alias_stream.clone()))
                     .serialize(

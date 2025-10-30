@@ -1,25 +1,32 @@
-import { assertNever } from "@fern-api/core-utils";
-import { swift } from "@fern-api/swift-codegen";
-import { HttpEndpoint, HttpMethod } from "@fern-fern/ir-sdk/api";
-
+import { assertDefined, assertNever } from "@fern-api/core-utils";
+import { Referencer, swift } from "@fern-api/swift-codegen";
+import { HttpEndpoint, HttpMethod, TypeReference } from "@fern-fern/ir-sdk/api";
 import { SdkGeneratorContext } from "../../SdkGeneratorContext";
 import { ClientGeneratorContext } from "./ClientGeneratorContext";
 import { formatEndpointPathForSwift } from "./util/format-endpoint-path-for-swift";
-import { getQueryParamCaseName } from "./util/get-query-param-case-name";
 import { parseEndpointPath } from "./util/parse-endpoint-path";
 
 export declare namespace EndpointMethodGenerator {
     interface Args {
+        parentClassSymbol: swift.Symbol;
         clientGeneratorContext: ClientGeneratorContext;
         sdkGeneratorContext: SdkGeneratorContext;
     }
 }
 
 export class EndpointMethodGenerator {
+    private readonly parentClassSymbol: swift.Symbol;
     private readonly clientGeneratorContext: ClientGeneratorContext;
     private readonly sdkGeneratorContext: SdkGeneratorContext;
+    private readonly referencer: Referencer;
 
-    public constructor({ clientGeneratorContext, sdkGeneratorContext }: EndpointMethodGenerator.Args) {
+    public constructor({
+        parentClassSymbol,
+        clientGeneratorContext,
+        sdkGeneratorContext
+    }: EndpointMethodGenerator.Args) {
+        this.referencer = sdkGeneratorContext.createReferencer(parentClassSymbol);
+        this.parentClassSymbol = parentClassSymbol;
         this.clientGeneratorContext = clientGeneratorContext;
         this.sdkGeneratorContext = sdkGeneratorContext;
     }
@@ -59,7 +66,7 @@ export class EndpointMethodGenerator {
                     swift.functionParameter({
                         argumentLabel: pathPart.unsafeNameCamelCase,
                         unsafeName: pathPart.unsafeNameCamelCase,
-                        type: swift.Type.string(),
+                        type: this.referencer.referenceSwiftType("String"),
                         docsContent: pathPart.docs
                     })
                 );
@@ -67,8 +74,8 @@ export class EndpointMethodGenerator {
         });
 
         endpoint.headers.forEach((header) => {
-            const swiftType = this.sdkGeneratorContext.getSwiftTypeForTypeReference(header.valueType);
-            if (swiftType.nonOptionalType !== "string") {
+            const swiftType = this.getResolvedSwiftTypeForTypeReference(header.valueType);
+            if (!this.referencer.resolvesToTheSwiftType(swiftType.nonOptional(), "String")) {
                 return;
             }
             params.push(
@@ -76,20 +83,23 @@ export class EndpointMethodGenerator {
                     argumentLabel: header.name.name.camelCase.unsafeName,
                     unsafeName: header.name.name.camelCase.unsafeName,
                     type: swiftType,
-                    defaultValue: swiftType.isOptional ? swift.Expression.rawValue("nil") : undefined,
+                    defaultValue: swiftType.variant.type === "optional" ? swift.Expression.rawValue("nil") : undefined,
                     docsContent: header.docs
                 })
             );
         });
 
         endpoint.queryParameters.forEach((queryParam) => {
-            const swiftType = this.sdkGeneratorContext.getSwiftTypeForTypeReference(queryParam.valueType);
+            const swiftType = this.sdkGeneratorContext.getSwiftTypeReferenceFromScope(
+                queryParam.valueType,
+                this.parentClassSymbol
+            );
             params.push(
                 swift.functionParameter({
                     argumentLabel: queryParam.name.name.camelCase.unsafeName,
                     unsafeName: queryParam.name.name.camelCase.unsafeName,
                     type: swiftType,
-                    defaultValue: swiftType.isOptional ? swift.Expression.rawValue("nil") : undefined,
+                    defaultValue: swiftType.variant.type === "optional" ? swift.Expression.rawValue("nil") : undefined,
                     docsContent: queryParam.docs
                 })
             );
@@ -101,23 +111,23 @@ export class EndpointMethodGenerator {
                     swift.functionParameter({
                         argumentLabel: "request",
                         unsafeName: "request",
-                        type: this.sdkGeneratorContext.getSwiftTypeForTypeReference(
-                            endpoint.requestBody.requestBodyType
+                        type: this.sdkGeneratorContext.getSwiftTypeReferenceFromScope(
+                            endpoint.requestBody.requestBodyType,
+                            this.parentClassSymbol
                         ),
                         docsContent: endpoint.requestBody.docs
                     })
                 );
             } else if (endpoint.requestBody.type === "inlinedRequestBody") {
-                const fullyQualifiedRequestTypeSymbolName =
-                    this.sdkGeneratorContext.project.srcSymbolRegistry.getFullyQualifiedRequestTypeSymbolOrThrow(
-                        endpoint.id,
-                        endpoint.requestBody.name.pascalCase.unsafeName
-                    );
+                const requestTypeSymbol = this.sdkGeneratorContext.project.nameRegistry.getRequestTypeSymbolOrThrow(
+                    endpoint.id,
+                    endpoint.requestBody.name.pascalCase.unsafeName
+                );
                 params.push(
                     swift.functionParameter({
                         argumentLabel: "request",
                         unsafeName: "request",
-                        type: swift.Type.custom(fullyQualifiedRequestTypeSymbolName),
+                        type: this.referencer.referenceType(requestTypeSymbol),
                         docsContent: endpoint.requestBody.docs
                     })
                 );
@@ -126,21 +136,20 @@ export class EndpointMethodGenerator {
                     swift.functionParameter({
                         argumentLabel: "request",
                         unsafeName: "request",
-                        type: swift.Type.data(),
+                        type: this.referencer.referenceFoundationType("Data"),
                         docsContent: endpoint.requestBody.docs
                     })
                 );
             } else if (endpoint.requestBody.type === "fileUpload") {
-                const fullyQualifiedRequestTypeSymbolName =
-                    this.sdkGeneratorContext.project.srcSymbolRegistry.getFullyQualifiedRequestTypeSymbolOrThrow(
-                        endpoint.id,
-                        endpoint.requestBody.name.pascalCase.unsafeName
-                    );
+                const requestTypeSymbol = this.sdkGeneratorContext.project.nameRegistry.getRequestTypeSymbolOrThrow(
+                    endpoint.id,
+                    endpoint.requestBody.name.pascalCase.unsafeName
+                );
                 params.push(
                     swift.functionParameter({
                         argumentLabel: "request",
                         unsafeName: "request",
-                        type: swift.Type.custom(fullyQualifiedRequestTypeSymbolName),
+                        type: this.referencer.referenceType(requestTypeSymbol),
                         docsContent: endpoint.requestBody.docs
                     })
                 );
@@ -153,7 +162,7 @@ export class EndpointMethodGenerator {
             swift.functionParameter({
                 argumentLabel: "requestOptions",
                 unsafeName: "requestOptions",
-                type: swift.Type.optional(swift.Type.custom("RequestOptions")),
+                type: swift.TypeReference.optional(this.referencer.referenceAsIsType("RequestOptions")),
                 defaultValue: swift.Expression.rawValue("nil"),
                 docsContent:
                     "Additional options for configuring the request, such as custom headers or timeout settings."
@@ -163,18 +172,19 @@ export class EndpointMethodGenerator {
         return params;
     }
 
-    private getMethodReturnTypeForEndpoint(endpoint: HttpEndpoint): swift.Type {
+    private getMethodReturnTypeForEndpoint(endpoint: HttpEndpoint): swift.TypeReference {
         if (!endpoint.response || !endpoint.response.body) {
-            return swift.Type.void();
+            return this.referencer.referenceSwiftType("Void");
         }
         return endpoint.response.body._visit({
-            json: (resp) => this.sdkGeneratorContext.getSwiftTypeForTypeReference(resp.responseBodyType),
-            fileDownload: () => swift.Type.data(),
-            text: () => swift.Type.jsonValue(), // TODO(kafkas): Handle text responses
-            bytes: () => swift.Type.jsonValue(), // TODO(kafkas): Handle bytes responses
-            streaming: () => swift.Type.jsonValue(), // TODO(kafkas): Handle streaming responses
-            streamParameter: () => swift.Type.jsonValue(), // TODO(kafkas): Handle stream parameter responses
-            _other: () => swift.Type.jsonValue()
+            json: (resp) =>
+                this.sdkGeneratorContext.getSwiftTypeReferenceFromScope(resp.responseBodyType, this.parentClassSymbol),
+            fileDownload: () => this.referencer.referenceFoundationType("Data"),
+            text: () => this.referencer.referenceAsIsType("JSONValue"), // TODO(kafkas): Handle text responses
+            bytes: () => this.referencer.referenceAsIsType("JSONValue"), // TODO(kafkas): Handle bytes responses
+            streaming: () => this.referencer.referenceAsIsType("JSONValue"), // TODO(kafkas): Handle streaming responses
+            streamParameter: () => this.referencer.referenceAsIsType("JSONValue"), // TODO(kafkas): Handle stream parameter responses
+            _other: () => this.referencer.referenceAsIsType("JSONValue")
         });
     }
 
@@ -230,10 +240,10 @@ export class EndpointMethodGenerator {
             );
         }
 
-        const validHeaders = endpoint.headers.filter(
-            (header) =>
-                this.sdkGeneratorContext.getSwiftTypeForTypeReference(header.valueType).nonOptionalType === "string"
-        );
+        const validHeaders = endpoint.headers.filter((header) => {
+            const swiftType = this.getSwiftTypeForTypeReference(header.valueType);
+            return this.referencer.resolvesToTheSwiftType(swiftType.nonOptional(), "String");
+        });
 
         if (validHeaders.length > 0) {
             arguments_.push(
@@ -259,15 +269,13 @@ export class EndpointMethodGenerator {
                     value: swift.Expression.dictionaryLiteral({
                         entries: endpoint.queryParameters.map((queryParam) => {
                             const key = swift.Expression.stringLiteral(queryParam.name.name.originalName);
-                            const swiftType = this.sdkGeneratorContext.getSwiftTypeForTypeReference(
-                                queryParam.valueType
-                            );
-                            if (swiftType.isOptional) {
+                            const swiftType = this.getResolvedSwiftTypeForTypeReference(queryParam.valueType);
+                            if (swiftType.variant.type === "optional") {
                                 return [
                                     key,
                                     swift.Expression.methodCallWithTrailingClosure({
                                         target:
-                                            swiftType.nonOptionalType === "nullable"
+                                            swiftType.nonOptional().variant.type === "nullable"
                                                 ? swift.Expression.memberAccess({
                                                       target: swift.Expression.reference(
                                                           queryParam.name.name.camelCase.unsafeName
@@ -278,16 +286,17 @@ export class EndpointMethodGenerator {
                                                 : swift.Expression.reference(queryParam.name.name.camelCase.unsafeName),
                                         methodName: "map",
                                         closureBody: swift.Expression.contextualMethodCall({
-                                            methodName: getQueryParamCaseName(swiftType),
+                                            methodName: this.inferQueryParamCaseName(swiftType),
                                             arguments_: [
                                                 swift.functionArgument({
-                                                    value:
-                                                        swiftType.nonOptional().nonNullableType === "custom"
-                                                            ? swift.Expression.memberAccess({
-                                                                  target: swift.Expression.reference("$0"),
-                                                                  memberName: "rawValue"
-                                                              })
-                                                            : swift.Expression.reference("$0")
+                                                    value: this.referencer.resolvesToAnEnumWithRawValues(
+                                                        swiftType.nonOptional()
+                                                    )
+                                                        ? swift.Expression.memberAccess({
+                                                              target: swift.Expression.reference("$0"),
+                                                              memberName: "rawValue"
+                                                          })
+                                                        : swift.Expression.reference("$0")
                                                 })
                                             ]
                                         })
@@ -296,7 +305,7 @@ export class EndpointMethodGenerator {
                             } else {
                                 return [
                                     key,
-                                    swiftType.nonOptionalType === "nullable"
+                                    swiftType.nonOptional().variant.type === "nullable"
                                         ? swift.Expression.methodCallWithTrailingClosure({
                                               target: swift.Expression.memberAccess({
                                                   target: swift.Expression.reference(
@@ -306,7 +315,7 @@ export class EndpointMethodGenerator {
                                               }),
                                               methodName: "map",
                                               closureBody: swift.Expression.contextualMethodCall({
-                                                  methodName: getQueryParamCaseName(swiftType),
+                                                  methodName: this.inferQueryParamCaseName(swiftType),
                                                   arguments_: [
                                                       swift.functionArgument({
                                                           value: swift.Expression.reference("$0")
@@ -315,20 +324,21 @@ export class EndpointMethodGenerator {
                                               })
                                           })
                                         : swift.Expression.contextualMethodCall({
-                                              methodName: getQueryParamCaseName(swiftType),
+                                              methodName: this.inferQueryParamCaseName(swiftType),
                                               arguments_: [
                                                   swift.functionArgument({
-                                                      value:
-                                                          swiftType.nonOptionalType === "custom"
-                                                              ? swift.Expression.memberAccess({
-                                                                    target: swift.Expression.reference(
-                                                                        queryParam.name.name.camelCase.unsafeName
-                                                                    ),
-                                                                    memberName: "rawValue"
-                                                                })
-                                                              : swift.Expression.reference(
+                                                      value: this.referencer.resolvesToAnEnumWithRawValues(
+                                                          swiftType.nonOptional()
+                                                      )
+                                                          ? swift.Expression.memberAccess({
+                                                                target: swift.Expression.reference(
                                                                     queryParam.name.name.camelCase.unsafeName
-                                                                )
+                                                                ),
+                                                                memberName: "rawValue"
+                                                            })
+                                                          : swift.Expression.reference(
+                                                                queryParam.name.name.camelCase.unsafeName
+                                                            )
                                                   })
                                               ]
                                           })
@@ -371,7 +381,7 @@ export class EndpointMethodGenerator {
 
         const returnType = this.getMethodReturnTypeForEndpoint(endpoint);
 
-        if (returnType.type !== "void") {
+        if (!this.referencer.resolvesToTheSwiftType(returnType, "Void")) {
             arguments_.push(
                 swift.functionArgument({
                     label: "responseType",
@@ -384,6 +394,22 @@ export class EndpointMethodGenerator {
         }
 
         return arguments_;
+    }
+
+    private getResolvedSwiftTypeForTypeReference(typeReference: TypeReference): swift.TypeReference {
+        if (typeReference.type === "named") {
+            const { typeId } = typeReference;
+            const typeDeclaration = this.sdkGeneratorContext.ir.types[typeId];
+            assertDefined(typeDeclaration, `Type declaration not found for type id: ${typeId}`);
+            if (typeDeclaration.shape.type === "alias") {
+                return this.getResolvedSwiftTypeForTypeReference(typeDeclaration.shape.aliasOf);
+            }
+        }
+        return this.getSwiftTypeForTypeReference(typeReference);
+    }
+
+    private getSwiftTypeForTypeReference(typeReference: TypeReference) {
+        return this.sdkGeneratorContext.getSwiftTypeReferenceFromScope(typeReference, this.parentClassSymbol);
     }
 
     private getEnumCaseNameForHttpMethod(method: HttpMethod): string {
@@ -403,5 +429,54 @@ export class EndpointMethodGenerator {
             default:
                 assertNever(method);
         }
+    }
+
+    public inferQueryParamCaseName(typeReference: swift.TypeReference): string {
+        if (typeReference.variant.type === "optional") {
+            return this.inferQueryParamCaseName(typeReference.nonOptional());
+        }
+        if (typeReference.variant.type === "nullable") {
+            return this.inferQueryParamCaseName(typeReference.nonNullable());
+        }
+        if (this.referencer.resolvesToTheSwiftType(typeReference, "String")) {
+            return "string";
+        }
+        if (this.referencer.resolvesToTheSwiftType(typeReference, "Bool")) {
+            return "bool";
+        }
+        if (this.referencer.resolvesToTheSwiftType(typeReference, "Int")) {
+            return "int";
+        }
+        if (this.referencer.resolvesToTheSwiftType(typeReference, "UInt")) {
+            return "uint";
+        }
+        if (this.referencer.resolvesToTheSwiftType(typeReference, "UInt64")) {
+            return "uint64";
+        }
+        if (this.referencer.resolvesToTheSwiftType(typeReference, "Int64")) {
+            return "int64";
+        }
+        if (this.referencer.resolvesToTheSwiftType(typeReference, "Float")) {
+            return "float";
+        }
+        if (this.referencer.resolvesToTheSwiftType(typeReference, "Double")) {
+            return "double";
+        }
+        if (this.referencer.resolvesToTheFoundationType(typeReference, "Date")) {
+            return "date";
+        }
+        if (this.referencer.resolvesToTheAsIsType(typeReference, "CalendarDate")) {
+            return "calendarDate";
+        }
+        if (
+            typeReference.variant.type === "array" &&
+            this.referencer.resolvesToTheSwiftType(typeReference.variant.elementType, "String")
+        ) {
+            return "stringArray";
+        }
+        if (this.referencer.resolvesToTheFoundationType(typeReference, "UUID")) {
+            return "uuid";
+        }
+        return "unknown";
     }
 }

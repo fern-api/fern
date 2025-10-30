@@ -32,10 +32,11 @@ public final class SearchRequest {
 
   private final Optional<Map<String, String>> filters;
 
+  @Nullable
   private final List<String> includeTypes;
 
   private SearchRequest(String query, Optional<Map<String, String>> filters,
-      List<String> includeTypes) {
+      @Nullable List<String> includeTypes) {
     this.query = query;
     this.filters = filters;
     this.includeTypes = includeTypes;
@@ -103,7 +104,7 @@ public final class SearchRequest {
 
     _FinalStage filters(Map<String, String> filters);
 
-    _FinalStage includeTypes(List<String> includeTypes);
+    _FinalStage includeTypes(@Nullable List<String> includeTypes);
 
     _FinalStage addIncludeTypes(String includeTypes);
 
@@ -157,7 +158,7 @@ public final class SearchRequest {
         value = "includeTypes",
         nulls = Nulls.SKIP
     )
-    public _FinalStage includeTypes(List<String> includeTypes) {
+    public _FinalStage includeTypes(@Nullable List<String> includeTypes) {
       this.includeTypes.clear();
       if (includeTypes != null) {
         this.includeTypes.addAll(includeTypes);

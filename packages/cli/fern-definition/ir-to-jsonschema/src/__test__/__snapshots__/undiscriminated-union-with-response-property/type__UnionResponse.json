@@ -1,0 +1,75 @@
+{
+  "type": "object",
+  "properties": {
+    "data": {
+      "$ref": "#/definitions/MyUnion"
+    }
+  },
+  "required": [
+    "data"
+  ],
+  "additionalProperties": false,
+  "definitions": {
+    "VariantA": {
+      "type": "object",
+      "properties": {
+        "type": {
+          "const": "A"
+        },
+        "valueA": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "type",
+        "valueA"
+      ],
+      "additionalProperties": false
+    },
+    "VariantB": {
+      "type": "object",
+      "properties": {
+        "type": {
+          "const": "B"
+        },
+        "valueB": {
+          "type": "integer"
+        }
+      },
+      "required": [
+        "type",
+        "valueB"
+      ],
+      "additionalProperties": false
+    },
+    "VariantC": {
+      "type": "object",
+      "properties": {
+        "type": {
+          "const": "C"
+        },
+        "valueC": {
+          "type": "boolean"
+        }
+      },
+      "required": [
+        "type",
+        "valueC"
+      ],
+      "additionalProperties": false
+    },
+    "MyUnion": {
+      "anyOf": [
+        {
+          "$ref": "#/definitions/VariantA"
+        },
+        {
+          "$ref": "#/definitions/VariantB"
+        },
+        {
+          "$ref": "#/definitions/VariantC"
+        }
+      ]
+    }
+  }
+}

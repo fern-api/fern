@@ -55,6 +55,12 @@ export function visitNavigation({
                     tab.child.layout.forEach((item) => {
                         visitDocsNavigationItem({ item, collector });
                     });
+                } else if (tab.child.type === "variants") {
+                    tab.child.variants.forEach((variant) => {
+                        variant.layout.forEach((item) => {
+                            visitDocsNavigationItem({ item, collector });
+                        });
+                    });
                 }
             });
             break;

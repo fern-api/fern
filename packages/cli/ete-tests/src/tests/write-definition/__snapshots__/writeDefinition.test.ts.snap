@@ -497,9 +497,9 @@ exports[`validate namespaced API > namespaced 1`] = `
     "type": "file",
   },
   {
-    "contents": "auth: BearerAuthScheme
+    "contents": "auth: OAuth2
 auth-schemes:
-  BearerAuthScheme:
+  OAuth2:
     scheme: bearer
 default-environment: Production
 default-url: Base
@@ -1866,9 +1866,9 @@ exports[`validate namespaced API from Cohere > namespaced-fleshedout 1`] = `
     "type": "file",
   },
   {
-    "contents": "auth: BearerAuthScheme
+    "contents": "auth: bearerAuth
 auth-schemes:
-  BearerAuthScheme:
+  bearerAuth:
     scheme: bearer
     token:
       env: CO_API_KEY

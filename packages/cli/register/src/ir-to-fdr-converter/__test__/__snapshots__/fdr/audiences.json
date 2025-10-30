@@ -204,7 +204,26 @@
               }
             ]
           },
-          "queryParameters": [],
+          "queryParameters": [
+            {
+              "key": "ids",
+              "type": {
+                "type": "primitive",
+                "value": {
+                  "type": "string"
+                }
+              }
+            },
+            {
+              "key": "tags",
+              "type": {
+                "type": "primitive",
+                "value": {
+                  "type": "string"
+                }
+              }
+            }
+          ],
           "headers": [],
           "requestsV2": {},
           "response": {
@@ -222,7 +241,10 @@
             {
               "path": "",
               "pathParameters": {},
-              "queryParameters": {},
+              "queryParameters": {
+                "ids": "ids",
+                "tags": "tags"
+              },
               "headers": {},
               "responseStatusCode": 200,
               "responseBody": {

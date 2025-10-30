@@ -84,6 +84,35 @@ var response = await client.Union.GetAsync(
 );
 ```
 
+### Forward Compatible Enums
+
+This SDK uses forward-compatible enums that can handle unknown values gracefully.
+
+```csharp
+using SeedUndiscriminatedUnions;
+
+// Using a built-in value
+var keyType = KeyType.Name;
+
+// Using a custom value
+var customKeyType = KeyType.FromCustom("custom-value");
+
+// Using in a switch statement
+switch (keyType.Value)
+{
+    case KeyType.Values.Name:
+        Console.WriteLine("Name");
+        break;
+    default:
+        Console.WriteLine($"Unknown value: {keyType.Value}");
+        break;
+}
+
+// Explicit casting
+string keyTypeString = (string)KeyType.Name;
+KeyType keyTypeFromString = (KeyType)"name";
+```
+
 ## Contributing
 
 While we value open-source contributions to this SDK, this library is generated programmatically.

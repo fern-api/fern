@@ -10,6 +10,17 @@
                 "type": "go",
                 "client": "import (\n\tcontext \"context\"\n\tfern \"github.com/required-nullable/fern\"\n\tfernclient \"github.com/required-nullable/fern/client\"\n)\n\nclient := fernclient.NewClient()\nresponse, err := client.GetFoo(\n\tcontext.TODO(),\n\t\u0026fern.GetFooRequest{\n\t\tRequiredBaz: \"required_baz\",\n\t\tRequiredNullableBaz: fern.String(\n\t\t\t\"required_nullable_baz\",\n\t\t),\n\t},\n)\n"
             }
+        },
+        {
+            "id": {
+                "path": "/foo/{id}",
+                "method": "PATCH",
+                "identifier_override": "endpoint_.updateFoo"
+            },
+            "snippet": {
+                "type": "go",
+                "client": "import (\n\tcontext \"context\"\n\tfern \"github.com/required-nullable/fern\"\n\tfernclient \"github.com/required-nullable/fern/client\"\n)\n\nclient := fernclient.NewClient()\nresponse, err := client.UpdateFoo(\n\tcontext.TODO(),\n\t\"id\",\n\t\u0026fern.UpdateFooRequest{\n\t\tXIdempotencyKey: \"X-Idempotency-Key\",\n\t\tNullableText: fern.String(\n\t\t\t\"nullable_text\",\n\t\t),\n\t\tNullableNumber: fern.Float64(\n\t\t\t1.1,\n\t\t),\n\t\tNonNullableText: fern.String(\n\t\t\t\"non_nullable_text\",\n\t\t),\n\t},\n)\n"
+            }
         }
     ]
 }

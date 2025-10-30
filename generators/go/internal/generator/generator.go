@@ -345,7 +345,6 @@ func (g *Generator) generate(ir *fernir.IntermediateRepresentation, mode Mode) (
 	files = append(files, newExtraPropertiesFile(g.coordinator))
 	files = append(files, newExtraPropertiesTestFile(g.coordinator))
 	// Then handle mode-specific generation tasks.
-	var generatedPagination bool
 	switch mode {
 	case ModeFiber:
 		break
@@ -354,7 +353,6 @@ func (g *Generator) generate(ir *fernir.IntermediateRepresentation, mode Mode) (
 			generatedAuth        *GeneratedAuth
 			generatedEnvironment *GeneratedEnvironment
 		)
-		generatedPagination = needsPaginationHelpers(ir)
 		// Generate the core API files.
 		fileInfo := fileInfoForRequestOptionsDefinition()
 		writer := newFileWriter(
@@ -571,12 +569,6 @@ func (g *Generator) generate(ir *fernir.IntermediateRepresentation, mode Mode) (
 		if needsFileUploadHelpers(ir) {
 			files = append(files, newMultipartFile(g.coordinator))
 			files = append(files, newMultipartTestFile(g.coordinator))
-		}
-		if ir.SdkConfig.HasStreamingEndpoints {
-			files = append(files, newStreamFile(g.coordinator))
-		}
-		if generatedPagination {
-			files = append(files, newPageFile(g.coordinator))
 		}
 		clientTestFile, err := newClientTestFile(g.config.FullImportPath, rootPackageName, g.coordinator, g.config.ClientName, g.config.ClientConstructorName)
 		if err != nil {
@@ -1255,22 +1247,6 @@ func newOptionalTestFile(coordinator *coordinator.Client) *File {
 		coordinator,
 		"core/optional_test.go",
 		[]byte(optionalTestFile),
-	)
-}
-
-func newPageFile(coordinator *coordinator.Client) *File {
-	return NewFile(
-		coordinator,
-		"core/page.go",
-		[]byte(pageFile),
-	)
-}
-
-func newStreamFile(coordinator *coordinator.Client) *File {
-	return NewFile(
-		coordinator,
-		"core/stream.go",
-		[]byte(streamFile),
 	)
 }
 

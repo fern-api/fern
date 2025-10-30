@@ -92,6 +92,12 @@ def _write_dir_func(writer: AST.Writer) -> None:
         writer.write_line("return sorted(lazy_attrs)")
 
 
+def _write_recursion_limit(writer: AST.Writer, recursion_limit: int) -> None:
+    writer.write_line(f"if sys.getrecursionlimit() < {recursion_limit}:")
+    with writer.indent():
+        writer.write_line(f"sys.setrecursionlimit({recursion_limit})")
+
+
 class ModuleManager:
     """
     A utility for managing the __init__.py files in a project
@@ -99,10 +105,17 @@ class ModuleManager:
 
     _module_infos: DefaultDict[AST.ModulePath, ModuleInfo]
 
-    def __init__(self, *, sorted_modules: Optional[Sequence[str]] = None, lazy_imports: bool) -> None:
+    def __init__(
+        self,
+        *,
+        sorted_modules: Optional[Sequence[str]] = None,
+        lazy_imports: bool,
+        recursion_limit: Optional[int] = None,
+    ) -> None:
         self._module_infos = defaultdict(create_empty_module_info)
         self._sorted_modules = sorted_modules or []
         self._lazy_imports = lazy_imports
+        self._recursion_limit = recursion_limit
 
     def register_additional_exports(self, path: AST.ModulePath, exports: List[ModuleExport]) -> None:
         for export in exports:
@@ -164,9 +177,16 @@ class ModuleManager:
             }
             sorted_export_module_mapping = sorted(all_exports.items())
 
+            # Write preamble for root module (empty tuple)
+            recursion_limit_to_write = self._recursion_limit if len(module) == 0 else None
+
             if len(sorted_export_module_mapping) > 0 and self._lazy_imports:
+                if recursion_limit_to_write is not None:
+                    writer.write_line("import sys")
                 writer.write_line("import typing")
                 writer.write_line("from importlib import import_module")
+                if recursion_limit_to_write is not None:
+                    _write_recursion_limit(writer, recursion_limit_to_write)
 
                 # We only import the modules if we're in a type-checking context.
                 writer.write_line("if typing.TYPE_CHECKING:")
@@ -178,6 +198,9 @@ class ModuleManager:
                 _write_dir_func(writer)
 
             else:
+                if recursion_limit_to_write is not None:
+                    writer.write_line("import sys")
+                    _write_recursion_limit(writer, recursion_limit_to_write)
                 self._write_imports(writer, sorted_exports)
 
             if len(sorted_export_module_mapping) > 0:

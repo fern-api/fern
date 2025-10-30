@@ -683,7 +683,51 @@ async function convertNavigationTabConfiguration({
         throw new Error(`Tab ${item.tab} is not defined in the tabs config.`);
     }
 
-    if (item.layout != null) {
+    if (tabbedNavigationItemHasVariants(item)) {
+        const variants: docsYml.TabVariant[] = await Promise.all(
+            item.variants.map(async (variant) => {
+                const layout = await Promise.all(
+                    variant.layout.map((layoutItem) =>
+                        convertNavigationItem({
+                            rawConfig: layoutItem,
+                            absolutePathToFernFolder,
+                            absolutePathToConfig,
+                            context
+                        })
+                    )
+                );
+                return {
+                    title: variant.title,
+                    subtitle: variant.subtitle,
+                    icon: variant.icon,
+                    layout,
+                    slug: variant.slug,
+                    skipUrlSlug: variant.skipSlug,
+                    hidden: variant.hidden,
+                    default: variant.default,
+                    viewers: parseRoles(variant.viewers),
+                    orphaned: variant.orphaned,
+                    featureFlags: convertFeatureFlag(variant.featureFlag)
+                };
+            })
+        );
+        return {
+            title: tab.displayName,
+            icon: tab.icon,
+            slug: tab.slug,
+            skipUrlSlug: tab.skipSlug,
+            hidden: tab.hidden,
+            child: {
+                type: "variants",
+                variants
+            },
+            viewers: parseRoles(tab.viewers),
+            orphaned: tab.orphaned,
+            featureFlags: convertFeatureFlag(tab.featureFlag)
+        };
+    }
+
+    if (tabbedNavigationItemHasLayout(item)) {
         const layout = await Promise.all(
             item.layout.map((item) =>
                 convertNavigationItem({ rawConfig: item, absolutePathToFernFolder, absolutePathToConfig, context })
@@ -828,7 +872,9 @@ async function convertNavigationItem({
             icon: rawConfig.icon,
             apiName: rawConfig.apiName ?? undefined,
             audiences:
-                rawConfig.audiences != null ? { type: "select", audiences: rawConfig.audiences } : { type: "all" },
+                rawConfig.audiences != null
+                    ? { type: "select", audiences: parseAudiences(rawConfig.audiences) ?? [] }
+                    : { type: "all" },
             availability: rawConfig.availability,
             showErrors: rawConfig.displayErrors ?? true,
             snippetsConfiguration:
@@ -935,6 +981,7 @@ function parseApiReferenceLayoutItem(
                 slug: item.slug,
                 hidden: item.hidden,
                 skipUrlSlug: item.skipSlug,
+                availability: item.availability,
                 icon: item.icon,
                 playground: item.playground,
                 viewers: parseRoles(item.viewers),
@@ -951,6 +998,7 @@ function parseApiReferenceLayoutItem(
                 icon: item.icon,
                 slug: item.slug,
                 hidden: item.hidden,
+                availability: item.availability,
                 playground: item.playground,
                 viewers: parseRoles(item.viewers),
                 orphaned: item.orphaned,
@@ -972,6 +1020,7 @@ function parseApiReferenceLayoutItem(
                 skipUrlSlug: value.skipSlug,
                 icon: value.icon,
                 playground: value.playground,
+                availability: value.availability,
                 viewers: parseRoles(value.viewers),
                 orphaned: value.orphaned,
                 featureFlags: convertFeatureFlag(value.featureFlag)
@@ -988,6 +1037,7 @@ function parseApiReferenceLayoutItem(
             skipUrlSlug: false,
             icon: undefined,
             playground: undefined,
+            availability: undefined,
             viewers: undefined,
             orphaned: undefined,
             featureFlags: undefined
@@ -1076,6 +1126,22 @@ function isTabbedNavigationConfig(
         // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
         (navigationConfig[0] as docsYml.RawSchemas.TabbedNavigationItem).tab != null
     );
+}
+
+function tabbedNavigationItemHasLayout(
+    item: docsYml.RawSchemas.TabbedNavigationItem
+): item is docsYml.RawSchemas.TabbedNavigationItemWithLayout & {
+    layout: docsYml.RawSchemas.NavigationItem[];
+} {
+    return "layout" in item && Array.isArray(item.layout);
+}
+
+function tabbedNavigationItemHasVariants(
+    item: docsYml.RawSchemas.TabbedNavigationItem
+): item is docsYml.RawSchemas.TabbedNavigationItemWithVariants & {
+    variants: docsYml.RawSchemas.TabVariant[];
+} {
+    return "variants" in item && Array.isArray(item.variants);
 }
 
 function convertNavbarLinks(
@@ -1188,4 +1254,20 @@ function parseRoles(raw: string | string[] | undefined): CjsFdrSdk.RoleId[] | un
     }
 
     return raw.map(CjsFdrSdk.RoleId);
+}
+
+export function parseAudiences(raw: string | string[] | undefined): string[] | undefined {
+    if (raw == null) {
+        return undefined;
+    }
+
+    if (typeof raw === "string") {
+        return [raw];
+    }
+
+    if (raw.length === 0) {
+        return undefined;
+    }
+
+    return raw;
 }

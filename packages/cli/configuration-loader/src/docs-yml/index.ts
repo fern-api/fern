@@ -1,3 +1,3 @@
 export { getColorFromRawConfig, getColorType } from "./convertColorsConfiguration";
 export { getReferencedApiSections } from "./getReferencedApiSections";
-export { parseDocsConfiguration, resolveFilepath } from "./parseDocsConfiguration";
+export { parseAudiences, parseDocsConfiguration, resolveFilepath } from "./parseDocsConfiguration";

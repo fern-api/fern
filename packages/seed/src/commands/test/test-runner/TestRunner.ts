@@ -257,7 +257,8 @@ export abstract class TestRunner {
             const scriptResponse = await this.scriptRunner?.run({
                 taskContext,
                 outputDir,
-                id
+                id,
+                skipScripts: configuration?.skipScripts
             });
 
             scriptStopwatch.stop();

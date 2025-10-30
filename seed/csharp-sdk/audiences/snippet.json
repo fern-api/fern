@@ -10,7 +10,7 @@
             },
             "snippet": {
                 "type": "csharp",
-                "client": "using SeedAudiences;\n\nvar client = new SeedAudiencesClient();\nawait client.FolderA.Service.GetDirectThreadAsync();\n"
+                "client": "using SeedAudiences.FolderA;\nusing SeedAudiences;\n\nvar client = new SeedAudiencesClient();\nawait client.FolderA.Service.GetDirectThreadAsync(\n    new GetDirectThreadRequest { Ids = [\"ids\"], Tags = [\"tags\"] }\n);\n"
             }
         },
         {

@@ -280,6 +280,7 @@ types:
         docs: |
           If `edit-this-page` is set, Fern will add an "Edit this page" link to the bottom of each page that links to the given GitHub repository.
         availability: in-development
+      audiences: optional<Audience>
 
   CustomDomain:
     discriminated: false
@@ -319,6 +320,7 @@ types:
         type: optional<VersionAvailability>
         docs: |
           If `availability` is set to `deprecated`, Fern will display a warning banner on the docs site.
+      audiences: optional<Audience>
 
   Availability:
     enum:
@@ -360,11 +362,34 @@ types:
     type: list<TabbedNavigationItem>
 
   TabbedNavigationItem:
+    discriminated: false
+    union:
+      - TabbedNavigationItemWithLayout
+      - TabbedNavigationItemWithVariants
+
+  TabbedNavigationItemWithLayout:
     properties:
       tab: TabId
       layout:
         type: optional<list<NavigationItem>>
         docs: If `href` is set, `layout` must be null.
+
+  TabbedNavigationItemWithVariants:
+    properties:
+      tab: TabId
+      variants: list<TabVariant>
+
+  TabVariant:
+    extends: [WithPermissions, WithFeatureFlags]
+    properties:
+      title: string
+      subtitle: optional<string>
+      icon: optional<string>
+      layout: list<NavigationItem>
+      slug: optional<string>
+      skip-slug: optional<boolean>
+      hidden: optional<boolean>
+      default: optional<boolean>
 
   NavigationItem:
     discriminated: false
@@ -563,6 +588,15 @@ types:
     type: string
     docs: ID of audience which is used to filter the API spec.
 
+  Audience:
+    docs: |
+      Audience can either be a string or list of strings
+      i.e. `audiences: internal` or `audiences: [internal, beta]`
+    discriminated: false
+    union:
+      - AudienceId
+      - list<AudienceId>
+
   RoleId:
     type: string
     docs: ID of role which is used to filter the content shown in Fern Docs.
@@ -732,7 +766,7 @@ types:
         type: optional<string>
         docs: Path to an openrpc spec.
         availability: pre-release
-      audiences: optional<list<AudienceId>>
+      audiences: optional<Audience>
       display-errors:
         type: optional<boolean>
         docs: Defaults to false
@@ -800,6 +834,7 @@ types:
       icon: optional<string>
       hidden: optional<boolean>
       skip-slug: optional<boolean>
+      availability: optional<Availability>
       playground:
         type: optional<PlaygroundSettings>
         docs: Settings for the api playground that affects all endpoints.
@@ -819,6 +854,7 @@ types:
         docs: |
           Relative path to the markdown file. This summary is displayed at the top of the API section.
       contents: optional<list<ApiReferenceLayoutItem>>
+      availability: optional<Availability>
       slug: optional<string>
       icon: optional<string>
       hidden: optional<boolean>
@@ -835,6 +871,7 @@ types:
       slug: optional<string>
       icon: optional<string>
       hidden: optional<boolean>
+      availability: optional<Availability>
       playground:
         type: optional<PlaygroundSettings>
         docs: Settings for the api playground that affect this endpoint specifically.
@@ -1202,6 +1239,7 @@ types:
         type: optional<string>
         docs: The "slug" is this version's basePath. If not set, the slug will be generated from the display-name.
       versions: optional<list<VersionConfig>>
+      audiences: optional<Audience>
 
   ProductFileConfig:
     properties:

@@ -545,7 +545,10 @@ export class OperationConverter extends AbstractOperationConverter {
                     {
                         displayName: undefined,
                         request:
-                            example.request != null
+                            example.request != null ||
+                            example["path-parameters"] != null ||
+                            example["query-parameters"] != null ||
+                            example.headers != null
                                 ? {
                                       docs: undefined,
                                       endpoint: {
@@ -558,7 +561,7 @@ export class OperationConverter extends AbstractOperationConverter {
                                       pathParameters: example["path-parameters"] ?? {},
                                       queryParameters: example["query-parameters"] ?? {},
                                       headers: example.headers ?? {},
-                                      requestBody: example.request
+                                      requestBody: example.request ?? undefined
                                   }
                                 : undefined,
                         response:

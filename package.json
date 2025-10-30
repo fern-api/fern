@@ -29,8 +29,8 @@
     "format": "biome format --fix",
     "format:fix": "biome format --fix",
     "format:check": "biome format",
-    "format:yaml:fix": "prettier --write \"**/*.{yml,yaml}\"",
-    "format:yaml:check": "prettier --check \"**/*.{yml,yaml}\"",
+    "format:yaml:fix": "prettier --write \"**/*.{yml,yaml}\" --cache",
+    "format:yaml:check": "prettier --check \"**/*.{yml,yaml}\" --cache",
     "format:package-json": "sort-package-json \"generators/**/package.json\" \"packages/**/package.json\" --ignore \"**/dist\" --ignore \"**lib\" --ignore \"**/node_modules\"",
     "check:biome": "biome check",
     "check": "biome check",
@@ -78,7 +78,7 @@
     "@babel/core": "^7.26.0",
     "@babel/preset-env": "^7.26.0",
     "@babel/preset-typescript": "^7.26.0",
-    "@biomejs/biome": "2.2.5",
+    "@biomejs/biome": "2.3.1",
     "@blueprintjs/eslint-plugin": "^6.1.6",
     "@blueprintjs/stylelint-plugin": "^4.1.14",
     "@fern-api/configs": "workspace:*",
@@ -123,17 +123,18 @@
     "overrides": {
       "node-fetch@2.x>whatwg-url": "^14.0.0",
       "qs": "6.13.0",
-      "url-join": "^5.0.0",
-      "@fern-fern/fdr-cjs-sdk": "0.139.33-c9426f366",
-      "@fern-api/fdr-sdk": "0.139.33-c9426f366",
+      "url-join": "^4.0.1",
+      "@fern-fern/fdr-cjs-sdk": "0.139.33-21b1b47db",
+      "@fern-api/fdr-sdk": "0.139.33-21b1b47db",
       "es-toolkit": "^1.39.10",
-      "ts-essentials": "^10.1.1"
+      "ts-essentials": "^10.1.1",
+      "form-data": "^4.0.4"
     }
   },
   "catalog": {
     "es-toolkit": "^1.39.10",
     "qs": "^6.13.0",
     "ts-essentials": "^10.1.1",
-    "url-join": "^5.0.0"
+    "url-join": "^4.0.1"
   }
 }

@@ -29,24 +29,30 @@ import org.jetbrains.annotations.Nullable;
 public final class DeserializationTestRequest {
     private final String requiredString;
 
+    @Nullable
     private final String nullableString;
 
     private final Optional<String> optionalString;
 
     private final Optional<String> optionalNullableString;
 
+    @Nullable
     private final UserRole nullableEnum;
 
     private final Optional<UserStatus> optionalEnum;
 
+    @Nullable
     private final NotificationMethod nullableUnion;
 
     private final Optional<SearchResult> optionalUnion;
 
+    @Nullable
     private final List<String> nullableList;
 
+    @Nullable
     private final Map<String, Integer> nullableMap;
 
+    @Nullable
     private final Address nullableObject;
 
     private final Optional<Organization> optionalObject;
@@ -55,16 +61,16 @@ public final class DeserializationTestRequest {
 
     private DeserializationTestRequest(
             String requiredString,
-            String nullableString,
+            @Nullable String nullableString,
             Optional<String> optionalString,
             Optional<String> optionalNullableString,
-            UserRole nullableEnum,
+            @Nullable UserRole nullableEnum,
             Optional<UserStatus> optionalEnum,
-            NotificationMethod nullableUnion,
+            @Nullable NotificationMethod nullableUnion,
             Optional<SearchResult> optionalUnion,
-            List<String> nullableList,
-            Map<String, Integer> nullableMap,
-            Address nullableObject,
+            @Nullable List<String> nullableList,
+            @Nullable Map<String, Integer> nullableMap,
+            @Nullable Address nullableObject,
             Optional<Organization> optionalObject,
             Map<String, Object> additionalProperties) {
         this.requiredString = requiredString;
@@ -254,43 +260,43 @@ public final class DeserializationTestRequest {
     public interface _FinalStage {
         DeserializationTestRequest build();
 
-        _FinalStage nullableString(@com.seed.nullableOptional.core.Nullable String nullableString);
+        _FinalStage nullableString(@Nullable String nullableString);
 
         _FinalStage optionalString(Optional<String> optionalString);
 
         _FinalStage optionalString(String optionalString);
 
-        _FinalStage optionalNullableString(Optional<String> optionalNullableString);
+        _FinalStage optionalNullableString(@Nullable Optional<String> optionalNullableString);
 
         _FinalStage optionalNullableString(String optionalNullableString);
 
         _FinalStage optionalNullableString(com.seed.nullableOptional.core.Nullable<String> optionalNullableString);
 
-        _FinalStage nullableEnum(@com.seed.nullableOptional.core.Nullable UserRole nullableEnum);
+        _FinalStage nullableEnum(@Nullable UserRole nullableEnum);
 
         _FinalStage optionalEnum(Optional<UserStatus> optionalEnum);
 
         _FinalStage optionalEnum(UserStatus optionalEnum);
 
-        _FinalStage nullableUnion(@com.seed.nullableOptional.core.Nullable NotificationMethod nullableUnion);
+        _FinalStage nullableUnion(@Nullable NotificationMethod nullableUnion);
 
         _FinalStage optionalUnion(Optional<SearchResult> optionalUnion);
 
         _FinalStage optionalUnion(SearchResult optionalUnion);
 
-        _FinalStage nullableList(List<String> nullableList);
+        _FinalStage nullableList(@Nullable List<String> nullableList);
 
         _FinalStage addNullableList(String nullableList);
 
         _FinalStage addAllNullableList(List<String> nullableList);
 
-        _FinalStage nullableMap(Map<String, Integer> nullableMap);
+        _FinalStage nullableMap(@Nullable Map<String, Integer> nullableMap);
 
         _FinalStage putAllNullableMap(Map<String, Integer> nullableMap);
 
         _FinalStage nullableMap(String key, Integer value);
 
-        _FinalStage nullableObject(@com.seed.nullableOptional.core.Nullable Address nullableObject);
+        _FinalStage nullableObject(@Nullable Address nullableObject);
 
         _FinalStage optionalObject(Optional<Organization> optionalObject);
 
@@ -367,7 +373,7 @@ public final class DeserializationTestRequest {
 
         @java.lang.Override
         @JsonSetter("nullableObject")
-        public _FinalStage nullableObject(@com.seed.nullableOptional.core.Nullable Address nullableObject) {
+        public _FinalStage nullableObject(@Nullable Address nullableObject) {
             this.nullableObject = nullableObject;
             return this;
         }
@@ -388,7 +394,7 @@ public final class DeserializationTestRequest {
 
         @java.lang.Override
         @JsonSetter(value = "nullableMap", nulls = Nulls.SKIP)
-        public _FinalStage nullableMap(Map<String, Integer> nullableMap) {
+        public _FinalStage nullableMap(@Nullable Map<String, Integer> nullableMap) {
             this.nullableMap.clear();
             if (nullableMap != null) {
                 this.nullableMap.putAll(nullableMap);
@@ -412,7 +418,7 @@ public final class DeserializationTestRequest {
 
         @java.lang.Override
         @JsonSetter(value = "nullableList", nulls = Nulls.SKIP)
-        public _FinalStage nullableList(List<String> nullableList) {
+        public _FinalStage nullableList(@Nullable List<String> nullableList) {
             this.nullableList.clear();
             if (nullableList != null) {
                 this.nullableList.addAll(nullableList);
@@ -435,7 +441,7 @@ public final class DeserializationTestRequest {
 
         @java.lang.Override
         @JsonSetter("nullableUnion")
-        public _FinalStage nullableUnion(@com.seed.nullableOptional.core.Nullable NotificationMethod nullableUnion) {
+        public _FinalStage nullableUnion(@Nullable NotificationMethod nullableUnion) {
             this.nullableUnion = nullableUnion;
             return this;
         }
@@ -455,7 +461,7 @@ public final class DeserializationTestRequest {
 
         @java.lang.Override
         @JsonSetter("nullableEnum")
-        public _FinalStage nullableEnum(@com.seed.nullableOptional.core.Nullable UserRole nullableEnum) {
+        public _FinalStage nullableEnum(@Nullable UserRole nullableEnum) {
             this.nullableEnum = nullableEnum;
             return this;
         }
@@ -481,7 +487,7 @@ public final class DeserializationTestRequest {
 
         @java.lang.Override
         @JsonSetter(value = "optionalNullableString", nulls = Nulls.SKIP)
-        public _FinalStage optionalNullableString(Optional<String> optionalNullableString) {
+        public _FinalStage optionalNullableString(@Nullable Optional<String> optionalNullableString) {
             this.optionalNullableString = optionalNullableString;
             return this;
         }
@@ -501,7 +507,7 @@ public final class DeserializationTestRequest {
 
         @java.lang.Override
         @JsonSetter("nullableString")
-        public _FinalStage nullableString(@com.seed.nullableOptional.core.Nullable String nullableString) {
+        public _FinalStage nullableString(@Nullable String nullableString) {
             this.nullableString = nullableString;
             return this;
         }

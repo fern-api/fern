@@ -11,6 +11,7 @@ export interface ApiReferencePackageConfigurationWithOptions
     /** Relative path to the markdown file. This summary is displayed at the top of the API section. */
     summary?: string;
     contents?: FernDocsConfig.ApiReferenceLayoutItem[];
+    availability?: FernDocsConfig.Availability;
     slug?: string;
     icon?: string;
     hidden?: boolean;

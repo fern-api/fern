@@ -1,5 +1,5 @@
 pub mod resources;
 pub mod types;
 
-pub use resources::LiteralsUnionsClient;
+pub use resources::{LiteralsClient, LiteralsUnionsClient};
 pub use types::*;

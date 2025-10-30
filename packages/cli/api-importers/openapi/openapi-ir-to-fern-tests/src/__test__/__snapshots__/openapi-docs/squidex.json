@@ -43937,9 +43937,9 @@ service:
   "packageMarkers": {},
   "rootApiFile": {
     "contents": {
-      "auth": "BearerAuthScheme",
+      "auth": "squidex-oauth-auth",
       "auth-schemes": {
-        "BearerAuthScheme": {
+        "squidex-oauth-auth": {
           "scheme": "bearer",
         },
       },
@@ -43968,9 +43968,9 @@ environments:
   Default: https://localhost:5001
 default-environment: Default
 auth-schemes:
-  BearerAuthScheme:
+  squidex-oauth-auth:
     scheme: bearer
-auth: BearerAuthScheme
+auth: squidex-oauth-auth
 variables:
   appName:
     type: string

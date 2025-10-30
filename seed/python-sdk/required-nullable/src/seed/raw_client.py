@@ -6,9 +6,13 @@ from json.decoder import JSONDecodeError
 from .core.api_error import ApiError
 from .core.client_wrapper import AsyncClientWrapper, SyncClientWrapper
 from .core.http_response import AsyncHttpResponse, HttpResponse
+from .core.jsonable_encoder import jsonable_encoder
 from .core.pydantic_utilities import parse_obj_as
 from .core.request_options import RequestOptions
 from .types.foo import Foo
+
+# this is used as the default value for optional parameters
+OMIT = typing.cast(typing.Any, ...)
 
 
 class RawSeedApi:
@@ -73,6 +77,69 @@ class RawSeedApi:
             raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
         raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
 
+    def update_foo(
+        self,
+        id: str,
+        *,
+        x_idempotency_key: str,
+        nullable_text: typing.Optional[str] = OMIT,
+        nullable_number: typing.Optional[float] = OMIT,
+        non_nullable_text: typing.Optional[str] = OMIT,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> HttpResponse[Foo]:
+        """
+        Parameters
+        ----------
+        id : str
+
+        x_idempotency_key : str
+
+        nullable_text : typing.Optional[str]
+            Can be explicitly set to null to clear the value
+
+        nullable_number : typing.Optional[float]
+            Can be explicitly set to null to clear the value
+
+        non_nullable_text : typing.Optional[str]
+            Regular non-nullable field
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        HttpResponse[Foo]
+            successful operation
+        """
+        _response = self._client_wrapper.httpx_client.request(
+            f"foo/{jsonable_encoder(id)}",
+            method="PATCH",
+            json={
+                "nullable_text": nullable_text,
+                "nullable_number": nullable_number,
+                "non_nullable_text": non_nullable_text,
+            },
+            headers={
+                "X-Idempotency-Key": str(x_idempotency_key) if x_idempotency_key is not None else None,
+            },
+            request_options=request_options,
+            omit=OMIT,
+        )
+        try:
+            if 200 <= _response.status_code < 300:
+                _data = typing.cast(
+                    Foo,
+                    parse_obj_as(
+                        type_=Foo,  # type: ignore
+                        object_=_response.json(),
+                    ),
+                )
+                return HttpResponse(response=_response, data=_data)
+            _response_json = _response.json()
+        except JSONDecodeError:
+            raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
+        raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
+
 
 class AsyncRawSeedApi:
     def __init__(self, *, client_wrapper: AsyncClientWrapper):
@@ -120,6 +187,69 @@ class AsyncRawSeedApi:
                 "required_nullable_baz": required_nullable_baz,
             },
             request_options=request_options,
+        )
+        try:
+            if 200 <= _response.status_code < 300:
+                _data = typing.cast(
+                    Foo,
+                    parse_obj_as(
+                        type_=Foo,  # type: ignore
+                        object_=_response.json(),
+                    ),
+                )
+                return AsyncHttpResponse(response=_response, data=_data)
+            _response_json = _response.json()
+        except JSONDecodeError:
+            raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
+        raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
+
+    async def update_foo(
+        self,
+        id: str,
+        *,
+        x_idempotency_key: str,
+        nullable_text: typing.Optional[str] = OMIT,
+        nullable_number: typing.Optional[float] = OMIT,
+        non_nullable_text: typing.Optional[str] = OMIT,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> AsyncHttpResponse[Foo]:
+        """
+        Parameters
+        ----------
+        id : str
+
+        x_idempotency_key : str
+
+        nullable_text : typing.Optional[str]
+            Can be explicitly set to null to clear the value
+
+        nullable_number : typing.Optional[float]
+            Can be explicitly set to null to clear the value
+
+        non_nullable_text : typing.Optional[str]
+            Regular non-nullable field
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        AsyncHttpResponse[Foo]
+            successful operation
+        """
+        _response = await self._client_wrapper.httpx_client.request(
+            f"foo/{jsonable_encoder(id)}",
+            method="PATCH",
+            json={
+                "nullable_text": nullable_text,
+                "nullable_number": nullable_number,
+                "non_nullable_text": non_nullable_text,
+            },
+            headers={
+                "X-Idempotency-Key": str(x_idempotency_key) if x_idempotency_key is not None else None,
+            },
+            request_options=request_options,
+            omit=OMIT,
         )
         try:
             if 200 <= _response.status_code < 300:

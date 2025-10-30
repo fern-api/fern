@@ -521,6 +521,14 @@ public abstract class AbstractHttpResponseParserGenerator {
                                 .add(snippet.codeBlock)
                                 .build());
                 endpointMethodBuilder.returns(snippet.typeName);
+
+                if (clientGeneratorContext.getCustomConfig().useNullableAnnotation()
+                        && com.fern.java.utils.NullableAnnotationUtils.isNullableType(body.getResponseBodyType())
+                        && !snippet.typeName.isPrimitive()) {
+                    endpointMethodBuilder.addAnnotation(
+                            com.fern.java.utils.NullableAnnotationUtils.getNullableAnnotation());
+                }
+
                 return null;
             }
 
@@ -555,6 +563,14 @@ public abstract class AbstractHttpResponseParserGenerator {
             }
 
             endpointMethodBuilder.returns(responseType);
+
+            if (clientGeneratorContext.getCustomConfig().useNullableAnnotation()
+                    && com.fern.java.utils.NullableAnnotationUtils.isNullableType(body.getResponseBodyType())
+                    && !responseType.isPrimitive()) {
+                endpointMethodBuilder.addAnnotation(
+                        com.fern.java.utils.NullableAnnotationUtils.getNullableAnnotation());
+            }
+
             ObjectMapperUtils objectMapperUtils = new ObjectMapperUtils(clientGeneratorContext, generatedObjectMapper);
             handleSuccessfulResult(
                     httpResponseBuilder,
@@ -878,6 +894,17 @@ public abstract class AbstractHttpResponseParserGenerator {
 
                 @Override
                 public GetSnippetOutput visitUnion(UnionTypeDeclaration union) {
+                    addPreviousIfPresent();
+                    if (propertyPath.isEmpty()) {
+                        if (currentOptional || previousWasOptional) {
+                            return new GetSnippetOutput(
+                                    com.fern.ir.model.types.TypeReference.container(
+                                            com.fern.ir.model.types.ContainerType.optional(typeReference)),
+                                    codeBlocks);
+                        }
+                        return new GetSnippetOutput(typeReference, codeBlocks);
+                    }
+
                     List<String> variantErrors = new ArrayList<>();
                     int variantIndex = 0;
 
@@ -942,6 +969,17 @@ public abstract class AbstractHttpResponseParserGenerator {
                 @Override
                 public GetSnippetOutput visitUndiscriminatedUnion(
                         UndiscriminatedUnionTypeDeclaration undiscriminatedUnion) {
+                    addPreviousIfPresent();
+                    if (propertyPath.isEmpty()) {
+                        if (currentOptional || previousWasOptional) {
+                            return new GetSnippetOutput(
+                                    com.fern.ir.model.types.TypeReference.container(
+                                            com.fern.ir.model.types.ContainerType.optional(typeReference)),
+                                    codeBlocks);
+                        }
+                        return new GetSnippetOutput(typeReference, codeBlocks);
+                    }
+
                     List<String> variantErrors = new ArrayList<>();
                     int variantIndex = 0;
 

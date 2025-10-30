@@ -56,6 +56,10 @@ pub enum ApiError {
     InvalidHeader,
     #[error("Could not clone request for retry")]
     RequestClone,
+    #[error("SSE stream terminated")]
+    StreamTerminated,
+    #[error("SSE parse error: {0}")]
+    SseParseError(String),
 }
 
 impl ApiError {

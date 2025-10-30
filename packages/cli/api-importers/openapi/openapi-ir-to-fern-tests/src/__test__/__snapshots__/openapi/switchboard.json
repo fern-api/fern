@@ -3357,9 +3357,9 @@ service:
   "packageMarkers": {},
   "rootApiFile": {
     "contents": {
-      "auth": "BearerAuthScheme",
+      "auth": "BearerAuth",
       "auth-schemes": {
-        "BearerAuthScheme": {
+        "BearerAuth": {
           "scheme": "bearer",
           "token": {
             "name": "apiKey",
@@ -3385,11 +3385,11 @@ environments:
   Default: https://api.airtop.ai/v1
 default-environment: Default
 auth-schemes:
-  BearerAuthScheme:
+  BearerAuth:
     scheme: bearer
     token:
       name: apiKey
-auth: BearerAuthScheme
+auth: BearerAuth
 ",
   },
 }

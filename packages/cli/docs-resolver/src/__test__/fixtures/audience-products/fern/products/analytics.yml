@@ -1,0 +1,16 @@
+navigation:
+  - page: Analytics Dashboard
+    path: ../analytics/dashboard.mdx
+    audiences:
+      - internal
+  - api: Analytics API
+    audiences:
+      - internal
+    layout:
+      - section:
+          title: Data Collection
+          audiences:
+            - internal
+          contents:
+            - POST /analytics/events
+            - GET /analytics/reports/{id}

@@ -1,0 +1,330 @@
+{
+  "mappings" : [ {
+    "id" : "6099aae3-72ae-4ff3-a49c-0cd89a2b0819",
+    "name" : "Get Hacker News Item - ask",
+    "request" : {
+      "urlPathTemplate" : "/item/{id}.json",
+      "method" : "GET",
+      "pathParameters" : {
+        "id" : {
+          "equalTo" : "121003"
+        }
+      },
+      "formParameters" : { }
+    },
+    "response" : {
+      "status" : 200,
+      "body" : "{\n  \"by\" : \"tel\",\n  \"descendants\" : 16,\n  \"id\" : 121003,\n  \"kids\" : [ 121016, 121109, 121168 ],\n  \"score\" : 25,\n  \"text\" : \"<i>or</i> HN: the Next Iteration<p>I get the impression that with Arc being released a lot of people who never had time for HN before are suddenly dropping in more often. (PG: what are the numbers on this? I'm envisioning a spike.)<p>Not to say that isn't great, but I'm wary of Diggification. Between links comparing programming to sex and a flurry of gratuitous, ostentatious  adjectives in the headlines it's a bit concerning.<p>80% of the stuff that makes the front page is still pretty awesome, but what's in place to keep the signal/noise ratio high? Does the HN model still work as the community scales? What's in store for (++ HN)?\",\n  \"time\" : 1203647620,\n  \"title\" : \"Ask HN: The Arc Effect\",\n  \"type\" : \"story\"\n}  \n",
+      "headers" : {
+        "Content-Type" : "application/json"
+      }
+    },
+    "uuid" : "6099aae3-72ae-4ff3-a49c-0cd89a2b0819",
+    "persistent" : true,
+    "priority" : 3,
+    "metadata" : {
+      "mocklab" : {
+        "created" : {
+          "at" : "2023-08-24T04:57:53.388197751Z",
+          "via" : "SYSTEM"
+        }
+      }
+    },
+    "postServeActions" : [ ]
+  }, {
+    "id" : "0565c82f-df6a-43df-87f9-4e7d9d9814b0",
+    "name" : "Get Hacker News Item - comment",
+    "request" : {
+      "urlPathTemplate" : "/item/{id}.json",
+      "method" : "GET",
+      "pathParameters" : {
+        "id" : {
+          "equalTo" : "k1moyifavaov7t9uk6ec28sl7bl5k6nsfr4zhuuzgzg9eqxl2"
+        }
+      }
+    },
+    "response" : {
+      "status" : 200,
+      "body" : "{\n  \"by\" : \"norvig\",\n  \"id\" : 2921983,\n  \"kids\" : [ 2922097, 2922429, 2924562, 2922709, 2922573, 2922140, 2922141 ],\n  \"parent\" : 2921506,\n  \"text\" : \"Aw shucks, guys ... you make me blush with your compliments.<p>Tell you what, Ill make a deal: I'll keep writing if you keep reading. K?\",\n  \"time\" : 1314211127,\n  \"type\" : \"comment\"\n}",
+      "headers" : {
+        "Content-Type" : "application/json"
+      }
+    },
+    "uuid" : "0565c82f-df6a-43df-87f9-4e7d9d9814b0",
+    "persistent" : true,
+    "priority" : 3,
+    "metadata" : {
+      "mocklab" : {
+        "created" : {
+          "at" : "2023-08-24T04:57:53.388143693Z",
+          "via" : "SYSTEM"
+        }
+      }
+    }
+  }, {
+    "id" : "ed1e805b-3637-48ed-861c-03a575ae305f",
+    "name" : "Get Hacker News Item - poll",
+    "request" : {
+      "urlPathTemplate" : "/item/{id}.json",
+      "method" : "GET",
+      "pathParameters" : {
+        "id" : {
+          "equalTo" : "grqwsqyxit09qe32gc5tu1djvq8k2blf6rh1q5vjkr5uvgtnzhguvpakdhvukv"
+        }
+      }
+    },
+    "response" : {
+      "status" : 200,
+      "body" : "{\n  \"by\" : \"pg\",\n  \"descendants\" : 54,\n  \"id\" : 126809,\n  \"kids\" : [ 126822, 126823, 126993, 126824, 126934, 127411, 126888, 127681, 126818, 126816, 126854, 127095, 126861, 127313, 127299, 126859, 126852, 126882, 126832, 127072, 127217, 126889, 127535, 126917, 126875 ],\n  \"parts\" : [ 126810, 126811, 126812 ],\n  \"score\" : 46,\n  \"text\" : \"\",\n  \"time\" : 1204403652,\n  \"title\" : \"Poll: What would happen if News.YC had explicit support for polls?\",\n  \"type\" : \"poll\"\n}\n",
+      "headers" : {
+        "Content-Type" : "application/json"
+      }
+    },
+    "uuid" : "ed1e805b-3637-48ed-861c-03a575ae305f",
+    "persistent" : true,
+    "priority" : 3,
+    "metadata" : {
+      "mocklab" : {
+        "created" : {
+          "at" : "2023-08-24T04:57:53.388089822Z",
+          "via" : "SYSTEM"
+        }
+      }
+    }
+  }, {
+    "id" : "dd8205bd-6e82-49e8-b526-e6bca3620927",
+    "name" : "Get Hacker News Item - job",
+    "request" : {
+      "urlPathTemplate" : "/item/{id}.json",
+      "method" : "GET",
+      "pathParameters" : {
+        "id" : {
+          "equalTo" : "jb5i4jhetm9pazigmc9g1kmfq0k1efd4pec7ky629nrlcprsa6db848f5etqxehpvd3wrfybtv99528egw1zfzblsxyfimnluabh0l55bkxzqa99cleyruy753ibcij85"
+        }
+      }
+    },
+    "response" : {
+      "status" : 200,
+      "body" : "{\n  \"by\" : \"justin\",\n  \"id\" : 192327,\n  \"score\" : 6,\n  \"text\" : \"Justin.tv is the biggest live video site online. We serve hundreds of thousands of video streams a day, and have supported up to 50k live concurrent viewers. Our site is growing every week, and we just added a 10 gbps line to our colo. Our unique visitors are up 900% since January.<p>There are a lot of pieces that fit together to make Justin.tv work: our video cluster, IRC server, our web app, and our monitoring and search services, to name a few. A lot of our website is dependent on Flash, and we're looking for talented Flash Engineers who know AS2 and AS3 very well who want to be leaders in the development of our Flash.<p>Responsibilities<p><pre><code>    * Contribute to product design and implementation discussions\\n    * Implement projects from the idea phase to production\\n    * Test and iterate code before and after production release \\n</code></pre>\\nQualifications<p><pre><code>    * You should know AS2, AS3, and maybe a little be of Flex.\\n    * Experience building web applications.\\n    * A strong desire to work on website with passionate users and ideas for how to improve it.\\n    * Experience hacking video streams, python, Twisted or rails all a plus.\\n</code></pre>\\nWhile we're growing rapidly, Justin.tv is still a small, technology focused company, built by hackers for hackers. Seven of our ten person team are engineers or designers. We believe in rapid development, and push out new code releases every week. We're based in a beautiful office in the SOMA district of SF, one block from the caltrain station. If you want a fun job hacking on code that will touch a lot of people, JTV is for you.<p>Note: You must be physically present in SF to work for JTV. Completing the technical problem at <a href=\\\"http://www.justin.tv/problems/bml\\\" rel=\\\"nofollow\\\">http://www.justin.tv/problems/bml</a> will go a long way with us. Cheers!\",\n  \"time\" : 1210981217,\n  \"title\" : \"Justin.tv is looking for a Lead Flash Engineer!\",\n  \"type\" : \"job\",\n  \"url\" : \"\"\n}\n",
+      "headers" : {
+        "Content-Type" : "application/json"
+      }
+    },
+    "uuid" : "dd8205bd-6e82-49e8-b526-e6bca3620927",
+    "persistent" : true,
+    "priority" : 3,
+    "metadata" : {
+      "mocklab" : {
+        "created" : {
+          "at" : "2023-08-24T04:57:53.388043327Z",
+          "via" : "SYSTEM"
+        }
+      }
+    }
+  }, {
+    "id" : "7a7645ca-db16-469e-b340-d2ed3a6228ce",
+    "name" : "Get Hacker News Item - pollopt",
+    "request" : {
+      "urlPathTemplate" : "/item/{id}.json",
+      "method" : "GET",
+      "pathParameters" : {
+        "id" : {
+          "equalTo" : "h2204t1htzw9w05gxlojhnaphvq25ledscrzepin4of07a40fk0fvgmvew8oawhrhtrldg7p14mb2mg9cn4btow4sphrcqjck8htv131wsh14shspzyo3q8suobxvsry8hboyy7mbvsmp3m16yledf83ek0vf2ygal"
+        }
+      }
+    },
+    "response" : {
+      "status" : 200,
+      "body" : "{\n  \"by\" : \"pg\",\n  \"id\" : 160705,\n  \"poll\" : 160704,\n  \"score\" : 335,\n  \"text\" : \"Yes, ban them; I'm tired of seeing Valleywag stories on News.YC.\",\n  \"time\" : 1207886576,\n  \"type\" : \"pollopt\"\n}\n",
+      "headers" : {
+        "Content-Type" : "application/json"
+      }
+    },
+    "uuid" : "7a7645ca-db16-469e-b340-d2ed3a6228ce",
+    "persistent" : true,
+    "priority" : 3,
+    "metadata" : {
+      "mocklab" : {
+        "created" : {
+          "at" : "2023-08-24T04:57:53.387992221Z",
+          "via" : "SYSTEM"
+        }
+      }
+    }
+  }, {
+    "id" : "92f04b00-949e-40e3-b492-0e62f30f99b9",
+    "name" : "Get Hacker News Item - story",
+    "request" : {
+      "urlPathTemplate" : "/item/{id}.json",
+      "method" : "GET",
+      "pathParameters" : {
+        "id" : {
+          "equalTo" : "12132423454"
+        }
+      },
+      "formParameters" : { }
+    },
+    "response" : {
+      "status" : 200,
+      "body" : "{\n  \"by\" : \"dhouston\",\n  \"descendants\" : 71,\n  \"id\" : 8863,\n  \"kids\" : [ 8952, 9224, 8917, 8884, 8887, 8943, 8869, 8958, 9005, 9671, 8940, 9067, 8908, 9055, 8865, 8881, 8872, 8873, 8955, 10403, 8903, 8928, 9125, 8998, 8901, 8902, 8907, 8894, 8878, 8870, 8980, 8934, 8876 ],\n  \"score\" : 111,\n  \"time\" : 1175714200,\n  \"title\" : \"My YC app: Dropbox - Throw away your USB drive\",\n  \"type\" : \"story\",\n  \"url\" : \"http://www.getdropbox.com/u/2/screencast.html\"\n}\n",
+      "headers" : {
+        "Content-Type" : "application/json"
+      }
+    },
+    "uuid" : "92f04b00-949e-40e3-b492-0e62f30f99b9",
+    "persistent" : true,
+    "priority" : 3,
+    "metadata" : {
+      "mocklab" : {
+        "created" : {
+          "at" : "2023-08-24T04:57:53.387942561Z",
+          "via" : "SYSTEM"
+        }
+      }
+    },
+    "postServeActions" : [ ]
+  }, {
+    "id" : "b8896814-138d-47db-bc17-5c09544bb03f",
+    "name" : "Get User Info - common-user",
+    "request" : {
+      "urlPathTemplate" : "/user/{id}.json",
+      "method" : "GET",
+      "pathParameters" : {
+        "id" : {
+          "equalTo" : "wiremock"
+        }
+      },
+      "formParameters" : { }
+    },
+    "response" : {
+      "status" : 200,
+      "body" : "{\n  \"about\" : \"WireMock is a free and open source tool for building and testing mock APIs. Originated in Java, now it&#x27;s being used everywhere thanks to many implementations and adapters. Join us on GitHub and Slack!\",\n  \"created\" : 1680600921,\n  \"id\" : \"wiremock\",\n  \"karma\" : 2,\n  \"submitted\" : [ 36998400, 36998399, 36149301, 36149300, 36148010, 36136096, 36136095 ]\n}\n",
+      "headers" : {
+        "Content-Type" : "application/json"
+      }
+    },
+    "uuid" : "b8896814-138d-47db-bc17-5c09544bb03f",
+    "persistent" : true,
+    "priority" : 3,
+    "metadata" : {
+      "mocklab" : {
+        "created" : {
+          "at" : "2023-08-24T04:57:53.387826822Z",
+          "via" : "SYSTEM"
+        }
+      }
+    },
+    "postServeActions" : [ ]
+  }, {
+    "id" : "a9af02eb-a653-4bf8-b3ad-21079109d8a3",
+    "name" : "Get Max Item ID - default",
+    "request" : {
+      "urlPathTemplate" : "/maxitem",
+      "method" : "GET"
+    },
+    "response" : {
+      "status" : 200,
+      "body" : "9130260",
+      "headers" : {
+        "Content-Type" : "application/json"
+      }
+    },
+    "uuid" : "a9af02eb-a653-4bf8-b3ad-21079109d8a3",
+    "persistent" : true,
+    "priority" : 3,
+    "metadata" : {
+      "mocklab" : {
+        "created" : {
+          "at" : "2023-08-24T04:57:53.387768471Z",
+          "via" : "SYSTEM"
+        }
+      }
+    }
+  }, {
+    "id" : "0530429b-c2a0-425c-9e69-1377e353196b",
+    "name" : "Get Changed Items and Profiles - story",
+    "request" : {
+      "urlPathTemplate" : "/updates.json",
+      "method" : "GET"
+    },
+    "response" : {
+      "status" : 200,
+      "body" : "{\n  \"items\" : [ 8423305, 8420805, 8423379, 8422504, 8423178, 8423336, 8422717, 8417484, 8423378, 8423238, 8423353, 8422395, 8423072, 8423044, 8423344, 8423374, 8423015, 8422428, 8423377, 8420444, 8423300, 8422633, 8422599, 8422408, 8422928, 8394339, 8421900, 8420902, 8422087 ],\n  \"profiles\" : [ \"thefox\", \"mdda\", \"plinkplonk\", \"GBond\", \"rqebmm\", \"neom\", \"arram\", \"mcmancini\", \"metachris\", \"DubiousPusher\", \"dochtman\", \"kstrauser\", \"biren34\", \"foobarqux\", \"mkehrt\", \"nathanm412\", \"wmblaettler\", \"JoeAnzalone\", \"rcconf\", \"johndbritton\", \"msie\", \"cktsai\", \"27182818284\", \"kevinskii\", \"wildwood\", \"mcherm\", \"naiyt\", \"matthewmcg\", \"joelhaus\", \"tshtf\", \"MrZongle2\", \"Bogdanp\" ]\n}",
+      "headers" : {
+        "Content-Type" : "application/json"
+      }
+    },
+    "uuid" : "0530429b-c2a0-425c-9e69-1377e353196b",
+    "persistent" : true,
+    "priority" : 3,
+    "metadata" : {
+      "mocklab" : {
+        "created" : {
+          "at" : "2023-08-24T04:57:53.387684582Z",
+          "via" : "SYSTEM"
+        }
+      }
+    }
+  }, {
+    "id" : "31fc807b-6dda-404f-b395-b4336e4ea1d9",
+    "name" : "Get Hacker News Item - 404",
+    "request" : {
+      "urlPathTemplate" : "/item/{id}.json",
+      "method" : "GET",
+      "pathParameters" : {
+        "id" : {
+          "equalTo" : "n0u0ijzut4ee3ffke6"
+        }
+      }
+    },
+    "response" : {
+      "status" : 404,
+      "body" : "",
+      "headers" : {
+        "Content-Type" : "application/json"
+      }
+    },
+    "uuid" : "31fc807b-6dda-404f-b395-b4336e4ea1d9",
+    "persistent" : true,
+    "metadata" : {
+      "mocklab" : {
+        "created" : {
+          "at" : "2023-08-24T04:57:53.388235641Z",
+          "via" : "SYSTEM"
+        }
+      }
+    }
+  }, {
+    "id" : "e7c218bf-25da-4bb7-b600-2c7c46c54db0",
+    "name" : "Get User Info - empty-value",
+    "request" : {
+      "urlPathTemplate" : "/user/{id}.json",
+      "method" : "GET",
+      "pathParameters" : {
+        "id" : {
+          "equalTo" : "8upclzuflksbybyuy75uvri7zcl70flj7i3r2v1v8n"
+        }
+      }
+    },
+    "response" : {
+      "status" : 404,
+      "body" : "null",
+      "headers" : {
+        "Content-Type" : "application/json"
+      }
+    },
+    "uuid" : "e7c218bf-25da-4bb7-b600-2c7c46c54db0",
+    "persistent" : true,
+    "metadata" : {
+      "mocklab" : {
+        "created" : {
+          "at" : "2023-08-24T04:57:53.387863883Z",
+          "via" : "SYSTEM"
+        }
+      }
+    }
+  } ],
+  "meta" : {
+    "total" : 11
+  }
+}

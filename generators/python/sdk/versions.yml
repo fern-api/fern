@@ -1,5 +1,35 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
 # For unreleased changes, use unreleased.yml
+- version: 4.32.2
+  changelogEntry:
+    - summary: Update pyproject.toml headers to propagate project urls to pypi metadata generation
+      type: chore
+  createdAt: "2025-10-29"
+  irVersion: 60
+
+- version: 4.32.1
+  changelogEntry:
+    - summary: Fix pydantic model alias generator to correctly serialize wrapped aliases in pydantic v2.
+      type: fix
+  createdAt: "2025-10-27"
+  irVersion: 60
+
+- version: 4.32.0
+  changelogEntry:
+    - summary: |
+        Add support for setting the recursion limit above the default of 1000.
+        Also removes unused imports that were previously F401-ignored.
+      type: feat
+  createdAt: "2025-10-24"
+  irVersion: 60
+
+- version: 4.31.2
+  changelogEntry:
+    - summary: Fix union type deserialization to properly match discriminated unions based on literal field values (e.g., type discriminators) when nested fields have validation errors.
+      type: fix
+  createdAt: "2025-10-23"
+  irVersion: 60
+
 - version: 4.31.1
   changelogEntry:
     - summary: Escape backslashes in docstrings to prevent SyntaxWarning for invalid escape sequences.
