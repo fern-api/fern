@@ -26,7 +26,7 @@
     "clean": "rm -rf ./lib && tsc --build --clean",
     "compile": "tsc --build",
     "compile:debug": "tsc --build --sourceMap",
-    "depcheck": "depcheck",
+    "depcheck": "depcheck --ignores=readable-stream",
     "test": "vitest --passWithNoTests --run",
     "test:debug": "pnpm run test --inspect --no-file-parallelism",
     "test:update": "vitest --passWithNoTests --run -u"
@@ -39,6 +39,7 @@
     "@fern-fern/fiddle-sdk": "0.0.656",
     "node-fetch": "2",
     "qs": "6.12.1",
+    "readable-stream": "^4.7.0",
     "zod": "^3.22.3"
   },
   "devDependencies": {
@@ -46,6 +47,7 @@
     "@types/node": "18.15.3",
     "@types/node-fetch": "2",
     "@types/qs": "6.9.15",
+    "@types/readable-stream": "^4.0.22",
     "depcheck": "^1.4.7",
     "typescript": "5.9.3",
     "vitest": "^2.1.9"
