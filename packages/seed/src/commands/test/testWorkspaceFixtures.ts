@@ -106,7 +106,7 @@ export async function testGenerator({
     }
 
     if (unexpectedlySucceededFixtures.length > 0) {
-        CONSOLE_LOGGER.warn(
+        CONSOLE_LOGGER.info(
             `⚠️ ${unexpectedlySucceededFixtures.length}/${
                 results.length
             } test cases succeeded unexpectedly. Consider removing the following fixtures from allowedFailures: ${unexpectedlySucceededFixtures.join(", ")}.`
