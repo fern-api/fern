@@ -24,7 +24,7 @@ paths:
               required:
                 - callbackUrl
       responses:
-        '200':
+        "200":
           description: Successfully subscribed
           content:
             application/json:
@@ -35,7 +35,7 @@ paths:
                     type: string
       callbacks:
         onEvent:
-          '{$request.body#/callbackUrl}':
+          "{$request.body#/callbackUrl}":
             post:
               summary: Event notification
               description: Webhook callback for event notifications
@@ -60,5 +60,5 @@ paths:
                         - eventId
                         - timestamp
               responses:
-                '200':
+                "200":
                   description: Webhook received successfully
