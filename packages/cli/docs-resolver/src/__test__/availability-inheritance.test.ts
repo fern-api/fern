@@ -100,7 +100,9 @@ describe("availability inheritance", () => {
                 }
                 if (child.type === "apiPackage" && child.children) {
                     const found = findNodeByTitle(child.children, title);
-                    if (found) return found;
+                    if (found) {
+                        return found;
+                    }
                 }
             }
             return undefined;
@@ -108,9 +110,15 @@ describe("availability inheritance", () => {
 
         // Helper function to get availability from any node type
         const getAvailability = (node: FernNavigation.V1.ApiPackageChild | undefined) => {
-            if (!node) return undefined;
-            if (node.type === "endpointPair") return node.nonStream.availability;
-            if (node.type === "link") return undefined; // Link nodes don't have availability
+            if (!node) {
+                return undefined;
+            }
+            if (node.type === "endpointPair") {
+                return node.nonStream.availability;
+            }
+            if (node.type === "link") {
+                return undefined; // Link nodes don't have availability
+            }
             return node.availability;
         };
 

@@ -1,3 +1,4 @@
+import { docsYml } from "@fern-api/configuration-loader";
 import { FernNavigation } from "@fern-api/fdr-sdk";
 
 export function enrichApiPackageChild({
@@ -11,7 +12,7 @@ export function enrichApiPackageChild({
     convertApiDefinitionPackageId: (
         subpackageId: string,
         slug: FernNavigation.V1.SlugGenerator,
-        parentAvailability?: any
+        parentAvailability?: docsYml.RawSchemas.Availability
     ) => FernNavigation.V1.ApiPackageChild[];
     mergeAndFilterChildren: (
         children: FernNavigation.V1.ApiPackageChild[],
