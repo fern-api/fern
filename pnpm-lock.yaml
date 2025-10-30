@@ -15,7 +15,7 @@ overrides:
   yaml: 2.3.3
   node-fetch@2.x>whatwg-url: ^14.0.0
   qs: 6.13.0
-  url-join: ^5.0.0
+  url-join: ^4.0.1
   '@fern-fern/fdr-cjs-sdk': 0.139.33-21b1b47db
   '@fern-api/fdr-sdk': 0.139.33-21b1b47db
   es-toolkit: ^1.39.10
@@ -442,8 +442,8 @@ importers:
         specifier: 5.9.3
         version: 5.9.3
       url-join:
-        specifier: ^5.0.0
-        version: 5.0.0
+        specifier: ^4.0.1
+        version: 4.0.1
       vitest:
         specifier: ^2.1.9
         version: 2.1.9(@types/node@18.15.3)(jsdom@20.0.3)(msw@2.11.3(@types/node@18.15.3)(typescript@5.9.3))(sass@1.93.2)(terser@5.44.0)
@@ -915,8 +915,8 @@ importers:
         specifier: 5.9.3
         version: 5.9.3
       url-join:
-        specifier: ^5.0.0
-        version: 5.0.0
+        specifier: ^4.0.1
+        version: 4.0.1
       vitest:
         specifier: ^2.1.9
         version: 2.1.9(@types/node@18.15.3)(jsdom@20.0.3)(msw@2.11.3(@types/node@18.15.3)(typescript@5.9.3))(sass@1.93.2)(terser@5.44.0)
@@ -1774,8 +1774,8 @@ importers:
         specifier: ^4.17.21
         version: 4.17.21
       url-join:
-        specifier: ^5.0.0
-        version: 5.0.0
+        specifier: ^4.0.1
+        version: 4.0.1
       zod:
         specifier: ^3.22.3
         version: 3.25.76
@@ -3906,8 +3906,8 @@ importers:
         specifier: ^15.1.0
         version: 15.1.0
       url-join:
-        specifier: ^5.0.0
-        version: 5.0.0
+        specifier: ^4.0.1
+        version: 4.0.1
     devDependencies:
       '@fern-api/configs':
         specifier: workspace:*
@@ -4816,8 +4816,8 @@ importers:
         specifier: ^6.21.1
         version: 6.21.3
       url-join:
-        specifier: ^5.0.0
-        version: 5.0.0
+        specifier: ^4.0.1
+        version: 4.0.1
       validate-npm-package-name:
         specifier: ^5.0.1
         version: 5.0.1
@@ -4974,6 +4974,15 @@ importers:
       '@fern-fern/fiddle-sdk':
         specifier: 0.0.656
         version: 0.0.656
+      node-fetch:
+        specifier: '2'
+        version: 2.7.0
+      qs:
+        specifier: 6.13.0
+        version: 6.13.0
+      readable-stream:
+        specifier: ^4.7.0
+        version: 4.7.0
       zod:
         specifier: ^3.22.3
         version: 3.25.76
@@ -4984,6 +4993,15 @@ importers:
       '@types/node':
         specifier: 18.15.3
         version: 18.15.3
+      '@types/node-fetch':
+        specifier: '2'
+        version: 2.6.9
+      '@types/qs':
+        specifier: 6.9.15
+        version: 6.9.15
+      '@types/readable-stream':
+        specifier: ^4.0.22
+        version: 4.0.22
       depcheck:
         specifier: ^1.4.7
         version: 1.4.7
@@ -5483,8 +5501,8 @@ importers:
         specifier: ^12.1.3
         version: 12.1.3
       url-join:
-        specifier: ^5.0.0
-        version: 5.0.0
+        specifier: ^4.0.1
+        version: 4.0.1
     devDependencies:
       '@fern-api/configs':
         specifier: workspace:*
@@ -5743,8 +5761,8 @@ importers:
         specifier: ^7.1.0
         version: 7.1.2
       url-join:
-        specifier: ^5.0.0
-        version: 5.0.0
+        specifier: ^4.0.1
+        version: 4.0.1
     devDependencies:
       '@fern-api/configs':
         specifier: workspace:*
@@ -5825,8 +5843,8 @@ importers:
         specifier: 5.9.3
         version: 5.9.3
       url-join:
-        specifier: ^5.0.0
-        version: 5.0.0
+        specifier: ^4.0.1
+        version: 4.0.1
       uuid:
         specifier: ^9.0.1
         version: 9.0.1
@@ -6420,8 +6438,8 @@ importers:
         specifier: ^3.0.3
         version: 3.0.3
       url-join:
-        specifier: ^5.0.0
-        version: 5.0.0
+        specifier: ^4.0.1
+        version: 4.0.1
     devDependencies:
       '@fern-api/configs':
         specifier: workspace:*
@@ -6659,8 +6677,8 @@ importers:
         specifier: ^4.17.21
         version: 4.17.21
       url-join:
-        specifier: ^5.0.0
-        version: 5.0.0
+        specifier: ^4.0.1
+        version: 4.0.1
     devDependencies:
       '@fern-api/configs':
         specifier: workspace:*
@@ -7306,8 +7324,8 @@ importers:
         specifier: ^5.0.0
         version: 5.0.0
       url-join:
-        specifier: ^5.0.0
-        version: 5.0.0
+        specifier: ^4.0.1
+        version: 4.0.1
       zod:
         specifier: ^3.22.3
         version: 3.25.76
@@ -10545,8 +10563,8 @@ packages:
   '@types/react@18.3.25':
     resolution: {integrity: sha512-oSVZmGtDPmRZtVDqvdKUi/qgCsWp5IDY29wp8na8Bj4B3cc99hfNzvNhlMkVVxctkAOGUA3Km7MMpBHAnWfcIA==}
 
-  '@types/readable-stream@4.0.21':
-    resolution: {integrity: sha512-19eKVv9tugr03IgfXlA9UVUVRbW6IuqRO5B92Dl4a6pT7K8uaGrNS0GkxiZD0BOk6PLuXl5FhWl//eX/pzYdTQ==}
+  '@types/readable-stream@4.0.22':
+    resolution: {integrity: sha512-/FFhJpfCLAPwAcN3mFycNUa77ddnr8jTgF5VmSNetaemWB2cIlfCA9t0YTM3JAT0wOcv8D4tjPo7pkDhK3EJIg==}
 
   '@types/semver@7.7.1':
     resolution: {integrity: sha512-FmgJfu+MOcQ370SD0ev7EI8TlCAfKYU+B4m5T3yXc1CiRN94g/SZPtsCkk506aUDtlMnFZvasDwHHUcZUEaYuA==}
@@ -15191,9 +15209,8 @@ packages:
   uri-js@4.4.1:
     resolution: {integrity: sha512-7rKUyy33Q1yc98pQ1DAmLtwX109F7TIfWlW1Ydo8Wl1ii1SeHieeh0HHfPeL2fMXK6z0s8ecKs9frCuLJvndBg==}
 
-  url-join@5.0.0:
-    resolution: {integrity: sha512-n2huDr9h9yzd6exQVnH/jU5mr+Pfx08LRXXZhkLLetAMESRj+anQsTAh940iMrIetKAmry9coFuZQ2jY8/p3WA==}
-    engines: {node: ^12.20.0 || ^14.13.1 || >=16.0.0}
+  url-join@4.0.1:
+    resolution: {integrity: sha512-jk1+QP6ZJqyOiuEI9AEWQfju/nB2Pw466kbA0LEZljHwKeMgd9WrAEgEGxjPDD2+TNbbb37rTyhEfrCXfuKXnA==}
 
   url-parse@1.5.10:
     resolution: {integrity: sha512-WypcfiRhfeUP9vvF0j6rw0J3hrWrw6iZv3+22h6iRMJ/8z1Tj6XfLP4DsUix5MhMPnXpiHDoKyoZ/bdCkwBCiQ==}
@@ -16907,7 +16924,7 @@ snapshots:
   '@fern-api/fdr-sdk@0.139.33-21b1b47db(typescript@5.9.3)':
     dependencies:
       '@fern-api/ui-core-utils': 0.139.33-21b1b47db
-      '@types/readable-stream': 4.0.21
+      '@types/readable-stream': 4.0.22
       '@ungap/structured-clone': 1.3.0
       dayjs: 1.11.18
       es-toolkit: 1.39.10
@@ -16921,7 +16938,7 @@ snapshots:
       readable-stream: 4.7.0
       tinycolor2: 1.6.0
       ts-essentials: 10.1.1(typescript@5.9.3)
-      url-join: 5.0.0
+      url-join: 4.0.1
     transitivePeerDependencies:
       - encoding
       - typescript
@@ -16944,7 +16961,7 @@ snapshots:
       js-base64: 3.7.2
       node-fetch: 2.7.0
       qs: 6.13.0
-      url-join: 5.0.0
+      url-join: 4.0.1
     transitivePeerDependencies:
       - encoding
 
@@ -16986,7 +17003,7 @@ snapshots:
       node-fetch: 2.7.0
       qs: 6.13.0
       readable-stream: 4.7.0
-      url-join: 5.0.0
+      url-join: 4.0.1
     transitivePeerDependencies:
       - encoding
 
@@ -16996,7 +17013,7 @@ snapshots:
       js-base64: 3.7.2
       node-fetch: 2.7.0
       qs: 6.13.0
-      url-join: 5.0.0
+      url-join: 4.0.1
     transitivePeerDependencies:
       - encoding
 
@@ -17006,7 +17023,7 @@ snapshots:
       js-base64: 3.7.2
       node-fetch: 2.7.0
       qs: 6.13.0
-      url-join: 5.0.0
+      url-join: 4.0.1
     transitivePeerDependencies:
       - encoding
 
@@ -17035,7 +17052,7 @@ snapshots:
       form-data: 4.0.4
       node-fetch: 2.7.0
       qs: 6.13.0
-      url-join: 5.0.0
+      url-join: 4.0.1
     transitivePeerDependencies:
       - encoding
 
@@ -17047,7 +17064,7 @@ snapshots:
       node-fetch: 2.7.0
       qs: 6.13.0
       readable-stream: 4.7.0
-      url-join: 5.0.0
+      url-join: 4.0.1
     transitivePeerDependencies:
       - encoding
 
@@ -17285,7 +17302,7 @@ snapshots:
       formdata-node: 6.0.3
       node-fetch: 2.7.0
       qs: 6.13.0
-      url-join: 5.0.0
+      url-join: 4.0.1
     transitivePeerDependencies:
       - encoding
 
@@ -17295,7 +17312,7 @@ snapshots:
       js-base64: 3.7.2
       node-fetch: 2.7.0
       qs: 6.13.0
-      url-join: 5.0.0
+      url-join: 4.0.1
     transitivePeerDependencies:
       - encoding
 
@@ -18342,7 +18359,7 @@ snapshots:
       '@types/prop-types': 15.7.15
       csstype: 3.1.3
 
-  '@types/readable-stream@4.0.21':
+  '@types/readable-stream@4.0.22':
     dependencies:
       '@types/node': 18.19.129
 
@@ -24305,7 +24322,7 @@ snapshots:
     dependencies:
       punycode: 2.3.1
 
-  url-join@5.0.0: {}
+  url-join@4.0.1: {}
 
   url-parse@1.5.10:
     dependencies:

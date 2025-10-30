@@ -68,11 +68,11 @@ export function buildAuthSchemes(context: OpenApiIrConverterContext): void {
             }
 
             context.builder.addAuthScheme({
-                name: BASIC_AUTH_SCHEME,
+                name: id,
                 schema: basicAuthScheme
             });
             if (!setAuth) {
-                context.builder.setAuth(BASIC_AUTH_SCHEME);
+                context.builder.setAuth(id);
                 setAuth = true;
             }
         } else if (securityScheme.type === "bearer") {
@@ -100,11 +100,11 @@ export function buildAuthSchemes(context: OpenApiIrConverterContext): void {
             }
 
             context.builder.addAuthScheme({
-                name: BEARER_AUTH_SCHEME,
+                name: id,
                 schema: bearerAuthScheme
             });
             if (!setAuth) {
-                context.builder.setAuth(BEARER_AUTH_SCHEME);
+                context.builder.setAuth(id);
                 setAuth = true;
             }
         } else if (securityScheme.type === "header") {
@@ -141,11 +141,11 @@ export function buildAuthSchemes(context: OpenApiIrConverterContext): void {
                 scheme: "bearer"
             };
             context.builder.addAuthScheme({
-                name: BEARER_AUTH_SCHEME,
+                name: id,
                 schema: bearerAuthScheme
             });
             if (!setAuth) {
-                context.builder.setAuth(BEARER_AUTH_SCHEME);
+                context.builder.setAuth(id);
                 setAuth = true;
             }
             if (securityScheme.scopesEnum != null && securityScheme.scopesEnum.values.length > 0) {

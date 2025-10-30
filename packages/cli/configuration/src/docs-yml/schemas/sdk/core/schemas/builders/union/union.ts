@@ -5,10 +5,10 @@ import { keys } from "../../utils/keys";
 import { maybeSkipValidation } from "../../utils/maybeSkipValidation";
 import { enum_ } from "../enum";
 import { ObjectSchema } from "../object";
-import { getObjectLikeUtils, ObjectLikeSchema } from "../object-like";
+import { ObjectLikeSchema, getObjectLikeUtils } from "../object-like";
 import { getSchemaUtils } from "../schema-utils";
 import { Discriminant } from "./discriminant";
-import { inferParsedDiscriminant, inferParsedUnion, inferRawDiscriminant, inferRawUnion, UnionSubtypes } from "./types";
+import { UnionSubtypes, inferParsedDiscriminant, inferParsedUnion, inferRawDiscriminant, inferRawUnion } from "./types";
 
 export function union<D extends string | Discriminant<any, any>, U extends UnionSubtypes<any>>(
     discriminant: D,

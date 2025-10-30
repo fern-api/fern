@@ -18,6 +18,7 @@ export interface ApiReferenceSectionConfiguration
     icon?: string;
     hidden?: boolean;
     skipSlug?: boolean;
+    availability?: FernDocsConfig.Availability;
     /** Settings for the api playground that affects all endpoints. */
     playground?: FernDocsConfig.PlaygroundSettings;
 }

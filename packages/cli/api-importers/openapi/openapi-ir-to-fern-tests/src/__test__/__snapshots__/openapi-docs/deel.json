@@ -33717,9 +33717,12 @@ types:
       "audiences": [
         "external",
       ],
-      "auth": "BearerAuthScheme",
+      "auth": "deelToken",
       "auth-schemes": {
-        "BearerAuthScheme": {
+        "deelToken": {
+          "scheme": "bearer",
+        },
+        "oauth2": {
           "scheme": "bearer",
         },
       },
@@ -33742,9 +33745,11 @@ environments:
   Default: https://api.letsdeel.com/rest/v1
 default-environment: Default
 auth-schemes:
-  BearerAuthScheme:
+  deelToken:
     scheme: bearer
-auth: BearerAuthScheme
+  oauth2:
+    scheme: bearer
+auth: deelToken
 audiences:
   - external
 ",

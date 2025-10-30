@@ -26,18 +26,21 @@ export const TabWithHrefRule: Rule = {
                             continue;
                         }
 
-                        if (tabConfig.href != null && tabItem.layout != null) {
+                        const hasLayout = tabbedNavigationItemHasLayout(tabItem);
+                        const hasVariants = tabbedNavigationItemHasVariants(tabItem);
+
+                        if (tabConfig.href != null && (hasLayout || hasVariants)) {
                             ruleViolations.push({
                                 severity: "fatal",
-                                message: `Tab "${tabItem.tab}" has both a href and layout. Only one should be used.`
+                                message: `Tab "${tabItem.tab}" has both a href and ${hasLayout ? "layout" : "variants"}. Only one should be used.`
                             });
                             continue;
                         }
 
-                        if (tabConfig.href == null && tabItem.layout == null) {
+                        if (tabConfig.href == null && !hasLayout && !hasVariants) {
                             ruleViolations.push({
                                 severity: "fatal",
-                                message: `Tab "${tabItem.tab}" is missing a href or layout.`
+                                message: `Tab "${tabItem.tab}" is missing a href, layout, or variants.`
                             });
                             continue;
                         }
@@ -59,4 +62,20 @@ function isTabbedNavigationConfig(
         // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
         (navigationConfig[0] as docsYml.RawSchemas.TabbedNavigationItem).tab != null
     );
+}
+
+function tabbedNavigationItemHasLayout(
+    item: docsYml.RawSchemas.TabbedNavigationItem
+): item is docsYml.RawSchemas.TabbedNavigationItemWithLayout & {
+    layout: docsYml.RawSchemas.NavigationItem[];
+} {
+    return "layout" in item && Array.isArray(item.layout);
+}
+
+function tabbedNavigationItemHasVariants(
+    item: docsYml.RawSchemas.TabbedNavigationItem
+): item is docsYml.RawSchemas.TabbedNavigationItemWithVariants & {
+    variants: docsYml.RawSchemas.TabVariant[];
+} {
+    return "variants" in item && Array.isArray(item.variants);
 }
