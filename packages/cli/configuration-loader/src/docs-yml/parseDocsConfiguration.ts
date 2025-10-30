@@ -496,44 +496,63 @@ async function getNavigationConfiguration({
     } else if (products != null) {
         const productNavbars: docsYml.ProductInfo[] = [];
         for (const product of products) {
-            const absoluteFilepathToProductFile = resolve(absolutePathToFernFolder, product.path);
             const productImageFile =
                 product.image != null ? resolve(absolutePathToFernFolder, product.image) : undefined;
-            const content = yaml.load((await readFile(absoluteFilepathToProductFile)).toString());
-            const result = docsYml.RawSchemas.Serializer.ProductFileConfig.parseOrThrow(content);
 
-            let navigation: docsYml.DocsNavigationConfiguration;
+            if ("path" in product) {
+                const absoluteFilepathToProductFile = resolve(absolutePathToFernFolder, product.path);
+                const content = yaml.load((await readFile(absoluteFilepathToProductFile)).toString());
+                const result = docsYml.RawSchemas.Serializer.ProductFileConfig.parseOrThrow(content);
 
-            // If the product has versions defined, process them
-            if (product.versions != null && product.versions.length > 0) {
-                navigation = await getVersionedNavigationConfiguration({
-                    versions: product.versions,
-                    absolutePathToFernFolder,
-                    context
+                let navigation: docsYml.DocsNavigationConfiguration;
+
+                // If the product has versions defined, process them
+                if (product.versions != null && product.versions.length > 0) {
+                    navigation = await getVersionedNavigationConfiguration({
+                        versions: product.versions,
+                        absolutePathToFernFolder,
+                        context
+                    });
+                } else {
+                    // Process as a regular navigation if no versions
+                    navigation = await convertNavigationConfiguration({
+                        tabs: result.tabs,
+                        rawNavigationConfig: result.navigation,
+                        absolutePathToFernFolder,
+                        absolutePathToConfig: absoluteFilepathToProductFile,
+                        context
+                    });
+                }
+
+                productNavbars.push({
+                    landingPage: parsePageConfig(result.landingPage, absoluteFilepathToProductFile),
+                    product: product.displayName,
+                    navigation,
+                    slug: product.slug,
+                    subtitle: product.subtitle,
+                    icon: product.icon || "fa-solid fa-code",
+                    image: productImageFile,
+                    viewers: parseRoles(product.viewers),
+                    orphaned: product.orphaned,
+                    featureFlags: convertFeatureFlag(product.featureFlag)
+                });
+            } else if ("href" in product) {
+                // create external link product
+                productNavbars.push({
+                    landingPage: undefined, // irrelevant
+                    product: product.displayName,
+                    navigation: { type: "untabbed", items: [] }, // irrelevant
+                    slug: product.href,
+                    subtitle: product.subtitle,
+                    icon: product.icon || "fa-solid fa-external-link",
+                    image: productImageFile,
+                    viewers: parseRoles(product.viewers),
+                    orphaned: product.orphaned,
+                    featureFlags: convertFeatureFlag(product.featureFlag)
                 });
             } else {
-                // Process as a regular navigation if no versions
-                navigation = await convertNavigationConfiguration({
-                    tabs: result.tabs,
-                    rawNavigationConfig: result.navigation,
-                    absolutePathToFernFolder,
-                    absolutePathToConfig: absoluteFilepathToProductFile,
-                    context
-                });
+                throw new Error(`Invalid product configuration: product must have either 'path' or 'href' property`);
             }
-
-            productNavbars.push({
-                landingPage: parsePageConfig(result.landingPage, absoluteFilepathToProductFile),
-                product: product.displayName,
-                navigation,
-                slug: product.slug,
-                subtitle: product.subtitle,
-                icon: product.icon || "fa-solid fa-code",
-                image: productImageFile,
-                viewers: parseRoles(product.viewers),
-                orphaned: product.orphaned,
-                featureFlags: convertFeatureFlag(product.featureFlag)
-            });
         }
 
         return {

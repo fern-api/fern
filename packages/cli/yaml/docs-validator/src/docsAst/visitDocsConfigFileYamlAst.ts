@@ -187,35 +187,41 @@ export async function visitDocsConfigFileYamlAst({
 
             await Promise.all(
                 products.map(async (product, idx) => {
-                    await visitFilepath({
-                        absoluteFilepathToConfiguration,
-                        rawUnresolvedFilepath: product.path,
-                        visitor,
-                        nodePath: ["products", `${idx}`],
-                        willBeUploaded: false
-                    });
-                    const absoluteFilepath = resolve(dirname(absoluteFilepathToConfiguration), product.path);
-                    const content = yaml.load((await readFile(absoluteFilepath)).toString());
-                    if (await doesPathExist(absoluteFilepath)) {
-                        await visitor.productFile?.(
-                            {
-                                path: product.path,
-                                content
-                            },
-                            [product.path]
-                        );
-                    }
-                    const parsedProductFile = await validateProductConfigFileSchema({ value: content });
-                    if (parsedProductFile.type === "success") {
-                        await visitNavigationAst({
-                            absolutePathToFernFolder,
-                            navigation: parsedProductFile.contents.navigation,
+                    if ("path" in product) {
+                        await visitFilepath({
+                            absoluteFilepathToConfiguration,
+                            rawUnresolvedFilepath: product.path,
                             visitor,
-                            nodePath: ["navigation"],
-                            absoluteFilepathToConfiguration: absoluteFilepath,
-                            apiWorkspaces,
-                            context
+                            nodePath: ["products", `${idx}`],
+                            willBeUploaded: false
                         });
+                        const absoluteFilepath = resolve(dirname(absoluteFilepathToConfiguration), product.path);
+                        const content = yaml.load((await readFile(absoluteFilepath)).toString());
+                        if (await doesPathExist(absoluteFilepath)) {
+                            await visitor.productFile?.(
+                                {
+                                    path: product.path,
+                                    content
+                                },
+                                [product.path]
+                            );
+                        }
+                        const parsedProductFile = await validateProductConfigFileSchema({ value: content });
+                        if (parsedProductFile.type === "success") {
+                            await visitNavigationAst({
+                                absolutePathToFernFolder,
+                                navigation: parsedProductFile.contents.navigation,
+                                visitor,
+                                nodePath: ["navigation"],
+                                absoluteFilepathToConfiguration: absoluteFilepath,
+                                apiWorkspaces,
+                                context
+                            });
+                        }
+                    } else if (!("href" in product)) {
+                        throw new Error(
+                            `Invalid product configuration: product must have either 'path' or 'href' property`
+                        );
                     }
                 })
             );

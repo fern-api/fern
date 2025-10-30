@@ -4,4 +4,4 @@
 
 import * as FernDocsConfig from "../../../index";
 
-export type ProductConfig = FernDocsConfig.ProductConfigWithRelativePath | FernDocsConfig.ProductConfigWithHref;
+export type ProductPath = FernDocsConfig.RelativeProductPath | FernDocsConfig.AbsoluteProductPath;
