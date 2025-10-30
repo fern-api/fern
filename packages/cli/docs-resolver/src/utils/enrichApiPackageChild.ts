@@ -10,7 +10,8 @@ export function enrichApiPackageChild({
     nodeIdToSubpackageId: Map<string, string[]>;
     convertApiDefinitionPackageId: (
         subpackageId: string,
-        slug: FernNavigation.V1.SlugGenerator
+        slug: FernNavigation.V1.SlugGenerator,
+        parentAvailability?: any
     ) => FernNavigation.V1.ApiPackageChild[];
     mergeAndFilterChildren: (
         children: FernNavigation.V1.ApiPackageChild[],
@@ -22,7 +23,7 @@ export function enrichApiPackageChild({
         const slug = FernNavigation.V1.SlugGenerator.init(child.slug);
         const subpackageIds = nodeIdToSubpackageId.get(child.id) ?? [];
         const subpackageChildren = subpackageIds.flatMap((subpackageId) =>
-            convertApiDefinitionPackageId(subpackageId, slug)
+            convertApiDefinitionPackageId(subpackageId, slug, child.availability)
         );
 
         // recursively apply enrichment to children

@@ -5,6 +5,7 @@
 import * as serializers from "../../../index";
 import * as FernDocsConfig from "../../../../api/index";
 import * as core from "../../../../core";
+import { Availability } from "./Availability";
 import { PlaygroundSettings } from "./PlaygroundSettings";
 import { WithPermissions } from "./WithPermissions";
 import { WithFeatureFlags } from "./WithFeatureFlags";
@@ -19,6 +20,7 @@ export const ApiReferenceEndpointConfiguration: core.serialization.ObjectSchema<
         slug: core.serialization.string().optional(),
         icon: core.serialization.string().optional(),
         hidden: core.serialization.boolean().optional(),
+        availability: Availability.optional(),
         playground: PlaygroundSettings.optional(),
     })
     .extend(WithPermissions)
@@ -31,6 +33,7 @@ export declare namespace ApiReferenceEndpointConfiguration {
         slug?: string | null;
         icon?: string | null;
         hidden?: boolean | null;
+        availability?: Availability.Raw | null;
         playground?: PlaygroundSettings.Raw | null;
     }
 }
