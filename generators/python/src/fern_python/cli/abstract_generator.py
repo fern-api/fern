@@ -119,6 +119,7 @@ class AbstractGenerator(ABC):
                 github=lambda github_output_mode: self._write_files_for_github_repo(
                     project=project,
                     output_mode=github_output_mode,
+                    publish_config=generator_config.publish,
                     write_unit_tests=(
                         self.project_type() == "sdk" and include_legacy_wire_tests and generator_config.write_unit_tests
                     ),
@@ -204,7 +205,7 @@ class AbstractGenerator(ABC):
         publisher.publish_package(publish_config=publish_config)
 
     def _write_files_for_github_repo(
-        self, project: Project, output_mode: GithubOutputMode, write_unit_tests: bool
+        self, project: Project, output_mode: GithubOutputMode, write_unit_tests: bool, publish_config: GeneratorPublishConfig,
     ) -> None:
         project.add_file(
             ".gitignore",
@@ -220,10 +221,9 @@ class AbstractGenerator(ABC):
         )
         # Use OIDC workflow if token is set to 'OIDC', otherwise use legacy workflow
         use_oidc_workflow = False
-        if output_mode.publish_info is not None:
-            publish_info_union = output_mode.publish_info.get_as_union()
-            if publish_info_union.type == "pypi":
-                use_oidc_workflow = publish_info_union.password_environment_variable == "OIDC"
+        if publish_config is not None:
+          if publish_config.registries_v_2 is not None and publish_config.registries_v_2.pypi is not None:
+            use_oidc_workflow = publish_config.registries_v_2.pypi.password == "OIDC"
         
         project.add_file(
             ".github/workflows/ci.yml",
