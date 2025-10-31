@@ -1,12 +1,9 @@
 import { assertNever } from "@fern-api/core-utils";
-import { ast } from "@fern-api/csharp-codegen";
+import { ast, lazy, WithGeneration } from "@fern-api/csharp-codegen";
 
 import { HttpHeader, Literal } from "@fern-fern/ir-sdk/api";
 
 import { SdkGeneratorContext } from "../SdkGeneratorContext";
-
-export const BASE_URL_FIELD_NAME = "BaseUrl";
-export const BASE_URL_SUMMARY = "The Base URL for the API.";
 
 export interface OptionArgs {
     optional: boolean;
@@ -18,31 +15,34 @@ export interface HttpHeadersFieldOptionArgs {
     interfaceReference?: ast.ClassReference;
 }
 
-export class BaseOptionsGenerator {
-    private context: SdkGeneratorContext;
+export class BaseOptionsGenerator extends WithGeneration {
+    constructor(private readonly context: SdkGeneratorContext) {
+        super(context);
+    }
 
-    constructor(context: SdkGeneratorContext) {
-        this.context = context;
-        this.BASE_URL_FIELD = this.csharp.field({
+    public readonly members = lazy({
+        baseUrlSummary: () => "The Base URL for the API."
+    });
+
+    private createBaseUrlField(classOrInterface: ast.Interface | ast.Class) {
+        classOrInterface.addField({
             access: ast.Access.Public,
-            name: BASE_URL_FIELD_NAME,
+            origin: classOrInterface.explicit("BaseUrl"),
             get: true,
             init: true,
-            type: this.csharp.Type.optional(this.csharp.Type.string()),
-            summary: BASE_URL_SUMMARY
+            type: this.csharp.Type.optional(this.csharp.Type.string),
+            summary: this.members.baseUrlSummary
         });
     }
-    private get csharp() {
-        return this.context.csharp;
-    }
 
-    BASE_URL_FIELD: ast.Field;
-
-    public getHttpClientField({ optional, includeInitializer }: OptionArgs): ast.Field {
-        const type = this.csharp.Type.reference(this.csharp.System.Net.Http.HttpClient);
-        return this.csharp.field({
+    public getHttpClientField(
+        classOrInterface: ast.Interface | ast.Class,
+        { optional, includeInitializer }: OptionArgs
+    ) {
+        const type = this.csharp.Type.reference(this.extern.System.Net.Http.HttpClient);
+        classOrInterface.addField({
+            origin: classOrInterface.explicit("HttpClient"),
             access: ast.Access.Public,
-            name: "HttpClient",
             get: true,
             init: true,
             type: optional ? this.csharp.Type.optional(type) : type,
@@ -51,16 +51,15 @@ export class BaseOptionsGenerator {
         });
     }
 
-    public getHttpHeadersField({
-        optional,
-        includeInitializer,
-        interfaceReference
-    }: HttpHeadersFieldOptionArgs): ast.Field {
-        const headersReference = this.csharp.Type.reference(this.context.getHeadersClassReference());
-        return this.csharp.field({
+    public getHttpHeadersField(
+        classOrInterface: ast.Interface | ast.Class,
+        { optional, includeInitializer, interfaceReference }: HttpHeadersFieldOptionArgs
+    ) {
+        const headersReference = this.csharp.Type.reference(this.types.Headers);
+        classOrInterface.addField({
             // Classes implementing internal interface field cannot have an access modifier
+            origin: classOrInterface.explicit("Headers"),
             access: !interfaceReference ? ast.Access.Internal : undefined,
-            name: "Headers",
             get: true,
             init: true,
             type: optional ? this.csharp.Type.optional(headersReference) : headersReference,
@@ -70,11 +69,14 @@ export class BaseOptionsGenerator {
         });
     }
 
-    public getMaxRetriesField({ optional, includeInitializer }: OptionArgs): ast.Field {
-        const type = this.csharp.Type.integer();
-        return this.csharp.field({
+    public getMaxRetriesField(
+        classOrInterface: ast.Interface | ast.Class,
+        { optional, includeInitializer }: OptionArgs
+    ) {
+        const type = this.csharp.Type.integer;
+        classOrInterface.addField({
+            origin: classOrInterface.explicit("MaxRetries"),
             access: ast.Access.Public,
-            name: "MaxRetries",
             get: true,
             init: true,
             type: optional ? this.csharp.Type.optional(type) : type,
@@ -83,11 +85,11 @@ export class BaseOptionsGenerator {
         });
     }
 
-    public getTimeoutField({ optional, includeInitializer }: OptionArgs): ast.Field {
-        const type = this.csharp.Type.reference(this.csharp.System.TimeSpan);
-        return this.csharp.field({
+    public getTimeoutField(classOrInterface: ast.Interface | ast.Class, { optional, includeInitializer }: OptionArgs) {
+        const type = this.csharp.Type.reference(this.extern.System.TimeSpan);
+        classOrInterface.addField({
+            origin: classOrInterface.explicit("Timeout"),
             access: ast.Access.Public,
-            name: "Timeout",
             get: true,
             init: true,
             type: optional ? this.csharp.Type.optional(type) : type,
@@ -96,26 +98,29 @@ export class BaseOptionsGenerator {
         });
     }
 
-    public getAdditionalHeadersField({
-        summary,
-        includeInitializer
-    }: {
-        summary: string;
-        includeInitializer: boolean;
-    }): ast.Field {
+    public getAdditionalHeadersField(
+        classOrInterface: ast.Interface | ast.Class,
+        {
+            summary,
+            includeInitializer
+        }: {
+            summary: string;
+            includeInitializer: boolean;
+        }
+    ) {
         const type = this.csharp.Type.reference(
-            this.csharp.System.Collections.Generic.IEnumerable(
+            this.extern.System.Collections.Generic.IEnumerable(
                 this.csharp.Type.reference(
-                    this.context.getKeyValuePairsClassReference({
-                        key: this.csharp.Type.string(),
-                        value: this.csharp.Type.string().toOptionalIfNotAlready()
-                    })
+                    this.extern.System.Collections.Generic.KeyValuePair(
+                        this.csharp.Type.string,
+                        this.csharp.Type.string.toOptionalIfNotAlready()
+                    )
                 )
             )
         );
-        return this.csharp.field({
+        classOrInterface.addField({
+            origin: classOrInterface.explicit("AdditionalHeaders"),
             access: ast.Access.Public,
-            name: "AdditionalHeaders",
             get: true,
             init: true,
             type,
@@ -124,19 +129,22 @@ export class BaseOptionsGenerator {
         });
     }
 
-    public maybeGetLiteralHeaderField({
-        header,
-        options
-    }: {
-        header: HttpHeader;
-        options: OptionArgs;
-    }): ast.Field | undefined {
-        if (header.valueType.type !== "container" || header.valueType.container.type !== "literal") {
-            return undefined;
+    public maybeGetLiteralHeaderField(
+        classOrInterface: ast.Interface | ast.Class,
+        {
+            header,
+            options
+        }: {
+            header: HttpHeader;
+            options: OptionArgs;
         }
-        return this.csharp.field({
+    ) {
+        if (header.valueType.type !== "container" || header.valueType.container.type !== "literal") {
+            return;
+        }
+        classOrInterface.addField({
             access: ast.Access.Public,
-            name: header.name.name.pascalCase.safeName,
+            origin: header,
             get: true,
             init: true,
             type: this.getLiteralRootClientParameterType({ literal: header.valueType.container.literal }),
@@ -145,82 +153,79 @@ export class BaseOptionsGenerator {
         });
     }
 
-    public getRequestOptionFields(): ast.Field[] {
+    public getRequestOptionFields(classOrInterface: ast.Interface | ast.Class) {
         const optionArgs: OptionArgs = {
             optional: true,
             includeInitializer: false
         };
-        return [
-            this.BASE_URL_FIELD,
-            this.getHttpClientField(optionArgs),
-            this.getHttpHeadersField({
-                optional: false,
-                includeInitializer: true,
-                interfaceReference: this.context.getRequestOptionsInterfaceReference()
-            }),
-            this.getAdditionalHeadersField({
-                summary:
-                    "Additional headers to be sent with the request.\nHeaders previously set with matching keys will be overwritten.",
-                includeInitializer: true
-            }),
-            this.getMaxRetriesField(optionArgs),
-            this.getTimeoutField(optionArgs),
-            this.getQueryParametersField({
-                optional: false,
-                includeInitializer: true
-            }),
-            this.getBodyPropertiesField(optionArgs),
-            ...this.getLiteralHeaderOptions(optionArgs)
-        ];
+
+        this.createBaseUrlField(classOrInterface);
+        this.getHttpClientField(classOrInterface, optionArgs);
+        this.getHttpHeadersField(classOrInterface, {
+            optional: false,
+            includeInitializer: true,
+            interfaceReference: this.types.RequestOptionsInterface
+        });
+        this.getAdditionalHeadersField(classOrInterface, {
+            summary:
+                "Additional headers to be sent with the request.\nHeaders previously set with matching keys will be overwritten.",
+            includeInitializer: true
+        });
+        this.getMaxRetriesField(classOrInterface, optionArgs);
+        this.getTimeoutField(classOrInterface, optionArgs);
+        this.getQueryParametersField(classOrInterface, {
+            optional: false,
+            includeInitializer: true
+        });
+        this.getBodyPropertiesField(classOrInterface, optionArgs);
+        this.getLiteralHeaderOptions(classOrInterface, optionArgs);
     }
 
-    public getRequestOptionInterfaceFields(): ast.Field[] {
+    public getRequestOptionInterfaceFields(iface: ast.Interface) {
         const optionArgs: OptionArgs = {
             optional: true,
             includeInitializer: false
         };
-        return [
-            this.BASE_URL_FIELD,
-            this.getHttpClientField(optionArgs),
-            this.getHttpHeadersField({ optional: false, includeInitializer: false, interfaceReference: undefined }),
-            this.getAdditionalHeadersField({
-                summary:
-                    "Additional headers to be sent with the request.\nHeaders previously set with matching keys will be overwritten.",
-                includeInitializer: false
-            }),
-            this.getMaxRetriesField(optionArgs),
-            this.getTimeoutField(optionArgs),
-            this.getQueryParametersField({ optional: false, includeInitializer: false }),
-            this.getBodyPropertiesField(optionArgs)
-        ];
+
+        this.createBaseUrlField(iface);
+        this.getHttpClientField(iface, optionArgs);
+        this.getHttpHeadersField(iface, {
+            optional: false,
+            includeInitializer: false,
+            interfaceReference: undefined
+        });
+        this.getAdditionalHeadersField(iface, {
+            summary:
+                "Additional headers to be sent with the request.\nHeaders previously set with matching keys will be overwritten.",
+            includeInitializer: false
+        });
+        this.getMaxRetriesField(iface, optionArgs);
+        this.getTimeoutField(iface, optionArgs);
+        this.getQueryParametersField(iface, { optional: false, includeInitializer: false });
+        this.getBodyPropertiesField(iface, optionArgs);
     }
 
-    public getLiteralHeaderOptions(optionArgs: OptionArgs): ast.Field[] {
-        const fields: ast.Field[] = [];
+    public getLiteralHeaderOptions(classOrInterface: ast.Interface | ast.Class, optionArgs: OptionArgs) {
         for (const header of this.context.ir.headers) {
-            const field = this.maybeGetLiteralHeaderField({ header, options: optionArgs });
-            if (field != null) {
-                fields.push(field);
-            }
+            this.maybeGetLiteralHeaderField(classOrInterface, { header, options: optionArgs });
         }
-        return fields;
     }
 
     private getLiteralRootClientParameterType({ literal }: { literal: Literal }): ast.Type {
         switch (literal.type) {
             case "string":
-                return this.csharp.Type.optional(this.csharp.Type.string());
+                return this.csharp.Type.optional(this.csharp.Type.string);
             case "boolean":
-                return this.csharp.Type.optional(this.csharp.Type.boolean());
+                return this.csharp.Type.optional(this.csharp.Type.boolean);
             default:
                 assertNever(literal);
         }
     }
 
-    private getQueryParametersField({ includeInitializer }: OptionArgs): ast.Field {
-        return this.csharp.field({
+    private getQueryParametersField(classOrInterface: ast.Interface | ast.Class, { includeInitializer }: OptionArgs) {
+        classOrInterface.addField({
+            origin: classOrInterface.explicit("AdditionalQueryParameters"),
             access: ast.Access.Public,
-            name: "AdditionalQueryParameters",
             type: this.context.getAdditionalQueryParametersType(),
             summary: "Additional query parameters sent with the request.",
             get: true,
@@ -234,10 +239,10 @@ export class BaseOptionsGenerator {
         });
     }
 
-    private getBodyPropertiesField({ includeInitializer }: OptionArgs): ast.Field {
-        return this.csharp.field({
+    private getBodyPropertiesField(classOrInterface: ast.Interface | ast.Class, { includeInitializer }: OptionArgs) {
+        classOrInterface.addField({
+            origin: classOrInterface.explicit("AdditionalBodyProperties"),
             access: ast.Access.Public,
-            name: "AdditionalBodyProperties",
             type: this.context.getAdditionalBodyPropertiesType(),
             summary: "Additional body properties sent with the request.\nThis is only applied to JSON requests.",
             get: true,
