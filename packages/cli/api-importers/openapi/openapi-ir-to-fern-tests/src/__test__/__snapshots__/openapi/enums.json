@@ -68,6 +68,17 @@
             "docs": "Priority level (1=Low, 2=Medium, 3=High)",
             "type": "integer",
           },
+          "SingleUniqueValueEnum": {
+            "enum": [
+              "SingleUniqueValue",
+            ],
+            "inline": undefined,
+            "source": {
+              "openapi": "../openapi.yml",
+            },
+          },
+          "SingleValueEnum": "literal<"SingleValue">",
+          "SingleValueEnumWithFernTypeLiteral": "literal<"SingleValue">",
           "StatusEnum": {
             "docs": "Status of the resource",
             "enum": [
@@ -127,6 +138,13 @@ types:
       - UNAUTHORIZED
       - BAD_REQUEST
     docs: Error codes
+    source:
+      openapi: ../openapi.yml
+  SingleValueEnum: literal<"SingleValue">
+  SingleValueEnumWithFernTypeLiteral: literal<"SingleValue">
+  SingleUniqueValueEnum:
+    enum:
+      - SingleUniqueValue
     source:
       openapi: ../openapi.yml
 ",
