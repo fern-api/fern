@@ -3,4 +3,4 @@ api:
   specs:
     - openapi: ../openapi.yml
       settings:
-        coerce-single-value-enums-to-literals: true
+        coerce-enums-to-literals: true

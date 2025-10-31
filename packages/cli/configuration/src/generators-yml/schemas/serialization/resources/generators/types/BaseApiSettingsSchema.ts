@@ -14,7 +14,6 @@ export const BaseApiSettingsSchema: core.serialization.ObjectSchema<
     "title-as-schema-name": core.serialization.boolean().optional(),
     "optional-additional-properties": core.serialization.boolean().optional(),
     "coerce-enums-to-literals": core.serialization.boolean().optional(),
-    "coerce-single-value-enums-to-literals": core.serialization.boolean().optional(),
     "idiomatic-request-names": core.serialization.boolean().optional(),
     "wrap-references-to-nullable-in-optional": core.serialization.boolean().optional(),
     "coerce-optional-schemas-to-nullable": core.serialization.boolean().optional(),
@@ -27,7 +26,6 @@ export declare namespace BaseApiSettingsSchema {
         "title-as-schema-name"?: boolean | null;
         "optional-additional-properties"?: boolean | null;
         "coerce-enums-to-literals"?: boolean | null;
-        "coerce-single-value-enums-to-literals"?: boolean | null;
         "idiomatic-request-names"?: boolean | null;
         "wrap-references-to-nullable-in-optional"?: boolean | null;
         "coerce-optional-schemas-to-nullable"?: boolean | null;

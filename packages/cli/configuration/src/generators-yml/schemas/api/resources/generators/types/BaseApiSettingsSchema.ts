@@ -8,9 +8,8 @@ export interface BaseApiSettingsSchema {
     /** Whether to use the titles of the schemas within an OpenAPI definition as the names of the types within Fern. Defaults to true. */
     "title-as-schema-name"?: boolean;
     "optional-additional-properties"?: boolean;
-    "coerce-enums-to-literals"?: boolean;
     /** Whether to coerce single value enums to literals. Defaults to true. */
-    "coerce-single-value-enums-to-literals"?: boolean;
+    "coerce-enums-to-literals"?: boolean;
     "idiomatic-request-names"?: boolean;
     /**
      * If true, the converter will convert nullable schemas to optional nullable.

@@ -288,8 +288,7 @@ types:
         type: optional<boolean>
         docs: Whether to use the titles of the schemas within an OpenAPI definition as the names of the types within Fern. Defaults to true.
       optional-additional-properties: optional<boolean>
-      coerce-enums-to-literals: optional<boolean>
-      coerce-single-value-enums-to-literals:
+      coerce-enums-to-literals:
         type: optional<boolean>
         docs: Whether to coerce single value enums to literals. Defaults to true.
       idiomatic-request-names: optional<boolean>

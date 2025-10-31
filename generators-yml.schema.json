@@ -1601,16 +1601,6 @@
             }
           ]
         },
-        "coerce-single-value-enums-to-literals": {
-          "oneOf": [
-            {
-              "type": "boolean"
-            },
-            {
-              "type": "null"
-            }
-          ]
-        },
         "idiomatic-request-names": {
           "oneOf": [
             {
@@ -1900,16 +1890,6 @@
           ]
         },
         "coerce-enums-to-literals": {
-          "oneOf": [
-            {
-              "type": "boolean"
-            },
-            {
-              "type": "null"
-            }
-          ]
-        },
-        "coerce-single-value-enums-to-literals": {
           "oneOf": [
             {
               "type": "boolean"

@@ -1227,7 +1227,6 @@
     "useTitlesAsName": true,
     "optionalAdditionalProperties": true,
     "coerceEnumsToLiterals": true,
-    "coerceSingleValueEnumsToLiterals": true,
     "respectReadonlySchemas": false,
     "respectNullableSchemas": false,
     "onlyIncludeReferencedSchemas": false,

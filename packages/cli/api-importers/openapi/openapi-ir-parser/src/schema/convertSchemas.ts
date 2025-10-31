@@ -415,7 +415,7 @@ export function convertSchemaObject(
             const fernEnum = getFernEnum(schema);
 
             if (
-                context.options.coerceSingleValueEnumsToLiterals &&
+                context.options.coerceEnumsToLiterals &&
                 schema.enum.length === 1 &&
                 schema.enum[0] != null &&
                 fernEnum == null
