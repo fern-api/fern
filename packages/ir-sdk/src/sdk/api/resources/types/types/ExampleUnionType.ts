@@ -7,4 +7,8 @@ import * as FernIr from "../../../index";
 export interface ExampleUnionType {
     discriminant: FernIr.NameAndWireValue;
     singleUnionType: FernIr.ExampleSingleUnionType;
+    /** A list of properties inherited from other types */
+    extendProperties: FernIr.ExampleObjectProperty[] | undefined;
+    /** A list of base properties for the union */
+    baseProperties: FernIr.ExampleUnionBaseProperty[] | undefined;
 }

@@ -2848,7 +2848,9 @@
                                     "extraProperties": null
                                 }
                             }
-                        }
+                        },
+                        "baseProperties": [],
+                        "extendProperties": []
                     },
                     "jsonExample": {
                         "type": "metadata",
@@ -3211,7 +3213,9 @@
                                 },
                                 "jsonExample": "data"
                             }
-                        }
+                        },
+                        "baseProperties": [],
+                        "extendProperties": []
                     },
                     "jsonExample": {
                         "type": "string",
@@ -17616,7 +17620,195 @@
                                 },
                                 "jsonExample": "<head>...</head>"
                             }
-                        }
+                        },
+                        "baseProperties": [
+                            {
+                                "name": {
+                                    "name": {
+                                        "originalName": "extra",
+                                        "camelCase": {
+                                            "unsafeName": "extra",
+                                            "safeName": "extra"
+                                        },
+                                        "snakeCase": {
+                                            "unsafeName": "extra",
+                                            "safeName": "extra"
+                                        },
+                                        "screamingSnakeCase": {
+                                            "unsafeName": "EXTRA",
+                                            "safeName": "EXTRA"
+                                        },
+                                        "pascalCase": {
+                                            "unsafeName": "Extra",
+                                            "safeName": "Extra"
+                                        }
+                                    },
+                                    "wireValue": "extra"
+                                },
+                                "value": {
+                                    "shape": {
+                                        "type": "container",
+                                        "container": {
+                                            "type": "map",
+                                            "map": [
+                                                {
+                                                    "key": {
+                                                        "shape": {
+                                                            "type": "primitive",
+                                                            "primitive": {
+                                                                "type": "string",
+                                                                "string": {
+                                                                    "original": "version"
+                                                                }
+                                                            }
+                                                        },
+                                                        "jsonExample": "version"
+                                                    },
+                                                    "value": {
+                                                        "shape": {
+                                                            "type": "primitive",
+                                                            "primitive": {
+                                                                "type": "string",
+                                                                "string": {
+                                                                    "original": "0.0.1"
+                                                                }
+                                                            }
+                                                        },
+                                                        "jsonExample": "0.0.1"
+                                                    }
+                                                },
+                                                {
+                                                    "key": {
+                                                        "shape": {
+                                                            "type": "primitive",
+                                                            "primitive": {
+                                                                "type": "string",
+                                                                "string": {
+                                                                    "original": "tenancy"
+                                                                }
+                                                            }
+                                                        },
+                                                        "jsonExample": "tenancy"
+                                                    },
+                                                    "value": {
+                                                        "shape": {
+                                                            "type": "primitive",
+                                                            "primitive": {
+                                                                "type": "string",
+                                                                "string": {
+                                                                    "original": "test"
+                                                                }
+                                                            }
+                                                        },
+                                                        "jsonExample": "test"
+                                                    }
+                                                }
+                                            ],
+                                            "keyType": {
+                                                "_type": "primitive",
+                                                "primitive": {
+                                                    "v1": "STRING",
+                                                    "v2": {
+                                                        "type": "string",
+                                                        "default": null,
+                                                        "validation": null
+                                                    }
+                                                }
+                                            },
+                                            "valueType": {
+                                                "_type": "primitive",
+                                                "primitive": {
+                                                    "v1": "STRING",
+                                                    "v2": {
+                                                        "type": "string",
+                                                        "default": null,
+                                                        "validation": null
+                                                    }
+                                                }
+                                            }
+                                        }
+                                    },
+                                    "jsonExample": {
+                                        "version": "0.0.1",
+                                        "tenancy": "test"
+                                    }
+                                }
+                            },
+                            {
+                                "name": {
+                                    "name": {
+                                        "originalName": "tags",
+                                        "camelCase": {
+                                            "unsafeName": "tags",
+                                            "safeName": "tags"
+                                        },
+                                        "snakeCase": {
+                                            "unsafeName": "tags",
+                                            "safeName": "tags"
+                                        },
+                                        "screamingSnakeCase": {
+                                            "unsafeName": "TAGS",
+                                            "safeName": "TAGS"
+                                        },
+                                        "pascalCase": {
+                                            "unsafeName": "Tags",
+                                            "safeName": "Tags"
+                                        }
+                                    },
+                                    "wireValue": "tags"
+                                },
+                                "value": {
+                                    "shape": {
+                                        "type": "container",
+                                        "container": {
+                                            "type": "set",
+                                            "set": [
+                                                {
+                                                    "shape": {
+                                                        "type": "primitive",
+                                                        "primitive": {
+                                                            "type": "string",
+                                                            "string": {
+                                                                "original": "development"
+                                                            }
+                                                        }
+                                                    },
+                                                    "jsonExample": "development"
+                                                },
+                                                {
+                                                    "shape": {
+                                                        "type": "primitive",
+                                                        "primitive": {
+                                                            "type": "string",
+                                                            "string": {
+                                                                "original": "public"
+                                                            }
+                                                        }
+                                                    },
+                                                    "jsonExample": "public"
+                                                }
+                                            ],
+                                            "itemType": {
+                                                "_type": "primitive",
+                                                "primitive": {
+                                                    "v1": "STRING",
+                                                    "v2": {
+                                                        "type": "string",
+                                                        "default": null,
+                                                        "validation": null
+                                                    }
+                                                }
+                                            }
+                                        }
+                                    },
+                                    "jsonExample": [
+                                        "development",
+                                        "public"
+                                    ]
+                                }
+                            }
+                        ],
+                        "extendProperties": []
                     },
                     "jsonExample": {
                         "type": "html",
@@ -18253,7 +18445,9 @@
                                     "extraProperties": null
                                 }
                             }
-                        }
+                        },
+                        "baseProperties": [],
+                        "extendProperties": []
                     },
                     "jsonExample": {
                         "type": "generic",
@@ -21466,7 +21660,9 @@
                                 },
                                 "jsonExample": true
                             }
-                        }
+                        },
+                        "baseProperties": [],
+                        "extendProperties": []
                     },
                     "jsonExample": {
                         "type": "and",
@@ -21552,7 +21748,9 @@
                                 },
                                 "jsonExample": true
                             }
-                        }
+                        },
+                        "baseProperties": [],
+                        "extendProperties": []
                     },
                     "jsonExample": {
                         "type": "or",
@@ -25939,7 +26137,9 @@
                                                                 "extraProperties": null
                                                             }
                                                         }
-                                                    }
+                                                    },
+                                                    "baseProperties": [],
+                                                    "extendProperties": []
                                                 }
                                             },
                                             "jsonExample": {
@@ -25959,7 +26159,7 @@
                     "autogeneratedExamples": [
                         {
                             "example": {
-                                "id": "97654f4b",
+                                "id": "421fb8d8",
                                 "url": "/file/notification/notificationId",
                                 "name": null,
                                 "endpointHeaders": [],
@@ -26375,7 +26575,9 @@
                                                                 "extraProperties": null
                                                             }
                                                         }
-                                                    }
+                                                    },
+                                                    "baseProperties": [],
+                                                    "extendProperties": []
                                                 },
                                                 "typeName": {
                                                     "name": {
@@ -36038,7 +36240,195 @@
                                                             },
                                                             "jsonExample": "<head>...</head>"
                                                         }
-                                                    }
+                                                    },
+                                                    "baseProperties": [
+                                                        {
+                                                            "name": {
+                                                                "name": {
+                                                                    "originalName": "extra",
+                                                                    "camelCase": {
+                                                                        "unsafeName": "extra",
+                                                                        "safeName": "extra"
+                                                                    },
+                                                                    "snakeCase": {
+                                                                        "unsafeName": "extra",
+                                                                        "safeName": "extra"
+                                                                    },
+                                                                    "screamingSnakeCase": {
+                                                                        "unsafeName": "EXTRA",
+                                                                        "safeName": "EXTRA"
+                                                                    },
+                                                                    "pascalCase": {
+                                                                        "unsafeName": "Extra",
+                                                                        "safeName": "Extra"
+                                                                    }
+                                                                },
+                                                                "wireValue": "extra"
+                                                            },
+                                                            "value": {
+                                                                "shape": {
+                                                                    "type": "container",
+                                                                    "container": {
+                                                                        "type": "map",
+                                                                        "map": [
+                                                                            {
+                                                                                "key": {
+                                                                                    "shape": {
+                                                                                        "type": "primitive",
+                                                                                        "primitive": {
+                                                                                            "type": "string",
+                                                                                            "string": {
+                                                                                                "original": "version"
+                                                                                            }
+                                                                                        }
+                                                                                    },
+                                                                                    "jsonExample": "version"
+                                                                                },
+                                                                                "value": {
+                                                                                    "shape": {
+                                                                                        "type": "primitive",
+                                                                                        "primitive": {
+                                                                                            "type": "string",
+                                                                                            "string": {
+                                                                                                "original": "0.0.1"
+                                                                                            }
+                                                                                        }
+                                                                                    },
+                                                                                    "jsonExample": "0.0.1"
+                                                                                }
+                                                                            },
+                                                                            {
+                                                                                "key": {
+                                                                                    "shape": {
+                                                                                        "type": "primitive",
+                                                                                        "primitive": {
+                                                                                            "type": "string",
+                                                                                            "string": {
+                                                                                                "original": "tenancy"
+                                                                                            }
+                                                                                        }
+                                                                                    },
+                                                                                    "jsonExample": "tenancy"
+                                                                                },
+                                                                                "value": {
+                                                                                    "shape": {
+                                                                                        "type": "primitive",
+                                                                                        "primitive": {
+                                                                                            "type": "string",
+                                                                                            "string": {
+                                                                                                "original": "test"
+                                                                                            }
+                                                                                        }
+                                                                                    },
+                                                                                    "jsonExample": "test"
+                                                                                }
+                                                                            }
+                                                                        ],
+                                                                        "keyType": {
+                                                                            "_type": "primitive",
+                                                                            "primitive": {
+                                                                                "v1": "STRING",
+                                                                                "v2": {
+                                                                                    "type": "string",
+                                                                                    "default": null,
+                                                                                    "validation": null
+                                                                                }
+                                                                            }
+                                                                        },
+                                                                        "valueType": {
+                                                                            "_type": "primitive",
+                                                                            "primitive": {
+                                                                                "v1": "STRING",
+                                                                                "v2": {
+                                                                                    "type": "string",
+                                                                                    "default": null,
+                                                                                    "validation": null
+                                                                                }
+                                                                            }
+                                                                        }
+                                                                    }
+                                                                },
+                                                                "jsonExample": {
+                                                                    "version": "0.0.1",
+                                                                    "tenancy": "test"
+                                                                }
+                                                            }
+                                                        },
+                                                        {
+                                                            "name": {
+                                                                "name": {
+                                                                    "originalName": "tags",
+                                                                    "camelCase": {
+                                                                        "unsafeName": "tags",
+                                                                        "safeName": "tags"
+                                                                    },
+                                                                    "snakeCase": {
+                                                                        "unsafeName": "tags",
+                                                                        "safeName": "tags"
+                                                                    },
+                                                                    "screamingSnakeCase": {
+                                                                        "unsafeName": "TAGS",
+                                                                        "safeName": "TAGS"
+                                                                    },
+                                                                    "pascalCase": {
+                                                                        "unsafeName": "Tags",
+                                                                        "safeName": "Tags"
+                                                                    }
+                                                                },
+                                                                "wireValue": "tags"
+                                                            },
+                                                            "value": {
+                                                                "shape": {
+                                                                    "type": "container",
+                                                                    "container": {
+                                                                        "type": "set",
+                                                                        "set": [
+                                                                            {
+                                                                                "shape": {
+                                                                                    "type": "primitive",
+                                                                                    "primitive": {
+                                                                                        "type": "string",
+                                                                                        "string": {
+                                                                                            "original": "development"
+                                                                                        }
+                                                                                    }
+                                                                                },
+                                                                                "jsonExample": "development"
+                                                                            },
+                                                                            {
+                                                                                "shape": {
+                                                                                    "type": "primitive",
+                                                                                    "primitive": {
+                                                                                        "type": "string",
+                                                                                        "string": {
+                                                                                            "original": "public"
+                                                                                        }
+                                                                                    }
+                                                                                },
+                                                                                "jsonExample": "public"
+                                                                            }
+                                                                        ],
+                                                                        "itemType": {
+                                                                            "_type": "primitive",
+                                                                            "primitive": {
+                                                                                "v1": "STRING",
+                                                                                "v2": {
+                                                                                    "type": "string",
+                                                                                    "default": null,
+                                                                                    "validation": null
+                                                                                }
+                                                                            }
+                                                                        }
+                                                                    }
+                                                                },
+                                                                "jsonExample": [
+                                                                    "development",
+                                                                    "public"
+                                                                ]
+                                                            }
+                                                        }
+                                                    ],
+                                                    "extendProperties": []
                                                 }
                                             },
                                             "jsonExample": {
@@ -36064,7 +36454,7 @@
                     "autogeneratedExamples": [
                         {
                             "example": {
-                                "id": "60367849",
+                                "id": "33b03494",
                                 "url": "/metadata",
                                 "name": null,
                                 "endpointHeaders": [
@@ -36178,7 +36568,155 @@
                                                             },
                                                             "jsonExample": "string"
                                                         }
-                                                    }
+                                                    },
+                                                    "baseProperties": [
+                                                        {
+                                                            "name": {
+                                                                "name": {
+                                                                    "originalName": "extra",
+                                                                    "camelCase": {
+                                                                        "unsafeName": "extra",
+                                                                        "safeName": "extra"
+                                                                    },
+                                                                    "snakeCase": {
+                                                                        "unsafeName": "extra",
+                                                                        "safeName": "extra"
+                                                                    },
+                                                                    "screamingSnakeCase": {
+                                                                        "unsafeName": "EXTRA",
+                                                                        "safeName": "EXTRA"
+                                                                    },
+                                                                    "pascalCase": {
+                                                                        "unsafeName": "Extra",
+                                                                        "safeName": "Extra"
+                                                                    }
+                                                                },
+                                                                "wireValue": "extra"
+                                                            },
+                                                            "value": {
+                                                                "shape": {
+                                                                    "type": "container",
+                                                                    "container": {
+                                                                        "type": "map",
+                                                                        "map": [
+                                                                            {
+                                                                                "key": {
+                                                                                    "shape": {
+                                                                                        "type": "primitive",
+                                                                                        "primitive": {
+                                                                                            "type": "string",
+                                                                                            "string": {
+                                                                                                "original": "extra"
+                                                                                            }
+                                                                                        }
+                                                                                    },
+                                                                                    "jsonExample": "extra"
+                                                                                },
+                                                                                "value": {
+                                                                                    "shape": {
+                                                                                        "type": "primitive",
+                                                                                        "primitive": {
+                                                                                            "type": "string",
+                                                                                            "string": {
+                                                                                                "original": "extra"
+                                                                                            }
+                                                                                        }
+                                                                                    },
+                                                                                    "jsonExample": "extra"
+                                                                                }
+                                                                            }
+                                                                        ],
+                                                                        "keyType": {
+                                                                            "_type": "primitive",
+                                                                            "primitive": {
+                                                                                "v1": "STRING",
+                                                                                "v2": {
+                                                                                    "type": "string",
+                                                                                    "default": null,
+                                                                                    "validation": null
+                                                                                }
+                                                                            }
+                                                                        },
+                                                                        "valueType": {
+                                                                            "_type": "primitive",
+                                                                            "primitive": {
+                                                                                "v1": "STRING",
+                                                                                "v2": {
+                                                                                    "type": "string",
+                                                                                    "default": null,
+                                                                                    "validation": null
+                                                                                }
+                                                                            }
+                                                                        }
+                                                                    }
+                                                                },
+                                                                "jsonExample": {
+                                                                    "extra": "extra"
+                                                                }
+                                                            }
+                                                        },
+                                                        {
+                                                            "name": {
+                                                                "name": {
+                                                                    "originalName": "tags",
+                                                                    "camelCase": {
+                                                                        "unsafeName": "tags",
+                                                                        "safeName": "tags"
+                                                                    },
+                                                                    "snakeCase": {
+                                                                        "unsafeName": "tags",
+                                                                        "safeName": "tags"
+                                                                    },
+                                                                    "screamingSnakeCase": {
+                                                                        "unsafeName": "TAGS",
+                                                                        "safeName": "TAGS"
+                                                                    },
+                                                                    "pascalCase": {
+                                                                        "unsafeName": "Tags",
+                                                                        "safeName": "Tags"
+                                                                    }
+                                                                },
+                                                                "wireValue": "tags"
+                                                            },
+                                                            "value": {
+                                                                "shape": {
+                                                                    "type": "container",
+                                                                    "container": {
+                                                                        "type": "set",
+                                                                        "set": [
+                                                                            {
+                                                                                "shape": {
+                                                                                    "type": "primitive",
+                                                                                    "primitive": {
+                                                                                        "type": "string",
+                                                                                        "string": {
+                                                                                            "original": "tags"
+                                                                                        }
+                                                                                    }
+                                                                                },
+                                                                                "jsonExample": "tags"
+                                                                            }
+                                                                        ],
+                                                                        "itemType": {
+                                                                            "_type": "primitive",
+                                                                            "primitive": {
+                                                                                "v1": "STRING",
+                                                                                "v2": {
+                                                                                    "type": "string",
+                                                                                    "default": null,
+                                                                                    "validation": null
+                                                                                }
+                                                                            }
+                                                                        }
+                                                                    }
+                                                                },
+                                                                "jsonExample": [
+                                                                    "tags"
+                                                                ]
+                                                            }
+                                                        }
+                                                    ],
+                                                    "extendProperties": []
                                                 },
                                                 "typeName": {
                                                     "name": {
@@ -48113,6 +48651,7 @@
         "generatorConfig": null
     },
     "audiences": null,
+    "generationMetadata": null,
     "subpackages": {
         "subpackage_commons": {
             "name": {

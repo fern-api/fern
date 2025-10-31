@@ -66,6 +66,26 @@
             "BAD_REQUEST"
           ],
           "description": "Error codes"
+        },
+        "SingleValueEnum": {
+          "type": "string",
+          "enum": [
+            "SingleValue"
+          ]
+        },
+        "SingleValueEnumWithFernTypeLiteral": {
+          "type": "string",
+          "enum": [
+            "SingleValue"
+          ],
+          "x-fern-type": "literal<\"SingleValue\">"
+        },
+        "SingleUniqueValueEnum": {
+          "type": "string",
+          "enum": [
+            "SingleUniqueValue",
+            "SingleUniqueValue"
+          ]
         }
       }
     }

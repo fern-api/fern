@@ -8,11 +8,11 @@ import { GetReferenceOpts, getPropertyKey } from "@fern-typescript/commons";
 import { BaseContext, GeneratedUnion, GeneratedUnionType } from "@fern-typescript/contexts";
 import { GeneratedUnionImpl } from "@fern-typescript/union-generator";
 import { ModuleDeclarationStructure, StatementStructures, ts, WriterFunction } from "ts-morph";
-
 import { AbstractGeneratedType } from "../AbstractGeneratedType";
 import { ParsedSingleUnionTypeForUnion } from "./ParsedSingleUnionTypeForUnion";
 import { UnknownSingleUnionType } from "./UnknownSingleUnionType";
 import { UnknownSingleUnionTypeGenerator } from "./UnknownSingleUnionTypeGenerator";
+import { Name } from "@fern-fern/ir-sdk/serialization";
 import { FernIr } from "@fern-fern/ir-sdk";
 
 export declare namespace GeneratedUnionTypeImpl {
@@ -112,28 +112,32 @@ export class GeneratedUnionTypeImpl<Context extends BaseContext>
         });
     }
 
+    private getPropertyKeyFromPropertyName(propertyName: FernIr.NameAndWireValue): string {
+        if (this.includeSerdeLayer && !this.retainOriginalCasing) {
+            return propertyName.name.camelCase.unsafeName;
+        } else {
+            return propertyName.wireValue;
+        }
+    }
+
     public buildExample(example: ExampleTypeShape, context: Context, opts: GetReferenceOpts): ts.Expression {
         if (example.type !== "union") {
             throw new Error("Example is not for an union");
         }
 
-        const mockExample = example as ExampleTypeShape.Union & {
-            baseProperties: FernIr.ExampleObjectProperty[];
-            extendProperties: FernIr.ExampleObjectProperty[];
-        };
         const nonDiscriminantProperties: ts.ObjectLiteralElementLike[] = [];
         nonDiscriminantProperties.push(
-            ...mockExample.baseProperties.map((property) => {
+            ...(example.baseProperties ?? []).map((property) => {
                 return ts.factory.createPropertyAssignment(
-                    getPropertyKey(property.name.name.camelCase.safeName),
+                    getPropertyKey(this.getPropertyKeyFromPropertyName(property.name)),
                     context.type.getGeneratedExample(property.value).build(context, opts)
                 );
             })
         );
         nonDiscriminantProperties.push(
-            ...mockExample.extendProperties.map((property) => {
+            ...(example.extendProperties ?? []).map((property) => {
                 return ts.factory.createPropertyAssignment(
-                    getPropertyKey(property.name.name.camelCase.safeName),
+                    getPropertyKey(this.getPropertyKeyFromPropertyName(property.name)),
                     context.type.getGeneratedExample(property.value).build(context, opts)
                 );
             })

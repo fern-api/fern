@@ -7781,6 +7781,7 @@
         "generatorConfig": null
     },
     "audiences": null,
+    "generationMetadata": null,
     "subpackages": {
         "subpackage_deep-cursor-path": {
             "name": {

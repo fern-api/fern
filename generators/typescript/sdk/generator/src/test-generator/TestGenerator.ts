@@ -1,5 +1,4 @@
 import { assertNever } from "@fern-api/core-utils";
-import { FernIr } from "@fern-fern/ir-sdk";
 import {
     AuthScheme,
     ErrorDeclaration,
@@ -1287,15 +1286,16 @@ describe("${serviceName}", () => {
                         )}`;
                     },
                     union: (value) => {
-                        const mockExample = value as FernIr.ExampleUnionType & {
-                            baseProperties: FernIr.ExampleObjectProperty[];
-                            extendProperties: FernIr.ExampleObjectProperty[];
-                        };
+                        if(typeof jsonExample !== "object" || jsonExample == null) {
+                            // should not happen
+                            return code`${literalOf(jsonExample)}`;
+                        }
                         const properties: Record<string, unknown> = {};
+                        properties[value.discriminant.wireValue] = (jsonExample as Record<string, unknown>)[value.discriminant.wireValue];
                         Object.assign(
                             properties,
                             Object.fromEntries(
-                                mockExample.baseProperties.map((property) => {
+                                (value.baseProperties ?? []).map((property) => {
                                     return [property.name.wireValue, property.value.jsonExample];
                                 })
                             )
@@ -1303,7 +1303,7 @@ describe("${serviceName}", () => {
                         Object.assign(
                             properties,
                             Object.fromEntries(
-                                mockExample.extendProperties.map((property) => {
+                                (value.extendProperties ?? []).map((property) => {
                                     return [property.name.wireValue, property.value.jsonExample];
                                 })
                             )
@@ -1357,9 +1357,13 @@ describe("${serviceName}", () => {
                             },
                             _other: () => jsonExample as object | undefined | null
                         });
-                        if (singleUnionProperties == null) {
+                        if (singleUnionProperties != null) {
                             Object.assign(properties, singleUnionProperties);
                         }
+
+                        // for extra properties
+                        const otherProperties = Object.fromEntries(Object.entries(jsonExample).filter(([key]) => !Object.keys(properties).includes(key)));
+                        Object.assign(properties, otherProperties);
                         return code`${literalOf(properties)}`;
                     },
                     undiscriminatedUnion: (value) => {

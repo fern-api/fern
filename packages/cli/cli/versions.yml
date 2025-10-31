@@ -1,11 +1,35 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
 - changelogEntry:
     - summary: |
+        Add support for new IR property: GenerationMetadata.
+      type: feat
+  irVersion: 61
+  createdAt: "2025-10-31"
+  version: 0.102.0
+
+- changelogEntry:
+    - summary: |
+        Fix `coerce-enums-to-literals` setting to coerce single value enums to literals.
+      type: fix
+  irVersion: 61
+  createdAt: "2025-10-31"
+  version: 0.101.4
+
+- changelogEntry:
+    - summary: |
         Fix issue where parsing failed for null objects in a TabbedNavigationItem.
       type: fix
   irVersion: 61
   createdAt: "2025-10-31"
   version: 0.101.3
+
+- changelogEntry:
+    - summary: |
+        Add discriminated union base property and extend property examples to IR.
+      type: feat
+  irVersion: 61
+  createdAt: "2025-10-31"
+  version: 0.102.0
 
 - changelogEntry:
     - summary: |

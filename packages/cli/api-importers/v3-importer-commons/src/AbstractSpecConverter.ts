@@ -87,7 +87,8 @@ export abstract class AbstractSpecConverter<
                     userAgent: undefined
                 }
             },
-            audiences: undefined
+            audiences: undefined,
+            generationMetadata: undefined
         };
     }
 

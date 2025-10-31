@@ -5,10 +5,12 @@ import { TaskContext } from "@fern-api/task-context";
 import { FernRegistry as CjsFdrSdk } from "@fern-fern/fdr-cjs-sdk";
 import { readFile } from "fs/promises";
 import yaml from "js-yaml";
+import path from "path";
 
 import { WithoutQuestionMarks } from "../commons/WithoutQuestionMarks";
 import { convertColorsConfiguration } from "./convertColorsConfiguration";
 import { getAllPages, loadAllPages } from "./getAllPages";
+import { buildNavigationForDirectory, nameToSlug, nameToTitle } from "./navigationUtils";
 
 export async function parseDocsConfiguration({
     rawDocsConfiguration,
@@ -846,6 +848,46 @@ async function convertNavigationConfiguration({
 
 const DEFAULT_CHANGELOG_TITLE = "Changelog";
 
+async function expandFolderConfiguration({
+    rawConfig,
+    absolutePathToFernFolder,
+    absolutePathToConfig,
+    context
+}: {
+    rawConfig: docsYml.RawSchemas.FolderConfiguration;
+    absolutePathToFernFolder: AbsoluteFilePath;
+    absolutePathToConfig: AbsoluteFilePath;
+    context: TaskContext;
+}): Promise<docsYml.DocsNavigationItem> {
+    const folderPath = resolveFilepath(rawConfig.folder, absolutePathToConfig);
+
+    if (!(await doesPathExist(folderPath))) {
+        context.failAndThrow(`Folder not found: ${rawConfig.folder}`);
+    }
+
+    const contents = await buildNavigationForDirectory({ directoryPath: folderPath });
+
+    const folderName = path.basename(folderPath);
+    const title = rawConfig.title ?? nameToTitle({ name: folderName });
+    const slug = rawConfig.slug ?? nameToSlug({ name: folderName });
+
+    return {
+        type: "section",
+        title,
+        icon: rawConfig.icon,
+        contents,
+        slug,
+        collapsed: rawConfig.collapsed ?? undefined,
+        hidden: rawConfig.hidden ?? undefined,
+        skipUrlSlug: rawConfig.skipSlug ?? false,
+        overviewAbsolutePath: undefined,
+        viewers: parseRoles(rawConfig.viewers),
+        orphaned: rawConfig.orphaned,
+        featureFlags: convertFeatureFlag(rawConfig.featureFlag),
+        availability: rawConfig.availability
+    };
+}
+
 async function convertNavigationItem({
     rawConfig,
     absolutePathToFernFolder,
@@ -933,6 +975,14 @@ async function convertNavigationItem({
             orphaned: rawConfig.orphaned,
             featureFlags: convertFeatureFlag(rawConfig.featureFlag)
         };
+    }
+    if (isRawFolderConfig(rawConfig)) {
+        return await expandFolderConfiguration({
+            rawConfig,
+            absolutePathToFernFolder,
+            absolutePathToConfig,
+            context
+        });
     }
     assertNever(rawConfig);
 }
@@ -1103,6 +1153,10 @@ function isRawLinkConfig(item: unknown): item is docsYml.RawSchemas.LinkConfigur
 
 function isRawChangelogConfig(item: unknown): item is docsYml.RawSchemas.ChangelogConfiguration {
     return isPlainObject(item) && typeof item.changelog === "string";
+}
+
+function isRawFolderConfig(item: unknown): item is docsYml.RawSchemas.FolderConfiguration {
+    return isPlainObject(item) && typeof item.folder === "string";
 }
 
 function isRawApiRefSectionConfiguration(item: unknown): item is docsYml.RawSchemas.ApiReferenceSectionConfiguration {

@@ -5,6 +5,15 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [v61.7.0] - 2025-10-31
+
+- Feature: Add GenerationMetadata to IR
+
+## [v61.6.0] - 2025-10-31
+
+- Chore: BOO 🎃
+- Feature: Update union example to include properties from extended types and base properties.
+
 ## [v61.4.0] - 2025-10-14
 
 - Feature: Add `CratesPublishTarget` for Rust crates.io publishing support
@@ -34,7 +43,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [v60.3.1] - 2025-09-23
 
-- - Fix: Pushing new version to fix ir migrations for java and python
+- Fix: Pushing new version to fix ir migrations for java and python
 
 ## [v60.3.0] - 2025-09-23
 
