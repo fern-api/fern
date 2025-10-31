@@ -1,15 +1,9 @@
 import { AbstractWriter } from "@fern-api/browser-compatible-base-generator";
-import { BaseCsharpCustomConfigSchema } from "../../custom-config";
-import { type ClassReference } from "../ClassReference";
+import { Generation } from "../../context/generation-info";
+import { type ClassReference } from "../types/ClassReference";
 
 type Alias = string;
 type Namespace = string;
-
-const IMPLICIT_NAMESPACES = new Set(["System"]);
-
-function isNamespaceImplicit(namespace: string): boolean {
-    return IMPLICIT_NAMESPACES.has(namespace);
-}
 
 export declare namespace Writer {
     interface Args {
@@ -19,10 +13,8 @@ export declare namespace Writer {
         allNamespaceSegments: Set<string>;
         /* The name of every type in the project mapped to the namespaces a type of that name belongs to */
         allTypeClassReferences: Map<string, Set<Namespace>>;
-        /* The root namespace of the project */
-        rootNamespace: string;
         /* Custom generator config */
-        customConfig: BaseCsharpCustomConfigSchema;
+        generation: Generation;
         /* Whether or not to skip writing imports */
         skipImports?: boolean;
     }
@@ -32,18 +24,15 @@ export class Writer extends AbstractWriter {
     /* Import statements */
     private references: Record<Namespace, ClassReference[]> = {};
     /* The namespace that is being written to */
-    private namespace: string;
+    public namespace: string;
     /* The set of namespace aliases */
     private namespaceAliases: Record<Alias, Namespace> = {};
     /* All base namespaces in the project */
     private allNamespaceSegments: Set<string>;
     /* The name of every type in the project mapped to the namespaces a type of that name belongs to */
     private allTypeClassReferences: Map<string, Set<Namespace>>;
-    /* The root namespace of the project */
-    private rootNamespace: string;
     /* Whether or not dictionary<string, object?> should be simplified to just objects */
-    private customConfig: BaseCsharpCustomConfigSchema;
-
+    public readonly generation: Generation;
     /* Whether or not to skip writing imports */
     public readonly skipImports: boolean;
 
@@ -51,16 +40,14 @@ export class Writer extends AbstractWriter {
         namespace,
         allNamespaceSegments,
         allTypeClassReferences,
-        rootNamespace,
-        customConfig,
+        generation,
         skipImports = false
     }: Writer.Args) {
         super();
         this.namespace = namespace;
         this.allNamespaceSegments = allNamespaceSegments;
         this.allTypeClassReferences = allTypeClassReferences;
-        this.rootNamespace = rootNamespace;
-        this.customConfig = customConfig;
+        this.generation = generation;
         this.skipImports = skipImports;
     }
 
@@ -86,7 +73,7 @@ export class Writer extends AbstractWriter {
     public addNamespaceAlias(alias: string, namespace: string): string {
         const set = new Set<Alias>(Object.values(this.namespaceAliases));
         while (set.has(alias)) {
-            alias = "_" + alias;
+            alias = `_${alias}`;
         }
         this.namespaceAliases[alias] = namespace;
         return alias;
@@ -104,27 +91,7 @@ export class Writer extends AbstractWriter {
         return this.allNamespaceSegments;
     }
 
-    public getRootNamespace(): string {
-        return this.rootNamespace;
-    }
-
-    public getNamespace(): string {
-        return this.namespace;
-    }
-
-    public getCustomConfig(): BaseCsharpCustomConfigSchema {
-        return this.customConfig;
-    }
-
-    public get useFullyQualifiedNamespaces(): boolean {
-        return this.customConfig["experimental-fully-qualified-namespaces"] ?? false;
-    }
-
-    public getSimplifyObjectDictionaries(): boolean {
-        return this.customConfig["simplify-object-dictionaries"] ?? false;
-    }
-
-    public toString(skipImports = false): string {
+    public override toString(skipImports = false): string {
         if (!skipImports) {
             const imports = this.stringifyImports();
             if (imports.length > 0) {
@@ -141,7 +108,14 @@ ${this.buffer}`;
     }
 
     public isReadOnlyMemoryType(type: string): boolean {
-        return this.customConfig["read-only-memory-types"]?.includes(type) ?? false;
+        return this.generation.settings.readOnlyMemoryTypes.includes(type);
+    }
+
+    private inQuoteBlock = false;
+
+    public override shouldSkipTracking(lines: string[]) {
+        lines.forEach((line) => (this.inQuoteBlock = line.includes('"""') ? !this.inQuoteBlock : this.inQuoteBlock));
+        return this.inQuoteBlock;
     }
 
     /*******************************
@@ -151,7 +125,7 @@ ${this.buffer}`;
     private stringifyImports(): string {
         let result = Object.entries(this.references)
             .filter(([ns]) => !this.isCurrentNamespace(ns)) // Filter out the current namespace.
-            .filter(([ns]) => !isNamespaceImplicit(ns)) // System is implicitly imported
+            .filter(([ns]) => !this.generation.registry.isNamespaceImplicit(ns)) // System is implicitly imported
             .map(
                 ([, refs]) =>
                     `using ${refs.some((ref) => ref?.global) ? "global::" : ""}${(refs[0] as ClassReference).resolveNamespace()};`
@@ -159,11 +133,11 @@ ${this.buffer}`;
             .join("\n");
 
         if (result.length > 0) {
-            result += "\n";
+            result = `${result}\n`;
         }
 
         for (const [alias, namespace] of Object.entries(this.namespaceAliases)) {
-            result += `using ${alias} = ${namespace};\n`;
+            result = `${result}using ${alias} = ${namespace};\n`;
         }
 
         return result;

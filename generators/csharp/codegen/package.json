@@ -34,16 +34,12 @@
     "@fern-api/base-generator": "workspace:*",
     "@fern-api/browser-compatible-base-generator": "workspace:*",
     "@fern-api/core-utils": "workspace:*",
-    "@fern-fern/ir-sdk": "^61.0.0",
-    "lodash-es": "^4.17.21",
+    "@fern-fern/ir-sdk": "^61.4.0",
+    "@fern-api/dynamic-ir-sdk": "^61.0.0",
     "zod": "^3.22.3"
   },
   "devDependencies": {
-    "@fern-api/browser-compatible-base-generator": "workspace:*",
     "@fern-api/configs": "workspace:*",
-    "@fern-api/core-utils": "workspace:*",
-    "@fern-fern/ir-sdk": "^61.0.0",
-    "@types/lodash-es": "^4.17.12",
     "@types/node": "18.15.3",
     "depcheck": "^1.4.7",
     "typescript": "5.9.3",

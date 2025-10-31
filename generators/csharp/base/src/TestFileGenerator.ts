@@ -10,27 +10,22 @@ export class TestFileGenerator extends FileGenerator<
     BaseCsharpGeneratorContext<BaseCsharpCustomConfigSchema>
 > {
     protected getFilepath(): RelativeFilePath {
-        return join(this.context.project.filepaths.getTestFilesDirectory(), RelativeFilePath.of("TestClient.cs"));
+        return join(this.constants.folders.testFiles, RelativeFilePath.of(`${this.types.TestClient.name}.cs`));
     }
 
     public doGenerate(): CSharpFile {
         const testClass = this.csharp.class_({
-            name: "TestClient",
-            namespace: this.context.getTestNamespace(),
+            reference: this.types.TestClient,
             access: ast.Access.Public,
-            annotations: [
-                this.csharp.annotation({
-                    reference: this.csharp.NUnit.Framework.TestFixture
-                })
-            ]
+            annotations: [this.extern.NUnit.Framework.TestFixture]
         });
         return new CSharpFile({
             clazz: testClass,
             directory: RelativeFilePath.of(""),
             allNamespaceSegments: this.context.getAllNamespaceSegments(),
             allTypeClassReferences: this.context.getAllTypeClassReferences(),
-            namespace: this.context.getNamespace(),
-            customConfig: this.context.customConfig
+            namespace: this.namespaces.root,
+            generation: this.generation
         });
     }
 }
