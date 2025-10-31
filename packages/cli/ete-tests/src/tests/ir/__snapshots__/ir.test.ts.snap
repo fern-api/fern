@@ -28060,7 +28060,9 @@ exports[`ir > {"name":"simple"} 1`] = `
                                 },
                                 "jsonExample": "Matt Damon"
                             }
-                        }
+                        },
+                        "baseProperties": [],
+                        "extendProperties": []
                     },
                     "jsonExample": {
                         "type": "actor",
@@ -28405,7 +28407,9 @@ exports[`ir > {"name":"simple"} 1`] = `
                                     "extraProperties": null
                                 }
                             }
-                        }
+                        },
+                        "baseProperties": [],
+                        "extendProperties": []
                     },
                     "jsonExample": {
                         "type": "director",
@@ -28471,7 +28475,9 @@ exports[`ir > {"name":"simple"} 1`] = `
                                     "extraProperties": null
                                 }
                             }
-                        }
+                        },
+                        "baseProperties": [],
+                        "extendProperties": []
                     },
                     "jsonExample": {
                         "type": "producer"
