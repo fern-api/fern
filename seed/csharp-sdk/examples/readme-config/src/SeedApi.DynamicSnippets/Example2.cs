@@ -1,5 +1,4 @@
 using SeedExamples;
-using System.Threading.Tasks;
 
 namespace Usage;
 
@@ -13,8 +12,8 @@ public class Example2
             }
         );
 
-        await client.EchoAsync(
-            "primitive"
+        await client.CreateTypeAsync(
+            BasicType.Primitive
         );
     }
 
