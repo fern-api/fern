@@ -388,3 +388,23 @@ async function collectIconsFromNavigationItem({
             break;
     }
 }
+
+/**
+ * Rewrites navigation icon fields from relative filepaths to uploaded file IDs.
+ */
+export function setIconFileIds(
+    iconRefs: IconRef[],
+    resolveFilepath: (rel: string) => AbsoluteFilePath | undefined,
+    getFileId: (abs: AbsoluteFilePath) => string | undefined
+): void {
+    for (const { raw, holder, key } of iconRefs) {
+        const abs = resolveFilepath(raw);
+        if (!abs) {
+            continue;
+        }
+        const fileId = getFileId(abs);
+        if (fileId) {
+            holder[key] = fileId;
+        }
+    }
+}

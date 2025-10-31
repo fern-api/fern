@@ -25,8 +25,11 @@ import { ChangelogNodeConverter } from "./ChangelogNodeConverter";
 import { NodeIdGenerator } from "./NodeIdGenerator";
 import { convertDocsSnippetsConfigToFdr } from "./utils/convertDocsSnippetsConfigToFdr";
 import { convertIrToApiDefinition } from "./utils/convertIrToApiDefinition";
-import type { IconRef } from "./utils/getImageFilepathsToUpload";
-import { collectFilesFromDocsConfig, collectIconsFromDocsConfig } from "./utils/getImageFilepathsToUpload";
+import {
+    collectFilesFromDocsConfig,
+    collectIconsFromDocsConfig,
+    setIconFileIds
+} from "./utils/getImageFilepathsToUpload";
 import { visitNavigationAst } from "./visitNavigationAst";
 import { wrapWithHttps } from "./wrapWithHttps";
 
@@ -211,21 +214,21 @@ export class DocsDefinitionResolver {
         return parseAudiences(version?.audiences);
     }
 
-    /**
-     * Rewrites navigation icon fields from relative filepaths to uploaded file IDs.
-     */
-    private setIconFileIds(iconRefs: IconRef[]): void {
-        for (const { raw, holder, key } of iconRefs) {
-            const abs = this.resolveFilepath(raw);
-            if (!abs) {
-                continue;
-            }
-            const fileId = this.getFileId(abs);
-            if (fileId) {
-                holder[key] = fileId;
-            }
-        }
-    }
+    // /**
+    //  * Rewrites navigation icon fields from relative filepaths to uploaded file IDs.
+    //  */
+    // private setIconFileIds(iconRefs: IconRef[]): void {
+    //     for (const { raw, holder, key } of iconRefs) {
+    //         const abs = this.resolveFilepath(raw);
+    //         if (!abs) {
+    //             continue;
+    //         }
+    //         const fileId = this.getFileId(abs);
+    //         if (fileId) {
+    //             holder[key] = fileId;
+    //         }
+    //     }
+    // }
 
     private _parsedDocsConfig: WithoutQuestionMarks<docsYml.ParsedDocsConfiguration> | undefined;
     private get parsedDocsConfig(): WithoutQuestionMarks<docsYml.ParsedDocsConfiguration> {
@@ -368,7 +371,7 @@ export class DocsDefinitionResolver {
             this.collectedFileIds.set(uploadedFile.absoluteFilePath, uploadedFile.fileId);
         });
 
-        this.setIconFileIds(iconRefs);
+        setIconFileIds(iconRefs, this.resolveFilepath.bind(this), this.getFileId.bind(this));
 
         // store root here so we only process once
         const root = await this.toRootNode();
