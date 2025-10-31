@@ -6,7 +6,7 @@ private func main() async throws {
 
     _ = try await client.nullable.getUsers(
         avatar: "avatar",
-        extra: true
+        extra: .value(true)
     )
 }
 
