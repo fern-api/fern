@@ -269,7 +269,7 @@ export abstract class AbstractSwiftGeneratorContext<
                         ),
                     set: () => referencer.referenceAsIsType("JSONValue"),
                     nullable: (ref) =>
-                        this.customConfig.decodeNullableToOptional
+                        this.customConfig.nullableAsOptional
                             ? swift.TypeReference.optional(this.getSwiftTypeReferenceFromScope(ref, fromSymbol))
                             : swift.TypeReference.nullable(this.getSwiftTypeReferenceFromScope(ref, fromSymbol)),
                     optional: (ref) =>

@@ -210,7 +210,7 @@ export class WireTestFunctionGenerator {
                     },
                     set: () => swift.Expression.arrayLiteral({}),
                     nullable: (nullableContainer) => {
-                        if (this.sdkGeneratorContext.customConfig.decodeNullableToOptional) {
+                        if (this.sdkGeneratorContext.customConfig.nullableAsOptional) {
                             const exampleTypeRef =
                                 nullableContainer.nullable?.shape.type === "container" &&
                                 nullableContainer.nullable.shape.container.type === "optional"
@@ -249,7 +249,7 @@ export class WireTestFunctionGenerator {
                             inner?.shape.type === "container"
                                 ? inner.shape.container.type === "optional"
                                     ? inner.shape.container.optional
-                                    : this.sdkGeneratorContext.customConfig.decodeNullableToOptional &&
+                                    : this.sdkGeneratorContext.customConfig.nullableAsOptional &&
                                         inner.shape.container.type === "nullable"
                                       ? inner.shape.container.nullable
                                       : inner
@@ -448,7 +448,7 @@ export class WireTestFunctionGenerator {
                         ),
                     set: () => this.referencer.referenceAsIsType("JSONValue"),
                     nullable: (exampleNullableContainer) =>
-                        this.sdkGeneratorContext.customConfig.decodeNullableToOptional
+                        this.sdkGeneratorContext.customConfig.nullableAsOptional
                             ? swift.TypeReference.optional(
                                   this.sdkGeneratorContext.getSwiftTypeReferenceFromTestModuleScope(
                                       exampleNullableContainer.valueType

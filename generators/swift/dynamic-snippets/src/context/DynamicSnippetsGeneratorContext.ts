@@ -171,7 +171,7 @@ export class DynamicSnippetsGeneratorContext extends AbstractDynamicSnippetsGene
                 return swift.TypeReference.symbol(symbolRef);
             },
             nullable: (ref) =>
-                this.customConfig?.decodeNullableToOptional
+                this.customConfig?.nullableAsOptional
                     ? swift.TypeReference.optional(this.getSwiftTypeReferenceFromScope(ref.value, fromSymbol))
                     : swift.TypeReference.nullable(this.getSwiftTypeReferenceFromScope(ref.value, fromSymbol)),
             optional: (ref) => swift.TypeReference.optional(this.getSwiftTypeReferenceFromScope(ref.value, fromSymbol)),
