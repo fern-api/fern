@@ -196,9 +196,7 @@ export async function writeTranslationForProject({
                 );
             }
         }
-        context.logger.info(
-            `Source language (${sourceLanguage}) values are tracked as hashes in translations/hashes`
-        );
+        context.logger.info(`Source language (${sourceLanguage}) values are tracked as hashes in translations/hashes`);
     });
 }
 
