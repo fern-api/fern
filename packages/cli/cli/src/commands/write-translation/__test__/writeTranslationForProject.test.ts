@@ -26,7 +26,7 @@ describe("writeTranslationForProject", () => {
         } as unknown as CliContext;
     });
 
-    it("should create .translations folder with correct structure", async () => {
+    it("should create translations folder with correct structure", async () => {
         const { tempDir, fernDir, project } = await setupTestProjectFromFixture("basic-project");
 
         try {
@@ -80,14 +80,14 @@ describe("writeTranslationForProject", () => {
         }
     });
 
-    it("should create .translations folder with individual language directories", async () => {
+    it("should create translations folder with individual language directories", async () => {
         const { tempDir, fernDir, project } = await setupTestProjectFromFixture("basic-project");
         const fs = await import("fs/promises");
         const path = await import("path");
 
         try {
-            // Verify .translations folder doesn't exist initially
-            const translationsPath = path.join(fernDir, ".translations");
+            // Verify translations folder doesn't exist initially
+            const translationsPath = path.join(fernDir, "translations");
             let translationsExists = false;
             try {
                 await fs.stat(translationsPath);
@@ -103,7 +103,7 @@ describe("writeTranslationForProject", () => {
                 cliContext: mockCliContext
             });
 
-            // Verify .translations folder was created
+            // Verify translations folder was created
             const stat = await fs.stat(translationsPath);
             expect(stat.isDirectory()).toBe(true);
 
@@ -116,9 +116,9 @@ describe("writeTranslationForProject", () => {
                 expect(langStat.isDirectory()).toBe(true);
             }
 
-            // Verify no unexpected directories were created (filter out .hashes file)
+            // Verify no unexpected directories were created (filter out hashes file)
             const actualEntries = await fs.readdir(translationsPath);
-            const actualLanguages = actualEntries.filter((entry) => entry !== ".hashes");
+            const actualLanguages = actualEntries.filter((entry) => entry !== "hashes");
             expect(actualLanguages.sort()).toEqual(expectedLanguages.sort());
         } finally {
             try {
