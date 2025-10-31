@@ -292,6 +292,10 @@ export class Service {
      *         },
      *         metadata: {
      *             type: "html",
+     *             extra: {
+     *                 "extra": "extra"
+     *             },
+     *             tags: ["tags"],
      *             value: "metadata"
      *         },
      *         commonMetadata: {

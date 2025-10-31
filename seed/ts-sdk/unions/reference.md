@@ -64,6 +64,9 @@ await client.bigunion.get("id");
 ```typescript
 await client.bigunion.update({
     type: "normalSweet",
+    id: "id",
+    "created-at": "2024-01-15T09:30:00Z",
+    "archived-at": "2024-01-15T09:30:00Z",
     value: "value"
 });
 
@@ -116,9 +119,15 @@ await client.bigunion.update({
 ```typescript
 await client.bigunion.updateMany([{
         type: "normalSweet",
+        id: "id",
+        "created-at": "2024-01-15T09:30:00Z",
+        "archived-at": "2024-01-15T09:30:00Z",
         value: "value"
     }, {
         type: "normalSweet",
+        id: "id",
+        "created-at": "2024-01-15T09:30:00Z",
+        "archived-at": "2024-01-15T09:30:00Z",
         value: "value"
     }]);
 
@@ -221,6 +230,8 @@ await client.union.get("id");
 ```typescript
 await client.union.update({
     type: "circle",
+    id: "id",
+    name: "name",
     radius: 1.1
 });
 

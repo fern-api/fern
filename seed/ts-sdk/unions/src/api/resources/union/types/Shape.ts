@@ -6,12 +6,14 @@ import type * as SeedUnions from "../../../index.js";
  * @example
  *     {
  *         type: "circle",
+ *         id: "example",
  *         radius: 5
  *     }
  *
  * @example
  *     {
  *         type: "square",
+ *         id: "example",
  *         length: 5
  *     }
  */

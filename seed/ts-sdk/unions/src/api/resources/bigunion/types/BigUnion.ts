@@ -6,18 +6,27 @@ import type * as SeedUnions from "../../../index.js";
  * @example
  *     {
  *         type: "normalSweet",
+ *         id: "id",
+ *         "created-at": "2024-01-15T09:30:00Z",
+ *         "archived-at": "2024-01-15T09:30:00Z",
  *         value: "example1"
  *     }
  *
  * @example
  *     {
  *         type: "thankfulFactor",
+ *         id: "id",
+ *         "created-at": "2024-01-15T09:30:00Z",
+ *         "archived-at": "2024-01-15T09:30:00Z",
  *         value: "example2"
  *     }
  *
  * @example
  *     {
  *         type: "jumboEnd",
+ *         id: "id",
+ *         "created-at": "2024-01-15T09:30:00Z",
+ *         "archived-at": "2024-01-15T09:30:00Z",
  *         value: "example3"
  *     }
  */
