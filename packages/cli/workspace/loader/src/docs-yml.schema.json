@@ -2152,6 +2152,118 @@
       ],
       "additionalProperties": false
     },
+    "docs.FolderConfiguration": {
+      "type": "object",
+      "properties": {
+        "viewers": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/docs.Role"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "orphaned": {
+          "oneOf": [
+            {
+              "type": "boolean"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "feature-flag": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/docs.FeatureFlagConfiguration"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "folder": {
+          "type": "string"
+        },
+        "title": {
+          "oneOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "slug": {
+          "oneOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "icon": {
+          "oneOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "hidden": {
+          "oneOf": [
+            {
+              "type": "boolean"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "skip-slug": {
+          "oneOf": [
+            {
+              "type": "boolean"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "collapsed": {
+          "oneOf": [
+            {
+              "type": "boolean"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "availability": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/docs.Availability"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        }
+      },
+      "required": [
+        "folder"
+      ],
+      "additionalProperties": false
+    },
     "docs.NavigationItem": {
       "anyOf": [
         {
@@ -2168,6 +2280,9 @@
         },
         {
           "$ref": "#/definitions/docs.ChangelogConfiguration"
+        },
+        {
+          "$ref": "#/definitions/docs.FolderConfiguration"
         }
       ]
     },
