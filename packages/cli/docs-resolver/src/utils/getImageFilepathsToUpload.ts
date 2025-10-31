@@ -164,7 +164,7 @@ export async function collectIconsFromDocsConfig({
             docsWorkspace,
             refs
         })),
-        ...(await collectIconsFromNavbarLinksV2({
+        ...(await collectIconsFromNavbarLinks({
             parsedDocsConfig,
             docsWorkspace,
             refs
@@ -174,20 +174,6 @@ export async function collectIconsFromDocsConfig({
 }
 
 async function collectIconsFromNavbarLinks({
-    parsedDocsConfig,
-    docsWorkspace,
-    refs
-}: {
-    parsedDocsConfig: docsYml.ParsedDocsConfiguration;
-    docsWorkspace: DocsWorkspace;
-    refs: IconRef[];
-}): Promise<Set<AbsoluteFilePath>> {
-    const navbarLinks = parsedDocsConfig.navbarLinks ?? [];
-    const filepaths = new Set<AbsoluteFilePath>();
-    return filepaths;
-}
-
-async function collectIconsFromNavbarLinksV2({
     parsedDocsConfig,
     docsWorkspace,
     refs
@@ -224,6 +210,7 @@ async function collectIconsFromNavbarLinksV2({
         await collectIcon(obj, obj.icon);
         await collectRightIcon(obj, obj.rightIcon);
 
+        // biome-ignore lint/suspicious/noExplicitAny: (TODO) need to refine type
         const children = Array.isArray((obj as any).links) ? (obj as any).links : [];
         await Promise.all(children.map(visit));
     };
