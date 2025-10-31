@@ -6,7 +6,8 @@ export const BaseSwiftCustomConfigSchema = z.object({
     clientClassName: z.string().optional(),
     environmentEnumName: z.string().optional(),
     customReadmeSections: z.array(CustomReadmeSectionSchema).optional(),
-    enableWireTests: z.boolean().optional()
+    enableWireTests: z.boolean().optional(),
+    nullableAsOptional: z.boolean().optional()
 });
 
 export type BaseSwiftCustomConfigSchema = z.infer<typeof BaseSwiftCustomConfigSchema>;
