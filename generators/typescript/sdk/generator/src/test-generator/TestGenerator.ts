@@ -1286,12 +1286,14 @@ describe("${serviceName}", () => {
                         )}`;
                     },
                     union: (value) => {
-                        if(typeof jsonExample !== "object" || jsonExample == null) {
+                        if (typeof jsonExample !== "object" || jsonExample == null) {
                             // should not happen
                             return code`${literalOf(jsonExample)}`;
                         }
                         const properties: Record<string, unknown> = {};
-                        properties[value.discriminant.wireValue] = (jsonExample as Record<string, unknown>)[value.discriminant.wireValue];
+                        properties[value.discriminant.wireValue] = (jsonExample as Record<string, unknown>)[
+                            value.discriminant.wireValue
+                        ];
                         Object.assign(
                             properties,
                             Object.fromEntries(
@@ -1362,7 +1364,9 @@ describe("${serviceName}", () => {
                         }
 
                         // for extra properties
-                        const otherProperties = Object.fromEntries(Object.entries(jsonExample).filter(([key]) => !Object.keys(properties).includes(key)));
+                        const otherProperties = Object.fromEntries(
+                            Object.entries(jsonExample).filter(([key]) => !Object.keys(properties).includes(key))
+                        );
                         Object.assign(properties, otherProperties);
                         return code`${literalOf(properties)}`;
                     },

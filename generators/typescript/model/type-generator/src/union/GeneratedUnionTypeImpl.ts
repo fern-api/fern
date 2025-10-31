@@ -1,3 +1,4 @@
+import { FernIr } from "@fern-fern/ir-sdk";
 import {
     ExampleSingleUnionTypeProperties,
     ExampleTypeShape,
@@ -12,8 +13,6 @@ import { AbstractGeneratedType } from "../AbstractGeneratedType";
 import { ParsedSingleUnionTypeForUnion } from "./ParsedSingleUnionTypeForUnion";
 import { UnknownSingleUnionType } from "./UnknownSingleUnionType";
 import { UnknownSingleUnionTypeGenerator } from "./UnknownSingleUnionTypeGenerator";
-import { Name } from "@fern-fern/ir-sdk/serialization";
-import { FernIr } from "@fern-fern/ir-sdk";
 
 export declare namespace GeneratedUnionTypeImpl {
     export interface Init<Context extends BaseContext>
