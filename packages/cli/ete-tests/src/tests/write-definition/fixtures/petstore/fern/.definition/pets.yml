@@ -1,0 +1,64 @@
+imports:
+  root: __package__.yml
+service:
+  auth: false
+  base-path: ''
+  endpoints:
+    createPets:
+      display-name: Create a pet
+      examples:
+        - {}
+      method: POST
+      path: /pets
+      source:
+        openapi: openapi/openapi.yml
+    listPets:
+      display-name: List all pets
+      examples:
+        - query-parameters:
+            limit: 1
+          response:
+            body:
+              - id: 1000000
+                name: name
+                tag: tag
+      method: GET
+      path: /pets
+      request:
+        name: ListPetsRequest
+        query-parameters:
+          limit:
+            docs: How many items to return at one time (max 100)
+            type: optional<integer>
+            validation:
+              max: 100
+      response:
+        docs: A paged array of pets
+        status-code: 200
+        type: root.Pets
+      source:
+        openapi: openapi/openapi.yml
+    showPetById:
+      display-name: Info for a specific pet
+      examples:
+        - path-parameters:
+            petId: petId
+          response:
+            body:
+              id: 1000000
+              name: name
+              tag: tag
+      method: GET
+      path: /pets/{petId}
+      path-parameters:
+        petId:
+          docs: The id of the pet to retrieve
+          type: string
+      response:
+        docs: Expected response to a valid request
+        status-code: 200
+        type: root.Pet
+      source:
+        openapi: openapi/openapi.yml
+  source:
+    openapi: openapi/openapi.yml

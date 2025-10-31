@@ -1,4 +1,11 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- changelogEntry:
+    - summary: |
+        Add support for new IR property: GenerationMetadata.
+      type: feat
+  irVersion: 61
+  createdAt: "2025-10-31"
+  version: 0.102.0
 
 - changelogEntry:
     - summary: |
@@ -7,14 +14,6 @@
   irVersion: 61
   createdAt: "2025-10-31"
   version: 0.101.4
-
-- changelogEntry:
-    - summary: |
-        Add support for new IR property: GenerationMetadata.
-      type: feat
-  irVersion: 61
-  createdAt: "2025-10-31"
-  version: 0.102.0
 
 - changelogEntry:
     - summary: |
