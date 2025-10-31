@@ -14,7 +14,7 @@
             }
         },
         {
-            "example_identifier": "429e5aca",
+            "example_identifier": "4b0ea585",
             "id": {
                 "method": "POST",
                 "path": "/admin/store-test-submission-status/{submissionId}",
@@ -27,7 +27,7 @@
             }
         },
         {
-            "example_identifier": "2fde7eb7",
+            "example_identifier": "a8d83f64",
             "id": {
                 "method": "POST",
                 "path": "/admin/store-test-submission-status-v2/{submissionId}",
@@ -40,7 +40,7 @@
             }
         },
         {
-            "example_identifier": "10f720c8",
+            "example_identifier": "5bc66eaf",
             "id": {
                 "method": "POST",
                 "path": "/admin/store-workspace-submission-status/{submissionId}",
@@ -53,7 +53,7 @@
             }
         },
         {
-            "example_identifier": "b06c56bb",
+            "example_identifier": "a3218334",
             "id": {
                 "method": "POST",
                 "path": "/admin/store-workspace-submission-status-v2/{submissionId}",
@@ -66,7 +66,7 @@
             }
         },
         {
-            "example_identifier": "af0a309a",
+            "example_identifier": "9ba46e2f",
             "id": {
                 "method": "POST",
                 "path": "/admin/store-test-trace/submission/{submissionId}/testCase/{testCaseId}",
@@ -79,7 +79,7 @@
             }
         },
         {
-            "example_identifier": "b5d3a977",
+            "example_identifier": "29692ea1",
             "id": {
                 "method": "POST",
                 "path": "/admin/store-test-trace-v2/submission/{submissionId}/testCase/{testCaseId}",
@@ -92,7 +92,7 @@
             }
         },
         {
-            "example_identifier": "b2beb5f1",
+            "example_identifier": "1706da68",
             "id": {
                 "method": "POST",
                 "path": "/admin/store-workspace-trace/submission/{submissionId}",
@@ -105,7 +105,7 @@
             }
         },
         {
-            "example_identifier": "244e34a0",
+            "example_identifier": "c25ae1f2",
             "id": {
                 "method": "POST",
                 "path": "/admin/store-workspace-trace-v2/submission/{submissionId}",
@@ -196,7 +196,7 @@
             }
         },
         {
-            "example_identifier": "a02dc709",
+            "example_identifier": "3c3cc2c0",
             "id": {
                 "method": "GET",
                 "path": "/v2/playlist/{serviceParam}/{playlistId}",
@@ -235,7 +235,7 @@
             }
         },
         {
-            "example_identifier": "d5052230",
+            "example_identifier": "34dfafe5",
             "id": {
                 "method": "PUT",
                 "path": "/v2/playlist/{serviceParam}/{playlistId}",
@@ -261,7 +261,7 @@
             }
         },
         {
-            "example_identifier": "b0a598d1",
+            "example_identifier": "ccdf4a53",
             "id": {
                 "method": "POST",
                 "path": "/problem-crud/create",
@@ -274,7 +274,7 @@
             }
         },
         {
-            "example_identifier": "ed7b10ae",
+            "example_identifier": "7e30a8fd",
             "id": {
                 "method": "POST",
                 "path": "/problem-crud/update/{problemId}",
@@ -300,7 +300,7 @@
             }
         },
         {
-            "example_identifier": "1d6f970b",
+            "example_identifier": "b4884a18",
             "id": {
                 "method": "POST",
                 "path": "/problem-crud/default-starter-files",
@@ -391,7 +391,7 @@
             }
         },
         {
-            "example_identifier": "ebc73ea5",
+            "example_identifier": "374d0e3d",
             "id": {
                 "method": "GET",
                 "path": "/problems-v2/lightweight-problem-info",
@@ -404,7 +404,7 @@
             }
         },
         {
-            "example_identifier": "bbeb9947",
+            "example_identifier": "76fb2f77",
             "id": {
                 "method": "GET",
                 "path": "/problems-v2/problem-info",
@@ -417,7 +417,7 @@
             }
         },
         {
-            "example_identifier": "82e87612",
+            "example_identifier": "bc384922",
             "id": {
                 "method": "GET",
                 "path": "/problems-v2/problem-info/{problemId}",
@@ -430,7 +430,7 @@
             }
         },
         {
-            "example_identifier": "d4ce7370",
+            "example_identifier": "3d070ee0",
             "id": {
                 "method": "GET",
                 "path": "/problems-v2/problem-info/{problemId}/version/{problemVersion}",
@@ -443,7 +443,7 @@
             }
         },
         {
-            "example_identifier": "d21d3033",
+            "example_identifier": "68990a1d",
             "id": {
                 "method": "GET",
                 "path": "/problems-v2/lightweight-problem-info",
@@ -456,7 +456,7 @@
             }
         },
         {
-            "example_identifier": "9be7b773",
+            "example_identifier": "24d81b87",
             "id": {
                 "method": "GET",
                 "path": "/problems-v2/problem-info",
@@ -469,7 +469,7 @@
             }
         },
         {
-            "example_identifier": "bbdcb36",
+            "example_identifier": "1453b27c",
             "id": {
                 "method": "GET",
                 "path": "/problems-v2/problem-info/{problemId}",
@@ -482,7 +482,7 @@
             }
         },
         {
-            "example_identifier": "fcb2d1dc",
+            "example_identifier": "dfcf1ca",
             "id": {
                 "method": "GET",
                 "path": "/problems-v2/problem-info/{problemId}/version/{problemVersion}",
