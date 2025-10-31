@@ -18,6 +18,14 @@
 
 - changelogEntry:
     - summary: |
+        Add discriminated union base property and extend property examples to IR.
+      type: feat
+  irVersion: 61
+  createdAt: "2025-10-31"
+  version: 0.102.0
+
+- changelogEntry:
+    - summary: |
         Publish with all APIs to S3 by default.
       type: fix
   irVersion: 61

@@ -2,6 +2,25 @@
 
 import type * as SeedUnions from "../../../index.js";
 
+/**
+ * @example
+ *     {
+ *         type: "normalSweet",
+ *         value: "example1"
+ *     }
+ *
+ * @example
+ *     {
+ *         type: "thankfulFactor",
+ *         value: "example2"
+ *     }
+ *
+ * @example
+ *     {
+ *         type: "jumboEnd",
+ *         value: "example3"
+ *     }
+ */
 export type BigUnion =
     | SeedUnions.BigUnion.NormalSweet
     | SeedUnions.BigUnion.ThankfulFactor
