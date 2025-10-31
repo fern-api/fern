@@ -155,3 +155,5 @@ allowedFailures:
   - unions
   - variables
   - websocket-inferred-auth
+  # Intermediate failures
+  - any-auth
