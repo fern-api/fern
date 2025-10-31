@@ -61,9 +61,8 @@ export async function getIntermediateRepresentation({
     if (sourceConfig != null) {
         intermediateRepresentation.sourceConfig = sourceConfig;
     }
-
     intermediateRepresentation.generationMetadata = {
-        cliVersion: process.env.CLI_VERSION ?? "unknown",
+        cliVersion: workspace.cliVersion,
         generatorName: generatorInvocation.name,
         generatorVersion: generatorInvocation.version,
         generatorConfig: generatorInvocation.config

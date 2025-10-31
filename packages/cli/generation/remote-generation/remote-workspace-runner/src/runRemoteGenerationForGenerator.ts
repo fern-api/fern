@@ -102,7 +102,7 @@ export async function runRemoteGenerationForGenerator({
     }
 
     ir.generationMetadata = {
-        cliVersion: process.env.CLI_VERSION ?? "unknown",
+        cliVersion: workspace.cliVersion,
         generatorName: generatorInvocation.name,
         generatorVersion: generatorInvocation.version,
         generatorConfig: generatorInvocation.config

@@ -12,7 +12,7 @@ export interface TaskContext {
         run: (context: InteractiveTaskContext) => void | Promise<void>
     ) => Promise<boolean>;
     instrumentPostHogEvent: (event: PosthogEvent) => Promise<void>;
-    cliVersion: string;
+    cliVersion?: string;
 }
 
 export interface InteractiveTaskContext extends TaskContext {
