@@ -44,7 +44,7 @@ import NullableOptional
                 city: Optional("city"),
                 state: Optional("state"),
                 zipCode: "zipCode",
-                country: Optional(Optional("country")),
+                country: Optional("country"),
                 buildingId: Optional("buildingId"),
                 tenantId: Optional("tenantId")
             ))
@@ -94,7 +94,7 @@ import NullableOptional
                 city: Optional("city"),
                 state: Optional("state"),
                 zipCode: "zipCode",
-                country: Optional(Optional("country")),
+                country: Optional("country"),
                 buildingId: Optional("buildingId"),
                 tenantId: Optional("tenantId")
             ))
@@ -157,7 +157,7 @@ import NullableOptional
                 city: Optional("city"),
                 state: Optional("state"),
                 zipCode: "zipCode",
-                country: Optional(Optional("country")),
+                country: Optional("country"),
                 buildingId: Optional("buildingId"),
                 tenantId: Optional("tenantId")
             ))
@@ -243,7 +243,7 @@ import NullableOptional
                     city: Optional("city"),
                     state: Optional("state"),
                     zipCode: "zipCode",
-                    country: Optional(Optional("country")),
+                    country: Optional("country"),
                     buildingId: Optional("buildingId"),
                     tenantId: Optional("tenantId")
                 ))
@@ -260,7 +260,7 @@ import NullableOptional
                     city: Optional("city"),
                     state: Optional("state"),
                     zipCode: "zipCode",
-                    country: Optional(Optional("country")),
+                    country: Optional("country"),
                     buildingId: Optional("buildingId"),
                     tenantId: Optional("tenantId")
                 ))
@@ -336,7 +336,7 @@ import NullableOptional
                     city: Optional("city"),
                     state: Optional("state"),
                     zipCode: "zipCode",
-                    country: Optional(Optional("country")),
+                    country: Optional("country"),
                     buildingId: Optional("buildingId"),
                     tenantId: Optional("tenantId")
                 ))
@@ -353,7 +353,7 @@ import NullableOptional
                     city: Optional("city"),
                     state: Optional("state"),
                     zipCode: "zipCode",
-                    country: Optional(Optional("country")),
+                    country: Optional("country"),
                     buildingId: Optional("buildingId"),
                     tenantId: Optional("tenantId")
                 ))
@@ -491,10 +491,10 @@ import NullableOptional
             id: "id",
             nullableRole: Optional(.admin),
             optionalRole: Optional(.admin),
-            optionalNullableRole: Optional(Optional(.admin)),
+            optionalNullableRole: Optional(.admin),
             nullableStatus: Optional(.active),
             optionalStatus: Optional(.active),
-            optionalNullableStatus: Optional(Optional(.active)),
+            optionalNullableStatus: Optional(.active),
             nullableNotification: Optional(.email(
                 .init(
                     emailAddress: "emailAddress",
@@ -509,13 +509,13 @@ import NullableOptional
                     htmlContent: Optional("htmlContent")
                 )
             )),
-            optionalNullableNotification: Optional(Optional(.email(
+            optionalNullableNotification: Optional(.email(
                 .init(
                     emailAddress: "emailAddress",
                     subject: "subject",
                     htmlContent: Optional("htmlContent")
                 )
-            ))),
+            )),
             nullableSearchResult: Optional(.user(
                 .init(
                     id: "id",
@@ -529,7 +529,7 @@ import NullableOptional
                         city: Optional("city"),
                         state: Optional("state"),
                         zipCode: "zipCode",
-                        country: Optional(Optional("country")),
+                        country: Optional("country"),
                         buildingId: Optional("buildingId"),
                         tenantId: Optional("tenantId")
                     ))
@@ -548,7 +548,7 @@ import NullableOptional
                         city: Optional("city"),
                         state: Optional("state"),
                         zipCode: "zipCode",
-                        country: Optional(Optional("country")),
+                        country: Optional("country"),
                         buildingId: Optional("buildingId"),
                         tenantId: Optional("tenantId")
                     ))
@@ -562,10 +562,10 @@ import NullableOptional
                 "optionalArray",
                 "optionalArray"
             ]),
-            optionalNullableArray: Optional(Optional([
+            optionalNullableArray: Optional([
                 "optionalNullableArray",
                 "optionalNullableArray"
-            ])),
+            ]),
             nullableListOfNullables: Optional([
                 Optional("nullableListOfNullables"),
                 Optional("nullableListOfNullables")
@@ -576,7 +576,7 @@ import NullableOptional
                     city: Optional("city"),
                     state: Optional("state"),
                     zipCode: "zipCode",
-                    country: Optional(Optional("country")),
+                    country: Optional("country"),
                     buildingId: Optional("buildingId"),
                     tenantId: Optional("tenantId")
                 ))
@@ -841,10 +841,10 @@ import NullableOptional
             id: "id",
             nullableRole: Optional(.admin),
             optionalRole: Optional(.admin),
-            optionalNullableRole: Optional(Optional(.admin)),
+            optionalNullableRole: Optional(.admin),
             nullableStatus: Optional(.active),
             optionalStatus: Optional(.active),
-            optionalNullableStatus: Optional(Optional(.active)),
+            optionalNullableStatus: Optional(.active),
             nullableNotification: Optional(.email(
                 .init(
                     emailAddress: "emailAddress",
@@ -859,13 +859,13 @@ import NullableOptional
                     htmlContent: Optional("htmlContent")
                 )
             )),
-            optionalNullableNotification: Optional(Optional(.email(
+            optionalNullableNotification: Optional(.email(
                 .init(
                     emailAddress: "emailAddress",
                     subject: "subject",
                     htmlContent: Optional("htmlContent")
                 )
-            ))),
+            )),
             nullableSearchResult: Optional(.user(
                 .init(
                     id: "id",
@@ -879,7 +879,7 @@ import NullableOptional
                         city: Optional("city"),
                         state: Optional("state"),
                         zipCode: "zipCode",
-                        country: Optional(Optional("country")),
+                        country: Optional("country"),
                         buildingId: Optional("buildingId"),
                         tenantId: Optional("tenantId")
                     ))
@@ -898,7 +898,7 @@ import NullableOptional
                         city: Optional("city"),
                         state: Optional("state"),
                         zipCode: "zipCode",
-                        country: Optional(Optional("country")),
+                        country: Optional("country"),
                         buildingId: Optional("buildingId"),
                         tenantId: Optional("tenantId")
                     ))
@@ -912,10 +912,10 @@ import NullableOptional
                 "optionalArray",
                 "optionalArray"
             ]),
-            optionalNullableArray: Optional(Optional([
+            optionalNullableArray: Optional([
                 "optionalNullableArray",
                 "optionalNullableArray"
-            ])),
+            ]),
             nullableListOfNullables: Optional([
                 Optional("nullableListOfNullables"),
                 Optional("nullableListOfNullables")
@@ -926,7 +926,7 @@ import NullableOptional
                     city: Optional("city"),
                     state: Optional("state"),
                     zipCode: "zipCode",
-                    country: Optional(Optional("country")),
+                    country: Optional("country"),
                     buildingId: Optional("buildingId"),
                     tenantId: Optional("tenantId")
                 ))
@@ -1078,10 +1078,10 @@ import NullableOptional
             id: "id",
             nullableRole: Optional(.admin),
             optionalRole: Optional(.admin),
-            optionalNullableRole: Optional(Optional(.admin)),
+            optionalNullableRole: Optional(.admin),
             nullableStatus: Optional(.active),
             optionalStatus: Optional(.active),
-            optionalNullableStatus: Optional(Optional(.active)),
+            optionalNullableStatus: Optional(.active),
             nullableNotification: Optional(.email(
                 .init(
                     emailAddress: "emailAddress",
@@ -1096,13 +1096,13 @@ import NullableOptional
                     htmlContent: Optional("htmlContent")
                 )
             )),
-            optionalNullableNotification: Optional(Optional(.email(
+            optionalNullableNotification: Optional(.email(
                 .init(
                     emailAddress: "emailAddress",
                     subject: "subject",
                     htmlContent: Optional("htmlContent")
                 )
-            ))),
+            )),
             nullableSearchResult: Optional(.user(
                 .init(
                     id: "id",
@@ -1116,7 +1116,7 @@ import NullableOptional
                         city: Optional("city"),
                         state: Optional("state"),
                         zipCode: "zipCode",
-                        country: Optional(Optional("country")),
+                        country: Optional("country"),
                         buildingId: Optional("buildingId"),
                         tenantId: Optional("tenantId")
                     ))
@@ -1135,7 +1135,7 @@ import NullableOptional
                         city: Optional("city"),
                         state: Optional("state"),
                         zipCode: "zipCode",
-                        country: Optional(Optional("country")),
+                        country: Optional("country"),
                         buildingId: Optional("buildingId"),
                         tenantId: Optional("tenantId")
                     ))
@@ -1149,10 +1149,10 @@ import NullableOptional
                 "optionalArray",
                 "optionalArray"
             ]),
-            optionalNullableArray: Optional(Optional([
+            optionalNullableArray: Optional([
                 "optionalNullableArray",
                 "optionalNullableArray"
-            ])),
+            ]),
             nullableListOfNullables: Optional([
                 Optional("nullableListOfNullables"),
                 Optional("nullableListOfNullables")
@@ -1163,7 +1163,7 @@ import NullableOptional
                     city: Optional("city"),
                     state: Optional("state"),
                     zipCode: "zipCode",
-                    country: Optional(Optional("country")),
+                    country: Optional("country"),
                     buildingId: Optional("buildingId"),
                     tenantId: Optional("tenantId")
                 ))
@@ -1304,7 +1304,7 @@ import NullableOptional
                 requiredString: "requiredString",
                 nullableString: Optional("nullableString"),
                 optionalString: Optional("optionalString"),
-                optionalNullableString: Optional(Optional("optionalNullableString")),
+                optionalNullableString: Optional("optionalNullableString"),
                 nullableEnum: Optional(.admin),
                 optionalEnum: Optional(.active),
                 nullableUnion: Optional(.email(
@@ -1327,7 +1327,7 @@ import NullableOptional
                             city: Optional("city"),
                             state: Optional("state"),
                             zipCode: "zipCode",
-                            country: Optional(Optional("country")),
+                            country: Optional("country"),
                             buildingId: Optional("buildingId"),
                             tenantId: Optional("tenantId")
                         ))
@@ -1345,7 +1345,7 @@ import NullableOptional
                     city: Optional("city"),
                     state: Optional("state"),
                     zipCode: "zipCode",
-                    country: Optional(Optional("country")),
+                    country: Optional("country"),
                     buildingId: Optional("buildingId"),
                     tenantId: Optional("tenantId")
                 )),
@@ -1480,7 +1480,7 @@ import NullableOptional
                     city: Optional("city"),
                     state: Optional("state"),
                     zipCode: "zipCode",
-                    country: Optional(Optional("country")),
+                    country: Optional("country"),
                     buildingId: Optional("buildingId"),
                     tenantId: Optional("tenantId")
                 ))
@@ -1497,7 +1497,7 @@ import NullableOptional
                     city: Optional("city"),
                     state: Optional("state"),
                     zipCode: "zipCode",
-                    country: Optional(Optional("country")),
+                    country: Optional("country"),
                     buildingId: Optional("buildingId"),
                     tenantId: Optional("tenantId")
                 ))
@@ -1644,7 +1644,7 @@ import NullableOptional
                         city: Optional("city"),
                         state: Optional("state"),
                         zipCode: "zipCode",
-                        country: Optional(Optional("country")),
+                        country: Optional("country"),
                         buildingId: Optional("buildingId"),
                         tenantId: Optional("tenantId")
                     ))
@@ -1663,7 +1663,7 @@ import NullableOptional
                         city: Optional("city"),
                         state: Optional("state"),
                         zipCode: "zipCode",
-                        country: Optional(Optional("country")),
+                        country: Optional("country"),
                         buildingId: Optional("buildingId"),
                         tenantId: Optional("tenantId")
                     ))

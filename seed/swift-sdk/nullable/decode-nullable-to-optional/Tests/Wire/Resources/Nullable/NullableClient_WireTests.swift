@@ -87,31 +87,31 @@ import Nullable
                     "tags",
                     "tags"
                 ]),
-                metadata: Optional(Optional(Metadata(
+                metadata: Optional(Metadata(
                     createdAt: try! Date("2024-01-15T09:30:00Z", strategy: .iso8601),
                     updatedAt: try! Date("2024-01-15T09:30:00Z", strategy: .iso8601),
                     avatar: Optional("avatar"),
-                    activated: Optional(Optional(true)),
+                    activated: Optional(true),
                     status: .active(.init()),
                     values: Optional([
-                        "values": Optional(Optional("values"))
+                        "values": Optional("values")
                     ])
-                ))),
+                )),
                 email: Optional("email"),
                 favoriteNumber: WeirdNumber.int(
                     1
                 ),
-                numbers: Optional(Optional([
+                numbers: Optional([
                     1,
                     1
-                ])),
-                strings: Optional(Optional([
+                ]),
+                strings: Optional([
                     "strings": JSONValue.object(
                         [
                             "key": JSONValue.string("value")
                         ]
                     )
-                ]))
+                ])
             ),
             User(
                 name: "name",
@@ -120,31 +120,31 @@ import Nullable
                     "tags",
                     "tags"
                 ]),
-                metadata: Optional(Optional(Metadata(
+                metadata: Optional(Metadata(
                     createdAt: try! Date("2024-01-15T09:30:00Z", strategy: .iso8601),
                     updatedAt: try! Date("2024-01-15T09:30:00Z", strategy: .iso8601),
                     avatar: Optional("avatar"),
-                    activated: Optional(Optional(true)),
+                    activated: Optional(true),
                     status: .active(.init()),
                     values: Optional([
-                        "values": Optional(Optional("values"))
+                        "values": Optional("values")
                     ])
-                ))),
+                )),
                 email: Optional("email"),
                 favoriteNumber: WeirdNumber.int(
                     1
                 ),
-                numbers: Optional(Optional([
+                numbers: Optional([
                     1,
                     1
-                ])),
-                strings: Optional(Optional([
+                ]),
+                strings: Optional([
                     "strings": JSONValue.object(
                         [
                             "key": JSONValue.string("value")
                         ]
                     )
-                ]))
+                ])
             )
         ]
         let response = try await client.nullable.getUsers(
@@ -204,31 +204,31 @@ import Nullable
                 "tags",
                 "tags"
             ]),
-            metadata: Optional(Optional(Metadata(
+            metadata: Optional(Metadata(
                 createdAt: try! Date("2024-01-15T09:30:00Z", strategy: .iso8601),
                 updatedAt: try! Date("2024-01-15T09:30:00Z", strategy: .iso8601),
                 avatar: Optional("avatar"),
-                activated: Optional(Optional(true)),
+                activated: Optional(true),
                 status: .active(.init()),
                 values: Optional([
-                    "values": Optional(Optional("values"))
+                    "values": Optional("values")
                 ])
-            ))),
+            )),
             email: Optional("email"),
             favoriteNumber: WeirdNumber.int(
                 1
             ),
-            numbers: Optional(Optional([
+            numbers: Optional([
                 1,
                 1
-            ])),
-            strings: Optional(Optional([
+            ]),
+            strings: Optional([
                 "strings": JSONValue.object(
                     [
                         "key": JSONValue.string("value")
                     ]
                 )
-            ]))
+            ])
         )
         let response = try await client.nullable.createUser(request: .init(
             username: "username",
