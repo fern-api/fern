@@ -94279,6 +94279,7 @@ exports[`fern protoc-gen-fern > test with buf 1`] = `
       "userAgent": null
     }
   },
-  "audiences": []
+  "audiences": [],
+  "generationMetadata": null
 }"
 `;
