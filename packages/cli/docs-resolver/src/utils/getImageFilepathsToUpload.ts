@@ -4,7 +4,7 @@ import { DocsWorkspace } from "@fern-api/workspace-loader";
 
 export interface IconRef {
     holder: Record<string, unknown>;
-    key: "icon";
+    key: string;
     raw: string;
 }
 
@@ -60,7 +60,7 @@ async function addIconToFilepaths({
     }
 }
 
-function pushRef(refs: IconRef[], holder: Record<string, unknown>, key: "icon", raw: string | undefined) {
+function pushRef(refs: IconRef[], holder: Record<string, unknown>, key: string = "icon", raw: string | undefined) {
     if (raw != null && shouldProcessIconPath(raw)) {
         refs.push({ holder, key, raw });
     }
@@ -157,6 +157,8 @@ export async function collectIconsFromDocsConfig({
     parsedDocsConfig: docsYml.ParsedDocsConfiguration;
     docsWorkspace: DocsWorkspace;
 }): Promise<{ filepaths: Set<AbsoluteFilePath>; refs: IconRef[] }> {
+    console.log("parseDocsConfig:");
+    console.dir(parsedDocsConfig, { depth: null });
     const refs: IconRef[] = [];
     const filepaths = new Set([
         ...(await collectIconsFromNavigation({
@@ -164,8 +166,8 @@ export async function collectIconsFromDocsConfig({
             docsWorkspace,
             refs
         })),
-        ...(await collectIconsFromNavbar({
-            navbar: parsedDocsConfig.navbar,
+        ...(await collectIconsFromNavbarLinksV2({
+            parsedDocsConfig,
             docsWorkspace,
             refs
         }))
@@ -173,16 +175,64 @@ export async function collectIconsFromDocsConfig({
     return { filepaths, refs };
 }
 
-async function collectIconsFromNavbar({
-    navbar,
+async function collectIconsFromNavbarLinks({
+    parsedDocsConfig,
     docsWorkspace,
     refs
 }: {
-    navbar: docsYml.DocsNavbarConfiguration;
+    parsedDocsConfig: docsYml.ParsedDocsConfiguration;
+    docsWorkspace: DocsWorkspace;
+    refs: IconRef[];
+}): Promise<Set<AbsoluteFilePath>> {
+    const navbarLinks = parsedDocsConfig.navbarLinks ?? [];
+    console.log("navbarLinks:");
+    console.dir(navbarLinks, { depth: null });
+    const filepaths = new Set<AbsoluteFilePath>();
+    return filepaths;
+}
+
+async function collectIconsFromNavbarLinksV2({
+    parsedDocsConfig,
+    docsWorkspace,
+    refs
+}: {
+    parsedDocsConfig: docsYml.ParsedDocsConfiguration;
     docsWorkspace: DocsWorkspace;
     refs: IconRef[];
 }): Promise<Set<AbsoluteFilePath>> {
     const filepaths = new Set<AbsoluteFilePath>();
+    const links = parsedDocsConfig.navbarLinks ?? [];
+
+    const collectIcon = async (holder: Record<string, unknown>, icon: unknown) => {
+        if (typeof icon !== "string" || !shouldProcessIconPath(icon)) {
+            return;
+        }
+        pushRef(refs, holder, "icon", icon);
+        await addIconToFilepaths({ iconPath: icon, filepaths, docsWorkspace });
+    };
+
+    const collectRightIcon = async (holder: Record<string, unknown>, rightIcon: unknown) => {
+        if (typeof rightIcon !== "string" || !shouldProcessIconPath(rightIcon)) {
+            return;
+        }
+        pushRef(refs, holder, "rightIcon", rightIcon);
+        await addIconToFilepaths({ iconPath: rightIcon, filepaths, docsWorkspace });
+    };
+
+    const visit = async (node: unknown): Promise<void> => {
+        if (node == null || typeof node !== "object") {
+            return;
+        }
+        const obj = node as Record<string, unknown>;
+
+        await collectIcon(obj, obj.icon);
+        await collectRightIcon(obj, obj.rightIcon);
+
+        const children = Array.isArray((obj as any).links) ? (obj as any).links : [];
+        await Promise.all(children.map(visit));
+    };
+
+    await Promise.all(links.map(visit));
     return filepaths;
 }
 
