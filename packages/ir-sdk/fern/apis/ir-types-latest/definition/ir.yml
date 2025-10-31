@@ -66,7 +66,7 @@ types:
       dynamic: optional<dynamic.DynamicIntermediateRepresentation>
       selfHosted: optional<boolean>
       audiences: optional<list<audience.AudienceDefinition>>
-      generationMetadata: GenerationMetadata
+      generationMetadata: optional<GenerationMetadata>
 
   GenerationMetadata:
     docs: |

@@ -71,7 +71,7 @@ export const IntermediateRepresentation: core.serialization.ObjectSchema<
     dynamic: DynamicIntermediateRepresentation.optional(),
     selfHosted: core.serialization.boolean().optional(),
     audiences: core.serialization.list(AudienceDefinition).optional(),
-    generationMetadata: GenerationMetadata,
+    generationMetadata: GenerationMetadata.optional(),
 });
 
 export declare namespace IntermediateRepresentation {
@@ -105,6 +105,6 @@ export declare namespace IntermediateRepresentation {
         dynamic?: DynamicIntermediateRepresentation.Raw | null;
         selfHosted?: boolean | null;
         audiences?: AudienceDefinition.Raw[] | null;
-        generationMetadata: GenerationMetadata.Raw;
+        generationMetadata?: GenerationMetadata.Raw | null;
     }
 }
