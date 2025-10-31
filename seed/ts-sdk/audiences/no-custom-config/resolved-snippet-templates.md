@@ -4,7 +4,10 @@ import { SeedAudiencesClient } from "@fern/audiences";
 const client = new SeedAudiencesClient({
   environment: SeedAudiencesEnvironment.EnvironmentA,
 });
-await client.folderA.service.getDirectThread();
+await client.folderA.service.getDirectThread({
+  ids: "ids",
+  tags: "tags",
+});
 
 ```
 

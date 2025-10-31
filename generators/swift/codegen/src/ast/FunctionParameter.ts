@@ -1,6 +1,6 @@
 import { AstNode, Writer } from "./core";
 import { Expression } from "./Expression";
-import { Type } from "./Type";
+import { TypeReference } from "./TypeReference";
 
 export declare namespace FunctionParameter {
     interface Args {
@@ -9,7 +9,7 @@ export declare namespace FunctionParameter {
         /** Used within the function’s body. */
         unsafeName: string;
         escaping?: true;
-        type: Type;
+        type: TypeReference;
         defaultValue?: Expression;
         docsContent?: string;
     }
@@ -19,7 +19,7 @@ export class FunctionParameter extends AstNode {
     public readonly argumentLabel?: string;
     public readonly unsafeName: string;
     public readonly escaping?: true;
-    public readonly type: Type;
+    public readonly type: TypeReference;
     public readonly defaultValue?: Expression;
     public readonly docsContent?: string;
 

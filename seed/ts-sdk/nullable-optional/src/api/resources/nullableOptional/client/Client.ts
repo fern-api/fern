@@ -44,7 +44,7 @@ export class NullableOptional {
             url: core.url.join(
                 (await core.Supplier.get(this._options.baseUrl)) ??
                     (await core.Supplier.get(this._options.environment)),
-                `/api/users/${encodeURIComponent(userId)}`,
+                `/api/users/${core.url.encodePathParam(userId)}`,
             ),
             method: "GET",
             headers: _headers,
@@ -204,7 +204,7 @@ export class NullableOptional {
             url: core.url.join(
                 (await core.Supplier.get(this._options.baseUrl)) ??
                     (await core.Supplier.get(this._options.environment)),
-                `/api/users/${encodeURIComponent(userId)}`,
+                `/api/users/${core.url.encodePathParam(userId)}`,
             ),
             method: "PATCH",
             headers: _headers,
@@ -602,7 +602,7 @@ export class NullableOptional {
             url: core.url.join(
                 (await core.Supplier.get(this._options.baseUrl)) ??
                     (await core.Supplier.get(this._options.environment)),
-                `/api/profiles/complex/${encodeURIComponent(profileId)}`,
+                `/api/profiles/complex/${core.url.encodePathParam(profileId)}`,
             ),
             method: "GET",
             headers: _headers,
@@ -698,7 +698,7 @@ export class NullableOptional {
             url: core.url.join(
                 (await core.Supplier.get(this._options.baseUrl)) ??
                     (await core.Supplier.get(this._options.environment)),
-                `/api/profiles/complex/${encodeURIComponent(profileId)}`,
+                `/api/profiles/complex/${core.url.encodePathParam(profileId)}`,
             ),
             method: "PATCH",
             headers: _headers,
@@ -970,7 +970,7 @@ export class NullableOptional {
             url: core.url.join(
                 (await core.Supplier.get(this._options.baseUrl)) ??
                     (await core.Supplier.get(this._options.environment)),
-                `/api/users/${encodeURIComponent(userId)}/notifications`,
+                `/api/users/${core.url.encodePathParam(userId)}/notifications`,
             ),
             method: "GET",
             headers: _headers,
@@ -1045,7 +1045,7 @@ export class NullableOptional {
             url: core.url.join(
                 (await core.Supplier.get(this._options.baseUrl)) ??
                     (await core.Supplier.get(this._options.environment)),
-                `/api/users/${encodeURIComponent(userId)}/tags`,
+                `/api/users/${core.url.encodePathParam(userId)}/tags`,
             ),
             method: "PUT",
             headers: _headers,

@@ -60,6 +60,20 @@ export class SdkGeneratorContext extends AbstractGoGeneratorContext<SdkCustomCon
         return [];
     }
 
+    public getCoreAsIsFiles(): string[] {
+        const files = [];
+
+        if (this.needsPaginationHelpers()) {
+            files.push(AsIsFiles.Page);
+        }
+
+        if (this.ir.sdkConfig.hasStreamingEndpoints) {
+            files.push(AsIsFiles.Stream);
+        }
+
+        return files;
+    }
+
     public getRootAsIsFiles(): string[] {
         const files = [
             AsIsFiles.ErrorDecoder,
@@ -79,10 +93,6 @@ export class SdkGeneratorContext extends AbstractGoGeneratorContext<SdkCustomCon
         }
 
         return files;
-    }
-
-    public getTestAsIsFiles(): string[] {
-        return [AsIsFiles.MainTest];
     }
 
     public getClientClassName(subpackage?: Subpackage): string {
@@ -457,15 +467,7 @@ export class SdkGeneratorContext extends AbstractGoGeneratorContext<SdkCustomCon
         arguments_: go.AstNode[];
         streamPayload: go.Type;
     }): go.FuncInvocation {
-        return go.invokeFunc({
-            func: go.typeReference({
-                name: "NewStreamer",
-                importPath: this.getRootImportPath(),
-                generics: [streamPayload]
-            }),
-            arguments_,
-            multiline: false
-        });
+        return this.callInternalFunc({ name: "NewStreamer", arguments_, generics: [streamPayload], multiline: false });
     }
 
     public callQueryValues(arguments_: go.AstNode[]): go.FuncInvocation {
@@ -476,11 +478,11 @@ export class SdkGeneratorContext extends AbstractGoGeneratorContext<SdkCustomCon
         return this.callInternalFunc({ name: "QueryValuesWithDefaults", arguments_, multiline: true });
     }
 
-    public getPageTypeReference(valueType: go.Type): go.TypeReference {
+    public getPageTypeReference(cursorType: go.Type, valueType: go.Type): go.TypeReference {
         return go.typeReference({
             name: "Page",
             importPath: this.getCoreImportPath(),
-            generics: [valueType]
+            generics: [cursorType, valueType]
         });
     }
 

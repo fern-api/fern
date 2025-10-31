@@ -1,5 +1,4 @@
 import { AbstractReadmeSnippetBuilder } from "@fern-api/base-generator";
-import { FernIr } from "@fern-api/dynamic-ir-sdk";
 import { java } from "@fern-api/java-ast";
 
 import { FernGeneratorCli } from "@fern-fern/generator-cli-sdk";
@@ -19,6 +18,7 @@ export class ReadmeSnippetBuilder extends AbstractReadmeSnippetBuilder {
     private static EXCEPTION_HANDLING_FEATURE_ID: FernGeneratorCli.FeatureId = "EXCEPTION_HANDLING";
     private static BASE_URL_FEATURE_ID: FernGeneratorCli.FeatureId = "BASE_URL";
     private static CUSTOM_HEADERS_FEATURE_ID: FernGeneratorCli.FeatureId = "CUSTOM_HEADERS";
+    private static RAW_RESPONSE_FEATURE_ID: FernGeneratorCli.FeatureId = "ACCESS_RAW_RESPONSE_DATA";
     private static SNIPPET_PACKAGE_NAME = "com.example.usage";
     private static ELLIPSES = java.codeblock("...");
 
@@ -82,6 +82,7 @@ export class ReadmeSnippetBuilder extends AbstractReadmeSnippetBuilder {
             [FernGeneratorCli.StructuredFeatureId.Retries]: { renderer: this.renderRetriesSnippet.bind(this) },
             [FernGeneratorCli.StructuredFeatureId.Timeouts]: { renderer: this.renderTimeoutsSnippet.bind(this) },
             [ReadmeSnippetBuilder.CUSTOM_HEADERS_FEATURE_ID]: { renderer: this.renderCustomHeadersSnippet.bind(this) },
+            [ReadmeSnippetBuilder.RAW_RESPONSE_FEATURE_ID]: { renderer: this.renderRawResponseSnippet.bind(this) },
             ...(this.isPaginationEnabled
                 ? {
                       [FernGeneratorCli.StructuredFeatureId.Pagination]: {
@@ -107,6 +108,44 @@ export class ReadmeSnippetBuilder extends AbstractReadmeSnippetBuilder {
         }
 
         return snippetsByFeatureId;
+    }
+
+    public buildReadmeAddendumsByFeatureId(): Record<FernGeneratorCli.FeatureId, string> {
+        const addendumsByFeatureId: Record<FernGeneratorCli.FeatureId, string> = {};
+
+        // Check if collapse-optional-nullable flag is enabled
+        const customConfig = this.context.customConfig;
+        if (customConfig != null && customConfig["collapse-optional-nullable"] === true) {
+            // Add OptionalNullable documentation to Usage section
+            addendumsByFeatureId[FernGeneratorCli.StructuredFeatureId.Usage] = this.getOptionalNullableDocumentation();
+        }
+
+        return addendumsByFeatureId;
+    }
+
+    private getOptionalNullableDocumentation(): string {
+        return `## OptionalNullable for PATCH Requests
+
+For PATCH requests, the SDK uses \`OptionalNullable<T>\` to handle three-state nullable semantics:
+
+- **ABSENT**: Field not provided (omitted from JSON)
+- **NULL**: Field explicitly set to null (included as \`null\` in JSON)
+- **PRESENT**: Field has a non-null value
+
+\`\`\`java
+import com.seed.api.core.OptionalNullable;
+
+UpdateRequest request = UpdateRequest.builder()
+    .fieldName(OptionalNullable.absent())    // Skip field
+    .anotherField(OptionalNullable.ofNull()) // Clear field
+    .yetAnotherField(OptionalNullable.of("value")) // Set value
+    .build();
+\`\`\`
+
+### Important Notes
+
+- **Required fields**: For required fields, you cannot use \`absent()\`. Required fields must always be present with either a non-null value or explicitly set to null using \`ofNull()\`.
+- **Type safety**: \`OptionalNullable<T>\` is not fully type-safe since all three states use the same type, but it provides a cleaner API than nested \`Optional<Optional<T>>\` for handling three-state nullable semantics.`;
     }
 
     private getPrerenderedSnippetsForFeature(
@@ -400,6 +439,37 @@ export class ReadmeSnippetBuilder extends AbstractReadmeSnippetBuilder {
         return this.renderSnippet(snippet);
     }
 
+    private renderRawResponseSnippet(endpoint: EndpointWithFilepath): string {
+        // Get the endpoint method call with withRawResponse()
+        const clientAccess = this.getAccessFromRootClient(endpoint.fernFilepath);
+        const withRawResponseCall = java.invokeMethod({
+            on: clientAccess,
+            method: "withRawResponse",
+            arguments_: []
+        });
+
+        const endpointMethodCall = java.invokeMethod({
+            on: withRawResponseCall,
+            method: this.getEndpointMethodName(endpoint.endpoint),
+            arguments_: [ReadmeSnippetBuilder.ELLIPSES]
+        });
+
+        // Get the endpoint name for the response type
+        const endpointMethodName = this.getEndpointMethodName(endpoint.endpoint);
+        const responseTypeName = this.capitalizeFirstLetter(endpointMethodName) + "HttpResponse";
+
+        const snippet = java.codeblock((writer) => {
+            writer.write(responseTypeName);
+            writer.write(" response = ");
+            writer.writeNodeStatement(endpointMethodCall);
+            writer.newLine();
+            writer.writeLine("System.out.println(response.body());");
+            writer.writeLine('System.out.println(response.headers().get("X-My-Header"));');
+        });
+
+        return this.renderSnippet(snippet);
+    }
+
     private renderPaginationSnippet(endpoint: EndpointWithFilepath): string {
         const clientClassReference = this.context.getRootClientClassReference();
         const clientInitialization = java.TypeLiteral.builder({
@@ -494,6 +564,10 @@ export class ReadmeSnippetBuilder extends AbstractReadmeSnippetBuilder {
         endpointSnippets: FernGeneratorExec.Endpoint[]
     ): Record<EndpointId, string> {
         const snippets: Record<EndpointId, string> = {};
+        const exampleStyle = this.context.ir.readmeConfig?.exampleStyle;
+
+        const snippetsByEndpointId: Record<EndpointId, FernGeneratorExec.Endpoint[]> = {};
+
         for (const endpointSnippet of Object.values(endpointSnippets)) {
             if (endpointSnippet.id.identifierOverride == null) {
                 throw new Error("Internal error; snippets must define the endpoint id to generate README.md");
@@ -501,12 +575,118 @@ export class ReadmeSnippetBuilder extends AbstractReadmeSnippetBuilder {
             if (endpointSnippet.snippet.type !== "java") {
                 throw new Error(`Internal error; expected java snippet but got: ${endpointSnippet.snippet.type}`);
             }
-            if (snippets[endpointSnippet.id.identifierOverride] != null) {
-                continue;
+
+            const endpointId = endpointSnippet.id.identifierOverride;
+            if (!snippetsByEndpointId[endpointId]) {
+                snippetsByEndpointId[endpointId] = [];
             }
-            snippets[endpointSnippet.id.identifierOverride] = endpointSnippet.snippet.syncClient;
+            snippetsByEndpointId[endpointId].push(endpointSnippet);
+        }
+
+        for (const [endpointId, endpointSnippetList] of Object.entries(snippetsByEndpointId)) {
+            let selectedSnippet: FernGeneratorExec.Endpoint;
+
+            if (exampleStyle === "minimal") {
+                selectedSnippet = endpointSnippetList.reduce((best, current) => {
+                    const currentIsMinimal =
+                        current.exampleIdentifier?.toLowerCase().includes("minimal") ||
+                        current.exampleIdentifier?.toLowerCase().includes("required");
+                    const bestIsMinimal =
+                        best.exampleIdentifier?.toLowerCase().includes("minimal") ||
+                        best.exampleIdentifier?.toLowerCase().includes("required");
+
+                    if (currentIsMinimal && !bestIsMinimal) {
+                        return current;
+                    }
+                    if (bestIsMinimal && !currentIsMinimal) {
+                        return best;
+                    }
+
+                    if (current.snippet.type === "java" && best.snippet.type === "java") {
+                        const currentLength = current.snippet.syncClient.length;
+                        const bestLength = best.snippet.syncClient.length;
+                        return currentLength < bestLength ? current : best;
+                    }
+                    return best;
+                });
+            } else {
+                selectedSnippet = endpointSnippetList.reduce((best, current) => {
+                    if (current.snippet.type === "java" && best.snippet.type === "java") {
+                        const currentLength = current.snippet.syncClient.length;
+                        const bestLength = best.snippet.syncClient.length;
+                        return currentLength > bestLength ? current : best;
+                    }
+                    return best;
+                });
+            }
+
+            if (selectedSnippet.snippet.type !== "java") {
+                throw new Error(`Internal error; expected java snippet but got: ${selectedSnippet.snippet.type}`);
+            }
+            let snippet = selectedSnippet.snippet.syncClient;
+
+            if (exampleStyle === "minimal") {
+                snippet = this.filterOptionalParametersFromSnippet(snippet, endpointId);
+            }
+
+            snippets[endpointId] = snippet;
         }
         return snippets;
+    }
+
+    private filterOptionalParametersFromSnippet(snippet: string, endpointId: string): string {
+        const endpoint = this.endpointsById[endpointId];
+        if (!endpoint?.endpoint.requestBody) {
+            return snippet;
+        }
+
+        const requestBody = endpoint.endpoint.requestBody;
+        const optionalFieldNames = new Set<string>();
+
+        if (requestBody.type === "reference") {
+            const requestBodyRef = requestBody;
+            if (requestBodyRef.requestBodyType.type === "named") {
+                const typeId = requestBodyRef.requestBodyType.typeId;
+                for (const type of Object.values(this.context.ir.types)) {
+                    if (type.name.typeId === typeId && type.shape.type === "object") {
+                        for (const property of type.shape.properties) {
+                            const valueType = property.valueType;
+                            if (
+                                valueType.type === "container" &&
+                                (valueType.container.type === "optional" || valueType.container.type === "nullable")
+                            ) {
+                                const fieldName = property.name.name.camelCase.unsafeName;
+                                optionalFieldNames.add(fieldName);
+                            }
+                        }
+                    }
+                }
+            }
+        }
+
+        if (optionalFieldNames.size === 0) {
+            return snippet;
+        }
+
+        const lines = snippet.split("\n");
+        const filteredLines: string[] = [];
+
+        for (const line of lines) {
+            let shouldInclude = true;
+            for (const optionalField of optionalFieldNames) {
+                const methodPattern = new RegExp(`\\.${optionalField}\\s*\\(`);
+                if (methodPattern.test(line)) {
+                    shouldInclude = false;
+                    break;
+                }
+            }
+
+            if (shouldInclude) {
+                filteredLines.push(line);
+            }
+        }
+
+        return filteredLines.join("\n");
     }
 
     private getEndpointsForFeature(featureId: FeatureId): EndpointWithFilepath[] {
@@ -545,7 +725,7 @@ export class ReadmeSnippetBuilder extends AbstractReadmeSnippetBuilder {
         return endpoint.name.camelCase.unsafeName;
     }
 
-    private getDefaultEnvironmentId(): FernIr.EnvironmentId | undefined {
+    private getDefaultEnvironmentId(): string | undefined {
         if (this.context.ir.environments == null) {
             return undefined;
         }
@@ -616,5 +796,9 @@ export class ReadmeSnippetBuilder extends AbstractReadmeSnippetBuilder {
         } else {
             return asString.split("\n").slice(2).join("\n");
         }
+    }
+
+    private capitalizeFirstLetter(str: string): string {
+        return str.charAt(0).toUpperCase() + str.slice(1);
     }
 }

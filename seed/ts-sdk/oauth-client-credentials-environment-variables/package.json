@@ -30,6 +30,9 @@
     ],
     "scripts": {
         "format": "biome format --write --skip-parse-errors --no-errors-on-unmatched --max-diagnostics=none",
+        "format:check": "biome format --skip-parse-errors --no-errors-on-unmatched --max-diagnostics=none",
+        "lint": "biome lint --skip-parse-errors --no-errors-on-unmatched --max-diagnostics=none",
+        "lint:fix": "biome lint --fix --unsafe --skip-parse-errors --no-errors-on-unmatched --max-diagnostics=none",
         "check": "biome check --skip-parse-errors --no-errors-on-unmatched --max-diagnostics=none",
         "check:fix": "biome check --fix --unsafe --skip-parse-errors --no-errors-on-unmatched --max-diagnostics=none",
         "build": "pnpm build:cjs && pnpm build:esm",
@@ -45,8 +48,8 @@
         "vitest": "^3.2.4",
         "msw": "2.11.2",
         "@types/node": "^18.19.70",
-        "@biomejs/biome": "2.2.5",
-        "typescript": "~5.7.2"
+        "typescript": "~5.7.2",
+        "@biomejs/biome": "2.3.1"
     },
     "browser": {
         "fs": false,
@@ -54,7 +57,7 @@
         "path": false,
         "stream": false
     },
-    "packageManager": "pnpm@10.14.0",
+    "packageManager": "pnpm@10.20.0",
     "engines": {
         "node": ">=18.0.0"
     },

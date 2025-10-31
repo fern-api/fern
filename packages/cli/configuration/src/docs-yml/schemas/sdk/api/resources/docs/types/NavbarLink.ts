@@ -9,6 +9,7 @@ export type NavbarLink =
     | FernDocsConfig.NavbarLink.Outlined
     | FernDocsConfig.NavbarLink.Minimal
     | FernDocsConfig.NavbarLink.Github
+    | FernDocsConfig.NavbarLink.Dropdown
     | FernDocsConfig.NavbarLink.Primary
     | FernDocsConfig.NavbarLink.Secondary;
 
@@ -28,6 +29,10 @@ export namespace NavbarLink {
     export interface Github {
         type: "github";
         value: FernDocsConfig.NavbarGithubConfig;
+    }
+
+    export interface Dropdown extends FernDocsConfig.NavbarDropdownConfig {
+        type: "dropdown";
     }
 
     export interface Primary extends FernDocsConfig.NavbarLinkConfig {

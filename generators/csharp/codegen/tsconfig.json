@@ -9,6 +9,9 @@
   "include": ["./src/**/*"],
   "references": [
     {
+      "path": "../../base"
+    },
+    {
       "path": "../../../packages/commons/core-utils"
     },
     {

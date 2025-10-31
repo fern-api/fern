@@ -64,6 +64,23 @@ try {
 }
 ```
 
+## Streaming Response
+
+Some endpoints return streaming responses instead of returning the full response at once.
+The SDK uses async iterators, so you can consume the responses using a `for await...of` loop.
+
+```typescript
+import { SeedStreamingClient } from "@fern/streaming";
+
+const client = new SeedStreamingClient({ environment: "YOUR_BASE_URL" });
+const response = await client.dummy.generateStream({
+    num_events: 1
+});
+for await (const item of response) {
+    console.log(item);
+}
+```
+
 ## Advanced
 
 ### Additional Headers

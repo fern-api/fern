@@ -57,5 +57,7 @@
     "FERN_TOKEN": "${FERN_TOKEN}",
     "NODE_ENV": "development",
     "PNPM_VERSION": "9.4.0"
-  }
+  },
+  "includeCoAuthoredBy": true,
+  "model": "claude-sonnet-4-20250514"
 }

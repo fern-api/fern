@@ -14,7 +14,6 @@
 
 ```rust
 use seed_idempotency_headers::prelude::*;
-use std::collections::HashMap;
 
 #[tokio::main]
 async fn main() {

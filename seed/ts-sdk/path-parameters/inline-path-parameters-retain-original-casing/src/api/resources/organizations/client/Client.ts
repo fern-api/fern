@@ -42,7 +42,7 @@ export class Organizations {
             url: core.url.join(
                 (await core.Supplier.get(this._options.baseUrl)) ??
                     (await core.Supplier.get(this._options.environment)),
-                `/${encodeURIComponent(this._options.tenant_id)}/organizations/${encodeURIComponent(organization_id)}/`,
+                `/${core.url.encodePathParam(this._options.tenant_id)}/organizations/${core.url.encodePathParam(organization_id)}/`,
             ),
             method: "GET",
             headers: _headers,
@@ -109,7 +109,7 @@ export class Organizations {
             url: core.url.join(
                 (await core.Supplier.get(this._options.baseUrl)) ??
                     (await core.Supplier.get(this._options.environment)),
-                `/${encodeURIComponent(this._options.tenant_id)}/organizations/${encodeURIComponent(organizationId)}/users/${encodeURIComponent(userId)}`,
+                `/${core.url.encodePathParam(this._options.tenant_id)}/organizations/${core.url.encodePathParam(organizationId)}/users/${core.url.encodePathParam(userId)}`,
             ),
             method: "GET",
             headers: _headers,
@@ -185,7 +185,7 @@ export class Organizations {
             url: core.url.join(
                 (await core.Supplier.get(this._options.baseUrl)) ??
                     (await core.Supplier.get(this._options.environment)),
-                `/${encodeURIComponent(this._options.tenant_id)}/organizations/${encodeURIComponent(organization_id)}/search`,
+                `/${core.url.encodePathParam(this._options.tenant_id)}/organizations/${core.url.encodePathParam(organization_id)}/search`,
             ),
             method: "GET",
             headers: _headers,

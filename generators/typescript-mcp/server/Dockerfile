@@ -42,7 +42,7 @@ RUN yarn install
 RUN rm -rf node_modules
 RUN rm -rf yarn.lock
 
-RUN npm install -g pnpm@10.14.0
+RUN npm install -g pnpm@10.20.0
 
 RUN pnpm install
 

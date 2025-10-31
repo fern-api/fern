@@ -14,7 +14,6 @@
 
 ```rust
 use seed_streaming::prelude::*;
-use std::collections::HashMap;
 
 #[tokio::main]
 async fn main() {
@@ -81,7 +80,6 @@ async fn main() {
 
 ```rust
 use seed_streaming::prelude::*;
-use std::collections::HashMap;
 
 #[tokio::main]
 async fn main() {

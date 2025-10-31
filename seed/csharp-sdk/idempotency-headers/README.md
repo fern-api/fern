@@ -84,6 +84,35 @@ var response = await client.Payment.CreateAsync(
 );
 ```
 
+### Forward Compatible Enums
+
+This SDK uses forward-compatible enums that can handle unknown values gracefully.
+
+```csharp
+using SeedIdempotencyHeaders;
+
+// Using a built-in value
+var currency = Currency.Usd;
+
+// Using a custom value
+var customCurrency = Currency.FromCustom("custom-value");
+
+// Using in a switch statement
+switch (currency.Value)
+{
+    case Currency.Values.Usd:
+        Console.WriteLine("Usd");
+        break;
+    default:
+        Console.WriteLine($"Unknown value: {currency.Value}");
+        break;
+}
+
+// Explicit casting
+string currencyString = (string)Currency.Usd;
+Currency currencyFromString = (Currency)"USD";
+```
+
 ## Contributing
 
 While we value open-source contributions to this SDK, this library is generated programmatically.

@@ -2,7 +2,15 @@ import { AbstractReadmeSnippetBuilder } from "@fern-api/base-generator";
 
 import { FernGeneratorCli } from "@fern-fern/generator-cli-sdk";
 import { FernGeneratorExec } from "@fern-fern/generator-exec-sdk";
-import { EndpointId, FeatureId, FernFilepath, HttpEndpoint } from "@fern-fern/ir-sdk/api";
+import {
+    EndpointId,
+    EnumValue,
+    FeatureId,
+    FernFilepath,
+    HttpEndpoint,
+    Type,
+    TypeDeclaration
+} from "@fern-fern/ir-sdk/api";
 
 import { SdkGeneratorContext } from "../SdkGeneratorContext";
 
@@ -13,6 +21,7 @@ interface EndpointWithFilepath {
 
 export class ReadmeSnippetBuilder extends AbstractReadmeSnippetBuilder {
     private static EXCEPTION_HANDLING_FEATURE_ID: FernGeneratorCli.FeatureId = "EXCEPTION_HANDLING";
+    private static FORWARD_COMPATIBLE_ENUMS_FEATURE_ID: FernGeneratorCli.FeatureId = "FORWARD_COMPATIBLE_ENUMS";
 
     private readonly context: SdkGeneratorContext;
     private readonly endpoints: Record<EndpointId, EndpointWithFilepath> = {};
@@ -48,6 +57,10 @@ export class ReadmeSnippetBuilder extends AbstractReadmeSnippetBuilder {
         snippets[ReadmeSnippetBuilder.EXCEPTION_HANDLING_FEATURE_ID] = this.buildExceptionHandlingSnippets();
         if (this.isPaginationEnabled) {
             snippets[FernGeneratorCli.StructuredFeatureId.Pagination] = this.buildPaginationSnippets();
+        }
+        if (this.context.isForwardCompatibleEnumsEnabled()) {
+            snippets[ReadmeSnippetBuilder.FORWARD_COMPATIBLE_ENUMS_FEATURE_ID] =
+                this.buildForwardCompatibleEnumSnippets();
         }
         return snippets;
     }
@@ -119,6 +132,58 @@ try {
             return snippet != null ? [snippet] : [];
         }
         return [];
+    }
+
+    private buildForwardCompatibleEnumSnippets(): string[] {
+        const enumsWithValues = Object.values(this.context.ir.types).filter((t) => {
+            if (t.shape.type !== "enum") {
+                return false;
+            }
+            if (t.shape.values == null || t.shape.values.length === 0) {
+                return false;
+            }
+            return true;
+        });
+        if (enumsWithValues.length === 0) {
+            return [];
+        }
+        const firstEnum = enumsWithValues[0] as TypeDeclaration & {
+            shape: Type.Enum;
+        };
+
+        const enumName = firstEnum.name.name.pascalCase.safeName;
+        const enumCamelCaseName = firstEnum.name.name.camelCase.safeName;
+        const enumNamespace = this.context.getNamespaceFromFernFilepath(firstEnum.name.fernFilepath);
+        const firstEnumValue = firstEnum.shape.values[0] as EnumValue;
+        const firstEnumValueName = firstEnumValue.name.name.pascalCase.safeName;
+        const firstEnumValueWire = firstEnumValue.name.wireValue;
+
+        return [
+            this.writeCode(`
+using ${enumNamespace};
+
+// Using a built-in value
+var ${enumCamelCaseName} = ${enumName}.${firstEnumValueName};
+
+// Using a custom value
+var custom${enumName} = ${enumName}.FromCustom("custom-value");
+
+// Using in a switch statement
+switch (${enumCamelCaseName}.Value)
+{
+    case ${enumName}.Values.${firstEnumValueName}:
+        Console.WriteLine("${firstEnumValueName}");
+        break;
+    default:
+        Console.WriteLine($"Unknown value: {${enumCamelCaseName}.Value}");
+        break;
+}
+
+// Explicit casting
+string ${enumCamelCaseName}String = (string)${enumName}.${firstEnumValueName};
+${enumName} ${enumCamelCaseName}FromString = (${enumName})"${firstEnumValueWire}";
+`)
+        ];
     }
 
     private getEndpointWithPagination(): EndpointWithFilepath | undefined {

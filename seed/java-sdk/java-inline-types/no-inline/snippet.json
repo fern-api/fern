@@ -14,7 +14,7 @@
             }
         },
         {
-            "example_identifier": "3e3dda15",
+            "example_identifier": "d8f3d996",
             "id": {
                 "method": "POST",
                 "path": "/root/discriminated-union",

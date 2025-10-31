@@ -46,8 +46,15 @@ jobs:
     needs: [setup]
     strategy:
       matrix:
-        generator-name: [ruby, ruby-v2, openapi, python, postman, java, typescript, go, csharp, php, swift, rust]
+        generator-name: [seed, ruby, ruby-v2, openapi, python, postman, java, typescript, go, csharp, php, swift, rust]
         include:
+          - files: |
+              packages/seed/
+              packages/ir-sdk/fern/apis/
+              packages/cli/generation/ir-generator/
+              test-definitions/
+              test-definitions-openapi/
+            generator-name: seed
           - files: |
               generators/ruby/
               seed/ruby-sdk/seed.yml
@@ -63,6 +70,7 @@ jobs:
             generator-name: openapi
           - files: |
               generators/python/
+              generators/python-v2/
               seed/pydantic/seed.yml
               seed/pydantic-v2/seed.yml
               seed/python-sdk/seed.yml
@@ -74,17 +82,20 @@ jobs:
             generator-name: postman
           - files: |
               generators/java/
+              generators/java-v2/
               seed/java-sdk/seed.yml
               seed/java-model/seed.yml
               seed/java-spring/seed.yml
             generator-name: java
           - files: |
               generators/typescript/
+              generators/typescript-v2/
               seed/ts-sdk/seed.yml
               seed/ts-express/seed.yml
             generator-name: typescript
           - files: |
               generators/go/
+              generators/go-v2/
               seed/go-sdk/seed.yml
               seed/go-model/seed.yml
               seed/go-fiber/seed.yml
@@ -109,7 +120,7 @@ jobs:
               seed/rust-sdk/seed.yml
             generator-name: rust
     outputs:
-      # Note: purposely excluding seed. Running every generator at once will lock up all of our runners.
+      seed: ${{ steps.set-output.outputs.seed-changes }}
       ruby: ${{ steps.set-output.outputs.ruby-changes }}
       ruby-v2: ${{ steps.set-output.outputs.ruby-v2-changes }}
       openapi: ${{ steps.set-output.outputs.openapi-changes }}
@@ -283,7 +294,7 @@ jobs:
     needs: [setup, changes, get-all-test-matrices]
     if: >-
       ${{
-        (needs.changes.outputs.ruby == 'true' && needs.get-all-test-matrices.outputs.ruby-model != ''
+        ((needs.changes.outputs.ruby == 'true' || needs.changes.outputs.seed == 'true') && needs.get-all-test-matrices.outputs.ruby-model != ''
         && github.event.pull_request.draft == false) || github.event_name == 'workflow_dispatch'
       }}
     strategy:
@@ -313,7 +324,7 @@ jobs:
     needs: [setup, changes, get-all-test-matrices]
     if: >-
       ${{
-        (needs.changes.outputs.ruby == 'true' && needs.get-all-test-matrices.outputs.ruby-sdk != ''
+        ((needs.changes.outputs.ruby == 'true' || needs.changes.outputs.seed == 'true') && needs.get-all-test-matrices.outputs.ruby-sdk != ''
         && github.event.pull_request.draft == false) || github.event_name == 'workflow_dispatch'
       }}
     strategy:
@@ -343,7 +354,7 @@ jobs:
     needs: [setup, changes, get-all-test-matrices]
     if: >-
       ${{
-        (needs.changes.outputs.ruby-v2 == 'true' && needs.get-all-test-matrices.outputs.ruby-sdk-v2 != ''
+        ((needs.changes.outputs.ruby-v2 == 'true' || needs.changes.outputs.seed == 'true') && needs.get-all-test-matrices.outputs.ruby-sdk-v2 != ''
         && github.event.pull_request.draft == false) || github.event_name == 'workflow_dispatch'
       }}
     strategy:
@@ -366,6 +377,7 @@ jobs:
           fixtures-to-run: ${{toJson(matrix.fixtures)}}
           job-index: ${{ strategy.job-index }}
           collect-metrics: ${{ needs.setup.outputs.post-metrics }}
+          determinism-exclude-paths: '["seed/*/.mock/*", "seed/**/Gemfile.lock"]'
 
   pydantic:
     runs-on: ubuntu-latest
@@ -373,7 +385,7 @@ jobs:
     needs: [setup, changes, get-all-test-matrices]
     if: >-
       ${{
-        (needs.changes.outputs.python == 'true' && needs.get-all-test-matrices.outputs.pydantic != ''
+        ((needs.changes.outputs.python == 'true' || needs.changes.outputs.seed == 'true') && needs.get-all-test-matrices.outputs.pydantic != ''
         && github.event.pull_request.draft == false) || github.event_name == 'workflow_dispatch'
       }}
     strategy:
@@ -392,7 +404,7 @@ jobs:
         uses: ./.github/actions/run-seed-process
         with:
           sdk-name: pydantic
-          generator-path: generators/python
+          generator-path: generators/python generators/python-v2
           fixtures-to-run: ${{toJson(matrix.fixtures)}}
           job-index: ${{ strategy.job-index }}
           collect-metrics: ${{ needs.setup.outputs.post-metrics }}
@@ -403,7 +415,7 @@ jobs:
     needs: [setup, changes, get-all-test-matrices]
     if: >-
       ${{
-        (needs.changes.outputs.python == 'true' && needs.get-all-test-matrices.outputs.python-sdk != ''
+        ((needs.changes.outputs.python == 'true' || needs.changes.outputs.seed == 'true') && needs.get-all-test-matrices.outputs.python-sdk != ''
         && github.event.pull_request.draft == false) || github.event_name == 'workflow_dispatch'
       }}
     strategy:
@@ -422,10 +434,11 @@ jobs:
         uses: ./.github/actions/run-seed-process
         with:
           sdk-name: python-sdk
-          generator-path: generators/python
+          generator-path: generators/python generators/python-v2
           fixtures-to-run: ${{toJson(matrix.fixtures)}}
           job-index: ${{ strategy.job-index }}
           collect-metrics: ${{ needs.setup.outputs.post-metrics }}
+          determinism-exclude-paths: '["seed/*/.mock/*", "seed/**/poetry.lock"]'
 
   fastapi:
     runs-on: ubuntu-latest
@@ -433,7 +446,7 @@ jobs:
     needs: [setup, changes, get-all-test-matrices]
     if: >-
       ${{
-        (needs.changes.outputs.python == 'true' && needs.get-all-test-matrices.outputs.fastapi != ''
+        ((needs.changes.outputs.python == 'true' || needs.changes.outputs.seed == 'true') && needs.get-all-test-matrices.outputs.fastapi != ''
         && github.event.pull_request.draft == false) || github.event_name == 'workflow_dispatch'
       }}
     strategy:
@@ -452,7 +465,7 @@ jobs:
         uses: ./.github/actions/run-seed-process
         with:
           sdk-name: fastapi
-          generator-path: generators/python
+          generator-path: generators/python generators/python-v2
           fixtures-to-run: ${{toJson(matrix.fixtures)}}
           job-index: ${{ strategy.job-index }}
           collect-metrics: ${{ needs.setup.outputs.post-metrics }}
@@ -463,7 +476,7 @@ jobs:
     needs: [setup, changes, get-all-test-matrices]
     if: >-
       ${{
-        (needs.changes.outputs.openapi == 'true' && needs.get-all-test-matrices.outputs.openapi != ''
+        ((needs.changes.outputs.openapi == 'true' || needs.changes.outputs.seed == 'true') && needs.get-all-test-matrices.outputs.openapi != ''
         && github.event.pull_request.draft == false) || github.event_name == 'workflow_dispatch'
       }}
     strategy:
@@ -493,7 +506,7 @@ jobs:
     needs: [setup, changes, get-all-test-matrices]
     if: >-
       ${{
-        (needs.changes.outputs.postman == 'true' && needs.get-all-test-matrices.outputs.postman != ''
+        ((needs.changes.outputs.postman == 'true' || needs.changes.outputs.seed == 'true') && needs.get-all-test-matrices.outputs.postman != ''
         && github.event.pull_request.draft == false) || github.event_name == 'workflow_dispatch'
       }}
     strategy:
@@ -523,7 +536,7 @@ jobs:
     needs: [setup, changes, get-all-test-matrices]
     if: >-
       ${{
-        (needs.changes.outputs.java == 'true' && needs.get-all-test-matrices.outputs.java-sdk != ''
+        ((needs.changes.outputs.java == 'true' || needs.changes.outputs.seed == 'true') && needs.get-all-test-matrices.outputs.java-sdk != ''
         && github.event.pull_request.draft == false) || github.event_name == 'workflow_dispatch'
       }}
     strategy:
@@ -553,7 +566,7 @@ jobs:
     needs: [setup, changes, get-all-test-matrices]
     if: >-
       ${{
-        (needs.changes.outputs.java == 'true' && needs.get-all-test-matrices.outputs.java-model != ''
+        ((needs.changes.outputs.java == 'true' || needs.changes.outputs.seed == 'true') && needs.get-all-test-matrices.outputs.java-model != ''
         && github.event.pull_request.draft == false) || github.event_name == 'workflow_dispatch'
       }}
     strategy:
@@ -572,7 +585,7 @@ jobs:
         uses: ./.github/actions/run-seed-process
         with:
           sdk-name: java-model
-          generator-path: generators/java
+          generator-path: generators/java generators/java-v2
           fixtures-to-run: ${{toJson(matrix.fixtures)}}
           job-index: ${{ strategy.job-index }}
           collect-metrics: ${{ needs.setup.outputs.post-metrics }}
@@ -583,7 +596,7 @@ jobs:
     needs: [setup, changes, get-all-test-matrices]
     if: >-
       ${{
-        (needs.changes.outputs.java == 'true' && needs.get-all-test-matrices.outputs.java-spring != ''
+        ((needs.changes.outputs.java == 'true' || needs.changes.outputs.seed == 'true') && needs.get-all-test-matrices.outputs.java-spring != ''
         && github.event.pull_request.draft == false) || github.event_name == 'workflow_dispatch'
       }}
     strategy:
@@ -602,7 +615,7 @@ jobs:
         uses: ./.github/actions/run-seed-process
         with:
           sdk-name: java-spring
-          generator-path: generators/java
+          generator-path: generators/java generators/java-v2
           fixtures-to-run: ${{toJson(matrix.fixtures)}}
           job-index: ${{ strategy.job-index }}
           collect-metrics: ${{ needs.setup.outputs.post-metrics }}
@@ -613,7 +626,7 @@ jobs:
     needs: [setup, changes, get-all-test-matrices]
     if: >-
       ${{
-        (needs.changes.outputs.typescript == 'true' && needs.get-all-test-matrices.outputs.ts-sdk != ''
+        ((needs.changes.outputs.typescript == 'true' || needs.changes.outputs.seed == 'true') && needs.get-all-test-matrices.outputs.ts-sdk != ''
         && github.event.pull_request.draft == false) || github.event_name == 'workflow_dispatch'
       }}
     strategy:
@@ -632,10 +645,11 @@ jobs:
         uses: ./.github/actions/run-seed-process
         with:
           sdk-name: ts-sdk
-          generator-path: generators/typescript
+          generator-path: generators/typescript generators/typescript-v2
           fixtures-to-run: ${{toJson(matrix.fixtures)}}
           job-index: ${{ strategy.job-index }}
           collect-metrics: ${{ needs.setup.outputs.post-metrics }}
+          determinism-exclude-paths: '["seed/*/.mock/*", "seed/ts-sdk/**/pnpm-lock.yaml"]'
 
   ts-express:
     runs-on: ubuntu-latest
@@ -643,7 +657,7 @@ jobs:
     needs: [setup, changes, get-all-test-matrices]
     if: >-
       ${{
-        (needs.changes.outputs.typescript == 'true' && needs.get-all-test-matrices.outputs.ts-express != ''
+        ((needs.changes.outputs.typescript == 'true' || needs.changes.outputs.seed == 'true') && needs.get-all-test-matrices.outputs.ts-express != ''
         && github.event.pull_request.draft == false) || github.event_name == 'workflow_dispatch'
       }}
     strategy:
@@ -662,7 +676,7 @@ jobs:
         uses: ./.github/actions/run-seed-process
         with:
           sdk-name: ts-express
-          generator-path: generators/typescript
+          generator-path: generators/typescript generators/typescript-v2
           fixtures-to-run: ${{toJson(matrix.fixtures)}}
           job-index: ${{ strategy.job-index }}
           collect-metrics: ${{ needs.setup.outputs.post-metrics }}
@@ -673,7 +687,7 @@ jobs:
     needs: [setup, changes, get-all-test-matrices]
     if: >-
       ${{
-        (needs.changes.outputs.go == 'true' && needs.get-all-test-matrices.outputs.go-fiber != ''
+        ((needs.changes.outputs.go == 'true' || needs.changes.outputs.seed == 'true') && needs.get-all-test-matrices.outputs.go-fiber != ''
         && github.event.pull_request.draft == false) || github.event_name == 'workflow_dispatch'
       }}
     strategy:
@@ -703,7 +717,7 @@ jobs:
     needs: [setup, changes, get-all-test-matrices]
     if: >-
       ${{
-        (needs.changes.outputs.go == 'true' && needs.get-all-test-matrices.outputs.go-model != ''
+        ((needs.changes.outputs.go == 'true' || needs.changes.outputs.seed == 'true') && needs.get-all-test-matrices.outputs.go-model != ''
         && github.event.pull_request.draft == false) || github.event_name == 'workflow_dispatch'
       }}
     strategy:
@@ -733,7 +747,7 @@ jobs:
     needs: [setup, changes, get-all-test-matrices]
     if: >-
       ${{
-        (needs.changes.outputs.go == 'true' && needs.get-all-test-matrices.outputs.go-sdk != ''
+        ((needs.changes.outputs.go == 'true' || needs.changes.outputs.seed == 'true') && needs.get-all-test-matrices.outputs.go-sdk != ''
         && github.event.pull_request.draft == false) || github.event_name == 'workflow_dispatch'
       }}
     strategy:
@@ -763,7 +777,7 @@ jobs:
     needs: [setup, changes, get-all-test-matrices]
     if: >-
       ${{
-        (needs.changes.outputs.csharp == 'true' && needs.get-all-test-matrices.outputs.csharp-model != ''
+        ((needs.changes.outputs.csharp == 'true' || needs.changes.outputs.seed == 'true') && needs.get-all-test-matrices.outputs.csharp-model != ''
         && github.event.pull_request.draft == false) || github.event_name == 'workflow_dispatch'
       }}
     strategy:
@@ -793,7 +807,7 @@ jobs:
     needs: [setup, changes, get-all-test-matrices]
     if: >-
       ${{
-        (needs.changes.outputs.csharp == 'true' && needs.get-all-test-matrices.outputs.csharp-sdk != ''
+        ((needs.changes.outputs.csharp == 'true' || needs.changes.outputs.seed == 'true') && needs.get-all-test-matrices.outputs.csharp-sdk != ''
         && github.event.pull_request.draft == false) || github.event_name == 'workflow_dispatch'
       }}
     strategy:
@@ -823,7 +837,7 @@ jobs:
     needs: [setup, changes, get-all-test-matrices]
     if: >-
       ${{
-        (needs.changes.outputs.php == 'true' && needs.get-all-test-matrices.outputs.php-model != ''
+        ((needs.changes.outputs.php == 'true' || needs.changes.outputs.seed == 'true') && needs.get-all-test-matrices.outputs.php-model != ''
         && github.event.pull_request.draft == false) || github.event_name == 'workflow_dispatch'
       }}
     strategy:
@@ -853,7 +867,7 @@ jobs:
     needs: [setup, changes, get-all-test-matrices]
     if: >-
       ${{
-        (needs.changes.outputs.php == 'true' && needs.get-all-test-matrices.outputs.php-sdk != ''
+        ((needs.changes.outputs.php == 'true' || needs.changes.outputs.seed == 'true') && needs.get-all-test-matrices.outputs.php-sdk != ''
         && github.event.pull_request.draft == false) || github.event_name == 'workflow_dispatch'
       }}
     strategy:
@@ -883,7 +897,7 @@ jobs:
     needs: [setup, changes, get-all-test-matrices]
     if: >-
       ${{
-        (needs.changes.outputs.swift == 'true' && needs.get-all-test-matrices.outputs.swift-sdk != ''
+        ((needs.changes.outputs.swift == 'true' || needs.changes.outputs.seed == 'true') && needs.get-all-test-matrices.outputs.swift-sdk != ''
         && github.event.pull_request.draft == false) || github.event_name == 'workflow_dispatch'
       }}
     strategy:
@@ -913,7 +927,7 @@ jobs:
     needs: [setup, changes, get-all-test-matrices]
     if: >-
       ${{
-        (needs.changes.outputs.rust == 'true' && needs.get-all-test-matrices.outputs.rust-model != ''
+        ((needs.changes.outputs.rust == 'true' || needs.changes.outputs.seed == 'true') && needs.get-all-test-matrices.outputs.rust-model != ''
         && github.event.pull_request.draft == false) || github.event_name == 'workflow_dispatch'
       }}
     strategy:
@@ -943,7 +957,7 @@ jobs:
     needs: [setup, changes, get-all-test-matrices]
     if: >-
       ${{
-        (needs.changes.outputs.rust == 'true' && needs.get-all-test-matrices.outputs.rust-sdk != ''
+        ((needs.changes.outputs.rust == 'true' || needs.changes.outputs.seed == 'true') && needs.get-all-test-matrices.outputs.rust-sdk != ''
         && github.event.pull_request.draft == false) || github.event_name == 'workflow_dispatch'
       }}
     strategy:
@@ -1078,6 +1092,175 @@ jobs:
             exit 1
           fi
 
+  collect-allowed-failures:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    needs: [setup, changes, get-all-test-matrices]
+    if: >-
+      ${{
+        always() && !cancelled() && needs.setup.outputs.post-metrics == 'true'
+      }}
+    strategy:
+      fail-fast: false # Let all collections run, even if some fail
+      matrix:
+        seed-generator-alias:
+          [
+            ruby-model,
+            ruby-sdk,
+            ruby-sdk-v2,
+            pydantic,
+            python-sdk,
+            fastapi,
+            openapi,
+            postman,
+            java-sdk,
+            java-model,
+            java-spring,
+            ts-sdk,
+            ts-express,
+            go-fiber,
+            go-model,
+            go-sdk,
+            csharp-model,
+            csharp-sdk,
+            php-model,
+            php-sdk,
+            swift-sdk,
+            rust-model,
+            rust-sdk
+          ]
+    outputs:
+      ruby-model-total-fixtures-count: ${{ steps.extract-all-fixture-info.outputs.ruby-model-total-fixtures-count }}
+      ruby-model-allowed-failures: ${{ steps.extract-all-fixture-info.outputs.ruby-model-allowed-failures }}
+      ruby-model-allowed-failures-count: ${{ steps.extract-all-fixture-info.outputs.ruby-model-allowed-failures-count }}
+
+      ruby-sdk-total-fixtures-count: ${{ steps.extract-all-fixture-info.outputs.ruby-sdk-total-fixtures-count }}
+      ruby-sdk-allowed-failures: ${{ steps.extract-all-fixture-info.outputs.ruby-sdk-allowed-failures }}
+      ruby-sdk-allowed-failures-count: ${{ steps.extract-all-fixture-info.outputs.ruby-sdk-allowed-failures-count }}
+
+      ruby-sdk-v2-total-fixtures-count: ${{ steps.extract-all-fixture-info.outputs.ruby-sdk-v2-total-fixtures-count }}
+      ruby-sdk-v2-allowed-failures: ${{ steps.extract-all-fixture-info.outputs.ruby-sdk-v2-allowed-failures }}
+      ruby-sdk-v2-allowed-failures-count: ${{ steps.extract-all-fixture-info.outputs.ruby-sdk-v2-allowed-failures-count }}
+
+      pydantic-total-fixtures-count: ${{ steps.extract-all-fixture-info.outputs.pydantic-total-fixtures-count }}
+      pydantic-allowed-failures: ${{ steps.extract-all-fixture-info.outputs.pydantic-allowed-failures }}
+      pydantic-allowed-failures-count: ${{ steps.extract-all-fixture-info.outputs.pydantic-allowed-failures-count }}
+
+      python-sdk-total-fixtures-count: ${{ steps.extract-all-fixture-info.outputs.python-sdk-total-fixtures-count }}
+      python-sdk-allowed-failures: ${{ steps.extract-all-fixture-info.outputs.python-sdk-allowed-failures }}
+      python-sdk-allowed-failures-count: ${{ steps.extract-all-fixture-info.outputs.python-sdk-allowed-failures-count }}
+
+      fastapi-total-fixtures-count: ${{ steps.extract-all-fixture-info.outputs.fastapi-total-fixtures-count }}
+      fastapi-allowed-failures: ${{ steps.extract-all-fixture-info.outputs.fastapi-allowed-failures }}
+      fastapi-allowed-failures-count: ${{ steps.extract-all-fixture-info.outputs.fastapi-allowed-failures-count }}
+
+      openapi-total-fixtures-count: ${{ steps.extract-all-fixture-info.outputs.openapi-total-fixtures-count }}
+      openapi-allowed-failures: ${{ steps.extract-all-fixture-info.outputs.openapi-allowed-failures }}
+      openapi-allowed-failures-count: ${{ steps.extract-all-fixture-info.outputs.openapi-allowed-failures-count }}
+
+      postman-total-fixtures-count: ${{ steps.extract-all-fixture-info.outputs.postman-total-fixtures-count }}
+      postman-allowed-failures: ${{ steps.extract-all-fixture-info.outputs.postman-allowed-failures }}
+      postman-allowed-failures-count: ${{ steps.extract-all-fixture-info.outputs.postman-allowed-failures-count }}
+
+      java-sdk-total-fixtures-count: ${{ steps.extract-all-fixture-info.outputs.java-sdk-total-fixtures-count }}
+      java-sdk-allowed-failures: ${{ steps.extract-all-fixture-info.outputs.java-sdk-allowed-failures }}
+      java-sdk-allowed-failures-count: ${{ steps.extract-all-fixture-info.outputs.java-sdk-allowed-failures-count }}
+
+      java-model-total-fixtures-count: ${{ steps.extract-all-fixture-info.outputs.java-model-total-fixtures-count }}
+      java-model-allowed-failures: ${{ steps.extract-all-fixture-info.outputs.java-model-allowed-failures }}
+      java-model-allowed-failures-count: ${{ steps.extract-all-fixture-info.outputs.java-model-allowed-failures-count }}
+
+      java-spring-total-fixtures-count: ${{ steps.extract-all-fixture-info.outputs.java-spring-total-fixtures-count }}
+      java-spring-allowed-failures: ${{ steps.extract-all-fixture-info.outputs.java-spring-allowed-failures }}
+      java-spring-allowed-failures-count: ${{ steps.extract-all-fixture-info.outputs.java-spring-allowed-failures-count }}
+
+      ts-sdk-total-fixtures-count: ${{ steps.extract-all-fixture-info.outputs.ts-sdk-total-fixtures-count }}
+      ts-sdk-allowed-failures: ${{ steps.extract-all-fixture-info.outputs.ts-sdk-allowed-failures }}
+      ts-sdk-allowed-failures-count: ${{ steps.extract-all-fixture-info.outputs.ts-sdk-allowed-failures-count }}
+
+      ts-express-total-fixtures-count: ${{ steps.extract-all-fixture-info.outputs.ts-express-total-fixtures-count }}
+      ts-express-allowed-failures: ${{ steps.extract-all-fixture-info.outputs.ts-express-allowed-failures }}
+      ts-express-allowed-failures-count: ${{ steps.extract-all-fixture-info.outputs.ts-express-allowed-failures-count }}
+
+      go-fiber-total-fixtures-count: ${{ steps.extract-all-fixture-info.outputs.go-fiber-total-fixtures-count }}
+      go-fiber-allowed-failures: ${{ steps.extract-all-fixture-info.outputs.go-fiber-allowed-failures }}
+      go-fiber-allowed-failures-count: ${{ steps.extract-all-fixture-info.outputs.go-fiber-allowed-failures-count }}
+
+      go-model-total-fixtures-count: ${{ steps.extract-all-fixture-info.outputs.go-model-total-fixtures-count }}
+      go-model-allowed-failures: ${{ steps.extract-all-fixture-info.outputs.go-model-allowed-failures }}
+      go-model-allowed-failures-count: ${{ steps.extract-all-fixture-info.outputs.go-model-allowed-failures-count }}
+
+      go-sdk-total-fixtures-count: ${{ steps.extract-all-fixture-info.outputs.go-sdk-total-fixtures-count }}
+      go-sdk-allowed-failures: ${{ steps.extract-all-fixture-info.outputs.go-sdk-allowed-failures }}
+      go-sdk-allowed-failures-count: ${{ steps.extract-all-fixture-info.outputs.go-sdk-allowed-failures-count }}
+
+      csharp-model-total-fixtures-count: ${{ steps.extract-all-fixture-info.outputs.csharp-model-total-fixtures-count }}
+      csharp-model-allowed-failures: ${{ steps.extract-all-fixture-info.outputs.csharp-model-allowed-failures }}
+      csharp-model-allowed-failures-count: ${{ steps.extract-all-fixture-info.outputs.csharp-model-allowed-failures-count }}
+
+      csharp-sdk-total-fixtures-count: ${{ steps.extract-all-fixture-info.outputs.csharp-sdk-total-fixtures-count }}
+      csharp-sdk-allowed-failures: ${{ steps.extract-all-fixture-info.outputs.csharp-sdk-allowed-failures }}
+      csharp-sdk-allowed-failures-count: ${{ steps.extract-all-fixture-info.outputs.csharp-sdk-allowed-failures-count }}
+
+      php-model-total-fixtures-count: ${{ steps.extract-all-fixture-info.outputs.php-model-total-fixtures-count }}
+      php-model-allowed-failures: ${{ steps.extract-all-fixture-info.outputs.php-model-allowed-failures }}
+      php-model-allowed-failures-count: ${{ steps.extract-all-fixture-info.outputs.php-model-allowed-failures-count }}
+
+      php-sdk-total-fixtures-count: ${{ steps.extract-all-fixture-info.outputs.php-sdk-total-fixtures-count }}
+      php-sdk-allowed-failures: ${{ steps.extract-all-fixture-info.outputs.php-sdk-allowed-failures }}
+      php-sdk-allowed-failures-count: ${{ steps.extract-all-fixture-info.outputs.php-sdk-allowed-failures-count }}
+
+      swift-sdk-total-fixtures-count: ${{ steps.extract-all-fixture-info.outputs.swift-sdk-total-fixtures-count }}
+      swift-sdk-allowed-failures: ${{ steps.extract-all-fixture-info.outputs.swift-sdk-allowed-failures }}
+      swift-sdk-allowed-failures-count: ${{ steps.extract-all-fixture-info.outputs.swift-sdk-allowed-failures-count }}
+
+      rust-model-total-fixtures-count: ${{ steps.extract-all-fixture-info.outputs.rust-model-total-fixtures-count }}
+      rust-model-allowed-failures: ${{ steps.extract-all-fixture-info.outputs.rust-model-allowed-failures }}
+      rust-model-allowed-failures-count: ${{ steps.extract-all-fixture-info.outputs.rust-model-allowed-failures-count }}
+
+      rust-sdk-total-fixtures-count: ${{ steps.extract-all-fixture-info.outputs.rust-sdk-total-fixtures-count }}
+      rust-sdk-allowed-failures: ${{ steps.extract-all-fixture-info.outputs.rust-sdk-allowed-failures }}
+      rust-sdk-allowed-failures-count: ${{ steps.extract-all-fixture-info.outputs.rust-sdk-allowed-failures-count }}
+    steps:
+      - name: Checkout Files with Test Info
+        uses: actions/checkout@v4
+        with:
+          # Only need most recent commit
+          fetch-depth: 1
+          sparse-checkout: |
+            seed/${{ matrix.seed-generator-alias }}/seed.yml
+            .github/workflow-resource-files/seed-groups/${{ matrix.seed-generator-alias }}-seed-groups.json
+
+      - name: Extract All Fixture Info
+        shell: bash
+        id: extract-all-fixture-info
+        run: |
+          # Extract total fixture count from groups in balanced test file into a single value
+          FIXTURE_COUNT=$(jq '.groups | map(.fixtures) | flatten | length' .github/workflow-resource-files/seed-groups/${{ matrix.seed-generator-alias }}-seed-groups.json)
+
+          # Output for debugging
+          echo "Found $FIXTURE_COUNT total fixtures"
+
+          # Set defaults for allowed failures data
+          ALLOWED_FAILURES="[]"
+          ALLOWED_FAILURES_COUNT=0
+
+          # Read allowed failures from yml file as JSON data, if it exists
+          if [[ $(yq 'has("allowedFailures")' seed/${{ matrix.seed-generator-alias }}/seed.yml) == "true" ]]; then
+            # Parameter exists, extract allowed failures as JSON data from file
+            ALLOWED_FAILURES=$(yq -o json '.allowedFailures' seed/${{ matrix.seed-generator-alias }}/seed.yml)
+            ALLOWED_FAILURES_COUNT=$(echo "$ALLOWED_FAILURES" | jq 'length')
+          fi
+
+          # Output for debugging
+          echo "Found $ALLOWED_FAILURES_COUNT total allowed failures"
+          echo "$ALLOWED_FAILURES" | jq .
+
+          # Set outputs
+          echo "${{ matrix.seed-generator-alias }}-total-fixtures-count=$FIXTURE_COUNT" >> $GITHUB_OUTPUT
+          echo "${{ matrix.seed-generator-alias }}-allowed-failures=$(echo "$ALLOWED_FAILURES" | jq -c .)" >> $GITHUB_OUTPUT
+          echo "${{ matrix.seed-generator-alias }}-allowed-failures-count=$ALLOWED_FAILURES_COUNT" >> $GITHUB_OUTPUT
+
   post-metrics:
     runs-on: ubuntu-latest
     timeout-minutes: 10
@@ -1107,11 +1290,12 @@ jobs:
         php-sdk,
         swift-sdk,
         rust-model,
-        rust-sdk
+        rust-sdk,
+        collect-allowed-failures
       ]
     if: ${{ always() && !cancelled() && needs.setup.outputs.post-metrics == 'true' }}
     strategy:
-      fail-fast: false # Let all tests run, even if some fail
+      fail-fast: false # Let all posts run, even if some fail
       matrix:
         seed-generator-alias:
           [
@@ -1213,6 +1397,16 @@ jobs:
 
           echo "all_tests_passing=$all_tests_passing" >> $GITHUB_OUTPUT
 
+          # Determine if all of seed generation is deterministic for a given generator. One reporting as a failure means the collective is a failure.
+          all_seed_files_deterministic=$(find "./$METRICS_PATH" -name "$METRICS_PATTERN" -exec jq -r '.deterministic' {} \; | grep -v -q "true" && echo "false" || echo "true")
+
+          # If empty for any reason, default to false
+          if [ -z "$all_seed_files_deterministic" ]; then
+            all_seed_files_deterministic="false"
+          fi
+
+          echo "all_seed_files_deterministic=$all_seed_files_deterministic" >> $GITHUB_OUTPUT
+
       - name: Post to PostHog
         # https://github.com/PostHog/posthog-github-action
         uses: PostHog/posthog-github-action@v0.1
@@ -1226,5 +1420,9 @@ jobs:
               "seed_generator_alias": "${{ matrix.seed-generator-alias }}",
               "run_url": "${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}",
               "duration_seconds": ${{ steps.parse-seed-test-metrics.outputs.duration_seconds }},
-              "all_tests_passing": "${{ steps.parse-seed-test-metrics.outputs.all_tests_passing }}"
+              "all_tests_passing": "${{ steps.parse-seed-test-metrics.outputs.all_tests_passing }}",
+              "all_seed_files_deterministic": "${{ steps.parse-seed-test-metrics.outputs.all_seed_files_deterministic }}",
+              "total_fixture_count": ${{ needs.collect-allowed-failures.outputs[format('{0}-total-fixtures-count', matrix.seed-generator-alias)] }},
+              "allowed_failures": ${{ needs.collect-allowed-failures.outputs[format('{0}-allowed-failures', matrix.seed-generator-alias)] }},
+              "allowed_failures_count": ${{ needs.collect-allowed-failures.outputs[format('{0}-allowed-failures-count', matrix.seed-generator-alias)] }}
             }

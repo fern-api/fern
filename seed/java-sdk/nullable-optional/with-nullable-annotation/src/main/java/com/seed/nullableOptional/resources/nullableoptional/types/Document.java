@@ -31,6 +31,7 @@ public final class Document {
 
     private final String content;
 
+    @Nullable
     private final String author;
 
     private final Optional<List<String>> tags;
@@ -41,7 +42,7 @@ public final class Document {
             String id,
             String title,
             String content,
-            String author,
+            @Nullable String author,
             Optional<List<String>> tags,
             Map<String, Object> additionalProperties) {
         this.id = id;
@@ -134,7 +135,7 @@ public final class Document {
     public interface _FinalStage {
         Document build();
 
-        _FinalStage author(@com.seed.nullableOptional.core.Nullable String author);
+        _FinalStage author(@Nullable String author);
 
         _FinalStage tags(Optional<List<String>> tags);
 
@@ -204,7 +205,7 @@ public final class Document {
 
         @java.lang.Override
         @JsonSetter("author")
-        public _FinalStage author(@com.seed.nullableOptional.core.Nullable String author) {
+        public _FinalStage author(@Nullable String author) {
             this.author = author;
             return this;
         }

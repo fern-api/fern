@@ -1,0 +1,248 @@
+{
+    "version": "1.0.0",
+    "types": {
+        "type_:PostSubmitResponse": {
+            "type": "object",
+            "declaration": {
+                "name": {
+                    "originalName": "PostSubmitResponse",
+                    "camelCase": {
+                        "unsafeName": "postSubmitResponse",
+                        "safeName": "postSubmitResponse"
+                    },
+                    "snakeCase": {
+                        "unsafeName": "post_submit_response",
+                        "safeName": "post_submit_response"
+                    },
+                    "screamingSnakeCase": {
+                        "unsafeName": "POST_SUBMIT_RESPONSE",
+                        "safeName": "POST_SUBMIT_RESPONSE"
+                    },
+                    "pascalCase": {
+                        "unsafeName": "PostSubmitResponse",
+                        "safeName": "PostSubmitResponse"
+                    }
+                },
+                "fernFilepath": {
+                    "allParts": [],
+                    "packagePath": [],
+                    "file": null
+                }
+            },
+            "properties": [
+                {
+                    "name": {
+                        "name": {
+                            "originalName": "status",
+                            "camelCase": {
+                                "unsafeName": "status",
+                                "safeName": "status"
+                            },
+                            "snakeCase": {
+                                "unsafeName": "status",
+                                "safeName": "status"
+                            },
+                            "screamingSnakeCase": {
+                                "unsafeName": "STATUS",
+                                "safeName": "STATUS"
+                            },
+                            "pascalCase": {
+                                "unsafeName": "Status",
+                                "safeName": "Status"
+                            }
+                        },
+                        "wireValue": "status"
+                    },
+                    "typeReference": {
+                        "type": "optional",
+                        "value": {
+                            "type": "primitive",
+                            "value": "STRING"
+                        }
+                    },
+                    "propertyAccess": null,
+                    "variable": null
+                },
+                {
+                    "name": {
+                        "name": {
+                            "originalName": "message",
+                            "camelCase": {
+                                "unsafeName": "message",
+                                "safeName": "message"
+                            },
+                            "snakeCase": {
+                                "unsafeName": "message",
+                                "safeName": "message"
+                            },
+                            "screamingSnakeCase": {
+                                "unsafeName": "MESSAGE",
+                                "safeName": "MESSAGE"
+                            },
+                            "pascalCase": {
+                                "unsafeName": "Message",
+                                "safeName": "Message"
+                            }
+                        },
+                        "wireValue": "message"
+                    },
+                    "typeReference": {
+                        "type": "optional",
+                        "value": {
+                            "type": "primitive",
+                            "value": "STRING"
+                        }
+                    },
+                    "propertyAccess": null,
+                    "variable": null
+                }
+            ],
+            "additionalProperties": false
+        }
+    },
+    "headers": [],
+    "endpoints": {
+        "endpoint_.submitFormData": {
+            "auth": null,
+            "declaration": {
+                "name": {
+                    "originalName": "submitFormData",
+                    "camelCase": {
+                        "unsafeName": "submitFormData",
+                        "safeName": "submitFormData"
+                    },
+                    "snakeCase": {
+                        "unsafeName": "submit_form_data",
+                        "safeName": "submit_form_data"
+                    },
+                    "screamingSnakeCase": {
+                        "unsafeName": "SUBMIT_FORM_DATA",
+                        "safeName": "SUBMIT_FORM_DATA"
+                    },
+                    "pascalCase": {
+                        "unsafeName": "SubmitFormData",
+                        "safeName": "SubmitFormData"
+                    }
+                },
+                "fernFilepath": {
+                    "allParts": [],
+                    "packagePath": [],
+                    "file": null
+                }
+            },
+            "location": {
+                "method": "POST",
+                "path": "/submit"
+            },
+            "request": {
+                "type": "inlined",
+                "declaration": {
+                    "name": {
+                        "originalName": "PostSubmitRequest",
+                        "camelCase": {
+                            "unsafeName": "postSubmitRequest",
+                            "safeName": "postSubmitRequest"
+                        },
+                        "snakeCase": {
+                            "unsafeName": "post_submit_request",
+                            "safeName": "post_submit_request"
+                        },
+                        "screamingSnakeCase": {
+                            "unsafeName": "POST_SUBMIT_REQUEST",
+                            "safeName": "POST_SUBMIT_REQUEST"
+                        },
+                        "pascalCase": {
+                            "unsafeName": "PostSubmitRequest",
+                            "safeName": "PostSubmitRequest"
+                        }
+                    },
+                    "fernFilepath": {
+                        "allParts": [],
+                        "packagePath": [],
+                        "file": null
+                    }
+                },
+                "pathParameters": [],
+                "queryParameters": [],
+                "headers": [],
+                "body": {
+                    "type": "properties",
+                    "value": [
+                        {
+                            "name": {
+                                "name": {
+                                    "originalName": "username",
+                                    "camelCase": {
+                                        "unsafeName": "username",
+                                        "safeName": "username"
+                                    },
+                                    "snakeCase": {
+                                        "unsafeName": "username",
+                                        "safeName": "username"
+                                    },
+                                    "screamingSnakeCase": {
+                                        "unsafeName": "USERNAME",
+                                        "safeName": "USERNAME"
+                                    },
+                                    "pascalCase": {
+                                        "unsafeName": "Username",
+                                        "safeName": "Username"
+                                    }
+                                },
+                                "wireValue": "username"
+                            },
+                            "typeReference": {
+                                "type": "primitive",
+                                "value": "STRING"
+                            },
+                            "propertyAccess": null,
+                            "variable": null
+                        },
+                        {
+                            "name": {
+                                "name": {
+                                    "originalName": "email",
+                                    "camelCase": {
+                                        "unsafeName": "email",
+                                        "safeName": "email"
+                                    },
+                                    "snakeCase": {
+                                        "unsafeName": "email",
+                                        "safeName": "email"
+                                    },
+                                    "screamingSnakeCase": {
+                                        "unsafeName": "EMAIL",
+                                        "safeName": "EMAIL"
+                                    },
+                                    "pascalCase": {
+                                        "unsafeName": "Email",
+                                        "safeName": "Email"
+                                    }
+                                },
+                                "wireValue": "email"
+                            },
+                            "typeReference": {
+                                "type": "primitive",
+                                "value": "STRING"
+                            },
+                            "propertyAccess": null,
+                            "variable": null
+                        }
+                    ]
+                },
+                "metadata": {
+                    "includePathParameters": false,
+                    "onlyPathParameters": false
+                }
+            },
+            "response": {
+                "type": "json"
+            },
+            "examples": null
+        }
+    },
+    "pathParameters": [],
+    "environments": null,
+    "variables": null,
+    "generatorConfig": null
+}

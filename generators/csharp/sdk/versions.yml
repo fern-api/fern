@@ -1,4 +1,20 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 2.5.0
+  changelogEntry:
+    - type: feat
+      summary: |
+        Generate section about forward-compatible enums in README.md
+  createdAt: "2025-10-24"
+  irVersion: 61
+
+- version: 2.4.4
+  changelogEntry:
+    - type: fix
+      summary: |
+        When sending the HTTP request, allow the response to start processing before the entire body is read.
+  createdAt: "2025-10-20"
+  irVersion: 61
+
 - version: 2.4.3
   changelogEntry:
     - type: fix

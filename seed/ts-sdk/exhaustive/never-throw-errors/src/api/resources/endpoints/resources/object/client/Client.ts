@@ -420,7 +420,7 @@ export class Object_ {
             url: core.url.join(
                 (await core.Supplier.get(this._options.baseUrl)) ??
                     (await core.Supplier.get(this._options.environment)),
-                `/object/get-and-return-nested-with-required-field/${encodeURIComponent(string_)}`,
+                `/object/get-and-return-nested-with-required-field/${core.url.encodePathParam(string_)}`,
             ),
             method: "POST",
             headers: _headers,

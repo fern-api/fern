@@ -8,10 +8,19 @@
   "include": ["./src/**/*"],
   "references": [
     {
+      "path": "../base"
+    },
+    {
       "path": "../ast"
     },
     {
-      "path": "../base"
+      "path": "../../../packages/commons/core-utils"
+    },
+    {
+      "path": "../../../packages/commons/fs-utils"
+    },
+    {
+      "path": "../../base"
     }
   ]
 }

@@ -81,8 +81,7 @@ function validateAndTransformRecord<TransformedKey extends string | number, Tran
 
     return entries(value).reduce<MaybeValid<Record<TransformedKey, TransformedValue>>>(
         (accPromise, [stringKey, value]) => {
-            // skip nullish keys
-            if (value == null) {
+            if (value === undefined) {
                 return accPromise;
             }
 

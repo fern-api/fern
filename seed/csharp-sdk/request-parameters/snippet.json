@@ -26,6 +26,18 @@
             }
         },
         {
+            "example_identifier": "empty-object",
+            "id": {
+                "path": "/user/username-optional",
+                "method": "POST",
+                "identifier_override": "endpoint_user.createUsernameOptional"
+            },
+            "snippet": {
+                "type": "csharp",
+                "client": "using SeedRequestParameters;\n\nvar client = new SeedRequestParametersClient();\nawait client.User.CreateUsernameOptionalAsync(new CreateUsernameBodyOptionalProperties());\n"
+            }
+        },
+        {
             "example_identifier": null,
             "id": {
                 "path": "/user",

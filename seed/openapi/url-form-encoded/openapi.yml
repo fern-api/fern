@@ -1,0 +1,61 @@
+openapi: 3.0.1
+info:
+  title: URL Form Encoded API
+  version: ''
+paths:
+  /submit:
+    post:
+      operationId: submitFormData
+      tags:
+        - ''
+      parameters: []
+      responses:
+        '200':
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PostSubmitResponse'
+              examples:
+                Example1:
+                  value:
+                    status: success
+                    message: Data received successfully.
+      summary: Submit form data
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                username:
+                  type: string
+                  description: The user's username
+                  example: johndoe
+                email:
+                  type: string
+                  format: email
+                  description: The user's email address
+                  example: john@example.com
+              required:
+                - username
+                - email
+            examples:
+              Example1:
+                value:
+                  username: johndoe
+                  email: john@example.com
+components:
+  schemas:
+    PostSubmitResponse:
+      title: PostSubmitResponse
+      type: object
+      properties:
+        status:
+          type: string
+          nullable: true
+        message:
+          type: string
+          nullable: true
+  securitySchemes: {}

@@ -65,18 +65,7 @@ export class SdkGeneratorCLI extends AbstractGoGeneratorCli<SdkCustomConfigSchem
 
         await context.snippetGenerator.populateSnippetsCache();
 
-        if (context.customConfig.enableWireTests) {
-            try {
-                const wireTestGenerator = new WireTestGenerator(context);
-                await wireTestGenerator.generate();
-            } catch (e) {
-                context.logger.error("Failed to generate Wiremock tests");
-                if (e instanceof Error) {
-                    context.logger.debug(e.message);
-                    context.logger.debug(e.stack ?? "");
-                }
-            }
-        }
+        await this.generateWireTestFiles(context);
 
         if (this.shouldGenerateReadme(context)) {
             try {
@@ -105,6 +94,22 @@ export class SdkGeneratorCLI extends AbstractGoGeneratorCli<SdkCustomConfigSchem
         }
 
         await context.project.persist({ tidy: true });
+    }
+
+    private async generateWireTestFiles(context: SdkGeneratorContext) {
+        if (!context.customConfig.enableWireTests) {
+            return;
+        }
+        try {
+            const wireTestGenerator = new WireTestGenerator(context);
+            await wireTestGenerator.generate();
+        } catch (e) {
+            context.logger.error("Failed to generate Wiremock tests");
+            if (e instanceof Error) {
+                context.logger.debug(e.message);
+                context.logger.debug(e.stack ?? "");
+            }
+        }
     }
 
     private generateRawClients(context: SdkGeneratorContext) {

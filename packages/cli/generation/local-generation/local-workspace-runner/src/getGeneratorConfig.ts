@@ -106,12 +106,21 @@ function getGithubPublishConfig(
 ): FernGeneratorExec.GithubPublishInfo | undefined {
     return githubPublishInfo != null
         ? FiddleGithubPublishInfo._visit<FernGeneratorExec.GithubPublishInfo | undefined>(githubPublishInfo, {
-              npm: (value) =>
-                  FernGeneratorExec.GithubPublishInfo.npm({
+              npm: (value) => {
+                  const token = (value.token || "${NPM_TOKEN}").trim();
+                  const useOidc = token === "<USE_OIDC>" || token === "OIDC";
+                  return FernGeneratorExec.GithubPublishInfo.npm({
                       registryUrl: value.registryUrl,
                       packageName: value.packageName,
-                      tokenEnvironmentVariable: EnvironmentVariable(value.token ?? "")
-                  }),
+                      tokenEnvironmentVariable: EnvironmentVariable(
+                          useOidc
+                              ? "<USE_OIDC>"
+                              : token.startsWith("${") && token.endsWith("}")
+                                ? token.slice(2, -1).trim()
+                                : ""
+                      )
+                  });
+              },
               maven: (value) =>
                   FernGeneratorExec.GithubPublishInfo.maven({
                       registryUrl: value.registryUrl,

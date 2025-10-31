@@ -8,7 +8,7 @@
             },
             "snippet": {
                 "type": "typescript",
-                "client": "import { SeedAudiencesEnvironment, SeedAudiencesClient } from \"@fern/audiences\";\n\nconst client = new SeedAudiencesClient({ environment: SeedAudiencesEnvironment.EnvironmentA });\nawait client.folderA.service.getDirectThread();\n"
+                "client": "import { SeedAudiencesEnvironment, SeedAudiencesClient } from \"@fern/audiences\";\n\nconst client = new SeedAudiencesClient({ environment: SeedAudiencesEnvironment.EnvironmentA });\nawait client.folderA.service.getDirectThread({\n    ids: \"ids\",\n    tags: \"tags\"\n});\n"
             }
         },
         {

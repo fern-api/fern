@@ -43,7 +43,7 @@ RUN yarn install
 RUN rm -rf node_modules
 RUN rm -rf yarn.lock
 
-RUN npm install -g pnpm@10.14.0
+RUN npm install -g pnpm@10.20.0
 
 # make prettier globally available
 RUN npm install -g prettier@^3.4.2

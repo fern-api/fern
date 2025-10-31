@@ -1,2 +1,2 @@
 pub mod endpoints_container;
-pub use endpoints_container::EndpointsContainerClient;
+pub use endpoints_container::ContainerClient;

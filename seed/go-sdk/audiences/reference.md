@@ -13,11 +13,43 @@
 <dd>
 
 ```go
+request := &foldera.GetDirectThreadRequest{
+        Ids: []string{
+            "ids",
+        },
+        Tags: []string{
+            "tags",
+        },
+    }
 client.FolderA.Service.GetDirectThread(
         context.TODO(),
+        request,
     )
 }
 ```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**ids:** `string` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**tags:** `string` 
+    
 </dd>
 </dl>
 </dd>

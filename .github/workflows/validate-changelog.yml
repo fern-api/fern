@@ -28,10 +28,13 @@ jobs:
       - name: Checkout repo at current ref
         uses: actions/checkout@v4
         with:
-          fetch-depth: 0
+          fetch-depth: 1
 
       - name: Install
         uses: ./.github/actions/install
+
+      - name: Compile
+        run: pnpm exec turbo compile '--filter=@fern-api/seed-cli'
 
       - name: Seed Build
         run: pnpm seed:build

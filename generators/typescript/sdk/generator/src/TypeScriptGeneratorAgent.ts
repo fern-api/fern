@@ -60,7 +60,18 @@ export class TypeScriptGeneratorAgent extends AbstractGeneratorAgent<SdkContext>
         };
     }
 
+    public getExportedContributingFilePath(): ExportedFilePath {
+        return {
+            directories: [],
+            file: {
+                nameOnDisk: "CONTRIBUTING.md"
+            },
+            rootDir: ""
+        };
+    }
+
     public getGitHubConfig(args: AbstractGeneratorAgent.GitHubConfigArgs<SdkContext>): RawGithubConfig {
+        // TODO: get from env
         return {
             sourceDirectory: "fern/output",
             type: this.publishConfig?.type,

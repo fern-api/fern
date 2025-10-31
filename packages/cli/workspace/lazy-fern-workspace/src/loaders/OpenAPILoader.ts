@@ -21,77 +21,109 @@ export class OpenAPILoader {
     }): Promise<Document[]> {
         const documents: Document[] = [];
         for (const spec of specs) {
-            const contents = (await readFile(spec.absoluteFilepath)).toString();
-            let sourceRelativePath = relative(this.absoluteFilePath, spec.source.file);
-            if (spec.source.relativePathToDependency != null) {
-                sourceRelativePath = join(spec.source.relativePathToDependency, sourceRelativePath);
-            }
-            const source =
-                spec.source.type === "protobuf"
-                    ? OpenApiIrSource.protobuf({ file: sourceRelativePath })
-                    : OpenApiIrSource.openapi({ file: sourceRelativePath });
-            if (contents.includes("openapi") || contents.includes("swagger")) {
-                const openAPI = await loadOpenAPI({
-                    absolutePathToOpenAPI: spec.absoluteFilepath,
-                    context,
-                    absolutePathToOpenAPIOverrides: spec.absoluteFilepathToOverrides
-                });
-                if (isOpenAPIV3(openAPI)) {
-                    documents.push({
-                        type: "openapi",
-                        value: openAPI,
-                        source,
-                        namespace: spec.namespace,
-                        settings: getParseOptions({ options: spec.settings })
-                    });
-                    continue;
-                } else if (isOpenAPIV2(openAPI)) {
-                    // default to https to produce a valid URL
-                    if (!openAPI.schemes || openAPI.schemes.length === 0) {
-                        openAPI.schemes = ["https"];
-                    }
-                    const convertedOpenAPI = await convertOpenAPIV2ToV3(openAPI);
-                    documents.push({
-                        type: "openapi",
-                        value: convertedOpenAPI,
-                        source,
-                        namespace: spec.namespace,
-                        settings: getParseOptions({ options: spec.settings })
-                    });
-                    continue;
+            try {
+                const contents = (await readFile(spec.absoluteFilepath)).toString();
+                let sourceRelativePath = relative(this.absoluteFilePath, spec.source.file);
+                if (spec.source.relativePathToDependency != null) {
+                    sourceRelativePath = join(spec.source.relativePathToDependency, sourceRelativePath);
                 }
-            }
-            if (contents.includes("asyncapi")) {
-                const asyncAPI = await loadAsyncAPI({
-                    context,
-                    absoluteFilePath: spec.absoluteFilepath,
-                    absoluteFilePathToOverrides: spec.absoluteFilepathToOverrides
-                });
-                documents.push({
-                    type: "asyncapi",
-                    value: asyncAPI,
-                    source,
-                    namespace: spec.namespace,
-                    settings: getParseOptions({ options: spec.settings })
-                });
+                const source =
+                    spec.source.type === "protobuf"
+                        ? OpenApiIrSource.protobuf({ file: sourceRelativePath })
+                        : OpenApiIrSource.openapi({ file: sourceRelativePath });
+
+                if (contents.includes("openapi") || contents.includes("swagger")) {
+                    try {
+                        const openAPI = await loadOpenAPI({
+                            absolutePathToOpenAPI: spec.absoluteFilepath,
+                            context,
+                            absolutePathToOpenAPIOverrides: spec.absoluteFilepathToOverrides
+                        });
+                        if (isOpenAPIV3(openAPI)) {
+                            documents.push({
+                                type: "openapi",
+                                value: openAPI,
+                                source,
+                                namespace: spec.namespace,
+                                settings: getParseOptions({ options: spec.settings })
+                            });
+                            continue;
+                        } else if (isOpenAPIV2(openAPI)) {
+                            // default to https to produce a valid URL
+                            if (!openAPI.schemes || openAPI.schemes.length === 0) {
+                                openAPI.schemes = ["https"];
+                            }
+                            const convertedOpenAPI = await convertOpenAPIV2ToV3(openAPI);
+                            documents.push({
+                                type: "openapi",
+                                value: convertedOpenAPI,
+                                source,
+                                namespace: spec.namespace,
+                                settings: getParseOptions({ options: spec.settings })
+                            });
+                            continue;
+                        }
+                    } catch (error) {
+                        context.logger.debug(
+                            `Failed to parse OpenAPI document at ${spec.absoluteFilepath}: ${error}. Skipping...`
+                        );
+                        continue;
+                    }
+                }
+
+                if (contents.includes("asyncapi")) {
+                    try {
+                        const asyncAPI = await loadAsyncAPI({
+                            context,
+                            absoluteFilePath: spec.absoluteFilepath,
+                            absoluteFilePathToOverrides: spec.absoluteFilepathToOverrides
+                        });
+                        documents.push({
+                            type: "asyncapi",
+                            value: asyncAPI,
+                            source,
+                            namespace: spec.namespace,
+                            settings: getParseOptions({ options: spec.settings })
+                        });
+                        continue;
+                    } catch (error) {
+                        context.logger.error(
+                            `Failed to parse AsyncAPI document at ${spec.absoluteFilepath}: ${error}. Skipping...`
+                        );
+                        continue;
+                    }
+                }
+
+                if (contents.includes("openrpc")) {
+                    try {
+                        const asyncAPI = await loadAsyncAPI({
+                            context,
+                            absoluteFilePath: spec.absoluteFilepath,
+                            absoluteFilePathToOverrides: spec.absoluteFilepathToOverrides
+                        });
+                        documents.push({
+                            type: "asyncapi",
+                            value: asyncAPI,
+                            source,
+                            namespace: spec.namespace,
+                            settings: getParseOptions({ options: spec.settings })
+                        });
+                        continue;
+                    } catch (error) {
+                        context.logger.error(
+                            `Failed to parse OpenRPC document at ${spec.absoluteFilepath}: ${error}. Skipping...`
+                        );
+                        continue;
+                    }
+                }
+
+                context.logger.warn(
+                    `${spec.absoluteFilepath} is not a valid OpenAPI, AsyncAPI, or OpenRPC file. Skipping...`
+                );
+            } catch (error) {
+                context.logger.error(`Failed to read or process file ${spec.absoluteFilepath}: ${error}. Skipping...`);
                 continue;
             }
-            if (contents.includes("openrpc")) {
-                const asyncAPI = await loadAsyncAPI({
-                    context,
-                    absoluteFilePath: spec.absoluteFilepath,
-                    absoluteFilePathToOverrides: spec.absoluteFilepathToOverrides
-                });
-                documents.push({
-                    type: "asyncapi",
-                    value: asyncAPI,
-                    source,
-                    namespace: spec.namespace,
-                    settings: getParseOptions({ options: spec.settings })
-                });
-                continue;
-            }
-            context.failAndThrow(`${spec.absoluteFilepath} is not a valid OpenAPI or AsyncAPI file`);
         }
         return documents;
     }

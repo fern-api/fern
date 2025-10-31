@@ -7,6 +7,7 @@ import * as FernDocsConfig from "../../../../api/index";
 import * as core from "../../../../core";
 import { NavbarLinkConfig } from "./NavbarLinkConfig";
 import { NavbarGithubConfig } from "./NavbarGithubConfig";
+import { NavbarDropdownConfig } from "./NavbarDropdownConfig";
 
 export const NavbarLink: core.serialization.Schema<serializers.NavbarLink.Raw, FernDocsConfig.NavbarLink> =
     core.serialization
@@ -17,6 +18,7 @@ export const NavbarLink: core.serialization.Schema<serializers.NavbarLink.Raw, F
             github: core.serialization.object({
                 value: NavbarGithubConfig,
             }),
+            dropdown: NavbarDropdownConfig,
             primary: NavbarLinkConfig,
             secondary: NavbarLinkConfig,
         })
@@ -31,6 +33,7 @@ export declare namespace NavbarLink {
         | NavbarLink.Outlined
         | NavbarLink.Minimal
         | NavbarLink.Github
+        | NavbarLink.Dropdown
         | NavbarLink.Primary
         | NavbarLink.Secondary;
 
@@ -49,6 +52,10 @@ export declare namespace NavbarLink {
     export interface Github {
         type: "github";
         value: NavbarGithubConfig.Raw;
+    }
+
+    export interface Dropdown extends NavbarDropdownConfig.Raw {
+        type: "dropdown";
     }
 
     export interface Primary extends NavbarLinkConfig.Raw {

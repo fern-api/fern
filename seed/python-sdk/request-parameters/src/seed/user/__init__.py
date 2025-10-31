@@ -6,8 +6,13 @@ import typing
 from importlib import import_module
 
 if typing.TYPE_CHECKING:
-    from .types import CreateUsernameBody, NestedUser, User
-_dynamic_imports: typing.Dict[str, str] = {"CreateUsernameBody": ".types", "NestedUser": ".types", "User": ".types"}
+    from .types import CreateUsernameBody, CreateUsernameBodyOptionalProperties, NestedUser, User
+_dynamic_imports: typing.Dict[str, str] = {
+    "CreateUsernameBody": ".types",
+    "CreateUsernameBodyOptionalProperties": ".types",
+    "NestedUser": ".types",
+    "User": ".types",
+}
 
 
 def __getattr__(attr_name: str) -> typing.Any:
@@ -31,4 +36,4 @@ def __dir__():
     return sorted(lazy_attrs)
 
 
-__all__ = ["CreateUsernameBody", "NestedUser", "User"]
+__all__ = ["CreateUsernameBody", "CreateUsernameBodyOptionalProperties", "NestedUser", "User"]

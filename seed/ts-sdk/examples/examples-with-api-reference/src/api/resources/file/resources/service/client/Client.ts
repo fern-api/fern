@@ -59,7 +59,7 @@ export class Service {
             url: core.url.join(
                 (await core.Supplier.get(this._options.baseUrl)) ??
                     (await core.Supplier.get(this._options.environment)),
-                `/file/${encodeURIComponent(filename)}`,
+                `/file/${core.url.encodePathParam(filename)}`,
             ),
             method: "GET",
             headers: _headers,

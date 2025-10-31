@@ -1,6 +1,32 @@
 {
     "endpoints": [
         {
+            "example_identifier": "6d60be92",
+            "id": {
+                "method": "POST",
+                "path": "/just-file",
+                "identifier_override": "endpoint_service.justFile"
+            },
+            "snippet": {
+                "type": "java",
+                "sync_client": "package com.example.usage;\n\nimport com.seed.fileUpload.SeedFileUploadClient;\nimport com.seed.fileUpload.resources.service.requests.JustFileRequest;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedFileUploadClient client = SeedFileUploadClient\n            .builder()\n            .build();\n\n        client.service().justFile(\n            JustFileRequest\n                .builder()\n                .build()\n        );\n    }\n}\n",
+                "async_client": "package com.example.usage;\n\nimport com.seed.fileUpload.SeedFileUploadClient;\nimport com.seed.fileUpload.resources.service.requests.JustFileRequest;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedFileUploadClient client = SeedFileUploadClient\n            .builder()\n            .build();\n\n        client.service().justFile(\n            JustFileRequest\n                .builder()\n                .build()\n        );\n    }\n}\n"
+            }
+        },
+        {
+            "example_identifier": "25dc561",
+            "id": {
+                "method": "POST",
+                "path": "/optional-args",
+                "identifier_override": "endpoint_service.optionalArgs"
+            },
+            "snippet": {
+                "type": "java",
+                "sync_client": "package com.example.usage;\n\nimport com.seed.fileUpload.SeedFileUploadClient;\nimport com.seed.fileUpload.resources.service.requests.OptionalArgsRequest;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedFileUploadClient client = SeedFileUploadClient\n            .builder()\n            .build();\n\n        client.service().optionalArgs(\n            OptionalArgsRequest\n                .builder()\n                .build()\n        );\n    }\n}\n",
+                "async_client": "package com.example.usage;\n\nimport com.seed.fileUpload.SeedFileUploadClient;\nimport com.seed.fileUpload.resources.service.requests.OptionalArgsRequest;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedFileUploadClient client = SeedFileUploadClient\n            .builder()\n            .build();\n\n        client.service().optionalArgs(\n            OptionalArgsRequest\n                .builder()\n                .build()\n        );\n    }\n}\n"
+            }
+        },
+        {
             "example_identifier": "82444d62",
             "id": {
                 "method": "POST",

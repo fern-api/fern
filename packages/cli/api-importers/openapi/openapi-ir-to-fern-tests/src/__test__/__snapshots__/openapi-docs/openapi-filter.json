@@ -866,9 +866,9 @@ types:
   "packageMarkers": {},
   "rootApiFile": {
     "contents": {
-      "auth": "BearerAuthScheme",
+      "auth": "bearerAuth",
       "auth-schemes": {
-        "BearerAuthScheme": {
+        "bearerAuth": {
           "scheme": "bearer",
         },
       },
@@ -906,9 +906,9 @@ headers:
     type: optional<root.IntercomVersion>
     name: intercomVersion
 auth-schemes:
-  BearerAuthScheme:
+  bearerAuth:
     scheme: bearer
-auth: BearerAuthScheme
+auth: bearerAuth
 ",
   },
 }

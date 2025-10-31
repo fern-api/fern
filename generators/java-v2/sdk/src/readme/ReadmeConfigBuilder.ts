@@ -22,6 +22,7 @@ export class ReadmeConfigBuilder {
             endpointSnippets
         });
         const snippetsByFeatureId = readmeSnippetBuilder.buildReadmeSnippetsByFeatureId();
+        const addendumsByFeatureId = readmeSnippetBuilder.buildReadmeAddendumsByFeatureId();
         const features: FernGeneratorCli.ReadmeFeature[] = [];
 
         for (const feature of featureConfig.features) {
@@ -31,11 +32,13 @@ export class ReadmeConfigBuilder {
                 continue;
             }
 
+            const addendumForFeature = addendumsByFeatureId[feature.id];
             features.push({
                 id: feature.id,
                 advanced: feature.advanced,
                 description: feature.description,
                 snippets: snippetsForFeature,
+                addendum: addendumForFeature,
                 snippetsAreOptional: false
             });
         }
@@ -52,8 +55,9 @@ export class ReadmeConfigBuilder {
             disabledFeatures: context.ir.readmeConfig?.disabledFeatures,
             whiteLabel: context.ir.readmeConfig?.whiteLabel,
             customSections: getCustomSections(context),
-            features
-        };
+            features,
+            exampleStyle: context.ir.readmeConfig?.exampleStyle
+        } as FernGeneratorCli.ReadmeConfig;
     }
 
     private getLanguageInfo({ context }: { context: SdkGeneratorContext }): FernGeneratorCli.LanguageInfo {
@@ -89,9 +93,8 @@ export class ReadmeConfigBuilder {
 
 function getCustomSections(context: SdkGeneratorContext): FernGeneratorCli.CustomSection[] | undefined {
     const irCustomSections = context.ir.readmeConfig?.customSections;
-    const customConfigSections = parseCustomConfigOrUndefined(context.logger, context.config.customConfig)?.[
-        "custom-readme-sections"
-    ];
+    const customConfig = parseCustomConfigOrUndefined(context.logger, context.config.customConfig);
+    const customConfigSections = customConfig?.["custom-readme-sections"];
 
     let sections: FernGeneratorCli.CustomSection[] = [];
     for (const section of irCustomSections ?? []) {
@@ -110,6 +113,7 @@ function getCustomSections(context: SdkGeneratorContext): FernGeneratorCli.Custo
             content: section.content
         });
     }
+
     return sections.length > 0 ? sections : undefined;
 }
 

@@ -43,7 +43,7 @@ export class Realtime {
             url: core.url.join(
                 (await core.Supplier.get(this._options.baseUrl)) ??
                     (await core.Supplier.get(this._options.environment)),
-                `/realtime/${encodeURIComponent(id)}`,
+                `/realtime/${core.url.encodePathParam(id)}`,
             ),
             protocols: [],
             queryParameters: _queryParams,

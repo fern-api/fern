@@ -19,10 +19,7 @@ import Streaming
 private func main() async throws {
     let client = StreamingClient()
 
-    _ = try await client.dummy.generateStream(request: .init(
-        stream: ,
-        numEvents: 1
-    ))
+    _ = try await client.dummy.generateStream(request: .init(numEvents: 1))
 }
 
 try await main()
@@ -79,10 +76,7 @@ import Streaming
 private func main() async throws {
     let client = StreamingClient()
 
-    _ = try await client.dummy.generate(request: .init(
-        stream: ,
-        numEvents: 5
-    ))
+    _ = try await client.dummy.generate(request: .init(numEvents: 5))
 }
 
 try await main()
@@ -119,3 +113,4 @@ try await main()
 </dd>
 </dl>
 </details>
+

@@ -7,6 +7,4 @@ RUN git config --global user.email "115122769+fern-api[bot]@users.noreply.github
 COPY generators/swift/sdk/features.yml /assets/features.yml
 COPY generators/swift/sdk/dist /dist
 
-RUN npm install -f -g @fern-api/generator-cli
-
 ENTRYPOINT ["node", "--enable-source-maps", "/dist/cli.cjs", "swift-sdk"]

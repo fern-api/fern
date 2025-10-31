@@ -1,0 +1,19 @@
+navigation:
+  - page: External and Internal Overview
+    path: ../v2/overview.mdx
+  - api: API Reference
+    audiences:
+      - internal
+    layout:
+      - section:
+          title: Internal Operations
+          audiences:
+            - internal
+          contents:
+            - DELETE /admin/users/{id}
+            - GET /admin/analytics
+      - section:
+          title: Public Endpoints
+          contents:
+            - GET /users/{id}
+            - POST /users

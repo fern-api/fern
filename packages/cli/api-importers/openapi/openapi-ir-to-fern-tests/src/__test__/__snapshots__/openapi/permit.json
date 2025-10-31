@@ -21124,9 +21124,9 @@ docs: >
   "packageMarkers": {},
   "rootApiFile": {
     "contents": {
-      "auth": "BearerAuthScheme",
+      "auth": "HTTPBearer",
       "auth-schemes": {
-        "BearerAuthScheme": {
+        "HTTPBearer": {
           "scheme": "bearer",
         },
       },
@@ -21149,9 +21149,9 @@ environments:
   Default: https://api.permit.io
 default-environment: Default
 auth-schemes:
-  BearerAuthScheme:
+  HTTPBearer:
     scheme: bearer
-auth: BearerAuthScheme
+auth: HTTPBearer
 ",
   },
 }

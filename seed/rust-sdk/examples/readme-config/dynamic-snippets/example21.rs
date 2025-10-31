@@ -1,5 +1,4 @@
 use seed_examples::prelude::*;
-use std::collections::HashMap;
 
 #[tokio::main]
 async fn main() {

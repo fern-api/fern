@@ -131,8 +131,8 @@ import Exhaustive
             token: "<token>",
             urlSession: stub.urlSession
         )
-        let expectedResponse = try! CalendarDate("2023-01-15")
-        let response = try await client.endpoints.primitive.getAndReturnDate(request: try! CalendarDate("2023-01-15"))
+        let expectedResponse = CalendarDate("2023-01-15")!
+        let response = try await client.endpoints.primitive.getAndReturnDate(request: CalendarDate("2023-01-15")!)
         try #require(response == expectedResponse)
     }
 
@@ -150,8 +150,8 @@ import Exhaustive
             token: "<token>",
             urlSession: stub.urlSession
         )
-        let expectedResponse = UUID(uuidString: "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32")
-        let response = try await client.endpoints.primitive.getAndReturnUuid(request: UUID(uuidString: "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32"))
+        let expectedResponse = UUID(uuidString: "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32")!
+        let response = try await client.endpoints.primitive.getAndReturnUuid(request: UUID(uuidString: "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32")!)
         try #require(response == expectedResponse)
     }
 

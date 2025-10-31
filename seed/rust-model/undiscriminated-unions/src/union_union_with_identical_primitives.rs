@@ -67,3 +67,13 @@ impl UnionWithIdenticalPrimitives {
     }
 
 }
+
+impl fmt::Display for UnionWithIdenticalPrimitives {
+    fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
+        match self {
+            Self::Integer(value) => write!(f, "{}", value),
+            Self::Double(value) => write!(f, "{}", value),
+            Self::String(value) => write!(f, "{}", value),
+        }
+    }
+}

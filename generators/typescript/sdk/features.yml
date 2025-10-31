@@ -13,6 +13,11 @@ features:
       When the API returns a non-success status code (4xx or 5xx response), a subclass of the following error
       will be thrown.
 
+  - id: STREAMING_RESPONSE
+    description: |
+      Some endpoints return streaming responses instead of returning the full response at once.
+      The SDK uses async iterators, so you can consume the responses using a `for await...of` loop.
+
   - id: FILE_UPLOADS
     description: |
       You can upload files using the client:

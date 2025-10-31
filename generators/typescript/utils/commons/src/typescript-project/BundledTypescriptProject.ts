@@ -1,11 +1,9 @@
 import { RelativeFilePath } from "@fern-api/fs-utils";
 import { produce } from "immer";
-import yaml from "js-yaml";
 import { IPackageJson } from "package-json-type";
 import { CompilerOptions, ModuleKind, ModuleResolutionKind, ScriptTarget } from "ts-morph";
 
 import { DependencyType } from "../dependency-manager/DependencyManager";
-import { JSR } from "./JSR";
 import { mergeExtraConfigs } from "./mergeExtraConfigs";
 import { TypescriptProject } from "./TypescriptProject";
 
@@ -15,6 +13,7 @@ export declare namespace BundledTypescriptProject {
 
 export class BundledTypescriptProject extends TypescriptProject {
     protected async addFilesToVolume(): Promise<void> {
+        this.addCommonFilesToVolume();
         await this.writeFileToVolume(
             RelativeFilePath.of(BundledTypescriptProject.BUILD_SCRIPT_FILENAME),
             this.getBuildScriptContents()
@@ -23,20 +22,6 @@ export class BundledTypescriptProject extends TypescriptProject {
         await this.generateStubTypeDeclarations();
         await this.generateTsConfig();
         await this.generatePackageJson();
-        if (this.outputJsr) {
-            await this.generateJsrJson();
-        }
-        if (this.packageManager === "pnpm") {
-            await this.generatePnpmWorkspace();
-        }
-    }
-
-    protected getCheckFixCommand(): string[] {
-        return [BundledTypescriptProject.CHECK_FIX_SCRIPT_NAME];
-    }
-
-    protected getBuildCommand(): string[] {
-        return [BundledTypescriptProject.BUILD_SCRIPT_NAME];
     }
 
     private getBuildScriptContents(): string {
@@ -125,10 +110,6 @@ async function runEsbuild({ platform, target, format, entryPoint, outfile }) {
                 ".pnpm-debug.log"
             ].join("\n")
         );
-    }
-
-    private async generatePnpmWorkspace(): Promise<void> {
-        await this.writeFileToVolume(RelativeFilePath.of(TypescriptProject.PNPM_WORKSPACE_FILENAME), "packages: ['.']");
     }
 
     private async generateStubTypeDeclarations(): Promise<void> {
@@ -233,13 +214,9 @@ export * from "./${BundledTypescriptProject.TYPES_DIRECTORY}/${folder}";
             },
             types: `./${BundledTypescriptProject.TYPES_DIRECTORY}/index.d.ts`,
             scripts: {
-                ...BundledTypescriptProject.COMMON_SCRIPTS,
+                ...this.getCommonScripts(),
                 [BundledTypescriptProject.COMPILE_SCRIPT_NAME]: "tsc",
                 [BundledTypescriptProject.BUNDLE_SCRIPT_NAME]: `node ${BundledTypescriptProject.BUILD_SCRIPT_FILENAME}`,
-                [BundledTypescriptProject.BUILD_SCRIPT_NAME]: [
-                    `${this.packageManager} ${BundledTypescriptProject.COMPILE_SCRIPT_NAME}`,
-                    `${this.packageManager} ${BundledTypescriptProject.BUNDLE_SCRIPT_NAME}`
-                ].join(" && "),
                 ...packageJson.scripts,
                 ...this.extraScripts
             }
@@ -286,7 +263,7 @@ export * from "./${BundledTypescriptProject.TYPES_DIRECTORY}/${folder}";
                 draft["packageManager"] = "yarn@1.22.22";
             }
             if (this.packageManager === "pnpm") {
-                draft["packageManager"] = "pnpm@10.14.0";
+                draft["packageManager"] = "pnpm@10.20.0";
             }
             draft["engines"] = {
                 node: ">=18.0.0"
@@ -302,18 +279,8 @@ export * from "./${BundledTypescriptProject.TYPES_DIRECTORY}/${folder}";
         );
     }
 
-    private async generateJsrJson(): Promise<void> {
-        if (this.npmPackage != null) {
-            const jsr: JSR = {
-                name: this.npmPackage?.packageName,
-                version: this.npmPackage.version,
-                exports: "src/index.ts"
-            };
-            await this.writeFileToVolume(
-                RelativeFilePath.of(TypescriptProject.JSR_JSON_FILENAME),
-                JSON.stringify(jsr, undefined, 4)
-            );
-        }
+    protected getBuildCommandScript(): string {
+        return `${this.packageManager} ${BundledTypescriptProject.COMPILE_SCRIPT_NAME} && ${this.packageManager} ${BundledTypescriptProject.BUNDLE_SCRIPT_NAME}`;
     }
 
     private getExportsForBundle({
@@ -356,10 +323,8 @@ export * from "./${BundledTypescriptProject.TYPES_DIRECTORY}/${folder}";
 
     private getDevDependencies(): Record<string, string> {
         return {
-            "@types/node": "^18.19.70",
-            esbuild: "~0.24.2",
-            "@biomejs/biome": "2.2.5",
-            typescript: "~5.7.2"
+            ...this.getCommonDevDependencies(),
+            esbuild: "~0.24.2"
         };
     }
 }

@@ -271,6 +271,12 @@ public final class PoetTypeNameMapper {
 
         @Override
         public TypeName visitNullable(TypeReference typeReference) {
+            if (customConfig.collapseOptionalNullable()) {
+                TypeName innerTypeName = typeReference.visit(primitiveDisAllowedTypeReferenceConverter);
+                ClassName optionalNullableClassName = poetClassNameFactory.getOptionalNullableClassName();
+                return ParameterizedTypeName.get(optionalNullableClassName, innerTypeName);
+            }
+
             if (customConfig.useNullableAnnotation()) {
                 return typeReference.visit(primitiveDisAllowedTypeReferenceConverter);
             } else {
@@ -280,6 +286,16 @@ public final class PoetTypeNameMapper {
 
         @Override
         public TypeName visitOptional(TypeReference typeReference) {
+            if (customConfig.collapseOptionalNullable()
+                    && typeReference.isContainer()
+                    && typeReference.getContainer().get().isNullable()) {
+                TypeReference innerType =
+                        typeReference.getContainer().get().getNullable().get();
+                TypeName innerTypeName = innerType.visit(primitiveDisAllowedTypeReferenceConverter);
+                ClassName optionalNullableClassName = poetClassNameFactory.getOptionalNullableClassName();
+                return ParameterizedTypeName.get(optionalNullableClassName, innerTypeName);
+            }
+
             TypeName typeName = typeReference.visit(primitiveDisAllowedTypeReferenceConverter);
             if (typeName instanceof ParameterizedTypeName) {
                 // Optional should not be re-wrapped in Optional

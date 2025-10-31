@@ -61,13 +61,13 @@ export class Attribute extends AstNode {
         rename: (value: string): Attribute =>
             new Attribute({
                 name: "serde",
-                args: [`rename = "${value}"`]
+                args: [`rename = ${JSON.stringify(value)}`]
             }),
 
         with: (path: string): Attribute =>
             new Attribute({
                 name: "serde",
-                args: [`with = "${path}"`]
+                args: [`with = ${JSON.stringify(path)}`]
             }),
 
         skip: (): Attribute =>
@@ -86,7 +86,7 @@ export class Attribute extends AstNode {
         tag: (discriminant: string): Attribute =>
             new Attribute({
                 name: "serde",
-                args: [`tag = "${discriminant}"`]
+                args: [`tag = ${JSON.stringify(discriminant)}`]
             }),
 
         untagged: (): Attribute =>
@@ -104,14 +104,14 @@ export class Attribute extends AstNode {
         content: (field: string): Attribute =>
             new Attribute({
                 name: "serde",
-                args: [`content = "${field}"`]
+                args: [`content = ${JSON.stringify(field)}`]
             }),
 
         // For adjacently tagged unions
         tagAndContent: (tag: string, content: string): Attribute =>
             new Attribute({
                 name: "serde",
-                args: [`tag = "${tag}"`, `content = "${content}"`]
+                args: [`tag = ${JSON.stringify(tag)}`, `content = ${JSON.stringify(content)}`]
             })
     };
 }

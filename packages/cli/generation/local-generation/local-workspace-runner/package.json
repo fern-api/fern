@@ -73,7 +73,7 @@
     "@types/node": "18.15.3",
     "@types/prettier2": "npm:@types/prettier@^2.7.3",
     "depcheck": "^1.4.7",
-    "typescript": "5.8.3",
+    "typescript": "5.9.3",
     "vitest": "^2.1.9"
   }
 }

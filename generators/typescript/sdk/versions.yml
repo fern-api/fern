@@ -1,8 +1,159 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
-- version: 3.9.3
+- version: 3.17.2
   changelogEntry:
     - summary: |
         Fix TypeScript SDK generator's local GitHub generation to match remote generation.
+      type: fix
+  createdAt: "2025-10-31"
+  irVersion: 60
+
+- version: 3.17.1
+  changelogEntry:
+    - summary: |
+        `hasNextPage()` now factors in `offset.step` if provided for offset-based pagination
+        such that `hasNextPage` now returns `false` if the returned page was not as large as requested.
+      type: fix
+  createdAt: "2025-10-31"
+  irVersion: 60
+
+- version: 3.17.0
+  changelogEntry:
+    - summary: |
+        Add `Page` to the top-level `exports.ts` files, which allows for `import { Page } from '...';` to work.
+        Remove `Pageable`, and use only `core.Page` for pagination everywhere.
+      type: feat
+  createdAt: "2025-10-29"
+  irVersion: 60
+
+- version: 3.16.0
+  changelogEntry:
+    - summary: |
+        Generate a CONTRIBUTING.md file.
+      type: feat
+  createdAt: "2025-10-29"
+  irVersion: 60
+
+- version: 3.15.0
+  changelogEntry:
+    - summary: |
+        Export types for `ReconnectingWebSocket`, `ReconnectingWebSocket.Event`, `ReconnectingWebSocket.CloseEvent`, and `ReconnectingWebSocket.ErrorEvent`.
+      type: feat
+  createdAt: "2025-10-29"
+  irVersion: 60
+
+- version: 3.14.0
+  changelogEntry:
+    - summary: |
+        Expose the underlying response on the `Page` type.
+      type: feat
+  createdAt: "2025-10-29"
+  irVersion: 60
+
+- version: 3.13.0
+  changelogEntry:
+    - summary: |
+        Improve pnpm and yarn caching in generator Docker images.
+      type: feat
+  createdAt: "2025-10-28"
+  irVersion: 60
+
+- version: 3.12.3
+  changelogEntry:
+    - summary: Fix `.github/workflows/ci.yml` file when using OIDC for npm publishing.
+      type: fix
+  createdAt: "2025-10-28"
+  irVersion: 60
+
+- version: 3.12.2
+  changelogEntry:
+    - summary: |
+        Add streaming tests; fix custom message terminators in streams; fix multi-byte character handling across chunk breaks in streams.
+      type: fix
+  createdAt: "2025-10-28"
+  irVersion: 60
+
+- version: 3.12.1
+  changelogEntry:
+    - summary: Update Biome to 2.3.1
+      type: chore
+  createdAt: "2025-10-28"
+  irVersion: 60
+
+- version: 3.12.0
+  changelogEntry:
+    - summary: |
+        Add support for [publishing to npmjs.org using OIDC from GitHub Actions](https://docs.npmjs.com/trusted-publishers).
+
+        To use OIDC for publishing to npmjs.org, you need to follow two steps:
+        1. Follow the instructions in ["Step 1: Add a trusted publisher on npmjs.com"](https://docs.npmjs.com/trusted-publishers#step-1-add-a-trusted-publisher-on-npmjscom).
+        2. Set the `output.token` field to `OIDC` in _generators.yml_ to enable this feature:
+
+            ```yml
+            # In generators.yml
+            groups:
+              ts-sdk:
+                generators:
+                  - name: fernapi/fern-typescript-sdk
+                    output:
+                      location: npm
+                      package-name: your-package-name
+                      token: OIDC # previously this would be set to something like ${NPM_TOKEN}
+                    ...
+            ```
+
+            This will take care of ["Step 2: Configure your CI/CD workflow"](https://docs.npmjs.com/trusted-publishers#step-2-configure-your-cicd-workflow).
+
+        For local generation, you'll need Fern CLI version 0.94.0 or later.
+      type: feat
+    - summary: |
+        Update GitHub Actions `setup-node` action to v4 in the generated CI workflow.
+      type: feat
+  createdAt: "2025-10-21"
+  irVersion: 60
+
+- version: 3.11.1
+  changelogEntry:
+    - summary: |
+        Generate streaming response section in README.md for streaming response endpoints.
+      type: fix
+  createdAt: "2025-10-21"
+  irVersion: 60
+
+- version: 3.11.0
+  changelogEntry:
+    - summary: |
+        Add `linter` and `formatter` configuration options to configure code linters and formatters for the generated SDK.
+        - `linter`:
+          - `biome`: Use Biome as the code linter. This is the default.
+          - `none`: Do not include a code linter.
+        - `formatter`:
+          - `biome`: Use Biome as the code formatter. This is the default.
+          - `prettier`: Use Prettier as the code formatter.
+
+        For consistency, the _package.json_ scripts will always include the following scripts:
+        - `lint`: Run the configured linter.
+        - `lint:fix`: Run the configured linter with auto-fix.
+        - `format`: Run the configured formatter.
+        - `format:check`: Run the configured formatter in check mode.
+        - `check`: Run both the linter and formatter in check mode.
+        - `check:fix`: Run both the linter and formatter with auto-fix.
+        When the `linter` is set to `none`, `lint` and `lint:fix` scripts will echo a message indicating that no linter is configured.
+      type: feat
+  createdAt: "2025-10-21"
+  irVersion: 60
+
+- version: 3.10.0
+  changelogEntry:
+    - summary: |
+        Generate file upload section in README.md for multipart-form file uploads.
+      type: feat
+  createdAt: "2025-10-20"
+  irVersion: 60
+
+- version: 3.9.3
+  changelogEntry:
+    - summary: |
+        Fix a compilation error when a path parameter is nullable or optional.
       type: fix
   createdAt: "2025-10-17"
   irVersion: 60

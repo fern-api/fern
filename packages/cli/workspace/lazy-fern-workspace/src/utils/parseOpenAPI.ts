@@ -29,5 +29,6 @@ export async function parseOpenAPI({
                   ref: absolutePathToOpenAPI,
                   externalRefResolver: new OpenAPIRefResolver(absolutePathToOpenAPIOverrides)
               });
+
     return result.bundle.parsed;
 }

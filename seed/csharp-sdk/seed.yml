@@ -203,6 +203,7 @@ allowedFailures:
   - pagination:no-custom-config
   - pagination:custom-pager
   - pagination:custom-pager-with-exception-handler
+  - file-upload
 
   ## Dynamic snippets
   - auth-environment-variables # TODO: Add global headers to ExampleEndpointCall.

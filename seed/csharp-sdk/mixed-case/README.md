@@ -84,6 +84,35 @@ var response = await client.Service.GetResourceAsync(
 );
 ```
 
+### Forward Compatible Enums
+
+This SDK uses forward-compatible enums that can handle unknown values gracefully.
+
+```csharp
+using SeedMixedCase;
+
+// Using a built-in value
+var resourceStatus = ResourceStatus.Active;
+
+// Using a custom value
+var customResourceStatus = ResourceStatus.FromCustom("custom-value");
+
+// Using in a switch statement
+switch (resourceStatus.Value)
+{
+    case ResourceStatus.Values.Active:
+        Console.WriteLine("Active");
+        break;
+    default:
+        Console.WriteLine($"Unknown value: {resourceStatus.Value}");
+        break;
+}
+
+// Explicit casting
+string resourceStatusString = (string)ResourceStatus.Active;
+ResourceStatus resourceStatusFromString = (ResourceStatus)"ACTIVE";
+```
+
 ## Contributing
 
 While we value open-source contributions to this SDK, this library is generated programmatically.

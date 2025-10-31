@@ -414,7 +414,12 @@ export function convertSchemaObject(
 
             const fernEnum = getFernEnum(schema);
 
-            if (schema.enum.length === 1 && schema.enum[0] != null && fernEnum == null) {
+            if (
+                context.options.coerceEnumsToLiterals &&
+                schema.enum.length === 1 &&
+                schema.enum[0] != null &&
+                fernEnum == null
+            ) {
                 return convertLiteral({
                     nameOverride,
                     generatedName,
@@ -1079,7 +1084,7 @@ export function convertSchemaObject(
             const filteredAllOfObjects = filteredAllOfs.filter((allOf) => {
                 const valid = isValidAllOfObject(allOf);
                 if (!valid) {
-                    context.logger.warn(`Skipping non-object allOf element: ${JSON.stringify(allOf)}`);
+                    context.logger.debug(`Skipping non-object allOf element: ${JSON.stringify(allOf)}`);
                 }
                 return valid;
             });

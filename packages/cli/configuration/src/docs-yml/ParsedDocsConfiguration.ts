@@ -9,7 +9,9 @@ import {
     Availability,
     DocsInstance,
     ExperimentalConfig,
+    Language,
     PlaygroundSettings,
+    ThemeConfig,
     VersionAvailability
 } from "./schemas";
 
@@ -41,9 +43,11 @@ export interface ParsedDocsConfiguration {
     typography: TypographyConfig | undefined;
     layout: CjsFdrSdk.docs.v1.commons.DocsLayoutConfig | undefined;
     settings: CjsFdrSdk.docs.v1.commons.DocsSettingsConfig | undefined;
+    languages: Language[] | undefined;
     defaultLanguage: CjsFdrSdk.docs.v1.commons.ProgrammingLanguage | undefined;
     analyticsConfig: CjsFdrSdk.docs.v1.commons.AnalyticsConfig | undefined;
     announcement: AnnouncementConfig | undefined;
+    theme: ThemeConfig | undefined;
 
     /* integrations */
     integrations: CjsFdrSdk.docs.v1.commons.IntegrationsConfig | undefined;
@@ -202,7 +206,8 @@ export interface TabbedNavigation
 type TabbedNavigationChild =
     | TabbedNavigationChild.Layout
     | TabbedNavigationChild.Link
-    | TabbedNavigationChild.Changelog;
+    | TabbedNavigationChild.Changelog
+    | TabbedNavigationChild.Variants;
 
 export declare namespace TabbedNavigationChild {
     export interface Layout {
@@ -219,6 +224,24 @@ export declare namespace TabbedNavigationChild {
         type: "changelog";
         changelog: AbsoluteFilePath[];
     }
+
+    export interface Variants {
+        type: "variants";
+        variants: TabVariant[];
+    }
+}
+
+export interface TabVariant
+    extends CjsFdrSdk.navigation.v1.WithPermissions,
+        CjsFdrSdk.navigation.latest.WithFeatureFlags {
+    title: string;
+    subtitle: string | undefined;
+    icon: string | undefined;
+    layout: DocsNavigationItem[];
+    slug: string | undefined;
+    skipUrlSlug: boolean | undefined;
+    hidden: boolean | undefined;
+    default: boolean | undefined;
 }
 
 export type DocsNavigationItem =
@@ -328,6 +351,7 @@ export declare namespace ParsedApiReferenceLayoutItem {
         hidden: boolean | undefined;
         icon: string | undefined;
         skipUrlSlug: boolean | undefined;
+        availability: Availability | undefined;
         playground: PlaygroundSettings | undefined;
     }
     export interface Package
@@ -342,6 +366,7 @@ export declare namespace ParsedApiReferenceLayoutItem {
         hidden: boolean | undefined;
         icon: string | undefined;
         skipUrlSlug: boolean | undefined;
+        availability: Availability | undefined;
         playground: PlaygroundSettings | undefined;
     }
 
@@ -354,6 +379,7 @@ export declare namespace ParsedApiReferenceLayoutItem {
         icon: string | undefined;
         slug: string | undefined;
         hidden: boolean | undefined;
+        availability: Availability | undefined;
         playground: PlaygroundSettings | undefined;
     }
 

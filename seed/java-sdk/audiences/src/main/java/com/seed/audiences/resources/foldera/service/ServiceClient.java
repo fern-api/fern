@@ -5,6 +5,7 @@ package com.seed.audiences.resources.foldera.service;
 
 import com.seed.audiences.core.ClientOptions;
 import com.seed.audiences.core.RequestOptions;
+import com.seed.audiences.resources.foldera.service.requests.GetDirectThreadRequest;
 import com.seed.audiences.resources.foldera.service.types.Response;
 
 public class ServiceClient {
@@ -24,11 +25,11 @@ public class ServiceClient {
         return this.rawClient;
     }
 
-    public Response getDirectThread() {
-        return this.rawClient.getDirectThread().body();
+    public Response getDirectThread(GetDirectThreadRequest request) {
+        return this.rawClient.getDirectThread(request).body();
     }
 
-    public Response getDirectThread(RequestOptions requestOptions) {
-        return this.rawClient.getDirectThread(requestOptions).body();
+    public Response getDirectThread(GetDirectThreadRequest request, RequestOptions requestOptions) {
+        return this.rawClient.getDirectThread(request, requestOptions).body();
     }
 }

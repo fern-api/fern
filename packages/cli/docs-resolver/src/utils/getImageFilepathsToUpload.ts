@@ -188,6 +188,31 @@ async function collectIconsFromNavigation({
                                 })
                             )
                         );
+                    } else if (tab.child.type === "variants" && tab.child.variants != null) {
+                        await Promise.all(
+                            tab.child.variants.flatMap((variant) => {
+                                const promises: Promise<void>[] = [];
+                                if (variant.icon != null) {
+                                    promises.push(
+                                        addIconToFilepaths({
+                                            iconPath: variant.icon,
+                                            filepaths,
+                                            docsWorkspace
+                                        })
+                                    );
+                                }
+                                promises.push(
+                                    ...variant.layout.map((item) =>
+                                        collectIconsFromNavigationItem({
+                                            item,
+                                            filepaths,
+                                            docsWorkspace
+                                        })
+                                    )
+                                );
+                                return promises;
+                            })
+                        );
                     }
                 })
             );

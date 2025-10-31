@@ -33,7 +33,7 @@
   },
   "dependencies": {
     "@fern-api/docs-resolver": "workspace:*",
-    "@fern-api/fdr-sdk": "0.139.31-66c809cb8",
+    "@fern-api/fdr-sdk": "0.139.37-f5b57f86e",
     "@fern-api/fs-utils": "workspace:*",
     "@fern-api/ir-sdk": "workspace:*",
     "@fern-api/logger": "workspace:*",
@@ -61,7 +61,7 @@
     "@types/ws": "^8.5.10",
     "@types/xml2js": "^0.4.14",
     "depcheck": "^1.4.7",
-    "typescript": "5.8.3",
+    "typescript": "5.9.3",
     "vitest": "^2.1.9"
   }
 }

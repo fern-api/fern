@@ -1,13 +1,13 @@
 import { DiscriminatedUnionTypeInstance, Severity } from "@fern-api/browser-compatible-base-generator";
 import { assertNever } from "@fern-api/core-utils";
 import { FernIr } from "@fern-api/dynamic-ir-sdk";
-import { LiteralEnum, sanitizeSelf, swift } from "@fern-api/swift-codegen";
+import { EnumWithAssociatedValues, LiteralEnum, sanitizeSelf, swift } from "@fern-api/swift-codegen";
 
 import { DynamicSnippetsGeneratorContext } from "./DynamicSnippetsGeneratorContext";
-import { DynamicTypeMapper } from "./DynamicTypeMapper";
 
 export declare namespace DynamicTypeLiteralMapper {
     interface Args {
+        fromSymbol: swift.Symbol;
         typeReference: FernIr.dynamic.TypeReference;
         value: unknown;
         as?: ConvertedAs;
@@ -26,48 +26,57 @@ export class DynamicTypeLiteralMapper {
     }
 
     public convert(args: DynamicTypeLiteralMapper.Args): swift.Expression {
-        switch (args.typeReference.type) {
+        const { fromSymbol, typeReference, value, as } = args;
+        switch (typeReference.type) {
             case "list":
-                return this.convertList({ list: args.typeReference.value, value: args.value });
+                return this.convertList({ fromSymbol, list: typeReference.value, value });
             case "literal": {
-                if (args.typeReference.value.type === "string") {
+                if (typeReference.value.type === "string") {
                     return swift.Expression.enumCaseShorthand(
-                        LiteralEnum.generateEnumCaseLabel(args.typeReference.value.value)
+                        LiteralEnum.generateEnumCaseLabel(typeReference.value.value)
                     );
-                } else if (args.typeReference.value.type === "boolean") {
-                    // TODO(kafkas): Boolean literals are not supported yet
+                } else if (typeReference.value.type === "boolean") {
                     return swift.Expression.nop();
                 } else {
-                    assertNever(args.typeReference.value);
+                    assertNever(typeReference.value);
                     break;
                 }
             }
             case "map":
-                return this.convertMap({ map: args.typeReference, value: args.value });
+                return this.convertMap({ fromSymbol, map: typeReference, value: value });
             case "named": {
-                const named = this.context.resolveNamedType({ typeId: args.typeReference.value });
+                const named = this.context.resolveNamedType({ typeId: typeReference.value });
                 if (named == null) {
                     return swift.Expression.nop();
                 }
-                return this.convertNamed({ named, value: args.value, as: args.as });
+                return this.convertNamed({ fromSymbol, typeId: typeReference.value, named, value: value, as });
             }
             case "nullable":
-                return this.convertNullable({ nullable: args.typeReference, value: args.value, as: args.as });
+                return this.context.customConfig?.nullableAsOptional
+                    ? this.convert({ fromSymbol, typeReference: typeReference.value, value, as })
+                    : this.convertNullable({ fromSymbol, nullable: typeReference, value: value, as });
             case "optional":
-                return this.convert({ typeReference: args.typeReference.value, value: args.value, as: args.as });
+                return this.convert({ fromSymbol, typeReference: typeReference.value, value, as });
             case "primitive":
-                return this.convertPrimitive({ primitive: args.typeReference.value, value: args.value, as: args.as });
+                return this.convertPrimitive({ primitive: typeReference.value, value: value, as });
             case "set":
-                // TODO(kafkas): Set is not supported yet
                 return swift.Expression.nop();
             case "unknown":
-                return this.convertUnknown(args.value);
+                return this.convertUnknown(value);
             default:
-                assertNever(args.typeReference);
+                assertNever(typeReference);
         }
     }
 
-    private convertList({ list, value }: { list: FernIr.dynamic.TypeReference; value: unknown }): swift.Expression {
+    private convertList({
+        fromSymbol,
+        list,
+        value
+    }: {
+        fromSymbol: swift.Symbol;
+        list: FernIr.dynamic.TypeReference;
+        value: unknown;
+    }): swift.Expression {
         if (!Array.isArray(value)) {
             this.context.errors.add({
                 severity: Severity.Critical,
@@ -79,7 +88,7 @@ export class DynamicTypeLiteralMapper {
             elements: value.map((v, index) => {
                 this.context.errors.scope({ index });
                 try {
-                    return this.convert({ typeReference: list, value: v });
+                    return this.convert({ fromSymbol, typeReference: list, value: v });
                 } finally {
                     this.context.errors.unscope();
                 }
@@ -88,7 +97,15 @@ export class DynamicTypeLiteralMapper {
         });
     }
 
-    private convertMap({ map, value }: { map: FernIr.dynamic.MapType; value: unknown }): swift.Expression {
+    private convertMap({
+        fromSymbol,
+        map,
+        value
+    }: {
+        fromSymbol: swift.Symbol;
+        map: FernIr.dynamic.MapType;
+        value: unknown;
+    }): swift.Expression {
         if (typeof value !== "object" || value == null) {
             this.context.errors.add({
                 severity: Severity.Critical,
@@ -101,8 +118,18 @@ export class DynamicTypeLiteralMapper {
                 this.context.errors.scope(key);
                 try {
                     return [
-                        this.convert({ typeReference: map.key, value: key, as: "mapKey" }),
-                        this.convert({ typeReference: map.value, value, as: "mapValue" })
+                        this.convert({
+                            fromSymbol,
+                            typeReference: map.key,
+                            value: key,
+                            as: "mapKey"
+                        }),
+                        this.convert({
+                            fromSymbol,
+                            typeReference: map.value,
+                            value,
+                            as: "mapValue"
+                        })
                     ];
                 } finally {
                     this.context.errors.unscope();
@@ -113,35 +140,60 @@ export class DynamicTypeLiteralMapper {
     }
 
     private convertNamed({
+        fromSymbol,
+        typeId,
         named,
         value,
         as
     }: {
+        fromSymbol: swift.Symbol;
+        typeId: string;
         named: FernIr.dynamic.NamedType;
         value: unknown;
         as?: DynamicTypeLiteralMapper.ConvertedAs;
     }): swift.Expression {
         switch (named.type) {
             case "alias":
-                return this.convert({ typeReference: named.typeReference, value, as });
-            case "discriminatedUnion":
-                return this.convertDiscriminatedUnion({ discriminatedUnion: named, value });
+                return this.convert({
+                    fromSymbol,
+                    typeReference: named.typeReference,
+                    value,
+                    as
+                });
+            case "discriminatedUnion": {
+                const unionSymbol = this.context.nameRegistry.getSchemaTypeSymbolOrThrow(typeId);
+                return this.convertDiscriminatedUnion({
+                    fromSymbol,
+                    unionSymbol,
+                    discriminatedUnion: named,
+                    value
+                });
+            }
             case "enum":
                 return this.convertEnum({ enum_: named, value });
             case "object":
-                return this.convertObject({ object_: named, value, as });
-            case "undiscriminatedUnion":
-                return this.convertUndiscriminatedUnion({ undiscriminatedUnion: named, value });
+                return this.convertObject({ fromSymbol, typeId, object_: named, value });
+            case "undiscriminatedUnion": {
+                const unionSymbol = this.context.nameRegistry.getSchemaTypeSymbolOrThrow(typeId);
+                return this.convertUndiscriminatedUnion({
+                    fromSymbol,
+                    unionSymbol,
+                    undiscriminatedUnion: named,
+                    value
+                });
+            }
             default:
                 assertNever(named);
         }
     }
 
     private convertNullable({
+        fromSymbol,
         nullable,
         value,
         as
     }: {
+        fromSymbol: swift.Symbol;
         nullable: FernIr.dynamic.TypeReference.Nullable;
         value: unknown;
         as?: DynamicTypeLiteralMapper.ConvertedAs;
@@ -153,17 +205,21 @@ export class DynamicTypeLiteralMapper {
             methodName: "value",
             arguments_: [
                 swift.functionArgument({
-                    value: this.convert({ typeReference: nullable.value, value, as })
+                    value: this.convert({ fromSymbol, typeReference: nullable.value, value, as })
                 })
             ]
         });
     }
 
     private convertDiscriminatedUnion({
+        fromSymbol,
         discriminatedUnion,
+        unionSymbol,
         value
     }: {
+        fromSymbol: swift.Symbol;
         discriminatedUnion: FernIr.dynamic.DiscriminatedUnionType;
+        unionSymbol: swift.Symbol;
         value: unknown;
     }): swift.Expression {
         const discriminatedUnionTypeInstance = this.context.resolveDiscriminatedUnionTypeInstance({
@@ -175,15 +231,23 @@ export class DynamicTypeLiteralMapper {
         }
         const unionVariant = discriminatedUnionTypeInstance.singleDiscriminatedUnionType;
         const unionProperties = this.convertDiscriminatedUnionProperties({
+            fromSymbol,
             discriminatedUnionTypeInstance,
             unionVariant
         });
         if (unionProperties == null) {
             return swift.Expression.nop();
         }
+        const variants = this.context.nameRegistry.getAllDiscriminatedUnionVariantsOrThrow(unionSymbol);
+        const matchingVariant = variants.find(
+            (v) => v.discriminantWireValue === unionVariant.discriminantValue.wireValue
+        );
+        if (matchingVariant == null) {
+            return swift.Expression.nop();
+        }
         return swift.Expression.methodCall({
-            target: swift.Expression.reference(discriminatedUnion.declaration.name.pascalCase.unsafeName),
-            methodName: unionVariant.discriminantValue.name.camelCase.unsafeName,
+            target: swift.Expression.reference(unionSymbol.name),
+            methodName: matchingVariant.caseName,
             arguments_: [
                 swift.functionArgument({
                     value: swift.Expression.contextualMethodCall({
@@ -198,13 +262,16 @@ export class DynamicTypeLiteralMapper {
     }
 
     private convertDiscriminatedUnionProperties({
+        fromSymbol,
         discriminatedUnionTypeInstance,
         unionVariant
     }: {
+        fromSymbol: swift.Symbol;
         discriminatedUnionTypeInstance: DiscriminatedUnionTypeInstance;
         unionVariant: FernIr.dynamic.SingleDiscriminatedUnionType;
     }): swift.FunctionArgument[] | undefined {
         const baseFields = this.getBaseFields({
+            fromSymbol,
             discriminatedUnionTypeInstance,
             singleDiscriminatedUnionType: unionVariant
         });
@@ -216,7 +283,12 @@ export class DynamicTypeLiteralMapper {
                 if (named == null) {
                     return undefined;
                 }
-                const converted = this.convertNamed({ named, value: discriminatedUnionTypeInstance.value });
+                const converted = this.convertNamed({
+                    fromSymbol,
+                    typeId: unionVariant.typeId,
+                    named,
+                    value: discriminatedUnionTypeInstance.value
+                });
                 if (!converted.isStructInitialization()) {
                     this.context.errors.add({
                         severity: Severity.Critical,
@@ -237,8 +309,13 @@ export class DynamicTypeLiteralMapper {
                     return [
                         ...baseFields,
                         swift.functionArgument({
-                            label: sanitizeSelf(unionVariant.discriminantValue.name.camelCase.unsafeName),
+                            label: sanitizeSelf(
+                                EnumWithAssociatedValues.sanitizeToCamelCase(
+                                    unionVariant.discriminantValue.name.camelCase.unsafeName
+                                )
+                            ),
                             value: this.convert({
+                                fromSymbol,
                                 typeReference: unionVariant.typeReference,
                                 value: record[unionVariant.discriminantValue.wireValue]
                             })
@@ -256,9 +333,11 @@ export class DynamicTypeLiteralMapper {
     }
 
     private getBaseFields({
+        fromSymbol,
         discriminatedUnionTypeInstance,
         singleDiscriminatedUnionType
     }: {
+        fromSymbol: swift.Symbol;
         discriminatedUnionTypeInstance: DiscriminatedUnionTypeInstance;
         singleDiscriminatedUnionType: FernIr.dynamic.SingleDiscriminatedUnionType;
     }): swift.FunctionArgument[] {
@@ -271,7 +350,11 @@ export class DynamicTypeLiteralMapper {
             try {
                 return swift.functionArgument({
                     label: sanitizeSelf(property.name.name.camelCase.unsafeName),
-                    value: this.convert(property)
+                    value: this.convert({
+                        fromSymbol,
+                        typeReference: property.typeReference,
+                        value: property.value
+                    })
                 });
             } finally {
                 this.context.errors.unscope();
@@ -307,39 +390,61 @@ export class DynamicTypeLiteralMapper {
     }
 
     private convertObject({
+        fromSymbol,
+        typeId,
         object_,
-        value,
-        as
+        value
     }: {
+        fromSymbol: swift.Symbol;
+        typeId: string;
         object_: FernIr.dynamic.ObjectType;
         value: unknown;
-        as?: DynamicTypeLiteralMapper.ConvertedAs;
     }): swift.Expression {
+        const symbol = this.context.nameRegistry.getSchemaTypeSymbolOrThrow(typeId);
         return swift.Expression.structInitialization({
-            unsafeName: object_.declaration.name.pascalCase.unsafeName,
+            unsafeName: symbol.name,
             arguments_: this.context
                 .getExampleObjectProperties({
                     parameters: object_.properties,
                     snippetObject: value
                 })
                 .map((typeInstance) => {
+                    const expression = this.convert({
+                        fromSymbol,
+                        typeReference: typeInstance.typeReference,
+                        value: typeInstance.value
+                    });
+                    if (expression.isNop()) {
+                        return null;
+                    }
                     return swift.functionArgument({
                         label: sanitizeSelf(typeInstance.name.name.camelCase.unsafeName),
-                        value: this.convert(typeInstance)
+                        value: this.convert({
+                            fromSymbol,
+                            typeReference: typeInstance.typeReference,
+                            value: typeInstance.value
+                        })
                     });
-                }),
+                })
+                .filter((argument) => argument != null),
             multiline: true
         });
     }
 
     private convertUndiscriminatedUnion({
+        fromSymbol,
+        unionSymbol,
         undiscriminatedUnion,
         value
     }: {
+        fromSymbol: swift.Symbol;
+        unionSymbol: swift.Symbol;
         undiscriminatedUnion: FernIr.dynamic.UndiscriminatedUnionType;
         value: unknown;
     }): swift.Expression {
         const result = this.findMatchingUndiscriminatedUnionType({
+            fromSymbol,
+            unionSymbol,
             undiscriminatedUnion,
             value
         });
@@ -350,20 +455,28 @@ export class DynamicTypeLiteralMapper {
     }
 
     private findMatchingUndiscriminatedUnionType({
+        fromSymbol,
+        unionSymbol,
         undiscriminatedUnion,
         value
     }: {
+        fromSymbol: swift.Symbol;
+        unionSymbol: swift.Symbol;
         undiscriminatedUnion: FernIr.dynamic.UndiscriminatedUnionType;
         value: unknown;
     }): swift.Expression | undefined {
+        const variants = this.context.nameRegistry.getAllUndiscriminatedUnionVariantsOrThrow(unionSymbol);
         for (const typeReference of undiscriminatedUnion.types) {
             try {
-                const converted = this.convert({ typeReference, value });
-                const typeMapper = new DynamicTypeMapper({ context: this.context });
-                const swiftType = typeMapper.convert({ typeReference });
+                const converted = this.convert({ fromSymbol, typeReference, value });
+                const swiftType = this.context.getSwiftTypeReferenceFromScope(typeReference, fromSymbol);
+                const matchingVariant = variants.find((v) => v.swiftType.equals(swiftType));
+                if (matchingVariant == null) {
+                    continue;
+                }
                 return swift.Expression.methodCall({
-                    target: swift.Expression.reference(undiscriminatedUnion.declaration.name.pascalCase.unsafeName),
-                    methodName: swiftType.toCaseName(),
+                    target: swift.Expression.reference(unionSymbol.name),
+                    methodName: matchingVariant.caseName,
                     arguments_: [
                         swift.functionArgument({
                             value: converted
@@ -525,7 +638,6 @@ export class DynamicTypeLiteralMapper {
                 if (bigInt == null) {
                     return swift.Expression.nop();
                 }
-                // TODO(kafkas): Bigints are not supported yet
                 return swift.Expression.nop();
             }
             default:

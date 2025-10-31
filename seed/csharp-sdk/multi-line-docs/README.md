@@ -84,6 +84,35 @@ var response = await client.User.CreateUserAsync(
 );
 ```
 
+### Forward Compatible Enums
+
+This SDK uses forward-compatible enums that can handle unknown values gracefully.
+
+```csharp
+using SeedMultiLineDocs;
+
+// Using a built-in value
+var operand = Operand.GreaterThan;
+
+// Using a custom value
+var customOperand = Operand.FromCustom("custom-value");
+
+// Using in a switch statement
+switch (operand.Value)
+{
+    case Operand.Values.GreaterThan:
+        Console.WriteLine("GreaterThan");
+        break;
+    default:
+        Console.WriteLine($"Unknown value: {operand.Value}");
+        break;
+}
+
+// Explicit casting
+string operandString = (string)Operand.GreaterThan;
+Operand operandFromString = (Operand)">";
+```
+
 ## Contributing
 
 While we value open-source contributions to this SDK, this library is generated programmatically.

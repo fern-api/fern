@@ -84,7 +84,6 @@ async fn main() {
 
 ```rust
 use seed_cross_package_type_names::prelude::*;
-use std::collections::HashMap;
 
 #[tokio::main]
 async fn main() {

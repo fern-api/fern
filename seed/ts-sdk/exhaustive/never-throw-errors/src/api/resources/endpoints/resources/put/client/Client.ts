@@ -54,7 +54,7 @@ export class Put {
             url: core.url.join(
                 (await core.Supplier.get(this._options.baseUrl)) ??
                     (await core.Supplier.get(this._options.environment)),
-                `${encodeURIComponent(id)}`,
+                `${core.url.encodePathParam(id)}`,
             ),
             method: "PUT",
             headers: _headers,

@@ -27,4 +27,4 @@ class ObjectWithOptionalField(UniversalBaseModel):
     map_: typing.Optional[typing.Dict[int, str]] = pydantic.Field(alias="map", default=None)
     bigint: typing.Optional[str] = None
 
-    model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow")  # type: ignore # Pydantic v2
+    model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow")
