@@ -54,7 +54,7 @@ describe("hash-utils", () => {
     });
 
     describe("loadHashMappings and saveHashMappings", () => {
-        it("should return empty object when .hashes file doesn't exist", async () => {
+        it("should return empty object when hashes file doesn't exist", async () => {
             const result = await loadHashMappings(testDir);
             expect(result).toEqual({});
         });
@@ -67,7 +67,7 @@ describe("hash-utils", () => {
 
             await saveHashMappings(testDir, mappings);
 
-            const hashesFilePath = path.join(testDir, ".hashes");
+            const hashesFilePath = path.join(testDir, "hashes");
             expect(existsSync(hashesFilePath)).toBe(true);
 
             const loaded = await loadHashMappings(testDir);
@@ -83,7 +83,7 @@ describe("hash-utils", () => {
 
             await saveHashMappings(testDir, mappings);
 
-            const hashesFilePath = path.join(testDir, ".hashes");
+            const hashesFilePath = path.join(testDir, "hashes");
             const content = await readFile(hashesFilePath, "utf-8");
             const parsed = JSON.parse(content);
 
@@ -97,8 +97,8 @@ describe("hash-utils", () => {
         });
 
         it("should load hash mappings correctly, ignoring comment field", async () => {
-            // Manually create a .hashes file with comment field
-            const hashesFilePath = path.join(testDir, ".hashes");
+            // Manually create a hashes file with comment field
+            const hashesFilePath = path.join(testDir, "hashes");
             const fileContent = {
                 _comment: "Test comment",
                 "file1.md": "hash1",
@@ -115,8 +115,8 @@ describe("hash-utils", () => {
             });
         });
 
-        it("should handle corrupted .hashes file gracefully", async () => {
-            const hashesFilePath = path.join(testDir, ".hashes");
+        it("should handle corrupted hashes file gracefully", async () => {
+            const hashesFilePath = path.join(testDir, "hashes");
             await writeFile(hashesFilePath, "invalid json", "utf-8");
 
             const result = await loadHashMappings(testDir);
