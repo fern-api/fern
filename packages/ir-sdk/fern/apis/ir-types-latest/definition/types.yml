@@ -399,6 +399,12 @@ types:
     properties:
       discriminant: commons.NameAndWireValue
       singleUnionType: ExampleSingleUnionType
+      extendProperties:
+        docs: A list of properties inherited from other types
+        type: optional<list<ExampleObjectProperty>>
+      baseProperties:
+        docs: A list of base properties for the union
+        type: optional<list<ExampleObjectProperty>>
 
   ExampleUndiscriminatedUnionType:
     properties:

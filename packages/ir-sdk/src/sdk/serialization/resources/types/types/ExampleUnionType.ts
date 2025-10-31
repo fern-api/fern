@@ -13,11 +13,19 @@ export const ExampleUnionType: core.serialization.ObjectSchema<
 > = core.serialization.objectWithoutOptionalProperties({
     discriminant: NameAndWireValue,
     singleUnionType: core.serialization.lazyObject(() => serializers.ExampleSingleUnionType),
+    extendProperties: core.serialization
+        .list(core.serialization.lazyObject(() => serializers.ExampleObjectProperty))
+        .optional(),
+    baseProperties: core.serialization
+        .list(core.serialization.lazyObject(() => serializers.ExampleObjectProperty))
+        .optional(),
 });
 
 export declare namespace ExampleUnionType {
     export interface Raw {
         discriminant: NameAndWireValue.Raw;
         singleUnionType: serializers.ExampleSingleUnionType.Raw;
+        extendProperties?: serializers.ExampleObjectProperty.Raw[] | null;
+        baseProperties?: serializers.ExampleObjectProperty.Raw[] | null;
     }
 }

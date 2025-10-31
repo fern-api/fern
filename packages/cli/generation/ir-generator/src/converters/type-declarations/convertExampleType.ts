@@ -12,6 +12,7 @@ import {
     DeclaredTypeName,
     ExampleContainer,
     ExampleExtraObjectProperty,
+    ExampleObjectProperty,
     ExamplePrimitive,
     ExampleSingleUnionType,
     ExampleSingleUnionTypeProperties,
@@ -104,6 +105,78 @@ export function convertTypeExample({
                       ? rawSingleUnionType.type
                       : undefined;
 
+            const baseProperties: ExampleObjectProperty[] = Object.entries(rawUnion["base-properties"] ?? {})
+                .map<ExampleObjectProperty | undefined>(([propertyName, property]) => {
+                    const propertyExample = example[propertyName];
+                    if (propertyExample == null) {
+                        return undefined;
+                    }
+                    return {
+                        name: fileContainingExample.casingsGenerator.generateNameAndWireValue({
+                            name: propertyName,
+                            wireValue: propertyName
+                        }),
+                        value: convertTypeReferenceExample({
+                            example: propertyExample,
+                            rawTypeBeingExemplified: typeof property === "string" ? property : property.type,
+                            fileContainingRawTypeReference: fileContainingType,
+                            fileContainingExample,
+                            typeResolver,
+                            exampleResolver,
+                            workspace
+                        }),
+                        propertyAccess: undefined,
+                        originalTypeDeclaration: typeName
+                    };
+                })
+                .filter((property): property is ExampleObjectProperty => property != null);
+
+            const extendProperties: ExampleObjectProperty[] = (
+                typeof rawUnion.extends === "undefined"
+                    ? []
+                    : typeof rawUnion.extends === "string"
+                      ? [rawUnion.extends]
+                      : rawUnion.extends
+            ).flatMap((extendedTypeName) => {
+                const resolvedExtendedType = typeResolver.resolveNamedTypeOrThrow({
+                    file: fileContainingType,
+                    referenceToNamedType: extendedTypeName
+                });
+                if (
+                    resolvedExtendedType._type !== "named" ||
+                    !isRawObjectDefinition(resolvedExtendedType.declaration)
+                ) {
+                    throw new Error("Extended type is not a named object");
+                }
+                const extendedObject = resolvedExtendedType.declaration;
+                const propertiesFromExtension: ExampleObjectProperty[] = Object.entries(extendedObject.properties ?? {})
+                    .map<ExampleObjectProperty | undefined>(([propertyName, property]) => {
+                        const propertyExample = example[propertyName];
+                        if (propertyExample == null) {
+                            return undefined;
+                        }
+                        return {
+                            name: fileContainingExample.casingsGenerator.generateNameAndWireValue({
+                                name: typeof property === "string" ? propertyName : (property.name ?? propertyName),
+                                wireValue: propertyName
+                            }),
+                            value: convertTypeReferenceExample({
+                                example: propertyExample,
+                                rawTypeBeingExemplified: typeof property === "string" ? property : property.type,
+                                fileContainingRawTypeReference: fileContainingType,
+                                fileContainingExample,
+                                typeResolver,
+                                exampleResolver,
+                                workspace
+                            }),
+                            propertyAccess: getPropertyAccess({ property }),
+                            originalTypeDeclaration: typeName
+                        };
+                    })
+                    .filter((property): property is ExampleObjectProperty => property != null);
+                return propertiesFromExtension;
+            });
+
             return ExampleTypeShape.union({
                 discriminant: fileContainingExample.casingsGenerator.generateNameAndWireValue({
                     name: getUnionDiscriminantName(rawUnion).name,
@@ -120,7 +193,9 @@ export function convertTypeExample({
                     discriminant,
                     discriminantValueForExample,
                     workspace
-                })
+                }),
+                baseProperties,
+                extendProperties
             });
         },
         enum: (rawEnum) => {
