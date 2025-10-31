@@ -1,4 +1,13 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 3.17.1
+  changelogEntry:
+    - summary: |
+        `hasNextPage()` now factors in `offset.step` if provided for offset-based pagination
+        such that `hasNextPage` now returns `false` if the returned page was not as large as requested.
+      type: fix
+  createdAt: "2025-10-31"
+  irVersion: 60
+
 - version: 3.17.0
   changelogEntry:
     - summary: |
