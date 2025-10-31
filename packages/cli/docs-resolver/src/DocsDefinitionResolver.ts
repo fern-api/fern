@@ -214,7 +214,7 @@ export class DocsDefinitionResolver {
     /**
      * Rewrites navigation icon fields from relative filepaths to uploaded file IDs.
      */
-    private setNavigationIconFileIds(iconRefs: IconRef[]): void {
+    private setIconFileIds(iconRefs: IconRef[]): void {
         for (const { raw, holder, key } of iconRefs) {
             const abs = this.resolveFilepath(raw);
             if (!abs) {
@@ -368,7 +368,7 @@ export class DocsDefinitionResolver {
             this.collectedFileIds.set(uploadedFile.absoluteFilePath, uploadedFile.fileId);
         });
 
-        this.setNavigationIconFileIds(iconRefs);
+        this.setIconFileIds(iconRefs);
 
         // store root here so we only process once
         const root = await this.toRootNode();

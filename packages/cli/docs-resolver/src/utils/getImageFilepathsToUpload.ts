@@ -158,12 +158,32 @@ export async function collectIconsFromDocsConfig({
     docsWorkspace: DocsWorkspace;
 }): Promise<{ filepaths: Set<AbsoluteFilePath>; refs: IconRef[] }> {
     const refs: IconRef[] = [];
-    const filepaths = await collectIconsFromNavigation({
-        navigation: parsedDocsConfig.navigation,
-        docsWorkspace,
-        refs
-    });
+    const filepaths = new Set([
+        ...(await collectIconsFromNavigation({
+            navigation: parsedDocsConfig.navigation,
+            docsWorkspace,
+            refs
+        })),
+        ...(await collectIconsFromNavbar({
+            navbar: parsedDocsConfig.navbar,
+            docsWorkspace,
+            refs
+        }))
+    ]);
     return { filepaths, refs };
+}
+
+async function collectIconsFromNavbar({
+    navbar,
+    docsWorkspace,
+    refs
+}: {
+    navbar: docsYml.DocsNavbarConfiguration;
+    docsWorkspace: DocsWorkspace;
+    refs: IconRef[];
+}): Promise<Set<AbsoluteFilePath>> {
+    const filepaths = new Set<AbsoluteFilePath>();
+    return filepaths;
 }
 
 async function collectIconsFromNavigation({
