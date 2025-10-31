@@ -25,7 +25,8 @@ import { ChangelogNodeConverter } from "./ChangelogNodeConverter";
 import { NodeIdGenerator } from "./NodeIdGenerator";
 import { convertDocsSnippetsConfigToFdr } from "./utils/convertDocsSnippetsConfigToFdr";
 import { convertIrToApiDefinition } from "./utils/convertIrToApiDefinition";
-import { collectFilesFromDocsConfig } from "./utils/getImageFilepathsToUpload";
+import type { IconRef } from "./utils/getImageFilepathsToUpload";
+import { collectFilesFromDocsConfig, collectIconsFromDocsConfig } from "./utils/getImageFilepathsToUpload";
 import { visitNavigationAst } from "./visitNavigationAst";
 import { wrapWithHttps } from "./wrapWithHttps";
 
@@ -210,6 +211,22 @@ export class DocsDefinitionResolver {
         return parseAudiences(version?.audiences);
     }
 
+    /**
+     * Rewrites navigation icon fields from relative filepaths to uploaded file IDs.
+     */
+    private setNavigationIconFileIds(iconRefs: IconRef[]): void {
+        for (const { raw, holder, key } of iconRefs) {
+            const abs = this.resolveFilepath(raw);
+            if (!abs) {
+                continue;
+            }
+            const fileId = this.getFileId(abs);
+            if (fileId) {
+                holder[key] = fileId;
+            }
+        }
+    }
+
     private _parsedDocsConfig: WithoutQuestionMarks<docsYml.ParsedDocsConfiguration> | undefined;
     private get parsedDocsConfig(): WithoutQuestionMarks<docsYml.ParsedDocsConfiguration> {
         if (this._parsedDocsConfig == null) {
@@ -308,6 +325,13 @@ export class DocsDefinitionResolver {
             docsWorkspace: this.docsWorkspace
         });
 
+        const { filepaths: iconFilepaths, refs: iconRefs } = await collectIconsFromDocsConfig({
+            parsedDocsConfig: this.parsedDocsConfig,
+            docsWorkspace: this.docsWorkspace
+        });
+
+        iconFilepaths.forEach((iconPath) => filesToUploadSet.add(iconPath));
+
         // preprocess markdown files to extract image paths
         for (const [relativePath, markdown] of Object.entries(this.parsedDocsConfig.pages)) {
             try {
@@ -343,6 +367,8 @@ export class DocsDefinitionResolver {
         uploadedFiles.forEach((uploadedFile) => {
             this.collectedFileIds.set(uploadedFile.absoluteFilePath, uploadedFile.fileId);
         });
+
+        this.setNavigationIconFileIds(iconRefs);
 
         // store root here so we only process once
         const root = await this.toRootNode();
