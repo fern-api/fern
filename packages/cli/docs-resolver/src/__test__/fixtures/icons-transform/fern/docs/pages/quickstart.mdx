@@ -1,0 +1,61 @@
+---
+title: Quickstart
+subtitle: Build and deploy your first frame in under 5 minutes.
+slug: quickstart
+description: Follow this guide to go from zero to a deployed Hollowframe project—your first distributed micro-frame.
+---
+
+# 🚀 Quickstart
+
+Welcome to **Hollowframe** — where your code doesn’t just run, it *drifts*.  
+This guide will walk you through spinning up your first distributed frame.
+
+## Step 1: Create a New Frame
+
+```bash
+hollow create starlight
+cd starlight
+```
+
+This creates a new frame called **Starlight**, with boilerplate code for a basic reactive function.
+
+## Step 2: Start Your Local Environment
+
+```bash
+hollow dev
+```
+
+You’ll see logs as your frame activates and binds to its default port.
+
+```
+🌌 Spinning up frame starlight...
+✨ Ready at http://localhost:4242
+```
+
+## Step 3: Deploy to the Hollowverse
+
+Once everything looks good locally, deploy your frame:
+
+```bash
+hollow deploy
+```
+
+After deployment, Hollowframe will provide a public endpoint and a unique visualization in the Hollowverse UI.
+
+## Step 4: Explore the Dashboard
+
+Visit [app.hollowframe.dev](https://app.hollowframe.dev) to monitor your live frame.  
+See real-time logs, latency metrics, and even visualize inter-frame interactions.
+
+<CardGroup>
+  <Card 
+    title="Next: Deep Dive"
+    icon="fa-solid fa-water"
+    href="/guides/deep-dive"
+  />
+  <Card
+    title="Join the Community"
+    icon="fa-brands fa-discord"
+    href="https://discord.gg/hollowframe"
+  />
+</CardGroup>

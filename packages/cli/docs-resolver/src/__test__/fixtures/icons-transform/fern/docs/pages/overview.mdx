@@ -1,0 +1,113 @@
+---
+title: HollowFrame — Overview
+subtitle: What you can build with the HollowFrame Cipher API
+slug: overview
+description: Explore capabilities, core concepts, and quick starts for integrating the HollowFrame Cipher API into your app.
+---
+
+Welcome to **HollowFrame** — a playful developer platform for encrypting, sharing, and validating messages in real time.  
+This overview orients you in minutes so you can ship secure features without the security headache.
+
+## Why HollowFrame?
+
+- **Strong primitives**: AES-GCM, Ed25519, and time-boxed token sealing out-of-the-box.
+- **Zero‑trust by default**: Client keys never leave the device. Ephemeral tokens scoped per action.
+- **Developer‑first**: Simple REST & WebSocket APIs, typed SDKs, and copy‑pasteable examples.
+
+<CardGroup>
+  <Card title="Quickstart" icon="fa-solid fa-bolt" href="/learn/quickstart" />
+  <Card title="Deep Dive" icon="fa-solid fa-layer-group" href="/learn/deep-dive" />
+  <Card title="API Reference" icon="fa-solid fa-code" href="/api-reference" />
+  <Card title="Changelog" icon="fa-solid fa-clock-rotate-left" href="/changelog" />
+</CardGroup>
+
+---
+
+## Core concepts
+
+### 1) Ciphers
+A **cipher** is a named policy describing how data is encrypted (algorithm, key length, rotation window). You can have multiple ciphers per workspace (e.g., `messages`, `files`, `payments`).
+
+### 2) Seals
+A **seal** is a short‑lived, signed token authorizing one operation (encrypt, decrypt, validate). Seals are minted serverside and redeemed clientside.
+
+### 3) Frames
+A **frame** is the envelope that travels over the wire. Frames bundle metadata (version, cipher id, ttl) with your ciphertext.
+
+> TL;DR: **Ciphers** define policy ➜ **Seals** authorize work ➜ **Frames** carry results.
+
+---
+
+## Architecture at a glance
+
+```
+[ client ] --(mint seal)--> [ your server ] --(verify)--> [ HollowFrame ]
+     |                                              |
+     |<-- sealed token (1–5 min TTL) ---------------|
+     |--(encrypt/decrypt with seal)------------------------------>|
+     |<---------------------- frame / result ---------------------|
+```
+
+---
+
+## Try it in 90 seconds
+
+### 1) Create an API key
+Head to your HollowFrame dashboard and create a **Server API Key**. Store it as `HF_API_KEY`.
+
+### 2) Mint a seal (server)
+```bash
+curl -s https://api.hollowframe.dev/v1/seals \\
+  -H "Authorization: Bearer $HF_API_KEY" \\
+  -H "Content-Type: application/json" \\
+  -d '{
+    "scope": "encrypt",
+    "cipherId": "messages",
+    "ttlSeconds": 120
+  }'
+```
+
+> The response contains a `seal` string. Pass it to your client.
+
+### 3) Encrypt on the client (TypeScript)
+```ts
+import { HollowFrame } from "hollowframe";
+
+const hf = new HollowFrame({ seal: "<SEAL_FROM_STEP_2>" });
+
+const frame = await hf.encrypt({
+  plaintext: "meet at the fountain at midnight",
+  associatedData: { channel: "midnight-run" }
+});
+
+console.log(frame.ciphertext.substring(0, 32) + "...");
+```
+
+### 4) Decrypt later (TypeScript)
+```ts
+const message = await hf.decrypt(frame);
+console.log(message.plaintext); // "meet at the fountain at midnight"
+```
+
+---
+
+## Production checklist
+
+- Rotate seals frequently (default TTL ≤ 5 minutes).
+- Use **separate ciphers** per data domain.
+- Store **frames**, not raw plaintext.
+- Validate **associated data** on decrypt.
+- Log **seal issuance** for auditability.
+
+<Callout title="Security tip" icon="fa-solid fa-shield-halved">
+Never send your **Server API Key** to the client. Only send short‑lived **seals**.
+</Callout>
+
+---
+
+## Next steps
+
+- Read the **Quickstart** to build a full flow: [/learn/quickstart](/learn/quickstart)
+- Explore internals in the **Deep Dive**: [/learn/deep-dive](/learn/deep-dive)
+- Jump straight to the **API Reference**: [/api-reference](/api-reference)
+- Watch changes in the **Changelog**: [/changelog](/changelog)

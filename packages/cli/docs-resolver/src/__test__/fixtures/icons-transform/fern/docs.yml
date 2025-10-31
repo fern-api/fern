@@ -1,0 +1,114 @@
+# yaml-language-server: $schema=https://schema.buildwithfern.dev/docs-yml.json
+
+instances:
+  - url: example.docs.buildwithfern.com
+
+title: Icon Coverage Demo
+
+layout:
+  tabs-placement: header
+  searchbar-placement: header
+
+# 1) Tabs (TabConfig.icon)
+tabs:
+  home:
+    display-name: Home
+    icon: docs/assets/tab-home.svg
+  guides:
+    display-name: Guides
+    icon: docs/assets/tab-guides.svg
+  api:
+    display-name: API
+    icon: docs/assets/tab-api.svg
+
+# Also demonstrate product cards in the header area
+products:
+  - display-name: Cloud
+    path: docs/products/cloud.yml
+    icon: docs/assets/product-cloud.svg # ProductConfig.icon
+    image: docs/assets/product-cloud-card.png
+
+navbar-links:
+  - type: minimal
+    text: Changelog
+    href: /changelog
+    icon: docs/assets/nav-changelog.svg # NavbarLinkConfig.icon
+    rightIcon: docs/assets/arrow-right.svg # NavbarLinkConfig.rightIcon
+  - type: github
+    value: https://github.com/acme-inc/awesome
+
+# 2) Navigation with icons in many places
+navigation:
+  # Untabbed items under HOME
+  - tab: home
+    layout:
+      - section: Getting Started
+        icon: docs/assets/section-getting-started.svg # SectionConfiguration.icon
+        contents:
+          - page: Welcome
+            path: docs/pages/welcome.mdx
+            icon: docs/assets/page-welcome.svg # PageConfiguration.icon
+          - page: Installation
+            path: docs/pages/installation.mdx
+            icon: docs/assets/page-install.svg # PageConfiguration.icon
+          - link: External Guide
+            href: https://example.com/guide
+            icon: docs/assets/link-external.svg # LinkConfiguration.icon
+
+      - changelog: changelog # ChangelogConfiguration.icon
+        title: Changelog
+        icon: docs/assets/changelog.svg
+
+  # 3) Tab with standard layout items
+  - tab: guides
+    layout:
+      - section: Learn
+        icon: docs/assets/section-learn.svg
+        contents:
+          - page: Concepts
+            path: docs/pages/concepts.mdx
+            icon: docs/assets/page-concepts.svg
+
+  # 4) Tab with variants (TabVariant.icon)
+  - tab: guides
+    variants:
+      - title: Beginners
+        default: true
+        icon: docs/assets/variant-beginners.svg # TabVariant.icon
+        layout:
+          - page: Quickstart
+            path: docs/pages/quickstart.mdx
+            icon: docs/assets/page-quickstart.svg
+      - title: Advanced
+        icon: docs/assets/variant-advanced.svg # TabVariant.icon
+        layout:
+          - page: Deep Dive
+            path: docs/pages/deep-dive.mdx
+            icon: docs/assets/page-deep-dive.svg
+
+  # 5) API Reference with icons across multiple nested layout types
+  - tab: api
+    layout:
+      - api: Public API
+        icon: docs/assets/api-root.svg # ApiReferenceConfiguration.icon
+        summary: docs/api/summary.mdx
+        layout:
+          # ApiReferenceSectionConfiguration (custom section grouping)
+          - section: Core
+            icon: docs/assets/api-section-core.svg # ApiReferenceSectionConfiguration.icon
+            contents:
+              - page:
+                  icon: docs/assets/api-page-usage.svg
+
+          # ApiReferencePackageConfigurationWithOptions (package with options)
+          - Core Admin:
+              title: Admin
+              icon: docs/assets/api-package-admin.svg # ApiReferencePackageConfigurationWithOptions.icon
+              contents:
+                - page:
+                    icon: docs/assets/api-page-policies.svg
+
+          # ApiReferenceEndpointConfiguration (explicit endpoint object with icon)
+          - endpoint:
+              title: Get Pet
+              icon: docs/assets/api-endpoint-getpet.svg # ApiReferenceEndpointConfiguration.icon

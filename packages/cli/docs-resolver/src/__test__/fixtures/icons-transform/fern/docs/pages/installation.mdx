@@ -1,0 +1,86 @@
+---
+title: Installation
+subtitle: Set up the HollowFrame CLI and SDK in minutes.
+slug: installation
+description: Install HollowFrame using npm, brew, or curl. Learn how to verify your setup and connect to the Hollowverse.
+---
+
+# ⚙️ Installation Guide
+
+Installing **HollowFrame** is simple, no matter your platform or vibe.
+
+## 1. Using npm
+
+If you're a JavaScript or TypeScript developer, install the SDK via npm:
+
+```bash
+npm install -g hollowframe
+```
+
+To verify installation:
+
+```bash
+hollow --version
+```
+
+## 2. Using Homebrew
+
+Prefer your binaries brewed fresh? Use Homebrew:
+
+```bash
+brew tap hollowframe/hollow
+brew install hollow
+```
+
+Once installed, run:
+
+```bash
+hollow init
+```
+
+You'll be greeted by the HollowFrame CLI wizard that walks you through:
+- Connecting your account
+- Creating your first workspace
+- Generating a local config file
+
+## 3. Using Curl (Manual Install)
+
+If you're running headless servers or lightweight containers:
+
+```bash
+curl -fsSL https://get.hollowframe.dev/install.sh | bash
+```
+
+This will install the binary to `/usr/local/bin/hollow`.
+
+---
+
+## 🔍 Verify Your Setup
+
+You can test your setup by running:
+
+```bash
+hollow ping
+```
+
+Expected output:
+
+```
+🌐 Connected to Hollowverse
+✅ Authenticated as user@example.com
+```
+
+If you see this — congratulations, you're connected!
+
+<CardGroup>
+  <Card 
+    title="Next: Quickstart"
+    icon="fa-solid fa-bolt"
+    href="/learn/quickstart"
+  />
+  <Card
+    title="Docs Home"
+    icon="fa-solid fa-book-open"
+    href="/"
+  />
+</CardGroup>

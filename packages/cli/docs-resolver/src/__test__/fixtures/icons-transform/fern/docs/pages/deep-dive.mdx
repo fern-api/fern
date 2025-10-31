@@ -1,0 +1,65 @@
+---
+title: Deep Dive
+subtitle: Understand the core architecture of Hollowframe.
+slug: deep-dive
+description: Learn how Hollowframe manages distributed computation, frame synchronization, and event propagation across nodes.
+---
+
+# 🧠 Deep Dive into Hollowframe
+
+Now that you’ve built your first frame, let’s explore how the Hollowframe runtime actually works.
+
+## The Concept of Frames
+
+A **Frame** is a self-contained reactive node that runs in the Hollowverse.  
+It can send and receive *signals* from other frames, forming a mesh of reactive connections.
+
+Each frame is defined by its lifecycle hooks and event bindings.
+
+```ts
+import { defineFrame } from "hollowframe";
+
+export default defineFrame({
+  name: "starlight",
+  onInit() {
+    console.log("Frame initialized ✨");
+  },
+  onSignal(signal) {
+    console.log("Received signal:", signal);
+  },
+});
+```
+
+## Frame Synchronization
+
+When multiple frames run together, Hollowframe automatically synchronizes their state using **quantum deltas**.  
+This ensures all connected nodes stay consistent—even under network partition or latency.
+
+```
+[Frame: starlight] — emits delta → [Frame: nebula]
+```
+
+Each delta includes timestamped state snapshots and merge priorities.
+
+## The Hollowverse Network
+
+Frames communicate through the **Hollowverse**, our decentralized mesh powered by CRDTs and gRPC streaming.  
+When you deploy a frame, it becomes part of this persistent topology.
+
+## Visualization
+
+Inside the [Hollowverse Dashboard](https://app.hollowframe.dev), each frame is represented as a glowing orb.  
+Data transfer lines pulse in real time, showing active signal flow between frames.
+
+<CardGroup>
+  <Card 
+    title="Architecture Overview"
+    icon="fa-solid fa-diagram-project"
+    href="/guides/architecture"
+  />
+  <Card
+    title="Signal Protocol Docs"
+    icon="fa-solid fa-bolt"
+    href="/api-reference/signals"
+  />
+</CardGroup>

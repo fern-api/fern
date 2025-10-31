@@ -1,0 +1,13 @@
+tabs:
+  cloud:
+    display-name: Cloud
+    icon: ../assets/product-cloud-tab.svg
+
+navigation:
+  - tab: cloud
+    layout:
+      - page: Cloud Overview
+        path: ../pages/cloud/overview.mdx
+        icon: ../assets/product-cloud-overview.svg
+      - api: Cloud API
+        icon: ../assets/product-cloud-api.svg
