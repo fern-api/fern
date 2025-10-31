@@ -1970,7 +1970,7 @@ await client.Sysprop.GetNumWarmInstancesAsync();
 </details>
 
 ## V2 Problem
-<details><summary><code>client.V2.Problem.<a href="/src/SeedTrace/V2/Problem/ProblemClient.cs">GetLightweightProblemsAsync</a>() -> IEnumerable<SeedTrace.V2.LightweightProblemInfoV2></code></summary>
+<details><summary><code>client.V2.Problem.<a href="/src/SeedTrace/V2/Problem/ProblemClient.cs">GetLightweightProblemsAsync</a>() -> IEnumerable<LightweightProblemInfoV2></code></summary>
 <dl>
 <dd>
 
@@ -2009,7 +2009,7 @@ await client.V2.Problem.GetLightweightProblemsAsync();
 </dl>
 </details>
 
-<details><summary><code>client.V2.Problem.<a href="/src/SeedTrace/V2/Problem/ProblemClient.cs">GetProblemsAsync</a>() -> IEnumerable<SeedTrace.V2.ProblemInfoV2></code></summary>
+<details><summary><code>client.V2.Problem.<a href="/src/SeedTrace/V2/Problem/ProblemClient.cs">GetProblemsAsync</a>() -> IEnumerable<ProblemInfoV2></code></summary>
 <dl>
 <dd>
 
@@ -2048,7 +2048,7 @@ await client.V2.Problem.GetProblemsAsync();
 </dl>
 </details>
 
-<details><summary><code>client.V2.Problem.<a href="/src/SeedTrace/V2/Problem/ProblemClient.cs">GetLatestProblemAsync</a>(problemId) -> SeedTrace.V2.ProblemInfoV2</code></summary>
+<details><summary><code>client.V2.Problem.<a href="/src/SeedTrace/V2/Problem/ProblemClient.cs">GetLatestProblemAsync</a>(problemId) -> ProblemInfoV2</code></summary>
 <dl>
 <dd>
 
@@ -2102,7 +2102,7 @@ await client.V2.Problem.GetLatestProblemAsync("problemId");
 </dl>
 </details>
 
-<details><summary><code>client.V2.Problem.<a href="/src/SeedTrace/V2/Problem/ProblemClient.cs">GetProblemVersionAsync</a>(problemId, problemVersion) -> SeedTrace.V2.ProblemInfoV2</code></summary>
+<details><summary><code>client.V2.Problem.<a href="/src/SeedTrace/V2/Problem/ProblemClient.cs">GetProblemVersionAsync</a>(problemId, problemVersion) -> ProblemInfoV2</code></summary>
 <dl>
 <dd>
 
@@ -2165,7 +2165,7 @@ await client.V2.Problem.GetProblemVersionAsync("problemId", 1);
 </details>
 
 ## V2 V3 Problem
-<details><summary><code>client.V2.V3.Problem.<a href="/src/SeedTrace/V2/V3/Problem/ProblemClient.cs">GetLightweightProblemsAsync</a>() -> IEnumerable<SeedTrace.V2.V3.LightweightProblemInfoV2></code></summary>
+<details><summary><code>client.V2.V3.Problem.<a href="/src/SeedTrace/V2/V3/Problem/ProblemClient.cs">GetLightweightProblemsAsync</a>() -> IEnumerable<LightweightProblemInfoV2></code></summary>
 <dl>
 <dd>
 
@@ -2204,7 +2204,7 @@ await client.V2.V3.Problem.GetLightweightProblemsAsync();
 </dl>
 </details>
 
-<details><summary><code>client.V2.V3.Problem.<a href="/src/SeedTrace/V2/V3/Problem/ProblemClient.cs">GetProblemsAsync</a>() -> IEnumerable<SeedTrace.V2.V3.ProblemInfoV2></code></summary>
+<details><summary><code>client.V2.V3.Problem.<a href="/src/SeedTrace/V2/V3/Problem/ProblemClient.cs">GetProblemsAsync</a>() -> IEnumerable<ProblemInfoV2></code></summary>
 <dl>
 <dd>
 
@@ -2243,7 +2243,7 @@ await client.V2.V3.Problem.GetProblemsAsync();
 </dl>
 </details>
 
-<details><summary><code>client.V2.V3.Problem.<a href="/src/SeedTrace/V2/V3/Problem/ProblemClient.cs">GetLatestProblemAsync</a>(problemId) -> SeedTrace.V2.V3.ProblemInfoV2</code></summary>
+<details><summary><code>client.V2.V3.Problem.<a href="/src/SeedTrace/V2/V3/Problem/ProblemClient.cs">GetLatestProblemAsync</a>(problemId) -> ProblemInfoV2</code></summary>
 <dl>
 <dd>
 
@@ -2297,7 +2297,7 @@ await client.V2.V3.Problem.GetLatestProblemAsync("problemId");
 </dl>
 </details>
 
-<details><summary><code>client.V2.V3.Problem.<a href="/src/SeedTrace/V2/V3/Problem/ProblemClient.cs">GetProblemVersionAsync</a>(problemId, problemVersion) -> SeedTrace.V2.V3.ProblemInfoV2</code></summary>
+<details><summary><code>client.V2.V3.Problem.<a href="/src/SeedTrace/V2/V3/Problem/ProblemClient.cs">GetProblemVersionAsync</a>(problemId, problemVersion) -> ProblemInfoV2</code></summary>
 <dl>
 <dd>
 
