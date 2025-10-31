@@ -33,7 +33,6 @@
     },
     {
       "fixtures": [
-        "nullable-optional",
         "pagination-custom",
         "websocket-bearer-auth",
         "single-url-environment-default:with-custom-config",
@@ -98,7 +97,6 @@
         "undiscriminated-union-with-response-property",
         "oauth-client-credentials-environment-variables",
         "oauth-client-credentials-nested-root",
-        "nullable",
         "auth-environment-variables",
         "path-parameters",
         "literal"
@@ -115,7 +113,6 @@
         "object",
         "streaming-parameter",
         "file-upload-openapi",
-        "required-nullable",
         "examples:no-custom-config"
       ],
       "groupTotalTimeSeconds": 1447
