@@ -2,3 +2,5 @@
 api:
   specs:
     - openapi: ../openapi.yml
+      settings:
+        coerce-enums-to-literals: true
