@@ -4203,6 +4203,16 @@
             }
           ]
         },
+        "disable-analytics": {
+          "oneOf": [
+            {
+              "type": "boolean"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
         "dark-mode-code": {
           "oneOf": [
             {
