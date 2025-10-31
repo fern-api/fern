@@ -2,6 +2,14 @@
 
 - changelogEntry:
     - summary: |
+        Upgrade fdr sdk to 0.139.40
+      type: fix
+  irVersion: 61
+  createdAt: "2025-10-31"
+  version: 0.101.5
+
+- changelogEntry:
+    - summary: |
         Fix `coerce-enums-to-literals` setting to coerce single value enums to literals.
       type: fix
   irVersion: 61
