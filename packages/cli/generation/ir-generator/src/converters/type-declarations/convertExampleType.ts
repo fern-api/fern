@@ -19,6 +19,7 @@ import {
     ExampleTypeReference,
     ExampleTypeReferenceShape,
     ExampleTypeShape,
+    ExampleUnionBaseProperty,
     PrimitiveTypeV1
 } from "@fern-api/ir-sdk";
 import { IdGenerator } from "@fern-api/ir-utils";
@@ -105,8 +106,8 @@ export function convertTypeExample({
                       ? rawSingleUnionType.type
                       : undefined;
 
-            const baseProperties: ExampleObjectProperty[] = Object.entries(rawUnion["base-properties"] ?? {})
-                .map<ExampleObjectProperty | undefined>(([propertyName, property]) => {
+            const baseProperties: ExampleUnionBaseProperty[] = Object.entries(rawUnion["base-properties"] ?? {})
+                .map<ExampleUnionBaseProperty | undefined>(([propertyName, property]) => {
                     const propertyExample = example[propertyName];
                     if (propertyExample == null) {
                         return undefined;
@@ -124,12 +125,10 @@ export function convertTypeExample({
                             typeResolver,
                             exampleResolver,
                             workspace
-                        }),
-                        propertyAccess: undefined,
-                        originalTypeDeclaration: typeName
+                        })
                     };
                 })
-                .filter((property): property is ExampleObjectProperty => property != null);
+                .filter((property): property is ExampleUnionBaseProperty => property != null);
 
             const extendProperties: ExampleObjectProperty[] = (
                 typeof rawUnion.extends === "undefined"

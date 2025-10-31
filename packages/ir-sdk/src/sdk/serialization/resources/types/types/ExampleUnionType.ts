@@ -17,7 +17,7 @@ export const ExampleUnionType: core.serialization.ObjectSchema<
         .list(core.serialization.lazyObject(() => serializers.ExampleObjectProperty))
         .optional(),
     baseProperties: core.serialization
-        .list(core.serialization.lazyObject(() => serializers.ExampleObjectProperty))
+        .list(core.serialization.lazyObject(() => serializers.ExampleUnionBaseProperty))
         .optional(),
 });
 
@@ -26,6 +26,6 @@ export declare namespace ExampleUnionType {
         discriminant: NameAndWireValue.Raw;
         singleUnionType: serializers.ExampleSingleUnionType.Raw;
         extendProperties?: serializers.ExampleObjectProperty.Raw[] | null;
-        baseProperties?: serializers.ExampleObjectProperty.Raw[] | null;
+        baseProperties?: serializers.ExampleUnionBaseProperty.Raw[] | null;
     }
 }

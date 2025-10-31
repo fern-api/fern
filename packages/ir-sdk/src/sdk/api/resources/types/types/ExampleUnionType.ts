@@ -10,5 +10,5 @@ export interface ExampleUnionType {
     /** A list of properties inherited from other types */
     extendProperties: FernIr.ExampleObjectProperty[] | undefined;
     /** A list of base properties for the union */
-    baseProperties: FernIr.ExampleObjectProperty[] | undefined;
+    baseProperties: FernIr.ExampleUnionBaseProperty[] | undefined;
 }
