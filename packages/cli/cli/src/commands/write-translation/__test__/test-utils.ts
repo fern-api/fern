@@ -67,7 +67,7 @@ async function createMockProjectFromFernDir(fernDir: AbsoluteFilePath): Promise<
     // Read docs.yml to determine the configuration
     const docsYmlPath = join(fernDir, RelativeFilePath.of("docs.yml"));
     const docsYmlContent = await fs.readFile(docsYmlPath, "utf-8");
-    const parsedDocsYml = yaml.load(docsYmlContent) as any;
+    const parsedDocsYml = yaml.load(docsYmlContent) as Record<string, unknown>;
 
     // Remove debug logging
 
@@ -76,12 +76,17 @@ async function createMockProjectFromFernDir(fernDir: AbsoluteFilePath): Promise<
         workspaceName: undefined,
         absoluteFilePath: fernDir,
         absoluteFilepathToDocsConfig: docsYmlPath,
-        config: parsedDocsYml
+        config: {
+            instances: [],
+            ...parsedDocsYml
+        } as any
     };
 
     return {
         docsWorkspaces: docsWorkspace,
         config: {
+            _absolutePath: fernDir,
+            rawConfig: {},
             organization: "test-org",
             version: "0.0.1"
         } as any,
@@ -105,8 +110,8 @@ export async function verifyTranslationStructure(
         try {
             await fs.stat(translationsDir);
             throw new Error("Expected .translations directory to not exist when no languages are configured");
-        } catch (error: any) {
-            if (error.code !== "ENOENT") {
+        } catch (error: unknown) {
+            if (error instanceof Error && "code" in error && error.code !== "ENOENT") {
                 throw error;
             }
             // This is expected - directory should not exist
@@ -127,8 +132,8 @@ export async function verifyTranslationStructure(
         if (!hashesStat.isFile()) {
             throw new Error(".hashes should be a file");
         }
-    } catch (error: any) {
-        if (error.code === "ENOENT") {
+    } catch (error: unknown) {
+        if (error instanceof Error && "code" in error && error.code === "ENOENT") {
             throw new Error("Expected .hashes file not found in translations directory");
         }
         throw error;

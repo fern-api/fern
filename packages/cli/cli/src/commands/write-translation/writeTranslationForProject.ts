@@ -9,7 +9,6 @@ import { CliContext } from "../../cli-context/CliContext";
 import { transformContentForLanguage } from "./content-transformer";
 import {
     cleanupHashMappings,
-    FileHashMap,
     hasFileChanged,
     loadHashMappings,
     saveHashMappings,
@@ -94,7 +93,10 @@ export async function writeTranslationForProject({
                 if (!fileHasChanged) {
                     // Update stats for all languages (including source) even though we skip processing
                     for (const language of languages) {
-                        languageStats[language]!.filesSkipped++;
+                        const stats = languageStats[language];
+                        if (stats) {
+                            stats.filesSkipped++;
+                        }
                     }
                     cliContext.logger.debug(`[SKIPPED] ${relativePath} (no changes since last translation)`);
                     continue;
@@ -106,7 +108,10 @@ export async function writeTranslationForProject({
                 updateHashForFile(hashMappings, relativePath, originalContent);
 
                 // Process source language for stats tracking but don't create files
-                languageStats[sourceLanguage]!.filesProcessed++;
+                const sourceStats = languageStats[sourceLanguage];
+                if (sourceStats) {
+                    sourceStats.filesProcessed++;
+                }
                 cliContext.logger.debug(
                     `[HASH UPDATED] ${relativePath} -> ${sourceLanguage} (source language - hash only)`
                 );
@@ -131,7 +136,10 @@ export async function writeTranslationForProject({
                     const transformedContent = transformContentForLanguage(transformation, cliContext);
                     await writeFile(destPath, transformedContent, "utf-8");
 
-                    languageStats[language]!.filesProcessed++;
+                    const languageStatsForLang = languageStats[language];
+                    if (languageStatsForLang) {
+                        languageStatsForLang.filesProcessed++;
+                    }
                     cliContext.logger.debug(`[COMPLETED] ${relativePath} -> ${language}/${relativePath}`);
                 }
             }
@@ -139,7 +147,10 @@ export async function writeTranslationForProject({
             await saveHashMappings(translationsDirectory, hashMappings);
 
             for (const language of languages) {
-                const stats = languageStats[language]!;
+                const stats = languageStats[language];
+                if (!stats) {
+                    continue;
+                }
                 aggregateStats.filesProcessed += stats.filesProcessed;
                 aggregateStats.filesSkipped += stats.filesSkipped;
 

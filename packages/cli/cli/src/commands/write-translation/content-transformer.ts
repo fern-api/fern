@@ -1,6 +1,6 @@
+import { CliContext } from "../../cli-context/CliContext";
 import { ContentTransformation } from "./types";
 import { translateYamlContent } from "./yaml-processor";
-import { CliContext } from "../../cli-context/CliContext";
 
 export function transformContentForLanguage(transformation: ContentTransformation, cliContext: CliContext): string {
     const { filePath, language, sourceLanguage, originalContent } = transformation;

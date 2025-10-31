@@ -16,7 +16,7 @@ export const TRANSLATABLE_YAML_KEYS = new Set([
     "api"
 ]);
 
-export function shouldTranslateValue(key: string, value: any): boolean {
+export function shouldTranslateValue(key: string, value: unknown): boolean {
     if (typeof value !== "string") {
         return false;
     }

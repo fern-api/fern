@@ -149,8 +149,8 @@ describe("writeTranslationForProject", () => {
             });
 
             // Verify that the logger output indicates no files were processed on second run
-            const mockInfo = mockCliContext.logger.info as any;
-            const infoMessages = mockInfo.mock.calls.map((call: any) => call[0]);
+            const mockInfo = mockCliContext.logger.info as ReturnType<typeof vi.fn>;
+            const infoMessages = mockInfo.mock.calls.map((call: unknown[]) => call[0]);
 
             // Check that each language shows 0 processed files
             const fixture = FIXTURES["basic-project"];
@@ -159,7 +159,7 @@ describe("writeTranslationForProject", () => {
             // Check target languages (non-source languages)
             for (const language of expectedLanguages) {
                 const languageSummaryMessage = infoMessages.find(
-                    (msg: any) =>
+                    (msg: unknown) =>
                         typeof msg === "string" &&
                         msg.includes(`${language} translation summary:`) &&
                         msg.includes("0 processed")
@@ -170,7 +170,7 @@ describe("writeTranslationForProject", () => {
 
             // Check source language (en) shows hash tracking message
             const sourceLanguageSummaryMessage = infoMessages.find(
-                (msg: any) =>
+                (msg: unknown) =>
                     typeof msg === "string" &&
                     msg.includes("en (source) hash tracking summary:") &&
                     msg.includes("0 processed")
@@ -180,7 +180,7 @@ describe("writeTranslationForProject", () => {
 
             // Check overall summary shows 0 files processed
             const overallSummaryMessage = infoMessages.find(
-                (msg: any) =>
+                (msg: unknown) =>
                     typeof msg === "string" && msg.includes("Overall summary:") && msg.includes("0 files processed")
             );
             expect(overallSummaryMessage).toBeDefined();

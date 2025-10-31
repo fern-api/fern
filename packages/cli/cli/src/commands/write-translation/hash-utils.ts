@@ -50,7 +50,10 @@ export async function saveHashMappings(translationsDirectory: string, hashMappin
     Object.keys(hashMappings)
         .sort()
         .forEach((key) => {
-            sortedMappings[key] = hashMappings[key]!;
+            const value = hashMappings[key];
+            if (value !== undefined) {
+                sortedMappings[key] = value;
+            }
         });
 
     // Create the file content with explanatory comment

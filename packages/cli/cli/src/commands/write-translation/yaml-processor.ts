@@ -1,9 +1,14 @@
 import * as yaml from "js-yaml";
+import { CliContext } from "../../cli-context/CliContext";
 import { shouldTranslateValue } from "./translatable-keys";
 import { translateText } from "./translation-service";
-import { CliContext } from "../../cli-context/CliContext";
 
-export function translateYamlObject(obj: any, language: string, sourceLanguage: string, cliContext: CliContext): any {
+export function translateYamlObject(
+    obj: unknown,
+    language: string,
+    sourceLanguage: string,
+    cliContext: CliContext
+): unknown {
     if (obj === null || obj === undefined) {
         return obj;
     }
@@ -17,7 +22,7 @@ export function translateYamlObject(obj: any, language: string, sourceLanguage: 
     }
 
     if (typeof obj === "object") {
-        const result: any = {};
+        const result: Record<string, unknown> = {};
 
         for (const [key, value] of Object.entries(obj)) {
             if (shouldTranslateValue(key, value)) {
