@@ -27,6 +27,7 @@ import { OpenApiIrConverterContext } from "./OpenApiIrConverterContext";
 import { convertAvailability } from "./utils/convertAvailability";
 import { convertSdkGroupNameToFile } from "./utils/convertSdkGroupName";
 import { convertToEncodingSchema } from "./utils/convertToEncodingSchema";
+import { getDeclarationFileForSchema } from "./utils/getDeclarationFileForSchema";
 import { getGroupNameForSchema } from "./utils/getGroupNameForSchema";
 import {
     getDefaultFromTypeReference,
@@ -42,6 +43,79 @@ const MAX_INT_32 = 2147483647;
 
 const MIN_DOUBLE_64 = -1.7976931348623157e308;
 const MAX_DOUBLE_64 = 1.7976931348623157e308;
+
+/**
+ * Checks if a schema exists as a top-level schema in the IR.
+ * If it does, returns the declaration file where it should be located.
+ * Otherwise, returns undefined.
+ */
+function findTopLevelSchemaFile(
+    schema: EnumSchema | ObjectSchema | OneOfSchema,
+    context: OpenApiIrConverterContext
+): RelativeFilePath | undefined {
+    const schemaName = schema.nameOverride ?? schema.generatedName;
+    const schemaType = getSchemaType(schema);
+
+    // Check in root schemas
+    for (const [id, topLevelSchema] of Object.entries(context.ir.groupedSchemas.rootSchemas)) {
+        if (schemasMatch(topLevelSchema, schemaName, schemaType)) {
+            return getDeclarationFileForSchema(topLevelSchema);
+        }
+    }
+
+    // Check in namespaced schemas
+    for (const [namespace, schemas] of Object.entries(context.ir.groupedSchemas.namespacedSchemas)) {
+        for (const [id, topLevelSchema] of Object.entries(schemas)) {
+            if (schemasMatch(topLevelSchema, schemaName, schemaType)) {
+                return getDeclarationFileForSchema(topLevelSchema);
+            }
+        }
+    }
+
+    return undefined;
+}
+
+/**
+ * Get the schema type string for enum, object, or oneOf schemas.
+ */
+function getSchemaType(schema: EnumSchema | ObjectSchema | OneOfSchema): "enum" | "object" | "oneOf" {
+    // This is a workaround: check for properties that uniquely identify each type
+    if ("values" in schema) {
+        return "enum";
+    }
+    if ("properties" in schema || "allOf" in schema) {
+        return "object";
+    }
+    return "oneOf";
+}
+
+/**
+ * Helper to check if a schema matches the given name and type.
+ */
+function schemasMatch(schema: Schema, targetName: string, targetType: "enum" | "object" | "oneOf"): boolean {
+    // Get the schema name
+    const schemaName = Schema._visit(schema, {
+        primitive: (s) => s.nameOverride ?? s.generatedName,
+        object: (s) => s.nameOverride ?? s.generatedName,
+        array: (s) => s.nameOverride ?? s.generatedName,
+        map: (s) => s.nameOverride ?? s.generatedName,
+        enum: (s) => s.nameOverride ?? s.generatedName,
+        reference: (s) => s.nameOverride ?? s.generatedName,
+        literal: (s) => s.nameOverride ?? s.generatedName,
+        oneOf: (s) => s.nameOverride ?? s.generatedName,
+        optional: (s) => s.nameOverride ?? s.generatedName,
+        nullable: (s) => s.nameOverride ?? s.generatedName,
+        unknown: (s) => s.nameOverride ?? s.generatedName,
+        _other: () => undefined
+    });
+
+    if (schemaName !== targetName) {
+        return false;
+    }
+
+    // Match based on type
+    return schema.type === targetType;
+}
 
 export function buildTypeReference({
     schema,
@@ -739,13 +813,27 @@ export function buildEnumTypeReference({
     context: OpenApiIrConverterContext;
     declarationDepth: number;
 }): RawSchemas.TypeReferenceSchema {
-    const enumTypeDeclaration = buildEnumTypeDeclaration(schema, declarationDepth);
     const name = schema.nameOverride ?? schema.generatedName;
-    context.builder.addType(declarationFile, {
-        name,
-        schema: enumTypeDeclaration.schema
+
+    // Check if this schema exists as a top-level schema
+    const topLevelSchemaFile = findTopLevelSchemaFile(schema, context);
+    const effectiveDeclarationFile = topLevelSchemaFile ?? declarationFile;
+
+    // Only add the type if we haven't encountered it before OR if it should be in the current file
+    if (topLevelSchemaFile == null) {
+        const enumTypeDeclaration = buildEnumTypeDeclaration(schema, declarationDepth);
+        context.builder.addType(declarationFile, {
+            name,
+            schema: enumTypeDeclaration.schema
+        });
+    }
+
+    const prefixedType = getPrefixedType({
+        type: name,
+        fileContainingReference,
+        declarationFile: effectiveDeclarationFile,
+        context
     });
-    const prefixedType = getPrefixedType({ type: name, fileContainingReference, declarationFile, context });
     if (schema.description == null && schema.default == null && schema.title == null) {
         return prefixedType;
     }
@@ -780,19 +868,33 @@ export function buildObjectTypeReference({
     namespace: string | undefined;
     declarationDepth: number;
 }): RawSchemas.TypeReferenceSchema {
-    const objectTypeDeclaration = buildObjectTypeDeclaration({
-        schema,
-        declarationFile,
-        context,
-        namespace,
-        declarationDepth
-    });
     const name = schema.nameOverride ?? schema.generatedName;
-    context.builder.addType(declarationFile, {
-        name,
-        schema: objectTypeDeclaration.schema
+
+    // Check if this schema exists as a top-level schema
+    const topLevelSchemaFile = findTopLevelSchemaFile(schema, context);
+    const effectiveDeclarationFile = topLevelSchemaFile ?? declarationFile;
+
+    // Only add the type if we haven't encountered it before OR if it should be in the current file
+    if (topLevelSchemaFile == null) {
+        const objectTypeDeclaration = buildObjectTypeDeclaration({
+            schema,
+            declarationFile,
+            context,
+            namespace,
+            declarationDepth
+        });
+        context.builder.addType(declarationFile, {
+            name,
+            schema: objectTypeDeclaration.schema
+        });
+    }
+
+    const prefixedType = getPrefixedType({
+        type: name,
+        fileContainingReference,
+        declarationFile: effectiveDeclarationFile,
+        context
     });
-    const prefixedType = getPrefixedType({ type: name, fileContainingReference, declarationFile, context });
     if (schema.description == null && schema.title == null) {
         return prefixedType;
     }
@@ -818,19 +920,33 @@ export function buildOneOfTypeReference({
     namespace: string | undefined;
     declarationDepth: number;
 }): RawSchemas.TypeReferenceSchema {
-    const unionTypeDeclaration = buildOneOfTypeDeclaration({
-        schema,
-        declarationFile,
-        context,
-        namespace,
-        declarationDepth
-    });
     const name = schema.nameOverride ?? schema.generatedName;
-    context.builder.addType(declarationFile, {
-        name,
-        schema: unionTypeDeclaration.schema
+
+    // Check if this schema exists as a top-level schema
+    const topLevelSchemaFile = findTopLevelSchemaFile(schema, context);
+    const effectiveDeclarationFile = topLevelSchemaFile ?? declarationFile;
+
+    // Only add the type if we haven't encountered it before OR if it should be in the current file
+    if (topLevelSchemaFile == null) {
+        const unionTypeDeclaration = buildOneOfTypeDeclaration({
+            schema,
+            declarationFile,
+            context,
+            namespace,
+            declarationDepth
+        });
+        context.builder.addType(declarationFile, {
+            name,
+            schema: unionTypeDeclaration.schema
+        });
+    }
+
+    const prefixedType = getPrefixedType({
+        type: name,
+        fileContainingReference,
+        declarationFile: effectiveDeclarationFile,
+        context
     });
-    const prefixedType = getPrefixedType({ type: name, fileContainingReference, declarationFile, context });
     if (schema.description == null && schema.title == null) {
         return prefixedType;
     }
