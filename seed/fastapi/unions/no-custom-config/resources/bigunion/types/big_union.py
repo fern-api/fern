@@ -231,6 +231,16 @@ class _Factory:
 
 
 class BigUnion(UniversalRootModel):
+    """
+    Examples
+    --------
+    from seed.unions.resources.bigunion import BigUnion_NormalSweet
+
+    BigUnion_NormalSweet(
+        value="example1",
+    )
+    """
+
     factory: typing.ClassVar[_Factory] = _Factory()
 
     if IS_PYDANTIC_V2:
