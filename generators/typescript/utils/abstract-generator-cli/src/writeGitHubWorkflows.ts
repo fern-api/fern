@@ -103,7 +103,6 @@ jobs:
 
     // First condition is for resilience in the event that Fiddle isn't upgraded to include the new flag
     if (
-        publishInfo == null ||
         (publishInfo != null && publishInfo?.shouldGeneratePublishWorkflow == null) ||
         publishInfo?.shouldGeneratePublishWorkflow === true
     ) {
