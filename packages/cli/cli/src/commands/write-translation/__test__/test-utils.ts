@@ -105,11 +105,11 @@ export async function verifyTranslationStructure(
     const fs = await import("fs/promises");
 
     if (expectedLanguages.length === 0) {
-        // Verify no .translations directory was created
-        const translationsDir = join(fernDir, RelativeFilePath.of(".translations"));
+        // Verify no translations directory was created
+        const translationsDir = join(fernDir, RelativeFilePath.of("translations"));
         try {
             await fs.stat(translationsDir);
-            throw new Error("Expected .translations directory to not exist when no languages are configured");
+            throw new Error("Expected translations directory to not exist when no languages are configured");
         } catch (error: unknown) {
             if (error instanceof Error && "code" in error && error.code !== "ENOENT") {
                 throw error;
@@ -119,22 +119,22 @@ export async function verifyTranslationStructure(
         return;
     }
 
-    const translationsDir = join(fernDir, RelativeFilePath.of(".translations"));
+    const translationsDir = join(fernDir, RelativeFilePath.of("translations"));
     const translationsStat = await fs.stat(translationsDir);
     if (!translationsStat.isDirectory()) {
-        throw new Error(".translations should be a directory");
+        throw new Error("translations should be a directory");
     }
 
-    // Verify .hashes file was created
-    const hashesFile = join(translationsDir, RelativeFilePath.of(".hashes"));
+    // Verify hashes file was created
+    const hashesFile = join(translationsDir, RelativeFilePath.of("hashes"));
     try {
         const hashesStat = await fs.stat(hashesFile);
         if (!hashesStat.isFile()) {
-            throw new Error(".hashes should be a file");
+            throw new Error("hashes should be a file");
         }
     } catch (error: unknown) {
         if (error instanceof Error && "code" in error && error.code === "ENOENT") {
-            throw new Error("Expected .hashes file not found in translations directory");
+            throw new Error("Expected hashes file not found in translations directory");
         }
         throw error;
     }

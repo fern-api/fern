@@ -16,10 +16,10 @@ export function calculateContentHash(content: string): string {
 }
 
 /**
- * Load hash mappings from .hashes file
+ * Load hash mappings from hashes file
  */
 export async function loadHashMappings(translationsDirectory: string): Promise<FileHashMap> {
-    const hashesFilePath = path.join(translationsDirectory, ".hashes");
+    const hashesFilePath = path.join(translationsDirectory, "hashes");
 
     if (!existsSync(hashesFilePath)) {
         return {};
@@ -40,10 +40,10 @@ export async function loadHashMappings(translationsDirectory: string): Promise<F
 }
 
 /**
- * Save hash mappings to .hashes file
+ * Save hash mappings to hashes file
  */
 export async function saveHashMappings(translationsDirectory: string, hashMappings: FileHashMap): Promise<void> {
-    const hashesFilePath = path.join(translationsDirectory, ".hashes");
+    const hashesFilePath = path.join(translationsDirectory, "hashes");
     const sortedMappings: FileHashMap = {};
 
     // Sort keys for consistent file format

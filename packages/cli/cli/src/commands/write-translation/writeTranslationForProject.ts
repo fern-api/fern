@@ -39,7 +39,7 @@ export async function writeTranslationForProject({
 
     await cliContext.runTaskForWorkspace(docsWorkspace, async (context) => {
         const fernDirectory = docsWorkspace.absoluteFilePath;
-        const translationsDirectory = join(fernDirectory, RelativeFilePath.of(".translations"));
+        const translationsDirectory = join(fernDirectory, RelativeFilePath.of("translations"));
 
         const sourceLanguage = languages[0];
         if (!sourceLanguage) {
@@ -197,7 +197,7 @@ export async function writeTranslationForProject({
             }
         }
         context.logger.info(
-            `Source language (${sourceLanguage}) values are tracked as hashes in .translations/.hashes`
+            `Source language (${sourceLanguage}) values are tracked as hashes in translations/hashes`
         );
     });
 }
@@ -211,8 +211,8 @@ async function collectFiles(
     const entries = await readdir(baseDirectory);
 
     for (const entry of entries) {
-        // skip the .translations directory
-        if (entry === ".translations") {
+        // skip the translations directory
+        if (entry === "translations") {
             continue;
         }
 
