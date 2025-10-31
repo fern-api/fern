@@ -27,6 +27,7 @@ export interface DocsConfiguration {
     pageActions?: FernDocsConfig.PageActionsConfig;
     experimental?: FernDocsConfig.ExperimentalConfig;
     defaultLanguage?: FernDocsConfig.ProgrammingLanguage;
+    languages?: FernDocsConfig.Language[];
     aiChat?: FernDocsConfig.AiChatConfig;
     aiSearch?: FernDocsConfig.AiChatConfig;
     metadata?: FernDocsConfig.MetadataConfig;
@@ -38,6 +39,7 @@ export interface DocsConfiguration {
     typography?: FernDocsConfig.DocsTypographyConfig;
     layout?: FernDocsConfig.LayoutConfig;
     settings?: FernDocsConfig.DocsSettingsConfig;
+    theme?: FernDocsConfig.ThemeConfig;
     integrations?: FernDocsConfig.IntegrationsConfig;
     css?: FernDocsConfig.CssConfig;
     js?: FernDocsConfig.JsConfig;
