@@ -170,7 +170,10 @@ export class DynamicSnippetsGeneratorContext extends AbstractDynamicSnippetsGene
                 const symbolRef = this.nameRegistry.reference({ fromSymbol, toSymbol });
                 return swift.TypeReference.symbol(symbolRef);
             },
-            nullable: (ref) => swift.TypeReference.nullable(this.getSwiftTypeReferenceFromScope(ref.value, fromSymbol)),
+            nullable: (ref) =>
+                this.customConfig?.nullableAsOptional
+                    ? swift.TypeReference.optional(this.getSwiftTypeReferenceFromScope(ref.value, fromSymbol))
+                    : swift.TypeReference.nullable(this.getSwiftTypeReferenceFromScope(ref.value, fromSymbol)),
             optional: (ref) => swift.TypeReference.optional(this.getSwiftTypeReferenceFromScope(ref.value, fromSymbol)),
             primitive: (ref) => {
                 return visitDiscriminatedUnion(ref, "value")._visit({
