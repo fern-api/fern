@@ -2,11 +2,11 @@
 
 - changelogEntry:
     - summary: |
-        Add `coerce-single-value-enums-to-literals` setting to `generators.yml` to control whether to coerce single value enums to literals.
-      type: feat
+        Fix `coerce-enums-to-literals` setting to coerce single value enums to literals.
+      type: fix
   irVersion: 61
   createdAt: "2025-10-31"
-  version: 0.102.0
+  version: 0.101.4
 
 - changelogEntry:
     - summary: |
