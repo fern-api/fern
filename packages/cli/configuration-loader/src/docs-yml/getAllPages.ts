@@ -65,6 +65,14 @@ function getAllPagesFromNavigationConfig(navigation: docsYml.DocsNavigationConfi
                             item
                         });
                     });
+                } else if (tab.child.type === "variants") {
+                    return tab.child.variants.flatMap((variant) =>
+                        variant.layout.flatMap((item) => {
+                            return getAllPagesFromNavigationItem({
+                                item
+                            });
+                        })
+                    );
                 } else if (tab.child.type === "changelog") {
                     return tab.child.changelog;
                 }

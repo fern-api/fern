@@ -4,15 +4,16 @@ import type { HttpResponsePromise, RawResponse } from "../fetcher/index.js";
  * A page of results from a paginated API.
  *
  * @template T The type of the items in the page.
+ * @template R The type of the API response.
  */
-export class Page<T> implements AsyncIterable<T> {
+export class Page<T, R = unknown> implements AsyncIterable<T> {
     public data: T[];
     public rawResponse: RawResponse;
+    public response: R;
 
-    private response: unknown;
-    private _hasNextPage: (response: unknown) => boolean;
-    private getItems: (response: unknown) => T[];
-    private loadNextPage: (response: unknown) => HttpResponsePromise<unknown>;
+    private _hasNextPage: (response: R) => boolean;
+    private getItems: (response: R) => T[];
+    private loadNextPage: (response: R) => HttpResponsePromise<R>;
 
     constructor({
         response,
@@ -21,11 +22,11 @@ export class Page<T> implements AsyncIterable<T> {
         getItems,
         loadPage,
     }: {
-        response: unknown;
+        response: R;
         rawResponse: RawResponse;
-        hasNextPage: (response: unknown) => boolean;
-        getItems: (response: unknown) => T[];
-        loadPage: (response: unknown) => HttpResponsePromise<any>;
+        hasNextPage: (response: R) => boolean;
+        getItems: (response: R) => T[];
+        loadPage: (response: R) => HttpResponsePromise<R>;
     }) {
         this.response = response;
         this.rawResponse = rawResponse;

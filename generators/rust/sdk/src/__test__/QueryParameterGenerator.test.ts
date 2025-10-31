@@ -152,6 +152,64 @@ function createMockContext(ir: IntermediateRepresentation): SdkGeneratorContext 
                 .replace(/([A-Z])/g, "_$1")
                 .toLowerCase()
                 .replace(/^_/, "");
+        },
+        escapeRustKeyword: (name: string) => {
+            // Simple implementation for testing - just returns the name as-is
+            // In production, this would escape Rust keywords with r# prefix
+            const RUST_KEYWORDS = new Set([
+                "as",
+                "break",
+                "const",
+                "continue",
+                "crate",
+                "else",
+                "enum",
+                "extern",
+                "false",
+                "fn",
+                "for",
+                "if",
+                "impl",
+                "in",
+                "let",
+                "loop",
+                "match",
+                "mod",
+                "move",
+                "mut",
+                "pub",
+                "ref",
+                "return",
+                "self",
+                "Self",
+                "static",
+                "struct",
+                "super",
+                "trait",
+                "true",
+                "type",
+                "unsafe",
+                "use",
+                "where",
+                "while",
+                "async",
+                "await",
+                "dyn",
+                "abstract",
+                "become",
+                "box",
+                "do",
+                "final",
+                "macro",
+                "override",
+                "priv",
+                "typeof",
+                "unsized",
+                "virtual",
+                "yield",
+                "try"
+            ]);
+            return RUST_KEYWORDS.has(name) ? `r#${name}` : name;
         }
     } as unknown as SdkGeneratorContext;
 }

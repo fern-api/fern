@@ -12,6 +12,15 @@ service:
     getDirectThread:
       path: ""
       method: GET
+      request:
+        name: GetDirectThreadRequest
+        query-parameters:
+          ids:
+            type: string
+            allow-multiple: true
+          tags:
+            type: string
+            allow-multiple: true
       response: Response
 
 types:

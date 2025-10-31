@@ -85730,9 +85730,9 @@ docs: >-
   "packageMarkers": {},
   "rootApiFile": {
     "contents": {
-      "auth": "BasicAuthScheme",
+      "auth": "basicAuth",
       "auth-schemes": {
-        "BasicAuthScheme": {
+        "basicAuth": {
           "scheme": "basic",
         },
       },
@@ -85759,9 +85759,9 @@ environments:
   Development: https://development.belvo.com
 default-environment: Production
 auth-schemes:
-  BasicAuthScheme:
+  basicAuth:
     scheme: basic
-auth: BasicAuthScheme
+auth: basicAuth
 ",
   },
 }

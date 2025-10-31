@@ -4,8 +4,10 @@
 
 package resources.foldera.service;
 
+import java.lang.String;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import resources.foldera.service.types.Response;
 
 @RequestMapping(
@@ -16,5 +18,5 @@ public interface ServiceService {
       value = "",
       produces = "application/json"
   )
-  Response getDirectThread();
+  Response getDirectThread(@RequestParam("ids") String ids, @RequestParam("tags") String tags);
 }

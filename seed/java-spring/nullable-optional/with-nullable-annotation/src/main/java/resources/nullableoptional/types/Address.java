@@ -27,6 +27,7 @@ import org.jetbrains.annotations.Nullable;
 public final class Address {
   private final String street;
 
+  @Nullable
   private final String city;
 
   private final Optional<String> state;
@@ -39,7 +40,7 @@ public final class Address {
 
   private final OptionalUserId tenantId;
 
-  private Address(String street, String city, Optional<String> state, String zipCode,
+  private Address(String street, @Nullable String city, Optional<String> state, String zipCode,
       Optional<String> country, NullableUserId buildingId, OptionalUserId tenantId) {
     this.street = street;
     this.city = city;
@@ -148,7 +149,7 @@ public final class Address {
   public interface _FinalStage {
     Address build();
 
-    _FinalStage city(@core.Nullable String city);
+    _FinalStage city(@Nullable String city);
 
     _FinalStage state(Optional<String> state);
 
@@ -260,7 +261,7 @@ public final class Address {
 
     @java.lang.Override
     @JsonSetter("city")
-    public _FinalStage city(@core.Nullable String city) {
+    public _FinalStage city(@Nullable String city) {
       this.city = city;
       return this;
     }

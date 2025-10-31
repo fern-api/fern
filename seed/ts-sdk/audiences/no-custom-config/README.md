@@ -38,7 +38,7 @@ following namespace:
 ```typescript
 import { SeedAudiences } from "@fern/audiences";
 
-const request: SeedAudiences.FindRequest = {
+const request: SeedAudiences.GetDirectThreadRequest = {
     ...
 };
 ```

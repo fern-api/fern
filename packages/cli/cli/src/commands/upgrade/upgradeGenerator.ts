@@ -11,9 +11,32 @@ import { FernRegistry } from "@fern-fern/generators-sdk";
 import chalk from "chalk";
 import { readFile, writeFile } from "fs/promises";
 import path from "path";
+import semver from "semver";
 import YAML from "yaml";
 
 import { CliContext } from "../../cli-context/CliContext";
+
+interface SkippedMajorUpgrade {
+    generatorName: string;
+    currentVersion: string;
+    latestMajorVersion: string;
+}
+
+function getChangelogUrl(generatorName: string): string | undefined {
+    const changelogMap: Record<string, string> = {
+        "fernapi/fern-typescript-sdk": "https://buildwithfern.com/learn/sdks/generators/typescript/changelog",
+        "fernapi/fern-typescript-node-sdk": "https://buildwithfern.com/learn/sdks/generators/typescript/changelog",
+        "fernapi/fern-python-sdk": "https://buildwithfern.com/learn/sdks/generators/python/changelog",
+        "fernapi/fern-go-sdk": "https://buildwithfern.com/learn/sdks/generators/go/changelog",
+        "fernapi/fern-java-sdk": "https://buildwithfern.com/learn/sdks/generators/java/changelog",
+        "fernapi/fern-csharp-sdk": "https://buildwithfern.com/learn/sdks/generators/csharp/changelog",
+        "fernapi/fern-php-sdk": "https://buildwithfern.com/learn/sdks/generators/php/changelog",
+        "fernapi/fern-ruby-sdk": "https://buildwithfern.com/learn/sdks/generators/ruby/changelog",
+        "fernapi/fern-swift-sdk": "https://buildwithfern.com/learn/sdks/generators/swift/changelog"
+    };
+
+    return changelogMap[generatorName];
+}
 
 export async function loadAndUpdateGenerators({
     absolutePathToWorkspace,
@@ -31,11 +54,11 @@ export async function loadAndUpdateGenerators({
     includeMajor: boolean;
     channel: FernRegistry.generators.ReleaseType | undefined;
     cliVersion: string;
-}): Promise<string | undefined> {
+}): Promise<{ updatedConfiguration: string | undefined; skippedMajorUpgrades: SkippedMajorUpgrade[] }> {
     const filepath = await getPathToGeneratorsConfiguration({ absolutePathToWorkspace });
     if (filepath == null || !(await doesPathExist(filepath))) {
         context.logger.debug("Generators configuration file was not found, no generators to upgrade.");
-        return undefined;
+        return { updatedConfiguration: undefined, skippedMajorUpgrades: [] };
     }
     const contents = await readFile(filepath);
     context.logger.debug(`Found generators: ${contents.toString()}`);
@@ -46,13 +69,15 @@ export async function loadAndUpdateGenerators({
     const generatorGroups = parsedDocument.get("groups");
     if (generatorGroups == null) {
         context.logger.debug("No groups were found within the generators configuration, no generators to upgrade.");
-        return undefined;
+        return { updatedConfiguration: undefined, skippedMajorUpgrades: [] };
     }
     if (!YAML.isMap(generatorGroups)) {
         context.failAndThrow(`Expected 'groups' to be a map in ${path.relative(process.cwd(), filepath)}`);
-        return undefined;
+        return { updatedConfiguration: undefined, skippedMajorUpgrades: [] };
     }
     context.logger.debug(`Groups found: ${generatorGroups.toString()}`);
+
+    const skippedMajorUpgrades: SkippedMajorUpgrade[] = [];
 
     for (const groupBlock of generatorGroups.items) {
         // The typing appears to be off in this lib, but BLOCK.key.value is meant to always be available
@@ -110,17 +135,43 @@ export async function loadAndUpdateGenerators({
                 context
             });
 
-            if (latestVersion == null) {
-                continue;
+            // Use the latest version if available, otherwise use the current version
+            const versionToUse = latestVersion ?? currentGeneratorVersion;
+
+            if (latestVersion != null) {
+                context.logger.debug(
+                    chalk.green(`Upgrading ${generatorName} from ${currentGeneratorVersion} to ${latestVersion}`)
+                );
+                generator.set("version", latestVersion);
             }
-            context.logger.debug(
-                chalk.green(`Upgrading ${generatorName} from ${currentGeneratorVersion} to ${latestVersion}`)
-            );
-            generator.set("version", latestVersion);
+
+            if (!includeMajor) {
+                const latestMajorVersion = await getLatestGeneratorVersion({
+                    generatorName: normalizedGeneratorName,
+                    cliVersion,
+                    currentGeneratorVersion: versionToUse,
+                    channel,
+                    includeMajor: true,
+                    context
+                });
+
+                if (latestMajorVersion != null) {
+                    const currentParsed = semver.parse(versionToUse);
+                    const latestParsed = semver.parse(latestMajorVersion);
+
+                    if (currentParsed != null && latestParsed != null && latestParsed.major > currentParsed.major) {
+                        skippedMajorUpgrades.push({
+                            generatorName,
+                            currentVersion: versionToUse,
+                            latestMajorVersion
+                        });
+                    }
+                }
+            }
         }
     }
 
-    return parsedDocument.toString();
+    return { updatedConfiguration: parsedDocument.toString(), skippedMajorUpgrades };
 }
 
 export async function upgradeGenerator({
@@ -138,10 +189,11 @@ export async function upgradeGenerator({
     includeMajor: boolean;
     channel: FernRegistry.generators.ReleaseType | undefined;
 }): Promise<void> {
+    const allSkippedMajorUpgrades: SkippedMajorUpgrade[] = [];
+
     await Promise.all(
         apiWorkspaces.map(async (workspace) => {
             await cliContext.runTaskForWorkspace(workspace, async (context) => {
-                // Not totally necessary, but keeping around to ensure the schema is valid
                 const generatorsConfiguration =
                     (await loadRawGeneratorsConfiguration({
                         absolutePathToWorkspace: workspace.absoluteFilePath,
@@ -160,7 +212,7 @@ export async function upgradeGenerator({
                     context.logger.info(`Upgrading generators in workspace: ${workspace.workspaceName}.`);
                 }
 
-                const updatedConfiguration = await loadAndUpdateGenerators({
+                const result = await loadAndUpdateGenerators({
                     absolutePathToWorkspace: workspace.absoluteFilePath,
                     context,
                     generatorFilter: generator,
@@ -174,10 +226,31 @@ export async function upgradeGenerator({
                     absolutePathToWorkspace: workspace.absoluteFilePath
                 });
 
-                if (absolutePathToGeneratorsConfiguration != null && updatedConfiguration != null) {
-                    await writeFile(absolutePathToGeneratorsConfiguration, updatedConfiguration);
+                if (absolutePathToGeneratorsConfiguration != null && result.updatedConfiguration != null) {
+                    await writeFile(absolutePathToGeneratorsConfiguration, result.updatedConfiguration);
                 }
+
+                allSkippedMajorUpgrades.push(...result.skippedMajorUpgrades);
             });
         })
     );
+
+    if (allSkippedMajorUpgrades.length > 0) {
+        cliContext.logger.info("");
+        cliContext.logger.info(chalk.yellow("Major version upgrades available:"));
+        for (const upgrade of allSkippedMajorUpgrades) {
+            cliContext.logger.info(
+                chalk.yellow(`  - ${upgrade.generatorName}: ${upgrade.currentVersion} → ${upgrade.latestMajorVersion}`)
+            );
+            const upgradeCommand =
+                generator != null
+                    ? `fern generator upgrade --generator ${upgrade.generatorName} --include-major`
+                    : `fern generator upgrade --include-major`;
+            cliContext.logger.info(chalk.yellow(`    Run: ${upgradeCommand}`));
+            const changelogUrl = getChangelogUrl(upgrade.generatorName);
+            if (changelogUrl != null) {
+                cliContext.logger.info(chalk.yellow(`    Changelog: ${changelogUrl}`));
+            }
+        }
+    }
 }

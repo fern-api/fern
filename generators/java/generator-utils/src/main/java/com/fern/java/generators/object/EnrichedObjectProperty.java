@@ -62,12 +62,19 @@ public interface EnrichedObjectProperty {
         if (literal().isPresent()) {
             return Optional.empty();
         }
-        return Optional.of(FieldSpec.builder(
-                        poetTypeName(),
-                        KeyWordUtils.getKeyWordCompatibleName(camelCaseKey()),
-                        Modifier.PRIVATE,
-                        Modifier.FINAL)
-                .build());
+        FieldSpec.Builder fieldBuilder = FieldSpec.builder(
+                poetTypeName(),
+                KeyWordUtils.getKeyWordCompatibleName(camelCaseKey()),
+                Modifier.PRIVATE,
+                Modifier.FINAL);
+
+        boolean shouldUseNullableAnnotation =
+                useNullableAnnotation() && isNullable(objectProperty().getValueType());
+        if (shouldUseNullableAnnotation && !poetTypeName().isPrimitive()) {
+            fieldBuilder.addAnnotation(NullableAnnotationUtils.getNullableAnnotation());
+        }
+
+        return Optional.of(fieldBuilder.build());
     }
 
     @Value.Lazy

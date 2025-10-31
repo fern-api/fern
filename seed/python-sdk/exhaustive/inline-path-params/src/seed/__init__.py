@@ -2,9 +2,12 @@
 
 # isort: skip_file
 
+import sys
 import typing
 from importlib import import_module
 
+if sys.getrecursionlimit() < 1234:
+    sys.setrecursionlimit(1234)
 if typing.TYPE_CHECKING:
     from . import endpoints, general_errors, inlined_requests, no_auth, no_req_body, req_with_headers, types
     from .client import AsyncSeedExhaustive, SeedExhaustive

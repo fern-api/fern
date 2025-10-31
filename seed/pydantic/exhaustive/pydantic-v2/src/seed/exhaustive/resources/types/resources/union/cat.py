@@ -10,4 +10,4 @@ class Cat(UniversalBaseModel):
     name: str
     likes_to_meow: bool = pydantic.Field(alias="likesToMeow")
 
-    model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow")  # type: ignore # Pydantic v2
+    model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow")

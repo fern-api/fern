@@ -4,7 +4,7 @@ import { AstNode, Writer } from "./core";
 import { DeclarationType } from "./DeclarationType";
 import { DocComment } from "./DocComment";
 import { Expression } from "./Expression";
-import { Type } from "./Type";
+import { TypeReference } from "./TypeReference";
 
 export declare namespace Property {
     interface Args {
@@ -12,7 +12,7 @@ export declare namespace Property {
         accessLevel?: AccessLevel;
         static_?: boolean;
         declarationType: DeclarationType;
-        type: Type;
+        type: TypeReference;
         defaultValue?: Expression;
         docs?: DocComment;
     }
@@ -23,7 +23,7 @@ export class Property extends AstNode {
     public readonly accessLevel?: AccessLevel;
     public readonly static_?: boolean;
     public readonly declarationType: DeclarationType;
-    public readonly type: Type;
+    public readonly type: TypeReference;
     public readonly defaultValue?: Expression;
     public readonly docs?: DocComment;
 

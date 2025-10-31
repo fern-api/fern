@@ -143,9 +143,6 @@
       "path": "./generators/typescript-v2/dynamic-snippets"
     },
     {
-      "path": "./generators/typescript/playground/browser"
-    },
-    {
       "path": "./packages/cli/api-importers/openapi-to-ir"
     },
     {
@@ -303,6 +300,9 @@
     },
     {
       "path": "./packages/commons/test-utils"
+    },
+    {
+      "path": "./packages/commons/mock-utils"
     },
     {
       "path": "./packages/cli/configuration"

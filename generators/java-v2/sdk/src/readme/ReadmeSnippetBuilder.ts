@@ -18,6 +18,7 @@ export class ReadmeSnippetBuilder extends AbstractReadmeSnippetBuilder {
     private static EXCEPTION_HANDLING_FEATURE_ID: FernGeneratorCli.FeatureId = "EXCEPTION_HANDLING";
     private static BASE_URL_FEATURE_ID: FernGeneratorCli.FeatureId = "BASE_URL";
     private static CUSTOM_HEADERS_FEATURE_ID: FernGeneratorCli.FeatureId = "CUSTOM_HEADERS";
+    private static RAW_RESPONSE_FEATURE_ID: FernGeneratorCli.FeatureId = "ACCESS_RAW_RESPONSE_DATA";
     private static SNIPPET_PACKAGE_NAME = "com.example.usage";
     private static ELLIPSES = java.codeblock("...");
 
@@ -81,6 +82,7 @@ export class ReadmeSnippetBuilder extends AbstractReadmeSnippetBuilder {
             [FernGeneratorCli.StructuredFeatureId.Retries]: { renderer: this.renderRetriesSnippet.bind(this) },
             [FernGeneratorCli.StructuredFeatureId.Timeouts]: { renderer: this.renderTimeoutsSnippet.bind(this) },
             [ReadmeSnippetBuilder.CUSTOM_HEADERS_FEATURE_ID]: { renderer: this.renderCustomHeadersSnippet.bind(this) },
+            [ReadmeSnippetBuilder.RAW_RESPONSE_FEATURE_ID]: { renderer: this.renderRawResponseSnippet.bind(this) },
             ...(this.isPaginationEnabled
                 ? {
                       [FernGeneratorCli.StructuredFeatureId.Pagination]: {
@@ -394,6 +396,37 @@ export class ReadmeSnippetBuilder extends AbstractReadmeSnippetBuilder {
             writer.newLine();
             writer.writeLine("// Request level");
             writer.writeNodeStatement(endpointMethodInvocation);
+        });
+
+        return this.renderSnippet(snippet);
+    }
+
+    private renderRawResponseSnippet(endpoint: EndpointWithFilepath): string {
+        // Get the endpoint method call with withRawResponse()
+        const clientAccess = this.getAccessFromRootClient(endpoint.fernFilepath);
+        const withRawResponseCall = java.invokeMethod({
+            on: clientAccess,
+            method: "withRawResponse",
+            arguments_: []
+        });
+
+        const endpointMethodCall = java.invokeMethod({
+            on: withRawResponseCall,
+            method: this.getEndpointMethodName(endpoint.endpoint),
+            arguments_: [ReadmeSnippetBuilder.ELLIPSES]
+        });
+
+        // Get the endpoint name for the response type
+        const endpointMethodName = this.getEndpointMethodName(endpoint.endpoint);
+        const responseTypeName = this.capitalizeFirstLetter(endpointMethodName) + "HttpResponse";
+
+        const snippet = java.codeblock((writer) => {
+            writer.write(responseTypeName);
+            writer.write(" response = ");
+            writer.writeNodeStatement(endpointMethodCall);
+            writer.newLine();
+            writer.writeLine("System.out.println(response.body());");
+            writer.writeLine('System.out.println(response.headers().get("X-My-Header"));');
         });
 
         return this.renderSnippet(snippet);
@@ -725,5 +758,9 @@ export class ReadmeSnippetBuilder extends AbstractReadmeSnippetBuilder {
         } else {
             return asString.split("\n").slice(2).join("\n");
         }
+    }
+
+    private capitalizeFirstLetter(str: string): string {
+        return str.charAt(0).toUpperCase() + str.slice(1);
     }
 }

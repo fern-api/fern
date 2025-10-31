@@ -48,3 +48,21 @@ func (c *Client) GetFoo(
 	}
 	return response.Body, nil
 }
+
+func (c *Client) UpdateFoo(
+	ctx context.Context,
+	id string,
+	request *fern.UpdateFooRequest,
+	opts ...option.RequestOption,
+) (*fern.Foo, error) {
+	response, err := c.WithRawResponse.UpdateFoo(
+		ctx,
+		id,
+		request,
+		opts...,
+	)
+	if err != nil {
+		return nil, err
+	}
+	return response.Body, nil
+}

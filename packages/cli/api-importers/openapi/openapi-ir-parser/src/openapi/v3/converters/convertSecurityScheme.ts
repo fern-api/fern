@@ -90,7 +90,7 @@ function convertSecuritySchemeHelper(
     } catch (error) {
         taskContext.logger.debug(`Error converting security scheme: ${(error as Error)?.message}`);
     }
-    taskContext.logger.warn(
+    taskContext.logger.debug(
         `Skipping security scheme: ${JSON.stringify(securityScheme, null)} - not currently supported. Please reach out to Fern support team!`
     );
     return undefined;

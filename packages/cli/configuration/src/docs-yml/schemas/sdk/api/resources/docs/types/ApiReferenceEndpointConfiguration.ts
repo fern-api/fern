@@ -12,6 +12,7 @@ export interface ApiReferenceEndpointConfiguration
     slug?: string;
     icon?: string;
     hidden?: boolean;
+    availability?: FernDocsConfig.Availability;
     /** Settings for the api playground that affect this endpoint specifically. */
     playground?: FernDocsConfig.PlaygroundSettings;
 }

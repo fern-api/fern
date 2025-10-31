@@ -187,7 +187,7 @@ export class ExampleEndpointFactory {
                 }
             });
             if (example != null && !isExamplePrimitive(example)) {
-                this.logger.warn(
+                this.logger.debug(
                     `Expected a primitive example but got ${example.type} for path parameter ${
                         pathParameter.name
                     } for ${endpoint.method.toUpperCase()} ${endpoint.path}`
@@ -219,7 +219,7 @@ export class ExampleEndpointFactory {
                 }
             });
             if (example != null && !isExamplePrimitive(example)) {
-                this.logger.warn(
+                this.logger.debug(
                     `Expected a primitive example but got ${example.type} for query parameter ${
                         queryParameter.name
                     } for ${endpoint.method.toUpperCase()} ${endpoint.path}`
@@ -250,7 +250,7 @@ export class ExampleEndpointFactory {
                 }
             });
             if (example != null && !isExamplePrimitive(example)) {
-                this.logger.warn(
+                this.logger.debug(
                     `Expected a primitive example but got ${example.type} for header ${
                         header.name
                     } for ${endpoint.method.toUpperCase()} ${endpoint.path}`
@@ -302,7 +302,7 @@ export class ExampleEndpointFactory {
             });
 
             if (example != null && !isExamplePrimitive(example)) {
-                this.logger.warn(
+                this.logger.debug(
                     `Expected a primitive example but got ${example.type} for global header ${
                         globalHeader.header
                     } for ${endpoint.method.toUpperCase()} ${endpoint.path}`

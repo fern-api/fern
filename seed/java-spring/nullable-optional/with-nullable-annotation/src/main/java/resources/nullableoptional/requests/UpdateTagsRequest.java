@@ -26,13 +26,14 @@ import org.jetbrains.annotations.Nullable;
     builder = UpdateTagsRequest.Builder.class
 )
 public final class UpdateTagsRequest {
+  @Nullable
   private final List<String> tags;
 
   private final Optional<List<String>> categories;
 
   private final Optional<List<String>> labels;
 
-  private UpdateTagsRequest(List<String> tags, Optional<List<String>> categories,
+  private UpdateTagsRequest(@Nullable List<String> tags, Optional<List<String>> categories,
       Optional<List<String>> labels) {
     this.tags = tags;
     this.categories = categories;
@@ -112,7 +113,7 @@ public final class UpdateTagsRequest {
         value = "tags",
         nulls = Nulls.SKIP
     )
-    public Builder tags(List<String> tags) {
+    public Builder tags(@Nullable List<String> tags) {
       this.tags.clear();
       if (tags != null) {
         this.tags.addAll(tags);

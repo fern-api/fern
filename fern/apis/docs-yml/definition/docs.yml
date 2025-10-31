@@ -24,6 +24,24 @@ types:
       - ts
       - js
 
+  Language:
+    enum:
+      - en
+      - es
+      - fr
+      - de
+      - it
+      - pt
+      - ja
+      - zh
+      - ko
+      - el
+      - no
+      - pl
+      - ru
+      - sv
+      - tr
+
   AnalyticsConfig:
     properties:
       segment: optional<SegmentConfig>
@@ -142,6 +160,8 @@ types:
       experimental: optional<ExperimentalConfig>
       "default-language": optional<ProgrammingLanguage>
 
+      languages: optional<list<Language>>
+
       # Deprecated
       "ai-chat": optional<AIChatConfig>
 
@@ -161,6 +181,7 @@ types:
       typography: optional<DocsTypographyConfig>
       layout: optional<LayoutConfig>
       settings: optional<DocsSettingsConfig>
+      theme: optional<ThemeConfig>
 
       # integrations
       integrations: optional<IntegrationsConfig>
@@ -280,6 +301,7 @@ types:
         docs: |
           If `edit-this-page` is set, Fern will add an "Edit this page" link to the bottom of each page that links to the given GitHub repository.
         availability: in-development
+      audiences: optional<Audience>
 
   CustomDomain:
     discriminated: false
@@ -319,6 +341,7 @@ types:
         type: optional<VersionAvailability>
         docs: |
           If `availability` is set to `deprecated`, Fern will display a warning banner on the docs site.
+      audiences: optional<Audience>
 
   Availability:
     enum:
@@ -360,11 +383,34 @@ types:
     type: list<TabbedNavigationItem>
 
   TabbedNavigationItem:
+    discriminated: false
+    union:
+      - TabbedNavigationItemWithLayout
+      - TabbedNavigationItemWithVariants
+
+  TabbedNavigationItemWithLayout:
     properties:
       tab: TabId
       layout:
         type: optional<list<NavigationItem>>
         docs: If `href` is set, `layout` must be null.
+
+  TabbedNavigationItemWithVariants:
+    properties:
+      tab: TabId
+      variants: list<TabVariant>
+
+  TabVariant:
+    extends: [WithPermissions, WithFeatureFlags]
+    properties:
+      title: string
+      subtitle: optional<string>
+      icon: optional<string>
+      layout: list<NavigationItem>
+      slug: optional<string>
+      skip-slug: optional<boolean>
+      hidden: optional<boolean>
+      default: optional<boolean>
 
   NavigationItem:
     discriminated: false
@@ -514,6 +560,28 @@ types:
       http-snippets: optional<HttpSnippetsConfig>
       hide-404-page: optional<boolean>
       use-javascript-as-typescript: optional<boolean>
+      disable-explorer-proxy: optional<boolean>
+
+  ThemeConfig:
+    properties:
+      sidebar: SidebarThemeConfig
+      body: BodyThemeConfig
+      tabs: TabsThemeConfig
+
+  TabsThemeConfig:
+    enum:
+      - default
+      - bubble
+
+  BodyThemeConfig:
+    enum:
+      - default
+      - canvas
+
+  SidebarThemeConfig:
+    enum:
+      - default
+      - minimal
 
   HttpSnippetsConfig:
     discriminated: false
@@ -562,6 +630,15 @@ types:
   AudienceId:
     type: string
     docs: ID of audience which is used to filter the API spec.
+
+  Audience:
+    docs: |
+      Audience can either be a string or list of strings
+      i.e. `audiences: internal` or `audiences: [internal, beta]`
+    discriminated: false
+    union:
+      - AudienceId
+      - list<AudienceId>
 
   RoleId:
     type: string
@@ -732,7 +809,7 @@ types:
         type: optional<string>
         docs: Path to an openrpc spec.
         availability: pre-release
-      audiences: optional<list<AudienceId>>
+      audiences: optional<Audience>
       display-errors:
         type: optional<boolean>
         docs: Defaults to false
@@ -800,6 +877,7 @@ types:
       icon: optional<string>
       hidden: optional<boolean>
       skip-slug: optional<boolean>
+      availability: optional<Availability>
       playground:
         type: optional<PlaygroundSettings>
         docs: Settings for the api playground that affects all endpoints.
@@ -819,6 +897,7 @@ types:
         docs: |
           Relative path to the markdown file. This summary is displayed at the top of the API section.
       contents: optional<list<ApiReferenceLayoutItem>>
+      availability: optional<Availability>
       slug: optional<string>
       icon: optional<string>
       hidden: optional<boolean>
@@ -835,6 +914,7 @@ types:
       slug: optional<string>
       icon: optional<string>
       hidden: optional<boolean>
+      availability: optional<Availability>
       playground:
         type: optional<PlaygroundSettings>
         docs: Settings for the api playground that affect this endpoint specifically.
@@ -952,12 +1032,27 @@ types:
       outlined: NavbarLinkConfig
       minimal: NavbarLinkConfig
       github: NavbarGithubConfig
+      dropdown: NavbarDropdownConfig
 
       # deprecated
       primary: NavbarLinkConfig # use `outlined` instead
       secondary: NavbarLinkConfig # use `minimal` instead
 
+  WithViewers:
+    properties:
+      viewers: optional<Role>
+
+  NavbarDropdownConfig:
+    extends: [WithViewers]
+    properties:
+      links: list<NavbarLinkConfig>
+      text: optional<string>
+      icon: optional<string>
+      rightIcon: optional<string>
+      rounded: optional<boolean>
+
   NavbarLinkConfig:
+    extends: [WithViewers]
     properties:
       href: optional<string>
       url:
@@ -970,8 +1065,15 @@ types:
       rounded: optional<boolean>
 
   NavbarGithubConfig:
-    type: string
-    availability: in-development
+    discriminated: false
+    union:
+      - string
+      - NavbarGithubConfigWithOptions
+
+  NavbarGithubConfigWithOptions:
+    extends: [WithViewers]
+    properties:
+      url: string
 
   FooterLinksConfig:
     properties:
@@ -1202,6 +1304,7 @@ types:
         type: optional<string>
         docs: The "slug" is this version's basePath. If not set, the slug will be generated from the display-name.
       versions: optional<list<VersionConfig>>
+      audiences: optional<Audience>
 
   ProductFileConfig:
     properties:

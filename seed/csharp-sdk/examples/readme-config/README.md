@@ -135,6 +135,35 @@ var response = await client.Service.CreateMovieAsync(
 );
 ```
 
+### Forward Compatible Enums
+
+This SDK uses forward-compatible enums that can handle unknown values gracefully.
+
+```csharp
+using SeedExamples;
+
+// Using a built-in value
+var basicType = BasicType.Primitive;
+
+// Using a custom value
+var customBasicType = BasicType.FromCustom("custom-value");
+
+// Using in a switch statement
+switch (basicType.Value)
+{
+    case BasicType.Values.Primitive:
+        Console.WriteLine("Primitive");
+        break;
+    default:
+        Console.WriteLine($"Unknown value: {basicType.Value}");
+        break;
+}
+
+// Explicit casting
+string basicTypeString = (string)BasicType.Primitive;
+BasicType basicTypeFromString = (BasicType)"primitive";
+```
+
 ## Contributing
 
 While we value open-source contributions to this SDK, this library is generated programmatically.

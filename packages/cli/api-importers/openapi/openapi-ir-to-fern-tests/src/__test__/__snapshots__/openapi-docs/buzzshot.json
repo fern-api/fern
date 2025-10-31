@@ -2106,9 +2106,9 @@
   "packageMarkers": {},
   "rootApiFile": {
     "contents": {
-      "auth": "BearerAuthScheme",
+      "auth": "bearerAuth",
       "auth-schemes": {
-        "BearerAuthScheme": {
+        "bearerAuth": {
           "scheme": "bearer",
         },
       },
@@ -2127,9 +2127,9 @@ error-discrimination:
   strategy: status-code
 display-name: ''
 auth-schemes:
-  BearerAuthScheme:
+  bearerAuth:
     scheme: bearer
-auth: BearerAuthScheme
+auth: bearerAuth
 imports:
   root: __package__.yml
 ",

@@ -28,6 +28,7 @@ export async function testGenerator({
     inspect: boolean;
 }): Promise<boolean> {
     const testCases: Promise<TestRunner.TestResult>[] = [];
+    const allowedFailuresAsSet = new Set(generator.workspaceConfig.allowedFailures);
     for (const fixture of fixtures) {
         let fixtureName = fixture;
         let fixtureOutputFolder = outputFolder;
@@ -79,7 +80,12 @@ export async function testGenerator({
     const failedFixtures = results
         .filter((res) => res.type === "failure")
         .map((res) => (res.id === res.outputFolder || !res.outputFolder ? res.id : `${res.id}:${res.outputFolder}`));
-    const unexpectedFixtures = difference(failedFixtures, generator.workspaceConfig.allowedFailures ?? []);
+    const unexpectedlyFailedFixtures = difference(failedFixtures, generator.workspaceConfig.allowedFailures ?? []);
+
+    const succeededFixtures = results
+        .filter((res) => res.type === "success")
+        .map((res) => (res.id === res.outputFolder || !res.outputFolder ? res.id : `${res.id}:${res.outputFolder}`));
+    const unexpectedlySucceededFixtures = succeededFixtures.filter((fixture) => allowedFailuresAsSet.has(fixture));
 
     if (failedFixtures.length === 0) {
         CONSOLE_LOGGER.info(`${results.length}/${results.length} test cases passed ✅`);
@@ -89,15 +95,24 @@ export async function testGenerator({
                 results.length
             } test cases failed. The failed fixtures include ${failedFixtures.join(", ")}.`
         );
-        if (unexpectedFixtures.length > 0) {
+        if (unexpectedlyFailedFixtures.length > 0) {
             CONSOLE_LOGGER.info(
-                `❌ THERE WERE UNEXPECTED TEST CASE FAILURES: Of the ${failedFixtures.length} failed fixtures, ${unexpectedFixtures.length} were unexpected failures, including: ${unexpectedFixtures.join(", ")}.`
+                `❌ THERE WERE UNEXPECTED TEST CASE FAILURES: Of the ${failedFixtures.length} failed fixtures, ${unexpectedlyFailedFixtures.length} were unexpected failures, including: ${unexpectedlyFailedFixtures.join(", ")}.`
             );
             return false;
         } else {
             CONSOLE_LOGGER.info("✅ All failed fixtures were expected failures.");
         }
     }
+
+    if (unexpectedlySucceededFixtures.length > 0) {
+        CONSOLE_LOGGER.info(
+            `⚠️ ${unexpectedlySucceededFixtures.length}/${
+                results.length
+            } test cases succeeded unexpectedly. Consider removing the following fixtures from allowedFailures: ${unexpectedlySucceededFixtures.join(", ")}.`
+        );
+    }
+
     return true;
 }
 

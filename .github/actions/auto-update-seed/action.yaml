@@ -25,10 +25,6 @@ inputs:
     description: The matrix strategy index of the job (to differentiate when parallelizing jobs)
     required: false
     default: "0"
-  cache-disabled:
-    description: "Whether to skip caching and always regenerate"
-    required: false
-    default: "true"
 
 runs:
   using: "composite"

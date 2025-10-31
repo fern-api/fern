@@ -20,4 +20,4 @@ export { Property } from "./Property";
 export { Protocol } from "./Protocol";
 export { Statement } from "./Statement";
 export { Struct } from "./Struct";
-export { Type } from "./Type";
+export { TypeReference } from "./TypeReference";

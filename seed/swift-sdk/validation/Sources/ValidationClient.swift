@@ -63,7 +63,7 @@ public final class ValidationClient: Sendable {
         )
     }
 
-    public func get(decimal: Double, even: Int, name: String, requestOptions: RequestOptions? = nil) async throws -> Type {
+    public func get(decimal: Swift.Double, even: Int, name: String, requestOptions: RequestOptions? = nil) async throws -> Type {
         return try await httpClient.performRequest(
             method: .get,
             path: "/",

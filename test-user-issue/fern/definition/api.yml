@@ -1,0 +1,4 @@
+name: test-api
+display-name: Test API
+error-discrimination:
+  strategy: status-code

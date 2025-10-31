@@ -1,5 +1,29 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
 
+- version: 0.20.1
+  changelogEntry:
+    - type: fix
+      summary: |
+        Integrates dynamic snippets with the graph-based symbol registry for scope-aware type resolution.
+  createdAt: "2025-10-29"
+  irVersion: 59
+
+- version: 0.20.0
+  changelogEntry:
+    - type: feat
+      summary: |
+        Migrated the generator to use the programmatic `generator-cli` API instead of invoking the CLI in a child process.
+  createdAt: "2025-10-26"
+  irVersion: 59
+
+- version: 0.19.0
+  changelogEntry:
+    - type: feat
+      summary: |
+        Replaced the flat symbol registry with a graph-backed, scope-aware naming system, delivering deterministic, collision-safe naming and reference resolution.
+  createdAt: "2025-10-23"
+  irVersion: 59
+
 - version: 0.18.2
   changelogEntry:
     - type: fix

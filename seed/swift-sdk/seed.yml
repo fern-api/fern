@@ -103,6 +103,7 @@ allowedFailures:
   - examples:readme-config
   - exhaustive
   - extra-properties
+  - file-upload-openapi
   - idempotency-headers
   - imdb
   - inferred-auth-explicit
@@ -122,10 +123,7 @@ allowedFailures:
   - pagination:custom-pager-with-exception-handler
   - path-parameters
   - plain-text
-  - property-access
   - query-parameters
-  - query-parameters-openapi
-  - query-parameters-openapi-as-objects
   - request-parameters
   - required-nullable
   - reserved-keywords
@@ -138,4 +136,3 @@ allowedFailures:
   - unions
   - variables
   - websocket-inferred-auth
-  - file-upload

@@ -217,10 +217,7 @@ import Examples
             urlSession: stub.urlSession
         )
         let expectedResponse = "<head>...</head>"
-        let response = try await client.service.getMetadata(
-            shallow: false,
-            tag: 
-        )
+        let response = try await client.service.getMetadata(shallow: false)
         try #require(response == expectedResponse)
     }
 
@@ -248,10 +245,7 @@ import Examples
             urlSession: stub.urlSession
         )
         let expectedResponse = "string"
-        let response = try await client.service.getMetadata(
-            shallow: true,
-            tag: 
-        )
+        let response = try await client.service.getMetadata(shallow: true)
         try #require(response == expectedResponse)
     }
 
@@ -341,7 +335,7 @@ import Examples
                 ),
                 name: "name"
             ),
-            metadata: Metadata.html(
+            metadata: MetadataType.html(
                 .init(
                     extra: [
                         "extra": "extra"
@@ -534,8 +528,8 @@ import Examples
                 ]
             ),
             moment: Moment(
-                id: UUID(uuidString: "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32"),
-                date: try! CalendarDate("2023-01-15"),
+                id: UUID(uuidString: "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32")!,
+                date: CalendarDate("2023-01-15")!,
                 datetime: try! Date("2024-01-15T09:30:00Z", strategy: .iso8601)
             )
         ))

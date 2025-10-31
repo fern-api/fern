@@ -1,18 +1,18 @@
 import Foundation
 
 public enum UnionWithDiscriminant: Codable, Hashable, Sendable {
+    case bar(Bar)
     /// This is a Foo field.
     case foo(Foo)
-    case bar(Bar)
 
     public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
         let discriminant = try container.decode(String.self, forKey: .type)
         switch discriminant {
-        case "foo":
-            self = .foo(try Foo(from: decoder))
         case "bar":
             self = .bar(try Bar(from: decoder))
+        case "foo":
+            self = .foo(try Foo(from: decoder))
         default:
             throw DecodingError.dataCorrupted(
                 DecodingError.Context(
@@ -25,9 +25,9 @@ public enum UnionWithDiscriminant: Codable, Hashable, Sendable {
 
     public func encode(to encoder: Encoder) throws -> Void {
         switch self {
-        case .foo(let data):
-            try data.encode(to: encoder)
         case .bar(let data):
+            try data.encode(to: encoder)
+        case .foo(let data):
             try data.encode(to: encoder)
         }
     }
@@ -35,12 +35,12 @@ public enum UnionWithDiscriminant: Codable, Hashable, Sendable {
     /// This is a Foo field.
     public struct Foo: Codable, Hashable, Sendable {
         public let type: String = "foo"
-        public let foo: Foo
+        public let foo: Unions.Foo
         /// Additional properties that are not explicitly defined in the schema
         public let additionalProperties: [String: JSONValue]
 
         public init(
-            foo: Foo,
+            foo: Unions.Foo,
             additionalProperties: [String: JSONValue] = .init()
         ) {
             self.foo = foo
@@ -49,7 +49,7 @@ public enum UnionWithDiscriminant: Codable, Hashable, Sendable {
 
         public init(from decoder: Decoder) throws {
             let container = try decoder.container(keyedBy: CodingKeys.self)
-            self.foo = try container.decode(Foo.self, forKey: .foo)
+            self.foo = try container.decode(Unions.Foo.self, forKey: .foo)
             self.additionalProperties = try decoder.decodeAdditionalProperties(using: CodingKeys.self)
         }
 
@@ -69,12 +69,12 @@ public enum UnionWithDiscriminant: Codable, Hashable, Sendable {
 
     public struct Bar: Codable, Hashable, Sendable {
         public let type: String = "bar"
-        public let bar: Bar
+        public let bar: Unions.Bar
         /// Additional properties that are not explicitly defined in the schema
         public let additionalProperties: [String: JSONValue]
 
         public init(
-            bar: Bar,
+            bar: Unions.Bar,
             additionalProperties: [String: JSONValue] = .init()
         ) {
             self.bar = bar
@@ -83,7 +83,7 @@ public enum UnionWithDiscriminant: Codable, Hashable, Sendable {
 
         public init(from decoder: Decoder) throws {
             let container = try decoder.container(keyedBy: CodingKeys.self)
-            self.bar = try container.decode(Bar.self, forKey: .bar)
+            self.bar = try container.decode(Unions.Bar.self, forKey: .bar)
             self.additionalProperties = try decoder.decodeAdditionalProperties(using: CodingKeys.self)
         }
 

@@ -1,0 +1,86 @@
+name: nested-audience-api
+display-name: Nested Audience Test API
+
+auth: false
+
+types:
+  Status:
+    properties:
+      healthy: boolean
+      uptime: integer
+
+  Metrics:
+    properties:
+      requests: integer
+      errors: integer
+      latency: double
+
+service:
+  auth: false
+  base-path: ""
+  endpoints:
+    # Platform v1 endpoints
+    getV1Status:
+      display-name: Get V1 Status
+      method: GET
+      path: /v1/status
+      response: Status
+
+    initializeV1:
+      display-name: Initialize V1
+      method: POST
+      path: /v1/initialize
+      response: Status
+
+    # Platform v2 endpoints
+    getV2Status:
+      display-name: Get V2 Status
+      method: GET
+      path: /v2/status
+      response: Status
+
+    initializeV2:
+      display-name: Initialize V2
+      method: POST
+      path: /v2/initialize
+      response: Status
+
+    getV2Metrics:
+      display-name: Get V2 Metrics (Admin)
+      method: GET
+      path: /v2/admin/metrics
+      response: Metrics
+
+    resetV2:
+      display-name: Reset V2 (Admin)
+      method: POST
+      path: /v2/admin/reset
+      response: Status
+
+    # Internal tools v3 endpoints
+    getToolsMonitoringStatus:
+      display-name: Get Tools Monitoring Status
+      method: GET
+      path: /tools/v3/monitoring/status
+      response: Status
+
+    getToolsMonitoringMetrics:
+      display-name: Get Tools Monitoring Metrics
+      method: GET
+      path: /tools/v3/monitoring/metrics
+      response: Metrics
+
+    backupTools:
+      display-name: Backup Tools
+      method: POST
+      path: /tools/v3/admin/backup
+      response: boolean
+
+    restoreTools:
+      display-name: Restore Tools
+      method: POST
+      path: /tools/v3/admin/restore
+      request:
+        properties:
+          backupId: string
+      response: Status

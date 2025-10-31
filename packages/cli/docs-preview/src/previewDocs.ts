@@ -20,6 +20,7 @@ import { readFile } from "fs/promises";
 import { v4 as uuidv4 } from "uuid";
 
 import {
+    parseImagePaths,
     replaceImagePathsAndUrls,
     replaceReferencedCode,
     replaceReferencedMarkdown
@@ -63,16 +64,36 @@ export async function getPreviewDocsDefinition({
                 continue;
             }
 
+            const { markdown: markdownWithAbsPaths, filepaths } = parseImagePaths(processedMarkdown, {
+                absolutePathToFernFolder: docsWorkspace.absoluteFilePath,
+                absolutePathToMarkdownFile: absoluteFilePath
+            });
+
+            if (previousDocsDefinition.filesV2 == null) {
+                previousDocsDefinition.filesV2 = {};
+            }
+
             const fileIdsMap = new Map(
-                Object.entries(previousDocsDefinition.filesV2 ?? {}).map(([id, file]) => {
+                Object.entries(previousDocsDefinition.filesV2).map(([id, file]) => {
                     const path = "/" + file.url.replace("/_local/", "");
                     return [AbsoluteFilePath.of(path), id];
                 })
             );
 
+            for (const filepath of filepaths) {
+                if (!fileIdsMap.has(filepath)) {
+                    const fileId = FdrAPI.FileId(uuidv4());
+                    previousDocsDefinition.filesV2[fileId] = {
+                        type: "url",
+                        url: FernNavigation.Url(`/_local${convertToFernHostAbsoluteFilePath(filepath)}`)
+                    };
+                    fileIdsMap.set(filepath, fileId);
+                }
+            }
+
             // Then replace image paths with file IDs
             let finalMarkdown = replaceImagePathsAndUrls(
-                processedMarkdown,
+                markdownWithAbsPaths,
                 fileIdsMap,
                 {}, // markdownFilesToPathName - empty object since we don't need it for images
                 {
@@ -108,14 +129,14 @@ export async function getPreviewDocsDefinition({
 
     const filesV2: Record<string, DocsV1Read.File_> = {};
 
-    const resolver = new DocsDefinitionResolver(
+    const resolver = new DocsDefinitionResolver({
         domain,
         docsWorkspace,
         ossWorkspaces,
         apiWorkspaces,
-        context,
-        undefined,
-        async (files) =>
+        taskContext: context,
+        editThisPage: undefined,
+        uploadFiles: async (files) =>
             files.map((file) => {
                 const fileId = uuidv4();
                 filesV2[fileId] = {
@@ -128,8 +149,9 @@ export async function getPreviewDocsDefinition({
                     fileId
                 };
             }),
-        async (opts) => apiCollector.addReferencedAPI(opts)
-    );
+        registerApi: async (opts) => apiCollector.addReferencedAPI(opts),
+        targetAudiences: undefined
+    });
 
     const writeDocsDefinition = await resolver.resolve();
     const dbDocsDefinition = convertDocsDefinitionToDb({

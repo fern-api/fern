@@ -13,8 +13,34 @@
 <dd>
 
 ```ruby
-client.folder_a.service.get_direct_thread();
+client.folder_a.service.get_direct_thread(
+  ids: ,
+  tags: 
+);
 ```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**ids:** `String` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**tags:** `String` 
+    
 </dd>
 </dl>
 </dd>

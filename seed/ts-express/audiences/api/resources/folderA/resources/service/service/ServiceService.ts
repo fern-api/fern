@@ -7,7 +7,15 @@ import type * as SeedAudiences from "../../../../../index";
 
 export interface ServiceServiceMethods {
     getDirectThread(
-        req: express.Request<never, SeedAudiences.folderA.Response, never, never>,
+        req: express.Request<
+            never,
+            SeedAudiences.folderA.Response,
+            never,
+            {
+                ids: string;
+                tags: string;
+            }
+        >,
         res: {
             send: (responseBody: SeedAudiences.folderA.Response) => Promise<void>;
             cookie: (cookie: string, value: string, options?: express.CookieOptions) => void;

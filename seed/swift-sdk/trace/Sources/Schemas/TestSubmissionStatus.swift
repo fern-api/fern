@@ -1,21 +1,21 @@
 import Foundation
 
 public enum TestSubmissionStatus: Codable, Hashable, Sendable {
-    case stopped(Stopped)
     case errored(Errored)
     case running(Running)
+    case stopped(Stopped)
     case testCaseIdToState(TestCaseIdToState)
 
     public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
         let discriminant = try container.decode(String.self, forKey: .type)
         switch discriminant {
-        case "stopped":
-            self = .stopped(try Stopped(from: decoder))
         case "errored":
             self = .errored(try Errored(from: decoder))
         case "running":
             self = .running(try Running(from: decoder))
+        case "stopped":
+            self = .stopped(try Stopped(from: decoder))
         case "testCaseIdToState":
             self = .testCaseIdToState(try TestCaseIdToState(from: decoder))
         default:
@@ -30,11 +30,11 @@ public enum TestSubmissionStatus: Codable, Hashable, Sendable {
 
     public func encode(to encoder: Encoder) throws -> Void {
         switch self {
-        case .stopped(let data):
-            try data.encode(to: encoder)
         case .errored(let data):
             try data.encode(to: encoder)
         case .running(let data):
+            try data.encode(to: encoder)
+        case .stopped(let data):
             try data.encode(to: encoder)
         case .testCaseIdToState(let data):
             try data.encode(to: encoder)
