@@ -211,14 +211,19 @@ export class WireTestFunctionGenerator {
                     set: () => swift.Expression.arrayLiteral({}),
                     nullable: (nullableContainer) => {
                         if (this.sdkGeneratorContext.customConfig.decodeNullableToOptional) {
+                            const exampleTypeRef =
+                                nullableContainer.nullable?.shape.type === "container" &&
+                                nullableContainer.nullable.shape.container.type === "optional"
+                                    ? nullableContainer.nullable.shape.container.optional
+                                    : nullableContainer.nullable;
                             return swift.Expression.structInitialization({
                                 unsafeName: "Optional",
                                 arguments_: [
                                     swift.functionArgument({
                                         value:
-                                            nullableContainer.nullable == null
+                                            exampleTypeRef == null
                                                 ? swift.Expression.nil()
-                                                : this.generateExampleResponse(nullableContainer.nullable, fromScope)
+                                                : this.generateExampleResponse(exampleTypeRef, fromScope)
                                     })
                                 ]
                             });
@@ -239,19 +244,24 @@ export class WireTestFunctionGenerator {
                         });
                     },
                     optional: (optionalContainer) => {
+                        const inner = optionalContainer.optional;
+                        const exampleTypeRef =
+                            inner?.shape.type === "container"
+                                ? inner.shape.container.type === "optional"
+                                    ? inner.shape.container.optional
+                                    : this.sdkGeneratorContext.customConfig.decodeNullableToOptional &&
+                                        inner.shape.container.type === "nullable"
+                                      ? inner.shape.container.nullable
+                                      : inner
+                                : inner;
                         return swift.Expression.structInitialization({
                             unsafeName: "Optional",
                             arguments_: [
                                 swift.functionArgument({
                                     value:
-                                        optionalContainer.optional == null
-                                            ? swift.Expression.memberAccess({
-                                                  target: this.sdkGeneratorContext.getSwiftTypeReferenceFromTestModuleScope(
-                                                      optionalContainer.valueType
-                                                  ),
-                                                  memberName: "null"
-                                              })
-                                            : this.generateExampleResponse(optionalContainer.optional, fromScope)
+                                        exampleTypeRef == null
+                                            ? swift.Expression.nil()
+                                            : this.generateExampleResponse(exampleTypeRef, fromScope)
                                 })
                             ]
                         });
