@@ -280,28 +280,6 @@ public final class PoetTypeNameMapper {
 
         @Override
         public TypeName visitOptional(TypeReference typeReference) {
-            // When use-nullable-for-optional-fields is enabled, use Nullable<T> instead of Optional<T>
-            // This provides three-state support for PATCH requests (value, null, omitted)
-            if (customConfig.useNullableForOptionalFields()) {
-                // Special handling for optional<nullable<T>> pattern - avoid double-wrapping
-                // Just return Nullable<T> instead of Nullable<Nullable<T>>
-                if (typeReference.isContainer()
-                        && typeReference.getContainer().get().isNullable()) {
-                    // Visit the inner nullable type directly, which will return the unwrapped type
-                    TypeReference innerNullable =
-                            typeReference.getContainer().get().getNullable().get();
-                    TypeName innerTypeName = innerNullable.visit(primitiveDisAllowedTypeReferenceConverter);
-                    ClassName nullableClassName = poetClassNameFactory.getNullableClassName();
-                    return ParameterizedTypeName.get(nullableClassName, innerTypeName);
-                }
-
-                // For regular optional<T>, convert to Nullable<T>
-                TypeName typeName = typeReference.visit(primitiveDisAllowedTypeReferenceConverter);
-                ClassName nullableClassName = poetClassNameFactory.getNullableClassName();
-                return ParameterizedTypeName.get(nullableClassName, typeName);
-            }
-
-            // Default behavior when config is not enabled - use Optional<T>
             TypeName typeName = typeReference.visit(primitiveDisAllowedTypeReferenceConverter);
             if (typeName instanceof ParameterizedTypeName) {
                 // Optional should not be re-wrapped in Optional

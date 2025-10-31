@@ -1,6 +1,13 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
 # For unreleased changes, use unreleased.yml
 
+- version: 4.32.3-rc1
+  changelogEntry:
+    - summary: Added logging to debug 4.32.3-rc0
+      type: feat
+  createdAt: "2025-10-30"
+  irVersion: 60
+
 - version: 4.32.3-rc0
   changelogEntry:
     - summary: Add support for publishing to PyPI with attestations in auto-generated GHA ci.yml
