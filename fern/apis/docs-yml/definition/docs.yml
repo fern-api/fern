@@ -555,6 +555,7 @@ types:
     properties:
       search-text: optional<string>
       disable-search: optional<boolean>
+      disable-analytics: optional<boolean>
       dark-mode-code: optional<boolean>
       default-search-filters: optional<boolean>
       http-snippets: optional<HttpSnippetsConfig>

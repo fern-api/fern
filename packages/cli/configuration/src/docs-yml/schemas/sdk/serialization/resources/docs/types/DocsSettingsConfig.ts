@@ -13,6 +13,7 @@ export const DocsSettingsConfig: core.serialization.ObjectSchema<
 > = core.serialization.object({
     searchText: core.serialization.property("search-text", core.serialization.string().optional()),
     disableSearch: core.serialization.property("disable-search", core.serialization.boolean().optional()),
+    disableAnalytics: core.serialization.property("disable-analytics", core.serialization.boolean().optional()),
     darkModeCode: core.serialization.property("dark-mode-code", core.serialization.boolean().optional()),
     defaultSearchFilters: core.serialization.property(
         "default-search-filters",
@@ -34,6 +35,7 @@ export declare namespace DocsSettingsConfig {
     export interface Raw {
         "search-text"?: string | null;
         "disable-search"?: boolean | null;
+        "disable-analytics"?: boolean | null;
         "dark-mode-code"?: boolean | null;
         "default-search-filters"?: boolean | null;
         "http-snippets"?: HttpSnippetsConfig.Raw | null;
