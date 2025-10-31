@@ -100,7 +100,7 @@ public interface ICustomConfig {
     default Boolean collapseOptionalNullable() {
         return false;
     }
-    
+
     @JsonProperty("package-prefix")
     Optional<String> packagePrefix();
 
