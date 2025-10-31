@@ -3231,73 +3231,6 @@
                                         }
                                     },
                                     "jsonExample": "id"
-                                },
-                                "propertyAccess": null,
-                                "originalTypeDeclaration": {
-                                    "name": {
-                                        "originalName": "BigUnion",
-                                        "camelCase": {
-                                            "unsafeName": "bigUnion",
-                                            "safeName": "bigUnion"
-                                        },
-                                        "snakeCase": {
-                                            "unsafeName": "big_union",
-                                            "safeName": "big_union"
-                                        },
-                                        "screamingSnakeCase": {
-                                            "unsafeName": "BIG_UNION",
-                                            "safeName": "BIG_UNION"
-                                        },
-                                        "pascalCase": {
-                                            "unsafeName": "BigUnion",
-                                            "safeName": "BigUnion"
-                                        }
-                                    },
-                                    "fernFilepath": {
-                                        "allParts": [
-                                            {
-                                                "originalName": "bigunion",
-                                                "camelCase": {
-                                                    "unsafeName": "bigunion",
-                                                    "safeName": "bigunion"
-                                                },
-                                                "snakeCase": {
-                                                    "unsafeName": "bigunion",
-                                                    "safeName": "bigunion"
-                                                },
-                                                "screamingSnakeCase": {
-                                                    "unsafeName": "BIGUNION",
-                                                    "safeName": "BIGUNION"
-                                                },
-                                                "pascalCase": {
-                                                    "unsafeName": "Bigunion",
-                                                    "safeName": "Bigunion"
-                                                }
-                                            }
-                                        ],
-                                        "packagePath": [],
-                                        "file": {
-                                            "originalName": "bigunion",
-                                            "camelCase": {
-                                                "unsafeName": "bigunion",
-                                                "safeName": "bigunion"
-                                            },
-                                            "snakeCase": {
-                                                "unsafeName": "bigunion",
-                                                "safeName": "bigunion"
-                                            },
-                                            "screamingSnakeCase": {
-                                                "unsafeName": "BIGUNION",
-                                                "safeName": "BIGUNION"
-                                            },
-                                            "pascalCase": {
-                                                "unsafeName": "Bigunion",
-                                                "safeName": "Bigunion"
-                                            }
-                                        }
-                                    },
-                                    "displayName": null,
-                                    "typeId": "type_bigunion:BigUnion"
                                 }
                             },
                             {
@@ -3333,73 +3266,6 @@
                                         }
                                     },
                                     "jsonExample": "2024-01-15T09:30:00Z"
-                                },
-                                "propertyAccess": null,
-                                "originalTypeDeclaration": {
-                                    "name": {
-                                        "originalName": "BigUnion",
-                                        "camelCase": {
-                                            "unsafeName": "bigUnion",
-                                            "safeName": "bigUnion"
-                                        },
-                                        "snakeCase": {
-                                            "unsafeName": "big_union",
-                                            "safeName": "big_union"
-                                        },
-                                        "screamingSnakeCase": {
-                                            "unsafeName": "BIG_UNION",
-                                            "safeName": "BIG_UNION"
-                                        },
-                                        "pascalCase": {
-                                            "unsafeName": "BigUnion",
-                                            "safeName": "BigUnion"
-                                        }
-                                    },
-                                    "fernFilepath": {
-                                        "allParts": [
-                                            {
-                                                "originalName": "bigunion",
-                                                "camelCase": {
-                                                    "unsafeName": "bigunion",
-                                                    "safeName": "bigunion"
-                                                },
-                                                "snakeCase": {
-                                                    "unsafeName": "bigunion",
-                                                    "safeName": "bigunion"
-                                                },
-                                                "screamingSnakeCase": {
-                                                    "unsafeName": "BIGUNION",
-                                                    "safeName": "BIGUNION"
-                                                },
-                                                "pascalCase": {
-                                                    "unsafeName": "Bigunion",
-                                                    "safeName": "Bigunion"
-                                                }
-                                            }
-                                        ],
-                                        "packagePath": [],
-                                        "file": {
-                                            "originalName": "bigunion",
-                                            "camelCase": {
-                                                "unsafeName": "bigunion",
-                                                "safeName": "bigunion"
-                                            },
-                                            "snakeCase": {
-                                                "unsafeName": "bigunion",
-                                                "safeName": "bigunion"
-                                            },
-                                            "screamingSnakeCase": {
-                                                "unsafeName": "BIGUNION",
-                                                "safeName": "BIGUNION"
-                                            },
-                                            "pascalCase": {
-                                                "unsafeName": "Bigunion",
-                                                "safeName": "Bigunion"
-                                            }
-                                        }
-                                    },
-                                    "displayName": null,
-                                    "typeId": "type_bigunion:BigUnion"
                                 }
                             },
                             {
@@ -3451,73 +3317,6 @@
                                         }
                                     },
                                     "jsonExample": "2024-01-15T09:30:00Z"
-                                },
-                                "propertyAccess": null,
-                                "originalTypeDeclaration": {
-                                    "name": {
-                                        "originalName": "BigUnion",
-                                        "camelCase": {
-                                            "unsafeName": "bigUnion",
-                                            "safeName": "bigUnion"
-                                        },
-                                        "snakeCase": {
-                                            "unsafeName": "big_union",
-                                            "safeName": "big_union"
-                                        },
-                                        "screamingSnakeCase": {
-                                            "unsafeName": "BIG_UNION",
-                                            "safeName": "BIG_UNION"
-                                        },
-                                        "pascalCase": {
-                                            "unsafeName": "BigUnion",
-                                            "safeName": "BigUnion"
-                                        }
-                                    },
-                                    "fernFilepath": {
-                                        "allParts": [
-                                            {
-                                                "originalName": "bigunion",
-                                                "camelCase": {
-                                                    "unsafeName": "bigunion",
-                                                    "safeName": "bigunion"
-                                                },
-                                                "snakeCase": {
-                                                    "unsafeName": "bigunion",
-                                                    "safeName": "bigunion"
-                                                },
-                                                "screamingSnakeCase": {
-                                                    "unsafeName": "BIGUNION",
-                                                    "safeName": "BIGUNION"
-                                                },
-                                                "pascalCase": {
-                                                    "unsafeName": "Bigunion",
-                                                    "safeName": "Bigunion"
-                                                }
-                                            }
-                                        ],
-                                        "packagePath": [],
-                                        "file": {
-                                            "originalName": "bigunion",
-                                            "camelCase": {
-                                                "unsafeName": "bigunion",
-                                                "safeName": "bigunion"
-                                            },
-                                            "snakeCase": {
-                                                "unsafeName": "bigunion",
-                                                "safeName": "bigunion"
-                                            },
-                                            "screamingSnakeCase": {
-                                                "unsafeName": "BIGUNION",
-                                                "safeName": "BIGUNION"
-                                            },
-                                            "pascalCase": {
-                                                "unsafeName": "Bigunion",
-                                                "safeName": "Bigunion"
-                                            }
-                                        }
-                                    },
-                                    "displayName": null,
-                                    "typeId": "type_bigunion:BigUnion"
                                 }
                             }
                         ],
@@ -3747,73 +3546,6 @@
                                         }
                                     },
                                     "jsonExample": "id"
-                                },
-                                "propertyAccess": null,
-                                "originalTypeDeclaration": {
-                                    "name": {
-                                        "originalName": "BigUnion",
-                                        "camelCase": {
-                                            "unsafeName": "bigUnion",
-                                            "safeName": "bigUnion"
-                                        },
-                                        "snakeCase": {
-                                            "unsafeName": "big_union",
-                                            "safeName": "big_union"
-                                        },
-                                        "screamingSnakeCase": {
-                                            "unsafeName": "BIG_UNION",
-                                            "safeName": "BIG_UNION"
-                                        },
-                                        "pascalCase": {
-                                            "unsafeName": "BigUnion",
-                                            "safeName": "BigUnion"
-                                        }
-                                    },
-                                    "fernFilepath": {
-                                        "allParts": [
-                                            {
-                                                "originalName": "bigunion",
-                                                "camelCase": {
-                                                    "unsafeName": "bigunion",
-                                                    "safeName": "bigunion"
-                                                },
-                                                "snakeCase": {
-                                                    "unsafeName": "bigunion",
-                                                    "safeName": "bigunion"
-                                                },
-                                                "screamingSnakeCase": {
-                                                    "unsafeName": "BIGUNION",
-                                                    "safeName": "BIGUNION"
-                                                },
-                                                "pascalCase": {
-                                                    "unsafeName": "Bigunion",
-                                                    "safeName": "Bigunion"
-                                                }
-                                            }
-                                        ],
-                                        "packagePath": [],
-                                        "file": {
-                                            "originalName": "bigunion",
-                                            "camelCase": {
-                                                "unsafeName": "bigunion",
-                                                "safeName": "bigunion"
-                                            },
-                                            "snakeCase": {
-                                                "unsafeName": "bigunion",
-                                                "safeName": "bigunion"
-                                            },
-                                            "screamingSnakeCase": {
-                                                "unsafeName": "BIGUNION",
-                                                "safeName": "BIGUNION"
-                                            },
-                                            "pascalCase": {
-                                                "unsafeName": "Bigunion",
-                                                "safeName": "Bigunion"
-                                            }
-                                        }
-                                    },
-                                    "displayName": null,
-                                    "typeId": "type_bigunion:BigUnion"
                                 }
                             },
                             {
@@ -3849,73 +3581,6 @@
                                         }
                                     },
                                     "jsonExample": "2024-01-15T09:30:00Z"
-                                },
-                                "propertyAccess": null,
-                                "originalTypeDeclaration": {
-                                    "name": {
-                                        "originalName": "BigUnion",
-                                        "camelCase": {
-                                            "unsafeName": "bigUnion",
-                                            "safeName": "bigUnion"
-                                        },
-                                        "snakeCase": {
-                                            "unsafeName": "big_union",
-                                            "safeName": "big_union"
-                                        },
-                                        "screamingSnakeCase": {
-                                            "unsafeName": "BIG_UNION",
-                                            "safeName": "BIG_UNION"
-                                        },
-                                        "pascalCase": {
-                                            "unsafeName": "BigUnion",
-                                            "safeName": "BigUnion"
-                                        }
-                                    },
-                                    "fernFilepath": {
-                                        "allParts": [
-                                            {
-                                                "originalName": "bigunion",
-                                                "camelCase": {
-                                                    "unsafeName": "bigunion",
-                                                    "safeName": "bigunion"
-                                                },
-                                                "snakeCase": {
-                                                    "unsafeName": "bigunion",
-                                                    "safeName": "bigunion"
-                                                },
-                                                "screamingSnakeCase": {
-                                                    "unsafeName": "BIGUNION",
-                                                    "safeName": "BIGUNION"
-                                                },
-                                                "pascalCase": {
-                                                    "unsafeName": "Bigunion",
-                                                    "safeName": "Bigunion"
-                                                }
-                                            }
-                                        ],
-                                        "packagePath": [],
-                                        "file": {
-                                            "originalName": "bigunion",
-                                            "camelCase": {
-                                                "unsafeName": "bigunion",
-                                                "safeName": "bigunion"
-                                            },
-                                            "snakeCase": {
-                                                "unsafeName": "bigunion",
-                                                "safeName": "bigunion"
-                                            },
-                                            "screamingSnakeCase": {
-                                                "unsafeName": "BIGUNION",
-                                                "safeName": "BIGUNION"
-                                            },
-                                            "pascalCase": {
-                                                "unsafeName": "Bigunion",
-                                                "safeName": "Bigunion"
-                                            }
-                                        }
-                                    },
-                                    "displayName": null,
-                                    "typeId": "type_bigunion:BigUnion"
                                 }
                             },
                             {
@@ -3967,73 +3632,6 @@
                                         }
                                     },
                                     "jsonExample": "2024-01-15T09:30:00Z"
-                                },
-                                "propertyAccess": null,
-                                "originalTypeDeclaration": {
-                                    "name": {
-                                        "originalName": "BigUnion",
-                                        "camelCase": {
-                                            "unsafeName": "bigUnion",
-                                            "safeName": "bigUnion"
-                                        },
-                                        "snakeCase": {
-                                            "unsafeName": "big_union",
-                                            "safeName": "big_union"
-                                        },
-                                        "screamingSnakeCase": {
-                                            "unsafeName": "BIG_UNION",
-                                            "safeName": "BIG_UNION"
-                                        },
-                                        "pascalCase": {
-                                            "unsafeName": "BigUnion",
-                                            "safeName": "BigUnion"
-                                        }
-                                    },
-                                    "fernFilepath": {
-                                        "allParts": [
-                                            {
-                                                "originalName": "bigunion",
-                                                "camelCase": {
-                                                    "unsafeName": "bigunion",
-                                                    "safeName": "bigunion"
-                                                },
-                                                "snakeCase": {
-                                                    "unsafeName": "bigunion",
-                                                    "safeName": "bigunion"
-                                                },
-                                                "screamingSnakeCase": {
-                                                    "unsafeName": "BIGUNION",
-                                                    "safeName": "BIGUNION"
-                                                },
-                                                "pascalCase": {
-                                                    "unsafeName": "Bigunion",
-                                                    "safeName": "Bigunion"
-                                                }
-                                            }
-                                        ],
-                                        "packagePath": [],
-                                        "file": {
-                                            "originalName": "bigunion",
-                                            "camelCase": {
-                                                "unsafeName": "bigunion",
-                                                "safeName": "bigunion"
-                                            },
-                                            "snakeCase": {
-                                                "unsafeName": "bigunion",
-                                                "safeName": "bigunion"
-                                            },
-                                            "screamingSnakeCase": {
-                                                "unsafeName": "BIGUNION",
-                                                "safeName": "BIGUNION"
-                                            },
-                                            "pascalCase": {
-                                                "unsafeName": "Bigunion",
-                                                "safeName": "Bigunion"
-                                            }
-                                        }
-                                    },
-                                    "displayName": null,
-                                    "typeId": "type_bigunion:BigUnion"
                                 }
                             }
                         ],
@@ -4263,73 +3861,6 @@
                                         }
                                     },
                                     "jsonExample": "id"
-                                },
-                                "propertyAccess": null,
-                                "originalTypeDeclaration": {
-                                    "name": {
-                                        "originalName": "BigUnion",
-                                        "camelCase": {
-                                            "unsafeName": "bigUnion",
-                                            "safeName": "bigUnion"
-                                        },
-                                        "snakeCase": {
-                                            "unsafeName": "big_union",
-                                            "safeName": "big_union"
-                                        },
-                                        "screamingSnakeCase": {
-                                            "unsafeName": "BIG_UNION",
-                                            "safeName": "BIG_UNION"
-                                        },
-                                        "pascalCase": {
-                                            "unsafeName": "BigUnion",
-                                            "safeName": "BigUnion"
-                                        }
-                                    },
-                                    "fernFilepath": {
-                                        "allParts": [
-                                            {
-                                                "originalName": "bigunion",
-                                                "camelCase": {
-                                                    "unsafeName": "bigunion",
-                                                    "safeName": "bigunion"
-                                                },
-                                                "snakeCase": {
-                                                    "unsafeName": "bigunion",
-                                                    "safeName": "bigunion"
-                                                },
-                                                "screamingSnakeCase": {
-                                                    "unsafeName": "BIGUNION",
-                                                    "safeName": "BIGUNION"
-                                                },
-                                                "pascalCase": {
-                                                    "unsafeName": "Bigunion",
-                                                    "safeName": "Bigunion"
-                                                }
-                                            }
-                                        ],
-                                        "packagePath": [],
-                                        "file": {
-                                            "originalName": "bigunion",
-                                            "camelCase": {
-                                                "unsafeName": "bigunion",
-                                                "safeName": "bigunion"
-                                            },
-                                            "snakeCase": {
-                                                "unsafeName": "bigunion",
-                                                "safeName": "bigunion"
-                                            },
-                                            "screamingSnakeCase": {
-                                                "unsafeName": "BIGUNION",
-                                                "safeName": "BIGUNION"
-                                            },
-                                            "pascalCase": {
-                                                "unsafeName": "Bigunion",
-                                                "safeName": "Bigunion"
-                                            }
-                                        }
-                                    },
-                                    "displayName": null,
-                                    "typeId": "type_bigunion:BigUnion"
                                 }
                             },
                             {
@@ -4365,73 +3896,6 @@
                                         }
                                     },
                                     "jsonExample": "2024-01-15T09:30:00Z"
-                                },
-                                "propertyAccess": null,
-                                "originalTypeDeclaration": {
-                                    "name": {
-                                        "originalName": "BigUnion",
-                                        "camelCase": {
-                                            "unsafeName": "bigUnion",
-                                            "safeName": "bigUnion"
-                                        },
-                                        "snakeCase": {
-                                            "unsafeName": "big_union",
-                                            "safeName": "big_union"
-                                        },
-                                        "screamingSnakeCase": {
-                                            "unsafeName": "BIG_UNION",
-                                            "safeName": "BIG_UNION"
-                                        },
-                                        "pascalCase": {
-                                            "unsafeName": "BigUnion",
-                                            "safeName": "BigUnion"
-                                        }
-                                    },
-                                    "fernFilepath": {
-                                        "allParts": [
-                                            {
-                                                "originalName": "bigunion",
-                                                "camelCase": {
-                                                    "unsafeName": "bigunion",
-                                                    "safeName": "bigunion"
-                                                },
-                                                "snakeCase": {
-                                                    "unsafeName": "bigunion",
-                                                    "safeName": "bigunion"
-                                                },
-                                                "screamingSnakeCase": {
-                                                    "unsafeName": "BIGUNION",
-                                                    "safeName": "BIGUNION"
-                                                },
-                                                "pascalCase": {
-                                                    "unsafeName": "Bigunion",
-                                                    "safeName": "Bigunion"
-                                                }
-                                            }
-                                        ],
-                                        "packagePath": [],
-                                        "file": {
-                                            "originalName": "bigunion",
-                                            "camelCase": {
-                                                "unsafeName": "bigunion",
-                                                "safeName": "bigunion"
-                                            },
-                                            "snakeCase": {
-                                                "unsafeName": "bigunion",
-                                                "safeName": "bigunion"
-                                            },
-                                            "screamingSnakeCase": {
-                                                "unsafeName": "BIGUNION",
-                                                "safeName": "BIGUNION"
-                                            },
-                                            "pascalCase": {
-                                                "unsafeName": "Bigunion",
-                                                "safeName": "Bigunion"
-                                            }
-                                        }
-                                    },
-                                    "displayName": null,
-                                    "typeId": "type_bigunion:BigUnion"
                                 }
                             },
                             {
@@ -4483,73 +3947,6 @@
                                         }
                                     },
                                     "jsonExample": "2024-01-15T09:30:00Z"
-                                },
-                                "propertyAccess": null,
-                                "originalTypeDeclaration": {
-                                    "name": {
-                                        "originalName": "BigUnion",
-                                        "camelCase": {
-                                            "unsafeName": "bigUnion",
-                                            "safeName": "bigUnion"
-                                        },
-                                        "snakeCase": {
-                                            "unsafeName": "big_union",
-                                            "safeName": "big_union"
-                                        },
-                                        "screamingSnakeCase": {
-                                            "unsafeName": "BIG_UNION",
-                                            "safeName": "BIG_UNION"
-                                        },
-                                        "pascalCase": {
-                                            "unsafeName": "BigUnion",
-                                            "safeName": "BigUnion"
-                                        }
-                                    },
-                                    "fernFilepath": {
-                                        "allParts": [
-                                            {
-                                                "originalName": "bigunion",
-                                                "camelCase": {
-                                                    "unsafeName": "bigunion",
-                                                    "safeName": "bigunion"
-                                                },
-                                                "snakeCase": {
-                                                    "unsafeName": "bigunion",
-                                                    "safeName": "bigunion"
-                                                },
-                                                "screamingSnakeCase": {
-                                                    "unsafeName": "BIGUNION",
-                                                    "safeName": "BIGUNION"
-                                                },
-                                                "pascalCase": {
-                                                    "unsafeName": "Bigunion",
-                                                    "safeName": "Bigunion"
-                                                }
-                                            }
-                                        ],
-                                        "packagePath": [],
-                                        "file": {
-                                            "originalName": "bigunion",
-                                            "camelCase": {
-                                                "unsafeName": "bigunion",
-                                                "safeName": "bigunion"
-                                            },
-                                            "snakeCase": {
-                                                "unsafeName": "bigunion",
-                                                "safeName": "bigunion"
-                                            },
-                                            "screamingSnakeCase": {
-                                                "unsafeName": "BIGUNION",
-                                                "safeName": "BIGUNION"
-                                            },
-                                            "pascalCase": {
-                                                "unsafeName": "Bigunion",
-                                                "safeName": "Bigunion"
-                                            }
-                                        }
-                                    },
-                                    "displayName": null,
-                                    "typeId": "type_bigunion:BigUnion"
                                 }
                             }
                         ],
@@ -13111,73 +12508,6 @@
                                         }
                                     },
                                     "jsonExample": "base"
-                                },
-                                "propertyAccess": null,
-                                "originalTypeDeclaration": {
-                                    "name": {
-                                        "originalName": "UnionWithLiteral",
-                                        "camelCase": {
-                                            "unsafeName": "unionWithLiteral",
-                                            "safeName": "unionWithLiteral"
-                                        },
-                                        "snakeCase": {
-                                            "unsafeName": "union_with_literal",
-                                            "safeName": "union_with_literal"
-                                        },
-                                        "screamingSnakeCase": {
-                                            "unsafeName": "UNION_WITH_LITERAL",
-                                            "safeName": "UNION_WITH_LITERAL"
-                                        },
-                                        "pascalCase": {
-                                            "unsafeName": "UnionWithLiteral",
-                                            "safeName": "UnionWithLiteral"
-                                        }
-                                    },
-                                    "fernFilepath": {
-                                        "allParts": [
-                                            {
-                                                "originalName": "types",
-                                                "camelCase": {
-                                                    "unsafeName": "types",
-                                                    "safeName": "types"
-                                                },
-                                                "snakeCase": {
-                                                    "unsafeName": "types",
-                                                    "safeName": "types"
-                                                },
-                                                "screamingSnakeCase": {
-                                                    "unsafeName": "TYPES",
-                                                    "safeName": "TYPES"
-                                                },
-                                                "pascalCase": {
-                                                    "unsafeName": "Types",
-                                                    "safeName": "Types"
-                                                }
-                                            }
-                                        ],
-                                        "packagePath": [],
-                                        "file": {
-                                            "originalName": "types",
-                                            "camelCase": {
-                                                "unsafeName": "types",
-                                                "safeName": "types"
-                                            },
-                                            "snakeCase": {
-                                                "unsafeName": "types",
-                                                "safeName": "types"
-                                            },
-                                            "screamingSnakeCase": {
-                                                "unsafeName": "TYPES",
-                                                "safeName": "TYPES"
-                                            },
-                                            "pascalCase": {
-                                                "unsafeName": "Types",
-                                                "safeName": "Types"
-                                            }
-                                        }
-                                    },
-                                    "displayName": null,
-                                    "typeId": "type_types:UnionWithLiteral"
                                 }
                             }
                         ],
@@ -13679,73 +13009,6 @@
                                         }
                                     },
                                     "jsonExample": "id"
-                                },
-                                "propertyAccess": null,
-                                "originalTypeDeclaration": {
-                                    "name": {
-                                        "originalName": "UnionWithBaseProperties",
-                                        "camelCase": {
-                                            "unsafeName": "unionWithBaseProperties",
-                                            "safeName": "unionWithBaseProperties"
-                                        },
-                                        "snakeCase": {
-                                            "unsafeName": "union_with_base_properties",
-                                            "safeName": "union_with_base_properties"
-                                        },
-                                        "screamingSnakeCase": {
-                                            "unsafeName": "UNION_WITH_BASE_PROPERTIES",
-                                            "safeName": "UNION_WITH_BASE_PROPERTIES"
-                                        },
-                                        "pascalCase": {
-                                            "unsafeName": "UnionWithBaseProperties",
-                                            "safeName": "UnionWithBaseProperties"
-                                        }
-                                    },
-                                    "fernFilepath": {
-                                        "allParts": [
-                                            {
-                                                "originalName": "types",
-                                                "camelCase": {
-                                                    "unsafeName": "types",
-                                                    "safeName": "types"
-                                                },
-                                                "snakeCase": {
-                                                    "unsafeName": "types",
-                                                    "safeName": "types"
-                                                },
-                                                "screamingSnakeCase": {
-                                                    "unsafeName": "TYPES",
-                                                    "safeName": "TYPES"
-                                                },
-                                                "pascalCase": {
-                                                    "unsafeName": "Types",
-                                                    "safeName": "Types"
-                                                }
-                                            }
-                                        ],
-                                        "packagePath": [],
-                                        "file": {
-                                            "originalName": "types",
-                                            "camelCase": {
-                                                "unsafeName": "types",
-                                                "safeName": "types"
-                                            },
-                                            "snakeCase": {
-                                                "unsafeName": "types",
-                                                "safeName": "types"
-                                            },
-                                            "screamingSnakeCase": {
-                                                "unsafeName": "TYPES",
-                                                "safeName": "TYPES"
-                                            },
-                                            "pascalCase": {
-                                                "unsafeName": "Types",
-                                                "safeName": "Types"
-                                            }
-                                        }
-                                    },
-                                    "displayName": null,
-                                    "typeId": "type_types:UnionWithBaseProperties"
                                 }
                             }
                         ],
@@ -13874,73 +13137,6 @@
                                         }
                                     },
                                     "jsonExample": "id"
-                                },
-                                "propertyAccess": null,
-                                "originalTypeDeclaration": {
-                                    "name": {
-                                        "originalName": "UnionWithBaseProperties",
-                                        "camelCase": {
-                                            "unsafeName": "unionWithBaseProperties",
-                                            "safeName": "unionWithBaseProperties"
-                                        },
-                                        "snakeCase": {
-                                            "unsafeName": "union_with_base_properties",
-                                            "safeName": "union_with_base_properties"
-                                        },
-                                        "screamingSnakeCase": {
-                                            "unsafeName": "UNION_WITH_BASE_PROPERTIES",
-                                            "safeName": "UNION_WITH_BASE_PROPERTIES"
-                                        },
-                                        "pascalCase": {
-                                            "unsafeName": "UnionWithBaseProperties",
-                                            "safeName": "UnionWithBaseProperties"
-                                        }
-                                    },
-                                    "fernFilepath": {
-                                        "allParts": [
-                                            {
-                                                "originalName": "types",
-                                                "camelCase": {
-                                                    "unsafeName": "types",
-                                                    "safeName": "types"
-                                                },
-                                                "snakeCase": {
-                                                    "unsafeName": "types",
-                                                    "safeName": "types"
-                                                },
-                                                "screamingSnakeCase": {
-                                                    "unsafeName": "TYPES",
-                                                    "safeName": "TYPES"
-                                                },
-                                                "pascalCase": {
-                                                    "unsafeName": "Types",
-                                                    "safeName": "Types"
-                                                }
-                                            }
-                                        ],
-                                        "packagePath": [],
-                                        "file": {
-                                            "originalName": "types",
-                                            "camelCase": {
-                                                "unsafeName": "types",
-                                                "safeName": "types"
-                                            },
-                                            "snakeCase": {
-                                                "unsafeName": "types",
-                                                "safeName": "types"
-                                            },
-                                            "screamingSnakeCase": {
-                                                "unsafeName": "TYPES",
-                                                "safeName": "TYPES"
-                                            },
-                                            "pascalCase": {
-                                                "unsafeName": "Types",
-                                                "safeName": "Types"
-                                            }
-                                        }
-                                    },
-                                    "displayName": null,
-                                    "typeId": "type_types:UnionWithBaseProperties"
                                 }
                             }
                         ],
@@ -14168,73 +13364,6 @@
                                         }
                                     },
                                     "jsonExample": "id"
-                                },
-                                "propertyAccess": null,
-                                "originalTypeDeclaration": {
-                                    "name": {
-                                        "originalName": "UnionWithBaseProperties",
-                                        "camelCase": {
-                                            "unsafeName": "unionWithBaseProperties",
-                                            "safeName": "unionWithBaseProperties"
-                                        },
-                                        "snakeCase": {
-                                            "unsafeName": "union_with_base_properties",
-                                            "safeName": "union_with_base_properties"
-                                        },
-                                        "screamingSnakeCase": {
-                                            "unsafeName": "UNION_WITH_BASE_PROPERTIES",
-                                            "safeName": "UNION_WITH_BASE_PROPERTIES"
-                                        },
-                                        "pascalCase": {
-                                            "unsafeName": "UnionWithBaseProperties",
-                                            "safeName": "UnionWithBaseProperties"
-                                        }
-                                    },
-                                    "fernFilepath": {
-                                        "allParts": [
-                                            {
-                                                "originalName": "types",
-                                                "camelCase": {
-                                                    "unsafeName": "types",
-                                                    "safeName": "types"
-                                                },
-                                                "snakeCase": {
-                                                    "unsafeName": "types",
-                                                    "safeName": "types"
-                                                },
-                                                "screamingSnakeCase": {
-                                                    "unsafeName": "TYPES",
-                                                    "safeName": "TYPES"
-                                                },
-                                                "pascalCase": {
-                                                    "unsafeName": "Types",
-                                                    "safeName": "Types"
-                                                }
-                                            }
-                                        ],
-                                        "packagePath": [],
-                                        "file": {
-                                            "originalName": "types",
-                                            "camelCase": {
-                                                "unsafeName": "types",
-                                                "safeName": "types"
-                                            },
-                                            "snakeCase": {
-                                                "unsafeName": "types",
-                                                "safeName": "types"
-                                            },
-                                            "screamingSnakeCase": {
-                                                "unsafeName": "TYPES",
-                                                "safeName": "TYPES"
-                                            },
-                                            "pascalCase": {
-                                                "unsafeName": "Types",
-                                                "safeName": "Types"
-                                            }
-                                        }
-                                    },
-                                    "displayName": null,
-                                    "typeId": "type_types:UnionWithBaseProperties"
                                 }
                             }
                         ],
@@ -20960,73 +20089,6 @@
                                         }
                                     },
                                     "jsonExample": "example"
-                                },
-                                "propertyAccess": null,
-                                "originalTypeDeclaration": {
-                                    "name": {
-                                        "originalName": "Shape",
-                                        "camelCase": {
-                                            "unsafeName": "shape",
-                                            "safeName": "shape"
-                                        },
-                                        "snakeCase": {
-                                            "unsafeName": "shape",
-                                            "safeName": "shape"
-                                        },
-                                        "screamingSnakeCase": {
-                                            "unsafeName": "SHAPE",
-                                            "safeName": "SHAPE"
-                                        },
-                                        "pascalCase": {
-                                            "unsafeName": "Shape",
-                                            "safeName": "Shape"
-                                        }
-                                    },
-                                    "fernFilepath": {
-                                        "allParts": [
-                                            {
-                                                "originalName": "union",
-                                                "camelCase": {
-                                                    "unsafeName": "union",
-                                                    "safeName": "union"
-                                                },
-                                                "snakeCase": {
-                                                    "unsafeName": "union",
-                                                    "safeName": "union"
-                                                },
-                                                "screamingSnakeCase": {
-                                                    "unsafeName": "UNION",
-                                                    "safeName": "UNION"
-                                                },
-                                                "pascalCase": {
-                                                    "unsafeName": "Union",
-                                                    "safeName": "Union"
-                                                }
-                                            }
-                                        ],
-                                        "packagePath": [],
-                                        "file": {
-                                            "originalName": "union",
-                                            "camelCase": {
-                                                "unsafeName": "union",
-                                                "safeName": "union"
-                                            },
-                                            "snakeCase": {
-                                                "unsafeName": "union",
-                                                "safeName": "union"
-                                            },
-                                            "screamingSnakeCase": {
-                                                "unsafeName": "UNION",
-                                                "safeName": "UNION"
-                                            },
-                                            "pascalCase": {
-                                                "unsafeName": "Union",
-                                                "safeName": "Union"
-                                            }
-                                        }
-                                    },
-                                    "displayName": null,
-                                    "typeId": "type_union:Shape"
                                 }
                             }
                         ],
@@ -21357,73 +20419,6 @@
                                         }
                                     },
                                     "jsonExample": "example"
-                                },
-                                "propertyAccess": null,
-                                "originalTypeDeclaration": {
-                                    "name": {
-                                        "originalName": "Shape",
-                                        "camelCase": {
-                                            "unsafeName": "shape",
-                                            "safeName": "shape"
-                                        },
-                                        "snakeCase": {
-                                            "unsafeName": "shape",
-                                            "safeName": "shape"
-                                        },
-                                        "screamingSnakeCase": {
-                                            "unsafeName": "SHAPE",
-                                            "safeName": "SHAPE"
-                                        },
-                                        "pascalCase": {
-                                            "unsafeName": "Shape",
-                                            "safeName": "Shape"
-                                        }
-                                    },
-                                    "fernFilepath": {
-                                        "allParts": [
-                                            {
-                                                "originalName": "union",
-                                                "camelCase": {
-                                                    "unsafeName": "union",
-                                                    "safeName": "union"
-                                                },
-                                                "snakeCase": {
-                                                    "unsafeName": "union",
-                                                    "safeName": "union"
-                                                },
-                                                "screamingSnakeCase": {
-                                                    "unsafeName": "UNION",
-                                                    "safeName": "UNION"
-                                                },
-                                                "pascalCase": {
-                                                    "unsafeName": "Union",
-                                                    "safeName": "Union"
-                                                }
-                                            }
-                                        ],
-                                        "packagePath": [],
-                                        "file": {
-                                            "originalName": "union",
-                                            "camelCase": {
-                                                "unsafeName": "union",
-                                                "safeName": "union"
-                                            },
-                                            "snakeCase": {
-                                                "unsafeName": "union",
-                                                "safeName": "union"
-                                            },
-                                            "screamingSnakeCase": {
-                                                "unsafeName": "UNION",
-                                                "safeName": "UNION"
-                                            },
-                                            "pascalCase": {
-                                                "unsafeName": "Union",
-                                                "safeName": "Union"
-                                            }
-                                        }
-                                    },
-                                    "displayName": null,
-                                    "typeId": "type_union:Shape"
                                 }
                             }
                         ],
@@ -22092,7 +21087,7 @@
                     "autogeneratedExamples": [
                         {
                             "example": {
-                                "id": "bc29f0c1",
+                                "id": "b28cc44f",
                                 "url": "/id",
                                 "name": null,
                                 "endpointHeaders": [],
@@ -22327,72 +21322,6 @@
                                                                 },
                                                                 "wireValue": "id"
                                                             },
-                                                            "originalTypeDeclaration": {
-                                                                "name": {
-                                                                    "originalName": "BigUnion",
-                                                                    "camelCase": {
-                                                                        "unsafeName": "bigUnion",
-                                                                        "safeName": "bigUnion"
-                                                                    },
-                                                                    "snakeCase": {
-                                                                        "unsafeName": "big_union",
-                                                                        "safeName": "big_union"
-                                                                    },
-                                                                    "screamingSnakeCase": {
-                                                                        "unsafeName": "BIG_UNION",
-                                                                        "safeName": "BIG_UNION"
-                                                                    },
-                                                                    "pascalCase": {
-                                                                        "unsafeName": "BigUnion",
-                                                                        "safeName": "BigUnion"
-                                                                    }
-                                                                },
-                                                                "fernFilepath": {
-                                                                    "allParts": [
-                                                                        {
-                                                                            "originalName": "bigunion",
-                                                                            "camelCase": {
-                                                                                "unsafeName": "bigunion",
-                                                                                "safeName": "bigunion"
-                                                                            },
-                                                                            "snakeCase": {
-                                                                                "unsafeName": "bigunion",
-                                                                                "safeName": "bigunion"
-                                                                            },
-                                                                            "screamingSnakeCase": {
-                                                                                "unsafeName": "BIGUNION",
-                                                                                "safeName": "BIGUNION"
-                                                                            },
-                                                                            "pascalCase": {
-                                                                                "unsafeName": "Bigunion",
-                                                                                "safeName": "Bigunion"
-                                                                            }
-                                                                        }
-                                                                    ],
-                                                                    "packagePath": [],
-                                                                    "file": {
-                                                                        "originalName": "bigunion",
-                                                                        "camelCase": {
-                                                                            "unsafeName": "bigunion",
-                                                                            "safeName": "bigunion"
-                                                                        },
-                                                                        "snakeCase": {
-                                                                            "unsafeName": "bigunion",
-                                                                            "safeName": "bigunion"
-                                                                        },
-                                                                        "screamingSnakeCase": {
-                                                                            "unsafeName": "BIGUNION",
-                                                                            "safeName": "BIGUNION"
-                                                                        },
-                                                                        "pascalCase": {
-                                                                            "unsafeName": "Bigunion",
-                                                                            "safeName": "Bigunion"
-                                                                        }
-                                                                    }
-                                                                },
-                                                                "displayName": null,
-                                                                "typeId": "type_bigunion:BigUnion"
-                                                            },
                                                             "value": {
                                                                 "shape": {
                                                                     "type": "primitive",
@@ -22404,8 +21333,7 @@
                                                                     }
                                                                 },
                                                                 "jsonExample": "id"
-                                                            },
-                                                            "propertyAccess": null
+                                                            }
                                                         },
                                                         {
                                                             "name": {
@@ -22430,72 +21358,6 @@
                                                                 },
                                                                 "wireValue": "created-at"
                                                             },
-                                                            "originalTypeDeclaration": {
-                                                                "name": {
-                                                                    "originalName": "BigUnion",
-                                                                    "camelCase": {
-                                                                        "unsafeName": "bigUnion",
-                                                                        "safeName": "bigUnion"
-                                                                    },
-                                                                    "snakeCase": {
-                                                                        "unsafeName": "big_union",
-                                                                        "safeName": "big_union"
-                                                                    },
-                                                                    "screamingSnakeCase": {
-                                                                        "unsafeName": "BIG_UNION",
-                                                                        "safeName": "BIG_UNION"
-                                                                    },
-                                                                    "pascalCase": {
-                                                                        "unsafeName": "BigUnion",
-                                                                        "safeName": "BigUnion"
-                                                                    }
-                                                                },
-                                                                "fernFilepath": {
-                                                                    "allParts": [
-                                                                        {
-                                                                            "originalName": "bigunion",
-                                                                            "camelCase": {
-                                                                                "unsafeName": "bigunion",
-                                                                                "safeName": "bigunion"
-                                                                            },
-                                                                            "snakeCase": {
-                                                                                "unsafeName": "bigunion",
-                                                                                "safeName": "bigunion"
-                                                                            },
-                                                                            "screamingSnakeCase": {
-                                                                                "unsafeName": "BIGUNION",
-                                                                                "safeName": "BIGUNION"
-                                                                            },
-                                                                            "pascalCase": {
-                                                                                "unsafeName": "Bigunion",
-                                                                                "safeName": "Bigunion"
-                                                                            }
-                                                                        }
-                                                                    ],
-                                                                    "packagePath": [],
-                                                                    "file": {
-                                                                        "originalName": "bigunion",
-                                                                        "camelCase": {
-                                                                            "unsafeName": "bigunion",
-                                                                            "safeName": "bigunion"
-                                                                        },
-                                                                        "snakeCase": {
-                                                                            "unsafeName": "bigunion",
-                                                                            "safeName": "bigunion"
-                                                                        },
-                                                                        "screamingSnakeCase": {
-                                                                            "unsafeName": "BIGUNION",
-                                                                            "safeName": "BIGUNION"
-                                                                        },
-                                                                        "pascalCase": {
-                                                                            "unsafeName": "Bigunion",
-                                                                            "safeName": "Bigunion"
-                                                                        }
-                                                                    }
-                                                                },
-                                                                "displayName": null,
-                                                                "typeId": "type_bigunion:BigUnion"
-                                                            },
                                                             "value": {
                                                                 "shape": {
                                                                     "type": "primitive",
@@ -22506,8 +21368,7 @@
                                                                     }
                                                                 },
                                                                 "jsonExample": "2024-01-15T09:30:00Z"
-                                                            },
-                                                            "propertyAccess": null
+                                                            }
                                                         },
                                                         {
                                                             "name": {
@@ -22531,72 +21392,6 @@
                                                                     }
                                                                 },
                                                                 "wireValue": "archived-at"
-                                                            },
-                                                            "originalTypeDeclaration": {
-                                                                "name": {
-                                                                    "originalName": "BigUnion",
-                                                                    "camelCase": {
-                                                                        "unsafeName": "bigUnion",
-                                                                        "safeName": "bigUnion"
-                                                                    },
-                                                                    "snakeCase": {
-                                                                        "unsafeName": "big_union",
-                                                                        "safeName": "big_union"
-                                                                    },
-                                                                    "screamingSnakeCase": {
-                                                                        "unsafeName": "BIG_UNION",
-                                                                        "safeName": "BIG_UNION"
-                                                                    },
-                                                                    "pascalCase": {
-                                                                        "unsafeName": "BigUnion",
-                                                                        "safeName": "BigUnion"
-                                                                    }
-                                                                },
-                                                                "fernFilepath": {
-                                                                    "allParts": [
-                                                                        {
-                                                                            "originalName": "bigunion",
-                                                                            "camelCase": {
-                                                                                "unsafeName": "bigunion",
-                                                                                "safeName": "bigunion"
-                                                                            },
-                                                                            "snakeCase": {
-                                                                                "unsafeName": "bigunion",
-                                                                                "safeName": "bigunion"
-                                                                            },
-                                                                            "screamingSnakeCase": {
-                                                                                "unsafeName": "BIGUNION",
-                                                                                "safeName": "BIGUNION"
-                                                                            },
-                                                                            "pascalCase": {
-                                                                                "unsafeName": "Bigunion",
-                                                                                "safeName": "Bigunion"
-                                                                            }
-                                                                        }
-                                                                    ],
-                                                                    "packagePath": [],
-                                                                    "file": {
-                                                                        "originalName": "bigunion",
-                                                                        "camelCase": {
-                                                                            "unsafeName": "bigunion",
-                                                                            "safeName": "bigunion"
-                                                                        },
-                                                                        "snakeCase": {
-                                                                            "unsafeName": "bigunion",
-                                                                            "safeName": "bigunion"
-                                                                        },
-                                                                        "screamingSnakeCase": {
-                                                                            "unsafeName": "BIGUNION",
-                                                                            "safeName": "BIGUNION"
-                                                                        },
-                                                                        "pascalCase": {
-                                                                            "unsafeName": "Bigunion",
-                                                                            "safeName": "Bigunion"
-                                                                        }
-                                                                    }
-                                                                },
-                                                                "displayName": null,
-                                                                "typeId": "type_bigunion:BigUnion"
                                                             },
                                                             "value": {
                                                                 "shape": {
@@ -22624,8 +21419,7 @@
                                                                     }
                                                                 },
                                                                 "jsonExample": "2024-01-15T09:30:00Z"
-                                                            },
-                                                            "propertyAccess": null
+                                                            }
                                                         }
                                                     ],
                                                     "extendProperties": []
@@ -22964,7 +21758,7 @@
                     "autogeneratedExamples": [
                         {
                             "example": {
-                                "id": "239d0785",
+                                "id": "5a90baf7",
                                 "url": "",
                                 "name": null,
                                 "endpointHeaders": [],
@@ -23161,72 +21955,6 @@
                                                         },
                                                         "wireValue": "id"
                                                     },
-                                                    "originalTypeDeclaration": {
-                                                        "name": {
-                                                            "originalName": "BigUnion",
-                                                            "camelCase": {
-                                                                "unsafeName": "bigUnion",
-                                                                "safeName": "bigUnion"
-                                                            },
-                                                            "snakeCase": {
-                                                                "unsafeName": "big_union",
-                                                                "safeName": "big_union"
-                                                            },
-                                                            "screamingSnakeCase": {
-                                                                "unsafeName": "BIG_UNION",
-                                                                "safeName": "BIG_UNION"
-                                                            },
-                                                            "pascalCase": {
-                                                                "unsafeName": "BigUnion",
-                                                                "safeName": "BigUnion"
-                                                            }
-                                                        },
-                                                        "fernFilepath": {
-                                                            "allParts": [
-                                                                {
-                                                                    "originalName": "bigunion",
-                                                                    "camelCase": {
-                                                                        "unsafeName": "bigunion",
-                                                                        "safeName": "bigunion"
-                                                                    },
-                                                                    "snakeCase": {
-                                                                        "unsafeName": "bigunion",
-                                                                        "safeName": "bigunion"
-                                                                    },
-                                                                    "screamingSnakeCase": {
-                                                                        "unsafeName": "BIGUNION",
-                                                                        "safeName": "BIGUNION"
-                                                                    },
-                                                                    "pascalCase": {
-                                                                        "unsafeName": "Bigunion",
-                                                                        "safeName": "Bigunion"
-                                                                    }
-                                                                }
-                                                            ],
-                                                            "packagePath": [],
-                                                            "file": {
-                                                                "originalName": "bigunion",
-                                                                "camelCase": {
-                                                                    "unsafeName": "bigunion",
-                                                                    "safeName": "bigunion"
-                                                                },
-                                                                "snakeCase": {
-                                                                    "unsafeName": "bigunion",
-                                                                    "safeName": "bigunion"
-                                                                },
-                                                                "screamingSnakeCase": {
-                                                                    "unsafeName": "BIGUNION",
-                                                                    "safeName": "BIGUNION"
-                                                                },
-                                                                "pascalCase": {
-                                                                    "unsafeName": "Bigunion",
-                                                                    "safeName": "Bigunion"
-                                                                }
-                                                            }
-                                                        },
-                                                        "displayName": null,
-                                                        "typeId": "type_bigunion:BigUnion"
-                                                    },
                                                     "value": {
                                                         "shape": {
                                                             "type": "primitive",
@@ -23238,8 +21966,7 @@
                                                             }
                                                         },
                                                         "jsonExample": "id"
-                                                    },
-                                                    "propertyAccess": null
+                                                    }
                                                 },
                                                 {
                                                     "name": {
@@ -23264,72 +21991,6 @@
                                                         },
                                                         "wireValue": "created-at"
                                                     },
-                                                    "originalTypeDeclaration": {
-                                                        "name": {
-                                                            "originalName": "BigUnion",
-                                                            "camelCase": {
-                                                                "unsafeName": "bigUnion",
-                                                                "safeName": "bigUnion"
-                                                            },
-                                                            "snakeCase": {
-                                                                "unsafeName": "big_union",
-                                                                "safeName": "big_union"
-                                                            },
-                                                            "screamingSnakeCase": {
-                                                                "unsafeName": "BIG_UNION",
-                                                                "safeName": "BIG_UNION"
-                                                            },
-                                                            "pascalCase": {
-                                                                "unsafeName": "BigUnion",
-                                                                "safeName": "BigUnion"
-                                                            }
-                                                        },
-                                                        "fernFilepath": {
-                                                            "allParts": [
-                                                                {
-                                                                    "originalName": "bigunion",
-                                                                    "camelCase": {
-                                                                        "unsafeName": "bigunion",
-                                                                        "safeName": "bigunion"
-                                                                    },
-                                                                    "snakeCase": {
-                                                                        "unsafeName": "bigunion",
-                                                                        "safeName": "bigunion"
-                                                                    },
-                                                                    "screamingSnakeCase": {
-                                                                        "unsafeName": "BIGUNION",
-                                                                        "safeName": "BIGUNION"
-                                                                    },
-                                                                    "pascalCase": {
-                                                                        "unsafeName": "Bigunion",
-                                                                        "safeName": "Bigunion"
-                                                                    }
-                                                                }
-                                                            ],
-                                                            "packagePath": [],
-                                                            "file": {
-                                                                "originalName": "bigunion",
-                                                                "camelCase": {
-                                                                    "unsafeName": "bigunion",
-                                                                    "safeName": "bigunion"
-                                                                },
-                                                                "snakeCase": {
-                                                                    "unsafeName": "bigunion",
-                                                                    "safeName": "bigunion"
-                                                                },
-                                                                "screamingSnakeCase": {
-                                                                    "unsafeName": "BIGUNION",
-                                                                    "safeName": "BIGUNION"
-                                                                },
-                                                                "pascalCase": {
-                                                                    "unsafeName": "Bigunion",
-                                                                    "safeName": "Bigunion"
-                                                                }
-                                                            }
-                                                        },
-                                                        "displayName": null,
-                                                        "typeId": "type_bigunion:BigUnion"
-                                                    },
                                                     "value": {
                                                         "shape": {
                                                             "type": "primitive",
@@ -23340,8 +22001,7 @@
                                                             }
                                                         },
                                                         "jsonExample": "2024-01-15T09:30:00Z"
-                                                    },
-                                                    "propertyAccess": null
+                                                    }
                                                 },
                                                 {
                                                     "name": {
@@ -23366,72 +22026,6 @@
                                                         },
                                                         "wireValue": "archived-at"
                                                     },
-                                                    "originalTypeDeclaration": {
-                                                        "name": {
-                                                            "originalName": "BigUnion",
-                                                            "camelCase": {
-                                                                "unsafeName": "bigUnion",
-                                                                "safeName": "bigUnion"
-                                                            },
-                                                            "snakeCase": {
-                                                                "unsafeName": "big_union",
-                                                                "safeName": "big_union"
-                                                            },
-                                                            "screamingSnakeCase": {
-                                                                "unsafeName": "BIG_UNION",
-                                                                "safeName": "BIG_UNION"
-                                                            },
-                                                            "pascalCase": {
-                                                                "unsafeName": "BigUnion",
-                                                                "safeName": "BigUnion"
-                                                            }
-                                                        },
-                                                        "fernFilepath": {
-                                                            "allParts": [
-                                                                {
-                                                                    "originalName": "bigunion",
-                                                                    "camelCase": {
-                                                                        "unsafeName": "bigunion",
-                                                                        "safeName": "bigunion"
-                                                                    },
-                                                                    "snakeCase": {
-                                                                        "unsafeName": "bigunion",
-                                                                        "safeName": "bigunion"
-                                                                    },
-                                                                    "screamingSnakeCase": {
-                                                                        "unsafeName": "BIGUNION",
-                                                                        "safeName": "BIGUNION"
-                                                                    },
-                                                                    "pascalCase": {
-                                                                        "unsafeName": "Bigunion",
-                                                                        "safeName": "Bigunion"
-                                                                    }
-                                                                }
-                                                            ],
-                                                            "packagePath": [],
-                                                            "file": {
-                                                                "originalName": "bigunion",
-                                                                "camelCase": {
-                                                                    "unsafeName": "bigunion",
-                                                                    "safeName": "bigunion"
-                                                                },
-                                                                "snakeCase": {
-                                                                    "unsafeName": "bigunion",
-                                                                    "safeName": "bigunion"
-                                                                },
-                                                                "screamingSnakeCase": {
-                                                                    "unsafeName": "BIGUNION",
-                                                                    "safeName": "BIGUNION"
-                                                                },
-                                                                "pascalCase": {
-                                                                    "unsafeName": "Bigunion",
-                                                                    "safeName": "Bigunion"
-                                                                }
-                                                            }
-                                                        },
-                                                        "displayName": null,
-                                                        "typeId": "type_bigunion:BigUnion"
-                                                    },
                                                     "value": {
                                                         "shape": {
                                                             "type": "container",
@@ -23447,8 +22041,7 @@
                                                                 }
                                                             }
                                                         }
-                                                    },
-                                                    "propertyAccess": null
+                                                    }
                                                 }
                                             ],
                                             "extendProperties": []
@@ -23829,7 +22422,7 @@
                     "autogeneratedExamples": [
                         {
                             "example": {
-                                "id": "190e82a4",
+                                "id": "d5cff794",
                                 "url": "/many",
                                 "name": null,
                                 "endpointHeaders": [],
@@ -24032,72 +22625,6 @@
                                                                         },
                                                                         "wireValue": "id"
                                                                     },
-                                                                    "originalTypeDeclaration": {
-                                                                        "name": {
-                                                                            "originalName": "BigUnion",
-                                                                            "camelCase": {
-                                                                                "unsafeName": "bigUnion",
-                                                                                "safeName": "bigUnion"
-                                                                            },
-                                                                            "snakeCase": {
-                                                                                "unsafeName": "big_union",
-                                                                                "safeName": "big_union"
-                                                                            },
-                                                                            "screamingSnakeCase": {
-                                                                                "unsafeName": "BIG_UNION",
-                                                                                "safeName": "BIG_UNION"
-                                                                            },
-                                                                            "pascalCase": {
-                                                                                "unsafeName": "BigUnion",
-                                                                                "safeName": "BigUnion"
-                                                                            }
-                                                                        },
-                                                                        "fernFilepath": {
-                                                                            "allParts": [
-                                                                                {
-                                                                                    "originalName": "bigunion",
-                                                                                    "camelCase": {
-                                                                                        "unsafeName": "bigunion",
-                                                                                        "safeName": "bigunion"
-                                                                                    },
-                                                                                    "snakeCase": {
-                                                                                        "unsafeName": "bigunion",
-                                                                                        "safeName": "bigunion"
-                                                                                    },
-                                                                                    "screamingSnakeCase": {
-                                                                                        "unsafeName": "BIGUNION",
-                                                                                        "safeName": "BIGUNION"
-                                                                                    },
-                                                                                    "pascalCase": {
-                                                                                        "unsafeName": "Bigunion",
-                                                                                        "safeName": "Bigunion"
-                                                                                    }
-                                                                                }
-                                                                            ],
-                                                                            "packagePath": [],
-                                                                            "file": {
-                                                                                "originalName": "bigunion",
-                                                                                "camelCase": {
-                                                                                    "unsafeName": "bigunion",
-                                                                                    "safeName": "bigunion"
-                                                                                },
-                                                                                "snakeCase": {
-                                                                                    "unsafeName": "bigunion",
-                                                                                    "safeName": "bigunion"
-                                                                                },
-                                                                                "screamingSnakeCase": {
-                                                                                    "unsafeName": "BIGUNION",
-                                                                                    "safeName": "BIGUNION"
-                                                                                },
-                                                                                "pascalCase": {
-                                                                                    "unsafeName": "Bigunion",
-                                                                                    "safeName": "Bigunion"
-                                                                                }
-                                                                            }
-                                                                        },
-                                                                        "displayName": null,
-                                                                        "typeId": "type_bigunion:BigUnion"
-                                                                    },
                                                                     "value": {
                                                                         "shape": {
                                                                             "type": "primitive",
@@ -24109,8 +22636,7 @@
                                                                             }
                                                                         },
                                                                         "jsonExample": "id"
-                                                                    },
-                                                                    "propertyAccess": null
+                                                                    }
                                                                 },
                                                                 {
                                                                     "name": {
@@ -24135,72 +22661,6 @@
                                                                         },
                                                                         "wireValue": "created-at"
                                                                     },
-                                                                    "originalTypeDeclaration": {
-                                                                        "name": {
-                                                                            "originalName": "BigUnion",
-                                                                            "camelCase": {
-                                                                                "unsafeName": "bigUnion",
-                                                                                "safeName": "bigUnion"
-                                                                            },
-                                                                            "snakeCase": {
-                                                                                "unsafeName": "big_union",
-                                                                                "safeName": "big_union"
-                                                                            },
-                                                                            "screamingSnakeCase": {
-                                                                                "unsafeName": "BIG_UNION",
-                                                                                "safeName": "BIG_UNION"
-                                                                            },
-                                                                            "pascalCase": {
-                                                                                "unsafeName": "BigUnion",
-                                                                                "safeName": "BigUnion"
-                                                                            }
-                                                                        },
-                                                                        "fernFilepath": {
-                                                                            "allParts": [
-                                                                                {
-                                                                                    "originalName": "bigunion",
-                                                                                    "camelCase": {
-                                                                                        "unsafeName": "bigunion",
-                                                                                        "safeName": "bigunion"
-                                                                                    },
-                                                                                    "snakeCase": {
-                                                                                        "unsafeName": "bigunion",
-                                                                                        "safeName": "bigunion"
-                                                                                    },
-                                                                                    "screamingSnakeCase": {
-                                                                                        "unsafeName": "BIGUNION",
-                                                                                        "safeName": "BIGUNION"
-                                                                                    },
-                                                                                    "pascalCase": {
-                                                                                        "unsafeName": "Bigunion",
-                                                                                        "safeName": "Bigunion"
-                                                                                    }
-                                                                                }
-                                                                            ],
-                                                                            "packagePath": [],
-                                                                            "file": {
-                                                                                "originalName": "bigunion",
-                                                                                "camelCase": {
-                                                                                    "unsafeName": "bigunion",
-                                                                                    "safeName": "bigunion"
-                                                                                },
-                                                                                "snakeCase": {
-                                                                                    "unsafeName": "bigunion",
-                                                                                    "safeName": "bigunion"
-                                                                                },
-                                                                                "screamingSnakeCase": {
-                                                                                    "unsafeName": "BIGUNION",
-                                                                                    "safeName": "BIGUNION"
-                                                                                },
-                                                                                "pascalCase": {
-                                                                                    "unsafeName": "Bigunion",
-                                                                                    "safeName": "Bigunion"
-                                                                                }
-                                                                            }
-                                                                        },
-                                                                        "displayName": null,
-                                                                        "typeId": "type_bigunion:BigUnion"
-                                                                    },
                                                                     "value": {
                                                                         "shape": {
                                                                             "type": "primitive",
@@ -24211,8 +22671,7 @@
                                                                             }
                                                                         },
                                                                         "jsonExample": "2024-01-15T09:30:00Z"
-                                                                    },
-                                                                    "propertyAccess": null
+                                                                    }
                                                                 },
                                                                 {
                                                                     "name": {
@@ -24237,72 +22696,6 @@
                                                                         },
                                                                         "wireValue": "archived-at"
                                                                     },
-                                                                    "originalTypeDeclaration": {
-                                                                        "name": {
-                                                                            "originalName": "BigUnion",
-                                                                            "camelCase": {
-                                                                                "unsafeName": "bigUnion",
-                                                                                "safeName": "bigUnion"
-                                                                            },
-                                                                            "snakeCase": {
-                                                                                "unsafeName": "big_union",
-                                                                                "safeName": "big_union"
-                                                                            },
-                                                                            "screamingSnakeCase": {
-                                                                                "unsafeName": "BIG_UNION",
-                                                                                "safeName": "BIG_UNION"
-                                                                            },
-                                                                            "pascalCase": {
-                                                                                "unsafeName": "BigUnion",
-                                                                                "safeName": "BigUnion"
-                                                                            }
-                                                                        },
-                                                                        "fernFilepath": {
-                                                                            "allParts": [
-                                                                                {
-                                                                                    "originalName": "bigunion",
-                                                                                    "camelCase": {
-                                                                                        "unsafeName": "bigunion",
-                                                                                        "safeName": "bigunion"
-                                                                                    },
-                                                                                    "snakeCase": {
-                                                                                        "unsafeName": "bigunion",
-                                                                                        "safeName": "bigunion"
-                                                                                    },
-                                                                                    "screamingSnakeCase": {
-                                                                                        "unsafeName": "BIGUNION",
-                                                                                        "safeName": "BIGUNION"
-                                                                                    },
-                                                                                    "pascalCase": {
-                                                                                        "unsafeName": "Bigunion",
-                                                                                        "safeName": "Bigunion"
-                                                                                    }
-                                                                                }
-                                                                            ],
-                                                                            "packagePath": [],
-                                                                            "file": {
-                                                                                "originalName": "bigunion",
-                                                                                "camelCase": {
-                                                                                    "unsafeName": "bigunion",
-                                                                                    "safeName": "bigunion"
-                                                                                },
-                                                                                "snakeCase": {
-                                                                                    "unsafeName": "bigunion",
-                                                                                    "safeName": "bigunion"
-                                                                                },
-                                                                                "screamingSnakeCase": {
-                                                                                    "unsafeName": "BIGUNION",
-                                                                                    "safeName": "BIGUNION"
-                                                                                },
-                                                                                "pascalCase": {
-                                                                                    "unsafeName": "Bigunion",
-                                                                                    "safeName": "Bigunion"
-                                                                                }
-                                                                            }
-                                                                        },
-                                                                        "displayName": null,
-                                                                        "typeId": "type_bigunion:BigUnion"
-                                                                    },
                                                                     "value": {
                                                                         "shape": {
                                                                             "type": "container",
@@ -24318,8 +22711,7 @@
                                                                                 }
                                                                             }
                                                                         }
-                                                                    },
-                                                                    "propertyAccess": null
+                                                                    }
                                                                 }
                                                             ],
                                                             "extendProperties": []
@@ -24585,72 +22977,6 @@
                                                                         },
                                                                         "wireValue": "id"
                                                                     },
-                                                                    "originalTypeDeclaration": {
-                                                                        "name": {
-                                                                            "originalName": "BigUnion",
-                                                                            "camelCase": {
-                                                                                "unsafeName": "bigUnion",
-                                                                                "safeName": "bigUnion"
-                                                                            },
-                                                                            "snakeCase": {
-                                                                                "unsafeName": "big_union",
-                                                                                "safeName": "big_union"
-                                                                            },
-                                                                            "screamingSnakeCase": {
-                                                                                "unsafeName": "BIG_UNION",
-                                                                                "safeName": "BIG_UNION"
-                                                                            },
-                                                                            "pascalCase": {
-                                                                                "unsafeName": "BigUnion",
-                                                                                "safeName": "BigUnion"
-                                                                            }
-                                                                        },
-                                                                        "fernFilepath": {
-                                                                            "allParts": [
-                                                                                {
-                                                                                    "originalName": "bigunion",
-                                                                                    "camelCase": {
-                                                                                        "unsafeName": "bigunion",
-                                                                                        "safeName": "bigunion"
-                                                                                    },
-                                                                                    "snakeCase": {
-                                                                                        "unsafeName": "bigunion",
-                                                                                        "safeName": "bigunion"
-                                                                                    },
-                                                                                    "screamingSnakeCase": {
-                                                                                        "unsafeName": "BIGUNION",
-                                                                                        "safeName": "BIGUNION"
-                                                                                    },
-                                                                                    "pascalCase": {
-                                                                                        "unsafeName": "Bigunion",
-                                                                                        "safeName": "Bigunion"
-                                                                                    }
-                                                                                }
-                                                                            ],
-                                                                            "packagePath": [],
-                                                                            "file": {
-                                                                                "originalName": "bigunion",
-                                                                                "camelCase": {
-                                                                                    "unsafeName": "bigunion",
-                                                                                    "safeName": "bigunion"
-                                                                                },
-                                                                                "snakeCase": {
-                                                                                    "unsafeName": "bigunion",
-                                                                                    "safeName": "bigunion"
-                                                                                },
-                                                                                "screamingSnakeCase": {
-                                                                                    "unsafeName": "BIGUNION",
-                                                                                    "safeName": "BIGUNION"
-                                                                                },
-                                                                                "pascalCase": {
-                                                                                    "unsafeName": "Bigunion",
-                                                                                    "safeName": "Bigunion"
-                                                                                }
-                                                                            }
-                                                                        },
-                                                                        "displayName": null,
-                                                                        "typeId": "type_bigunion:BigUnion"
-                                                                    },
                                                                     "value": {
                                                                         "shape": {
                                                                             "type": "primitive",
@@ -24662,8 +22988,7 @@
                                                                             }
                                                                         },
                                                                         "jsonExample": "id"
-                                                                    },
-                                                                    "propertyAccess": null
+                                                                    }
                                                                 },
                                                                 {
                                                                     "name": {
@@ -24688,72 +23013,6 @@
                                                                         },
                                                                         "wireValue": "created-at"
                                                                     },
-                                                                    "originalTypeDeclaration": {
-                                                                        "name": {
-                                                                            "originalName": "BigUnion",
-                                                                            "camelCase": {
-                                                                                "unsafeName": "bigUnion",
-                                                                                "safeName": "bigUnion"
-                                                                            },
-                                                                            "snakeCase": {
-                                                                                "unsafeName": "big_union",
-                                                                                "safeName": "big_union"
-                                                                            },
-                                                                            "screamingSnakeCase": {
-                                                                                "unsafeName": "BIG_UNION",
-                                                                                "safeName": "BIG_UNION"
-                                                                            },
-                                                                            "pascalCase": {
-                                                                                "unsafeName": "BigUnion",
-                                                                                "safeName": "BigUnion"
-                                                                            }
-                                                                        },
-                                                                        "fernFilepath": {
-                                                                            "allParts": [
-                                                                                {
-                                                                                    "originalName": "bigunion",
-                                                                                    "camelCase": {
-                                                                                        "unsafeName": "bigunion",
-                                                                                        "safeName": "bigunion"
-                                                                                    },
-                                                                                    "snakeCase": {
-                                                                                        "unsafeName": "bigunion",
-                                                                                        "safeName": "bigunion"
-                                                                                    },
-                                                                                    "screamingSnakeCase": {
-                                                                                        "unsafeName": "BIGUNION",
-                                                                                        "safeName": "BIGUNION"
-                                                                                    },
-                                                                                    "pascalCase": {
-                                                                                        "unsafeName": "Bigunion",
-                                                                                        "safeName": "Bigunion"
-                                                                                    }
-                                                                                }
-                                                                            ],
-                                                                            "packagePath": [],
-                                                                            "file": {
-                                                                                "originalName": "bigunion",
-                                                                                "camelCase": {
-                                                                                    "unsafeName": "bigunion",
-                                                                                    "safeName": "bigunion"
-                                                                                },
-                                                                                "snakeCase": {
-                                                                                    "unsafeName": "bigunion",
-                                                                                    "safeName": "bigunion"
-                                                                                },
-                                                                                "screamingSnakeCase": {
-                                                                                    "unsafeName": "BIGUNION",
-                                                                                    "safeName": "BIGUNION"
-                                                                                },
-                                                                                "pascalCase": {
-                                                                                    "unsafeName": "Bigunion",
-                                                                                    "safeName": "Bigunion"
-                                                                                }
-                                                                            }
-                                                                        },
-                                                                        "displayName": null,
-                                                                        "typeId": "type_bigunion:BigUnion"
-                                                                    },
                                                                     "value": {
                                                                         "shape": {
                                                                             "type": "primitive",
@@ -24764,8 +23023,7 @@
                                                                             }
                                                                         },
                                                                         "jsonExample": "2024-01-15T09:30:00Z"
-                                                                    },
-                                                                    "propertyAccess": null
+                                                                    }
                                                                 },
                                                                 {
                                                                     "name": {
@@ -24790,72 +23048,6 @@
                                                                         },
                                                                         "wireValue": "archived-at"
                                                                     },
-                                                                    "originalTypeDeclaration": {
-                                                                        "name": {
-                                                                            "originalName": "BigUnion",
-                                                                            "camelCase": {
-                                                                                "unsafeName": "bigUnion",
-                                                                                "safeName": "bigUnion"
-                                                                            },
-                                                                            "snakeCase": {
-                                                                                "unsafeName": "big_union",
-                                                                                "safeName": "big_union"
-                                                                            },
-                                                                            "screamingSnakeCase": {
-                                                                                "unsafeName": "BIG_UNION",
-                                                                                "safeName": "BIG_UNION"
-                                                                            },
-                                                                            "pascalCase": {
-                                                                                "unsafeName": "BigUnion",
-                                                                                "safeName": "BigUnion"
-                                                                            }
-                                                                        },
-                                                                        "fernFilepath": {
-                                                                            "allParts": [
-                                                                                {
-                                                                                    "originalName": "bigunion",
-                                                                                    "camelCase": {
-                                                                                        "unsafeName": "bigunion",
-                                                                                        "safeName": "bigunion"
-                                                                                    },
-                                                                                    "snakeCase": {
-                                                                                        "unsafeName": "bigunion",
-                                                                                        "safeName": "bigunion"
-                                                                                    },
-                                                                                    "screamingSnakeCase": {
-                                                                                        "unsafeName": "BIGUNION",
-                                                                                        "safeName": "BIGUNION"
-                                                                                    },
-                                                                                    "pascalCase": {
-                                                                                        "unsafeName": "Bigunion",
-                                                                                        "safeName": "Bigunion"
-                                                                                    }
-                                                                                }
-                                                                            ],
-                                                                            "packagePath": [],
-                                                                            "file": {
-                                                                                "originalName": "bigunion",
-                                                                                "camelCase": {
-                                                                                    "unsafeName": "bigunion",
-                                                                                    "safeName": "bigunion"
-                                                                                },
-                                                                                "snakeCase": {
-                                                                                    "unsafeName": "bigunion",
-                                                                                    "safeName": "bigunion"
-                                                                                },
-                                                                                "screamingSnakeCase": {
-                                                                                    "unsafeName": "BIGUNION",
-                                                                                    "safeName": "BIGUNION"
-                                                                                },
-                                                                                "pascalCase": {
-                                                                                    "unsafeName": "Bigunion",
-                                                                                    "safeName": "Bigunion"
-                                                                                }
-                                                                            }
-                                                                        },
-                                                                        "displayName": null,
-                                                                        "typeId": "type_bigunion:BigUnion"
-                                                                    },
                                                                     "value": {
                                                                         "shape": {
                                                                             "type": "container",
@@ -24871,8 +23063,7 @@
                                                                                 }
                                                                             }
                                                                         }
-                                                                    },
-                                                                    "propertyAccess": null
+                                                                    }
                                                                 }
                                                             ],
                                                             "extendProperties": []
@@ -25400,7 +23591,7 @@
                     "autogeneratedExamples": [
                         {
                             "example": {
-                                "id": "d64a6244",
+                                "id": "731e9f42",
                                 "url": "/id",
                                 "name": null,
                                 "endpointHeaders": [],
@@ -25633,72 +23824,6 @@
                                                                 },
                                                                 "wireValue": "id"
                                                             },
-                                                            "originalTypeDeclaration": {
-                                                                "name": {
-                                                                    "originalName": "Shape",
-                                                                    "camelCase": {
-                                                                        "unsafeName": "shape",
-                                                                        "safeName": "shape"
-                                                                    },
-                                                                    "snakeCase": {
-                                                                        "unsafeName": "shape",
-                                                                        "safeName": "shape"
-                                                                    },
-                                                                    "screamingSnakeCase": {
-                                                                        "unsafeName": "SHAPE",
-                                                                        "safeName": "SHAPE"
-                                                                    },
-                                                                    "pascalCase": {
-                                                                        "unsafeName": "Shape",
-                                                                        "safeName": "Shape"
-                                                                    }
-                                                                },
-                                                                "fernFilepath": {
-                                                                    "allParts": [
-                                                                        {
-                                                                            "originalName": "union",
-                                                                            "camelCase": {
-                                                                                "unsafeName": "union",
-                                                                                "safeName": "union"
-                                                                            },
-                                                                            "snakeCase": {
-                                                                                "unsafeName": "union",
-                                                                                "safeName": "union"
-                                                                            },
-                                                                            "screamingSnakeCase": {
-                                                                                "unsafeName": "UNION",
-                                                                                "safeName": "UNION"
-                                                                            },
-                                                                            "pascalCase": {
-                                                                                "unsafeName": "Union",
-                                                                                "safeName": "Union"
-                                                                            }
-                                                                        }
-                                                                    ],
-                                                                    "packagePath": [],
-                                                                    "file": {
-                                                                        "originalName": "union",
-                                                                        "camelCase": {
-                                                                            "unsafeName": "union",
-                                                                            "safeName": "union"
-                                                                        },
-                                                                        "snakeCase": {
-                                                                            "unsafeName": "union",
-                                                                            "safeName": "union"
-                                                                        },
-                                                                        "screamingSnakeCase": {
-                                                                            "unsafeName": "UNION",
-                                                                            "safeName": "UNION"
-                                                                        },
-                                                                        "pascalCase": {
-                                                                            "unsafeName": "Union",
-                                                                            "safeName": "Union"
-                                                                        }
-                                                                    }
-                                                                },
-                                                                "displayName": null,
-                                                                "typeId": "type_union:Shape"
-                                                            },
                                                             "value": {
                                                                 "shape": {
                                                                     "type": "primitive",
@@ -25710,8 +23835,7 @@
                                                                     }
                                                                 },
                                                                 "jsonExample": "id"
-                                                            },
-                                                            "propertyAccess": null
+                                                            }
                                                         }
                                                     ],
                                                     "extendProperties": [
@@ -26152,7 +24276,7 @@
                     "autogeneratedExamples": [
                         {
                             "example": {
-                                "id": "f9aa0c14",
+                                "id": "f6bd2732",
                                 "url": "",
                                 "name": null,
                                 "endpointHeaders": [],
@@ -26347,72 +24471,6 @@
                                                         },
                                                         "wireValue": "id"
                                                     },
-                                                    "originalTypeDeclaration": {
-                                                        "name": {
-                                                            "originalName": "Shape",
-                                                            "camelCase": {
-                                                                "unsafeName": "shape",
-                                                                "safeName": "shape"
-                                                            },
-                                                            "snakeCase": {
-                                                                "unsafeName": "shape",
-                                                                "safeName": "shape"
-                                                            },
-                                                            "screamingSnakeCase": {
-                                                                "unsafeName": "SHAPE",
-                                                                "safeName": "SHAPE"
-                                                            },
-                                                            "pascalCase": {
-                                                                "unsafeName": "Shape",
-                                                                "safeName": "Shape"
-                                                            }
-                                                        },
-                                                        "fernFilepath": {
-                                                            "allParts": [
-                                                                {
-                                                                    "originalName": "union",
-                                                                    "camelCase": {
-                                                                        "unsafeName": "union",
-                                                                        "safeName": "union"
-                                                                    },
-                                                                    "snakeCase": {
-                                                                        "unsafeName": "union",
-                                                                        "safeName": "union"
-                                                                    },
-                                                                    "screamingSnakeCase": {
-                                                                        "unsafeName": "UNION",
-                                                                        "safeName": "UNION"
-                                                                    },
-                                                                    "pascalCase": {
-                                                                        "unsafeName": "Union",
-                                                                        "safeName": "Union"
-                                                                    }
-                                                                }
-                                                            ],
-                                                            "packagePath": [],
-                                                            "file": {
-                                                                "originalName": "union",
-                                                                "camelCase": {
-                                                                    "unsafeName": "union",
-                                                                    "safeName": "union"
-                                                                },
-                                                                "snakeCase": {
-                                                                    "unsafeName": "union",
-                                                                    "safeName": "union"
-                                                                },
-                                                                "screamingSnakeCase": {
-                                                                    "unsafeName": "UNION",
-                                                                    "safeName": "UNION"
-                                                                },
-                                                                "pascalCase": {
-                                                                    "unsafeName": "Union",
-                                                                    "safeName": "Union"
-                                                                }
-                                                            }
-                                                        },
-                                                        "displayName": null,
-                                                        "typeId": "type_union:Shape"
-                                                    },
                                                     "value": {
                                                         "shape": {
                                                             "type": "primitive",
@@ -26424,8 +24482,7 @@
                                                             }
                                                         },
                                                         "jsonExample": "id"
-                                                    },
-                                                    "propertyAccess": null
+                                                    }
                                                 }
                                             ],
                                             "extendProperties": [

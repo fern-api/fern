@@ -17732,73 +17732,6 @@
                                         "version": "0.0.1",
                                         "tenancy": "test"
                                     }
-                                },
-                                "propertyAccess": null,
-                                "originalTypeDeclaration": {
-                                    "name": {
-                                        "originalName": "Metadata",
-                                        "camelCase": {
-                                            "unsafeName": "metadata",
-                                            "safeName": "metadata"
-                                        },
-                                        "snakeCase": {
-                                            "unsafeName": "metadata",
-                                            "safeName": "metadata"
-                                        },
-                                        "screamingSnakeCase": {
-                                            "unsafeName": "METADATA",
-                                            "safeName": "METADATA"
-                                        },
-                                        "pascalCase": {
-                                            "unsafeName": "Metadata",
-                                            "safeName": "Metadata"
-                                        }
-                                    },
-                                    "fernFilepath": {
-                                        "allParts": [
-                                            {
-                                                "originalName": "types",
-                                                "camelCase": {
-                                                    "unsafeName": "types",
-                                                    "safeName": "types"
-                                                },
-                                                "snakeCase": {
-                                                    "unsafeName": "types",
-                                                    "safeName": "types"
-                                                },
-                                                "screamingSnakeCase": {
-                                                    "unsafeName": "TYPES",
-                                                    "safeName": "TYPES"
-                                                },
-                                                "pascalCase": {
-                                                    "unsafeName": "Types",
-                                                    "safeName": "Types"
-                                                }
-                                            }
-                                        ],
-                                        "packagePath": [],
-                                        "file": {
-                                            "originalName": "types",
-                                            "camelCase": {
-                                                "unsafeName": "types",
-                                                "safeName": "types"
-                                            },
-                                            "snakeCase": {
-                                                "unsafeName": "types",
-                                                "safeName": "types"
-                                            },
-                                            "screamingSnakeCase": {
-                                                "unsafeName": "TYPES",
-                                                "safeName": "TYPES"
-                                            },
-                                            "pascalCase": {
-                                                "unsafeName": "Types",
-                                                "safeName": "Types"
-                                            }
-                                        }
-                                    },
-                                    "displayName": null,
-                                    "typeId": "type_types:Metadata"
                                 }
                             },
                             {
@@ -17872,73 +17805,6 @@
                                         "development",
                                         "public"
                                     ]
-                                },
-                                "propertyAccess": null,
-                                "originalTypeDeclaration": {
-                                    "name": {
-                                        "originalName": "Metadata",
-                                        "camelCase": {
-                                            "unsafeName": "metadata",
-                                            "safeName": "metadata"
-                                        },
-                                        "snakeCase": {
-                                            "unsafeName": "metadata",
-                                            "safeName": "metadata"
-                                        },
-                                        "screamingSnakeCase": {
-                                            "unsafeName": "METADATA",
-                                            "safeName": "METADATA"
-                                        },
-                                        "pascalCase": {
-                                            "unsafeName": "Metadata",
-                                            "safeName": "Metadata"
-                                        }
-                                    },
-                                    "fernFilepath": {
-                                        "allParts": [
-                                            {
-                                                "originalName": "types",
-                                                "camelCase": {
-                                                    "unsafeName": "types",
-                                                    "safeName": "types"
-                                                },
-                                                "snakeCase": {
-                                                    "unsafeName": "types",
-                                                    "safeName": "types"
-                                                },
-                                                "screamingSnakeCase": {
-                                                    "unsafeName": "TYPES",
-                                                    "safeName": "TYPES"
-                                                },
-                                                "pascalCase": {
-                                                    "unsafeName": "Types",
-                                                    "safeName": "Types"
-                                                }
-                                            }
-                                        ],
-                                        "packagePath": [],
-                                        "file": {
-                                            "originalName": "types",
-                                            "camelCase": {
-                                                "unsafeName": "types",
-                                                "safeName": "types"
-                                            },
-                                            "snakeCase": {
-                                                "unsafeName": "types",
-                                                "safeName": "types"
-                                            },
-                                            "screamingSnakeCase": {
-                                                "unsafeName": "TYPES",
-                                                "safeName": "TYPES"
-                                            },
-                                            "pascalCase": {
-                                                "unsafeName": "Types",
-                                                "safeName": "Types"
-                                            }
-                                        }
-                                    },
-                                    "displayName": null,
-                                    "typeId": "type_types:Metadata"
                                 }
                             }
                         ],
@@ -36486,73 +36352,6 @@
                                                                     "version": "0.0.1",
                                                                     "tenancy": "test"
                                                                 }
-                                                            },
-                                                            "propertyAccess": null,
-                                                            "originalTypeDeclaration": {
-                                                                "typeId": "type_types:Metadata",
-                                                                "fernFilepath": {
-                                                                    "allParts": [
-                                                                        {
-                                                                            "originalName": "types",
-                                                                            "camelCase": {
-                                                                                "unsafeName": "types",
-                                                                                "safeName": "types"
-                                                                            },
-                                                                            "snakeCase": {
-                                                                                "unsafeName": "types",
-                                                                                "safeName": "types"
-                                                                            },
-                                                                            "screamingSnakeCase": {
-                                                                                "unsafeName": "TYPES",
-                                                                                "safeName": "TYPES"
-                                                                            },
-                                                                            "pascalCase": {
-                                                                                "unsafeName": "Types",
-                                                                                "safeName": "Types"
-                                                                            }
-                                                                        }
-                                                                    ],
-                                                                    "packagePath": [],
-                                                                    "file": {
-                                                                        "originalName": "types",
-                                                                        "camelCase": {
-                                                                            "unsafeName": "types",
-                                                                            "safeName": "types"
-                                                                        },
-                                                                        "snakeCase": {
-                                                                            "unsafeName": "types",
-                                                                            "safeName": "types"
-                                                                        },
-                                                                        "screamingSnakeCase": {
-                                                                            "unsafeName": "TYPES",
-                                                                            "safeName": "TYPES"
-                                                                        },
-                                                                        "pascalCase": {
-                                                                            "unsafeName": "Types",
-                                                                            "safeName": "Types"
-                                                                        }
-                                                                    }
-                                                                },
-                                                                "name": {
-                                                                    "originalName": "Metadata",
-                                                                    "camelCase": {
-                                                                        "unsafeName": "metadata",
-                                                                        "safeName": "metadata"
-                                                                    },
-                                                                    "snakeCase": {
-                                                                        "unsafeName": "metadata",
-                                                                        "safeName": "metadata"
-                                                                    },
-                                                                    "screamingSnakeCase": {
-                                                                        "unsafeName": "METADATA",
-                                                                        "safeName": "METADATA"
-                                                                    },
-                                                                    "pascalCase": {
-                                                                        "unsafeName": "Metadata",
-                                                                        "safeName": "Metadata"
-                                                                    }
-                                                                },
-                                                                "displayName": null
                                                             }
                                                         },
                                                         {
@@ -36626,73 +36425,6 @@
                                                                     "development",
                                                                     "public"
                                                                 ]
-                                                            },
-                                                            "propertyAccess": null,
-                                                            "originalTypeDeclaration": {
-                                                                "typeId": "type_types:Metadata",
-                                                                "fernFilepath": {
-                                                                    "allParts": [
-                                                                        {
-                                                                            "originalName": "types",
-                                                                            "camelCase": {
-                                                                                "unsafeName": "types",
-                                                                                "safeName": "types"
-                                                                            },
-                                                                            "snakeCase": {
-                                                                                "unsafeName": "types",
-                                                                                "safeName": "types"
-                                                                            },
-                                                                            "screamingSnakeCase": {
-                                                                                "unsafeName": "TYPES",
-                                                                                "safeName": "TYPES"
-                                                                            },
-                                                                            "pascalCase": {
-                                                                                "unsafeName": "Types",
-                                                                                "safeName": "Types"
-                                                                            }
-                                                                        }
-                                                                    ],
-                                                                    "packagePath": [],
-                                                                    "file": {
-                                                                        "originalName": "types",
-                                                                        "camelCase": {
-                                                                            "unsafeName": "types",
-                                                                            "safeName": "types"
-                                                                        },
-                                                                        "snakeCase": {
-                                                                            "unsafeName": "types",
-                                                                            "safeName": "types"
-                                                                        },
-                                                                        "screamingSnakeCase": {
-                                                                            "unsafeName": "TYPES",
-                                                                            "safeName": "TYPES"
-                                                                        },
-                                                                        "pascalCase": {
-                                                                            "unsafeName": "Types",
-                                                                            "safeName": "Types"
-                                                                        }
-                                                                    }
-                                                                },
-                                                                "name": {
-                                                                    "originalName": "Metadata",
-                                                                    "camelCase": {
-                                                                        "unsafeName": "metadata",
-                                                                        "safeName": "metadata"
-                                                                    },
-                                                                    "snakeCase": {
-                                                                        "unsafeName": "metadata",
-                                                                        "safeName": "metadata"
-                                                                    },
-                                                                    "screamingSnakeCase": {
-                                                                        "unsafeName": "METADATA",
-                                                                        "safeName": "METADATA"
-                                                                    },
-                                                                    "pascalCase": {
-                                                                        "unsafeName": "Metadata",
-                                                                        "safeName": "Metadata"
-                                                                    }
-                                                                },
-                                                                "displayName": null
                                                             }
                                                         }
                                                     ],
@@ -36722,7 +36454,7 @@
                     "autogeneratedExamples": [
                         {
                             "example": {
-                                "id": "7f0f4f74",
+                                "id": "33b03494",
                                 "url": "/metadata",
                                 "name": null,
                                 "endpointHeaders": [
@@ -36861,72 +36593,6 @@
                                                                 },
                                                                 "wireValue": "extra"
                                                             },
-                                                            "originalTypeDeclaration": {
-                                                                "name": {
-                                                                    "originalName": "Metadata",
-                                                                    "camelCase": {
-                                                                        "unsafeName": "metadata",
-                                                                        "safeName": "metadata"
-                                                                    },
-                                                                    "snakeCase": {
-                                                                        "unsafeName": "metadata",
-                                                                        "safeName": "metadata"
-                                                                    },
-                                                                    "screamingSnakeCase": {
-                                                                        "unsafeName": "METADATA",
-                                                                        "safeName": "METADATA"
-                                                                    },
-                                                                    "pascalCase": {
-                                                                        "unsafeName": "Metadata",
-                                                                        "safeName": "Metadata"
-                                                                    }
-                                                                },
-                                                                "fernFilepath": {
-                                                                    "allParts": [
-                                                                        {
-                                                                            "originalName": "types",
-                                                                            "camelCase": {
-                                                                                "unsafeName": "types",
-                                                                                "safeName": "types"
-                                                                            },
-                                                                            "snakeCase": {
-                                                                                "unsafeName": "types",
-                                                                                "safeName": "types"
-                                                                            },
-                                                                            "screamingSnakeCase": {
-                                                                                "unsafeName": "TYPES",
-                                                                                "safeName": "TYPES"
-                                                                            },
-                                                                            "pascalCase": {
-                                                                                "unsafeName": "Types",
-                                                                                "safeName": "Types"
-                                                                            }
-                                                                        }
-                                                                    ],
-                                                                    "packagePath": [],
-                                                                    "file": {
-                                                                        "originalName": "types",
-                                                                        "camelCase": {
-                                                                            "unsafeName": "types",
-                                                                            "safeName": "types"
-                                                                        },
-                                                                        "snakeCase": {
-                                                                            "unsafeName": "types",
-                                                                            "safeName": "types"
-                                                                        },
-                                                                        "screamingSnakeCase": {
-                                                                            "unsafeName": "TYPES",
-                                                                            "safeName": "TYPES"
-                                                                        },
-                                                                        "pascalCase": {
-                                                                            "unsafeName": "Types",
-                                                                            "safeName": "Types"
-                                                                        }
-                                                                    }
-                                                                },
-                                                                "displayName": null,
-                                                                "typeId": "type_types:Metadata"
-                                                            },
                                                             "value": {
                                                                 "shape": {
                                                                     "type": "container",
@@ -36987,8 +36653,7 @@
                                                                 "jsonExample": {
                                                                     "extra": "extra"
                                                                 }
-                                                            },
-                                                            "propertyAccess": null
+                                                            }
                                                         },
                                                         {
                                                             "name": {
@@ -37012,72 +36677,6 @@
                                                                     }
                                                                 },
                                                                 "wireValue": "tags"
-                                                            },
-                                                            "originalTypeDeclaration": {
-                                                                "name": {
-                                                                    "originalName": "Metadata",
-                                                                    "camelCase": {
-                                                                        "unsafeName": "metadata",
-                                                                        "safeName": "metadata"
-                                                                    },
-                                                                    "snakeCase": {
-                                                                        "unsafeName": "metadata",
-                                                                        "safeName": "metadata"
-                                                                    },
-                                                                    "screamingSnakeCase": {
-                                                                        "unsafeName": "METADATA",
-                                                                        "safeName": "METADATA"
-                                                                    },
-                                                                    "pascalCase": {
-                                                                        "unsafeName": "Metadata",
-                                                                        "safeName": "Metadata"
-                                                                    }
-                                                                },
-                                                                "fernFilepath": {
-                                                                    "allParts": [
-                                                                        {
-                                                                            "originalName": "types",
-                                                                            "camelCase": {
-                                                                                "unsafeName": "types",
-                                                                                "safeName": "types"
-                                                                            },
-                                                                            "snakeCase": {
-                                                                                "unsafeName": "types",
-                                                                                "safeName": "types"
-                                                                            },
-                                                                            "screamingSnakeCase": {
-                                                                                "unsafeName": "TYPES",
-                                                                                "safeName": "TYPES"
-                                                                            },
-                                                                            "pascalCase": {
-                                                                                "unsafeName": "Types",
-                                                                                "safeName": "Types"
-                                                                            }
-                                                                        }
-                                                                    ],
-                                                                    "packagePath": [],
-                                                                    "file": {
-                                                                        "originalName": "types",
-                                                                        "camelCase": {
-                                                                            "unsafeName": "types",
-                                                                            "safeName": "types"
-                                                                        },
-                                                                        "snakeCase": {
-                                                                            "unsafeName": "types",
-                                                                            "safeName": "types"
-                                                                        },
-                                                                        "screamingSnakeCase": {
-                                                                            "unsafeName": "TYPES",
-                                                                            "safeName": "TYPES"
-                                                                        },
-                                                                        "pascalCase": {
-                                                                            "unsafeName": "Types",
-                                                                            "safeName": "Types"
-                                                                        }
-                                                                    }
-                                                                },
-                                                                "displayName": null,
-                                                                "typeId": "type_types:Metadata"
                                                             },
                                                             "value": {
                                                                 "shape": {
@@ -37114,8 +36713,7 @@
                                                                 "jsonExample": [
                                                                     "tags"
                                                                 ]
-                                                            },
-                                                            "propertyAccess": null
+                                                            }
                                                         }
                                                     ],
                                                     "extendProperties": []
