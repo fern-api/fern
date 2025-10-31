@@ -1,6 +1,44 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
 - changelogEntry:
     - summary: |
+        Fix issue where parsing failed for null objects in a TabbedNavigationItem.
+      type: fix
+  irVersion: 61
+  createdAt: "2025-10-31"
+  version: 0.101.3
+
+- changelogEntry:
+    - summary: |
+        Publish with all APIs to S3 by default.
+      type: fix
+  irVersion: 61
+  createdAt: "2025-10-31"
+  version: 0.101.2
+
+- changelogEntry:
+    - summary: |
+        Fix bug where child nodes of variants did not inherit variant slugs
+      type: fix
+  irVersion: 61
+  createdAt: "2025-10-31"
+  version: 0.101.1
+
+- changelogEntry:
+    - summary: |
+        Adds new `docs.yml` configurations:
+
+        - `theme.[sidebar, body, tabs]`: controls the theme of the docs
+        - `settings.disable-explorer-proxy`: controls whether the explorer uses a proxy
+        - `languages`: initializes localization within fern docs 
+        - `navbarLinks.[dropdown]`: adds a dropdown option for navbar links
+        - `navbarLinks.[].viewers`: allows navbar links to be controlled with RBAC
+      type: feat
+  irVersion: 61
+  createdAt: "2025-10-30"
+  version: 0.101.0
+
+- changelogEntry:
+    - summary: |
         Generate synthetic operationIds for OpenAPI callbacks that don't have an explicit operationId. This ensures callbacks are properly rendered in documentation even when the OpenAPI spec doesn't include an operationId for the callback operation.
       type: fix
   irVersion: 61
