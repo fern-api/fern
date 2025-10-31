@@ -616,10 +616,13 @@ async function convertOutputMode({
     maybeTopLevelReviewers: generatorsYml.ReviewersSchema | undefined;
 }): Promise<FernFiddle.OutputMode> {
     const downloadSnippets = generator.snippets != null && generator.snippets.path !== "";
-    if (generator.github != null && !isGithubSelfhosted(generator.github)) {
-        const indexOfFirstSlash = generator.github.repository.indexOf("/");
-        const owner = generator.github.repository.slice(0, indexOfFirstSlash);
-        const repo = generator.github.repository.slice(indexOfFirstSlash + 1);
+    if (generator.github) {
+        const repoString = isGithubSelfhosted(generator.github)
+            ? generator.github.uri
+            : generator.github.repository;
+        const indexOfFirstSlash = repoString.indexOf("/");
+        const owner = repoString.slice(0, indexOfFirstSlash);
+        const repo = repoString.slice(indexOfFirstSlash + 1);
         const publishInfo =
             generator.output != null
                 ? getGithubPublishInfo(generator.output, maybeGroupLevelMetadata, maybeTopLevelMetadata)
@@ -925,8 +928,8 @@ function getGithubLicenseSchema(
         return generator["publish-metadata"].license;
     } else if (generator.metadata?.license != null) {
         return generator.metadata.license;
-    } else if (isGithubSelfhosted(generator.github)) {
-        return undefined;
+    } else if (isGithubSelfhosted(generator.github) && generator.github.license != null) {
+        return generator.github.license;
     }
     return generator.github?.license;
 }
