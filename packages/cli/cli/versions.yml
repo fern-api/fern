@@ -1,6 +1,22 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
 - changelogEntry:
     - summary: |
+        Fix issue where parsing failed for null objects in a TabbedNavigationItem.
+      type: fix
+  irVersion: 61
+  createdAt: "2025-10-31"
+  version: 0.101.3
+
+- changelogEntry:
+    - summary: |
+        Publish with all APIs to S3 by default.
+      type: fix
+  irVersion: 61
+  createdAt: "2025-10-31"
+  version: 0.101.2
+
+- changelogEntry:
+    - summary: |
         Fix bug where child nodes of variants did not inherit variant slugs
       type: fix
   irVersion: 61

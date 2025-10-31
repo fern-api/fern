@@ -96,8 +96,8 @@ public interface ICustomConfig {
     }
 
     @Value.Default
-    @JsonProperty("use-nullable-for-optional-fields")
-    default Boolean useNullableForOptionalFields() {
+    @JsonProperty("collapse-optional-nullable")
+    default Boolean collapseOptionalNullable() {
         return false;
     }
 
