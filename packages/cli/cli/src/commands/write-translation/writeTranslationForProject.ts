@@ -91,7 +91,6 @@ export async function writeTranslationForProject({
                 const fileHasChanged = await hasFileChanged(filePath, relativePath, hashMappings);
 
                 if (!fileHasChanged) {
-                    // Update stats for all languages (including source) even though we skip processing
                     for (const language of languages) {
                         const stats = languageStats[language];
                         if (stats) {
@@ -107,7 +106,6 @@ export async function writeTranslationForProject({
                 const originalContent = await readFile(filePath, "utf-8");
                 updateHashForFile(hashMappings, relativePath, originalContent);
 
-                // Process source language for stats tracking but don't create files
                 const sourceStats = languageStats[sourceLanguage];
                 if (sourceStats) {
                     sourceStats.filesProcessed++;
@@ -116,7 +114,6 @@ export async function writeTranslationForProject({
                     `[HASH UPDATED] ${relativePath} -> ${sourceLanguage} (source language - hash only)`
                 );
 
-                // Only create translation files for target languages (non-source languages)
                 for (const language of targetLanguages) {
                     const languageDirectory = join(translationsDirectory, RelativeFilePath.of(language));
                     const destPath = join(languageDirectory, relativePath);

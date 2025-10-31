@@ -1,3 +1,4 @@
+import { docsYml, fernConfigJson } from "@fern-api/configuration-loader";
 import { AbsoluteFilePath, join, RelativeFilePath } from "@fern-api/fs-utils";
 import { Project } from "@fern-api/project-loader";
 import { DocsWorkspace } from "@fern-api/workspace-loader";
@@ -79,7 +80,7 @@ async function createMockProjectFromFernDir(fernDir: AbsoluteFilePath): Promise<
         config: {
             instances: [],
             ...parsedDocsYml
-        } as any
+        } as docsYml.RawSchemas.DocsConfiguration
     };
 
     return {
@@ -89,7 +90,7 @@ async function createMockProjectFromFernDir(fernDir: AbsoluteFilePath): Promise<
             rawConfig: {},
             organization: "test-org",
             version: "0.0.1"
-        } as any,
+        } as fernConfigJson.ProjectConfig,
         apiWorkspaces: [],
         loadAPIWorkspace: () => undefined
     } as Project;
