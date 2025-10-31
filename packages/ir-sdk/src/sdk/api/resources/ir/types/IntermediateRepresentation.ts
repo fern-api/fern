@@ -45,5 +45,5 @@ export interface IntermediateRepresentation {
     dynamic: FernIr.dynamic.DynamicIntermediateRepresentation | undefined;
     selfHosted: boolean | undefined;
     audiences: FernIr.AudienceDefinition[] | undefined;
-    generationMetadata: FernIr.GenerationMetadata | undefined;
+    generationMetadata: FernIr.GenerationMetadata;
 }

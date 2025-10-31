@@ -35,7 +35,8 @@ export function createMockTaskContext({ logger = CONSOLE_LOGGER }: { logger?: Lo
         },
         instrumentPostHogEvent: () => {
             throw new Error("Not implemented");
-        }
+        },
+        cliVersion: "0.0.0"
     };
     return context;
 }
