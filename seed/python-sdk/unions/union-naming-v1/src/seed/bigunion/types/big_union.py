@@ -12,6 +12,16 @@ from ...core.serialization import FieldMetadata
 
 
 class Base(UniversalBaseModel):
+    """
+    Examples
+    --------
+    from seed.bigunion import NormalSweetBigUnion
+
+    NormalSweetBigUnion(
+        value="example1",
+    )
+    """
+
     id: str
     created_at: typing_extensions.Annotated[dt.datetime, FieldMetadata(alias="created-at")]
     archived_at: typing_extensions.Annotated[typing.Optional[dt.datetime], FieldMetadata(alias="archived-at")] = None
@@ -27,6 +37,16 @@ class Base(UniversalBaseModel):
 
 
 class NormalSweetBigUnion(Base):
+    """
+    Examples
+    --------
+    from seed.bigunion import NormalSweetBigUnion
+
+    NormalSweetBigUnion(
+        value="example1",
+    )
+    """
+
     type: typing.Literal["normalSweet"] = "normalSweet"
     value: str
 
@@ -41,6 +61,16 @@ class NormalSweetBigUnion(Base):
 
 
 class ThankfulFactorBigUnion(Base):
+    """
+    Examples
+    --------
+    from seed.bigunion import NormalSweetBigUnion
+
+    NormalSweetBigUnion(
+        value="example1",
+    )
+    """
+
     type: typing.Literal["thankfulFactor"] = "thankfulFactor"
     value: str
 
@@ -55,6 +85,16 @@ class ThankfulFactorBigUnion(Base):
 
 
 class JumboEndBigUnion(Base):
+    """
+    Examples
+    --------
+    from seed.bigunion import NormalSweetBigUnion
+
+    NormalSweetBigUnion(
+        value="example1",
+    )
+    """
+
     type: typing.Literal["jumboEnd"] = "jumboEnd"
     value: str
 
@@ -69,6 +109,16 @@ class JumboEndBigUnion(Base):
 
 
 class HastyPainBigUnion(Base):
+    """
+    Examples
+    --------
+    from seed.bigunion import NormalSweetBigUnion
+
+    NormalSweetBigUnion(
+        value="example1",
+    )
+    """
+
     type: typing.Literal["hastyPain"] = "hastyPain"
     value: str
 
@@ -83,6 +133,16 @@ class HastyPainBigUnion(Base):
 
 
 class MistySnowBigUnion(Base):
+    """
+    Examples
+    --------
+    from seed.bigunion import NormalSweetBigUnion
+
+    NormalSweetBigUnion(
+        value="example1",
+    )
+    """
+
     type: typing.Literal["mistySnow"] = "mistySnow"
     value: str
 
@@ -97,6 +157,16 @@ class MistySnowBigUnion(Base):
 
 
 class DistinctFailureBigUnion(Base):
+    """
+    Examples
+    --------
+    from seed.bigunion import NormalSweetBigUnion
+
+    NormalSweetBigUnion(
+        value="example1",
+    )
+    """
+
     type: typing.Literal["distinctFailure"] = "distinctFailure"
     value: str
 
@@ -111,6 +181,16 @@ class DistinctFailureBigUnion(Base):
 
 
 class PracticalPrincipleBigUnion(Base):
+    """
+    Examples
+    --------
+    from seed.bigunion import NormalSweetBigUnion
+
+    NormalSweetBigUnion(
+        value="example1",
+    )
+    """
+
     type: typing.Literal["practicalPrinciple"] = "practicalPrinciple"
     value: str
 
@@ -125,6 +205,16 @@ class PracticalPrincipleBigUnion(Base):
 
 
 class LimpingStepBigUnion(Base):
+    """
+    Examples
+    --------
+    from seed.bigunion import NormalSweetBigUnion
+
+    NormalSweetBigUnion(
+        value="example1",
+    )
+    """
+
     type: typing.Literal["limpingStep"] = "limpingStep"
     value: str
 
@@ -139,6 +229,16 @@ class LimpingStepBigUnion(Base):
 
 
 class VibrantExcitementBigUnion(Base):
+    """
+    Examples
+    --------
+    from seed.bigunion import NormalSweetBigUnion
+
+    NormalSweetBigUnion(
+        value="example1",
+    )
+    """
+
     type: typing.Literal["vibrantExcitement"] = "vibrantExcitement"
     value: str
 
@@ -153,6 +253,16 @@ class VibrantExcitementBigUnion(Base):
 
 
 class ActiveDiamondBigUnion(Base):
+    """
+    Examples
+    --------
+    from seed.bigunion import NormalSweetBigUnion
+
+    NormalSweetBigUnion(
+        value="example1",
+    )
+    """
+
     type: typing.Literal["activeDiamond"] = "activeDiamond"
     value: str
 
@@ -167,6 +277,16 @@ class ActiveDiamondBigUnion(Base):
 
 
 class PopularLimitBigUnion(Base):
+    """
+    Examples
+    --------
+    from seed.bigunion import NormalSweetBigUnion
+
+    NormalSweetBigUnion(
+        value="example1",
+    )
+    """
+
     type: typing.Literal["popularLimit"] = "popularLimit"
     value: str
 
@@ -181,6 +301,16 @@ class PopularLimitBigUnion(Base):
 
 
 class FalseMirrorBigUnion(Base):
+    """
+    Examples
+    --------
+    from seed.bigunion import NormalSweetBigUnion
+
+    NormalSweetBigUnion(
+        value="example1",
+    )
+    """
+
     type: typing.Literal["falseMirror"] = "falseMirror"
     value: str
 
@@ -195,6 +325,16 @@ class FalseMirrorBigUnion(Base):
 
 
 class PrimaryBlockBigUnion(Base):
+    """
+    Examples
+    --------
+    from seed.bigunion import NormalSweetBigUnion
+
+    NormalSweetBigUnion(
+        value="example1",
+    )
+    """
+
     type: typing.Literal["primaryBlock"] = "primaryBlock"
     value: str
 
@@ -209,6 +349,16 @@ class PrimaryBlockBigUnion(Base):
 
 
 class RotatingRatioBigUnion(Base):
+    """
+    Examples
+    --------
+    from seed.bigunion import NormalSweetBigUnion
+
+    NormalSweetBigUnion(
+        value="example1",
+    )
+    """
+
     type: typing.Literal["rotatingRatio"] = "rotatingRatio"
     value: str
 
@@ -223,6 +373,16 @@ class RotatingRatioBigUnion(Base):
 
 
 class ColorfulCoverBigUnion(Base):
+    """
+    Examples
+    --------
+    from seed.bigunion import NormalSweetBigUnion
+
+    NormalSweetBigUnion(
+        value="example1",
+    )
+    """
+
     type: typing.Literal["colorfulCover"] = "colorfulCover"
     value: str
 
@@ -237,6 +397,16 @@ class ColorfulCoverBigUnion(Base):
 
 
 class DisloyalValueBigUnion(Base):
+    """
+    Examples
+    --------
+    from seed.bigunion import NormalSweetBigUnion
+
+    NormalSweetBigUnion(
+        value="example1",
+    )
+    """
+
     type: typing.Literal["disloyalValue"] = "disloyalValue"
     value: str
 
@@ -251,6 +421,16 @@ class DisloyalValueBigUnion(Base):
 
 
 class GruesomeCoachBigUnion(Base):
+    """
+    Examples
+    --------
+    from seed.bigunion import NormalSweetBigUnion
+
+    NormalSweetBigUnion(
+        value="example1",
+    )
+    """
+
     type: typing.Literal["gruesomeCoach"] = "gruesomeCoach"
     value: str
 
@@ -265,6 +445,16 @@ class GruesomeCoachBigUnion(Base):
 
 
 class TotalWorkBigUnion(Base):
+    """
+    Examples
+    --------
+    from seed.bigunion import NormalSweetBigUnion
+
+    NormalSweetBigUnion(
+        value="example1",
+    )
+    """
+
     type: typing.Literal["totalWork"] = "totalWork"
     value: str
 
@@ -279,6 +469,16 @@ class TotalWorkBigUnion(Base):
 
 
 class HarmoniousPlayBigUnion(Base):
+    """
+    Examples
+    --------
+    from seed.bigunion import NormalSweetBigUnion
+
+    NormalSweetBigUnion(
+        value="example1",
+    )
+    """
+
     type: typing.Literal["harmoniousPlay"] = "harmoniousPlay"
     value: str
 
@@ -293,6 +493,16 @@ class HarmoniousPlayBigUnion(Base):
 
 
 class UniqueStressBigUnion(Base):
+    """
+    Examples
+    --------
+    from seed.bigunion import NormalSweetBigUnion
+
+    NormalSweetBigUnion(
+        value="example1",
+    )
+    """
+
     type: typing.Literal["uniqueStress"] = "uniqueStress"
     value: str
 
@@ -307,6 +517,16 @@ class UniqueStressBigUnion(Base):
 
 
 class UnwillingSmokeBigUnion(Base):
+    """
+    Examples
+    --------
+    from seed.bigunion import NormalSweetBigUnion
+
+    NormalSweetBigUnion(
+        value="example1",
+    )
+    """
+
     type: typing.Literal["unwillingSmoke"] = "unwillingSmoke"
     value: str
 
@@ -321,6 +541,16 @@ class UnwillingSmokeBigUnion(Base):
 
 
 class FrozenSleepBigUnion(Base):
+    """
+    Examples
+    --------
+    from seed.bigunion import NormalSweetBigUnion
+
+    NormalSweetBigUnion(
+        value="example1",
+    )
+    """
+
     type: typing.Literal["frozenSleep"] = "frozenSleep"
     value: str
 
@@ -335,6 +565,16 @@ class FrozenSleepBigUnion(Base):
 
 
 class DiligentDealBigUnion(Base):
+    """
+    Examples
+    --------
+    from seed.bigunion import NormalSweetBigUnion
+
+    NormalSweetBigUnion(
+        value="example1",
+    )
+    """
+
     type: typing.Literal["diligentDeal"] = "diligentDeal"
     value: str
 
@@ -349,6 +589,16 @@ class DiligentDealBigUnion(Base):
 
 
 class AttractiveScriptBigUnion(Base):
+    """
+    Examples
+    --------
+    from seed.bigunion import NormalSweetBigUnion
+
+    NormalSweetBigUnion(
+        value="example1",
+    )
+    """
+
     type: typing.Literal["attractiveScript"] = "attractiveScript"
     value: str
 
@@ -363,6 +613,16 @@ class AttractiveScriptBigUnion(Base):
 
 
 class HoarseMouseBigUnion(Base):
+    """
+    Examples
+    --------
+    from seed.bigunion import NormalSweetBigUnion
+
+    NormalSweetBigUnion(
+        value="example1",
+    )
+    """
+
     type: typing.Literal["hoarseMouse"] = "hoarseMouse"
     value: str
 
@@ -377,6 +637,16 @@ class HoarseMouseBigUnion(Base):
 
 
 class CircularCardBigUnion(Base):
+    """
+    Examples
+    --------
+    from seed.bigunion import NormalSweetBigUnion
+
+    NormalSweetBigUnion(
+        value="example1",
+    )
+    """
+
     type: typing.Literal["circularCard"] = "circularCard"
     value: str
 
@@ -391,6 +661,16 @@ class CircularCardBigUnion(Base):
 
 
 class PotableBadBigUnion(Base):
+    """
+    Examples
+    --------
+    from seed.bigunion import NormalSweetBigUnion
+
+    NormalSweetBigUnion(
+        value="example1",
+    )
+    """
+
     type: typing.Literal["potableBad"] = "potableBad"
     value: str
 
@@ -405,6 +685,16 @@ class PotableBadBigUnion(Base):
 
 
 class TriangularRepairBigUnion(Base):
+    """
+    Examples
+    --------
+    from seed.bigunion import NormalSweetBigUnion
+
+    NormalSweetBigUnion(
+        value="example1",
+    )
+    """
+
     type: typing.Literal["triangularRepair"] = "triangularRepair"
     value: str
 
@@ -419,6 +709,16 @@ class TriangularRepairBigUnion(Base):
 
 
 class GaseousRoadBigUnion(Base):
+    """
+    Examples
+    --------
+    from seed.bigunion import NormalSweetBigUnion
+
+    NormalSweetBigUnion(
+        value="example1",
+    )
+    """
+
     type: typing.Literal["gaseousRoad"] = "gaseousRoad"
     value: str
 
@@ -432,6 +732,13 @@ class GaseousRoadBigUnion(Base):
             extra = pydantic.Extra.allow
 
 
+"""
+from seed.bigunion import NormalSweetBigUnion
+
+NormalSweetBigUnion(
+    value="example1",
+)
+"""
 BigUnion = typing.Union[
     NormalSweetBigUnion,
     ThankfulFactorBigUnion,
