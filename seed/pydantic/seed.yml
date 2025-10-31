@@ -81,6 +81,5 @@ fixtures:
         use_inheritance_for_extended_models: false
       outputFolder: no-inheritance-for-extended-models
 allowedFailures:
-  - websocket
   # Complex circular refs
   - simple-fhir

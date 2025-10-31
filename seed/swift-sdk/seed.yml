@@ -106,7 +106,6 @@ fixtures:
       outputFolder: with-custom-config
 
 allowedFailures:
-  - any-auth
   - api-wide-base-path
   - audiences
   - auth-environment-variables
@@ -123,7 +122,6 @@ allowedFailures:
   - extra-properties
   - file-upload-openapi
   - idempotency-headers
-  - imdb
   - inferred-auth-explicit
   - inferred-auth-implicit
   - inferred-auth-implicit-no-expiry
