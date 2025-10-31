@@ -2,8 +2,7 @@ import { ContentTransformation } from "./types";
 import { translateYamlContent } from "./yaml-processor";
 import { CliContext } from "../../cli-context/CliContext";
 
-
-export function transformContentForLanguage(transformation: ContentTransformation, cliContext: CliContext ): string {
+export function transformContentForLanguage(transformation: ContentTransformation, cliContext: CliContext): string {
     const { filePath, language, sourceLanguage, originalContent } = transformation;
 
     cliContext.logger.debug(`[PROCESSING] ${filePath} for language: ${language} (source: ${sourceLanguage})`);
@@ -16,7 +15,7 @@ export function transformContentForLanguage(transformation: ContentTransformatio
         // todo: create MDX translate stub
         return originalContent;
     }
-    
+
     cliContext.logger.error(`[SKIP] Skipping file "${filePath}" - unsupported file type for translation.`);
     return originalContent;
 }

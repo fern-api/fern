@@ -3,7 +3,6 @@ import { shouldTranslateValue } from "./translatable-keys";
 import { translateText } from "./translation-service";
 import { CliContext } from "../../cli-context/CliContext";
 
-
 export function translateYamlObject(obj: any, language: string, sourceLanguage: string, cliContext: CliContext): any {
     if (obj === null || obj === undefined) {
         return obj;

@@ -20,12 +20,12 @@ export function shouldTranslateValue(key: string, value: any): boolean {
     if (typeof value !== "string") {
         return false;
     }
-    
+
     // don't translate string - this is likely a type
     if (value === "string") {
         return false;
     }
-    
+
     // don't translate relative links
     if (value.startsWith("./")) {
         return false;
