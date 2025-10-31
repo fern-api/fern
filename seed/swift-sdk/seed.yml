@@ -75,13 +75,13 @@ fixtures:
       outputFolder: no-custom-config
     - customConfig:
         decodeNullableToOptional: true
-      outputFolder: decode-nullable-to-optional
+      outputFolder: nullable-as-optional
   nullable-optional:
     - customConfig: null
       outputFolder: no-custom-config
     - customConfig:
         decodeNullableToOptional: true
-      outputFolder: decode-nullable-to-optional
+      outputFolder: nullable-as-optional
   pagination:
     - customConfig: null
       outputFolder: no-custom-config
@@ -97,7 +97,7 @@ fixtures:
       outputFolder: no-custom-config
     - customConfig:
         decodeNullableToOptional: true
-      outputFolder: decode-nullable-to-optional
+      outputFolder: nullable-as-optional
   single-url-environment-default:
     - customConfig: null
       outputFolder: no-custom-config
@@ -132,8 +132,10 @@ allowedFailures:
   - mixed-file-directory
   - multi-url-environment
   - multi-url-environment-no-default
-  - nullable
-  - nullable-optional
+  - nullable:no-custom-config
+  - nullable:nullable-as-optional
+  - nullable-optional:no-custom-config
+  - nullable-optional:nullable-as-optional
   - oauth-client-credentials-custom
   - oauth-client-credentials-with-variables
   - pagination:no-custom-config
@@ -143,7 +145,8 @@ allowedFailures:
   - plain-text
   - query-parameters
   - request-parameters
-  - required-nullable
+  - required-nullable:no-custom-config
+  - required-nullable:nullable-as-optional
   - reserved-keywords
   - response-property
   - simple-fhir
