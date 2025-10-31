@@ -1,17 +1,14 @@
-using System.Net.Http;
 using System.Text.Json;
-using System.Threading;
-using System.Threading.Tasks;
 using SeedPagination;
 using SeedPagination.Core;
 
 namespace SeedPagination.InlineUsers;
 
-public partial class InlineUsersClient
+public partial class InlineUsersClient_
 {
     private RawClient _client;
 
-    internal InlineUsersClient(RawClient client)
+    internal InlineUsersClient_(RawClient client)
     {
         _client = client;
     }
@@ -658,8 +655,8 @@ public partial class InlineUsersClient
                 {
                     request.StartingAfter = cursor;
                 },
-                response => response?.Page?.Next?.StartingAfter,
-                response => response?.Data?.Users?.ToList(),
+                response => response.Page?.Next?.StartingAfter,
+                response => response.Data.Users_?.ToList(),
                 cancellationToken
             )
             .ConfigureAwait(false);
@@ -696,8 +693,8 @@ public partial class InlineUsersClient
                 {
                     request.Cursor = cursor;
                 },
-                response => response?.Next,
-                response => response?.Data?.Users?.ToList(),
+                response => response.Next,
+                response => response.Data.Users_?.ToList(),
                 cancellationToken
             )
             .ConfigureAwait(false);
@@ -735,11 +732,11 @@ public partial class InlineUsersClient
                 ListWithBodyCursorPaginationInternalAsync,
                 (request, cursor) =>
                 {
-                    request.Pagination ??= new();
+                    request.Pagination ??= new WithCursor();
                     request.Pagination.Cursor = cursor;
                 },
-                response => response?.Page?.Next?.StartingAfter,
-                response => response?.Data?.Users?.ToList(),
+                response => response.Page?.Next?.StartingAfter,
+                response => response.Data.Users_?.ToList(),
                 cancellationToken
             )
             .ConfigureAwait(false);
@@ -776,13 +773,13 @@ public partial class InlineUsersClient
                 request,
                 options,
                 ListWithOffsetPaginationInternalAsync,
-                request => request?.Page ?? 0,
+                request => request.Page ?? 0,
                 (request, offset) =>
                 {
                     request.Page = offset;
                 },
                 null,
-                response => response?.Data?.Users?.ToList(),
+                response => response.Data.Users_?.ToList(),
                 null,
                 cancellationToken
             )
@@ -820,13 +817,13 @@ public partial class InlineUsersClient
                 request,
                 options,
                 ListWithDoubleOffsetPaginationInternalAsync,
-                request => request?.Page ?? 0,
+                request => request.Page ?? 0,
                 (request, offset) =>
                 {
                     request.Page = offset;
                 },
                 null,
-                response => response?.Data?.Users?.ToList(),
+                response => response.Data.Users_?.ToList(),
                 null,
                 cancellationToken
             )
@@ -861,14 +858,14 @@ public partial class InlineUsersClient
                 request,
                 options,
                 ListWithBodyOffsetPaginationInternalAsync,
-                request => request?.Pagination?.Page ?? 0,
+                request => request.Pagination?.Page ?? 0,
                 (request, offset) =>
                 {
                     request.Pagination ??= new();
                     request.Pagination.Page = offset;
                 },
                 null,
-                response => response?.Data?.Users?.ToList(),
+                response => response.Data.Users_?.ToList(),
                 null,
                 cancellationToken
             )
@@ -905,13 +902,13 @@ public partial class InlineUsersClient
                 request,
                 options,
                 ListWithOffsetStepPaginationInternalAsync,
-                request => request?.Page ?? 0,
+                request => request.Page ?? 0,
                 (request, offset) =>
                 {
                     request.Page = offset;
                 },
-                request => request?.Limit ?? 0,
-                response => response?.Data?.Users?.ToList(),
+                request => request.Limit ?? 0,
+                response => response.Data.Users_?.ToList(),
                 null,
                 cancellationToken
             )
@@ -948,14 +945,14 @@ public partial class InlineUsersClient
                 request,
                 options,
                 ListWithOffsetPaginationHasNextPageInternalAsync,
-                request => request?.Page ?? 0,
+                request => request.Page ?? 0,
                 (request, offset) =>
                 {
                     request.Page = offset;
                 },
-                request => request?.Limit ?? 0,
-                response => response?.Data?.Users?.ToList(),
-                response => response?.HasNextPage,
+                request => request.Limit ?? 0,
+                response => response.Data.Users_?.ToList(),
+                response => response.HasNextPage,
                 cancellationToken
             )
             .ConfigureAwait(false);
@@ -995,8 +992,8 @@ public partial class InlineUsersClient
                 {
                     request.Cursor = cursor;
                 },
-                response => response?.Next,
-                response => response?.Data?.Users?.ToList(),
+                response => response.Next,
+                response => response.Data.Users?.ToList(),
                 cancellationToken
             )
             .ConfigureAwait(false);
@@ -1036,8 +1033,8 @@ public partial class InlineUsersClient
                 {
                     request.Cursor = cursor;
                 },
-                response => response?.Next,
-                response => response?.Data?.Users?.ToList(),
+                response => response.Next,
+                response => response.Data.Users?.ToList(),
                 cancellationToken
             )
             .ConfigureAwait(false);
@@ -1074,8 +1071,8 @@ public partial class InlineUsersClient
                 {
                     request.StartingAfter = cursor;
                 },
-                response => response?.Cursor?.After,
-                response => response?.Cursor?.Data?.ToList(),
+                response => response.Cursor.After,
+                response => response.Cursor.Data?.ToList(),
                 cancellationToken
             )
             .ConfigureAwait(false);
@@ -1106,13 +1103,13 @@ public partial class InlineUsersClient
                 request,
                 options,
                 ListWithGlobalConfigInternalAsync,
-                request => request?.Offset ?? 0,
+                request => request.Offset ?? 0,
                 (request, offset) =>
                 {
                     request.Offset = offset;
                 },
                 null,
-                response => response?.Results?.ToList(),
+                response => response.Results?.ToList(),
                 null,
                 cancellationToken
             )
