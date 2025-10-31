@@ -1831,6 +1831,7 @@
         "internal",
         "development"
     ],
+    "generationMetadata": null,
     "subpackages": {
         "subpackage_imdb": {
             "name": {

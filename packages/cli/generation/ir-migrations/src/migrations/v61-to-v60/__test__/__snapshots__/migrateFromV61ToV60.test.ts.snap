@@ -640,6 +640,7 @@ exports[`migrateFromV61ToV60 > streaming 1`] = `
   },
   "errors": {},
   "fdrApiDefinitionId": null,
+  "generationMetadata": undefined,
   "headers": [],
   "idempotencyHeaders": [],
   "pathParameters": [],
