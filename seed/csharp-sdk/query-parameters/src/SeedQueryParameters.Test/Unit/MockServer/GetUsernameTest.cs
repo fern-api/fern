@@ -1,5 +1,4 @@
 using System.Globalization;
-using System.Threading.Tasks;
 using NUnit.Framework;
 using SeedQueryParameters;
 using SeedQueryParameters.Core;

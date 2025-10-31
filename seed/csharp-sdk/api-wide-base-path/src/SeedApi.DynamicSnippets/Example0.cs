@@ -1,5 +1,4 @@
 using SeedApiWideBasePath;
-using System.Threading.Tasks;
 
 namespace Usage;
 

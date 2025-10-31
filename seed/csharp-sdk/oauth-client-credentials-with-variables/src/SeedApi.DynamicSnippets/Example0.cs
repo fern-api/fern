@@ -1,5 +1,4 @@
 using SeedOauthClientCredentialsWithVariables;
-using System.Threading.Tasks;
 
 namespace Usage;
 
