@@ -336,7 +336,7 @@ export class GeneratedThrowingEndpointResponse implements GeneratedEndpointRespo
                               ts.factory.createBinaryExpression(
                                   stepPropertyAccess,
                                   ts.factory.createToken(ts.SyntaxKind.QuestionQuestionToken),
-                                  ts.factory.createNumericLiteral("0")
+                                  ts.factory.createNumericLiteral("1")
                               )
                           )
                       );
