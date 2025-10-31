@@ -52,7 +52,9 @@ export class DynamicTypeLiteralMapper {
                 return this.convertNamed({ fromSymbol, typeId: typeReference.value, named, value: value, as });
             }
             case "nullable":
-                return this.convertNullable({ fromSymbol, nullable: typeReference, value: value, as });
+                return this.context.customConfig?.nullableAsOptional
+                    ? this.convert({ fromSymbol, typeReference: typeReference.value, value, as })
+                    : this.convertNullable({ fromSymbol, nullable: typeReference, value: value, as });
             case "optional":
                 return this.convert({ fromSymbol, typeReference: typeReference.value, value, as });
             case "primitive":
