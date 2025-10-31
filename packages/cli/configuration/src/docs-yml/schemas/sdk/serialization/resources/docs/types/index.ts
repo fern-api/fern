@@ -68,6 +68,7 @@ export * from "./FontConfigVariant";
 export * from "./PageConfiguration";
 export * from "./ChangelogConfiguration";
 export * from "./SectionConfiguration";
+export * from "./FolderConfiguration";
 export * from "./ApiReferenceConfiguration";
 export * from "./ApiReferenceLayoutItem";
 export * from "./ApiReferenceSectionConfiguration";

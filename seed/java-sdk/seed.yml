@@ -258,6 +258,9 @@ fixtures:
     - customConfig:
         use-nullable-annotation: false
       outputFolder: legacy
+    - customConfig:
+        collapse-optional-nullable: true
+      outputFolder: collapse-optional-nullable
 scripts:
   - docker: fernapi/java-seed
     commands:
@@ -284,6 +287,7 @@ allowedFailures:
   - java-inline-types:no-wrapped-aliases
   - literal
   - nullable-optional:with-nullable-annotation
+  - nullable-optional:collapse-optional-nullable
   - oauth-client-credentials-custom
   - oauth-client-credentials-with-variables
   - query-parameters-openapi
