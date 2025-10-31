@@ -1,6 +1,14 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
 - changelogEntry:
     - summary: |
+        Add support for new IR property: GenerationMetadata.
+      type: feat
+  irVersion: 61
+  createdAt: "2025-10-31"
+  version: 0.102.0
+
+- changelogEntry:
+    - summary: |
         Fix issue where parsing failed for null objects in a TabbedNavigationItem.
       type: fix
   irVersion: 61
