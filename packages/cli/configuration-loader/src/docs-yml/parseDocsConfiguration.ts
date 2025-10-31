@@ -1147,7 +1147,7 @@ function isTabbedNavigationConfig(
 
 function tabbedNavigationItemHasLayout(
     item: docsYml.RawSchemas.TabbedNavigationItem
-): item is docsYml.RawSchemas.TabbedNavigationItemWithLayout & {
+): item is docsYml.RawSchemas.TabbedNavigationItem & {
     layout: docsYml.RawSchemas.NavigationItem[];
 } {
     return "layout" in item && Array.isArray(item.layout);
@@ -1155,7 +1155,7 @@ function tabbedNavigationItemHasLayout(
 
 function tabbedNavigationItemHasVariants(
     item: docsYml.RawSchemas.TabbedNavigationItem
-): item is docsYml.RawSchemas.TabbedNavigationItemWithVariants & {
+): item is docsYml.RawSchemas.TabbedNavigationItem & {
     variants: docsYml.RawSchemas.TabVariant[];
 } {
     return "variants" in item && Array.isArray(item.variants);
