@@ -3,6 +3,7 @@ import {
     ExampleObjectType,
     ExampleSingleUnionTypeProperties,
     ExampleTypeShape,
+    ExampleUnionBaseProperty,
     ObjectTypeDeclaration,
     TypeDeclaration,
     TypeId
@@ -171,6 +172,53 @@ export function generateTypeDeclarationExample({
                 }
             }
 
+            const baseProperties: ExampleUnionBaseProperty[] = typeDeclaration.shape.baseProperties.map((property) => {
+                const propertyExample = generateTypeReferenceExample({
+                    fieldName: property.name.wireValue,
+                    typeReference: property.valueType,
+                    typeDeclarations,
+                    currentDepth: currentDepth + 1,
+                    maxDepth,
+                    skipOptionalProperties
+                });
+                if (propertyExample.type === "failure") {
+                    throw new Error(`Failed to generate example for union base property ${property.name.wireValue}`);
+                }
+                const { example } = propertyExample;
+                return {
+                    name: property.name,
+                    value: example
+                };
+            });
+            const extendProperties: ExampleObjectProperty[] = typeDeclaration.shape.extends.flatMap(
+                (extendedTypeReference) => {
+                    const extendedTypeDeclaration = typeDeclarations[extendedTypeReference.typeId];
+                    if (extendedTypeDeclaration == null) {
+                        throw new Error(
+                            `Failed to find extended type declaration with id ${extendedTypeReference.typeId}`
+                        );
+                    }
+                    const extendedExample = generateTypeDeclarationExample({
+                        fieldName,
+                        typeDeclaration: extendedTypeDeclaration,
+                        typeDeclarations,
+                        currentDepth: currentDepth + 1,
+                        maxDepth,
+                        skipOptionalProperties
+                    });
+                    if (extendedExample == null || extendedExample.type === "failure") {
+                        throw new Error(
+                            `Failed to generate example for extended type declaration ${extendedTypeDeclaration.name.typeId}`
+                        );
+                    }
+                    if (extendedExample.example.type !== "object") {
+                        throw new Error(
+                            `Extended type declaration ${extendedTypeDeclaration.name.typeId} is not an object`
+                        );
+                    }
+                    return extendedExample.example.properties;
+                }
+            );
             for (const variant of typeDeclaration.shape.types) {
                 const variantExample = variant.shape._visit<ExampleGenerationResult<ExampleTypeShape>>({
                     noProperties: () => {
@@ -181,7 +229,9 @@ export function generateTypeDeclarationExample({
                                 singleUnionType: {
                                     wireDiscriminantValue: variant.discriminantValue,
                                     shape: ExampleSingleUnionTypeProperties.noProperties()
-                                }
+                                },
+                                baseProperties,
+                                extendProperties
                             }),
                             jsonExample: {
                                 [discriminant.wireValue]: variant.discriminantValue.wireValue,
@@ -228,7 +278,9 @@ export function generateTypeDeclarationExample({
                                                 ? example
                                                 : { properties: [], extraProperties: undefined }
                                     })
-                                }
+                                },
+                                baseProperties,
+                                extendProperties
                             }),
                             jsonExample: {
                                 [discriminant.wireValue]: variant.discriminantValue.wireValue,
@@ -257,7 +309,9 @@ export function generateTypeDeclarationExample({
                                 singleUnionType: {
                                     wireDiscriminantValue: variant.discriminantValue,
                                     shape: ExampleSingleUnionTypeProperties.singleProperty(example)
-                                }
+                                },
+                                baseProperties,
+                                extendProperties
                             }),
                             jsonExample: {
                                 [discriminant.wireValue]: variant.discriminantValue.wireValue,

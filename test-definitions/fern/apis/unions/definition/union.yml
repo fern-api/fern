@@ -3,8 +3,7 @@ types:
     properties:
       id: string
     examples:
-      - name: example
-        value:
+      - value:
           id: example
 
   WithName:

@@ -1,0 +1,14 @@
+tabs:
+  docs:
+    display-name: Documentation
+    icon: fa-solid fa-book
+
+navigation:
+  - tab: docs
+    layout:
+      - page: Getting Started
+        path: ./pages/getting-started.mdx
+      - section: API Guide
+        contents:
+          - page: Overview
+            path: ./pages/api/overview.mdx

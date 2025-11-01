@@ -715,6 +715,7 @@
         "generatorConfig": null
     },
     "audiences": null,
+    "generationMetadata": null,
     "subpackages": {
         "subpackage_single-property": {
             "name": {

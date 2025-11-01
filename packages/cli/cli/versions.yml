@@ -1,4 +1,27 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- changelogEntry:
+    - summary: |
+        Add support for new IR property: GenerationMetadata.
+      type: feat
+  irVersion: 61
+  createdAt: "2025-10-31"
+  version: 0.102.0
+
+- changelogEntry:
+    - summary: |
+        Fix discriminated union validation in `fern check` to include base properties and extends.
+      type: fix
+  irVersion: 61
+  createdAt: "2025-10-31"
+  version: 0.102.1
+
+- changelogEntry:
+    - summary: |
+        Add discriminated union base property and extend property examples to IR.
+      type: feat
+  irVersion: 61
+  createdAt: "2025-10-31"
+  version: 0.102.0
 
 - changelogEntry:
     - summary: |

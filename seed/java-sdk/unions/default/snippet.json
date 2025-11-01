@@ -1,7 +1,7 @@
 {
     "endpoints": [
         {
-            "example_identifier": "96b5d27e",
+            "example_identifier": "fd605b3b",
             "id": {
                 "method": "GET",
                 "path": "/{id}",
@@ -14,7 +14,7 @@
             }
         },
         {
-            "example_identifier": "52faaa4c",
+            "example_identifier": "ca00d2fd",
             "id": {
                 "method": "PATCH",
                 "path": "/",
@@ -27,7 +27,7 @@
             }
         },
         {
-            "example_identifier": "a2c0d45e",
+            "example_identifier": "eaf6af3e",
             "id": {
                 "method": "PATCH",
                 "path": "/many",
@@ -40,7 +40,7 @@
             }
         },
         {
-            "example_identifier": "3fba8105",
+            "example_identifier": "db2e6c32",
             "id": {
                 "method": "GET",
                 "path": "/{id}",
@@ -53,7 +53,7 @@
             }
         },
         {
-            "example_identifier": "ad0ac887",
+            "example_identifier": "c9a657a8",
             "id": {
                 "method": "PATCH",
                 "path": "/",
