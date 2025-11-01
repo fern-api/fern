@@ -1279,8 +1279,8 @@ function convertNavbarLinks(
                         href: link.href,
                         url: CjsFdrSdk.Url(link.url ?? link.href ?? "/"),
                         text: link.text,
-                        icon: link.icon,
-                        rightIcon: link.rightIcon,
+                        icon: resolveIconPath(link.icon, absoluteFilepathToDocsConfig),
+                        rightIcon: resolveIconPath(link.rightIcon, absoluteFilepathToDocsConfig),
                         rounded: link.rounded,
                         viewers: convertRoleToRoleIds(link.viewers)
                     })) ?? []

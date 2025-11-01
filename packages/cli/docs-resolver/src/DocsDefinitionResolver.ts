@@ -25,7 +25,7 @@ import { ChangelogNodeConverter } from "./ChangelogNodeConverter";
 import { NodeIdGenerator } from "./NodeIdGenerator";
 import { convertDocsSnippetsConfigToFdr } from "./utils/convertDocsSnippetsConfigToFdr";
 import { convertIrToApiDefinition } from "./utils/convertIrToApiDefinition";
-import { collectFilesFromDocsConfig, shouldProcessIconPath } from "./utils/getImageFilepathsToUpload";
+import { collectFilesFromDocsConfig } from "./utils/getImageFilepathsToUpload";
 import { visitNavigationAst } from "./visitNavigationAst";
 import { wrapWithHttps } from "./wrapWithHttps";
 
@@ -64,10 +64,6 @@ let apiCounter = 0;
 const defaultRegisterApi: RegisterApiFn = async ({ ir }) => {
     apiCounter++;
     return `${ir.apiName.snakeCase.unsafeName}-${apiCounter}`;
-};
-
-const defaultConfigureAiChat: ConfigureAiChatFn = async ({ aiChatConfig }) => {
-    return;
 };
 
 export interface DocsDefinitionResolverArgs {
@@ -304,8 +300,7 @@ export class DocsDefinitionResolver {
         }
 
         const filesToUploadSet = await collectFilesFromDocsConfig({
-            parsedDocsConfig: this.parsedDocsConfig,
-            docsWorkspace: this.docsWorkspace
+            parsedDocsConfig: this.parsedDocsConfig
         });
 
         // preprocess markdown files to extract image paths
@@ -1389,12 +1384,16 @@ export class DocsDefinitionResolver {
         if (iconPath == null) {
             return undefined;
         }
-        if (typeof iconPath === "string") {
-            // This is a Font Awesome icon or other external icon identifier
-            return iconPath;
+
+        // Check if this is a file path that exists in our collected files
+        // AbsoluteFilePath is a branded string type, so we need to check if it's a file path
+        // by seeing if it exists in our file collection
+        if (this.collectedFileIds.has(iconPath as AbsoluteFilePath)) {
+            return this.getFileId(iconPath as AbsoluteFilePath);
         }
-        // This is an AbsoluteFilePath, so get the file ID
-        return this.getFileId(iconPath);
+
+        // Otherwise, treat it as a string (FontAwesome icon, etc.)
+        return iconPath as string;
     }
 
     private convertColorConfigImageReferences(): DocsV1Write.ColorsConfigV3 | undefined {

@@ -157,7 +157,7 @@ describe("Nested icon functionality", () => {
             // Check how many custom icons were collected for upload
             const svgFiles = uploadedFiles.filter((file) => file.relativeFilePath.endsWith(".svg"));
             expect(svgFiles.length).toBeGreaterThan(0);
-            
+
             console.log("svgs:", svgFiles);
 
             // Based on the fixture, we should have at least 3 custom SVG icons:
@@ -171,7 +171,7 @@ describe("Nested icon functionality", () => {
             expect(iconFileNames).toContain("fern.svg");
             expect(iconFileNames).toContain("virus.svg");
             expect(iconFileNames).toContain("atom.svg");
-            expect(iconFileNames).toContain("products/snow.svgq");
+            expect(iconFileNames).toContain("products/snow.svg");
             expect(iconFileNames).toContain("analytics/moon.svg");
         });
 
