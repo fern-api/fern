@@ -1,8 +1,13 @@
 import { docsYml } from "@fern-api/configuration-loader";
 import { AbsoluteFilePath, doesPathExist, RelativeFilePath, resolve } from "@fern-api/fs-utils";
 import { DocsWorkspace } from "@fern-api/workspace-loader";
+import path from "path";
 
-function shouldProcessIconPath(iconPath: string): boolean {
+export function shouldProcessIconPath(iconPath?: string): boolean {
+    if (!iconPath) {
+        return false;
+    }
+
     return (
         iconPath.startsWith(".") || // check for mac + linux relative paths
         iconPath.includes("/") ||
@@ -40,17 +45,16 @@ async function addIconToFilepaths({
     filepaths,
     docsWorkspace
 }: {
-    iconPath: string;
+    iconPath: string | AbsoluteFilePath;
     filepaths: Set<AbsoluteFilePath>;
     docsWorkspace: DocsWorkspace;
 }): Promise<void> {
-    if (shouldProcessIconPath(iconPath)) {
-        const absoluteIconPath = await resolvePath({
-            pathToImage: iconPath,
-            absolutePathToFernFolder: docsWorkspace.absoluteFilePath
-        });
+    if (iconPath == null) {
+        return;
+    }
 
-        absoluteIconPath && filepaths.add(absoluteIconPath);
+    if (typeof iconPath === "string" && path.isAbsolute(iconPath)) {
+        filepaths.add(iconPath as AbsoluteFilePath);
     }
 }
 
@@ -136,6 +140,31 @@ export async function collectFilesFromDocsConfig({
     navigationIcons.forEach((filepath) => {
         filepaths.add(filepath);
     });
+
+    /* navbar links */
+    if (parsedDocsConfig.navbarLinks) {
+        await Promise.all(
+            parsedDocsConfig.navbarLinks.map(async (link) => {
+                if (link.type !== "github") {
+                    if (link.icon) {
+                        await addIconToFilepaths({
+                            iconPath: link.icon,
+                            filepaths,
+                            docsWorkspace
+                        });
+                    }
+
+                    if (link.rightIcon) {
+                        await addIconToFilepaths({
+                            iconPath: link.rightIcon,
+                            filepaths,
+                            docsWorkspace
+                        });
+                    }
+                }
+            })
+        );
+    }
 
     /* javascript files */
     if (parsedDocsConfig.js != null) {
@@ -238,6 +267,13 @@ async function collectIconsFromNavigation({
         case "productgroup":
             await Promise.all(
                 navigation.products.map(async (product) => {
+                    if (product.icon != null) {
+                        await addIconToFilepaths({
+                            iconPath: product.icon,
+                            filepaths,
+                            docsWorkspace
+                        });
+                    }
                     if (product.landingPage != null) {
                         await collectIconsFromNavigationItem({
                             item: product.landingPage,

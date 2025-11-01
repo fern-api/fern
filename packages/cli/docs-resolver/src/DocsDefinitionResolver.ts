@@ -25,7 +25,7 @@ import { ChangelogNodeConverter } from "./ChangelogNodeConverter";
 import { NodeIdGenerator } from "./NodeIdGenerator";
 import { convertDocsSnippetsConfigToFdr } from "./utils/convertDocsSnippetsConfigToFdr";
 import { convertIrToApiDefinition } from "./utils/convertIrToApiDefinition";
-import { collectFilesFromDocsConfig } from "./utils/getImageFilepathsToUpload";
+import { collectFilesFromDocsConfig, shouldProcessIconPath } from "./utils/getImageFilepathsToUpload";
 import { visitNavigationAst } from "./visitNavigationAst";
 import { wrapWithHttps } from "./wrapWithHttps";
 
@@ -563,13 +563,27 @@ export class DocsDefinitionResolver {
                         ...navbarLink,
                         links: navbarLink.links?.map((link) => ({
                             ...link,
-                            url: DocsV1Write.Url(link.url)
-                        }))
+                            url: DocsV1Write.Url(link.url),
+                            icon: this.resolveIconFileId(link.icon),
+                            rightIcon: this.resolveIconFileId(link.rightIcon)
+                        })),
+                        icon: this.resolveIconFileId(navbarLink.icon),
+                        rightIcon: this.resolveIconFileId(navbarLink.rightIcon)
                     };
                 }
+
+                if (navbarLink.type === "github") {
+                    return {
+                        ...navbarLink,
+                        url: DocsV1Write.Url(navbarLink.url)
+                    };
+                }
+
                 return {
                     ...navbarLink,
-                    url: DocsV1Write.Url(navbarLink.url)
+                    url: DocsV1Write.Url(navbarLink.url),
+                    icon: this.resolveIconFileId(navbarLink.icon),
+                    rightIcon: this.resolveIconFileId(navbarLink.rightIcon)
                 };
             }),
             typographyV2: this.convertDocsTypographyConfiguration(),
@@ -737,7 +751,7 @@ export class DocsDefinitionResolver {
             id: this.#idgen.get(pageId),
             title: landingPageConfig.title,
             slug: slug.get(),
-            icon: landingPageConfig.icon,
+            icon: this.resolveIconFileId(landingPageConfig.icon),
             hidden: landingPageConfig.hidden,
             viewers: landingPageConfig.viewers,
             orphaned: landingPageConfig.orphaned,
@@ -853,7 +867,7 @@ export class DocsDefinitionResolver {
             default: false,
             hidden: undefined,
             authed: undefined,
-            icon: product.icon,
+            icon: this.resolveIconFileId(product.icon),
             image: product.image != null ? this.getFileId(product.image) : undefined,
             pointsTo: undefined,
             viewers: product.viewers,
@@ -980,7 +994,7 @@ export class DocsDefinitionResolver {
             children,
             title: item.title,
             slug: variantSlug.get(),
-            icon: item.icon,
+            icon: this.resolveIconFileId(item.icon),
             hidden: item.hidden,
             authed: undefined,
             viewers: item.viewers,
@@ -1136,7 +1150,7 @@ export class DocsDefinitionResolver {
         return changelogResolver.toChangelogNode({
             parentSlug,
             title: item.title,
-            icon: item.icon,
+            icon: this.resolveIconFileId(item.icon),
             viewers: item.viewers,
             hidden: hideChildren || item.hidden,
             slug: item.slug
@@ -1175,7 +1189,7 @@ export class DocsDefinitionResolver {
             type: "page",
             slug: slug.get(),
             title: item.title,
-            icon: item.icon,
+            icon: this.resolveIconFileId(item.icon),
             hidden: hideChildren || item.hidden,
             viewers: item.viewers,
             orphaned: item.orphaned,
@@ -1219,7 +1233,7 @@ export class DocsDefinitionResolver {
             overviewPageId: pageId,
             slug: slug.get(),
             title: item.title,
-            icon: item.icon,
+            icon: this.resolveIconFileId(item.icon),
             collapsed: item.collapsed,
             hidden: hiddenSection,
             viewers: item.viewers,
@@ -1285,7 +1299,7 @@ export class DocsDefinitionResolver {
         return changelogResolver.toChangelogNode({
             parentSlug,
             title: item.title,
-            icon: item.icon,
+            icon: this.resolveIconFileId(item.icon),
             viewers: item.viewers,
             hidden: item.hidden,
             slug: item.slug
@@ -1318,7 +1332,7 @@ export class DocsDefinitionResolver {
             id,
             title: item.title,
             slug: slug.get(),
-            icon: item.icon,
+            icon: this.resolveIconFileId(item.icon),
             hidden: item.hidden,
             authed: undefined,
             viewers: item.viewers,
@@ -1345,7 +1359,7 @@ export class DocsDefinitionResolver {
             id,
             title: item.title,
             slug: slug.get(),
-            icon: item.icon,
+            icon: this.resolveIconFileId(item.icon),
             hidden: item.hidden,
             authed: undefined,
             viewers: item.viewers,
@@ -1367,6 +1381,20 @@ export class DocsDefinitionResolver {
             return this.taskContext.failAndThrow("Failed to locate file after uploading: " + filepath);
         }
         return DocsV1Write.FileId(fileId);
+    }
+
+    private resolveIconFileId(
+        iconPath: string | AbsoluteFilePath | undefined
+    ): DocsV1Write.FileId | string | undefined {
+        if (iconPath == null) {
+            return undefined;
+        }
+        if (typeof iconPath === "string") {
+            // This is a Font Awesome icon or other external icon identifier
+            return iconPath;
+        }
+        // This is an AbsoluteFilePath, so get the file ID
+        return this.getFileId(iconPath);
     }
 
     private convertColorConfigImageReferences(): DocsV1Write.ColorsConfigV3 | undefined {
