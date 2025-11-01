@@ -809,8 +809,29 @@ export class DocsDefinitionResolver {
         product: docsYml.ProductInfo,
         parentSlug: FernNavigation.V1.SlugGenerator
     ): Promise<FernNavigation.V1.ProductNode> {
-        const slug = parentSlug.setProductSlug(product.slug ?? kebabCase(product.product));
         let child: FernNavigation.V1.ProductChild;
+
+        if (this.isExternalProduct(product)) {
+            return {
+                type: "productLink",
+                id: this.#idgen.get(product.product),
+                productId: FernNavigation.V1.ProductId(product.product),
+                title: product.product,
+                subtitle: product.subtitle ?? "",
+                href: product.href,
+                default: false,
+                hidden: undefined,
+                authed: undefined,
+                icon: product.icon,
+                image: product.image != null ? this.getFileId(product.image) : undefined,
+                pointsTo: undefined,
+                viewers: product.viewers,
+                orphaned: product.orphaned,
+                featureFlags: product.featureFlags
+            };
+        }
+        
+        const slug = parentSlug.setProductSlug(product.slug ?? kebabCase(product.product));
         switch (product.navigation.type) {
             case "tabbed":
                 child = {
@@ -842,6 +863,7 @@ export class DocsDefinitionResolver {
             default:
                 assertNever(product.navigation);
         }
+
         return {
             type: "product",
             id: this.#idgen.get(product.product),
@@ -1508,6 +1530,10 @@ export class DocsDefinitionResolver {
             url: ({ value }) => ({ type: "url", value: DocsV1Write.Url(value) }),
             _other: () => this.taskContext.failAndThrow("Invalid metadata configuration")
         });
+    }
+
+    private isExternalProduct(product: docsYml.ProductInfo): product is docsYml.ExternalProductInfo {
+        return "href" in product;
     }
 }
 

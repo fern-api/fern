@@ -238,18 +238,21 @@ async function collectIconsFromNavigation({
         case "productgroup":
             await Promise.all(
                 navigation.products.map(async (product) => {
-                    if (product.landingPage != null) {
-                        await collectIconsFromNavigationItem({
-                            item: product.landingPage,
-                            filepaths,
+                    // only internal products have landingPage and navigation
+                    if (isInternalProduct(product)) {
+                        if (product.landingPage != null) {
+                            await collectIconsFromNavigationItem({
+                                item: product.landingPage,
+                                filepaths,
+                                docsWorkspace
+                            });
+                        }
+                        const nestedIcons = await collectIconsFromNavigation({
+                            navigation: product.navigation,
                             docsWorkspace
                         });
+                        nestedIcons.forEach((filepath) => filepaths.add(filepath));
                     }
-                    const nestedIcons = await collectIconsFromNavigation({
-                        navigation: product.navigation,
-                        docsWorkspace
-                    });
-                    nestedIcons.forEach((filepath) => filepaths.add(filepath));
                 })
             );
             break;
@@ -323,4 +326,8 @@ async function collectIconsFromNavigationItem({
             }
             break;
     }
+}
+
+function isInternalProduct(product: docsYml.ProductInfo): product is docsYml.InternalProductInfo {
+    return "navigation" in product && "landingPage" in product;
 }

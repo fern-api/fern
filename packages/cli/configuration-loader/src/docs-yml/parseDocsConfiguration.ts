@@ -501,7 +501,7 @@ async function getNavigationConfiguration({
             const productImageFile =
                 product.image != null ? resolve(absolutePathToFernFolder, product.image) : undefined;
 
-            if ("path" in product) {
+            if ("path" in product && product.path != null) {
                 const absoluteFilepathToProductFile = resolve(absolutePathToFernFolder, product.path);
                 const content = yaml.load((await readFile(absoluteFilepathToProductFile)).toString());
                 const result = docsYml.RawSchemas.Serializer.ProductFileConfig.parseOrThrow(content);
@@ -537,21 +537,18 @@ async function getNavigationConfiguration({
                     viewers: parseRoles(product.viewers),
                     orphaned: product.orphaned,
                     featureFlags: convertFeatureFlag(product.featureFlag)
-                });
-            } else if ("href" in product) {
-                // create external link product
+                } as docsYml.InternalProductInfo);
+            } else if ("href" in product && product.href != null) {
                 productNavbars.push({
-                    landingPage: undefined, // irrelevant
                     product: product.displayName,
-                    navigation: { type: "untabbed", items: [] }, // irrelevant
-                    slug: product.href,
+                    href: product.href,
                     subtitle: product.subtitle,
                     icon: product.icon || "fa-solid fa-external-link",
                     image: productImageFile,
                     viewers: parseRoles(product.viewers),
                     orphaned: product.orphaned,
                     featureFlags: convertFeatureFlag(product.featureFlag)
-                });
+                } as docsYml.ExternalProductInfo);
             } else {
                 throw new Error(`Invalid product configuration: product must have either 'path' or 'href' property`);
             }

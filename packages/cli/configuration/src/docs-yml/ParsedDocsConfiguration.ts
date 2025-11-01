@@ -170,8 +170,7 @@ export interface VersionInfo
     availability: VersionAvailability | undefined;
     slug: string | undefined;
 }
-
-export interface ProductInfo
+export interface InternalProductInfo
     extends CjsFdrSdk.navigation.v1.WithPermissions,
         CjsFdrSdk.navigation.latest.WithFeatureFlags {
     landingPage: DocsNavigationItem.Page | undefined;
@@ -182,6 +181,18 @@ export interface ProductInfo
     icon: string;
     image: AbsoluteFilePath | undefined;
 }
+
+export interface ExternalProductInfo
+    extends CjsFdrSdk.navigation.v1.WithPermissions,
+        CjsFdrSdk.navigation.latest.WithFeatureFlags {
+    subtitle: string | undefined;
+    product: string;
+    href: string | undefined;
+    icon: string;
+    image: AbsoluteFilePath | undefined;
+}
+
+export type ProductInfo = InternalProductInfo | ExternalProductInfo;
 
 export type DocsNavigationConfiguration =
     | UntabbedDocsNavigation

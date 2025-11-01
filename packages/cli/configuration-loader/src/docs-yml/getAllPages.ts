@@ -93,10 +93,15 @@ function getAllPagesFromNavigationConfig(navigation: docsYml.DocsNavigationConfi
             });
         case "productgroup":
             return navigation.products.flatMap((product) => {
-                return getAllPages({
-                    landingPage: product.landingPage,
-                    navigation: product.navigation
-                });
+                // Only internal products have landingPage and navigation
+                if ("landingPage" in product && "navigation" in product) {
+                    return getAllPages({
+                        landingPage: product.landingPage,
+                        navigation: product.navigation
+                    });
+                }
+                // External products don't contribute pages
+                return [];
             });
         default:
             assertNever(navigation);
