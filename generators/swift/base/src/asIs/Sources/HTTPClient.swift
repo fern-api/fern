@@ -4,6 +4,10 @@ final class HTTPClient: Sendable {
     private let clientConfig: ClientConfig
     private let jsonEncoder = Serde.jsonEncoder
     private let jsonDecoder = Serde.jsonDecoder
+    
+    private static let initialRetryDelay: TimeInterval = 1.0  // 1 second
+    private static let maxRetryDelay: TimeInterval = 60.0     // 60 seconds
+    private static let jitterFactor: Double = 0.2             // 20% jitter
 
     init(config: ClientConfig) {
         self.clientConfig = config
@@ -64,7 +68,7 @@ final class HTTPClient: Sendable {
             requestOptions: requestOptions
         )
 
-        let (data, _) = try await executeRequestWithURLSession(request)
+        let (data, _) = try await executeRequestWithURLSession(request, requestOptions: requestOptions)
 
         if responseType == Data.self {
             if let data = data as? T {
@@ -245,38 +249,118 @@ final class HTTPClient: Sendable {
     }
 
     private func executeRequestWithURLSession(
-        _ request: URLRequest
+        _ request: URLRequest,
+        requestOptions: RequestOptions? = nil
     ) async throws -> (Data, String?) {
-        do {
-            let (data, response) = try await clientConfig.urlSession.data(for: request)
+        let maxRetries = requestOptions?.maxRetries ?? clientConfig.maxRetries
+        var lastResponse: (Data, HTTPURLResponse)?
+        
+        for attempt in 0...maxRetries {
+            do {
+                let (data, response) = try await clientConfig.urlSession.data(for: request)
 
-            guard let httpResponse = response as? HTTPURLResponse else {
-                throw ClientError.invalidResponse
-            }
+                guard let httpResponse = response as? HTTPURLResponse else {
+                    throw ClientError.invalidResponse
+                }
 
-            // Handle successful responses
-            if 200...299 ~= httpResponse.statusCode {
+                // Handle successful responses
+                if 200...299 ~= httpResponse.statusCode {
+                    let contentType = httpResponse.value(forHTTPHeaderField: "Content-Type")
+                    return (data, contentType)
+                }
+
+                lastResponse = (data, httpResponse)
+
+                if attempt < maxRetries && shouldRetry(statusCode: httpResponse.statusCode) {
+                    let delay = getRetryDelay(response: httpResponse, retryAttempt: attempt)
+                    try await Task.sleep(nanoseconds: UInt64(delay * 1_000_000_000))
+                    continue
+                }
+
+                // Handle error responses (no more retries)
+                try handleErrorResponse(
+                    statusCode: httpResponse.statusCode,
+                    data: data
+                )
+
+                // This should never be reached, but satisfy the compiler
                 let contentType = httpResponse.value(forHTTPHeaderField: "Content-Type")
                 return (data, contentType)
-            }
 
-            // Handle error responses
-            try handleErrorResponse(
-                statusCode: httpResponse.statusCode,
-                data: data
-            )
-
-            // This should never be reached, but satisfy the compiler
-            let contentType = httpResponse.value(forHTTPHeaderField: "Content-Type")
-            return (data, contentType)
-
-        } catch {
-            if error is ClientError {
-                throw error
-            } else {
-                throw ClientError.networkError(error)
+            } catch {
+                if attempt >= maxRetries || error is ClientError {
+                    if error is ClientError {
+                        throw error
+                    } else {
+                        throw ClientError.networkError(error)
+                    }
+                }
+                let delay = Self.initialRetryDelay * pow(2.0, Double(attempt))
+                let cappedDelay = min(delay, Self.maxRetryDelay)
+                let jitteredDelay = addSymmetricJitter(to: cappedDelay)
+                try await Task.sleep(nanoseconds: UInt64(jitteredDelay * 1_000_000_000))
             }
         }
+
+        // This should never be reached, but satisfy the compiler
+        if let (data, httpResponse) = lastResponse {
+            try handleErrorResponse(statusCode: httpResponse.statusCode, data: data)
+            let contentType = httpResponse.value(forHTTPHeaderField: "Content-Type")
+            return (data, contentType)
+        }
+        throw ClientError.invalidResponse
+    }
+    
+    private func shouldRetry(statusCode: Int) -> Bool {
+        return statusCode == 408 || statusCode == 429 || statusCode >= 500
+    }
+    
+    private func getRetryDelay(response: HTTPURLResponse, retryAttempt: Int) -> TimeInterval {
+        if let retryAfter = response.value(forHTTPHeaderField: "Retry-After") {
+            if let seconds = Double(retryAfter), seconds > 0 {
+                return min(seconds, Self.maxRetryDelay)
+            }
+            
+            if let date = parseHTTPDate(retryAfter) {
+                let delay = date.timeIntervalSinceNow
+                if delay > 0 {
+                    return min(delay, Self.maxRetryDelay)
+                }
+            }
+        }
+        
+        if let rateLimitReset = response.value(forHTTPHeaderField: "X-RateLimit-Reset") {
+            if let resetTimeSeconds = Double(rateLimitReset) {
+                let resetDate = Date(timeIntervalSince1970: resetTimeSeconds)
+                let delay = resetDate.timeIntervalSinceNow
+                if delay > 0 {
+                    let cappedDelay = min(delay, Self.maxRetryDelay)
+                    return addPositiveJitter(to: cappedDelay)
+                }
+            }
+        }
+        
+        let baseDelay = Self.initialRetryDelay * pow(2.0, Double(retryAttempt))
+        let cappedDelay = min(baseDelay, Self.maxRetryDelay)
+        return addSymmetricJitter(to: cappedDelay)
+    }
+    
+    private func parseHTTPDate(_ dateString: String) -> Date? {
+        let formatter = DateFormatter()
+        formatter.locale = Locale(identifier: "en_US_POSIX")
+        formatter.timeZone = TimeZone(abbreviation: "GMT")
+        formatter.dateFormat = "EEE, dd MMM yyyy HH:mm:ss zzz"
+        return formatter.date(from: dateString)
+    }
+    
+    private func addPositiveJitter(to delay: TimeInterval) -> TimeInterval {
+        let jitterMultiplier = 1.0 + Double.random(in: 0...Self.jitterFactor)
+        return delay * jitterMultiplier
+    }
+    
+    private func addSymmetricJitter(to delay: TimeInterval) -> TimeInterval {
+        let jitterMultiplier = 1.0 + Double.random(in: -Self.jitterFactor/2...Self.jitterFactor/2)
+        return delay * jitterMultiplier
     }
 
     private func handleErrorResponse(statusCode: Int, data: Data) throws {
