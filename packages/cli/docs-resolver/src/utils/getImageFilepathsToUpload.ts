@@ -102,6 +102,24 @@ export async function collectFilesFromDocsConfig({
     if (parsedDocsConfig.navbarLinks) {
         await Promise.all(
             parsedDocsConfig.navbarLinks.map(async (link) => {
+                if (link.type === "dropdown") {
+                    link.links.map(async (nestedLink) => {
+                        if (nestedLink.icon) {
+                            await addIconToFilepaths({
+                                iconPath: nestedLink.icon,
+                                filepaths
+                            })
+                        }
+                        
+                        if (nestedLink.rightIcon) {
+                            await addIconToFilepaths({
+                                iconPath: nestedLink.rightIcon,
+                                filepaths
+                            })
+                        }
+                    })
+                }
+                
                 if (link.type !== "github") {
                     if (link.icon) {
                         await addIconToFilepaths({
