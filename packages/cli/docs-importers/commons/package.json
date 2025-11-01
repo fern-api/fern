@@ -21,7 +21,9 @@
   "main": "lib/index.js",
   "source": "src/index.ts",
   "types": "lib/index.d.ts",
-  "files": ["lib"],
+  "files": [
+    "lib"
+  ],
   "scripts": {
     "clean": "rm -rf ./lib && tsc --build --clean",
     "compile": "tsc --build",
@@ -35,7 +37,7 @@
     "@fern-api/configuration": "workspace:*",
     "@fern-api/fs-utils": "workspace:*",
     "@fern-api/task-context": "workspace:*",
-    "@fern-fern/fdr-cjs-sdk": "0.139.40-f4db65ec9",
+    "@fern-fern/fdr-cjs-sdk": "0.139.41-64b751ea5",
     "js-yaml": "^4.1.0"
   },
   "devDependencies": {

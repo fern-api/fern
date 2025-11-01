@@ -21,7 +21,9 @@
   "main": "lib/index.js",
   "source": "src/index.ts",
   "types": "lib/index.d.ts",
-  "files": ["lib"],
+  "files": [
+    "lib"
+  ],
   "scripts": {
     "clean": "rm -rf ./lib && tsc --build --clean",
     "compile": "tsc --build",
@@ -33,7 +35,7 @@
   },
   "dependencies": {
     "@fern-api/venus-api-sdk": "0.17.3-3-gf696595",
-    "@fern-fern/fdr-cjs-sdk": "0.139.40-f4db65ec9",
+    "@fern-fern/fdr-cjs-sdk": "0.139.41-64b751ea5",
     "@fern-fern/fdr-test-sdk": "^0.0.5297",
     "@fern-fern/fiddle-sdk": "0.0.656",
     "@fern-fern/generators-sdk": "0.114.0-5745f9e74"

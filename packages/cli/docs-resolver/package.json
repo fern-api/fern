@@ -21,7 +21,9 @@
   "main": "lib/index.js",
   "source": "src/index.ts",
   "types": "lib/index.d.ts",
-  "files": ["lib"],
+  "files": [
+    "lib"
+  ],
   "scripts": {
     "clean": "rm -rf ./lib && tsc --build --clean",
     "compile": "tsc --build",
@@ -38,7 +40,7 @@
     "@fern-api/core-utils": "workspace:*",
     "@fern-api/docs-markdown-utils": "workspace:*",
     "@fern-api/docs-parsers": "0.0.65",
-    "@fern-api/fdr-sdk": "0.139.40-f4db65ec9",
+    "@fern-api/fdr-sdk": "0.139.41-64b751ea5",
     "@fern-api/fs-utils": "workspace:*",
     "@fern-api/ir-generator": "workspace:*",
     "@fern-api/ir-sdk": "workspace:*",
@@ -47,7 +49,7 @@
     "@fern-api/register": "workspace:*",
     "@fern-api/task-context": "workspace:*",
     "@fern-api/ui-core-utils": "0.129.4-b6c699ad2",
-    "@fern-fern/fdr-cjs-sdk": "0.139.40-f4db65ec9",
+    "@fern-fern/fdr-cjs-sdk": "0.139.41-64b751ea5",
     "@open-rpc/meta-schema": "^1.14.9",
     "@types/fast-levenshtein": "^0.0.4",
     "dayjs": "^1.11.11",

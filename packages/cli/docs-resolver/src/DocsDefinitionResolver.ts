@@ -812,22 +812,25 @@ export class DocsDefinitionResolver {
         let child: FernNavigation.V1.ProductChild;
 
         if (this.isExternalProduct(product)) {
+            if (!product.href) {
+                this.taskContext.logger.error(`Invalid href detected for product: ${product.product}`);
+                throw new Error("Misconfigured product");
+            }
+
             return {
                 type: "productLink",
                 id: this.#idgen.get(product.product),
                 productId: FernNavigation.V1.ProductId(product.product),
                 title: product.product,
                 subtitle: product.subtitle ?? "",
-                href: product.href,
+                href: DocsV1Write.Url(product.href),
                 default: false,
                 hidden: undefined,
                 authed: undefined,
                 icon: product.icon,
                 image: product.image != null ? this.getFileId(product.image) : undefined,
-                pointsTo: undefined,
                 viewers: product.viewers,
-                orphaned: product.orphaned,
-                featureFlags: product.featureFlags
+                orphaned: product.orphaned
             };
         }
 
