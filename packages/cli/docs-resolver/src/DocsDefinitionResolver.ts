@@ -1385,14 +1385,10 @@ export class DocsDefinitionResolver {
             return undefined;
         }
 
-        // Check if this is a file path that exists in our collected files
-        // AbsoluteFilePath is a branded string type, so we need to check if it's a file path
-        // by seeing if it exists in our file collection
         if (this.collectedFileIds.has(iconPath as AbsoluteFilePath)) {
-            return this.getFileId(iconPath as AbsoluteFilePath);
+            return `file:${this.getFileId(iconPath as AbsoluteFilePath)}`;
         }
 
-        // Otherwise, treat it as a string (FontAwesome icon, etc.)
         return iconPath as string;
     }
 
