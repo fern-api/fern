@@ -187,6 +187,7 @@ export async function visitDocsConfigFileYamlAst({
 
             await Promise.all(
                 products.map(async (product, idx) => {
+                    // for internal products, traverse navigation
                     if ("path" in product) {
                         await visitFilepath({
                             absoluteFilepathToConfiguration,
