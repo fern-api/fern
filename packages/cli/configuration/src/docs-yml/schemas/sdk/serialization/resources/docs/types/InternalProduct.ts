@@ -7,17 +7,19 @@ import * as FernDocsConfig from "../../../../api/index";
 import * as core from "../../../../core";
 import { ProductConfigBase } from "./ProductConfigBase";
 
-export const ProductConfigWithHref: core.serialization.ObjectSchema<
-    serializers.ProductConfigWithHref.Raw,
-    FernDocsConfig.ProductConfigWithHref
+export const InternalProduct: core.serialization.ObjectSchema<
+    serializers.InternalProduct.Raw,
+    FernDocsConfig.InternalProduct
 > = core.serialization
     .object({
-        href: core.serialization.string(),
+        path: core.serialization.string(),
+        slug: core.serialization.string().optional(),
     })
     .extend(ProductConfigBase);
 
-export declare namespace ProductConfigWithHref {
+export declare namespace InternalProduct {
     export interface Raw extends ProductConfigBase.Raw {
-        href: string;
+        path: string;
+        slug?: string | null;
     }
 }

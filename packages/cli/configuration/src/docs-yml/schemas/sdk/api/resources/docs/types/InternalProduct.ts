@@ -4,7 +4,7 @@
 
 import * as FernDocsConfig from "../../../index";
 
-export interface ProductConfigWithRelativePath extends FernDocsConfig.ProductConfigBase {
+export interface InternalProduct extends FernDocsConfig.ProductConfigBase {
     /** The relative path to the version's docs.yml file. */
     path: string;
     /** The "slug" is this version's basePath. If not set, the slug will be generated from the display-name. */

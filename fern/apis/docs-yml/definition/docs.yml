@@ -1343,10 +1343,10 @@ types:
   ProductConfig:
     discriminated: false
     union:
-      - ProductConfigWithRelativePath
-      - ProductConfigWithHref
+      - InternalProduct
+      - ExternalProduct
 
-  ProductConfigWithRelativePath:
+  InternalProduct:
     extends: [ProductConfigBase]
     properties:
       path:
@@ -1356,7 +1356,7 @@ types:
         type: optional<string>
         docs: The "slug" is this version's basePath. If not set, the slug will be generated from the display-name.
 
-  ProductConfigWithHref:
+  ExternalProduct:
     extends: [ProductConfigBase]
     properties:
       href:

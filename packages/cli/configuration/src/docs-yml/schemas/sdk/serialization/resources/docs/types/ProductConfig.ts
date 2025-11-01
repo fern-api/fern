@@ -5,12 +5,12 @@
 import * as serializers from "../../../index";
 import * as FernDocsConfig from "../../../../api/index";
 import * as core from "../../../../core";
-import { ProductConfigWithRelativePath } from "./ProductConfigWithRelativePath";
-import { ProductConfigWithHref } from "./ProductConfigWithHref";
+import { InternalProduct } from "./InternalProduct";
+import { ExternalProduct } from "./ExternalProduct";
 
 export const ProductConfig: core.serialization.Schema<serializers.ProductConfig.Raw, FernDocsConfig.ProductConfig> =
-    core.serialization.undiscriminatedUnion([ProductConfigWithRelativePath, ProductConfigWithHref]);
+    core.serialization.undiscriminatedUnion([InternalProduct, ExternalProduct]);
 
 export declare namespace ProductConfig {
-    export type Raw = ProductConfigWithRelativePath.Raw | ProductConfigWithHref.Raw;
+    export type Raw = InternalProduct.Raw | ExternalProduct.Raw;
 }

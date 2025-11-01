@@ -109,6 +109,6 @@ export * from "./RelativeProductPath";
 export * from "./AbsoluteProductPath";
 export * from "./ProductConfigBase";
 export * from "./ProductConfig";
-export * from "./ProductConfigWithRelativePath";
-export * from "./ProductConfigWithHref";
+export * from "./InternalProduct";
+export * from "./ExternalProduct";
 export * from "./ProductFileConfig";
