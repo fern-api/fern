@@ -1158,7 +1158,7 @@ export class DocsDefinitionResolver {
             id: this.#idgen.get(item.url),
             title: item.text,
             url: FernNavigation.V1.Url(item.url),
-            icon: item.icon
+            icon: this.resolveIconFileId(item.icon)
         };
     }
 
@@ -1307,7 +1307,7 @@ export class DocsDefinitionResolver {
             id: this.#idgen.get(href),
             title: item.title,
             url: FernNavigation.V1.Url(href),
-            icon: item.icon
+            icon: this.resolveIconFileId(item.icon)
         };
     }
 
