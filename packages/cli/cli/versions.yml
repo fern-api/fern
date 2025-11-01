@@ -1,6 +1,14 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
 - changelogEntry:
     - summary: |
+        Adds support for custom icons.
+      type: feat
+  irVersion: 61
+  createdAt: "2025-11-1"
+  version: 0.104.0
+
+- changelogEntry:
+    - summary: |
         Add support for new IR property: GenerationMetadata.
       type: feat
   irVersion: 61
