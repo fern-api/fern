@@ -908,7 +908,7 @@
       ],
       "additionalProperties": false
     },
-    "docs.ProductConfigWithRelativePath": {
+    "docs.InternalProduct": {
       "type": "object",
       "properties": {
         "display-name": {
@@ -1017,7 +1017,7 @@
       ],
       "additionalProperties": false
     },
-    "docs.ProductConfigWithHref": {
+    "docs.ExternalProduct": {
       "type": "object",
       "properties": {
         "display-name": {
@@ -1119,10 +1119,10 @@
     "docs.ProductConfig": {
       "anyOf": [
         {
-          "$ref": "#/definitions/docs.ProductConfigWithRelativePath"
+          "$ref": "#/definitions/docs.InternalProduct"
         },
         {
-          "$ref": "#/definitions/docs.ProductConfigWithHref"
+          "$ref": "#/definitions/docs.ExternalProduct"
         }
       ]
     },
