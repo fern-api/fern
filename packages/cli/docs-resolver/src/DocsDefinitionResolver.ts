@@ -830,7 +830,7 @@ export class DocsDefinitionResolver {
                 featureFlags: product.featureFlags
             };
         }
-        
+
         const slug = parentSlug.setProductSlug(product.slug ?? kebabCase(product.product));
         switch (product.navigation.type) {
             case "tabbed":
