@@ -1121,6 +1121,7 @@ export class DocsDefinitionResolver {
             this.markdownFilesToNoIndex,
             this.markdownFilesToTags,
             this.#idgen,
+            this.collectedFileIds,
             workspace,
             hideChildren,
             parentAvailability ?? item.availability
