@@ -292,7 +292,7 @@ export class BaseClientContextImpl implements BaseClientContext {
             type: "typeof fetch",
             hasQuestionToken: true,
             docs: [
-                "Provide a custom fetch implementation. Useful for environments like React Native that require a custom fetch function."
+                "Provide a custom fetch implementation. Useful for platforms that don't have a built-in fetch or need a custom implementation."
             ]
         });
 
