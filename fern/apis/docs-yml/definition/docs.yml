@@ -562,6 +562,7 @@ types:
       hide-404-page: optional<boolean>
       use-javascript-as-typescript: optional<boolean>
       disable-explorer-proxy: optional<boolean>
+      disable-analytics: optional<boolean>
 
   ThemeConfig:
     properties:

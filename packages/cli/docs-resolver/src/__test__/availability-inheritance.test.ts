@@ -82,6 +82,7 @@ describe("availability inheritance", () => {
             new Map(),
             new Map(),
             NodeIdGenerator.init(),
+            new Map(),
             apiWorkspace
         ).get();
 

@@ -4377,6 +4377,16 @@
               "type": "null"
             }
           ]
+        },
+        "disable-analytics": {
+          "oneOf": [
+            {
+              "type": "boolean"
+            },
+            {
+              "type": "null"
+            }
+          ]
         }
       },
       "additionalProperties": false
