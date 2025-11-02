@@ -1,10 +1,18 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
 - changelogEntry:
     - summary: |
+        Add a disable-analytics setting in docs.yml
+      type: feat
+  irVersion: 61
+  createdAt: "2025-11-02"
+  version: 0.105.0
+
+- changelogEntry:
+    - summary: |
         Adds support for custom icons.
       type: feat
   irVersion: 61
-  createdAt: "2025-11-1"
+  createdAt: "2025-11-01"
   version: 0.104.0
 
 - changelogEntry:

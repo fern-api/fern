@@ -389,7 +389,8 @@ function convertSettingsConfig(
         httpSnippets: settings.httpSnippets ?? true,
         searchText: settings.searchText ?? "Search",
         useJavascriptAsTypescript: settings.useJavascriptAsTypescript ?? false,
-        disableExplorerProxy: settings.disableExplorerProxy ?? false
+        disableExplorerProxy: settings.disableExplorerProxy ?? false,
+        disableAnalytics: settings.disableAnalytics ?? false
     };
 }
 
