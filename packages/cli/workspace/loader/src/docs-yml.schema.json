@@ -3425,7 +3425,6 @@
     "docs.AIChatModel": {
       "type": "string",
       "enum": [
-        "claude-3.5",
         "claude-3.7",
         "claude-4",
         "command-a"
