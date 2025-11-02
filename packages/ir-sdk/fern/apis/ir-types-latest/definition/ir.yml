@@ -66,6 +66,25 @@ types:
       dynamic: optional<dynamic.DynamicIntermediateRepresentation>
       selfHosted: optional<boolean>
       audiences: optional<list<audience.AudienceDefinition>>
+      generationMetadata: optional<GenerationMetadata>
+
+  GenerationMetadata:
+    docs: |
+      Metadata about the generation process, including CLI version and generator configuration.
+      This information can be used by generators to include metadata in generated SDKs.
+    properties:
+      cliVersion:
+        type: string
+        docs: The version of the Fern CLI that generated this IR.
+      generatorName:
+        type: string
+        docs: The name of the generator being invoked (e.g., "fernapi/fern-python-sdk").
+      generatorVersion:
+        type: string
+        docs: The version of the generator being invoked.
+      generatorConfig:
+        type: optional<unknown>
+        docs: The custom configuration passed to the generator from generators.yml.
 
   ReadmeConfig:
     docs: |

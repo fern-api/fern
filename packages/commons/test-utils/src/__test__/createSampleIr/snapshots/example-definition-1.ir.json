@@ -675,6 +675,7 @@
   },
   "errors": {},
   "fdrApiDefinitionId": undefined,
+  "generationMetadata": undefined,
   "headers": [],
   "idempotencyHeaders": [],
   "pathParameters": [],

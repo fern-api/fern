@@ -37,6 +37,7 @@ export class ApiReferenceNodeConverter {
     #slug: FernNavigation.V1.SlugGenerator;
     #idgen: NodeIdGenerator;
     private disableEndpointPairs;
+    private collectedFileIds = new Map<AbsoluteFilePath, string>();
     constructor(
         private apiSection: docsYml.DocsNavigationItem.ApiSection,
         api: APIV1Read.ApiDefinition,
@@ -47,6 +48,7 @@ export class ApiReferenceNodeConverter {
         private markdownFilesToNoIndex: Map<AbsoluteFilePath, boolean>,
         private markdownFilesToTags: Map<AbsoluteFilePath, string[]>,
         idgen: NodeIdGenerator,
+        collectedFileIds: Map<AbsoluteFilePath, string>,
         private workspace?: FernWorkspace,
         private hideChildren?: boolean,
         private parentAvailability?: docsYml.RawSchemas.Availability
@@ -54,6 +56,7 @@ export class ApiReferenceNodeConverter {
         this.disableEndpointPairs = docsWorkspace.config.experimental?.disableStreamToggle ?? false;
         this.apiDefinitionId = FernNavigation.V1.ApiDefinitionId(api.id);
         this.#holder = ApiDefinitionHolder.create(api, taskContext);
+        this.collectedFileIds = collectedFileIds;
 
         // we are assuming that the apiDefinitionId is unique.
         this.#idgen = idgen;
@@ -112,7 +115,7 @@ export class ApiReferenceNodeConverter {
             overviewPageId: this.#overviewPageId,
             paginated: this.apiSection.paginated,
             slug: this.#slug.get(),
-            icon: this.apiSection.icon,
+            icon: this.resolveIconFileId(this.apiSection.icon),
             hidden: this.hideChildren || this.apiSection.hidden,
             hideTitle: this.apiSection.flattened,
             showErrors: this.apiSection.showErrors,
@@ -151,7 +154,7 @@ export class ApiReferenceNodeConverter {
                         id: this.#idgen.get(link.url),
                         type: "link",
                         title: link.text,
-                        icon: link.icon,
+                        icon: this.resolveIconFileId(link.icon),
                         url: FernNavigation.Url(link.url)
                     }),
                     page: (page) => this.#toPageNode(page, parentSlug, parentAvailability),
@@ -186,7 +189,8 @@ export class ApiReferenceNodeConverter {
             markdownFilesToFullSlugs: this.markdownFilesToFullSlugs,
             markdownFilesToNoIndex: this.markdownFilesToNoIndex,
             idgen: this.#idgen,
-            hideChildren: this.hideChildren
+            hideChildren: this.hideChildren,
+            resolveIconFileId: this.resolveIconFileId.bind(this)
         });
     }
 
@@ -243,7 +247,7 @@ export class ApiReferenceNodeConverter {
                         ? (subpackage.displayName ?? titleCase(subpackage.name))
                         : this.apiSection.title),
                 slug: slug.get(),
-                icon: pkg.icon,
+                icon: this.resolveIconFileId(pkg.icon),
                 hidden: this.hideChildren || pkg.hidden,
                 overviewPageId,
                 availability: pkgAvailability,
@@ -273,7 +277,7 @@ export class ApiReferenceNodeConverter {
                 children: convertedItems,
                 title: pkg.title ?? pkg.package,
                 slug: slug.get(),
-                icon: pkg.icon,
+                icon: this.resolveIconFileId(pkg.icon),
                 hidden: this.hideChildren || pkg.hidden,
                 overviewPageId,
                 availability: pkgAvailability,
@@ -356,7 +360,7 @@ export class ApiReferenceNodeConverter {
             children: convertedItems,
             title: section.title,
             slug: slug.get(),
-            icon: section.icon,
+            icon: this.resolveIconFileId(section.icon),
             hidden: this.hideChildren || section.hidden,
             overviewPageId,
             availability: sectionAvailability,
@@ -479,7 +483,7 @@ export class ApiReferenceNodeConverter {
                     isResponseStream: endpoint.response?.type.type === "stream",
                     title: endpointItem.title ?? endpoint.name ?? stringifyEndpointPathParts(endpoint.path.parts),
                     slug: endpointSlug.get(),
-                    icon: endpointItem.icon,
+                    icon: this.resolveIconFileId(endpointItem.icon),
                     hidden: this.hideChildren || endpointItem.hidden,
                     playground: this.#convertPlaygroundSettings(endpointItem.playground),
                     authed: undefined,
@@ -517,7 +521,7 @@ export class ApiReferenceNodeConverter {
                         ? parentSlug.append(endpointItem.slug)
                         : parentSlug.apply(webSocket)
                     ).get(),
-                    icon: endpointItem.icon,
+                    icon: this.resolveIconFileId(endpointItem.icon),
                     hidden: this.hideChildren || endpointItem.hidden,
                     apiDefinitionId: this.apiDefinitionId,
                     availability: FernNavigation.V1.convertAvailability(webSocket.availability) ?? parentAvailability,
@@ -556,7 +560,7 @@ export class ApiReferenceNodeConverter {
                         ? parentSlug.append(endpointItem.slug)
                         : parentSlug.apply(webhook)
                     ).get(),
-                    icon: endpointItem.icon,
+                    icon: this.resolveIconFileId(endpointItem.icon),
                     hidden: this.hideChildren || endpointItem.hidden,
                     apiDefinitionId: this.apiDefinitionId,
                     availability: parentAvailability,
@@ -817,5 +821,27 @@ export class ApiReferenceNodeConverter {
             disableEndpointPairs: this.disableEndpointPairs,
             apiDefinitionId: this.apiDefinitionId
         });
+    }
+
+    private getFileId(filepath: AbsoluteFilePath): string {
+        const fileId = this.collectedFileIds.get(filepath);
+        if (fileId == null) {
+            return this.taskContext.failAndThrow("Failed to locate file after uploading: " + filepath);
+        }
+        return fileId;
+    }
+
+    private resolveIconFileId(
+        iconPath: string | AbsoluteFilePath | undefined
+    ): FernNavigation.V1.FileId | string | undefined {
+        if (iconPath == null) {
+            return undefined;
+        }
+
+        if (this.collectedFileIds.has(iconPath as AbsoluteFilePath)) {
+            return `file:${this.getFileId(iconPath as AbsoluteFilePath)}` as FernNavigation.V1.FileId;
+        }
+
+        return iconPath as string;
     }
 }

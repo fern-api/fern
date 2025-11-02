@@ -53,7 +53,7 @@
             }
         },
         {
-            "example_identifier": "3a0e3bcb",
+            "example_identifier": "8a041040",
             "id": {
                 "method": "GET",
                 "path": "/file/notification/{notificationId}",
@@ -235,7 +235,7 @@
             }
         },
         {
-            "example_identifier": "b5bc2bea",
+            "example_identifier": "4e152de5",
             "id": {
                 "method": "GET",
                 "path": "/metadata",
@@ -248,7 +248,7 @@
             }
         },
         {
-            "example_identifier": "656da7",
+            "example_identifier": "662f4a82",
             "id": {
                 "method": "POST",
                 "path": "/big-entity",

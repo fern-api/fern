@@ -14,7 +14,8 @@ export function toPageNode({
     idgen,
     markdownFilesToFullSlugs,
     markdownFilesToNoIndex,
-    hideChildren
+    hideChildren,
+    resolveIconFileId
 }: {
     docsWorkspace: DocsWorkspace;
     page: docsYml.DocsNavigationItem.Page;
@@ -23,6 +24,9 @@ export function toPageNode({
     markdownFilesToFullSlugs: Map<AbsoluteFilePath, string>;
     markdownFilesToNoIndex: Map<AbsoluteFilePath, boolean>;
     hideChildren?: boolean;
+    resolveIconFileId?: (
+        iconPath: string | AbsoluteFilePath | undefined
+    ) => FernNavigation.V1.FileId | string | undefined;
 }): FernNavigation.V1.PageNode {
     const pageId = FernNavigation.V1.PageId(toRelativeFilepath(docsWorkspace, page.absolutePath));
     const pageSlug = parentSlug.apply({
@@ -35,7 +39,7 @@ export function toPageNode({
         pageId,
         title: page.title,
         slug: pageSlug.get(),
-        icon: page.icon,
+        icon: resolveIconFileId ? resolveIconFileId(page.icon) : page.icon,
         hidden: hideChildren || page.hidden,
         noindex: page.noindex || markdownFilesToNoIndex.get(page.absolutePath),
         authed: undefined,

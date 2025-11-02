@@ -54,6 +54,7 @@ export * from "./ExampleObjectType";
 export * from "./ExampleObjectProperty";
 export * from "./ExampleExtraObjectProperty";
 export * from "./ExampleUnionType";
+export * from "./ExampleUnionBaseProperty";
 export * from "./ExampleUndiscriminatedUnionType";
 export * from "./ExampleSingleUnionType";
 export * from "./ExampleSingleUnionTypeProperties";

@@ -28,6 +28,7 @@ export const DocsSettingsConfig: core.serialization.ObjectSchema<
         "disable-explorer-proxy",
         core.serialization.boolean().optional(),
     ),
+    disableAnalytics: core.serialization.property("disable-analytics", core.serialization.boolean().optional()),
 });
 
 export declare namespace DocsSettingsConfig {
@@ -40,5 +41,6 @@ export declare namespace DocsSettingsConfig {
         "hide-404-page"?: boolean | null;
         "use-javascript-as-typescript"?: boolean | null;
         "disable-explorer-proxy"?: boolean | null;
+        "disable-analytics"?: boolean | null;
     }
 }

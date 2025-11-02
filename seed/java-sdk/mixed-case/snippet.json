@@ -14,7 +14,7 @@
             }
         },
         {
-            "example_identifier": "8303d785",
+            "example_identifier": "d5ed8eab",
             "id": {
                 "method": "GET",
                 "path": "/resource/{ResourceID}",
@@ -40,7 +40,7 @@
             }
         },
         {
-            "example_identifier": "8346e42",
+            "example_identifier": "f47f45e",
             "id": {
                 "method": "GET",
                 "path": "/resource",

@@ -6,9 +6,9 @@ private func main() async throws {
 
     _ = try await client.nullableOptional.searchUsers(
         query: "query",
-        department: "department",
+        department: .value("department"),
         role: "role",
-        isActive: true
+        isActive: .value(true)
     )
 }
 
