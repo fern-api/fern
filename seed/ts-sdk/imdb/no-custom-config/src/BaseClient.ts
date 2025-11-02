@@ -13,6 +13,7 @@ export interface BaseClientOptions {
     timeoutInSeconds?: number;
     /** The default number of times to retry the request. Defaults to 2. */
     maxRetries?: number;
+    /** Provide a custom fetch implementation. Useful for environments like React Native that require a custom fetch function. */
     fetch?: typeof fetch;
 }
 

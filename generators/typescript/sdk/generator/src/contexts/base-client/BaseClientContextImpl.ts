@@ -290,7 +290,10 @@ export class BaseClientContextImpl implements BaseClientContext {
             kind: StructureKind.PropertySignature,
             name: "fetch",
             type: "typeof fetch",
-            hasQuestionToken: true
+            hasQuestionToken: true,
+            docs: [
+                "Provide a custom fetch implementation. Useful for environments like React Native that require a custom fetch function."
+            ]
         });
 
         if (this.allowCustomFetcher) {
