@@ -108,18 +108,18 @@ export async function collectFilesFromDocsConfig({
                             await addIconToFilepaths({
                                 iconPath: nestedLink.icon,
                                 filepaths
-                            })
+                            });
                         }
-                        
+
                         if (nestedLink.rightIcon) {
                             await addIconToFilepaths({
                                 iconPath: nestedLink.rightIcon,
                                 filepaths
-                            })
+                            });
                         }
-                    })
+                    });
                 }
-                
+
                 if (link.type !== "github") {
                     if (link.icon) {
                         await addIconToFilepaths({
