@@ -66,10 +66,6 @@ const defaultRegisterApi: RegisterApiFn = async ({ ir }) => {
     return `${ir.apiName.snakeCase.unsafeName}-${apiCounter}`;
 };
 
-const defaultConfigureAiChat: ConfigureAiChatFn = async ({ aiChatConfig }) => {
-    return;
-};
-
 export interface DocsDefinitionResolverArgs {
     domain: string;
     docsWorkspace: DocsWorkspace;
@@ -304,8 +300,7 @@ export class DocsDefinitionResolver {
         }
 
         const filesToUploadSet = await collectFilesFromDocsConfig({
-            parsedDocsConfig: this.parsedDocsConfig,
-            docsWorkspace: this.docsWorkspace
+            parsedDocsConfig: this.parsedDocsConfig
         });
 
         // preprocess markdown files to extract image paths
@@ -563,13 +558,27 @@ export class DocsDefinitionResolver {
                         ...navbarLink,
                         links: navbarLink.links?.map((link) => ({
                             ...link,
-                            url: DocsV1Write.Url(link.url)
-                        }))
+                            url: DocsV1Write.Url(link.url),
+                            icon: this.resolveIconFileId(link.icon),
+                            rightIcon: this.resolveIconFileId(link.rightIcon)
+                        })),
+                        icon: this.resolveIconFileId(navbarLink.icon),
+                        rightIcon: this.resolveIconFileId(navbarLink.rightIcon)
                     };
                 }
+
+                if (navbarLink.type === "github") {
+                    return {
+                        ...navbarLink,
+                        url: DocsV1Write.Url(navbarLink.url)
+                    };
+                }
+
                 return {
                     ...navbarLink,
-                    url: DocsV1Write.Url(navbarLink.url)
+                    url: DocsV1Write.Url(navbarLink.url),
+                    icon: this.resolveIconFileId(navbarLink.icon),
+                    rightIcon: this.resolveIconFileId(navbarLink.rightIcon)
                 };
             }),
             typographyV2: this.convertDocsTypographyConfiguration(),
@@ -737,7 +746,7 @@ export class DocsDefinitionResolver {
             id: this.#idgen.get(pageId),
             title: landingPageConfig.title,
             slug: slug.get(),
-            icon: landingPageConfig.icon,
+            icon: this.resolveIconFileId(landingPageConfig.icon),
             hidden: landingPageConfig.hidden,
             viewers: landingPageConfig.viewers,
             orphaned: landingPageConfig.orphaned,
@@ -853,7 +862,7 @@ export class DocsDefinitionResolver {
             default: false,
             hidden: undefined,
             authed: undefined,
-            icon: product.icon,
+            icon: this.resolveIconFileId(product.icon),
             image: product.image != null ? this.getFileId(product.image) : undefined,
             pointsTo: undefined,
             viewers: product.viewers,
@@ -980,7 +989,7 @@ export class DocsDefinitionResolver {
             children,
             title: item.title,
             slug: variantSlug.get(),
-            icon: item.icon,
+            icon: this.resolveIconFileId(item.icon),
             hidden: item.hidden,
             authed: undefined,
             viewers: item.viewers,
@@ -1112,6 +1121,7 @@ export class DocsDefinitionResolver {
             this.markdownFilesToNoIndex,
             this.markdownFilesToTags,
             this.#idgen,
+            this.collectedFileIds,
             workspace,
             hideChildren,
             parentAvailability ?? item.availability
@@ -1136,7 +1146,7 @@ export class DocsDefinitionResolver {
         return changelogResolver.toChangelogNode({
             parentSlug,
             title: item.title,
-            icon: item.icon,
+            icon: this.resolveIconFileId(item.icon),
             viewers: item.viewers,
             hidden: hideChildren || item.hidden,
             slug: item.slug
@@ -1149,7 +1159,7 @@ export class DocsDefinitionResolver {
             id: this.#idgen.get(item.url),
             title: item.text,
             url: FernNavigation.V1.Url(item.url),
-            icon: item.icon
+            icon: this.resolveIconFileId(item.icon)
         };
     }
 
@@ -1175,7 +1185,7 @@ export class DocsDefinitionResolver {
             type: "page",
             slug: slug.get(),
             title: item.title,
-            icon: item.icon,
+            icon: this.resolveIconFileId(item.icon),
             hidden: hideChildren || item.hidden,
             viewers: item.viewers,
             orphaned: item.orphaned,
@@ -1219,7 +1229,7 @@ export class DocsDefinitionResolver {
             overviewPageId: pageId,
             slug: slug.get(),
             title: item.title,
-            icon: item.icon,
+            icon: this.resolveIconFileId(item.icon),
             collapsed: item.collapsed,
             hidden: hiddenSection,
             viewers: item.viewers,
@@ -1285,7 +1295,7 @@ export class DocsDefinitionResolver {
         return changelogResolver.toChangelogNode({
             parentSlug,
             title: item.title,
-            icon: item.icon,
+            icon: this.resolveIconFileId(item.icon),
             viewers: item.viewers,
             hidden: item.hidden,
             slug: item.slug
@@ -1298,7 +1308,7 @@ export class DocsDefinitionResolver {
             id: this.#idgen.get(href),
             title: item.title,
             url: FernNavigation.V1.Url(href),
-            icon: item.icon
+            icon: this.resolveIconFileId(item.icon)
         };
     }
 
@@ -1318,7 +1328,7 @@ export class DocsDefinitionResolver {
             id,
             title: item.title,
             slug: slug.get(),
-            icon: item.icon,
+            icon: this.resolveIconFileId(item.icon),
             hidden: item.hidden,
             authed: undefined,
             viewers: item.viewers,
@@ -1345,7 +1355,7 @@ export class DocsDefinitionResolver {
             id,
             title: item.title,
             slug: slug.get(),
-            icon: item.icon,
+            icon: this.resolveIconFileId(item.icon),
             hidden: item.hidden,
             authed: undefined,
             viewers: item.viewers,
@@ -1367,6 +1377,20 @@ export class DocsDefinitionResolver {
             return this.taskContext.failAndThrow("Failed to locate file after uploading: " + filepath);
         }
         return DocsV1Write.FileId(fileId);
+    }
+
+    private resolveIconFileId(
+        iconPath: string | AbsoluteFilePath | undefined
+    ): DocsV1Write.FileId | string | undefined {
+        if (iconPath == null) {
+            return undefined;
+        }
+
+        if (this.collectedFileIds.has(iconPath as AbsoluteFilePath)) {
+            return `file:${this.getFileId(iconPath as AbsoluteFilePath)}`;
+        }
+
+        return iconPath as string;
     }
 
     private convertColorConfigImageReferences(): DocsV1Write.ColorsConfigV3 | undefined {
