@@ -6,16 +6,22 @@ import * as serializers from "../../../index";
 import * as FernDocsConfig from "../../../../api/index";
 import * as core from "../../../../core";
 import { GithubEditThisPageConfig } from "./GithubEditThisPageConfig";
+import { GitlabEditThisPageConfig } from "./GitlabEditThisPageConfig";
+import { BitbucketEditThisPageConfig } from "./BitbucketEditThisPageConfig";
 
 export const EditThisPageConfig: core.serialization.ObjectSchema<
     serializers.EditThisPageConfig.Raw,
     FernDocsConfig.EditThisPageConfig
 > = core.serialization.object({
     github: GithubEditThisPageConfig.optional(),
+    gitlab: GitlabEditThisPageConfig.optional(),
+    bitbucket: BitbucketEditThisPageConfig.optional(),
 });
 
 export declare namespace EditThisPageConfig {
     export interface Raw {
         github?: GithubEditThisPageConfig.Raw | null;
+        gitlab?: GitlabEditThisPageConfig.Raw | null;
+        bitbucket?: BitbucketEditThisPageConfig.Raw | null;
     }
 }
