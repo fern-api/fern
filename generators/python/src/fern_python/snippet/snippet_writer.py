@@ -270,7 +270,7 @@ class SnippetWriter:
     ) -> AST.Expression:
         if unknown is None:
             return AST.Expression("None")
-        
+
         if isinstance(unknown, dict):
             keys = list(unknown.keys())
             if keys and all(isinstance(k, (int, str)) for k in keys):
@@ -285,7 +285,7 @@ class SnippetWriter:
                         else:
                             array_like = False
                             break
-                    
+
                     if array_like:
                         sorted_keys = sorted(int_keys)
                         if sorted_keys == list(range(len(sorted_keys))):
@@ -297,7 +297,7 @@ class SnippetWriter:
                             return self._write_list(values=values)
                 except (ValueError, TypeError):
                     pass
-            
+
             keys_exprs = []
             values_exprs = []
             for k, v in unknown.items():
@@ -307,11 +307,11 @@ class SnippetWriter:
                     keys_exprs.append(AST.Expression(str(k)))
                 values_exprs.append(self._get_snippet_for_unknown(v))
             return self._write_map(keys=keys_exprs, values=values_exprs)
-        
+
         if isinstance(unknown, (list, tuple)):
             values = [self._get_snippet_for_unknown(item) for item in unknown]
             return self._write_list(values=values)
-        
+
         def write_unknown(writer: AST.NodeWriter) -> None:
             maybe_stringify_unknown = repr(unknown) if type(unknown) is str else unknown
             writer.write_line(f"{maybe_stringify_unknown}")
