@@ -3,6 +3,7 @@ export * from "./base64";
 export * from "./callback-queue/index";
 export * from "./fetcher/index";
 export * from "./form-data-utils/index";
+export * from "./logger/Logger";
 export * from "./pagination/index";
 export * from "./runtime/index";
 export * from "./schemas/index";

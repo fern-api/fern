@@ -305,6 +305,16 @@ export class BaseClientContextImpl implements BaseClientContext {
             });
         }
 
+        properties.push({
+            kind: StructureKind.PropertySignature,
+            name: "logger",
+            type: "boolean | Logger",
+            hasQuestionToken: true,
+            docs: [
+                "Enable logging for HTTP requests. Set to `true` to use console logging, or provide a custom Logger implementation."
+            ]
+        });
+
         return {
             kind: StructureKind.Interface,
             name: OPTIONS_INTERFACE_NAME,
