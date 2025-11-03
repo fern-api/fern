@@ -1,4 +1,12 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 3.19.0
+  changelogEntry:
+    - summary: |
+        Add support for application/x-www-form-urlencoded request bodies.
+      type: feat
+  createdAt: "2025-11-03"
+  irVersion: 60
+
 - version: 3.17.1
   changelogEntry:
     - summary: |
