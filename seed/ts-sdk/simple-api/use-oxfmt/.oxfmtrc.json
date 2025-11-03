@@ -1,0 +1,14 @@
+{
+  "$schema": "https://raw.githubusercontent.com/oxc-project/oxc/refs/tags/oxfmt_v0.9.0/npm/oxfmt/configuration_schema.json",
+  "tabWidth": 4,
+  "printWidth": 120,
+  "singleQuote": false,
+  "ignorePatterns": [
+    "dist/**",
+    "*.tsbuildinfo",
+    "_tmp_*",
+    "*.tmp",
+    ".tmp/",
+    "*.log"
+  ]
+}

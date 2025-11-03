@@ -29,8 +29,8 @@ export declare namespace TypescriptProject {
         packagePath?: string;
         testPath: string;
         packageManager: "yarn" | "pnpm";
-        formatter: "prettier" | "biome";
-        linter: "biome" | "none";
+        formatter: "prettier" | "biome" | "oxfmt";
+        linter: "biome" | "oxlint" | "none";
     }
 }
 
@@ -105,8 +105,8 @@ export abstract class TypescriptProject {
     protected readonly packagePath: string;
     protected readonly testPath: string;
     protected readonly packageManager: "yarn" | "pnpm";
-    private readonly formatter: "prettier" | "biome";
-    private readonly linter: "biome" | "none";
+    private readonly formatter: "prettier" | "biome" | "oxfmt";
+    private readonly linter: "biome" | "oxlint" | "none";
 
     private readonly runScripts: boolean;
 
@@ -264,6 +264,11 @@ export abstract class TypescriptProject {
                         [COMMON_SCRIPTS.FORMAT]: "prettier . --write --ignore-unknown",
                         [COMMON_SCRIPTS.FORMAT_CHECK]: "prettier . --check --ignore-unknown"
                     };
+                case "oxfmt":
+                    return {
+                        [COMMON_SCRIPTS.FORMAT]: "oxfmt --no-error-on-unmatched-pattern .",
+                        [COMMON_SCRIPTS.FORMAT_CHECK]: "oxfmt --check --no-error-on-unmatched-pattern ."
+                    };
                 default:
                     assertNever(this.formatter);
             }
@@ -276,6 +281,11 @@ export abstract class TypescriptProject {
                             "biome lint --skip-parse-errors --no-errors-on-unmatched --max-diagnostics=none",
                         [COMMON_SCRIPTS.LINT_FIX]:
                             "biome lint --fix --unsafe --skip-parse-errors --no-errors-on-unmatched --max-diagnostics=none"
+                    };
+                case "oxlint":
+                    return {
+                        [COMMON_SCRIPTS.LINT]: "oxlint",
+                        [COMMON_SCRIPTS.LINT_FIX]: "oxlint --fix"
                     };
                 case "none":
                     return {
@@ -339,8 +349,15 @@ export abstract class TypescriptProject {
         if (this.linter === "biome" || this.formatter === "biome") {
             deps["@biomejs/biome"] = "2.3.1";
         }
+        if (this.linter === "oxlint") {
+            deps["oxlint"] = "1.25.0";
+            deps["oxlint-tsgolint"] = "0.4.0";
+        }
         if (this.formatter === "prettier") {
             deps["prettier"] = "3.4.2";
+        }
+        if (this.formatter === "oxfmt") {
+            deps["oxfmt"] = "0.9.0";
         }
         return deps;
     }

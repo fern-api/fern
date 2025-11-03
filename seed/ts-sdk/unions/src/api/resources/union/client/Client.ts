@@ -47,6 +47,7 @@ export class Union {
             timeoutMs: (requestOptions?.timeoutInSeconds ?? this._options?.timeoutInSeconds ?? 60) * 1000,
             maxRetries: requestOptions?.maxRetries ?? this._options?.maxRetries,
             abortSignal: requestOptions?.abortSignal,
+            fetchFn: this._options?.fetch,
         });
         if (_response.ok) {
             return { data: _response.body as SeedUnions.Shape, rawResponse: _response.rawResponse };
@@ -84,6 +85,8 @@ export class Union {
      * @example
      *     await client.union.update({
      *         type: "circle",
+     *         id: "id",
+     *         name: "name",
      *         radius: 1.1
      *     })
      */
@@ -109,6 +112,7 @@ export class Union {
             timeoutMs: (requestOptions?.timeoutInSeconds ?? this._options?.timeoutInSeconds ?? 60) * 1000,
             maxRetries: requestOptions?.maxRetries ?? this._options?.maxRetries,
             abortSignal: requestOptions?.abortSignal,
+            fetchFn: this._options?.fetch,
         });
         if (_response.ok) {
             return { data: _response.body as boolean, rawResponse: _response.rawResponse };

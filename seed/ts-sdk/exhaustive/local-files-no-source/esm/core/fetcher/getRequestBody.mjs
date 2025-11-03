@@ -8,8 +8,12 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 import { toJson } from "../json.mjs";
+import { toQueryString } from "../url/qs.mjs";
 export function getRequestBody(_a) {
     return __awaiter(this, arguments, void 0, function* ({ body, type }) {
+        if (type === "form") {
+            return toQueryString(body, { arrayFormat: "repeat", encode: true });
+        }
         if (type.includes("json")) {
             return toJson(body);
         }

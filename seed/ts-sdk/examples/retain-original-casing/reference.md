@@ -506,6 +506,10 @@ await client.service.createBigEntity({
     },
     metadata: {
         type: "html",
+        extra: {
+            "extra": "extra"
+        },
+        tags: ["tags"],
         value: "metadata"
     },
     commonMetadata: {
