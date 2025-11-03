@@ -1308,23 +1308,63 @@ types:
         type: string
         docs: The message to display in the announcement bar. Markdown is supported.
 
-  ProductConfig:
+  ProductPath:
+    discriminated: false
+    union:
+      - RelativeProductPath
+      - AbsoluteProductPath
+
+  RelativeProductPath:
     extends: [WithPermissions, WithFeatureFlags]
     properties:
       display-name: string
       path:
         type: string
         docs: The relative path to the version's docs.yml file.
+      slug:
+        type: optional<string>
+        docs: The "slug" is this version's basePath. If not set, the slug will be generated from the display-name.
+
+  AbsoluteProductPath:
+    properties:
+      href:
+        type: string
+        docs: The absolute URL to the product.
+
+  ProductConfigBase:
+    extends: [WithPermissions, WithFeatureFlags]
+    properties:
+      display-name: string
       subtitle: optional<string>
       icon: optional<string>
       image:
         type: optional<string>
         docs: The image to display in the product card. This will override the icon field if both are set.
+      versions: optional<list<VersionConfig>>
+      audiences: optional<Audience>
+
+  ProductConfig:
+    discriminated: false
+    union:
+      - InternalProduct
+      - ExternalProduct
+
+  InternalProduct:
+    extends: [ProductConfigBase]
+    properties:
+      path:
+        type: string
+        docs: The relative path to the version's docs.yml file.
       slug:
         type: optional<string>
         docs: The "slug" is this version's basePath. If not set, the slug will be generated from the display-name.
-      versions: optional<list<VersionConfig>>
-      audiences: optional<Audience>
+
+  ExternalProduct:
+    extends: [ProductConfigBase]
+    properties:
+      href:
+        type: string
+        docs: The absolute URL to the product.
 
   ProductFileConfig:
     properties:

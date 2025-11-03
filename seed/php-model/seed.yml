@@ -38,7 +38,3 @@ allowedFailures:
   - trace
   - circular-references
   - circular-references-advanced
-  # unknown
-  - enum
-  - errors
-  - literal

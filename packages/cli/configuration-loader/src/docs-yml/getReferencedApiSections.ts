@@ -32,7 +32,9 @@ export function getReferencedApiSections(config: docsYml.ParsedDocsConfiguration
             break;
         case "productgroup":
             config.navigation.products.forEach((product) => {
-                visitNavigation({ navigation: product.navigation, collector });
+                if (product.type === "internal") {
+                    visitNavigation({ navigation: product.navigation, collector });
+                }
             });
             break;
         default:
