@@ -20,6 +20,9 @@ describe("Bigunion", () => {
         const response = await client.bigunion.get("id");
         expect(response).toEqual({
             type: "normalSweet",
+            id: "id",
+            "created-at": "2024-01-15T09:30:00Z",
+            "archived-at": "2024-01-15T09:30:00Z",
             value: "value",
         });
     });
@@ -46,6 +49,9 @@ describe("Bigunion", () => {
 
         const response = await client.bigunion.update({
             type: "normalSweet",
+            id: "id",
+            "created-at": "2024-01-15T09:30:00Z",
+            "archived-at": "2024-01-15T09:30:00Z",
             value: "value",
         });
         expect(response).toEqual(true);
@@ -83,10 +89,16 @@ describe("Bigunion", () => {
         const response = await client.bigunion.updateMany([
             {
                 type: "normalSweet",
+                id: "id",
+                "created-at": "2024-01-15T09:30:00Z",
+                "archived-at": "2024-01-15T09:30:00Z",
                 value: "value",
             },
             {
                 type: "normalSweet",
+                id: "id",
+                "created-at": "2024-01-15T09:30:00Z",
+                "archived-at": "2024-01-15T09:30:00Z",
                 value: "value",
             },
         ]);

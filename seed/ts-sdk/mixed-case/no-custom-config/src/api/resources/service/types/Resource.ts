@@ -6,6 +6,7 @@ import type * as SeedMixedCase from "../../../index.js";
  * @example
  *     {
  *         resource_type: "user",
+ *         status: SeedMixedCase.ResourceStatus.Active,
  *         userName: "username",
  *         metadata_tags: ["tag1", "tag2"],
  *         EXTRA_PROPERTIES: {

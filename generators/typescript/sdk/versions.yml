@@ -1,4 +1,12 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 3.20.0
+  changelogEntry:
+    - summary: |
+        Implement base and extend properties in discriminated union examples.
+      type: feat
+  createdAt: "2025-11-03"
+  irVersion: 61
+
 - version: 3.19.1
   changelogEntry:
     - summary: |
