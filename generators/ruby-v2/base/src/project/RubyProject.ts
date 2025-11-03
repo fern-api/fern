@@ -30,20 +30,18 @@ export class RubyProject extends AbstractProject<AbstractRubyGeneratorContext<Ba
     }
 
     public async persist(): Promise<void> {
-        await Promise.all([
-            this.createGemspecfile(),
-            this.createCustomGemspecFile(),
-            this.createGemfile(),
-            this.createCustomGemfile(),
-            this.createRakefile(),
-            this.writeRawFiles(),
-            this.createAsIsFiles(),
-            this.writeAsIsFiles(),
-            this.createTestFiles(),
-            this.createVersionFile(),
-            this.createModuleFile(),
-            this.createRuboCopFile()
-        ]);
+        await this.createGemspecfile();
+        await this.createCustomGemspecFile();
+        await this.createGemfile();
+        await this.createCustomGemfile();
+        await this.createRakefile();
+        await this.writeRawFiles();
+        await this.createAsIsFiles();
+        await this.writeAsIsFiles();
+        await this.createTestFiles();
+        await this.createVersionFile();
+        await this.createModuleFile();
+        await this.createRuboCopFile();
     }
 
     private async createGemspecfile(): Promise<void> {
