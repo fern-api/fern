@@ -122,34 +122,3 @@ features:
 
       The SDK provides a way for you to customize the underlying HTTP client / Fetch function. If you're running in an
       unsupported environment, this provides a way for you to break glass and ensure the SDK works.
-
-      ### Configuring Fetch Implementation
-
-      You can configure which fetch implementation the SDK uses via the `fetchSupport` option in your `generators.yml` file.
-
-      **`fetchSupport: "native"` (default)**
-
-      Uses the native fetch API available in modern JavaScript runtimes. This is the recommended option as it:
-      - Has no external dependencies (no `node-fetch` package required)
-      - Works seamlessly across all supported runtimes
-      - Results in a smaller bundle size
-
-      **`fetchSupport: "node-fetch"`**
-
-      Uses the `node-fetch` package as a polyfill. This option:
-      - Adds `node-fetch` as a dependency to your generated SDK
-      - Falls back to the global fetch if available
-
-      To configure this option, add it to your `generators.yml`:
-
-      ```yaml
-      groups:
-        production:
-          generators:
-            - name: fernapi/fern-typescript-node-sdk
-              version: latest
-              config:
-                fetchSupport: native  # or "node-fetch"
-      ```
-
-      The default is `"native"`, so you only need to specify this if you want to use `node-fetch`.
