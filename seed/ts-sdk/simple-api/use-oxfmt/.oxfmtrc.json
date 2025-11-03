@@ -3,12 +3,5 @@
   "tabWidth": 4,
   "printWidth": 120,
   "singleQuote": false,
-  "ignorePatterns": [
-    "dist/**",
-    "*.tsbuildinfo",
-    "_tmp_*",
-    "*.tmp",
-    ".tmp/",
-    "*.log"
-  ]
+  "ignorePatterns": ["dist/**", "*.tsbuildinfo", "_tmp_*", "*.tmp", ".tmp/", "*.log"]
 }
