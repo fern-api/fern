@@ -7,6 +7,14 @@
   createdAt: "2025-11-03"
   irVersion: 61
 
+- version: 3.19.1
+  changelogEntry:
+    - summary: |
+        `mergeHeaders()` and `mergeOnlyDefinedHeaders()` are now case-insensitive.
+      type: fix
+  createdAt: "2025-11-03"
+  irVersion: 60
+
 - version: 3.19.0
   changelogEntry:
     - summary: |
