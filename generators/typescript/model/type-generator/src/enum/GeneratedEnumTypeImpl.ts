@@ -64,15 +64,13 @@ export class GeneratedEnumTypeImpl<Context extends BaseContext>
         const enumLiteralTypes = this.shape.values.map((value) =>
             ts.factory.createLiteralTypeNode(ts.factory.createStringLiteral(value.name.wireValue))
         );
-        
-        const unionMembers = this.includeSerdeLayer 
-            ? enumLiteralTypes 
+
+        const unionMembers = this.includeSerdeLayer
+            ? enumLiteralTypes
             : [...enumLiteralTypes, ts.factory.createKeywordTypeNode(ts.SyntaxKind.StringKeyword)];
-        
+
         return {
-            typeNode: ts.factory.createParenthesizedType(
-                ts.factory.createUnionTypeNode(unionMembers)
-            ),
+            typeNode: ts.factory.createParenthesizedType(ts.factory.createUnionTypeNode(unionMembers)),
             requestTypeNode: undefined,
             responseTypeNode: undefined
         };
