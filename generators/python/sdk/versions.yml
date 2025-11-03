@@ -1,5 +1,11 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
 # For unreleased changes, use unreleased.yml
+- version: 4.33.0
+  changelogEntry:
+    - summary: Added Generation Metadata file to output
+      type: feat
+  createdAt: "2025-11-03"
+  irVersion: 61
 
 - version: 4.32.3-rc1
   changelogEntry:
