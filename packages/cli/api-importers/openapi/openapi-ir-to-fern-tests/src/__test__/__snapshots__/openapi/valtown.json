@@ -1926,8 +1926,8 @@ docs: Blobs
     discriminated: false
     docs: A single email or list of emails for one of the address fields
     union:
-      - display-name: EmailData
-        type: EmailData
+      - type: EmailData
+        display-name: EmailData
       - type: list<EmailData>
     source:
       openapi: ../openapi.yml
@@ -3601,8 +3601,8 @@ docs: Search
         type: string
         docs: SQL statement, with ? placeholders for arguments
       args:
-        display-name: StatementArg
         type: StatementArg
+        display-name: StatementArg
         docs: List of arguments to be used in the given statement
     source:
       openapi: ../openapi.yml
