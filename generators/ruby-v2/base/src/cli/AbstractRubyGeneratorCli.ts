@@ -1,5 +1,6 @@
 import { AbstractGeneratorCli, parseIR } from "@fern-api/base-generator";
 import { AbsoluteFilePath } from "@fern-api/fs-utils";
+import { File } from "@fern-api/base-generator";
 import { BaseRubyCustomConfigSchema } from "@fern-api/ruby-ast";
 import { IntermediateRepresentation } from "@fern-fern/ir-sdk/api";
 import * as IrSerialization from "@fern-fern/ir-sdk/serialization";
@@ -19,5 +20,12 @@ export abstract class AbstractRubyGeneratorCli<
             absolutePathToIR: AbsoluteFilePath.of(irFilepath),
             parse: IrSerialization.IntermediateRepresentation.parse
         });
+    }
+
+    protected async generateMetadata(context: RubyGeneratorContext): Promise<void> {
+        const content = JSON.stringify(context.ir.generationMetadata, null, 2);
+        context.project.addRawFiles(
+            new File(this.GENERATION_METADATA_FILENAME, this.GENERATION_METADATA_FILEPATH, content)
+        );
     }
 }

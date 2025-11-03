@@ -3,6 +3,7 @@ import {
     FernGeneratorExec,
     GeneratorNotificationService
 } from "@fern-api/browser-compatible-base-generator";
+import { RubyProject } from "../project/RubyProject";
 import { RelativeFilePath } from "@fern-api/path-utils";
 import { BaseRubyCustomConfigSchema, ruby } from "@fern-api/ruby-ast";
 import { IntermediateRepresentation, TypeDeclaration, TypeId } from "@fern-fern/ir-sdk/api";
@@ -15,6 +16,7 @@ export abstract class AbstractRubyGeneratorContext<
     CustomConfig extends BaseRubyCustomConfigSchema
 > extends AbstractGeneratorContext {
     public readonly ir: IntermediateRepresentation;
+    public readonly project: RubyProject;
     public readonly customConfig: CustomConfig;
     public readonly typeMapper: RubyTypeMapper;
     public readonly typesDirName: string = "types";
@@ -30,6 +32,7 @@ export abstract class AbstractRubyGeneratorContext<
         this.ir = ir;
         this.customConfig = customConfig;
         this.typeMapper = new RubyTypeMapper(this);
+        this.project = new RubyProject({ context: this });
     }
 
     public getTypeDeclarationOrThrow(typeId: TypeId): TypeDeclaration {

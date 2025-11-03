@@ -19,6 +19,7 @@ import { writeFile } from "fs/promises";
 import tmp from "tmp-promise";
 import { publishPackage } from "./publishPackage";
 import { writeGitHubWorkflows } from "./writeGitHubWorkflows";
+import { writeGenerationMetadata } from "./writeGenerationMetadata";
 
 const OUTPUT_ZIP_FILENAME = "output.zip";
 
@@ -112,6 +113,14 @@ export abstract class AbstractGeneratorCli<CustomConfig> {
                 AbsoluteFilePath.of(config.output.path),
                 RelativeFilePath.of(options?.outputSubDirectory ?? "")
             );
+
+            await typescriptProject.writeArbitraryFiles(async (pathToProject) => {
+                await writeGenerationMetadata({
+                    generationMetadata: ir.generationMetadata,
+                    pathToProject
+                });
+            });
+            
             await config.output.mode._visit<void | Promise<void>>({
                 publish: async () => {
                     await typescriptProject.installDependencies(logger);

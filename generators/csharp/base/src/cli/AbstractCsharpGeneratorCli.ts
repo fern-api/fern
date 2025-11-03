@@ -11,10 +11,6 @@ export abstract class AbstractCsharpGeneratorCli<
     CustomConfig extends BaseCsharpCustomConfigSchema,
     CsharpGeneratorContext extends BaseCsharpGeneratorContext<CustomConfig>
 > extends AbstractGeneratorCli<CustomConfig, IntermediateRepresentation, CsharpGeneratorContext> {
-
-    private readonly GENERATION_METADATA_FILEPATH = RelativeFilePath.of("./.fern");
-    private readonly GENERATION_METADATA_FILENAME = "metadata.json";
-
     /**
      * Parses the IR for the Csharp generators
      * @param irFilepath

@@ -23,7 +23,6 @@ import { SdkCustomConfigSchema } from "./SdkCustomConfig";
 
 export class SdkGeneratorContext extends AbstractJavaGeneratorContext<SdkCustomConfigSchema> {
     public readonly generatorAgent: JavaGeneratorAgent;
-    public readonly project: JavaProject;
     public readonly snippetGenerator: EndpointSnippetsGenerator;
     private paginationPackageCache?: string;
 
@@ -34,7 +33,6 @@ export class SdkGeneratorContext extends AbstractJavaGeneratorContext<SdkCustomC
         public readonly generatorNotificationService: GeneratorNotificationService
     ) {
         super(ir, config, customConfig, generatorNotificationService);
-        this.project = new JavaProject({ context: this });
         this.snippetGenerator = new EndpointSnippetsGenerator({ context: this });
         this.generatorAgent = new JavaGeneratorAgent({
             logger: this.logger,

@@ -1,6 +1,6 @@
-import { AbstractGeneratorContext, FernGeneratorExec, GeneratorNotificationService } from "@fern-api/base-generator";
+import { AbstractGeneratorContext, FernGeneratorExec, GeneratorNotificationService, File } from "@fern-api/base-generator";
 import { BaseJavaCustomConfigSchema, java } from "@fern-api/java-ast";
-
+import { JavaProject } from "../project/JavaProject";
 import { FernFilepath, IntermediateRepresentation, Name, TypeDeclaration, TypeId } from "@fern-fern/ir-sdk/api";
 
 import { JavaTypeMapper } from "./JavaTypeMapper";
@@ -9,6 +9,7 @@ export abstract class AbstractJavaGeneratorContext<
     CustomConfig extends BaseJavaCustomConfigSchema
 > extends AbstractGeneratorContext {
     public readonly javaTypeMapper: JavaTypeMapper;
+    public readonly project: JavaProject;
 
     public constructor(
         public readonly ir: IntermediateRepresentation,
@@ -18,6 +19,7 @@ export abstract class AbstractJavaGeneratorContext<
     ) {
         super(config, generatorNotificationService);
         this.javaTypeMapper = new JavaTypeMapper(this);
+        this.project = new JavaProject({ context: this });
     }
 
     public abstract getRootPackageName(): string;
