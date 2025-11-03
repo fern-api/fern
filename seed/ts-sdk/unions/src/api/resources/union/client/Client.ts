@@ -85,6 +85,8 @@ export class Union {
      * @example
      *     await client.union.update({
      *         type: "circle",
+     *         id: "id",
+     *         name: "name",
      *         radius: 1.1
      *     })
      */

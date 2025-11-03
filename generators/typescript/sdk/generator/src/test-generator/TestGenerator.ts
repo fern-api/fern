@@ -1296,58 +1296,89 @@ describe("${serviceName}", () => {
                         )}`;
                     },
                     union: (value) => {
-                        return value.singleUnionType.shape._visit({
-                            noProperties: () => code`${literalOf(jsonExample)}`,
-                            singleProperty: () => code`${literalOf(jsonExample)}`,
+                        if (typeof jsonExample !== "object" || jsonExample == null) {
+                            // should not happen
+                            return code`${literalOf(jsonExample)}`;
+                        }
+                        const properties: Record<string, unknown> = {};
+                        properties[value.discriminant.wireValue] = (jsonExample as Record<string, unknown>)[
+                            value.discriminant.wireValue
+                        ];
+                        Object.assign(
+                            properties,
+                            Object.fromEntries(
+                                (value.baseProperties ?? []).map((property) => {
+                                    return [property.name.wireValue, property.value.jsonExample];
+                                })
+                            )
+                        );
+                        Object.assign(
+                            properties,
+                            Object.fromEntries(
+                                (value.extendProperties ?? []).map((property) => {
+                                    return [property.name.wireValue, property.value.jsonExample];
+                                })
+                            )
+                        );
+                        const singleUnionProperties = value.singleUnionType.shape._visit({
+                            noProperties: () => jsonExample as object | undefined | null,
+                            singleProperty: () => jsonExample as object | undefined | null,
                             samePropertiesAsObject: (memberValue) => {
-                                return code`${literalOf(
-                                    Object.fromEntries([
-                                        ...getUnusedPropertiesFromJsonExample(jsonExample, memberValue),
-                                        ...memberValue.object.properties
-                                            .filter((p) => {
-                                                if (typeof p.propertyAccess === "undefined") {
-                                                    return true;
-                                                }
-                                                if (
-                                                    filterOutReadonlyProps &&
-                                                    p.propertyAccess === ObjectPropertyAccess.ReadOnly
-                                                ) {
-                                                    return false;
-                                                }
-                                                if (
-                                                    filterOutWriteonlyProps &&
-                                                    p.propertyAccess === ObjectPropertyAccess.WriteOnly
-                                                ) {
-                                                    return false;
-                                                }
+                                return Object.fromEntries([
+                                    ...memberValue.object.properties
+                                        .filter((p) => {
+                                            if (typeof p.propertyAccess === "undefined") {
                                                 return true;
-                                            })
-                                            .map<[string, Code]>((property) => {
-                                                return [
-                                                    property.name.wireValue,
-                                                    createRawJsonExample({
-                                                        example: property.value,
-                                                        isForRequest,
-                                                        isForResponse
-                                                    })
-                                                ];
-                                            })
-                                            .filter(([_, value]) => !isCodeUndefined(value)),
-                                        ...(memberValue.object.extraProperties ?? [])
-                                            .map<[string, Code]>((property) => [
+                                            }
+                                            if (
+                                                filterOutReadonlyProps &&
+                                                p.propertyAccess === ObjectPropertyAccess.ReadOnly
+                                            ) {
+                                                return false;
+                                            }
+                                            if (
+                                                filterOutWriteonlyProps &&
+                                                p.propertyAccess === ObjectPropertyAccess.WriteOnly
+                                            ) {
+                                                return false;
+                                            }
+                                            return true;
+                                        })
+                                        .map<[string, Code]>((property) => {
+                                            return [
                                                 property.name.wireValue,
                                                 createRawJsonExample({
                                                     example: property.value,
                                                     isForRequest,
                                                     isForResponse
                                                 })
-                                            ])
-                                            .filter(([_, value]) => !isCodeUndefined(value))
-                                    ])
-                                )}`;
+                                            ];
+                                        })
+                                        .filter(([_, value]) => !isCodeUndefined(value)),
+                                    ...(memberValue.object.extraProperties ?? [])
+                                        .map<[string, Code]>((property) => [
+                                            property.name.wireValue,
+                                            createRawJsonExample({
+                                                example: property.value,
+                                                isForRequest,
+                                                isForResponse
+                                            })
+                                        ])
+                                        .filter(([_, value]) => !isCodeUndefined(value))
+                                ]);
                             },
-                            _other: () => code`${literalOf(jsonExample)}`
+                            _other: () => jsonExample as object | undefined | null
                         });
+                        if (singleUnionProperties != null) {
+                            Object.assign(properties, singleUnionProperties);
+                        }
+
+                        // for extra properties
+                        const otherProperties = Object.fromEntries(
+                            Object.entries(jsonExample).filter(([key]) => !Object.keys(properties).includes(key))
+                        );
+                        Object.assign(properties, otherProperties);
+                        return code`${literalOf(properties)}`;
                     },
                     undiscriminatedUnion: (value) => {
                         return createRawJsonExample({ example: value.singleUnionType, isForRequest, isForResponse });
