@@ -29,7 +29,7 @@ export declare namespace TypescriptProject {
         packagePath?: string;
         testPath: string;
         packageManager: "yarn" | "pnpm";
-        formatter: "prettier" | "biome";
+        formatter: "prettier" | "biome" | "oxfmt";
         linter: "biome" | "none";
     }
 }
@@ -105,7 +105,7 @@ export abstract class TypescriptProject {
     protected readonly packagePath: string;
     protected readonly testPath: string;
     protected readonly packageManager: "yarn" | "pnpm";
-    private readonly formatter: "prettier" | "biome";
+    private readonly formatter: "prettier" | "biome" | "oxfmt";
     private readonly linter: "biome" | "none";
 
     private readonly runScripts: boolean;
@@ -154,6 +154,11 @@ export abstract class TypescriptProject {
         if (this.formatter === "prettier") {
             await this.generatePrettierRc();
             await this.generatePrettierIgnore();
+        }
+        if (this.formatter === "oxfmt") {
+            // biome-ignore lint/suspicious/noConsole: allow console
+            console.warn("⚠️  oxfmt is a beta feature and is currently work in progress. Use with caution.");
+            await this.generateOxfmtRc();
         }
         if (this.outputJsr) {
             await this.generateJsrJson();
@@ -264,6 +269,11 @@ export abstract class TypescriptProject {
                         [COMMON_SCRIPTS.FORMAT]: "prettier . --write --ignore-unknown",
                         [COMMON_SCRIPTS.FORMAT_CHECK]: "prettier . --check --ignore-unknown"
                     };
+                case "oxfmt":
+                    return {
+                        [COMMON_SCRIPTS.FORMAT]: "oxfmt .",
+                        [COMMON_SCRIPTS.FORMAT_CHECK]: "oxfmt --check ."
+                    };
                 default:
                     assertNever(this.formatter);
             }
@@ -342,6 +352,9 @@ export abstract class TypescriptProject {
         if (this.formatter === "prettier") {
             deps["prettier"] = "3.4.2";
         }
+        if (this.formatter === "oxfmt") {
+            deps["oxfmt"] = "^0.5.0";
+        }
         return deps;
     }
 
@@ -385,5 +398,20 @@ Thumbs.db
                 JSON.stringify(jsr, undefined, 4)
             );
         }
+    }
+
+    private async generateOxfmtRc(): Promise<void> {
+        await this.writeFileToVolume(
+            RelativeFilePath.of(".oxfmtrc.json"),
+            JSON.stringify(
+                {
+                    printWidth: 120,
+                    singleQuote: false,
+                    ignorePatterns: ["dist/**", "*.tsbuildinfo", "_tmp_*", "*.tmp", ".tmp/", "*.log"]
+                },
+                undefined,
+                2
+            )
+        );
     }
 }

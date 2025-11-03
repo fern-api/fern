@@ -69,7 +69,7 @@ export declare namespace ExpressGenerator {
         noOptionalProperties: boolean;
         packagePath: string | undefined;
         packageManager: "pnpm" | "yarn";
-        formatter: "prettier" | "biome";
+        formatter: "prettier" | "biome" | "oxfmt";
         linter: "biome" | "none";
     }
 }
