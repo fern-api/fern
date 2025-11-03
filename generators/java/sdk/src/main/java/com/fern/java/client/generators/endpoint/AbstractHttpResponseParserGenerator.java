@@ -335,6 +335,49 @@ public abstract class AbstractHttpResponseParserGenerator {
         }
     }
 
+    protected boolean shouldPreReadResponseBodyString() {
+        if (httpEndpoint.getResponse().isPresent()
+                && httpEndpoint.getResponse().get().getBody().isPresent()) {
+            return httpEndpoint.getResponse().get().getBody().get().visit(new HttpResponseBody.Visitor<Boolean>() {
+                @Override
+                public Boolean visitJson(JsonResponse jsonResponse) {
+                    return true;
+                }
+
+                @Override
+                public Boolean visitFileDownload(FileDownloadResponse fileDownloadResponse) {
+                    return false;
+                }
+
+                @Override
+                public Boolean visitText(TextResponse textResponse) {
+                    return true;
+                }
+
+                @Override
+                public Boolean visitBytes(BytesResponse bytesResponse) {
+                    return false;
+                }
+
+                @Override
+                public Boolean visitStreaming(StreamingResponse streamingResponse) {
+                    return false;
+                }
+
+                @Override
+                public Boolean visitStreamParameter(StreamParameterResponse streamParameterResponse) {
+                    return false;
+                }
+
+                @Override
+                public Boolean _visitUnknown(Object o) {
+                    return false;
+                }
+            });
+        }
+        return false;
+    }
+
     public void beginResponseProcessingTryBlock(CodeBlock.Builder httpResponseBuilder) {
         if (httpEndpoint.getResponse().isPresent()
                 && httpEndpoint.getResponse().get().getBody().isPresent()) {
@@ -386,13 +429,16 @@ public abstract class AbstractHttpResponseParserGenerator {
 
     public void addMappedFailuresCodeBlock(CodeBlock.Builder httpResponseBuilder) {
         ObjectMapperUtils objectMapperUtils = new ObjectMapperUtils(clientGeneratorContext, generatedObjectMapper);
-        httpResponseBuilder.addStatement(
-                "$T $L = $L != null ? $L.string() : $S",
-                String.class,
-                variables.getResponseBodyStringName(),
-                variables.getResponseBodyName(),
-                variables.getResponseBodyName(),
-                "{}");
+
+        if (!shouldPreReadResponseBodyString()) {
+            httpResponseBuilder.addStatement(
+                    "$T $L = $L != null ? $L.string() : $S",
+                    String.class,
+                    variables.getResponseBodyStringName(),
+                    variables.getResponseBodyName(),
+                    variables.getResponseBodyName(),
+                    "{}");
+        }
 
         // map to status-specific errors
         if (clientGeneratorContext.getIr().getErrorDiscriminationStrategy().isStatusCode()) {
@@ -510,7 +556,7 @@ public abstract class AbstractHttpResponseParserGenerator {
                         new ObjectMapperUtils(clientGeneratorContext, generatedObjectMapper);
                 httpResponseBuilder.add("$T $L = ", responseType, variables.getParsedResponseVariableName());
                 httpResponseBuilder.addStatement(objectMapperUtils.readValueCall(
-                        CodeBlock.of("$L.string()", variables.getResponseBodyName()),
+                        CodeBlock.of("$L", variables.getResponseBodyStringName()),
                         Optional.of(body.getResponseBodyType())));
                 SnippetAndResultType snippet = getNestedPropertySnippet(
                         Optional.empty(), body.getResponseProperty().get(), body.getResponseBodyType());
@@ -537,7 +583,7 @@ public abstract class AbstractHttpResponseParserGenerator {
                         new ObjectMapperUtils(clientGeneratorContext, generatedObjectMapper);
                 httpResponseBuilder.add("$T $L = ", responseType, variables.getParsedResponseVariableName());
                 httpResponseBuilder.addStatement(objectMapperUtils.readValueCall(
-                        CodeBlock.of("$L.string()", variables.getResponseBodyName()),
+                        CodeBlock.of("$L", variables.getResponseBodyStringName()),
                         Optional.of(body.getResponseBodyType())));
                 ParameterSpec requestParameterSpec = variables
                         .requestParameterSpec()
@@ -575,7 +621,7 @@ public abstract class AbstractHttpResponseParserGenerator {
             handleSuccessfulResult(
                     httpResponseBuilder,
                     objectMapperUtils.readValueCall(
-                            CodeBlock.of("$L.string()", variables.getResponseBodyName()),
+                            CodeBlock.of("$L", variables.getResponseBodyStringName()),
                             Optional.of(body.getResponseBodyType())));
             return null;
         }
@@ -595,7 +641,7 @@ public abstract class AbstractHttpResponseParserGenerator {
         @Override
         public Void visitText(TextResponse text) {
             endpointMethodBuilder.returns(String.class);
-            handleSuccessfulResult(httpResponseBuilder, CodeBlock.of("$L.string()", variables.getResponseBodyName()));
+            handleSuccessfulResult(httpResponseBuilder, CodeBlock.of("$L", variables.getResponseBodyStringName()));
             return null;
         }
 
