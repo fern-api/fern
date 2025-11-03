@@ -498,7 +498,7 @@ public abstract class AbstractHttpResponseParserGenerator {
                 .nextControlFlow("catch ($T ignored)", JsonProcessingException.class)
                 .addStatement("errorBody = $L", variables.getResponseBodyStringName())
                 .endControlFlow();
-        
+
         handleExceptionalResult(
                 httpResponseBuilder,
                 CodeBlock.of(
