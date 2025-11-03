@@ -125,6 +125,10 @@ export class SdkGeneratorCli extends AbstractGeneratorCli<SdkCustomConfig> {
             }
         }
 
+        if (config.formatter === "oxfmt") {
+            logger.warn("Warning: oxfmt is currently in beta. Use with caution.");
+        }
+
         return config;
     }
 

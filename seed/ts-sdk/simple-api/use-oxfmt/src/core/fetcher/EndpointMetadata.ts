@@ -6,8 +6,8 @@ export type SecuritySchemeKey = string;
 export type SecuritySchemeCollection = Record<SecuritySchemeKey, AuthScope[]>;
 export type AuthScope = string;
 export type EndpointMetadata = {
-  /**
-   * An array of security scheme collections. Each collection represents an alternative way to authenticate.
-   */
-  security?: SecuritySchemeCollection[];
+    /**
+     * An array of security scheme collections. Each collection represents an alternative way to authenticate.
+     */
+    security?: SecuritySchemeCollection[];
 };

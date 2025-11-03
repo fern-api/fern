@@ -6,33 +6,33 @@ import { mergeHeaders } from "./core/headers.js";
 import { User } from "./api/resources/user/client/Client.js";
 
 export declare namespace SeedSimpleApiClient {
-  export interface Options extends BaseClientOptions {}
+    export interface Options extends BaseClientOptions {}
 
-  export interface RequestOptions extends BaseRequestOptions {}
+    export interface RequestOptions extends BaseRequestOptions {}
 }
 
 export class SeedSimpleApiClient {
-  protected readonly _options: SeedSimpleApiClient.Options;
-  protected _user: User | undefined;
+    protected readonly _options: SeedSimpleApiClient.Options;
+    protected _user: User | undefined;
 
-  constructor(_options: SeedSimpleApiClient.Options) {
-    this._options = {
-      ..._options,
-      headers: mergeHeaders(
-        {
-          "X-Fern-Language": "JavaScript",
-          "X-Fern-SDK-Name": "@fern/simple-api",
-          "X-Fern-SDK-Version": "0.0.1",
-          "User-Agent": "@fern/simple-api/0.0.1",
-          "X-Fern-Runtime": core.RUNTIME.type,
-          "X-Fern-Runtime-Version": core.RUNTIME.version,
-        },
-        _options?.headers,
-      ),
-    };
-  }
+    constructor(_options: SeedSimpleApiClient.Options) {
+        this._options = {
+            ..._options,
+            headers: mergeHeaders(
+                {
+                    "X-Fern-Language": "JavaScript",
+                    "X-Fern-SDK-Name": "@fern/simple-api",
+                    "X-Fern-SDK-Version": "0.0.1",
+                    "User-Agent": "@fern/simple-api/0.0.1",
+                    "X-Fern-Runtime": core.RUNTIME.type,
+                    "X-Fern-Runtime-Version": core.RUNTIME.version,
+                },
+                _options?.headers,
+            ),
+        };
+    }
 
-  public get user(): User {
-    return (this._user ??= new User(this._options));
-  }
+    public get user(): User {
+        return (this._user ??= new User(this._options));
+    }
 }

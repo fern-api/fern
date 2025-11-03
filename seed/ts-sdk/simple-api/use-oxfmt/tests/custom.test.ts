@@ -7,7 +7,7 @@
  * you will have tests automatically generated for you.
  */
 describe("test", () => {
-  it("default", () => {
-    expect(true).toBe(true);
-  });
+    it("default", () => {
+        expect(true).toBe(true);
+    });
 });

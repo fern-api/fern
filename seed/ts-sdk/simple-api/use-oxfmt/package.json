@@ -29,8 +29,8 @@
         "LICENSE"
     ],
     "scripts": {
-        "format": "oxfmt .",
-        "format:check": "oxfmt --check .",
+        "format": "oxfmt --no-error-on-unmatched-pattern .",
+        "format:check": "oxfmt --check --no-error-on-unmatched-pattern .",
         "lint": "biome lint --skip-parse-errors --no-errors-on-unmatched --max-diagnostics=none",
         "lint:fix": "biome lint --fix --unsafe --skip-parse-errors --no-errors-on-unmatched --max-diagnostics=none",
         "check": "pnpm format:check && pnpm lint",

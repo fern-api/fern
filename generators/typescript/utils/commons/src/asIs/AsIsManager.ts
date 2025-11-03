@@ -52,6 +52,7 @@ export class AsIsManager {
     private getAsIsFiles() {
         return {
             biomeJson: { "biome.json": "biome.json" },
+            oxfmtrcJson: { "oxfmtrc.json": ".oxfmtrc.json" },
             core: {
                 mergeHeaders: { "core/headers.ts": `${this.relativePackagePath}/core/headers.ts` },
                 json: {
@@ -79,6 +80,9 @@ export class AsIsManager {
 
         if (this.formatter === "biome" || this.linter === "biome") {
             filesToCopy.push(asIsFiles.biomeJson);
+        }
+        if (this.formatter === "oxfmt") {
+            filesToCopy.push(asIsFiles.oxfmtrcJson);
         }
         if (this.generatorType === "sdk" || this.generatorType === "model") {
             filesToCopy.push(asIsFiles.core.mergeHeaders);

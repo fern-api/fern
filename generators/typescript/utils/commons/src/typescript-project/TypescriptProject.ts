@@ -155,11 +155,6 @@ export abstract class TypescriptProject {
             await this.generatePrettierRc();
             await this.generatePrettierIgnore();
         }
-        if (this.formatter === "oxfmt") {
-            // biome-ignore lint/suspicious/noConsole: allow console
-            console.warn("⚠️  oxfmt is a beta feature and is currently work in progress. Use with caution.");
-            await this.generateOxfmtRc();
-        }
         if (this.outputJsr) {
             await this.generateJsrJson();
         }
@@ -271,8 +266,8 @@ export abstract class TypescriptProject {
                     };
                 case "oxfmt":
                     return {
-                        [COMMON_SCRIPTS.FORMAT]: "oxfmt .",
-                        [COMMON_SCRIPTS.FORMAT_CHECK]: "oxfmt --check ."
+                        [COMMON_SCRIPTS.FORMAT]: "oxfmt --no-error-on-unmatched-pattern .",
+                        [COMMON_SCRIPTS.FORMAT_CHECK]: "oxfmt --check --no-error-on-unmatched-pattern ."
                     };
                 default:
                     assertNever(this.formatter);
@@ -398,20 +393,5 @@ Thumbs.db
                 JSON.stringify(jsr, undefined, 4)
             );
         }
-    }
-
-    private async generateOxfmtRc(): Promise<void> {
-        await this.writeFileToVolume(
-            RelativeFilePath.of(".oxfmtrc.json"),
-            JSON.stringify(
-                {
-                    printWidth: 120,
-                    singleQuote: false,
-                    ignorePatterns: ["dist/**", "*.tsbuildinfo", "_tmp_*", "*.tmp", ".tmp/", "*.log"]
-                },
-                undefined,
-                2
-            )
-        );
     }
 }
