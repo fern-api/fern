@@ -11,4 +11,4 @@ from ....core.serialization import FieldMetadata
 class ObjectWithMapOfMap(UniversalBaseModel):
     map_: typing_extensions.Annotated[typing.Dict[str, typing.Dict[str, str]], FieldMetadata(alias="map")]
 
-    model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2
+    model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)

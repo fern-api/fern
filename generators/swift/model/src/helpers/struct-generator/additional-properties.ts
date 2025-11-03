@@ -1,5 +1,4 @@
-import { Referencer } from "@fern-api/swift-base";
-import { swift } from "@fern-api/swift-codegen";
+import { Referencer, swift } from "@fern-api/swift-codegen";
 import { StructGenerator } from "./StructGenerator";
 
 export interface AdditionalPropertiesMetadata {

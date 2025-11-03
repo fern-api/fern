@@ -9,8 +9,8 @@ describe("Service", () => {
         const client = new SeedMixedCaseClient({ environment: server.baseUrl });
 
         const rawResponseBody = {
-            status: "ACTIVE",
             resource_type: "user",
+            status: "ACTIVE",
             userName: "username",
             metadata_tags: ["tag1", "tag2"],
             EXTRA_PROPERTIES: { foo: "bar", baz: "qux" },
@@ -20,6 +20,7 @@ describe("Service", () => {
         const response = await client.service.getResource("rsc-xyz");
         expect(response).toEqual({
             resource_type: "user",
+            status: "ACTIVE",
             userName: "username",
             metadata_tags: ["tag1", "tag2"],
             EXTRA_PROPERTIES: {
@@ -51,6 +52,7 @@ describe("Service", () => {
         expect(response).toEqual([
             {
                 resource_type: "user",
+                status: "ACTIVE",
                 userName: "username",
                 metadata_tags: ["tag1", "tag2"],
                 EXTRA_PROPERTIES: {

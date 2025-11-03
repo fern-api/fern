@@ -1,6 +1,6 @@
 # Reference
 ## FolderA Service
-<details><summary><code>client.folderA.service.<a href="/src/api/resources/folderA/resources/service/client/Client.ts">getDirectThread</a>() -> SeedAudiences.Response</code></summary>
+<details><summary><code>client.folderA.service.<a href="/src/api/resources/folderA/resources/service/client/Client.ts">getDirectThread</a>({ ...params }) -> SeedAudiences.Response</code></summary>
 <dl>
 <dd>
 
@@ -13,7 +13,10 @@
 <dd>
 
 ```typescript
-await client.folderA.service.getDirectThread();
+await client.folderA.service.getDirectThread({
+    ids: "ids",
+    tags: "tags"
+});
 
 ```
 </dd>
@@ -25,6 +28,14 @@ await client.folderA.service.getDirectThread();
 
 <dl>
 <dd>
+
+<dl>
+<dd>
+
+**request:** `SeedAudiences.folderA.GetDirectThreadRequest` 
+    
+</dd>
+</dl>
 
 <dl>
 <dd>

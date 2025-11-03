@@ -30,7 +30,7 @@ packages = [
     { include = "seed/cross_package_type_names", from = "src"}
 ]
 
-[project.urls]
+[tool.poetry.urls]
 Repository = 'https://github.com/cross-package-type-names/fern'
 
 [tool.poetry.dependencies]

@@ -1,8 +1,7 @@
 import { AbstractAstNode } from "@fern-api/browser-compatible-base-generator";
-
-import { Writer } from "..";
-import { XmlDocBlock } from "../XmlDocBlock";
+import { XmlDocBlock } from "../language/XmlDocBlock";
 import { AstNode } from "./AstNode";
+import { Writer } from "./Writer";
 
 export class XmlDocWriter {
     private writer: Writer;
@@ -45,7 +44,7 @@ export class XmlDocWriter {
     }
 
     public writeNodeOrString(input: AbstractAstNode | string): void {
-        this.writer.writeNodeOrString(input);
+        this.writer.write(input);
     }
 
     public writePrefix(): this {

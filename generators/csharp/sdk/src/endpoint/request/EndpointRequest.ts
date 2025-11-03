@@ -1,4 +1,4 @@
-import { ast } from "@fern-api/csharp-codegen";
+import { ast, WithGeneration } from "@fern-api/csharp-codegen";
 import { HttpEndpoint, SdkRequest } from "@fern-fern/ir-sdk/api";
 import { SdkGeneratorContext } from "../../SdkGeneratorContext";
 import { RawClient } from "../http/RawClient";
@@ -18,12 +18,14 @@ export interface RequestBodyCodeBlock {
     requestBodyReference: string;
 }
 
-export abstract class EndpointRequest {
+export abstract class EndpointRequest extends WithGeneration {
     public constructor(
         protected readonly context: SdkGeneratorContext,
         protected readonly sdkRequest: SdkRequest,
         protected readonly endpoint: HttpEndpoint
-    ) {}
+    ) {
+        super(context);
+    }
 
     public getParameterName(): string {
         return this.sdkRequest.requestParameterName.camelCase.safeName;

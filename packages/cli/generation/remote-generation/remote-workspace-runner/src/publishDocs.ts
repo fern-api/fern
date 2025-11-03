@@ -113,7 +113,8 @@ export async function publishDocs({
                     width: image.width,
                     height: image.height,
                     blurDataUrl: image.blurDataUrl,
-                    alt: undefined
+                    alt: undefined,
+                    fileHash: undefined
                 };
                 images.push(imageFilePath);
             });
@@ -255,7 +256,7 @@ export async function publishDocs({
         CjsFdrSdk.docs.v1.write.DocsRegistrationId(docsRegistrationId),
         {
             docsDefinition,
-            excludeApis: true
+            excludeApis: false
         }
     );
 

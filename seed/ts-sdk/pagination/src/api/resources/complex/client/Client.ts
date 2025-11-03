@@ -41,7 +41,7 @@ export class Complex {
         index: string,
         request: SeedPagination.SearchRequest,
         requestOptions?: Complex.RequestOptions,
-    ): Promise<core.Page<SeedPagination.Conversation>> {
+    ): Promise<core.Page<SeedPagination.Conversation, SeedPagination.PaginatedConversationResponse>> {
         const list = core.HttpResponsePromise.interceptFunction(
             async (
                 request: SeedPagination.SearchRequest,
@@ -66,6 +66,7 @@ export class Complex {
                     timeoutMs: (requestOptions?.timeoutInSeconds ?? this._options?.timeoutInSeconds ?? 60) * 1000,
                     maxRetries: requestOptions?.maxRetries ?? this._options?.maxRetries,
                     abortSignal: requestOptions?.abortSignal,
+                    fetchFn: this._options?.fetch,
                 });
                 if (_response.ok) {
                     return {
@@ -100,7 +101,7 @@ export class Complex {
             },
         );
         const dataWithRawResponse = await list(request).withRawResponse();
-        return new core.Pageable<SeedPagination.PaginatedConversationResponse, SeedPagination.Conversation>({
+        return new core.Page<SeedPagination.Conversation, SeedPagination.PaginatedConversationResponse>({
             response: dataWithRawResponse.data,
             rawResponse: dataWithRawResponse.rawResponse,
             hasNextPage: (response) =>

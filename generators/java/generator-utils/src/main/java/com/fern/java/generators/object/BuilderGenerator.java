@@ -347,6 +347,10 @@ public final class BuilderGenerator {
                 && builderNotNullChecks
                 && !isNullableField) {
             parameterSpecBuilder.addAnnotation(ClassName.get("org.jetbrains.annotations", "NotNull"));
+        } else if (isNotNullableType(enrichedObjectProperty.enrichedObjectProperty.poetTypeName())
+                && enrichedObjectProperty.enrichedObjectProperty.useNullableAnnotation()
+                && isNullableField) {
+            parameterSpecBuilder.addAnnotation(ClassName.get("org.jetbrains.annotations", "Nullable"));
         }
         MethodSpec.Builder methodBuilder = MethodSpec.methodBuilder(enrichedObjectProperty.fieldSpec.name)
                 .addModifiers(Modifier.PUBLIC)
@@ -453,9 +457,18 @@ public final class BuilderGenerator {
             EnrichedObjectPropertyWithField enrichedProperty, ClassName returnClass, boolean isOverridden) {
         TypeName poetTypeName = enrichedProperty.enrichedObjectProperty.poetTypeName();
         FieldSpec fieldSpec = enrichedProperty.fieldSpec;
+        ParameterSpec.Builder paramBuilder = ParameterSpec.builder(poetTypeName, fieldSpec.name);
+
+        boolean isNullableField = enrichedProperty.enrichedObjectProperty.nullable()
+                || enrichedProperty.enrichedObjectProperty.aliasOfNullable();
+        if (isNotNullableType(poetTypeName)
+                && enrichedProperty.enrichedObjectProperty.useNullableAnnotation()
+                && isNullableField) {
+            paramBuilder.addAnnotation(ClassName.get("org.jetbrains.annotations", "Nullable"));
+        }
+
         MethodSpec.Builder setter = MethodSpec.methodBuilder(fieldSpec.name)
-                .addParameter(
-                        ParameterSpec.builder(poetTypeName, fieldSpec.name).build())
+                .addParameter(paramBuilder.build())
                 .addModifiers(Modifier.PUBLIC)
                 .returns(returnClass);
         if (isOverridden) {
@@ -516,31 +529,65 @@ public final class BuilderGenerator {
         MethodSpec.Builder defaultMethodImplBuilder =
                 getDefaultSetterForImpl(enrichedObjectProperty, finalStageClassName, implsOverride);
 
-        // Handle Nullable<T> fields (when use-nullable-for-optional-fields is enabled)
-        if (isEqual(propertyTypeName, nullableClassName)) {
-            TypeName itemTypeName = getOnlyTypeArgumentOrThrow(propertyTypeName);
-
-            // Add setter for direct T value (convenience method)
-            interfaceSetterConsumer.accept(
-                    createOptionalItemTypeNameSetter(enrichedObjectProperty, propertyTypeName, finalStageClassName)
-                            .addModifiers(Modifier.ABSTRACT)
-                            .build());
-
-            // Initialize field with Nullable.empty()
+        if (isOptionalNullable(propertyTypeName)) {
+            ClassName optionalNullableClassName = getOptionalNullableClassName();
             implFieldConsumer.accept(implFieldSpecBuilder
-                    .initializer("$T.empty()", nullableClassName)
+                    .initializer("$T.absent()", optionalNullableClassName)
                     .build());
-
-            // Default setter that takes Nullable<T> directly
             implSetterConsumer.accept(defaultMethodImplBuilder
                     .addStatement("this.$L = $L", fieldSpec.name, fieldSpec.name)
                     .addStatement("return this")
                     .build());
 
-            // Convenience setter that takes T and wraps in Nullable.of()
-            implSetterConsumer.accept(createOptionalItemTypeNameSetter(
+            // Add convenience setter for raw values: .city("city") -> OptionalNullable.of("city")
+            interfaceSetterConsumer.accept(createOptionalNullableItemTypeNameSetter(
+                            enrichedObjectProperty, propertyTypeName, finalStageClassName)
+                    .addModifiers(Modifier.ABSTRACT)
+                    .build());
+            implSetterConsumer.accept(createOptionalNullableItemTypeNameSetter(
                             enrichedObjectProperty, propertyTypeName, finalStageClassName, implsOverride)
-                    .addStatement("this.$L = $T.of($L)", fieldSpec.name, nullableClassName, fieldSpec.name)
+                    .addStatement("this.$L = $T.of($L)", fieldSpec.name, optionalNullableClassName, fieldSpec.name)
+                    .addStatement("return this")
+                    .build());
+
+            // Add convenience setter for Optional: .city(Optional.of("city")) -> OptionalNullable conversion
+            interfaceSetterConsumer.accept(createOptionalToOptionalNullableSetter(
+                            enrichedObjectProperty, propertyTypeName, finalStageClassName)
+                    .addModifiers(Modifier.ABSTRACT)
+                    .build());
+            implSetterConsumer.accept(createOptionalToOptionalNullableSetter(
+                            enrichedObjectProperty, propertyTypeName, finalStageClassName, implsOverride)
+                    .beginControlFlow("if ($L.isPresent())", fieldSpec.name)
+                    .addStatement(
+                            "this.$L = $T.of($L.get())", fieldSpec.name, optionalNullableClassName, fieldSpec.name)
+                    .endControlFlow()
+                    .beginControlFlow("else")
+                    .addStatement("this.$L = $T.absent()", fieldSpec.name, optionalNullableClassName)
+                    .endControlFlow()
+                    .addStatement("return this")
+                    .build());
+
+            // Add convenience setter for Nullable: .city(Nullable.of("city")) -> OptionalNullable conversion
+            interfaceSetterConsumer.accept(createNullableToOptionalNullableSetter(
+                            enrichedObjectProperty, nullableClassName, propertyTypeName, finalStageClassName)
+                    .addModifiers(Modifier.ABSTRACT)
+                    .build());
+            implSetterConsumer.accept(createNullableToOptionalNullableSetter(
+                            enrichedObjectProperty,
+                            nullableClassName,
+                            propertyTypeName,
+                            finalStageClassName,
+                            implsOverride)
+                    .beginControlFlow("if ($L.isNull())", fieldSpec.name)
+                    .addStatement("this.$L = $T.ofNull()", fieldSpec.name, optionalNullableClassName)
+                    .endControlFlow()
+                    .beginControlFlow("else if ($N.isEmpty())", fieldSpec.name)
+                    .addStatement("this.$L = $T.absent()", fieldSpec.name, optionalNullableClassName)
+                    .endControlFlow()
+                    .beginControlFlow("else")
+                    .addStatement(
+                            "this.$L = $T.of($L.get())", fieldSpec.name, optionalNullableClassName, fieldSpec.name)
+                    .endControlFlow()
                     .addStatement("return this")
                     .build());
         } else if (isEqual(propertyTypeName, ClassName.get(Optional.class))) {
@@ -964,9 +1011,11 @@ public final class BuilderGenerator {
                 .returns(returnClass);
 
         ParameterSpec.Builder paramBuilder = ParameterSpec.builder(poetTypeName, fieldSpec.name);
-        if (enrichedProperty.enrichedObjectProperty.nullable()
-                || enrichedProperty.enrichedObjectProperty.aliasOfNullable()) {
-            paramBuilder.addAnnotation(nullableClassName);
+        if ((enrichedProperty.enrichedObjectProperty.nullable()
+                        || enrichedProperty.enrichedObjectProperty.aliasOfNullable())
+                && enrichedProperty.enrichedObjectProperty.useNullableAnnotation()
+                && !poetTypeName.isPrimitive()) {
+            paramBuilder.addAnnotation(com.fern.java.utils.NullableAnnotationUtils.getNullableAnnotation());
         }
         interfaceSetter.addParameter(paramBuilder.build());
 
@@ -1087,6 +1136,7 @@ public final class BuilderGenerator {
         if (poetTypeName instanceof ParameterizedTypeName) {
             ParameterizedTypeName poetParameterizedTypeName = (ParameterizedTypeName) poetTypeName;
             return !isEqual(poetParameterizedTypeName, ClassName.get(Optional.class))
+                    && !isOptionalNullable(poetParameterizedTypeName)
                     && !isEqual(poetParameterizedTypeName, ClassName.get(Map.class))
                     && !isEqual(poetParameterizedTypeName, ClassName.get(List.class))
                     && !isEqual(poetParameterizedTypeName, ClassName.get(Set.class));
@@ -1097,6 +1147,16 @@ public final class BuilderGenerator {
     @SuppressWarnings("checkstyle:ParameterName")
     private boolean isEqual(ParameterizedTypeName a, ClassName b) {
         return a.rawType.compareTo(b) == 0;
+    }
+
+    private boolean isOptionalNullable(ParameterizedTypeName typeName) {
+        // OptionalNullable is in the same package as Nullable
+        ClassName optionalNullableClassName = ClassName.get(nullableClassName.packageName(), "OptionalNullable");
+        return isEqual(typeName, optionalNullableClassName);
+    }
+
+    private ClassName getOptionalNullableClassName() {
+        return ClassName.get(nullableClassName.packageName(), "OptionalNullable");
     }
 
     private static <T> List<T> reverse(List<T> val) {
@@ -1154,6 +1214,91 @@ public final class BuilderGenerator {
         static ImmutableBuilderImplBuilder.Builder builder() {
             return ImmutableBuilderImplBuilder.builder();
         }
+    }
+
+    private static MethodSpec.Builder createOptionalNullableItemTypeNameSetter(
+            EnrichedObjectPropertyWithField enrichedObjectProperty,
+            ParameterizedTypeName optionalNullableTypeName,
+            ClassName returnClass) {
+        return createOptionalNullableItemTypeNameSetter(
+                enrichedObjectProperty, optionalNullableTypeName, returnClass, false);
+    }
+
+    private static MethodSpec.Builder createOptionalNullableItemTypeNameSetter(
+            EnrichedObjectPropertyWithField enrichedObjectProperty,
+            ParameterizedTypeName optionalNullableTypeName,
+            ClassName returnClass,
+            boolean isOverridden) {
+        String fieldName = enrichedObjectProperty.fieldSpec.name;
+        TypeName itemTypeName = getOnlyTypeArgumentOrThrow(optionalNullableTypeName);
+        MethodSpec.Builder setter = defaultSetter(fieldName, returnClass).addParameter(itemTypeName, fieldName);
+        if (isOverridden) {
+            setter.addAnnotation(ClassName.get("", "java.lang.Override"));
+        }
+        if (isOverridden && enrichedObjectProperty.enrichedObjectProperty.docs().isPresent()) {
+            setter.addJavadoc(JavaDocUtils.render(
+                    enrichedObjectProperty.enrichedObjectProperty.docs().get()));
+            setter.addJavadoc(JavaDocUtils.getReturnDocs(CHAINED_RETURN_DOCS));
+        }
+        return setter;
+    }
+
+    private static MethodSpec.Builder createOptionalToOptionalNullableSetter(
+            EnrichedObjectPropertyWithField enrichedObjectProperty,
+            ParameterizedTypeName optionalNullableTypeName,
+            ClassName returnClass) {
+        return createOptionalToOptionalNullableSetter(
+                enrichedObjectProperty, optionalNullableTypeName, returnClass, false);
+    }
+
+    private static MethodSpec.Builder createOptionalToOptionalNullableSetter(
+            EnrichedObjectPropertyWithField enrichedObjectProperty,
+            ParameterizedTypeName optionalNullableTypeName,
+            ClassName returnClass,
+            boolean isOverridden) {
+        String fieldName = enrichedObjectProperty.fieldSpec.name;
+        TypeName itemTypeName = getOnlyTypeArgumentOrThrow(optionalNullableTypeName);
+        ParameterizedTypeName optionalTypeName = ParameterizedTypeName.get(ClassName.get(Optional.class), itemTypeName);
+        MethodSpec.Builder setter = defaultSetter(fieldName, returnClass).addParameter(optionalTypeName, fieldName);
+        if (isOverridden) {
+            setter.addAnnotation(ClassName.get("", "java.lang.Override"));
+        }
+        if (isOverridden && enrichedObjectProperty.enrichedObjectProperty.docs().isPresent()) {
+            setter.addJavadoc(JavaDocUtils.render(
+                    enrichedObjectProperty.enrichedObjectProperty.docs().get()));
+            setter.addJavadoc(JavaDocUtils.getReturnDocs(CHAINED_RETURN_DOCS));
+        }
+        return setter;
+    }
+
+    private static MethodSpec.Builder createNullableToOptionalNullableSetter(
+            EnrichedObjectPropertyWithField enrichedObjectProperty,
+            ClassName nullableClassName,
+            ParameterizedTypeName optionalNullableTypeName,
+            ClassName returnClass) {
+        return createNullableToOptionalNullableSetter(
+                enrichedObjectProperty, nullableClassName, optionalNullableTypeName, returnClass, false);
+    }
+
+    private static MethodSpec.Builder createNullableToOptionalNullableSetter(
+            EnrichedObjectPropertyWithField enrichedObjectProperty,
+            ClassName nullableClassName,
+            ParameterizedTypeName optionalNullableTypeName,
+            ClassName returnClass,
+            boolean isOverridden) {
+        String fieldName = enrichedObjectProperty.fieldSpec.name;
+        TypeName itemTypeName = getOnlyTypeArgumentOrThrow(optionalNullableTypeName);
+        ParameterizedTypeName nullableTypeName = ParameterizedTypeName.get(nullableClassName, itemTypeName);
+        MethodSpec.Builder setter = defaultSetter(fieldName, returnClass).addParameter(nullableTypeName, fieldName);
+        if (isOverridden) {
+            setter.addAnnotation(ClassName.get("", "java.lang.Override"));
+        }
+        if (isOverridden && enrichedObjectProperty.enrichedObjectProperty.docs().isPresent()) {
+            setter.addJavadoc(JavaDocUtils.render(
+                    enrichedObjectProperty.enrichedObjectProperty.docs().get()));
+            setter.addJavadoc(JavaDocUtils.getReturnDocs(CHAINED_RETURN_DOCS));
+        }
+        return setter;
     }
 
     private static Optional<EnrichedObjectPropertyWithField> maybeGetEnrichedObjectPropertyWithField(

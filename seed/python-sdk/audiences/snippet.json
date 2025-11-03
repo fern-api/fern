@@ -9,8 +9,8 @@
                 "identifier_override": "endpoint_folder-a/service.getDirectThread"
             },
             "snippet": {
-                "sync_client": "from seed import SeedAudiences\nfrom seed.environment import SeedAudiencesEnvironment\n\nclient = SeedAudiences(\n    environment=SeedAudiencesEnvironment.ENVIRONMENT_A,\n)\nclient.folder_a.service.get_direct_thread()\n",
-                "async_client": "import asyncio\n\nfrom seed import AsyncSeedAudiences\nfrom seed.environment import SeedAudiencesEnvironment\n\nclient = AsyncSeedAudiences(\n    environment=SeedAudiencesEnvironment.ENVIRONMENT_A,\n)\n\n\nasync def main() -> None:\n    await client.folder_a.service.get_direct_thread()\n\n\nasyncio.run(main())\n",
+                "sync_client": "from seed import SeedAudiences\nfrom seed.environment import SeedAudiencesEnvironment\n\nclient = SeedAudiences(\n    environment=SeedAudiencesEnvironment.ENVIRONMENT_A,\n)\nclient.folder_a.service.get_direct_thread(\n    ids=\"ids\",\n    tags=\"tags\",\n)\n",
+                "async_client": "import asyncio\n\nfrom seed import AsyncSeedAudiences\nfrom seed.environment import SeedAudiencesEnvironment\n\nclient = AsyncSeedAudiences(\n    environment=SeedAudiencesEnvironment.ENVIRONMENT_A,\n)\n\n\nasync def main() -> None:\n    await client.folder_a.service.get_direct_thread(\n        ids=\"ids\",\n        tags=\"tags\",\n    )\n\n\nasyncio.run(main())\n",
                 "type": "python"
             }
         },

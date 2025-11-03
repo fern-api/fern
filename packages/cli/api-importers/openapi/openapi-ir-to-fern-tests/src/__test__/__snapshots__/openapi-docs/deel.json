@@ -7708,63 +7708,6 @@
               "openapi": "../openapi.yml",
             },
           },
-          "ContractToCreateOngoingTimeBasedCompensationDetails": {
-            "docs": undefined,
-            "inline": true,
-            "properties": {
-              "amount": {
-                "docs": "Amount to be paid. This field can be excluded when creating a Pay-as-you-go task-based or Milestone contracts.",
-                "type": "optional<double>",
-              },
-              "currency_code": "CurrencyCodeRequired",
-              "cycle_end": {
-                "docs": "Date invoice cycle ends.",
-                "type": "double",
-                "validation": {
-                  "exclusiveMax": undefined,
-                  "exclusiveMin": undefined,
-                  "max": 31,
-                  "min": 1,
-                  "multipleOf": undefined,
-                },
-              },
-              "cycle_end_type": "WorkStatementCycleEndTypeEnum",
-              "first_payment": {
-                "default": 0,
-                "docs": "First payment amount.",
-                "type": "optional<double>",
-                "validation": {
-                  "exclusiveMax": undefined,
-                  "exclusiveMin": undefined,
-                  "max": undefined,
-                  "min": 0,
-                  "multipleOf": undefined,
-                },
-              },
-              "first_payment_date": "optional<DateString>",
-              "frequency": "WorkStatementCycleScaleEnum",
-              "notice_period": "optional<NoticePeriod>",
-              "pay_before_weekends": {
-                "docs": "If the payment due is on a weekend, pay on Friday.",
-                "type": "optional<boolean>",
-              },
-              "payment_due_days": {
-                "type": "double",
-                "validation": {
-                  "exclusiveMax": undefined,
-                  "exclusiveMin": undefined,
-                  "max": 90,
-                  "min": 0,
-                  "multipleOf": undefined,
-                },
-              },
-              "payment_due_type": "WorkStatementPaymentDueTypeEnum",
-              "scale": "WorkStatementScaleEnum",
-            },
-            "source": {
-              "openapi": "../openapi.yml",
-            },
-          },
           "ContractToCreatePayAsYouGoTimeBased": {
             "docs": undefined,
             "extends": [
@@ -7774,63 +7717,6 @@
             "properties": {
               "compensation_details": "ContractToCreatePayAsYouGoTimeBasedCompensationDetails",
               "type": "literal<"pay_as_you_go_time_based">",
-            },
-            "source": {
-              "openapi": "../openapi.yml",
-            },
-          },
-          "ContractToCreatePayAsYouGoTimeBasedCompensationDetails": {
-            "docs": undefined,
-            "inline": true,
-            "properties": {
-              "amount": {
-                "docs": "Amount to be paid. This field can be excluded when creating a Pay-as-you-go task-based or Milestone contracts.",
-                "type": "optional<double>",
-              },
-              "currency_code": "CurrencyCodeRequired",
-              "cycle_end": {
-                "docs": "Date invoice cycle ends.",
-                "type": "double",
-                "validation": {
-                  "exclusiveMax": undefined,
-                  "exclusiveMin": undefined,
-                  "max": 31,
-                  "min": 1,
-                  "multipleOf": undefined,
-                },
-              },
-              "cycle_end_type": "WorkStatementCycleEndTypeEnum",
-              "first_payment": {
-                "default": 0,
-                "docs": "First payment amount.",
-                "type": "optional<double>",
-                "validation": {
-                  "exclusiveMax": undefined,
-                  "exclusiveMin": undefined,
-                  "max": undefined,
-                  "min": 0,
-                  "multipleOf": undefined,
-                },
-              },
-              "first_payment_date": "optional<DateString>",
-              "frequency": "WorkStatementCycleScaleEnum",
-              "notice_period": "optional<NoticePeriod>",
-              "pay_before_weekends": {
-                "docs": "If the payment due is on a weekend, pay on Friday.",
-                "type": "optional<boolean>",
-              },
-              "payment_due_days": {
-                "type": "double",
-                "validation": {
-                  "exclusiveMax": undefined,
-                  "exclusiveMin": undefined,
-                  "max": 90,
-                  "min": 0,
-                  "multipleOf": undefined,
-                },
-              },
-              "payment_due_type": "WorkStatementPaymentDueTypeEnum",
-              "scale": "WorkStatementScaleEnum",
             },
             "source": {
               "openapi": "../openapi.yml",
@@ -8215,18 +8101,6 @@
             "properties": {
               "data": "CreateTimeoff",
             },
-            "source": {
-              "openapi": "../openapi.yml",
-            },
-          },
-          "CreateTimeoffType": {
-            "docs": "Time off type.",
-            "enum": [
-              "VACATION",
-              "SICK_LEAVE",
-              "OTHER",
-            ],
-            "inline": true,
             "source": {
               "openapi": "../openapi.yml",
             },
@@ -12974,22 +12848,6 @@
               "openapi": "../openapi.yml",
             },
           },
-          "WorkStatementScaleEnumOptional": {
-            "docs": "Defines the scale at which the amount is paid. For example, enter 'hourly' to define the amount per hour. This field can be excluded when creating a Pay-as-you-go task-based or Milestone contracts.",
-            "enum": [
-              "hourly",
-              "daily",
-              "weekly",
-              "monthly",
-              "biweekly",
-              "semimonthly",
-              "custom",
-            ],
-            "inline": undefined,
-            "source": {
-              "openapi": "../openapi.yml",
-            },
-          },
           "WorkerEmailType": {
             "docs": "Worker's email address.",
             "type": "optional<string>",
@@ -13624,43 +13482,6 @@
       - ContractToCreateOngoingTimeBased
     source:
       openapi: ../openapi.yml
-  ContractToCreatePayAsYouGoTimeBasedCompensationDetails:
-    properties:
-      amount:
-        type: optional<double>
-        docs: >-
-          Amount to be paid. This field can be excluded when creating a
-          Pay-as-you-go task-based or Milestone contracts.
-      currency_code: CurrencyCodeRequired
-      frequency: WorkStatementCycleScaleEnum
-      cycle_end:
-        type: double
-        docs: Date invoice cycle ends.
-        validation:
-          min: 1
-          max: 31
-      cycle_end_type: WorkStatementCycleEndTypeEnum
-      payment_due_type: WorkStatementPaymentDueTypeEnum
-      payment_due_days:
-        type: double
-        validation:
-          min: 0
-          max: 90
-      pay_before_weekends:
-        type: optional<boolean>
-        docs: If the payment due is on a weekend, pay on Friday.
-      first_payment_date: optional<DateString>
-      first_payment:
-        type: optional<double>
-        docs: First payment amount.
-        default: 0
-        validation:
-          min: 0
-      notice_period: optional<NoticePeriod>
-      scale: WorkStatementScaleEnum
-    source:
-      openapi: ../openapi.yml
-    inline: true
   ContractToCreatePayAsYouGoTimeBased:
     properties:
       type: literal<"pay_as_you_go_time_based">
@@ -13685,43 +13506,6 @@
       - ContractToCreateShared
     source:
       openapi: ../openapi.yml
-  ContractToCreateOngoingTimeBasedCompensationDetails:
-    properties:
-      amount:
-        type: optional<double>
-        docs: >-
-          Amount to be paid. This field can be excluded when creating a
-          Pay-as-you-go task-based or Milestone contracts.
-      currency_code: CurrencyCodeRequired
-      frequency: WorkStatementCycleScaleEnum
-      cycle_end:
-        type: double
-        docs: Date invoice cycle ends.
-        validation:
-          min: 1
-          max: 31
-      cycle_end_type: WorkStatementCycleEndTypeEnum
-      payment_due_type: WorkStatementPaymentDueTypeEnum
-      payment_due_days:
-        type: double
-        validation:
-          min: 0
-          max: 90
-      pay_before_weekends:
-        type: optional<boolean>
-        docs: If the payment due is on a weekend, pay on Friday.
-      first_payment_date: optional<DateString>
-      first_payment:
-        type: optional<double>
-        docs: First payment amount.
-        default: 0
-        validation:
-          min: 0
-      notice_period: optional<NoticePeriod>
-      scale: WorkStatementScaleEnum
-    source:
-      openapi: ../openapi.yml
-    inline: true
   ContractToCreateOngoingTimeBased:
     properties:
       type: literal<"ongoing_time_based">
@@ -13928,21 +13712,6 @@
         docs: Message for the worker.
         validation:
           minLength: 1
-    source:
-      openapi: ../openapi.yml
-  WorkStatementScaleEnumOptional:
-    enum:
-      - hourly
-      - daily
-      - weekly
-      - monthly
-      - biweekly
-      - semimonthly
-      - custom
-    docs: >-
-      Defines the scale at which the amount is paid. For example, enter 'hourly'
-      to define the amount per hour. This field can be excluded when creating a
-      Pay-as-you-go task-based or Milestone contracts.
     source:
       openapi: ../openapi.yml
   WorkStatementScaleEnum:
@@ -16611,15 +16380,6 @@
   CreateTimeoffContainer:
     properties:
       data: CreateTimeoff
-    source:
-      openapi: ../openapi.yml
-  CreateTimeoffType:
-    enum:
-      - VACATION
-      - SICK_LEAVE
-      - OTHER
-    docs: Time off type.
-    inline: true
     source:
       openapi: ../openapi.yml
   CreateTimeoff:
@@ -33717,9 +33477,12 @@ types:
       "audiences": [
         "external",
       ],
-      "auth": "BearerAuthScheme",
+      "auth": "deelToken",
       "auth-schemes": {
-        "BearerAuthScheme": {
+        "deelToken": {
+          "scheme": "bearer",
+        },
+        "oauth2": {
           "scheme": "bearer",
         },
       },
@@ -33742,9 +33505,11 @@ environments:
   Default: https://api.letsdeel.com/rest/v1
 default-environment: Default
 auth-schemes:
-  BearerAuthScheme:
+  deelToken:
     scheme: bearer
-auth: BearerAuthScheme
+  oauth2:
+    scheme: bearer
+auth: deelToken
 audiences:
   - external
 ",

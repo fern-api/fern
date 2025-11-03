@@ -1,5 +1,21 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
 
+- version: 0.21.0
+  changelogEntry:
+    - type: feat
+      summary: |
+        Added generator config option `nullableAsOptional` (defaults to `false`) to decode nullable fields as `Optional` instead of `Nullable`.
+  createdAt: "2025-10-31"
+  irVersion: 59
+
+- version: 0.20.1
+  changelogEntry:
+    - type: fix
+      summary: |
+        Integrates dynamic snippets with the graph-based symbol registry for scope-aware type resolution.
+  createdAt: "2025-10-29"
+  irVersion: 59
+
 - version: 0.20.0
   changelogEntry:
     - type: feat

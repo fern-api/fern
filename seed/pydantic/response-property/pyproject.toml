@@ -30,7 +30,7 @@ packages = [
     { include = "seed/response_property", from = "src"}
 ]
 
-[project.urls]
+[tool.poetry.urls]
 Repository = 'https://github.com/response-property/fern'
 
 [tool.poetry.dependencies]

@@ -1,5 +1,4 @@
 using SeedUndiscriminatedUnionWithResponseProperty;
-using System.Threading.Tasks;
 
 namespace Usage;
 

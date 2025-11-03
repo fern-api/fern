@@ -41,7 +41,7 @@ func (c *Client) ListWithCursorPagination(
 	ctx context.Context,
 	request *inlineusers.ListUsersCursorPaginationRequest,
 	opts ...option.RequestOption,
-) (*core.Page[*inlineusers.User], error) {
+) (*core.Page[*string, *inlineusers.User], error) {
 	options := core.NewRequestOptions(opts...)
 	baseURL := internal.ResolveBaseURL(
 		options.BaseURL,
@@ -57,7 +57,7 @@ func (c *Client) ListWithCursorPagination(
 		c.options.ToHeader(),
 		options.ToHeader(),
 	)
-	prepareCall := func(pageRequest *internal.PageRequest[*string]) *internal.CallParams {
+	prepareCall := func(pageRequest *core.PageRequest[*string]) *internal.CallParams {
 		if pageRequest.Cursor != nil {
 			queryParams.Set("starting_after", *pageRequest.Cursor)
 		}
@@ -76,11 +76,11 @@ func (c *Client) ListWithCursorPagination(
 			Response:        pageRequest.Response,
 		}
 	}
-	readPageResponse := func(response *inlineusers.ListUsersPaginationResponse) *internal.PageResponse[*string, *inlineusers.User] {
+	readPageResponse := func(response *inlineusers.ListUsersPaginationResponse) *core.PageResponse[*string, *inlineusers.User] {
 		var zeroValue string
 		next := response.GetPage().GetNext().GetStartingAfter()
 		results := response.GetData().GetUsers()
-		return &internal.PageResponse[*string, *inlineusers.User]{
+		return &core.PageResponse[*string, *inlineusers.User]{
 			Next:    &next,
 			Results: results,
 			Done:    next == zeroValue,
@@ -98,7 +98,7 @@ func (c *Client) ListWithMixedTypeCursorPagination(
 	ctx context.Context,
 	request *inlineusers.ListUsersMixedTypeCursorPaginationRequest,
 	opts ...option.RequestOption,
-) (*core.Page[*inlineusers.User], error) {
+) (*core.Page[*string, *inlineusers.User], error) {
 	options := core.NewRequestOptions(opts...)
 	baseURL := internal.ResolveBaseURL(
 		options.BaseURL,
@@ -114,7 +114,7 @@ func (c *Client) ListWithMixedTypeCursorPagination(
 		c.options.ToHeader(),
 		options.ToHeader(),
 	)
-	prepareCall := func(pageRequest *internal.PageRequest[*string]) *internal.CallParams {
+	prepareCall := func(pageRequest *core.PageRequest[*string]) *internal.CallParams {
 		if pageRequest.Cursor != nil {
 			queryParams.Set("cursor", *pageRequest.Cursor)
 		}
@@ -133,11 +133,11 @@ func (c *Client) ListWithMixedTypeCursorPagination(
 			Response:        pageRequest.Response,
 		}
 	}
-	readPageResponse := func(response *inlineusers.ListUsersMixedTypePaginationResponse) *internal.PageResponse[*string, *inlineusers.User] {
+	readPageResponse := func(response *inlineusers.ListUsersMixedTypePaginationResponse) *core.PageResponse[*string, *inlineusers.User] {
 		var zeroValue string
 		next := response.GetNext()
 		results := response.GetData().GetUsers()
-		return &internal.PageResponse[*string, *inlineusers.User]{
+		return &core.PageResponse[*string, *inlineusers.User]{
 			Next:    &next,
 			Results: results,
 			Done:    next == zeroValue,
@@ -171,7 +171,7 @@ func (c *Client) ListWithOffsetPagination(
 	ctx context.Context,
 	request *inlineusers.ListUsersOffsetPaginationRequest,
 	opts ...option.RequestOption,
-) (*core.Page[*inlineusers.User], error) {
+) (*core.Page[*int, *inlineusers.User], error) {
 	options := core.NewRequestOptions(opts...)
 	baseURL := internal.ResolveBaseURL(
 		options.BaseURL,
@@ -187,7 +187,7 @@ func (c *Client) ListWithOffsetPagination(
 		c.options.ToHeader(),
 		options.ToHeader(),
 	)
-	prepareCall := func(pageRequest *internal.PageRequest[*int]) *internal.CallParams {
+	prepareCall := func(pageRequest *core.PageRequest[*int]) *internal.CallParams {
 		if pageRequest.Cursor != nil {
 			queryParams.Set("page", fmt.Sprintf("%v", *pageRequest.Cursor))
 		}
@@ -214,10 +214,10 @@ func (c *Client) ListWithOffsetPagination(
 		}
 	}
 
-	readPageResponse := func(response *inlineusers.ListUsersPaginationResponse) *internal.PageResponse[*int, *inlineusers.User] {
+	readPageResponse := func(response *inlineusers.ListUsersPaginationResponse) *core.PageResponse[*int, *inlineusers.User] {
 		next += 1
 		results := response.GetData().GetUsers()
-		return &internal.PageResponse[*int, *inlineusers.User]{
+		return &core.PageResponse[*int, *inlineusers.User]{
 			Next:    &next,
 			Results: results,
 		}
@@ -234,7 +234,7 @@ func (c *Client) ListWithDoubleOffsetPagination(
 	ctx context.Context,
 	request *inlineusers.ListUsersDoubleOffsetPaginationRequest,
 	opts ...option.RequestOption,
-) (*core.Page[*inlineusers.User], error) {
+) (*core.Page[*float64, *inlineusers.User], error) {
 	options := core.NewRequestOptions(opts...)
 	baseURL := internal.ResolveBaseURL(
 		options.BaseURL,
@@ -250,7 +250,7 @@ func (c *Client) ListWithDoubleOffsetPagination(
 		c.options.ToHeader(),
 		options.ToHeader(),
 	)
-	prepareCall := func(pageRequest *internal.PageRequest[*float64]) *internal.CallParams {
+	prepareCall := func(pageRequest *core.PageRequest[*float64]) *internal.CallParams {
 		if pageRequest.Cursor != nil {
 			queryParams.Set("page", fmt.Sprintf("%v", *pageRequest.Cursor))
 		}
@@ -272,15 +272,15 @@ func (c *Client) ListWithDoubleOffsetPagination(
 	var next float64 = 1
 	if queryParams.Has("page") {
 		var err error
-		if next, err = strconv.Atoi(queryParams.Get("page")); err != nil {
+		if next, err = strconv.ParseFloat(queryParams.Get("page"), 64); err != nil {
 			return nil, err
 		}
 	}
 
-	readPageResponse := func(response *inlineusers.ListUsersPaginationResponse) *internal.PageResponse[*float64, *inlineusers.User] {
+	readPageResponse := func(response *inlineusers.ListUsersPaginationResponse) *core.PageResponse[*float64, *inlineusers.User] {
 		next += 1
 		results := response.GetData().GetUsers()
-		return &internal.PageResponse[*float64, *inlineusers.User]{
+		return &core.PageResponse[*float64, *inlineusers.User]{
 			Next:    &next,
 			Results: results,
 		}
@@ -313,7 +313,7 @@ func (c *Client) ListWithOffsetStepPagination(
 	ctx context.Context,
 	request *inlineusers.ListUsersOffsetStepPaginationRequest,
 	opts ...option.RequestOption,
-) (*core.Page[*inlineusers.User], error) {
+) (*core.Page[*int, *inlineusers.User], error) {
 	options := core.NewRequestOptions(opts...)
 	baseURL := internal.ResolveBaseURL(
 		options.BaseURL,
@@ -329,7 +329,7 @@ func (c *Client) ListWithOffsetStepPagination(
 		c.options.ToHeader(),
 		options.ToHeader(),
 	)
-	prepareCall := func(pageRequest *internal.PageRequest[*int]) *internal.CallParams {
+	prepareCall := func(pageRequest *core.PageRequest[*int]) *internal.CallParams {
 		if pageRequest.Cursor != nil {
 			queryParams.Set("page", fmt.Sprintf("%v", *pageRequest.Cursor))
 		}
@@ -356,10 +356,10 @@ func (c *Client) ListWithOffsetStepPagination(
 		}
 	}
 
-	readPageResponse := func(response *inlineusers.ListUsersPaginationResponse) *internal.PageResponse[*int, *inlineusers.User] {
+	readPageResponse := func(response *inlineusers.ListUsersPaginationResponse) *core.PageResponse[*int, *inlineusers.User] {
 		next += 1
 		results := response.GetData().GetUsers()
-		return &internal.PageResponse[*int, *inlineusers.User]{
+		return &core.PageResponse[*int, *inlineusers.User]{
 			Next:    &next,
 			Results: results,
 		}
@@ -376,7 +376,7 @@ func (c *Client) ListWithOffsetPaginationHasNextPage(
 	ctx context.Context,
 	request *inlineusers.ListWithOffsetPaginationHasNextPageRequest,
 	opts ...option.RequestOption,
-) (*core.Page[*inlineusers.User], error) {
+) (*core.Page[*int, *inlineusers.User], error) {
 	options := core.NewRequestOptions(opts...)
 	baseURL := internal.ResolveBaseURL(
 		options.BaseURL,
@@ -392,7 +392,7 @@ func (c *Client) ListWithOffsetPaginationHasNextPage(
 		c.options.ToHeader(),
 		options.ToHeader(),
 	)
-	prepareCall := func(pageRequest *internal.PageRequest[*int]) *internal.CallParams {
+	prepareCall := func(pageRequest *core.PageRequest[*int]) *internal.CallParams {
 		if pageRequest.Cursor != nil {
 			queryParams.Set("page", fmt.Sprintf("%v", *pageRequest.Cursor))
 		}
@@ -419,10 +419,10 @@ func (c *Client) ListWithOffsetPaginationHasNextPage(
 		}
 	}
 
-	readPageResponse := func(response *inlineusers.ListUsersPaginationResponse) *internal.PageResponse[*int, *inlineusers.User] {
+	readPageResponse := func(response *inlineusers.ListUsersPaginationResponse) *core.PageResponse[*int, *inlineusers.User] {
 		next += 1
 		results := response.GetData().GetUsers()
-		return &internal.PageResponse[*int, *inlineusers.User]{
+		return &core.PageResponse[*int, *inlineusers.User]{
 			Next:    &next,
 			Results: results,
 		}
@@ -439,7 +439,7 @@ func (c *Client) ListWithExtendedResults(
 	ctx context.Context,
 	request *inlineusers.ListUsersExtendedRequest,
 	opts ...option.RequestOption,
-) (*core.Page[*inlineusers.User], error) {
+) (*core.Page[*uuid.UUID, *inlineusers.User], error) {
 	options := core.NewRequestOptions(opts...)
 	baseURL := internal.ResolveBaseURL(
 		options.BaseURL,
@@ -455,7 +455,7 @@ func (c *Client) ListWithExtendedResults(
 		c.options.ToHeader(),
 		options.ToHeader(),
 	)
-	prepareCall := func(pageRequest *internal.PageRequest[*uuid.UUID]) *internal.CallParams {
+	prepareCall := func(pageRequest *core.PageRequest[*uuid.UUID]) *internal.CallParams {
 		if pageRequest.Cursor != nil {
 			queryParams.Set("cursor", fmt.Sprintf("%v", *pageRequest.Cursor))
 		}
@@ -474,11 +474,11 @@ func (c *Client) ListWithExtendedResults(
 			Response:        pageRequest.Response,
 		}
 	}
-	readPageResponse := func(response *inlineusers.ListUsersExtendedResponse) *internal.PageResponse[*uuid.UUID, *inlineusers.User] {
+	readPageResponse := func(response *inlineusers.ListUsersExtendedResponse) *core.PageResponse[*uuid.UUID, *inlineusers.User] {
 		var zeroValue *uuid.UUID
 		next := response.GetNext()
 		results := response.GetData().GetUsers()
-		return &internal.PageResponse[*uuid.UUID, *inlineusers.User]{
+		return &core.PageResponse[*uuid.UUID, *inlineusers.User]{
 			Next:    next,
 			Results: results,
 			Done:    next == zeroValue,
@@ -496,7 +496,7 @@ func (c *Client) ListWithExtendedResultsAndOptionalData(
 	ctx context.Context,
 	request *inlineusers.ListUsersExtendedRequestForOptionalData,
 	opts ...option.RequestOption,
-) (*core.Page[*inlineusers.User], error) {
+) (*core.Page[*uuid.UUID, *inlineusers.User], error) {
 	options := core.NewRequestOptions(opts...)
 	baseURL := internal.ResolveBaseURL(
 		options.BaseURL,
@@ -512,7 +512,7 @@ func (c *Client) ListWithExtendedResultsAndOptionalData(
 		c.options.ToHeader(),
 		options.ToHeader(),
 	)
-	prepareCall := func(pageRequest *internal.PageRequest[*uuid.UUID]) *internal.CallParams {
+	prepareCall := func(pageRequest *core.PageRequest[*uuid.UUID]) *internal.CallParams {
 		if pageRequest.Cursor != nil {
 			queryParams.Set("cursor", fmt.Sprintf("%v", *pageRequest.Cursor))
 		}
@@ -531,11 +531,11 @@ func (c *Client) ListWithExtendedResultsAndOptionalData(
 			Response:        pageRequest.Response,
 		}
 	}
-	readPageResponse := func(response *inlineusers.ListUsersExtendedOptionalListResponse) *internal.PageResponse[*uuid.UUID, *inlineusers.User] {
+	readPageResponse := func(response *inlineusers.ListUsersExtendedOptionalListResponse) *core.PageResponse[*uuid.UUID, *inlineusers.User] {
 		var zeroValue *uuid.UUID
 		next := response.GetNext()
 		results := response.GetData().GetUsers()
-		return &internal.PageResponse[*uuid.UUID, *inlineusers.User]{
+		return &core.PageResponse[*uuid.UUID, *inlineusers.User]{
 			Next:    next,
 			Results: results,
 			Done:    next == zeroValue,
@@ -553,7 +553,7 @@ func (c *Client) ListUsernames(
 	ctx context.Context,
 	request *inlineusers.ListUsernamesRequest,
 	opts ...option.RequestOption,
-) (*core.Page[string], error) {
+) (*core.Page[*string, string], error) {
 	options := core.NewRequestOptions(opts...)
 	baseURL := internal.ResolveBaseURL(
 		options.BaseURL,
@@ -569,7 +569,7 @@ func (c *Client) ListUsernames(
 		c.options.ToHeader(),
 		options.ToHeader(),
 	)
-	prepareCall := func(pageRequest *internal.PageRequest[*string]) *internal.CallParams {
+	prepareCall := func(pageRequest *core.PageRequest[*string]) *internal.CallParams {
 		if pageRequest.Cursor != nil {
 			queryParams.Set("starting_after", *pageRequest.Cursor)
 		}
@@ -588,14 +588,14 @@ func (c *Client) ListUsernames(
 			Response:        pageRequest.Response,
 		}
 	}
-	readPageResponse := func(response *fern.UsernameCursor) *internal.PageResponse[*string, string] {
+	readPageResponse := func(response *fern.UsernameCursor) *core.PageResponse[*string, string] {
 		var zeroValue *string
 		var next *string
 		if response.Cursor != nil {
 			next = response.Cursor.After
 		}
 		results := response.GetCursor().GetData()
-		return &internal.PageResponse[*string, string]{
+		return &core.PageResponse[*string, string]{
 			Next:    next,
 			Results: results,
 			Done:    next == zeroValue,
@@ -613,7 +613,7 @@ func (c *Client) ListWithGlobalConfig(
 	ctx context.Context,
 	request *inlineusers.ListWithGlobalConfigRequest,
 	opts ...option.RequestOption,
-) (*core.Page[string], error) {
+) (*core.Page[*int, string], error) {
 	options := core.NewRequestOptions(opts...)
 	baseURL := internal.ResolveBaseURL(
 		options.BaseURL,
@@ -629,7 +629,7 @@ func (c *Client) ListWithGlobalConfig(
 		c.options.ToHeader(),
 		options.ToHeader(),
 	)
-	prepareCall := func(pageRequest *internal.PageRequest[*int]) *internal.CallParams {
+	prepareCall := func(pageRequest *core.PageRequest[*int]) *internal.CallParams {
 		if pageRequest.Cursor != nil {
 			queryParams.Set("offset", fmt.Sprintf("%v", *pageRequest.Cursor))
 		}
@@ -656,10 +656,10 @@ func (c *Client) ListWithGlobalConfig(
 		}
 	}
 
-	readPageResponse := func(response *inlineusers.UsernameContainer) *internal.PageResponse[*int, string] {
+	readPageResponse := func(response *inlineusers.UsernameContainer) *core.PageResponse[*int, string] {
 		next += 1
 		results := response.GetResults()
-		return &internal.PageResponse[*int, string]{
+		return &core.PageResponse[*int, string]{
 			Next:    &next,
 			Results: results,
 		}

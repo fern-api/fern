@@ -85,6 +85,10 @@ public abstract class AbstractPoetClassNameFactory {
         return ClassName.get(getCorePackage(), "NullableNonemptyFilter");
     }
 
+    public final ClassName getOptionalNullableClassName() {
+        return ClassName.get(getCorePackage(), "OptionalNullable");
+    }
+
     public final ClassName getWrappedAliasClassName() {
         return ClassName.get(getCorePackage(), "WrappedAlias");
     }

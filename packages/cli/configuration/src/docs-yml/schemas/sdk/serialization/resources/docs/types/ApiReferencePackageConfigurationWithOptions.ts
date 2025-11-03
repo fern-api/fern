@@ -5,6 +5,7 @@
 import * as serializers from "../../../index";
 import * as FernDocsConfig from "../../../../api/index";
 import * as core from "../../../../core";
+import { Availability } from "./Availability";
 import { PlaygroundSettings } from "./PlaygroundSettings";
 import { WithPermissions } from "./WithPermissions";
 import { WithFeatureFlags } from "./WithFeatureFlags";
@@ -17,6 +18,7 @@ export const ApiReferencePackageConfigurationWithOptions: core.serialization.Obj
         title: core.serialization.string().optional(),
         summary: core.serialization.string().optional(),
         contents: core.serialization.list(core.serialization.lazy(() => serializers.ApiReferenceLayoutItem)).optional(),
+        availability: Availability.optional(),
         slug: core.serialization.string().optional(),
         icon: core.serialization.string().optional(),
         hidden: core.serialization.boolean().optional(),
@@ -31,6 +33,7 @@ export declare namespace ApiReferencePackageConfigurationWithOptions {
         title?: string | null;
         summary?: string | null;
         contents?: serializers.ApiReferenceLayoutItem.Raw[] | null;
+        availability?: Availability.Raw | null;
         slug?: string | null;
         icon?: string | null;
         hidden?: boolean | null;

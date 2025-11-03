@@ -75,6 +75,7 @@ export class Problem {
             maxRetries: requestOptions?.maxRetries ?? this._options?.maxRetries,
             withCredentials: true,
             abortSignal: requestOptions?.abortSignal,
+            fetchFn: this._options?.fetch,
         });
         if (_response.ok) {
             return {
@@ -148,6 +149,7 @@ export class Problem {
             maxRetries: requestOptions?.maxRetries ?? this._options?.maxRetries,
             withCredentials: true,
             abortSignal: requestOptions?.abortSignal,
+            fetchFn: this._options?.fetch,
         });
         if (_response.ok) {
             return {
@@ -224,6 +226,7 @@ export class Problem {
             maxRetries: requestOptions?.maxRetries ?? this._options?.maxRetries,
             withCredentials: true,
             abortSignal: requestOptions?.abortSignal,
+            fetchFn: this._options?.fetch,
         });
         if (_response.ok) {
             return {
@@ -305,6 +308,7 @@ export class Problem {
             maxRetries: requestOptions?.maxRetries ?? this._options?.maxRetries,
             withCredentials: true,
             abortSignal: requestOptions?.abortSignal,
+            fetchFn: this._options?.fetch,
         });
         if (_response.ok) {
             return {

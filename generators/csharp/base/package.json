@@ -37,7 +37,7 @@
     "@fern-api/csharp-codegen": "workspace:*",
     "@fern-api/fs-utils": "workspace:*",
     "@fern-api/logging-execa": "workspace:*",
-    "@fern-fern/ir-sdk": "^61.0.0",
+    "@fern-fern/ir-sdk": "^61.6.0",
     "@types/lodash-es": "^4.17.12",
     "@types/node": "18.15.3",
     "depcheck": "^1.4.7",

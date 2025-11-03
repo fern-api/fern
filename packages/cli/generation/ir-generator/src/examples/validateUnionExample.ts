@@ -5,6 +5,7 @@ import { getUnionDiscriminant } from "../converters/type-declarations/convertDis
 import { FernFileContext } from "../FernFileContext";
 import { ExampleResolver } from "../resolvers/ExampleResolver";
 import { TypeResolver } from "../resolvers/TypeResolver";
+import { getAllPropertiesForObject } from "../utils/getAllPropertiesForObject";
 import { ExampleViolation } from "./exampleViolation";
 import { getViolationsForMisshapenExample } from "./getViolationsForMisshapenExample";
 import { validateObjectExample } from "./validateObjectExample";
@@ -39,11 +40,7 @@ export function validateUnionExample({
     const { [discriminant]: discriminantValue, ...nonDiscriminantPropertyExamples } = example;
 
     if (discriminantValue == null) {
-        return [
-            {
-                message: `Missing discriminant property ("${discriminant}")`
-            }
-        ];
+        return [{ message: `Missing discriminant property ("${discriminant}")` }];
     }
 
     if (typeof discriminantValue !== "string") {
@@ -55,42 +52,16 @@ export function validateUnionExample({
     if (discriminantValue.startsWith("\\$")) {
         singleUnionTypeDefinition = rawUnion.union[discriminantValue.slice(1)];
     }
-
     if (singleUnionTypeDefinition == null) {
         return [
             {
                 message:
                     `Invalid discriminant property: "${discriminantValue}". Allowed discriminant values:\n` +
                     Object.keys(rawUnion.union)
-                        .map((otherDiscriminantValue) => `  - ${otherDiscriminantValue}`)
+                        .map((value) => `  - ${value}`)
                         .join("\n")
             }
         ];
-    }
-
-    if (rawUnion["base-properties"] != null) {
-        const example = Object.fromEntries(
-            Object.entries(nonDiscriminantPropertyExamples).filter(
-                ([key]) => rawUnion["base-properties"]?.[key] != null
-            )
-        );
-        const basePropertyViolations = validateObjectExample({
-            typeName,
-            typeNameForBreadcrumb: typeName,
-            rawObject: {
-                properties: rawUnion["base-properties"]
-            },
-            file,
-            example,
-            typeResolver,
-            exampleResolver,
-            workspace,
-            breadcrumbs,
-            depth: depth + 1
-        });
-        if (basePropertyViolations.length > 0) {
-            return basePropertyViolations;
-        }
     }
 
     const type =
@@ -105,23 +76,97 @@ export function validateUnionExample({
         file
     });
 
-    // type doesn't exist. this is handled by other rules
     if (resolvedType == null) {
         return [];
     }
 
+    const unionExtends =
+        typeof rawUnion.extends === "undefined"
+            ? []
+            : typeof rawUnion.extends === "string"
+              ? [rawUnion.extends]
+              : rawUnion.extends;
+
+    if (rawUnion["base-properties"] != null || unionExtends.length > 0) {
+        const baseAndExtendsObject: RawSchemas.ObjectSchema = {
+            properties: rawUnion["base-properties"],
+            extends: unionExtends
+        };
+
+        const baseAndExtendsProperties = getAllPropertiesForObject({
+            typeName: undefined,
+            objectDeclaration: baseAndExtendsObject,
+            typeResolver,
+            definitionFile: file.definitionFile,
+            workspace,
+            filepathOfDeclaration: file.relativeFilepath,
+            smartCasing: false
+        });
+
+        const baseAndExtendsPropertyKeys = new Set(baseAndExtendsProperties.map((p) => p.wireKey));
+
+        const baseAndExtendsViolations = validateObjectExample({
+            typeName,
+            typeNameForBreadcrumb: typeName,
+            rawObject: baseAndExtendsObject,
+            file,
+            example: nonDiscriminantPropertyExamples,
+            typeResolver,
+            exampleResolver,
+            workspace,
+            breadcrumbs,
+            depth: depth + 1
+        });
+
+        const relevantViolations = baseAndExtendsViolations.filter((violation) => {
+            const message = violation.message.toLowerCase();
+            if (message.includes("unexpected property")) {
+                const match = message.match(/unexpected property "([^"]+)"/);
+                if (match && match[1] && !baseAndExtendsPropertyKeys.has(match[1])) {
+                    return false;
+                }
+            }
+            return true;
+        });
+
+        if (relevantViolations.length > 0) {
+            return relevantViolations;
+        }
+    }
+
     if (resolvedType._type === "named" && isRawObjectDefinition(resolvedType.declaration)) {
-        const example = Object.fromEntries(
-            Object.entries(nonDiscriminantPropertyExamples).filter(
-                ([key]) => rawUnion["base-properties"]?.[key] == null
-            )
+        const unionMemberExample = Object.fromEntries(
+            Object.entries(nonDiscriminantPropertyExamples).filter(([key]) => {
+                if (rawUnion["base-properties"]?.[key] != null) {
+                    return false;
+                }
+                if (
+                    unionExtends.some((extendedType) => {
+                        const resolvedExtendedType = typeResolver.resolveNamedType({
+                            referenceToNamedType: extendedType,
+                            file
+                        });
+                        if (
+                            resolvedExtendedType?._type === "named" &&
+                            isRawObjectDefinition(resolvedExtendedType.declaration)
+                        ) {
+                            return resolvedExtendedType.declaration.properties?.[key] != null;
+                        }
+                        return false;
+                    })
+                ) {
+                    return false;
+                }
+                return true;
+            })
         );
+
         return validateObjectExample({
             typeName,
             typeNameForBreadcrumb: typeName,
             rawObject: resolvedType.declaration,
             file: resolvedType.file,
-            example,
+            example: unionMemberExample,
             typeResolver,
             exampleResolver,
             workspace,
@@ -135,7 +180,6 @@ export function validateUnionExample({
             ? singleUnionTypeDefinition.key
             : undefined;
 
-    // "key" is not defined, but this will be caught by other rules
     if (singlePropertyKey == null) {
         return [];
     }

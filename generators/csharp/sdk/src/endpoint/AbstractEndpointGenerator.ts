@@ -1,5 +1,5 @@
 import { assertNever } from "@fern-api/core-utils";
-import { ast } from "@fern-api/csharp-codegen";
+import { ast, is, WithGeneration } from "@fern-api/csharp-codegen";
 import { ExampleGenerator } from "@fern-api/fern-csharp-model";
 import { ExampleEndpointCall, ExampleRequestBody, HttpEndpoint, PathParameter, ServiceId } from "@fern-fern/ir-sdk/api";
 import { SdkGeneratorContext } from "../SdkGeneratorContext";
@@ -10,17 +10,14 @@ import { getEndpointReturnType } from "./utils/getEndpointReturnType";
 
 type PagingEndpoint = HttpEndpoint & { pagination: NonNullable<HttpEndpoint["pagination"]> };
 
-export abstract class AbstractEndpointGenerator {
+export abstract class AbstractEndpointGenerator extends WithGeneration {
     private exampleGenerator: ExampleGenerator;
     protected readonly context: SdkGeneratorContext;
 
     public constructor({ context }: { context: SdkGeneratorContext }) {
+        super(context);
         this.context = context;
         this.exampleGenerator = new ExampleGenerator(context);
-    }
-
-    protected get csharp() {
-        return this.context.csharp;
     }
 
     public getEndpointSignatureInfo({
@@ -105,17 +102,9 @@ export abstract class AbstractEndpointGenerator {
     protected getPagerReturnType(endpoint: HttpEndpoint): ast.Type {
         const itemType = this.getPaginationItemType(endpoint);
         if (endpoint.pagination?.type === "custom") {
-            return this.csharp.Type.reference(
-                this.context.getCustomPagerClassReference({
-                    itemType
-                })
-            );
+            return this.csharp.Type.reference(this.types.CustomPagerClass(itemType));
         }
-        return this.csharp.Type.reference(
-            this.context.getPagerClassReference({
-                itemType
-            })
-        );
+        return this.csharp.Type.reference(this.types.Pager(itemType));
     }
 
     protected getPaginationItemType(endpoint: HttpEndpoint): ast.Type {
@@ -136,7 +125,7 @@ export abstract class AbstractEndpointGenerator {
             unboxOptionals: true
         });
 
-        if (this.csharp.is.Type.list(listItemType)) {
+        if (is.Type.list(listItemType)) {
             return listItemType.getCollectionItemType();
         }
         throw new Error(
@@ -215,6 +204,9 @@ export abstract class AbstractEndpointGenerator {
         const requestBodyType = endpoint.requestBody?.type;
         // TODO: implement these
         if (requestBodyType === "fileUpload" || requestBodyType === "bytes") {
+            this.context.logger.warn(
+                "file upload or bytes request body is not supported for generating an endpoint snippet"
+            );
             return undefined;
         }
         const args = this.getNonEndpointArguments({ endpoint, example, parseDatetimes });
@@ -273,11 +265,11 @@ export abstract class AbstractEndpointGenerator {
         body: ast.CodeBlock;
         returnType: ast.Type | undefined;
     }): ast.CodeBlock {
-        if (!this.context.includeExceptionHandler()) {
+        if (!this.settings.includeExceptionHandler) {
             return body;
         }
         return this.csharp.codeblock((writer) => {
-            if (this.context.includeExceptionHandler()) {
+            if (this.settings.includeExceptionHandler) {
                 if (returnType != null) {
                     writer.write("return ");
                 }
@@ -285,7 +277,7 @@ export abstract class AbstractEndpointGenerator {
                 writer.pushScope();
             }
             body.write(writer);
-            if (this.context.includeExceptionHandler()) {
+            if (this.settings.includeExceptionHandler) {
                 writer.popScope();
                 writer.writeLine(").ConfigureAwait(false);");
             }

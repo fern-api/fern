@@ -1,6 +1,5 @@
 import { assertDefined } from "@fern-api/core-utils";
-import { Referencer } from "@fern-api/swift-base";
-import { LiteralEnum, swift } from "@fern-api/swift-codegen";
+import { LiteralEnum, Referencer, swift } from "@fern-api/swift-codegen";
 import { EndpointSnippetGenerator } from "@fern-api/swift-dynamic-snippets";
 import { dynamic, ExampleEndpointCall, ExampleTypeReference, HttpEndpoint } from "@fern-fern/ir-sdk/api";
 import { SdkGeneratorContext } from "../../SdkGeneratorContext";
@@ -211,6 +210,24 @@ export class WireTestFunctionGenerator {
                     },
                     set: () => swift.Expression.arrayLiteral({}),
                     nullable: (nullableContainer) => {
+                        if (this.sdkGeneratorContext.customConfig.nullableAsOptional) {
+                            const exampleTypeRef =
+                                nullableContainer.nullable?.shape.type === "container" &&
+                                nullableContainer.nullable.shape.container.type === "optional"
+                                    ? nullableContainer.nullable.shape.container.optional
+                                    : nullableContainer.nullable;
+                            return swift.Expression.structInitialization({
+                                unsafeName: "Optional",
+                                arguments_: [
+                                    swift.functionArgument({
+                                        value:
+                                            exampleTypeRef == null
+                                                ? swift.Expression.nil()
+                                                : this.generateExampleResponse(exampleTypeRef, fromScope)
+                                    })
+                                ]
+                            });
+                        }
                         if (nullableContainer.nullable == null) {
                             return swift.Expression.enumCaseShorthand("null");
                         }
@@ -227,28 +244,27 @@ export class WireTestFunctionGenerator {
                         });
                     },
                     optional: (optionalContainer) => {
-                        return optionalContainer.optional == null
-                            ? swift.Expression.structInitialization({
-                                  unsafeName: "Optional",
-                                  arguments_: [
-                                      swift.functionArgument({
-                                          value: swift.Expression.memberAccess({
-                                              target: this.sdkGeneratorContext.getSwiftTypeReferenceFromTestModuleScope(
-                                                  optionalContainer.valueType
-                                              ),
-                                              memberName: "null"
-                                          })
-                                      })
-                                  ]
-                              })
-                            : swift.Expression.structInitialization({
-                                  unsafeName: "Optional",
-                                  arguments_: [
-                                      swift.functionArgument({
-                                          value: this.generateExampleResponse(optionalContainer.optional, fromScope)
-                                      })
-                                  ]
-                              });
+                        const inner = optionalContainer.optional;
+                        const exampleTypeRef =
+                            inner?.shape.type === "container"
+                                ? inner.shape.container.type === "optional"
+                                    ? inner.shape.container.optional
+                                    : this.sdkGeneratorContext.customConfig.nullableAsOptional &&
+                                        inner.shape.container.type === "nullable"
+                                      ? inner.shape.container.nullable
+                                      : inner
+                                : inner;
+                        return swift.Expression.structInitialization({
+                            unsafeName: "Optional",
+                            arguments_: [
+                                swift.functionArgument({
+                                    value:
+                                        exampleTypeRef == null
+                                            ? swift.Expression.nil()
+                                            : this.generateExampleResponse(exampleTypeRef, fromScope)
+                                })
+                            ]
+                        });
                     },
                     list: (listContainer) => {
                         return swift.Expression.arrayLiteral({
@@ -326,7 +342,14 @@ export class WireTestFunctionGenerator {
                                     methodName:
                                         exampleUnionType.singleUnionType.wireDiscriminantValue.name.camelCase
                                             .unsafeName,
-                                    arguments_: []
+                                    arguments_: [
+                                        swift.functionArgument({
+                                            value: swift.Expression.contextualMethodCall({
+                                                methodName: "init",
+                                                arguments_: []
+                                            })
+                                        })
+                                    ]
                                 }),
                             samePropertiesAsObject: (exampleObjectTypeWithId) =>
                                 swift.Expression.contextualMethodCall({
@@ -425,11 +448,17 @@ export class WireTestFunctionGenerator {
                         ),
                     set: () => this.referencer.referenceAsIsType("JSONValue"),
                     nullable: (exampleNullableContainer) =>
-                        swift.TypeReference.nullable(
-                            this.sdkGeneratorContext.getSwiftTypeReferenceFromTestModuleScope(
-                                exampleNullableContainer.valueType
-                            )
-                        ),
+                        this.sdkGeneratorContext.customConfig.nullableAsOptional
+                            ? swift.TypeReference.optional(
+                                  this.sdkGeneratorContext.getSwiftTypeReferenceFromTestModuleScope(
+                                      exampleNullableContainer.valueType
+                                  )
+                              )
+                            : swift.TypeReference.nullable(
+                                  this.sdkGeneratorContext.getSwiftTypeReferenceFromTestModuleScope(
+                                      exampleNullableContainer.valueType
+                                  )
+                              ),
                     optional: (exampleOptionalContainer) =>
                         swift.TypeReference.optional(
                             this.sdkGeneratorContext.getSwiftTypeReferenceFromTestModuleScope(

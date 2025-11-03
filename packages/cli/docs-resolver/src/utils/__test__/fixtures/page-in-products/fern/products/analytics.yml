@@ -1,0 +1,4 @@
+navigation:
+  - page: Analytics Dashboard
+    icon: ../analytics/moon.svg
+    path: ../analytics/dashboard.mdx

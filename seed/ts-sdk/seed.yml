@@ -308,10 +308,16 @@ fixtures:
     - outputFolder: use-prettier
       customConfig:
         formatter: prettier
+    - outputFolder: use-oxfmt
+      customConfig:
+        formatter: oxfmt
     - outputFolder: use-prettier-no-linter
       customConfig:
         formatter: prettier
         linter: none
+    - outputFolder: use-oxlint
+      customConfig:
+        linter: oxlint
     - outputFolder: no-linter
       customConfig:
         linter: none
@@ -382,7 +388,7 @@ scripts:
         if grep -q '"packageManager": "pnpm' package.json; then
           mkdir -p .pnpm-cache
           echo "Preparing corepack and pnpm..."
-          corepack prepare pnpm@10.14.0 --activate
+          corepack prepare pnpm --activate
           echo "Running pnpm install..."
           if [ -f "pnpm-lock.yaml" ]; then
             corepack pnpm install --prefer-offline --frozen-lockfile
@@ -397,7 +403,7 @@ scripts:
         if grep -q '"packageManager": "yarn' package.json; then
           mkdir -p .yarn-cache
           echo "Preparing corepack and yarn..."
-          corepack prepare yarn@1.22.22 --activate
+          corepack prepare yarn --activate
           echo "Running yarn install..."
           if [ -f "yarn.lock" ]; then
             corepack yarn install --prefer-offline --frozen-lockfile
@@ -416,12 +422,7 @@ allowedFailures:
   - error-property:no-custom-config
   - error-property:union-utils
   - errors
-  - examples:examples-with-api-reference
-  - examples:retain-original-casing
-  - mixed-case:no-custom-config
-  - mixed-case:retain-original-casing
   - oauth-client-credentials-custom
   - package-yml
   - trace:no-custom-config
   - trace:serde
-  - unions

@@ -66,7 +66,7 @@
             }
         },
         {
-            "example_identifier": "7e269f6d",
+            "example_identifier": "68755f0f",
             "id": {
                 "method": "POST",
                 "path": "/api/profiles/complex",
@@ -79,7 +79,7 @@
             }
         },
         {
-            "example_identifier": "14b9ab61",
+            "example_identifier": "54b13c5c",
             "id": {
                 "method": "GET",
                 "path": "/api/profiles/complex/{profileId}",
@@ -92,7 +92,7 @@
             }
         },
         {
-            "example_identifier": "acef1eaf",
+            "example_identifier": "ca5a6e96",
             "id": {
                 "method": "PATCH",
                 "path": "/api/profiles/complex/{profileId}",
@@ -105,7 +105,7 @@
             }
         },
         {
-            "example_identifier": "c5e4faa2",
+            "example_identifier": "75a33322",
             "id": {
                 "method": "POST",
                 "path": "/api/test/deserialization",
@@ -131,7 +131,7 @@
             }
         },
         {
-            "example_identifier": "78ac9ea8",
+            "example_identifier": "989972b9",
             "id": {
                 "method": "GET",
                 "path": "/api/users/{userId}/notifications",
@@ -157,7 +157,7 @@
             }
         },
         {
-            "example_identifier": "3dc6cf70",
+            "example_identifier": "c01a13e8",
             "id": {
                 "method": "POST",
                 "path": "/api/search",

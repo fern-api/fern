@@ -1,0 +1,45 @@
+# yaml-language-server: $schema=https://raw.githubusercontent.com/fern-api/fern/main/fern.schema.json
+
+service:
+  auth: false
+  base-path: /users
+  endpoints:
+    getUser:
+      docs: Get a user by ID (should inherit from parent)
+      method: GET
+      path: /{id}
+      path-parameters:
+        id: UserId
+      response: User
+
+    createUser:
+      docs: Create a new user (beta availability)
+      method: POST
+      path: /
+      request: CreateUserRequest
+      response: User
+      availability: beta
+
+    deleteUser:
+      docs: Delete a user (deprecated availability)
+      method: DELETE
+      path: /{id}
+      path-parameters:
+        id: UserId
+      availability: deprecated
+
+types:
+  UserId:
+    type: string
+    docs: The unique identifier for a user
+
+  User:
+    properties:
+      id: UserId
+      name: string
+      email: string
+
+  CreateUserRequest:
+    properties:
+      name: string
+      email: string

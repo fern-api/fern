@@ -6248,7 +6248,7 @@ The response may be incomplete. Given a `Retry-After` response header, the clien
                   },
                   "location": {
                     "docs": "Filter accounts to just a subset of `internal` or `external` accounts (per the `location` property on the [`accountItem`](#schema-accountItem) schema).",
-                    "type": "optional<AccountsListAccountsRequestLocation>",
+                    "type": "optional<root.AccountsListAccountsRequestLocation>",
                   },
                   "productType": {
                     "allow-multiple": true,
@@ -6353,28 +6353,9 @@ Optionally, an agent can access a business customer's ACH accounts when acting o
             "openapi": "../openapi.yml",
           },
         },
-        "types": {
-          "AccountsListAccountsRequestLocation": {
-            "enum": [
-              "internal",
-              "external",
-            ],
-            "inline": undefined,
-            "source": {
-              "openapi": "../openapi.yml",
-            },
-          },
-        },
       },
       "rawContents": "imports:
   root: __package__.yml
-types:
-  AccountsListAccountsRequestLocation:
-    enum:
-      - internal
-      - external
-    source:
-      openapi: ../openapi.yml
 service:
   auth: false
   base-path: ''
@@ -6403,7 +6384,7 @@ service:
               set. For example, to list only savings, checking, and CD accounts,
               use <br>`?productType=savings|checking|cd`.
           location:
-            type: optional<AccountsListAccountsRequestLocation>
+            type: optional<root.AccountsListAccountsRequestLocation>
             docs: >-
               Filter accounts to just a subset of `internal` or `external`
               accounts (per the `location` property on the
@@ -9757,7 +9738,7 @@ docs: Banking Transfers
     "contents": {
       "auth": "apiKey",
       "auth-schemes": {
-        "BearerAuthScheme": {
+        "accessToken": {
           "scheme": "bearer",
         },
         "apiKey": {
@@ -9794,7 +9775,7 @@ auth-schemes:
     header: API-Key
     name: apiKey
     type: string
-  BearerAuthScheme:
+  accessToken:
     scheme: bearer
 auth: apiKey
 ",

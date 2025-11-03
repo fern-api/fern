@@ -29,6 +29,7 @@ const EMPTY_DOCS_DEFINITION: DocsV1Read.DocsDefinition = {
         root: undefined,
         title: undefined,
         defaultLanguage: undefined,
+        languages: undefined,
         announcement: undefined,
         navbarLinks: undefined,
         footerLinks: undefined,
@@ -45,7 +46,8 @@ const EMPTY_DOCS_DEFINITION: DocsV1Read.DocsDefinition = {
         integrations: undefined,
         css: undefined,
         js: undefined,
-        pageActions: undefined
+        pageActions: undefined,
+        theme: undefined
     },
     jsFiles: undefined,
     id: undefined

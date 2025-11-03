@@ -94,7 +94,7 @@ jobs:
   build-seed-groups:
     runs-on: ubuntu-latest
     timeout-minutes: 3
-    if: always() && (needs.run-seed-test.result == 'success' || needs.run-seed-test.result == 'failure')
+    if: always() && !cancelled() && (needs.run-seed-test.result == 'success' || needs.run-seed-test.result == 'failure')
     needs: [run-seed-test]
     strategy:
       fail-fast: false
@@ -171,7 +171,7 @@ jobs:
   pr-seed-group-files:
     runs-on: ubuntu-latest
     timeout-minutes: 10
-    if: always() && (needs.build-seed-groups.result == 'success' || needs.build-seed-groups.result == 'failure')
+    if: always() && !cancelled() && (needs.build-seed-groups.result == 'success' || needs.build-seed-groups.result == 'failure')
     needs: [build-seed-groups]
     steps:
       - name: Checkout Repo

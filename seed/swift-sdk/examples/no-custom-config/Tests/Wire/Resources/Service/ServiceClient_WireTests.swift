@@ -335,7 +335,7 @@ import Examples
                 ),
                 name: "name"
             ),
-            metadata: Metadata.html(
+            metadata: MetadataType.html(
                 .init(
                     extra: [
                         "extra": "extra"

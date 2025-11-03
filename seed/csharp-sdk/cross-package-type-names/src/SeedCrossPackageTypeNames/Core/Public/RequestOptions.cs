@@ -1,6 +1,3 @@
-using System.Collections.Generic;
-using System.Linq;
-using System.Net.Http;
 using SeedCrossPackageTypeNames.Core;
 
 namespace SeedCrossPackageTypeNames;

@@ -23,10 +23,20 @@ class ServiceClient:
         """
         return self._raw_client
 
-    def get_direct_thread(self, *, request_options: typing.Optional[RequestOptions] = None) -> Response:
+    def get_direct_thread(
+        self,
+        *,
+        ids: typing.Union[str, typing.Sequence[str]],
+        tags: typing.Union[str, typing.Sequence[str]],
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> Response:
         """
         Parameters
         ----------
+        ids : typing.Union[str, typing.Sequence[str]]
+
+        tags : typing.Union[str, typing.Sequence[str]]
+
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
 
@@ -42,9 +52,12 @@ class ServiceClient:
         client = SeedAudiences(
             environment=SeedAudiencesEnvironment.ENVIRONMENT_A,
         )
-        client.folder_a.service.get_direct_thread()
+        client.folder_a.service.get_direct_thread(
+            ids="ids",
+            tags="tags",
+        )
         """
-        _response = self._raw_client.get_direct_thread(request_options=request_options)
+        _response = self._raw_client.get_direct_thread(ids=ids, tags=tags, request_options=request_options)
         return _response.data
 
 
@@ -63,10 +76,20 @@ class AsyncServiceClient:
         """
         return self._raw_client
 
-    async def get_direct_thread(self, *, request_options: typing.Optional[RequestOptions] = None) -> Response:
+    async def get_direct_thread(
+        self,
+        *,
+        ids: typing.Union[str, typing.Sequence[str]],
+        tags: typing.Union[str, typing.Sequence[str]],
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> Response:
         """
         Parameters
         ----------
+        ids : typing.Union[str, typing.Sequence[str]]
+
+        tags : typing.Union[str, typing.Sequence[str]]
+
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
 
@@ -87,10 +110,13 @@ class AsyncServiceClient:
 
 
         async def main() -> None:
-            await client.folder_a.service.get_direct_thread()
+            await client.folder_a.service.get_direct_thread(
+                ids="ids",
+                tags="tags",
+            )
 
 
         asyncio.run(main())
         """
-        _response = await self._raw_client.get_direct_thread(request_options=request_options)
+        _response = await self._raw_client.get_direct_thread(ids=ids, tags=tags, request_options=request_options)
         return _response.data

@@ -673,15 +673,15 @@ import Trace
                                 Parameter(
                                     parameterId: "parameterId",
                                     name: "name",
-                                    variableType: .integerType()
+                                    variableType: .integerType(.init())
                                 ),
                                 Parameter(
                                     parameterId: "parameterId",
                                     name: "name",
-                                    variableType: .integerType()
+                                    variableType: .integerType(.init())
                                 )
                             ],
-                            returnType: .integerType()
+                            returnType: .integerType(.init())
                         ),
                         additionalFiles: [
                             .java: Files(
@@ -789,15 +789,15 @@ import Trace
                                                 Parameter(
                                                     parameterId: "parameterId",
                                                     name: "name",
-                                                    variableType: .integerType()
+                                                    variableType: .integerType(.init())
                                                 ),
                                                 Parameter(
                                                     parameterId: "parameterId",
                                                     name: "name",
-                                                    variableType: .integerType()
+                                                    variableType: .integerType(.init())
                                                 )
                                             ],
-                                            returnType: .integerType()
+                                            returnType: .integerType(.init())
                                         ),
                                         code: FunctionImplementationForMultipleLanguages(
                                             codeByLanguage: [
@@ -834,15 +834,15 @@ import Trace
                                                 Parameter(
                                                     parameterId: "parameterId",
                                                     name: "name",
-                                                    variableType: .integerType()
+                                                    variableType: .integerType(.init())
                                                 ),
                                                 Parameter(
                                                     parameterId: "parameterId",
                                                     name: "name",
-                                                    variableType: .integerType()
+                                                    variableType: .integerType(.init())
                                                 )
                                             ],
-                                            returnType: .integerType()
+                                            returnType: .integerType(.init())
                                         ),
                                         code: FunctionImplementationForMultipleLanguages(
                                             codeByLanguage: [
@@ -913,15 +913,15 @@ import Trace
                                 Parameter(
                                     parameterId: "parameterId",
                                     name: "name",
-                                    variableType: .integerType()
+                                    variableType: .integerType(.init())
                                 ),
                                 Parameter(
                                     parameterId: "parameterId",
                                     name: "name",
-                                    variableType: .integerType()
+                                    variableType: .integerType(.init())
                                 )
                             ],
-                            returnType: .integerType()
+                            returnType: .integerType(.init())
                         ),
                         additionalFiles: [
                             .java: Files(
@@ -1029,15 +1029,15 @@ import Trace
                                                 Parameter(
                                                     parameterId: "parameterId",
                                                     name: "name",
-                                                    variableType: .integerType()
+                                                    variableType: .integerType(.init())
                                                 ),
                                                 Parameter(
                                                     parameterId: "parameterId",
                                                     name: "name",
-                                                    variableType: .integerType()
+                                                    variableType: .integerType(.init())
                                                 )
                                             ],
-                                            returnType: .integerType()
+                                            returnType: .integerType(.init())
                                         ),
                                         code: FunctionImplementationForMultipleLanguages(
                                             codeByLanguage: [
@@ -1074,15 +1074,15 @@ import Trace
                                                 Parameter(
                                                     parameterId: "parameterId",
                                                     name: "name",
-                                                    variableType: .integerType()
+                                                    variableType: .integerType(.init())
                                                 ),
                                                 Parameter(
                                                     parameterId: "parameterId",
                                                     name: "name",
-                                                    variableType: .integerType()
+                                                    variableType: .integerType(.init())
                                                 )
                                             ],
-                                            returnType: .integerType()
+                                            returnType: .integerType(.init())
                                         ),
                                         code: FunctionImplementationForMultipleLanguages(
                                             codeByLanguage: [
@@ -1464,15 +1464,15 @@ import Trace
                             Parameter(
                                 parameterId: "parameterId",
                                 name: "name",
-                                variableType: .integerType()
+                                variableType: .integerType(.init())
                             ),
                             Parameter(
                                 parameterId: "parameterId",
                                 name: "name",
-                                variableType: .integerType()
+                                variableType: .integerType(.init())
                             )
                         ],
-                        returnType: .integerType()
+                        returnType: .integerType(.init())
                     ),
                     additionalFiles: [
                         .java: Files(
@@ -1580,15 +1580,15 @@ import Trace
                                             Parameter(
                                                 parameterId: "parameterId",
                                                 name: "name",
-                                                variableType: .integerType()
+                                                variableType: .integerType(.init())
                                             ),
                                             Parameter(
                                                 parameterId: "parameterId",
                                                 name: "name",
-                                                variableType: .integerType()
+                                                variableType: .integerType(.init())
                                             )
                                         ],
-                                        returnType: .integerType()
+                                        returnType: .integerType(.init())
                                     ),
                                     code: FunctionImplementationForMultipleLanguages(
                                         codeByLanguage: [
@@ -1626,15 +1626,15 @@ import Trace
                                             Parameter(
                                                 parameterId: "parameterId",
                                                 name: "name",
-                                                variableType: .integerType()
+                                                variableType: .integerType(.init())
                                             ),
                                             Parameter(
                                                 parameterId: "parameterId",
                                                 name: "name",
-                                                variableType: .integerType()
+                                                variableType: .integerType(.init())
                                             )
                                         ],
-                                        returnType: .integerType()
+                                        returnType: .integerType(.init())
                                     ),
                                     code: FunctionImplementationForMultipleLanguages(
                                         codeByLanguage: [
@@ -2016,15 +2016,15 @@ import Trace
                             Parameter(
                                 parameterId: "parameterId",
                                 name: "name",
-                                variableType: .integerType()
+                                variableType: .integerType(.init())
                             ),
                             Parameter(
                                 parameterId: "parameterId",
                                 name: "name",
-                                variableType: .integerType()
+                                variableType: .integerType(.init())
                             )
                         ],
-                        returnType: .integerType()
+                        returnType: .integerType(.init())
                     ),
                     additionalFiles: [
                         .java: Files(
@@ -2132,15 +2132,15 @@ import Trace
                                             Parameter(
                                                 parameterId: "parameterId",
                                                 name: "name",
-                                                variableType: .integerType()
+                                                variableType: .integerType(.init())
                                             ),
                                             Parameter(
                                                 parameterId: "parameterId",
                                                 name: "name",
-                                                variableType: .integerType()
+                                                variableType: .integerType(.init())
                                             )
                                         ],
-                                        returnType: .integerType()
+                                        returnType: .integerType(.init())
                                     ),
                                     code: FunctionImplementationForMultipleLanguages(
                                         codeByLanguage: [
@@ -2178,15 +2178,15 @@ import Trace
                                             Parameter(
                                                 parameterId: "parameterId",
                                                 name: "name",
-                                                variableType: .integerType()
+                                                variableType: .integerType(.init())
                                             ),
                                             Parameter(
                                                 parameterId: "parameterId",
                                                 name: "name",
-                                                variableType: .integerType()
+                                                variableType: .integerType(.init())
                                             )
                                         ],
-                                        returnType: .integerType()
+                                        returnType: .integerType(.init())
                                     ),
                                     code: FunctionImplementationForMultipleLanguages(
                                         codeByLanguage: [

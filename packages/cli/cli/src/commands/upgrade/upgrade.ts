@@ -12,6 +12,10 @@ import { rerunFernCliAtVersion } from "../../rerunFernCliAtVersion";
 
 export const PREVIOUS_VERSION_ENV_VAR = "FERN_PRE_UPGRADE_VERSION";
 
+function ensureFinalNewline(content: string): string {
+    return content.endsWith("\n") ? content : content + "\n";
+}
+
 /**
  * there are 3 relevant versions:
  *   1. the version of the CLI specified in fern.config.json
@@ -97,7 +101,10 @@ export async function upgrade({
         const newProjectConfig = produce(projectConfig.rawConfig, (draft) => {
             draft.version = fernCliUpgradeInfo.targetVersion;
         });
-        await writeFile(projectConfig._absolutePath, JSON.stringify(newProjectConfig, undefined, 2));
+        await writeFile(
+            projectConfig._absolutePath,
+            ensureFinalNewline(JSON.stringify(newProjectConfig, undefined, 2))
+        );
 
         cliContext.logger.info(
             `Upgrading from ${chalk.dim(cliContext.environment.packageVersion)} → ${chalk.green(

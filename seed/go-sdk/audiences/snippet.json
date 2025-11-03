@@ -8,7 +8,7 @@
             },
             "snippet": {
                 "type": "go",
-                "client": "import (\n\tcontext \"context\"\n\tfern \"github.com/audiences/fern\"\n\tfernclient \"github.com/audiences/fern/client\"\n\toption \"github.com/audiences/fern/option\"\n)\n\nclient := fernclient.NewClient(\n\toption.WithBaseURL(\n\t\tfern.Environments.EnvironmentA,\n\t),\n)\nresponse, err := client.FolderA.Service.GetDirectThread(\n\tcontext.TODO(),\n)\n"
+                "client": "import (\n\tcontext \"context\"\n\tfern \"github.com/audiences/fern\"\n\tfernclient \"github.com/audiences/fern/client\"\n\tfoldera \"github.com/audiences/fern/foldera\"\n\toption \"github.com/audiences/fern/option\"\n)\n\nclient := fernclient.NewClient(\n\toption.WithBaseURL(\n\t\tfern.Environments.EnvironmentA,\n\t),\n)\nresponse, err := client.FolderA.Service.GetDirectThread(\n\tcontext.TODO(),\n\t\u0026foldera.GetDirectThreadRequest{\n\t\tIds: []string{\n\t\t\t\"ids\",\n\t\t},\n\t\tTags: []string{\n\t\t\t\"tags\",\n\t\t},\n\t},\n)\n"
             }
         },
         {

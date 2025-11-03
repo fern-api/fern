@@ -27,14 +27,14 @@ export class DynamicSnippetsGenerator extends AbstractDynamicSnippetsGenerator<
         this.context.precalculate(requests);
     }
 
-    public async generate(
+    public override async generate(
         request: FernIr.dynamic.EndpointSnippetRequest,
         options: Options = {}
     ): Promise<FernIr.dynamic.EndpointSnippetResponse> {
         return super.generate(request, options);
     }
 
-    public generateSync(
+    public override generateSync(
         request: FernIr.dynamic.EndpointSnippetRequest,
         options: Options = {}
     ): FernIr.dynamic.EndpointSnippetResponse {

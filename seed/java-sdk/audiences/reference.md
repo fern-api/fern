@@ -13,8 +13,41 @@
 <dd>
 
 ```java
-client.folderA().service().getDirectThread();
+client.folderA().service().getDirectThread(
+    GetDirectThreadRequest
+        .builder()
+        .ids(
+            Arrays.asList("ids")
+        )
+        .tags(
+            Arrays.asList("tags")
+        )
+        .build()
+);
 ```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**ids:** `String` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**tags:** `String` 
+    
 </dd>
 </dl>
 </dd>

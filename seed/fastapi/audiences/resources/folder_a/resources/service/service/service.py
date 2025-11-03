@@ -23,7 +23,7 @@ class AbstractFolderAServiceService(AbstractFernService):
     """
 
     @abc.abstractmethod
-    def get_direct_thread(self) -> Response: ...
+    def get_direct_thread(self, *, ids: typing.List[str], tags: typing.List[str]) -> Response: ...
 
     """
     Below are internal methods used by Fern to register your implementation.
@@ -41,6 +41,10 @@ class AbstractFolderAServiceService(AbstractFernService):
         for index, (parameter_name, parameter) in enumerate(endpoint_function.parameters.items()):
             if index == 0:
                 new_parameters.append(parameter.replace(default=fastapi.Depends(cls)))
+            elif parameter_name == "ids":
+                new_parameters.append(parameter.replace(default=fastapi.Query(default=[])))
+            elif parameter_name == "tags":
+                new_parameters.append(parameter.replace(default=fastapi.Query(default=[])))
             else:
                 new_parameters.append(parameter)
         setattr(cls.get_direct_thread, "__signature__", endpoint_function.replace(parameters=new_parameters))

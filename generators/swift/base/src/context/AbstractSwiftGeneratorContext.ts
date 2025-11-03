@@ -1,7 +1,7 @@
 import { AbstractGeneratorContext, FernGeneratorExec, GeneratorNotificationService } from "@fern-api/base-generator";
 import { assertDefined, assertNever } from "@fern-api/core-utils";
 import { RelativeFilePath } from "@fern-api/fs-utils";
-import { BaseSwiftCustomConfigSchema, swift } from "@fern-api/swift-codegen";
+import { BaseSwiftCustomConfigSchema, Referencer, swift, UndiscriminatedUnion } from "@fern-api/swift-codegen";
 import {
     FernFilepath,
     HttpEndpoint,
@@ -20,10 +20,9 @@ import {
 
 import { AsIsFileDefinition, SourceAsIsFiles, TestAsIsFiles } from "../AsIs";
 import { SwiftProject } from "../project";
-import { Referencer } from "./Referencer";
 import { registerDiscriminatedUnionVariants } from "./register-discriminated-unions";
 import { registerLiteralEnums, registerLiteralEnumsForObjectProperties } from "./register-literal-enums";
-import { inferCaseNameForTypeReference, registerUndiscriminatedUnionVariants } from "./register-undiscriminated-unions";
+import { registerUndiscriminatedUnionVariants } from "./register-undiscriminated-unions";
 
 export abstract class AbstractSwiftGeneratorContext<
     CustomConfig extends BaseSwiftCustomConfigSchema
@@ -270,7 +269,9 @@ export abstract class AbstractSwiftGeneratorContext<
                         ),
                     set: () => referencer.referenceAsIsType("JSONValue"),
                     nullable: (ref) =>
-                        swift.TypeReference.nullable(this.getSwiftTypeReferenceFromScope(ref, fromSymbol)),
+                        this.customConfig.nullableAsOptional
+                            ? swift.TypeReference.optional(this.getSwiftTypeReferenceFromScope(ref, fromSymbol))
+                            : swift.TypeReference.nullable(this.getSwiftTypeReferenceFromScope(ref, fromSymbol)),
                     optional: (ref) =>
                         swift.TypeReference.optional(this.getSwiftTypeReferenceFromScope(ref, fromSymbol)),
                     list: (ref) => swift.TypeReference.array(this.getSwiftTypeReferenceFromScope(ref, fromSymbol)),
@@ -306,7 +307,11 @@ export abstract class AbstractSwiftGeneratorContext<
     }
 
     public inferCaseNameForTypeReference(parentSymbol: swift.Symbol, typeReference: swift.TypeReference): string {
-        return inferCaseNameForTypeReference(parentSymbol, typeReference, this.project.nameRegistry);
+        return UndiscriminatedUnion.inferCaseNameForTypeReference(
+            parentSymbol,
+            typeReference,
+            this.project.nameRegistry
+        );
     }
 
     public getEndpointMethodDetails(endpoint: HttpEndpoint) {
@@ -353,6 +358,6 @@ export abstract class AbstractSwiftGeneratorContext<
     }
 
     public createReferencer(fromSymbol: swift.Symbol | string) {
-        return new Referencer(this.project, fromSymbol);
+        return new Referencer(this.project.nameRegistry, fromSymbol);
     }
 }

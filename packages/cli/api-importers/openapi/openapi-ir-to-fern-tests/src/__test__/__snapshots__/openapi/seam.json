@@ -34309,9 +34309,30 @@ service:
   "packageMarkers": {},
   "rootApiFile": {
     "contents": {
-      "auth": "BearerAuthScheme",
+      "auth": "api_key",
       "auth-schemes": {
-        "BearerAuthScheme": {
+        "access_token": {
+          "scheme": "bearer",
+        },
+        "api_key": {
+          "scheme": "bearer",
+        },
+        "client_session": {
+          "scheme": "bearer",
+        },
+        "console_session": {
+          "scheme": "bearer",
+        },
+        "pat_with_workspace": {
+          "scheme": "bearer",
+        },
+        "pat_without_workspace": {
+          "scheme": "bearer",
+        },
+        "user_session": {
+          "scheme": "bearer",
+        },
+        "user_session_without_workspace": {
           "scheme": "bearer",
         },
       },
@@ -34351,9 +34372,23 @@ environments:
   Default: https://connect.getseam.com
 default-environment: Default
 auth-schemes:
-  BearerAuthScheme:
+  api_key:
     scheme: bearer
-auth: BearerAuthScheme
+  access_token:
+    scheme: bearer
+  pat_with_workspace:
+    scheme: bearer
+  pat_without_workspace:
+    scheme: bearer
+  client_session:
+    scheme: bearer
+  user_session:
+    scheme: bearer
+  user_session_without_workspace:
+    scheme: bearer
+  console_session:
+    scheme: bearer
+auth: api_key
 headers:
   seam-workspace:
     type: string

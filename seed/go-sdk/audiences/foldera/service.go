@@ -11,6 +11,40 @@ import (
 )
 
 var (
+	getDirectThreadRequestFieldIds  = big.NewInt(1 << 0)
+	getDirectThreadRequestFieldTags = big.NewInt(1 << 1)
+)
+
+type GetDirectThreadRequest struct {
+	Ids  []string `json:"-" url:"ids"`
+	Tags []string `json:"-" url:"tags"`
+
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
+}
+
+func (g *GetDirectThreadRequest) require(field *big.Int) {
+	if g.explicitFields == nil {
+		g.explicitFields = big.NewInt(0)
+	}
+	g.explicitFields.Or(g.explicitFields, field)
+}
+
+// SetIds sets the Ids field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (g *GetDirectThreadRequest) SetIds(ids []string) {
+	g.Ids = ids
+	g.require(getDirectThreadRequestFieldIds)
+}
+
+// SetTags sets the Tags field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (g *GetDirectThreadRequest) SetTags(tags []string) {
+	g.Tags = tags
+	g.require(getDirectThreadRequestFieldTags)
+}
+
+var (
 	responseFieldFoo = big.NewInt(1 << 0)
 )
 

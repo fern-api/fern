@@ -13,7 +13,7 @@ import {
 } from "@fern-fern/ir-sdk/api";
 import { HttpEndpointGenerator } from "../../endpoint/http/HttpEndpointGenerator";
 import { SdkCustomConfigSchema } from "../../SdkCustomConfig";
-import { MOCK_SERVER_TEST_FOLDER, SdkGeneratorContext } from "../../SdkGeneratorContext";
+import { SdkGeneratorContext } from "../../SdkGeneratorContext";
 import { MockEndpointGenerator } from "./MockEndpointGenerator";
 
 export declare namespace TestClass {
@@ -37,7 +37,8 @@ export class MockServerTestGenerator extends FileGenerator<CSharpFile, SdkCustom
         super(context);
 
         this.classReference = this.csharp.classReference({
-            name: this.endpoint.name.pascalCase.safeName + "Test",
+            origin: this.model.explicit(this.endpoint, `Test${this.getTestNamespace()}`),
+            name: `${this.endpoint.name.pascalCase.safeName}Test`,
             namespace: this.getTestNamespace()
         });
 
@@ -49,26 +50,27 @@ export class MockServerTestGenerator extends FileGenerator<CSharpFile, SdkCustom
         if (this.endpoint.pagination?.type === "custom") {
             return false;
         }
-        return true;
+        return super.shouldGenerate();
     }
 
     private getTestNamespace(): string {
         const subpackage = this.context.getSubpackageForServiceId(this.serviceId);
         if (!subpackage) {
-            return this.context.getMockServerTestNamespace();
+            return this.namespaces.mockServerTest;
         }
 
         return [
-            this.context.getMockServerTestNamespace(),
+            this.namespaces.mockServerTest,
             ...this.context.getChildNamespaceSegments(subpackage.fernFilepath)
         ].join(".");
     }
 
     protected doGenerate(): CSharpFile {
         const testClass = this.csharp.testClass({
-            name: this.getTestClassName(),
+            name: this.classReference.name,
             namespace: this.getTestNamespace(),
-            parentClassReference: this.context.getBaseMockServerTestClassReference()
+            origin: this.classReference.origin,
+            parentClassReference: this.types.BaseMockServerTest
         });
         this.exampleEndpointCalls.forEach((example, index) => {
             let jsonExampleResponse: unknown | undefined = undefined;
@@ -130,7 +132,7 @@ export class MockServerTestGenerator extends FileGenerator<CSharpFile, SdkCustom
                     writer.writeNodeStatement(endpointSnippet);
                     writer.writeTextStatement("Assert.That(headers, Is.Not.Null)");
                     writer.write("Assert.That(headers, Is.InstanceOf<");
-                    writer.writeNode(this.context.getHttpResponseHeadersReference());
+                    writer.writeNode(this.extern.System.Net.Http.HttpResponseHeaders);
                     writer.writeTextStatement(">())");
                 } else {
                     if (isSupportedResponse) {
@@ -140,7 +142,7 @@ export class MockServerTestGenerator extends FileGenerator<CSharpFile, SdkCustom
                         if (responseBodyType === "json") {
                             const responseType = this.getCsharpTypeFromResponse(example.response);
                             const deserializeResponseNode = this.csharp.invokeMethod({
-                                on: this.context.getJsonUtilsClassReference(),
+                                on: this.types.JsonUtils,
                                 method: "Deserialize",
                                 generics: [responseType],
                                 arguments_: [this.csharp.codeblock("mockResponse")]
@@ -211,25 +213,25 @@ export class MockServerTestGenerator extends FileGenerator<CSharpFile, SdkCustom
             directory: this.getDirectory(),
             allNamespaceSegments: this.context.getAllNamespaceSegments(),
             allTypeClassReferences: this.context.getAllTypeClassReferences(),
-            namespace: this.context.getNamespace(),
-            customConfig: this.context.customConfig
+            namespace: this.namespaces.root,
+            generation: this.generation
         });
     }
 
     private getDirectory(): RelativeFilePath {
         const subpackage = this.context.getSubpackageForServiceId(this.serviceId);
         if (!subpackage) {
-            return MOCK_SERVER_TEST_FOLDER;
+            return this.constants.folders.mockServerTests;
         }
         return join(
-            MOCK_SERVER_TEST_FOLDER,
+            this.constants.folders.mockServerTests,
             ...this.context.getChildNamespaceSegments(subpackage.fernFilepath).map(RelativeFilePath.of)
         );
     }
 
     protected getFilepath(): RelativeFilePath {
         return join(
-            this.context.project.filepaths.getTestFilesDirectory(),
+            this.constants.folders.testFiles,
             this.getDirectory(),
             RelativeFilePath.of(`${this.getTestClassName()}.cs`)
         );

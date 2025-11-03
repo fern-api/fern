@@ -1,6 +1,5 @@
 import { assertNever, visitDiscriminatedUnion } from "@fern-api/core-utils";
-import { Referencer } from "@fern-api/swift-base";
-import { swift } from "@fern-api/swift-codegen";
+import { Referencer, swift } from "@fern-api/swift-codegen";
 import { Package } from "@fern-fern/ir-sdk/api";
 import { SdkGeneratorContext } from "../../SdkGeneratorContext";
 import { ClientGeneratorContext } from "./ClientGeneratorContext";

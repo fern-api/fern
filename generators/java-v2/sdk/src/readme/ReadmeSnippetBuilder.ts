@@ -110,6 +110,44 @@ export class ReadmeSnippetBuilder extends AbstractReadmeSnippetBuilder {
         return snippetsByFeatureId;
     }
 
+    public buildReadmeAddendumsByFeatureId(): Record<FernGeneratorCli.FeatureId, string> {
+        const addendumsByFeatureId: Record<FernGeneratorCli.FeatureId, string> = {};
+
+        // Check if collapse-optional-nullable flag is enabled
+        const customConfig = this.context.customConfig;
+        if (customConfig != null && customConfig["collapse-optional-nullable"] === true) {
+            // Add OptionalNullable documentation to Usage section
+            addendumsByFeatureId[FernGeneratorCli.StructuredFeatureId.Usage] = this.getOptionalNullableDocumentation();
+        }
+
+        return addendumsByFeatureId;
+    }
+
+    private getOptionalNullableDocumentation(): string {
+        return `## OptionalNullable for PATCH Requests
+
+For PATCH requests, the SDK uses \`OptionalNullable<T>\` to handle three-state nullable semantics:
+
+- **ABSENT**: Field not provided (omitted from JSON)
+- **NULL**: Field explicitly set to null (included as \`null\` in JSON)
+- **PRESENT**: Field has a non-null value
+
+\`\`\`java
+import com.seed.api.core.OptionalNullable;
+
+UpdateRequest request = UpdateRequest.builder()
+    .fieldName(OptionalNullable.absent())    // Skip field
+    .anotherField(OptionalNullable.ofNull()) // Clear field
+    .yetAnotherField(OptionalNullable.of("value")) // Set value
+    .build();
+\`\`\`
+
+### Important Notes
+
+- **Required fields**: For required fields, you cannot use \`absent()\`. Required fields must always be present with either a non-null value or explicitly set to null using \`ofNull()\`.
+- **Type safety**: \`OptionalNullable<T>\` is not fully type-safe since all three states use the same type, but it provides a cleaner API than nested \`Optional<Optional<T>>\` for handling three-state nullable semantics.`;
+    }
+
     private getPrerenderedSnippetsForFeature(
         featureId: FernGeneratorCli.FeatureId,
         predicate: (endpoint: EndpointWithFilepath) => boolean = () => true,

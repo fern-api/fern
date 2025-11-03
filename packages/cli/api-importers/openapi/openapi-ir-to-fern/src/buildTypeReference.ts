@@ -24,9 +24,11 @@ import {
     buildOneOfTypeDeclaration
 } from "./buildTypeDeclaration";
 import { OpenApiIrConverterContext } from "./OpenApiIrConverterContext";
+import { buildTypeReferenceWithMetadata } from "./utils/buildTypeReferenceMetadata";
 import { convertAvailability } from "./utils/convertAvailability";
 import { convertSdkGroupNameToFile } from "./utils/convertSdkGroupName";
 import { convertToEncodingSchema } from "./utils/convertToEncodingSchema";
+import { findTopLevelSchemaFile, getSchemaName } from "./utils/findTopLevelSchema";
 import { getGroupNameForSchema } from "./utils/getGroupNameForSchema";
 import {
     getDefaultFromTypeReference,
@@ -135,6 +137,7 @@ export function buildTypeReference({
         case "oneOf":
             return buildOneOfTypeReference({
                 schema: schema.value,
+                fullSchema: schema,
                 fileContainingReference,
                 context,
                 declarationFile,
@@ -739,30 +742,35 @@ export function buildEnumTypeReference({
     context: OpenApiIrConverterContext;
     declarationDepth: number;
 }): RawSchemas.TypeReferenceSchema {
-    const enumTypeDeclaration = buildEnumTypeDeclaration(schema, declarationDepth);
     const name = schema.nameOverride ?? schema.generatedName;
-    context.builder.addType(declarationFile, {
-        name,
-        schema: enumTypeDeclaration.schema
-    });
-    const prefixedType = getPrefixedType({ type: name, fileContainingReference, declarationFile, context });
-    if (schema.description == null && schema.default == null && schema.title == null) {
-        return prefixedType;
-    }
-    const result: RawSchemas.TypeReferenceSchema = {
-        type: prefixedType
-    };
-    if (schema.description != null) {
-        result.docs = schema.description;
-    }
-    if (schema.default != null) {
-        result.default = schema.default.value;
-    }
-    if (schema.availability != null) {
-        result.availability = convertAvailability(schema.availability);
+
+    // Check if this schema exists as a top-level schema
+    const topLevelSchemaFile = findTopLevelSchemaFile(schema as Schema, context);
+    const effectiveDeclarationFile = topLevelSchemaFile ?? declarationFile;
+
+    // Only add the type if we haven't encountered it before OR if it should be in the current file
+    if (topLevelSchemaFile == null) {
+        const enumTypeDeclaration = buildEnumTypeDeclaration(schema, declarationDepth);
+        context.builder.addType(declarationFile, {
+            name,
+            schema: enumTypeDeclaration.schema
+        });
     }
 
-    return result;
+    const prefixedType = getPrefixedType({
+        type: name,
+        fileContainingReference,
+        declarationFile: effectiveDeclarationFile,
+        context
+    });
+
+    return buildTypeReferenceWithMetadata({
+        type: prefixedType,
+        docs: schema.description,
+        defaultValue: schema.default?.value,
+        availability: schema.availability,
+        title: schema.title
+    });
 }
 
 export function buildObjectTypeReference({
@@ -780,31 +788,45 @@ export function buildObjectTypeReference({
     namespace: string | undefined;
     declarationDepth: number;
 }): RawSchemas.TypeReferenceSchema {
-    const objectTypeDeclaration = buildObjectTypeDeclaration({
-        schema,
-        declarationFile,
-        context,
-        namespace,
-        declarationDepth
-    });
     const name = schema.nameOverride ?? schema.generatedName;
-    context.builder.addType(declarationFile, {
-        name,
-        schema: objectTypeDeclaration.schema
-    });
-    const prefixedType = getPrefixedType({ type: name, fileContainingReference, declarationFile, context });
-    if (schema.description == null && schema.title == null) {
-        return prefixedType;
+
+    // Check if this schema exists as a top-level schema
+    const topLevelSchemaFile = findTopLevelSchemaFile(schema as Schema, context);
+    const effectiveDeclarationFile = topLevelSchemaFile ?? declarationFile;
+
+    // Only add the type if we haven't encountered it before OR if it should be in the current file
+    if (topLevelSchemaFile == null) {
+        const objectTypeDeclaration = buildObjectTypeDeclaration({
+            schema,
+            declarationFile,
+            context,
+            namespace,
+            declarationDepth
+        });
+        context.builder.addType(declarationFile, {
+            name,
+            schema: objectTypeDeclaration.schema
+        });
     }
-    return {
+
+    const prefixedType = getPrefixedType({
+        type: name,
+        fileContainingReference,
+        declarationFile: effectiveDeclarationFile,
+        context
+    });
+
+    return buildTypeReferenceWithMetadata({
         type: prefixedType,
-        ...(schema.description != null ? { docs: schema.description } : {}),
-        ...(schema.availability != null ? { availability: convertAvailability(schema.availability) } : {})
-    };
+        docs: schema.description,
+        availability: schema.availability,
+        title: schema.title
+    });
 }
 
 export function buildOneOfTypeReference({
     schema,
+    fullSchema,
     fileContainingReference,
     declarationFile,
     context,
@@ -812,34 +834,48 @@ export function buildOneOfTypeReference({
     declarationDepth
 }: {
     schema: OneOfSchema;
+    fullSchema: Schema;
     fileContainingReference: RelativeFilePath;
     declarationFile: RelativeFilePath;
     context: OpenApiIrConverterContext;
     namespace: string | undefined;
     declarationDepth: number;
 }): RawSchemas.TypeReferenceSchema {
-    const unionTypeDeclaration = buildOneOfTypeDeclaration({
-        schema,
-        declarationFile,
-        context,
-        namespace,
-        declarationDepth
-    });
     const name = schema.nameOverride ?? schema.generatedName;
-    context.builder.addType(declarationFile, {
-        name,
-        schema: unionTypeDeclaration.schema
-    });
-    const prefixedType = getPrefixedType({ type: name, fileContainingReference, declarationFile, context });
-    if (schema.description == null && schema.title == null) {
-        return prefixedType;
+
+    // Check if this schema exists as a top-level schema
+    const topLevelSchemaFile = findTopLevelSchemaFile(fullSchema, context);
+    const effectiveDeclarationFile = topLevelSchemaFile ?? declarationFile;
+
+    // Only add the type if we haven't encountered it before OR if it should be in the current file
+    if (topLevelSchemaFile == null) {
+        const unionTypeDeclaration = buildOneOfTypeDeclaration({
+            schema,
+            declarationFile,
+            context,
+            namespace,
+            declarationDepth
+        });
+        context.builder.addType(declarationFile, {
+            name,
+            schema: unionTypeDeclaration.schema
+        });
     }
-    return {
-        ...(schema.title != null ? { "display-name": schema.title } : {}),
+
+    const prefixedType = getPrefixedType({
+        type: name,
+        fileContainingReference,
+        declarationFile: effectiveDeclarationFile,
+        context
+    });
+
+    return buildTypeReferenceWithMetadata({
         type: prefixedType,
-        ...(schema.description != null ? { docs: schema.description } : {}),
-        ...(schema.availability != null ? { availability: convertAvailability(schema.availability) } : {})
-    };
+        docs: schema.description,
+        availability: schema.availability,
+        title: schema.title,
+        displayName: schema.title
+    });
 }
 
 function getPrefixedType({
@@ -861,23 +897,6 @@ function getPrefixedType({
         fileToImport: declarationFile
     });
     return prefix != null ? `${prefix}.${type}` : type;
-}
-
-function getSchemaName(schema: Schema): string | undefined {
-    return Schema._visit(schema, {
-        primitive: (s) => s.nameOverride ?? s.generatedName,
-        object: (s) => s.nameOverride ?? s.generatedName,
-        array: (s) => s.nameOverride ?? s.generatedName,
-        map: (s) => s.nameOverride ?? s.generatedName,
-        enum: (s) => s.nameOverride ?? s.generatedName,
-        reference: (s) => s.nameOverride ?? s.generatedName,
-        literal: (s) => s.nameOverride ?? s.generatedName,
-        oneOf: (s) => s.nameOverride ?? s.generatedName,
-        optional: (s) => s.nameOverride ?? s.generatedName,
-        nullable: (s) => s.nameOverride ?? s.generatedName,
-        unknown: (s) => s.nameOverride ?? s.generatedName,
-        _other: () => undefined
-    });
 }
 
 function getDisplayName(schema: Schema): string | undefined {

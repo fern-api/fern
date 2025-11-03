@@ -3924,8 +3924,8 @@ types:
   ResourceRoleList:
     properties:
       roles:
-        display-name: Roles
         type: Roles
+        display-name: Roles
     source:
       openapi: ../openapi.json
   ResourceRoleRead:
@@ -4102,8 +4102,8 @@ types:
   RoleList:
     properties:
       roles:
-        display-name: Roles
         type: Roles
+        display-name: Roles
     source:
       openapi: ../openapi.json
   RoleRead:
@@ -21124,9 +21124,9 @@ docs: >
   "packageMarkers": {},
   "rootApiFile": {
     "contents": {
-      "auth": "BearerAuthScheme",
+      "auth": "HTTPBearer",
       "auth-schemes": {
-        "BearerAuthScheme": {
+        "HTTPBearer": {
           "scheme": "bearer",
         },
       },
@@ -21149,9 +21149,9 @@ environments:
   Default: https://api.permit.io
 default-environment: Default
 auth-schemes:
-  BearerAuthScheme:
+  HTTPBearer:
     scheme: bearer
-auth: BearerAuthScheme
+auth: HTTPBearer
 ",
   },
 }

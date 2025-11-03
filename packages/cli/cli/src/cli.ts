@@ -50,6 +50,7 @@ import { validateDocsBrokenLinks } from "./commands/validate/validateDocsBrokenL
 import { validateWorkspaces } from "./commands/validate/validateWorkspaces";
 import { writeDefinitionForWorkspaces } from "./commands/write-definition/writeDefinitionForWorkspaces";
 import { writeDocsDefinitionForProject } from "./commands/write-docs-definition/writeDocsDefinitionForProject";
+import { writeTranslationForProject } from "./commands/write-translation/writeTranslationForProject";
 import { FERN_CWD_ENV_VAR } from "./cwd";
 import { rerunFernCliAtVersion } from "./rerunFernCliAtVersion";
 import { RUNTIME } from "./runtime";
@@ -192,6 +193,7 @@ async function tryRunCli(cliContext: CliContext) {
     });
     addGenerateJsonschemaCommand(cli, cliContext);
     addWriteDocsDefinitionCommand(cli, cliContext);
+    addWriteTranslationCommand(cli, cliContext);
     addExportCommand(cli, cliContext);
 
     // CLI V2 Sanctioned Commands
@@ -1416,6 +1418,27 @@ function addWriteDocsDefinitionCommand(cli: Argv<GlobalCliOptions>, cliContext: 
                     commandLineApiWorkspace: undefined
                 }),
                 outputPath: resolve(cwd(), argv.outputPath),
+                cliContext
+            });
+        }
+    );
+}
+
+function addWriteTranslationCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext) {
+    cli.command(
+        "write-translation",
+        "Generate translation directories for each language defined in docs.yml",
+        (yargs) => yargs,
+        async (argv) => {
+            await cliContext.instrumentPostHogEvent({
+                command: "fern write-translation"
+            });
+
+            await writeTranslationForProject({
+                project: await loadProjectAndRegisterWorkspacesWithContext(cliContext, {
+                    defaultToAllApiWorkspaces: true,
+                    commandLineApiWorkspace: undefined
+                }),
                 cliContext
             });
         }
