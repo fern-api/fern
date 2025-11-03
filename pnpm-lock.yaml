@@ -885,8 +885,8 @@ importers:
         specifier: workspace:*
         version: link:../../packages/commons/fs-utils
       '@fern-fern/ir-sdk':
-        specifier: ^61.7.0
-        version: 61.7.0
+        specifier: 53.9.0
+        version: 53.9.0
       '@types/js-yaml':
         specifier: ^4.0.8
         version: 4.0.9
@@ -1171,8 +1171,8 @@ importers:
         specifier: workspace:*
         version: link:../../packages/commons/fs-utils
       '@fern-fern/ir-sdk':
-        specifier: ^61.7.0
-        version: 61.7.0
+        specifier: 53.9.0
+        version: 53.9.0
       '@fern-fern/postman-sdk':
         specifier: 0.1.1
         version: 0.1.1
@@ -2378,8 +2378,8 @@ importers:
         specifier: workspace:*
         version: link:../../typescript-v2/formatter
       '@fern-fern/ir-sdk':
-        specifier: ^61.7.0
-        version: 61.7.0
+        specifier: ^58.2.0
+        version: 58.3.0
       '@types/lodash-es':
         specifier: ^4.17.12
         version: 4.17.12
@@ -2417,8 +2417,8 @@ importers:
         specifier: workspace:*
         version: link:../base
       '@fern-fern/ir-sdk':
-        specifier: ^61.7.0
-        version: 61.7.0
+        specifier: ^58.2.0
+        version: 58.3.0
       '@types/node':
         specifier: 18.15.3
         version: 18.15.3
@@ -2459,8 +2459,8 @@ importers:
         specifier: ^0.0.1167
         version: 0.0.1167
       '@fern-fern/ir-sdk':
-        specifier: ^61.7.0
-        version: 61.7.0
+        specifier: ^58.2.0
+        version: 58.3.0
       '@fern-typescript/sdk-generator-cli':
         specifier: workspace:*
         version: link:../../typescript/sdk/cli
@@ -9498,6 +9498,12 @@ packages:
 
   '@fern-fern/ir-sdk@39.0.0':
     resolution: {integrity: sha512-cx8g0hX3gS/JveQPKanSWAyhM8SGhVOiQEcovqmcF/j9wvpjO8FXXNNI1+ZR1Wdmkcggx9UIqXDbS7jzefh6Rw==}
+
+  '@fern-fern/ir-sdk@53.9.0':
+    resolution: {integrity: sha512-WAXXL+XVnDO4a3nfZRbRTr0+xz88jIYEZYTbJ7sYWLS7DLjmU780EFMMwO8ySmCdI0R2yRfeSY0qaGvuomXg6g==}
+
+  '@fern-fern/ir-sdk@58.3.0':
+    resolution: {integrity: sha512-HZXzhxk/NV70R9LMr9SD7QQClrY2YxO2xOzMvS42ODYZWxMWZ/r4MQ2/1e5HN3ROyotJZkpI9QMOmFmgNbTrTw==}
 
   '@fern-fern/ir-sdk@61.7.0':
     resolution: {integrity: sha512-LHz8xJRISnuMVzLZHjwh1ziEofE0smL08Ddoe/YHnod8p7DPS/mpOcQKEfzqUn2mdLB6iqUBKB74NMchP/nM+Q==}
@@ -17064,6 +17070,18 @@ snapshots:
       - encoding
 
   '@fern-fern/ir-sdk@39.0.0': {}
+
+  '@fern-fern/ir-sdk@53.9.0': {}
+
+  '@fern-fern/ir-sdk@58.3.0':
+    dependencies:
+      form-data: 4.0.4
+      formdata-node: 6.0.3
+      node-fetch: 2.7.0
+      qs: 6.13.0
+      readable-stream: 4.7.0
+    transitivePeerDependencies:
+      - encoding
 
   '@fern-fern/ir-sdk@61.7.0':
     dependencies:
