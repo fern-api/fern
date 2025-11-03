@@ -16,6 +16,7 @@ export const ExpressCustomConfigSchema = z.strictObject({
     packageManager: z.optional(z.enum(["pnpm", "yarn"])),
     linter: z.optional(z.enum(["biome", "oxlint", "none"])),
     formatter: z.optional(z.enum(["prettier", "biome"])),
+    enableForwardCompatibleEnums: z.optional(z.boolean()),
 
     // beta (not in docs)
     outputSourceFiles: z.optional(z.boolean()),
