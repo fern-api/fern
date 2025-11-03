@@ -20,7 +20,9 @@
   "main": "lib/index.js",
   "source": "src/index.ts",
   "types": "lib/index.d.ts",
-  "files": ["lib"],
+  "files": [
+    "lib"
+  ],
   "scripts": {
     "clean": "rm -rf ./lib && tsc --build --clean",
     "compile": "tsc --build",
@@ -34,8 +36,8 @@
     "@fern-api/base-generator": "workspace:*",
     "@fern-api/browser-compatible-base-generator": "workspace:*",
     "@fern-api/core-utils": "workspace:*",
-    "@fern-fern/ir-sdk": "^61.4.0",
-    "@fern-api/dynamic-ir-sdk": "^61.0.0",
+    "@fern-fern/ir-sdk": "^61.6.0",
+    "@fern-api/dynamic-ir-sdk": "^61.6.0",
     "zod": "^3.22.3"
   },
   "devDependencies": {
