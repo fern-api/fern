@@ -33,6 +33,7 @@ export class CliContext {
     public readonly environment: CliEnvironment;
 
     private didSucceed = true;
+    private collectedErrors: string[] = [];
 
     private numTasks = 0;
     private ttyAwareLogger: TtyAwareLogger;
@@ -100,10 +101,30 @@ export class CliContext {
         logErrorMessage({ message, error, logger: this.logger });
     }
 
+    public collectError(errorMessage: string): void {
+        this.collectedErrors.push(errorMessage);
+    }
+
+    public getCollectedErrors(): readonly string[] {
+        return this.collectedErrors;
+    }
+
     public async exit({ code }: { code?: number } = {}): Promise<never> {
         if (!this._suppressUpgradeMessage || !this.isLocal) {
             await this.nudgeUpgradeIfAvailable();
         }
+
+        // Display collected errors at the end
+        const collectedErrors = this.getCollectedErrors();
+        if (collectedErrors.length > 0) {
+            this.stderr.info(""); // Add a blank line before errors
+            this.stderr.error(`Found ${collectedErrors.length} error${collectedErrors.length === 1 ? '' : 's'}:`);
+            for (const error of collectedErrors) {
+                this.stderr.error(`  • ${error}`);
+            }
+            this.stderr.info(""); // Add a blank line after errors
+        }
+
         this.ttyAwareLogger.finish();
         const posthogManager = await getPosthogManager();
         await posthogManager.flush();
@@ -253,6 +274,14 @@ export class CliContext {
     }
 
     private log(level: LogLevel, ...parts: string[]) {
+        // Collect error messages for final summary
+        if (level === LogLevel.Error) {
+            const errorMessage = parts.join(" ");
+            if (errorMessage.trim()) {
+                this.collectedErrors.push(errorMessage);
+            }
+        }
+
         this.logImmediately([
             {
                 parts,
@@ -263,6 +292,14 @@ export class CliContext {
     }
 
     private logStderr(level: LogLevel, ...parts: string[]) {
+        // Collect error messages for final summary
+        if (level === LogLevel.Error) {
+            const errorMessage = parts.join(" ");
+            if (errorMessage.trim()) {
+                this.collectedErrors.push(errorMessage);
+            }
+        }
+
         this.logImmediately(
             [
                 {
