@@ -10,7 +10,7 @@
     "test:watch": "jest --watch"
   },
   "dependencies": {
-    "@fern-fern/ir-sdk": "^60.3.1",
+    "@fern-fern/ir-sdk": "^61.7.0",
     "@fern-api/base-generator": "workspace:*",
     "@fern-api/ir-utils": "workspace:*",
     "uuid": "^9.0.0"
@@ -26,6 +26,9 @@
   "jest": {
     "preset": "ts-jest",
     "testEnvironment": "node",
-    "testMatch": ["**/__tests__/**/*.test.ts", "**/?(*.)+(spec|test).ts"]
+    "testMatch": [
+      "**/__tests__/**/*.test.ts",
+      "**/?(*.)+(spec|test).ts"
+    ]
   }
 }
