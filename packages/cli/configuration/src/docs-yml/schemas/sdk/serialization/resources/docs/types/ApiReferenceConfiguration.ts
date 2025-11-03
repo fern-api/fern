@@ -25,6 +25,7 @@ export const ApiReferenceConfiguration: core.serialization.ObjectSchema<
         snippets: SnippetsConfiguration.optional(),
         summary: core.serialization.string().optional(),
         layout: core.serialization.list(core.serialization.lazy(() => serializers.ApiReferenceLayoutItem)).optional(),
+        collapsed: core.serialization.boolean().optional(),
         icon: core.serialization.string().optional(),
         slug: core.serialization.string().optional(),
         hidden: core.serialization.boolean().optional(),
@@ -48,6 +49,7 @@ export declare namespace ApiReferenceConfiguration {
         snippets?: SnippetsConfiguration.Raw | null;
         summary?: string | null;
         layout?: serializers.ApiReferenceLayoutItem.Raw[] | null;
+        collapsed?: boolean | null;
         icon?: string | null;
         slug?: string | null;
         hidden?: boolean | null;

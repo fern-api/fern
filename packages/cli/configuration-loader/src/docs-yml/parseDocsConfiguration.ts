@@ -990,6 +990,7 @@ async function convertNavigationItem({
             navigation:
                 rawConfig.layout?.flatMap((item) => parseApiReferenceLayoutItem(item, absolutePathToConfig)) ?? [],
             overviewAbsolutePath: resolveFilepath(rawConfig.summary, absolutePathToConfig),
+            collapsed: rawConfig.collapsed ?? undefined,
             hidden: rawConfig.hidden ?? undefined,
             slug: rawConfig.slug,
             skipUrlSlug: rawConfig.skipSlug ?? false,
