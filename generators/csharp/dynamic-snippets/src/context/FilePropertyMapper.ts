@@ -1,5 +1,5 @@
 import { assertNever } from "@fern-api/core-utils";
-import { ast } from "@fern-api/csharp-codegen";
+import { ast, WithGeneration } from "@fern-api/csharp-codegen";
 import { FernIr } from "@fern-api/dynamic-ir-sdk";
 
 import { DynamicSnippetsGeneratorContext } from "./DynamicSnippetsGeneratorContext";
@@ -9,15 +9,12 @@ export interface FilePropertyInfo {
     bodyPropertyFields: ast.ConstructorField[];
 }
 
-export class FilePropertyMapper {
+export class FilePropertyMapper extends WithGeneration {
     private context: DynamicSnippetsGeneratorContext;
 
     constructor({ context }: { context: DynamicSnippetsGeneratorContext }) {
+        super(context);
         this.context = context;
-    }
-
-    private get csharp() {
-        return this.context.csharp;
     }
 
     public getFilePropertyInfo({
@@ -85,7 +82,7 @@ export class FilePropertyMapper {
             return this.csharp.TypeLiteral.nop();
         }
         return this.csharp.TypeLiteral.list({
-            valueType: this.csharp.Type.reference(this.context.getFileParameterClassReference()),
+            valueType: this.csharp.Type.reference(this.types.FileParameter),
             values: fileValues.map((value) => this.context.getFileParameterForString(value))
         });
     }

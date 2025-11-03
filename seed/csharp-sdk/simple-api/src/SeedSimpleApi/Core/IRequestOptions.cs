@@ -1,6 +1,3 @@
-using System.Collections.Generic;
-using System.Net.Http;
-
 namespace SeedSimpleApi.Core;
 
 internal interface IRequestOptions

@@ -6,27 +6,23 @@ import {
     TypeId,
     WellKnownProtobufType
 } from "@fern-fern/ir-sdk/api";
-import { camelCase } from "lodash-es";
 import { ast } from "../";
 import { CsharpGeneratorContext } from "../context/CsharpGeneratorContext";
 import { CsharpTypeMapper } from "../context/CsharpTypeMapper";
 import { BaseCsharpCustomConfigSchema } from "../custom-config/BaseCsharpCustomConfigSchema";
+import { camelCase } from "../utils/text";
+import { WithGeneration } from "../with-generation";
 import { ResolvedWellKnownProtobufType } from "./ResolvedWellKnownProtobufType";
 
-export class ProtobufResolver {
-    private context: CsharpGeneratorContext<BaseCsharpCustomConfigSchema>;
+export class ProtobufResolver extends WithGeneration {
     private csharpTypeMapper: CsharpTypeMapper;
 
     public constructor(
-        context: CsharpGeneratorContext<BaseCsharpCustomConfigSchema>,
+        private readonly context: CsharpGeneratorContext<BaseCsharpCustomConfigSchema>,
         csharpTypeMapper: CsharpTypeMapper
     ) {
-        this.context = context;
+        super(context);
         this.csharpTypeMapper = csharpTypeMapper;
-    }
-
-    private get csharp() {
-        return this.context.csharp;
     }
 
     public resolveWellKnownProtobufType(
@@ -48,24 +44,23 @@ export class ProtobufResolver {
         switch (protobufType.type) {
             case "wellKnown": {
                 return this.csharpTypeMapper.convertToClassReference(
-                    this.context.getTypeDeclarationOrThrow(typeId).name
+                    this.model.dereferenceType(typeId).typeDeclaration
                 );
             }
             case "userDefined": {
                 const protoNamespace = this.context.protobufResolver.getNamespaceFromProtobufFileOrThrow(
                     protobufType.file
                 );
-                const rootNamespace = this.context.getNamespace();
                 const aliasSuffix = camelCase(
                     protoNamespace
                         .split(".")
-                        .filter((segment) => !rootNamespace.split(".").includes(segment))
+                        .filter((segment) => !this.namespaces.root.split(".").includes(segment))
                         .join("_")
                 );
                 return this.csharp.classReference({
                     name: protobufType.name.originalName,
                     namespace: this.context.protobufResolver.getNamespaceFromProtobufFileOrThrow(protobufType.file),
-                    namespaceAlias: `Proto${aliasSuffix.charAt(0).toUpperCase() + aliasSuffix.slice(1)}`
+                    namespaceAlias: `Proto${aliasSuffix.charAt(0).toUpperCase()}${aliasSuffix.slice(1)}`
                 });
             }
         }

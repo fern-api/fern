@@ -1,6 +1,3 @@
-using System.Collections.Generic;
-using System.Net.Http;
-
 namespace SeedBasicAuth.Core;
 
 internal interface IRequestOptions

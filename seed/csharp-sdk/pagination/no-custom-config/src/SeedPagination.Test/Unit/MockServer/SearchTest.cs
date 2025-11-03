@@ -1,4 +1,3 @@
-using System.Threading.Tasks;
 using NUnit.Framework;
 using SeedPagination;
 
@@ -77,7 +76,7 @@ public class SearchTest : BaseMockServerTest
                 Query = new SingleFilterSearchRequest
                 {
                     Field = "field",
-                    Operator = SingleFilterSearchRequestOperator.Equals,
+                    Operator = SingleFilterSearchRequestOperator.Equals_,
                     Value = "value",
                 },
             }

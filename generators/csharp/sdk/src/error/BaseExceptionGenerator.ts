@@ -8,15 +8,15 @@ import { SdkGeneratorContext } from "../SdkGeneratorContext";
 export class BaseExceptionGenerator extends FileGenerator<CSharpFile, SdkCustomConfigSchema, SdkGeneratorContext> {
     public doGenerate(): CSharpFile {
         const class_ = this.csharp.class_({
-            ...this.context.getBaseExceptionClassReference(),
+            reference: this.types.BaseException,
             access: ast.Access.Public,
-            parentClassReference: this.csharp.System.Exception,
+            parentClassReference: this.extern.System.Exception,
             primaryConstructor: {
                 parameters: [
-                    this.csharp.parameter({ name: "message", type: this.csharp.Type.string() }),
+                    this.csharp.parameter({ name: "message", type: this.csharp.Type.string }),
                     this.csharp.parameter({
                         name: "innerException",
-                        type: this.csharp.Type.optional(this.csharp.Type.reference(this.csharp.System.Exception)),
+                        type: this.csharp.Type.optional(this.csharp.Type.reference(this.extern.System.Exception)),
                         initializer: "null"
                     })
                 ],
@@ -29,14 +29,11 @@ export class BaseExceptionGenerator extends FileGenerator<CSharpFile, SdkCustomC
             directory: this.context.getPublicCoreDirectory(),
             allNamespaceSegments: this.context.getAllNamespaceSegments(),
             allTypeClassReferences: this.context.getAllTypeClassReferences(),
-            namespace: this.context.getNamespace(),
-            customConfig: this.context.customConfig
+            namespace: this.namespaces.root,
+            generation: this.generation
         });
     }
     protected getFilepath(): RelativeFilePath {
-        return join(
-            this.context.project.filepaths.getPublicCoreFilesDirectory(),
-            RelativeFilePath.of(`${this.context.getBaseExceptionClassReference().name}.cs`)
-        );
+        return join(this.constants.folders.publicCoreFiles, RelativeFilePath.of(`${this.types.BaseException.name}.cs`));
     }
 }

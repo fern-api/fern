@@ -1,3 +1,6 @@
+import { fail } from "node:assert";
+import { at } from "@fern-api/browser-compatible-base-generator";
+import { dynamic, Name, NameAndWireValue } from "@fern-fern/ir-sdk/api";
 import {
     And,
     Annotation,
@@ -11,62 +14,68 @@ import {
     ConstructorField,
     CoreClassReference,
     Dictionary,
+    DictionaryEntry,
     Enum,
     EnumInstantiation,
-    Field,
     Interface,
     List,
-    Method,
     MethodInvocation,
     Or,
     Parameter,
+    InstantiatedPrimitive as PrimitiveInstantiation,
+    ReadOnlyMemory,
     String_,
     Switch,
     Ternary,
     TestClass,
     Type,
     TypeLiteral,
-    TypeParameter
+    TypeParameter,
+    XmlDocBlock
 } from "./ast";
-import { PrimitiveInstantiation } from "./ast/InstantiatedPrimitive";
-import { ReadOnlyMemory } from "./ast/ReadOnlymemory";
-import {
-    ActionType,
-    ArrayType,
-    BinaryType,
-    BooleanType,
-    CoreReferenceType,
-    CsharpTypeType,
-    DateOnlyType,
-    DateTimeType,
-    DoubleType,
-    FileParameterType,
-    FloatType,
-    FuncType,
-    IDictionaryType,
-    IntegerType,
-    KeyValuePairType,
-    ListType,
-    ListTypeType,
-    LongType,
-    MapType,
-    ObjectType,
-    OneOfBaseType,
-    OneOfType,
-    OptionalType,
-    ReferenceType,
-    SetType,
-    StringEnumType,
-    StringType,
-    UintType,
-    UlongType,
-    UuidType
-} from "./ast/Type";
-import { DictionaryEntry } from "./ast/TypeLiteral";
-import { XmlDocBlock } from "./ast/XmlDocBlock";
-import { BaseCsharpCustomConfigSchema } from "./custom-config/BaseCsharpCustomConfigSchema";
-import { NameRegistry } from "./utils/nameRegistry";
-import { stacktrace } from "./utils/stacktrace";
+import { Generation } from "./context/generation-info";
+import { IrNode, Origin } from "./context/model-navigator";
+import { NameRegistry } from "./context/name-registry";
+import { lazy } from "./utils/lazy";
+
+interface ClassRefArgsWithNamespace extends ClassReference.Args {
+    namespace: string;
+    enclosingType?: never;
+}
+
+interface ClassRefArgsWithEnclosingType extends ClassReference.Args {
+    enclosingType: ClassReference;
+    namespace?: never;
+}
+
+interface ClassRefWithOriginAndNamespace extends Omit<ClassReference.Args, "name"> {
+    origin: Origin;
+    namespace: string;
+}
+
+interface ClassRefWithOriginAndEnclosingType extends Omit<ClassReference.Args, "name"> {
+    origin: Origin;
+    enclosingType: ClassReference;
+    namespace?: never;
+}
+
+interface ClassArgsWithOrigin extends Class.Args {
+    origin: Origin;
+    name?: never;
+}
+
+interface ClassArgsWithName extends Class.Args {
+    name: string;
+    origin?: never;
+}
+
+interface ClassArgsWithReference extends Class.Args {
+    reference: ClassReference;
+    name?: never; // this should be propogated from reference
+    namespace?: never; // this should be propogated from reference
+    enclosingType?: never; // this should be propogated from reference
+    //origin?: never; // (TODO: removethis?)  this should be propogated from reference
+}
 
 /**
  * Main class for generating C# code using an Abstract Syntax Tree (AST) approach.
@@ -78,21 +87,20 @@ import { stacktrace } from "./utils/stacktrace";
  * The class supports a "freeze" mechanism where after freezing, any new class references
  * are tracked separately to help identify missing dependencies during code generation.
  *
- * @example
- * ```typescript
- * const csharp = new CSharp();
- * const myClass = csharp.class_({
- *   name: "MyClass",
- *   namespace: "MyNamespace"
- * });
  * ```
  */
 export class CSharp {
     /**
      * Registry for managing class names and ensuring proper namespace resolution.
      * This registry tracks all known classes and their fully qualified names.
+     * Now also handles member-level name registration and conflict resolution.
      */
-    public readonly nameRegistry = new NameRegistry();
+
+    constructor(private readonly generation: Generation) {}
+
+    private get model() {
+        return this.generation.model;
+    }
 
     /**
      * Indicates whether the class reference registry has been frozen.
@@ -117,41 +125,48 @@ export class CSharp {
      * @param args - Configuration for the class reference including name, namespace, and optional generics
      * @returns A ClassReference object representing the C# class
      *
-     * @example
-     * ```typescript
-     * const stringRef = csharp.classReference({
-     *   name: "String",
-     *   namespace: "System"
-     * });
-     *
-     * const genericListRef = csharp.classReference({
-     *   name: "List",
-     *   namespace: "System.Collections.Generic",
-     *   generics: [stringRef]
-     * });
-     * ```
      */
-    public classReference(args: ClassReference.Args): ClassReference {
-        const fullyQualifiedName = NameRegistry.fullyQualifiedNameOf(args);
+    public classReference(
+        argz:
+            | ClassRefArgsWithNamespace
+            | ClassRefArgsWithEnclosingType
+            | ClassRefWithOriginAndNamespace
+            | ClassRefWithOriginAndEnclosingType
+    ): ClassReference {
+        return this.classReferenceInternal(argz as ClassReference.Args);
+    }
+
+    public classReferenceInternal(args: ClassReference.Args): ClassReference {
+        // if we're given an origin, we need to turn that into a name
+        if (!args.name && "origin" in args && args.origin) {
+            args.name = this.model.getClassNameFor(args.origin);
+        }
+
+        if (args.enclosingType) {
+            if (args.namespace) {
+                throw new Error(`ClassReference: Both enclosingType and namespace cannot be provided`);
+            }
+            args.namespace = args.enclosingType.namespace;
+        }
+        const expectedFQN = NameRegistry.fullyQualifiedNameOf(args);
         if (this.frozen) {
             // check if the class reference is already known
-            if (!this.nameRegistry.isRegistered(fullyQualifiedName)) {
+            if (!this.generation.registry.isRegisteredTypeName(expectedFQN)) {
                 // this wasn't in the registry before we were frozen.
-                let set = this.extraClassReferences.get(fullyQualifiedName);
+                let set = this.extraClassReferences.get(expectedFQN);
                 if (!set) {
                     set = new Set();
-                    this.extraClassReferences.set(fullyQualifiedName, set);
+                    this.extraClassReferences.set(expectedFQN, set);
                 }
 
                 // remember where we saw this type being used
-                set.add(
-                    `${fullyQualifiedName} -\n${stacktrace()
-                        .map((each) => `   ${each.fn} - ${each.path}:${each.position}`)
-                        .join("\n")}`
-                );
+                set.add(`${expectedFQN} -\n${at()}`);
             }
         }
-        return this.nameRegistry.createClassReference(args, fullyQualifiedName, this);
+        return this.generation.registry.registerClassReference(
+            args as ClassReference.Args & { namespace: string },
+            expectedFQN
+        );
     }
 
     /**
@@ -163,14 +178,43 @@ export class CSharp {
         this.frozen = true;
     }
 
+    getPropertyName(
+        enclosingType: ClassReference,
+        property: (IrNode & { name: Name | dynamic.Name }) | (IrNode & { name: NameAndWireValue })
+    ) {
+        const expectedName = this.model.getPropertyNameFor(property);
+        const origin =
+            this.model.origin(property) ??
+            fail(`Origin not found for property: ${JSON.stringify(property).substring(0, 100)}`);
+
+        const value = enclosingType.getFieldName(origin, expectedName);
+
+        if (value) {
+            // we have been told there is a member that looks like the one we want.
+            return value;
+        }
+
+        // there isn't anything registered that looks like the one we want.
+        // we're going to complain, but give them the expected name for now.
+        // when we have the order of creation sorted all out, this should be an error.
+        this.generation.logger.warn(
+            `NOTE: getPropertyName: ${enclosingType.fullyQualifiedName} using unregistered property ${expectedName}`
+        );
+        return expectedName;
+    }
+
     /**
      * Creates a C# class definition.
      *
      * @param args - Configuration for the class including name, namespace, fields, methods, etc.
      * @returns A Class object representing the C# class definition
      */
-    class_(args: Class.Args): Class {
-        return new Class(args, this);
+    class_(args: ClassArgsWithOrigin | ClassArgsWithName | ClassArgsWithReference): Class {
+        let classArgs: Class.Args = args as Class.Args;
+        if ("reference" in args) {
+            classArgs = { ...args.reference, ...args };
+        }
+        return new Class(classArgs, this.generation);
     }
 
     /**
@@ -180,7 +224,7 @@ export class CSharp {
      * @returns A TestClass object representing the C# test class definition
      */
     public testClass(args: TestClass.Args): TestClass {
-        return new TestClass(args, this);
+        return new TestClass(args, this.generation);
     }
 
     /**
@@ -190,7 +234,7 @@ export class CSharp {
      * @returns An Annotation object representing the C# attribute
      */
     public annotation(args: Annotation.Args): Annotation {
-        return new Annotation(args, this);
+        return new Annotation(args, this.generation);
     }
 
     /**
@@ -200,7 +244,7 @@ export class CSharp {
      * @returns A ClassInstantiation object representing the C# object creation
      */
     public instantiateClass(args: ClassInstantiation.Args): ClassInstantiation {
-        return new ClassInstantiation(args, this);
+        return new ClassInstantiation(args, this.generation);
     }
 
     /**
@@ -210,7 +254,7 @@ export class CSharp {
      * @returns A MethodInvocation object representing the C# method call
      */
     public invokeMethod(args: MethodInvocation.Args): MethodInvocation {
-        return new MethodInvocation(args, this);
+        return new MethodInvocation(args, this.generation);
     }
 
     /**
@@ -220,7 +264,7 @@ export class CSharp {
      * @returns A CoreClassReference object representing the C# core type
      */
     public coreClassReference(args: CoreClassReference.Args): CoreClassReference {
-        return new CoreClassReference(args, this);
+        return new CoreClassReference(args, this.generation);
     }
 
     /**
@@ -230,27 +274,7 @@ export class CSharp {
      * @returns A CodeBlock object representing the C# code block
      */
     public codeblock(arg: CodeBlock.Arg): CodeBlock {
-        return new CodeBlock(arg, this);
-    }
-
-    /**
-     * Creates a C# field definition.
-     *
-     * @param args - Configuration for the field including name, type, and modifiers
-     * @returns A Field object representing the C# field
-     */
-    public field(args: Field.Args): Field {
-        return new Field(args, this);
-    }
-
-    /**
-     * Creates a C# method definition.
-     *
-     * @param args - Configuration for the method including name, parameters, return type, and body
-     * @returns A Method object representing the C# method
-     */
-    public method(args: Method.Args): Method {
-        return new Method(args, this);
+        return new CodeBlock(arg, this.generation);
     }
 
     /**
@@ -270,7 +294,7 @@ export class CSharp {
      * @returns A Parameter object representing the C# parameter
      */
     public parameter(args: Parameter.Args): Parameter {
-        return new Parameter(args, this);
+        return new Parameter(args, this.generation);
     }
 
     /**
@@ -283,7 +307,7 @@ export class CSharp {
         if (typeof args === "string") {
             args = { name: args };
         }
-        return new TypeParameter(args, this);
+        return new TypeParameter(args, this.generation);
     }
 
     /**
@@ -293,7 +317,7 @@ export class CSharp {
      * @returns An Interface object representing the C# interface
      */
     public interface_(args: Interface.Args): Interface {
-        return new Interface(args, this);
+        return new Interface(args, this.generation);
     }
 
     /**
@@ -303,7 +327,7 @@ export class CSharp {
      * @returns An Enum object representing the C# enum
      */
     public enum_(args: Enum.Args): Enum {
-        return new Enum(args, this);
+        return new Enum(args, this.generation);
     }
 
     /**
@@ -313,7 +337,7 @@ export class CSharp {
      * @returns A Dictionary object representing the C# dictionary literal
      */
     public dictionary(args: Dictionary.Args): Dictionary {
-        return new Dictionary(args, this);
+        return new Dictionary(args, this.generation);
     }
 
     /**
@@ -323,7 +347,7 @@ export class CSharp {
      * @returns A List object representing the C# list literal
      */
     public list(args: List.Args): List {
-        return new List(args, this);
+        return new List(args, this.generation);
     }
 
     /**
@@ -333,17 +357,17 @@ export class CSharp {
      * @returns A ReadOnlyMemory object representing the C# ReadOnlyMemory expression
      */
     public readOnlyMemory(args: ReadOnlyMemory.Args): ReadOnlyMemory {
-        return new ReadOnlyMemory(args, this);
+        return new ReadOnlyMemory(args, this.generation);
     }
 
     /**
      * Creates a C# set literal expression.
      *
      * @param args - Configuration for the set including elements
-     * @returns A SetType object representing the C# set literal
+     * @returns A Set object representing the C# set literal
      */
     public set(args: AstSet.Args): AstSet {
-        return new AstSet(args, this);
+        return new AstSet(args, this.generation);
     }
 
     /**
@@ -353,7 +377,7 @@ export class CSharp {
      * @returns A Switch object representing the C# switch statement
      */
     public switch_(args: Switch.Args): Switch {
-        return new Switch(args, this);
+        return new Switch(args, this.generation);
     }
 
     /**
@@ -363,7 +387,7 @@ export class CSharp {
      * @returns A Ternary object representing the C# ternary expression
      */
     public ternary(args: Ternary.Args): Ternary {
-        return new Ternary(args, this);
+        return new Ternary(args, this.generation);
     }
 
     /**
@@ -373,7 +397,7 @@ export class CSharp {
      * @returns An And object representing the C# logical AND expression
      */
     public and(args: And.Args): And {
-        return new And(args, this);
+        return new And(args, this.generation);
     }
 
     /**
@@ -383,7 +407,7 @@ export class CSharp {
      * @returns An Or object representing the C# logical OR expression
      */
     public or(args: Or.Args): Or {
-        return new Or(args, this);
+        return new Or(args, this.generation);
     }
 
     /**
@@ -393,7 +417,7 @@ export class CSharp {
      * @returns An EnumInstantiation object representing the C# enum value
      */
     public enumInstantiation(args: EnumInstantiation.Args): EnumInstantiation {
-        return new EnumInstantiation(args, this);
+        return new EnumInstantiation(args, this.generation);
     }
 
     /**
@@ -403,7 +427,7 @@ export class CSharp {
      * @returns A String_ object representing the C# string literal
      */
     public string_(args: String_.Args): String_ {
-        return new String_(args, this);
+        return new String_(args, this.generation);
     }
 
     /**
@@ -413,7 +437,7 @@ export class CSharp {
      * @returns An XmlDocBlock object representing the C# XML documentation
      */
     public xmlDocBlock(arg: XmlDocBlock.Arg): XmlDocBlock {
-        return new XmlDocBlock(arg, this);
+        return new XmlDocBlock(arg, this.generation);
     }
 
     /**
@@ -434,7 +458,7 @@ export class CSharp {
                     type: "string",
                     value
                 },
-                this
+                this.generation
             );
         },
 
@@ -450,7 +474,7 @@ export class CSharp {
                     type: "boolean",
                     value
                 },
-                this
+                this.generation
             );
         },
 
@@ -466,7 +490,7 @@ export class CSharp {
                     type: "integer",
                     value
                 },
-                this
+                this.generation
             );
         },
 
@@ -482,7 +506,7 @@ export class CSharp {
                     type: "long",
                     value
                 },
-                this
+                this.generation
             );
         },
 
@@ -498,7 +522,7 @@ export class CSharp {
                     type: "uint",
                     value
                 },
-                this
+                this.generation
             );
         },
 
@@ -514,7 +538,7 @@ export class CSharp {
                     type: "ulong",
                     value
                 },
-                this
+                this.generation
             );
         },
 
@@ -530,7 +554,7 @@ export class CSharp {
                     type: "float",
                     value
                 },
-                this
+                this.generation
             );
         },
 
@@ -546,7 +570,7 @@ export class CSharp {
                     type: "double",
                     value
                 },
-                this
+                this.generation
             );
         },
 
@@ -562,7 +586,7 @@ export class CSharp {
                     type: "date",
                     value
                 },
-                this
+                this.generation
             );
         },
 
@@ -580,7 +604,7 @@ export class CSharp {
                     value,
                     parse
                 },
-                this
+                this.generation
             );
         },
 
@@ -596,7 +620,7 @@ export class CSharp {
                     type: "uuid",
                     value
                 },
-                this
+                this.generation
             );
         },
 
@@ -610,57 +634,8 @@ export class CSharp {
                 {
                     type: "null"
                 },
-                this
+                this.generation
             );
-        }
-    };
-
-    /** Universal Type Guard functions
-     *
-     * Using these functions on objects is preferable to sniffing the internals of the object.
-     * Using the type guard functions allows TypeScript to infer the type of the object in the block following.
-     *
-     * @see https://www.typescriptlang.org/docs/handbook/2/narrowing.html#using-type-guards
-     */
-    public is = {
-        string: (value: unknown): value is string => typeof value === "string",
-        boolean: (value: unknown): value is boolean => typeof value === "boolean",
-        number: (value: unknown): value is number => typeof value === "number",
-        date: (value: unknown): value is Date => value instanceof Date,
-        object: (value: unknown): value is object =>
-            value !== null && typeof value === "object" && Array.isArray(value) === false,
-        array: (value: unknown): value is unknown[] => Array.isArray(value),
-
-        Type: {
-            string: (value: Type | undefined) => value instanceof StringType,
-            boolean: (value: Type | undefined) => value instanceof BooleanType,
-            int: (value: Type | undefined) => value instanceof IntegerType,
-            long: (value: Type | undefined) => value instanceof LongType,
-            uint: (value: Type | undefined) => value instanceof UintType,
-            ulong: (value: Type | undefined) => value instanceof UlongType,
-            float: (value: Type | undefined) => value instanceof FloatType,
-            double: (value: Type | undefined) => value instanceof DoubleType,
-            dateTime: (value: Type | undefined) => value instanceof DateTimeType,
-            uuid: (value: Type | undefined) => value instanceof UuidType,
-            object: (value: Type | undefined) => value instanceof ObjectType,
-            array: (value: Type | undefined) => value instanceof ArrayType,
-            listType: (value: Type | undefined) => value instanceof ListTypeType,
-            list: (value: Type | undefined) => value instanceof ListType,
-            set: (value: Type | undefined) => value instanceof SetType,
-            map: (value: Type | undefined) => value instanceof MapType,
-            idictionary: (value: Type | undefined) => value instanceof IDictionaryType,
-            keyValuePair: (value: Type | undefined) => value instanceof KeyValuePairType,
-            optional: (value: Type | undefined) => value instanceof OptionalType,
-            fileParam: (value: Type | undefined) => value instanceof FileParameterType,
-            func: (value: Type | undefined) => value instanceof FuncType,
-            action: (value: Type | undefined) => value instanceof ActionType,
-            csharpType: (value: Type | undefined) => value instanceof CsharpTypeType,
-            byte: (value: Type | undefined) => value instanceof BinaryType,
-            reference: (value: Type | undefined) => value instanceof ReferenceType,
-            coreReference: (value: Type | undefined) => value instanceof CoreReferenceType,
-            oneOf: (value: Type | undefined) => value instanceof OneOfType,
-            oneOfBase: (value: Type | undefined) => value instanceof OneOfBaseType,
-            stringEnum: (value: Type | undefined) => value instanceof StringEnumType
         }
     };
 
@@ -669,14 +644,14 @@ export class CSharp {
      * These methods create Type objects that represent C# type declarations
      * including primitive types, collections, and custom types.
      */
-    public Type = {
+    public Type = lazy({
         /**
          * Creates a string type.
          *
          * @returns A Type object representing the C# string type
          */
         string: () => {
-            return new StringType(this);
+            return new Type.String(this.generation);
         },
 
         /**
@@ -685,7 +660,7 @@ export class CSharp {
          * @returns A Type object representing the C# string type
          */
         binary: () => {
-            return new BinaryType(this);
+            return new Type.Binary(this.generation);
         },
 
         /**
@@ -694,7 +669,7 @@ export class CSharp {
          * @returns A Type object representing the C# bool type
          */
         boolean: () => {
-            return new BooleanType(this);
+            return new Type.Boolean(this.generation);
         },
 
         /**
@@ -703,7 +678,7 @@ export class CSharp {
          * @returns A Type object representing the C# int type
          */
         integer: () => {
-            return new IntegerType(this);
+            return new Type.Integer(this.generation);
         },
 
         /**
@@ -712,7 +687,7 @@ export class CSharp {
          * @returns A Type object representing the C# long type
          */
         long: () => {
-            return new LongType(this);
+            return new Type.Long(this.generation);
         },
 
         /**
@@ -721,7 +696,7 @@ export class CSharp {
          * @returns A Type object representing the C# uint type
          */
         uint: () => {
-            return new UintType(this);
+            return new Type.Uint(this.generation);
         },
 
         /**
@@ -730,7 +705,7 @@ export class CSharp {
          * @returns A Type object representing the C# ulong type
          */
         ulong: () => {
-            return new UlongType(this);
+            return new Type.ULong(this.generation);
         },
 
         /**
@@ -739,7 +714,7 @@ export class CSharp {
          * @returns A Type object representing the C# float type
          */
         float: () => {
-            return new FloatType(this);
+            return new Type.Float(this.generation);
         },
 
         /**
@@ -748,7 +723,7 @@ export class CSharp {
          * @returns A Type object representing the C# double type
          */
         double: () => {
-            return new DoubleType(this);
+            return new Type.Double(this.generation);
         },
 
         /**
@@ -757,7 +732,7 @@ export class CSharp {
          * @returns A Type object representing the C# DateOnly type
          */
         dateOnly: () => {
-            return new DateOnlyType(this);
+            return new Type.DateOnly(this.generation);
         },
 
         /**
@@ -766,7 +741,7 @@ export class CSharp {
          * @returns A Type object representing the C# DateTime type
          */
         dateTime: () => {
-            return new DateTimeType(this);
+            return new Type.DateTime(this.generation);
         },
 
         /**
@@ -775,7 +750,7 @@ export class CSharp {
          * @returns A Type object representing the C# Guid type
          */
         uuid: () => {
-            return new UuidType(this);
+            return new Type.Uuid(this.generation);
         },
 
         /**
@@ -784,7 +759,7 @@ export class CSharp {
          * @returns A Type object representing the C# object type
          */
         object: () => {
-            return new ObjectType(this);
+            return new Type.Object(this.generation);
         },
 
         /**
@@ -794,7 +769,7 @@ export class CSharp {
          * @returns A Type object representing the C# array type
          */
         array: (value: Type) => {
-            return new ArrayType(value, this);
+            return new Type.Array(value, this.generation);
         },
 
         /**
@@ -804,7 +779,7 @@ export class CSharp {
          * @returns A Type object representing the C# List<T> type
          */
         listType: (value: Type) => {
-            return new ListTypeType(value, this);
+            return new Type.ListType(value, this.generation);
         },
 
         /**
@@ -814,7 +789,7 @@ export class CSharp {
          * @returns A Type object representing the C# List<T> type
          */
         list: (value: Type) => {
-            return new ListType(value, this);
+            return new Type.List(value, this.generation);
         },
 
         /**
@@ -824,7 +799,7 @@ export class CSharp {
          * @returns A Type object representing the C# HashSet<T> type
          */
         set: (value: Type) => {
-            return new SetType(value, this);
+            return new Type.Set(value, this.generation);
         },
 
         /**
@@ -836,7 +811,7 @@ export class CSharp {
          * @returns A Type object representing the C# Dictionary<TKey, TValue> type
          */
         map: (keyType: Type, valueType: Type, options?: { dontSimplify?: boolean }) => {
-            return new MapType(keyType, valueType, this, options);
+            return new Type.Map(keyType, valueType, this.generation, options);
         },
 
         /**
@@ -847,8 +822,13 @@ export class CSharp {
          * @param options - Optional configuration for the dictionary
          * @returns A Type object representing the C# IDictionary<TKey, TValue> type
          */
-        idictionary: (keyType: Type, valueType: Type, options?: { dontSimplify?: boolean }) => {
-            return new IDictionaryType(keyType, valueType, this, options);
+        idictionary: (keyType: Type, valueType: Type | ClassReference, options?: { dontSimplify?: boolean }) => {
+            return new Type.IDictionary(
+                keyType,
+                valueType instanceof ClassReference ? this.Type.reference(valueType) : valueType,
+                this.generation,
+                options
+            );
         },
 
         /**
@@ -859,7 +839,7 @@ export class CSharp {
          * @returns A Type object representing the C# KeyValuePair<TKey, TValue> type
          */
         keyValuePair: (keyType: Type, valueType: Type) => {
-            return new KeyValuePairType(keyType, valueType, this);
+            return new Type.KeyValuePair(keyType, valueType, this.generation);
         },
 
         /**
@@ -869,11 +849,11 @@ export class CSharp {
          * @returns A Type object representing the C# nullable type (T?)
          */
         optional: (value: Type) => {
-            if (value instanceof OptionalType) {
+            if (value instanceof Type.Optional) {
                 // Avoids double optional.
                 return value;
             }
-            return new OptionalType(value, this);
+            return new Type.Optional(value, this.generation);
         },
 
         /**
@@ -883,7 +863,7 @@ export class CSharp {
          * @returns A Type object representing the custom class type
          */
         reference: (value: ClassReference) => {
-            return new ReferenceType(value, this);
+            return new Type.Reference(value, this.generation);
         },
 
         /**
@@ -893,7 +873,7 @@ export class CSharp {
          * @returns A Type object representing the core class type
          */
         coreClass: (value: CoreClassReference) => {
-            return new CoreReferenceType(value, this);
+            return new Type.CoreReference(value, this.generation);
         },
 
         /**
@@ -903,7 +883,7 @@ export class CSharp {
          * @returns A Type object representing the OneOf<T1, T2, ...> type
          */
         oneOf: (memberValues: Type[]) => {
-            return new OneOfType(memberValues, this);
+            return new Type.OneOf(memberValues, this.generation);
         },
 
         /**
@@ -913,7 +893,7 @@ export class CSharp {
          * @returns A Type object representing the OneOfBase<T1, T2, ...> type
          */
         oneOfBase: (memberValues: Type[]) => {
-            return new OneOfBaseType(memberValues, this);
+            return new Type.OneOfBase(memberValues, this.generation);
         },
 
         /**
@@ -923,7 +903,7 @@ export class CSharp {
          * @returns A Type object representing the string enum type
          */
         stringEnum: (value: ClassReference) => {
-            return new StringEnumType(value, this);
+            return new Type.StringEnum(value, this.generation);
         },
 
         /**
@@ -933,7 +913,7 @@ export class CSharp {
          * @returns A Type object representing the C# Action<T1, T2, ...> type
          */
         action: ({ typeParameters }: { typeParameters: (Type | TypeParameter)[] }) => {
-            return new ActionType(typeParameters, this);
+            return new Type.Action(typeParameters, this.generation);
         },
 
         /**
@@ -950,7 +930,7 @@ export class CSharp {
             typeParameters: (Type | TypeParameter)[];
             returnType: Type | TypeParameter;
         }) => {
-            return new FuncType(typeParameters, returnType, this);
+            return new Type.Func(typeParameters, returnType, this.generation);
         },
 
         /**
@@ -958,8 +938,8 @@ export class CSharp {
          *
          * @returns A Type object representing a generic C# type
          */
-        csharpType: () => {
-            return new CsharpTypeType(this);
+        systemType: () => {
+            return new Type.SystemType(this.generation);
         },
 
         /**
@@ -969,9 +949,9 @@ export class CSharp {
          * @returns A Type object representing a file parameter type
          */
         fileParam: (classReference: ClassReference) => {
-            return new FileParameterType(classReference, this);
+            return new Type.FileParameter(classReference, this.generation);
         }
-    };
+    });
 
     /**
      * Factory methods for creating C# type literals.
@@ -987,7 +967,7 @@ export class CSharp {
          * @returns A TypeLiteral object representing the class initialization
          */
         class_: ({ reference, fields }: { reference: ClassReference; fields: ConstructorField[] }) => {
-            return new TypeLiteral({ type: "class", reference, fields }, this);
+            return new TypeLiteral({ type: "class", reference, fields }, this.generation);
         },
 
         /**
@@ -1007,7 +987,7 @@ export class CSharp {
             valueType: Type;
             entries: DictionaryEntry[];
         }) => {
-            return new TypeLiteral({ type: "dictionary", keyType, valueType, entries }, this);
+            return new TypeLiteral({ type: "dictionary", keyType, valueType, entries }, this.generation);
         },
 
         /**
@@ -1018,7 +998,7 @@ export class CSharp {
          * @returns A TypeLiteral object representing the list initialization
          */
         list: ({ valueType, values }: { valueType: Type; values: TypeLiteral[] }) => {
-            return new TypeLiteral({ type: "list", valueType, values }, this);
+            return new TypeLiteral({ type: "list", valueType, values }, this.generation);
         },
 
         /**
@@ -1029,7 +1009,7 @@ export class CSharp {
          * @returns A TypeLiteral object representing the set initialization
          */
         set: ({ valueType, values }: { valueType: Type; values: TypeLiteral[] }) => {
-            return new TypeLiteral({ type: "set", valueType, values }, this);
+            return new TypeLiteral({ type: "set", valueType, values }, this.generation);
         },
 
         /**
@@ -1039,7 +1019,7 @@ export class CSharp {
          * @returns A TypeLiteral object representing the boolean literal
          */
         boolean: (value: boolean) => {
-            return new TypeLiteral({ type: "boolean", value }, this);
+            return new TypeLiteral({ type: "boolean", value }, this.generation);
         },
 
         /**
@@ -1049,7 +1029,7 @@ export class CSharp {
          * @returns A TypeLiteral object representing the float literal
          */
         float: (value: number) => {
-            return new TypeLiteral({ type: "float", value }, this);
+            return new TypeLiteral({ type: "float", value }, this.generation);
         },
 
         /**
@@ -1059,7 +1039,7 @@ export class CSharp {
          * @returns A TypeLiteral object representing the date literal
          */
         date: (value: string) => {
-            return new TypeLiteral({ type: "date", value }, this);
+            return new TypeLiteral({ type: "date", value }, this.generation);
         },
 
         /**
@@ -1069,7 +1049,7 @@ export class CSharp {
          * @returns A TypeLiteral object representing the DateTime literal
          */
         datetime: (value: string) => {
-            return new TypeLiteral({ type: "datetime", value }, this);
+            return new TypeLiteral({ type: "datetime", value }, this.generation);
         },
 
         /**
@@ -1079,7 +1059,7 @@ export class CSharp {
          * @returns A TypeLiteral object representing the decimal literal
          */
         decimal: (value: number) => {
-            return new TypeLiteral({ type: "decimal", value }, this);
+            return new TypeLiteral({ type: "decimal", value }, this.generation);
         },
 
         /**
@@ -1089,7 +1069,7 @@ export class CSharp {
          * @returns A TypeLiteral object representing the double literal
          */
         double: (value: number) => {
-            return new TypeLiteral({ type: "double", value }, this);
+            return new TypeLiteral({ type: "double", value }, this.generation);
         },
 
         /**
@@ -1099,7 +1079,7 @@ export class CSharp {
          * @returns A TypeLiteral object representing the integer literal
          */
         integer: (value: number) => {
-            return new TypeLiteral({ type: "integer", value }, this);
+            return new TypeLiteral({ type: "integer", value }, this.generation);
         },
 
         /**
@@ -1109,7 +1089,7 @@ export class CSharp {
          * @returns A TypeLiteral object representing the long literal
          */
         long: (value: number) => {
-            return new TypeLiteral({ type: "long", value }, this);
+            return new TypeLiteral({ type: "long", value }, this.generation);
         },
 
         /**
@@ -1119,7 +1099,7 @@ export class CSharp {
          * @returns A TypeLiteral object representing the uint literal
          */
         uint: (value: number) => {
-            return new TypeLiteral({ type: "uint", value }, this);
+            return new TypeLiteral({ type: "uint", value }, this.generation);
         },
 
         /**
@@ -1129,7 +1109,7 @@ export class CSharp {
          * @returns A TypeLiteral object representing the ulong literal
          */
         ulong: (value: number) => {
-            return new TypeLiteral({ type: "ulong", value }, this);
+            return new TypeLiteral({ type: "ulong", value }, this.generation);
         },
 
         /**
@@ -1144,7 +1124,7 @@ export class CSharp {
                     type: "reference",
                     value
                 },
-                this
+                this.generation
             );
         },
 
@@ -1160,7 +1140,7 @@ export class CSharp {
                     type: "string",
                     value
                 },
-                this
+                this.generation
             );
         },
 
@@ -1170,7 +1150,7 @@ export class CSharp {
          * @returns A TypeLiteral object representing the null literal
          */
         null: () => {
-            return new TypeLiteral({ type: "null" }, this);
+            return new TypeLiteral({ type: "null" }, this.generation);
         },
 
         /**
@@ -1179,7 +1159,7 @@ export class CSharp {
          * @returns A TypeLiteral object representing a no-operation literal
          */
         nop: () => {
-            return new TypeLiteral({ type: "nop" }, this);
+            return new TypeLiteral({ type: "nop" }, this.generation);
         },
 
         /**
@@ -1189,7 +1169,7 @@ export class CSharp {
          * @returns A TypeLiteral object representing the unknown literal
          */
         unknown: (value: unknown) => {
-            return new TypeLiteral({ type: "unknown", value }, this);
+            return new TypeLiteral({ type: "unknown", value }, this.generation);
         },
 
         /**
@@ -1212,7 +1192,9 @@ export class CSharp {
      * @returns An XmlDocBlock instance
      */
     public xmlDocBlockOf(xmlDocBlockLike: XmlDocBlock.Like): XmlDocBlock {
-        return xmlDocBlockLike instanceof XmlDocBlock ? xmlDocBlockLike : new XmlDocBlock(xmlDocBlockLike, this);
+        return xmlDocBlockLike instanceof XmlDocBlock
+            ? xmlDocBlockLike
+            : new XmlDocBlock(xmlDocBlockLike, this.generation);
     }
 
     /**
@@ -1242,633 +1224,17 @@ export class CSharp {
      * are supported by the code generator. If any invalid types are found, it throws an error
      * with details about which types are valid.
      *
-     * @param customConfig - The custom configuration schema to validate
      * @throws Error if any invalid types are found in the read-only-memory-types configuration
      */
-    validateReadOnlyMemoryTypes(customConfig: BaseCsharpCustomConfigSchema): void {
-        const readOnlyMemoryTypes = customConfig["read-only-memory-types"];
-        if (readOnlyMemoryTypes != null) {
-            for (const type of readOnlyMemoryTypes) {
-                if (!this.VALID_READ_ONLY_MEMORY_TYPES.has(type)) {
-                    throw new Error(
-                        `Type "${type}" is not a valid 'read-only-memory-types' custom config option; expected one of ${JSON.stringify(
-                            this.VALID_READ_ONLY_MEMORY_TYPES
-                        )}.`
-                    );
-                }
+    validateReadOnlyMemoryTypes(): void {
+        for (const type of this.generation.settings.readOnlyMemoryTypes) {
+            if (!this.VALID_READ_ONLY_MEMORY_TYPES.has(type)) {
+                throw new Error(
+                    `Type "${type}" is not a valid 'read-only-memory-types' custom config option; expected one of ${JSON.stringify(
+                        this.VALID_READ_ONLY_MEMORY_TYPES
+                    )}.`
+                );
             }
         }
     }
-
-    /**
-     * Pre-defined references to commonly used System namespace classes and types.
-     * This object provides convenient access to standard .NET Framework types
-     * without having to manually create class references.
-     */
-    readonly System = {
-        /**
-         * Reference to System.Enum class.
-         */
-        Enum: this.classReference({
-            name: "Enum",
-            namespace: "System"
-        }),
-
-        /**
-         * Reference to System.Exception class.
-         */
-        Exception: this.classReference({
-            name: "Exception",
-            namespace: "System"
-        }),
-
-        /**
-         * Reference to System.SerializableAttribute class.
-         */
-        Serializable: this.classReference({
-            name: "Serializable",
-            namespace: "System"
-        }),
-
-        /**
-         * Reference to System.String class.
-         */
-        String: this.classReference({
-            name: "String",
-            namespace: "System"
-        }),
-
-        /**
-         * Reference to System.TimeSpan class.
-         */
-        TimeSpan: this.classReference({
-            name: "TimeSpan",
-            namespace: "System"
-        }),
-        /**
-         * Reference to System.Uri class.
-         */
-        Uri: this.classReference({
-            name: "Uri",
-            namespace: "System"
-        }),
-        /**
-         * Reference to System.UriBuilder class.
-         */
-        UriBuilder: this.classReference({
-            name: "UriBuilder",
-            namespace: "System"
-        }),
-        /**
-         * Runtime namespace references.
-         */
-        Runtime: {
-            /**
-             * Serialization namespace references.
-             */
-            Serialization: {
-                /**
-                 * Reference to System.Runtime.Serialization.EnumMemberAttribute class.
-                 */
-                EnumMember: this.classReference({
-                    name: "EnumMember",
-                    namespace: "System.Runtime.Serialization"
-                })
-            } as const
-        } as const,
-        /**
-         * Collections namespace references.
-         */
-        Collections: {
-            /**
-             * Generic collections namespace references.
-             */
-            Generic: {
-                /**
-                 * Creates a reference to IAsyncEnumerable<T>.
-                 *
-                 * @param elementType - The element type (optional)
-                 * @returns A ClassReference for IAsyncEnumerable<T>
-                 */
-                IAsyncEnumerable: (elementType?: ClassReference | TypeParameter | Type) => {
-                    return this.classReference({
-                        name: "IAsyncEnumerable",
-                        namespace: "System.Collections.Generic",
-                        generics: elementType ? [elementType] : undefined
-                    });
-                },
-
-                /**
-                 * Creates a reference to IEnumerable<T>.
-                 *
-                 * @param elementType - The element type (optional)
-                 * @returns A ClassReference for IEnumerable<T>
-                 */
-                IEnumerable: (elementType?: ClassReference | TypeParameter | Type) => {
-                    return this.classReference({
-                        name: "IEnumerable",
-                        namespace: "System.Collections.Generic",
-                        generics: elementType ? [elementType] : undefined
-                    });
-                },
-
-                /**
-                 * Creates a reference to KeyValuePair<TKey, TValue>.
-                 *
-                 * @param keyType - The key type (optional)
-                 * @param valueType - The value type (optional)
-                 * @returns A ClassReference for KeyValuePair<TKey, TValue>
-                 */
-                KeyValuePair: (
-                    keyType?: ClassReference | TypeParameter | Type,
-                    valueType?: ClassReference | TypeParameter | Type
-                ) => {
-                    return this.classReference({
-                        name: "KeyValuePair",
-                        namespace: "System.Collections.Generic",
-                        generics: keyType && valueType ? [keyType, valueType] : undefined
-                    });
-                },
-
-                /**
-                 * Creates a reference to List<T>.
-                 *
-                 * @param elementType - The element type (optional)
-                 * @returns A ClassReference for List<T>
-                 */
-                List: (elementType?: ClassReference | TypeParameter | Type) => {
-                    return this.classReference({
-                        name: "List",
-                        namespace: "System.Collections.Generic",
-                        generics: elementType ? [elementType] : undefined
-                    });
-                },
-
-                /**
-                 * Creates a reference to HashSet<T>.
-                 *
-                 * @param elementType - The element type (optional)
-                 * @returns A ClassReference for HashSet<T>
-                 */
-                HashSet: (elementType?: ClassReference | TypeParameter | Type) => {
-                    return this.classReference({
-                        name: "HashSet",
-                        namespace: "System.Collections.Generic",
-                        generics: elementType ? [elementType] : undefined
-                    });
-                },
-
-                /**
-                 * Creates a reference to Dictionary<TKey, TValue>.
-                 *
-                 * @param keyType - The key type (optional)
-                 * @param valueType - The value type (optional)
-                 * @returns A ClassReference for Dictionary<TKey, TValue>
-                 */
-                Dictionary: (
-                    keyType?: ClassReference | TypeParameter | Type,
-                    valueType?: ClassReference | TypeParameter | Type
-                ) => {
-                    return this.classReference({
-                        name: "Dictionary",
-                        namespace: "System.Collections.Generic",
-                        generics: keyType && valueType ? [keyType, valueType] : undefined
-                    });
-                }
-            } as const,
-
-            /**
-             * LINQ namespace references.
-             */
-            Linq: {
-                /**
-                 * Reference to System.Linq.Enumerable class.
-                 */
-                Enumerable: this.classReference({
-                    name: "Enumerable",
-                    namespace: "System.Linq"
-                })
-            } as const
-        } as const,
-        /**
-         * Globalization namespace references.
-         */
-        Globalization: {
-            /**
-             * Reference to System.Globalization.DateTimeStyles enum.
-             */
-            DateTimeStyles: this.classReference({
-                name: "DateTimeStyles",
-                namespace: "System.Globalization"
-            })
-        } as const,
-
-        /**
-         * LINQ namespace references.
-         */
-        Linq: {
-            /**
-             * Reference to System.Linq.Enumerable class.
-             */
-            Enumerable: this.classReference({
-                name: "Enumerable",
-                namespace: "System.Linq"
-            })
-        } as const,
-        /**
-         * Net namespace references.
-         */
-        Net: {
-            /**
-             * HTTP namespace references.
-             */
-            Http: {
-                /**
-                 * Reference to System.Net.Http.HttpClient class.
-                 */
-                HttpClient: this.classReference({
-                    name: "HttpClient",
-                    namespace: "System.Net.Http"
-                }),
-
-                /**
-                 * Reference to System.Net.Http.HttpMethod class.
-                 */
-                HttpMethod: this.classReference({
-                    name: "HttpMethod",
-                    namespace: "System.Net.Http"
-                }),
-
-                /**
-                 * Reference to System.Net.Http.Headers.HttpResponseHeaders class.
-                 */
-                HttpResponseHeaders: this.classReference({
-                    name: "HttpResponseHeaders",
-                    namespace: "System.Net.Http.Headers"
-                })
-            } as const,
-            /**
-             * ServerSentEvents namespace references.
-             */
-            ServerSentEvents: {
-                /**
-                 * Reference to System.Net.ServerSentEvents.SseEvent class.
-                 */
-                SseEvent: this.classReference({
-                    name: "SseEvent",
-                    namespace: "System.Net.ServerSentEvents"
-                }),
-                SseParser: this.classReference({
-                    name: "SseParser",
-                    namespace: "System.Net.ServerSentEvents"
-                })
-            } as const,
-            WebSockets: {
-                ClientWebSocketOptions: this.classReference({
-                    name: "ClientWebSocketOptions",
-                    namespace: "System.Net.WebSockets"
-                })
-            } as const
-        } as const,
-        /**
-         * IO namespace references.
-         */
-        IO: {
-            /**
-             * Reference to System.IO.MemoryStream class.
-             */
-            MemoryStream: this.classReference({
-                name: "MemoryStream",
-                namespace: "System.IO"
-            }),
-            Stream: this.classReference({
-                name: "Stream",
-                namespace: "System.IO"
-            }),
-            /**
-             * Reference to System.IO.StreamReader class.
-             */
-            StreamReader: this.classReference({
-                name: "StreamReader",
-                namespace: "System.IO"
-            })
-        } as const,
-        /**
-         * Text namespace references.
-         */
-        Text: {
-            /**
-             * Reference to System.Text.Encoding class.
-             */
-            Encoding: this.classReference({
-                name: "Encoding",
-                namespace: "System.Text"
-            }),
-
-            /**
-             * Reference to System.Text.Encoding.UTF8 class.
-             */
-            Encoding_UTF8: this.classReference({
-                name: "UTF8",
-                namespace: "System.Text",
-                enclosingType: this.classReference({
-                    name: "Encoding",
-                    namespace: "System.Text"
-                })
-            }),
-            /**
-             * JSON namespace references.
-             */
-            Json: {
-                /**
-                 * Reference to System.Text.Json.JsonElement class.
-                 */
-                JsonElement: this.classReference({
-                    name: "JsonElement",
-                    namespace: "System.Text.Json"
-                }),
-
-                /**
-                 * Reference to System.Text.Json.JsonDocument class.
-                 */
-                JsonDocument: this.classReference({
-                    name: "JsonDocument",
-                    namespace: "System.Text.Json"
-                }),
-
-                /**
-                 * Reference to System.Text.Json.JsonException class.
-                 */
-                JsonException: this.classReference({
-                    name: "JsonException",
-                    namespace: "System.Text.Json"
-                }),
-
-                /**
-                 * Reference to System.Text.Json.Utf8JsonReader class.
-                 */
-                Utf8JsonReader: this.classReference({
-                    name: "Utf8JsonReader",
-                    namespace: "System.Text.Json"
-                }),
-
-                /**
-                 * Reference to System.Text.Json.JsonSerializerOptions class.
-                 */
-                JsonSerializerOptions: this.classReference({
-                    name: "JsonSerializerOptions",
-                    namespace: "System.Text.Json"
-                }),
-
-                /**
-                 * Reference to System.Text.Json.JsonSerializer class.
-                 */
-                JsonSerializer: this.classReference({
-                    name: "JsonSerializer",
-                    namespace: "System.Text.Json"
-                }),
-
-                /**
-                 * Reference to System.Text.Json.Utf8JsonWriter class.
-                 */
-                Utf8JsonWriter: this.classReference({
-                    name: "Utf8JsonWriter",
-                    namespace: "System.Text.Json"
-                }),
-
-                /**
-                 * JSON Nodes namespace references.
-                 */
-                Nodes: {
-                    /**
-                     * Reference to System.Text.Json.Nodes.JsonNode class.
-                     */
-                    JsonNode: this.classReference({
-                        name: "JsonNode",
-                        namespace: "System.Text.Json.Nodes"
-                    }),
-
-                    /**
-                     * Reference to System.Text.Json.Nodes.JsonObject class.
-                     */
-                    JsonObject: this.classReference({
-                        name: "JsonObject",
-                        namespace: "System.Text.Json.Nodes"
-                    })
-                } as const,
-                /**
-                 * JSON Serialization namespace references.
-                 */
-                Serialization: {
-                    /**
-                     * Reference to System.Text.Json.Serialization.IJsonOnDeserialized interface.
-                     */
-                    IJsonOnDeserialized: this.classReference({
-                        name: "IJsonOnDeserialized",
-                        namespace: "System.Text.Json.Serialization"
-                    }),
-
-                    /**
-                     * Reference to System.Text.Json.Serialization.IJsonOnSerializing interface.
-                     */
-                    IJsonOnSerializing: this.classReference({
-                        name: "IJsonOnSerializing",
-                        namespace: "System.Text.Json.Serialization"
-                    }),
-
-                    /**
-                     * Reference to System.Text.Json.Serialization.JsonOnDeserializedAttribute class.
-                     */
-                    JsonOnDeserializedAttribute: this.classReference({
-                        name: "JsonOnDeserializedAttribute",
-                        namespace: "System.Text.Json.Serialization"
-                    }),
-
-                    /**
-                     * Reference to System.Text.Json.Serialization.JsonExtensionDataAttribute class.
-                     */
-                    JsonExtensionData: this.classReference({
-                        name: "JsonExtensionData",
-                        namespace: "System.Text.Json.Serialization"
-                    }),
-
-                    /**
-                     * Creates a reference to JsonConverter<T>.
-                     *
-                     * @param typeToConvert - The type to convert (optional)
-                     * @returns A ClassReference for JsonConverter<T>
-                     */
-                    JsonConverter: (typeToConvert?: ClassReference | TypeParameter | Type) => {
-                        return this.classReference({
-                            name: "JsonConverter",
-                            namespace: "System.Text.Json.Serialization",
-                            generics: typeToConvert ? [typeToConvert] : undefined
-                        });
-                    },
-
-                    /**
-                     * Reference to System.Text.Json.Serialization.JsonIgnoreAttribute class.
-                     */
-                    JsonIgnore: this.classReference({
-                        name: "JsonIgnore",
-                        namespace: "System.Text.Json.Serialization"
-                    }),
-
-                    /**
-                     * Reference to System.Text.Json.Serialization.JsonPropertyNameAttribute class.
-                     */
-                    JsonPropertyName: this.classReference({
-                        name: "JsonPropertyName",
-                        namespace: "System.Text.Json.Serialization"
-                    })
-                } as const
-            } as const
-        } as const,
-        /**
-         * Threading namespace references.
-         */
-        Threading: {
-            /**
-             * Reference to System.Threading.CancellationToken struct.
-             */
-            CancellationToken: this.classReference({
-                name: "CancellationToken",
-                namespace: "System.Threading"
-            }),
-
-            /**
-             * Tasks namespace references.
-             */
-            Tasks: {
-                /**
-                 * Creates a reference to Task<T>.
-                 *
-                 * @param ofType - The result type (optional)
-                 * @returns A ClassReference for Task<T>
-                 */
-                Task: (ofType?: ClassReference | TypeParameter | Type) => {
-                    return this.classReference({
-                        name: "Task",
-                        namespace: "System.Threading.Tasks",
-                        generics: ofType ? [ofType] : undefined
-                    });
-                }
-            } as const
-        } as const
-    } as const;
-
-    /**
-     * Pre-defined references to NUnit testing framework classes and attributes.
-     * This object provides convenient access to NUnit test attributes
-     * for generating test classes and methods.
-     */
-    readonly NUnit = {
-        /**
-         * NUnit Framework namespace references.
-         */
-        Framework: {
-            /**
-             * Reference to NUnit.Framework.TestFixtureAttribute class.
-             */
-            TestFixture: this.classReference({
-                name: "TestFixture",
-                namespace: "NUnit.Framework"
-            }),
-
-            /**
-             * Reference to NUnit.Framework.TestAttribute class.
-             */
-            Test: this.classReference({
-                name: "Test",
-                namespace: "NUnit.Framework"
-            })
-        } as const
-    } as const;
-    /**
-     * Pre-defined references to OneOf library classes for union types.
-     * This object provides convenient access to OneOf union type classes
-     * for creating discriminated unions in C#.
-     */
-    readonly OneOf = {
-        /**
-         * Creates a reference to OneOf<T1, T2, ...>.
-         *
-         * @param generics - Array of generic type parameters (optional)
-         * @returns A ClassReference for OneOf<T1, T2, ...>
-         */
-        OneOf: (generics?: ClassReference[] | TypeParameter[] | Type[]) => {
-            return this.classReference({
-                name: "OneOf",
-                namespace: "OneOf",
-                generics
-            });
-        },
-
-        /**
-         * Creates a reference to OneOfBase<T1, T2, ...>.
-         *
-         * @param generics - Array of generic type parameters (optional)
-         * @returns A ClassReference for OneOfBase<T1, T2, ...>
-         */
-        OneOfBase: (generics?: ClassReference[] | TypeParameter[] | Type[]) => {
-            return this.classReference({
-                name: "OneOfBase",
-                namespace: "OneOf",
-                generics
-            });
-        }
-    } as const;
-
-    /**
-     * Pre-defined references to Google Protocol Buffers classes.
-     * This object provides convenient access to Google.Protobuf types
-     * for working with Protocol Buffer well-known types.
-     */
-    public Google = {
-        /**
-         * Protocol Buffers namespace references.
-         */
-        Protobuf: {
-            /**
-             * Well-known types namespace references with namespace alias.
-             */
-            WellKnownTypes: {
-                /**
-                 * Reference to Google.Protobuf.WellKnownTypes.Struct class.
-                 */
-                Struct: this.classReference({
-                    name: "Struct",
-                    namespace: "Google.Protobuf.WellKnownTypes",
-                    namespaceAlias: "WellKnownProto"
-                }),
-
-                /**
-                 * Reference to Google.Protobuf.WellKnownTypes.Value class.
-                 */
-                Value: this.classReference({
-                    name: "Value",
-                    namespace: "Google.Protobuf.WellKnownTypes",
-                    namespaceAlias: "WellKnownProto"
-                }),
-
-                /**
-                 * Reference to Google.Protobuf.WellKnownTypes.ListValue class.
-                 */
-                ListValue: this.classReference({
-                    name: "ListValue",
-                    namespace: "Google.Protobuf.WellKnownTypes",
-                    namespaceAlias: "WellKnownProto"
-                }),
-
-                /**
-                 * Reference to Google.Protobuf.WellKnownTypes.Timestamp class.
-                 */
-                Timestamp: this.classReference({
-                    name: "Timestamp",
-                    namespace: "Google.Protobuf.WellKnownTypes",
-                    namespaceAlias: "WellKnownProto"
-                })
-            } as const
-        } as const
-    } as const;
 }

@@ -1,5 +1,4 @@
 using SeedExhaustive;
-using System.Threading.Tasks;
 using SeedExhaustive.Endpoints.Params;
 
 namespace Usage;
@@ -14,10 +13,16 @@ public class Example24
             }
         );
 
-        await client.Endpoints.Params.GetWithQueryAsync(
-            new GetWithQuery {
-                Query = "query",
-                Number = 1
+        await client.Endpoints.Params.GetWithAllowMultipleQueryAsync(
+            new GetWithMultipleQuery {
+                Query = new List<string>(){
+                    "query",
+                }
+                ,
+                Number = new List<int>(){
+                    1,
+                }
+
             }
         );
     }

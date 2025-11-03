@@ -46,7 +46,49 @@ export class ReadmeSnippetBuilder extends AbstractReadmeSnippetBuilder {
             this.context.ir.readmeConfig?.defaultEndpoint != null
                 ? this.context.ir.readmeConfig.defaultEndpoint
                 : this.getDefaultEndpointId();
-        this.requestOptionsName = this.context.getRequestOptionsClassReference().name;
+        this.requestOptionsName = this.types.RequestOptions.name;
+    }
+    protected get generation() {
+        return this.context.generation;
+    }
+    protected get namespaces() {
+        return this.generation.namespaces;
+    }
+    protected get registry() {
+        return this.generation.registry;
+    }
+    protected get extern() {
+        return this.generation.extern;
+    }
+    protected get settings() {
+        return this.generation.settings;
+    }
+    protected get constants() {
+        return this.generation.constants;
+    }
+    protected get names() {
+        return this.generation.names;
+    }
+    protected get types() {
+        return this.generation.types;
+    }
+    protected get model() {
+        return this.generation.model;
+    }
+    protected get csharp() {
+        return this.generation.csharp;
+    }
+    protected get System() {
+        return this.extern.System;
+    }
+    protected get NUnit() {
+        return this.extern.NUnit;
+    }
+    protected get OneOf() {
+        return this.extern.OneOf;
+    }
+    protected get Google() {
+        return this.extern.Google;
     }
 
     public buildReadmeSnippets(): Record<FernGeneratorCli.FeatureId, string[]> {
@@ -58,7 +100,7 @@ export class ReadmeSnippetBuilder extends AbstractReadmeSnippetBuilder {
         if (this.isPaginationEnabled) {
             snippets[FernGeneratorCli.StructuredFeatureId.Pagination] = this.buildPaginationSnippets();
         }
-        if (this.context.isForwardCompatibleEnumsEnabled()) {
+        if (this.context.settings.isForwardCompatibleEnumsEnabled) {
             snippets[ReadmeSnippetBuilder.FORWARD_COMPATIBLE_ENUMS_FEATURE_ID] =
                 this.buildForwardCompatibleEnumSnippets();
         }
@@ -107,11 +149,11 @@ var response = await ${this.getMethodCall(timeoutEndpoint)}(
         );
         return exceptionHandlingEndpoints.map((exceptionHandlingEndpoint) =>
             this.writeCode(`
-using ${this.context.getNamespace()};
+using ${this.namespaces.root};
 
 try {
     var response = await ${this.getMethodCall(exceptionHandlingEndpoint)}(...);
-} catch (${this.context.getBaseApiExceptionClassReference().name} e) {
+} catch (${this.types.BaseApiException.name} e) {
     System.Console.WriteLine(e.Body);
     System.Console.WriteLine(e.StatusCode);
 }
@@ -278,6 +320,6 @@ ${enumName} ${enumCamelCaseName}FromString = (${enumName})"${firstEnumValueWire}
     }
 
     private writeCode(s: string): string {
-        return s.trim() + "\n";
+        return `${s.trim()}\n`;
     }
 }

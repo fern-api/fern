@@ -28,55 +28,54 @@ export class MultiUrlEnvironmentGenerator extends FileGenerator<
 
     public doGenerate(): CSharpFile {
         const class_ = this.csharp.class_({
-            ...this.context.getEnvironmentsClassReference(),
+            reference: this.types.Environments,
             partial: false,
             access: ast.Access.Public,
-            annotations: [this.context.getSerializableAttribute()]
+            annotations: [this.extern.System.Serializable]
         });
 
         for (const environment of this.multiUrlEnvironments.environments) {
-            class_.addField(
-                this.csharp.field({
-                    access: ast.Access.Public,
-                    static_: true,
-                    readonly: true,
-                    name:
-                        (this.context.customConfig["pascal-case-environments"] ?? true)
-                            ? environment.name.pascalCase.safeName
-                            : environment.name.screamingSnakeCase.safeName,
-                    type: this.csharp.Type.reference(this.context.getEnvironmentsClassReference()),
-                    initializer: this.csharp.codeblock((writer) => {
-                        writer.writeNode(
-                            this.csharp.instantiateClass({
-                                classReference: class_.reference,
-                                arguments_: Object.entries(environment.urls).map(([id, url]) => {
-                                    const baseUrl = this.multiUrlEnvironments.baseUrls.find((url) => url.id === id);
-                                    if (baseUrl == null) {
-                                        throw new Error(`Failed to find base url with id ${id}`);
-                                    }
-                                    return {
-                                        name: baseUrl?.name.pascalCase.safeName ?? "",
-                                        assignment: this.csharp.codeblock(this.csharp.string_({ string: url }))
-                                    };
-                                })
+            class_.addField({
+                origin: class_.explicit(
+                    this.settings.pascalCaseEnvironments
+                        ? environment.name.pascalCase.safeName
+                        : environment.name.screamingSnakeCase.safeName
+                ),
+                enclosingType: class_,
+                access: ast.Access.Public,
+                static_: true,
+                readonly: true,
+
+                type: this.csharp.Type.reference(this.types.Environments),
+                initializer: this.csharp.codeblock((writer) => {
+                    writer.writeNode(
+                        this.csharp.instantiateClass({
+                            classReference: class_.reference,
+                            arguments_: Object.entries(environment.urls).map(([id, url]) => {
+                                const baseUrl = this.multiUrlEnvironments.baseUrls.find((url) => url.id === id);
+                                if (baseUrl == null) {
+                                    throw new Error(`Failed to find base url with id ${id}`);
+                                }
+                                return {
+                                    name: baseUrl?.name.pascalCase.safeName ?? "",
+                                    assignment: this.csharp.codeblock(this.csharp.string_({ string: url }))
+                                };
                             })
-                        );
-                    })
+                        })
+                    );
                 })
-            );
+            });
         }
 
         for (const baseUrl of this.multiUrlEnvironments.baseUrls) {
-            class_.addField(
-                this.csharp.field({
-                    access: ast.Access.Public,
-                    name: baseUrl.name.pascalCase.safeName,
-                    type: this.csharp.Type.string(),
-                    get: true,
-                    init: true,
-                    summary: `URL for the ${baseUrl.id} service`
-                })
-            );
+            class_.addField({
+                origin: baseUrl,
+                access: ast.Access.Public,
+                type: this.csharp.Type.string,
+                get: true,
+                init: true,
+                summary: `URL for the ${baseUrl.id} service`
+            });
         }
 
         return new CSharpFile({
@@ -84,8 +83,8 @@ export class MultiUrlEnvironmentGenerator extends FileGenerator<
             directory: RelativeFilePath.of(this.context.getPublicCoreDirectory()),
             allNamespaceSegments: this.context.getAllNamespaceSegments(),
             allTypeClassReferences: this.context.getAllTypeClassReferences(),
-            namespace: this.context.getNamespace(),
-            customConfig: this.context.customConfig
+            namespace: this.namespaces.root,
+            generation: this.generation
         });
     }
 
@@ -97,15 +96,12 @@ export class MultiUrlEnvironmentGenerator extends FileGenerator<
         });
 
         return this.csharp.instantiateClass({
-            classReference: this.context.getEnvironmentsClassReference(),
+            classReference: this.types.Environments,
             arguments_
         });
     }
 
     protected getFilepath(): RelativeFilePath {
-        return join(
-            this.context.project.filepaths.getPublicCoreFilesDirectory(),
-            RelativeFilePath.of(`${this.context.getEnvironmentsClassReference().name}.cs`)
-        );
+        return join(this.constants.folders.publicCoreFiles, RelativeFilePath.of(`${this.types.Environments.name}.cs`));
     }
 }

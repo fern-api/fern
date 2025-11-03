@@ -1,6 +1,5 @@
 import { File, GeneratorNotificationService } from "@fern-api/base-generator";
 import { AbstractCsharpGeneratorCli, TestFileGenerator } from "@fern-api/csharp-base";
-import { CSharp } from "@fern-api/csharp-codegen";
 import {
     generateModels,
     generateTests as generateModelTests,
@@ -58,14 +57,6 @@ export class SdkGeneratorCLI extends AbstractCsharpGeneratorCli<SdkCustomConfigS
     }
 
     private validateCustomConfig(customConfig: SdkCustomConfigSchema): SdkCustomConfigSchema {
-        this.validateExceptionClassNames(customConfig);
-        // todo: fix this
-        new CSharp().validateReadOnlyMemoryTypes(customConfig);
-
-        return customConfig;
-    }
-
-    private validateExceptionClassNames(customConfig: SdkCustomConfigSchema): void {
         const baseExceptionClassName = customConfig["base-exception-class-name"];
         const baseApiExceptionClassName = customConfig["base-api-exception-class-name"];
 
@@ -76,6 +67,7 @@ export class SdkGeneratorCLI extends AbstractCsharpGeneratorCli<SdkCustomConfigS
         ) {
             throw new Error("The 'base-api-exception-class-name' and 'base-exception-class-name' cannot be the same.");
         }
+        return customConfig;
     }
 
     protected async publishPackage(context: SdkGeneratorContext): Promise<void> {
@@ -135,10 +127,11 @@ export class SdkGeneratorCLI extends AbstractCsharpGeneratorCli<SdkCustomConfigS
             }
         }
 
-        Object.entries(context.ir.subpackages).forEach(([_, subpackage]) => {
+        const subpackages = context.getSubpackages(Object.keys(context.ir.subpackages));
+        for (const subpackage of subpackages) {
             const service = subpackage.service != null ? context.getHttpServiceOrThrow(subpackage.service) : undefined;
             // skip subpackages that have no endpoints (recursively)
-            if (context.subPackageHasEndpoints(subpackage)) {
+            if (context.subPackageHasEndpointsRecursively(subpackage)) {
                 const subClient = new SubPackageClientGenerator({
                     context,
                     subpackage,
@@ -152,7 +145,7 @@ export class SdkGeneratorCLI extends AbstractCsharpGeneratorCli<SdkCustomConfigS
                 }
             }
 
-            if (context.subPackageHasWebsocketEndpoints(subpackage)) {
+            if (context.subPackageHasWebsocketEndpointsRecursively(subpackage)) {
                 const websocketChannel = context.getWebsocketChannel(subpackage.websocket);
                 if (websocketChannel) {
                     const websocketApi = new WebSocketClientGenerator({
@@ -163,7 +156,7 @@ export class SdkGeneratorCLI extends AbstractCsharpGeneratorCli<SdkCustomConfigS
                     context.project.addSourceFiles(websocketApi.generate());
                 }
             }
-        });
+        }
 
         const baseOptionsGenerator = new BaseOptionsGenerator(context);
 
@@ -202,7 +195,7 @@ export class SdkGeneratorCLI extends AbstractCsharpGeneratorCli<SdkCustomConfigS
             context.project.addSourceFiles(oauthTokenProvider.generate());
         }
 
-        if (context.customConfig["generate-error-types"] ?? true) {
+        if (context.settings.generateErrorTypes) {
             for (const _error of Object.values(context.ir.errors)) {
                 const errorGenerator = new ErrorGenerator(context, _error);
                 context.project.addSourceFiles(errorGenerator.generate());

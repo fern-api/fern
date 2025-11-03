@@ -128,7 +128,7 @@ await client.PathParam.SendAsync(Operand.GreaterThan, Color.Red);
 <dl>
 <dd>
 
-**operandOrColor:** `OneOf.OneOf<Color, Operand>` 
+**operandOrColor:** `OneOf<Color, Operand>` 
     
 </dd>
 </dl>

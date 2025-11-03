@@ -1,5 +1,3 @@
-using System.Collections.Generic;
-using System.Net.Http;
 using SeedOauthClientCredentialsWithVariables.Core;
 
 namespace SeedOauthClientCredentialsWithVariables;

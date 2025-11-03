@@ -6,8 +6,6 @@ import { SdkCustomConfigSchema } from "../SdkCustomConfig";
 import { SdkGeneratorContext } from "../SdkGeneratorContext";
 import { BaseOptionsGenerator } from "./BaseOptionsGenerator";
 
-export const REQUEST_OPTIONS_CLASS_NAME = "RequestOptions";
-
 export class RequestOptionsGenerator extends FileGenerator<CSharpFile, SdkCustomConfigSchema, SdkGeneratorContext> {
     private baseOptionsGenerator: BaseOptionsGenerator;
 
@@ -19,27 +17,27 @@ export class RequestOptionsGenerator extends FileGenerator<CSharpFile, SdkCustom
 
     public doGenerate(): CSharpFile {
         const class_ = this.csharp.class_({
-            ...this.context.getRequestOptionsClassReference(),
+            reference: this.types.RequestOptions,
             partial: true,
             access: ast.Access.Public,
-            interfaceReferences: [this.context.getRequestOptionsInterfaceReference()],
-            annotations: [this.context.getSerializableAttribute()]
+            interfaceReferences: [this.types.RequestOptionsInterface],
+            annotations: [this.extern.System.Serializable]
         });
-        class_.addFields(this.baseOptionsGenerator.getRequestOptionFields());
+        this.baseOptionsGenerator.getRequestOptionFields(class_);
         return new CSharpFile({
             clazz: class_,
             directory: this.context.getPublicCoreDirectory(),
             allNamespaceSegments: this.context.getAllNamespaceSegments(),
             allTypeClassReferences: this.context.getAllTypeClassReferences(),
-            namespace: this.context.getPublicCoreNamespace(),
-            customConfig: this.context.customConfig
+            namespace: this.namespaces.publicCore,
+            generation: this.generation
         });
     }
 
     protected getFilepath(): RelativeFilePath {
         return join(
-            this.context.project.filepaths.getPublicCoreFilesDirectory(),
-            RelativeFilePath.of(`${REQUEST_OPTIONS_CLASS_NAME}.cs`)
+            this.constants.folders.publicCoreFiles,
+            RelativeFilePath.of(`${this.types.RequestOptions.name}.cs`)
         );
     }
 }

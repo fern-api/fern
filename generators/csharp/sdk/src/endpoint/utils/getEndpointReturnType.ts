@@ -14,7 +14,7 @@ export function getEndpointReturnType({
 }): ast.Type | undefined {
     if (endpoint.response?.body == null) {
         if (endpoint.method === FernIr.HttpMethod.Head) {
-            return context.csharp.Type.reference(context.getHttpResponseHeadersReference());
+            return context.csharp.Type.reference(context.extern.System.Net.Http.HttpResponseHeaders);
         }
         return undefined;
     }
@@ -24,7 +24,7 @@ export function getEndpointReturnType({
             context.System.Collections.Generic.IAsyncEnumerable(
                 context.csharpTypeMapper.convert({ reference: jsonChunk.payload })
             ).asTypeRef(),
-        text: () => context.System.Collections.Generic.IAsyncEnumerable(context.csharp.Type.string()).asTypeRef(),
+        text: () => context.System.Collections.Generic.IAsyncEnumerable(context.csharp.Type.string).asTypeRef(),
         sse: (sseChunk: FernIr.SseStreamChunk) =>
             context.System.Collections.Generic.IAsyncEnumerable(
                 context.csharpTypeMapper.convert({ reference: sseChunk.payload })
@@ -39,7 +39,7 @@ export function getEndpointReturnType({
         streamParameter: (reference) => reference.streamResponse._visit(streamResultType),
         fileDownload: () => context.System.IO.Stream.asFullyQualified().asTypeRef(),
         json: (reference) => context.csharpTypeMapper.convert({ reference: reference.responseBodyType }),
-        text: () => context.csharp.Type.string(),
+        text: () => context.csharp.Type.string,
         bytes: () => undefined,
         _other: () => undefined
     });

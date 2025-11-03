@@ -1,6 +1,3 @@
-using System.Collections.Generic;
-using System.Linq;
-using System.Net.Http;
 using SeedIdempotencyHeaders.Core;
 
 namespace SeedIdempotencyHeaders;
@@ -111,7 +108,7 @@ public partial class IdempotentRequestOptions : IIdempotentRequestOptions
     Headers IIdempotentRequestOptions.GetIdempotencyHeaders()
     {
         return new Headers(
-            new Dictionary<string, string>
+            new Dictionary<string, string>()
             {
                 ["Idempotency-Key"] = IdempotencyKey,
                 ["Idempotency-Expiration"] = IdempotencyExpiration.ToString(),

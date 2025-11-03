@@ -1,4 +1,3 @@
-using System.Threading.Tasks;
 using NUnit.Framework;
 using SeedLiteral;
 using SeedLiteral.Core;
@@ -13,26 +12,7 @@ public class SendTest : BaseMockServerTest
     {
         const string requestJson = """
             {
-              "prompt": "You are a helpful assistant",
-              "query": "query",
-              "stream": false,
-              "ending": "$ending",
-              "context": "You're super wise",
-              "maybeContext": "You're super wise",
-              "containerObject": {
-                "nestedObjects": [
-                  {
-                    "literal1": "literal1",
-                    "literal2": "literal2",
-                    "strProp": "strProp"
-                  },
-                  {
-                    "literal1": "literal1",
-                    "literal2": "literal2",
-                    "strProp": "strProp"
-                  }
-                ]
-              }
+              "query": "query"
             }
             """;
 
@@ -48,7 +28,8 @@ public class SendTest : BaseMockServerTest
             .Given(
                 WireMock
                     .RequestBuilders.Request.Create()
-                    .WithPath("/reference")
+                    .WithPath("/headers")
+                    .WithHeader("X-Endpoint-Version", "02-12-2024")
                     .UsingPost()
                     .WithBodyAsJson(requestJson)
             )
@@ -59,33 +40,12 @@ public class SendTest : BaseMockServerTest
                     .WithBody(mockResponse)
             );
 
-        var response = await Client.Reference.SendAsync(
-            new SendRequest
+        var response = await Client.Headers.SendAsync(
+            new SendLiteralsInHeadersRequest
             {
-                Prompt = "You are a helpful assistant",
+                EndpointVersion = "02-12-2024",
+                Async = true,
                 Query = "query",
-                Stream = false,
-                Ending = "$ending",
-                Context = "You're super wise",
-                MaybeContext = "You're super wise",
-                ContainerObject = new ContainerObject
-                {
-                    NestedObjects = new List<NestedObjectWithLiterals>()
-                    {
-                        new NestedObjectWithLiterals
-                        {
-                            Literal1 = "literal1",
-                            Literal2 = "literal2",
-                            StrProp = "strProp",
-                        },
-                        new NestedObjectWithLiterals
-                        {
-                            Literal1 = "literal1",
-                            Literal2 = "literal2",
-                            StrProp = "strProp",
-                        },
-                    },
-                },
             }
         );
         Assert.That(
@@ -99,19 +59,7 @@ public class SendTest : BaseMockServerTest
     {
         const string requestJson = """
             {
-              "prompt": "You are a helpful assistant",
-              "stream": false,
-              "context": "You're super wise",
-              "query": "What is the weather today",
-              "containerObject": {
-                "nestedObjects": [
-                  {
-                    "literal1": "literal1",
-                    "literal2": "literal2",
-                    "strProp": "strProp"
-                  }
-                ]
-              }
+              "query": "What is the weather today"
             }
             """;
 
@@ -127,7 +75,8 @@ public class SendTest : BaseMockServerTest
             .Given(
                 WireMock
                     .RequestBuilders.Request.Create()
-                    .WithPath("/reference")
+                    .WithPath("/headers")
+                    .WithHeader("X-Endpoint-Version", "02-12-2024")
                     .UsingPost()
                     .WithBodyAsJson(requestJson)
             )
@@ -138,25 +87,12 @@ public class SendTest : BaseMockServerTest
                     .WithBody(mockResponse)
             );
 
-        var response = await Client.Reference.SendAsync(
-            new SendRequest
+        var response = await Client.Headers.SendAsync(
+            new SendLiteralsInHeadersRequest
             {
-                Prompt = "You are a helpful assistant",
-                Stream = false,
-                Context = "You're super wise",
+                EndpointVersion = "02-12-2024",
+                Async = true,
                 Query = "What is the weather today",
-                ContainerObject = new ContainerObject
-                {
-                    NestedObjects = new List<NestedObjectWithLiterals>()
-                    {
-                        new NestedObjectWithLiterals
-                        {
-                            Literal1 = "literal1",
-                            Literal2 = "literal2",
-                            StrProp = "strProp",
-                        },
-                    },
-                },
             }
         );
         Assert.That(

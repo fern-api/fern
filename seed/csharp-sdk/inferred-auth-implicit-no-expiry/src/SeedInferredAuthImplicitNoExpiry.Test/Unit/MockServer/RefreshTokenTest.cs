@@ -1,4 +1,3 @@
-using System.Threading.Tasks;
 using NUnit.Framework;
 using SeedInferredAuthImplicitNoExpiry;
 using SeedInferredAuthImplicitNoExpiry.Core;

@@ -1,18 +1,22 @@
+import { enableStackTracking } from "../utils";
+import { frames, StackTraceFrame, stacktrace, startTracking, trackingType } from "../utils/stacktrace";
 import { AbstractAstNode } from "./AbstractAstNode";
 import { CodeBlock } from "./CodeBlock";
 
 const TAB_SIZE = 4;
-
-const enableStackTracking = !!process.env["FERN_STACK_TRACK"];
-
-if (enableStackTracking) {
-    // let it get more frames, we like to trim out a bunch.
-    Error.stackTraceLimit = 50;
-}
+// this will start tracking only when FERN_STACK_TRACK is defined
+// otherwise this has absolutely no effect whatsoever.
+startTracking({ skip: 0, maxFrames: 15, filterFunctions: ["Abstract"] });
 
 export class AbstractWriter {
+    /* The buffer of lines being written */
+    protected readonly lineBuffer: string[] = [];
+
     /* The contents being written */
-    public buffer = "";
+    public get buffer() {
+        return this.lineBuffer.join("\n") + (this.lastCharacterIsNewline ? "\n" : "");
+    }
+
     /* Indentation level (multiple of 4) */
     private indentLevel = 0;
     /* Whether anything has been written to the buffer */
@@ -21,6 +25,8 @@ export class AbstractWriter {
     private lastCharacterIsSemicolon = false;
     /* Whether the last character written was a newline */
     private lastCharacterIsNewline = false;
+    /* The stack traces associated with the current node */
+    private nodeStackFrames: StackTraceFrame[] = [];
 
     /**
      * Writes arbitrary text and nodes
@@ -72,6 +78,7 @@ export class AbstractWriter {
      * @param node
      */
     public writeNode(node: AbstractAstNode): void {
+        this.nodeStackFrames.push(...frames(node));
         node.write(this);
     }
 
@@ -93,7 +100,7 @@ export class AbstractWriter {
      * @param node
      */
     public writeNodeStatement(node: AbstractAstNode): void {
-        node.write(this);
+        this.writeNode(node);
         this.write(";");
         this.writeNewLineIfLastLineNot();
     }
@@ -244,29 +251,137 @@ export class AbstractWriter {
     /*******************************
      * Helper Methods
      *******************************/
-
-    private writeInternal(text: string): string {
-        if (text.length > 0) {
-            this.hasWrittenAnything = true;
-            this.lastCharacterIsNewline = text.endsWith("\n");
-            this.lastCharacterIsSemicolon = text.endsWith(";");
-        }
-        this.buffer += text;
-
-        if (enableStackTracking && this.buffer.endsWith("\n") && !this.buffer.endsWith('"""\n')) {
-            const stackLine = this.stacktrace(15)
-                .map((each) => `${each.fn} - ${each.path}:${each.position}`)
-                .join(" ");
-            if (stackLine) {
-                this.buffer = this.buffer.slice(0, -1);
-                // this marker is used to easily identify stack traces in the generated code
-                // (it also makes it easy to grep for them in a diff to make sure you're not commiting them)
-                // use ` git diff | grep -i "//@@" ` to check
-                this.buffer += `//` + `@@ ${stackLine}\n`;
-            }
+    private writeInternal(text: string) {
+        if (text.length === 0) {
+            return;
         }
 
-        return this.buffer;
+        const appendToLastLine = !this.lastCharacterIsNewline;
+
+        this.hasWrittenAnything = true;
+        this.lastCharacterIsNewline = text.endsWith("\n");
+        this.lastCharacterIsSemicolon = text.endsWith(";");
+
+        const lines = text.split("\n");
+
+        const appendTrackingComment =
+            enableStackTracking && !this.shouldSkipTracking(lines) && this.lastCharacterIsNewline;
+
+        if (appendToLastLine) {
+            this.lastLine = `${this.lastLine}${lines.shift() || ""}`;
+        }
+
+        if (this.lastCharacterIsNewline) {
+            lines.pop();
+        }
+
+        this.lineBuffer.push(...lines);
+
+        if (appendTrackingComment) {
+            this.appendTrackingComment();
+        }
+    }
+
+    /**
+     * Sets the last line of the buffer
+     * @param line - The line to set
+     */
+    protected set lastLine(line: string) {
+        if (this.lineBuffer.length > 0) {
+            this.lineBuffer[this.lineBuffer.length - 1] = line;
+        } else {
+            this.lineBuffer.push(line);
+        }
+    }
+
+    /**
+     * Gets the last line of the buffer
+     * @returns The last line of the buffer
+     */
+    protected get lastLine() {
+        return this.lineBuffer[this.lineBuffer.length - 1] || "";
+    }
+
+    /**
+     * Determines if the tracking comment should be skipped
+     * @param lines - The that are being written out
+     *
+     * @returns True if the tracking comment should be skipped
+     */
+    protected shouldSkipTracking(lines: string[]) {
+        return false;
+    }
+
+    /**
+     * Formats the stack trace frames into a string
+     * @param stack - The stack trace to format
+     * @param prefix - The prefix to add to the stack trace
+     * @returns The formatted stack trace
+     */
+    protected formatStack(stack: StackTraceFrame[], prefix = "") {
+        return stack.map((each) => `${prefix ? `(${prefix}) ` : ""} ${each.fn} - ${each.path} : ${each.position}`);
+    }
+
+    /** filters out frames that start with the name of the current class */
+    protected filterStack(stack: StackTraceFrame[]) {
+        return stack.filter((each) => !each.fn.startsWith(`${this.constructor.name}.`));
+    }
+
+    /**
+     * Prepares the stack trace and calls the appropriate tracking comment formatter
+     */
+    protected appendTrackingComment() {
+        const stack = [
+            // adds the stack frames of the current function call
+            ...this.formatStack(this.filterStack(stacktrace({ maxFrames: 15, skip: 3 }))),
+
+            // adds the stack frames of any AstNodes that have been written since the last tracking comment
+            ...new Set(this.formatStack(this.filterStack(this.nodeStackFrames), "node"))
+        ];
+        // reset the ast node stack frames
+        this.nodeStackFrames.length = 0;
+
+        switch (trackingType) {
+            case "single":
+                return this.singleLineTrackingComment(stack);
+
+            case "multiline":
+                return this.multiLineTrackingComment(stack);
+
+            case "box":
+                return this.boxTrackingComment(stack);
+        }
+    }
+
+    /**
+     * Creates a single line tracking comment
+     *
+     * Override this to change the format of the comment.
+     *
+     * @param stack - The stack trace to add to the comment
+     */
+    protected singleLineTrackingComment(stack: string[]) {
+        this.lastLine = `${this.lastLine} // ${stack.join(" ")}`;
+    }
+    /**
+     * Creates a multi line tracking comment
+     *
+     * Override this to change the format of the comment.
+     *
+     * @param stack - The stack trace to add to the comment
+     */
+    protected multiLineTrackingComment(stack: string[]) {
+        this.lineBuffer.push(...stack.map((each) => `    // ${each}`));
+    }
+    /**
+     * Creates a box tracking comment
+     *
+     * Override this to change the format of the comment.
+     *
+     * @param stack - The stack trace to add to the comment
+     */
+    protected boxTrackingComment(stack: string[]) {
+        this.lineBuffer.push("/*", ...stack.map((each) => `    ${each}`), "*/");
     }
 
     private isAtStartOfLine(): boolean {
@@ -279,59 +394,5 @@ export class AbstractWriter {
 
     protected getTabSize(): number {
         return TAB_SIZE;
-    }
-
-    /**
-     * This function is used to get the stack trace of the current code execution point.$
-     * It cleans up the stack trace to remove unnecessary frames and return a list of frames.
-     * (Used for debugging purposes)
-     *
-     * @returns A list of frames with the function name, path, and position.
-     */
-    private stacktrace(maxFrames: number = 50): { fn: string; path: string; position: string }[] {
-        let stop = false;
-        return (
-            (new Error().stack ?? "")
-                .split("\n")
-                .map((line) => {
-                    const match = line.match(/at\s+(.*)\s+\((.*):(\d+):(\d+)\)/);
-                    if (match && match.length === 5) {
-                        let [, fn, path, line, column] = match;
-                        if (stop || fn?.includes("runInteractiveTask")) {
-                            stop = true;
-                            return undefined;
-                        }
-                        switch (fn) {
-                            case "Object.<anonymous>":
-                                fn = "";
-                                break;
-                            case "Object.object":
-                            case "Object.alias":
-                            case "Object.union":
-                            case "Object.enum":
-                            case "Object.undiscriminatedUnion":
-                                fn = `${fn.substring(fn.indexOf(".") + 1)}()=> { ... }`;
-                                break;
-                        }
-                        return { fn, path: path?.replace(/^.*?fern.*?\//, "") ?? "", position: `${line}:${column}` };
-                    }
-                    return undefined;
-                })
-                .filter(
-                    (each) =>
-                        each &&
-                        !each.path?.startsWith("node:") &&
-                        !each.path?.endsWith(".js") &&
-                        !each.path?.includes("AbstractWriter") &&
-                        !each.fn?.includes("stacktrace") &&
-                        !each.fn?.includes("stackLine") &&
-                        !each.fn?.includes("SdkGeneratorCLI") &&
-                        !each.fn?.includes("runCli")
-                ) as {
-                fn: string;
-                path: string;
-                position: string;
-            }[]
-        ).slice(0, maxFrames);
     }
 }

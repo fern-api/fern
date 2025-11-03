@@ -17,7 +17,7 @@ export function generateModels({ context }: { context: ModelGeneratorContext }):
         const file = typeDeclaration.shape._visit<CSharpFile | undefined>({
             alias: () => undefined,
             enum: (etd: EnumTypeDeclaration) => {
-                return context.isForwardCompatibleEnumsEnabled()
+                return context.settings.isForwardCompatibleEnumsEnabled
                     ? new StringEnumGenerator(context, typeDeclaration, etd).generate()
                     : new EnumGenerator(context, typeDeclaration, etd).generate();
             },
@@ -26,7 +26,7 @@ export function generateModels({ context }: { context: ModelGeneratorContext }):
             },
             undiscriminatedUnion: () => undefined,
             union: (unionDeclaration) => {
-                if (context.shouldGenerateDiscriminatedUnions()) {
+                if (context.settings.shouldGeneratedDiscriminatedUnions) {
                     return new UnionGenerator(context, typeDeclaration, unionDeclaration).generate();
                 }
                 return undefined;

@@ -1,6 +1,6 @@
 import { FernGeneratorExec, GeneratorNotificationService } from "@fern-api/base-generator";
 import { AbstractCsharpGeneratorCli } from "@fern-api/csharp-base";
-import { CSharp } from "@fern-api/csharp-codegen";
+import { Generation } from "@fern-api/csharp-codegen";
 import { IntermediateRepresentation } from "@fern-fern/ir-sdk/api";
 import { generateModels } from "./generateModels";
 import { generateVersion } from "./generateVersion";
@@ -32,7 +32,13 @@ export class ModelGeneratorCLI extends AbstractCsharpGeneratorCli<ModelCustomCon
     }
 
     private validateCustomConfig(customConfig: ModelCustomConfigSchema): ModelCustomConfigSchema {
-        new CSharp().validateReadOnlyMemoryTypes(customConfig);
+        new Generation(
+            {} as unknown as IntermediateRepresentation,
+            "",
+            customConfig,
+            {} as FernGeneratorExec.GeneratorConfig
+        ).csharp.validateReadOnlyMemoryTypes();
+
         return customConfig;
     }
 
