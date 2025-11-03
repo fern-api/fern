@@ -5,7 +5,7 @@
 
 // Client and configuration
 pub use crate::config::ClientConfig;
-pub use crate::core::{FormFile, HttpClient, MultipartFormData, MultipartFormField, RequestOptions};
+pub use crate::core::{HttpClient, RequestOptions};
 pub use crate::error::ApiError;
 
 // Main client and resource clients

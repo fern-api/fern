@@ -1,13 +1,13 @@
 import {
     Attribute,
+    CodeBlock,
     ImplBlock,
     Method,
     PUBLIC,
+    Reference,
     rust,
-    Type,
-    CodeBlock,
     Statement,
-    Reference
+    Type
 } from "@fern-api/rust-codegen";
 import { InlinedRequestBodyProperty, ObjectProperty } from "@fern-fern/ir-sdk/api";
 import { ModelGeneratorContext } from "../ModelGeneratorContext";
@@ -116,7 +116,7 @@ export class FileUploadRequestGenerator {
                     isSelf: true
                 }
             ],
-            returnType: Type.reference(new Reference({ name: "MultipartFormData", module: undefined })),
+            returnType: Type.reference(new Reference({ name: "reqwest::multipart::Form", module: undefined })),
             isStatic: false,
             body
         });
@@ -125,8 +125,8 @@ export class FileUploadRequestGenerator {
     private generateToMultipartBody(): CodeBlock {
         const statements: string[] = [];
 
-        // Initialize multipart
-        statements.push("let mut multipart = MultipartFormData::new();");
+        // Initialize reqwest multipart form
+        statements.push("let mut form = reqwest::multipart::Form::new();");
         statements.push("");
 
         // Add file fields
@@ -137,43 +137,51 @@ export class FileUploadRequestGenerator {
                 if (fileProp.isArray) {
                     // Optional array of files
                     statements.push(`if let Some(ref files) = self.${fieldName} {`);
-                    statements.push(
-                        `    multipart.add_file_array("${fileProp.name}".to_string(), files.iter().map(|data| {`
-                    );
-                    statements.push(
-                        `        FormFile::new(data.clone()).with_filename("${fileProp.name}".to_string()).with_content_type("application/octet-stream".to_string())`
-                    );
-                    statements.push(`    }).collect());`);
+                    statements.push(`    for file_data in files {`);
+                    statements.push(`        form = form.part(`);
+                    statements.push(`            "${fileProp.name}",`);
+                    statements.push(`            reqwest::multipart::Part::bytes(file_data.clone())`);
+                    statements.push(`                .file_name("${fileProp.name}")`);
+                    statements.push(`                .mime_str("application/octet-stream").unwrap()`);
+                    statements.push(`        );`);
+                    statements.push(`    }`);
                     statements.push(`}`);
                 } else {
                     // Optional single file
                     statements.push(`if let Some(ref file_data) = self.${fieldName} {`);
-                    statements.push(
-                        `    multipart.add_file("${fileProp.name}".to_string(), FormFile::new(file_data.clone()).with_filename("${fileProp.name}".to_string()).with_content_type("application/octet-stream".to_string()));`
-                    );
+                    statements.push(`    form = form.part(`);
+                    statements.push(`        "${fileProp.name}",`);
+                    statements.push(`        reqwest::multipart::Part::bytes(file_data.clone())`);
+                    statements.push(`            .file_name("${fileProp.name}")`);
+                    statements.push(`            .mime_str("application/octet-stream").unwrap()`);
+                    statements.push(`    );`);
                     statements.push(`}`);
                 }
             } else {
                 if (fileProp.isArray) {
                     // Required array of files
-                    statements.push(
-                        `multipart.add_file_array("${fileProp.name}".to_string(), self.${fieldName}.iter().map(|data| {`
-                    );
-                    statements.push(
-                        `    FormFile::new(data.clone()).with_filename("${fileProp.name}".to_string()).with_content_type("application/octet-stream".to_string())`
-                    );
-                    statements.push(`}).collect());`);
+                    statements.push(`for file_data in &self.${fieldName} {`);
+                    statements.push(`    form = form.part(`);
+                    statements.push(`        "${fileProp.name}",`);
+                    statements.push(`        reqwest::multipart::Part::bytes(file_data.clone())`);
+                    statements.push(`            .file_name("${fileProp.name}")`);
+                    statements.push(`            .mime_str("application/octet-stream").unwrap()`);
+                    statements.push(`    );`);
+                    statements.push(`}`);
                 } else {
                     // Required single file
-                    statements.push(
-                        `multipart.add_file("${fileProp.name}".to_string(), FormFile::new(self.${fieldName}.clone()).with_filename("${fileProp.name}".to_string()).with_content_type("application/octet-stream".to_string()));`
-                    );
+                    statements.push(`form = form.part(`);
+                    statements.push(`    "${fileProp.name}",`);
+                    statements.push(`    reqwest::multipart::Part::bytes(self.${fieldName}.clone())`);
+                    statements.push(`        .file_name("${fileProp.name}")`);
+                    statements.push(`        .mime_str("application/octet-stream").unwrap()`);
+                    statements.push(`);`);
                 }
             }
             statements.push("");
         }
 
-        // Add body properties as JSON fields
+        // Add body properties as text fields
         for (const bodyProp of this.bodyProperties) {
             const propName = bodyProp.name.name.originalName;
             const fieldName = this.getFieldName(propName);
@@ -182,18 +190,18 @@ export class FileUploadRequestGenerator {
             if (isOptional) {
                 statements.push(`if let Some(ref value) = self.${fieldName} {`);
                 statements.push(`    if let Ok(json_str) = serde_json::to_string(value) {`);
-                statements.push(`        multipart.add_field("${propName}".to_string(), json_str);`);
+                statements.push(`        form = form.text("${propName}", json_str);`);
                 statements.push(`    }`);
                 statements.push(`}`);
             } else {
                 statements.push(`if let Ok(json_str) = serde_json::to_string(&self.${fieldName}) {`);
-                statements.push(`    multipart.add_field("${propName}".to_string(), json_str);`);
+                statements.push(`    form = form.text("${propName}", json_str);`);
                 statements.push(`}`);
             }
             statements.push("");
         }
 
-        statements.push("multipart");
+        statements.push("form");
 
         // Create Statement array from raw strings
         const statementObjects = statements.map((s) => Statement.raw(s));

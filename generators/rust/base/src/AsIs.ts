@@ -55,18 +55,6 @@ const AsIsFileSpecs = {
         relativePathToDir: "src/core",
         filename: "sse_stream.rs"
     },
-    FormFile: {
-        relativePathToDir: "src/core",
-        filename: "form_file.rs"
-    },
-    Multipart: {
-        relativePathToDir: "src/core",
-        filename: "multipart.rs"
-    },
-    MultipartFormField: {
-        relativePathToDir: "src/core",
-        filename: "multipart_form_field.rs"
-    },
     CoreMod: {
         relativePathToDir: "src/core",
         filename: "mod.rs"

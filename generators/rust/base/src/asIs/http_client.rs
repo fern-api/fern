@@ -150,20 +150,18 @@ impl HttpClient {
 
     /// Execute a multipart/form-data request with the given method, path, and options
     ///
-    /// This method is used for file uploads and other multipart form data submissions.
-    /// The multipart data includes proper boundary handling and Content-Type headers.
+    /// This method is used for file uploads using reqwest's built-in multipart support.
+    /// Note: Multipart requests are not retried because they cannot be cloned.
     ///
     /// # Example
     /// ```no_run
-    /// use your_crate::{MultipartFormData, FormFile};
-    ///
-    /// let mut multipart = MultipartFormData::new();
-    /// multipart.add_file("upload", FormFile::new(vec![1, 2, 3]));
+    /// let form = reqwest::multipart::Form::new()
+    ///     .part("file", reqwest::multipart::Part::bytes(vec![1, 2, 3]));
     ///
     /// let response: MyResponse = client.execute_multipart_request(
     ///     Method::POST,
     ///     "/upload",
-    ///     multipart,
+    ///     form,
     ///     None,
     ///     None,
     /// ).await?;
@@ -172,7 +170,7 @@ impl HttpClient {
         &self,
         method: Method,
         path: &str,
-        multipart: crate::MultipartFormData,
+        form: reqwest::multipart::Form,
         query_params: Option<Vec<(String, String)>>,
         options: Option<RequestOptions>,
     ) -> Result<T, ApiError>
@@ -194,23 +192,26 @@ impl HttpClient {
             }
         }
 
-        // Convert multipart to bytes and set the body
-        let multipart_bytes = multipart.to_bytes();
-        let content_type = multipart.content_type();
-
-        request = request
-            .header("Content-Type", content_type)
-            .body(multipart_bytes);
+        // Use reqwest's built-in multipart support
+        request = request.multipart(form);
 
         // Build the request
         let mut req = request.build().map_err(|e| ApiError::Network(e))?;
 
-        // Apply authentication and headers (custom headers applied after Content-Type)
+        // Apply authentication and headers
         self.apply_auth_headers(&mut req, &options)?;
         self.apply_custom_headers(&mut req, &options)?;
 
-        // Execute with retries
-        let response = self.execute_with_retries(req, &options).await?;
+        // Execute directly without retries (multipart requests cannot be cloned)
+        let response = self.client.execute(req).await.map_err(ApiError::Network)?;
+
+        // Check response status
+        if !response.status().is_success() {
+            let status_code = response.status().as_u16();
+            let body = response.text().await.ok();
+            return Err(ApiError::from_response(status_code, body.as_deref()));
+        }
+
         self.parse_response(response).await
     }
 
