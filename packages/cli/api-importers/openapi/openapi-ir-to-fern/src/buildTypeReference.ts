@@ -873,8 +873,8 @@ export function buildOneOfTypeReference({
         type: prefixedType,
         docs: schema.description,
         availability: schema.availability,
-        title: oneOfSchema.title,
-        displayName: oneOfSchema.title
+        title: schema.title,
+        displayName: schema.title
     });
 }
 
