@@ -49,6 +49,9 @@ export class RustProject extends AbstractProject<AbstractRustGeneratorContext<Ba
 
         // Write all dynamic source files
         await Promise.all(this.sourceFiles.map((file) => file.write(this.absolutePathToOutputDirectory)));
+
+        // Write all raw files
+        await this.writeRawFiles();
     }
 
     private async persistStaticSourceFiles(): Promise<void> {
