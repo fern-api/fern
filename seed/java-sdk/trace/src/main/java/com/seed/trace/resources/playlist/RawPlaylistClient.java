@@ -77,11 +77,11 @@ public class RawPlaylistClient {
         }
         try (Response response = client.newCall(okhttpRequest).execute()) {
             ResponseBody responseBody = response.body();
+            String responseBodyString = responseBody != null ? responseBody.string() : "{}";
             if (response.isSuccessful()) {
                 return new SeedTraceHttpResponse<>(
-                        ObjectMappers.JSON_MAPPER.readValue(responseBody.string(), Playlist.class), response);
+                        ObjectMappers.JSON_MAPPER.readValue(responseBodyString, Playlist.class), response);
             }
-            String responseBodyString = responseBody != null ? responseBody.string() : "{}";
             throw new SeedTraceApiException(
                     "Error with status code " + response.code(),
                     response.code(),
@@ -135,13 +135,12 @@ public class RawPlaylistClient {
         }
         try (Response response = client.newCall(okhttpRequest).execute()) {
             ResponseBody responseBody = response.body();
+            String responseBodyString = responseBody != null ? responseBody.string() : "{}";
             if (response.isSuccessful()) {
                 return new SeedTraceHttpResponse<>(
-                        ObjectMappers.JSON_MAPPER.readValue(
-                                responseBody.string(), new TypeReference<List<Playlist>>() {}),
+                        ObjectMappers.JSON_MAPPER.readValue(responseBodyString, new TypeReference<List<Playlist>>() {}),
                         response);
             }
-            String responseBodyString = responseBody != null ? responseBody.string() : "{}";
             throw new SeedTraceApiException(
                     "Error with status code " + response.code(),
                     response.code(),
@@ -182,11 +181,11 @@ public class RawPlaylistClient {
         }
         try (Response response = client.newCall(okhttpRequest).execute()) {
             ResponseBody responseBody = response.body();
+            String responseBodyString = responseBody != null ? responseBody.string() : "{}";
             if (response.isSuccessful()) {
                 return new SeedTraceHttpResponse<>(
-                        ObjectMappers.JSON_MAPPER.readValue(responseBody.string(), Playlist.class), response);
+                        ObjectMappers.JSON_MAPPER.readValue(responseBodyString, Playlist.class), response);
             }
-            String responseBodyString = responseBody != null ? responseBody.string() : "{}";
             throw new SeedTraceApiException(
                     "Error with status code " + response.code(),
                     response.code(),
@@ -249,13 +248,13 @@ public class RawPlaylistClient {
         }
         try (Response response = client.newCall(okhttpRequest).execute()) {
             ResponseBody responseBody = response.body();
+            String responseBodyString = responseBody != null ? responseBody.string() : "{}";
             if (response.isSuccessful()) {
                 return new SeedTraceHttpResponse<>(
                         ObjectMappers.JSON_MAPPER.readValue(
-                                responseBody.string(), new TypeReference<Optional<Playlist>>() {}),
+                                responseBodyString, new TypeReference<Optional<Playlist>>() {}),
                         response);
             }
-            String responseBodyString = responseBody != null ? responseBody.string() : "{}";
             throw new SeedTraceApiException(
                     "Error with status code " + response.code(),
                     response.code(),

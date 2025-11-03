@@ -54,13 +54,13 @@ public class AsyncRawServiceClient {
             @Override
             public void onResponse(@NotNull Call call, @NotNull Response response) throws IOException {
                 try (ResponseBody responseBody = response.body()) {
+                    String responseBodyString = responseBody != null ? responseBody.string() : "{}";
                     if (response.isSuccessful()) {
                         future.complete(new BaseClientHttpResponse<>(
-                                ObjectMappers.JSON_MAPPER.readValue(responseBody.string(), HelloResponse.class),
+                                ObjectMappers.JSON_MAPPER.readValue(responseBodyString, HelloResponse.class),
                                 response));
                         return;
                     }
-                    String responseBodyString = responseBody != null ? responseBody.string() : "{}";
                     future.completeExceptionally(new BaseClientApiException(
                             "Error with status code " + response.code(),
                             response.code(),

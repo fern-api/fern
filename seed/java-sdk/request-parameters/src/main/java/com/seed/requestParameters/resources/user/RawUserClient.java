@@ -220,11 +220,11 @@ public class RawUserClient {
         }
         try (Response response = client.newCall(okhttpRequest).execute()) {
             ResponseBody responseBody = response.body();
+            String responseBodyString = responseBody != null ? responseBody.string() : "{}";
             if (response.isSuccessful()) {
                 return new SeedRequestParametersHttpResponse<>(
-                        ObjectMappers.JSON_MAPPER.readValue(responseBody.string(), User.class), response);
+                        ObjectMappers.JSON_MAPPER.readValue(responseBodyString, User.class), response);
             }
-            String responseBodyString = responseBody != null ? responseBody.string() : "{}";
             throw new SeedRequestParametersApiException(
                     "Error with status code " + response.code(),
                     response.code(),

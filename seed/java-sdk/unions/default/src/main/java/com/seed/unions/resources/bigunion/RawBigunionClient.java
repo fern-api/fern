@@ -52,11 +52,11 @@ public class RawBigunionClient {
         }
         try (Response response = client.newCall(okhttpRequest).execute()) {
             ResponseBody responseBody = response.body();
+            String responseBodyString = responseBody != null ? responseBody.string() : "{}";
             if (response.isSuccessful()) {
                 return new SeedUnionsHttpResponse<>(
-                        ObjectMappers.JSON_MAPPER.readValue(responseBody.string(), BigUnion.class), response);
+                        ObjectMappers.JSON_MAPPER.readValue(responseBodyString, BigUnion.class), response);
             }
-            String responseBodyString = responseBody != null ? responseBody.string() : "{}";
             throw new SeedUnionsApiException(
                     "Error with status code " + response.code(),
                     response.code(),
@@ -95,11 +95,11 @@ public class RawBigunionClient {
         }
         try (Response response = client.newCall(okhttpRequest).execute()) {
             ResponseBody responseBody = response.body();
+            String responseBodyString = responseBody != null ? responseBody.string() : "{}";
             if (response.isSuccessful()) {
                 return new SeedUnionsHttpResponse<>(
-                        ObjectMappers.JSON_MAPPER.readValue(responseBody.string(), boolean.class), response);
+                        ObjectMappers.JSON_MAPPER.readValue(responseBodyString, boolean.class), response);
             }
-            String responseBodyString = responseBody != null ? responseBody.string() : "{}";
             throw new SeedUnionsApiException(
                     "Error with status code " + response.code(),
                     response.code(),
@@ -140,13 +140,13 @@ public class RawBigunionClient {
         }
         try (Response response = client.newCall(okhttpRequest).execute()) {
             ResponseBody responseBody = response.body();
+            String responseBodyString = responseBody != null ? responseBody.string() : "{}";
             if (response.isSuccessful()) {
                 return new SeedUnionsHttpResponse<>(
                         ObjectMappers.JSON_MAPPER.readValue(
-                                responseBody.string(), new TypeReference<Map<String, Boolean>>() {}),
+                                responseBodyString, new TypeReference<Map<String, Boolean>>() {}),
                         response);
             }
-            String responseBodyString = responseBody != null ? responseBody.string() : "{}";
             throw new SeedUnionsApiException(
                     "Error with status code " + response.code(),
                     response.code(),

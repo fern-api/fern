@@ -69,12 +69,12 @@ public class RawInlinedRequestsClient {
         }
         try (Response response = client.newCall(okhttpRequest).execute()) {
             ResponseBody responseBody = response.body();
+            String responseBodyString = responseBody != null ? responseBody.string() : "{}";
             if (response.isSuccessful()) {
                 return new SeedExhaustiveHttpResponse<>(
-                        ObjectMappers.JSON_MAPPER.readValue(responseBody.string(), ObjectWithOptionalField.class),
+                        ObjectMappers.JSON_MAPPER.readValue(responseBodyString, ObjectWithOptionalField.class),
                         response);
             }
-            String responseBodyString = responseBody != null ? responseBody.string() : "{}";
             try {
                 if (response.code() == 400) {
                     throw new BadRequestBody(
