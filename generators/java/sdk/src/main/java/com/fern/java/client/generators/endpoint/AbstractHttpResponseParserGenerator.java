@@ -488,16 +488,25 @@ public abstract class AbstractHttpResponseParserGenerator {
                         .endControlFlow();
             }
         }
+        httpResponseBuilder.addStatement("$T errorBody", Object.class);
+        httpResponseBuilder.beginControlFlow("try");
+        httpResponseBuilder.addStatement(
+                "errorBody = $L",
+                objectMapperUtils.readValueCall(
+                        CodeBlock.of("$L", variables.getResponseBodyStringName()), Optional.empty()));
+        httpResponseBuilder
+                .nextControlFlow("catch ($T ignored)", JsonProcessingException.class)
+                .addStatement("errorBody = $L", variables.getResponseBodyStringName())
+                .endControlFlow();
+        
         handleExceptionalResult(
                 httpResponseBuilder,
                 CodeBlock.of(
-                        "new $T($S + $L.code(), $L.code(), $L, $L)",
+                        "new $T($S + $L.code(), $L.code(), errorBody, $L)",
                         apiErrorClassName,
                         "Error with status code ",
                         variables.getResponseName(),
                         variables.getResponseName(),
-                        objectMapperUtils.readValueCall(
-                                CodeBlock.of("$L", variables.getResponseBodyStringName()), Optional.empty()),
                         "response"));
     }
 
