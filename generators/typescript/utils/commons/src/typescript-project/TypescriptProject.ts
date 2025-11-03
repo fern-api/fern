@@ -346,7 +346,7 @@ export abstract class TypescriptProject {
         }
         if (this.linter === "oxlint") {
             deps["oxlint"] = "1.25.0";
-            deps["oxlint-tsgolint"] = "1.25.0";
+            deps["oxlint-tsgolint"] = "0.4.0";
         }
         if (this.formatter === "prettier") {
             deps["prettier"] = "3.4.2";

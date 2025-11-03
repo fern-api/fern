@@ -50,7 +50,8 @@
         "@types/node": "^18.19.70",
         "typescript": "~5.7.2",
         "@biomejs/biome": "2.3.1",
-        "oxlint": "1.25.0"
+        "oxlint": "1.25.0",
+        "oxlint-tsgolint": "0.4.0"
     },
     "browser": {
         "fs": false,
