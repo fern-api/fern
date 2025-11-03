@@ -1,6 +1,14 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
 - changelogEntry:
     - summary: |
+        Fixes fern definition creating duplicate types in separate files
+      type: fix
+  irVersion: 61
+  createdAt: "2025-11-03"
+  version: 0.106.1
+
+- changelogEntry:
+    - summary: |
         Add support for external product links.
       type: feat
   irVersion: 61
@@ -50,14 +58,6 @@
 - changelogEntry:
     - summary: |
         Fix `coerce-enums-to-literals` setting to coerce single value enums to literals.
-      type: fix
-  irVersion: 61
-  createdAt: "2025-10-31"
-  version: 0.101.4
-
-- changelogEntry:
-    - summary: |
-        Fixes fern definition creating duplicate types in separate files
       type: fix
   irVersion: 61
   createdAt: "2025-10-31"
