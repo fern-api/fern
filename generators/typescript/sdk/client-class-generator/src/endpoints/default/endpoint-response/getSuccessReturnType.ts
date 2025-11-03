@@ -12,6 +12,7 @@ export function getSuccessReturnType(
         | HttpResponseBody.FileDownload
         | HttpResponseBody.Streaming
         | HttpResponseBody.Text
+        | HttpResponseBody.Bytes
         | undefined,
     context: SdkContext,
     opts: {
@@ -27,7 +28,8 @@ export function getSuccessReturnType(
         return ts.factory.createKeywordTypeNode(ts.SyntaxKind.VoidKeyword);
     }
     switch (response.type) {
-        case "fileDownload": {
+        case "fileDownload":
+        case "bytes": {
             return getFileType({
                 context,
                 includeContentHeadersOnResponse: opts.includeContentHeadersOnResponse,

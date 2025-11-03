@@ -416,7 +416,6 @@ scripts:
           if grep -q '"test":' package.json; then corepack yarn test; fi
         fi
 allowedFailures:
-  - bytes-download
   - circular-references
   - enum
   - error-property:no-custom-config
