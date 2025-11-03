@@ -1,5 +1,4 @@
 using SeedBasicAuth;
-using System.Threading.Tasks;
 
 namespace Usage;
 

@@ -96,7 +96,7 @@ await client.CreateTaskAsync(
 </details>
 
 ## System
-<details><summary><code>client.System.<a href="/src/SeedCsharpNamespaceCollision/System/SystemClient.cs">CreateUserAsync</a>(global::SeedCsharpNamespaceCollision.System.User { ... }) -> global::SeedCsharpNamespaceCollision.System.User</code></summary>
+<details><summary><code>client.System.<a href="/src/SeedCsharpNamespaceCollision/System/SystemClient.cs">CreateUserAsync</a>(User { ... }) -> User</code></summary>
 <dl>
 <dd>
 
@@ -134,7 +134,7 @@ await client.System.CreateUserAsync(
 <dl>
 <dd>
 
-**request:** `global::SeedCsharpNamespaceCollision.System.User` 
+**request:** `User` 
     
 </dd>
 </dl>
@@ -146,7 +146,7 @@ await client.System.CreateUserAsync(
 </dl>
 </details>
 
-<details><summary><code>client.System.<a href="/src/SeedCsharpNamespaceCollision/System/SystemClient.cs">CreateTaskAsync</a>(global::SeedCsharpNamespaceCollision.System.Task { ... }) -> global::SeedCsharpNamespaceCollision.System.Task</code></summary>
+<details><summary><code>client.System.<a href="/src/SeedCsharpNamespaceCollision/System/SystemClient.cs">CreateTaskAsync</a>(Task { ... }) -> Task</code></summary>
 <dl>
 <dd>
 
@@ -188,7 +188,7 @@ await client.System.CreateTaskAsync(
 <dl>
 <dd>
 
-**request:** `global::SeedCsharpNamespaceCollision.System.Task` 
+**request:** `Task` 
     
 </dd>
 </dl>

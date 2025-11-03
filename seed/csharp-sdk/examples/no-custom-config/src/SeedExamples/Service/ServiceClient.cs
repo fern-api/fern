@@ -1,7 +1,4 @@
-using System.Net.Http;
 using System.Text.Json;
-using System.Threading;
-using System.Threading.Tasks;
 using SeedExamples.Core;
 
 namespace SeedExamples;
@@ -245,7 +242,7 @@ public partial class ServiceClient
     ///                 }
     ///             )
     ///         ),
-    ///         Test = new SeedExamples.Test(new SeedExamples.Test.And(true)),
+    ///         Test = new Test(new Test.And(true)),
     ///         Node = new Node
     ///         {
     ///             Name = "name",

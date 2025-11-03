@@ -10,7 +10,7 @@
             },
             "snippet": {
                 "type": "csharp",
-                "client": "using SeedObjectsWithImports;\n\nvar client = new SeedObjectsWithImportsClient();\nawait client.Optional.SendOptionalBodyAsync(\n    new Dictionary<string, object?>()\n    {\n        {\n            \"string\",\n            new Dictionary<object, object?>() { { \"key\", \"value\" } }\n        },\n    }\n);\n"
+                "client": "using SeedObjectsWithImports;\nusing System.Collections.Generic;\n\nvar client = new SeedObjectsWithImportsClient();\nawait client.Optional.SendOptionalBodyAsync(\n    new Dictionary<string, object?>()\n    {\n        {\n            \"string\",\n            new Dictionary<object, object?>() { { \"key\", \"value\" } }\n        },\n    }\n);\n"
             }
         }
     ]

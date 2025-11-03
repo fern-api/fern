@@ -38,7 +38,7 @@
     "@fern-api/configs": "workspace:*",
     "@fern-api/core-utils": "workspace:*",
     "@fern-api/csharp-codegen": "workspace:*",
-    "@fern-api/dynamic-ir-sdk": "^61.0.0",
+    "@fern-api/dynamic-ir-sdk": "61.4.0",
     "@fern-api/path-utils": "workspace:*",
     "@types/lodash-es": "^4.17.12",
     "@types/node": "18.15.3",

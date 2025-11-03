@@ -9,8 +9,8 @@ public partial class InlineUsersClient
     internal InlineUsersClient(RawClient client)
     {
         _client = client;
-        InlineUsers = new InlineUsersClient(_client);
+        InlineUsers = new InlineUsersClient_(_client);
     }
 
-    public InlineUsersClient InlineUsers { get; }
+    public InlineUsersClient_ InlineUsers { get; }
 }

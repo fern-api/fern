@@ -1,6 +1,3 @@
-using System.Net.Http;
-using System.Threading;
-using System.Threading.Tasks;
 using SeedTrace;
 using SeedTrace.Core;
 using SeedTrace.V2.V3;

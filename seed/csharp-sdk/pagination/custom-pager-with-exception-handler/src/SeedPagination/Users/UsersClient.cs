@@ -1,7 +1,4 @@
-using System.Net.Http;
 using System.Text.Json;
-using System.Threading;
-using System.Threading.Tasks;
 using SeedPagination.Core;
 
 namespace SeedPagination;
@@ -724,8 +721,8 @@ public partial class UsersClient
                         {
                             request.StartingAfter = cursor;
                         },
-                        response => response?.Page?.Next?.StartingAfter,
-                        response => response?.Data?.ToList(),
+                        response => response.Page?.Next?.StartingAfter,
+                        response => response.Data?.ToList(),
                         cancellationToken
                     )
                     .ConfigureAwait(false);
@@ -767,8 +764,8 @@ public partial class UsersClient
                         {
                             request.Cursor = cursor;
                         },
-                        response => response?.Next,
-                        response => response?.Data?.ToList(),
+                        response => response.Next,
+                        response => response.Data?.ToList(),
                         cancellationToken
                     )
                     .ConfigureAwait(false);
@@ -811,11 +808,11 @@ public partial class UsersClient
                         ListWithBodyCursorPaginationInternalAsync,
                         (request, cursor) =>
                         {
-                            request.Pagination ??= new();
+                            request.Pagination ??= new WithCursor();
                             request.Pagination.Cursor = cursor;
                         },
-                        response => response?.Page?.Next?.StartingAfter,
-                        response => response?.Data?.ToList(),
+                        response => response.Page?.Next?.StartingAfter,
+                        response => response.Data?.ToList(),
                         cancellationToken
                     )
                     .ConfigureAwait(false);
@@ -857,13 +854,13 @@ public partial class UsersClient
                         request,
                         options,
                         ListWithOffsetPaginationInternalAsync,
-                        request => request?.Page ?? 0,
+                        request => request.Page ?? 0,
                         (request, offset) =>
                         {
                             request.Page = offset;
                         },
                         null,
-                        response => response?.Data?.ToList(),
+                        response => response.Data?.ToList(),
                         null,
                         cancellationToken
                     )
@@ -906,13 +903,13 @@ public partial class UsersClient
                         request,
                         options,
                         ListWithDoubleOffsetPaginationInternalAsync,
-                        request => request?.Page ?? 0,
+                        request => request.Page ?? 0,
                         (request, offset) =>
                         {
                             request.Page = offset;
                         },
                         null,
-                        response => response?.Data?.ToList(),
+                        response => response.Data?.ToList(),
                         null,
                         cancellationToken
                     )
@@ -952,14 +949,14 @@ public partial class UsersClient
                         request,
                         options,
                         ListWithBodyOffsetPaginationInternalAsync,
-                        request => request?.Pagination?.Page ?? 0,
+                        request => request.Pagination?.Page ?? 0,
                         (request, offset) =>
                         {
                             request.Pagination ??= new();
                             request.Pagination.Page = offset;
                         },
                         null,
-                        response => response?.Data?.ToList(),
+                        response => response.Data?.ToList(),
                         null,
                         cancellationToken
                     )
@@ -1001,13 +998,13 @@ public partial class UsersClient
                         request,
                         options,
                         ListWithOffsetStepPaginationInternalAsync,
-                        request => request?.Page ?? 0,
+                        request => request.Page ?? 0,
                         (request, offset) =>
                         {
                             request.Page = offset;
                         },
-                        request => request?.Limit ?? 0,
-                        response => response?.Data?.ToList(),
+                        request => request.Limit ?? 0,
+                        response => response.Data?.ToList(),
                         null,
                         cancellationToken
                     )
@@ -1049,14 +1046,14 @@ public partial class UsersClient
                         request,
                         options,
                         ListWithOffsetPaginationHasNextPageInternalAsync,
-                        request => request?.Page ?? 0,
+                        request => request.Page ?? 0,
                         (request, offset) =>
                         {
                             request.Page = offset;
                         },
-                        request => request?.Limit ?? 0,
-                        response => response?.Data?.ToList(),
-                        response => response?.HasNextPage,
+                        request => request.Limit ?? 0,
+                        response => response.Data?.ToList(),
+                        response => response.HasNextPage,
                         cancellationToken
                     )
                     .ConfigureAwait(false);
@@ -1098,8 +1095,8 @@ public partial class UsersClient
                         {
                             request.Cursor = cursor;
                         },
-                        response => response?.Next,
-                        response => response?.Data?.Users?.ToList(),
+                        response => response.Next,
+                        response => response.Data.Users?.ToList(),
                         cancellationToken
                     )
                     .ConfigureAwait(false);
@@ -1144,8 +1141,8 @@ public partial class UsersClient
                         {
                             request.Cursor = cursor;
                         },
-                        response => response?.Next,
-                        response => response?.Data?.Users?.ToList(),
+                        response => response.Next,
+                        response => response.Data.Users?.ToList(),
                         cancellationToken
                     )
                     .ConfigureAwait(false);
@@ -1187,8 +1184,8 @@ public partial class UsersClient
                         {
                             request.StartingAfter = cursor;
                         },
-                        response => response?.Cursor?.After,
-                        response => response?.Cursor?.Data?.ToList(),
+                        response => response.Cursor.After,
+                        response => response.Cursor.Data?.ToList(),
                         cancellationToken
                     )
                     .ConfigureAwait(false);
@@ -1224,13 +1221,13 @@ public partial class UsersClient
                         request,
                         options,
                         ListWithGlobalConfigInternalAsync,
-                        request => request?.Offset ?? 0,
+                        request => request.Offset ?? 0,
                         (request, offset) =>
                         {
                             request.Offset = offset;
                         },
                         null,
-                        response => response?.Results?.ToList(),
+                        response => response.Results?.ToList(),
                         null,
                         cancellationToken
                     )

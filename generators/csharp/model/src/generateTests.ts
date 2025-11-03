@@ -38,7 +38,7 @@ export function generateModelTests({ context }: { context: ModelGeneratorContext
         files.push(testGenerator.generate());
     }
 
-    if (context.shouldGenerateDiscriminatedUnions()) {
+    if (context.settings.shouldGeneratedDiscriminatedUnions) {
         for (const typeDeclaration of types
             .filter((type) => type.shape.type === "union")
             .map((type) => type as FernIr.TypeDeclaration & { shape: FernIr.UnionTypeDeclaration })) {

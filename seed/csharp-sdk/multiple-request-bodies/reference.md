@@ -1,5 +1,5 @@
 # Reference
-<details><summary><code>client.<a href="/src/SeedApi/SeedApiClient.cs">UploadJsonDocumentAsync</a>(UploadDocumentRequest { ... }) -> OneOf.OneOf<DocumentMetadata, DocumentUploadResult></code></summary>
+<details><summary><code>client.<a href="/src/SeedApi/SeedApiClient.cs">UploadJsonDocumentAsync</a>(UploadDocumentRequest { ... }) -> OneOf<DocumentMetadata, DocumentUploadResult></code></summary>
 <dl>
 <dd>
 

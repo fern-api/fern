@@ -3,53 +3,88 @@ import {
     FernGeneratorExec,
     Options
 } from "@fern-api/browser-compatible-base-generator";
-import { ast, BaseCsharpCustomConfigSchema, CSharp } from "@fern-api/csharp-codegen";
+import { ast, BaseCsharpCustomConfigSchema, Generation } from "@fern-api/csharp-codegen";
 import { FernIr } from "@fern-api/dynamic-ir-sdk";
-import { camelCase, upperFirst } from "lodash-es";
-import { SNIPPET_NAMESPACE } from "../constants";
 import { DynamicTypeLiteralMapper } from "./DynamicTypeLiteralMapper";
 import { DynamicTypeMapper } from "./DynamicTypeMapper";
 import { FilePropertyMapper } from "./FilePropertyMapper";
 
-const CLIENT_OPTIONS_CLASS_NAME = "ClientOptions";
-const REQUEST_OPTIONS_CLASS_NAME = "RequestOptions";
-
 export class DynamicSnippetsGeneratorContext extends AbstractDynamicSnippetsGeneratorContext {
     public ir: FernIr.dynamic.DynamicIntermediateRepresentation;
-    public customConfig: BaseCsharpCustomConfigSchema | undefined;
     public dynamicTypeMapper: DynamicTypeMapper;
     public dynamicTypeLiteralMapper: DynamicTypeLiteralMapper;
     public filePropertyMapper: FilePropertyMapper;
-    public rootNamespace: string;
-    public readonly csharp: CSharp;
+
+    public readonly generation: Generation;
+
+    public get namespaces() {
+        return this.generation.namespaces;
+    }
+    public get registry() {
+        return this.generation.registry;
+    }
+    public get extern() {
+        return this.generation.extern;
+    }
+    public get settings() {
+        return this.generation.settings;
+    }
+    public get constants() {
+        return this.generation.constants;
+    }
+    public get names() {
+        return this.generation.names;
+    }
+    public get types() {
+        return this.generation.types;
+    }
+    public get model() {
+        return this.generation.model;
+    }
+    public get csharp() {
+        return this.generation.csharp;
+    }
+    public get System() {
+        return this.extern.System;
+    }
+    public get NUnit() {
+        return this.extern.NUnit;
+    }
+    public get OneOf() {
+        return this.extern.OneOf;
+    }
+    public get Google() {
+        return this.extern.Google;
+    }
+
     constructor({
         ir,
         config,
         options,
-        csharp
+        generation
     }: {
         ir: FernIr.dynamic.DynamicIntermediateRepresentation;
         config: FernGeneratorExec.GeneratorConfig;
         options?: Options;
-        csharp?: CSharp;
+        generation?: Generation;
     }) {
         super({ ir, config, options });
-        this.csharp = csharp ?? new CSharp();
-
         this.ir = ir;
-        this.customConfig =
-            config.customConfig != null
-                ? (config.customConfig as BaseCsharpCustomConfigSchema)
-                : ({} as BaseCsharpCustomConfigSchema);
+
+        this.generation =
+            generation ??
+            new Generation(
+                ir,
+                config.workspaceName,
+                config.customConfig != null
+                    ? (config.customConfig as BaseCsharpCustomConfigSchema)
+                    : ({} as BaseCsharpCustomConfigSchema),
+                config
+            );
 
         this.dynamicTypeMapper = new DynamicTypeMapper({ context: this });
         this.dynamicTypeLiteralMapper = new DynamicTypeLiteralMapper({ context: this });
         this.filePropertyMapper = new FilePropertyMapper({ context: this });
-        this.rootNamespace = getRootNamespace({
-            organization: config.organization,
-            workspaceName: config.workspaceName,
-            namespaceOverride: this.customConfig?.namespace
-        });
     }
 
     public clone(): DynamicSnippetsGeneratorContext {
@@ -57,14 +92,14 @@ export class DynamicSnippetsGeneratorContext extends AbstractDynamicSnippetsGene
             ir: this.ir,
             config: this.config,
             options: this.options,
-            csharp: this.csharp
+            generation: this.generation
         });
     }
 
     public getFileParameterForString(str: string): ast.TypeLiteral {
         return this.csharp.TypeLiteral.reference(
             this.csharp.instantiateClass({
-                classReference: this.getFileParameterClassReference(),
+                classReference: this.types.FileParameter,
                 arguments_: [],
                 properties: [
                     {
@@ -79,10 +114,10 @@ export class DynamicSnippetsGeneratorContext extends AbstractDynamicSnippetsGene
 
     public getMemoryStreamForString(str: string): ast.ClassInstantiation {
         return this.csharp.instantiateClass({
-            classReference: this.getMemoryStreamClassReference(),
+            classReference: this.extern.System.IO.MemoryStream,
             arguments_: [
                 this.csharp.invokeMethod({
-                    on: this.getEncodingUtf8ClassReference(),
+                    on: this.extern.System.Text.Encoding_UTF8,
                     method: "GetBytes",
                     arguments_: [this.csharp.TypeLiteral.string(str)]
                 })
@@ -91,13 +126,6 @@ export class DynamicSnippetsGeneratorContext extends AbstractDynamicSnippetsGene
     }
 
     public getClassName(name: FernIr.Name): string {
-        return name.pascalCase.safeName;
-    }
-
-    public getUnionInnerClassName(name: FernIr.Name): string {
-        if (["Value", "Type"].includes(name.pascalCase.safeName)) {
-            return `${name.pascalCase.safeName}Inner`;
-        }
         return name.pascalCase.safeName;
     }
 
@@ -113,103 +141,10 @@ export class DynamicSnippetsGeneratorContext extends AbstractDynamicSnippetsGene
         return `${name.pascalCase.safeName}Async`;
     }
 
-    public getEnvironmentClassName(): string {
-        return this.customConfig?.["environment-class-name"] ?? `${this.getClientPrefix()}Environment`;
-    }
-
-    public shouldUseDiscriminatedUnions(): boolean {
-        return this.customConfig?.["use-discriminated-unions"] ?? true;
-    }
-
-    public getRootClientClassName(): string {
-        return (
-            this.customConfig?.["exported-client-class-name"] ??
-            this.customConfig?.["client-class-name"] ??
-            `${this.getComputedClientName()}Client`
-        );
-    }
-
-    public getRootClientClassReference(): ast.ClassReference {
-        const fullyQualified =
-            this.csharp.nameRegistry.isKnownIdentifier(this.getRootClientClassName()) ||
-            this.csharp.nameRegistry.isKnownIdentifier(this.getRootNamespace());
-        return this.csharp.classReference({
-            name: this.getRootClientClassName(),
-            namespace: this.getRootNamespace(),
-            fullyQualified
-        });
-    }
-
-    public getBaseExceptionClassReference(): ast.ClassReference {
-        return this.csharp.classReference({
-            name: this.customConfig?.["base-exception-class-name"] ?? `${this.getClientPrefix()}Exception`,
-            namespace: this.getNamespaceForPublicCoreClasses()
-        });
-    }
-
-    public getBaseApiExceptionClassReference(): ast.ClassReference {
-        return this.csharp.classReference({
-            name: this.customConfig?.["base-api-exception-class-name"] ?? `${this.getClientPrefix()}ApiException`,
-            namespace: this.getNamespaceForPublicCoreClasses()
-        });
-    }
-
-    public getExceptionClassReference(declaration: FernIr.dynamic.Declaration): ast.ClassReference {
-        return this.csharp.classReference({
-            name: this.getClassName(declaration.name),
-            namespace: this.getNamespace(declaration.fernFilepath)
-        });
-    }
-
-    public getClientOptionsClassReference(): ast.ClassReference {
-        return this.csharp.classReference({
-            name: CLIENT_OPTIONS_CLASS_NAME,
-            namespace: this.getNamespaceForPublicCoreClasses()
-        });
-    }
-
-    public getRequestOptionsClassReference(): ast.ClassReference {
-        return this.csharp.classReference({
-            name: REQUEST_OPTIONS_CLASS_NAME,
-            namespace: this.getNamespaceForPublicCoreClasses()
-        });
-    }
-
-    public getFileParameterClassReference(): ast.ClassReference {
-        return this.csharp.classReference({
-            name: "FileParameter",
-            namespace: this.getNamespaceForPublicCoreClasses()
-        });
-    }
-
-    public getMemoryStreamClassReference(): ast.ClassReference {
-        return this.csharp.System.IO.MemoryStream;
-    }
-
-    public getEncodingUtf8ClassReference(): ast.ClassReference {
-        return this.csharp.System.Text.Encoding_UTF8;
-    }
-
     public getNamespace(fernFilepath: FernIr.dynamic.FernFilepath, suffix?: string): string {
         let parts = this.getNamespaceSegments(fernFilepath);
         parts = suffix != null ? [...parts, suffix] : parts;
-        return [this.getRootNamespace(), ...parts].join(".");
-    }
-
-    public getRootNamespace(): string {
-        return this.rootNamespace;
-    }
-
-    public getCoreNamespace(): string {
-        return `${this.getRootNamespace()}.Core`;
-    }
-
-    public getNamespaceForPublicCoreClasses(): string {
-        const rootNamespaceForCoreClasses = this.customConfig?.["root-namespace-for-core-classes"];
-        if (rootNamespaceForCoreClasses == null) {
-            return this.getRootNamespace();
-        }
-        return rootNamespaceForCoreClasses ? this.getRootNamespace() : this.getCoreNamespace();
+        return [this.namespaces.root, ...parts].join(".");
     }
 
     public getEnvironmentTypeReferenceFromID(environmentID: string): ast.ClassReference | undefined {
@@ -220,46 +155,27 @@ export class DynamicSnippetsGeneratorContext extends AbstractDynamicSnippetsGene
         return this.getEnvironmentClassReferenceForEnumName(environmentName);
     }
 
-    public getEnvironmentClassReference(): ast.ClassReference {
-        return this.csharp.classReference({
-            name: `${this.getEnvironmentClassName()}`,
-            namespace: this.getRootNamespace()
-        });
-    }
-
     private getEnvironmentClassReferenceForEnumName(name: FernIr.Name): ast.ClassReference {
         return this.csharp.classReference({
-            name: `${this.getEnvironmentClassName()}.${this.getClassName(name)}`,
-            namespace: this.getRootNamespace()
+            name: `${this.generation.types.Environments.name}.${this.getClassName(name)}`,
+            namespace: this.namespaces.root
         });
-    }
-
-    private getClientPrefix(): string {
-        return (
-            this.customConfig?.["exported-client-class-name"] ??
-            this.customConfig?.["client-class-name"] ??
-            this.getComputedClientName()
-        );
     }
 
     private getNamespaceSegments(fernFilepath: FernIr.dynamic.FernFilepath): string[] {
-        const segments = this.customConfig?.["explicit-namespaces"] ? fernFilepath.allParts : fernFilepath.packagePath;
+        const segments = this.settings.explicitNamespaces ? fernFilepath.allParts : fernFilepath.packagePath;
         return segments.map((segment) => segment.pascalCase.safeName);
     }
 
-    private getComputedClientName(): string {
-        return `${upperFirst(camelCase(this.config.organization))}${upperFirst(camelCase(this.config.workspaceName))}`;
-    }
-
     public precalculate(requests: Partial<FernIr.dynamic.EndpointSnippetRequest>[]): void {
-        this.csharp.nameRegistry.addImplicitNamespace(this.getRootNamespace());
-        this.csharp.System.Collections.Generic.KeyValuePair();
-        this.csharp.System.Collections.Generic.IEnumerable();
-        this.csharp.System.Collections.Generic.IAsyncEnumerable();
-        this.csharp.System.Collections.Generic.HashSet();
-        this.csharp.System.Collections.Generic.List();
-        this.csharp.System.Collections.Generic.Dictionary();
-        this.csharp.System.Threading.Tasks.Task();
+        this.generation.initialize();
+        this.extern.System.Collections.Generic.KeyValuePair();
+        this.extern.System.Collections.Generic.IEnumerable();
+        this.extern.System.Collections.Generic.IAsyncEnumerable();
+        this.extern.System.Collections.Generic.HashSet();
+        this.extern.System.Collections.Generic.List();
+        this.extern.System.Collections.Generic.Dictionary();
+        this.extern.System.Threading.Tasks.Task();
 
         // generate the names for the model types
         Object.entries(this.ir.types)
@@ -275,8 +191,8 @@ export class DynamicSnippetsGeneratorContext extends AbstractDynamicSnippetsGene
             // generate the class names for the examples
 
             this.csharp.classReference({
-                name: `Example${idx}`,
-                namespace: SNIPPET_NAMESPACE
+                origin: this.model.staticExplicit(`Example${idx}`),
+                namespace: "Usage"
             });
 
             if (request.endpoint) {
@@ -285,7 +201,7 @@ export class DynamicSnippetsGeneratorContext extends AbstractDynamicSnippetsGene
                     switch (endpoint.request.type) {
                         case "inlined":
                             this.csharp.classReference({
-                                name: this.getClassName(endpoint.request.declaration.name),
+                                origin: endpoint.request.declaration.name,
                                 namespace: this.getNamespace(endpoint.request.declaration.fernFilepath)
                             });
 
@@ -298,22 +214,10 @@ export class DynamicSnippetsGeneratorContext extends AbstractDynamicSnippetsGene
             }
         }
 
-        this.getClientOptionsClassReference();
-        this.getRootClientClassReference();
+        this.generation.types.ClientOptions;
+        this.generation.types.RootClient;
 
         // after generating the names for everything, freeze the class references
         this.csharp.freezeClassReferences();
     }
-}
-
-function getRootNamespace({
-    organization,
-    workspaceName,
-    namespaceOverride
-}: {
-    organization: string;
-    workspaceName: string;
-    namespaceOverride?: string;
-}): string {
-    return namespaceOverride ?? upperFirst(camelCase(`${organization}_${upperFirst(camelCase(workspaceName))}`));
 }

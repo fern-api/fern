@@ -11,7 +11,7 @@ internal record FormRequest : BaseRequest
 
     internal override HttpContent? CreateContent()
     {
-        if (Body is null && Options?.AdditionalBodyProperties is null)
+        if (Body is null)
         {
             return null;
         }

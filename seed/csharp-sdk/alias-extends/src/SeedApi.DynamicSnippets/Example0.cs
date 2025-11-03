@@ -1,5 +1,4 @@
 using SeedAliasExtends;
-using System.Threading.Tasks;
 
 namespace Usage;
 

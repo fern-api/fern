@@ -1,6 +1,3 @@
-using System.Collections.Generic;
-using System.Linq;
-using System.Net.Http;
 using SeedHttpHead.Core;
 
 namespace SeedHttpHead;
@@ -11,7 +8,7 @@ public partial class RequestOptions : IRequestOptions
     /// <summary>
     /// The http headers sent with the request.
     /// </summary>
-    Headers IRequestOptions.Headers { get; init; } = new();
+    SeedHttpHead.Core.Headers IRequestOptions.Headers { get; init; } = new();
 
     /// <summary>
     /// The Base URL for the API.

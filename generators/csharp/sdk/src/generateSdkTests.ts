@@ -13,7 +13,7 @@ export function generateSdkTests({ context }: { context: SdkGeneratorContext }):
 }
 
 function generateMockServerTests({ context }: { context: SdkGeneratorContext }): CSharpFile[] {
-    if (!context.generateMockServerTests()) {
+    if (!context.settings.shouldGenerateMockServerTests) {
         return [];
     }
     const files: CSharpFile[] = [];

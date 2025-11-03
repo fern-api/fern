@@ -1,5 +1,3 @@
-using System.Collections.Generic;
-using System.Net.Http;
 using SeedPropertyAccess.Core;
 
 namespace SeedPropertyAccess;
