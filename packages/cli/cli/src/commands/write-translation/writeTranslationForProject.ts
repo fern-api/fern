@@ -36,8 +36,7 @@ export function addLanguageSuffixToUrl(url: string, language: string): string {
         if (hostname.endsWith(".docs.buildwithfern.com")) {
             const org = hostname.replace(".docs.buildwithfern.com", "");
             urlObj.hostname = `${org}-${language}.docs.buildwithfern.com`;
-        }
-        else {
+        } else {
             urlObj.hostname = `${language}.${hostname}`;
         }
 
