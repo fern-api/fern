@@ -11,8 +11,12 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.getRequestBody = getRequestBody;
 const json_js_1 = require("../json.js");
+const qs_js_1 = require("../url/qs.js");
 function getRequestBody(_a) {
     return __awaiter(this, arguments, void 0, function* ({ body, type }) {
+        if (type === "form") {
+            return (0, qs_js_1.toQueryString)(body, { arrayFormat: "repeat", encode: true });
+        }
         if (type.includes("json")) {
             return (0, json_js_1.toJson)(body);
         }
