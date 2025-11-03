@@ -307,11 +307,11 @@ export class BaseClientContextImpl implements BaseClientContext {
 
         properties.push({
             kind: StructureKind.PropertySignature,
-            name: "logger",
-            type: "boolean | Logger",
+            name: "logging",
+            type: getTextOfTsNode(context.coreUtilities.logger.LoggingConfig._getReferenceToType()),
             hasQuestionToken: true,
             docs: [
-                "Enable logging for HTTP requests. Set to `true` to use console logging, or provide a custom Logger implementation."
+                "Configure logging for HTTP requests. Provide a custom logger and/or log level (debug, info, warn, error, silent). Defaults to silent (no logging)."
             ]
         });
 

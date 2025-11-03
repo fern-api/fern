@@ -1,5 +1,6 @@
 import { toJson } from "../json";
-import type { Logger } from "../logger/Logger";
+import type { Logger, LogLevel } from "../logger/Logger";
+import { shouldLog } from "../logger/Logger";
 import type { APIResponse } from "./APIResponse";
 import { createRequestUrl } from "./createRequestUrl";
 import type { EndpointMetadata } from "./EndpointMetadata";
@@ -32,6 +33,7 @@ export declare namespace Fetcher {
         endpointMetadata?: EndpointMetadata;
         fetchFn?: typeof fetch;
         logger?: Logger;
+        logLevel?: LogLevel;
     }
 
     export type Error = FailedStatusCodeError | NonJsonError | TimeoutError | UnknownError;
@@ -115,14 +117,16 @@ export async function fetcherImpl<R = unknown>(args: Fetcher.Args): Promise<APIR
     const fetchFn = args.fetchFn ?? (await getFetchFn());
     const headers = await getHeaders(args);
 
-    if (args.logger != null) {
-        args.logger.debug("Making HTTP request", {
+    const level = args.logLevel ?? "silent";
+    if (shouldLog(level, "debug") && args.logger != null) {
+        const metadata = {
             method: args.method,
             url,
             headers: filterSensitiveHeaders(headers),
             queryParameters: args.queryParameters,
             hasBody: requestBody != null
-        });
+        };
+        args.logger.debug("Making HTTP request", metadata);
     }
 
     try {
@@ -143,12 +147,13 @@ export async function fetcherImpl<R = unknown>(args: Fetcher.Args): Promise<APIR
         );
 
         if (response.status >= 200 && response.status < 400) {
-            if (args.logger != null) {
-                args.logger.debug("HTTP request succeeded", {
+            if (shouldLog(level, "debug") && args.logger != null) {
+                const metadata = {
                     method: args.method,
                     url,
                     statusCode: response.status
-                });
+                };
+                args.logger.debug("HTTP request succeeded", metadata);
             }
             return {
                 ok: true,
@@ -157,12 +162,13 @@ export async function fetcherImpl<R = unknown>(args: Fetcher.Args): Promise<APIR
                 rawResponse: toRawResponse(response)
             };
         } else {
-            if (args.logger != null) {
-                args.logger.warn("HTTP request failed with error status", {
+            if (shouldLog(level, "warn") && args.logger != null) {
+                const metadata = {
                     method: args.method,
                     url,
                     statusCode: response.status
-                });
+                };
+                args.logger.warn("HTTP request failed with error status", metadata);
             }
             return {
                 ok: false,
@@ -176,11 +182,12 @@ export async function fetcherImpl<R = unknown>(args: Fetcher.Args): Promise<APIR
         }
     } catch (error) {
         if (args.abortSignal != null && args.abortSignal.aborted) {
-            if (args.logger != null) {
-                args.logger.info("HTTP request was aborted", {
+            if (shouldLog(level, "info") && args.logger != null) {
+                const metadata = {
                     method: args.method,
                     url
-                });
+                };
+                args.logger.info("HTTP request was aborted", metadata);
             }
             return {
                 ok: false,
@@ -191,12 +198,13 @@ export async function fetcherImpl<R = unknown>(args: Fetcher.Args): Promise<APIR
                 rawResponse: abortRawResponse
             };
         } else if (error instanceof Error && error.name === "AbortError") {
-            if (args.logger != null) {
-                args.logger.warn("HTTP request timed out", {
+            if (shouldLog(level, "warn") && args.logger != null) {
+                const metadata = {
                     method: args.method,
                     url,
                     timeoutMs: args.timeoutMs
-                });
+                };
+                args.logger.warn("HTTP request timed out", metadata);
             }
             return {
                 ok: false,
@@ -206,12 +214,13 @@ export async function fetcherImpl<R = unknown>(args: Fetcher.Args): Promise<APIR
                 rawResponse: abortRawResponse
             };
         } else if (error instanceof Error) {
-            if (args.logger != null) {
-                args.logger.error("HTTP request failed with error", {
+            if (shouldLog(level, "error") && args.logger != null) {
+                const metadata = {
                     method: args.method,
                     url,
                     errorMessage: error.message
-                });
+                };
+                args.logger.error("HTTP request failed with error", metadata);
             }
             return {
                 ok: false,
@@ -223,12 +232,13 @@ export async function fetcherImpl<R = unknown>(args: Fetcher.Args): Promise<APIR
             };
         }
 
-        if (args.logger != null) {
-            args.logger.error("HTTP request failed with unknown error", {
+        if (shouldLog(level, "error") && args.logger != null) {
+            const metadata = {
                 method: args.method,
                 url,
                 error: toJson(error)
-            });
+            };
+            args.logger.error("HTTP request failed with unknown error", metadata);
         }
         return {
             ok: false,

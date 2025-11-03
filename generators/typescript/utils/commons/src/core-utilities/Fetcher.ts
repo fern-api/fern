@@ -28,6 +28,7 @@ export interface Fetcher {
                 endpointMetadata: "endpointMetadata";
                 fetchFn: "fetchFn";
                 logger: "logger";
+                logLevel: "logLevel";
             };
         };
         Error: {
@@ -157,6 +158,7 @@ export declare namespace Fetcher {
         endpointMetadata?: ts.Expression;
         fetchFn?: ts.Expression;
         logger?: ts.Expression;
+        logLevel?: ts.Expression;
     }
 }
 
@@ -229,7 +231,8 @@ export class FetcherImpl extends CoreUtility implements Fetcher {
                 timeoutInSeconds: "timeoutInSeconds",
                 endpointMetadata: "endpointMetadata",
                 fetchFn: "fetchFn",
-                logger: "logger"
+                logger: "logger",
+                logLevel: "logLevel"
             },
             _getReferenceToType: this.getReferenceToTypeInFetcherModule("Args")
         },
@@ -346,8 +349,11 @@ export class FetcherImpl extends CoreUtility implements Fetcher {
                 );
             }
             if (args.logger != null) {
+                properties.push(ts.factory.createPropertyAssignment(this.Fetcher.Args.properties.logger, args.logger));
+            }
+            if (args.logLevel != null) {
                 properties.push(
-                    ts.factory.createPropertyAssignment(this.Fetcher.Args.properties.logger, args.logger)
+                    ts.factory.createPropertyAssignment(this.Fetcher.Args.properties.logLevel, args.logLevel)
                 );
             }
 
