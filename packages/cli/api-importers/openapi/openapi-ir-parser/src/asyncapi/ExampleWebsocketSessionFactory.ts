@@ -129,7 +129,7 @@ export class ExampleWebsocketSessionFactory {
                 });
                 if (example != null) {
                     messages.push({
-                        messageType: messageExample.type,
+                        messageType: messageExample.messageId,
                         payload: example,
                         description: undefined
                     });

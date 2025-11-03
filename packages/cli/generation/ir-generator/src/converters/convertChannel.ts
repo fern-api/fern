@@ -153,23 +153,25 @@ export function convertChannel({
                               };
                           })
                         : [],
-                messages: example.messages.map((messageExample): ExampleWebSocketMessage => {
-                    const message = channel.messages?.[messageExample.type];
-                    if (message == null) {
-                        throw new Error(`Message ${messageExample.type} does not exist`);
-                    }
-                    return {
-                        type: messageExample.type,
-                        body: convertExampleWebSocketMessageBody({
-                            message,
-                            example: messageExample.body,
-                            typeResolver,
-                            exampleResolver,
-                            file,
-                            workspace
-                        })
-                    };
-                })
+                messages: example.messages
+                    .map((messageExample): ExampleWebSocketMessage | undefined => {
+                        const message = channel.messages?.[messageExample.type];
+                        if (message == null) {
+                            return undefined;
+                        }
+                        return {
+                            type: messageExample.type,
+                            body: convertExampleWebSocketMessageBody({
+                                message,
+                                example: messageExample.body,
+                                typeResolver,
+                                exampleResolver,
+                                file,
+                                workspace
+                            })
+                        };
+                    })
+                    .filter((m): m is ExampleWebSocketMessage => m != null)
             };
         }),
         v2Examples: {
