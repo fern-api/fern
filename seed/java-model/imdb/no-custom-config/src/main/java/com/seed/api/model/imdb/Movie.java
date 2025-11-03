@@ -10,18 +10,25 @@ import com.fasterxml.jackson.annotation.JsonSetter;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.seed.api.core.ObjectMappers;
 import java.util.Objects;
-import org.jetbrains.annotations.NotNull;
 
 @JsonInclude(JsonInclude.Include.NON_ABSENT)
-@JsonDeserialize(builder = CreateMovieRequest.Builder.class)
-public final class CreateMovieRequest {
+@JsonDeserialize(builder = Movie.Builder.class)
+public final class Movie {
+    private final String id;
+
     private final String title;
 
     private final double rating;
 
-    private CreateMovieRequest(String title, double rating) {
+    private Movie(String id, String title, double rating) {
+        this.id = id;
         this.title = title;
         this.rating = rating;
+    }
+
+    @JsonProperty("id")
+    public String getId() {
+        return id;
     }
 
     @JsonProperty("title")
@@ -29,6 +36,9 @@ public final class CreateMovieRequest {
         return title;
     }
 
+    /**
+     * @return The rating scale is one to five stars
+     */
     @JsonProperty("rating")
     public double getRating() {
         return rating;
@@ -37,16 +47,16 @@ public final class CreateMovieRequest {
     @java.lang.Override
     public boolean equals(Object other) {
         if (this == other) return true;
-        return other instanceof CreateMovieRequest && equalTo((CreateMovieRequest) other);
+        return other instanceof Movie && equalTo((Movie) other);
     }
 
-    private boolean equalTo(CreateMovieRequest other) {
-        return title.equals(other.title) && rating == other.rating;
+    private boolean equalTo(Movie other) {
+        return id.equals(other.id) && title.equals(other.title) && rating == other.rating;
     }
 
     @java.lang.Override
     public int hashCode() {
-        return Objects.hash(this.title, this.rating);
+        return Objects.hash(this.id, this.title, this.rating);
     }
 
     @java.lang.Override
@@ -54,26 +64,35 @@ public final class CreateMovieRequest {
         return ObjectMappers.stringify(this);
     }
 
-    public static TitleStage builder() {
+    public static IdStage builder() {
         return new Builder();
     }
 
-    public interface TitleStage {
-        RatingStage title(@NotNull String title);
+    public interface IdStage {
+        TitleStage id(String id);
 
-        Builder from(CreateMovieRequest other);
+        Builder from(Movie other);
+    }
+
+    public interface TitleStage {
+        RatingStage title(String title);
     }
 
     public interface RatingStage {
+        /**
+         * <p>The rating scale is one to five stars</p>
+         */
         _FinalStage rating(double rating);
     }
 
     public interface _FinalStage {
-        CreateMovieRequest build();
+        Movie build();
     }
 
     @JsonIgnoreProperties(ignoreUnknown = true)
-    public static final class Builder implements TitleStage, RatingStage, _FinalStage {
+    public static final class Builder implements IdStage, TitleStage, RatingStage, _FinalStage {
+        private String id;
+
         private String title;
 
         private double rating;
@@ -81,19 +100,32 @@ public final class CreateMovieRequest {
         private Builder() {}
 
         @java.lang.Override
-        public Builder from(CreateMovieRequest other) {
+        public Builder from(Movie other) {
+            id(other.getId());
             title(other.getTitle());
             rating(other.getRating());
             return this;
         }
 
         @java.lang.Override
+        @JsonSetter("id")
+        public TitleStage id(String id) {
+            this.id = Objects.requireNonNull(id, "id must not be null");
+            return this;
+        }
+
+        @java.lang.Override
         @JsonSetter("title")
-        public RatingStage title(@NotNull String title) {
+        public RatingStage title(String title) {
             this.title = Objects.requireNonNull(title, "title must not be null");
             return this;
         }
 
+        /**
+         * <p>The rating scale is one to five stars</p>
+         * <p>The rating scale is one to five stars</p>
+         * @return Reference to {@code this} so that method calls can be chained together.
+         */
         @java.lang.Override
         @JsonSetter("rating")
         public _FinalStage rating(double rating) {
@@ -102,8 +134,8 @@ public final class CreateMovieRequest {
         }
 
         @java.lang.Override
-        public CreateMovieRequest build() {
-            return new CreateMovieRequest(title, rating);
+        public Movie build() {
+            return new Movie(id, title, rating);
         }
     }
 }
