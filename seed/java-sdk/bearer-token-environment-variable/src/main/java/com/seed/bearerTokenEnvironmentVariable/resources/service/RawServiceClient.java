@@ -51,11 +51,11 @@ public class RawServiceClient {
         }
         try (Response response = client.newCall(okhttpRequest).execute()) {
             ResponseBody responseBody = response.body();
+            String responseBodyString = responseBody != null ? responseBody.string() : "{}";
             if (response.isSuccessful()) {
                 return new SeedBearerTokenEnvironmentVariableHttpResponse<>(
-                        ObjectMappers.JSON_MAPPER.readValue(responseBody.string(), String.class), response);
+                        ObjectMappers.JSON_MAPPER.readValue(responseBodyString, String.class), response);
             }
-            String responseBodyString = responseBody != null ? responseBody.string() : "{}";
             throw new SeedBearerTokenEnvironmentVariableApiException(
                     "Error with status code " + response.code(),
                     response.code(),

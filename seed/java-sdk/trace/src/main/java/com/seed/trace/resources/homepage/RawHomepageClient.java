@@ -50,13 +50,12 @@ public class RawHomepageClient {
         }
         try (Response response = client.newCall(okhttpRequest).execute()) {
             ResponseBody responseBody = response.body();
+            String responseBodyString = responseBody != null ? responseBody.string() : "{}";
             if (response.isSuccessful()) {
                 return new SeedTraceHttpResponse<>(
-                        ObjectMappers.JSON_MAPPER.readValue(
-                                responseBody.string(), new TypeReference<List<String>>() {}),
+                        ObjectMappers.JSON_MAPPER.readValue(responseBodyString, new TypeReference<List<String>>() {}),
                         response);
             }
-            String responseBodyString = responseBody != null ? responseBody.string() : "{}";
             throw new SeedTraceApiException(
                     "Error with status code " + response.code(),
                     response.code(),

@@ -62,11 +62,11 @@ public class RawUnionClient {
         }
         try (Response response = client.newCall(okhttpRequest).execute()) {
             ResponseBody responseBody = response.body();
+            String responseBodyString = responseBody != null ? responseBody.string() : "{}";
             if (response.isSuccessful()) {
                 return new SeedUndiscriminatedUnionsHttpResponse<>(
-                        ObjectMappers.JSON_MAPPER.readValue(responseBody.string(), MyUnion.class), response);
+                        ObjectMappers.JSON_MAPPER.readValue(responseBodyString, MyUnion.class), response);
             }
-            String responseBodyString = responseBody != null ? responseBody.string() : "{}";
             throw new SeedUndiscriminatedUnionsApiException(
                     "Error with status code " + response.code(),
                     response.code(),
@@ -98,13 +98,13 @@ public class RawUnionClient {
         }
         try (Response response = client.newCall(okhttpRequest).execute()) {
             ResponseBody responseBody = response.body();
+            String responseBodyString = responseBody != null ? responseBody.string() : "{}";
             if (response.isSuccessful()) {
                 return new SeedUndiscriminatedUnionsHttpResponse<>(
                         ObjectMappers.JSON_MAPPER.readValue(
-                                responseBody.string(), new TypeReference<Map<Key, String>>() {}),
+                                responseBodyString, new TypeReference<Map<Key, String>>() {}),
                         response);
             }
-            String responseBodyString = responseBody != null ? responseBody.string() : "{}";
             throw new SeedUndiscriminatedUnionsApiException(
                     "Error with status code " + response.code(),
                     response.code(),
@@ -145,11 +145,11 @@ public class RawUnionClient {
         }
         try (Response response = client.newCall(okhttpRequest).execute()) {
             ResponseBody responseBody = response.body();
+            String responseBodyString = responseBody != null ? responseBody.string() : "{}";
             if (response.isSuccessful()) {
                 return new SeedUndiscriminatedUnionsHttpResponse<>(
-                        ObjectMappers.JSON_MAPPER.readValue(responseBody.string(), boolean.class), response);
+                        ObjectMappers.JSON_MAPPER.readValue(responseBodyString, boolean.class), response);
             }
-            String responseBodyString = responseBody != null ? responseBody.string() : "{}";
             throw new SeedUndiscriminatedUnionsApiException(
                     "Error with status code " + response.code(),
                     response.code(),
@@ -202,11 +202,11 @@ public class RawUnionClient {
         }
         try (Response response = client.newCall(okhttpRequest).execute()) {
             ResponseBody responseBody = response.body();
+            String responseBodyString = responseBody != null ? responseBody.string() : "{}";
             if (response.isSuccessful()) {
                 return new SeedUndiscriminatedUnionsHttpResponse<>(
-                        ObjectMappers.JSON_MAPPER.readValue(responseBody.string(), boolean.class), response);
+                        ObjectMappers.JSON_MAPPER.readValue(responseBodyString, boolean.class), response);
             }
-            String responseBodyString = responseBody != null ? responseBody.string() : "{}";
             throw new SeedUndiscriminatedUnionsApiException(
                     "Error with status code " + response.code(),
                     response.code(),
@@ -248,12 +248,12 @@ public class RawUnionClient {
         }
         try (Response response = client.newCall(okhttpRequest).execute()) {
             ResponseBody responseBody = response.body();
+            String responseBodyString = responseBody != null ? responseBody.string() : "{}";
             if (response.isSuccessful()) {
                 return new SeedUndiscriminatedUnionsHttpResponse<>(
-                        ObjectMappers.JSON_MAPPER.readValue(responseBody.string(), UnionWithDuplicateTypes.class),
+                        ObjectMappers.JSON_MAPPER.readValue(responseBodyString, UnionWithDuplicateTypes.class),
                         response);
             }
-            String responseBodyString = responseBody != null ? responseBody.string() : "{}";
             throw new SeedUndiscriminatedUnionsApiException(
                     "Error with status code " + response.code(),
                     response.code(),
@@ -294,11 +294,11 @@ public class RawUnionClient {
         }
         try (Response response = client.newCall(okhttpRequest).execute()) {
             ResponseBody responseBody = response.body();
+            String responseBodyString = responseBody != null ? responseBody.string() : "{}";
             if (response.isSuccessful()) {
                 return new SeedUndiscriminatedUnionsHttpResponse<>(
-                        ObjectMappers.JSON_MAPPER.readValue(responseBody.string(), String.class), response);
+                        ObjectMappers.JSON_MAPPER.readValue(responseBodyString, String.class), response);
             }
-            String responseBodyString = responseBody != null ? responseBody.string() : "{}";
             throw new SeedUndiscriminatedUnionsApiException(
                     "Error with status code " + response.code(),
                     response.code(),

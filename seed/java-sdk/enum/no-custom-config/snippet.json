@@ -27,7 +27,7 @@
             }
         },
         {
-            "example_identifier": "44be7f2e",
+            "example_identifier": "7933fc3",
             "id": {
                 "method": "POST",
                 "path": "/inlined",

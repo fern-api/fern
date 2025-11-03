@@ -76,14 +76,13 @@ public class AsyncRawObjectClient {
             @Override
             public void onResponse(@NotNull Call call, @NotNull Response response) throws IOException {
                 try (ResponseBody responseBody = response.body()) {
+                    String responseBodyString = responseBody != null ? responseBody.string() : "{}";
                     if (response.isSuccessful()) {
                         future.complete(new BestHttpResponse<>(
-                                ObjectMappers.JSON_MAPPER.readValue(
-                                        responseBody.string(), ObjectWithOptionalField.class),
+                                ObjectMappers.JSON_MAPPER.readValue(responseBodyString, ObjectWithOptionalField.class),
                                 response));
                         return;
                     }
-                    String responseBodyString = responseBody != null ? responseBody.string() : "{}";
                     future.completeExceptionally(new BestApiException(
                             "Error with status code " + response.code(),
                             response.code(),
@@ -138,14 +137,13 @@ public class AsyncRawObjectClient {
             @Override
             public void onResponse(@NotNull Call call, @NotNull Response response) throws IOException {
                 try (ResponseBody responseBody = response.body()) {
+                    String responseBodyString = responseBody != null ? responseBody.string() : "{}";
                     if (response.isSuccessful()) {
                         future.complete(new BestHttpResponse<>(
-                                ObjectMappers.JSON_MAPPER.readValue(
-                                        responseBody.string(), ObjectWithRequiredField.class),
+                                ObjectMappers.JSON_MAPPER.readValue(responseBodyString, ObjectWithRequiredField.class),
                                 response));
                         return;
                     }
-                    String responseBodyString = responseBody != null ? responseBody.string() : "{}";
                     future.completeExceptionally(new BestApiException(
                             "Error with status code " + response.code(),
                             response.code(),
@@ -200,13 +198,13 @@ public class AsyncRawObjectClient {
             @Override
             public void onResponse(@NotNull Call call, @NotNull Response response) throws IOException {
                 try (ResponseBody responseBody = response.body()) {
+                    String responseBodyString = responseBody != null ? responseBody.string() : "{}";
                     if (response.isSuccessful()) {
                         future.complete(new BestHttpResponse<>(
-                                ObjectMappers.JSON_MAPPER.readValue(responseBody.string(), ObjectWithMapOfMap.class),
+                                ObjectMappers.JSON_MAPPER.readValue(responseBodyString, ObjectWithMapOfMap.class),
                                 response));
                         return;
                     }
-                    String responseBodyString = responseBody != null ? responseBody.string() : "{}";
                     future.completeExceptionally(new BestApiException(
                             "Error with status code " + response.code(),
                             response.code(),
@@ -266,14 +264,14 @@ public class AsyncRawObjectClient {
             @Override
             public void onResponse(@NotNull Call call, @NotNull Response response) throws IOException {
                 try (ResponseBody responseBody = response.body()) {
+                    String responseBodyString = responseBody != null ? responseBody.string() : "{}";
                     if (response.isSuccessful()) {
                         future.complete(new BestHttpResponse<>(
                                 ObjectMappers.JSON_MAPPER.readValue(
-                                        responseBody.string(), NestedObjectWithOptionalField.class),
+                                        responseBodyString, NestedObjectWithOptionalField.class),
                                 response));
                         return;
                     }
-                    String responseBodyString = responseBody != null ? responseBody.string() : "{}";
                     future.completeExceptionally(new BestApiException(
                             "Error with status code " + response.code(),
                             response.code(),
@@ -329,14 +327,14 @@ public class AsyncRawObjectClient {
             @Override
             public void onResponse(@NotNull Call call, @NotNull Response response) throws IOException {
                 try (ResponseBody responseBody = response.body()) {
+                    String responseBodyString = responseBody != null ? responseBody.string() : "{}";
                     if (response.isSuccessful()) {
                         future.complete(new BestHttpResponse<>(
                                 ObjectMappers.JSON_MAPPER.readValue(
-                                        responseBody.string(), NestedObjectWithRequiredField.class),
+                                        responseBodyString, NestedObjectWithRequiredField.class),
                                 response));
                         return;
                     }
-                    String responseBodyString = responseBody != null ? responseBody.string() : "{}";
                     future.completeExceptionally(new BestApiException(
                             "Error with status code " + response.code(),
                             response.code(),
@@ -391,14 +389,14 @@ public class AsyncRawObjectClient {
             @Override
             public void onResponse(@NotNull Call call, @NotNull Response response) throws IOException {
                 try (ResponseBody responseBody = response.body()) {
+                    String responseBodyString = responseBody != null ? responseBody.string() : "{}";
                     if (response.isSuccessful()) {
                         future.complete(new BestHttpResponse<>(
                                 ObjectMappers.JSON_MAPPER.readValue(
-                                        responseBody.string(), NestedObjectWithRequiredField.class),
+                                        responseBodyString, NestedObjectWithRequiredField.class),
                                 response));
                         return;
                     }
-                    String responseBodyString = responseBody != null ? responseBody.string() : "{}";
                     future.completeExceptionally(new BestApiException(
                             "Error with status code " + response.code(),
                             response.code(),

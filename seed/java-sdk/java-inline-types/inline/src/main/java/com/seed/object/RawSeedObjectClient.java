@@ -61,11 +61,11 @@ public class RawSeedObjectClient {
         }
         try (Response response = client.newCall(okhttpRequest).execute()) {
             ResponseBody responseBody = response.body();
+            String responseBodyString = responseBody != null ? responseBody.string() : "{}";
             if (response.isSuccessful()) {
                 return new SeedObjectHttpResponse<>(
-                        ObjectMappers.JSON_MAPPER.readValue(responseBody.string(), RootType1.class), response);
+                        ObjectMappers.JSON_MAPPER.readValue(responseBodyString, RootType1.class), response);
             }
-            String responseBodyString = responseBody != null ? responseBody.string() : "{}";
             throw new SeedObjectApiException(
                     "Error with status code " + response.code(),
                     response.code(),

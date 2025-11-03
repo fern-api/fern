@@ -61,10 +61,10 @@ public class RawUnionClient {
     }
     try (Response response = client.newCall(okhttpRequest).execute()) {
       ResponseBody responseBody = response.body();
-      if (response.isSuccessful()) {
-        return new SeedExhaustiveHttpResponse<>(ObjectMappers.JSON_MAPPER.readValue(responseBody.string(), Animal.class), response);
-      }
       String responseBodyString = responseBody != null ? responseBody.string() : "{}";
+      if (response.isSuccessful()) {
+        return new SeedExhaustiveHttpResponse<>(ObjectMappers.JSON_MAPPER.readValue(responseBodyString, Animal.class), response);
+      }
       throw new SeedExhaustiveApiException("Error with status code " + response.code(), response.code(), ObjectMappers.JSON_MAPPER.readValue(responseBodyString, Object.class), response);
     }
     catch (IOException e) {

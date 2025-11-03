@@ -72,12 +72,12 @@ public class AsyncRawServiceClient {
             @Override
             public void onResponse(@NotNull Call call, @NotNull Response response) throws IOException {
                 try (ResponseBody responseBody = response.body()) {
+                    String responseBodyString = responseBody != null ? responseBody.string() : "{}";
                     if (response.isSuccessful()) {
                         future.complete(new SeedExamplesHttpResponse<>(
-                                ObjectMappers.JSON_MAPPER.readValue(responseBody.string(), File.class), response));
+                                ObjectMappers.JSON_MAPPER.readValue(responseBodyString, File.class), response));
                         return;
                     }
-                    String responseBodyString = responseBody != null ? responseBody.string() : "{}";
                     try {
                         if (response.code() == 404) {
                             future.completeExceptionally(new NotFoundError(

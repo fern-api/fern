@@ -74,11 +74,11 @@ public class RawNullableOptionalClient {
         }
         try (Response response = client.newCall(okhttpRequest).execute()) {
             ResponseBody responseBody = response.body();
+            String responseBodyString = responseBody != null ? responseBody.string() : "{}";
             if (response.isSuccessful()) {
                 return new SeedNullableOptionalHttpResponse<>(
-                        ObjectMappers.JSON_MAPPER.readValue(responseBody.string(), UserResponse.class), response);
+                        ObjectMappers.JSON_MAPPER.readValue(responseBodyString, UserResponse.class), response);
             }
-            String responseBodyString = responseBody != null ? responseBody.string() : "{}";
             throw new SeedNullableOptionalApiException(
                     "Error with status code " + response.code(),
                     response.code(),
@@ -126,11 +126,11 @@ public class RawNullableOptionalClient {
         }
         try (Response response = client.newCall(okhttpRequest).execute()) {
             ResponseBody responseBody = response.body();
+            String responseBodyString = responseBody != null ? responseBody.string() : "{}";
             if (response.isSuccessful()) {
                 return new SeedNullableOptionalHttpResponse<>(
-                        ObjectMappers.JSON_MAPPER.readValue(responseBody.string(), UserResponse.class), response);
+                        ObjectMappers.JSON_MAPPER.readValue(responseBodyString, UserResponse.class), response);
             }
-            String responseBodyString = responseBody != null ? responseBody.string() : "{}";
             throw new SeedNullableOptionalApiException(
                     "Error with status code " + response.code(),
                     response.code(),
@@ -186,11 +186,11 @@ public class RawNullableOptionalClient {
         }
         try (Response response = client.newCall(okhttpRequest).execute()) {
             ResponseBody responseBody = response.body();
+            String responseBodyString = responseBody != null ? responseBody.string() : "{}";
             if (response.isSuccessful()) {
                 return new SeedNullableOptionalHttpResponse<>(
-                        ObjectMappers.JSON_MAPPER.readValue(responseBody.string(), UserResponse.class), response);
+                        ObjectMappers.JSON_MAPPER.readValue(responseBodyString, UserResponse.class), response);
             }
-            String responseBodyString = responseBody != null ? responseBody.string() : "{}";
             throw new SeedNullableOptionalApiException(
                     "Error with status code " + response.code(),
                     response.code(),
@@ -252,13 +252,13 @@ public class RawNullableOptionalClient {
         }
         try (Response response = client.newCall(okhttpRequest).execute()) {
             ResponseBody responseBody = response.body();
+            String responseBodyString = responseBody != null ? responseBody.string() : "{}";
             if (response.isSuccessful()) {
                 return new SeedNullableOptionalHttpResponse<>(
                         ObjectMappers.JSON_MAPPER.readValue(
-                                responseBody.string(), new TypeReference<List<UserResponse>>() {}),
+                                responseBodyString, new TypeReference<List<UserResponse>>() {}),
                         response);
             }
-            String responseBodyString = responseBody != null ? responseBody.string() : "{}";
             throw new SeedNullableOptionalApiException(
                     "Error with status code " + response.code(),
                     response.code(),
@@ -310,13 +310,13 @@ public class RawNullableOptionalClient {
         }
         try (Response response = client.newCall(okhttpRequest).execute()) {
             ResponseBody responseBody = response.body();
+            String responseBodyString = responseBody != null ? responseBody.string() : "{}";
             if (response.isSuccessful()) {
                 return new SeedNullableOptionalHttpResponse<>(
                         ObjectMappers.JSON_MAPPER.readValue(
-                                responseBody.string(), new TypeReference<List<UserResponse>>() {}),
+                                responseBodyString, new TypeReference<List<UserResponse>>() {}),
                         response);
             }
-            String responseBodyString = responseBody != null ? responseBody.string() : "{}";
             throw new SeedNullableOptionalApiException(
                     "Error with status code " + response.code(),
                     response.code(),
@@ -364,11 +364,11 @@ public class RawNullableOptionalClient {
         }
         try (Response response = client.newCall(okhttpRequest).execute()) {
             ResponseBody responseBody = response.body();
+            String responseBodyString = responseBody != null ? responseBody.string() : "{}";
             if (response.isSuccessful()) {
                 return new SeedNullableOptionalHttpResponse<>(
-                        ObjectMappers.JSON_MAPPER.readValue(responseBody.string(), ComplexProfile.class), response);
+                        ObjectMappers.JSON_MAPPER.readValue(responseBodyString, ComplexProfile.class), response);
             }
-            String responseBodyString = responseBody != null ? responseBody.string() : "{}";
             throw new SeedNullableOptionalApiException(
                     "Error with status code " + response.code(),
                     response.code(),
@@ -409,11 +409,11 @@ public class RawNullableOptionalClient {
         }
         try (Response response = client.newCall(okhttpRequest).execute()) {
             ResponseBody responseBody = response.body();
+            String responseBodyString = responseBody != null ? responseBody.string() : "{}";
             if (response.isSuccessful()) {
                 return new SeedNullableOptionalHttpResponse<>(
-                        ObjectMappers.JSON_MAPPER.readValue(responseBody.string(), ComplexProfile.class), response);
+                        ObjectMappers.JSON_MAPPER.readValue(responseBodyString, ComplexProfile.class), response);
             }
-            String responseBodyString = responseBody != null ? responseBody.string() : "{}";
             throw new SeedNullableOptionalApiException(
                     "Error with status code " + response.code(),
                     response.code(),
@@ -471,11 +471,11 @@ public class RawNullableOptionalClient {
         }
         try (Response response = client.newCall(okhttpRequest).execute()) {
             ResponseBody responseBody = response.body();
+            String responseBodyString = responseBody != null ? responseBody.string() : "{}";
             if (response.isSuccessful()) {
                 return new SeedNullableOptionalHttpResponse<>(
-                        ObjectMappers.JSON_MAPPER.readValue(responseBody.string(), ComplexProfile.class), response);
+                        ObjectMappers.JSON_MAPPER.readValue(responseBodyString, ComplexProfile.class), response);
             }
-            String responseBodyString = responseBody != null ? responseBody.string() : "{}";
             throw new SeedNullableOptionalApiException(
                     "Error with status code " + response.code(),
                     response.code(),
@@ -524,12 +524,12 @@ public class RawNullableOptionalClient {
         }
         try (Response response = client.newCall(okhttpRequest).execute()) {
             ResponseBody responseBody = response.body();
+            String responseBodyString = responseBody != null ? responseBody.string() : "{}";
             if (response.isSuccessful()) {
                 return new SeedNullableOptionalHttpResponse<>(
-                        ObjectMappers.JSON_MAPPER.readValue(responseBody.string(), DeserializationTestResponse.class),
+                        ObjectMappers.JSON_MAPPER.readValue(responseBodyString, DeserializationTestResponse.class),
                         response);
             }
-            String responseBodyString = responseBody != null ? responseBody.string() : "{}";
             throw new SeedNullableOptionalApiException(
                     "Error with status code " + response.code(),
                     response.code(),
@@ -580,13 +580,13 @@ public class RawNullableOptionalClient {
         }
         try (Response response = client.newCall(okhttpRequest).execute()) {
             ResponseBody responseBody = response.body();
+            String responseBodyString = responseBody != null ? responseBody.string() : "{}";
             if (response.isSuccessful()) {
                 return new SeedNullableOptionalHttpResponse<>(
                         ObjectMappers.JSON_MAPPER.readValue(
-                                responseBody.string(), new TypeReference<List<UserResponse>>() {}),
+                                responseBodyString, new TypeReference<List<UserResponse>>() {}),
                         response);
             }
-            String responseBodyString = responseBody != null ? responseBody.string() : "{}";
             throw new SeedNullableOptionalApiException(
                     "Error with status code " + response.code(),
                     response.code(),
@@ -628,13 +628,13 @@ public class RawNullableOptionalClient {
         }
         try (Response response = client.newCall(okhttpRequest).execute()) {
             ResponseBody responseBody = response.body();
+            String responseBodyString = responseBody != null ? responseBody.string() : "{}";
             if (response.isSuccessful()) {
                 return new SeedNullableOptionalHttpResponse<>(
                         ObjectMappers.JSON_MAPPER.readValue(
-                                responseBody.string(), new TypeReference<Optional<NotificationMethod>>() {}),
+                                responseBodyString, new TypeReference<Optional<NotificationMethod>>() {}),
                         response);
             }
-            String responseBodyString = responseBody != null ? responseBody.string() : "{}";
             throw new SeedNullableOptionalApiException(
                     "Error with status code " + response.code(),
                     response.code(),
@@ -684,13 +684,12 @@ public class RawNullableOptionalClient {
         }
         try (Response response = client.newCall(okhttpRequest).execute()) {
             ResponseBody responseBody = response.body();
+            String responseBodyString = responseBody != null ? responseBody.string() : "{}";
             if (response.isSuccessful()) {
                 return new SeedNullableOptionalHttpResponse<>(
-                        ObjectMappers.JSON_MAPPER.readValue(
-                                responseBody.string(), new TypeReference<List<String>>() {}),
+                        ObjectMappers.JSON_MAPPER.readValue(responseBodyString, new TypeReference<List<String>>() {}),
                         response);
             }
-            String responseBodyString = responseBody != null ? responseBody.string() : "{}";
             throw new SeedNullableOptionalApiException(
                     "Error with status code " + response.code(),
                     response.code(),
@@ -738,13 +737,13 @@ public class RawNullableOptionalClient {
         }
         try (Response response = client.newCall(okhttpRequest).execute()) {
             ResponseBody responseBody = response.body();
+            String responseBodyString = responseBody != null ? responseBody.string() : "{}";
             if (response.isSuccessful()) {
                 return new SeedNullableOptionalHttpResponse<>(
                         ObjectMappers.JSON_MAPPER.readValue(
-                                responseBody.string(), new TypeReference<Optional<List<SearchResult>>>() {}),
+                                responseBodyString, new TypeReference<Optional<List<SearchResult>>>() {}),
                         response);
             }
-            String responseBodyString = responseBody != null ? responseBody.string() : "{}";
             throw new SeedNullableOptionalApiException(
                     "Error with status code " + response.code(),
                     response.code(),

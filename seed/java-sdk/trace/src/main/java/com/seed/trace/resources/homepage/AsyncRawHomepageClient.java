@@ -57,14 +57,14 @@ public class AsyncRawHomepageClient {
             @Override
             public void onResponse(@NotNull Call call, @NotNull Response response) throws IOException {
                 try (ResponseBody responseBody = response.body()) {
+                    String responseBodyString = responseBody != null ? responseBody.string() : "{}";
                     if (response.isSuccessful()) {
                         future.complete(new SeedTraceHttpResponse<>(
                                 ObjectMappers.JSON_MAPPER.readValue(
-                                        responseBody.string(), new TypeReference<List<String>>() {}),
+                                        responseBodyString, new TypeReference<List<String>>() {}),
                                 response));
                         return;
                     }
-                    String responseBodyString = responseBody != null ? responseBody.string() : "{}";
                     future.completeExceptionally(new SeedTraceApiException(
                             "Error with status code " + response.code(),
                             response.code(),

@@ -62,11 +62,11 @@ public class RawFooClient {
         }
         try (Response response = client.newCall(okhttpRequest).execute()) {
             ResponseBody responseBody = response.body();
+            String responseBodyString = responseBody != null ? responseBody.string() : "{}";
             if (response.isSuccessful()) {
                 return new SeedCrossPackageTypeNamesHttpResponse<>(
-                        ObjectMappers.JSON_MAPPER.readValue(responseBody.string(), ImportingType.class), response);
+                        ObjectMappers.JSON_MAPPER.readValue(responseBodyString, ImportingType.class), response);
             }
-            String responseBodyString = responseBody != null ? responseBody.string() : "{}";
             throw new SeedCrossPackageTypeNamesApiException(
                     "Error with status code " + response.code(),
                     response.code(),

@@ -79,11 +79,11 @@ public class AsyncRawInlinedRequestsClient {
       @Override
       public void onResponse(@NotNull Call call, @NotNull Response response) throws IOException {
         try (ResponseBody responseBody = response.body()) {
+          String responseBodyString = responseBody != null ? responseBody.string() : "{}";
           if (response.isSuccessful()) {
-            future.complete(new SeedExhaustiveHttpResponse<>(ObjectMappers.JSON_MAPPER.readValue(responseBody.string(), ObjectWithOptionalField.class), response));
+            future.complete(new SeedExhaustiveHttpResponse<>(ObjectMappers.JSON_MAPPER.readValue(responseBodyString, ObjectWithOptionalField.class), response));
             return;
           }
-          String responseBodyString = responseBody != null ? responseBody.string() : "{}";
           try {
             if (response.code() == 400) {
               future.completeExceptionally(new BadRequestBody(ObjectMappers.JSON_MAPPER.readValue(responseBodyString, BadObjectRequestInfo.class), response));

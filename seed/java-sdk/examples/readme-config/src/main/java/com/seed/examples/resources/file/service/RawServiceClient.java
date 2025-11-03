@@ -65,11 +65,11 @@ public class RawServiceClient {
         }
         try (Response response = client.newCall(okhttpRequest).execute()) {
             ResponseBody responseBody = response.body();
+            String responseBodyString = responseBody != null ? responseBody.string() : "{}";
             if (response.isSuccessful()) {
                 return new SeedExamplesHttpResponse<>(
-                        ObjectMappers.JSON_MAPPER.readValue(responseBody.string(), File.class), response);
+                        ObjectMappers.JSON_MAPPER.readValue(responseBodyString, File.class), response);
             }
-            String responseBodyString = responseBody != null ? responseBody.string() : "{}";
             try {
                 if (response.code() == 404) {
                     throw new NotFoundError(
