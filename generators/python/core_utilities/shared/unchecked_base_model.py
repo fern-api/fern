@@ -111,7 +111,8 @@ class UncheckedBaseModel(UniversalBaseModel):
                     fields_values[key] = value
 
         if IS_PYDANTIC_V2:
-            m = super(UncheckedBaseModel, cls).model_construct(_fields_set=_fields_set, **fields_values)
+            base_cls = typing.cast(typing.Type[UniversalBaseModel], cls)
+            m = typing.cast("Model", super(UncheckedBaseModel, base_cls).model_construct(_fields_set=_fields_set, **fields_values))  # type: ignore[misc]
             if extras:
                 object.__setattr__(m, "__pydantic_extra__", extras)
         else:
