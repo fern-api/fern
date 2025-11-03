@@ -1,0 +1,12 @@
+{
+  "printWidth": 120,
+  "singleQuote": false,
+  "ignorePatterns": [
+    "dist/**",
+    "*.tsbuildinfo",
+    "_tmp_*",
+    "*.tmp",
+    ".tmp/",
+    "*.log"
+  ]
+}

@@ -353,7 +353,7 @@ export abstract class TypescriptProject {
             deps["prettier"] = "3.4.2";
         }
         if (this.formatter === "oxfmt") {
-            deps["oxfmt"] = "^0.5.0";
+            deps["oxfmt"] = "0.9.0";
         }
         return deps;
     }
