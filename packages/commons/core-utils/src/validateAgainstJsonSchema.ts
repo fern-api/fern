@@ -134,7 +134,9 @@ export function validateAgainstJsonSchema(
                     allErrors: validate.errors ?? []
                 };
             } else if (mostGranularError.keyword === "type") {
-                const expectedType = mostGranularError.params.type;
+                const expectedType = Array.isArray(mostGranularError.params.type)
+                    ? mostGranularError.params.type.join(" or ")
+                    : mostGranularError.params.type;
                 const path = formatJsonPath(mostGranularError.instancePath);
                 let actualType = "unknown";
                 try {

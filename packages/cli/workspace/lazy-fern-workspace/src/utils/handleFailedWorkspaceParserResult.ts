@@ -9,6 +9,10 @@ import { ZodIssue, ZodIssueCode } from "zod";
 
 import { WorkspaceLoader, WorkspaceLoaderFailureType } from "./Result";
 
+function decodeJsonPointerSegment(segment: string): string {
+    return segment.replace(/~1/g, "/").replace(/~0/g, "~");
+}
+
 export function handleFailedWorkspaceParserResult(result: WorkspaceLoader.FailedResult, logger: Logger): void {
     for (const [relativeFilepath, failure] of entries(result.failures)) {
         handleWorkspaceParserFailureForFile({ relativeFilepath, failure, logger });
@@ -84,7 +88,10 @@ function handleWorkspaceParserFailureForFile({
             break;
         case WorkspaceLoaderFailureType.JSONSCHEMA_VALIDATION:
             if (failure.error.error != null) {
-                const pathSegments = failure.error.error.instancePath.split("/").filter((part) => part !== "");
+                const pathSegments = failure.error.error.instancePath
+                    .split("/")
+                    .filter((part) => part !== "")
+                    .map(decodeJsonPointerSegment);
                 if (failure.error.error.keyword === "required" && failure.error.error.params?.missingProperty) {
                     pathSegments.push(failure.error.error.params.missingProperty);
                 } else if (
@@ -102,7 +109,10 @@ function handleWorkspaceParserFailureForFile({
             }
             for (const error of failure.error.allErrors) {
                 if (error !== failure.error.error) {
-                    const pathSegments = error.instancePath.split("/").filter((part) => part !== "");
+                    const pathSegments = error.instancePath
+                        .split("/")
+                        .filter((part) => part !== "")
+                        .map(decodeJsonPointerSegment);
                     if (error.keyword === "required" && error.params?.missingProperty) {
                         pathSegments.push(error.params.missingProperty);
                     } else if (error.keyword === "additionalProperties" && error.params?.additionalProperty) {
