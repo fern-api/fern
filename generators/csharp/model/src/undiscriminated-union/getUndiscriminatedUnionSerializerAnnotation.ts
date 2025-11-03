@@ -25,9 +25,14 @@ export function getUndiscriminatedUnionSerializerAnnotation({
             argument: context.csharp.codeblock((writer) => {
                 writer.write("typeof(");
 
-                const oneOf = getOneOf({ context, undiscriminatedUnionDeclaration });
-                const oneOfSerializer = getOneOfSerializer({ context, undiscriminatedUnionDeclaration });
-                const collectionSerializer = context.getCollectionItemSerializerReference(oneOf, oneOfSerializer);
+                const oneOf = context.extern.OneOf.OneOf(
+                    undiscriminatedUnionDeclaration.members.map((member) => {
+                        return context.csharpTypeMapper.convert({ reference: member.type, unboxOptionals: true });
+                    })
+                );
+
+                const oneOfSerializer = context.types.OneOfSerializer(oneOf);
+                const collectionSerializer = context.types.CollectionItemSerializer(oneOf, oneOfSerializer);
                 writer.writeNode(collectionSerializer);
                 writer.write(")");
             })
@@ -37,36 +42,14 @@ export function getUndiscriminatedUnionSerializerAnnotation({
         reference: context.System.Text.Json.Serialization.JsonConverter(),
         argument: context.csharp.codeblock((writer) => {
             writer.write("typeof(");
-            const oneOfSerializer = getOneOfSerializer({ context, undiscriminatedUnionDeclaration });
+            const oneOf = context.extern.OneOf.OneOf(
+                undiscriminatedUnionDeclaration.members.map((member) => {
+                    return context.csharpTypeMapper.convert({ reference: member.type, unboxOptionals: true });
+                })
+            );
+            const oneOfSerializer = context.types.OneOfSerializer(oneOf);
             writer.writeNode(oneOfSerializer);
             writer.write(")");
         })
     });
-}
-
-function getOneOfSerializer({
-    context,
-    undiscriminatedUnionDeclaration
-}: {
-    // biome-ignore lint/suspicious/noExplicitAny: allow explicit any
-    context: BaseCsharpGeneratorContext<any>;
-    undiscriminatedUnionDeclaration: UndiscriminatedUnionTypeDeclaration;
-}): ast.ClassReference {
-    const oneOf = getOneOf({ context, undiscriminatedUnionDeclaration });
-    return context.getOneOfSerializerClassReference(oneOf);
-}
-
-function getOneOf({
-    context,
-    undiscriminatedUnionDeclaration
-}: {
-    // biome-ignore lint/suspicious/noExplicitAny: allow explicit any
-    context: BaseCsharpGeneratorContext<any>;
-    undiscriminatedUnionDeclaration: UndiscriminatedUnionTypeDeclaration;
-}): ast.ClassReference {
-    return context.getOneOfClassReference(
-        undiscriminatedUnionDeclaration.members.map((member) => {
-            return context.csharpTypeMapper.convert({ reference: member.type, unboxOptionals: true });
-        })
-    );
 }

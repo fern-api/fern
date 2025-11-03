@@ -1,4 +1,3 @@
-using System.Threading.Tasks;
 using NUnit.Framework;
 using SeedOauthClientCredentialsDefault;
 using SeedOauthClientCredentialsDefault.Core;

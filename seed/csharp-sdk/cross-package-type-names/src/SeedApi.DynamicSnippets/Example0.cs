@@ -1,5 +1,4 @@
 using SeedCrossPackageTypeNames;
-using System.Threading.Tasks;
 
 namespace Usage;
 

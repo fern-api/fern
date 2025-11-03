@@ -11,8 +11,8 @@ public class Example1
             }
         );
 
-        await client.CreateUserAsync(
-            new global::SeedCsharpNamespaceCollision.User {
+        await client.CreateTaskAsync(
+            new global::SeedCsharpNamespaceCollision.Task {
                 Id = "id",
                 Name = "name",
                 Email = "email",

@@ -4,29 +4,35 @@ import { FernIr } from "@fern-fern/ir-sdk";
 
 import { ModelGeneratorContext } from "./ModelGeneratorContext";
 
-export function generateFields({
-    properties,
-    className,
-    context
-}: {
-    properties: (FernIr.ObjectProperty | FernIr.InlinedRequestBodyProperty)[];
-    className: string;
-    context: ModelGeneratorContext;
-}): ast.Field[] {
-    return properties.map((property) => generateField({ property, className, context }));
+export function generateFields(
+    cls: ast.Class,
+    {
+        properties,
+        className,
+        context
+    }: {
+        properties: (FernIr.ObjectProperty | FernIr.InlinedRequestBodyProperty)[];
+        className: string;
+        context: ModelGeneratorContext;
+    }
+): ast.Field[] {
+    return properties.map((property) => generateField(cls, { property, className, context }));
 }
 
-export function generateField({
-    property,
-    className,
-    context,
-    jsonProperty = true
-}: {
-    property: FernIr.ObjectProperty | FernIr.InlinedRequestBodyProperty;
-    className: string;
-    context: ModelGeneratorContext;
-    jsonProperty?: boolean;
-}): ast.Field {
+export function generateField(
+    cls: ast.Class,
+    {
+        property,
+        className,
+        context,
+        jsonProperty = true
+    }: {
+        property: FernIr.ObjectProperty | FernIr.InlinedRequestBodyProperty;
+        className: string;
+        context: ModelGeneratorContext;
+        jsonProperty?: boolean;
+    }
+): ast.Field {
     const fieldType = context.csharpTypeMapper.convert({ reference: property.valueType });
     const maybeLiteralInitializer = context.getLiteralInitializerFromTypeReference({
         typeReference: property.valueType
@@ -40,12 +46,12 @@ export function generateField({
     }
     // if we are using readonly constants, we need to generate the accessors and initializer
     // so that deserialization works correctly  (ie, throws deserializing an incorrect value to a readonly constant)
-    const name = getPropertyName({ className, objectProperty: property.name, context });
+
     let accessors: ast.Field.Accessors | undefined;
     let initializer: ast.CodeBlock | undefined = maybeLiteralInitializer;
     let useRequired = true;
 
-    if (context.enableReadonlyConstants && maybeLiteralInitializer) {
+    if (context.generation.settings.enableReadonlyConstants && maybeLiteralInitializer) {
         accessors = {
             get: (writer: Writer) => {
                 writer.writeNode(maybeLiteralInitializer);
@@ -53,7 +59,7 @@ export function generateField({
             set: (writer: Writer) => {
                 writer.write("value.Assert(value ==");
                 writer.writeNode(maybeLiteralInitializer);
-                writer.write(`, "'${name}' must be " + `);
+                writer.write(`, "'${property.name}' must be " + `);
 
                 writer.writeNode(maybeLiteralInitializer);
                 writer.write(")");
@@ -63,8 +69,8 @@ export function generateField({
         useRequired = false;
     }
 
-    return context.csharp.field({
-        name,
+    return cls.addField({
+        origin: property,
         type: fieldType,
         access: ast.Access.Public,
         get: true,
@@ -77,42 +83,26 @@ export function generateField({
     });
 }
 
-export function generateFieldForFileProperty({
-    property,
-    className,
-    context
-}: {
-    property: FernIr.FileProperty;
-    className: string;
-    context: ModelGeneratorContext;
-}): ast.Field {
+export function generateFieldForFileProperty(
+    cls: ast.Class,
+    {
+        property,
+        className,
+        context
+    }: {
+        property: FernIr.FileProperty;
+        className: string;
+        context: ModelGeneratorContext;
+    }
+): ast.Field {
     const fieldType = context.csharpTypeMapper.convertFromFileProperty({ property });
 
-    return context.csharp.field({
-        name: getPropertyName({ className, objectProperty: property.key, context }),
+    return cls.addField({
+        origin: property.key,
         type: fieldType,
         access: ast.Access.Public,
         get: true,
         set: true,
         useRequired: !property.isOptional
     });
-}
-
-/**
- * Class Names and Property Names cannot overlap in C# otherwise there are compilation errors.
- */
-function getPropertyName({
-    className,
-    objectProperty,
-    context
-}: {
-    className: string;
-    objectProperty: FernIr.NameAndWireValue;
-    context: ModelGeneratorContext;
-}): string {
-    const propertyName = context.getPascalCaseSafeName(objectProperty.name);
-    if (propertyName === className) {
-        return `${propertyName}_`;
-    }
-    return propertyName;
 }

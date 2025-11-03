@@ -17,6 +17,14 @@
   createdAt: "2025-11-03"
   irVersion: 61
 
+- version: 3.23.0
+  changelogEntry:
+    - summary: |
+        Add support for bytes download responses.
+      type: feat
+  createdAt: "2025-11-03"
+  irVersion: 61
+
 - version: 3.22.0
   changelogEntry:
     - summary: |

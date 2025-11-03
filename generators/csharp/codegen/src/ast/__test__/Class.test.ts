@@ -1,21 +1,30 @@
-import { ast, CSharp } from "../..";
+import { FernGeneratorExec } from "@fern-api/browser-compatible-base-generator";
+import { IntermediateRepresentation } from "@fern-fern/ir-sdk/api";
+import { ast, BaseCsharpCustomConfigSchema } from "../..";
+import { Generation } from "../../context/generation-info";
 
-const csharp = new CSharp();
+const generation = new Generation(
+    {} as unknown as IntermediateRepresentation,
+    "",
+    {} as BaseCsharpCustomConfigSchema,
+    {} as FernGeneratorExec.config.GeneratorConfig
+);
+
 describe("class", () => {
     it("basic", async () => {
-        const clazz = csharp.class_({
+        const clazz = generation.csharp.class_({
             name: "Car",
             namespace: "Automotive",
             access: ast.Access.Public,
             primaryConstructor: {
                 parameters: [
-                    csharp.parameter({
+                    generation.csharp.parameter({
                         name: "make",
-                        type: csharp.Type.string()
+                        type: generation.csharp.Type.string
                     }),
-                    csharp.parameter({
+                    generation.csharp.parameter({
                         name: "model",
-                        type: csharp.Type.string()
+                        type: generation.csharp.Type.string
                     })
                 ],
                 superClassArguments: []
@@ -26,8 +35,7 @@ describe("class", () => {
                 namespace: "",
                 allNamespaceSegments: new Set<string>(),
                 allTypeClassReferences: new Map<string, Set<string>>(),
-                rootNamespace: "",
-                customConfig: {}
+                generation
             })
         ).toMatchSnapshot();
     });

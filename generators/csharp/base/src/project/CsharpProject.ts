@@ -12,12 +12,7 @@ import { BaseCsharpGeneratorContext } from "../context/BaseCsharpGeneratorContex
 import { findDotnetToolPath } from "../findDotNetToolPath";
 import { CSharpFile } from "./CSharpFile";
 
-const SRC_DIRECTORY_NAME = "src";
-const PROTOBUF_DIRECTORY_NAME = "proto";
-const AS_IS_DIRECTORY = path.join(__dirname, "asIs");
-
 export const CORE_DIRECTORY_NAME = "Core";
-export const TEST_UTILS_DIRECTORY_NAME = "Utils";
 export const PUBLIC_CORE_DIRECTORY_NAME = "Public";
 /**
  * In memory representation of a C# project.
@@ -33,8 +28,6 @@ export class CsharpProject extends AbstractProject<BaseCsharpGeneratorContext<Ba
     private testUtilFiles: File[] = [];
     private sourceFetcher: SourceFetcher;
 
-    public readonly filepaths: CsharpProjectFilepaths;
-
     public constructor({
         context,
         name
@@ -44,15 +37,52 @@ export class CsharpProject extends AbstractProject<BaseCsharpGeneratorContext<Ba
     }) {
         super(context);
         this.name = name;
-        this.filepaths = new CsharpProjectFilepaths(name);
         this.sourceFetcher = new SourceFetcher({
             context: this.context,
             sourceConfig: this.context.ir.sourceConfig
         });
     }
-
-    public getProjectDirectory(): RelativeFilePath {
-        return this.filepaths.getProjectDirectory();
+    protected get generation() {
+        return this.context.generation;
+    }
+    protected get namespaces() {
+        return this.generation.namespaces;
+    }
+    protected get registry() {
+        return this.generation.registry;
+    }
+    protected get extern() {
+        return this.generation.extern;
+    }
+    protected get settings() {
+        return this.generation.settings;
+    }
+    protected get constants() {
+        return this.generation.constants;
+    }
+    protected get names() {
+        return this.generation.names;
+    }
+    protected get types() {
+        return this.generation.types;
+    }
+    protected get model() {
+        return this.generation.model;
+    }
+    protected get csharp() {
+        return this.generation.csharp;
+    }
+    protected get System() {
+        return this.extern.System;
+    }
+    protected get NUnit() {
+        return this.extern.NUnit;
+    }
+    protected get OneOf() {
+        return this.extern.OneOf;
+    }
+    protected get Google() {
+        return this.extern.Google;
     }
 
     public addCoreFiles(file: File): void {
@@ -133,10 +163,7 @@ export class CsharpProject extends AbstractProject<BaseCsharpGeneratorContext<Ba
     }
 
     public async persist(): Promise<void> {
-        const absolutePathToSrcDirectory = join(
-            this.absolutePathToOutputDirectory,
-            this.filepaths.getSourceFileDirectory()
-        );
+        const absolutePathToSrcDirectory = join(this.absolutePathToOutputDirectory, this.constants.folders.sourceFiles);
         this.context.logger.debug(`mkdir ${absolutePathToSrcDirectory}`);
         await mkdir(absolutePathToSrcDirectory, { recursive: true });
 
@@ -157,7 +184,7 @@ export class CsharpProject extends AbstractProject<BaseCsharpGeneratorContext<Ba
             this.coreFiles.push(
                 await this.createAsIsFile({
                     filename,
-                    namespace: this.context.getCoreNamespace()
+                    namespace: this.namespaces.core
                 })
             );
         }
@@ -170,7 +197,7 @@ export class CsharpProject extends AbstractProject<BaseCsharpGeneratorContext<Ba
             this.coreTestFiles.push(
                 await this.createAsIsTestFile({
                     filename,
-                    namespace: this.context.getNamespace()
+                    namespace: this.namespaces.root
                 })
             );
         }
@@ -179,7 +206,7 @@ export class CsharpProject extends AbstractProject<BaseCsharpGeneratorContext<Ba
             this.publicCoreFiles.push(
                 await this.createAsIsFile({
                     filename,
-                    namespace: this.context.getNamespace()
+                    namespace: this.namespaces.root
                 })
             );
         }
@@ -189,19 +216,10 @@ export class CsharpProject extends AbstractProject<BaseCsharpGeneratorContext<Ba
                 this.coreFiles.push(
                     await this.createAsIsFile({
                         filename,
-                        namespace: this.context.getCoreNamespace()
+                        namespace: this.namespaces.core
                     })
                 );
             }
-        }
-
-        for (const filename of this.context.getPublicCoreTestAsIsFiles()) {
-            this.publicCoreTestFiles.push(
-                await this.createAsIsTestFile({
-                    filename,
-                    namespace: this.context.getNamespace()
-                })
-            );
         }
 
         for (const file of this.context.getAsIsTestUtils()) {
@@ -227,7 +245,7 @@ export class CsharpProject extends AbstractProject<BaseCsharpGeneratorContext<Ba
         await this.createCoreTestDirectory({ absolutePathToTestProjectDirectory });
         await this.createPublicCoreDirectory({ absolutePathToProjectDirectory });
 
-        if (this.context.useDotnetFormat) {
+        if (this.settings.useDotnetFormat) {
             // apply dotnet analyzer and formatter pass 1
             await this.dotnetFormat(
                 absolutePathToSrcDirectory,
@@ -274,7 +292,7 @@ dotnet_diagnostic.IDE0005.severity = error
 
         const absolutePathToProtoDirectory = join(
             this.absolutePathToOutputDirectory,
-            RelativeFilePath.of(PROTOBUF_DIRECTORY_NAME)
+            RelativeFilePath.of(this.context.generation.constants.folders.protobuf)
         );
         const protobufSourceFilePaths = await this.sourceFetcher.copyProtobufSources(absolutePathToProtoDirectory);
         const csproj = new CsProj({
@@ -313,11 +331,8 @@ dotnet_diagnostic.IDE0005.severity = error
     }: {
         absolutePathToSrcDirectory: AbsoluteFilePath;
     }): Promise<AbsoluteFilePath> {
-        const testProjectName = this.filepaths.getTestProjectName();
-        const absolutePathToTestProject = join(
-            this.absolutePathToOutputDirectory,
-            this.filepaths.getTestFilesDirectory()
-        );
+        const testProjectName = this.names.files.testProject;
+        const absolutePathToTestProject = join(this.absolutePathToOutputDirectory, this.constants.folders.testFiles);
         await mkdir(absolutePathToTestProject, { recursive: true });
 
         const testCsProjTemplateContents = (
@@ -417,10 +432,7 @@ dotnet_diagnostic.IDE0005.severity = error
     }: {
         absolutePathToTestProjectDirectory: AbsoluteFilePath;
     }): Promise<AbsoluteFilePath> {
-        const absolutePathToTestUtilsDirectory = join(
-            absolutePathToTestProjectDirectory,
-            RelativeFilePath.of(TEST_UTILS_DIRECTORY_NAME)
-        );
+        const absolutePathToTestUtilsDirectory = join(absolutePathToTestProjectDirectory, RelativeFilePath.of("Utils"));
         this.context.logger.debug(`mkdir ${absolutePathToTestUtilsDirectory}`);
         await mkdir(absolutePathToTestUtilsDirectory, { recursive: true });
 
@@ -462,8 +474,8 @@ dotnet_diagnostic.IDE0005.severity = error
                     grpc: this.context.hasGrpcEndpoints(),
                     idempotencyHeaders: this.context.hasIdempotencyHeaders(),
                     namespace,
-                    testNamespace: this.context.getTestNamespace(),
-                    additionalProperties: this.context.generateNewAdditionalProperties(),
+                    testNamespace: this.namespaces.test,
+                    additionalProperties: this.settings.generateNewAdditionalProperties,
                     context: this.context
                 }
             })
@@ -481,7 +493,7 @@ dotnet_diagnostic.IDE0005.severity = error
                     grpc: this.context.hasGrpcEndpoints(),
                     idempotencyHeaders: this.context.hasIdempotencyHeaders(),
                     namespace,
-                    additionalProperties: this.context.generateNewAdditionalProperties(),
+                    additionalProperties: this.settings.generateNewAdditionalProperties,
                     context: this.context
                 }
             })
@@ -490,7 +502,7 @@ dotnet_diagnostic.IDE0005.severity = error
 
     private async createCustomPagerAsIsFiles(): Promise<File[]> {
         const customPagerFileName = AsIsFiles.CustomPager;
-        const customPagerName = this.context.getCustomPagerName();
+        const customPagerName = this.names.classes.customPager;
         const customPagerContents = await readFile(getAsIsFilepath(customPagerFileName), {
             encoding: "utf-8"
         });
@@ -507,8 +519,8 @@ dotnet_diagnostic.IDE0005.severity = error
                     variables: {
                         grpc: this.context.hasGrpcEndpoints(),
                         idempotencyHeaders: this.context.hasIdempotencyHeaders(),
-                        namespace: this.context.getCoreNamespace(),
-                        additionalProperties: this.context.generateNewAdditionalProperties(),
+                        namespace: this.namespaces.core,
+                        additionalProperties: this.settings.generateNewAdditionalProperties,
                         context: this.context
                     }
                 }).replaceAll("CustomPager", customPagerName)
@@ -521,8 +533,8 @@ dotnet_diagnostic.IDE0005.severity = error
                     variables: {
                         grpc: this.context.hasGrpcEndpoints(),
                         idempotencyHeaders: this.context.hasIdempotencyHeaders(),
-                        namespace: this.context.getCoreNamespace(),
-                        additionalProperties: this.context.generateNewAdditionalProperties(),
+                        namespace: this.namespaces.core,
+                        additionalProperties: this.settings.generateNewAdditionalProperties,
                         context: this.context
                     }
                 }).replaceAll("CustomPager", customPagerName)
@@ -540,9 +552,9 @@ dotnet_diagnostic.IDE0005.severity = error
                 variables: {
                     grpc: this.context.hasGrpcEndpoints(),
                     idempotencyHeaders: this.context.hasIdempotencyHeaders(),
-                    namespace: this.context.getTestUtilsNamespace(),
-                    testNamespace: this.context.getTestNamespace(),
-                    additionalProperties: this.context.generateNewAdditionalProperties(),
+                    namespace: this.namespaces.testUtils,
+                    testNamespace: this.namespaces.test,
+                    additionalProperties: this.settings.generateNewAdditionalProperties,
                     context: this.context
                 }
             })
@@ -568,39 +580,7 @@ function replaceTemplate({ contents, variables }: { contents: string; variables:
 }
 
 function getAsIsFilepath(filename: string): string {
-    return AbsoluteFilePath.of(path.join(AS_IS_DIRECTORY, filename));
-}
-
-class CsharpProjectFilepaths {
-    constructor(private readonly name: string) {}
-
-    public getProjectDirectory(): RelativeFilePath {
-        return join(this.getSourceFileDirectory(), RelativeFilePath.of(this.name));
-    }
-
-    public getSourceFileDirectory(): RelativeFilePath {
-        return RelativeFilePath.of(SRC_DIRECTORY_NAME);
-    }
-
-    public getCoreFilesDirectory(): RelativeFilePath {
-        return join(this.getProjectDirectory(), RelativeFilePath.of(CORE_DIRECTORY_NAME));
-    }
-
-    public getPublicCoreFilesDirectory(): RelativeFilePath {
-        return join(
-            this.getProjectDirectory(),
-            RelativeFilePath.of(CORE_DIRECTORY_NAME),
-            RelativeFilePath.of(PUBLIC_CORE_DIRECTORY_NAME)
-        );
-    }
-
-    public getTestFilesDirectory(): RelativeFilePath {
-        return join(this.getSourceFileDirectory(), RelativeFilePath.of(this.getTestProjectName()));
-    }
-
-    public getTestProjectName(): string {
-        return `${this.name}.Test`;
-    }
+    return AbsoluteFilePath.of(path.join(__dirname, "asIs", filename));
 }
 
 declare namespace CsProj {
@@ -613,8 +593,6 @@ declare namespace CsProj {
         protobufSourceFilePaths: RelativeFilePath[];
     }
 }
-
-const FOUR_SPACES = "    ";
 
 class CsProj {
     private name: string;
@@ -630,7 +608,7 @@ class CsProj {
         this.githubUrl = githubUrl;
         this.context = context;
         this.protobufSourceFilePaths = protobufSourceFilePaths;
-        this.packageId = this.context.customConfig["package-id"];
+        this.packageId = this.context.settings.packageId;
     }
 
     public toString(): string {
@@ -647,6 +625,13 @@ ${projectGroup.join("\n")}
         <DefineConstants>$(DefineConstants);USE_PORTABLE_DATE_ONLY</DefineConstants>
         <UsePortableDateOnly>true</UsePortableDateOnly>
     </PropertyGroup>
+    <ItemGroup Condition="'$(TargetFramework)' == 'net462' Or '$(TargetFramework)' == 'netstandard2.0'">
+      <Using Include="System.Net.Http" />
+      <Using Include="System.Collections.Generic" />
+      <Using Include="System.Linq" />
+      <Using Include="System.Threading" />
+      <Using Include="System.Threading.Tasks" />
+    </ItemGroup>
     <ItemGroup Condition="'$(UsePortableDateOnly)' == 'true'">
         <PackageReference Include="Portable.System.DateTimeOnly" Version="8.0.2" />
     </ItemGroup>
@@ -654,18 +639,18 @@ ${projectGroup.join("\n")}
         <Compile Remove="Core\\DateOnlyConverter.cs" />
     </ItemGroup>
     <ItemGroup>
-        ${dependencies.join(`\n${FOUR_SPACES}${FOUR_SPACES}`)}
-        ${this.getSseDependencies().join(`\n${FOUR_SPACES}`)}
-        ${this.getWebSocketAsyncDependencies().join(`\n${FOUR_SPACES}`)}
+        ${dependencies.join(`\n${this.context.generation.constants.formatting.indent}${this.context.generation.constants.formatting.indent}`)}
+        ${this.getSseDependencies().join(`\n${this.context.generation.constants.formatting.indent}`)}
+        ${this.getWebSocketAsyncDependencies().join(`\n${this.context.generation.constants.formatting.indent}`)}
     </ItemGroup>
-${this.getProtobufDependencies(this.protobufSourceFilePaths).join(`\n${FOUR_SPACES}`)}
+${this.getProtobufDependencies(this.protobufSourceFilePaths).join(`\n${this.context.generation.constants.formatting.indent}`)}
     <ItemGroup>
         <None Include="..\\..\\README.md" Pack="true" PackagePath=""/>
     </ItemGroup>
-${this.getAdditionalItemGroups().join(`\n${FOUR_SPACES}`)}
+${this.getAdditionalItemGroups().join(`\n${this.context.generation.constants.formatting.indent}`)}
     <ItemGroup>
         <AssemblyAttribute Include="System.Runtime.CompilerServices.InternalsVisibleTo">
-            <_Parameter1>${this.context.project.filepaths.getTestProjectName()}</_Parameter1>
+            <_Parameter1>${this.context.generation.names.files.testProject}</_Parameter1>
         </AssemblyAttribute>
     </ItemGroup>
 
@@ -678,16 +663,16 @@ ${this.getAdditionalItemGroups().join(`\n${FOUR_SPACES}`)}
         const result: string[] = [];
         result.push('<PackageReference Include="PolySharp" Version="1.15.0">');
         result.push(
-            `${FOUR_SPACES}<IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>`
+            `${this.context.generation.constants.formatting.indent}<IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>`
         );
-        result.push(`${FOUR_SPACES}<PrivateAssets>all</PrivateAssets>`);
+        result.push(`${this.context.generation.constants.formatting.indent}<PrivateAssets>all</PrivateAssets>`);
         result.push("</PackageReference>");
         result.push('<PackageReference Include="OneOf" Version="3.0.271" />');
         result.push('<PackageReference Include="OneOf.Extended" Version="3.0.271" />');
         result.push('<PackageReference Include="System.Text.Json" Version="8.0.5" />');
         result.push('<PackageReference Include="System.Net.Http" Version="[4.3.4,)" />');
         result.push('<PackageReference Include="System.Text.RegularExpressions" Version="[4.3.1,)" />');
-        for (const [name, version] of Object.entries(this.context.getExtraDependencies())) {
+        for (const [name, version] of Object.entries(this.context.settings.extraDependencies)) {
             result.push(`<PackageReference Include="${name}" Version="${version}" />`);
         }
         return result;
@@ -718,7 +703,7 @@ ${this.getAdditionalItemGroups().join(`\n${FOUR_SPACES}`)}
             return [];
         }
 
-        const pathToProtobufDirectory = `..\\..\\${PROTOBUF_DIRECTORY_NAME}`;
+        const pathToProtobufDirectory = `..\\..\\${this.context.generation.constants.folders.protobuf}`;
 
         const result: string[] = [];
 
@@ -751,22 +736,32 @@ ${this.getAdditionalItemGroups().join(`\n${FOUR_SPACES}`)}
     private getProjectGroup(): string[] {
         const result: string[] = [];
 
-        result.push(`${FOUR_SPACES}<PropertyGroup>`);
-        if (this.packageId != null) {
-            result.push(`${FOUR_SPACES}${FOUR_SPACES}<PackageId>${this.packageId}</PackageId>`);
+        result.push(`${this.context.generation.constants.formatting.indent}<PropertyGroup>`);
+        if (this.packageId) {
+            result.push(
+                `${this.context.generation.constants.formatting.indent}${this.context.generation.constants.formatting.indent}<PackageId>${this.packageId}</PackageId>`
+            );
         }
         result.push(
-            `${FOUR_SPACES}${FOUR_SPACES}<TargetFrameworks>net462;net8.0;net7.0;net6.0;netstandard2.0</TargetFrameworks>`
+            `${this.context.generation.constants.formatting.indent}${this.context.generation.constants.formatting.indent}<TargetFrameworks>net462;net8.0;net7.0;net6.0;netstandard2.0</TargetFrameworks>`
         );
-        result.push(`${FOUR_SPACES}${FOUR_SPACES}<ImplicitUsings>enable</ImplicitUsings>`);
-        result.push(`${FOUR_SPACES}${FOUR_SPACES}<LangVersion>12</LangVersion>`);
-        result.push(`${FOUR_SPACES}${FOUR_SPACES}<Nullable>enable</Nullable>`);
+        result.push(
+            `${this.context.generation.constants.formatting.indent}${this.context.generation.constants.formatting.indent}<ImplicitUsings>enable</ImplicitUsings>`
+        );
+        result.push(
+            `${this.context.generation.constants.formatting.indent}${this.context.generation.constants.formatting.indent}<LangVersion>12</LangVersion>`
+        );
+        result.push(
+            `${this.context.generation.constants.formatting.indent}${this.context.generation.constants.formatting.indent}<Nullable>enable</Nullable>`
+        );
 
         const propertyGroups = this.getPropertyGroups();
         for (const propertyGroup of propertyGroups) {
-            result.push(`${FOUR_SPACES}${FOUR_SPACES}${propertyGroup}`);
+            result.push(
+                `${this.context.generation.constants.formatting.indent}${this.context.generation.constants.formatting.indent}${propertyGroup}`
+            );
         }
-        result.push(`${FOUR_SPACES}</PropertyGroup>`);
+        result.push(`${this.context.generation.constants.formatting.indent}</PropertyGroup>`);
 
         return result;
     }

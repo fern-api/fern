@@ -1,5 +1,3 @@
-using System.Collections.Generic;
-using System.Net.Http;
 using SeedHttpHead.Core;
 
 namespace SeedHttpHead;
@@ -10,7 +8,7 @@ public partial class ClientOptions
     /// <summary>
     /// The http headers sent with the request.
     /// </summary>
-    internal Headers Headers { get; init; } = new();
+    internal SeedHttpHead.Core.Headers Headers { get; init; } = new();
 
     /// <summary>
     /// The Base URL for the API.
@@ -79,7 +77,7 @@ public partial class ClientOptions
             HttpClient = HttpClient,
             MaxRetries = MaxRetries,
             Timeout = Timeout,
-            Headers = new Headers(new Dictionary<string, HeaderValue>(Headers)),
+            Headers = new SeedHttpHead.Core.Headers(new Dictionary<string, HeaderValue>(Headers)),
         };
     }
 }

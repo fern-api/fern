@@ -39,7 +39,7 @@ await client.EchoAsync("Hello world!\\n\\nwith\\n\\tnewlines");
 </dl>
 </details>
 
-<details><summary><code>client.<a href="/src/SeedExamples/SeedExamplesClient.cs">CreateTypeAsync</a>(OneOf.OneOf<BasicType, ComplexType> { ... }) -> Identifier</code></summary>
+<details><summary><code>client.<a href="/src/SeedExamples/SeedExamplesClient.cs">CreateTypeAsync</a>(OneOf<BasicType, ComplexType> { ... }) -> Identifier</code></summary>
 <dl>
 <dd>
 
@@ -67,7 +67,7 @@ await client.CreateTypeAsync(BasicType.Primitive);
 <dl>
 <dd>
 
-**request:** `OneOf.OneOf<BasicType, ComplexType>` 
+**request:** `OneOf<BasicType, ComplexType>` 
     
 </dd>
 </dl>
@@ -121,7 +121,7 @@ await client.File.Notification.Service.GetExceptionAsync("notification-hsy129x")
 </details>
 
 ## File Service
-<details><summary><code>client.File.Service.<a href="/src/SeedExamples/File/Service/ServiceClient.cs">GetFileAsync</a>(filename, SeedExamples.File_.GetFileRequest { ... }) -> File</code></summary>
+<details><summary><code>client.File.Service.<a href="/src/SeedExamples/File/Service/ServiceClient.cs">GetFileAsync</a>(filename, GetFileRequest { ... }) -> File</code></summary>
 <dl>
 <dd>
 
@@ -174,7 +174,7 @@ await client.File.Service.GetFileAsync(
 <dl>
 <dd>
 
-**request:** `SeedExamples.File_.GetFileRequest` 
+**request:** `GetFileRequest` 
     
 </dd>
 </dl>
@@ -499,7 +499,7 @@ await client.Service.CreateBigEntityAsync(
                 }
             )
         ),
-        Test = new SeedExamples.Test(new SeedExamples.Test.And(true)),
+        Test = new Test(new Test.And(true)),
         Node = new Node
         {
             Name = "name",

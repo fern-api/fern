@@ -1,7 +1,4 @@
-using System.Collections.Generic;
-using System.Net.Http;
 using System.Net.ServerSentEvents;
-using System.Threading;
 using SeedServerSentEvents.Core;
 
 namespace SeedServerSentEvents;

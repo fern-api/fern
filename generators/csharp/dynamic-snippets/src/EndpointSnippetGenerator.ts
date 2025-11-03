@@ -1,31 +1,20 @@
 import { NamedArgument, Options, Scope, Severity, Style } from "@fern-api/browser-compatible-base-generator";
 import { assertNever } from "@fern-api/core-utils";
-import { ast } from "@fern-api/csharp-codegen";
+import { ast, is, WithGeneration } from "@fern-api/csharp-codegen";
 import { FernIr } from "@fern-api/dynamic-ir-sdk";
 import { camelCase, upperFirst } from "lodash-es";
 
 import { Config } from "./Config";
-import { SNIPPET_NAMESPACE } from "./constants";
+
 import { DynamicSnippetsGeneratorContext } from "./context/DynamicSnippetsGeneratorContext";
 import { FilePropertyInfo } from "./context/FilePropertyMapper";
 
-const SNIPPET_CLASS_NAME = "Example";
-const SNIPPET_METHOD_NAME = "Do";
-const CLIENT_VAR_NAME = "client";
-const STRING_TYPE_REFERENCE: FernIr.dynamic.TypeReference = {
-    type: "primitive",
-    value: "STRING"
-};
-
-export class EndpointSnippetGenerator {
+export class EndpointSnippetGenerator extends WithGeneration {
     private context: DynamicSnippetsGeneratorContext;
 
     constructor({ context }: { context: DynamicSnippetsGeneratorContext }) {
+        super(context);
         this.context = context;
-    }
-
-    private get csharp() {
-        return this.context.csharp;
     }
 
     public async generateSnippet({
@@ -39,9 +28,8 @@ export class EndpointSnippetGenerator {
     }): Promise<string> {
         const code = this.buildCodeBlock({ endpoint, snippet: request, options });
         return code.toString({
-            namespace: SNIPPET_NAMESPACE,
-            rootNamespace: this.context.getRootNamespace(),
-            customConfig: this.context.customConfig ?? {},
+            namespace: "Usage",
+            generation: this.generation,
             allNamespaceSegments: new Set(),
             allTypeClassReferences: new Map()
         });
@@ -58,9 +46,8 @@ export class EndpointSnippetGenerator {
     }): string {
         const code = this.buildCodeBlock({ endpoint, snippet: request, options });
         return code.toString({
-            namespace: SNIPPET_NAMESPACE,
-            rootNamespace: this.context.getRootNamespace(),
-            customConfig: this.context.customConfig ?? {},
+            namespace: "Usage",
+            generation: this.generation,
             allNamespaceSegments: new Set(),
             allTypeClassReferences: new Map()
         });
@@ -75,6 +62,16 @@ export class EndpointSnippetGenerator {
         snippet: FernIr.dynamic.EndpointSnippetRequest;
         options: Options;
     }): ast.AstNode {
+        // if we're actually passed the examples, we need to
+        // check that the endpoint that we're generating has an example that matches the snippet
+        if (
+            endpoint.examples &&
+            !endpoint.examples?.find((each) => is.DynamicIR.EndpointExample(snippet) && each.id === snippet.id)
+        ) {
+            // the dsg expects us to just throw when there is nothing to generate.
+            throw new Error("Endpoint does not have an example that matches the snippet");
+        }
+
         const body = this.csharp.codeblock((writer) => {
             writer.writeNodeStatement(this.constructClient({ endpoint, snippet }));
             writer.newLine();
@@ -94,24 +91,22 @@ export class EndpointSnippetGenerator {
     private buildFullCodeBlock({ body, options }: { body: ast.CodeBlock; options: Options }): ast.AstNode {
         const config = this.getConfig(options);
         const class_ = this.csharp.class_({
-            name: config.fullStyleClassName ?? SNIPPET_CLASS_NAME,
-            namespace: SNIPPET_NAMESPACE,
+            name: config.fullStyleClassName ?? "Example",
+            namespace: "Usage",
             access: ast.Access.Public
         });
 
         // before we add the method, we're going to make the class aware of the root client namespace
         // which can help when finding out if we're going to have an ambiguous type of some kind.
-        class_.addNamespaceReference(this.context.getRootClientClassReference().namespace);
+        class_.addNamespaceReference(this.types.RootClient.namespace);
 
-        class_.addMethod(
-            this.csharp.method({
-                name: SNIPPET_METHOD_NAME,
-                access: ast.Access.Public,
-                isAsync: true,
-                parameters: [],
-                body
-            })
-        );
+        class_.addMethod({
+            name: "Do",
+            access: ast.Access.Public,
+            isAsync: true,
+            parameters: [],
+            body
+        });
         return class_;
     }
 
@@ -123,7 +118,7 @@ export class EndpointSnippetGenerator {
         snippet: FernIr.dynamic.EndpointSnippetRequest;
     }): ast.CodeBlock {
         return this.csharp.codeblock((writer) => {
-            writer.write(`var ${CLIENT_VAR_NAME} = `);
+            writer.write(`var client = `);
             writer.writeNode(this.getRootClientConstructorInvocation(this.getConstructorArgs({ endpoint, snippet })));
         });
     }
@@ -140,7 +135,7 @@ export class EndpointSnippetGenerator {
             endpoint.response?.type === "streaming" || endpoint.response?.type === "streamParameter";
 
         const invocation = this.csharp.invokeMethod({
-            on: this.csharp.codeblock(CLIENT_VAR_NAME),
+            on: this.csharp.codeblock("client"),
             method: this.getMethod({ endpoint }),
             arguments_: this.getMethodArgs({ endpoint, snippet }),
             async: true,
@@ -206,7 +201,7 @@ export class EndpointSnippetGenerator {
             {
                 name: "clientOptions",
                 assignment: this.csharp.instantiateClass({
-                    classReference: this.context.getClientOptionsClassReference(),
+                    classReference: this.types.ClientOptions,
                     arguments_: optionArgs.map((arg) => ({
                         name: arg.name,
                         assignment: arg.assignment
@@ -278,11 +273,14 @@ export class EndpointSnippetGenerator {
                 }
                 return this.csharp.TypeLiteral.reference(
                     this.csharp.instantiateClass({
-                        classReference: this.context.getEnvironmentClassReference(),
+                        classReference: this.types.Environments,
                         arguments_: Object.entries(environment).map(([key, value]) => ({
                             name: upperFirst(camelCase(key)),
                             assignment: this.context.dynamicTypeLiteralMapper.convert({
-                                typeReference: STRING_TYPE_REFERENCE,
+                                typeReference: {
+                                    type: "primitive",
+                                    value: "STRING"
+                                },
                                 value
                             })
                         })),
@@ -467,8 +465,6 @@ export class EndpointSnippetGenerator {
     }): ast.TypeLiteral[] {
         const args: ast.TypeLiteral[] = [];
 
-        const inlinePathParameters = this.context.customConfig?.["inline-path-parameters"] ?? true;
-
         this.context.errors.scope(Scope.PathParameters);
         const pathParameterFields: ast.ConstructorField[] = [];
         const pathParameters = [...(this.context.ir.pathParameters ?? []), ...(request.pathParameters ?? [])];
@@ -485,7 +481,7 @@ export class EndpointSnippetGenerator {
         if (
             !this.context.includePathParametersInWrappedRequest({
                 request,
-                inlinePathParameters
+                inlinePathParameters: this.settings.shouldInlinePathParameters
             })
         ) {
             args.push(...pathParameterFields.map((field) => field.value));
@@ -497,7 +493,7 @@ export class EndpointSnippetGenerator {
                 snippet,
                 pathParameterFields: this.context.includePathParametersInWrappedRequest({
                     request,
-                    inlinePathParameters
+                    inlinePathParameters: this.settings.shouldInlinePathParameters
                 })
                     ? pathParameterFields
                     : [],
@@ -572,7 +568,7 @@ export class EndpointSnippetGenerator {
 
         return this.csharp.TypeLiteral.class_({
             reference: this.csharp.classReference({
-                name: this.context.getClassName(request.declaration.name),
+                origin: request.declaration,
                 namespace: this.context.getNamespace(request.declaration.fernFilepath)
             }),
             fields: [...pathParameterFields, ...queryParameterFields, ...headerFields, ...requestBodyFields]
@@ -726,7 +722,7 @@ export class EndpointSnippetGenerator {
 
     private getRootClientConstructorInvocation(arguments_: NamedArgument[]): ast.ClassInstantiation {
         return this.csharp.instantiateClass({
-            classReference: this.context.getRootClientClassReference(),
+            classReference: this.types.RootClient,
             arguments_,
             forceUseConstructor: true,
             multiline: true
