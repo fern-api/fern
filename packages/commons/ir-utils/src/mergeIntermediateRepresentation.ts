@@ -77,7 +77,8 @@ export function mergeIntermediateRepresentation(
         publishConfig: ir1.publishConfig ?? ir2.publishConfig,
         dynamic: ir1.dynamic ?? ir2.dynamic,
         sdkConfig: ir1.sdkConfig ?? ir2.sdkConfig,
-        audiences: [...(ir1.audiences ?? []), ...(ir2.audiences ?? [])]
+        audiences: [...(ir1.audiences ?? []), ...(ir2.audiences ?? [])],
+        generationMetadata: ir1.generationMetadata ?? ir2.generationMetadata
     };
 }
 

@@ -24,6 +24,24 @@ types:
       - ts
       - js
 
+  Language:
+    enum:
+      - en
+      - es
+      - fr
+      - de
+      - it
+      - pt
+      - ja
+      - zh
+      - ko
+      - el
+      - no
+      - pl
+      - ru
+      - sv
+      - tr
+
   AnalyticsConfig:
     properties:
       segment: optional<SegmentConfig>
@@ -142,6 +160,8 @@ types:
       experimental: optional<ExperimentalConfig>
       "default-language": optional<ProgrammingLanguage>
 
+      languages: optional<list<Language>>
+
       # Deprecated
       "ai-chat": optional<AIChatConfig>
 
@@ -161,6 +181,7 @@ types:
       typography: optional<DocsTypographyConfig>
       layout: optional<LayoutConfig>
       settings: optional<DocsSettingsConfig>
+      theme: optional<ThemeConfig>
 
       # integrations
       integrations: optional<IntegrationsConfig>
@@ -362,11 +383,34 @@ types:
     type: list<TabbedNavigationItem>
 
   TabbedNavigationItem:
+    discriminated: false
+    union:
+      - TabbedNavigationItemWithLayout
+      - TabbedNavigationItemWithVariants
+
+  TabbedNavigationItemWithLayout:
     properties:
       tab: TabId
       layout:
         type: optional<list<NavigationItem>>
         docs: If `href` is set, `layout` must be null.
+
+  TabbedNavigationItemWithVariants:
+    properties:
+      tab: TabId
+      variants: list<TabVariant>
+
+  TabVariant:
+    extends: [WithPermissions, WithFeatureFlags]
+    properties:
+      title: string
+      subtitle: optional<string>
+      icon: optional<string>
+      layout: list<NavigationItem>
+      slug: optional<string>
+      skip-slug: optional<boolean>
+      hidden: optional<boolean>
+      default: optional<boolean>
 
   NavigationItem:
     discriminated: false
@@ -376,6 +420,7 @@ types:
       - ApiReferenceConfiguration
       - LinkConfiguration
       - ChangelogConfiguration
+      - FolderConfiguration
 
   LogoConfiguration:
     properties:
@@ -516,6 +561,29 @@ types:
       http-snippets: optional<HttpSnippetsConfig>
       hide-404-page: optional<boolean>
       use-javascript-as-typescript: optional<boolean>
+      disable-explorer-proxy: optional<boolean>
+      disable-analytics: optional<boolean>
+
+  ThemeConfig:
+    properties:
+      sidebar: SidebarThemeConfig
+      body: BodyThemeConfig
+      tabs: TabsThemeConfig
+
+  TabsThemeConfig:
+    enum:
+      - default
+      - bubble
+
+  BodyThemeConfig:
+    enum:
+      - default
+      - canvas
+
+  SidebarThemeConfig:
+    enum:
+      - default
+      - minimal
 
   HttpSnippetsConfig:
     discriminated: false
@@ -732,6 +800,24 @@ types:
       skip-slug: optional<boolean>
       availability: optional<Availability>
 
+  FolderConfiguration:
+    extends: [WithPermissions, WithFeatureFlags]
+    properties:
+      folder:
+        type: string
+        docs: |
+          The relative path to a folder containing markdown files. Fern will automatically discover and add all markdown files from this folder to the navigation.
+      title:
+        type: optional<string>
+        docs: |
+          The title to display for this folder section. If not provided, the folder name will be used.
+      slug: optional<string>
+      icon: optional<string>
+      hidden: optional<boolean>
+      skip-slug: optional<boolean>
+      collapsed: optional<boolean>
+      availability: optional<Availability>
+
   ApiReferenceConfiguration:
     extends: [WithPermissions, WithFeatureFlags]
     properties:
@@ -811,6 +897,7 @@ types:
       icon: optional<string>
       hidden: optional<boolean>
       skip-slug: optional<boolean>
+      availability: optional<Availability>
       playground:
         type: optional<PlaygroundSettings>
         docs: Settings for the api playground that affects all endpoints.
@@ -830,6 +917,7 @@ types:
         docs: |
           Relative path to the markdown file. This summary is displayed at the top of the API section.
       contents: optional<list<ApiReferenceLayoutItem>>
+      availability: optional<Availability>
       slug: optional<string>
       icon: optional<string>
       hidden: optional<boolean>
@@ -846,6 +934,7 @@ types:
       slug: optional<string>
       icon: optional<string>
       hidden: optional<boolean>
+      availability: optional<Availability>
       playground:
         type: optional<PlaygroundSettings>
         docs: Settings for the api playground that affect this endpoint specifically.
@@ -963,12 +1052,27 @@ types:
       outlined: NavbarLinkConfig
       minimal: NavbarLinkConfig
       github: NavbarGithubConfig
+      dropdown: NavbarDropdownConfig
 
       # deprecated
       primary: NavbarLinkConfig # use `outlined` instead
       secondary: NavbarLinkConfig # use `minimal` instead
 
+  WithViewers:
+    properties:
+      viewers: optional<Role>
+
+  NavbarDropdownConfig:
+    extends: [WithViewers]
+    properties:
+      links: list<NavbarLinkConfig>
+      text: optional<string>
+      icon: optional<string>
+      rightIcon: optional<string>
+      rounded: optional<boolean>
+
   NavbarLinkConfig:
+    extends: [WithViewers]
     properties:
       href: optional<string>
       url:
@@ -981,8 +1085,15 @@ types:
       rounded: optional<boolean>
 
   NavbarGithubConfig:
-    type: string
-    availability: in-development
+    discriminated: false
+    union:
+      - string
+      - NavbarGithubConfigWithOptions
+
+  NavbarGithubConfigWithOptions:
+    extends: [WithViewers]
+    properties:
+      url: string
 
   FooterLinksConfig:
     properties:
@@ -1197,23 +1308,63 @@ types:
         type: string
         docs: The message to display in the announcement bar. Markdown is supported.
 
-  ProductConfig:
+  ProductPath:
+    discriminated: false
+    union:
+      - RelativeProductPath
+      - AbsoluteProductPath
+
+  RelativeProductPath:
     extends: [WithPermissions, WithFeatureFlags]
     properties:
       display-name: string
       path:
         type: string
         docs: The relative path to the version's docs.yml file.
+      slug:
+        type: optional<string>
+        docs: The "slug" is this version's basePath. If not set, the slug will be generated from the display-name.
+
+  AbsoluteProductPath:
+    properties:
+      href:
+        type: string
+        docs: The absolute URL to the product.
+
+  ProductConfigBase:
+    extends: [WithPermissions, WithFeatureFlags]
+    properties:
+      display-name: string
       subtitle: optional<string>
       icon: optional<string>
       image:
         type: optional<string>
         docs: The image to display in the product card. This will override the icon field if both are set.
+      versions: optional<list<VersionConfig>>
+      audiences: optional<Audience>
+
+  ProductConfig:
+    discriminated: false
+    union:
+      - InternalProduct
+      - ExternalProduct
+
+  InternalProduct:
+    extends: [ProductConfigBase]
+    properties:
+      path:
+        type: string
+        docs: The relative path to the version's docs.yml file.
       slug:
         type: optional<string>
         docs: The "slug" is this version's basePath. If not set, the slug will be generated from the display-name.
-      versions: optional<list<VersionConfig>>
-      audiences: optional<Audience>
+
+  ExternalProduct:
+    extends: [ProductConfigBase]
+    properties:
+      href:
+        type: string
+        docs: The absolute URL to the product.
 
   ProductFileConfig:
     properties:

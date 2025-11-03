@@ -103,7 +103,7 @@ export class Users {
             },
         );
         const dataWithRawResponse = await list(request).withRawResponse();
-        return new core.Pageable<SeedPagination.ListUsersPaginationResponse, SeedPagination.User>({
+        return new core.Page<SeedPagination.User, SeedPagination.ListUsersPaginationResponse>({
             response: dataWithRawResponse.data,
             rawResponse: dataWithRawResponse.rawResponse,
             hasNextPage: (response) =>
@@ -191,7 +191,7 @@ export class Users {
             },
         );
         const dataWithRawResponse = await list(request).withRawResponse();
-        return new core.Pageable<SeedPagination.ListUsersMixedTypePaginationResponse, SeedPagination.User>({
+        return new core.Page<SeedPagination.User, SeedPagination.ListUsersMixedTypePaginationResponse>({
             response: dataWithRawResponse.data,
             rawResponse: dataWithRawResponse.rawResponse,
             hasNextPage: (response) =>
@@ -275,7 +275,7 @@ export class Users {
             },
         );
         const dataWithRawResponse = await list(request).withRawResponse();
-        return new core.Pageable<SeedPagination.ListUsersPaginationResponse, SeedPagination.User>({
+        return new core.Page<SeedPagination.User, SeedPagination.ListUsersPaginationResponse>({
             response: dataWithRawResponse.data,
             rawResponse: dataWithRawResponse.rawResponse,
             hasNextPage: (response) =>
@@ -376,7 +376,7 @@ export class Users {
         );
         let _offset = request?.page != null ? request?.page : 0;
         const dataWithRawResponse = await list(request).withRawResponse();
-        return new core.Pageable<SeedPagination.ListUsersPaginationResponse, SeedPagination.User>({
+        return new core.Page<SeedPagination.User, SeedPagination.ListUsersPaginationResponse>({
             response: dataWithRawResponse.data,
             rawResponse: dataWithRawResponse.rawResponse,
             hasNextPage: (response) => (response?.data ?? []).length > 0,
@@ -473,7 +473,7 @@ export class Users {
         );
         let _offset = request?.page != null ? request?.page : 1;
         const dataWithRawResponse = await list(request).withRawResponse();
-        return new core.Pageable<SeedPagination.ListUsersPaginationResponse, SeedPagination.User>({
+        return new core.Page<SeedPagination.User, SeedPagination.ListUsersPaginationResponse>({
             response: dataWithRawResponse.data,
             rawResponse: dataWithRawResponse.rawResponse,
             hasNextPage: (response) => (response?.data ?? []).length > 0,
@@ -558,7 +558,7 @@ export class Users {
         );
         let _offset = request?.pagination?.page != null ? request?.pagination?.page : 1;
         const dataWithRawResponse = await list(request).withRawResponse();
-        return new core.Pageable<SeedPagination.ListUsersPaginationResponse, SeedPagination.User>({
+        return new core.Page<SeedPagination.User, SeedPagination.ListUsersPaginationResponse>({
             response: dataWithRawResponse.data,
             rawResponse: dataWithRawResponse.rawResponse,
             hasNextPage: (response) => (response?.data ?? []).length > 0,
@@ -651,10 +651,10 @@ export class Users {
         );
         let _offset = request?.page != null ? request?.page : 1;
         const dataWithRawResponse = await list(request).withRawResponse();
-        return new core.Pageable<SeedPagination.ListUsersPaginationResponse, SeedPagination.User>({
+        return new core.Page<SeedPagination.User, SeedPagination.ListUsersPaginationResponse>({
             response: dataWithRawResponse.data,
             rawResponse: dataWithRawResponse.rawResponse,
-            hasNextPage: (response) => (response?.data ?? []).length > 0,
+            hasNextPage: (response) => (response?.data ?? []).length >= (request?.limit ?? 1),
             getItems: (response) => response?.data ?? [],
             loadPage: (response) => {
                 _offset += response?.data != null ? response.data.length : 1;
@@ -744,10 +744,10 @@ export class Users {
         );
         let _offset = request?.page != null ? request?.page : 1;
         const dataWithRawResponse = await list(request).withRawResponse();
-        return new core.Pageable<SeedPagination.ListUsersPaginationResponse, SeedPagination.User>({
+        return new core.Page<SeedPagination.User, SeedPagination.ListUsersPaginationResponse>({
             response: dataWithRawResponse.data,
             rawResponse: dataWithRawResponse.rawResponse,
-            hasNextPage: (response) => response?.hasNextPage ?? (response?.data ?? []).length > 0,
+            hasNextPage: (response) => response?.hasNextPage ?? (response?.data ?? []).length >= (request?.limit ?? 1),
             getItems: (response) => response?.data ?? [],
             loadPage: (response) => {
                 _offset += response?.data != null ? response.data.length : 1;
@@ -828,7 +828,7 @@ export class Users {
             },
         );
         const dataWithRawResponse = await list(request).withRawResponse();
-        return new core.Pageable<SeedPagination.ListUsersExtendedResponse, SeedPagination.User>({
+        return new core.Page<SeedPagination.User, SeedPagination.ListUsersExtendedResponse>({
             response: dataWithRawResponse.data,
             rawResponse: dataWithRawResponse.rawResponse,
             hasNextPage: (response) =>
@@ -912,7 +912,7 @@ export class Users {
             },
         );
         const dataWithRawResponse = await list(request).withRawResponse();
-        return new core.Pageable<SeedPagination.ListUsersExtendedOptionalListResponse, SeedPagination.User>({
+        return new core.Page<SeedPagination.User, SeedPagination.ListUsersExtendedOptionalListResponse>({
             response: dataWithRawResponse.data,
             rawResponse: dataWithRawResponse.rawResponse,
             hasNextPage: (response) =>
@@ -996,7 +996,7 @@ export class Users {
             },
         );
         const dataWithRawResponse = await list(request).withRawResponse();
-        return new core.Pageable<SeedPagination.UsernameCursor, string>({
+        return new core.Page<string, SeedPagination.UsernameCursor>({
             response: dataWithRawResponse.data,
             rawResponse: dataWithRawResponse.rawResponse,
             hasNextPage: (response) =>
@@ -1082,7 +1082,7 @@ export class Users {
         );
         let _offset = request?.offset != null ? request?.offset : 1;
         const dataWithRawResponse = await list(request).withRawResponse();
-        return new core.Pageable<SeedPagination.UsernameContainer, string>({
+        return new core.Page<string, SeedPagination.UsernameContainer>({
             response: dataWithRawResponse.data,
             rawResponse: dataWithRawResponse.rawResponse,
             hasNextPage: (response) => (response?.results ?? []).length > 0,

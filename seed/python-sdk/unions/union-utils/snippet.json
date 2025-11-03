@@ -1,5 +1,6 @@
 {
     "types": {
+        "type_bigunion:BigUnion": "from seed.bigunion import BigUnion_NormalSweet\n\nBigUnion_NormalSweet(\n    value=\"example1\",\n)\n",
         "type_bigunion:NormalSweet": "from seed.bigunion import NormalSweet\n\nNormalSweet(\n    value=\"example1\",\n)\n",
         "type_bigunion:ThankfulFactor": "from seed.bigunion import ThankfulFactor\n\nThankfulFactor(\n    value=\"example1\",\n)\n",
         "type_types:UnionWithPrimitive": "from seed.types import UnionWithPrimitive_Integer\n\nUnionWithPrimitive_Integer(value=9)\n",

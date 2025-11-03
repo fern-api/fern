@@ -169,6 +169,39 @@
           "type": "openapi"
         },
         "type": "enum"
+      },
+      "SingleValueEnum": {
+        "value": {
+          "value": "SingleValue",
+          "type": "string"
+        },
+        "generatedName": "SingleValueEnum",
+        "groupName": [],
+        "type": "literal"
+      },
+      "SingleValueEnumWithFernTypeLiteral": {
+        "value": {
+          "value": "SingleValue",
+          "type": "string"
+        },
+        "generatedName": "SingleValueEnumWithFernTypeLiteral",
+        "type": "literal"
+      },
+      "SingleUniqueValueEnum": {
+        "generatedName": "SingleUniqueValueEnum",
+        "values": [
+          {
+            "generatedName": "SingleUniqueValue",
+            "value": "SingleUniqueValue",
+            "casing": {}
+          }
+        ],
+        "groupName": [],
+        "source": {
+          "file": "../openapi.yml",
+          "type": "openapi"
+        },
+        "type": "enum"
       }
     },
     "namespacedSchemas": {}

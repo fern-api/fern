@@ -5818,9 +5818,9 @@ docs: |-
   "packageMarkers": {},
   "rootApiFile": {
     "contents": {
-      "auth": "BearerAuthScheme",
+      "auth": "bearerAuth",
       "auth-schemes": {
-        "BearerAuthScheme": {
+        "bearerAuth": {
           "scheme": "bearer",
         },
       },
@@ -5843,9 +5843,9 @@ environments:
   Production: https://api.val.town
 default-environment: Production
 auth-schemes:
-  BearerAuthScheme:
+  bearerAuth:
     scheme: bearer
-auth: BearerAuthScheme
+auth: bearerAuth
 ",
   },
 }

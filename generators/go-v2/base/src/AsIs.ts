@@ -12,7 +12,9 @@ export enum AsIsFiles {
     CallerTest = "internal/caller_test.go_",
     Retrier = "internal/retrier.go_",
     RetrierTest = "internal/retrier_test.go_",
+    Page = "core/page.go_",
     Pager = "internal/pager.go_",
     PagerTest = "internal/pager_test.go_",
+    Stream = "core/stream.go_",
     Streamer = "internal/streamer.go_"
 }

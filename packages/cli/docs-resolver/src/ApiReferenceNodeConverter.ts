@@ -37,6 +37,7 @@ export class ApiReferenceNodeConverter {
     #slug: FernNavigation.V1.SlugGenerator;
     #idgen: NodeIdGenerator;
     private disableEndpointPairs;
+    private collectedFileIds = new Map<AbsoluteFilePath, string>();
     constructor(
         private apiSection: docsYml.DocsNavigationItem.ApiSection,
         api: APIV1Read.ApiDefinition,
@@ -47,6 +48,7 @@ export class ApiReferenceNodeConverter {
         private markdownFilesToNoIndex: Map<AbsoluteFilePath, boolean>,
         private markdownFilesToTags: Map<AbsoluteFilePath, string[]>,
         idgen: NodeIdGenerator,
+        collectedFileIds: Map<AbsoluteFilePath, string>,
         private workspace?: FernWorkspace,
         private hideChildren?: boolean,
         private parentAvailability?: docsYml.RawSchemas.Availability
@@ -54,6 +56,7 @@ export class ApiReferenceNodeConverter {
         this.disableEndpointPairs = docsWorkspace.config.experimental?.disableStreamToggle ?? false;
         this.apiDefinitionId = FernNavigation.V1.ApiDefinitionId(api.id);
         this.#holder = ApiDefinitionHolder.create(api, taskContext);
+        this.collectedFileIds = collectedFileIds;
 
         // we are assuming that the apiDefinitionId is unique.
         this.#idgen = idgen;
@@ -75,19 +78,22 @@ export class ApiReferenceNodeConverter {
             urlSlug: this.apiSection.slug ?? kebabCase(this.apiSection.title)
         });
 
+        const apiSectionAvailability = this.apiSection.availability ?? this.parentAvailability;
+
         // Step 1. Convert the navigation items that are manually defined in the API section.
         if (this.apiSection.navigation != null) {
             this.#children = this.#convertApiReferenceLayoutItems(
                 this.apiSection.navigation,
                 this.#holder.api.rootPackage,
-                this.#slug
+                this.#slug,
+                apiSectionAvailability
             );
         }
 
         // Step 2. Fill in the any missing navigation items from the API definition
         this.#children = this.#mergeAndFilterChildren(
-            this.#children.map((child) => this.#enrichApiPackageChild(child)),
-            this.#convertApiDefinitionPackage(this.#holder.api.rootPackage, this.#slug)
+            this.#children.map((child) => this.#enrichApiPackageChild(child, apiSectionAvailability)),
+            this.#convertApiDefinitionPackage(this.#holder.api.rootPackage, this.#slug, apiSectionAvailability)
         );
     }
 
@@ -109,7 +115,7 @@ export class ApiReferenceNodeConverter {
             overviewPageId: this.#overviewPageId,
             paginated: this.apiSection.paginated,
             slug: this.#slug.get(),
-            icon: this.apiSection.icon,
+            icon: this.resolveIconFileId(this.apiSection.icon),
             hidden: this.hideChildren || this.apiSection.hidden,
             hideTitle: this.apiSection.flattened,
             showErrors: this.apiSection.showErrors,
@@ -135,7 +141,8 @@ export class ApiReferenceNodeConverter {
     #convertApiReferenceLayoutItems(
         navigation: docsYml.ParsedApiReferenceLayoutItem[],
         apiDefinitionPackage: APIV1Read.ApiDefinitionPackage | undefined,
-        parentSlug: FernNavigation.V1.SlugGenerator
+        parentSlug: FernNavigation.V1.SlugGenerator,
+        parentAvailability?: docsYml.RawSchemas.Availability
     ): FernNavigation.V1.ApiPackageChild[] {
         apiDefinitionPackage = this.#holder.resolveSubpackage(apiDefinitionPackage);
         const apiDefinitionPackageId =
@@ -147,15 +154,21 @@ export class ApiReferenceNodeConverter {
                         id: this.#idgen.get(link.url),
                         type: "link",
                         title: link.text,
-                        icon: link.icon,
+                        icon: this.resolveIconFileId(link.icon),
                         url: FernNavigation.Url(link.url)
                     }),
-                    page: (page) => this.#toPageNode(page, parentSlug),
-                    package: (pkg) => this.#convertPackage(pkg, parentSlug),
-                    section: (section) => this.#convertSection(section, parentSlug),
+                    page: (page) => this.#toPageNode(page, parentSlug, parentAvailability),
+                    package: (pkg) => this.#convertPackage(pkg, parentSlug, parentAvailability),
+                    section: (section) => this.#convertSection(section, parentSlug, parentAvailability),
                     item: ({ value: unknownIdentifier }): FernNavigation.V1.ApiPackageChild | undefined =>
-                        this.#convertUnknownIdentifier(unknownIdentifier, apiDefinitionPackageId, parentSlug),
-                    endpoint: (endpoint) => this.#convertEndpoint(endpoint, apiDefinitionPackageId, parentSlug)
+                        this.#convertUnknownIdentifier(
+                            unknownIdentifier,
+                            apiDefinitionPackageId,
+                            parentSlug,
+                            parentAvailability
+                        ),
+                    endpoint: (endpoint) =>
+                        this.#convertEndpoint(endpoint, apiDefinitionPackageId, parentSlug, parentAvailability)
                 })
             )
             .filter(isNonNullish);
@@ -163,22 +176,28 @@ export class ApiReferenceNodeConverter {
 
     #toPageNode(
         page: docsYml.DocsNavigationItem.Page,
-        parentSlug: FernNavigation.V1.SlugGenerator
+        parentSlug: FernNavigation.V1.SlugGenerator,
+        parentAvailability?: docsYml.RawSchemas.Availability
     ): FernNavigation.V1.PageNode {
         return toPageNode({
-            page,
+            page: {
+                ...page,
+                availability: page.availability ?? parentAvailability
+            },
             parentSlug,
             docsWorkspace: this.docsWorkspace,
             markdownFilesToFullSlugs: this.markdownFilesToFullSlugs,
             markdownFilesToNoIndex: this.markdownFilesToNoIndex,
             idgen: this.#idgen,
-            hideChildren: this.hideChildren
+            hideChildren: this.hideChildren,
+            resolveIconFileId: this.resolveIconFileId.bind(this)
         });
     }
 
     #convertPackage(
         pkg: docsYml.ParsedApiReferenceLayoutItem.Package,
-        parentSlug: FernNavigation.V1.SlugGenerator
+        parentSlug: FernNavigation.V1.SlugGenerator,
+        parentAvailability?: docsYml.RawSchemas.Availability
     ): FernNavigation.V1.ApiPackageNode {
         const overviewPageId =
             pkg.overviewAbsolutePath != null
@@ -187,6 +206,8 @@ export class ApiReferenceNodeConverter {
 
         const maybeFullSlug =
             pkg.overviewAbsolutePath != null ? this.markdownFilesToFullSlugs.get(pkg.overviewAbsolutePath) : undefined;
+
+        const pkgAvailability = pkg.availability ?? parentAvailability;
 
         const subpackage = this.#holder.getSubpackageByIdOrLocator(pkg.package);
 
@@ -210,7 +231,12 @@ export class ApiReferenceNodeConverter {
                 skipUrlSlug: pkg.skipUrlSlug,
                 urlSlug
             });
-            const convertedItems = this.#convertApiReferenceLayoutItems(pkg.contents, subpackage, slug);
+            const convertedItems = this.#convertApiReferenceLayoutItems(
+                pkg.contents,
+                subpackage,
+                slug,
+                pkgAvailability
+            );
             return {
                 id: subpackageNodeId,
                 type: "apiPackage",
@@ -221,10 +247,10 @@ export class ApiReferenceNodeConverter {
                         ? (subpackage.displayName ?? titleCase(subpackage.name))
                         : this.apiSection.title),
                 slug: slug.get(),
-                icon: pkg.icon,
+                icon: this.resolveIconFileId(pkg.icon),
                 hidden: this.hideChildren || pkg.hidden,
                 overviewPageId,
-                availability: this.parentAvailability,
+                availability: pkgAvailability,
                 apiDefinitionId: this.apiDefinitionId,
                 pointsTo: undefined,
                 noindex: undefined,
@@ -244,17 +270,17 @@ export class ApiReferenceNodeConverter {
                 skipUrlSlug: pkg.skipUrlSlug,
                 urlSlug
             });
-            const convertedItems = this.#convertApiReferenceLayoutItems(pkg.contents, undefined, slug);
+            const convertedItems = this.#convertApiReferenceLayoutItems(pkg.contents, undefined, slug, pkgAvailability);
             return {
                 id: this.#idgen.get(overviewPageId ?? `${this.apiDefinitionId}:${kebabCase(pkg.package)}`),
                 type: "apiPackage",
                 children: convertedItems,
                 title: pkg.title ?? pkg.package,
                 slug: slug.get(),
-                icon: pkg.icon,
+                icon: this.resolveIconFileId(pkg.icon),
                 hidden: this.hideChildren || pkg.hidden,
                 overviewPageId,
-                availability: this.parentAvailability,
+                availability: pkgAvailability,
                 apiDefinitionId: this.apiDefinitionId,
                 pointsTo: undefined,
                 noindex: undefined,
@@ -269,7 +295,8 @@ export class ApiReferenceNodeConverter {
 
     #convertSection(
         section: docsYml.ParsedApiReferenceLayoutItem.Section,
-        parentSlug: FernNavigation.V1.SlugGenerator
+        parentSlug: FernNavigation.V1.SlugGenerator,
+        parentAvailability?: docsYml.RawSchemas.Availability
     ): FernNavigation.V1.ApiPackageNode {
         const overviewPageId =
             section.overviewAbsolutePath != null
@@ -320,17 +347,23 @@ export class ApiReferenceNodeConverter {
             skipUrlSlug: section.skipUrlSlug,
             urlSlug
         });
-        const convertedItems = this.#convertApiReferenceLayoutItems(section.contents, undefined, slug);
+        const sectionAvailability = section.availability ?? parentAvailability;
+        const convertedItems = this.#convertApiReferenceLayoutItems(
+            section.contents,
+            undefined,
+            slug,
+            sectionAvailability
+        );
         return {
             id: nodeId,
             type: "apiPackage",
             children: convertedItems,
             title: section.title,
             slug: slug.get(),
-            icon: section.icon,
+            icon: this.resolveIconFileId(section.icon),
             hidden: this.hideChildren || section.hidden,
             overviewPageId,
-            availability: this.parentAvailability,
+            availability: sectionAvailability,
             apiDefinitionId: this.apiDefinitionId,
             pointsTo: undefined,
             noindex,
@@ -345,7 +378,8 @@ export class ApiReferenceNodeConverter {
     #convertUnknownIdentifier(
         unknownIdentifier: string,
         apiDefinitionPackageId: string | undefined,
-        parentSlug: FernNavigation.V1.SlugGenerator
+        parentSlug: FernNavigation.V1.SlugGenerator,
+        parentAvailability?: docsYml.RawSchemas.Availability
     ): FernNavigation.V1.ApiPackageChild | undefined {
         unknownIdentifier = unknownIdentifier.trim();
         // unknownIdentifier could either be a package, endpoint, websocket, or webhook.
@@ -376,7 +410,7 @@ export class ApiReferenceNodeConverter {
                 icon: undefined,
                 hidden: this.hideChildren,
                 overviewPageId: undefined,
-                availability: this.parentAvailability,
+                availability: parentAvailability,
                 apiDefinitionId: this.apiDefinitionId,
                 pointsTo: undefined,
                 noindex: undefined,
@@ -397,20 +431,23 @@ export class ApiReferenceNodeConverter {
                 icon: undefined,
                 slug: undefined,
                 hidden: undefined,
+                availability: undefined,
                 playground: undefined,
                 viewers: undefined,
                 orphaned: undefined,
                 featureFlags: undefined
             },
             apiDefinitionPackageId,
-            parentSlug
+            parentSlug,
+            parentAvailability
         );
     }
 
     #convertEndpoint(
         endpointItem: docsYml.ParsedApiReferenceLayoutItem.Endpoint,
         apiDefinitionPackageIdRaw: string | undefined,
-        parentSlug: FernNavigation.V1.SlugGenerator
+        parentSlug: FernNavigation.V1.SlugGenerator,
+        parentAvailability?: docsYml.RawSchemas.Availability
     ): FernNavigation.V1.ApiPackageChild | undefined {
         const endpoint =
             (apiDefinitionPackageIdRaw != null
@@ -440,11 +477,13 @@ export class ApiReferenceNodeConverter {
                     endpointId,
                     apiDefinitionId: this.apiDefinitionId,
                     availability:
-                        FernNavigation.V1.convertAvailability(endpoint.availability) ?? this.parentAvailability,
+                        endpointItem.availability ??
+                        FernNavigation.V1.convertAvailability(endpoint.availability) ??
+                        parentAvailability,
                     isResponseStream: endpoint.response?.type.type === "stream",
                     title: endpointItem.title ?? endpoint.name ?? stringifyEndpointPathParts(endpoint.path.parts),
                     slug: endpointSlug.get(),
-                    icon: endpointItem.icon,
+                    icon: this.resolveIconFileId(endpointItem.icon),
                     hidden: this.hideChildren || endpointItem.hidden,
                     playground: this.#convertPlaygroundSettings(endpointItem.playground),
                     authed: undefined,
@@ -482,11 +521,10 @@ export class ApiReferenceNodeConverter {
                         ? parentSlug.append(endpointItem.slug)
                         : parentSlug.apply(webSocket)
                     ).get(),
-                    icon: endpointItem.icon,
+                    icon: this.resolveIconFileId(endpointItem.icon),
                     hidden: this.hideChildren || endpointItem.hidden,
                     apiDefinitionId: this.apiDefinitionId,
-                    availability:
-                        FernNavigation.V1.convertAvailability(webSocket.availability) ?? this.parentAvailability,
+                    availability: FernNavigation.V1.convertAvailability(webSocket.availability) ?? parentAvailability,
                     playground: this.#convertPlaygroundSettings(endpointItem.playground),
                     authed: undefined,
                     viewers: endpointItem.viewers,
@@ -522,10 +560,10 @@ export class ApiReferenceNodeConverter {
                         ? parentSlug.append(endpointItem.slug)
                         : parentSlug.apply(webhook)
                     ).get(),
-                    icon: endpointItem.icon,
+                    icon: this.resolveIconFileId(endpointItem.icon),
                     hidden: this.hideChildren || endpointItem.hidden,
                     apiDefinitionId: this.apiDefinitionId,
-                    availability: this.parentAvailability,
+                    availability: parentAvailability,
                     authed: undefined,
                     viewers: endpointItem.viewers,
                     orphaned: endpointItem.orphaned,
@@ -556,19 +594,23 @@ export class ApiReferenceNodeConverter {
         });
     }
 
-    #enrichApiPackageChild(child: FernNavigation.V1.ApiPackageChild): FernNavigation.V1.ApiPackageChild {
+    #enrichApiPackageChild(
+        child: FernNavigation.V1.ApiPackageChild,
+        parentAvailability?: docsYml.RawSchemas.Availability
+    ): FernNavigation.V1.ApiPackageChild {
         return enrichApiPackageChild({
             child,
             nodeIdToSubpackageId: this.#nodeIdToSubpackageId,
-            convertApiDefinitionPackageId: (subpackageId, slug) =>
-                this.#convertApiDefinitionPackageId(subpackageId, slug),
+            convertApiDefinitionPackageId: (subpackageId, slug, childAvailability) =>
+                this.#convertApiDefinitionPackageId(subpackageId, slug, childAvailability),
             mergeAndFilterChildren: this.#mergeAndFilterChildren.bind(this)
         });
     }
 
     #convertApiDefinitionPackage(
         pkg: APIV1Read.ApiDefinitionPackage,
-        parentSlug: FernNavigation.V1.SlugGenerator
+        parentSlug: FernNavigation.V1.SlugGenerator,
+        parentAvailability?: docsYml.RawSchemas.Availability
     ): FernNavigation.V1.ApiPackageChild[] {
         // if an endpoint, websocket, webhook, or subpackage is not visited, add it to the additional children list
         let additionalChildren: FernNavigation.V1.ApiPackageChild[] = [];
@@ -594,7 +636,7 @@ export class ApiReferenceNodeConverter {
                     title: endpoint.name ?? stringifyEndpointPathParts(endpoint.path.parts),
                     method: endpoint.protocol?.methodType ?? "UNARY",
                     apiDefinitionId: this.apiDefinitionId,
-                    availability: this.parentAvailability,
+                    availability: parentAvailability,
                     slug: grpcSlug.get(),
                     icon: undefined,
                     hidden: undefined,
@@ -622,8 +664,7 @@ export class ApiReferenceNodeConverter {
                     method: endpoint.method,
                     endpointId,
                     apiDefinitionId: this.apiDefinitionId,
-                    availability:
-                        FernNavigation.V1.convertAvailability(endpoint.availability) ?? this.parentAvailability,
+                    availability: FernNavigation.V1.convertAvailability(endpoint.availability) ?? parentAvailability,
                     isResponseStream: endpoint.response?.type.type === "stream",
                     title: endpoint.name ?? stringifyEndpointPathParts(endpoint.path.parts),
                     slug: endpointSlug.get(),
@@ -656,7 +697,7 @@ export class ApiReferenceNodeConverter {
                 icon: undefined,
                 hidden: this.hideChildren,
                 apiDefinitionId: this.apiDefinitionId,
-                availability: FernNavigation.V1.convertAvailability(webSocket.availability) ?? this.parentAvailability,
+                availability: FernNavigation.V1.convertAvailability(webSocket.availability) ?? parentAvailability,
                 playground: undefined,
                 authed: undefined,
                 viewers: undefined,
@@ -684,7 +725,7 @@ export class ApiReferenceNodeConverter {
                 icon: undefined,
                 hidden: this.hideChildren,
                 apiDefinitionId: this.apiDefinitionId,
-                availability: this.parentAvailability,
+                availability: parentAvailability,
                 authed: undefined,
                 viewers: undefined,
                 orphaned: undefined,
@@ -707,7 +748,7 @@ export class ApiReferenceNodeConverter {
             }
 
             const slug = isSubpackage(subpackage) ? parentSlug.apply(subpackage) : parentSlug;
-            const subpackageChildren = this.#convertApiDefinitionPackageId(subpackageId, slug);
+            const subpackageChildren = this.#convertApiDefinitionPackageId(subpackageId, slug, parentAvailability);
             if (subpackageChildren.length > 0) {
                 additionalChildren.push({
                     id: FernNavigation.V1.NodeId(`${this.apiDefinitionId}:${subpackageId}`),
@@ -720,7 +761,7 @@ export class ApiReferenceNodeConverter {
                     icon: undefined,
                     hidden: this.hideChildren,
                     overviewPageId: undefined,
-                    availability: this.parentAvailability,
+                    availability: parentAvailability,
                     apiDefinitionId: this.apiDefinitionId,
                     pointsTo: undefined,
                     noindex: undefined,
@@ -748,7 +789,8 @@ export class ApiReferenceNodeConverter {
 
     #convertApiDefinitionPackageId(
         packageId: string | undefined,
-        parentSlug: FernNavigation.V1.SlugGenerator
+        parentSlug: FernNavigation.V1.SlugGenerator,
+        parentAvailability?: docsYml.RawSchemas.Availability
     ): FernNavigation.V1.ApiPackageChild[] {
         const pkg =
             packageId != null
@@ -761,7 +803,7 @@ export class ApiReferenceNodeConverter {
         }
 
         // if an endpoint, websocket, webhook, or subpackage is not visited, add it to the additional children list
-        return this.#convertApiDefinitionPackage(pkg, parentSlug);
+        return this.#convertApiDefinitionPackage(pkg, parentSlug, parentAvailability);
     }
 
     #convertPlaygroundSettings(
@@ -779,5 +821,27 @@ export class ApiReferenceNodeConverter {
             disableEndpointPairs: this.disableEndpointPairs,
             apiDefinitionId: this.apiDefinitionId
         });
+    }
+
+    private getFileId(filepath: AbsoluteFilePath): string {
+        const fileId = this.collectedFileIds.get(filepath);
+        if (fileId == null) {
+            return this.taskContext.failAndThrow("Failed to locate file after uploading: " + filepath);
+        }
+        return fileId;
+    }
+
+    private resolveIconFileId(
+        iconPath: string | AbsoluteFilePath | undefined
+    ): FernNavigation.V1.FileId | string | undefined {
+        if (iconPath == null) {
+            return undefined;
+        }
+
+        if (this.collectedFileIds.has(iconPath as AbsoluteFilePath)) {
+            return `file:${this.getFileId(iconPath as AbsoluteFilePath)}` as FernNavigation.V1.FileId;
+        }
+
+        return iconPath as string;
     }
 }

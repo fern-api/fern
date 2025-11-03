@@ -1,0 +1,17 @@
+instances:
+  - url: http://localhost:3000
+    custom-domain: localhost:3000
+
+navigation:
+  - api: API Reference
+    layout:
+      - admin:
+          title: Beta Features
+          availability: beta
+          contents:
+            - healthCheck
+
+      - section: Stable
+        availability: stable
+        contents:
+          - users

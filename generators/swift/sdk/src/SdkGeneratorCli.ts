@@ -30,7 +30,8 @@ import { convertIr } from "./utils/convertIr";
 
 export class SdkGeneratorCLI extends AbstractSwiftGeneratorCli<SdkCustomConfigSchema, SdkGeneratorContext> {
     private static readonly defaultCustomConfig: SdkCustomConfigSchema = {
-        enableWireTests: SdkCustomConfigSchemaDefaults.enableWireTests
+        enableWireTests: SdkCustomConfigSchemaDefaults.enableWireTests,
+        nullableAsOptional: SdkCustomConfigSchemaDefaults.nullableAsOptional
     };
 
     protected constructContext({

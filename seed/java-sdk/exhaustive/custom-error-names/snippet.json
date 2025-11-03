@@ -508,7 +508,7 @@
             }
         },
         {
-            "example_identifier": "d3cd01af",
+            "example_identifier": "bd475f9f",
             "id": {
                 "method": "POST",
                 "path": "/union",

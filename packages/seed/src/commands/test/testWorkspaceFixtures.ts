@@ -87,14 +87,6 @@ export async function testGenerator({
         .map((res) => (res.id === res.outputFolder || !res.outputFolder ? res.id : `${res.id}:${res.outputFolder}`));
     const unexpectedlySucceededFixtures = succeededFixtures.filter((fixture) => allowedFailuresAsSet.has(fixture));
 
-    if (unexpectedlySucceededFixtures.length > 0) {
-        CONSOLE_LOGGER.warn(
-            `⚠️ ${unexpectedlySucceededFixtures.length}/${
-                results.length
-            } test cases succeeded unexpectedly. Consider removing the following fixtures from allowedFailures: ${unexpectedlySucceededFixtures.join(", ")}.`
-        );
-    }
-
     if (failedFixtures.length === 0) {
         CONSOLE_LOGGER.info(`${results.length}/${results.length} test cases passed ✅`);
     } else {
@@ -112,6 +104,15 @@ export async function testGenerator({
             CONSOLE_LOGGER.info("✅ All failed fixtures were expected failures.");
         }
     }
+
+    if (unexpectedlySucceededFixtures.length > 0) {
+        CONSOLE_LOGGER.info(
+            `⚠️ ${unexpectedlySucceededFixtures.length}/${
+                results.length
+            } test cases succeeded unexpectedly. Consider removing the following fixtures from allowedFailures: ${unexpectedlySucceededFixtures.join(", ")}.`
+        );
+    }
+
     return true;
 }
 

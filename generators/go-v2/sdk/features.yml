@@ -10,7 +10,7 @@ features:
 
   - id: PAGINATION
     description: |
-      List endpoints are paginated. The SDK provides an iterator so that you can simply loop over the items. You can also iterate page-by-page.
+      List endpoints are paginated. The SDK provides an iterator so that you can simply loop over the items. You can also iterate page-by-page using the `GetNextPage` helper method. If need be you can access the raw response using the `RawResponse` field on the page.
 
   - id: ERRORS
     description: |
@@ -65,11 +65,3 @@ features:
       that come with every object. Calling a setter method for a property will flip a bit in the `explicitFields`
       bitfield for that setter's object; during serialization, any property with a flipped bit will have its
       omittable status stripped, so zero or `nil` values will be sent explicitly rather than omitted altogether:
-
-  - id: WIRE_TESTS
-    advanced: true
-    description: |
-      SDKS's are generated with wire tests by default (opt-out of this feature with `customConfig.enableWireTests: false` in your generator configuration).
-      Wire tests validate serialization, deserialization of request/response types, HTTP method, path, path parameters, query parameters (soon to come) using mock requests
-      made to a mock server run using [WireMock](https://pkg.go.dev/github.com/wiremock/go-wiremock) and [WireMock Test Containers](https://pkg.go.dev/github.com/wiremock/wiremock-testcontainers-go).
-      This dependency means that Docker is required as a runtime dependency.

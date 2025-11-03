@@ -70,6 +70,18 @@ fixtures:
           timeouts:
             - GET /movie/{movieId}
       outputFolder: readme-config
+  nullable:
+    - customConfig: null
+      outputFolder: no-custom-config
+    - customConfig:
+        decodeNullableToOptional: true
+      outputFolder: nullable-as-optional
+  nullable-optional:
+    - customConfig: null
+      outputFolder: no-custom-config
+    - customConfig:
+        decodeNullableToOptional: true
+      outputFolder: nullable-as-optional
   pagination:
     - customConfig: null
       outputFolder: no-custom-config
@@ -80,6 +92,12 @@ fixtures:
         custom-pager-name: MyPager
         include-exception-handler: true
       outputFolder: custom-pager-with-exception-handler
+  required-nullable:
+    - customConfig: null
+      outputFolder: no-custom-config
+    - customConfig:
+        decodeNullableToOptional: true
+      outputFolder: nullable-as-optional
   single-url-environment-default:
     - customConfig: null
       outputFolder: no-custom-config
@@ -88,7 +106,6 @@ fixtures:
       outputFolder: with-custom-config
 
 allowedFailures:
-  - any-auth
   - api-wide-base-path
   - audiences
   - auth-environment-variables
@@ -105,7 +122,6 @@ allowedFailures:
   - extra-properties
   - file-upload-openapi
   - idempotency-headers
-  - imdb
   - inferred-auth-explicit
   - inferred-auth-implicit
   - inferred-auth-implicit-no-expiry
@@ -114,8 +130,10 @@ allowedFailures:
   - mixed-file-directory
   - multi-url-environment
   - multi-url-environment-no-default
-  - nullable
-  - nullable-optional
+  - nullable:no-custom-config
+  - nullable:nullable-as-optional
+  - nullable-optional:no-custom-config
+  - nullable-optional:nullable-as-optional
   - oauth-client-credentials-custom
   - oauth-client-credentials-with-variables
   - pagination:no-custom-config
@@ -125,7 +143,8 @@ allowedFailures:
   - plain-text
   - query-parameters
   - request-parameters
-  - required-nullable
+  - required-nullable:no-custom-config
+  - required-nullable:nullable-as-optional
   - reserved-keywords
   - response-property
   - simple-fhir
@@ -136,3 +155,6 @@ allowedFailures:
   - unions
   - variables
   - websocket-inferred-auth
+  # Intermediate failures
+  - any-auth
+  - imdb

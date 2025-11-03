@@ -68,7 +68,7 @@ client := client.NewClient(
 
 ## Pagination
 
-List endpoints are paginated. The SDK provides an iterator so that you can simply loop over the items. You can also iterate page-by-page.
+List endpoints are paginated. The SDK provides an iterator so that you can simply loop over the items. You can also iterate page-by-page using the `GetNextPage` helper method. If need be you can access the raw response using the `RawResponse` field on the page.
 
 ```go
 // Loop over the items using the provided iterator.
@@ -102,6 +102,17 @@ for page != nil {
         return err
     }
 }
+
+// Alternatively, access the next cursor directly from the raw response.
+ctx := context.TODO()
+page, err := client.Complex.Search(
+    ctx,
+    ...
+)
+if err != nil {
+    return err
+}
+nextCursor := page.RawResponse.Next
 ```
 
 ## Errors
