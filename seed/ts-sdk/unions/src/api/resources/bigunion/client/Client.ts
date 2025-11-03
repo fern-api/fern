@@ -85,6 +85,9 @@ export class Bigunion {
      * @example
      *     await client.bigunion.update({
      *         type: "normalSweet",
+     *         id: "id",
+     *         "created-at": "2024-01-15T09:30:00Z",
+     *         "archived-at": "2024-01-15T09:30:00Z",
      *         value: "value"
      *     })
      */
@@ -151,9 +154,15 @@ export class Bigunion {
      * @example
      *     await client.bigunion.updateMany([{
      *             type: "normalSweet",
+     *             id: "id",
+     *             "created-at": "2024-01-15T09:30:00Z",
+     *             "archived-at": "2024-01-15T09:30:00Z",
      *             value: "value"
      *         }, {
      *             type: "normalSweet",
+     *             id: "id",
+     *             "created-at": "2024-01-15T09:30:00Z",
+     *             "archived-at": "2024-01-15T09:30:00Z",
      *             value: "value"
      *         }])
      */
