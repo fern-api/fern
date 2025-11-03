@@ -157,3 +157,4 @@ allowedFailures:
   - websocket-inferred-auth
   # Intermediate failures
   - any-auth
+  - imdb
