@@ -9,6 +9,7 @@ npm install -g yarn@1.22.22 --force
 pnpm install -g prettier@3.4.2
 pnpm install -g @biomejs/biome@2.3.1
 pnpm install -g oxlint@0.15.2
+pnpm install -g oxlint-tsgolint@0.15.2
 
 mkdir $project_name
 cd $project_name
@@ -26,6 +27,7 @@ echo '{
     "@biomejs/biome": "2.3.1",
     "prettier": "3.4.2",
     "oxlint": "0.15.2",
+    "oxlint-tsgolint": "0.15.2",
     "typescript": "5.7.2",
     "url-join": "4.0.1"
   }
