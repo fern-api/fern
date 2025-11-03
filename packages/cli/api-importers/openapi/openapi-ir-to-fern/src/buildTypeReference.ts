@@ -3,13 +3,10 @@ import { RawSchemas } from "@fern-api/fern-definition-schema";
 import {
     ArraySchema,
     DoubleSchema,
-    EnumSchema,
     IntSchema,
     LiteralSchema,
     MapSchema,
     NullableSchema,
-    ObjectSchema,
-    OneOfSchema,
     OptionalSchema,
     PrimitiveSchema,
     PrimitiveSchemaValue,
@@ -117,7 +114,6 @@ export function buildTypeReference({
         case "enum":
             return buildEnumTypeReference({
                 schema,
-                fullSchema: schema,
                 fileContainingReference,
                 context,
                 declarationFile,
@@ -129,7 +125,6 @@ export function buildTypeReference({
         case "object":
             return buildObjectTypeReference({
                 schema,
-                fullSchema: schema,
                 fileContainingReference,
                 context,
                 declarationFile,
@@ -138,8 +133,7 @@ export function buildTypeReference({
             });
         case "oneOf":
             return buildOneOfTypeReference({
-                schema: schema.value,
-                fullSchema: schema,
+                schema,
                 fileContainingReference,
                 context,
                 declarationFile,
@@ -733,23 +727,24 @@ export function buildLiteralTypeReference(schema: LiteralSchema): RawSchemas.Typ
 
 export function buildEnumTypeReference({
     schema,
-    fullSchema,
     fileContainingReference,
     declarationFile,
     context,
     declarationDepth
 }: {
-    schema: EnumSchema;
-    fullSchema: Schema;
+    schema: Schema;
     fileContainingReference: RelativeFilePath;
     declarationFile: RelativeFilePath;
     context: OpenApiIrConverterContext;
     declarationDepth: number;
 }): RawSchemas.TypeReferenceSchema {
+    if (schema.type !== "enum") {
+        throw new Error("buildEnumTypeReference called with non-enum schema");
+    }
     const name = schema.nameOverride ?? schema.generatedName;
 
     // Check if this schema exists as a top-level schema
-    const topLevelSchemaFile = findTopLevelSchemaFile(fullSchema, context);
+    const topLevelSchemaFile = findTopLevelSchemaFile(schema, context);
     const effectiveDeclarationFile = topLevelSchemaFile ?? declarationFile;
 
     // Only add the type if we haven't encountered it before OR if it should be in the current file
@@ -779,25 +774,26 @@ export function buildEnumTypeReference({
 
 export function buildObjectTypeReference({
     schema,
-    fullSchema,
     fileContainingReference,
     declarationFile,
     context,
     namespace,
     declarationDepth
 }: {
-    schema: ObjectSchema;
-    fullSchema: Schema;
+    schema: Schema;
     fileContainingReference: RelativeFilePath;
     declarationFile: RelativeFilePath;
     context: OpenApiIrConverterContext;
     namespace: string | undefined;
     declarationDepth: number;
 }): RawSchemas.TypeReferenceSchema {
+    if (schema.type !== "object") {
+        throw new Error("buildObjectTypeReference called with non-object schema");
+    }
     const name = schema.nameOverride ?? schema.generatedName;
 
     // Check if this schema exists as a top-level schema
-    const topLevelSchemaFile = findTopLevelSchemaFile(fullSchema, context);
+    const topLevelSchemaFile = findTopLevelSchemaFile(schema, context);
     const effectiveDeclarationFile = topLevelSchemaFile ?? declarationFile;
 
     // Only add the type if we haven't encountered it before OR if it should be in the current file
@@ -832,31 +828,33 @@ export function buildObjectTypeReference({
 
 export function buildOneOfTypeReference({
     schema,
-    fullSchema,
     fileContainingReference,
     declarationFile,
     context,
     namespace,
     declarationDepth
 }: {
-    schema: OneOfSchema;
-    fullSchema: Schema;
+    schema: Schema;
     fileContainingReference: RelativeFilePath;
     declarationFile: RelativeFilePath;
     context: OpenApiIrConverterContext;
     namespace: string | undefined;
     declarationDepth: number;
 }): RawSchemas.TypeReferenceSchema {
-    const name = schema.nameOverride ?? schema.generatedName;
+    if (schema.type !== "oneOf") {
+        throw new Error("buildOneOfTypeReference called with non-oneOf schema");
+    }
+    const oneOfSchema = schema.value;
+    const name = oneOfSchema.nameOverride ?? oneOfSchema.generatedName;
 
     // Check if this schema exists as a top-level schema
-    const topLevelSchemaFile = findTopLevelSchemaFile(fullSchema, context);
+    const topLevelSchemaFile = findTopLevelSchemaFile(schema, context);
     const effectiveDeclarationFile = topLevelSchemaFile ?? declarationFile;
 
     // Only add the type if we haven't encountered it before OR if it should be in the current file
     if (topLevelSchemaFile == null) {
         const unionTypeDeclaration = buildOneOfTypeDeclaration({
-            schema,
+            schema: oneOfSchema,
             declarationFile,
             context,
             namespace,
@@ -877,10 +875,10 @@ export function buildOneOfTypeReference({
 
     return buildTypeReferenceWithMetadata({
         type: prefixedType,
-        docs: schema.description,
-        availability: schema.availability,
-        title: schema.title,
-        displayName: schema.title
+        docs: oneOfSchema.description,
+        availability: oneOfSchema.availability,
+        title: oneOfSchema.title,
+        displayName: oneOfSchema.title
     });
 }
 
