@@ -32,6 +32,7 @@ export function addLanguageSuffixToUrl(url: string, language: string): string {
     try {
         const urlObj = new URL(url);
         const hostname = urlObj.hostname;
+        const originalHasTrailingSlash = url.endsWith("/");
 
         if (hostname.endsWith(".docs.buildwithfern.com")) {
             const org = hostname.replace(".docs.buildwithfern.com", "");
@@ -40,9 +41,18 @@ export function addLanguageSuffixToUrl(url: string, language: string): string {
             urlObj.hostname = `${language}.${hostname}`;
         }
 
-        return urlObj.toString();
+        let result = urlObj.toString();
+
+        if (!originalHasTrailingSlash && result.endsWith("/") && urlObj.pathname === "/") {
+            result = result.slice(0, -1);
+        } else if (originalHasTrailingSlash && !result.endsWith("/") && urlObj.pathname === "/") {
+            result += "/";
+        }
+
+        return result;
     } catch {
         // fallback parsing for invalid URLs
+        const originalHasTrailingSlash = url.endsWith("/");
         if (url.includes("://")) {
             const [protocol, rest] = url.split("://");
             const [hostAndPath, ...fragments] = rest?.split("#") ?? [];
@@ -64,6 +74,8 @@ export function addLanguageSuffixToUrl(url: string, language: string): string {
             let result = `${protocol}://${newHostname}`;
             if (pathParts.length > 0) {
                 result += "/" + pathParts.join("/");
+            } else if (originalHasTrailingSlash) {
+                result += "/";
             }
             if (hashParts.length > 0) {
                 result += "?" + hashParts.join("?");
@@ -87,8 +99,10 @@ export function addLanguageSuffixToUrl(url: string, language: string): string {
                     newHostname = `${language}.${hostname}`;
                 }
 
-                if (pathParts.length > 0) {
+                if (pathParts.length > 0 || pathParts.some((p) => p !== "")) {
                     return `${newHostname}/${pathParts.join("/")}`;
+                } else if (originalHasTrailingSlash) {
+                    return `${newHostname}/`;
                 } else {
                     return newHostname;
                 }
@@ -377,7 +391,7 @@ export async function writeTranslationForProject({
             );
             for (const language of targetLanguages) {
                 context.logger.info(
-                    chalk.blue(`  - ${language}/docs.yml: URLs modified to include /${language} suffix`)
+                    chalk.blue(`  - ${language}/docs.yml: URLs modified to include ${language} prefix`)
                 );
             }
         }
