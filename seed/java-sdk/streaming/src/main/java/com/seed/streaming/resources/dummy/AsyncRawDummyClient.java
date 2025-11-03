@@ -129,13 +129,13 @@ public class AsyncRawDummyClient {
             @Override
             public void onResponse(@NotNull Call call, @NotNull Response response) throws IOException {
                 try (ResponseBody responseBody = response.body()) {
+                    String responseBodyString = responseBody != null ? responseBody.string() : "{}";
                     if (response.isSuccessful()) {
                         future.complete(new SeedStreamingHttpResponse<>(
-                                ObjectMappers.JSON_MAPPER.readValue(responseBody.string(), StreamResponse.class),
+                                ObjectMappers.JSON_MAPPER.readValue(responseBodyString, StreamResponse.class),
                                 response));
                         return;
                     }
-                    String responseBodyString = responseBody != null ? responseBody.string() : "{}";
                     future.completeExceptionally(new SeedStreamingApiException(
                             "Error with status code " + response.code(),
                             response.code(),
