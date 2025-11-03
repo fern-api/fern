@@ -43421,7 +43421,7 @@ docs: Everything about your ticket types
                 "id": "string",
               },
               "request": {
-                "body": "ReplyTicketRequestBody",
+                "body": "root.ReplyTicketRequestBody",
                 "content-type": "application/json",
               },
               "response": {
@@ -44521,23 +44521,6 @@ The table below shows the operators you can use to define how you want to search
               "openapi": "../openapi.yml",
             },
           },
-          "ReplyTicketRequestBody": {
-            "discriminated": false,
-            "docs": undefined,
-            "encoding": undefined,
-            "inline": undefined,
-            "source": {
-              "openapi": "../openapi.yml",
-            },
-            "union": [
-              {
-                "type": "root.ContactReplyTicketRequest",
-              },
-              {
-                "type": "root.AdminReplyTicketRequest",
-              },
-            ],
-          },
           "Ticket": {
             "docs": "Tickets are how you track requests from your users.",
             "inline": undefined,
@@ -44818,277 +44801,6 @@ The table below shows the operators you can use to define how you want to search
       },
       "rawContents": "imports:
   root: __package__.yml
-types:
-  ReplyTicketRequestBody:
-    discriminated: false
-    union:
-      - type: root.ContactReplyTicketRequest
-      - type: root.AdminReplyTicketRequest
-    source:
-      openapi: ../openapi.yml
-  ID:
-    properties:
-      id:
-        type: string
-        docs: The identifier for the contact as given by Intercom.
-    source:
-      openapi: ../openapi.yml
-    inline: true
-  CreateTicketRequestContactsItemExternalId:
-    properties:
-      external_id:
-        type: string
-        docs: >-
-          The external_id you have defined for the contact who is being added as
-          a participant.
-    source:
-      openapi: ../openapi.yml
-    inline: true
-  Email:
-    properties:
-      email:
-        type: string
-        docs: >-
-          The email you have defined for the contact who is being added as a
-          participant. If a contact with this email does not exist, one will be
-          created.
-    source:
-      openapi: ../openapi.yml
-    inline: true
-  CreateTicketRequestContactsItem:
-    discriminated: false
-    union:
-      - type: ID
-      - type: CreateTicketRequestContactsItemExternalId
-      - type: Email
-    source:
-      openapi: ../openapi.yml
-    inline: true
-  UpdateTicketRequestState:
-    enum:
-      - in_progress
-      - waiting_on_customer
-      - resolved
-    docs: The state of the ticket.
-    inline: true
-    source:
-      openapi: ../openapi.yml
-  UpdateTicketRequestAssignment:
-    properties:
-      admin_id:
-        type: optional<string>
-        docs: The ID of the admin performing the action.
-      assignee_id:
-        type: optional<string>
-        docs: >-
-          The ID of the admin or team to which the ticket is assigned. Set this
-          0 to unassign it.
-    source:
-      openapi: ../openapi.yml
-    inline: true
-  TicketCategory:
-    enum:
-      - Customer
-      - value: Back-office
-        name: BackOffice
-      - Tracker
-    docs: Category of the Ticket.
-    inline: true
-    source:
-      openapi: ../openapi.yml
-  TicketTicketState:
-    enum:
-      - submitted
-      - in_progress
-      - waiting_on_customer
-      - resolved
-    docs: The state the ticket is currently in
-    inline: true
-    source:
-      openapi: ../openapi.yml
-  Ticket:
-    docs: Tickets are how you track requests from your users.
-    properties:
-      type:
-        type: optional<literal<"ticket">>
-        docs: Always ticket
-      id:
-        type: optional<string>
-        docs: The unique identifier for the ticket which is given by Intercom.
-      ticket_id:
-        type: optional<string>
-        docs: >-
-          The ID of the Ticket used in the Intercom Inbox and Messenger. Do not
-          use ticket_id for API queries.
-      category:
-        type: optional<TicketCategory>
-        docs: Category of the Ticket.
-      ticket_attributes: optional<root.TicketCustomAttributes>
-      ticket_state:
-        type: optional<TicketTicketState>
-        docs: The state the ticket is currently in
-      ticket_type: optional<TicketType>
-      contacts: optional<Contacts>
-      admin_assignee_id:
-        type: optional<string>
-        docs: The id representing the admin assigned to the ticket.
-      team_assignee_id:
-        type: optional<string>
-        docs: The id representing the team assigned to the ticket.
-      created_at:
-        type: optional<integer>
-        docs: The time the ticket was created as a UTC Unix timestamp.
-      updated_at:
-        type: optional<integer>
-        docs: The last time the ticket was updated as a UTC Unix timestamp.
-      open:
-        type: optional<boolean>
-        docs: Whether or not the ticket is open. If false, the ticket is closed.
-      snoozed_until:
-        type: optional<integer>
-        docs: >-
-          The time the ticket will be snoozed until as a UTC Unix timestamp. If
-          null, the ticket is not currently snoozed.
-      linked_objects: optional<root.LinkedObjectList>
-      ticket_parts: optional<root.TicketParts>
-      is_shared:
-        type: optional<boolean>
-        docs: Whether or not the ticket is shared with the customer.
-      ticket_state_internal_label:
-        type: optional<string>
-        docs: >-
-          The state the ticket is currently in, in a human readable form -
-          visible in Intercom
-      ticket_state_external_label:
-        type: optional<string>
-        docs: >-
-          The state the ticket is currently in, in a human readable form -
-          visible to customers, in the messenger, email and tickets portal.
-    source:
-      openapi: ../openapi.yml
-  Contacts:
-    docs: The list of contacts affected by a ticket.
-    properties:
-      type:
-        type: optional<literal<"contact.list">>
-        docs: always contact.list
-      contacts:
-        type: optional<list<root.ContactReference>>
-        docs: The list of contacts affected by this ticket.
-    source:
-      openapi: ../openapi.yml
-  TicketPartPreviousTicketState:
-    enum:
-      - submitted
-      - in_progress
-      - waiting_on_customer
-      - resolved
-    docs: The previous state of the ticket.
-    inline: true
-    source:
-      openapi: ../openapi.yml
-  TicketPartTicketState:
-    enum:
-      - submitted
-      - in_progress
-      - waiting_on_customer
-      - resolved
-    docs: The state of the ticket.
-    inline: true
-    source:
-      openapi: ../openapi.yml
-  TicketPart:
-    docs: A Ticket Part represents a message in the ticket.
-    properties:
-      type:
-        type: optional<string>
-        docs: Always ticket_part
-      id:
-        type: optional<string>
-        docs: The id representing the ticket part.
-      part_type:
-        type: optional<string>
-        docs: The type of ticket part.
-      body:
-        type: optional<string>
-        docs: The message body, which may contain HTML.
-      previous_ticket_state:
-        type: optional<TicketPartPreviousTicketState>
-        docs: The previous state of the ticket.
-      ticket_state:
-        type: optional<TicketPartTicketState>
-        docs: The state of the ticket.
-      created_at:
-        type: optional<integer>
-        docs: The time the ticket part was created.
-      updated_at:
-        type: optional<integer>
-        docs: The last time the ticket part was updated.
-      assigned_to:
-        type: optional<root.Reference>
-        docs: >-
-          The id of the admin that was assigned the ticket by this ticket_part
-          (null if there has been no change in assignment.)
-      author: optional<root.TicketPartAuthor>
-      attachments:
-        type: optional<list<root.PartAttachment>>
-        docs: A list of attachments for the part.
-      external_id:
-        type: optional<string>
-        docs: The external id of the ticket part
-      redacted:
-        type: optional<boolean>
-        docs: Whether or not the ticket part has been redacted.
-    source:
-      openapi: ../openapi.yml
-  TicketTypeCategory:
-    enum:
-      - Customer
-      - value: Back-office
-        name: BackOffice
-      - Tracker
-    docs: Category of the Ticket Type.
-    inline: true
-    source:
-      openapi: ../openapi.yml
-  TicketType:
-    docs: A ticket type, used to define the data fields to be captured in a ticket.
-    properties:
-      type:
-        type: optional<string>
-        docs: >-
-          String representing the object's type. Always has the value
-          `ticket_type`.
-      id:
-        type: optional<string>
-        docs: The id representing the ticket type.
-      category:
-        type: optional<TicketTypeCategory>
-        docs: Category of the Ticket Type.
-      name:
-        type: optional<string>
-        docs: The name of the ticket type
-      description:
-        type: optional<string>
-        docs: The description of the ticket type
-      icon:
-        type: optional<string>
-        docs: The icon of the ticket type
-      workspace_id:
-        type: optional<string>
-        docs: The id of the workspace that the ticket type belongs to.
-      ticket_type_attributes: optional<root.TicketTypeAttributeList>
-      archived:
-        type: optional<boolean>
-        docs: Whether the ticket type is archived or not.
-      created_at:
-        type: optional<integer>
-        docs: The date and time the ticket type was created.
-      updated_at:
-        type: optional<integer>
-        docs: The date and time the ticket type was last updated.
-    source:
-      openapi: ../openapi.yml
 service:
   auth: false
   base-path: ''
@@ -45105,7 +44817,7 @@ service:
         id: string
       display-name: Reply to a ticket
       request:
-        body: ReplyTicketRequestBody
+        body: root.ReplyTicketRequestBody
         content-type: application/json
       response:
         docs: Admin quick_reply reply
@@ -46381,6 +46093,270 @@ service:
     openapi: ../openapi.yml
   display-name: Tickets
 docs: Everything about your tickets
+types:
+  ID:
+    properties:
+      id:
+        type: string
+        docs: The identifier for the contact as given by Intercom.
+    source:
+      openapi: ../openapi.yml
+    inline: true
+  CreateTicketRequestContactsItemExternalId:
+    properties:
+      external_id:
+        type: string
+        docs: >-
+          The external_id you have defined for the contact who is being added as
+          a participant.
+    source:
+      openapi: ../openapi.yml
+    inline: true
+  Email:
+    properties:
+      email:
+        type: string
+        docs: >-
+          The email you have defined for the contact who is being added as a
+          participant. If a contact with this email does not exist, one will be
+          created.
+    source:
+      openapi: ../openapi.yml
+    inline: true
+  CreateTicketRequestContactsItem:
+    discriminated: false
+    union:
+      - type: ID
+      - type: CreateTicketRequestContactsItemExternalId
+      - type: Email
+    source:
+      openapi: ../openapi.yml
+    inline: true
+  UpdateTicketRequestState:
+    enum:
+      - in_progress
+      - waiting_on_customer
+      - resolved
+    docs: The state of the ticket.
+    inline: true
+    source:
+      openapi: ../openapi.yml
+  UpdateTicketRequestAssignment:
+    properties:
+      admin_id:
+        type: optional<string>
+        docs: The ID of the admin performing the action.
+      assignee_id:
+        type: optional<string>
+        docs: >-
+          The ID of the admin or team to which the ticket is assigned. Set this
+          0 to unassign it.
+    source:
+      openapi: ../openapi.yml
+    inline: true
+  TicketCategory:
+    enum:
+      - Customer
+      - value: Back-office
+        name: BackOffice
+      - Tracker
+    docs: Category of the Ticket.
+    inline: true
+    source:
+      openapi: ../openapi.yml
+  TicketTicketState:
+    enum:
+      - submitted
+      - in_progress
+      - waiting_on_customer
+      - resolved
+    docs: The state the ticket is currently in
+    inline: true
+    source:
+      openapi: ../openapi.yml
+  Ticket:
+    docs: Tickets are how you track requests from your users.
+    properties:
+      type:
+        type: optional<literal<"ticket">>
+        docs: Always ticket
+      id:
+        type: optional<string>
+        docs: The unique identifier for the ticket which is given by Intercom.
+      ticket_id:
+        type: optional<string>
+        docs: >-
+          The ID of the Ticket used in the Intercom Inbox and Messenger. Do not
+          use ticket_id for API queries.
+      category:
+        type: optional<TicketCategory>
+        docs: Category of the Ticket.
+      ticket_attributes: optional<root.TicketCustomAttributes>
+      ticket_state:
+        type: optional<TicketTicketState>
+        docs: The state the ticket is currently in
+      ticket_type: optional<TicketType>
+      contacts: optional<Contacts>
+      admin_assignee_id:
+        type: optional<string>
+        docs: The id representing the admin assigned to the ticket.
+      team_assignee_id:
+        type: optional<string>
+        docs: The id representing the team assigned to the ticket.
+      created_at:
+        type: optional<integer>
+        docs: The time the ticket was created as a UTC Unix timestamp.
+      updated_at:
+        type: optional<integer>
+        docs: The last time the ticket was updated as a UTC Unix timestamp.
+      open:
+        type: optional<boolean>
+        docs: Whether or not the ticket is open. If false, the ticket is closed.
+      snoozed_until:
+        type: optional<integer>
+        docs: >-
+          The time the ticket will be snoozed until as a UTC Unix timestamp. If
+          null, the ticket is not currently snoozed.
+      linked_objects: optional<root.LinkedObjectList>
+      ticket_parts: optional<root.TicketParts>
+      is_shared:
+        type: optional<boolean>
+        docs: Whether or not the ticket is shared with the customer.
+      ticket_state_internal_label:
+        type: optional<string>
+        docs: >-
+          The state the ticket is currently in, in a human readable form -
+          visible in Intercom
+      ticket_state_external_label:
+        type: optional<string>
+        docs: >-
+          The state the ticket is currently in, in a human readable form -
+          visible to customers, in the messenger, email and tickets portal.
+    source:
+      openapi: ../openapi.yml
+  Contacts:
+    docs: The list of contacts affected by a ticket.
+    properties:
+      type:
+        type: optional<literal<"contact.list">>
+        docs: always contact.list
+      contacts:
+        type: optional<list<root.ContactReference>>
+        docs: The list of contacts affected by this ticket.
+    source:
+      openapi: ../openapi.yml
+  TicketPartPreviousTicketState:
+    enum:
+      - submitted
+      - in_progress
+      - waiting_on_customer
+      - resolved
+    docs: The previous state of the ticket.
+    inline: true
+    source:
+      openapi: ../openapi.yml
+  TicketPartTicketState:
+    enum:
+      - submitted
+      - in_progress
+      - waiting_on_customer
+      - resolved
+    docs: The state of the ticket.
+    inline: true
+    source:
+      openapi: ../openapi.yml
+  TicketPart:
+    docs: A Ticket Part represents a message in the ticket.
+    properties:
+      type:
+        type: optional<string>
+        docs: Always ticket_part
+      id:
+        type: optional<string>
+        docs: The id representing the ticket part.
+      part_type:
+        type: optional<string>
+        docs: The type of ticket part.
+      body:
+        type: optional<string>
+        docs: The message body, which may contain HTML.
+      previous_ticket_state:
+        type: optional<TicketPartPreviousTicketState>
+        docs: The previous state of the ticket.
+      ticket_state:
+        type: optional<TicketPartTicketState>
+        docs: The state of the ticket.
+      created_at:
+        type: optional<integer>
+        docs: The time the ticket part was created.
+      updated_at:
+        type: optional<integer>
+        docs: The last time the ticket part was updated.
+      assigned_to:
+        type: optional<root.Reference>
+        docs: >-
+          The id of the admin that was assigned the ticket by this ticket_part
+          (null if there has been no change in assignment.)
+      author: optional<root.TicketPartAuthor>
+      attachments:
+        type: optional<list<root.PartAttachment>>
+        docs: A list of attachments for the part.
+      external_id:
+        type: optional<string>
+        docs: The external id of the ticket part
+      redacted:
+        type: optional<boolean>
+        docs: Whether or not the ticket part has been redacted.
+    source:
+      openapi: ../openapi.yml
+  TicketTypeCategory:
+    enum:
+      - Customer
+      - value: Back-office
+        name: BackOffice
+      - Tracker
+    docs: Category of the Ticket Type.
+    inline: true
+    source:
+      openapi: ../openapi.yml
+  TicketType:
+    docs: A ticket type, used to define the data fields to be captured in a ticket.
+    properties:
+      type:
+        type: optional<string>
+        docs: >-
+          String representing the object's type. Always has the value
+          `ticket_type`.
+      id:
+        type: optional<string>
+        docs: The id representing the ticket type.
+      category:
+        type: optional<TicketTypeCategory>
+        docs: Category of the Ticket Type.
+      name:
+        type: optional<string>
+        docs: The name of the ticket type
+      description:
+        type: optional<string>
+        docs: The description of the ticket type
+      icon:
+        type: optional<string>
+        docs: The icon of the ticket type
+      workspace_id:
+        type: optional<string>
+        docs: The id of the workspace that the ticket type belongs to.
+      ticket_type_attributes: optional<root.TicketTypeAttributeList>
+      archived:
+        type: optional<boolean>
+        docs: Whether the ticket type is archived or not.
+      created_at:
+        type: optional<integer>
+        docs: The date and time the ticket type was created.
+      updated_at:
+        type: optional<integer>
+        docs: The date and time the ticket type was last updated.
+    source:
+      openapi: ../openapi.yml
 ",
     },
     "visitors.yml": {
