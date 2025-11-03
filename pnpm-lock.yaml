@@ -9517,8 +9517,8 @@ packages:
   '@fern-fern/ir-sdk@60.5.0':
     resolution: {integrity: sha512-X8PBQzEuVHUEYCl+FeynSXD2mhbpJJDssnYMxqyYpd9qS/Z1QW/RF03jut/8MumPS9sKwy8F2lSN4y5ECQ3ZCQ==}
 
-  '@fern-fern/ir-sdk@61.2.0':
-    resolution: {integrity: sha512-QbFRDUsD4II/psRlsv/pXXWZJ90euRfG6htQAOpGwQ5wGSXJVFHwrzVwq0oumRPjqnQrBS6JnhhZbcQjtCgteg==}
+  '@fern-fern/ir-sdk@61.0.0':
+    resolution: {integrity: sha512-w1Z+hnLi+NogM3Rdh/6SMG5NzoiRQISSLqso05jHKQpAUOwzuO3KQB4ZPlu9/6i2QhJrJspfytQHNqmXN0H64Q==}
 
   '@fern-fern/ir-sdk@61.4.0':
     resolution: {integrity: sha512-tnnFqg3HSUh+dzrT9gKJP20QxXnv6qio468+6Opj9TiCeKCBCRL/n1heeG9+XJ3cbAeZsS8GC/1G4Jk07tAcEg==}
@@ -17124,6 +17124,26 @@ snapshots:
       - encoding
 
   '@fern-fern/ir-sdk@60.5.0':
+    dependencies:
+      form-data: 4.0.4
+      formdata-node: 6.0.3
+      node-fetch: 2.7.0
+      qs: 6.13.0
+      readable-stream: 4.7.0
+    transitivePeerDependencies:
+      - encoding
+
+  '@fern-fern/ir-sdk@61.0.0':
+    dependencies:
+      form-data: 4.0.4
+      formdata-node: 6.0.3
+      node-fetch: 2.7.0
+      qs: 6.13.0
+      readable-stream: 4.7.0
+    transitivePeerDependencies:
+      - encoding
+
+  '@fern-fern/ir-sdk@61.4.0':
     dependencies:
       form-data: 4.0.4
       formdata-node: 6.0.3
