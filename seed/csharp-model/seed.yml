@@ -49,5 +49,3 @@ scripts:
     commands:
       - dotnet restore src
       - dotnet build src -c Release /p:ContinuousIntegrationBuild=true --no-restore
-allowedFailures:
-  - pagination

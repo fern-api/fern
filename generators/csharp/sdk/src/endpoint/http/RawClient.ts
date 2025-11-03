@@ -1,6 +1,6 @@
 import { Arguments } from "@fern-api/base-generator";
 import { assertNever } from "@fern-api/core-utils";
-import { ast, Writer } from "@fern-api/csharp-codegen";
+import { ast, WithGeneration, Writer } from "@fern-api/csharp-codegen";
 
 import { FernIr } from "@fern-fern/ir-sdk";
 import { HttpEndpoint, HttpMethod } from "@fern-fern/ir-sdk/api";
@@ -63,15 +63,9 @@ export declare namespace RawClient {
 /**
  * Utility class that helps make calls to the raw client.
  */
-export class RawClient {
-    private context: SdkGeneratorContext;
-
-    public constructor(context: SdkGeneratorContext) {
-        this.context = context;
-    }
-
-    private get csharp() {
-        return this.context.csharp;
+export class RawClient extends WithGeneration {
+    public constructor(private readonly context: SdkGeneratorContext) {
+        super(context);
     }
 
     /**
@@ -136,12 +130,12 @@ export class RawClient {
         if (endpoint.idempotent) {
             args.push({
                 name: "Options",
-                assignment: this.csharp.codeblock(this.context.getIdempotentRequestOptionsParameterName())
+                assignment: this.csharp.codeblock(this.names.parameters.idempotentOptions)
             });
         } else {
             args.push({
                 name: "Options",
-                assignment: this.csharp.codeblock(this.context.getRequestOptionsParameterName())
+                assignment: this.csharp.codeblock(this.names.parameters.requestOptions)
             });
         }
         switch (requestType) {
@@ -151,7 +145,7 @@ export class RawClient {
                         arguments_: args,
                         classReference: this.csharp.classReference({
                             name: "StreamRequest",
-                            namespace: this.context.getCoreNamespace()
+                            namespace: this.namespaces.core
                         })
                     })
                 };
@@ -168,7 +162,7 @@ export class RawClient {
                             arguments_: args,
                             classReference: this.csharp.classReference({
                                 name: "MultipartFormRequest",
-                                namespace: this.context.getCoreNamespace()
+                                namespace: this.namespaces.core
                             })
                         })
                     );
@@ -196,7 +190,7 @@ export class RawClient {
 
             case "urlencoded":
                 return {
-                    requestReference: this.context.Core.FormRequest.new({ arguments_: args })
+                    requestReference: this.types.FormRequest.new({ arguments_: args })
                 };
 
             case "json":
@@ -204,7 +198,7 @@ export class RawClient {
                 return {
                     requestReference: this.csharp.instantiateClass({
                         arguments_: args,
-                        classReference: this.context.getJsonRequestClassReference()
+                        classReference: this.types.JsonRequest
                     })
                 };
         }
@@ -308,7 +302,7 @@ export class RawClient {
                 case "keyValuePair":
                     return isCollection ? "AddJsonParts" : "AddJsonPart";
                 case "optional":
-                case "csharpType":
+                case "systemType":
                 case "action":
                 case "func":
                 case "byte[]":
@@ -340,7 +334,7 @@ export class RawClient {
         return this.csharp.invokeMethod({
             on: this.csharp.codeblock(clientReference),
             method: "SendRequestAsync",
-            arguments_: [request, this.csharp.codeblock(this.context.getCancellationTokenParameterName())],
+            arguments_: [request, this.csharp.codeblock(this.names.parameters.cancellationToken)],
             async: true
         });
     }
@@ -357,7 +351,7 @@ export class RawClient {
         return this.csharp.invokeMethod({
             on: this.csharp.codeblock(clientReference),
             method: "SendRequestAsync",
-            arguments_: [request, options, this.csharp.codeblock(this.context.getCancellationTokenParameterName())],
+            arguments_: [request, options, this.csharp.codeblock(this.names.parameters.cancellationToken)],
             async: true
         });
     }
@@ -389,7 +383,7 @@ export class RawClient {
                 assertNever(irMethod);
         }
         return this.csharp.codeblock((writer) => {
-            writer.writeNode(this.csharp.System.Net.Http.HttpMethod);
+            writer.writeNode(this.extern.System.Net.Http.HttpMethod);
             writer.write(`.${method}`);
         });
     }
@@ -421,7 +415,7 @@ export class RawClient {
             }
             formatParams.push(
                 this.csharp.codeblock((writer) => {
-                    writer.writeNode(this.context.getValueConvertReference());
+                    writer.writeNode(this.types.ValueConvert);
                     writer.write(`.ToPathParameterString(${reference})`);
                 })
             );

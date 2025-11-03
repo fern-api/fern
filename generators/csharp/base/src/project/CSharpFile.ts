@@ -1,5 +1,5 @@
 import { File } from "@fern-api/base-generator";
-import { ast, BaseCsharpCustomConfigSchema } from "@fern-api/csharp-codegen";
+import { ast, Generation } from "@fern-api/csharp-codegen";
 import { AbsoluteFilePath, RelativeFilePath } from "@fern-api/fs-utils";
 import { FernFilepath } from "@fern-fern/ir-sdk/api";
 import path from "path";
@@ -19,7 +19,7 @@ export declare namespace CSharpFile {
         /* The root namespace of the project. Can be pulled directly from context. */
         namespace: string;
         /* Custom generator config */
-        customConfig: BaseCsharpCustomConfigSchema;
+        generation: Generation;
         /* The header to be written to the file */
         fileHeader?: string;
     }
@@ -31,16 +31,14 @@ export class CSharpFile extends File {
         directory,
         allNamespaceSegments,
         allTypeClassReferences,
-        namespace,
-        customConfig,
+        generation,
         fileHeader
     }: CSharpFile.Args) {
         let fileContents = clazz.toString({
-            namespace: clazz.getNamespace(),
+            namespace: clazz.namespace,
             allNamespaceSegments,
             allTypeClassReferences,
-            rootNamespace: namespace,
-            customConfig
+            generation
         });
         if (fileHeader) {
             fileContents = `${fileHeader}\n\n${fileContents}`;

@@ -72,6 +72,7 @@ export class Admin {
             timeoutMs: (requestOptions?.timeoutInSeconds ?? this._options?.timeoutInSeconds ?? 60) * 1000,
             maxRetries: requestOptions?.maxRetries ?? this._options?.maxRetries,
             abortSignal: requestOptions?.abortSignal,
+            fetchFn: this._options?.fetch,
         });
         if (_response.ok) {
             return {
@@ -151,6 +152,7 @@ export class Admin {
             timeoutMs: (requestOptions?.timeoutInSeconds ?? this._options?.timeoutInSeconds ?? 60) * 1000,
             maxRetries: requestOptions?.maxRetries ?? this._options?.maxRetries,
             abortSignal: requestOptions?.abortSignal,
+            fetchFn: this._options?.fetch,
         });
         if (_response.ok) {
             return {
@@ -226,6 +228,7 @@ export class Admin {
             timeoutMs: (requestOptions?.timeoutInSeconds ?? this._options?.timeoutInSeconds ?? 60) * 1000,
             maxRetries: requestOptions?.maxRetries ?? this._options?.maxRetries,
             abortSignal: requestOptions?.abortSignal,
+            fetchFn: this._options?.fetch,
         });
         if (_response.ok) {
             return {
@@ -305,6 +308,7 @@ export class Admin {
             timeoutMs: (requestOptions?.timeoutInSeconds ?? this._options?.timeoutInSeconds ?? 60) * 1000,
             maxRetries: requestOptions?.maxRetries ?? this._options?.maxRetries,
             abortSignal: requestOptions?.abortSignal,
+            fetchFn: this._options?.fetch,
         });
         if (_response.ok) {
             return {
@@ -468,6 +472,7 @@ export class Admin {
             timeoutMs: (requestOptions?.timeoutInSeconds ?? this._options?.timeoutInSeconds ?? 60) * 1000,
             maxRetries: requestOptions?.maxRetries ?? this._options?.maxRetries,
             abortSignal: requestOptions?.abortSignal,
+            fetchFn: this._options?.fetch,
         });
         if (_response.ok) {
             return {
@@ -620,6 +625,7 @@ export class Admin {
             timeoutMs: (requestOptions?.timeoutInSeconds ?? this._options?.timeoutInSeconds ?? 60) * 1000,
             maxRetries: requestOptions?.maxRetries ?? this._options?.maxRetries,
             abortSignal: requestOptions?.abortSignal,
+            fetchFn: this._options?.fetch,
         });
         if (_response.ok) {
             return {
@@ -775,6 +781,7 @@ export class Admin {
             timeoutMs: (requestOptions?.timeoutInSeconds ?? this._options?.timeoutInSeconds ?? 60) * 1000,
             maxRetries: requestOptions?.maxRetries ?? this._options?.maxRetries,
             abortSignal: requestOptions?.abortSignal,
+            fetchFn: this._options?.fetch,
         });
         if (_response.ok) {
             return {
@@ -924,6 +931,7 @@ export class Admin {
             timeoutMs: (requestOptions?.timeoutInSeconds ?? this._options?.timeoutInSeconds ?? 60) * 1000,
             maxRetries: requestOptions?.maxRetries ?? this._options?.maxRetries,
             abortSignal: requestOptions?.abortSignal,
+            fetchFn: this._options?.fetch,
         });
         if (_response.ok) {
             return {

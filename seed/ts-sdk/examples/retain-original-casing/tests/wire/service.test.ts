@@ -127,6 +127,11 @@ describe("Service", () => {
         });
         expect(response).toEqual({
             type: "html",
+            extra: {
+                version: "0.0.1",
+                tenancy: "test",
+            },
+            tags: ["development", "public"],
             value: "<head>...</head>",
         });
     });
@@ -150,7 +155,7 @@ describe("Service", () => {
                 revenue: 1000000,
             },
             entity: { type: "primitive", name: "name" },
-            metadata: { type: "html", value: "metadata", extra: { extra: "extra" }, tags: ["tags"] },
+            metadata: { type: "html", extra: { extra: "extra" }, tags: ["tags"], value: "metadata" },
             commonMetadata: { id: "id", data: { data: "data" }, jsonString: "jsonString" },
             eventInfo: { type: "metadata", id: "id", data: { data: "data" }, jsonString: "jsonString" },
             data: { type: "string", value: "data" },
@@ -278,6 +283,10 @@ describe("Service", () => {
             },
             metadata: {
                 type: "html",
+                extra: {
+                    extra: "extra",
+                },
+                tags: ["tags"],
                 value: "metadata",
             },
             commonMetadata: {

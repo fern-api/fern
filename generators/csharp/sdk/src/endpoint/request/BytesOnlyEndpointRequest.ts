@@ -15,10 +15,6 @@ export class BytesOnlyEndpointRequest extends EndpointRequest {
         super(context, sdkRequest, endpoint);
     }
 
-    private get csharp() {
-        return this.context.csharp;
-    }
-
     public getParameterType(): ast.Type {
         return this.csharp.Type.coreClass(
             this.csharp.coreClassReference({

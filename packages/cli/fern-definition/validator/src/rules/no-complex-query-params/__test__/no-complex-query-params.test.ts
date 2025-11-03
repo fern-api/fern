@@ -16,12 +16,6 @@ describe("no-complex-query-params", () => {
 
         expect(violations).toEqual([
             {
-                message: "unknown is not a valid type for a query parameter",
-                nodePath: ["service", "endpoints", "bar", "request", "query-parameters", "d"],
-                relativeFilepath: RelativeFilePath.of("a.yml"),
-                severity: "fatal"
-            },
-            {
                 message: "Union is not a valid type for a query parameter",
                 nodePath: ["service", "endpoints", "bar", "request", "query-parameters", "o"],
                 relativeFilepath: RelativeFilePath.of("a.yml"),

@@ -10,7 +10,7 @@
             },
             "snippet": {
                 "type": "csharp",
-                "client": "using SeedPagination;\n\nvar client = new SeedPaginationClient(\"TOKEN\");\nvar items = await client.Complex.SearchAsync(\n    \"index\",\n    new SearchRequest\n    {\n        Pagination = new StartingAfterPaging { PerPage = 1, StartingAfter = \"starting_after\" },\n        Query = new SingleFilterSearchRequest\n        {\n            Field = \"field\",\n            Operator = SingleFilterSearchRequestOperator.Equals,\n            Value = \"value\",\n        },\n    }\n);\n\nawait foreach (var item in items)\n{\n    // do something with item\n}\n"
+                "client": "using SeedPagination;\n\nvar client = new SeedPaginationClient(\"TOKEN\");\nvar items = await client.Complex.SearchAsync(\n    \"index\",\n    new SearchRequest\n    {\n        Pagination = new StartingAfterPaging { PerPage = 1, StartingAfter = \"starting_after\" },\n        Query = new SingleFilterSearchRequest\n        {\n            Field = \"field\",\n            Operator = SingleFilterSearchRequestOperator.Equals_,\n            Value = \"value\",\n        },\n    }\n);\n\nawait foreach (var item in items)\n{\n    // do something with item\n}\n"
             }
         },
         {

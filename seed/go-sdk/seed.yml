@@ -217,8 +217,6 @@ allowedFailures:
   - pagination-custom
   - request-parameters
   - reserved-keywords
-  - server-sent-event-examples
-  - server-sent-events
   - streaming-parameter
   - trace
   - property-access

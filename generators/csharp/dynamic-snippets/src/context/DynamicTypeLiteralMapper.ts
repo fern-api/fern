@@ -1,6 +1,6 @@
 import { DiscriminatedUnionTypeInstance, NamedArgument, Severity } from "@fern-api/browser-compatible-base-generator";
 import { assertNever } from "@fern-api/core-utils";
-import { ast } from "@fern-api/csharp-codegen";
+import { ast, WithGeneration } from "@fern-api/csharp-codegen";
 import { FernIr } from "@fern-api/dynamic-ir-sdk";
 import { DynamicSnippetsGeneratorContext } from "./DynamicSnippetsGeneratorContext";
 
@@ -16,15 +16,12 @@ export declare namespace DynamicTypeLiteralMapper {
     type ConvertedAs = "key";
 }
 
-export class DynamicTypeLiteralMapper {
+export class DynamicTypeLiteralMapper extends WithGeneration {
     private context: DynamicSnippetsGeneratorContext;
 
     constructor({ context }: { context: DynamicSnippetsGeneratorContext }) {
+        super(context);
         this.context = context;
-    }
-
-    private get csharp() {
-        return this.context.csharp;
     }
 
     public convert(args: DynamicTypeLiteralMapper.Args): ast.TypeLiteral {
@@ -181,12 +178,12 @@ export class DynamicTypeLiteralMapper {
             case "alias":
                 return this.convert({ typeReference: named.typeReference, value, as });
             case "discriminatedUnion":
-                if (this.context.shouldUseDiscriminatedUnions()) {
+                if (this.settings.shouldGeneratedDiscriminatedUnions) {
                     return this.convertDiscriminatedUnion({ discriminatedUnion: named, value });
                 }
                 return this.convertUnknown({ value });
             case "enum":
-                return this.convertEnum({ enum_: named, value });
+                return this.getEnumValue(named, value);
             case "object":
                 return this.convertObject({ object_: named, value });
             case "undiscriminatedUnion":
@@ -204,7 +201,7 @@ export class DynamicTypeLiteralMapper {
         value: unknown;
     }): ast.TypeLiteral {
         const classReference = this.csharp.classReference({
-            name: this.context.getClassName(discriminatedUnion.declaration.name),
+            origin: discriminatedUnion.declaration,
             namespace: this.context.getNamespace(discriminatedUnion.declaration.fernFilepath)
         });
         const discriminatedUnionTypeInstance = this.context.resolveDiscriminatedUnionTypeInstance({
@@ -239,6 +236,12 @@ export class DynamicTypeLiteralMapper {
                     return this.csharp.TypeLiteral.nop();
                 }
                 try {
+                    const innerClassName = ["Value", "Type"].includes(
+                        unionVariant.discriminantValue.name.pascalCase.safeName
+                    )
+                        ? `${unionVariant.discriminantValue.name.pascalCase.safeName}Inner`
+                        : unionVariant.discriminantValue.name.pascalCase.safeName;
+
                     this.context.errors.scope(unionVariant.discriminantValue.wireValue);
                     return this.instantiateUnionWithBaseProperties({
                         classReference,
@@ -246,8 +249,8 @@ export class DynamicTypeLiteralMapper {
                         arguments_: [
                             this.csharp.instantiateClass({
                                 classReference: this.csharp.classReference({
-                                    name: this.context.getUnionInnerClassName(unionVariant.discriminantValue.name),
-                                    namespace: classReference.namespace,
+                                    // origin: discriminatedUnionTypeInstance.discriminantValue,
+                                    name: innerClassName,
                                     enclosingType: classReference
                                 }),
                                 arguments_: [
@@ -271,8 +274,7 @@ export class DynamicTypeLiteralMapper {
                         // Unions with no properties require the discriminant property to be set.
                         this.csharp.instantiateClass({
                             classReference: this.csharp.classReference({
-                                name: this.context.getClassName(discriminatedUnionTypeInstance.discriminantValue.name),
-                                namespace: classReference.namespace,
+                                origin: discriminatedUnionTypeInstance.discriminantValue,
                                 enclosingType: classReference
                             }),
                             arguments_: []
@@ -334,75 +336,42 @@ export class DynamicTypeLiteralMapper {
                 writer.write(instantiation, " ");
                 writer.pushScope();
                 for (const baseProperty of baseProperties) {
-                    writer.write(baseProperty.name);
-                    writer.write(" = ");
-                    writer.writeNodeOrString(baseProperty.assignment);
-                    writer.write(",");
+                    writer.write(baseProperty.name, " = ", baseProperty.assignment, ",");
                 }
                 writer.popScope(false);
             })
         );
     }
 
-    private convertEnum({ enum_, value }: { enum_: FernIr.dynamic.EnumType; value: unknown }): ast.TypeLiteral {
-        const enumValue = this.getEnumValue({ enum_, value });
-        if (enumValue == null) {
+    private getEnumValue(enum_: FernIr.dynamic.EnumType, wireValue: unknown): ast.TypeLiteral {
+        if (typeof wireValue !== "string") {
+            this.context.errors.add({
+                severity: Severity.Critical,
+                message: `Expected enum value string, got: ${typeof wireValue}`
+            });
             return this.csharp.TypeLiteral.nop();
         }
-        return this.csharp.TypeLiteral.reference(enumValue);
-    }
-
-    private getEnumValueName({ enum_, value }: { enum_: FernIr.dynamic.EnumType; value: unknown }): string | undefined {
-        if (typeof value !== "string") {
-            this.context.errors.add({
-                severity: Severity.Critical,
-                message: `Expected enum value string, got: ${typeof value}`
-            });
-            return undefined;
-        }
-        const enumValue = enum_.values.find((v) => v.wireValue === value);
+        const enumValue = enum_.values.find((v) => v.wireValue === wireValue);
         if (enumValue == null) {
             this.context.errors.add({
                 severity: Severity.Critical,
-                message: `An enum value named "${value}" does not exist in this context`
+                message: `An enum value named "${wireValue}" does not exist in this context`
             });
-            return undefined;
+            return this.csharp.TypeLiteral.nop();
         }
-        return `${this.context.getClassName(enum_.declaration.name)}.${this.context.getClassName(enumValue.name)}`;
-    }
-
-    private getEnumValue({
-        enum_,
-        value
-    }: {
-        enum_: FernIr.dynamic.EnumType;
-        value: unknown;
-    }): ast.EnumInstantiation | undefined {
-        if (typeof value !== "string") {
-            this.context.errors.add({
-                severity: Severity.Critical,
-                message: `Expected enum value string, got: ${typeof value}`
-            });
-            return undefined;
-        }
-        const enumValue = enum_.values.find((v) => v.wireValue === value);
-        if (enumValue == null) {
-            this.context.errors.add({
-                severity: Severity.Critical,
-                message: `An enum value named "${value}" does not exist in this context`
-            });
-            return undefined;
-        }
-        let cr = this.csharp.classReference({
-            name: this.context.getClassName(enum_.declaration.name),
+        const reference = this.csharp.classReference({
+            origin: enum_.declaration,
             namespace: this.context.getNamespace(enum_.declaration.fernFilepath)
         });
-        let result = this.csharp.enumInstantiation({
-            reference: cr,
-            value: this.context.getPropertyName(enumValue.name)
-        });
 
-        return result;
+        const valueName = reference.registerField(this.model.getPropertyNameFor(enumValue), enumValue);
+
+        return this.csharp.TypeLiteral.reference(
+            this.csharp.enumInstantiation({
+                reference,
+                value: valueName
+            })
+        );
     }
 
     private convertObject({ object_, value }: { object_: FernIr.dynamic.ObjectType; value: unknown }): ast.TypeLiteral {
@@ -410,16 +379,11 @@ export class DynamicTypeLiteralMapper {
             parameters: object_.properties,
             values: this.context.getRecord(value) ?? {}
         });
-        // if the declaration name or namespace is a known identifier, then we need to fully qualify the type.
-        const fullyQualified =
-            this.csharp.nameRegistry.isKnownIdentifier(this.context.getClassName(object_.declaration.name)) ||
-            this.csharp.nameRegistry.isKnownIdentifier(this.context.getNamespace(object_.declaration.fernFilepath));
 
         return this.csharp.TypeLiteral.class_({
             reference: this.csharp.classReference({
-                name: this.context.getClassName(object_.declaration.name),
-                namespace: this.context.getNamespace(object_.declaration.fernFilepath),
-                fullyQualified
+                origin: object_.declaration,
+                namespace: this.context.getNamespace(object_.declaration.fernFilepath)
             }),
             fields: properties.map((property) => {
                 this.context.errors.scope(property.name.wireValue);

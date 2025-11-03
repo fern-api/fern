@@ -308,10 +308,16 @@ fixtures:
     - outputFolder: use-prettier
       customConfig:
         formatter: prettier
+    - outputFolder: use-oxfmt
+      customConfig:
+        formatter: oxfmt
     - outputFolder: use-prettier-no-linter
       customConfig:
         formatter: prettier
         linter: none
+    - outputFolder: use-oxlint
+      customConfig:
+        linter: oxlint
     - outputFolder: no-linter
       customConfig:
         linter: none
@@ -410,18 +416,12 @@ scripts:
           if grep -q '"test":' package.json; then corepack yarn test; fi
         fi
 allowedFailures:
-  - bytes-download
   - circular-references
   - enum
   - error-property:no-custom-config
   - error-property:union-utils
   - errors
-  - examples:examples-with-api-reference
-  - examples:retain-original-casing
-  - mixed-case:no-custom-config
-  - mixed-case:retain-original-casing
   - oauth-client-credentials-custom
   - package-yml
   - trace:no-custom-config
   - trace:serde
-  - unions

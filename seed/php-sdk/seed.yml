@@ -177,7 +177,6 @@ allowedFailures:
   - unions:no-custom-config
   - unions:property-accessors
   # unknown
-  - enum
   - file-upload
   - http-head
   - oauth-client-credentials-with-variables

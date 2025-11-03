@@ -235,6 +235,7 @@ export class GeneratedSdkClientClassImpl implements GeneratedSdkClientClass {
                         | HttpResponseBody.FileDownload
                         | HttpResponseBody.Text
                         | HttpResponseBody.Streaming
+                        | HttpResponseBody.Bytes
                         | undefined;
                 }) => {
                     if (neverThrowErrors) {
@@ -350,7 +351,22 @@ export class GeneratedSdkClientClassImpl implements GeneratedSdkClientClass {
                         });
                     },
                     bytes: (bytesResponse) => {
-                        throw new Error("Bytes response type is not supported yet");
+                        return new GeneratedFileDownloadEndpointImplementation({
+                            endpoint,
+                            generatedSdkClientClass: this,
+                            includeCredentialsOnCrossOriginRequests,
+                            defaultTimeoutInSeconds,
+                            request: getGeneratedEndpointRequest(),
+                            response: getGeneratedEndpointResponse({
+                                response: HttpResponseBody.bytes(bytesResponse)
+                            }),
+                            includeSerdeLayer,
+                            retainOriginalCasing: this.retainOriginalCasing,
+                            omitUndefined: this.omitUndefined,
+                            streamType,
+                            fileResponseType,
+                            generateEndpointMetadata: this.generateEndpointMetadata
+                        });
                     },
                     _other: () => {
                         throw new Error("Unknown Response type: " + endpoint.response?.body?.type);
@@ -1629,6 +1645,14 @@ export class GeneratedSdkClientClassImpl implements GeneratedSdkClientClass {
             this.getReferenceToOptions(),
             ts.factory.createToken(ts.SyntaxKind.QuestionDotToken),
             ts.factory.createIdentifier(GeneratedSdkClientClassImpl.MAX_RETRIES_REQUEST_OPTION_PROPERTY_NAME)
+        );
+    }
+
+    public getReferenceToFetch(): ts.Expression {
+        return ts.factory.createPropertyAccessChain(
+            this.getReferenceToOptions(),
+            ts.factory.createToken(ts.SyntaxKind.QuestionDotToken),
+            ts.factory.createIdentifier("fetch")
         );
     }
 

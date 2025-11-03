@@ -1,4 +1,3 @@
-using System.Threading.Tasks;
 using NUnit.Framework;
 using SeedTrace.Core;
 using SeedTrace.Test_.Unit.MockServer;

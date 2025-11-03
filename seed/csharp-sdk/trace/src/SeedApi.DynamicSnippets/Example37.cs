@@ -1,5 +1,4 @@
 using SeedTrace;
-using System.Threading.Tasks;
 
 namespace Usage;
 
@@ -13,7 +12,7 @@ public class Example37
             }
         );
 
-        await client.V2.Problem.GetProblemVersionAsync(
+        await client.V2.V3.Problem.GetProblemVersionAsync(
             "problemId",
             1
         );

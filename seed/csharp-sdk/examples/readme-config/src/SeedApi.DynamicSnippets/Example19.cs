@@ -1,5 +1,4 @@
 using SeedExamples;
-using System.Threading.Tasks;
 using SeedExamples.Commons;
 using System.Globalization;
 
@@ -92,8 +91,8 @@ public class Example19
                         ExceptionStacktrace = "exceptionStacktrace"
                     }
                 ),
-                Test = new SeedExamples.Test(
-                    new SeedExamples.Test.And()
+                Test = new Test(
+                    new Test.And()
                 ),
                 Node = new Node {
                     Name = "name",

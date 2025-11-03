@@ -1,5 +1,4 @@
 using SeedCrossPackageTypeNames;
-using System.Threading.Tasks;
 
 namespace Usage;
 
@@ -12,7 +11,7 @@ public class Example1
             }
         );
 
-        await client.FolderA.Service.GetDirectThreadAsync();
+        await client.FolderD.Service.GetDirectThreadAsync();
     }
 
 }

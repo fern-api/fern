@@ -1,4 +1,3 @@
-using System.Threading.Tasks;
 using NUnit.Framework;
 using SeedPagination.Test.Unit.MockServer;
 
@@ -64,7 +63,7 @@ public class ListWithBodyOffsetPaginationTest : BaseMockServerTest
         var items = await Client.InlineUsers.InlineUsers.ListWithBodyOffsetPaginationAsync(
             new SeedPagination.InlineUsers.ListUsersBodyOffsetPaginationRequest
             {
-                Pagination = new InlineUsers.WithPage { Page = 1 },
+                Pagination = new SeedPagination.InlineUsers.WithPage { Page = 1 },
             }
         );
         await foreach (var item in items)

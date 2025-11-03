@@ -3,8 +3,13 @@
   changelogEntry:
     - type: feat
       summary: |
-        Add Generation Metadata file to output in .fern/metadata.json path.
-  createdAt: "2025-11-03"
+        Significant improvements to class/property/namespace tracking, collisions reduced.
+        Generated snippets and examples are far more accurate.
+        Resolved a case where files with duplicate names were clobbered.
+        Implicit namespaces are consistent across .NET frameworks now.
+        Eliminated unnecessary namespace and scoping in generated code.
+        Significant fixes to generated code for Pagination scenarios.
+  createdAt: "2025-10-31"
   irVersion: 61
 
 - version: 2.5.0

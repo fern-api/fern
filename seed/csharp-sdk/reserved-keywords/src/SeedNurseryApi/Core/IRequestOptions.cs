@@ -1,6 +1,3 @@
-using System.Collections.Generic;
-using System.Net.Http;
-
 namespace SeedNurseryApi.Core;
 
 internal interface IRequestOptions
