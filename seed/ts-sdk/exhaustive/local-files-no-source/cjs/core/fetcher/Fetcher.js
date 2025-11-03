@@ -51,7 +51,7 @@ function fetcherImpl(args) {
         const url = (0, createRequestUrl_js_1.createRequestUrl)(args.url, args.queryParameters);
         const requestBody = yield (0, getRequestBody_js_1.getRequestBody)({
             body: args.body,
-            type: args.requestType === "json" ? "json" : "other",
+            type: (_a = args.requestType) !== null && _a !== void 0 ? _a : "other",
         });
         const fetchFn = (_a = args.fetchFn) !== null && _a !== void 0 ? _a : (yield (0, getFetchFn_js_1.getFetchFn)());
         try {

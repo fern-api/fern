@@ -222,7 +222,12 @@ export class GeneratedDefaultEndpointRequest implements GeneratedEndpointRequest
         }
     }
 
-    private getRequestType(): "json" | undefined {
+    private getRequestType(): "json" | "form" | undefined {
+        const contentType = this.requestBody?.contentType;
+        if (contentType === "application/x-www-form-urlencoded") {
+            return "form";
+        }
+
         const requestBodyType = this.requestBody?.type ?? "undefined";
         switch (requestBodyType) {
             case "inlinedRequestBody":

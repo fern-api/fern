@@ -149,7 +149,7 @@ export declare namespace Fetcher {
         withCredentials: boolean;
         timeoutInSeconds: ts.Expression;
         maxRetries?: ts.Expression;
-        requestType?: "json" | "file" | "bytes" | "other";
+        requestType?: "json" | "file" | "bytes" | "form" | "other";
         responseType?: "json" | "blob" | "sse" | "streaming" | "text" | "binary-response";
         duplex?: ts.Expression;
         endpointMetadata?: ts.Expression;

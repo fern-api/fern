@@ -47,7 +47,7 @@ export function fetcherImpl(args) {
         const url = createRequestUrl(args.url, args.queryParameters);
         const requestBody = yield getRequestBody({
             body: args.body,
-            type: args.requestType === "json" ? "json" : "other",
+            type: (_a = args.requestType) !== null && _a !== void 0 ? _a : "other",
         });
         const fetchFn = (_a = args.fetchFn) !== null && _a !== void 0 ? _a : (yield getFetchFn());
         try {
