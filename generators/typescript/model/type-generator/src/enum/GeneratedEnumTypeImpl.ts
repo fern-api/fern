@@ -19,6 +19,7 @@ import { AbstractGeneratedType } from "../AbstractGeneratedType";
 export declare namespace GeneratedEnumTypeImpl {
     export interface Init<Context> extends AbstractGeneratedType.Init<EnumTypeDeclaration, Context> {
         includeEnumUtils: boolean;
+        enableForwardCompatibleEnums: boolean;
     }
 }
 
@@ -35,10 +36,12 @@ export class GeneratedEnumTypeImpl<Context extends BaseContext>
 
     public readonly type = "enum";
     private includeEnumUtils: boolean;
+    private enableForwardCompatibleEnums: boolean;
 
-    constructor({ includeEnumUtils, ...superInit }: GeneratedEnumTypeImpl.Init<Context>) {
+    constructor({ includeEnumUtils, enableForwardCompatibleEnums, ...superInit }: GeneratedEnumTypeImpl.Init<Context>) {
         super(superInit);
         this.includeEnumUtils = includeEnumUtils;
+        this.enableForwardCompatibleEnums = enableForwardCompatibleEnums;
     }
 
     private generateEnumType(context: Context): TypeAliasDeclarationStructure {
@@ -46,11 +49,12 @@ export class GeneratedEnumTypeImpl<Context extends BaseContext>
             ? `Omit<typeof ${this.typeName}, "${GeneratedEnumTypeImpl.VISIT_PROPERTTY_NAME}">`
             : `typeof ${this.typeName}`;
         const baseType = `${typeofConst}[keyof ${typeofConst}]`;
+        const shouldWidenType = !this.includeSerdeLayer && this.enableForwardCompatibleEnums;
         const type: TypeAliasDeclarationStructure = {
             kind: StructureKind.TypeAlias,
             name: this.typeName,
             isExported: true,
-            type: this.includeSerdeLayer ? baseType : `${baseType} | string`
+            type: shouldWidenType ? `${baseType} | string` : baseType
         };
 
         return type;
@@ -65,9 +69,10 @@ export class GeneratedEnumTypeImpl<Context extends BaseContext>
             ts.factory.createLiteralTypeNode(ts.factory.createStringLiteral(value.name.wireValue))
         );
 
-        const unionMembers = this.includeSerdeLayer
-            ? enumLiteralTypes
-            : [...enumLiteralTypes, ts.factory.createKeywordTypeNode(ts.SyntaxKind.StringKeyword)];
+        const shouldWidenType = !this.includeSerdeLayer && this.enableForwardCompatibleEnums;
+        const unionMembers = shouldWidenType
+            ? [...enumLiteralTypes, ts.factory.createKeywordTypeNode(ts.SyntaxKind.StringKeyword)]
+            : enumLiteralTypes;
 
         return {
             typeNode: ts.factory.createParenthesizedType(ts.factory.createUnionTypeNode(unionMembers)),
