@@ -818,57 +818,76 @@ export class DocsDefinitionResolver {
         product: docsYml.ProductInfo,
         parentSlug: FernNavigation.V1.SlugGenerator
     ): Promise<FernNavigation.V1.ProductNode> {
-        const slug = parentSlug.setProductSlug(product.slug ?? kebabCase(product.product));
-        let child: FernNavigation.V1.ProductChild;
-        switch (product.navigation.type) {
-            case "tabbed":
-                child = {
-                    type: "unversioned",
-                    id: this.#idgen.get(product.product),
-                    landingPage: undefined,
-                    child: await this.convertTabbedNavigation(
-                        this.#idgen.get(product.product),
-                        product.navigation.items,
-                        slug
-                    )
-                };
-                break;
-            case "untabbed":
-                child = {
-                    type: "unversioned",
-                    id: this.#idgen.get(product.product),
-                    landingPage: undefined,
-                    child: await this.toSidebarRootNode(
-                        this.#idgen.get(product.product),
-                        product.navigation.items,
-                        slug
-                    )
-                };
-                break;
-            case "versioned":
-                child = await this.toVersionedNode(product.navigation, slug);
-                break;
-            default:
-                assertNever(product.navigation);
+        if (product.type === "internal") {
+            const slug = parentSlug.setProductSlug(product.slug ?? kebabCase(product.product));
+            let child: FernNavigation.V1.ProductChild;
+            switch (product.navigation.type) {
+                case "tabbed":
+                    child = {
+                        type: "unversioned",
+                        id: this.#idgen.get(product.product),
+                        landingPage: undefined,
+                        child: await this.convertTabbedNavigation(
+                            this.#idgen.get(product.product),
+                            product.navigation.items,
+                            slug
+                        )
+                    };
+                    break;
+                case "untabbed":
+                    child = {
+                        type: "unversioned",
+                        id: this.#idgen.get(product.product),
+                        landingPage: undefined,
+                        child: await this.toSidebarRootNode(
+                            this.#idgen.get(product.product),
+                            product.navigation.items,
+                            slug
+                        )
+                    };
+                    break;
+                case "versioned":
+                    child = await this.toVersionedNode(product.navigation, slug);
+                    break;
+                default:
+                    assertNever(product.navigation);
+            }
+
+            return {
+                type: "product",
+                id: this.#idgen.get(product.product),
+                productId: FernNavigation.V1.ProductId(product.product),
+                title: product.product,
+                subtitle: product.subtitle ?? "",
+                slug: slug.get(),
+                child,
+                default: false,
+                hidden: undefined,
+                authed: undefined,
+                icon: this.resolveIconFileId(product.icon),
+                image: product.image != null ? this.getFileId(product.image) : undefined,
+                pointsTo: undefined,
+                viewers: product.viewers,
+                orphaned: product.orphaned,
+                featureFlags: product.featureFlags
+            };
+        } else {
+            return {
+                type: "productLink",
+                id: this.#idgen.get(product.product),
+                productId: FernNavigation.V1.ProductId(product.product),
+                title: product.product,
+                subtitle: product.subtitle ?? "",
+                href: DocsV1Write.Url(product.href ?? ""),
+                default: false,
+                hidden: undefined,
+                authed: undefined,
+                icon: this.resolveIconFileId(product.icon),
+                image: product.image != null ? this.getFileId(product.image) : undefined,
+                viewers: product.viewers,
+                orphaned: product.orphaned
+            };
         }
-        return {
-            type: "product",
-            id: this.#idgen.get(product.product),
-            productId: FernNavigation.V1.ProductId(product.product),
-            title: product.product,
-            subtitle: product.subtitle ?? "",
-            slug: slug.get(),
-            child,
-            default: false,
-            hidden: undefined,
-            authed: undefined,
-            icon: this.resolveIconFileId(product.icon),
-            image: product.image != null ? this.getFileId(product.image) : undefined,
-            pointsTo: undefined,
-            viewers: product.viewers,
-            orphaned: product.orphaned,
-            featureFlags: product.featureFlags
-        };
     }
 
     private async toVersionNode(
