@@ -466,6 +466,7 @@ ossrh
 OSSRH
 ostruct
 OURCYGPATTERN
+oxlint
 oxtbtc
 oxteth
 oxtusd

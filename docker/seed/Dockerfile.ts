@@ -10,6 +10,12 @@ RUN corepack prepare pnpm@10.20.0
 RUN npm install -g yarn@1.22.22 --force
 RUN corepack prepare yarn@1.22.22
 
+RUN pnpm install -g typescript@~5.7.2
+RUN pnpm install -g prettier@3.4.2
+RUN pnpm install -g @biomejs/biome@2.3.1
+RUN pnpm install -g oxlint@1.25.0
+RUN pnpm install -g oxlint-tsgolint@0.4.0
+
 WORKDIR /tmp/cache-warm
 
 RUN echo '{ \
@@ -30,6 +36,7 @@ RUN echo '{ \
     "jest-environment-jsdom": "^29.7.0", \
     "prettier": "3.4.2", \
     "@biomejs/biome": "2.3.1", \
+    "oxlint": "1.25.0", \
     "ts-jest": "^29.1.1", \
     "typescript": "~5.7.2", \
     "form-data-encoder": "^4.0.2", \
@@ -52,9 +59,5 @@ RUN pnpm install
 RUN rm -rf /tmp/cache-warm
 
 WORKDIR /
-
-RUN pnpm install -g typescript@~5.7.2
-RUN pnpm install -g prettier@3.4.2
-RUN pnpm install -g @biomejs/biome@2.3.1
 
 ENTRYPOINT ["tail", "-f", "/dev/null"]

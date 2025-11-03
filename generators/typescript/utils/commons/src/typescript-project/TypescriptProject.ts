@@ -30,7 +30,7 @@ export declare namespace TypescriptProject {
         testPath: string;
         packageManager: "yarn" | "pnpm";
         formatter: "prettier" | "biome";
-        linter: "biome" | "none";
+        linter: "biome" | "oxlint" | "none";
     }
 }
 
@@ -106,7 +106,7 @@ export abstract class TypescriptProject {
     protected readonly testPath: string;
     protected readonly packageManager: "yarn" | "pnpm";
     private readonly formatter: "prettier" | "biome";
-    private readonly linter: "biome" | "none";
+    private readonly linter: "biome" | "oxlint" | "none";
 
     private readonly runScripts: boolean;
 
@@ -277,6 +277,11 @@ export abstract class TypescriptProject {
                         [COMMON_SCRIPTS.LINT_FIX]:
                             "biome lint --fix --unsafe --skip-parse-errors --no-errors-on-unmatched --max-diagnostics=none"
                     };
+                case "oxlint":
+                    return {
+                        [COMMON_SCRIPTS.LINT]: "oxlint",
+                        [COMMON_SCRIPTS.LINT_FIX]: "oxlint --fix"
+                    };
                 case "none":
                     return {
                         [COMMON_SCRIPTS.LINT]: "echo 'No linter configured.'",
@@ -338,6 +343,10 @@ export abstract class TypescriptProject {
         };
         if (this.linter === "biome" || this.formatter === "biome") {
             deps["@biomejs/biome"] = "2.3.1";
+        }
+        if (this.linter === "oxlint") {
+            deps["oxlint"] = "1.25.0";
+            deps["oxlint-tsgolint"] = "0.4.0";
         }
         if (this.formatter === "prettier") {
             deps["prettier"] = "3.4.2";

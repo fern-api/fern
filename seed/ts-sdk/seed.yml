@@ -312,6 +312,9 @@ fixtures:
       customConfig:
         formatter: prettier
         linter: none
+    - outputFolder: use-oxlint
+      customConfig:
+        linter: oxlint
     - outputFolder: no-linter
       customConfig:
         linter: none

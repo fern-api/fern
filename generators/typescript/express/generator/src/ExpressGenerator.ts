@@ -70,7 +70,7 @@ export declare namespace ExpressGenerator {
         packagePath: string | undefined;
         packageManager: "pnpm" | "yarn";
         formatter: "prettier" | "biome";
-        linter: "biome" | "none";
+        linter: "biome" | "oxlint" | "none";
     }
 }
 
