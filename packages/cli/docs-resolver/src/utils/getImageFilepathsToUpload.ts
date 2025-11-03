@@ -237,16 +237,17 @@ async function collectIconsFromNavigation({
                             filepaths
                         });
                     }
-                    if (product.landingPage != null) {
+                    if (product.type === "internal" && product.landingPage != null) {
                         await collectIconsFromNavigationItem({
                             item: product.landingPage,
                             filepaths
                         });
+
+                        const nestedIcons = await collectIconsFromNavigation({
+                            navigation: product.navigation
+                        });
+                        nestedIcons.forEach((filepath) => filepaths.add(filepath));
                     }
-                    const nestedIcons = await collectIconsFromNavigation({
-                        navigation: product.navigation
-                    });
-                    nestedIcons.forEach((filepath) => filepaths.add(filepath));
                 })
             );
             break;

@@ -1,5 +1,6 @@
 import { docsYml } from "@fern-api/configuration";
 import { assertNever } from "@fern-api/core-utils";
+import { products } from "@fern-api/fern-definition-schema/src/schemas";
 
 export type ReferencedApisResponse = DefaultAPIReferenced | NamedAPIReferenced;
 
@@ -32,7 +33,9 @@ export function getReferencedApiSections(config: docsYml.ParsedDocsConfiguration
             break;
         case "productgroup":
             config.navigation.products.forEach((product) => {
-                visitNavigation({ navigation: product.navigation, collector });
+                if (product.type === "internal") {
+                    visitNavigation({ navigation: product.navigation, collector });
+                }
             });
             break;
         default:
