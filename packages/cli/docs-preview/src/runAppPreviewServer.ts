@@ -7,11 +7,12 @@ import { TaskContext } from "@fern-api/task-context";
 import chalk from "chalk";
 import cors from "cors";
 import express from "express";
-import { readFile } from "fs/promises";
+import { readFile, writeFile } from "fs/promises";
 import http from "http";
 import path from "path";
 import Watcher from "watcher";
 import { WebSocket, WebSocketServer } from "ws";
+import yaml from "js-yaml";
 
 import { downloadBundle, getPathToBundleFolder } from "./downloadLocalDocsBundle";
 import { getPreviewDocsDefinition } from "./previewDocs";
@@ -223,6 +224,155 @@ class SnippetDependencyTracker {
             totalDependencies
         };
     }
+}
+
+/**
+ * Check if a file path is safe to edit (within the Fern directory and of allowed types)
+ */
+function isEditableFile(filePath: AbsoluteFilePath, fernDirectory: AbsoluteFilePath): boolean {
+    // Ensure the file is within the Fern directory
+    if (!filePath.startsWith(fernDirectory)) {
+        return false;
+    }
+
+    const relativePath = filePath.replace(fernDirectory, "").replace(/^\//, "");
+
+    // Allow docs.yml
+    if (relativePath === "docs.yml") {
+        return true;
+    }
+
+    // Allow CSS and JS files (by extension)
+    return /\.(css|js)$/.test(relativePath);
+}
+
+/**
+ * Read a file's contents
+ */
+async function readEditableFile(filePath: AbsoluteFilePath, context: TaskContext): Promise<string | null> {
+    try {
+        const content = await readFile(filePath, "utf-8");
+        return content;
+    } catch (error) {
+        context.logger.debug(`Failed to read file ${filePath}: ${error}`);
+        return null;
+    }
+}
+
+/**
+ * Validate file content based on file type
+ */
+function validateFileContent(filePath: AbsoluteFilePath, content: string): { valid: boolean; error?: string } {
+    const fileName = filePath.split("/").pop()?.toLowerCase() || "";
+
+    if (fileName === "docs.yml") {
+        try {
+            yaml.load(content);
+            return { valid: true };
+        } catch (error) {
+            return { valid: false, error: `Invalid YAML: ${error instanceof Error ? error.message : "Unknown error"}` };
+        }
+    }
+
+    if (fileName.endsWith(".css")) {
+        // Basic CSS validation - check for balanced braces
+        let braceCount = 0;
+        for (const char of content) {
+            if (char === "{") braceCount++;
+            if (char === "}") braceCount--;
+            if (braceCount < 0) {
+                return { valid: false, error: "Unmatched closing brace" };
+            }
+        }
+        if (braceCount !== 0) {
+            return { valid: false, error: "Unmatched opening brace" };
+        }
+        return { valid: true };
+    }
+
+    if (fileName.endsWith(".js")) {
+        // Basic JS validation - try to parse with a Function constructor
+        try {
+            // This is a very basic check - in production you'd want proper AST parsing
+            new Function(content);
+            return { valid: true };
+        } catch (error) {
+            return { valid: false, error: `JavaScript syntax error: ${error instanceof Error ? error.message : "Unknown error"}` };
+        }
+    }
+
+    return { valid: true };
+}
+
+/**
+ * Write content to a file with validation
+ */
+async function writeEditableFile(filePath: AbsoluteFilePath, content: string, context: TaskContext): Promise<{ success: boolean; error?: string }> {
+    // Validate content first
+    const validation = validateFileContent(filePath, content);
+    if (!validation.valid) {
+        return { success: false, error: validation.error };
+    }
+
+    try {
+        await writeFile(filePath, content, "utf-8");
+        return { success: true };
+    } catch (error) {
+        context.logger.debug(`Failed to write file ${filePath}: ${error}`);
+        return { success: false, error: `Failed to write file: ${error instanceof Error ? error.message : "Unknown error"}` };
+    }
+}
+
+/**
+ * Get a list of editable files (docs.yml and referenced CSS/JS files)
+ */
+async function getEditableFiles(project: Project, context: TaskContext): Promise<AbsoluteFilePath[]> {
+    const editableFiles: AbsoluteFilePath[] = [];
+
+    const docsWorkspace = project.docsWorkspaces;
+    if (!docsWorkspace) {
+        return editableFiles;
+    }
+
+    const fernDirectory = dirname(docsWorkspace.absoluteFilepathToDocsConfig);
+
+    // Add docs.yml
+    const docsYmlPath = docsWorkspace.absoluteFilepathToDocsConfig;
+    if (await doesPathExist(docsYmlPath)) {
+        editableFiles.push(docsYmlPath);
+    }
+
+    // Add CSS files
+    if (docsWorkspace.config.css) {
+        const cssFiles = Array.isArray(docsWorkspace.config.css) ? docsWorkspace.config.css : [docsWorkspace.config.css];
+        for (const cssFile of cssFiles) {
+            try {
+                // CSS files are resolved relative to docs.yml
+                const cssPath = resolve(dirname(docsWorkspace.absoluteFilepathToDocsConfig), cssFile);
+                if (await doesPathExist(cssPath) && isEditableFile(cssPath, fernDirectory)) {
+                    editableFiles.push(cssPath);
+                }
+            } catch (error) {
+                context.logger.debug(`Failed to resolve CSS file ${cssFile}: ${error}`);
+            }
+        }
+    }
+
+    // Add JS files
+    if (docsWorkspace.config.js?.files) {
+        for (const jsFile of docsWorkspace.config.js.files) {
+            try {
+                const jsPath = jsFile.absolutePath;
+                if (await doesPathExist(jsPath) && isEditableFile(jsPath, fernDirectory)) {
+                    editableFiles.push(jsPath);
+                }
+            } catch (error) {
+                context.logger.debug(`Failed to check JS file ${jsFile.absolutePath}: ${error}`);
+            }
+        }
+    }
+
+    return editableFiles;
 }
 
 export async function runAppPreviewServer({
@@ -488,15 +638,68 @@ export async function runAppPreviewServer({
 
         connections.set(ws, metadata);
 
-        ws.on("message", function message(data) {
+        ws.on("message", async function message(data) {
             try {
                 const parsed = JSON.parse(data.toString());
                 if (parsed.type === "pong") {
                     metadata.isAlive = true;
                     metadata.lastPong = Date.now();
+                } else if (parsed.type === "read-file") {
+                    const { filePath } = parsed;
+                    const fernDirectory = dirname(project.docsWorkspaces?.absoluteFilepathToDocsConfig ?? AbsoluteFilePath.of(""));
+                    const absoluteFilePath = AbsoluteFilePath.of(filePath);
+
+                    if (isEditableFile(absoluteFilePath, fernDirectory)) {
+                        const content = await readEditableFile(absoluteFilePath, context);
+                        ws.send(JSON.stringify({
+                            type: "file-content",
+                            filePath,
+                            content,
+                            success: content !== null
+                        }));
+                    } else {
+                        ws.send(JSON.stringify({
+                            type: "file-content",
+                            filePath,
+                            content: null,
+                            success: false,
+                            error: "File is not editable"
+                        }));
+                    }
+                } else if (parsed.type === "edit-file") {
+                    const { filePath, content } = parsed;
+                    const fernDirectory = dirname(project.docsWorkspaces?.absoluteFilepathToDocsConfig ?? AbsoluteFilePath.of(""));
+                    const absoluteFilePath = AbsoluteFilePath.of(filePath);
+
+                    if (isEditableFile(absoluteFilePath, fernDirectory)) {
+                        const result = await writeEditableFile(absoluteFilePath, content, context);
+                        ws.send(JSON.stringify({
+                            type: "file-edited",
+                            filePath,
+                            success: result.success,
+                            error: result.error
+                        }));
+                    } else {
+                        ws.send(JSON.stringify({
+                            type: "file-edited",
+                            filePath,
+                            success: false,
+                            error: "File is not editable"
+                        }));
+                    }
+                } else if (parsed.type === "list-editable-files") {
+                    const editableFiles = await getEditableFiles(project, context);
+                    ws.send(JSON.stringify({
+                        type: "editable-files",
+                        files: editableFiles
+                    }));
                 }
             } catch (error) {
                 context.logger.debug(`Failed to parse message from ${connectionId}: ${error}`);
+                ws.send(JSON.stringify({
+                    type: "error",
+                    message: "Failed to process message"
+                }));
             }
         });
 
