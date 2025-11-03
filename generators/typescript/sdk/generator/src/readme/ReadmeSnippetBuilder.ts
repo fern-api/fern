@@ -304,7 +304,7 @@ await ${this.getMethodCall(fileUploadEndpoint)}(new Uint8Array([0, 1, 2]), ...);
 
         const binaryResponseEndpoints = Object.values(this.context.ir.services).flatMap((service) =>
             service.endpoints
-                .filter((endpoint) => endpoint.response?.body?.type === "fileDownload")
+                .filter((endpoint) => endpoint.response?.body?.type === "fileDownload" || endpoint.response?.body?.type === "bytes")
                 .map((endpoint) => ({
                     endpoint,
                     fernFilepath: service.name.fernFilepath
@@ -337,7 +337,7 @@ const bodyUsed = response.bodyUsed;
 
         const binaryResponseEndpoints = Object.values(this.context.ir.services).flatMap((service) =>
             service.endpoints
-                .filter((endpoint) => endpoint.response?.body?.type === "fileDownload")
+                .filter((endpoint) => endpoint.response?.body?.type === "fileDownload" || endpoint.response?.body?.type === "bytes")
                 .map((endpoint) => ({
                     endpoint,
                     fernFilepath: service.name.fernFilepath
