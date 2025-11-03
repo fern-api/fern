@@ -1,3 +1,11 @@
+- version: 3.11.2
+  changelogEntry:
+    - summary: |
+        Fix IllegalStateException: closed on error responses. Generated clients were calling responseBody.string() twice (once in success handler, once in error handler), but OkHttp's ResponseBody can only be read once. Now pre-reads response body before success check for JSON/text responses.
+      type: fix
+  createdAt: "2025-11-03"
+  irVersion: 61
+
 - version: 3.11.1
   changelogEntry:
     - summary: |
