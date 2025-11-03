@@ -275,19 +275,20 @@ class SnippetWriter:
             keys = list(unknown.keys())
             if keys and all(isinstance(k, (int, str)) for k in keys):
                 try:
-                    int_keys = []
+                    int_keys: List[int] = []
+                    array_like = True
                     for k in keys:
                         if isinstance(k, int):
                             int_keys.append(k)
                         elif isinstance(k, str) and k.isdigit():
                             int_keys.append(int(k))
                         else:
-                            int_keys = None
+                            array_like = False
                             break
                     
-                    if int_keys is not None:
+                    if array_like:
                         sorted_keys = sorted(int_keys)
-                        if sorted_keys == list(range(len(sorted_keys))) and sorted_keys[0] == 0:
+                        if sorted_keys == list(range(len(sorted_keys))):
                             values = []
                             for i in sorted_keys:
                                 original_key = i if i in unknown else str(i)
