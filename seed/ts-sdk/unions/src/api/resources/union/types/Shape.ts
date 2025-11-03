@@ -7,6 +7,7 @@ import type * as SeedUnions from "../../../index.js";
  *     {
  *         type: "circle",
  *         id: "example",
+ *         name: "circle",
  *         radius: 5
  *     }
  *
@@ -14,6 +15,7 @@ import type * as SeedUnions from "../../../index.js";
  *     {
  *         type: "square",
  *         id: "example",
+ *         name: "square",
  *         length: 5
  *     }
  */
