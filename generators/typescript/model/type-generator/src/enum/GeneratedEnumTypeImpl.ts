@@ -45,11 +45,12 @@ export class GeneratedEnumTypeImpl<Context extends BaseContext>
         const typeofConst = this.includeEnumUtils
             ? `Omit<typeof ${this.typeName}, "${GeneratedEnumTypeImpl.VISIT_PROPERTTY_NAME}">`
             : `typeof ${this.typeName}`;
+        const baseType = `${typeofConst}[keyof ${typeofConst}]`;
         const type: TypeAliasDeclarationStructure = {
             kind: StructureKind.TypeAlias,
             name: this.typeName,
             isExported: true,
-            type: `${typeofConst}[keyof ${typeofConst}];`
+            type: this.includeSerdeLayer ? baseType : `${baseType} | string`
         };
 
         return type;
@@ -60,13 +61,17 @@ export class GeneratedEnumTypeImpl<Context extends BaseContext>
         requestTypeNode: ts.TypeNode | undefined;
         responseTypeNode: ts.TypeNode | undefined;
     } {
+        const enumLiteralTypes = this.shape.values.map((value) =>
+            ts.factory.createLiteralTypeNode(ts.factory.createStringLiteral(value.name.wireValue))
+        );
+        
+        const unionMembers = this.includeSerdeLayer 
+            ? enumLiteralTypes 
+            : [...enumLiteralTypes, ts.factory.createKeywordTypeNode(ts.SyntaxKind.StringKeyword)];
+        
         return {
             typeNode: ts.factory.createParenthesizedType(
-                ts.factory.createUnionTypeNode(
-                    this.shape.values.map((value) =>
-                        ts.factory.createLiteralTypeNode(ts.factory.createStringLiteral(value.name.wireValue))
-                    )
-                )
+                ts.factory.createUnionTypeNode(unionMembers)
             ),
             requestTypeNode: undefined,
             responseTypeNode: undefined

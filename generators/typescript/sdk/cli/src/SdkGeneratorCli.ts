@@ -45,7 +45,7 @@ export class SdkGeneratorCli extends AbstractGeneratorCli<SdkCustomConfig> {
             shouldBundle: parsed?.bundle ?? false,
             allowCustomFetcher: parsed?.allowCustomFetcher ?? false,
             shouldGenerateWebsocketClients: parsed?.shouldGenerateWebsocketClients ?? false,
-            includeUtilsOnUnionMembers: parsed?.includeUtilsOnUnionMembers ?? true,
+            includeUtilsOnUnionMembers: !noSerdeLayer && (parsed?.includeUtilsOnUnionMembers ?? false),
             includeOtherInUnionTypes: parsed?.includeOtherInUnionTypes ?? false,
             requireDefaultEnvironment: parsed?.requireDefaultEnvironment ?? false,
             defaultTimeoutInSeconds: parsed?.defaultTimeoutInSeconds ?? parsed?.timeoutInSeconds,
