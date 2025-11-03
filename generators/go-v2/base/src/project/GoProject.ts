@@ -37,19 +37,18 @@ export class GoProject extends AbstractProject<AbstractGoGeneratorContext<BaseGo
     }
 
     public async persist({ tidy }: { tidy?: boolean } = {}): Promise<void> {
-        this.context.logger.debug(`Writing go files to ${this.absolutePathToOutputDirectory}`);
-        await this.writeGoMod();
-        await this.writeCoreFiles();
-        await this.writeInternalFiles();
-        await this.writeRootAsIsFiles();
-        await this.writeGoFiles({
-            files: Object.values(this.goFiles).flat()
-        });
-        await this.writeRawFiles();
         const isModule = this.getModuleConfig({ config: this.context.config }) != null;
-        if (tidy && isModule) {
-            await this.runGoModTidy();
-        }
+        const files = Object.values(this.goFiles).flat();
+        this.context.logger.debug(`Writing go files to ${this.absolutePathToOutputDirectory}`);
+        await Promise.all([
+            this.writeGoMod(),
+            this.writeCoreFiles(),
+            this.writeInternalFiles(),
+            this.writeRootAsIsFiles(),
+            this.writeGoFiles({ files }),
+            await this.writeRawFiles(),
+            ...(tidy && isModule ? [this.runGoModTidy()] : [])
+        ]);
         this.context.logger.debug(`Successfully wrote go files to ${this.absolutePathToOutputDirectory}`);
     }
 

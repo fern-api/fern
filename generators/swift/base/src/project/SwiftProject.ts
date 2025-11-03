@@ -83,7 +83,12 @@ export class SwiftProject extends AbstractProject<AbstractSwiftGeneratorContext<
         const { context, absolutePathToSourcesDirectory } = this;
         context.logger.debug(`mkdir ${absolutePathToSourcesDirectory}`);
         await mkdir(absolutePathToSourcesDirectory, { recursive: true });
-        await Promise.all([this.persistRootFiles(), this.persistSourceFiles(), this.persistTestFiles()]);
+        await Promise.all([
+            this.persistRootFiles(),
+            this.persistSourceFiles(),
+            this.persistTestFiles(),
+            this.writeRawFiles()
+        ]);
     }
 
     private async persistRootFiles(): Promise<void> {

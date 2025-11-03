@@ -44,14 +44,14 @@ export class RustProject extends AbstractProject<AbstractRustGeneratorContext<Ba
         this.context.logger.debug(`mkdir ${absolutePathToSrcDirectory}`);
         await mkdir(absolutePathToSrcDirectory, { recursive: true });
 
-        // Write all template files (both source and project-level)
-        await this.persistStaticSourceFiles();
-
-        // Write all dynamic source files
-        await Promise.all(this.sourceFiles.map((file) => file.write(this.absolutePathToOutputDirectory)));
-
-        // Write all raw files
-        await this.writeRawFiles();
+        await Promise.all([
+            // Write all template files (both source and project-level)
+            await this.persistStaticSourceFiles(),
+            // Write all dynamic source files
+            await Promise.all(this.sourceFiles.map((file) => file.write(this.absolutePathToOutputDirectory))),
+            // Write all raw files
+            await this.writeRawFiles()
+        ]);
     }
 
     private async persistStaticSourceFiles(): Promise<void> {

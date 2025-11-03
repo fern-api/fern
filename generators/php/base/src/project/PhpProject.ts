@@ -60,14 +60,16 @@ export class PhpProject extends AbstractProject<AbstractPhpGeneratorContext<Base
     }
 
     public async persist(): Promise<void> {
-        await this.createRawFiles();
-        await this.createSourceDirectory();
-        await this.createTestsDirectory();
-        await this.createCoreDirectory();
-        await this.createCoreTestsDirectory();
-        await this.createUtilsDirectory();
-        await this.createGitHubWorkflowsDirectory();
-        await this.createComposerJson();
+        await Promise.all([
+            this.createRawFiles(),
+            this.createSourceDirectory(),
+            this.createTestsDirectory(),
+            this.createCoreDirectory(),
+            this.createCoreTestsDirectory(),
+            this.createUtilsDirectory(),
+            this.createGitHubWorkflowsDirectory(),
+            this.createComposerJson(),
+        ]);
     }
 
     private static getPackagePathPrefix(packagePath?: string): string {
