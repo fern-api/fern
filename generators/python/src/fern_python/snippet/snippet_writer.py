@@ -268,14 +268,54 @@ class SnippetWriter:
         self,
         unknown: Any,
     ) -> AST.Expression:
-        if unknown is not None:
+        if unknown is None:
+            return AST.Expression("None")
+        
+        if isinstance(unknown, dict):
+            keys = list(unknown.keys())
+            if keys and all(isinstance(k, (int, str)) for k in keys):
+                try:
+                    int_keys = []
+                    for k in keys:
+                        if isinstance(k, int):
+                            int_keys.append(k)
+                        elif isinstance(k, str) and k.isdigit():
+                            int_keys.append(int(k))
+                        else:
+                            int_keys = None
+                            break
+                    
+                    if int_keys is not None:
+                        sorted_keys = sorted(int_keys)
+                        if sorted_keys == list(range(len(sorted_keys))) and sorted_keys[0] == 0:
+                            values = []
+                            for i in sorted_keys:
+                                original_key = i if i in unknown else str(i)
+                                value_expr = self._get_snippet_for_unknown(unknown[original_key])
+                                values.append(value_expr)
+                            return self._write_list(values=values)
+                except (ValueError, TypeError):
+                    pass
+            
+            keys_exprs = []
+            values_exprs = []
+            for k, v in unknown.items():
+                if isinstance(k, str):
+                    keys_exprs.append(AST.Expression(repr(k)))
+                else:
+                    keys_exprs.append(AST.Expression(str(k)))
+                values_exprs.append(self._get_snippet_for_unknown(v))
+            return self._write_map(keys=keys_exprs, values=values_exprs)
+        
+        if isinstance(unknown, (list, tuple)):
+            values = [self._get_snippet_for_unknown(item) for item in unknown]
+            return self._write_list(values=values)
+        
+        def write_unknown(writer: AST.NodeWriter) -> None:
+            maybe_stringify_unknown = repr(unknown) if type(unknown) is str else unknown
+            writer.write_line(f"{maybe_stringify_unknown}")
 
-            def write_unknown(writer: AST.NodeWriter) -> None:
-                maybe_stringify_unknown = repr(unknown) if type(unknown) is str else unknown
-                writer.write_line(f"{maybe_stringify_unknown}")
-
-            return AST.Expression(AST.CodeWriter(write_unknown))
-        return AST.Expression("None")
+        return AST.Expression(AST.CodeWriter(write_unknown))
 
     def _get_snippet_for_list_or_set(
         self,
