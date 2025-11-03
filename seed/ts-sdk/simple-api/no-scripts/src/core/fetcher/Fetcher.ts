@@ -25,7 +25,7 @@ export declare namespace Fetcher {
         maxRetries?: number;
         withCredentials?: boolean;
         abortSignal?: AbortSignal;
-        requestType?: "json" | "file" | "bytes";
+        requestType?: "json" | "file" | "bytes" | "form" | "other";
         responseType?: "json" | "blob" | "sse" | "streaming" | "text" | "arrayBuffer" | "binary-response";
         duplex?: "half";
         endpointMetadata?: EndpointMetadata;
@@ -83,7 +83,7 @@ export async function fetcherImpl<R = unknown>(args: Fetcher.Args): Promise<APIR
     const url = createRequestUrl(args.url, args.queryParameters);
     const requestBody: BodyInit | undefined = await getRequestBody({
         body: args.body,
-        type: args.requestType === "json" ? "json" : "other"
+        type: args.requestType ?? "other"
     });
     const fetchFn = await getFetchFn();
 

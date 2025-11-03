@@ -43,11 +43,11 @@ function getHeaders(args) {
 }
 export function fetcherImpl(args) {
     return __awaiter(this, void 0, void 0, function* () {
-        var _a;
+        var _a, _b;
         const url = createRequestUrl(args.url, args.queryParameters);
         const requestBody = yield getRequestBody({
             body: args.body,
-            type: args.requestType === "json" ? "json" : "other",
+            type: (_a = args.requestType) !== null && _a !== void 0 ? _a : "other",
         });
         const fetchFn = yield getFetchFn();
         try {
@@ -75,7 +75,7 @@ export function fetcherImpl(args) {
             }
         }
         catch (error) {
-            if ((_a = args.abortSignal) === null || _a === void 0 ? void 0 : _a.aborted) {
+            if ((_b = args.abortSignal) === null || _b === void 0 ? void 0 : _b.aborted) {
                 return {
                     ok: false,
                     error: {
