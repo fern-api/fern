@@ -1,3 +1,18 @@
+- version: 3.11.1
+  changelogEntry:
+    - summary: |
+        Wire tests are now disabled by default for Java SDKs as a temporary measure while wire test issues
+        are being resolved. Users can still explicitly enable wire tests by setting `enable-wire-tests: true`
+        in their generator configuration.
+
+        ```yaml
+        customConfig:
+          enable-wire-tests: true
+        ```
+      type: fix
+  createdAt: "2025-11-03"
+  irVersion: 61
+
 - version: 3.11.0
   changelogEntry:
     - summary: |
