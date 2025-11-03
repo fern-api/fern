@@ -15,8 +15,8 @@ exports[`writeTranslationForProject > should be idempotent - no changes when run
   "  - es: <temp-dir>/fern/translations/es",
   "Source language (en) values are tracked as hashes in translations/hashes",
   "Language-specific docs configurations created with modified instance URLs:",
-  "  - de/docs.yml: URLs modified to include /de suffix",
-  "  - es/docs.yml: URLs modified to include /es suffix",
+  "  - de/docs.yml: URLs modified to use de subdomain prefix",
+  "  - es/docs.yml: URLs modified to use es subdomain prefix",
 ]
 `;
 
@@ -26,8 +26,8 @@ exports[`writeTranslationForProject > should correctly modify URLs with existing
     "de": {
       "instances": [
         {
-          "custom-domain": "custom.example.com/de/api",
-          "url": "https://example.com/de/docs",
+          "customDomain": "de.custom.example.com/api",
+          "url": "https://de.example.com/docs",
         },
       ],
       "languages": [
@@ -46,8 +46,8 @@ exports[`writeTranslationForProject > should correctly modify URLs with existing
     "es": {
       "instances": [
         {
-          "custom-domain": "custom.example.com/es/api",
-          "url": "https://example.com/es/docs",
+          "customDomain": "es.custom.example.com/api",
+          "url": "https://es.example.com/docs",
         },
       ],
       "languages": [
@@ -71,8 +71,8 @@ exports[`writeTranslationForProject > should correctly modify URLs with existing
           "content": {
             "instances": [
               {
-                "custom-domain": "custom.example.com/de/api",
-                "url": "https://example.com/de/docs",
+                "customDomain": "de.custom.example.com/api",
+                "url": "https://de.example.com/docs",
               },
             ],
             "languages": [
@@ -105,8 +105,8 @@ This is a test fixture file.",
           "content": {
             "instances": [
               {
-                "custom-domain": "custom.example.com/es/api",
-                "url": "https://example.com/es/docs",
+                "customDomain": "es.custom.example.com/api",
+                "url": "https://es.example.com/docs",
               },
             ],
             "languages": [
@@ -152,7 +152,7 @@ exports[`writeTranslationForProject > should create language-specific docs.yml c
     "de": {
       "instances": [
         {
-          "url": "https://test.docs.buildwithfern.com/de",
+          "url": "https://test-de.docs.buildwithfern.com",
         },
       ],
       "languages": [
@@ -171,7 +171,7 @@ exports[`writeTranslationForProject > should create language-specific docs.yml c
     "es": {
       "instances": [
         {
-          "url": "https://test.docs.buildwithfern.com/es",
+          "url": "https://test-es.docs.buildwithfern.com",
         },
       ],
       "languages": [
@@ -195,7 +195,7 @@ exports[`writeTranslationForProject > should create language-specific docs.yml c
           "content": {
             "instances": [
               {
-                "url": "https://test.docs.buildwithfern.com/de",
+                "url": "https://test-de.docs.buildwithfern.com",
               },
             ],
             "languages": [
@@ -253,7 +253,7 @@ exports[`writeTranslationForProject > should create language-specific docs.yml c
           "content": {
             "instances": [
               {
-                "url": "https://test.docs.buildwithfern.com/es",
+                "url": "https://test-es.docs.buildwithfern.com",
               },
             ],
             "languages": [
@@ -326,7 +326,7 @@ exports[`writeTranslationForProject > should create translations folder with cor
     "de": {
       "instances": [
         {
-          "url": "https://test.docs.buildwithfern.com/de",
+          "url": "https://test-de.docs.buildwithfern.com",
         },
       ],
       "languages": [
@@ -345,7 +345,7 @@ exports[`writeTranslationForProject > should create translations folder with cor
     "es": {
       "instances": [
         {
-          "url": "https://test.docs.buildwithfern.com/es",
+          "url": "https://test-es.docs.buildwithfern.com",
         },
       ],
       "languages": [
@@ -369,7 +369,7 @@ exports[`writeTranslationForProject > should create translations folder with cor
           "content": {
             "instances": [
               {
-                "url": "https://test.docs.buildwithfern.com/de",
+                "url": "https://test-de.docs.buildwithfern.com",
               },
             ],
             "languages": [
@@ -427,7 +427,7 @@ exports[`writeTranslationForProject > should create translations folder with cor
           "content": {
             "instances": [
               {
-                "url": "https://test.docs.buildwithfern.com/es",
+                "url": "https://test-es.docs.buildwithfern.com",
               },
             ],
             "languages": [
@@ -500,7 +500,7 @@ exports[`writeTranslationForProject > should create translations folder with ind
     "de": {
       "instances": [
         {
-          "url": "https://test.docs.buildwithfern.com/de",
+          "url": "https://test-de.docs.buildwithfern.com",
         },
       ],
       "languages": [
@@ -519,7 +519,7 @@ exports[`writeTranslationForProject > should create translations folder with ind
     "es": {
       "instances": [
         {
-          "url": "https://test.docs.buildwithfern.com/es",
+          "url": "https://test-es.docs.buildwithfern.com",
         },
       ],
       "languages": [
@@ -543,7 +543,7 @@ exports[`writeTranslationForProject > should create translations folder with ind
           "content": {
             "instances": [
               {
-                "url": "https://test.docs.buildwithfern.com/de",
+                "url": "https://test-de.docs.buildwithfern.com",
               },
             ],
             "languages": [
@@ -601,7 +601,7 @@ exports[`writeTranslationForProject > should create translations folder with ind
           "content": {
             "instances": [
               {
-                "url": "https://test.docs.buildwithfern.com/es",
+                "url": "https://test-es.docs.buildwithfern.com",
               },
             ],
             "languages": [

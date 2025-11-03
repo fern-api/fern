@@ -19,50 +19,88 @@ import {
 import { ContentTransformation, ProcessingStats } from "./types";
 
 /**
- * Adds a language prefix to a URL path.
+ * Adds a language prefix to a URL using subdomain format.
  * @param url - The original URL
- * @param language - The language to insert at the beginning of the path
- * @returns The URL with the language prefix in the path
+ * @param language - The language to add as a subdomain prefix
+ * @returns The URL with the language prefix in the subdomain
  * @example
- * - "https://example.com/docs" -> "https://example.com/de/docs"
- * - "https://example.com/" -> "https://example.com/de"
- * - "https://example.com" -> "https://example.com/de"
+ * - "https://org.docs.buildwithfern.com" -> "https://org-de.docs.buildwithfern.com"
+ * - "https://docs.custom.com" -> "https://de.docs.custom.com"
+ * - "https://docs.custom.com/path" -> "https://de.docs.custom.com/path"
  */
 export function addLanguageSuffixToUrl(url: string, language: string): string {
     try {
         const urlObj = new URL(url);
+        const hostname = urlObj.hostname;
 
-        if (urlObj.pathname === "/" || urlObj.pathname === "") {
-            urlObj.pathname = `/${language}`;
-        } else {
-            // remove leading slash, prepend language, then add back leading slash
-            const pathWithoutLeadingSlash = urlObj.pathname.replace(/^\//, "");
-            urlObj.pathname = `/${language}/${pathWithoutLeadingSlash}`;
+        if (hostname.endsWith(".docs.buildwithfern.com")) {
+            const org = hostname.replace(".docs.buildwithfern.com", "");
+            urlObj.hostname = `${org}-${language}.docs.buildwithfern.com`;
+        }
+        else {
+            urlObj.hostname = `${language}.${hostname}`;
         }
 
         return urlObj.toString();
     } catch {
-        // fallback parsing
-        if (url.includes("/")) {
-            if (url.startsWith("http://") || url.startsWith("https://")) {
-                const parts = url.split("/");
-                const protocolAndDomain = parts.slice(0, 3).join("/"); // "https://example.com"
-                const path = parts.slice(3).join("/"); // "docs/page"
+        // fallback parsing for invalid URLs
+        if (url.includes("://")) {
+            const [protocol, rest] = url.split("://");
+            const [hostAndPath, ...fragments] = rest?.split("#") ?? [];
+            const [hostAndQuery, ...hashParts] = hostAndPath?.split("?") ?? [];
+            const [hostname, ...pathParts] = hostAndQuery?.split("/") ?? [];
 
-                if (path) {
-                    return `${protocolAndDomain}/${language}/${path}`;
+            if (!hostname) {
+                return url;
+            }
+
+            let newHostname: string;
+            if (hostname.endsWith(".docs.buildwithfern.com")) {
+                const orgPart = hostname.replace(".docs.buildwithfern.com", "");
+                newHostname = `${orgPart}-${language}.docs.buildwithfern.com`;
+            } else {
+                newHostname = `${language}.${hostname}`;
+            }
+
+            let result = `${protocol}://${newHostname}`;
+            if (pathParts.length > 0) {
+                result += "/" + pathParts.join("/");
+            }
+            if (hashParts.length > 0) {
+                result += "?" + hashParts.join("?");
+            }
+            if (fragments.length > 0) {
+                result += "#" + fragments.join("#");
+            }
+
+            return result;
+        } else {
+            if (url.includes("/")) {
+                const parts = url.split("/");
+                const hostname = parts[0];
+                const pathParts = parts.slice(1);
+
+                let newHostname: string;
+                if (hostname?.endsWith(".docs.buildwithfern.com")) {
+                    const orgPart = hostname.replace(".docs.buildwithfern.com", "");
+                    newHostname = `${orgPart}-${language}.docs.buildwithfern.com`;
                 } else {
-                    return `${protocolAndDomain}/${language}`;
+                    newHostname = `${language}.${hostname}`;
+                }
+
+                if (pathParts.length > 0) {
+                    return `${newHostname}/${pathParts.join("/")}`;
+                } else {
+                    return newHostname;
                 }
             } else {
-                const firstSlashIndex = url.indexOf("/");
-                const beforeSlash = url.substring(0, firstSlashIndex); // "example.com"
-                const afterSlash = url.substring(firstSlashIndex + 1); // "docs"
-
-                return `${beforeSlash}/${language}/${afterSlash}`;
+                if (url.endsWith(".docs.buildwithfern.com")) {
+                    const orgPart = url.replace(".docs.buildwithfern.com", "");
+                    return `${orgPart}-${language}.docs.buildwithfern.com`;
+                } else {
+                    return `${language}.${url}`;
+                }
             }
-        } else {
-            return url + `/${language}`;
         }
     }
 }
@@ -84,11 +122,15 @@ function modifyInstanceUrlsForLanguage(docsConfig: any, language: string): any {
                 modifiedInstance.url = addLanguageSuffixToUrl(modifiedInstance.url, language);
             }
 
-            if (modifiedInstance["custom-domain"]) {
-                if (typeof modifiedInstance["custom-domain"] === "string") {
-                    modifiedInstance["custom-domain"] = addLanguageSuffixToUrl(modifiedInstance["custom-domain"], language);
-                } else if (Array.isArray(modifiedInstance["custom-domain"])) {
-                    modifiedInstance["custom-domain"] = modifiedInstance["custom-domain"].map((domain: string) =>
+            // Handle both customDomain (camelCase) and custom-domain (kebab-case)
+            const customDomainKey = modifiedInstance.customDomain ? "customDomain" : "custom-domain";
+            const customDomain = modifiedInstance.customDomain || modifiedInstance["custom-domain"];
+
+            if (customDomain) {
+                if (typeof customDomain === "string") {
+                    modifiedInstance[customDomainKey] = addLanguageSuffixToUrl(customDomain, language);
+                } else if (Array.isArray(customDomain)) {
+                    modifiedInstance[customDomainKey] = customDomain.map((domain: string) =>
                         addLanguageSuffixToUrl(domain, language)
                     );
                 }
