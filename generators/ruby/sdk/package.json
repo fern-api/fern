@@ -20,7 +20,9 @@
   "main": "lib/index.js",
   "source": "src/index.ts",
   "types": "lib/index.d.ts",
-  "files": ["lib"],
+  "files": [
+    "lib"
+  ],
   "scripts": {
     "clean": "rm -rf ./lib && tsc --build --clean",
     "compile": "tsc --build",
@@ -42,7 +44,7 @@
     "@fern-api/ruby-codegen": "workspace:*",
     "@fern-api/ruby-generator-cli": "workspace:*",
     "@fern-fern/generator-exec-sdk": "^0.0.1167",
-    "@fern-fern/ir-sdk": "^39",
+    "@fern-fern/ir-sdk": "^61.7.0",
     "@types/node": "18.15.3",
     "depcheck": "^1.4.7",
     "tsup": "^8.5.0",

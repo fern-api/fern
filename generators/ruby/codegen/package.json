@@ -20,7 +20,9 @@
   "main": "lib/index.js",
   "source": "src/index.ts",
   "types": "lib/index.d.ts",
-  "files": ["lib"],
+  "files": [
+    "lib"
+  ],
   "scripts": {
     "clean": "rm -rf ./lib && tsc --build --clean",
     "compile": "tsc --build",
@@ -33,7 +35,7 @@
   "dependencies": {
     "@fern-api/fs-utils": "workspace:*",
     "@fern-fern/generator-exec-sdk": "^0.0.1167",
-    "@fern-fern/ir-sdk": "^39",
+    "@fern-fern/ir-sdk": "^61.7.0",
     "lodash-es": "^4.17.21",
     "url-join": "^5.0.0",
     "zod": "^3.22.3"

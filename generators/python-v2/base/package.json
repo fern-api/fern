@@ -20,7 +20,9 @@
   "main": "lib/index.js",
   "source": "src/index.ts",
   "types": "lib/index.d.ts",
-  "files": ["lib"],
+  "files": [
+    "lib"
+  ],
   "scripts": {
     "clean": "rm -rf ./lib && tsc --build --clean",
     "compile": "tsc --build",
@@ -36,7 +38,7 @@
     "@fern-api/fs-utils": "workspace:*",
     "@fern-api/python-ast": "workspace:*",
     "@fern-api/python-browser-compatible-base": "workspace:*",
-    "@fern-fern/ir-sdk": "60.3.0",
+    "@fern-fern/ir-sdk": "^61.7.0",
     "lodash-es": "^4.17.21",
     "zod": "^3.22.4"
   },
