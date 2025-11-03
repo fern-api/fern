@@ -207,7 +207,7 @@ importers:
         version: link:../../../packages/commons/logging-execa
       '@fern-fern/ir-sdk':
         specifier: ^61.4.0
-        version: 61.4.0
+        version: 61.6.0
       '@types/lodash-es':
         specifier: ^4.17.12
         version: 4.17.12
@@ -243,7 +243,7 @@ importers:
         version: 61.4.0
       '@fern-fern/ir-sdk':
         specifier: ^61.4.0
-        version: 61.4.0
+        version: 61.6.0
       zod:
         specifier: ^3.22.3
         version: 3.25.76
@@ -368,7 +368,7 @@ importers:
         version: link:../../../packages/commons/fs-utils
       '@fern-fern/ir-sdk':
         specifier: ^61.4.0
-        version: 61.4.0
+        version: 61.6.0
       '@types/node':
         specifier: 18.15.3
         version: 18.15.3
@@ -425,7 +425,7 @@ importers:
         version: 0.0.1167
       '@fern-fern/ir-sdk':
         specifier: ^61.4.0
-        version: 61.4.0
+        version: 61.6.0
       '@types/node':
         specifier: 18.15.3
         version: 18.15.3
@@ -748,7 +748,7 @@ importers:
         version: link:../../../packages/commons/logging-execa
       '@fern-fern/ir-sdk':
         specifier: ^61.4.0
-        version: 61.4.0
+        version: 61.6.0
       '@types/node':
         specifier: 18.15.3
         version: 18.15.3
@@ -847,7 +847,7 @@ importers:
         version: 0.0.1167
       '@fern-fern/ir-sdk':
         specifier: ^61.4.0
-        version: 61.4.0
+        version: 61.6.0
       '@types/lodash-es':
         specifier: ^4.17.12
         version: 4.17.12
@@ -1917,7 +1917,7 @@ importers:
         version: link:../codegen
       '@fern-fern/ir-sdk':
         specifier: ^61.4.0
-        version: 61.4.0
+        version: 61.6.0
       lodash-es:
         specifier: ^4.17.21
         version: 4.17.21
@@ -2034,7 +2034,7 @@ importers:
         version: 0.0.1167
       '@fern-fern/ir-sdk':
         specifier: ^61.4.0
-        version: 61.4.0
+        version: 61.6.0
       '@types/node':
         specifier: 18.15.3
         version: 18.15.3
@@ -2095,7 +2095,7 @@ importers:
         version: 0.0.1167
       '@fern-fern/ir-sdk':
         specifier: ^61.4.0
-        version: 61.4.0
+        version: 61.6.0
       '@types/node':
         specifier: 18.15.3
         version: 18.15.3
@@ -17124,26 +17124,6 @@ snapshots:
       - encoding
 
   '@fern-fern/ir-sdk@60.5.0':
-    dependencies:
-      form-data: 4.0.4
-      formdata-node: 6.0.3
-      node-fetch: 2.7.0
-      qs: 6.13.0
-      readable-stream: 4.7.0
-    transitivePeerDependencies:
-      - encoding
-
-  '@fern-fern/ir-sdk@61.2.0':
-    dependencies:
-      form-data: 4.0.4
-      formdata-node: 6.0.3
-      node-fetch: 2.7.0
-      qs: 6.13.0
-      readable-stream: 4.7.0
-    transitivePeerDependencies:
-      - encoding
-
-  '@fern-fern/ir-sdk@61.4.0':
     dependencies:
       form-data: 4.0.4
       formdata-node: 6.0.3
