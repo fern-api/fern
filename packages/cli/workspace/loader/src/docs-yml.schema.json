@@ -383,6 +383,78 @@
       ],
       "additionalProperties": false
     },
+    "docs.GitlabEditThisPageConfig": {
+      "type": "object",
+      "properties": {
+        "host": {
+          "oneOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "owner": {
+          "type": "string"
+        },
+        "repo": {
+          "type": "string"
+        },
+        "branch": {
+          "oneOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        }
+      },
+      "required": [
+        "owner",
+        "repo"
+      ],
+      "additionalProperties": false
+    },
+    "docs.BitbucketEditThisPageConfig": {
+      "type": "object",
+      "properties": {
+        "host": {
+          "oneOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "owner": {
+          "type": "string"
+        },
+        "repo": {
+          "type": "string"
+        },
+        "branch": {
+          "oneOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        }
+      },
+      "required": [
+        "owner",
+        "repo"
+      ],
+      "additionalProperties": false
+    },
     "docs.EditThisPageConfig": {
       "type": "object",
       "properties": {
@@ -390,6 +462,26 @@
           "oneOf": [
             {
               "$ref": "#/definitions/docs.GithubEditThisPageConfig"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "gitlab": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/docs.GitlabEditThisPageConfig"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "bitbucket": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/docs.BitbucketEditThisPageConfig"
             },
             {
               "type": "null"
