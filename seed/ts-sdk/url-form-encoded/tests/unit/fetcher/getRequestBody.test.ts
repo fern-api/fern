@@ -45,7 +45,16 @@ describe("Test getRequestBody", () => {
         expect(result).toBe(input);
     });
 
-    it("should return the input for content-type 'application/x-www-form-urlencoded'", async () => {
+    it("should serialize objects for form-urlencoded content type", async () => {
+        const input = { username: "johndoe", email: "john@example.com" };
+        const result = await getRequestBody({
+            body: input,
+            type: "form",
+        });
+        expect(result).toBe("username=johndoe&email=john%40example.com");
+    });
+
+    it("should return the input for pre-serialized form-urlencoded strings", async () => {
         const input = "key=value&another=param";
         const result = await getRequestBody({
             body: input,
