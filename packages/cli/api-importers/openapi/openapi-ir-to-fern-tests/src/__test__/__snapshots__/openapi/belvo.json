@@ -2720,34 +2720,6 @@ In our documentation example, we use `{endpoint}` as a placeholder value. In pro
               "openapi": "../openapi.yml",
             },
           },
-          "EnumAccountCategory": {
-            "docs": "The type of account.
-We return one of the following enum values:
-  - `CHECKING_ACCOUNT`
-  - `CREDIT_CARD`
-  - `INVESTMENT_ACCOUNT`
-  - `LOAN_ACCOUNT`
-  - `PENSION_FUND_ACCOUNT`
-  - `RECEIVABLES_ACCOUNT`
-  - `SAVINGS_ACCOUNT`
-  - `UNCATEGORIZED`
-  - `null`
-",
-            "enum": [
-              "CHECKING_ACCOUNT",
-              "CREDIT_CARD",
-              "INVESTMENT_ACCOUNT",
-              "LOAN_ACCOUNT",
-              "PENSION_FUND_ACCOUNT",
-              "RECEIVABLES_ACCOUNT",
-              "SAVINGS_ACCOUNT",
-              "UNCATEGORIZED",
-            ],
-            "inline": undefined,
-            "source": {
-              "openapi": "../openapi.yml",
-            },
-          },
           "EnumBankAccountHolderTypeOfpi": {
             "docs": "The type of bank account. Can be either `INDIVIDUAL` or `BUSINESS`.",
             "enum": [
@@ -2806,85 +2778,6 @@ Can be either:
             "enum": [
               "INDIVIDUAL",
               "BUSINESS",
-            ],
-            "inline": undefined,
-            "source": {
-              "openapi": "../openapi.yml",
-            },
-          },
-          "EnumCategorizationTransactionCategory": {
-            "docs": "The name of the category to which this transaction belongs. For more info about this feature, check our [Transaction categorization](https://developers.belvo.com/docs/banking#categorizing-transactions) article. 
-
-We return one of the following enum values:
-
-  - `Bills & Utilities`
-  - `Credits & Loans`
-  - `Deposits`
-  - `Fees & Charges`
-  - `Food & Groceries`
-  - `Home & Life`
-  - `Income & Payments`
-  - `Insurance`
-  - `Investments & Savings`
-  - `Online Platforms & Leisure`
-  - `Personal Shopping`
-  - `Taxes`
-  - `Transfers`
-  - `Transport & Travel`
-  - `Unknown`
-  - `Withdrawal & ATM`
-  - `null`
-",
-            "enum": [
-              {
-                "name": "BillsUtilities",
-                "value": "Bills & Utilities",
-              },
-              {
-                "name": "CreditsLoans",
-                "value": "Credits & Loans",
-              },
-              "Deposits",
-              {
-                "name": "FeesCharges",
-                "value": "Fees & Charges",
-              },
-              {
-                "name": "FoodGroceries",
-                "value": "Food & Groceries",
-              },
-              {
-                "name": "HomeLife",
-                "value": "Home & Life",
-              },
-              {
-                "name": "IncomePayments",
-                "value": "Income & Payments",
-              },
-              "Insurance",
-              {
-                "name": "InvestmentsSavings",
-                "value": "Investments & Savings",
-              },
-              {
-                "name": "OnlinePlatformsLeisure",
-                "value": "Online Platforms & Leisure",
-              },
-              {
-                "name": "PersonalShopping",
-                "value": "Personal Shopping",
-              },
-              "Taxes",
-              "Transfers",
-              {
-                "name": "TransportTravel",
-                "value": "Transport & Travel",
-              },
-              "Unknown",
-              {
-                "name": "WithdrawalAtm",
-                "value": "Withdrawal & ATM",
-              },
             ],
             "inline": undefined,
             "source": {
@@ -3617,19 +3510,6 @@ For Mexico's SAT, we return one of the following values:
               "openapi": "../openapi.yml",
             },
           },
-          "EnumInvoiceType": {
-            "docs": "The direction of the invoice (from the perspective of the Link owner).
-- `OUTFLOW` indicates a sent invoice. - `INFLOW` indicates a received invoice.
-",
-            "enum": [
-              "OUTFLOW",
-              "INFLOW",
-            ],
-            "inline": undefined,
-            "source": {
-              "openapi": "../openapi.yml",
-            },
-          },
           "EnumLinkAccessModeRequest": {
             "default": "recurrent",
             "docs": "The type of link to create.
@@ -3638,23 +3518,6 @@ For Mexico's SAT, we return one of the following values:
 - Use `recurrent` to have Belvo access information on a recurrent basis so you always have fresh account, owner, balance, and transaction data.
 
 For more information, see our [Links](https://developers.belvo.com/docs/links-and-institutions#links) article.
-",
-            "enum": [
-              "single",
-              "recurrent",
-            ],
-            "inline": undefined,
-            "source": {
-              "openapi": "../openapi.yml",
-            },
-          },
-          "EnumLinkAccessModeResponse": {
-            "docs": "The link type.
-For more information, see our [Links](https://developers.belvo.com/docs/links-and-institutions#links) article.
-We return one of the following enum values:
-  - `single`
-  - `recurrent`
-  - `null`
 ",
             "enum": [
               "single",
@@ -3733,21 +3596,6 @@ We return one of the following values:
               "OPERATION_FEE",
               "INSURANCE_FEE",
               "OTHERS",
-            ],
-            "inline": undefined,
-            "source": {
-              "openapi": "../openapi.yml",
-            },
-          },
-          "EnumLoanDataInterestRateType": {
-            "docs": "The period that the interest is applied to the loan. We return one of the following values:
-
-  - `MONTHLY`
-  - `YEARLY`
-",
-            "enum": [
-              "MONTHLY",
-              "YEARLY",
             ],
             "inline": undefined,
             "source": {
@@ -4049,91 +3897,6 @@ We return one of the following values:
               "CLOSED",
               "OPEN",
               "FUTURE",
-            ],
-            "inline": undefined,
-            "source": {
-              "openapi": "../openapi.yml",
-            },
-          },
-          "EnumTransactionCategory": {
-            "docs": "The name of the category to which this transaction belongs.
-
-> **Get transaction categorization**
-With [Transaction categorization](https://developers.belvo.com/docs/banking#categorizing-transactions), we clean and categorize transactions for you, turning raw data into actionable insights. To enable this feature, just [reach out](https://belvo.com/contact/?utm_source=documentation) to us, and we'll get right to it.
-
-We return one of the following enum values:
-
-  - `Bills & Utilities`
-  - `Credits & Loans`
-  - `Deposits`
-  - `Fees & Charges`
-  - `Food & Groceries`
-  - `Home & Life`
-  - `Income & Payments`
-  - `Insurance`
-  - `Investments & Savings`
-  - `Online Platforms & Leisure`
-  - `Personal Shopping`
-  - `Taxes`
-  - `Transfers`
-  - `Transport & Travel`
-  - `Unknown`*
-  - `Withdrawal & ATM`
-  - `null`
-
-
-  \* For clients not using our Transaction Categorization product, we return `null` instead.
-",
-            "enum": [
-              {
-                "name": "BillsUtilities",
-                "value": "Bills & Utilities",
-              },
-              {
-                "name": "CreditsLoans",
-                "value": "Credits & Loans",
-              },
-              "Deposits",
-              {
-                "name": "FeesCharges",
-                "value": "Fees & Charges",
-              },
-              {
-                "name": "FoodGroceries",
-                "value": "Food & Groceries",
-              },
-              {
-                "name": "HomeLife",
-                "value": "Home & Life",
-              },
-              {
-                "name": "IncomePayments",
-                "value": "Income & Payments",
-              },
-              "Insurance",
-              {
-                "name": "InvestmentsSavings",
-                "value": "Investments & Savings",
-              },
-              {
-                "name": "OnlinePlatformsLeisure",
-                "value": "Online Platforms & Leisure",
-              },
-              {
-                "name": "PersonalShopping",
-                "value": "Personal Shopping",
-              },
-              "Taxes",
-              "Transfers",
-              {
-                "name": "TransportTravel",
-                "value": "Transport & Travel",
-              },
-              "Unknown",
-              {
-                "name": "WithdrawalAtm",
-                "value": "Withdrawal & ATM",
-              },
             ],
             "inline": undefined,
             "source": {
@@ -4446,21 +4209,6 @@ We return one of the following enum values:
                 "value": "Taxis & Rideshares",
               },
               "Other",
-            ],
-            "inline": undefined,
-            "source": {
-              "openapi": "../openapi.yml",
-            },
-          },
-          "EnumTransactionType": {
-            "docs": "The direction of the transaction:
-- `INFLOW` indicates money coming into the account.
-- `OUTFLOW` indicates money going out of the account.
-- `null` when no information was present regarding the direction of the transaction.
-",
-            "enum": [
-              "OUTFLOW",
-              "INFLOW",
             ],
             "inline": undefined,
             "source": {
@@ -12384,23 +12132,6 @@ types:
       - type: UnconfirmedLinkError
     source:
       openapi: ../openapi.yml
-  EnumLinkAccessModeResponse:
-    enum:
-      - single
-      - recurrent
-    docs: >
-      The link type.
-
-      For more information, see our
-      [Links](https://developers.belvo.com/docs/links-and-institutions#links)
-      article.
-
-      We return one of the following enum values:
-        - `single`
-        - `recurrent`
-        - `null`
-    source:
-      openapi: ../openapi.yml
   EnumLinkStatus:
     enum:
       - valid
@@ -13168,30 +12899,6 @@ types:
       type: optional<EnumInstitutionType>
     source:
       openapi: ../openapi.yml
-  EnumAccountCategory:
-    enum:
-      - CHECKING_ACCOUNT
-      - CREDIT_CARD
-      - INVESTMENT_ACCOUNT
-      - LOAN_ACCOUNT
-      - PENSION_FUND_ACCOUNT
-      - RECEIVABLES_ACCOUNT
-      - SAVINGS_ACCOUNT
-      - UNCATEGORIZED
-    docs: |
-      The type of account.
-      We return one of the following enum values:
-        - `CHECKING_ACCOUNT`
-        - `CREDIT_CARD`
-        - `INVESTMENT_ACCOUNT`
-        - `LOAN_ACCOUNT`
-        - `PENSION_FUND_ACCOUNT`
-        - `RECEIVABLES_ACCOUNT`
-        - `SAVINGS_ACCOUNT`
-        - `UNCATEGORIZED`
-        - `null`
-    source:
-      openapi: ../openapi.yml
   AccountsBalance:
     docs: |
       Details regarding the current and available balances for the account.
@@ -13293,18 +13000,6 @@ types:
 
           *The date when the last credit payment was made.*
         availability: deprecated
-    source:
-      openapi: ../openapi.yml
-  EnumLoanDataInterestRateType:
-    enum:
-      - MONTHLY
-      - YEARLY
-    docs: >
-      The period that the interest is applied to the loan. We return one of the
-      following values:
-
-        - `MONTHLY`
-        - `YEARLY`
     source:
       openapi: ../openapi.yml
   AccountsLoanDataInterestRate:
@@ -13751,73 +13446,6 @@ types:
         docs: The name of the merchant.
     source:
       openapi: ../openapi.yml
-  EnumTransactionCategory:
-    enum:
-      - value: Bills & Utilities
-        name: BillsUtilities
-      - value: Credits & Loans
-        name: CreditsLoans
-      - Deposits
-      - value: Fees & Charges
-        name: FeesCharges
-      - value: Food & Groceries
-        name: FoodGroceries
-      - value: Home & Life
-        name: HomeLife
-      - value: Income & Payments
-        name: IncomePayments
-      - Insurance
-      - value: Investments & Savings
-        name: InvestmentsSavings
-      - value: Online Platforms & Leisure
-        name: OnlinePlatformsLeisure
-      - value: Personal Shopping
-        name: PersonalShopping
-      - Taxes
-      - Transfers
-      - value: Transport & Travel
-        name: TransportTravel
-      - Unknown
-      - value: Withdrawal & ATM
-        name: WithdrawalAtm
-    docs: >
-      The name of the category to which this transaction belongs.
-
-
-      > **Get transaction categorization**
-
-      With [Transaction
-      categorization](https://developers.belvo.com/docs/banking#categorizing-transactions),
-      we clean and categorize transactions for you, turning raw data into
-      actionable insights. To enable this feature, just [reach
-      out](https://belvo.com/contact/?utm_source=documentation) to us, and we'll
-      get right to it.
-
-
-      We return one of the following enum values:
-
-        - `Bills & Utilities`
-        - `Credits & Loans`
-        - `Deposits`
-        - `Fees & Charges`
-        - `Food & Groceries`
-        - `Home & Life`
-        - `Income & Payments`
-        - `Insurance`
-        - `Investments & Savings`
-        - `Online Platforms & Leisure`
-        - `Personal Shopping`
-        - `Taxes`
-        - `Transfers`
-        - `Transport & Travel`
-        - `Unknown`*
-        - `Withdrawal & ATM`
-        - `null`
-
-
-        \* For clients not using our Transaction Categorization product, we return `null` instead.
-    source:
-      openapi: ../openapi.yml
   EnumTransactionSubcategory:
     enum:
       - value: Electricity & Energy
@@ -14025,21 +13653,6 @@ types:
         - `Taxis & Rideshares`
         - `Other`
         - `null`
-    source:
-      openapi: ../openapi.yml
-  EnumTransactionType:
-    enum:
-      - OUTFLOW
-      - INFLOW
-    docs: >
-      The direction of the transaction:
-
-      - `INFLOW` indicates money coming into the account.
-
-      - `OUTFLOW` indicates money going out of the account.
-
-      - `null` when no information was present regarding the direction of the
-      transaction.
     source:
       openapi: ../openapi.yml
   EnumTransactionStatus:
@@ -14663,17 +14276,6 @@ types:
         - `Nómina`
         - `Pago`
         - `Traslado`
-    source:
-      openapi: ../openapi.yml
-  EnumInvoiceType:
-    enum:
-      - OUTFLOW
-      - INFLOW
-    docs: >
-      The direction of the invoice (from the perspective of the Link owner).
-
-      - `OUTFLOW` indicates a sent invoice. - `INFLOW` indicates a received
-      invoice.
     source:
       openapi: ../openapi.yml
   EnumInvoiceSatPaymentMethod:
@@ -19401,63 +19003,6 @@ types:
         docs: >-
           The four-digit ISO 18245 Merchant Category Code (MCC). Only required
           when `account_category` = `CREDIT_CARD`.
-    source:
-      openapi: ../openapi.yml
-  EnumCategorizationTransactionCategory:
-    enum:
-      - value: Bills & Utilities
-        name: BillsUtilities
-      - value: Credits & Loans
-        name: CreditsLoans
-      - Deposits
-      - value: Fees & Charges
-        name: FeesCharges
-      - value: Food & Groceries
-        name: FoodGroceries
-      - value: Home & Life
-        name: HomeLife
-      - value: Income & Payments
-        name: IncomePayments
-      - Insurance
-      - value: Investments & Savings
-        name: InvestmentsSavings
-      - value: Online Platforms & Leisure
-        name: OnlinePlatformsLeisure
-      - value: Personal Shopping
-        name: PersonalShopping
-      - Taxes
-      - Transfers
-      - value: Transport & Travel
-        name: TransportTravel
-      - Unknown
-      - value: Withdrawal & ATM
-        name: WithdrawalAtm
-    docs: >
-      The name of the category to which this transaction belongs. For more info
-      about this feature, check our [Transaction
-      categorization](https://developers.belvo.com/docs/banking#categorizing-transactions)
-      article. 
-
-
-      We return one of the following enum values:
-
-        - `Bills & Utilities`
-        - `Credits & Loans`
-        - `Deposits`
-        - `Fees & Charges`
-        - `Food & Groceries`
-        - `Home & Life`
-        - `Income & Payments`
-        - `Insurance`
-        - `Investments & Savings`
-        - `Online Platforms & Leisure`
-        - `Personal Shopping`
-        - `Taxes`
-        - `Transfers`
-        - `Transport & Travel`
-        - `Unknown`
-        - `Withdrawal & ATM`
-        - `null`
     source:
       openapi: ../openapi.yml
   EnumCategorizationTransactionSubcategory:
@@ -50891,7 +50436,7 @@ types:
                   },
                   "status": {
                     "docs": "Return payment links with this status. Can be either `ACTIVE` or `INACTIVE`.",
-                    "type": "optional<ListPaymentLinksRequestStatus>",
+                    "type": "optional<root.ListPaymentLinksRequestStatus>",
                   },
                 },
               },
@@ -50977,25 +50522,11 @@ types:
               "openapi": "../openapi.yml",
             },
           },
-          "ListPaymentLinksRequestStatus": {
-            "enum": [
-              "ACTIVE",
-              "INACTIVE",
-            ],
-            "inline": undefined,
-            "source": {
-              "openapi": "../openapi.yml",
-            },
-          },
         },
       },
-      "rawContents": "types:
-  ListPaymentLinksRequestStatus:
-    enum:
-      - ACTIVE
-      - INACTIVE
-    source:
-      openapi: ../openapi.yml
+      "rawContents": "imports:
+  root: __package__.yml
+types:
   ListPaymentLinksRequestOrdering:
     enum:
       - value: created_at
@@ -51025,8 +50556,6 @@ types:
       - type: root.PaymentLinkPse
     source:
       openapi: ../openapi.yml
-imports:
-  root: __package__.yml
 service:
   auth: false
   base-path: ''
@@ -51083,7 +50612,7 @@ service:
             type: optional<string>
             docs: Return results between this date range (in `YYYY-MM-DD` format).
           status:
-            type: optional<ListPaymentLinksRequestStatus>
+            type: optional<root.ListPaymentLinksRequestStatus>
             docs: >-
               Return payment links with this status. Can be either `ACTIVE` or
               `INACTIVE`.

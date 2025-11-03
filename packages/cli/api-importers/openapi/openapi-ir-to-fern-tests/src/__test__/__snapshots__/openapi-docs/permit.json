@@ -5742,8 +5742,8 @@ types:
   ResourceRoleList:
     properties:
       roles:
-        display-name: Roles
         type: Roles
+        display-name: Roles
     source:
       openapi: ../openapi.json
   ResourceRoleRead:
@@ -5920,8 +5920,8 @@ types:
   RoleList:
     properties:
       roles:
-        display-name: Roles
         type: Roles
+        display-name: Roles
     source:
       openapi: ../openapi.json
   RoleRead:

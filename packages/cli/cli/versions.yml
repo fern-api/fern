@@ -1,6 +1,14 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
 - changelogEntry:
     - summary: |
+        Fixes fern definition creating duplicate types in separate files
+      type: fix
+  irVersion: 61
+  createdAt: "2025-11-03"
+  version: 0.107.0
+
+- changelogEntry:
+    - summary: |
         Add support for external product links.
       type: feat
   irVersion: 61
