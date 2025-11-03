@@ -49,7 +49,7 @@ export class DynamicSnippetsGeneratorContext extends AbstractDynamicSnippetsGene
         return upperFirst(this.customConfig?.clientModuleName ?? this.config.organization);
     }
 
-    public isSingleEnvironmentID(environment: FernIr.dynamic.EnvironmentValues): environment is FernIr.EnvironmentId {
+    public isSingleEnvironmentID(environment: FernIr.dynamic.EnvironmentValues): environment is FernIr.dynamic.EnvironmentId {
         return typeof environment === "string";
     }
 

@@ -1584,8 +1584,8 @@ importers:
         specifier: workspace:*
         version: link:../../../packages/commons/core-utils
       '@fern-api/dynamic-ir-sdk':
-        specifier: ^59.6.1
-        version: 59.6.1
+        specifier: ^61.7.0
+        version: 61.7.0
       '@fern-api/path-utils':
         specifier: workspace:*
         version: link:../../../packages/commons/path-utils
@@ -1668,8 +1668,8 @@ importers:
         specifier: workspace:*
         version: link:../../../packages/commons/core-utils
       '@fern-api/dynamic-ir-sdk':
-        specifier: ^58.2.0
-        version: 58.3.0
+        specifier: ^61.7.0
+        version: 61.7.0
       '@fern-api/fs-utils':
         specifier: workspace:*
         version: link:../../../packages/commons/fs-utils
@@ -9433,9 +9433,6 @@ packages:
   '@fern-api/docs-parsers@0.0.65':
     resolution: {integrity: sha512-+xZ6AU5Y/EdOeG5WIkUftiifNKC3QiMtjdZ5vlqcO0ZzehhpK0yOFRVfkQl6Z+eiD/VBZfTP5HYvlBkWy1xrJQ==}
 
-  '@fern-api/dynamic-ir-sdk@58.3.0':
-    resolution: {integrity: sha512-2PPIKyMlxUVmhouWj9WadwE/6/Lt9kTG/WyQqRyNGGqnwjU2NJm+fvBDZ/O7tOPUXk6+GYJbtjVYGSBXnihWPw==}
-
   '@fern-api/dynamic-ir-sdk@59.6.1':
     resolution: {integrity: sha512-GNo6cLnpaJjwY041x2clzRaUqsPKcQkpW9TsLYVptj2UniSFS7dtMcoPpRb/zFMmBO/SjFnOs/2OQ8AHYp58NA==}
 
@@ -16910,8 +16907,6 @@ snapshots:
       whatwg-mimetype: 4.0.0
     transitivePeerDependencies:
       - typescript
-
-  '@fern-api/dynamic-ir-sdk@58.3.0': {}
 
   '@fern-api/dynamic-ir-sdk@59.6.1': {}
 

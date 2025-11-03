@@ -17,10 +17,6 @@ export class ModelGeneratorContext extends AbstractRubyGeneratorContext<ModelCus
         );
     }
 
-    public addRawFile(file: File): void {
-        
-    }
-
     public getClassReferenceForTypeId(typeId: TypeId): ruby.ClassReference {
         const typeDeclaration = this.getTypeDeclarationOrThrow(typeId);
         return ruby.classReference({
