@@ -1539,13 +1539,22 @@ function createEditThisPageUrl(
     editThisPage: docsYml.RawSchemas.FernDocsConfig.EditThisPageConfig | undefined,
     pageFilepath: string
 ): string | undefined {
-    if (editThisPage?.github == null) {
-        return undefined;
+    if (editThisPage?.github != null) {
+        const { owner, repo, branch = "main", host = "https://github.com" } = editThisPage.github;
+        return `${wrapWithHttps(host)}/${owner}/${repo}/blob/${branch}/fern/${pageFilepath}?plain=1`;
     }
 
-    const { owner, repo, branch = "main", host = "https://github.com" } = editThisPage.github;
+    if (editThisPage?.gitlab != null) {
+        const { owner, repo, branch = "main", host = "https://gitlab.com" } = editThisPage.gitlab;
+        return `${wrapWithHttps(host)}/${owner}/${repo}/-/blob/${branch}/fern/${pageFilepath}`;
+    }
 
-    return `${wrapWithHttps(host)}/${owner}/${repo}/blob/${branch}/fern/${pageFilepath}?plain=1`;
+    if (editThisPage?.bitbucket != null) {
+        const { owner, repo, branch = "main", host = "https://bitbucket.org" } = editThisPage.bitbucket;
+        return `${wrapWithHttps(host)}/${owner}/${repo}/src/${branch}/fern/${pageFilepath}`;
+    }
+
+    return undefined;
 }
 
 function convertAvailability(
