@@ -30,6 +30,7 @@ RUN echo '{ \
     "jest-environment-jsdom": "^29.7.0", \
     "prettier": "3.4.2", \
     "@biomejs/biome": "2.3.1", \
+    "oxlint": "1.25.0", \
     "ts-jest": "^29.1.1", \
     "typescript": "~5.7.2", \
     "form-data-encoder": "^4.0.2", \
