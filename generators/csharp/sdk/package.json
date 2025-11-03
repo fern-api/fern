@@ -49,7 +49,7 @@
     "@fern-api/fern-csharp-model": "workspace:*",
     "@fern-api/fs-utils": "workspace:*",
     "@fern-api/logger": "workspace:*",
-    "@fern-fern/generator-cli-sdk": "0.3.0",
+    "@fern-fern/generator-cli-sdk": "^0.1.5",
     "@fern-fern/generator-exec-sdk": "^0.0.1167",
     "@fern-fern/ir-sdk": "^61.7.0",
     "@types/node": "18.15.3",
