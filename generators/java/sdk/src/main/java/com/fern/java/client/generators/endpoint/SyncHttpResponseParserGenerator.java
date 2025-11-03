@@ -139,8 +139,19 @@ public final class SyncHttpResponseParserGenerator extends AbstractHttpResponseP
                         "$T $L = $N.body()",
                         ResponseBody.class,
                         variables.getResponseBodyName(),
-                        variables.getResponseName())
-                .beginControlFlow("if ($L.isSuccessful())", variables.getResponseName());
+                        variables.getResponseName());
+
+        if (shouldPreReadResponseBodyString()) {
+            httpResponseBuilder.addStatement(
+                    "$T $L = $L != null ? $L.string() : $S",
+                    String.class,
+                    variables.getResponseBodyStringName(),
+                    variables.getResponseBodyName(),
+                    variables.getResponseBodyName(),
+                    "{}");
+        }
+
+        httpResponseBuilder.beginControlFlow("if ($L.isSuccessful())", variables.getResponseName());
     }
 
     @Override
@@ -157,8 +168,19 @@ public final class SyncHttpResponseParserGenerator extends AbstractHttpResponseP
                         "$T $L = $N.body()",
                         ResponseBody.class,
                         variables.getResponseBodyName(),
-                        variables.getResponseName())
-                .beginControlFlow("if ($L.isSuccessful())", variables.getResponseName());
+                        variables.getResponseName());
+
+        if (shouldPreReadResponseBodyString()) {
+            httpResponseBuilder.addStatement(
+                    "$T $L = $L != null ? $L.string() : $S",
+                    String.class,
+                    variables.getResponseBodyStringName(),
+                    variables.getResponseBodyName(),
+                    variables.getResponseBodyName(),
+                    "{}");
+        }
+
+        httpResponseBuilder.beginControlFlow("if ($L.isSuccessful())", variables.getResponseName());
     }
 
     @Override
