@@ -1,4 +1,4 @@
-import { EnumSchema, ObjectSchema, OneOfSchema, Schema } from "@fern-api/openapi-ir";
+import { Schema } from "@fern-api/openapi-ir";
 import { RelativeFilePath } from "@fern-api/path-utils";
 import { OpenApiIrConverterContext } from "../OpenApiIrConverterContext";
 import { getDeclarationFileForSchema } from "./getDeclarationFileForSchema";
@@ -9,14 +9,17 @@ import { getDeclarationFileForSchema } from "./getDeclarationFileForSchema";
  * Otherwise, returns undefined.
  */
 export function findTopLevelSchemaFile(
-    schema: EnumSchema | ObjectSchema | OneOfSchema,
+    inlineSchema: Schema,
     context: OpenApiIrConverterContext
 ): RelativeFilePath | undefined {
-    const schemaName = schema.nameOverride ?? schema.generatedName;
+    const schemaName = getSchemaName(inlineSchema);
+    if (schemaName == null) {
+        return undefined;
+    }
 
     // Check in root schemas
     for (const topLevelSchema of Object.values(context.ir.groupedSchemas.rootSchemas)) {
-        if (isSameSchema(topLevelSchema, schema, schemaName)) {
+        if (isSameSchema(topLevelSchema, inlineSchema, schemaName)) {
             return getDeclarationFileForSchema(topLevelSchema);
         }
     }
@@ -24,7 +27,7 @@ export function findTopLevelSchemaFile(
     // Check in namespaced schemas
     for (const schemas of Object.values(context.ir.groupedSchemas.namespacedSchemas)) {
         for (const topLevelSchema of Object.values(schemas)) {
-            if (isSameSchema(topLevelSchema, schema, schemaName)) {
+            if (isSameSchema(topLevelSchema, inlineSchema, schemaName)) {
                 return getDeclarationFileForSchema(topLevelSchema);
             }
         }
@@ -34,42 +37,18 @@ export function findTopLevelSchemaFile(
 }
 
 /**
- * Helper to get the schema type tag for inline schemas.
- */
-function getInlineSchemaType(inlineSchema: EnumSchema | ObjectSchema | OneOfSchema): "enum" | "object" | "oneOf" {
-    // EnumSchema has a values array
-    const asEnum = inlineSchema as EnumSchema;
-    if (asEnum.values !== undefined) {
-        return "enum";
-    }
-
-    // ObjectSchema has properties or allOf arrays
-    const asObject = inlineSchema as ObjectSchema;
-    if (asObject.properties !== undefined || asObject.allOf !== undefined) {
-        return "object";
-    }
-
-    // Otherwise it's a OneOfSchema
-    return "oneOf";
-}
-
-/**
  * Helper to check if a top-level schema matches the given inline schema.
+ * Compares both name and type discriminator directly - no string literals needed!
  */
-function isSameSchema(
-    topLevelSchema: Schema,
-    inlineSchema: EnumSchema | ObjectSchema | OneOfSchema,
-    targetName: string
-): boolean {
-    // Get the top-level schema name
+function isSameSchema(topLevelSchema: Schema, inlineSchema: Schema, targetName: string): boolean {
+    // Check if names match
     const topLevelName = getSchemaName(topLevelSchema);
     if (topLevelName !== targetName) {
         return false;
     }
 
-    // Match based on type
-    const inlineType = getInlineSchemaType(inlineSchema);
-    return topLevelSchema.type === inlineType;
+    // Direct type comparison: compares the discriminator values
+    return topLevelSchema.type === inlineSchema.type;
 }
 
 export function getSchemaName(schema: Schema): string | undefined {
