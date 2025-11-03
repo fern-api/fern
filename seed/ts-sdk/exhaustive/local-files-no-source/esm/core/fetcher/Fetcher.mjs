@@ -49,7 +49,7 @@ export function fetcherImpl(args) {
             body: args.body,
             type: (_a = args.requestType) !== null && _a !== void 0 ? _a : "other",
         });
-        const fetchFn = yield getFetchFn();
+        const fetchFn = (_a = args.fetchFn) !== null && _a !== void 0 ? _a : (yield getFetchFn());
         try {
             const response = yield requestWithRetries(() => __awaiter(this, void 0, void 0, function* () {
                 return makeRequest(fetchFn, url, args.method, yield getHeaders(args), requestBody, args.timeoutMs, args.abortSignal, args.withCredentials, args.duplex);

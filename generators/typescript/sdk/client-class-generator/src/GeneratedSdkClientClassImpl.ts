@@ -1632,6 +1632,14 @@ export class GeneratedSdkClientClassImpl implements GeneratedSdkClientClass {
         );
     }
 
+    public getReferenceToFetch(): ts.Expression {
+        return ts.factory.createPropertyAccessChain(
+            this.getReferenceToOptions(),
+            ts.factory.createToken(ts.SyntaxKind.QuestionDotToken),
+            ts.factory.createIdentifier("fetch")
+        );
+    }
+
     public getReferenceToOptions(): ts.Expression {
         return ts.factory.createPropertyAccessExpression(
             ts.factory.createThis(),
