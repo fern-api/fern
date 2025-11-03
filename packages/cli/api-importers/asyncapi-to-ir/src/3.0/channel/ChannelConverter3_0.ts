@@ -91,6 +91,34 @@ export class ChannelConverter3_0 extends AbstractChannelConverter<AsyncAPIV3.Cha
             }
         }
 
+        if (this.channel.messages != null) {
+            for (const [messageId, messageOrRef] of Object.entries(this.channel.messages)) {
+                const resolvedMessage = this.context.resolveMaybeReference<AsyncAPIV3.ChannelMessage>({
+                    schemaOrReference: messageOrRef,
+                    breadcrumbs: [...this.breadcrumbs, "messages", messageId]
+                });
+                if (resolvedMessage != null && "$ref" in resolvedMessage.payload) {
+                    const resolved = this.context.convertReferenceToTypeReference({
+                        reference: resolvedMessage.payload
+                    });
+                    if (resolved.ok) {
+                        const messageBody = WebSocketMessageBody.reference({
+                            bodyType: resolved.reference,
+                            docs: resolvedMessage.description
+                        });
+                        messages.push({
+                            type: messageId,
+                            displayName: resolvedMessage.name ?? messageId,
+                            origin: "client",
+                            body: messageBody,
+                            availability: undefined,
+                            docs: resolvedMessage.description
+                        });
+                    }
+                }
+            }
+        }
+
         const baseUrl =
             this.resolveChannelServersFromReference(this.channel.servers ?? []) ??
             Object.keys(this.context.spec.servers ?? {})[0];
