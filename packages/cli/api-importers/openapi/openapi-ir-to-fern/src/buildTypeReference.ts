@@ -24,10 +24,11 @@ import {
     buildOneOfTypeDeclaration
 } from "./buildTypeDeclaration";
 import { OpenApiIrConverterContext } from "./OpenApiIrConverterContext";
+import { buildTypeReferenceWithMetadata } from "./utils/buildTypeReferenceMetadata";
 import { convertAvailability } from "./utils/convertAvailability";
 import { convertSdkGroupNameToFile } from "./utils/convertSdkGroupName";
 import { convertToEncodingSchema } from "./utils/convertToEncodingSchema";
-import { getDeclarationFileForSchema } from "./utils/getDeclarationFileForSchema";
+import { findTopLevelSchemaFile, getSchemaName } from "./utils/findTopLevelSchema";
 import { getGroupNameForSchema } from "./utils/getGroupNameForSchema";
 import {
     getDefaultFromTypeReference,
@@ -43,79 +44,6 @@ const MAX_INT_32 = 2147483647;
 
 const MIN_DOUBLE_64 = -1.7976931348623157e308;
 const MAX_DOUBLE_64 = 1.7976931348623157e308;
-
-/**
- * Checks if a schema exists as a top-level schema in the IR.
- * If it does, returns the declaration file where it should be located.
- * Otherwise, returns undefined.
- */
-function findTopLevelSchemaFile(
-    schema: EnumSchema | ObjectSchema | OneOfSchema,
-    context: OpenApiIrConverterContext
-): RelativeFilePath | undefined {
-    const schemaName = schema.nameOverride ?? schema.generatedName;
-    const schemaType = getSchemaType(schema);
-
-    // Check in root schemas
-    for (const [id, topLevelSchema] of Object.entries(context.ir.groupedSchemas.rootSchemas)) {
-        if (schemasMatch(topLevelSchema, schemaName, schemaType)) {
-            return getDeclarationFileForSchema(topLevelSchema);
-        }
-    }
-
-    // Check in namespaced schemas
-    for (const [namespace, schemas] of Object.entries(context.ir.groupedSchemas.namespacedSchemas)) {
-        for (const [id, topLevelSchema] of Object.entries(schemas)) {
-            if (schemasMatch(topLevelSchema, schemaName, schemaType)) {
-                return getDeclarationFileForSchema(topLevelSchema);
-            }
-        }
-    }
-
-    return undefined;
-}
-
-/**
- * Get the schema type string for enum, object, or oneOf schemas.
- */
-function getSchemaType(schema: EnumSchema | ObjectSchema | OneOfSchema): "enum" | "object" | "oneOf" {
-    // This is a workaround: check for properties that uniquely identify each type
-    if ("values" in schema) {
-        return "enum";
-    }
-    if ("properties" in schema || "allOf" in schema) {
-        return "object";
-    }
-    return "oneOf";
-}
-
-/**
- * Helper to check if a schema matches the given name and type.
- */
-function schemasMatch(schema: Schema, targetName: string, targetType: "enum" | "object" | "oneOf"): boolean {
-    // Get the schema name
-    const schemaName = Schema._visit(schema, {
-        primitive: (s) => s.nameOverride ?? s.generatedName,
-        object: (s) => s.nameOverride ?? s.generatedName,
-        array: (s) => s.nameOverride ?? s.generatedName,
-        map: (s) => s.nameOverride ?? s.generatedName,
-        enum: (s) => s.nameOverride ?? s.generatedName,
-        reference: (s) => s.nameOverride ?? s.generatedName,
-        literal: (s) => s.nameOverride ?? s.generatedName,
-        oneOf: (s) => s.nameOverride ?? s.generatedName,
-        optional: (s) => s.nameOverride ?? s.generatedName,
-        nullable: (s) => s.nameOverride ?? s.generatedName,
-        unknown: (s) => s.nameOverride ?? s.generatedName,
-        _other: () => undefined
-    });
-
-    if (schemaName !== targetName) {
-        return false;
-    }
-
-    // Match based on type
-    return schema.type === targetType;
-}
 
 export function buildTypeReference({
     schema,
@@ -834,23 +762,14 @@ export function buildEnumTypeReference({
         declarationFile: effectiveDeclarationFile,
         context
     });
-    if (schema.description == null && schema.default == null && schema.title == null) {
-        return prefixedType;
-    }
-    const result: RawSchemas.TypeReferenceSchema = {
-        type: prefixedType
-    };
-    if (schema.description != null) {
-        result.docs = schema.description;
-    }
-    if (schema.default != null) {
-        result.default = schema.default.value;
-    }
-    if (schema.availability != null) {
-        result.availability = convertAvailability(schema.availability);
-    }
 
-    return result;
+    return buildTypeReferenceWithMetadata({
+        type: prefixedType,
+        docs: schema.description,
+        defaultValue: schema.default?.value,
+        availability: schema.availability,
+        title: schema.title
+    });
 }
 
 export function buildObjectTypeReference({
@@ -895,14 +814,13 @@ export function buildObjectTypeReference({
         declarationFile: effectiveDeclarationFile,
         context
     });
-    if (schema.description == null && schema.title == null) {
-        return prefixedType;
-    }
-    return {
+
+    return buildTypeReferenceWithMetadata({
         type: prefixedType,
-        ...(schema.description != null ? { docs: schema.description } : {}),
-        ...(schema.availability != null ? { availability: convertAvailability(schema.availability) } : {})
-    };
+        docs: schema.description,
+        availability: schema.availability,
+        title: schema.title
+    });
 }
 
 export function buildOneOfTypeReference({
@@ -947,15 +865,14 @@ export function buildOneOfTypeReference({
         declarationFile: effectiveDeclarationFile,
         context
     });
-    if (schema.description == null && schema.title == null) {
-        return prefixedType;
-    }
-    return {
-        ...(schema.title != null ? { "display-name": schema.title } : {}),
+
+    return buildTypeReferenceWithMetadata({
         type: prefixedType,
-        ...(schema.description != null ? { docs: schema.description } : {}),
-        ...(schema.availability != null ? { availability: convertAvailability(schema.availability) } : {})
-    };
+        docs: schema.description,
+        availability: schema.availability,
+        title: schema.title,
+        displayName: schema.title
+    });
 }
 
 function getPrefixedType({
@@ -977,23 +894,6 @@ function getPrefixedType({
         fileToImport: declarationFile
     });
     return prefix != null ? `${prefix}.${type}` : type;
-}
-
-function getSchemaName(schema: Schema): string | undefined {
-    return Schema._visit(schema, {
-        primitive: (s) => s.nameOverride ?? s.generatedName,
-        object: (s) => s.nameOverride ?? s.generatedName,
-        array: (s) => s.nameOverride ?? s.generatedName,
-        map: (s) => s.nameOverride ?? s.generatedName,
-        enum: (s) => s.nameOverride ?? s.generatedName,
-        reference: (s) => s.nameOverride ?? s.generatedName,
-        literal: (s) => s.nameOverride ?? s.generatedName,
-        oneOf: (s) => s.nameOverride ?? s.generatedName,
-        optional: (s) => s.nameOverride ?? s.generatedName,
-        nullable: (s) => s.nameOverride ?? s.generatedName,
-        unknown: (s) => s.nameOverride ?? s.generatedName,
-        _other: () => undefined
-    });
 }
 
 function getDisplayName(schema: Schema): string | undefined {
