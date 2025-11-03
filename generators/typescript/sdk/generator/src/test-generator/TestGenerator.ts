@@ -437,6 +437,7 @@ describe("test", () => {
             response: example.response,
             ir: this.ir
         });
+        const mockBodyMethod = this.getMockBodyMethod(endpoint);
 
         return code`
 export function mockAuth(server: MockServer) {
@@ -452,7 +453,7 @@ export function mockAuth(server: MockServer) {
                 `;
         })}${
             rawRequestBody
-                ? code`.jsonBody(rawRequestBody)
+                ? code`.${mockBodyMethod}(rawRequestBody)
             `
                 : ""
         }.respondWith()
@@ -809,6 +810,7 @@ describe("${serviceName}", () => {
             response: example.response,
             ir: this.ir
         });
+        const mockBodyMethod = this.getMockBodyMethod(endpoint);
 
         const willThrowError = responseStatusCode >= 400 && this.neverThrowErrors === false;
 
@@ -923,7 +925,7 @@ describe("${serviceName}", () => {
                     `;
             })}${
                 rawRequestBody
-                    ? code`.jsonBody(rawRequestBody)
+                    ? code`.${mockBodyMethod}(rawRequestBody)
                 `
                     : ""
             }.respondWith()
@@ -960,6 +962,14 @@ describe("${serviceName}", () => {
 
     private getName({ name, context }: { name: Name; context: SdkContext }): string {
         return context.retainOriginalCasing || !context.includeSerdeLayer ? name.originalName : name.camelCase.safeName;
+    }
+
+    private getMockBodyMethod(endpoint: HttpEndpoint): string {
+        const contentType = endpoint.requestBody?.contentType;
+        if (contentType === "application/x-www-form-urlencoded") {
+            return "formUrlEncodedBody";
+        }
+        return "jsonBody";
     }
 
     private shouldBuildTest(endpoint: HttpEndpoint): boolean {

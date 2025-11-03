@@ -47,13 +47,13 @@ function getHeaders(args) {
 }
 function fetcherImpl(args) {
     return __awaiter(this, void 0, void 0, function* () {
-        var _a;
+        var _a, _b;
         const url = (0, createRequestUrl_js_1.createRequestUrl)(args.url, args.queryParameters);
         const requestBody = yield (0, getRequestBody_js_1.getRequestBody)({
             body: args.body,
-            type: args.requestType === "json" ? "json" : "other",
+            type: (_a = args.requestType) !== null && _a !== void 0 ? _a : "other",
         });
-        const fetchFn = yield (0, getFetchFn_js_1.getFetchFn)();
+        const fetchFn = (_a = args.fetchFn) !== null && _a !== void 0 ? _a : (yield (0, getFetchFn_js_1.getFetchFn)());
         try {
             const response = yield (0, requestWithRetries_js_1.requestWithRetries)(() => __awaiter(this, void 0, void 0, function* () {
                 return (0, makeRequest_js_1.makeRequest)(fetchFn, url, args.method, yield getHeaders(args), requestBody, args.timeoutMs, args.abortSignal, args.withCredentials, args.duplex);
@@ -79,7 +79,7 @@ function fetcherImpl(args) {
             }
         }
         catch (error) {
-            if ((_a = args.abortSignal) === null || _a === void 0 ? void 0 : _a.aborted) {
+            if ((_b = args.abortSignal) === null || _b === void 0 ? void 0 : _b.aborted) {
                 return {
                     ok: false,
                     error: {

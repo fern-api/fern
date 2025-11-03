@@ -908,43 +908,10 @@
       ],
       "additionalProperties": false
     },
-    "docs.ProductConfig": {
+    "docs.InternalProduct": {
       "type": "object",
       "properties": {
-        "viewers": {
-          "oneOf": [
-            {
-              "$ref": "#/definitions/docs.Role"
-            },
-            {
-              "type": "null"
-            }
-          ]
-        },
-        "orphaned": {
-          "oneOf": [
-            {
-              "type": "boolean"
-            },
-            {
-              "type": "null"
-            }
-          ]
-        },
-        "feature-flag": {
-          "oneOf": [
-            {
-              "$ref": "#/definitions/docs.FeatureFlagConfiguration"
-            },
-            {
-              "type": "null"
-            }
-          ]
-        },
         "display-name": {
-          "type": "string"
-        },
-        "path": {
           "type": "string"
         },
         "subtitle": {
@@ -977,7 +944,106 @@
             }
           ]
         },
+        "versions": {
+          "oneOf": [
+            {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/docs.VersionConfig"
+              }
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "audiences": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/docs.Audience"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "viewers": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/docs.Role"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "orphaned": {
+          "oneOf": [
+            {
+              "type": "boolean"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "feature-flag": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/docs.FeatureFlagConfiguration"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "path": {
+          "type": "string"
+        },
         "slug": {
+          "oneOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        }
+      },
+      "required": [
+        "display-name",
+        "path"
+      ],
+      "additionalProperties": false
+    },
+    "docs.ExternalProduct": {
+      "type": "object",
+      "properties": {
+        "display-name": {
+          "type": "string"
+        },
+        "subtitle": {
+          "oneOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "icon": {
+          "oneOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "image": {
           "oneOf": [
             {
               "type": "string"
@@ -1009,13 +1075,56 @@
               "type": "null"
             }
           ]
+        },
+        "viewers": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/docs.Role"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "orphaned": {
+          "oneOf": [
+            {
+              "type": "boolean"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "feature-flag": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/docs.FeatureFlagConfiguration"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "href": {
+          "type": "string"
         }
       },
       "required": [
         "display-name",
-        "path"
+        "href"
       ],
       "additionalProperties": false
+    },
+    "docs.ProductConfig": {
+      "anyOf": [
+        {
+          "$ref": "#/definitions/docs.InternalProduct"
+        },
+        {
+          "$ref": "#/definitions/docs.ExternalProduct"
+        }
+      ]
     },
     "docs.Availability": {
       "type": "string",
@@ -4369,6 +4478,16 @@
           ]
         },
         "disable-explorer-proxy": {
+          "oneOf": [
+            {
+              "type": "boolean"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "disable-analytics": {
           "oneOf": [
             {
               "type": "boolean"

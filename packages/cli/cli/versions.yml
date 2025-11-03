@@ -1,7 +1,47 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
 - changelogEntry:
     - summary: |
+        Add support for external product links.
+      type: feat
+  irVersion: 61
+  createdAt: "2025-11-03"
+  version: 0.106.0
+
+- changelogEntry:
+    - summary: |
+        Add a disable-analytics setting in docs.yml
+      type: feat
+  irVersion: 61
+  createdAt: "2025-11-02"
+  version: 0.105.0
+
+- changelogEntry:
+    - summary: |
+        Adds support for custom icons.
+      type: feat
+  irVersion: 61
+  createdAt: "2025-11-01"
+  version: 0.104.0
+
+- changelogEntry:
+    - summary: |
         Add support for new IR property: GenerationMetadata.
+      type: feat
+  irVersion: 61
+  createdAt: "2025-10-31"
+  version: 0.103.0
+
+- changelogEntry:
+    - summary: |
+        Fix discriminated union validation in `fern check` to include base properties and extends.
+      type: fix
+  irVersion: 61
+  createdAt: "2025-10-31"
+  version: 0.102.1
+
+- changelogEntry:
+    - summary: |
+        Add discriminated union base property and extend property examples to IR.
       type: feat
   irVersion: 61
   createdAt: "2025-10-31"
@@ -22,14 +62,6 @@
   irVersion: 61
   createdAt: "2025-10-31"
   version: 0.101.3
-
-- changelogEntry:
-    - summary: |
-        Add discriminated union base property and extend property examples to IR.
-      type: feat
-  irVersion: 61
-  createdAt: "2025-10-31"
-  version: 0.102.0
 
 - changelogEntry:
     - summary: |

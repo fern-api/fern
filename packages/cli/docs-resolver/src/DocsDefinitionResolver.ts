@@ -66,10 +66,6 @@ const defaultRegisterApi: RegisterApiFn = async ({ ir }) => {
     return `${ir.apiName.snakeCase.unsafeName}-${apiCounter}`;
 };
 
-const defaultConfigureAiChat: ConfigureAiChatFn = async ({ aiChatConfig }) => {
-    return;
-};
-
 export interface DocsDefinitionResolverArgs {
     domain: string;
     docsWorkspace: DocsWorkspace;
@@ -304,8 +300,7 @@ export class DocsDefinitionResolver {
         }
 
         const filesToUploadSet = await collectFilesFromDocsConfig({
-            parsedDocsConfig: this.parsedDocsConfig,
-            docsWorkspace: this.docsWorkspace
+            parsedDocsConfig: this.parsedDocsConfig
         });
 
         // preprocess markdown files to extract image paths
@@ -563,13 +558,27 @@ export class DocsDefinitionResolver {
                         ...navbarLink,
                         links: navbarLink.links?.map((link) => ({
                             ...link,
-                            url: DocsV1Write.Url(link.url)
-                        }))
+                            url: DocsV1Write.Url(link.url),
+                            icon: this.resolveIconFileId(link.icon),
+                            rightIcon: this.resolveIconFileId(link.rightIcon)
+                        })),
+                        icon: this.resolveIconFileId(navbarLink.icon),
+                        rightIcon: this.resolveIconFileId(navbarLink.rightIcon)
                     };
                 }
+
+                if (navbarLink.type === "github") {
+                    return {
+                        ...navbarLink,
+                        url: DocsV1Write.Url(navbarLink.url)
+                    };
+                }
+
                 return {
                     ...navbarLink,
-                    url: DocsV1Write.Url(navbarLink.url)
+                    url: DocsV1Write.Url(navbarLink.url),
+                    icon: this.resolveIconFileId(navbarLink.icon),
+                    rightIcon: this.resolveIconFileId(navbarLink.rightIcon)
                 };
             }),
             typographyV2: this.convertDocsTypographyConfiguration(),
@@ -737,7 +746,7 @@ export class DocsDefinitionResolver {
             id: this.#idgen.get(pageId),
             title: landingPageConfig.title,
             slug: slug.get(),
-            icon: landingPageConfig.icon,
+            icon: this.resolveIconFileId(landingPageConfig.icon),
             hidden: landingPageConfig.hidden,
             viewers: landingPageConfig.viewers,
             orphaned: landingPageConfig.orphaned,
@@ -809,57 +818,76 @@ export class DocsDefinitionResolver {
         product: docsYml.ProductInfo,
         parentSlug: FernNavigation.V1.SlugGenerator
     ): Promise<FernNavigation.V1.ProductNode> {
-        const slug = parentSlug.setProductSlug(product.slug ?? kebabCase(product.product));
-        let child: FernNavigation.V1.ProductChild;
-        switch (product.navigation.type) {
-            case "tabbed":
-                child = {
-                    type: "unversioned",
-                    id: this.#idgen.get(product.product),
-                    landingPage: undefined,
-                    child: await this.convertTabbedNavigation(
-                        this.#idgen.get(product.product),
-                        product.navigation.items,
-                        slug
-                    )
-                };
-                break;
-            case "untabbed":
-                child = {
-                    type: "unversioned",
-                    id: this.#idgen.get(product.product),
-                    landingPage: undefined,
-                    child: await this.toSidebarRootNode(
-                        this.#idgen.get(product.product),
-                        product.navigation.items,
-                        slug
-                    )
-                };
-                break;
-            case "versioned":
-                child = await this.toVersionedNode(product.navigation, slug);
-                break;
-            default:
-                assertNever(product.navigation);
+        if (product.type === "internal") {
+            const slug = parentSlug.setProductSlug(product.slug ?? kebabCase(product.product));
+            let child: FernNavigation.V1.ProductChild;
+            switch (product.navigation.type) {
+                case "tabbed":
+                    child = {
+                        type: "unversioned",
+                        id: this.#idgen.get(product.product),
+                        landingPage: undefined,
+                        child: await this.convertTabbedNavigation(
+                            this.#idgen.get(product.product),
+                            product.navigation.items,
+                            slug
+                        )
+                    };
+                    break;
+                case "untabbed":
+                    child = {
+                        type: "unversioned",
+                        id: this.#idgen.get(product.product),
+                        landingPage: undefined,
+                        child: await this.toSidebarRootNode(
+                            this.#idgen.get(product.product),
+                            product.navigation.items,
+                            slug
+                        )
+                    };
+                    break;
+                case "versioned":
+                    child = await this.toVersionedNode(product.navigation, slug);
+                    break;
+                default:
+                    assertNever(product.navigation);
+            }
+
+            return {
+                type: "product",
+                id: this.#idgen.get(product.product),
+                productId: FernNavigation.V1.ProductId(product.product),
+                title: product.product,
+                subtitle: product.subtitle ?? "",
+                slug: slug.get(),
+                child,
+                default: false,
+                hidden: undefined,
+                authed: undefined,
+                icon: this.resolveIconFileId(product.icon),
+                image: product.image != null ? this.getFileId(product.image) : undefined,
+                pointsTo: undefined,
+                viewers: product.viewers,
+                orphaned: product.orphaned,
+                featureFlags: product.featureFlags
+            };
+        } else {
+            return {
+                type: "productLink",
+                id: this.#idgen.get(product.product),
+                productId: FernNavigation.V1.ProductId(product.product),
+                title: product.product,
+                subtitle: product.subtitle ?? "",
+                href: DocsV1Write.Url(product.href ?? ""),
+                default: false,
+                hidden: undefined,
+                authed: undefined,
+                icon: this.resolveIconFileId(product.icon),
+                image: product.image != null ? this.getFileId(product.image) : undefined,
+                viewers: product.viewers,
+                orphaned: product.orphaned
+            };
         }
-        return {
-            type: "product",
-            id: this.#idgen.get(product.product),
-            productId: FernNavigation.V1.ProductId(product.product),
-            title: product.product,
-            subtitle: product.subtitle ?? "",
-            slug: slug.get(),
-            child,
-            default: false,
-            hidden: undefined,
-            authed: undefined,
-            icon: product.icon,
-            image: product.image != null ? this.getFileId(product.image) : undefined,
-            pointsTo: undefined,
-            viewers: product.viewers,
-            orphaned: product.orphaned,
-            featureFlags: product.featureFlags
-        };
     }
 
     private async toVersionNode(
@@ -980,7 +1008,7 @@ export class DocsDefinitionResolver {
             children,
             title: item.title,
             slug: variantSlug.get(),
-            icon: item.icon,
+            icon: this.resolveIconFileId(item.icon),
             hidden: item.hidden,
             authed: undefined,
             viewers: item.viewers,
@@ -1112,6 +1140,7 @@ export class DocsDefinitionResolver {
             this.markdownFilesToNoIndex,
             this.markdownFilesToTags,
             this.#idgen,
+            this.collectedFileIds,
             workspace,
             hideChildren,
             parentAvailability ?? item.availability
@@ -1136,7 +1165,7 @@ export class DocsDefinitionResolver {
         return changelogResolver.toChangelogNode({
             parentSlug,
             title: item.title,
-            icon: item.icon,
+            icon: this.resolveIconFileId(item.icon),
             viewers: item.viewers,
             hidden: hideChildren || item.hidden,
             slug: item.slug
@@ -1149,7 +1178,7 @@ export class DocsDefinitionResolver {
             id: this.#idgen.get(item.url),
             title: item.text,
             url: FernNavigation.V1.Url(item.url),
-            icon: item.icon
+            icon: this.resolveIconFileId(item.icon)
         };
     }
 
@@ -1175,7 +1204,7 @@ export class DocsDefinitionResolver {
             type: "page",
             slug: slug.get(),
             title: item.title,
-            icon: item.icon,
+            icon: this.resolveIconFileId(item.icon),
             hidden: hideChildren || item.hidden,
             viewers: item.viewers,
             orphaned: item.orphaned,
@@ -1219,7 +1248,7 @@ export class DocsDefinitionResolver {
             overviewPageId: pageId,
             slug: slug.get(),
             title: item.title,
-            icon: item.icon,
+            icon: this.resolveIconFileId(item.icon),
             collapsed: item.collapsed,
             hidden: hiddenSection,
             viewers: item.viewers,
@@ -1285,7 +1314,7 @@ export class DocsDefinitionResolver {
         return changelogResolver.toChangelogNode({
             parentSlug,
             title: item.title,
-            icon: item.icon,
+            icon: this.resolveIconFileId(item.icon),
             viewers: item.viewers,
             hidden: item.hidden,
             slug: item.slug
@@ -1298,7 +1327,7 @@ export class DocsDefinitionResolver {
             id: this.#idgen.get(href),
             title: item.title,
             url: FernNavigation.V1.Url(href),
-            icon: item.icon
+            icon: this.resolveIconFileId(item.icon)
         };
     }
 
@@ -1318,7 +1347,7 @@ export class DocsDefinitionResolver {
             id,
             title: item.title,
             slug: slug.get(),
-            icon: item.icon,
+            icon: this.resolveIconFileId(item.icon),
             hidden: item.hidden,
             authed: undefined,
             viewers: item.viewers,
@@ -1345,7 +1374,7 @@ export class DocsDefinitionResolver {
             id,
             title: item.title,
             slug: slug.get(),
-            icon: item.icon,
+            icon: this.resolveIconFileId(item.icon),
             hidden: item.hidden,
             authed: undefined,
             viewers: item.viewers,
@@ -1367,6 +1396,20 @@ export class DocsDefinitionResolver {
             return this.taskContext.failAndThrow("Failed to locate file after uploading: " + filepath);
         }
         return DocsV1Write.FileId(fileId);
+    }
+
+    private resolveIconFileId(
+        iconPath: string | AbsoluteFilePath | undefined
+    ): DocsV1Write.FileId | string | undefined {
+        if (iconPath == null) {
+            return undefined;
+        }
+
+        if (this.collectedFileIds.has(iconPath as AbsoluteFilePath)) {
+            return `file:${this.getFileId(iconPath as AbsoluteFilePath)}`;
+        }
+
+        return iconPath as string;
     }
 
     private convertColorConfigImageReferences(): DocsV1Write.ColorsConfigV3 | undefined {

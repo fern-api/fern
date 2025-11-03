@@ -171,15 +171,29 @@ export interface VersionInfo
     slug: string | undefined;
 }
 
-export interface ProductInfo
+export type ProductInfo = InternalProduct | ExternalProduct;
+
+export interface InternalProduct
     extends CjsFdrSdk.navigation.v1.WithPermissions,
         CjsFdrSdk.navigation.latest.WithFeatureFlags {
+    type: "internal";
     landingPage: DocsNavigationItem.Page | undefined;
     subtitle: string | undefined;
     product: string;
     navigation: UnversionedNavigationConfiguration | VersionedDocsNavigation;
     slug: string | undefined;
-    icon: string;
+    icon: string | AbsoluteFilePath;
+    image: AbsoluteFilePath | undefined;
+}
+
+export interface ExternalProduct
+    extends CjsFdrSdk.navigation.v1.WithPermissions,
+        CjsFdrSdk.navigation.latest.WithFeatureFlags {
+    type: "external";
+    subtitle: string | undefined;
+    product: string;
+    href: string | undefined;
+    icon: string | AbsoluteFilePath;
     image: AbsoluteFilePath | undefined;
 }
 
@@ -196,7 +210,7 @@ export interface TabbedNavigation
         CjsFdrSdk.navigation.latest.WithFeatureFlags {
     // tab: string;
     title: string;
-    icon: string | undefined;
+    icon: string | AbsoluteFilePath | undefined;
     slug: string | undefined;
     skipUrlSlug: boolean | undefined;
     hidden: boolean | undefined;
@@ -236,7 +250,7 @@ export interface TabVariant
         CjsFdrSdk.navigation.latest.WithFeatureFlags {
     title: string;
     subtitle: string | undefined;
-    icon: string | undefined;
+    icon: string | AbsoluteFilePath | undefined;
     layout: DocsNavigationItem[];
     slug: string | undefined;
     skipUrlSlug: boolean | undefined;
@@ -257,7 +271,7 @@ export declare namespace DocsNavigationItem {
             CjsFdrSdk.navigation.latest.WithFeatureFlags {
         type: "page";
         title: string;
-        icon: string | undefined;
+        icon: string | AbsoluteFilePath | undefined;
         absolutePath: AbsoluteFilePath;
         slug: string | undefined;
         hidden: boolean | undefined;
@@ -270,7 +284,7 @@ export declare namespace DocsNavigationItem {
             CjsFdrSdk.navigation.latest.WithFeatureFlags {
         type: "section";
         title: string;
-        icon: string | undefined;
+        icon: string | AbsoluteFilePath | undefined;
         contents: DocsNavigationItem[];
         collapsed: boolean | undefined;
         slug: string | undefined;
@@ -285,7 +299,7 @@ export declare namespace DocsNavigationItem {
             CjsFdrSdk.navigation.latest.WithFeatureFlags {
         type: "apiSection";
         title: string;
-        icon: string | undefined;
+        icon: string | AbsoluteFilePath | undefined;
         apiName: string | undefined;
         openrpc: string | undefined;
         audiences: Audiences;
@@ -307,7 +321,7 @@ export declare namespace DocsNavigationItem {
         type: "link";
         text: string;
         url: string;
-        icon: string | undefined;
+        icon: string | AbsoluteFilePath | undefined;
     }
 
     export interface Changelog
@@ -316,7 +330,7 @@ export declare namespace DocsNavigationItem {
         type: "changelog";
         changelog: AbsoluteFilePath[];
         title: string;
-        icon: string | undefined;
+        icon: string | AbsoluteFilePath | undefined;
         hidden: boolean | undefined;
         slug: string | undefined;
     }
@@ -349,7 +363,7 @@ export declare namespace ParsedApiReferenceLayoutItem {
         contents: ParsedApiReferenceLayoutItem[];
         slug: string | undefined;
         hidden: boolean | undefined;
-        icon: string | undefined;
+        icon: string | AbsoluteFilePath | undefined;
         skipUrlSlug: boolean | undefined;
         availability: Availability | undefined;
         playground: PlaygroundSettings | undefined;
@@ -364,7 +378,7 @@ export declare namespace ParsedApiReferenceLayoutItem {
         contents: ParsedApiReferenceLayoutItem[];
         slug: string | undefined;
         hidden: boolean | undefined;
-        icon: string | undefined;
+        icon: string | AbsoluteFilePath | undefined;
         skipUrlSlug: boolean | undefined;
         availability: Availability | undefined;
         playground: PlaygroundSettings | undefined;
@@ -376,7 +390,7 @@ export declare namespace ParsedApiReferenceLayoutItem {
         type: "endpoint";
         endpoint: string; // endpoint locator
         title: string | undefined;
-        icon: string | undefined;
+        icon: string | AbsoluteFilePath | undefined;
         slug: string | undefined;
         hidden: boolean | undefined;
         availability: Availability | undefined;
