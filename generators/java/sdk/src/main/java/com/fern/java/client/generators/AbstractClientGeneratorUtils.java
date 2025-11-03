@@ -19,6 +19,7 @@ package com.fern.java.client.generators;
 import com.fern.ir.model.commons.ErrorId;
 import com.fern.ir.model.commons.SubpackageId;
 import com.fern.ir.model.commons.TypeId;
+import com.fern.ir.model.commons.WebSocketChannelId;
 import com.fern.ir.model.http.HttpEndpoint;
 import com.fern.ir.model.http.HttpService;
 import com.fern.ir.model.ir.IPackage;
@@ -39,6 +40,7 @@ import com.squareup.javapoet.FieldSpec;
 import com.squareup.javapoet.MethodSpec;
 import com.squareup.javapoet.ParameterSpec;
 import com.squareup.javapoet.ParameterizedTypeName;
+import com.squareup.javapoet.TypeName;
 import com.squareup.javapoet.TypeSpec;
 import java.util.ArrayList;
 import java.util.List;
@@ -199,9 +201,100 @@ public abstract class AbstractClientGeneratorUtils {
             }
         }
 
+        // Expose WebSocket channel client if present
+        if (fernPackage.getWebsocket().isPresent()) {
+            WebSocketChannelId websocketChannelId = fernPackage.getWebsocket().get();
+            com.fern.ir.model.websocket.WebSocketChannel websocketChannel = generatorContext
+                    .getIr()
+                    .getWebsocketChannels()
+                    .map(channels -> channels.get(websocketChannelId))
+                    .orElse(null);
+
+            if (websocketChannel != null) {
+                // Get the WebSocket client class name
+                // Determine if this is a subpackage or root package
+                Optional<Subpackage> subpackageOpt =
+                        fernPackage instanceof Subpackage ? Optional.of((Subpackage) fernPackage) : Optional.empty();
+                ClassName webSocketClientClassName = generatorContext
+                        .getPoetClassNameFactory()
+                        .getWebSocketClientClassName(websocketChannel, subpackageOpt);
+
+                // Create a factory method for the WebSocket client
+                // We need to handle path and query parameters, so we create a factory method
+                // rather than a simple getter
+                MethodSpec.Builder webSocketFactoryMethod = MethodSpec.methodBuilder(
+                                websocketChannel.getName().get().getCamelCase().getSafeName() + "WebSocket")
+                        .addModifiers(Modifier.PUBLIC)
+                        .returns(webSocketClientClassName)
+                        .addJavadoc(
+                                "Creates a new WebSocket client for the $L channel.\n",
+                                websocketChannel.getName().get().getCamelCase().getSafeName());
+
+                // Add path parameters
+                for (com.fern.ir.model.http.PathParameter pathParam : websocketChannel.getPathParameters()) {
+                    TypeName paramType =
+                            generatorContext.getPoetTypeNameMapper().convertToTypeName(true, pathParam.getValueType());
+                    webSocketFactoryMethod.addParameter(
+                            paramType, pathParam.getName().getCamelCase().getSafeName());
+                    webSocketFactoryMethod.addJavadoc(
+                            "@param $L $L\n",
+                            pathParam.getName().getCamelCase().getSafeName(),
+                            pathParam
+                                    .getDocs()
+                                    .orElse("the "
+                                            + pathParam.getName().getCamelCase().getSafeName() + " path parameter"));
+                }
+
+                // Add query parameters
+                for (com.fern.ir.model.http.QueryParameter queryParam : websocketChannel.getQueryParameters()) {
+                    TypeName paramType =
+                            generatorContext.getPoetTypeNameMapper().convertToTypeName(true, queryParam.getValueType());
+                    String paramName =
+                            queryParam.getName().getName().getCamelCase().getSafeName();
+
+                    // Check if already optional
+                    if (!queryParam.getValueType().getContainer().isPresent()
+                            || !queryParam.getValueType().getContainer().get().isOptional()) {
+                        paramType = ParameterizedTypeName.get(ClassName.get(Optional.class), paramType);
+                    }
+
+                    webSocketFactoryMethod.addParameter(paramType, paramName);
+                    webSocketFactoryMethod.addJavadoc(
+                            "@param $L $L\n",
+                            paramName,
+                            queryParam.getDocs().orElse("Optional " + paramName + " query parameter"));
+                }
+
+                // Build the return statement with all parameters
+                StringBuilder returnStatement = new StringBuilder("return new $T($N");
+                for (com.fern.ir.model.http.PathParameter pathParam : websocketChannel.getPathParameters()) {
+                    returnStatement
+                            .append(", ")
+                            .append(pathParam.getName().getCamelCase().getSafeName());
+                }
+                for (com.fern.ir.model.http.QueryParameter queryParam : websocketChannel.getQueryParameters()) {
+                    returnStatement
+                            .append(", ")
+                            .append(queryParam
+                                    .getName()
+                                    .getName()
+                                    .getCamelCase()
+                                    .getSafeName());
+                }
+                returnStatement.append(")");
+
+                webSocketFactoryMethod.addStatement(
+                        returnStatement.toString(), webSocketClientClassName, clientOptionsField);
+
+                implBuilder.addMethod(webSocketFactoryMethod.build());
+            }
+        }
+
         for (SubpackageId subpackageId : fernPackage.getSubpackages()) {
             Subpackage subpackage = generatorContext.getIr().getSubpackages().get(subpackageId);
-            if (!subpackage.getHasEndpointsInTree()) {
+            // Include subpackage if it has endpoints or WebSocket channels
+            if (!subpackage.getHasEndpointsInTree()
+                    && !subpackage.getWebsocket().isPresent()) {
                 continue;
             }
             ClassName subpackageClientImpl = subpackageClientImplName(subpackage);

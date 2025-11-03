@@ -39,7 +39,7 @@ groups:
   java:
     generators:
       - name: fernapi/java-model
-        version: 0.5.20
+        version: 0.9.28
         output:
           location: maven
           url: maven.buildwithfern.com
