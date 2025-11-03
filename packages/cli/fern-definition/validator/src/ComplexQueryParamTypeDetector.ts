@@ -75,7 +75,7 @@ export class ComplexQueryParamTypeDetector {
             case "primitive":
                 return false;
             case "unknown":
-                return true;
+                return false;
             default:
                 assertNever(type);
         }
