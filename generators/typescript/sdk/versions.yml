@@ -1,4 +1,13 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 3.22.0
+  changelogEntry:
+    - summary: |
+        Add support for oxfmt as the formatter.
+        This is a beta feature and not officially supported yet.
+      type: feat
+  createdAt: "2025-11-03"
+  irVersion: 61
+
 - version: 3.21.0
   changelogEntry:
     - summary: |

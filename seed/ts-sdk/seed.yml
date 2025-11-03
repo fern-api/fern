@@ -308,6 +308,9 @@ fixtures:
     - outputFolder: use-prettier
       customConfig:
         formatter: prettier
+    - outputFolder: use-oxfmt
+      customConfig:
+        formatter: oxfmt
     - outputFolder: use-prettier-no-linter
       customConfig:
         formatter: prettier

@@ -21,5 +21,5 @@ export interface ExpressCustomConfig {
     packagePath: string | undefined;
     packageManager: "pnpm" | "yarn";
     linter: "biome" | "oxlint" | "none";
-    formatter: "prettier" | "biome";
+    formatter: "prettier" | "biome" | "oxfmt";
 }

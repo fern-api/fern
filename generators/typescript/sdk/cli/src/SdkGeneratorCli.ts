@@ -125,6 +125,10 @@ export class SdkGeneratorCli extends AbstractGeneratorCli<SdkCustomConfig> {
             }
         }
 
+        if (config.formatter === "oxfmt") {
+            logger.warn("Warning: oxfmt is currently in beta. Use with caution.");
+        }
+
         if (config.linter === "oxlint") {
             logger.warn(
                 "Warning: oxlint is currently in beta. Use with caution. Type-aware linting is supported via the --type-aware flag."

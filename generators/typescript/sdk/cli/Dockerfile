@@ -11,6 +11,7 @@ ENV PATH=$PNPM_HOME:$PATH
 RUN npm install -g pnpm@10.20.0 --force
 RUN npm install -g yarn@1.22.22 --force
 RUN pnpm install -g prettier@3.4.2
+RUN pnpm install -g oxfmt@0.9.0
 RUN pnpm install -g @biomejs/biome@2.3.1
 RUN pnpm install -g oxlint@1.25.0
 RUN pnpm install -g oxlint-tsgolint@0.4.0
@@ -35,6 +36,7 @@ RUN echo '{ \
     "formdata-node": "^6.0.3", \
     "jest-environment-jsdom": "^29.7.0", \
     "prettier": "3.4.2", \
+    "oxfmt": "0.9.0", \
     "@biomejs/biome": "2.3.1", \
     "oxlint": "1.25.0", \
     "oxlint-tsgolint": "0.4.0", \
