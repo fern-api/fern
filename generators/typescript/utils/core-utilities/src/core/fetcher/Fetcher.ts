@@ -58,23 +58,22 @@ export declare namespace Fetcher {
     }
 }
 
+const SENSITIVE_HEADERS = new Set([
+    "authorization",
+    "x-api-key",
+    "api-key",
+    "x-auth-token",
+    "cookie",
+    "set-cookie",
+    "proxy-authorization",
+    "x-csrf-token",
+    "x-xsrf-token"
+]);
+
 function filterSensitiveHeaders(headers: Record<string, string>): Record<string, string> {
     const filtered: Record<string, string> = {};
-    const sensitiveHeaderPatterns = [
-        /^authorization$/i,
-        /^x-api-key$/i,
-        /^api-key$/i,
-        /^x-auth-token$/i,
-        /^cookie$/i,
-        /^set-cookie$/i,
-        /^proxy-authorization$/i,
-        /^x-csrf-token$/i,
-        /^x-xsrf-token$/i
-    ];
-
     for (const [key, value] of Object.entries(headers)) {
-        const isSensitive = sensitiveHeaderPatterns.some((pattern) => pattern.test(key));
-        if (isSensitive) {
+        if (SENSITIVE_HEADERS.has(key.toLowerCase())) {
             filtered[key] = "[REDACTED]";
         } else {
             filtered[key] = value;
