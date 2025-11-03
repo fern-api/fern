@@ -29,6 +29,7 @@ export declare namespace Fetcher {
         responseType?: "json" | "blob" | "sse" | "streaming" | "text" | "arrayBuffer" | "binary-response";
         duplex?: "half";
         endpointMetadata?: EndpointMetadata;
+        fetchFn?: typeof fetch;
     }
 
     export type Error = FailedStatusCodeError | NonJsonError | TimeoutError | UnknownError;
@@ -85,7 +86,7 @@ export async function fetcherImpl<R = unknown>(args: Fetcher.Args): Promise<APIR
         body: args.body,
         type: args.requestType === "json" ? "json" : "other",
     });
-    const fetchFn = await getFetchFn();
+    const fetchFn = args.fetchFn ?? (await getFetchFn());
 
     try {
         const response = await requestWithRetries(

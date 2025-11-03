@@ -18,6 +18,7 @@ export declare namespace Fetcher {
         responseType?: "json" | "blob" | "sse" | "streaming" | "text" | "arrayBuffer" | "binary-response";
         duplex?: "half";
         endpointMetadata?: EndpointMetadata;
+        fetchFn?: typeof fetch;
     }
     type Error = FailedStatusCodeError | NonJsonError | TimeoutError | UnknownError;
     interface FailedStatusCodeError {
