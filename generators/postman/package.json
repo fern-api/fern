@@ -44,7 +44,7 @@
     "@fern-api/configs": "workspace:*",
     "@fern-api/core-utils": "workspace:*",
     "@fern-api/fs-utils": "workspace:*",
-    "@fern-fern/ir-sdk": "^61.7.0",
+    "@fern-fern/ir-sdk": "53.9.0",
     "@fern-fern/postman-sdk": "0.1.1",
     "@types/lodash": "^4.17.4",
     "@types/node": "18.15.3",

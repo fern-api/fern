@@ -41,7 +41,7 @@
     "@fern-api/typescript-mcp-base": "workspace:*",
     "@fern-api/typescript-mcp-model": "workspace:*",
     "@fern-fern/generator-exec-sdk": "^0.0.1167",
-    "@fern-fern/ir-sdk": "^61.7.0",
+    "@fern-fern/ir-sdk": "^58.2.0",
     "@fern-typescript/sdk-generator-cli": "workspace:*",
     "@types/node": "18.15.3",
     "depcheck": "^1.4.7",
