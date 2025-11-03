@@ -1,4 +1,12 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 3.18.0
+  changelogEntry:
+    - summary: |
+        Users can now pass in a custom `fetch` function to the client options.
+      type: feat
+  createdAt: "2025-11-03"
+  irVersion: 60
+
 - version: 3.17.1
   changelogEntry:
     - summary: |

@@ -53,6 +53,7 @@ export class User {
             timeoutMs: (requestOptions?.timeoutInSeconds ?? this._options?.timeoutInSeconds ?? 60) * 1000,
             maxRetries: requestOptions?.maxRetries ?? this._options?.maxRetries,
             abortSignal: requestOptions?.abortSignal,
+            fetchFn: this._options?.fetch,
         });
         if (_response.ok) {
             return { data: _response.body as SeedPathParameters.User, rawResponse: _response.rawResponse };
@@ -122,6 +123,7 @@ export class User {
             timeoutMs: (requestOptions?.timeoutInSeconds ?? this._options?.timeoutInSeconds ?? 60) * 1000,
             maxRetries: requestOptions?.maxRetries ?? this._options?.maxRetries,
             abortSignal: requestOptions?.abortSignal,
+            fetchFn: this._options?.fetch,
         });
         if (_response.ok) {
             return { data: _response.body as SeedPathParameters.User, rawResponse: _response.rawResponse };
@@ -195,6 +197,7 @@ export class User {
             timeoutMs: (requestOptions?.timeoutInSeconds ?? this._options?.timeoutInSeconds ?? 60) * 1000,
             maxRetries: requestOptions?.maxRetries ?? this._options?.maxRetries,
             abortSignal: requestOptions?.abortSignal,
+            fetchFn: this._options?.fetch,
         });
         if (_response.ok) {
             return { data: _response.body as SeedPathParameters.User, rawResponse: _response.rawResponse };
@@ -267,6 +270,7 @@ export class User {
             timeoutMs: (requestOptions?.timeoutInSeconds ?? this._options?.timeoutInSeconds ?? 60) * 1000,
             maxRetries: requestOptions?.maxRetries ?? this._options?.maxRetries,
             abortSignal: requestOptions?.abortSignal,
+            fetchFn: this._options?.fetch,
         });
         if (_response.ok) {
             return { data: _response.body as SeedPathParameters.User[], rawResponse: _response.rawResponse };

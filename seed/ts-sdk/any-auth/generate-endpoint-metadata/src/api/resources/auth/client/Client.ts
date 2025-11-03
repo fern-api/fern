@@ -66,6 +66,7 @@ export class Auth {
             maxRetries: requestOptions?.maxRetries ?? this._options?.maxRetries,
             abortSignal: requestOptions?.abortSignal,
             endpointMetadata: _metadata,
+            fetchFn: this._options?.fetch,
         });
         if (_response.ok) {
             return { data: _response.body as SeedAnyAuth.TokenResponse, rawResponse: _response.rawResponse };

@@ -25,6 +25,7 @@ export interface Fetcher {
                 duplex: "duplex";
                 timeoutMs: "timeoutMs";
                 endpointMetadata: "endpointMetadata";
+                fetchFn: "fetchFn";
             };
         };
         Error: {
@@ -152,6 +153,7 @@ export declare namespace Fetcher {
         responseType?: "json" | "blob" | "sse" | "streaming" | "text" | "binary-response";
         duplex?: ts.Expression;
         endpointMetadata?: ts.Expression;
+        fetchFn?: ts.Expression;
     }
 }
 
@@ -222,7 +224,8 @@ export class FetcherImpl extends CoreUtility implements Fetcher {
                 abortSignal: "abortSignal",
                 duplex: "duplex",
                 timeoutInSeconds: "timeoutInSeconds",
-                endpointMetadata: "endpointMetadata"
+                endpointMetadata: "endpointMetadata",
+                fetchFn: "fetchFn"
             },
             _getReferenceToType: this.getReferenceToTypeInFetcherModule("Args")
         },
@@ -331,6 +334,11 @@ export class FetcherImpl extends CoreUtility implements Fetcher {
                         this.Fetcher.Args.properties.endpointMetadata,
                         args.endpointMetadata
                     )
+                );
+            }
+            if (args.fetchFn != null) {
+                properties.push(
+                    ts.factory.createPropertyAssignment(this.Fetcher.Args.properties.fetchFn, args.fetchFn)
                 );
             }
 
