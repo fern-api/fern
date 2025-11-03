@@ -7,11 +7,12 @@ function mergeHeaders(...headersArray) {
     for (const [key, value] of headersArray
         .filter((headers) => headers != null)
         .flatMap((headers) => Object.entries(headers))) {
+        const insensitiveKey = key.toLowerCase();
         if (value != null) {
-            result[key] = value;
+            result[insensitiveKey] = value;
         }
-        else if (key in result) {
-            delete result[key];
+        else if (insensitiveKey in result) {
+            delete result[insensitiveKey];
         }
     }
     return result;
@@ -21,8 +22,9 @@ function mergeOnlyDefinedHeaders(...headersArray) {
     for (const [key, value] of headersArray
         .filter((headers) => headers != null)
         .flatMap((headers) => Object.entries(headers))) {
+        const insensitiveKey = key.toLowerCase();
         if (value != null) {
-            result[key] = value;
+            result[insensitiveKey] = value;
         }
     }
     return result;
