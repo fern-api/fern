@@ -785,27 +785,44 @@ export class SubClientGenerator {
             rust.Type.reference(rust.reference({ name: "ApiError" }))
         );
 
-        // Determine which execute method to use based on response type
+        // Check if this is a file upload endpoint
+        const isFileUpload = this.isFileUploadEndpoint(endpoint);
+
+        // Determine which execute method to use based on request and response types
         const responseType = this.getResponseStreamType(endpoint);
         let executeMethod = "execute_request";
         let typeParameter = "";
-        let executeArgs = `
+        let executeArgs = "";
+
+        if (isFileUpload) {
+            // Use multipart request for file uploads
+            executeMethod = "execute_multipart_request";
+            const multipartBody = "request.clone().to_multipart()";
+            executeArgs = `
+            Method::${httpMethod},
+            ${pathExpression},
+            ${multipartBody},
+            ${this.buildQueryParameters(endpoint)},
+            options,`;
+        } else {
+            executeArgs = `
             Method::${httpMethod},
             ${pathExpression},
             ${requestBody},
             ${this.buildQueryParameters(endpoint)},
             options,`;
 
-        if (responseType === "binary") {
-            executeMethod = "execute_stream_request";
-        } else if (responseType === "sse") {
-            executeMethod = "execute_sse_request";
-            const terminator = this.getSseTerminator(endpoint);
-            executeArgs += `\n            ${terminator},`;
-        } else if (responseType === "json") {
-            // JSON streaming needs explicit type parameter for inference
-            const innerType = this.getInnerResponseType(endpoint);
-            typeParameter = `::<${innerType}>`;
+            if (responseType === "binary") {
+                executeMethod = "execute_stream_request";
+            } else if (responseType === "sse") {
+                executeMethod = "execute_sse_request";
+                const terminator = this.getSseTerminator(endpoint);
+                executeArgs += `\n            ${terminator},`;
+            } else if (responseType === "json") {
+                // JSON streaming needs explicit type parameter for inference
+                const innerType = this.getInnerResponseType(endpoint);
+                typeParameter = `::<${innerType}>`;
+            }
         }
 
         return {
@@ -1258,6 +1275,13 @@ export class SubClientGenerator {
             return "Some(serde_json::to_value(request).unwrap_or_default())";
         }
         return "None";
+    }
+
+    private isFileUploadEndpoint(endpoint: HttpEndpoint): boolean {
+        if (!endpoint.requestBody) {
+            return false;
+        }
+        return endpoint.requestBody.type === "fileUpload";
     }
 
     private getReturnType(endpoint: HttpEndpoint): rust.Type {

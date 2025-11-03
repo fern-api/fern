@@ -148,6 +148,72 @@ impl HttpClient {
         self.parse_response(response).await
     }
 
+    /// Execute a multipart/form-data request with the given method, path, and options
+    ///
+    /// This method is used for file uploads and other multipart form data submissions.
+    /// The multipart data includes proper boundary handling and Content-Type headers.
+    ///
+    /// # Example
+    /// ```no_run
+    /// use your_crate::{MultipartFormData, FormFile};
+    ///
+    /// let mut multipart = MultipartFormData::new();
+    /// multipart.add_file("upload", FormFile::new(vec![1, 2, 3]));
+    ///
+    /// let response: MyResponse = client.execute_multipart_request(
+    ///     Method::POST,
+    ///     "/upload",
+    ///     multipart,
+    ///     None,
+    ///     None,
+    /// ).await?;
+    /// ```
+    pub async fn execute_multipart_request<T>(
+        &self,
+        method: Method,
+        path: &str,
+        multipart: crate::MultipartFormData,
+        query_params: Option<Vec<(String, String)>>,
+        options: Option<RequestOptions>,
+    ) -> Result<T, ApiError>
+    where
+        T: DeserializeOwned,
+    {
+        let url = join_url(&self.config.base_url, path);
+        let mut request = self.client.request(method, &url);
+
+        // Apply query parameters if provided
+        if let Some(params) = query_params {
+            request = request.query(&params);
+        }
+
+        // Apply additional query parameters from options
+        if let Some(opts) = &options {
+            if !opts.additional_query_params.is_empty() {
+                request = request.query(&opts.additional_query_params);
+            }
+        }
+
+        // Convert multipart to bytes and set the body
+        let multipart_bytes = multipart.to_bytes();
+        let content_type = multipart.content_type();
+
+        request = request
+            .header("Content-Type", content_type)
+            .body(multipart_bytes);
+
+        // Build the request
+        let mut req = request.build().map_err(|e| ApiError::Network(e))?;
+
+        // Apply authentication and headers (custom headers applied after Content-Type)
+        self.apply_auth_headers(&mut req, &options)?;
+        self.apply_custom_headers(&mut req, &options)?;
+
+        // Execute with retries
+        let response = self.execute_with_retries(req, &options).await?;
+        self.parse_response(response).await
+    }
+
     fn apply_auth_headers(
         &self,
         request: &mut Request,
