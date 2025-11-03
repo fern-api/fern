@@ -93,6 +93,10 @@ function getAllPagesFromNavigationConfig(navigation: docsYml.DocsNavigationConfi
             });
         case "productgroup":
             return navigation.products.flatMap((product) => {
+                if (product.type === "external") {
+                    return [];
+                }
+
                 return getAllPages({
                     landingPage: product.landingPage,
                     navigation: product.navigation

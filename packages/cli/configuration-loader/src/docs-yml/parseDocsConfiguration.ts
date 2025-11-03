@@ -12,6 +12,32 @@ import { convertColorsConfiguration } from "./convertColorsConfiguration";
 import { getAllPages, loadAllPages } from "./getAllPages";
 import { buildNavigationForDirectory, nameToSlug, nameToTitle } from "./navigationUtils";
 
+function shouldProcessIconPath(iconPath?: string): boolean {
+    if (!iconPath) {
+        return false;
+    }
+
+    return (
+        iconPath.startsWith(".") || // check for mac + linux relative paths
+        iconPath.includes("/") ||
+        iconPath.includes("\\") || // check for windows relative paths
+        iconPath.includes(":")
+    );
+}
+
+function resolveIconPath(
+    iconPath: string | undefined,
+    absoluteFilepathToDocsConfig: AbsoluteFilePath
+): AbsoluteFilePath | string | undefined {
+    if (!iconPath) {
+        return undefined;
+    }
+    if (shouldProcessIconPath(iconPath)) {
+        return resolveFilepath(iconPath, absoluteFilepathToDocsConfig);
+    }
+    return iconPath;
+}
+
 export async function parseDocsConfiguration({
     rawDocsConfiguration,
     absolutePathToFernFolder,
@@ -121,7 +147,7 @@ export async function parseDocsConfiguration({
         /* navigation */
         landingPage,
         navigation,
-        navbarLinks: convertNavbarLinks(navbarLinks),
+        navbarLinks: convertNavbarLinks(navbarLinks, absoluteFilepathToDocsConfig),
         footerLinks: convertFooterLinks(footerLinks),
         defaultLanguage,
         languages: rawDocsConfiguration.languages,
@@ -363,7 +389,8 @@ function convertSettingsConfig(
         httpSnippets: settings.httpSnippets ?? true,
         searchText: settings.searchText ?? "Search",
         useJavascriptAsTypescript: settings.useJavascriptAsTypescript ?? false,
-        disableExplorerProxy: settings.disableExplorerProxy ?? false
+        disableExplorerProxy: settings.disableExplorerProxy ?? false,
+        disableAnalytics: settings.disableAnalytics ?? false
     };
 }
 
@@ -498,44 +525,64 @@ async function getNavigationConfiguration({
     } else if (products != null) {
         const productNavbars: docsYml.ProductInfo[] = [];
         for (const product of products) {
-            const absoluteFilepathToProductFile = resolve(absolutePathToFernFolder, product.path);
             const productImageFile =
                 product.image != null ? resolve(absolutePathToFernFolder, product.image) : undefined;
-            const content = yaml.load((await readFile(absoluteFilepathToProductFile)).toString());
-            const result = docsYml.RawSchemas.Serializer.ProductFileConfig.parseOrThrow(content);
 
-            let navigation: docsYml.DocsNavigationConfiguration;
+            if ("path" in product) {
+                let navigation: docsYml.DocsNavigationConfiguration;
+                const absoluteFilepathToProductFile = resolve(absolutePathToFernFolder, product.path);
 
-            // If the product has versions defined, process them
-            if (product.versions != null && product.versions.length > 0) {
-                navigation = await getVersionedNavigationConfiguration({
-                    versions: product.versions,
-                    absolutePathToFernFolder,
-                    context
+                const content = yaml.load((await readFile(absoluteFilepathToProductFile)).toString());
+                const result = docsYml.RawSchemas.Serializer.ProductFileConfig.parseOrThrow(content);
+
+                // If the product has versions defined, process them
+                if (product.versions != null && product.versions.length > 0) {
+                    navigation = await getVersionedNavigationConfiguration({
+                        versions: product.versions,
+                        absolutePathToFernFolder,
+                        context
+                    });
+                } else {
+                    // Process as a regular navigation if no versions
+                    navigation = await convertNavigationConfiguration({
+                        tabs: result.tabs,
+                        rawNavigationConfig: result.navigation,
+                        absolutePathToFernFolder,
+                        absolutePathToConfig: absoluteFilepathToProductFile,
+                        context
+                    });
+                }
+
+                productNavbars.push({
+                    type: "internal",
+                    landingPage: parsePageConfig(result.landingPage, absoluteFilepathToProductFile),
+                    product: product.displayName,
+                    navigation,
+                    slug: product.slug,
+                    subtitle: product.subtitle,
+                    icon: resolveIconPath(product.icon, absolutePathToConfig) || "fa-solid fa-code",
+                    image: productImageFile,
+                    viewers: parseRoles(product.viewers),
+                    orphaned: product.orphaned,
+                    featureFlags: convertFeatureFlag(product.featureFlag)
+                });
+            } else if ("href" in product && product.href != null) {
+                productNavbars.push({
+                    type: "external",
+                    product: product.displayName,
+                    href: product.href,
+                    subtitle: product.subtitle,
+                    icon: resolveIconPath(product.icon, absolutePathToConfig) || "fa-solid fa-code",
+                    image: productImageFile,
+                    viewers: parseRoles(product.viewers),
+                    orphaned: product.orphaned,
+                    featureFlags: convertFeatureFlag(product.featureFlag)
                 });
             } else {
-                // Process as a regular navigation if no versions
-                navigation = await convertNavigationConfiguration({
-                    tabs: result.tabs,
-                    rawNavigationConfig: result.navigation,
-                    absolutePathToFernFolder,
-                    absolutePathToConfig: absoluteFilepathToProductFile,
-                    context
-                });
+                throw new Error(
+                    `Invalid product configuration: product must have either 'path' or valid 'href' property`
+                );
             }
-
-            productNavbars.push({
-                landingPage: parsePageConfig(result.landingPage, absoluteFilepathToProductFile),
-                product: product.displayName,
-                navigation,
-                slug: product.slug,
-                subtitle: product.subtitle,
-                icon: product.icon || "fa-solid fa-code",
-                image: productImageFile,
-                viewers: parseRoles(product.viewers),
-                orphaned: product.orphaned,
-                featureFlags: convertFeatureFlag(product.featureFlag)
-            });
         }
 
         return {
@@ -718,7 +765,7 @@ async function convertNavigationTabConfiguration({
                 return {
                     title: variant.title,
                     subtitle: variant.subtitle,
-                    icon: variant.icon,
+                    icon: resolveIconPath(variant.icon, absolutePathToConfig),
                     layout,
                     slug: variant.slug,
                     skipUrlSlug: variant.skipSlug,
@@ -732,7 +779,7 @@ async function convertNavigationTabConfiguration({
         );
         return {
             title: tab.displayName,
-            icon: tab.icon,
+            icon: resolveIconPath(tab.icon, absolutePathToConfig),
             slug: tab.slug,
             skipUrlSlug: tab.skipSlug,
             hidden: tab.hidden,
@@ -754,7 +801,7 @@ async function convertNavigationTabConfiguration({
         );
         return {
             title: tab.displayName,
-            icon: tab.icon,
+            icon: resolveIconPath(tab.icon, absolutePathToConfig),
             slug: tab.slug,
             skipUrlSlug: tab.skipSlug,
             hidden: tab.hidden,
@@ -771,7 +818,7 @@ async function convertNavigationTabConfiguration({
     if (tab.href != null) {
         return {
             title: tab.displayName,
-            icon: tab.icon,
+            icon: resolveIconPath(tab.icon, absolutePathToConfig),
             slug: tab.slug,
             skipUrlSlug: tab.skipSlug,
             hidden: tab.hidden,
@@ -788,7 +835,7 @@ async function convertNavigationTabConfiguration({
     if (tab.changelog != null) {
         return {
             title: tab.displayName,
-            icon: tab.icon,
+            icon: resolveIconPath(tab.icon, absolutePathToConfig),
             slug: tab.slug,
             skipUrlSlug: tab.skipSlug,
             hidden: tab.hidden,
@@ -874,7 +921,7 @@ async function expandFolderConfiguration({
     return {
         type: "section",
         title,
-        icon: rawConfig.icon,
+        icon: resolveIconPath(rawConfig.icon, absolutePathToConfig),
         contents,
         slug,
         collapsed: rawConfig.collapsed ?? undefined,
@@ -906,7 +953,7 @@ async function convertNavigationItem({
         return {
             type: "section",
             title: rawConfig.section,
-            icon: rawConfig.icon,
+            icon: resolveIconPath(rawConfig.icon, absolutePathToConfig),
             contents: await Promise.all(
                 rawConfig.contents.map((item) =>
                     convertNavigationItem({ rawConfig: item, absolutePathToFernFolder, absolutePathToConfig, context })
@@ -928,7 +975,7 @@ async function convertNavigationItem({
             type: "apiSection",
             openrpc: rawConfig.openrpc,
             title: rawConfig.api,
-            icon: rawConfig.icon,
+            icon: resolveIconPath(rawConfig.icon, absolutePathToConfig),
             apiName: rawConfig.apiName ?? undefined,
             audiences:
                 rawConfig.audiences != null
@@ -960,7 +1007,7 @@ async function convertNavigationItem({
             type: "link",
             text: rawConfig.link,
             url: rawConfig.href,
-            icon: rawConfig.icon
+            icon: resolveIconPath(rawConfig.icon, absolutePathToConfig)
         };
     }
     if (isRawChangelogConfig(rawConfig)) {
@@ -968,7 +1015,7 @@ async function convertNavigationItem({
             type: "changelog",
             changelog: await listFiles(resolveFilepath(rawConfig.changelog, absolutePathToConfig), "{md,mdx}"),
             hidden: rawConfig.hidden ?? false,
-            icon: rawConfig.icon,
+            icon: resolveIconPath(rawConfig.icon, absolutePathToConfig),
             title: rawConfig.title ?? DEFAULT_CHANGELOG_TITLE,
             slug: rawConfig.slug,
             viewers: parseRoles(rawConfig.viewers),
@@ -1007,7 +1054,7 @@ function parsePageConfig(
         title: item.page,
         absolutePath: resolveFilepath(item.path, absolutePathToConfig),
         slug: item.slug,
-        icon: item.icon,
+        icon: resolveIconPath(item.icon, absolutePathToConfig),
         hidden: item.hidden,
         noindex: item.noindex,
         viewers: parseRoles(item.viewers),
@@ -1033,7 +1080,7 @@ function parseApiReferenceLayoutItem(
                 type: "link",
                 text: item.link,
                 url: item.href,
-                icon: item.icon
+                icon: resolveIconPath(item.icon, absolutePathToConfig)
             }
         ];
     } else if (isRawApiRefSectionConfiguration(item)) {
@@ -1049,7 +1096,7 @@ function parseApiReferenceLayoutItem(
                 hidden: item.hidden,
                 skipUrlSlug: item.skipSlug,
                 availability: item.availability,
-                icon: item.icon,
+                icon: resolveIconPath(item.icon, absolutePathToConfig),
                 playground: item.playground,
                 viewers: parseRoles(item.viewers),
                 orphaned: item.orphaned,
@@ -1062,7 +1109,7 @@ function parseApiReferenceLayoutItem(
                 type: "endpoint",
                 endpoint: item.endpoint,
                 title: item.title,
-                icon: item.icon,
+                icon: resolveIconPath(item.icon, absolutePathToConfig),
                 slug: item.slug,
                 hidden: item.hidden,
                 availability: item.availability,
@@ -1085,7 +1132,7 @@ function parseApiReferenceLayoutItem(
                 slug: value.slug,
                 hidden: value.hidden,
                 skipUrlSlug: value.skipSlug,
-                icon: value.icon,
+                icon: resolveIconPath(value.icon, absolutePathToConfig),
                 playground: value.playground,
                 availability: value.availability,
                 viewers: parseRoles(value.viewers),
@@ -1216,7 +1263,8 @@ function tabbedNavigationItemHasVariants(
 }
 
 function convertNavbarLinks(
-    navbarLinks: docsYml.RawSchemas.NavbarLink[] | undefined
+    navbarLinks: docsYml.RawSchemas.NavbarLink[] | undefined,
+    absoluteFilepathToDocsConfig: AbsoluteFilePath
 ): CjsFdrSdk.docs.v1.commons.NavbarLink[] | undefined {
     return navbarLinks?.map((navbarLink): WithoutQuestionMarks<CjsFdrSdk.docs.v1.commons.NavbarLink> => {
         if (navbarLink.type === "github") {
@@ -1243,8 +1291,8 @@ function convertNavbarLinks(
             return {
                 type: "dropdown",
                 text: navbarLink.text,
-                icon: navbarLink.icon,
-                rightIcon: navbarLink.rightIcon,
+                icon: resolveIconPath(navbarLink.icon, absoluteFilepathToDocsConfig),
+                rightIcon: resolveIconPath(navbarLink.rightIcon, absoluteFilepathToDocsConfig),
                 rounded: navbarLink.rounded,
                 viewers,
                 links:
@@ -1252,8 +1300,8 @@ function convertNavbarLinks(
                         href: link.href,
                         url: CjsFdrSdk.Url(link.url ?? link.href ?? "/"),
                         text: link.text,
-                        icon: link.icon,
-                        rightIcon: link.rightIcon,
+                        icon: resolveIconPath(link.icon, absoluteFilepathToDocsConfig),
+                        rightIcon: resolveIconPath(link.rightIcon, absoluteFilepathToDocsConfig),
                         rounded: link.rounded,
                         viewers: convertRoleToRoleIds(link.viewers)
                     })) ?? []
@@ -1264,8 +1312,8 @@ function convertNavbarLinks(
             type: navbarLink.type,
             text: navbarLink.text,
             url: CjsFdrSdk.Url(navbarLink.href ?? navbarLink.url ?? "/"),
-            icon: navbarLink.icon,
-            rightIcon: navbarLink.rightIcon,
+            icon: resolveIconPath(navbarLink.icon, absoluteFilepathToDocsConfig),
+            rightIcon: resolveIconPath(navbarLink.rightIcon, absoluteFilepathToDocsConfig),
             rounded: navbarLink.rounded,
             viewers
         };

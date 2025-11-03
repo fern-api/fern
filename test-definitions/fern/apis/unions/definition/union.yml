@@ -23,11 +23,13 @@ types:
           type: circle
           id: example
           radius: 5.0
+          name: circle
       - name: square
         value:
           type: square
           id: example
           length: 5.0
+          name: square
 
   Circle:
     properties:
