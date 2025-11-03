@@ -1,6 +1,5 @@
 import { join, RelativeFilePath } from "@fern-api/fs-utils";
 import { ruby } from "@fern-api/ruby-ast";
-import { File } from "@fern-api/base-generator";
 import { AbstractRubyGeneratorContext, AsIsFiles } from "@fern-api/ruby-base";
 
 import { TypeDeclaration, TypeId } from "@fern-fern/ir-sdk/api";

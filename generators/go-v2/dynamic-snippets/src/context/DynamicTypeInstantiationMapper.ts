@@ -528,7 +528,11 @@ export class DynamicTypeInstantiationMapper {
         }
     }
 
-    private getUndiscriminatedUnionFieldNameForPrimitive({ primitive }: { primitive: FernIr.dynamic.PrimitiveTypeV1 }): string {
+    private getUndiscriminatedUnionFieldNameForPrimitive({
+        primitive
+    }: {
+        primitive: FernIr.dynamic.PrimitiveTypeV1;
+    }): string {
         switch (primitive) {
             case "INTEGER":
             case "UINT":

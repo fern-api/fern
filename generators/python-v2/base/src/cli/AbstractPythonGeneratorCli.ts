@@ -1,6 +1,5 @@
-import { AbstractGeneratorCli, parseIR } from "@fern-api/base-generator";
+import { AbstractGeneratorCli, File, parseIR } from "@fern-api/base-generator";
 import { AbsoluteFilePath } from "@fern-api/fs-utils";
-import { File } from "@fern-api/base-generator";
 import { IntermediateRepresentation } from "@fern-fern/ir-sdk/api";
 import * as IrSerialization from "@fern-fern/ir-sdk/serialization";
 import { AbstractPythonGeneratorContext } from "../context/AbstractPythonGeneratorContext";

@@ -1,7 +1,6 @@
-import { AbstractGeneratorCli } from "@fern-api/base-generator";
+import { AbstractGeneratorCli, File } from "@fern-api/base-generator";
 import { BaseRustCustomConfigSchema } from "@fern-api/rust-codegen";
 import { IntermediateRepresentation } from "@fern-fern/ir-sdk/api";
-import { File } from "@fern-api/base-generator";
 import * as IrSerialization from "@fern-fern/ir-sdk/serialization";
 import { readFile } from "fs/promises";
 import { AbstractRustGeneratorContext } from "../context/AbstractRustGeneratorContext";

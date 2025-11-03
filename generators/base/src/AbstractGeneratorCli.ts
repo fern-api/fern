@@ -123,7 +123,7 @@ export abstract class AbstractGeneratorCli<
     /**
      * Adds the /.fern/metadata.json file to the project
      * Included in this layer to ensure it's generated for all generation types
-     * @param context 
+     * @param context
      */
     protected abstract generateMetadata(context: GeneratorContext): Promise<void>;
 }

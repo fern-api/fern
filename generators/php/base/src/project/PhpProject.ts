@@ -68,7 +68,7 @@ export class PhpProject extends AbstractProject<AbstractPhpGeneratorContext<Base
             this.createCoreTestsDirectory(),
             this.createUtilsDirectory(),
             this.createGitHubWorkflowsDirectory(),
-            this.createComposerJson(),
+            this.createComposerJson()
         ]);
     }
 

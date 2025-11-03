@@ -18,8 +18,8 @@ import { GeneratorContext } from "@fern-typescript/contexts";
 import { writeFile } from "fs/promises";
 import tmp from "tmp-promise";
 import { publishPackage } from "./publishPackage";
-import { writeGitHubWorkflows } from "./writeGitHubWorkflows";
 import { writeGenerationMetadata } from "./writeGenerationMetadata";
+import { writeGitHubWorkflows } from "./writeGitHubWorkflows";
 
 const OUTPUT_ZIP_FILENAME = "output.zip";
 
@@ -122,7 +122,7 @@ export abstract class AbstractGeneratorCli<CustomConfig> {
                     });
                 }
             });
-            
+
             await config.output.mode._visit<void | Promise<void>>({
                 publish: async () => {
                     await typescriptProject.installDependencies(logger);

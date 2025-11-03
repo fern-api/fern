@@ -1,7 +1,7 @@
 import { GeneratorNotificationService } from "@fern-api/base-generator";
 import { assertNever } from "@fern-api/core-utils";
 import { java } from "@fern-api/java-ast";
-import { AbstractJavaGeneratorContext, JavaProject } from "@fern-api/java-base";
+import { AbstractJavaGeneratorContext } from "@fern-api/java-base";
 import { FernGeneratorExec } from "@fern-fern/generator-exec-sdk";
 import {
     ExampleEndpointCall,

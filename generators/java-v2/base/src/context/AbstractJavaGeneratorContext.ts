@@ -1,7 +1,7 @@
-import { AbstractGeneratorContext, FernGeneratorExec, GeneratorNotificationService, File } from "@fern-api/base-generator";
+import { AbstractGeneratorContext, FernGeneratorExec, GeneratorNotificationService } from "@fern-api/base-generator";
 import { BaseJavaCustomConfigSchema, java } from "@fern-api/java-ast";
-import { JavaProject } from "../project/JavaProject";
 import { FernFilepath, IntermediateRepresentation, Name, TypeDeclaration, TypeId } from "@fern-fern/ir-sdk/api";
+import { JavaProject } from "../project/JavaProject";
 
 import { JavaTypeMapper } from "./JavaTypeMapper";
 

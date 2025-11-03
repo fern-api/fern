@@ -1,5 +1,5 @@
 import { AbsoluteFilePath, RelativeFilePath } from "@fern-api/fs-utils";
-import { FernIr } from "@fern-fern/ir-sdk"
+import { FernIr } from "@fern-fern/ir-sdk";
 import { mkdir, writeFile } from "fs/promises";
 import path from "path";
 
@@ -10,8 +10,8 @@ export async function writeGenerationMetadata({
     generationMetadata,
     pathToProject
 }: {
-    generationMetadata: FernIr.GenerationMetadata,
-    pathToProject: AbsoluteFilePath
+    generationMetadata: FernIr.GenerationMetadata;
+    pathToProject: AbsoluteFilePath;
 }): Promise<void> {
     const content = JSON.stringify(generationMetadata, null, 2);
     const generationMetadataDir = path.join(pathToProject, GENERATION_METADATA_FILEPATH);

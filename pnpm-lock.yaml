@@ -1740,8 +1740,8 @@ importers:
         specifier: workspace:*
         version: link:../../../packages/commons/logging-execa
       '@fern-fern/ir-sdk':
-        specifier: ^61.7.0
-        version: 61.7.0
+        specifier: ^39
+        version: 39.0.0
       tmp-promise:
         specifier: ^3.0.3
         version: 3.0.3
@@ -1771,8 +1771,8 @@ importers:
         specifier: ^0.0.1167
         version: 0.0.1167
       '@fern-fern/ir-sdk':
-        specifier: ^61.7.0
-        version: 61.7.0
+        specifier: ^39
+        version: 39.0.0
       lodash-es:
         specifier: ^4.17.21
         version: 4.17.21
@@ -1829,8 +1829,8 @@ importers:
         specifier: ^0.0.1167
         version: 0.0.1167
       '@fern-fern/ir-sdk':
-        specifier: ^61.7.0
-        version: 61.7.0
+        specifier: ^39
+        version: 39.0.0
       '@types/node':
         specifier: 18.15.3
         version: 18.15.3
@@ -1877,8 +1877,8 @@ importers:
         specifier: ^0.0.1167
         version: 0.0.1167
       '@fern-fern/ir-sdk':
-        specifier: ^61.7.0
-        version: 61.7.0
+        specifier: ^39
+        version: 39.0.0
       '@types/node':
         specifier: 18.15.3
         version: 18.15.3
@@ -9496,6 +9496,9 @@ packages:
   '@fern-fern/generators-sdk@0.114.0-5745f9e74':
     resolution: {integrity: sha512-FG7SU7ul1Q6EELAPsixGvbq8VP4Xjl42cd1VmLBlYXds5EtYxG/SZCu2QLsGgPMrkCFJ6V6VQgzXFTU3RoYR9A==}
 
+  '@fern-fern/ir-sdk@39.0.0':
+    resolution: {integrity: sha512-cx8g0hX3gS/JveQPKanSWAyhM8SGhVOiQEcovqmcF/j9wvpjO8FXXNNI1+ZR1Wdmkcggx9UIqXDbS7jzefh6Rw==}
+
   '@fern-fern/ir-sdk@61.7.0':
     resolution: {integrity: sha512-LHz8xJRISnuMVzLZHjwh1ziEofE0smL08Ddoe/YHnod8p7DPS/mpOcQKEfzqUn2mdLB6iqUBKB74NMchP/nM+Q==}
 
@@ -17059,6 +17062,8 @@ snapshots:
       url-join: 4.0.1
     transitivePeerDependencies:
       - encoding
+
+  '@fern-fern/ir-sdk@39.0.0': {}
 
   '@fern-fern/ir-sdk@61.7.0':
     dependencies:

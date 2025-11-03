@@ -3,11 +3,11 @@ import {
     FernGeneratorExec,
     GeneratorNotificationService
 } from "@fern-api/browser-compatible-base-generator";
-import { RubyProject } from "../project/RubyProject";
 import { RelativeFilePath } from "@fern-api/path-utils";
 import { BaseRubyCustomConfigSchema, ruby } from "@fern-api/ruby-ast";
 import { IntermediateRepresentation, TypeDeclaration, TypeId } from "@fern-fern/ir-sdk/api";
 import { capitalize, snakeCase } from "lodash-es";
+import { RubyProject } from "../project/RubyProject";
 import { RubyTypeMapper } from "./RubyTypeMapper";
 
 const defaultVersion: string = "0.0.0";
