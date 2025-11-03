@@ -1,5 +1,5 @@
 displayName: Swift SDK
-irVersion: v59
+irVersion: v61
 image: fernapi/fern-swift-sdk
 changelogLocation: ../../generators/swift/sdk/versions.yml
 
