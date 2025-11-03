@@ -83,13 +83,19 @@ function handleWorkspaceParserFailureForFile({
             break;
         case WorkspaceLoaderFailureType.JSONSCHEMA_VALIDATION:
             if (failure.error.error != null) {
+                const pathSegments = failure.error.error.instancePath.split("/").filter((part) => part !== "");
+                if (failure.error.error.keyword === "required" && failure.error.error.params?.missingProperty) {
+                    pathSegments.push(failure.error.error.params.missingProperty);
+                } else if (
+                    failure.error.error.keyword === "additionalProperties" &&
+                    failure.error.error.params?.additionalProperty
+                ) {
+                    pathSegments.push(failure.error.error.params.additionalProperty);
+                }
                 logger.error(
                     formatLog({
                         title: failure.error.error.message ?? "Unknown error",
-                        breadcrumbs: [
-                            relativeFilepath,
-                            ...failure.error.error.instancePath.split("/").filter((part) => part !== "")
-                        ]
+                        breadcrumbs: [relativeFilepath, ...pathSegments]
                     })
                 );
             }
