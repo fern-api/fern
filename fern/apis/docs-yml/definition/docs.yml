@@ -313,6 +313,8 @@ types:
   EditThisPageConfig:
     properties:
       github: optional<GithubEditThisPageConfig>
+      gitlab: optional<GitlabEditThisPageConfig>
+      bitbucket: optional<BitbucketEditThisPageConfig>
 
   GithubEditThisPageConfig:
     properties:
@@ -320,6 +322,32 @@ types:
         type: optional<string>
         docs: |
           @default: `github.com`
+      owner: string
+      repo: string
+      branch:
+        type: optional<string>
+        docs: |
+          @default: `main`
+
+  GitlabEditThisPageConfig:
+    properties:
+      host:
+        type: optional<string>
+        docs: |
+          @default: `gitlab.com`
+      owner: string
+      repo: string
+      branch:
+        type: optional<string>
+        docs: |
+          @default: `main`
+
+  BitbucketEditThisPageConfig:
+    properties:
+      host:
+        type: optional<string>
+        docs: |
+          @default: `bitbucket.org`
       owner: string
       repo: string
       branch:
