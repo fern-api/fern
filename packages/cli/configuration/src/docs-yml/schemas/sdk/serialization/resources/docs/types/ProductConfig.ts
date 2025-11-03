@@ -5,37 +5,12 @@
 import * as serializers from "../../../index";
 import * as FernDocsConfig from "../../../../api/index";
 import * as core from "../../../../core";
-import { VersionConfig } from "./VersionConfig";
-import { Audience } from "./Audience";
-import { WithPermissions } from "./WithPermissions";
-import { WithFeatureFlags } from "./WithFeatureFlags";
+import { InternalProduct } from "./InternalProduct";
+import { ExternalProduct } from "./ExternalProduct";
 
-export const ProductConfig: core.serialization.ObjectSchema<
-    serializers.ProductConfig.Raw,
-    FernDocsConfig.ProductConfig
-> = core.serialization
-    .object({
-        displayName: core.serialization.property("display-name", core.serialization.string()),
-        path: core.serialization.string(),
-        subtitle: core.serialization.string().optional(),
-        icon: core.serialization.string().optional(),
-        image: core.serialization.string().optional(),
-        slug: core.serialization.string().optional(),
-        versions: core.serialization.list(VersionConfig).optional(),
-        audiences: Audience.optional(),
-    })
-    .extend(WithPermissions)
-    .extend(WithFeatureFlags);
+export const ProductConfig: core.serialization.Schema<serializers.ProductConfig.Raw, FernDocsConfig.ProductConfig> =
+    core.serialization.undiscriminatedUnion([InternalProduct, ExternalProduct]);
 
 export declare namespace ProductConfig {
-    export interface Raw extends WithPermissions.Raw, WithFeatureFlags.Raw {
-        "display-name": string;
-        path: string;
-        subtitle?: string | null;
-        icon?: string | null;
-        image?: string | null;
-        slug?: string | null;
-        versions?: VersionConfig.Raw[] | null;
-        audiences?: Audience.Raw | null;
-    }
+    export type Raw = InternalProduct.Raw | ExternalProduct.Raw;
 }
