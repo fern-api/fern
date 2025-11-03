@@ -115,10 +115,12 @@ export abstract class AbstractGeneratorCli<CustomConfig> {
             );
 
             await typescriptProject.writeArbitraryFiles(async (pathToProject) => {
-                await writeGenerationMetadata({
-                    generationMetadata: ir.generationMetadata,
-                    pathToProject
-                });
+                if (ir.generationMetadata) {
+                    await writeGenerationMetadata({
+                        generationMetadata: ir.generationMetadata,
+                        pathToProject
+                    });
+                }
             });
             
             await config.output.mode._visit<void | Promise<void>>({
