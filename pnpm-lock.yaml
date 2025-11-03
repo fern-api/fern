@@ -783,8 +783,8 @@ importers:
         specifier: workspace:*
         version: link:../../../packages/commons/core-utils
       '@fern-api/dynamic-ir-sdk':
-        specifier: ^61.4.0
-        version: 61.4.0
+        specifier: ^61.7.0
+        version: 61.7.0
       '@fern-api/java-ast':
         specifier: workspace:*
         version: link:../ast
@@ -9442,9 +9442,6 @@ packages:
   '@fern-api/dynamic-ir-sdk@61.0.0':
     resolution: {integrity: sha512-sVLYmbXwq90+tpWbDFjhDeBxIRnrr/RrwsDtoqVFBzuYCkj5zPh3ujsujYfcWQ0sDWlQ6oiIonTUZn+EabAuAQ==}
 
-  '@fern-api/dynamic-ir-sdk@61.4.0':
-    resolution: {integrity: sha512-pJ8oswOmhVBi7I7OnFXndb2TqXMKweQby1/YmbJi8Usp/c+mFwEvnCYfvTvj6an34mG1k7HiS4ACZHtDp/SMJw==}
-
   '@fern-api/dynamic-ir-sdk@61.7.0':
     resolution: {integrity: sha512-3BcgNnTgr3qucG2AYr1hCOjVMjM5VLZZIkSTgOlVjwASTvH5eqxApfYasUNLAAA9xXU7anfCqtnd7IOE2G2jTw==}
 
@@ -16919,8 +16916,6 @@ snapshots:
   '@fern-api/dynamic-ir-sdk@59.6.1': {}
 
   '@fern-api/dynamic-ir-sdk@61.0.0': {}
-
-  '@fern-api/dynamic-ir-sdk@61.4.0': {}
 
   '@fern-api/dynamic-ir-sdk@61.7.0': {}
 
