@@ -1,0 +1,11 @@
+# Place to hold unreleased changes before a full release
+# this file is meant to follow the same release format as versions.yml
+# but is not processed, it's simply procedural
+#
+# Rack up changes here, then copy the block over to versions.yml when ready to release
+- version: unreleased
+  changelogEntry:
+    - type: fix
+      summary: |
+        Fix deserialization of API responses with non-snake_case field names (e.g., camelCase, PascalCase, SCREAMING_SNAKE_CASE).
+        The generator now preserves wire format field names via the api_name parameter when generating field definitions.
