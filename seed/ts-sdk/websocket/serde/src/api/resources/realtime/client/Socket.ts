@@ -3,9 +3,9 @@
 import * as core from "../../../../core/index.js";
 import { fromJson } from "../../../../core/json.js";
 import * as serializers from "../../../../serialization/index.js";
-import { SendEvent as SendEventType } from "../../../../serialization/resources/realtime/types/SendEvent.js";
-import { SendEvent2 as SendEvent2Type } from "../../../../serialization/resources/realtime/types/SendEvent2.js";
-import { SendSnakeCase as SendSnakeCaseType } from "../../../../serialization/resources/realtime/types/SendSnakeCase.js";
+import { SendEvent as SendEvent_SeedWebsocket } from "../../../../serialization/resources/realtime/types/SendEvent.js";
+import { SendEvent2 as SendEvent2_SeedWebsocket } from "../../../../serialization/resources/realtime/types/SendEvent2.js";
+import { SendSnakeCase as SendSnakeCase_SeedWebsocket } from "../../../../serialization/resources/realtime/types/SendSnakeCase.js";
 import type { ReceiveEvent } from "../types/ReceiveEvent.js";
 import type { ReceiveEvent2 } from "../types/ReceiveEvent2.js";
 import type { ReceiveEvent3 } from "../types/ReceiveEvent3.js";
@@ -87,7 +87,7 @@ export class RealtimeSocket {
 
     public sendSend(message: SendEvent): void {
         this.assertSocketIsOpen();
-        const jsonPayload = SendEventType.jsonOrThrow(message, {
+        const jsonPayload = SendEvent_SeedWebsocket.jsonOrThrow(message, {
             unrecognizedObjectKeys: "passthrough",
             allowUnrecognizedUnionMembers: true,
             allowUnrecognizedEnumValues: true,
@@ -99,7 +99,7 @@ export class RealtimeSocket {
 
     public sendSendSnakeCase(message: SendSnakeCase): void {
         this.assertSocketIsOpen();
-        const jsonPayload = SendSnakeCaseType.jsonOrThrow(message, {
+        const jsonPayload = SendSnakeCase_SeedWebsocket.jsonOrThrow(message, {
             unrecognizedObjectKeys: "passthrough",
             allowUnrecognizedUnionMembers: true,
             allowUnrecognizedEnumValues: true,
@@ -111,7 +111,7 @@ export class RealtimeSocket {
 
     public sendSend2(message: SendEvent2): void {
         this.assertSocketIsOpen();
-        const jsonPayload = SendEvent2Type.jsonOrThrow(message, {
+        const jsonPayload = SendEvent2_SeedWebsocket.jsonOrThrow(message, {
             unrecognizedObjectKeys: "passthrough",
             allowUnrecognizedUnionMembers: true,
             allowUnrecognizedEnumValues: true,

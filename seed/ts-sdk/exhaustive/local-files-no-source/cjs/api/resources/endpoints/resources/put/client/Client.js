@@ -52,7 +52,7 @@ class Put {
         this._options = _options;
     }
     /**
-     * @param {SeedExhaustive.endpoints.PutRequest} request
+     * @param {PutRequest} request
      * @param {Put.RequestOptions} requestOptions - Request-specific configuration.
      *
      * @example

@@ -5,7 +5,7 @@ import { mergeHeaders, mergeOnlyDefinedHeaders } from "../../../../core/headers.
 import * as core from "../../../../core/index.js";
 import * as environments from "../../../../environments.js";
 import * as SeedTrace from "../../../index.js";
-import type { Migration as MigrationType } from "../types/Migration.js";
+import type { Migration as Migration_SeedTrace } from "../types/Migration.js";
 import type { GetAttemptedMigrationsRequest } from "./requests/GetAttemptedMigrationsRequest.js";
 
 export declare namespace Migration {
@@ -33,7 +33,9 @@ export class Migration {
     public getAttemptedMigrations(
         request: GetAttemptedMigrationsRequest,
         requestOptions?: Migration.RequestOptions,
-    ): core.HttpResponsePromise<core.APIResponse<MigrationType[], SeedTrace.migration.getAttemptedMigrations.Error>> {
+    ): core.HttpResponsePromise<
+        core.APIResponse<Migration_SeedTrace[], SeedTrace.migration.getAttemptedMigrations.Error>
+    > {
         return core.HttpResponsePromise.fromPromise(this.__getAttemptedMigrations(request, requestOptions));
     }
 
@@ -41,7 +43,7 @@ export class Migration {
         request: GetAttemptedMigrationsRequest,
         requestOptions?: Migration.RequestOptions,
     ): Promise<
-        core.WithRawResponse<core.APIResponse<MigrationType[], SeedTrace.migration.getAttemptedMigrations.Error>>
+        core.WithRawResponse<core.APIResponse<Migration_SeedTrace[], SeedTrace.migration.getAttemptedMigrations.Error>>
     > {
         const { "admin-key-header": adminKeyHeader } = request;
         const _headers: core.Fetcher.Args["headers"] = mergeHeaders(
@@ -78,7 +80,7 @@ export class Migration {
             return {
                 data: {
                     ok: true,
-                    body: _response.body as MigrationType[],
+                    body: _response.body as Migration_SeedTrace[],
                     headers: _response.headers,
                     rawResponse: _response.rawResponse,
                 },

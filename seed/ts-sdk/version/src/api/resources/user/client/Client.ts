@@ -4,7 +4,7 @@ import type { BaseClientOptions, BaseRequestOptions } from "../../../../BaseClie
 import { mergeHeaders, mergeOnlyDefinedHeaders } from "../../../../core/headers.js";
 import * as core from "../../../../core/index.js";
 import * as errors from "../../../../errors/index.js";
-import type { User as UserType } from "../types/User.js";
+import type { User as User_SeedVersion } from "../types/User.js";
 import type { UserId } from "../types/UserId.js";
 
 export declare namespace User {
@@ -27,14 +27,14 @@ export class User {
      * @example
      *     await client.user.getUser("userId")
      */
-    public getUser(userId: UserId, requestOptions?: User.RequestOptions): core.HttpResponsePromise<UserType> {
+    public getUser(userId: UserId, requestOptions?: User.RequestOptions): core.HttpResponsePromise<User_SeedVersion> {
         return core.HttpResponsePromise.fromPromise(this.__getUser(userId, requestOptions));
     }
 
     private async __getUser(
         userId: UserId,
         requestOptions?: User.RequestOptions,
-    ): Promise<core.WithRawResponse<UserType>> {
+    ): Promise<core.WithRawResponse<User_SeedVersion>> {
         const _headers: core.Fetcher.Args["headers"] = mergeHeaders(
             this._options?.headers,
             mergeOnlyDefinedHeaders({ "X-API-Version": requestOptions?.xApiVersion }),
@@ -55,7 +55,7 @@ export class User {
             fetchFn: this._options?.fetch,
         });
         if (_response.ok) {
-            return { data: _response.body as UserType, rawResponse: _response.rawResponse };
+            return { data: _response.body as User_SeedVersion, rawResponse: _response.rawResponse };
         }
 
         if (_response.error.reason === "status-code") {

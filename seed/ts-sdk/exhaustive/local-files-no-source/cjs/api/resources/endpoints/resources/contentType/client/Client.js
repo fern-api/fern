@@ -52,7 +52,7 @@ class ContentType {
         this._options = _options;
     }
     /**
-     * @param {SeedExhaustive.types.ObjectWithOptionalField} request
+     * @param {ObjectWithOptionalField} request
      * @param {ContentType.RequestOptions} requestOptions - Request-specific configuration.
      *
      * @example
@@ -122,7 +122,7 @@ class ContentType {
         });
     }
     /**
-     * @param {SeedExhaustive.types.ObjectWithOptionalField} request
+     * @param {ObjectWithOptionalField} request
      * @param {ContentType.RequestOptions} requestOptions - Request-specific configuration.
      *
      * @example

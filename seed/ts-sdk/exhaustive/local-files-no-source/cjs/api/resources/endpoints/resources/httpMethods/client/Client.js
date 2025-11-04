@@ -103,7 +103,7 @@ class HttpMethods {
         });
     }
     /**
-     * @param {SeedExhaustive.types.ObjectWithRequiredField} request
+     * @param {ObjectWithRequiredField} request
      * @param {HttpMethods.RequestOptions} requestOptions - Request-specific configuration.
      *
      * @example
@@ -132,10 +132,7 @@ class HttpMethods {
                 fetchFn: (_h = this._options) === null || _h === void 0 ? void 0 : _h.fetch,
             });
             if (_response.ok) {
-                return {
-                    data: _response.body,
-                    rawResponse: _response.rawResponse,
-                };
+                return { data: _response.body, rawResponse: _response.rawResponse };
             }
             if (_response.error.reason === "status-code") {
                 throw new errors.SeedExhaustiveError({
@@ -163,7 +160,7 @@ class HttpMethods {
     }
     /**
      * @param {string} id
-     * @param {SeedExhaustive.types.ObjectWithRequiredField} request
+     * @param {ObjectWithRequiredField} request
      * @param {HttpMethods.RequestOptions} requestOptions - Request-specific configuration.
      *
      * @example
@@ -192,10 +189,7 @@ class HttpMethods {
                 fetchFn: (_h = this._options) === null || _h === void 0 ? void 0 : _h.fetch,
             });
             if (_response.ok) {
-                return {
-                    data: _response.body,
-                    rawResponse: _response.rawResponse,
-                };
+                return { data: _response.body, rawResponse: _response.rawResponse };
             }
             if (_response.error.reason === "status-code") {
                 throw new errors.SeedExhaustiveError({
@@ -223,7 +217,7 @@ class HttpMethods {
     }
     /**
      * @param {string} id
-     * @param {SeedExhaustive.types.ObjectWithOptionalField} request
+     * @param {ObjectWithOptionalField} request
      * @param {HttpMethods.RequestOptions} requestOptions - Request-specific configuration.
      *
      * @example
@@ -266,10 +260,7 @@ class HttpMethods {
                 fetchFn: (_h = this._options) === null || _h === void 0 ? void 0 : _h.fetch,
             });
             if (_response.ok) {
-                return {
-                    data: _response.body,
-                    rawResponse: _response.rawResponse,
-                };
+                return { data: _response.body, rawResponse: _response.rawResponse };
             }
             if (_response.error.reason === "status-code") {
                 throw new errors.SeedExhaustiveError({

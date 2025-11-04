@@ -3,13 +3,13 @@
 import type { NestedObjectWithRequiredField } from "../../../../../../api/resources/types/resources/object/types/NestedObjectWithRequiredField.js";
 import * as core from "../../../../../../core/index.js";
 import type * as serializers from "../../../../../index.js";
-import { NestedObjectWithRequiredField as NestedObjectWithRequiredFieldType } from "../../../../types/resources/object/types/NestedObjectWithRequiredField.js";
+import { NestedObjectWithRequiredField as NestedObjectWithRequiredField_SeedExhaustive } from "../../../../types/resources/object/types/NestedObjectWithRequiredField.js";
 
 export const Request: core.serialization.Schema<
     serializers.endpoints.object.getAndReturnNestedWithRequiredFieldAsList.Request.Raw,
     NestedObjectWithRequiredField[]
-> = core.serialization.list(NestedObjectWithRequiredFieldType);
+> = core.serialization.list(NestedObjectWithRequiredField_SeedExhaustive);
 
 export declare namespace Request {
-    export type Raw = NestedObjectWithRequiredFieldType.Raw[];
+    export type Raw = NestedObjectWithRequiredField_SeedExhaustive.Raw[];
 }

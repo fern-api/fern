@@ -1,6 +1,6 @@
 import type { BaseClientOptions, BaseRequestOptions } from "../../../../../../BaseClient.js";
 import * as core from "../../../../../../core/index.js";
-import type * as SeedExhaustive from "../../../../../index.js";
+import type { ObjectWithOptionalField } from "../../../../types/resources/object/types/ObjectWithOptionalField.js";
 export declare namespace ContentType {
     interface Options extends BaseClientOptions {
     }
@@ -11,7 +11,7 @@ export declare class ContentType {
     protected readonly _options: ContentType.Options;
     constructor(_options: ContentType.Options);
     /**
-     * @param {SeedExhaustive.types.ObjectWithOptionalField} request
+     * @param {ObjectWithOptionalField} request
      * @param {ContentType.RequestOptions} requestOptions - Request-specific configuration.
      *
      * @example
@@ -33,10 +33,10 @@ export declare class ContentType {
      *         bigint: "1000000"
      *     })
      */
-    postJsonPatchContentType(request: SeedExhaustive.types.ObjectWithOptionalField, requestOptions?: ContentType.RequestOptions): core.HttpResponsePromise<void>;
+    postJsonPatchContentType(request: ObjectWithOptionalField, requestOptions?: ContentType.RequestOptions): core.HttpResponsePromise<void>;
     private __postJsonPatchContentType;
     /**
-     * @param {SeedExhaustive.types.ObjectWithOptionalField} request
+     * @param {ObjectWithOptionalField} request
      * @param {ContentType.RequestOptions} requestOptions - Request-specific configuration.
      *
      * @example
@@ -58,7 +58,7 @@ export declare class ContentType {
      *         bigint: "1000000"
      *     })
      */
-    postJsonPatchContentWithCharsetType(request: SeedExhaustive.types.ObjectWithOptionalField, requestOptions?: ContentType.RequestOptions): core.HttpResponsePromise<void>;
+    postJsonPatchContentWithCharsetType(request: ObjectWithOptionalField, requestOptions?: ContentType.RequestOptions): core.HttpResponsePromise<void>;
     private __postJsonPatchContentWithCharsetType;
     protected _getAuthorizationHeader(): Promise<string | undefined>;
 }

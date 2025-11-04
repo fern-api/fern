@@ -47,7 +47,7 @@ exports.InlinedRequests = void 0;
 const headers_js_1 = require("../../../../core/headers.js");
 const core = __importStar(require("../../../../core/index.js"));
 const errors = __importStar(require("../../../../errors/index.js"));
-const SeedExhaustive = __importStar(require("../../../index.js"));
+const BadRequestBody_js_1 = require("../../generalErrors/errors/BadRequestBody.js");
 class InlinedRequests {
     constructor(_options) {
         this._options = _options;
@@ -55,10 +55,10 @@ class InlinedRequests {
     /**
      * POST with custom object in request body, response is an object
      *
-     * @param {SeedExhaustive.PostWithObjectBody} request
+     * @param {PostWithObjectBody} request
      * @param {InlinedRequests.RequestOptions} requestOptions - Request-specific configuration.
      *
-     * @throws {@link SeedExhaustive.BadRequestBody}
+     * @throws {@link BadRequestBody}
      *
      * @example
      *     await client.inlinedRequests.postWithObjectBodyandResponse({
@@ -104,15 +104,12 @@ class InlinedRequests {
                 fetchFn: (_h = this._options) === null || _h === void 0 ? void 0 : _h.fetch,
             });
             if (_response.ok) {
-                return {
-                    data: _response.body,
-                    rawResponse: _response.rawResponse,
-                };
+                return { data: _response.body, rawResponse: _response.rawResponse };
             }
             if (_response.error.reason === "status-code") {
                 switch (_response.error.statusCode) {
                     case 400:
-                        throw new SeedExhaustive.BadRequestBody(_response.error.body, _response.rawResponse);
+                        throw new BadRequestBody_js_1.BadRequestBody(_response.error.body, _response.rawResponse);
                     default:
                         throw new errors.SeedExhaustiveError({
                             statusCode: _response.error.statusCode,

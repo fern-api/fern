@@ -71,7 +71,7 @@ export class Params {
     /**
      * GET with path param
      *
-     * @param {SeedExhaustive.endpoints.GetWithInlinePath} request
+     * @param {GetWithInlinePath} request
      * @param {Params.RequestOptions} requestOptions - Request-specific configuration.
      *
      * @example
@@ -127,7 +127,7 @@ export class Params {
     /**
      * GET with query param
      *
-     * @param {SeedExhaustive.endpoints.GetWithQuery} request
+     * @param {GetWithQuery} request
      * @param {Params.RequestOptions} requestOptions - Request-specific configuration.
      *
      * @example
@@ -187,7 +187,7 @@ export class Params {
     /**
      * GET with multiple of same query param
      *
-     * @param {SeedExhaustive.endpoints.GetWithMultipleQuery} request
+     * @param {GetWithMultipleQuery} request
      * @param {Params.RequestOptions} requestOptions - Request-specific configuration.
      *
      * @example
@@ -258,7 +258,7 @@ export class Params {
      * GET with path and query params
      *
      * @param {string} param
-     * @param {SeedExhaustive.endpoints.GetWithPathAndQuery} request
+     * @param {GetWithPathAndQuery} request
      * @param {Params.RequestOptions} requestOptions - Request-specific configuration.
      *
      * @example
@@ -316,7 +316,7 @@ export class Params {
     /**
      * GET with path and query params
      *
-     * @param {SeedExhaustive.endpoints.GetWithInlinePathAndQuery} request
+     * @param {GetWithInlinePathAndQuery} request
      * @param {Params.RequestOptions} requestOptions - Request-specific configuration.
      *
      * @example
@@ -432,7 +432,7 @@ export class Params {
     /**
      * PUT to update with path param
      *
-     * @param {SeedExhaustive.endpoints.ModifyResourceAtInlinedPath} request
+     * @param {ModifyResourceAtInlinedPath} request
      * @param {Params.RequestOptions} requestOptions - Request-specific configuration.
      *
      * @example

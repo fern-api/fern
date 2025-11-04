@@ -52,7 +52,7 @@ class Enum {
         this._options = _options;
     }
     /**
-     * @param {SeedExhaustive.types.WeatherReport} request
+     * @param {WeatherReport} request
      * @param {Enum.RequestOptions} requestOptions - Request-specific configuration.
      *
      * @example

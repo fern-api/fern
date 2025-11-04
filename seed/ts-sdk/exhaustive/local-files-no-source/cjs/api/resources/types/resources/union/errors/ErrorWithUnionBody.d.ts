@@ -1,6 +1,6 @@
 import type * as core from "../../../../../../core/index.js";
 import * as errors from "../../../../../../errors/index.js";
-import type * as SeedExhaustive from "../../../../../index.js";
+import type { Animal } from "../types/Animal.js";
 export declare class ErrorWithUnionBody extends errors.SeedExhaustiveError {
-    constructor(body: SeedExhaustive.types.Animal, rawResponse?: core.RawResponse);
+    constructor(body: Animal, rawResponse?: core.RawResponse);
 }

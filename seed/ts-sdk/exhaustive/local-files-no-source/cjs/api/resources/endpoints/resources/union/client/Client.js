@@ -52,7 +52,7 @@ class Union {
         this._options = _options;
     }
     /**
-     * @param {SeedExhaustive.types.Animal} request
+     * @param {Animal} request
      * @param {Union.RequestOptions} requestOptions - Request-specific configuration.
      *
      * @example

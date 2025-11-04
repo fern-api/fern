@@ -4,23 +4,23 @@ import type { Playlist } from "../../../../api/resources/playlist/types/Playlist
 import type { UpdatePlaylistRequest } from "../../../../api/resources/playlist/types/UpdatePlaylistRequest.js";
 import type * as core from "../../../../core/index.js";
 import type * as serializers from "../../../index.js";
-import { Playlist as PlaylistType } from "../types/Playlist.js";
-import { UpdatePlaylistRequest as UpdatePlaylistRequestType } from "../types/UpdatePlaylistRequest.js";
+import { Playlist as Playlist_SeedTrace } from "../types/Playlist.js";
+import { UpdatePlaylistRequest as UpdatePlaylistRequest_SeedTrace } from "../types/UpdatePlaylistRequest.js";
 
 export const Request: core.serialization.Schema<
     serializers.playlist.updatePlaylist.Request.Raw,
     UpdatePlaylistRequest | undefined
-> = UpdatePlaylistRequestType.optional();
+> = UpdatePlaylistRequest_SeedTrace.optional();
 
 export declare namespace Request {
-    export type Raw = UpdatePlaylistRequestType.Raw | null | undefined;
+    export type Raw = UpdatePlaylistRequest_SeedTrace.Raw | null | undefined;
 }
 
 export const Response: core.serialization.Schema<
     serializers.playlist.updatePlaylist.Response.Raw,
     Playlist | undefined
-> = PlaylistType.optional();
+> = Playlist_SeedTrace.optional();
 
 export declare namespace Response {
-    export type Raw = PlaylistType.Raw | null | undefined;
+    export type Raw = Playlist_SeedTrace.Raw | null | undefined;
 }

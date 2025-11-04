@@ -16,7 +16,7 @@ export class ReqWithHeaders {
         this._options = _options;
     }
     /**
-     * @param {SeedExhaustive.ReqWithHeaders} request
+     * @param {ReqWithHeaders_SeedExhaustive} request
      * @param {ReqWithHeaders.RequestOptions} requestOptions - Request-specific configuration.
      *
      * @example

@@ -1,10 +1,11 @@
-import type * as SeedExhaustive from "../../../../../index.mjs";
-export type Animal = SeedExhaustive.types.Animal.Dog | SeedExhaustive.types.Animal.Cat;
+import type { Cat as Cat_SeedExhaustive } from "./Cat.mjs";
+import type { Dog as Dog_SeedExhaustive } from "./Dog.mjs";
+export type Animal = Animal.Dog | Animal.Cat;
 export declare namespace Animal {
-    interface Dog extends SeedExhaustive.types.Dog {
+    interface Dog extends Dog_SeedExhaustive {
         animal: "dog";
     }
-    interface Cat extends SeedExhaustive.types.Cat {
+    interface Cat extends Cat_SeedExhaustive {
         animal: "cat";
     }
 }

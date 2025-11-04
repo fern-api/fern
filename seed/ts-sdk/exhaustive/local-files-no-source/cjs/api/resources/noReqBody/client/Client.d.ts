@@ -1,6 +1,6 @@
 import type { BaseClientOptions, BaseRequestOptions } from "../../../../BaseClient.js";
 import * as core from "../../../../core/index.js";
-import type * as SeedExhaustive from "../../../index.js";
+import type { ObjectWithOptionalField } from "../../types/resources/object/types/ObjectWithOptionalField.js";
 export declare namespace NoReqBody {
     interface Options extends BaseClientOptions {
     }
@@ -16,7 +16,7 @@ export declare class NoReqBody {
      * @example
      *     await client.noReqBody.getWithNoRequestBody()
      */
-    getWithNoRequestBody(requestOptions?: NoReqBody.RequestOptions): core.HttpResponsePromise<SeedExhaustive.types.ObjectWithOptionalField>;
+    getWithNoRequestBody(requestOptions?: NoReqBody.RequestOptions): core.HttpResponsePromise<ObjectWithOptionalField>;
     private __getWithNoRequestBody;
     /**
      * @param {NoReqBody.RequestOptions} requestOptions - Request-specific configuration.

@@ -1,5 +1,5 @@
-import type * as SeedExhaustive from "../../../../../index.js";
+import type { ObjectWithOptionalField } from "./ObjectWithOptionalField.js";
 export interface NestedObjectWithOptionalField {
     string?: string;
-    NestedObject?: SeedExhaustive.types.ObjectWithOptionalField;
+    NestedObject?: ObjectWithOptionalField;
 }

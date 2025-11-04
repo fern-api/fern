@@ -5,7 +5,7 @@ import { mergeHeaders, mergeOnlyDefinedHeaders } from "../../../../core/headers.
 import * as core from "../../../../core/index.js";
 import * as environments from "../../../../environments.js";
 import * as SeedTrace from "../../../index.js";
-import type { Playlist as PlaylistType } from "../types/Playlist.js";
+import type { Playlist as Playlist_SeedTrace } from "../types/Playlist.js";
 import type { PlaylistId } from "../types/PlaylistId.js";
 import type { UpdatePlaylistRequest } from "../types/UpdatePlaylistRequest.js";
 import type { CreatePlaylistRequest } from "./requests/CreatePlaylistRequest.js";
@@ -45,7 +45,7 @@ export class Playlist {
         serviceParam: number,
         request: CreatePlaylistRequest,
         requestOptions?: Playlist.RequestOptions,
-    ): core.HttpResponsePromise<core.APIResponse<PlaylistType, SeedTrace.playlist.createPlaylist.Error>> {
+    ): core.HttpResponsePromise<core.APIResponse<Playlist_SeedTrace, SeedTrace.playlist.createPlaylist.Error>> {
         return core.HttpResponsePromise.fromPromise(this.__createPlaylist(serviceParam, request, requestOptions));
     }
 
@@ -53,7 +53,7 @@ export class Playlist {
         serviceParam: number,
         request: CreatePlaylistRequest,
         requestOptions?: Playlist.RequestOptions,
-    ): Promise<core.WithRawResponse<core.APIResponse<PlaylistType, SeedTrace.playlist.createPlaylist.Error>>> {
+    ): Promise<core.WithRawResponse<core.APIResponse<Playlist_SeedTrace, SeedTrace.playlist.createPlaylist.Error>>> {
         const { datetime, optionalDatetime, body: _body } = request;
         const _queryParams: Record<string, string | string[] | object | object[] | null> = {};
         _queryParams.datetime = datetime;
@@ -97,7 +97,7 @@ export class Playlist {
             return {
                 data: {
                     ok: true,
-                    body: _response.body as PlaylistType,
+                    body: _response.body as Playlist_SeedTrace,
                     headers: _response.headers,
                     rawResponse: _response.rawResponse,
                 },
@@ -135,7 +135,7 @@ export class Playlist {
         serviceParam: number,
         request: GetPlaylistsRequest,
         requestOptions?: Playlist.RequestOptions,
-    ): core.HttpResponsePromise<core.APIResponse<PlaylistType[], SeedTrace.playlist.getPlaylists.Error>> {
+    ): core.HttpResponsePromise<core.APIResponse<Playlist_SeedTrace[], SeedTrace.playlist.getPlaylists.Error>> {
         return core.HttpResponsePromise.fromPromise(this.__getPlaylists(serviceParam, request, requestOptions));
     }
 
@@ -143,7 +143,7 @@ export class Playlist {
         serviceParam: number,
         request: GetPlaylistsRequest,
         requestOptions?: Playlist.RequestOptions,
-    ): Promise<core.WithRawResponse<core.APIResponse<PlaylistType[], SeedTrace.playlist.getPlaylists.Error>>> {
+    ): Promise<core.WithRawResponse<core.APIResponse<Playlist_SeedTrace[], SeedTrace.playlist.getPlaylists.Error>>> {
         const { limit, otherField, multiLineDocs, optionalMultipleField, multipleField } = request;
         const _queryParams: Record<string, string | string[] | object | object[] | null> = {};
         if (limit != null) {
@@ -199,7 +199,7 @@ export class Playlist {
             return {
                 data: {
                     ok: true,
-                    body: _response.body as PlaylistType[],
+                    body: _response.body as Playlist_SeedTrace[],
                     headers: _response.headers,
                     rawResponse: _response.rawResponse,
                 },
@@ -231,7 +231,7 @@ export class Playlist {
         serviceParam: number,
         playlistId: PlaylistId,
         requestOptions?: Playlist.RequestOptions,
-    ): core.HttpResponsePromise<core.APIResponse<PlaylistType, SeedTrace.playlist.getPlaylist.Error>> {
+    ): core.HttpResponsePromise<core.APIResponse<Playlist_SeedTrace, SeedTrace.playlist.getPlaylist.Error>> {
         return core.HttpResponsePromise.fromPromise(this.__getPlaylist(serviceParam, playlistId, requestOptions));
     }
 
@@ -239,7 +239,7 @@ export class Playlist {
         serviceParam: number,
         playlistId: PlaylistId,
         requestOptions?: Playlist.RequestOptions,
-    ): Promise<core.WithRawResponse<core.APIResponse<PlaylistType, SeedTrace.playlist.getPlaylist.Error>>> {
+    ): Promise<core.WithRawResponse<core.APIResponse<Playlist_SeedTrace, SeedTrace.playlist.getPlaylist.Error>>> {
         const _headers: core.Fetcher.Args["headers"] = mergeHeaders(
             this._options?.headers,
             mergeOnlyDefinedHeaders({
@@ -273,7 +273,7 @@ export class Playlist {
             return {
                 data: {
                     ok: true,
-                    body: _response.body as PlaylistType,
+                    body: _response.body as Playlist_SeedTrace,
                     headers: _response.headers,
                     rawResponse: _response.rawResponse,
                 },
@@ -325,7 +325,9 @@ export class Playlist {
         playlistId: PlaylistId,
         request?: UpdatePlaylistRequest,
         requestOptions?: Playlist.RequestOptions,
-    ): core.HttpResponsePromise<core.APIResponse<PlaylistType | undefined, SeedTrace.playlist.updatePlaylist.Error>> {
+    ): core.HttpResponsePromise<
+        core.APIResponse<Playlist_SeedTrace | undefined, SeedTrace.playlist.updatePlaylist.Error>
+    > {
         return core.HttpResponsePromise.fromPromise(
             this.__updatePlaylist(serviceParam, playlistId, request, requestOptions),
         );
@@ -337,7 +339,7 @@ export class Playlist {
         request?: UpdatePlaylistRequest,
         requestOptions?: Playlist.RequestOptions,
     ): Promise<
-        core.WithRawResponse<core.APIResponse<PlaylistType | undefined, SeedTrace.playlist.updatePlaylist.Error>>
+        core.WithRawResponse<core.APIResponse<Playlist_SeedTrace | undefined, SeedTrace.playlist.updatePlaylist.Error>>
     > {
         const _headers: core.Fetcher.Args["headers"] = mergeHeaders(
             this._options?.headers,
@@ -375,7 +377,7 @@ export class Playlist {
             return {
                 data: {
                     ok: true,
-                    body: _response.body as PlaylistType | undefined,
+                    body: _response.body as Playlist_SeedTrace | undefined,
                     headers: _response.headers,
                     rawResponse: _response.rawResponse,
                 },

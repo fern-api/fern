@@ -4,7 +4,7 @@ import type { BaseClientOptions, BaseRequestOptions } from "../../../../../../..
 import { mergeHeaders } from "../../../../../../../../core/headers.js";
 import * as core from "../../../../../../../../core/index.js";
 import * as errors from "../../../../../../../../errors/index.js";
-import type { Metadata as MetadataType } from "../types/Metadata.js";
+import type { Metadata as Metadata_SeedMixedFileDirectory } from "../types/Metadata.js";
 import type { GetEventMetadataRequest } from "./requests/GetEventMetadataRequest.js";
 
 export declare namespace Metadata {
@@ -34,14 +34,14 @@ export class Metadata {
     public getMetadata(
         request: GetEventMetadataRequest,
         requestOptions?: Metadata.RequestOptions,
-    ): core.HttpResponsePromise<MetadataType> {
+    ): core.HttpResponsePromise<Metadata_SeedMixedFileDirectory> {
         return core.HttpResponsePromise.fromPromise(this.__getMetadata(request, requestOptions));
     }
 
     private async __getMetadata(
         request: GetEventMetadataRequest,
         requestOptions?: Metadata.RequestOptions,
-    ): Promise<core.WithRawResponse<MetadataType>> {
+    ): Promise<core.WithRawResponse<Metadata_SeedMixedFileDirectory>> {
         const { id } = request;
         const _queryParams: Record<string, string | string[] | object | object[] | null> = {};
         _queryParams.id = id;
@@ -61,7 +61,7 @@ export class Metadata {
             fetchFn: this._options?.fetch,
         });
         if (_response.ok) {
-            return { data: _response.body as MetadataType, rawResponse: _response.rawResponse };
+            return { data: _response.body as Metadata_SeedMixedFileDirectory, rawResponse: _response.rawResponse };
         }
 
         if (_response.error.reason === "status-code") {

@@ -11,7 +11,7 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
 import { mergeHeaders, mergeOnlyDefinedHeaders } from "../../../../core/headers.mjs";
 import * as core from "../../../../core/index.mjs";
 import * as errors from "../../../../errors/index.mjs";
-import * as SeedExhaustive from "../../../index.mjs";
+import { BadRequestBody } from "../../generalErrors/errors/BadRequestBody.mjs";
 export class NoAuth {
     constructor(_options) {
         this._options = _options;
@@ -22,7 +22,7 @@ export class NoAuth {
      * @param {unknown} request
      * @param {NoAuth.RequestOptions} requestOptions - Request-specific configuration.
      *
-     * @throws {@link SeedExhaustive.BadRequestBody}
+     * @throws {@link BadRequestBody}
      *
      * @example
      *     await client.noAuth.postWithNoAuth({
@@ -55,7 +55,7 @@ export class NoAuth {
             if (_response.error.reason === "status-code") {
                 switch (_response.error.statusCode) {
                     case 400:
-                        throw new SeedExhaustive.BadRequestBody(_response.error.body, _response.rawResponse);
+                        throw new BadRequestBody(_response.error.body, _response.rawResponse);
                     default:
                         throw new errors.SeedExhaustiveError({
                             statusCode: _response.error.statusCode,

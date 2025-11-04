@@ -4,7 +4,7 @@ import type { BaseClientOptions, BaseRequestOptions } from "../../../../BaseClie
 import { mergeHeaders, mergeOnlyDefinedHeaders } from "../../../../core/headers.js";
 import * as core from "../../../../core/index.js";
 import * as errors from "../../../../errors/index.js";
-import type { ReqWithHeaders as ReqWithHeadersType } from "./requests/ReqWithHeaders.js";
+import type { ReqWithHeaders as ReqWithHeaders_SeedExhaustive } from "./requests/ReqWithHeaders.js";
 
 export declare namespace ReqWithHeaders {
     export interface Options extends BaseClientOptions {}
@@ -20,7 +20,7 @@ export class ReqWithHeaders {
     }
 
     /**
-     * @param {ReqWithHeadersType} request
+     * @param {ReqWithHeaders_SeedExhaustive} request
      * @param {ReqWithHeaders.RequestOptions} requestOptions - Request-specific configuration.
      *
      * @example
@@ -31,14 +31,14 @@ export class ReqWithHeaders {
      *     })
      */
     public getWithCustomHeader(
-        request: ReqWithHeadersType,
+        request: ReqWithHeaders_SeedExhaustive,
         requestOptions?: ReqWithHeaders.RequestOptions,
     ): core.HttpResponsePromise<void> {
         return core.HttpResponsePromise.fromPromise(this.__getWithCustomHeader(request, requestOptions));
     }
 
     private async __getWithCustomHeader(
-        request: ReqWithHeadersType,
+        request: ReqWithHeaders_SeedExhaustive,
         requestOptions?: ReqWithHeaders.RequestOptions,
     ): Promise<core.WithRawResponse<void>> {
         const {

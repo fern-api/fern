@@ -4,7 +4,7 @@ import type { BaseClientOptions, BaseRequestOptions } from "../../../../BaseClie
 import { mergeHeaders, mergeOnlyDefinedHeaders } from "../../../../core/headers.js";
 import * as core from "../../../../core/index.js";
 import * as errors from "../../../../errors/index.js";
-import type { User as UserType } from "../types/User.js";
+import type { User as User_SeedAnyAuth } from "../types/User.js";
 
 export declare namespace User {
     export interface Options extends BaseClientOptions {}
@@ -25,11 +25,11 @@ export class User {
      * @example
      *     await client.user.get()
      */
-    public get(requestOptions?: User.RequestOptions): core.HttpResponsePromise<UserType[]> {
+    public get(requestOptions?: User.RequestOptions): core.HttpResponsePromise<User_SeedAnyAuth[]> {
         return core.HttpResponsePromise.fromPromise(this.__get(requestOptions));
     }
 
-    private async __get(requestOptions?: User.RequestOptions): Promise<core.WithRawResponse<UserType[]>> {
+    private async __get(requestOptions?: User.RequestOptions): Promise<core.WithRawResponse<User_SeedAnyAuth[]>> {
         const _headers: core.Fetcher.Args["headers"] = mergeHeaders(
             this._options?.headers,
             mergeOnlyDefinedHeaders({
@@ -53,7 +53,7 @@ export class User {
             fetchFn: this._options?.fetch,
         });
         if (_response.ok) {
-            return { data: _response.body as UserType[], rawResponse: _response.rawResponse };
+            return { data: _response.body as User_SeedAnyAuth[], rawResponse: _response.rawResponse };
         }
 
         if (_response.error.reason === "status-code") {
@@ -87,11 +87,11 @@ export class User {
      * @example
      *     await client.user.getAdmins()
      */
-    public getAdmins(requestOptions?: User.RequestOptions): core.HttpResponsePromise<UserType[]> {
+    public getAdmins(requestOptions?: User.RequestOptions): core.HttpResponsePromise<User_SeedAnyAuth[]> {
         return core.HttpResponsePromise.fromPromise(this.__getAdmins(requestOptions));
     }
 
-    private async __getAdmins(requestOptions?: User.RequestOptions): Promise<core.WithRawResponse<UserType[]>> {
+    private async __getAdmins(requestOptions?: User.RequestOptions): Promise<core.WithRawResponse<User_SeedAnyAuth[]>> {
         const _headers: core.Fetcher.Args["headers"] = mergeHeaders(
             this._options?.headers,
             mergeOnlyDefinedHeaders({
@@ -115,7 +115,7 @@ export class User {
             fetchFn: this._options?.fetch,
         });
         if (_response.ok) {
-            return { data: _response.body as UserType[], rawResponse: _response.rawResponse };
+            return { data: _response.body as User_SeedAnyAuth[], rawResponse: _response.rawResponse };
         }
 
         if (_response.error.reason === "status-code") {

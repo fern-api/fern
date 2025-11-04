@@ -3,22 +3,22 @@
 import type { ObjectWithRequiredField } from "../../../../../../api/resources/types/resources/object/types/ObjectWithRequiredField.js";
 import * as core from "../../../../../../core/index.js";
 import type * as serializers from "../../../../../index.js";
-import { ObjectWithRequiredField as ObjectWithRequiredFieldType } from "../../../../types/resources/object/types/ObjectWithRequiredField.js";
+import { ObjectWithRequiredField as ObjectWithRequiredField_SeedExhaustive } from "../../../../types/resources/object/types/ObjectWithRequiredField.js";
 
 export const Request: core.serialization.Schema<
     serializers.endpoints.container.getAndReturnMapOfPrimToObject.Request.Raw,
     Record<string, ObjectWithRequiredField>
-> = core.serialization.record(core.serialization.string(), ObjectWithRequiredFieldType);
+> = core.serialization.record(core.serialization.string(), ObjectWithRequiredField_SeedExhaustive);
 
 export declare namespace Request {
-    export type Raw = Record<string, ObjectWithRequiredFieldType.Raw>;
+    export type Raw = Record<string, ObjectWithRequiredField_SeedExhaustive.Raw>;
 }
 
 export const Response: core.serialization.Schema<
     serializers.endpoints.container.getAndReturnMapOfPrimToObject.Response.Raw,
     Record<string, ObjectWithRequiredField>
-> = core.serialization.record(core.serialization.string(), ObjectWithRequiredFieldType);
+> = core.serialization.record(core.serialization.string(), ObjectWithRequiredField_SeedExhaustive);
 
 export declare namespace Response {
-    export type Raw = Record<string, ObjectWithRequiredFieldType.Raw>;
+    export type Raw = Record<string, ObjectWithRequiredField_SeedExhaustive.Raw>;
 }

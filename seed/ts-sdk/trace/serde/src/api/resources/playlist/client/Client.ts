@@ -8,7 +8,7 @@ import * as errors from "../../../../errors/index.js";
 import * as serializers from "../../../../serialization/index.js";
 import { PlaylistIdNotFoundError } from "../errors/PlaylistIdNotFoundError.js";
 import { UnauthorizedError } from "../errors/UnauthorizedError.js";
-import type { Playlist as PlaylistType } from "../types/Playlist.js";
+import type { Playlist as Playlist_SeedTrace } from "../types/Playlist.js";
 import type { PlaylistId } from "../types/PlaylistId.js";
 import type { UpdatePlaylistRequest } from "../types/UpdatePlaylistRequest.js";
 import type { CreatePlaylistRequest } from "./requests/CreatePlaylistRequest.js";
@@ -48,7 +48,7 @@ export class Playlist {
         serviceParam: number,
         request: CreatePlaylistRequest,
         requestOptions?: Playlist.RequestOptions,
-    ): core.HttpResponsePromise<PlaylistType> {
+    ): core.HttpResponsePromise<Playlist_SeedTrace> {
         return core.HttpResponsePromise.fromPromise(this.__createPlaylist(serviceParam, request, requestOptions));
     }
 
@@ -56,7 +56,7 @@ export class Playlist {
         serviceParam: number,
         request: CreatePlaylistRequest,
         requestOptions?: Playlist.RequestOptions,
-    ): Promise<core.WithRawResponse<PlaylistType>> {
+    ): Promise<core.WithRawResponse<Playlist_SeedTrace>> {
         const { datetime, optionalDatetime, body: _body } = request;
         const _queryParams: Record<string, string | string[] | object | object[] | null> = {};
         _queryParams.datetime = datetime.toISOString();
@@ -153,7 +153,7 @@ export class Playlist {
         serviceParam: number,
         request: GetPlaylistsRequest,
         requestOptions?: Playlist.RequestOptions,
-    ): core.HttpResponsePromise<PlaylistType[]> {
+    ): core.HttpResponsePromise<Playlist_SeedTrace[]> {
         return core.HttpResponsePromise.fromPromise(this.__getPlaylists(serviceParam, request, requestOptions));
     }
 
@@ -161,7 +161,7 @@ export class Playlist {
         serviceParam: number,
         request: GetPlaylistsRequest,
         requestOptions?: Playlist.RequestOptions,
-    ): Promise<core.WithRawResponse<PlaylistType[]>> {
+    ): Promise<core.WithRawResponse<Playlist_SeedTrace[]>> {
         const { limit, otherField, multiLineDocs, optionalMultipleField, multipleField } = request;
         const _queryParams: Record<string, string | string[] | object | object[] | null> = {};
         if (limit != null) {
@@ -264,7 +264,7 @@ export class Playlist {
         serviceParam: number,
         playlistId: PlaylistId,
         requestOptions?: Playlist.RequestOptions,
-    ): core.HttpResponsePromise<PlaylistType> {
+    ): core.HttpResponsePromise<Playlist_SeedTrace> {
         return core.HttpResponsePromise.fromPromise(this.__getPlaylist(serviceParam, playlistId, requestOptions));
     }
 
@@ -272,7 +272,7 @@ export class Playlist {
         serviceParam: number,
         playlistId: PlaylistId,
         requestOptions?: Playlist.RequestOptions,
-    ): Promise<core.WithRawResponse<PlaylistType>> {
+    ): Promise<core.WithRawResponse<Playlist_SeedTrace>> {
         const _headers: core.Fetcher.Args["headers"] = mergeHeaders(
             this._options?.headers,
             mergeOnlyDefinedHeaders({
@@ -373,7 +373,7 @@ export class Playlist {
         playlistId: PlaylistId,
         request?: UpdatePlaylistRequest,
         requestOptions?: Playlist.RequestOptions,
-    ): core.HttpResponsePromise<PlaylistType | undefined> {
+    ): core.HttpResponsePromise<Playlist_SeedTrace | undefined> {
         return core.HttpResponsePromise.fromPromise(
             this.__updatePlaylist(serviceParam, playlistId, request, requestOptions),
         );
@@ -384,7 +384,7 @@ export class Playlist {
         playlistId: PlaylistId,
         request?: UpdatePlaylistRequest,
         requestOptions?: Playlist.RequestOptions,
-    ): Promise<core.WithRawResponse<PlaylistType | undefined>> {
+    ): Promise<core.WithRawResponse<Playlist_SeedTrace | undefined>> {
         const _headers: core.Fetcher.Args["headers"] = mergeHeaders(
             this._options?.headers,
             mergeOnlyDefinedHeaders({

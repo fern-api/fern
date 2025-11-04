@@ -15,7 +15,7 @@ export declare class NoAuth {
      * @param {unknown} request
      * @param {NoAuth.RequestOptions} requestOptions - Request-specific configuration.
      *
-     * @throws {@link SeedExhaustive.BadRequestBody}
+     * @throws {@link BadRequestBody}
      *
      * @example
      *     await client.noAuth.postWithNoAuth({

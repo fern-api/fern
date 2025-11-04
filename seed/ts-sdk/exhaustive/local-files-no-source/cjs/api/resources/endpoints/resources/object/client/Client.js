@@ -52,7 +52,7 @@ class Object_ {
         this._options = _options;
     }
     /**
-     * @param {SeedExhaustive.types.ObjectWithOptionalField} request
+     * @param {ObjectWithOptionalField} request
      * @param {Object_.RequestOptions} requestOptions - Request-specific configuration.
      *
      * @example
@@ -95,10 +95,7 @@ class Object_ {
                 fetchFn: (_h = this._options) === null || _h === void 0 ? void 0 : _h.fetch,
             });
             if (_response.ok) {
-                return {
-                    data: _response.body,
-                    rawResponse: _response.rawResponse,
-                };
+                return { data: _response.body, rawResponse: _response.rawResponse };
             }
             if (_response.error.reason === "status-code") {
                 throw new errors.SeedExhaustiveError({
@@ -125,7 +122,7 @@ class Object_ {
         });
     }
     /**
-     * @param {SeedExhaustive.types.ObjectWithRequiredField} request
+     * @param {ObjectWithRequiredField} request
      * @param {Object_.RequestOptions} requestOptions - Request-specific configuration.
      *
      * @example
@@ -154,10 +151,7 @@ class Object_ {
                 fetchFn: (_h = this._options) === null || _h === void 0 ? void 0 : _h.fetch,
             });
             if (_response.ok) {
-                return {
-                    data: _response.body,
-                    rawResponse: _response.rawResponse,
-                };
+                return { data: _response.body, rawResponse: _response.rawResponse };
             }
             if (_response.error.reason === "status-code") {
                 throw new errors.SeedExhaustiveError({
@@ -184,7 +178,7 @@ class Object_ {
         });
     }
     /**
-     * @param {SeedExhaustive.types.ObjectWithMapOfMap} request
+     * @param {ObjectWithMapOfMap} request
      * @param {Object_.RequestOptions} requestOptions - Request-specific configuration.
      *
      * @example
@@ -217,10 +211,7 @@ class Object_ {
                 fetchFn: (_h = this._options) === null || _h === void 0 ? void 0 : _h.fetch,
             });
             if (_response.ok) {
-                return {
-                    data: _response.body,
-                    rawResponse: _response.rawResponse,
-                };
+                return { data: _response.body, rawResponse: _response.rawResponse };
             }
             if (_response.error.reason === "status-code") {
                 throw new errors.SeedExhaustiveError({
@@ -247,7 +238,7 @@ class Object_ {
         });
     }
     /**
-     * @param {SeedExhaustive.types.NestedObjectWithOptionalField} request
+     * @param {NestedObjectWithOptionalField} request
      * @param {Object_.RequestOptions} requestOptions - Request-specific configuration.
      *
      * @example
@@ -293,10 +284,7 @@ class Object_ {
                 fetchFn: (_h = this._options) === null || _h === void 0 ? void 0 : _h.fetch,
             });
             if (_response.ok) {
-                return {
-                    data: _response.body,
-                    rawResponse: _response.rawResponse,
-                };
+                return { data: _response.body, rawResponse: _response.rawResponse };
             }
             if (_response.error.reason === "status-code") {
                 throw new errors.SeedExhaustiveError({
@@ -324,7 +312,7 @@ class Object_ {
     }
     /**
      * @param {string} string_
-     * @param {SeedExhaustive.types.NestedObjectWithRequiredField} request
+     * @param {NestedObjectWithRequiredField} request
      * @param {Object_.RequestOptions} requestOptions - Request-specific configuration.
      *
      * @example
@@ -370,10 +358,7 @@ class Object_ {
                 fetchFn: (_h = this._options) === null || _h === void 0 ? void 0 : _h.fetch,
             });
             if (_response.ok) {
-                return {
-                    data: _response.body,
-                    rawResponse: _response.rawResponse,
-                };
+                return { data: _response.body, rawResponse: _response.rawResponse };
             }
             if (_response.error.reason === "status-code") {
                 throw new errors.SeedExhaustiveError({
@@ -400,7 +385,7 @@ class Object_ {
         });
     }
     /**
-     * @param {SeedExhaustive.types.NestedObjectWithRequiredField[]} request
+     * @param {NestedObjectWithRequiredField[]} request
      * @param {Object_.RequestOptions} requestOptions - Request-specific configuration.
      *
      * @example
@@ -465,10 +450,7 @@ class Object_ {
                 fetchFn: (_h = this._options) === null || _h === void 0 ? void 0 : _h.fetch,
             });
             if (_response.ok) {
-                return {
-                    data: _response.body,
-                    rawResponse: _response.rawResponse,
-                };
+                return { data: _response.body, rawResponse: _response.rawResponse };
             }
             if (_response.error.reason === "status-code") {
                 throw new errors.SeedExhaustiveError({

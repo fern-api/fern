@@ -6,7 +6,7 @@ import * as core from "../../../../core/index.js";
 import { toJson } from "../../../../core/json.js";
 import * as errors from "../../../../errors/index.js";
 import * as serializers from "../../../../serialization/index.js";
-import type { User as UserType } from "../types/User.js";
+import type { User as User_SeedQueryParameters } from "../types/User.js";
 import type { GetUsersRequest } from "./requests/GetUsersRequest.js";
 
 export declare namespace User {
@@ -70,14 +70,14 @@ export class User {
     public getUsername(
         request: GetUsersRequest,
         requestOptions?: User.RequestOptions,
-    ): core.HttpResponsePromise<UserType> {
+    ): core.HttpResponsePromise<User_SeedQueryParameters> {
         return core.HttpResponsePromise.fromPromise(this.__getUsername(request, requestOptions));
     }
 
     private async __getUsername(
         request: GetUsersRequest,
         requestOptions?: User.RequestOptions,
-    ): Promise<core.WithRawResponse<UserType>> {
+    ): Promise<core.WithRawResponse<User_SeedQueryParameters>> {
         const {
             limit,
             id,

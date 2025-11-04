@@ -3,11 +3,11 @@
 import type { Playlist } from "../../../../api/resources/playlist/types/Playlist.js";
 import * as core from "../../../../core/index.js";
 import type * as serializers from "../../../index.js";
-import { Playlist as PlaylistType } from "../types/Playlist.js";
+import { Playlist as Playlist_SeedTrace } from "../types/Playlist.js";
 
 export const Response: core.serialization.Schema<serializers.playlist.getPlaylists.Response.Raw, Playlist[]> =
-    core.serialization.list(PlaylistType);
+    core.serialization.list(Playlist_SeedTrace);
 
 export declare namespace Response {
-    export type Raw = PlaylistType.Raw[];
+    export type Raw = Playlist_SeedTrace.Raw[];
 }
