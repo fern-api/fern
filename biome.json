@@ -368,6 +368,7 @@
         "packages/cli/fern-definition/schema/src/schemas/**",
         "packages/cli/configuration/src/generators-yml/schemas/**",
         "packages/ir-sdk/**",
+        "packages/generator-cli/src/configuration/sdk/**",
         "packages/cli/configuration/src/docs-yml/schemas/**",
         "packages/cli/openapi-ir-sdk/**",
         "packages/seed/src/config/**",
