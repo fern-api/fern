@@ -1,0 +1,90 @@
+{
+  "absoluteFilePath": "/DUMMY_PATH",
+  "importedDefinitions": {},
+  "namedDefinitionFiles": {
+    "__package__.yml": {
+      "absoluteFilepath": "/DUMMY_PATH",
+      "contents": {},
+      "rawContents": "{}
+",
+    },
+    "speakV1.yml": {
+      "absoluteFilepath": "/DUMMY_PATH",
+      "contents": {
+        "channel": {
+          "auth": false,
+          "examples": [
+            {
+              "messages": [
+                {
+                  "body": {
+                    "type": "Text",
+                  },
+                  "type": "SpeakV1Text",
+                },
+              ],
+            },
+          ],
+          "messages": {
+            "SpeakV1Text": {
+              "body": "SpeakV1Text",
+              "origin": "client",
+            },
+          },
+          "path": "/SpeakV1",
+          "url": undefined,
+        },
+        "types": {
+          "SpeakV1Text": {
+            "docs": undefined,
+            "inline": undefined,
+            "properties": {
+              "type": {
+                "docs": "Message type identifier",
+                "type": "string",
+              },
+            },
+            "source": {
+              "openapi": "../asyncapi.yml",
+            },
+          },
+        },
+      },
+      "rawContents": "channel:
+  path: /SpeakV1
+  auth: false
+  messages:
+    SpeakV1Text:
+      origin: client
+      body: SpeakV1Text
+  examples:
+    - messages:
+        - type: SpeakV1Text
+          body:
+            type: Text
+types:
+  SpeakV1Text:
+    properties:
+      type:
+        type: string
+        docs: Message type identifier
+    source:
+      openapi: ../asyncapi.yml
+",
+    },
+  },
+  "packageMarkers": {},
+  "rootApiFile": {
+    "contents": {
+      "error-discrimination": {
+        "strategy": "status-code",
+      },
+      "name": "api",
+    },
+    "defaultUrl": undefined,
+    "rawContents": "name: api
+error-discrimination:
+  strategy: status-code
+",
+  },
+}
