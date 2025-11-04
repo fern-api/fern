@@ -2,6 +2,7 @@ import { SourceFile, ts } from "ts-morph";
 
 import { ExportedFilePath, ExportsManager, NamedExport } from "../exports-manager";
 import { ImportsManager } from "../imports-manager/ImportsManager";
+import { getReferenceToExportFromRoot } from "./getReferenceToExportFromRoot";
 import { getRelativePathAsModuleSpecifierTo } from "./getRelativePathAsModuleSpecifierTo";
 import { GetReferenceOpts, Reference } from "./Reference";
 
@@ -29,6 +30,17 @@ export function getDirectReferenceToExport({
 
     const isSelfImport = exportedFilePath === referencedInPath;
 
+    if (isSelfImport) {
+        return getReferenceToExportFromRoot({
+            exportedName,
+            exportedFromPath,
+            importsManager,
+            exportsManager,
+            referencedIn,
+            subImport
+        });
+    }
+
     const moduleSpecifier = getRelativePathAsModuleSpecifierTo({
         from: referencedIn,
         to: exportedFilePath
@@ -42,11 +54,6 @@ export function getDirectReferenceToExport({
             return;
         }
         importAdded = true;
-
-        if (isSelfImport) {
-            localName = NamedExport.getName(exportedName);
-            return;
-        }
 
         if (importAlias != null) {
             importsManager.addImport(moduleSpecifier, {
