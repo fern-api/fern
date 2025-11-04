@@ -2,7 +2,7 @@ import { ts } from "ts-morph";
 
 import { DependencyManager, DependencyType } from "../dependency-manager/DependencyManager";
 import { CoreUtility } from "./CoreUtility";
-import { MANIFEST as LoggerManifest } from "./Logger";
+import { MANIFEST as LoggingManifest } from "./Logging";
 import { MANIFEST as RuntimeManifest } from "./Runtime";
 import { MANIFEST as UrlManifest } from "./UrlUtils";
 
@@ -194,7 +194,7 @@ export const MANIFEST: CoreUtility.Manifest = {
             type: DependencyType.DEV
         });
     },
-    dependsOn: [LoggerManifest, RuntimeManifest, UrlManifest],
+    dependsOn: [LoggingManifest, RuntimeManifest, UrlManifest],
     getFilesPatterns: (options) => {
         const ignore: string[] = [];
         if (options.streamType !== "wrapper") {
