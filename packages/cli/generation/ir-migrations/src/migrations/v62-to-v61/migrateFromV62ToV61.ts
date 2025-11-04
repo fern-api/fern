@@ -52,7 +52,7 @@ export const V62_TO_V61_MIGRATION: IrMigration<
         return {
             ...v62,
             services: convertServices(v62.services)
-        };
+        } as unknown as IrVersions.V61.ir.IntermediateRepresentation;
     }
 };
 

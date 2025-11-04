@@ -95,13 +95,6 @@ function convertPublishTarget(target: IrVersions.V61.PublishTarget): IrVersions.
         npm: IrVersions.V60.PublishTarget.npm,
         maven: IrVersions.V60.PublishTarget.maven,
         pypi: IrVersions.V60.PublishTarget.pypi,
-        crates: (crates) => {
-            // Convert crates to pypi for backward compatibility (v60 doesn't have crates)
-            return IrVersions.V60.PublishTarget.pypi({
-                version: crates.version,
-                packageName: crates.packageName
-            });
-        },
         _other: () => undefined
     });
 }
@@ -149,14 +142,11 @@ function convertPublishInfo(
 ): IrVersions.V60.dynamic.PublishInfo | undefined {
     return IrVersions.V61.dynamic.PublishInfo._visit<IrVersions.V60.dynamic.PublishInfo | undefined>(publishInfo, {
         go: IrVersions.V60.dynamic.PublishInfo.go,
-        swift: () => undefined,
         maven: IrVersions.V60.dynamic.PublishInfo.maven,
         npm: IrVersions.V60.dynamic.PublishInfo.npm,
         nuget: IrVersions.V60.dynamic.PublishInfo.nuget,
         pypi: IrVersions.V60.dynamic.PublishInfo.pypi,
         rubygems: IrVersions.V60.dynamic.PublishInfo.rubygems,
-        // crates publish target is not supported in v60, return undefined
-        crates: () => undefined,
         _other: () => undefined
     });
 }
