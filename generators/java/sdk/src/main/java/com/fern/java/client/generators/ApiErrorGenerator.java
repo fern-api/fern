@@ -75,7 +75,8 @@ public final class ApiErrorGenerator extends AbstractFileGenerator {
 
     @Override
     public GeneratedJavaFile generateFile() {
-        ClassName objectMappersClassName = generatorContext.getPoetClassNameFactory().getObjectMapperClassName();
+        ClassName objectMappersClassName =
+                generatorContext.getPoetClassNameFactory().getObjectMapperClassName();
         TypeSpec apiErrorTypeSpec = TypeSpec.classBuilder(className)
                 .addJavadoc("This exception type will be thrown for any non-2XX API responses.")
                 .addModifiers(Modifier.PUBLIC)
