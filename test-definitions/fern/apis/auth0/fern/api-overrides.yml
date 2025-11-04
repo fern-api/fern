@@ -1,0 +1,10 @@
+components:
+  schemas:
+    CreateImportUsersRequestContent:
+      properties:
+        users:
+          format: binary
+    ClientAddonOag:
+      $ref: "#/components/schemas/ClientAddonOAG"
+    ClientComplianceLevel:
+      $ref: "#/components/schemas/ClientComplianceLevelEnum"

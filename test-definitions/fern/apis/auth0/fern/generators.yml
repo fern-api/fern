@@ -1,0 +1,264 @@
+# yaml-language-server: $schema=https://schema.buildwithfern.dev/generators-yml.json
+api:
+  specs:
+    - openapi: ../api.json
+      overrides: ./api-overrides.yml
+      settings:
+        prefer-undiscriminated-unions-with-literals: true
+
+groups:
+  ts-sdk:
+    generators:
+      - name: fernapi/fern-typescript-sdk
+        version: 2.13.0
+        github:
+          repository: fern-demo/auth0-node-sdk
+          mode: pull-request
+        metadata:
+          license: MIT
+        output:
+          location: npm
+          package-name: auth0
+        smart-casing: true
+        config:
+          packagePath: src/management
+          namespaceExport: Management
+          allowCustomFetcher: true
+          omitFernHeaders: true
+          useDefaultRequestParameterValues: true
+          exportAllRequestsAtRoot: true
+          consolidateTypeFiles: true
+          generateEndpointMetadata: true
+          packageJson:
+            engines:
+              node: "^20.19.0 || ^22.12.0 || ^24.0.0"
+            "lint-staged":
+              "*.{js,ts,tsx}": [ "eslint --fix", "prettier --write" ]
+              "*.{json,md,yml,yaml}": [ "prettier --write" ]
+            scripts:
+              "prepare": "husky"
+              "lint": "eslint . --ext .js,.ts,.tsx"
+              "lint:fix": "eslint . --ext .js,.ts,.tsx --fix"
+              "lint:check": "eslint . --ext .js,.ts,.tsx"
+              "test:coverage": "jest --config jest.config.mjs --coverage"
+              "test:coverage:unit": "jest --selectProjects unit --coverage"
+              "test:coverage:browser": "jest --selectProjects browser --coverage"
+              "test:coverage:wire": "jest --selectProjects wire --coverage"
+              "docs": "typedoc"
+              "docs:clean": "rm -rf docs"
+              "docs:build": "npm run docs:clean && npm run docs"
+              "precommit": "lint-staged"
+              "validate": "yarn lint:check && yarn format --check && yarn test"
+            dependencies:
+              "uuid": "^11.1.0"
+              "jose": "^4.13.2"
+              "auth0-legacy": "npm:auth0@^4.27.0"
+            devDependencies:
+              "typedoc": "^0.28.7"
+              "typedoc-plugin-missing-exports": "^4.0.0"
+              "nock": "^14.0.6"
+              "undici": "^7.12.0"
+              "@eslint/js": "^9.32.0"
+              "@typescript-eslint/eslint-plugin": "^8.38.0"
+              "@typescript-eslint/parser": "^8.38.0"
+              "eslint": "^9.32.0"
+              "eslint-config-prettier": "^10.1.8"
+              "eslint-plugin-prettier": "^5.5.3"
+              "husky": "^9.1.7"
+              "lint-staged": "^16.1.4"
+            exports:
+              "./legacy":
+                types: "./legacy/exports/index.d.ts"
+                import:
+                  types: "./legacy/exports/index.d.mts"
+                  default: "./legacy/exports/index.mjs"
+                require:
+                  types: "./legacy/exports/index.d.ts"
+                  default: "./legacy/exports/index.js"
+  go-sdk:
+    generators:
+      - name: fernapi/fern-go-sdk
+        version: 1.13.8
+        github:
+          repository: fern-demo/auth0-go-sdk
+          mode: pull-request
+        config:
+          union: v1
+          packageName: management
+          packagePath: management
+          clientName: Management
+          clientConstructorName: NewWithOptions
+          alwaysSendRequiredProperties: true
+          inlinePathParameters: true
+          inlineFileProperties: true
+          useDefaultRequestParameterValues: true
+          gettersPassByValue: true
+          exportAllRequestsAtRoot: true
+          enableWireTests: true
+        smart-casing: true
+
+  dotnet-sdk:
+    generators:
+      - name: fernapi/fern-csharp-sdk
+        version: 1.18.1
+        github:
+          repository: fern-demo/management.net
+          mode: pull-request
+        config:
+          namespace: Auth0.ManagementApi
+          package-id: Auth0.ManagementApi
+          client-class-name: ManagementApiClient
+          base-api-exception-class-name: ManagementApiException
+          base-exception-class-name: ManagementException
+          generate-mock-server-tests: true
+        smart-casing: true
+
+  java-sdk:
+    generators:
+      - name: fernapi/fern-java-sdk
+        version: 3.8.8
+        github:
+          repository: fern-demo/auth0-java-sdk
+          mode: pull-request
+        config:
+          client-class-name: ManagementApi
+          base-api-exception-class-name: ManagementApiException
+          base-exception-class-name: ManagementException
+          package-prefix: com.auth0.client.mgmt
+          package-layout: flat
+          use-default-request-parameter-values: true
+          enable-wire-tests: true
+          # enable-inline-types: true
+        smart-casing: true
+
+  php-sdk:
+    generators:
+      - name: fernapi/fern-php-sdk
+        version: 1.17.1
+        github:
+          repository: fern-demo/auth0-php
+          mode: pull-request
+        config:
+          clientName: Management
+          namespace: Auth0\SDK\API\Management
+          packagePath: API/Management
+          packageName: auth0/auth0-php
+          propertyAccess: private
+          inlinePathParameters: true
+          composerJson:
+            name: "auth0/auth0-php"
+            description: "PHP SDK for Auth0 Authentication and Management APIs."
+            license: "MIT"
+            type: "library"
+            keywords:
+              - "auth0"
+              - "authentication"
+              - "login"
+              - "auth"
+              - "jwt"
+              - "json web token"
+              - "jwk"
+              - "json web key"
+              - "oauth"
+              - "openid"
+              - "secure"
+              - "protect"
+              - "api"
+            authors:
+              - name: "Auth0"
+                email: "support@auth0.com"
+                homepage: "https://auth0.com"
+            homepage: "https://github.com/auth0/auth0-PHP"
+            require:
+              php: "^8.1"
+              ext-json: "*"
+              ext-mbstring: "*"
+              ext-openssl: "*"
+              php-http/multipart-stream-builder: "^1"
+              psr-discovery/all: "^1"
+              psr/http-client-implementation: "^1"
+              psr/http-factory-implementation: "^1"
+              psr/http-message-implementation: "^1"
+            require-dev:
+              ergebnis/composer-normalize: "~2.43.0"
+              friendsofphp/php-cs-fixer: "~3.59.0"
+              mockery/mockery: "~1.6.0"
+              pestphp/pest: "~2.34.0"
+              phpstan/phpstan: "~1.11.0"
+              phpstan/phpstan-strict-rules: "~1.6.0"
+              psr-mock/http: "~1.0.0"
+              rector/rector: "~0.17.0"
+              spatie/ray: "~1.41.0"
+              symfony/cache: "^4 || ^5 || ^6"
+              symfony/event-dispatcher: "^4 || ^5 || ^6"
+              vimeo/psalm: "~5.25.0"
+              wikimedia/composer-merge-plugin: "~2.1.0"
+            suggest:
+              psr/cache-implementation: "(PSR-6 Cache) Improve performance by avoiding making
+                redundant network requests."
+              psr/event-dispatcher-implementation: "(PSR-14 Event Dispatcher) Observe and
+                react to events when they occur."
+            minimum-stability: "dev"
+            prefer-stable: true
+            autoload:
+              psr-4:
+                "Auth0\\SDK\\": "src/"
+            autoload-dev:
+              psr-4:
+                "Auth0\\Tests\\": "tests/"
+            config:
+              allow-plugins:
+                ergebnis/composer-normalize: true
+                infection/extension-installer: false
+                pestphp/pest-plugin: true
+                php-http/discovery: false
+                wikimedia/composer-merge-plugin: true
+              optimize-autoloader: true
+              preferred-install: "dist"
+              process-timeout: 0
+              sort-packages: true
+            extra:
+              merge-plugin:
+                ignore-duplicates: false
+                include:
+                  - "composer.local.json"
+                merge-dev: true
+                merge-extra: false
+                merge-extra-deep: false
+                merge-scripts: false
+                recurse: true
+                replace: true
+            scripts:
+              pest:
+                - "@putenv XDEBUG_MODE=coverage"
+                - "@php vendor/bin/pest --colors=always --strict-global-state
+                  --fail-on-risky --fail-on-warning --coverage --strict-coverage
+                  --compact"
+              "pest:ci":
+                - "@pest:fast --order-by=random --no-progress"
+              "pest:fast":
+                - "@pest --parallel"
+              phpcs:
+                - "@putenv PHP_CS_FIXER_IGNORE_ENV=1"
+                - "@php vendor/bin/php-cs-fixer fix --dry-run --diff"
+              "phpcs:fix": "@php vendor/bin/php-cs-fixer fix"
+              phpstan: "@php vendor/bin/phpstan analyze"
+              psalm: "@php vendor/bin/psalm"
+              "psalm:fix": "@php vendor/bin/psalter --issues=all"
+              rector: "@php vendor/bin/rector process src --dry-run"
+              "rector:fix": "@php vendor/bin/rector process src"
+              test:
+                - "@pest"
+                - "@phpstan"
+                - "@psalm"
+                - "@rector"
+                - "@phpcs"
+        smart-casing: true
+  python-sdk:
+    generators:
+      - name: fernapi/fern-python-sdk
+        version: 4.30.3
+        github:
+          repository: fern-demo/auth0-python-sdk
+          mode: pull-request
+        config: null

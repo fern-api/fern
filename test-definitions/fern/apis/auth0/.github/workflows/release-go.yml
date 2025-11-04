@@ -1,0 +1,28 @@
+name: Release Go SDK
+
+on:
+  workflow_dispatch:
+    inputs:
+      version:
+        description: "The version of the Go SDK that you would like to release"
+        required: true
+        type: string
+
+jobs:
+  release:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v3
+
+      - name: Setup node
+        uses: actions/setup-node@v3
+
+      - name: Download Fern
+        run: npm install -g fern-api
+
+      - name: Release Go SDK
+        env:
+          FERN_TOKEN: ${{ secrets.FERN_TOKEN }}
+        run: |
+          fern generate --group go-sdk --version ${{ inputs.version }} --log-level debug
