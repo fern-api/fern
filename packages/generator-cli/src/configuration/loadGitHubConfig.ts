@@ -1,7 +1,7 @@
 import type { AbsoluteFilePath } from "@fern-api/fs-utils";
 import { readFile } from "fs/promises";
 
-import type { FernGeneratorCli } from "./generated";
+import type { FernGeneratorCli } from "./sdk";
 
 export async function loadGitHubConfig({
     absolutePathToConfig

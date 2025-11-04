@@ -6,7 +6,7 @@ groups:
         version: 0.20.9
         output:
           location: local-file-system
-          path: ../../../packages/generator-cli/src/configuration/generated
+          path: ../../../packages/generator-cli/src/configuration/sdk
         config:
           includeUtilsOnUnionMembers: true
           useBrandedStringAliases: true

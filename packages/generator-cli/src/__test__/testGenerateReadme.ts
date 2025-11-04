@@ -3,8 +3,8 @@ import { writeFile } from "fs/promises";
 import path from "path";
 import tmp from "tmp-promise";
 
-import type { FernGeneratorCli } from "../configuration/generated";
-import * as serializers from "../configuration/generated/serialization";
+import type { FernGeneratorCli } from "../configuration/sdk";
+import * as serializers from "../configuration/sdk/serialization";
 
 const FIXTURES_PATH = path.join(__dirname, "fixtures");
 

@@ -3,8 +3,8 @@ import { template } from "es-toolkit/compat";
 import { camelCase, upperFirst } from "es-toolkit/string";
 import type fs from "fs";
 
-import { FernGeneratorCli } from "../configuration/generated";
-import type { ReadmeFeature } from "../configuration/generated/api";
+import { FernGeneratorCli } from "../configuration/sdk";
+import type { ReadmeFeature } from "../configuration/sdk/api";
 import { StreamWriter, StringWriter, type Writer } from "../utils/Writer";
 import { Block } from "./Block";
 import { BlockMerger } from "./BlockMerger";

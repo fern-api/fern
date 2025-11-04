@@ -1,4 +1,4 @@
-import type { FernGeneratorCli } from "../configuration/generated";
+import type { FernGeneratorCli } from "../configuration/sdk";
 import { GitHub } from "../github/GitHub";
 
 export interface GithubPrParams {
