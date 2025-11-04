@@ -10,6 +10,9 @@ import {
 import {
     ExampleEndpointCall,
     ExampleEndpointSuccessResponse,
+    ExampleFile,
+    ExampleFileProperty,
+    ExampleFileSingle,
     ExampleHeader,
     ExampleInlinedRequestBodyExtraProperty,
     ExampleInlinedRequestBodyProperty,
@@ -370,6 +373,69 @@ function convertExampleRequestBody({
         throw new Error(`Example is not an object. Got: ${JSON.stringify(example.request)}`);
     }
 
+    // Check if this is a file upload request by looking for file properties
+    const hasFileProperties = Object.entries(requestType.properties ?? {}).some(([_, propertyDeclaration]) => {
+        const propertyType =
+            typeof propertyDeclaration === "string" ? propertyDeclaration : propertyDeclaration?.type;
+        return propertyType != null && parseRawFileType(propertyType) != null;
+    });
+
+    if (hasFileProperties) {
+        const exampleFileProperties: ExampleFileProperty[] = [];
+        const exampleProperties: ExampleInlinedRequestBodyProperty[] = [];
+
+        for (const [wireKey, propertyExample] of Object.entries(example.request)) {
+            const inlinedRequestPropertyDeclaration = requestType.properties?.[wireKey];
+            const inlinedRequestPropertyType =
+                typeof inlinedRequestPropertyDeclaration === "string"
+                    ? inlinedRequestPropertyDeclaration
+                    : inlinedRequestPropertyDeclaration?.type;
+
+            if (inlinedRequestPropertyType != null && parseRawFileType(inlinedRequestPropertyType) != null) {
+                const fileType = parseRawFileType(inlinedRequestPropertyType);
+                const exampleFile = convertExampleFile({ propertyExample, fileType });
+                if (exampleFile != null) {
+                    exampleFileProperties.push({
+                        name: file.casingsGenerator.generateNameAndWireValue({
+                            name: getPropertyName({ propertyKey: wireKey, property: inlinedRequestPropertyDeclaration })
+                                .name,
+                            wireValue: wireKey
+                        }),
+                        value: exampleFile
+                    });
+                }
+            } else if (inlinedRequestPropertyDeclaration != null) {
+                exampleProperties.push({
+                    name: file.casingsGenerator.generateNameAndWireValue({
+                        name: getPropertyName({ propertyKey: wireKey, property: inlinedRequestPropertyDeclaration })
+                            .name,
+                        wireValue: wireKey
+                    }),
+                    value: convertTypeReferenceExample({
+                        example: propertyExample,
+                        rawTypeBeingExemplified:
+                            typeof inlinedRequestPropertyDeclaration !== "string"
+                                ? inlinedRequestPropertyDeclaration.type
+                                : inlinedRequestPropertyDeclaration,
+                        typeResolver,
+                        exampleResolver,
+                        fileContainingRawTypeReference: file,
+                        fileContainingExample: file,
+                        workspace
+                    }),
+                    originalTypeDeclaration: undefined
+                });
+            }
+        }
+
+        return ExampleRequestBody.fileUpload({
+            jsonExample: exampleResolver.resolveAllReferencesInExampleOrThrow({ example: example.request, file })
+                .resolvedExample,
+            files: exampleFileProperties,
+            properties: exampleProperties
+        });
+    }
+
     const exampleProperties: ExampleInlinedRequestBodyProperty[] = [];
     const exampleExtraProperties: ExampleInlinedRequestBodyExtraProperty[] = [];
     for (const [wireKey, propertyExample] of Object.entries(example.request)) {
@@ -379,7 +445,7 @@ function convertExampleRequestBody({
                 ? inlinedRequestPropertyDeclaration
                 : inlinedRequestPropertyDeclaration?.type;
         if (inlinedRequestPropertyType != null && parseRawFileType(inlinedRequestPropertyType) != null) {
-            // HACK skip file properties
+            // HACK skip file properties (should not reach here since we check hasFileProperties above)
             continue;
         }
         if (inlinedRequestPropertyDeclaration != null) {
@@ -456,6 +522,46 @@ function convertExampleRequestBody({
         properties: exampleProperties,
         extraProperties: exampleExtraProperties.length > 0 ? exampleExtraProperties : undefined
     });
+}
+
+function convertExampleFile({
+    propertyExample,
+    fileType
+}: {
+    propertyExample: unknown;
+    fileType: { isArray: boolean };
+}): ExampleFile | undefined {
+    if (fileType.isArray) {
+        if (!Array.isArray(propertyExample)) {
+            return undefined;
+        }
+        const files: ExampleFileSingle[] = [];
+        for (const item of propertyExample) {
+            const singleFile = convertExampleFileSingle(item);
+            if (singleFile != null) {
+                files.push(singleFile);
+            }
+        }
+        return files.length > 0 ? ExampleFile.array(files) : undefined;
+    } else {
+        const singleFile = convertExampleFileSingle(propertyExample);
+        return singleFile != null ? ExampleFile.single(singleFile) : undefined;
+    }
+}
+
+function convertExampleFileSingle(example: unknown): ExampleFileSingle | undefined {
+    if (typeof example === "string") {
+        return {
+            filename: example,
+            contentType: undefined
+        };
+    } else if (isPlainObject(example) && typeof example.filename === "string") {
+        return {
+            filename: example.filename,
+            contentType: typeof example.contentType === "string" ? example.contentType : undefined
+        };
+    }
+    return undefined;
 }
 
 function convertExampleResponse({

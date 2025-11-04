@@ -573,6 +573,7 @@ types:
     union:
       inlinedRequestBody: ExampleInlinedRequestBody
       reference: types.ExampleTypeReference
+      fileUpload: ExampleFileUploadRequestBody
 
   ExampleInlinedRequestBody:
     extends: commons.WithJsonExample
@@ -594,6 +595,27 @@ types:
           This property may have been brought in via extension. originalTypeDeclaration
           is the name of the type that contains this property
         type: optional<types.DeclaredTypeName>
+
+  ExampleFileUploadRequestBody:
+    extends: commons.WithJsonExample
+    properties:
+      files: list<ExampleFileProperty>
+      properties: list<ExampleInlinedRequestBodyProperty>
+
+  ExampleFileProperty:
+    properties:
+      name: commons.NameAndWireValue
+      value: ExampleFile
+
+  ExampleFile:
+    union:
+      single: ExampleFileSingle
+      array: list<ExampleFileSingle>
+
+  ExampleFileSingle:
+    properties:
+      filename: string
+      contentType: optional<string>
 
   ExampleResponse:
     union:
