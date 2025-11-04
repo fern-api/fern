@@ -1211,7 +1211,7 @@ jobs:
           [ "${{ needs.swift-sdk-seed-update.result }}" = "success" ] && ALLOWED="${ALLOWED}swift-sdk,"
           [ "${{ needs.rust-model-seed-update.result }}" = "success" ] && ALLOWED="${ALLOWED}rust-model,"
           [ "${{ needs.rust-sdk-seed-update.result }}" = "success" ] && ALLOWED="${ALLOWED}rust-sdk,"
-          
+
           # Remove trailing comma
           ALLOWED="${ALLOWED%,}"
           echo "allowed=$ALLOWED" >> $GITHUB_OUTPUT
