@@ -49,13 +49,13 @@ public class RawSeedUndiscriminatedUnionWithResponsePropertyClient {
         }
         try (Response response = client.newCall(okhttpRequest).execute()) {
             ResponseBody responseBody = response.body();
+            String responseBodyString = responseBody != null ? responseBody.string() : "{}";
             if (response.isSuccessful()) {
                 UnionResponse parsedResponse =
-                        ObjectMappers.JSON_MAPPER.readValue(responseBody.string(), UnionResponse.class);
+                        ObjectMappers.JSON_MAPPER.readValue(responseBodyString, UnionResponse.class);
                 return new SeedUndiscriminatedUnionWithResponsePropertyHttpResponse<>(
                         parsedResponse.getData(), response);
             }
-            String responseBodyString = responseBody != null ? responseBody.string() : "{}";
             throw new SeedUndiscriminatedUnionWithResponsePropertyApiException(
                     "Error with status code " + response.code(),
                     response.code(),
@@ -88,13 +88,13 @@ public class RawSeedUndiscriminatedUnionWithResponsePropertyClient {
         }
         try (Response response = client.newCall(okhttpRequest).execute()) {
             ResponseBody responseBody = response.body();
+            String responseBodyString = responseBody != null ? responseBody.string() : "{}";
             if (response.isSuccessful()) {
                 UnionListResponse parsedResponse =
-                        ObjectMappers.JSON_MAPPER.readValue(responseBody.string(), UnionListResponse.class);
+                        ObjectMappers.JSON_MAPPER.readValue(responseBodyString, UnionListResponse.class);
                 return new SeedUndiscriminatedUnionWithResponsePropertyHttpResponse<>(
                         parsedResponse.getData(), response);
             }
-            String responseBodyString = responseBody != null ? responseBody.string() : "{}";
             throw new SeedUndiscriminatedUnionWithResponsePropertyApiException(
                     "Error with status code " + response.code(),
                     response.code(),

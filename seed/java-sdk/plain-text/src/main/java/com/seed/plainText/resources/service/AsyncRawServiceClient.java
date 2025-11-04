@@ -52,11 +52,11 @@ public class AsyncRawServiceClient {
             @Override
             public void onResponse(@NotNull Call call, @NotNull Response response) throws IOException {
                 try (ResponseBody responseBody = response.body()) {
+                    String responseBodyString = responseBody != null ? responseBody.string() : "{}";
                     if (response.isSuccessful()) {
-                        future.complete(new SeedPlainTextHttpResponse<>(responseBody.string(), response));
+                        future.complete(new SeedPlainTextHttpResponse<>(responseBodyString, response));
                         return;
                     }
-                    String responseBodyString = responseBody != null ? responseBody.string() : "{}";
                     future.completeExceptionally(new SeedPlainTextApiException(
                             "Error with status code " + response.code(),
                             response.code(),

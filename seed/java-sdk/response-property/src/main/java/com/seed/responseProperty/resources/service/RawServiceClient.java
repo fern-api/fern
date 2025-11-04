@@ -62,14 +62,13 @@ public class RawServiceClient {
         }
         try (Response response = client.newCall(okhttpRequest).execute()) {
             ResponseBody responseBody = response.body();
+            String responseBodyString = responseBody != null ? responseBody.string() : "{}";
             if (response.isSuccessful()) {
                 com.seed.responseProperty.resources.service.types.Response parsedResponse =
                         ObjectMappers.JSON_MAPPER.readValue(
-                                responseBody.string(),
-                                com.seed.responseProperty.resources.service.types.Response.class);
+                                responseBodyString, com.seed.responseProperty.resources.service.types.Response.class);
                 return new SeedResponsePropertyHttpResponse<>(parsedResponse.getData(), response);
             }
-            String responseBodyString = responseBody != null ? responseBody.string() : "{}";
             throw new SeedResponsePropertyApiException(
                     "Error with status code " + response.code(),
                     response.code(),
@@ -109,14 +108,13 @@ public class RawServiceClient {
         }
         try (Response response = client.newCall(okhttpRequest).execute()) {
             ResponseBody responseBody = response.body();
+            String responseBodyString = responseBody != null ? responseBody.string() : "{}";
             if (response.isSuccessful()) {
                 com.seed.responseProperty.resources.service.types.Response parsedResponse =
                         ObjectMappers.JSON_MAPPER.readValue(
-                                responseBody.string(),
-                                com.seed.responseProperty.resources.service.types.Response.class);
+                                responseBodyString, com.seed.responseProperty.resources.service.types.Response.class);
                 return new SeedResponsePropertyHttpResponse<>(parsedResponse.getDocs(), response);
             }
-            String responseBodyString = responseBody != null ? responseBody.string() : "{}";
             throw new SeedResponsePropertyApiException(
                     "Error with status code " + response.code(),
                     response.code(),
@@ -156,12 +154,12 @@ public class RawServiceClient {
         }
         try (Response response = client.newCall(okhttpRequest).execute()) {
             ResponseBody responseBody = response.body();
+            String responseBodyString = responseBody != null ? responseBody.string() : "{}";
             if (response.isSuccessful()) {
                 StringResponse parsedResponse =
-                        ObjectMappers.JSON_MAPPER.readValue(responseBody.string(), StringResponse.class);
+                        ObjectMappers.JSON_MAPPER.readValue(responseBodyString, StringResponse.class);
                 return new SeedResponsePropertyHttpResponse<>(parsedResponse.getData(), response);
             }
-            String responseBodyString = responseBody != null ? responseBody.string() : "{}";
             throw new SeedResponsePropertyApiException(
                     "Error with status code " + response.code(),
                     response.code(),
@@ -202,14 +200,13 @@ public class RawServiceClient {
         }
         try (Response response = client.newCall(okhttpRequest).execute()) {
             ResponseBody responseBody = response.body();
+            String responseBodyString = responseBody != null ? responseBody.string() : "{}";
             if (response.isSuccessful()) {
                 com.seed.responseProperty.resources.service.types.Response parsedResponse =
                         ObjectMappers.JSON_MAPPER.readValue(
-                                responseBody.string(),
-                                com.seed.responseProperty.resources.service.types.Response.class);
+                                responseBodyString, com.seed.responseProperty.resources.service.types.Response.class);
                 return new SeedResponsePropertyHttpResponse<>(parsedResponse.getMetadata(), response);
             }
-            String responseBodyString = responseBody != null ? responseBody.string() : "{}";
             throw new SeedResponsePropertyApiException(
                     "Error with status code " + response.code(),
                     response.code(),
@@ -250,17 +247,17 @@ public class RawServiceClient {
         }
         try (Response response = client.newCall(okhttpRequest).execute()) {
             ResponseBody responseBody = response.body();
+            String responseBodyString = responseBody != null ? responseBody.string() : "{}";
             if (response.isSuccessful()) {
                 Optional<com.seed.responseProperty.resources.service.types.Response> parsedResponse =
                         ObjectMappers.JSON_MAPPER.readValue(
-                                responseBody.string(),
+                                responseBodyString,
                                 new TypeReference<
                                         Optional<com.seed.responseProperty.resources.service.types.Response>>() {});
                 return new SeedResponsePropertyHttpResponse<>(
                         parsedResponse.map(com.seed.responseProperty.resources.service.types.Response::getData),
                         response);
             }
-            String responseBodyString = responseBody != null ? responseBody.string() : "{}";
             throw new SeedResponsePropertyApiException(
                     "Error with status code " + response.code(),
                     response.code(),
@@ -301,12 +298,12 @@ public class RawServiceClient {
         }
         try (Response response = client.newCall(okhttpRequest).execute()) {
             ResponseBody responseBody = response.body();
+            String responseBodyString = responseBody != null ? responseBody.string() : "{}";
             if (response.isSuccessful()) {
                 Optional<WithDocs> parsedResponse = ObjectMappers.JSON_MAPPER.readValue(
-                        responseBody.string(), new TypeReference<Optional<WithDocs>>() {});
+                        responseBodyString, new TypeReference<Optional<WithDocs>>() {});
                 return new SeedResponsePropertyHttpResponse<>(parsedResponse.map(WithDocs::getDocs), response);
             }
-            String responseBodyString = responseBody != null ? responseBody.string() : "{}";
             throw new SeedResponsePropertyApiException(
                     "Error with status code " + response.code(),
                     response.code(),
@@ -347,12 +344,12 @@ public class RawServiceClient {
         }
         try (Response response = client.newCall(okhttpRequest).execute()) {
             ResponseBody responseBody = response.body();
+            String responseBodyString = responseBody != null ? responseBody.string() : "{}";
             if (response.isSuccessful()) {
                 Optional<StringResponse> parsedResponse = ObjectMappers.JSON_MAPPER.readValue(
-                        responseBody.string(), new TypeReference<Optional<StringResponse>>() {});
+                        responseBodyString, new TypeReference<Optional<StringResponse>>() {});
                 return new SeedResponsePropertyHttpResponse<>(parsedResponse.map(StringResponse::getData), response);
             }
-            String responseBodyString = responseBody != null ? responseBody.string() : "{}";
             throw new SeedResponsePropertyApiException(
                     "Error with status code " + response.code(),
                     response.code(),

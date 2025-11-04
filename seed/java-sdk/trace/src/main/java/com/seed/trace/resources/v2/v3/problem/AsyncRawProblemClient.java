@@ -64,14 +64,14 @@ public class AsyncRawProblemClient {
             @Override
             public void onResponse(@NotNull Call call, @NotNull Response response) throws IOException {
                 try (ResponseBody responseBody = response.body()) {
+                    String responseBodyString = responseBody != null ? responseBody.string() : "{}";
                     if (response.isSuccessful()) {
                         future.complete(new SeedTraceHttpResponse<>(
                                 ObjectMappers.JSON_MAPPER.readValue(
-                                        responseBody.string(), new TypeReference<List<LightweightProblemInfoV2>>() {}),
+                                        responseBodyString, new TypeReference<List<LightweightProblemInfoV2>>() {}),
                                 response));
                         return;
                     }
-                    String responseBodyString = responseBody != null ? responseBody.string() : "{}";
                     future.completeExceptionally(new SeedTraceApiException(
                             "Error with status code " + response.code(),
                             response.code(),
@@ -122,14 +122,14 @@ public class AsyncRawProblemClient {
             @Override
             public void onResponse(@NotNull Call call, @NotNull Response response) throws IOException {
                 try (ResponseBody responseBody = response.body()) {
+                    String responseBodyString = responseBody != null ? responseBody.string() : "{}";
                     if (response.isSuccessful()) {
                         future.complete(new SeedTraceHttpResponse<>(
                                 ObjectMappers.JSON_MAPPER.readValue(
-                                        responseBody.string(), new TypeReference<List<ProblemInfoV2>>() {}),
+                                        responseBodyString, new TypeReference<List<ProblemInfoV2>>() {}),
                                 response));
                         return;
                     }
-                    String responseBodyString = responseBody != null ? responseBody.string() : "{}";
                     future.completeExceptionally(new SeedTraceApiException(
                             "Error with status code " + response.code(),
                             response.code(),
@@ -182,13 +182,13 @@ public class AsyncRawProblemClient {
             @Override
             public void onResponse(@NotNull Call call, @NotNull Response response) throws IOException {
                 try (ResponseBody responseBody = response.body()) {
+                    String responseBodyString = responseBody != null ? responseBody.string() : "{}";
                     if (response.isSuccessful()) {
                         future.complete(new SeedTraceHttpResponse<>(
-                                ObjectMappers.JSON_MAPPER.readValue(responseBody.string(), ProblemInfoV2.class),
+                                ObjectMappers.JSON_MAPPER.readValue(responseBodyString, ProblemInfoV2.class),
                                 response));
                         return;
                     }
-                    String responseBodyString = responseBody != null ? responseBody.string() : "{}";
                     future.completeExceptionally(new SeedTraceApiException(
                             "Error with status code " + response.code(),
                             response.code(),
@@ -244,13 +244,13 @@ public class AsyncRawProblemClient {
             @Override
             public void onResponse(@NotNull Call call, @NotNull Response response) throws IOException {
                 try (ResponseBody responseBody = response.body()) {
+                    String responseBodyString = responseBody != null ? responseBody.string() : "{}";
                     if (response.isSuccessful()) {
                         future.complete(new SeedTraceHttpResponse<>(
-                                ObjectMappers.JSON_MAPPER.readValue(responseBody.string(), ProblemInfoV2.class),
+                                ObjectMappers.JSON_MAPPER.readValue(responseBodyString, ProblemInfoV2.class),
                                 response));
                         return;
                     }
-                    String responseBodyString = responseBody != null ? responseBody.string() : "{}";
                     future.completeExceptionally(new SeedTraceApiException(
                             "Error with status code " + response.code(),
                             response.code(),

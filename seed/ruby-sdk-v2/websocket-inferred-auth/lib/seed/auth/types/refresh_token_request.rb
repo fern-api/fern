@@ -4,7 +4,7 @@ module Seed
   module Auth
     module Types
       class RefreshTokenRequest < Internal::Types::Model
-        field :x_api_key, -> { String }, optional: false, nullable: false
+        field :x_api_key, -> { String }, optional: false, nullable: false, api_name: "X-Api-Key"
         field :client_id, -> { String }, optional: false, nullable: false
         field :client_secret, -> { String }, optional: false, nullable: false
         field :refresh_token, -> { String }, optional: false, nullable: false

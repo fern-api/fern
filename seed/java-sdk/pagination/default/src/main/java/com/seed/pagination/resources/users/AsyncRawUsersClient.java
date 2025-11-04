@@ -107,9 +107,10 @@ public class AsyncRawUsersClient {
             @Override
             public void onResponse(@NotNull Call call, @NotNull Response response) throws IOException {
                 try (ResponseBody responseBody = response.body()) {
+                    String responseBodyString = responseBody != null ? responseBody.string() : "{}";
                     if (response.isSuccessful()) {
                         ListUsersPaginationResponse parsedResponse = ObjectMappers.JSON_MAPPER.readValue(
-                                responseBody.string(), ListUsersPaginationResponse.class);
+                                responseBodyString, ListUsersPaginationResponse.class);
                         Optional<String> startingAfter =
                                 parsedResponse.getPage().flatMap(Page::getNext).map(NextPage::getStartingAfter);
                         ListUsersCursorPaginationRequest nextRequest = ListUsersCursorPaginationRequest.builder()
@@ -130,7 +131,6 @@ public class AsyncRawUsersClient {
                                 response));
                         return;
                     }
-                    String responseBodyString = responseBody != null ? responseBody.string() : "{}";
                     future.completeExceptionally(new SeedPaginationApiException(
                             "Error with status code " + response.code(),
                             response.code(),
@@ -185,9 +185,10 @@ public class AsyncRawUsersClient {
             @Override
             public void onResponse(@NotNull Call call, @NotNull Response response) throws IOException {
                 try (ResponseBody responseBody = response.body()) {
+                    String responseBodyString = responseBody != null ? responseBody.string() : "{}";
                     if (response.isSuccessful()) {
                         ListUsersMixedTypePaginationResponse parsedResponse = ObjectMappers.JSON_MAPPER.readValue(
-                                responseBody.string(), ListUsersMixedTypePaginationResponse.class);
+                                responseBodyString, ListUsersMixedTypePaginationResponse.class);
                         String startingAfter = parsedResponse.getNext();
                         ListUsersMixedTypeCursorPaginationRequest nextRequest =
                                 ListUsersMixedTypeCursorPaginationRequest.builder()
@@ -208,7 +209,6 @@ public class AsyncRawUsersClient {
                                 response));
                         return;
                     }
-                    String responseBodyString = responseBody != null ? responseBody.string() : "{}";
                     future.completeExceptionally(new SeedPaginationApiException(
                             "Error with status code " + response.code(),
                             response.code(),
@@ -268,9 +268,10 @@ public class AsyncRawUsersClient {
             @Override
             public void onResponse(@NotNull Call call, @NotNull Response response) throws IOException {
                 try (ResponseBody responseBody = response.body()) {
+                    String responseBodyString = responseBody != null ? responseBody.string() : "{}";
                     if (response.isSuccessful()) {
                         ListUsersPaginationResponse parsedResponse = ObjectMappers.JSON_MAPPER.readValue(
-                                responseBody.string(), ListUsersPaginationResponse.class);
+                                responseBodyString, ListUsersPaginationResponse.class);
                         Optional<String> startingAfter =
                                 parsedResponse.getPage().flatMap(Page::getNext).map(NextPage::getStartingAfter);
                         Optional<WithCursor> pagination = request.getPagination()
@@ -297,7 +298,6 @@ public class AsyncRawUsersClient {
                                 response));
                         return;
                     }
-                    String responseBodyString = responseBody != null ? responseBody.string() : "{}";
                     future.completeExceptionally(new SeedPaginationApiException(
                             "Error with status code " + response.code(),
                             response.code(),
@@ -364,9 +364,10 @@ public class AsyncRawUsersClient {
             @Override
             public void onResponse(@NotNull Call call, @NotNull Response response) throws IOException {
                 try (ResponseBody responseBody = response.body()) {
+                    String responseBodyString = responseBody != null ? responseBody.string() : "{}";
                     if (response.isSuccessful()) {
                         ListUsersPaginationResponse parsedResponse = ObjectMappers.JSON_MAPPER.readValue(
-                                responseBody.string(), ListUsersPaginationResponse.class);
+                                responseBodyString, ListUsersPaginationResponse.class);
                         int newPageNumber = request.getPage()
                                 .map((Integer page) -> page + 1)
                                 .orElse(1);
@@ -388,7 +389,6 @@ public class AsyncRawUsersClient {
                                 response));
                         return;
                     }
-                    String responseBodyString = responseBody != null ? responseBody.string() : "{}";
                     future.completeExceptionally(new SeedPaginationApiException(
                             "Error with status code " + response.code(),
                             response.code(),
@@ -455,9 +455,10 @@ public class AsyncRawUsersClient {
             @Override
             public void onResponse(@NotNull Call call, @NotNull Response response) throws IOException {
                 try (ResponseBody responseBody = response.body()) {
+                    String responseBodyString = responseBody != null ? responseBody.string() : "{}";
                     if (response.isSuccessful()) {
                         ListUsersPaginationResponse parsedResponse = ObjectMappers.JSON_MAPPER.readValue(
-                                responseBody.string(), ListUsersPaginationResponse.class);
+                                responseBodyString, ListUsersPaginationResponse.class);
                         double newPageNumber = request.getPage()
                                 .map((Double page) -> page + 1.0)
                                 .orElse(1.0);
@@ -480,7 +481,6 @@ public class AsyncRawUsersClient {
                                 response));
                         return;
                     }
-                    String responseBodyString = responseBody != null ? responseBody.string() : "{}";
                     future.completeExceptionally(new SeedPaginationApiException(
                             "Error with status code " + response.code(),
                             response.code(),
@@ -540,9 +540,10 @@ public class AsyncRawUsersClient {
             @Override
             public void onResponse(@NotNull Call call, @NotNull Response response) throws IOException {
                 try (ResponseBody responseBody = response.body()) {
+                    String responseBodyString = responseBody != null ? responseBody.string() : "{}";
                     if (response.isSuccessful()) {
                         ListUsersPaginationResponse parsedResponse = ObjectMappers.JSON_MAPPER.readValue(
-                                responseBody.string(), ListUsersPaginationResponse.class);
+                                responseBodyString, ListUsersPaginationResponse.class);
                         int newPageNumber = request.getPagination()
                                 .flatMap(WithPage::getPage)
                                 .map((Integer page) -> page + 1)
@@ -571,7 +572,6 @@ public class AsyncRawUsersClient {
                                 response));
                         return;
                     }
-                    String responseBodyString = responseBody != null ? responseBody.string() : "{}";
                     future.completeExceptionally(new SeedPaginationApiException(
                             "Error with status code " + response.code(),
                             response.code(),
@@ -634,9 +634,10 @@ public class AsyncRawUsersClient {
             @Override
             public void onResponse(@NotNull Call call, @NotNull Response response) throws IOException {
                 try (ResponseBody responseBody = response.body()) {
+                    String responseBodyString = responseBody != null ? responseBody.string() : "{}";
                     if (response.isSuccessful()) {
                         ListUsersPaginationResponse parsedResponse = ObjectMappers.JSON_MAPPER.readValue(
-                                responseBody.string(), ListUsersPaginationResponse.class);
+                                responseBodyString, ListUsersPaginationResponse.class);
                         int newPageNumber = request.getPage()
                                 .map((Integer page) -> page + 1)
                                 .orElse(1);
@@ -659,7 +660,6 @@ public class AsyncRawUsersClient {
                                 response));
                         return;
                     }
-                    String responseBodyString = responseBody != null ? responseBody.string() : "{}";
                     future.completeExceptionally(new SeedPaginationApiException(
                             "Error with status code " + response.code(),
                             response.code(),
@@ -723,9 +723,10 @@ public class AsyncRawUsersClient {
             @Override
             public void onResponse(@NotNull Call call, @NotNull Response response) throws IOException {
                 try (ResponseBody responseBody = response.body()) {
+                    String responseBodyString = responseBody != null ? responseBody.string() : "{}";
                     if (response.isSuccessful()) {
                         ListUsersPaginationResponse parsedResponse = ObjectMappers.JSON_MAPPER.readValue(
-                                responseBody.string(), ListUsersPaginationResponse.class);
+                                responseBodyString, ListUsersPaginationResponse.class);
                         int newPageNumber = request.getPage()
                                 .map((Integer page) -> page + 1)
                                 .orElse(1);
@@ -748,7 +749,6 @@ public class AsyncRawUsersClient {
                                 response));
                         return;
                     }
-                    String responseBodyString = responseBody != null ? responseBody.string() : "{}";
                     future.completeExceptionally(new SeedPaginationApiException(
                             "Error with status code " + response.code(),
                             response.code(),
@@ -802,9 +802,10 @@ public class AsyncRawUsersClient {
             @Override
             public void onResponse(@NotNull Call call, @NotNull Response response) throws IOException {
                 try (ResponseBody responseBody = response.body()) {
+                    String responseBodyString = responseBody != null ? responseBody.string() : "{}";
                     if (response.isSuccessful()) {
                         ListUsersExtendedResponse parsedResponse = ObjectMappers.JSON_MAPPER.readValue(
-                                responseBody.string(), ListUsersExtendedResponse.class);
+                                responseBodyString, ListUsersExtendedResponse.class);
                         Optional<UUID> startingAfter = parsedResponse.getNext();
                         ListUsersExtendedRequest nextRequest = ListUsersExtendedRequest.builder()
                                 .from(request)
@@ -824,7 +825,6 @@ public class AsyncRawUsersClient {
                                 response));
                         return;
                     }
-                    String responseBodyString = responseBody != null ? responseBody.string() : "{}";
                     future.completeExceptionally(new SeedPaginationApiException(
                             "Error with status code " + response.code(),
                             response.code(),
@@ -881,9 +881,10 @@ public class AsyncRawUsersClient {
             @Override
             public void onResponse(@NotNull Call call, @NotNull Response response) throws IOException {
                 try (ResponseBody responseBody = response.body()) {
+                    String responseBodyString = responseBody != null ? responseBody.string() : "{}";
                     if (response.isSuccessful()) {
                         ListUsersExtendedOptionalListResponse parsedResponse = ObjectMappers.JSON_MAPPER.readValue(
-                                responseBody.string(), ListUsersExtendedOptionalListResponse.class);
+                                responseBodyString, ListUsersExtendedOptionalListResponse.class);
                         Optional<UUID> startingAfter = parsedResponse.getNext();
                         ListUsersExtendedRequestForOptionalData nextRequest =
                                 ListUsersExtendedRequestForOptionalData.builder()
@@ -904,7 +905,6 @@ public class AsyncRawUsersClient {
                                 response));
                         return;
                     }
-                    String responseBodyString = responseBody != null ? responseBody.string() : "{}";
                     future.completeExceptionally(new SeedPaginationApiException(
                             "Error with status code " + response.code(),
                             response.code(),
@@ -958,9 +958,10 @@ public class AsyncRawUsersClient {
             @Override
             public void onResponse(@NotNull Call call, @NotNull Response response) throws IOException {
                 try (ResponseBody responseBody = response.body()) {
+                    String responseBodyString = responseBody != null ? responseBody.string() : "{}";
                     if (response.isSuccessful()) {
                         UsernameCursor parsedResponse =
-                                ObjectMappers.JSON_MAPPER.readValue(responseBody.string(), UsernameCursor.class);
+                                ObjectMappers.JSON_MAPPER.readValue(responseBodyString, UsernameCursor.class);
                         Optional<String> startingAfter =
                                 parsedResponse.getCursor().getAfter();
                         ListUsernamesRequest nextRequest = ListUsernamesRequest.builder()
@@ -982,7 +983,6 @@ public class AsyncRawUsersClient {
                                 response));
                         return;
                     }
-                    String responseBodyString = responseBody != null ? responseBody.string() : "{}";
                     future.completeExceptionally(new SeedPaginationApiException(
                             "Error with status code " + response.code(),
                             response.code(),
@@ -1036,9 +1036,10 @@ public class AsyncRawUsersClient {
             @Override
             public void onResponse(@NotNull Call call, @NotNull Response response) throws IOException {
                 try (ResponseBody responseBody = response.body()) {
+                    String responseBodyString = responseBody != null ? responseBody.string() : "{}";
                     if (response.isSuccessful()) {
                         UsernameContainer parsedResponse =
-                                ObjectMappers.JSON_MAPPER.readValue(responseBody.string(), UsernameContainer.class);
+                                ObjectMappers.JSON_MAPPER.readValue(responseBodyString, UsernameContainer.class);
                         int newPageNumber = request.getOffset()
                                 .map((Integer page) -> page + 1)
                                 .orElse(1);
@@ -1060,7 +1061,6 @@ public class AsyncRawUsersClient {
                                 response));
                         return;
                     }
-                    String responseBodyString = responseBody != null ? responseBody.string() : "{}";
                     future.completeExceptionally(new SeedPaginationApiException(
                             "Error with status code " + response.code(),
                             response.code(),

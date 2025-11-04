@@ -20,7 +20,6 @@ dependencies {
     testImplementation 'org.junit.jupiter:junit-jupiter-engine:5.8.2'
     testImplementation 'org.junit.jupiter:junit-jupiter-params:5.8.2'
     implementation 'jakarta.websocket:jakarta.websocket-api:2.1.0'
-    testImplementation 'com.squareup.okhttp3:mockwebserver:4.12.0'
 }
 
 

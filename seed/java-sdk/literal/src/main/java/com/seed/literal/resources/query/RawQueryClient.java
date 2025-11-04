@@ -76,11 +76,11 @@ public class RawQueryClient {
         }
         try (Response response = client.newCall(okhttpRequest).execute()) {
             ResponseBody responseBody = response.body();
+            String responseBodyString = responseBody != null ? responseBody.string() : "{}";
             if (response.isSuccessful()) {
                 return new SeedLiteralHttpResponse<>(
-                        ObjectMappers.JSON_MAPPER.readValue(responseBody.string(), SendResponse.class), response);
+                        ObjectMappers.JSON_MAPPER.readValue(responseBodyString, SendResponse.class), response);
             }
-            String responseBodyString = responseBody != null ? responseBody.string() : "{}";
             throw new SeedLiteralApiException(
                     "Error with status code " + response.code(),
                     response.code(),

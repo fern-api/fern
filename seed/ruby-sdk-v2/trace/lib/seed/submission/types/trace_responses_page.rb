@@ -7,7 +7,7 @@ module Seed
         field :offset, -> { Integer }, optional: true, nullable: false
         field :trace_responses, lambda {
           Internal::Types::Array[Seed::Submission::Types::TraceResponse]
-        }, optional: false, nullable: false
+        }, optional: false, nullable: false, api_name: "traceResponses"
       end
     end
   end

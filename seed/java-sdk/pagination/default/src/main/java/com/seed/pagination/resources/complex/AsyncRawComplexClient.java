@@ -76,9 +76,10 @@ public class AsyncRawComplexClient {
             @Override
             public void onResponse(@NotNull Call call, @NotNull Response response) throws IOException {
                 try (ResponseBody responseBody = response.body()) {
+                    String responseBodyString = responseBody != null ? responseBody.string() : "{}";
                     if (response.isSuccessful()) {
                         PaginatedConversationResponse parsedResponse = ObjectMappers.JSON_MAPPER.readValue(
-                                responseBody.string(), PaginatedConversationResponse.class);
+                                responseBodyString, PaginatedConversationResponse.class);
                         Optional<String> startingAfter = parsedResponse
                                 .getPages()
                                 .flatMap(CursorPages::getNext)
@@ -107,7 +108,6 @@ public class AsyncRawComplexClient {
                                 response));
                         return;
                     }
-                    String responseBodyString = responseBody != null ? responseBody.string() : "{}";
                     future.completeExceptionally(new SeedPaginationApiException(
                             "Error with status code " + response.code(),
                             response.code(),

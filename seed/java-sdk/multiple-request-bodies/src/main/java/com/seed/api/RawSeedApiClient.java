@@ -67,12 +67,12 @@ public class RawSeedApiClient {
         }
         try (Response response = client.newCall(okhttpRequest).execute()) {
             ResponseBody responseBody = response.body();
+            String responseBodyString = responseBody != null ? responseBody.string() : "{}";
             if (response.isSuccessful()) {
                 return new SeedApiHttpResponse<>(
-                        ObjectMappers.JSON_MAPPER.readValue(responseBody.string(), UploadDocumentResponse.class),
+                        ObjectMappers.JSON_MAPPER.readValue(responseBodyString, UploadDocumentResponse.class),
                         response);
             }
-            String responseBodyString = responseBody != null ? responseBody.string() : "{}";
             throw new SeedApiApiException(
                     "Error with status code " + response.code(),
                     response.code(),
@@ -105,12 +105,12 @@ public class RawSeedApiClient {
         }
         try (Response response = client.newCall(okhttpRequest).execute()) {
             ResponseBody responseBody = response.body();
+            String responseBodyString = responseBody != null ? responseBody.string() : "{}";
             if (response.isSuccessful()) {
                 return new SeedApiHttpResponse<>(
-                        ObjectMappers.JSON_MAPPER.readValue(responseBody.string(), UploadDocumentResponse.class),
+                        ObjectMappers.JSON_MAPPER.readValue(responseBodyString, UploadDocumentResponse.class),
                         response);
             }
-            String responseBodyString = responseBody != null ? responseBody.string() : "{}";
             throw new SeedApiApiException(
                     "Error with status code " + response.code(),
                     response.code(),

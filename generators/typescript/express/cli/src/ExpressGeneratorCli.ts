@@ -35,7 +35,8 @@ export class ExpressGeneratorCli extends AbstractGeneratorCli<ExpressCustomConfi
             packagePath: parsed?.packagePath ?? undefined,
             packageManager: parsed?.packageManager ?? "pnpm",
             linter: parsed?.linter ?? "biome",
-            formatter: parsed?.formatter ?? "biome"
+            formatter: parsed?.formatter ?? "biome",
+            enableForwardCompatibleEnums: parsed?.enableForwardCompatibleEnums ?? false
         };
 
         if (config.linter === "oxlint") {
@@ -86,7 +87,8 @@ export class ExpressGeneratorCli extends AbstractGeneratorCli<ExpressCustomConfi
                 packagePath: customConfig.packagePath,
                 packageManager: customConfig.packageManager,
                 formatter: customConfig.formatter,
-                linter: customConfig.linter
+                linter: customConfig.linter,
+                enableForwardCompatibleEnums: customConfig.enableForwardCompatibleEnums
             }
         });
 

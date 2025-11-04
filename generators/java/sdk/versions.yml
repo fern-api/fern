@@ -1,9 +1,17 @@
-- version: 3.11.3
+- version: 3.11.4
   changelogEntry:
     - summary: |
         Extract error body parsing to ObjectMappers.parseErrorBody() utility method. When servers return XML/HTML errors instead of JSON, the utility gracefully falls back to raw string instead of throwing JsonProcessingException, preserving HTTP status codes and error details.
       type: fix
   createdAt: "2025-11-04"
+  irVersion: 61
+
+- version: 3.11.3
+  changelogEntry:
+    - summary: |
+        Fix `collapse-optional-nullable` config not being applied in download files mode.
+      type: fix
+  createdAt: "2025-11-03"
   irVersion: 61
 
 - version: 3.11.2
