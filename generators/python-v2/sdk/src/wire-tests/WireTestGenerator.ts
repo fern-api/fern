@@ -145,9 +145,7 @@ export class WireTestGenerator {
             docstring: "Reset WireMock request journal"
         });
 
-        resetMethod.addStatement(
-            python.codeBlock('wiremock_admin_url = "http://localhost:8080/__admin"')
-        );
+        resetMethod.addStatement(python.codeBlock('wiremock_admin_url = "http://localhost:8080/__admin"'));
         resetMethod.addStatement(
             python.invokeFunction({
                 reference: python.reference({
@@ -195,9 +193,7 @@ export class WireTestGenerator {
             docstring: "Verify the number of requests made to WireMock"
         });
 
-        verifyMethod.addStatement(
-            python.codeBlock('wiremock_admin_url = "http://localhost:8080/__admin"')
-        );
+        verifyMethod.addStatement(python.codeBlock('wiremock_admin_url = "http://localhost:8080/__admin"'));
         verifyMethod.addStatement(
             python.assign({
                 lhs: python.codeBlock("request_body"),
@@ -264,11 +260,7 @@ export class WireTestGenerator {
         testFile.addStatement(verifyMethod);
     }
 
-    private generateEndpointTestMethod(
-        testFile: python.PythonFile,
-        endpoint: HttpEndpoint,
-        snippet: string
-    ): void {
+    private generateEndpointTestMethod(testFile: python.PythonFile, endpoint: HttpEndpoint, snippet: string): void {
         const testFunctionName = this.parseTestFunctionNameFromSnippet(snippet);
         const clientConstructor = this.parseClientConstructor(snippet);
         const requestBodyInstantiation = this.parseRequestBodyInstantiation(snippet);
@@ -291,9 +283,7 @@ export class WireTestGenerator {
             })
         );
 
-        testMethod.addStatement(
-            python.codeBlock('wiremock_base_url = "http://localhost:8080"')
-        );
+        testMethod.addStatement(python.codeBlock('wiremock_base_url = "http://localhost:8080"'));
 
         if (clientConstructor) {
             testMethod.addStatement(python.codeBlock(clientConstructor));
@@ -497,7 +487,7 @@ export class WireTestGenerator {
         }
 
         const constructorLines = lines.slice(constructorStartIndex, constructorEndIndex + 1);
-        return constructorLines.join("\n").replace(/base_url\s*=\s*"[^"]*"/, 'base_url=wiremock_base_url');
+        return constructorLines.join("\n").replace(/base_url\s*=\s*"[^"]*"/, "base_url=wiremock_base_url");
     }
 
     private parseTestFunctionNameFromSnippet(snippet: string): string {

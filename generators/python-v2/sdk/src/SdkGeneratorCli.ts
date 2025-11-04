@@ -56,7 +56,7 @@ export class SdkGeneratorCli extends AbstractPythonGeneratorCli<SdkCustomConfigS
                 context.logger.warn(`Failed to generate wire tests: ${error}`);
             }
         }
-        
+
         await context.project.persist();
     }
 

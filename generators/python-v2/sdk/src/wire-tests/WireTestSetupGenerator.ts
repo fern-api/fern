@@ -25,7 +25,8 @@ export class WireTestSetupGenerator {
         this.generateDockerComposeFile();
     }
 
-    public static getWiremockConfigContent(ir: IntermediateRepresentation): any {
+    public static getWiremockConfigContent(ir: IntermediateRepresentation): unknown {
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
         return new WireMock().convertToWireMock(ir as any);
     }
 
