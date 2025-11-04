@@ -26,7 +26,7 @@ export function getDirectReferenceToExport({
 }): Reference {
     const exportedFilePath = exportsManager.convertExportedFilePathToFilePath(exportedFromPath);
     const referencedInPath = referencedIn.getFilePath();
-    
+
     const isSelfImport = exportedFilePath === referencedInPath;
 
     const moduleSpecifier = getRelativePathAsModuleSpecifierTo({
