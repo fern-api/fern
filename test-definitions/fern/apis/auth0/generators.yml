@@ -262,3 +262,10 @@ groups:
           repository: fern-demo/auth0-python-sdk
           mode: pull-request
         config: null
+  ruby-sdk-v2:
+    generators:
+      - name: fernapi/fern-ruby-sdk-v2
+        version: latest
+        config:
+          enableWireTests: true
+        smart-casing: true
