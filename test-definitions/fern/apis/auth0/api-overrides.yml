@@ -4,7 +4,7 @@ components:
       properties:
         users:
           format: binary
-    ClientAddonOag:
-      $ref: "#/components/schemas/ClientAddonOAG"
-    ClientComplianceLevel:
-      $ref: "#/components/schemas/ClientComplianceLevelEnum"
+    ClientAddonOAG:
+      x-fern-type-name: ClientAddonOag
+    ClientComplianceLevelEnum:
+      x-fern-type-name: ClientComplianceLevel
