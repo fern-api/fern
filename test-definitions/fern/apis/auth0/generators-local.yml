@@ -1,7 +1,8 @@
 # yaml-language-server: $schema=https://schema.buildwithfern.dev/generators-yml.json
 api:
   specs:
-    - openapi: ../api.json
+    - openapi: ./api.json
+      overrides: ./api-overrides.yml
 
 groups:
   java-sdk-local:
