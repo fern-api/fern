@@ -10,10 +10,10 @@ interface CodeReference {
 }
 
 function isCodeReference(value: unknown): value is CodeReference {
-    return isPlainObject(value) && typeof (value as Record<string, unknown>).$ref === "string";
+    return isPlainObject(value) && typeof (value as { $ref?: unknown }).$ref === "string";
 }
 
-async function maybeResolveCodeReference(code: string | CodeReference | undefined): Promise<string | undefined> {
+async function maybeResolveCodeReference(code: unknown): Promise<string | undefined> {
     if (code == null) {
         return undefined;
     }
@@ -37,8 +37,8 @@ async function maybeResolveCodeReference(code: string | CodeReference | undefine
     return undefined;
 }
 
-async function resolveCodeSamples(codeSamples: unknown[] | undefined): Promise<RawSchemas.ExampleCodeSampleSchema[]> {
-    if (!codeSamples || !Array.isArray(codeSamples)) {
+async function resolveCodeSamples(codeSamples: unknown): Promise<RawSchemas.ExampleCodeSampleSchema[]> {
+    if (!Array.isArray(codeSamples)) {
         return [];
     }
 
@@ -95,7 +95,7 @@ export class FernExamplesExtension extends AbstractExtension<FernExamplesExtensi
 
                 const exampleRecord = example as Record<string, unknown>;
                 const codeSamples = exampleRecord["code-samples"];
-                if (codeSamples) {
+                if (codeSamples != null) {
                     const resolvedCodeSamples = await resolveCodeSamples(codeSamples);
                     return {
                         ...example,
