@@ -33,10 +33,12 @@ publish:
     context: .
 
 scripts:
-  - docker: ruby:3.3
+  - docker: fernapi/ruby-seed:1.0.0
     commands:
+      - if [ -f wiremock/docker-compose.test.yml ]; then docker compose -f wiremock/docker-compose.test.yml down && docker compose -f wiremock/docker-compose.test.yml up -d; fi
       - bundle install
       - bundle exec rake test
+      - if [ -f wiremock/docker-compose.test.yml ]; then docker compose -f wiremock/docker-compose.test.yml down; fi
 
 fixtures:
   examples:
