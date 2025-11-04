@@ -48,11 +48,11 @@ public class RawPutClient {
         }
         try (Response response = client.newCall(okhttpRequest).execute()) {
             ResponseBody responseBody = response.body();
+            String responseBodyString = responseBody != null ? responseBody.string() : "{}";
             if (response.isSuccessful()) {
                 return new BestHttpResponse<>(
-                        ObjectMappers.JSON_MAPPER.readValue(responseBody.string(), PutResponse.class), response);
+                        ObjectMappers.JSON_MAPPER.readValue(responseBodyString, PutResponse.class), response);
             }
-            String responseBodyString = responseBody != null ? responseBody.string() : "{}";
             throw new BestApiException(
                     "Error with status code " + response.code(),
                     response.code(),

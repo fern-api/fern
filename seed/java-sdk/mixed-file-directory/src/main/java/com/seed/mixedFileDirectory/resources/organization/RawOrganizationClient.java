@@ -65,11 +65,11 @@ public class RawOrganizationClient {
         }
         try (Response response = client.newCall(okhttpRequest).execute()) {
             ResponseBody responseBody = response.body();
+            String responseBodyString = responseBody != null ? responseBody.string() : "{}";
             if (response.isSuccessful()) {
                 return new SeedMixedFileDirectoryHttpResponse<>(
-                        ObjectMappers.JSON_MAPPER.readValue(responseBody.string(), Organization.class), response);
+                        ObjectMappers.JSON_MAPPER.readValue(responseBodyString, Organization.class), response);
             }
-            String responseBodyString = responseBody != null ? responseBody.string() : "{}";
             throw new SeedMixedFileDirectoryApiException(
                     "Error with status code " + response.code(),
                     response.code(),

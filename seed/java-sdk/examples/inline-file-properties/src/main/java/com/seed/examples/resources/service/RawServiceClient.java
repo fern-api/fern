@@ -56,11 +56,11 @@ public class RawServiceClient {
         }
         try (Response response = client.newCall(okhttpRequest).execute()) {
             ResponseBody responseBody = response.body();
+            String responseBodyString = responseBody != null ? responseBody.string() : "{}";
             if (response.isSuccessful()) {
                 return new SeedExamplesHttpResponse<>(
-                        ObjectMappers.JSON_MAPPER.readValue(responseBody.string(), Movie.class), response);
+                        ObjectMappers.JSON_MAPPER.readValue(responseBodyString, Movie.class), response);
             }
-            String responseBodyString = responseBody != null ? responseBody.string() : "{}";
             throw new SeedExamplesApiException(
                     "Error with status code " + response.code(),
                     response.code(),
@@ -100,11 +100,11 @@ public class RawServiceClient {
         }
         try (Response response = client.newCall(okhttpRequest).execute()) {
             ResponseBody responseBody = response.body();
+            String responseBodyString = responseBody != null ? responseBody.string() : "{}";
             if (response.isSuccessful()) {
                 return new SeedExamplesHttpResponse<>(
-                        ObjectMappers.JSON_MAPPER.readValue(responseBody.string(), String.class), response);
+                        ObjectMappers.JSON_MAPPER.readValue(responseBodyString, String.class), response);
             }
-            String responseBodyString = responseBody != null ? responseBody.string() : "{}";
             throw new SeedExamplesApiException(
                     "Error with status code " + response.code(),
                     response.code(),
@@ -143,11 +143,11 @@ public class RawServiceClient {
         }
         try (Response response = client.newCall(okhttpRequest).execute()) {
             ResponseBody responseBody = response.body();
+            String responseBodyString = responseBody != null ? responseBody.string() : "{}";
             if (response.isSuccessful()) {
                 return new SeedExamplesHttpResponse<>(
-                        ObjectMappers.JSON_MAPPER.readValue(responseBody.string(), Metadata.class), response);
+                        ObjectMappers.JSON_MAPPER.readValue(responseBodyString, Metadata.class), response);
             }
-            String responseBodyString = responseBody != null ? responseBody.string() : "{}";
             throw new SeedExamplesApiException(
                     "Error with status code " + response.code(),
                     response.code(),
@@ -193,13 +193,13 @@ public class RawServiceClient {
         }
         try (Response response = client.newCall(okhttpRequest).execute()) {
             ResponseBody responseBody = response.body();
+            String responseBodyString = responseBody != null ? responseBody.string() : "{}";
             if (response.isSuccessful()) {
                 return new SeedExamplesHttpResponse<>(
                         ObjectMappers.JSON_MAPPER.readValue(
-                                responseBody.string(), com.seed.examples.resources.types.types.Response.class),
+                                responseBodyString, com.seed.examples.resources.types.types.Response.class),
                         response);
             }
-            String responseBodyString = responseBody != null ? responseBody.string() : "{}";
             throw new SeedExamplesApiException(
                     "Error with status code " + response.code(),
                     response.code(),
