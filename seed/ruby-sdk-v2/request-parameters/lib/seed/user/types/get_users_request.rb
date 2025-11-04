@@ -10,16 +10,22 @@ module Seed
         field :deadline, -> { String }, optional: false, nullable: false
         field :bytes, -> { String }, optional: false, nullable: false
         field :user, -> { Seed::User::Types::User }, optional: false, nullable: false
-        field :user_list, -> { Internal::Types::Array[Seed::User::Types::User] }, optional: false, nullable: false
-        field :optional_deadline, -> { String }, optional: true, nullable: false
-        field :key_value, -> { Internal::Types::Hash[String, String] }, optional: false, nullable: false
-        field :optional_string, -> { String }, optional: true, nullable: false
-        field :nested_user, -> { Seed::User::Types::NestedUser }, optional: false, nullable: false
-        field :optional_user, -> { Seed::User::Types::User }, optional: true, nullable: false
-        field :exclude_user, -> { Seed::User::Types::User }, optional: false, nullable: false
+        field :user_list, lambda {
+          Internal::Types::Array[Seed::User::Types::User]
+        }, optional: false, nullable: false, api_name: "userList"
+        field :optional_deadline, -> { String }, optional: true, nullable: false, api_name: "optionalDeadline"
+        field :key_value, lambda {
+          Internal::Types::Hash[String, String]
+        }, optional: false, nullable: false, api_name: "keyValue"
+        field :optional_string, -> { String }, optional: true, nullable: false, api_name: "optionalString"
+        field :nested_user, lambda {
+          Seed::User::Types::NestedUser
+        }, optional: false, nullable: false, api_name: "nestedUser"
+        field :optional_user, -> { Seed::User::Types::User }, optional: true, nullable: false, api_name: "optionalUser"
+        field :exclude_user, -> { Seed::User::Types::User }, optional: false, nullable: false, api_name: "excludeUser"
         field :filter, -> { String }, optional: false, nullable: false
-        field :long_param, -> { Integer }, optional: false, nullable: false
-        field :big_int_param, -> { String }, optional: false, nullable: false
+        field :long_param, -> { Integer }, optional: false, nullable: false, api_name: "longParam"
+        field :big_int_param, -> { String }, optional: false, nullable: false, api_name: "bigIntParam"
       end
     end
   end
