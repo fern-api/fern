@@ -5,7 +5,23 @@ import { beforeEach, describe, expect, it, vi } from "vitest";
 
 import { CliContext } from "../../../cli-context/CliContext";
 import { writeTranslationForProject } from "../writeTranslationForProject";
-import { FIXTURES, setupTestProjectFromFixture } from "./test-utils";
+import { setupTestProjectFromFixture } from "./test-utils";
+
+interface FileStructure {
+    type: "file";
+    content: string | unknown;
+}
+
+interface DirectoryStructure {
+    type: "directory";
+    contents: Record<string, FileStructure>;
+}
+
+interface TranslationOutput {
+    translationsExists: boolean;
+    structure?: Record<string, FileStructure | DirectoryStructure>;
+    docConfigs?: Record<string, unknown>;
+}
 
 describe("writeTranslationForProject", () => {
     let mockCliContext: CliContext;
@@ -32,7 +48,7 @@ describe("writeTranslationForProject", () => {
     /**
      * Helper function to capture the complete output structure for snapshot testing
      */
-    async function captureTranslationOutput(fernDir: string) {
+    async function captureTranslationOutput(fernDir: string): Promise<TranslationOutput> {
         const translationsPath = join(fernDir, "translations");
 
         try {
@@ -44,7 +60,7 @@ describe("writeTranslationForProject", () => {
             return { translationsExists: false };
         }
 
-        const output: any = {
+        const output: TranslationOutput = {
             translationsExists: true,
             structure: {},
             docConfigs: {}
@@ -56,12 +72,12 @@ describe("writeTranslationForProject", () => {
             const entryPath = join(translationsPath, entry);
             const entryStat = await stat(entryPath);
 
-            if (entry === "hashes") {
+            if (entry === "hashes" && output.structure) {
                 output.structure[entry] = {
                     type: "file",
                     content: await readFile(entryPath, "utf-8")
                 };
-            } else if (entryStat.isDirectory()) {
+            } else if (entryStat.isDirectory() && output.structure) {
                 output.structure[entry] = {
                     type: "directory",
                     contents: {}
@@ -75,14 +91,14 @@ describe("writeTranslationForProject", () => {
 
                     if (langFileStat.isFile()) {
                         const content = await readFile(langFilePath, "utf-8");
-                        output.structure[entry].contents[langFile] = {
+                        (output.structure[entry] as DirectoryStructure).contents[langFile] = {
                             type: "file",
                             content:
                                 langFile.endsWith(".yml") || langFile.endsWith(".yaml") ? yaml.load(content) : content
                         };
 
                         // Store parsed docs configs separately for easier testing
-                        if (langFile === "docs.yml") {
+                        if (langFile === "docs.yml" && output.docConfigs) {
                             output.docConfigs[entry] = yaml.load(content);
                         }
                     }
@@ -254,10 +270,10 @@ describe("writeTranslationForProject", () => {
 
             // Read original docs.yml to verify it has instances
             const originalDocsContent = await readFile(docsYmlPath, "utf-8");
-            const originalDocsConfig = yaml.load(originalDocsContent) as any;
+            const originalDocsConfig = yaml.load(originalDocsContent) as { instances?: unknown[] };
             expect(originalDocsConfig.instances).toBeDefined();
             expect(Array.isArray(originalDocsConfig.instances)).toBe(true);
-            expect(originalDocsConfig.instances.length).toBeGreaterThan(0);
+            expect(originalDocsConfig.instances?.length).toBeGreaterThan(0);
 
             // Execute the write-translation command
             await writeTranslationForProject({

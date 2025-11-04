@@ -1,6 +1,6 @@
 instances:
-  - url: https://example.com/docs
-    customDomain: custom.example.com/api
+  - url: https://example.docs.buildwithfern.com
+    custom-domain: custom.example.com/api
 
 languages:
   - en

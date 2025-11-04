@@ -1,3 +1,8 @@
+import { docsYml } from "@fern-api/configuration";
+
+type DocsConfiguration = docsYml.RawSchemas.DocsConfiguration;
+type DocsInstance = docsYml.RawSchemas.DocsInstance;
+
 import { DOCS_CONFIGURATION_FILENAME } from "@fern-api/configuration-loader";
 import { AbsoluteFilePath, join, RelativeFilePath } from "@fern-api/fs-utils";
 import { Project } from "@fern-api/project-loader";
@@ -124,26 +129,23 @@ export function addLanguageSuffixToUrl(url: string, language: string): string {
  * @param language - The target language
  * @returns Modified docs configuration with language-suffixed URLs
  */
-function modifyInstanceUrlsForLanguage(docsConfig: any, language: string): any {
+function modifyInstanceUrlsForLanguage(docsConfig: DocsConfiguration, language: string): DocsConfiguration {
     const modifiedConfig = structuredClone(docsConfig);
 
     if (modifiedConfig.instances && Array.isArray(modifiedConfig.instances)) {
-        modifiedConfig.instances = modifiedConfig.instances.map((instance: any) => {
+        modifiedConfig.instances = modifiedConfig.instances.map((instance: DocsInstance) => {
             const modifiedInstance = { ...instance };
 
             if (modifiedInstance.url) {
                 modifiedInstance.url = addLanguageSuffixToUrl(modifiedInstance.url, language);
             }
 
-            // Handle both customDomain (camelCase) and custom-domain (kebab-case)
-            const customDomainKey = modifiedInstance.customDomain ? "customDomain" : "custom-domain";
-            const customDomain = modifiedInstance.customDomain || modifiedInstance["custom-domain"];
-
-            if (customDomain) {
+            if (modifiedInstance.customDomain) {
+                const customDomain = modifiedInstance.customDomain;
                 if (typeof customDomain === "string") {
-                    modifiedInstance[customDomainKey] = addLanguageSuffixToUrl(customDomain, language);
+                    modifiedInstance.customDomain = addLanguageSuffixToUrl(customDomain, language);
                 } else if (Array.isArray(customDomain)) {
-                    modifiedInstance[customDomainKey] = customDomain.map((domain: string) =>
+                    modifiedInstance.customDomain = customDomain.map((domain: string) =>
                         addLanguageSuffixToUrl(domain, language)
                     );
                 }
@@ -171,7 +173,7 @@ async function createLanguageSpecificDocsConfig(
 ): Promise<void> {
     try {
         const originalConfigContent = await readFile(originalDocsConfigPath, "utf-8");
-        const originalConfig = yaml.load(originalConfigContent);
+        const originalConfig = yaml.load(originalConfigContent) as DocsConfiguration;
 
         const modifiedConfig = modifyInstanceUrlsForLanguage(originalConfig, language);
 
@@ -384,15 +386,10 @@ export async function writeTranslationForProject({
             }
         }
         context.logger.info(`Source language (${sourceLanguage}) values are tracked as hashes in translations/hashes`);
-
         if (hasDocsConfig && targetLanguages.length > 0) {
-            context.logger.info(
-                chalk.green("Language-specific docs configurations created with modified instance URLs:")
-            );
+            context.logger.info("Language-specific docs configurations created with modified instance URLs:");
             for (const language of targetLanguages) {
-                context.logger.info(
-                    chalk.blue(`  - ${language}/docs.yml: URLs modified to include ${language} prefix`)
-                );
+                context.logger.info(`  - ${language}/docs.yml: URLs modified to include ${language} prefix`);
             }
         }
     });
