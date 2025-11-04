@@ -99,6 +99,14 @@
               "openapi": "../openapi.yml",
             },
           },
+          "ApiErrorResponseData": {
+            "docs": undefined,
+            "inline": true,
+            "properties": {},
+            "source": {
+              "openapi": "../openapi.yml",
+            },
+          },
           "ApiKeyIntegrationConfigs": {
             "docs": undefined,
             "inline": undefined,
@@ -431,6 +439,14 @@
               "boolean",
               "ConnectionFilterPropertyThree",
             ],
+          },
+          "ConnectionFilterPropertyThree": {
+            "docs": undefined,
+            "inline": true,
+            "properties": {},
+            "source": {
+              "openapi": "../openapi.yml",
+            },
           },
           "ConnectionPaginatedResult": {
             "docs": undefined,
@@ -881,6 +897,14 @@
               "openapi": "../openapi.yml",
             },
           },
+          "EventAttemptBody": {
+            "docs": "Response body from the destination",
+            "inline": true,
+            "properties": {},
+            "source": {
+              "openapi": "../openapi.yml",
+            },
+          },
           "EventAttemptPaginatedResult": {
             "docs": undefined,
             "inline": undefined,
@@ -922,6 +946,14 @@
               "list<unknown>",
             ],
           },
+          "EventDataBodyOne": {
+            "docs": undefined,
+            "inline": true,
+            "properties": {},
+            "source": {
+              "openapi": "../openapi.yml",
+            },
+          },
           "EventDataHeaders": {
             "discriminated": false,
             "docs": undefined,
@@ -947,6 +979,14 @@
               "optional<string>",
               "EventDataParsedQueryOne",
             ],
+          },
+          "EventDataParsedQueryOne": {
+            "docs": undefined,
+            "inline": true,
+            "properties": {},
+            "source": {
+              "openapi": "../openapi.yml",
+            },
           },
           "EventPaginatedResult": {
             "docs": undefined,
@@ -1615,6 +1655,14 @@
               "list<unknown>",
             ],
           },
+          "RequestDataBodyOne": {
+            "docs": undefined,
+            "inline": true,
+            "properties": {},
+            "source": {
+              "openapi": "../openapi.yml",
+            },
+          },
           "RequestDataHeaders": {
             "discriminated": false,
             "docs": undefined,
@@ -1640,6 +1688,14 @@
               "optional<string>",
               "RequestDataParsedQueryOne",
             ],
+          },
+          "RequestDataParsedQueryOne": {
+            "docs": undefined,
+            "inline": true,
+            "properties": {},
+            "source": {
+              "openapi": "../openapi.yml",
+            },
           },
           "RequestIngestPriority": {
             "docs": "The priority attributed to the request when received",
@@ -1896,6 +1952,14 @@
               "list<unknown>",
             ],
           },
+          "ShortEventDataBodyOne": {
+            "docs": undefined,
+            "inline": true,
+            "properties": {},
+            "source": {
+              "openapi": "../openapi.yml",
+            },
+          },
           "ShortEventDataHeaders": {
             "discriminated": false,
             "docs": undefined,
@@ -1921,6 +1985,14 @@
               "optional<string>",
               "ShortEventDataParsedQueryOne",
             ],
+          },
+          "ShortEventDataParsedQueryOne": {
+            "docs": undefined,
+            "inline": true,
+            "properties": {},
+            "source": {
+              "openapi": "../openapi.yml",
+            },
           },
           "Source": {
             "docs": "Associated [Source](#source-object) object",
@@ -2239,6 +2311,14 @@
               "TransformationExecutorOutputRequestBodyOne",
             ],
           },
+          "TransformationExecutorOutputRequestBodyOne": {
+            "docs": undefined,
+            "inline": true,
+            "properties": {},
+            "source": {
+              "openapi": "../openapi.yml",
+            },
+          },
           "TransformationExecutorOutputRequestHeaders": {
             "discriminated": false,
             "docs": undefined,
@@ -2265,6 +2345,14 @@
               "TransformationExecutorOutputRequestParsedQueryOne",
             ],
           },
+          "TransformationExecutorOutputRequestParsedQueryOne": {
+            "docs": undefined,
+            "inline": true,
+            "properties": {},
+            "source": {
+              "openapi": "../openapi.yml",
+            },
+          },
           "TransformationExecutorOutputRequestQuery": {
             "discriminated": false,
             "docs": undefined,
@@ -2277,6 +2365,14 @@
               "optional<TransformationExecutorOutputRequestQueryZero>",
               "string",
             ],
+          },
+          "TransformationExecutorOutputRequestQueryZero": {
+            "docs": undefined,
+            "inline": true,
+            "properties": {},
+            "source": {
+              "openapi": "../openapi.yml",
+            },
           },
           "TransformationFailedMeta": {
             "docs": undefined,
@@ -2668,6 +2764,11 @@ types:
       models: optional<list<IssueTrigger>>
     source:
       openapi: ../openapi.yml
+  ApiErrorResponseData:
+    properties: {}
+    source:
+      openapi: ../openapi.yml
+    inline: true
   ApiErrorResponse:
     docs: Error response model
     properties:
@@ -2740,6 +2841,12 @@ types:
       - HOLD
     source:
       openapi: ../openapi.yml
+  EventAttemptBody:
+    docs: Response body from the destination
+    properties: {}
+    source:
+      openapi: ../openapi.yml
+    inline: true
   EventAttempt:
     properties:
       id:
@@ -2808,6 +2915,11 @@ types:
       models: optional<list<optional<EventAttempt>>>
     source:
       openapi: ../openapi.yml
+  ShortEventDataParsedQueryOne:
+    properties: {}
+    source:
+      openapi: ../openapi.yml
+    inline: true
   ShortEventDataParsedQuery:
     discriminated: false
     union:
@@ -2821,6 +2933,11 @@ types:
     union:
       - string
       - map<string, optional<string>>
+    source:
+      openapi: ../openapi.yml
+    inline: true
+  ShortEventDataBodyOne:
+    properties: {}
     source:
       openapi: ../openapi.yml
     inline: true
@@ -2891,6 +3008,11 @@ types:
       - FAILED
     source:
       openapi: ../openapi.yml
+  EventDataParsedQueryOne:
+    properties: {}
+    source:
+      openapi: ../openapi.yml
+    inline: true
   EventDataParsedQuery:
     discriminated: false
     union:
@@ -2904,6 +3026,11 @@ types:
     union:
       - string
       - map<string, optional<string>>
+    source:
+      openapi: ../openapi.yml
+    inline: true
+  EventDataBodyOne:
+    properties: {}
     source:
       openapi: ../openapi.yml
     inline: true
@@ -3584,6 +3711,11 @@ types:
     inline: true
     source:
       openapi: ../openapi.yml
+  RequestDataParsedQueryOne:
+    properties: {}
+    source:
+      openapi: ../openapi.yml
+    inline: true
   RequestDataParsedQuery:
     discriminated: false
     union:
@@ -3597,6 +3729,11 @@ types:
     union:
       - string
       - map<string, optional<string>>
+    source:
+      openapi: ../openapi.yml
+    inline: true
+  RequestDataBodyOne:
+    properties: {}
     source:
       openapi: ../openapi.yml
     inline: true
@@ -3760,6 +3897,11 @@ types:
       strategy: AlertStrategy
     source:
       openapi: ../openapi.yml
+  ConnectionFilterPropertyThree:
+    properties: {}
+    source:
+      openapi: ../openapi.yml
+    inline: true
   ConnectionFilterProperty:
     discriminated: false
     docs: JSON using our filter syntax to filter on request headers
@@ -4004,6 +4146,11 @@ types:
     source:
       openapi: ../openapi.yml
     inline: true
+  TransformationExecutorOutputRequestQueryZero:
+    properties: {}
+    source:
+      openapi: ../openapi.yml
+    inline: true
   TransformationExecutorOutputRequestQuery:
     discriminated: false
     union:
@@ -4012,11 +4159,21 @@ types:
     source:
       openapi: ../openapi.yml
     inline: true
+  TransformationExecutorOutputRequestParsedQueryOne:
+    properties: {}
+    source:
+      openapi: ../openapi.yml
+    inline: true
   TransformationExecutorOutputRequestParsedQuery:
     discriminated: false
     union:
       - optional<string>
       - TransformationExecutorOutputRequestParsedQueryOne
+    source:
+      openapi: ../openapi.yml
+    inline: true
+  TransformationExecutorOutputRequestBodyOne:
+    properties: {}
     source:
       openapi: ../openapi.yml
     inline: true
@@ -5849,8 +6006,16 @@ docs: A bookmark lets you conveniently store and replay a specific request.
             },
             "union": [
               "string",
-              "root.CreateEventBulkRetryRequestQueryBodyOne",
+              "CreateEventBulkRetryRequestQueryBodyOne",
             ],
+          },
+          "CreateEventBulkRetryRequestQueryBodyOne": {
+            "docs": undefined,
+            "inline": true,
+            "properties": {},
+            "source": {
+              "openapi": "../openapi.yml",
+            },
           },
           "CreateEventBulkRetryRequestQueryBulkRetryId": {
             "discriminated": false,
@@ -6011,8 +6176,16 @@ docs: A bookmark lets you conveniently store and replay a specific request.
             },
             "union": [
               "string",
-              "root.CreateEventBulkRetryRequestQueryHeadersOne",
+              "CreateEventBulkRetryRequestQueryHeadersOne",
             ],
+          },
+          "CreateEventBulkRetryRequestQueryHeadersOne": {
+            "docs": undefined,
+            "inline": true,
+            "properties": {},
+            "source": {
+              "openapi": "../openapi.yml",
+            },
           },
           "CreateEventBulkRetryRequestQueryId": {
             "discriminated": false,
@@ -6094,8 +6267,16 @@ docs: A bookmark lets you conveniently store and replay a specific request.
             },
             "union": [
               "string",
-              "root.CreateEventBulkRetryRequestQueryParsedQueryOne",
+              "CreateEventBulkRetryRequestQueryParsedQueryOne",
             ],
+          },
+          "CreateEventBulkRetryRequestQueryParsedQueryOne": {
+            "docs": undefined,
+            "inline": true,
+            "properties": {},
+            "source": {
+              "openapi": "../openapi.yml",
+            },
           },
           "CreateEventBulkRetryRequestQueryResponseStatus": {
             "discriminated": false,
@@ -6534,12 +6715,22 @@ docs: A bookmark lets you conveniently store and replay a specific request.
     source:
       openapi: ../openapi.yml
     inline: true
+  CreateEventBulkRetryRequestQueryHeadersOne:
+    properties: {}
+    source:
+      openapi: ../openapi.yml
+    inline: true
   CreateEventBulkRetryRequestQueryHeaders:
     discriminated: false
     docs: URL Encoded string of the JSON to match to the data headers
     union:
       - string
-      - root.CreateEventBulkRetryRequestQueryHeadersOne
+      - CreateEventBulkRetryRequestQueryHeadersOne
+    source:
+      openapi: ../openapi.yml
+    inline: true
+  CreateEventBulkRetryRequestQueryBodyOne:
+    properties: {}
     source:
       openapi: ../openapi.yml
     inline: true
@@ -6548,7 +6739,12 @@ docs: A bookmark lets you conveniently store and replay a specific request.
     docs: URL Encoded string of the JSON to match to the data body
     union:
       - string
-      - root.CreateEventBulkRetryRequestQueryBodyOne
+      - CreateEventBulkRetryRequestQueryBodyOne
+    source:
+      openapi: ../openapi.yml
+    inline: true
+  CreateEventBulkRetryRequestQueryParsedQueryOne:
+    properties: {}
     source:
       openapi: ../openapi.yml
     inline: true
@@ -6559,7 +6755,7 @@ docs: A bookmark lets you conveniently store and replay a specific request.
       representation of the query)
     union:
       - string
-      - root.CreateEventBulkRetryRequestQueryParsedQueryOne
+      - CreateEventBulkRetryRequestQueryParsedQueryOne
     source:
       openapi: ../openapi.yml
     inline: true
@@ -7935,8 +8131,16 @@ docs: ''
             },
             "union": [
               "string",
-              "root.CreateRequestBulkRetryRequestQueryBodyOne",
+              "CreateRequestBulkRetryRequestQueryBodyOne",
             ],
+          },
+          "CreateRequestBulkRetryRequestQueryBodyOne": {
+            "docs": undefined,
+            "inline": true,
+            "properties": {},
+            "source": {
+              "openapi": "../openapi.yml",
+            },
           },
           "CreateRequestBulkRetryRequestQueryBulkRetryId": {
             "discriminated": false,
@@ -8079,8 +8283,16 @@ docs: ''
             },
             "union": [
               "string",
-              "root.CreateRequestBulkRetryRequestQueryHeadersOne",
+              "CreateRequestBulkRetryRequestQueryHeadersOne",
             ],
+          },
+          "CreateRequestBulkRetryRequestQueryHeadersOne": {
+            "docs": undefined,
+            "inline": true,
+            "properties": {},
+            "source": {
+              "openapi": "../openapi.yml",
+            },
           },
           "CreateRequestBulkRetryRequestQueryId": {
             "discriminated": false,
@@ -8224,8 +8436,16 @@ docs: ''
             },
             "union": [
               "string",
-              "root.CreateRequestBulkRetryRequestQueryParsedQueryOne",
+              "CreateRequestBulkRetryRequestQueryParsedQueryOne",
             ],
+          },
+          "CreateRequestBulkRetryRequestQueryParsedQueryOne": {
+            "docs": undefined,
+            "inline": true,
+            "properties": {},
+            "source": {
+              "openapi": "../openapi.yml",
+            },
           },
           "CreateRequestBulkRetryRequestQueryRejectionCause": {
             "discriminated": false,
@@ -8435,12 +8655,22 @@ docs: ''
     source:
       openapi: ../openapi.yml
     inline: true
+  CreateRequestBulkRetryRequestQueryHeadersOne:
+    properties: {}
+    source:
+      openapi: ../openapi.yml
+    inline: true
   CreateRequestBulkRetryRequestQueryHeaders:
     discriminated: false
     docs: URL Encoded string of the JSON to match to the data headers
     union:
       - string
-      - root.CreateRequestBulkRetryRequestQueryHeadersOne
+      - CreateRequestBulkRetryRequestQueryHeadersOne
+    source:
+      openapi: ../openapi.yml
+    inline: true
+  CreateRequestBulkRetryRequestQueryBodyOne:
+    properties: {}
     source:
       openapi: ../openapi.yml
     inline: true
@@ -8449,7 +8679,12 @@ docs: ''
     docs: URL Encoded string of the JSON to match to the data body
     union:
       - string
-      - root.CreateRequestBulkRetryRequestQueryBodyOne
+      - CreateRequestBulkRetryRequestQueryBodyOne
+    source:
+      openapi: ../openapi.yml
+    inline: true
+  CreateRequestBulkRetryRequestQueryParsedQueryOne:
+    properties: {}
     source:
       openapi: ../openapi.yml
     inline: true
@@ -8460,7 +8695,7 @@ docs: ''
       representation of the query)
     union:
       - string
-      - root.CreateRequestBulkRetryRequestQueryParsedQueryOne
+      - CreateRequestBulkRetryRequestQueryParsedQueryOne
     source:
       openapi: ../openapi.yml
     inline: true
@@ -13821,7 +14056,7 @@ types:
                     "channels": "optional<root.IssueTriggerChannels>",
                     "configs": {
                       "docs": "Configuration object for the specific issue type selected",
-                      "type": "optional<root.CreateIssueTriggerRequestConfigs>",
+                      "type": "optional<CreateIssueTriggerRequestConfigs>",
                     },
                     "name": {
                       "docs": "Optional unique name to use as reference when using the API",
@@ -14192,7 +14427,7 @@ types:
                     "channels": "optional<root.IssueTriggerChannels>",
                     "configs": {
                       "docs": "Configuration object for the specific issue type selected",
-                      "type": "optional<root.UpdateIssueTriggerRequestConfigs>",
+                      "type": "optional<UpdateIssueTriggerRequestConfigs>",
                     },
                     "disabled_at": {
                       "docs": "Date when the issue trigger was disabled",
@@ -14271,7 +14506,7 @@ types:
                     "channels": "optional<root.IssueTriggerChannels>",
                     "configs": {
                       "docs": "Configuration object for the specific issue type selected",
-                      "type": "optional<root.UpsertIssueTriggerRequestConfigs>",
+                      "type": "optional<UpsertIssueTriggerRequestConfigs>",
                     },
                     "name": {
                       "docs": "Required unique name to use as reference when using the API",
@@ -14307,6 +14542,20 @@ types:
           },
         },
         "types": {
+          "CreateIssueTriggerRequestConfigs": {
+            "discriminated": false,
+            "docs": "Configuration object for the specific issue type selected",
+            "encoding": undefined,
+            "inline": true,
+            "source": {
+              "openapi": "../openapi.yml",
+            },
+            "union": [
+              "root.IssueTriggerDeliveryConfigs",
+              "root.IssueTriggerTransformationConfigs",
+              "root.IssueTriggerBackpressureConfigs",
+            ],
+          },
           "GetIssueTriggersRequestDir": {
             "enum": [
               "asc",
@@ -14317,6 +14566,34 @@ types:
             "enum": [
               "created_at",
               "type",
+            ],
+          },
+          "UpdateIssueTriggerRequestConfigs": {
+            "discriminated": false,
+            "docs": "Configuration object for the specific issue type selected",
+            "encoding": undefined,
+            "inline": true,
+            "source": {
+              "openapi": "../openapi.yml",
+            },
+            "union": [
+              "root.IssueTriggerDeliveryConfigs",
+              "root.IssueTriggerTransformationConfigs",
+              "root.IssueTriggerBackpressureConfigs",
+            ],
+          },
+          "UpsertIssueTriggerRequestConfigs": {
+            "discriminated": false,
+            "docs": "Configuration object for the specific issue type selected",
+            "encoding": undefined,
+            "inline": true,
+            "source": {
+              "openapi": "../openapi.yml",
+            },
+            "union": [
+              "root.IssueTriggerDeliveryConfigs",
+              "root.IssueTriggerTransformationConfigs",
+              "root.IssueTriggerBackpressureConfigs",
             ],
           },
         },
@@ -14332,6 +14609,36 @@ types:
     enum:
       - asc
       - desc
+  CreateIssueTriggerRequestConfigs:
+    discriminated: false
+    docs: Configuration object for the specific issue type selected
+    union:
+      - root.IssueTriggerDeliveryConfigs
+      - root.IssueTriggerTransformationConfigs
+      - root.IssueTriggerBackpressureConfigs
+    source:
+      openapi: ../openapi.yml
+    inline: true
+  UpsertIssueTriggerRequestConfigs:
+    discriminated: false
+    docs: Configuration object for the specific issue type selected
+    union:
+      - root.IssueTriggerDeliveryConfigs
+      - root.IssueTriggerTransformationConfigs
+      - root.IssueTriggerBackpressureConfigs
+    source:
+      openapi: ../openapi.yml
+    inline: true
+  UpdateIssueTriggerRequestConfigs:
+    discriminated: false
+    docs: Configuration object for the specific issue type selected
+    union:
+      - root.IssueTriggerDeliveryConfigs
+      - root.IssueTriggerTransformationConfigs
+      - root.IssueTriggerBackpressureConfigs
+    source:
+      openapi: ../openapi.yml
+    inline: true
 service:
   auth: false
   base-path: ''
@@ -14418,7 +14725,7 @@ service:
           properties:
             type: root.IssueType
             configs:
-              type: optional<root.CreateIssueTriggerRequestConfigs>
+              type: optional<CreateIssueTriggerRequestConfigs>
               docs: Configuration object for the specific issue type selected
             channels: optional<root.IssueTriggerChannels>
             name:
@@ -14466,7 +14773,7 @@ service:
           properties:
             type: root.IssueType
             configs:
-              type: optional<root.UpsertIssueTriggerRequestConfigs>
+              type: optional<UpsertIssueTriggerRequestConfigs>
               docs: Configuration object for the specific issue type selected
             channels: optional<root.IssueTriggerChannels>
             name:
@@ -14550,7 +14857,7 @@ service:
         body:
           properties:
             configs:
-              type: optional<root.UpdateIssueTriggerRequestConfigs>
+              type: optional<UpdateIssueTriggerRequestConfigs>
               docs: Configuration object for the specific issue type selected
             channels: optional<root.IssueTriggerChannels>
             disabled_at:
@@ -15186,7 +15493,7 @@ docs: >-
                   "properties": {
                     "status": {
                       "docs": "New status",
-                      "type": "root.UpdateIssueRequestStatus",
+                      "type": "UpdateIssueRequestStatus",
                     },
                   },
                 },
@@ -15271,6 +15578,19 @@ docs: >-
               "backpressure",
             ],
           },
+          "UpdateIssueRequestStatus": {
+            "docs": "New status",
+            "enum": [
+              "OPENED",
+              "IGNORED",
+              "ACKNOWLEDGED",
+              "RESOLVED",
+            ],
+            "inline": true,
+            "source": {
+              "openapi": "../openapi.yml",
+            },
+          },
         },
       },
       "rawContents": "types:
@@ -15318,6 +15638,16 @@ docs: >-
     enum:
       - asc
       - desc
+  UpdateIssueRequestStatus:
+    enum:
+      - OPENED
+      - IGNORED
+      - ACKNOWLEDGED
+      - RESOLVED
+    docs: New status
+    inline: true
+    source:
+      openapi: ../openapi.yml
 imports:
   root: __package__.yml
 service:
@@ -15593,7 +15923,7 @@ service:
         body:
           properties:
             status:
-              type: root.UpdateIssueRequestStatus
+              type: UpdateIssueRequestStatus
               docs: New status
         content-type: application/json
       response:
@@ -19320,7 +19650,7 @@ docs: A source represents any third party that sends webhooks to Hookdeck.
                     },
                     "env": {
                       "docs": "Key-value environment variables to be passed to the transformation",
-                      "type": "optional<root.TestTransformationRequestEnv>",
+                      "type": "optional<TestTransformationRequestEnv>",
                     },
                     "event_id": "optional<string>",
                     "request": {
@@ -19550,6 +19880,14 @@ docs: A source represents any third party that sends webhooks to Hookdeck.
               "created_at",
             ],
           },
+          "TestTransformationRequestEnv": {
+            "docs": "Key-value environment variables to be passed to the transformation",
+            "inline": true,
+            "properties": {},
+            "source": {
+              "openapi": "../openapi.yml",
+            },
+          },
           "TestTransformationRequestRequest": {
             "docs": "Request input to use for the transformation execution",
             "inline": true,
@@ -19564,7 +19902,7 @@ docs: A source represents any third party that sends webhooks to Hookdeck.
               },
               "parsed_query": {
                 "docs": "JSON representation of the query params",
-                "type": "optional<root.TestTransformationRequestRequestParsedQuery>",
+                "type": "optional<TestTransformationRequestRequestParsedQuery>",
               },
               "path": {
                 "docs": "Path of the request",
@@ -19588,9 +19926,25 @@ docs: A source represents any third party that sends webhooks to Hookdeck.
               "openapi": "../openapi.yml",
             },
             "union": [
-              "root.TestTransformationRequestRequestBodyZero",
+              "TestTransformationRequestRequestBodyZero",
               "string",
             ],
+          },
+          "TestTransformationRequestRequestBodyZero": {
+            "docs": undefined,
+            "inline": true,
+            "properties": {},
+            "source": {
+              "openapi": "../openapi.yml",
+            },
+          },
+          "TestTransformationRequestRequestParsedQuery": {
+            "docs": "JSON representation of the query params",
+            "inline": true,
+            "properties": {},
+            "source": {
+              "openapi": "../openapi.yml",
+            },
           },
           "UpdateTransformationRequestEnvValue": {
             "discriminated": false,
@@ -19652,12 +20006,29 @@ docs: A source represents any third party that sends webhooks to Hookdeck.
     source:
       openapi: ../openapi.yml
     inline: true
+  TestTransformationRequestEnv:
+    docs: Key-value environment variables to be passed to the transformation
+    properties: {}
+    source:
+      openapi: ../openapi.yml
+    inline: true
+  TestTransformationRequestRequestBodyZero:
+    properties: {}
+    source:
+      openapi: ../openapi.yml
+    inline: true
   TestTransformationRequestRequestBody:
     discriminated: false
     docs: Body of the request
     union:
-      - root.TestTransformationRequestRequestBodyZero
+      - TestTransformationRequestRequestBodyZero
       - string
+    source:
+      openapi: ../openapi.yml
+    inline: true
+  TestTransformationRequestRequestParsedQuery:
+    docs: JSON representation of the query params
+    properties: {}
     source:
       openapi: ../openapi.yml
     inline: true
@@ -19677,7 +20048,7 @@ docs: A source represents any third party that sends webhooks to Hookdeck.
         type: optional<string>
         docs: String representation of the query params of the request
       parsed_query:
-        type: optional<root.TestTransformationRequestRequestParsedQuery>
+        type: optional<TestTransformationRequestRequestParsedQuery>
         docs: JSON representation of the query params
     source:
       openapi: ../openapi.yml
@@ -19963,7 +20334,7 @@ service:
         body:
           properties:
             env:
-              type: optional<root.TestTransformationRequestEnv>
+              type: optional<TestTransformationRequestEnv>
               docs: >-
                 Key-value environment variables to be passed to the
                 transformation

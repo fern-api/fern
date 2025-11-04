@@ -3692,7 +3692,7 @@ Log.d("TAG", file.toString())
 Specifically, if the `source_url` had already been fetched and uploaded previously,
 this request will return information about the already uploaded file.
 ",
-                      "type": "optional<root.FromUrlUploadRequestCheckUrlDuplicates>",
+                      "type": "optional<FromUrlUploadRequestCheckUrlDuplicates>",
                     },
                     "expire": "optional<root.ExpireType>",
                     "filename": {
@@ -3712,7 +3712,7 @@ response headers or the `source_url`'s path.
 fetched/uploaded URLs. If the value is not defined explicitly, it is set
 to the value of the `check_URL_duplicates` parameter.
 ",
-                      "type": "optional<root.FromUrlUploadRequestSaveUrlDuplicates>",
+                      "type": "optional<FromUrlUploadRequestSaveUrlDuplicates>",
                     },
                     "signature": "optional<root.SignatureType>",
                     "source_url": {
@@ -4974,6 +4974,47 @@ the value is the unique ID of the file on our systems.
               "openapi": "../openapi.json",
             },
           },
+          "FromUrlUploadRequestCheckUrlDuplicates": {
+            "default": "0",
+            "docs": "If set to "1", enables the `source_url` duplicates prevention.
+Specifically, if the `source_url` had already been fetched and uploaded previously,
+this request will return information about the already uploaded file.
+",
+            "enum": [
+              {
+                "name": "Zero",
+                "value": "0",
+              },
+              {
+                "name": "One",
+                "value": "1",
+              },
+            ],
+            "inline": true,
+            "source": {
+              "openapi": "../openapi.json",
+            },
+          },
+          "FromUrlUploadRequestSaveUrlDuplicates": {
+            "docs": "Determines if the requested `source_url` should be kept in the history of
+fetched/uploaded URLs. If the value is not defined explicitly, it is set
+to the value of the `check_URL_duplicates` parameter.
+",
+            "enum": [
+              {
+                "name": "Zero",
+                "value": "0",
+              },
+              {
+                "name": "One",
+                "value": "1",
+              },
+            ],
+            "inline": true,
+            "source": {
+              "openapi": "../openapi.json",
+            },
+          },
           "FromUrlUploadResponse": {
             "discriminated": false,
             "docs": undefined,
@@ -5047,6 +5088,36 @@ types:
         validation:
           format: uuid
       parts: list<string>
+    source:
+      openapi: ../openapi.json
+  FromUrlUploadRequestCheckUrlDuplicates:
+    enum:
+      - value: '0'
+        name: Zero
+      - value: '1'
+        name: One
+    docs: >
+      If set to "1", enables the `source_url` duplicates prevention.
+
+      Specifically, if the `source_url` had already been fetched and uploaded
+      previously,
+
+      this request will return information about the already uploaded file.
+    default: '0'
+    inline: true
+    source:
+      openapi: ../openapi.json
+  FromUrlUploadRequestSaveUrlDuplicates:
+    enum:
+      - value: '0'
+        name: Zero
+      - value: '1'
+        name: One
+    docs: |
+      Determines if the requested `source_url` should be kept in the history of
+      fetched/uploaded URLs. If the value is not defined explicitly, it is set
+      to the value of the `check_URL_duplicates` parameter.
+    inline: true
     source:
       openapi: ../openapi.json
   FromUrlUploadResponse:
@@ -5915,7 +5986,7 @@ service:
 
                 `abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789._`.
             check_URL_duplicates:
-              type: optional<root.FromUrlUploadRequestCheckUrlDuplicates>
+              type: optional<FromUrlUploadRequestCheckUrlDuplicates>
               docs: >
                 If set to "1", enables the `source_url` duplicates prevention.
 
@@ -5926,7 +5997,7 @@ service:
                 file.
               default: '0'
             save_URL_duplicates:
-              type: optional<root.FromUrlUploadRequestSaveUrlDuplicates>
+              type: optional<FromUrlUploadRequestSaveUrlDuplicates>
               docs: >
                 Determines if the requested `source_url` should be kept in the
                 history of
