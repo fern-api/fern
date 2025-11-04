@@ -183,7 +183,7 @@ public abstract class AbstractEndpointWriter {
                         getEnvironmentToUrlMethod().name),
                 httpEndpoint,
                 httpService,
-                clientGeneratorContext.getIr().getBasePath(),
+                clientGeneratorContext.getIr().getBasePath().orElse(null),
                 convertPathParametersToSpecMap(clientGeneratorContext.getIr().getPathParameters()),
                 convertPathParametersToSpecMap(httpService.getPathParameters()),
                 convertPathParametersToSpecMap(httpEndpoint.getPathParameters()),

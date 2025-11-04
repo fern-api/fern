@@ -299,7 +299,7 @@ public final class ClientOptionsGenerator extends AbstractFileGenerator {
                         .returns(builderClassName)
                         .addStatement("return new $T()", builderClassName)
                         .build())
-                .addType(createBuilder(variableFields))
+                .addType(createBuilder(variableFields, apiPathParamFields))
                 .build();
 
         JavaFile environmentsFile =
@@ -449,7 +449,7 @@ public final class ClientOptionsGenerator extends AbstractFileGenerator {
                 .addStatement("return values");
     }
 
-    private TypeSpec createBuilder(Map<VariableId, FieldSpec> variableFields) {
+    private TypeSpec createBuilder(Map<VariableId, FieldSpec> variableFields, Map<String, FieldSpec> apiPathParamFields) {
         TypeSpec.Builder builder = TypeSpec.classBuilder(builderClassName)
                 .addModifiers(Modifier.PUBLIC, Modifier.STATIC)
                 .addField(FieldSpec.builder(environmentField.type, environmentField.name)
