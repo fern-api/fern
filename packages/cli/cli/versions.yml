@@ -1,6 +1,14 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
 - changelogEntry:
     - summary: |
+        Revert the change in 0.107.0 which didn't deduplicate types as expected
+      type: chore
+  irVersion: 61
+  createdAt: "2025-11-03"
+  version: 0.107.3
+
+- changelogEntry:
+    - summary: |
         Fix fern docs dev on windows
       type: fix
   irVersion: 61
