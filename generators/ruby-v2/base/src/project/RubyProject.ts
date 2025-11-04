@@ -582,7 +582,11 @@ class ModuleFile {
         });
 
         rubyFilePaths.forEach((filePath) => {
-            relativeImportPaths.add(relative(this.filePath, filePath));
+            const relPath = relative(this.filePath, filePath);
+            if (/(^|\/)test\//.test(relPath)) {
+                return;
+            }
+            relativeImportPaths.add(relPath);
         });
 
         const contents =

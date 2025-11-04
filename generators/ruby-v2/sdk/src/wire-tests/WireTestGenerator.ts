@@ -220,8 +220,23 @@ export class WireTestGenerator {
                 }
 
                 let clientSetup = clientSetupLines.join("\n");
-                clientSetup = clientSetup.replace(/base_url:\s*"[^"]*"/, "base_url: wiremock_base_url");
-                clientSetup = clientSetup.replace(/base_url:\s*'[^']*'/, "base_url: wiremock_base_url");
+
+                if (clientSetup.includes("base_url:")) {
+                    clientSetup = clientSetup.replace(/base_url:\s*"[^"]*"/, "base_url: wiremock_base_url");
+                    clientSetup = clientSetup.replace(/base_url:\s*'[^']*'/, "base_url: wiremock_base_url");
+                } else {
+                    const newMatch = clientSetup.match(/(.*Client\.new)\s*\(/);
+                    if (newMatch) {
+                        clientSetup = clientSetup.replace(/(.*Client\.new)\s*\(/, "$1(base_url: wiremock_base_url, ");
+                    } else {
+                        const newMatchNoParen = clientSetup.match(/(.*Client\.new)\s+(\w)/);
+                        if (newMatchNoParen) {
+                            clientSetup = clientSetup.replace(/(.*Client\.new)\s+/, "$1 base_url: wiremock_base_url, ");
+                        } else {
+                            clientSetup = clientSetup.replace(/(.*Client\.new)\s*$/, "$1(base_url: wiremock_base_url)");
+                        }
+                    }
+                }
 
                 return clientSetup.trim();
             }
