@@ -4506,6 +4506,16 @@
               "type": "null"
             }
           ]
+        },
+        "language": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/docs.Language"
+            },
+            {
+              "type": "null"
+            }
+          ]
         }
       },
       "additionalProperties": false
