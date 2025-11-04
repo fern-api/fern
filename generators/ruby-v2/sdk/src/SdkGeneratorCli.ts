@@ -124,7 +124,7 @@ export class SdkGeneratorCLI extends AbstractRubyGeneratorCli<SdkCustomConfigSch
             }
         }
 
-        if (context.ir.dynamic != null) {
+        if (context.ir.dynamic != null && context.customConfig.enableWireTests === true) {
             try {
                 const wireTestGenerator = new WireTestGenerator(context);
                 await wireTestGenerator.generate();

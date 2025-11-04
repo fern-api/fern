@@ -1,8 +1,11 @@
-irVersion: v59
+irVersion: v60
 displayName: Ruby SDK
 language: ruby
 generatorType: SDK
 defaultOutputMode: github
+defaultCustomConfig:
+  # wire tests cannot be run in seed containers due to docker-in-docker issues
+  enableWireTests: false
 image: fernapi/fern-ruby-sdk-v2
 changelogLocation: ../../generators/ruby-v2/sdk/versions.yml
 
@@ -12,7 +15,9 @@ buildScripts:
       - bundle install
   testScript:
     commands:
+      - if [ -f wiremock/docker-compose.test.yml ]; then docker compose -f wiremock/docker-compose.test.yml down && docker compose -f wiremock/docker-compose.test.yml up -d; fi
       - bundle exec rake test
+      - if [ -f wiremock/docker-compose.test.yml ]; then docker compose -f wiremock/docker-compose.test.yml down; fi
 
 test:
   docker:
@@ -63,6 +68,12 @@ fixtures:
             - GET /movie/{movieId}
             - method: POST
               path: /movie
+  imdb:
+    - outputFolder: with-wiremock-tests
+      customConfig:
+        enableWireTests: true
+    - outputFolder: no-custom-config
+      customConfig: null
 
 allowedFailures: []
 features:
