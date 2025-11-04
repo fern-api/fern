@@ -51,6 +51,8 @@ public final class HttpUrlBuilder {
     private final HttpService httpService;
     private final FieldSpec clientOptionsField;
     private final GeneratedClientOptions generatedClientOptions;
+    private final HttpPath apiBasePath;
+    private final Map<String, PathParamInfo> apiPathParameters;
     private final Map<String, PathParamInfo> servicePathParameters;
     private final Map<String, PathParamInfo> endpointPathParameters;
     private final ClientGeneratorContext context;
@@ -66,6 +68,8 @@ public final class HttpUrlBuilder {
             CodeBlock baseUrlReference,
             HttpEndpoint httpEndpoint,
             HttpService httpService,
+            HttpPath apiBasePath,
+            Map<String, PathParamInfo> apiPathParameters,
             Map<String, PathParamInfo> servicePathParameters,
             Map<String, PathParamInfo> endpointPathParameters,
             ClientGeneratorContext context) {
@@ -76,11 +80,14 @@ public final class HttpUrlBuilder {
         this.baseUrlReference = baseUrlReference;
         this.httpEndpoint = httpEndpoint;
         this.httpService = httpService;
+        this.apiBasePath = apiBasePath;
+        this.apiPathParameters = apiPathParameters;
         this.servicePathParameters = servicePathParameters;
         this.endpointPathParameters = endpointPathParameters;
         this.context = context;
         this.hasOptionalPathParams = Stream.concat(
-                        servicePathParameters.values().stream(), endpointPathParameters.values().stream())
+                        Stream.concat(apiPathParameters.values().stream(), servicePathParameters.values().stream()),
+                        endpointPathParameters.values().stream())
                 .anyMatch(pathParamInfo ->
                         pathParamInfo.irParam().getValueType().getContainer().isPresent()
                                 && pathParamInfo
@@ -126,6 +133,7 @@ public final class HttpUrlBuilder {
                 .add(baseUrlReference)
                 .add(").newBuilder()\n")
                 .indent();
+        addHttpPathToCodeBlock(codeBlock, apiBasePath, apiPathParameters, true);
         addHttpPathToCodeBlock(codeBlock, httpService.getBasePath(), servicePathParameters, true);
         addHttpPathToCodeBlock(codeBlock, httpEndpoint.getPath(), endpointPathParameters, true);
         codeBlock.add(".build();\n").unindent();
@@ -141,6 +149,7 @@ public final class HttpUrlBuilder {
                 .add(baseUrlReference)
                 .add(").newBuilder()\n")
                 .indent();
+        addHttpPathToCodeBlock(codeBlock, apiBasePath, apiPathParameters, true);
         addHttpPathToCodeBlock(codeBlock, httpService.getBasePath(), servicePathParameters, true);
         boolean endedWithStatement =
                 addHttpPathToCodeBlock(codeBlock, httpEndpoint.getPath(), endpointPathParameters, false);
@@ -217,6 +226,14 @@ public final class HttpUrlBuilder {
                         "\n.addPathSegment($L)",
                         PoetTypeNameStringifier.stringify(
                                 clientOptionsField.name + "." + variableGetter.name + "()",
+                                poetPathParameter.poetParam().type));
+            } else if (poetPathParameter.irParam().getLocation().equals(PathParameterLocation.ROOT)) {
+                String originalName = poetPathParameter.irParam().getName().getOriginalName();
+                MethodSpec apiPathParamGetter = generatedClientOptions.apiPathParamGetters().get(originalName);
+                codeBlock.add(
+                        "\n.addPathSegment($L)",
+                        PoetTypeNameStringifier.stringify(
+                                clientOptionsField.name + "." + apiPathParamGetter.name + "()",
                                 poetPathParameter.poetParam().type));
             } else {
                 String paramName = poetPathParameter.poetParam().name;

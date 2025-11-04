@@ -39,6 +39,8 @@ public abstract class GeneratedClientOptions extends AbstractGeneratedJavaFile {
 
     public abstract Map<VariableId, MethodSpec> variableGetters();
 
+    public abstract Map<String, MethodSpec> apiPathParamGetters();
+
     public abstract ClassName builderClassName();
 
     public static ImmutableGeneratedClientOptions.ClassNameBuildStage builder() {
