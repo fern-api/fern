@@ -4,7 +4,11 @@ import type { BaseClientOptions, BaseRequestOptions } from "../../../../BaseClie
 import { mergeHeaders } from "../../../../core/headers.js";
 import * as core from "../../../../core/index.js";
 import * as errors from "../../../../errors/index.js";
-import type * as SeedContentTypes from "../../../index.js";
+import type { NamedMixedPatchRequest } from "./requests/NamedMixedPatchRequest.js";
+import type { OptionalMergePatchRequest } from "./requests/OptionalMergePatchRequest.js";
+import type { PatchComplexRequest } from "./requests/PatchComplexRequest.js";
+import type { PatchProxyRequest } from "./requests/PatchProxyRequest.js";
+import type { RegularPatchRequest } from "./requests/RegularPatchRequest.js";
 
 export declare namespace Service {
     export interface Options extends BaseClientOptions {}
@@ -20,7 +24,7 @@ export class Service {
     }
 
     /**
-     * @param {SeedContentTypes.PatchProxyRequest} request
+     * @param {PatchProxyRequest} request
      * @param {Service.RequestOptions} requestOptions - Request-specific configuration.
      *
      * @example
@@ -29,15 +33,12 @@ export class Service {
      *         require_auth: true
      *     })
      */
-    public patch(
-        request: SeedContentTypes.PatchProxyRequest,
-        requestOptions?: Service.RequestOptions,
-    ): core.HttpResponsePromise<void> {
+    public patch(request: PatchProxyRequest, requestOptions?: Service.RequestOptions): core.HttpResponsePromise<void> {
         return core.HttpResponsePromise.fromPromise(this.__patch(request, requestOptions));
     }
 
     private async __patch(
-        request: SeedContentTypes.PatchProxyRequest,
+        request: PatchProxyRequest,
         requestOptions?: Service.RequestOptions,
     ): Promise<core.WithRawResponse<void>> {
         const _headers: core.Fetcher.Args["headers"] = mergeHeaders(this._options?.headers, requestOptions?.headers);
@@ -92,7 +93,7 @@ export class Service {
      * - optional<nullable<T>> fields (can be present, absent, or null)
      *
      * @param {string} id
-     * @param {SeedContentTypes.PatchComplexRequest} request
+     * @param {PatchComplexRequest} request
      * @param {Service.RequestOptions} requestOptions - Request-specific configuration.
      *
      * @example
@@ -119,7 +120,7 @@ export class Service {
      */
     public patchComplex(
         id: string,
-        request: SeedContentTypes.PatchComplexRequest = {},
+        request: PatchComplexRequest = {},
         requestOptions?: Service.RequestOptions,
     ): core.HttpResponsePromise<void> {
         return core.HttpResponsePromise.fromPromise(this.__patchComplex(id, request, requestOptions));
@@ -127,7 +128,7 @@ export class Service {
 
     private async __patchComplex(
         id: string,
-        request: SeedContentTypes.PatchComplexRequest = {},
+        request: PatchComplexRequest = {},
         requestOptions?: Service.RequestOptions,
     ): Promise<core.WithRawResponse<void>> {
         const _headers: core.Fetcher.Args["headers"] = mergeHeaders(this._options?.headers, requestOptions?.headers);
@@ -182,7 +183,7 @@ export class Service {
      * This should trigger the NPE issue when optional fields aren't initialized.
      *
      * @param {string} id
-     * @param {SeedContentTypes.NamedMixedPatchRequest} request
+     * @param {NamedMixedPatchRequest} request
      * @param {Service.RequestOptions} requestOptions - Request-specific configuration.
      *
      * @example
@@ -194,7 +195,7 @@ export class Service {
      */
     public namedPatchWithMixed(
         id: string,
-        request: SeedContentTypes.NamedMixedPatchRequest,
+        request: NamedMixedPatchRequest,
         requestOptions?: Service.RequestOptions,
     ): core.HttpResponsePromise<void> {
         return core.HttpResponsePromise.fromPromise(this.__namedPatchWithMixed(id, request, requestOptions));
@@ -202,7 +203,7 @@ export class Service {
 
     private async __namedPatchWithMixed(
         id: string,
-        request: SeedContentTypes.NamedMixedPatchRequest,
+        request: NamedMixedPatchRequest,
         requestOptions?: Service.RequestOptions,
     ): Promise<core.WithRawResponse<void>> {
         const _headers: core.Fetcher.Args["headers"] = mergeHeaders(this._options?.headers, requestOptions?.headers);
@@ -258,7 +259,7 @@ export class Service {
      * 1. Not NPE when fields are not provided (tests initialization)
      * 2. Not NPE when fields are explicitly null in JSON (tests Nulls.SKIP)
      *
-     * @param {SeedContentTypes.OptionalMergePatchRequest} request
+     * @param {OptionalMergePatchRequest} request
      * @param {Service.RequestOptions} requestOptions - Request-specific configuration.
      *
      * @example
@@ -271,14 +272,14 @@ export class Service {
      *     })
      */
     public optionalMergePatchTest(
-        request: SeedContentTypes.OptionalMergePatchRequest,
+        request: OptionalMergePatchRequest,
         requestOptions?: Service.RequestOptions,
     ): core.HttpResponsePromise<void> {
         return core.HttpResponsePromise.fromPromise(this.__optionalMergePatchTest(request, requestOptions));
     }
 
     private async __optionalMergePatchTest(
-        request: SeedContentTypes.OptionalMergePatchRequest,
+        request: OptionalMergePatchRequest,
         requestOptions?: Service.RequestOptions,
     ): Promise<core.WithRawResponse<void>> {
         const _headers: core.Fetcher.Args["headers"] = mergeHeaders(this._options?.headers, requestOptions?.headers);
@@ -334,7 +335,7 @@ export class Service {
      * Regular PATCH endpoint without merge-patch semantics
      *
      * @param {string} id
-     * @param {SeedContentTypes.RegularPatchRequest} request
+     * @param {RegularPatchRequest} request
      * @param {Service.RequestOptions} requestOptions - Request-specific configuration.
      *
      * @example
@@ -345,7 +346,7 @@ export class Service {
      */
     public regularPatch(
         id: string,
-        request: SeedContentTypes.RegularPatchRequest = {},
+        request: RegularPatchRequest = {},
         requestOptions?: Service.RequestOptions,
     ): core.HttpResponsePromise<void> {
         return core.HttpResponsePromise.fromPromise(this.__regularPatch(id, request, requestOptions));
@@ -353,7 +354,7 @@ export class Service {
 
     private async __regularPatch(
         id: string,
-        request: SeedContentTypes.RegularPatchRequest = {},
+        request: RegularPatchRequest = {},
         requestOptions?: Service.RequestOptions,
     ): Promise<core.WithRawResponse<void>> {
         const _headers: core.Fetcher.Args["headers"] = mergeHeaders(this._options?.headers, requestOptions?.headers);

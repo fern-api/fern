@@ -183,7 +183,7 @@ export class TypeContextImpl implements TypeContext {
         } else {
             return this.typeDeclarationReferencer.getReferenceToType({
                 name: typeName,
-                importStrategy: { type: "fromRoot", namespaceImport: this.typeDeclarationReferencer.namespaceExport },
+                importStrategy: { type: "direct" },
                 referencedIn: this.sourceFile,
                 importsManager: this.importsManager,
                 exportsManager: this.exportsManager

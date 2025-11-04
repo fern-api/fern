@@ -133,10 +133,7 @@ export class RequestWrapperContextImpl implements RequestWrapperContext {
             name: { packageId, endpoint },
             importsManager: this.importsManager,
             exportsManager: this.exportsManager,
-            importStrategy: {
-                type: "fromRoot",
-                namespaceImport: this.requestWrapperDeclarationReferencer.namespaceExport
-            },
+            importStrategy: { type: "direct" },
             referencedIn: this.sourceFile
         });
     }
