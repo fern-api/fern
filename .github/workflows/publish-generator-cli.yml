@@ -2,7 +2,10 @@ name: Publish Generator CLI
 
 on:
   push:
-    tags: ["*"]
+    branches:
+      - main
+    paths:
+      - "packages/generator-cli/versions.yml"
 
 env:
   PACKAGE_NAME: "@fern-api/generator-cli"
@@ -10,6 +13,7 @@ env:
   TURBO_TEAM: "buildwithfern"
   FERN_TOKEN: ${{ secrets.FERN_TOKEN }}
   GITHUB_TOKEN: ${{ secrets.FERN_GITHUB_TOKEN }}
+  NPM_TOKEN: ${{ secrets.FERN_NPM_TOKEN }}
 
 permissions:
   id-token: write # Required for OIDC
@@ -33,14 +37,32 @@ jobs:
       - name: 🧪 Build and test
         run: pnpm turbo codegen build test --filter=${{ env.PACKAGE_NAME }}
 
+      - name: Get version
+        id: get_version
+        run: |
+          previous_commit=$(git log -n 2 --pretty=format:"%h" -- packages/generator-cli/versions.yml | tail -n 1)
+          current_commit=$(git log -n 1 --pretty=format:"%h" -- packages/generator-cli/versions.yml)
+
+          # Get the previous version of the file using the specific commit that last changed it
+          git show ${previous_commit}:packages/generator-cli/versions.yml > tmp_generator_cli_previous_versions.yml
+
+          echo "Preview of the previous file (${previous_commit})"
+          head tmp_generator_cli_previous_versions.yml
+
+          echo "Preview of the current file (${current_commit})"
+          head packages/generator-cli/versions.yml
+
+          # Extract the new version from versions.yml
+          new_version=$(head -n 10 packages/generator-cli/versions.yml | grep -A 1 "version:" | tail -n 1 | sed 's/.*version: //' | tr -d ' ')
+          echo "Publishing version: ${new_version}"
+
       - name: Publish generator-cli
         env:
-          NODE_AUTH_TOKEN: ${{ secrets.FERN_NPM_TOKEN }}
+          NODE_AUTH_TOKEN: ${{ env.NPM_TOKEN }}
         run: |
-          git_version="$(scripts/generator-cli-version.sh)"
           cd packages/generator-cli
           mv package.json package.json.tmp
-          version_replace="s/0.0.0/${git_version}/"
+          version_replace="s/0.0.0/${new_version}/"
           cat package.json.tmp| sed "${version_replace}" > package.json
           rm -rf package.json.tmp
           npm publish --access public --tag latest
@@ -58,5 +80,4 @@ jobs:
         env:
           FERN_TOKEN: ${{ secrets.FERN_TOKEN }}
         run: |
-          git_version="$(scripts/generator-cli-version.sh)"
-          fern generate --api generator-cli --version "${git_version}" --group sdk
+          fern generate --api generator-cli --version "${new_version}" --group sdk
