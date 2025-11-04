@@ -65,13 +65,13 @@ public class AsyncRawEnumClient {
             @Override
             public void onResponse(@NotNull Call call, @NotNull Response response) throws IOException {
                 try (ResponseBody responseBody = response.body()) {
+                    String responseBodyString = responseBody != null ? responseBody.string() : "{}";
                     if (response.isSuccessful()) {
                         future.complete(new BestHttpResponse<>(
-                                ObjectMappers.JSON_MAPPER.readValue(responseBody.string(), WeatherReport.class),
+                                ObjectMappers.JSON_MAPPER.readValue(responseBodyString, WeatherReport.class),
                                 response));
                         return;
                     }
-                    String responseBodyString = responseBody != null ? responseBody.string() : "{}";
                     future.completeExceptionally(new BestApiException(
                             "Error with status code " + response.code(),
                             response.code(),

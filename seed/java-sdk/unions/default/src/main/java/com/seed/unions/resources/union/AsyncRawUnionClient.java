@@ -56,12 +56,12 @@ public class AsyncRawUnionClient {
             @Override
             public void onResponse(@NotNull Call call, @NotNull Response response) throws IOException {
                 try (ResponseBody responseBody = response.body()) {
+                    String responseBodyString = responseBody != null ? responseBody.string() : "{}";
                     if (response.isSuccessful()) {
                         future.complete(new SeedUnionsHttpResponse<>(
-                                ObjectMappers.JSON_MAPPER.readValue(responseBody.string(), Shape.class), response));
+                                ObjectMappers.JSON_MAPPER.readValue(responseBodyString, Shape.class), response));
                         return;
                     }
-                    String responseBodyString = responseBody != null ? responseBody.string() : "{}";
                     future.completeExceptionally(new SeedUnionsApiException(
                             "Error with status code " + response.code(),
                             response.code(),
@@ -112,12 +112,12 @@ public class AsyncRawUnionClient {
             @Override
             public void onResponse(@NotNull Call call, @NotNull Response response) throws IOException {
                 try (ResponseBody responseBody = response.body()) {
+                    String responseBodyString = responseBody != null ? responseBody.string() : "{}";
                     if (response.isSuccessful()) {
                         future.complete(new SeedUnionsHttpResponse<>(
-                                ObjectMappers.JSON_MAPPER.readValue(responseBody.string(), boolean.class), response));
+                                ObjectMappers.JSON_MAPPER.readValue(responseBodyString, boolean.class), response));
                         return;
                     }
-                    String responseBodyString = responseBody != null ? responseBody.string() : "{}";
                     future.completeExceptionally(new SeedUnionsApiException(
                             "Error with status code " + response.code(),
                             response.code(),

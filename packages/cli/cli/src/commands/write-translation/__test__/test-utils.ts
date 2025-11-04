@@ -22,6 +22,11 @@ export const FIXTURES: Record<string, TestFixture> = {
         name: "no-languages-project",
         description: "A project without languages configured",
         expectedLanguages: []
+    },
+    "path-url-project": {
+        name: "path-url-project",
+        description: "A project with URLs containing paths to test language prefix insertion",
+        expectedLanguages: ["de", "es"]
     }
 };
 
@@ -94,63 +99,4 @@ async function createMockProjectFromFernDir(fernDir: AbsoluteFilePath): Promise<
         apiWorkspaces: [],
         loadAPIWorkspace: () => undefined
     } as Project;
-}
-
-/**
- * Verifies that the expected translation structure was created
- */
-export async function verifyTranslationStructure(
-    fernDir: AbsoluteFilePath,
-    expectedLanguages: string[]
-): Promise<void> {
-    const fs = await import("fs/promises");
-
-    if (expectedLanguages.length === 0) {
-        // Verify no translations directory was created
-        const translationsDir = join(fernDir, RelativeFilePath.of("translations"));
-        try {
-            await fs.stat(translationsDir);
-            throw new Error("Expected translations directory to not exist when no languages are configured");
-        } catch (error: unknown) {
-            if (error instanceof Error && "code" in error && error.code !== "ENOENT") {
-                throw error;
-            }
-            // This is expected - directory should not exist
-        }
-        return;
-    }
-
-    const translationsDir = join(fernDir, RelativeFilePath.of("translations"));
-    const translationsStat = await fs.stat(translationsDir);
-    if (!translationsStat.isDirectory()) {
-        throw new Error("translations should be a directory");
-    }
-
-    // Verify hashes file was created
-    const hashesFile = join(translationsDir, RelativeFilePath.of("hashes"));
-    try {
-        const hashesStat = await fs.stat(hashesFile);
-        if (!hashesStat.isFile()) {
-            throw new Error("hashes should be a file");
-        }
-    } catch (error: unknown) {
-        if (error instanceof Error && "code" in error && error.code === "ENOENT") {
-            throw new Error("Expected hashes file not found in translations directory");
-        }
-        throw error;
-    }
-
-    // Verify language directories were created
-    const langDirs = await fs.readdir(translationsDir);
-    for (const expectedLang of expectedLanguages) {
-        if (!langDirs.includes(expectedLang)) {
-            throw new Error(`Expected language directory ${expectedLang} not found`);
-        }
-
-        const langDir = join(translationsDir, RelativeFilePath.of(expectedLang));
-        const langDirStat = await fs.stat(langDir);
-        if (!langDirStat.isDirectory()) {
-            throw new Error(`Language directory ${expectedLang} should be a directory`);
-        }
-    }
 }

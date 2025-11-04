@@ -12406,7 +12406,7 @@ service:
 * `ACTIVE` - ACTIVE
 * `PENDING` - PENDING
 * `INACTIVE` - INACTIVE",
-                    "type": "optional<root.EmployeesListRequestEmploymentStatus>",
+                    "type": "optional<EmployeesListRequestEmploymentStatus>",
                   },
                   "expand": {
                     "docs": "Which relations should be returned in expanded form. Multiple relation names should be comma separated without spaces.",
@@ -12692,6 +12692,17 @@ service:
           },
         },
         "types": {
+          "EmployeesListRequestEmploymentStatus": {
+            "enum": [
+              "ACTIVE",
+              "INACTIVE",
+              "PENDING",
+            ],
+            "inline": undefined,
+            "source": {
+              "openapi": "../openapi.yml",
+            },
+          },
           "EmployeesListRequestExpand": {
             "enum": [
               "company",
@@ -14926,9 +14937,14 @@ service:
           },
         },
       },
-      "rawContents": "imports:
-  root: __package__.yml
-types:
+      "rawContents": "types:
+  EmployeesListRequestEmploymentStatus:
+    enum:
+      - ACTIVE
+      - INACTIVE
+      - PENDING
+    source:
+      openapi: ../openapi.yml
   EmployeesListRequestExpand:
     enum:
       - company
@@ -16065,6 +16081,8 @@ types:
       - marital_status
     source:
       openapi: ../openapi.yml
+imports:
+  root: __package__.yml
 service:
   auth: false
   base-path: ''
@@ -16098,7 +16116,7 @@ service:
             type: optional<string>
             docs: If provided, will only return employees with this display name.
           employment_status:
-            type: optional<root.EmployeesListRequestEmploymentStatus>
+            type: optional<EmployeesListRequestEmploymentStatus>
             docs: >-
               If provided, will only return employees with this employment
               status.
@@ -18111,7 +18129,7 @@ service:
 
 * `ONGOING` - ONGOING
 * `RESOLVED` - RESOLVED",
-                    "type": "optional<root.IssuesListRequestStatus>",
+                    "type": "optional<IssuesListRequestStatus>",
                   },
                 },
               },
@@ -18178,8 +18196,27 @@ service:
             "openapi": "../openapi.yml",
           },
         },
+        "types": {
+          "IssuesListRequestStatus": {
+            "enum": [
+              "ONGOING",
+              "RESOLVED",
+            ],
+            "inline": undefined,
+            "source": {
+              "openapi": "../openapi.yml",
+            },
+          },
+        },
       },
-      "rawContents": "imports:
+      "rawContents": "types:
+  IssuesListRequestStatus:
+    enum:
+      - ONGOING
+      - RESOLVED
+    source:
+      openapi: ../openapi.yml
+imports:
   root: __package__.yml
 service:
   auth: false
@@ -18239,7 +18276,7 @@ service:
               If included, will only include issues whose most recent action
               occurred after this time
           status:
-            type: optional<root.IssuesListRequestStatus>
+            type: optional<IssuesListRequestStatus>
             docs: |-
               Status of the issue. Options: ('ONGOING', 'RESOLVED')
 

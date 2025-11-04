@@ -65,11 +65,11 @@ public class RawSimpleClient {
         }
         try (Response response = client.newCall(okhttpRequest).execute()) {
             ResponseBody responseBody = response.body();
+            String responseBodyString = responseBody != null ? responseBody.string() : "{}";
             if (response.isSuccessful()) {
                 return new SeedErrorsHttpResponse<>(
-                        ObjectMappers.JSON_MAPPER.readValue(responseBody.string(), FooResponse.class), response);
+                        ObjectMappers.JSON_MAPPER.readValue(responseBodyString, FooResponse.class), response);
             }
-            String responseBodyString = responseBody != null ? responseBody.string() : "{}";
             try {
                 switch (response.code()) {
                     case 400:
@@ -124,11 +124,11 @@ public class RawSimpleClient {
         }
         try (Response response = client.newCall(okhttpRequest).execute()) {
             ResponseBody responseBody = response.body();
+            String responseBodyString = responseBody != null ? responseBody.string() : "{}";
             if (response.isSuccessful()) {
                 return new SeedErrorsHttpResponse<>(
-                        ObjectMappers.JSON_MAPPER.readValue(responseBody.string(), FooResponse.class), response);
+                        ObjectMappers.JSON_MAPPER.readValue(responseBodyString, FooResponse.class), response);
             }
-            String responseBodyString = responseBody != null ? responseBody.string() : "{}";
             try {
                 switch (response.code()) {
                     case 400:
@@ -189,11 +189,11 @@ public class RawSimpleClient {
         }
         try (Response response = client.newCall(okhttpRequest).execute()) {
             ResponseBody responseBody = response.body();
+            String responseBodyString = responseBody != null ? responseBody.string() : "{}";
             if (response.isSuccessful()) {
                 return new SeedErrorsHttpResponse<>(
-                        ObjectMappers.JSON_MAPPER.readValue(responseBody.string(), FooResponse.class), response);
+                        ObjectMappers.JSON_MAPPER.readValue(responseBodyString, FooResponse.class), response);
             }
-            String responseBodyString = responseBody != null ? responseBody.string() : "{}";
             try {
                 switch (response.code()) {
                     case 400:

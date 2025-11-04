@@ -6,7 +6,7 @@ module Seed
       module Problem
         module Types
           class TestCaseTemplate < Internal::Types::Model
-            field :template_id, -> { String }, optional: false, nullable: false
+            field :template_id, -> { String }, optional: false, nullable: false, api_name: "templateId"
             field :name, -> { String }, optional: false, nullable: false
             field :implementation, lambda {
               Seed::V2::V3::Problem::Types::TestCaseImplementation

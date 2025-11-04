@@ -132,12 +132,12 @@ public class AsyncRawUserClient {
             @Override
             public void onResponse(@NotNull Call call, @NotNull Response response) throws IOException {
                 try (ResponseBody responseBody = response.body()) {
+                    String responseBodyString = responseBody != null ? responseBody.string() : "{}";
                     if (response.isSuccessful()) {
                         future.complete(new SeedMultiLineDocsHttpResponse<>(
-                                ObjectMappers.JSON_MAPPER.readValue(responseBody.string(), User.class), response));
+                                ObjectMappers.JSON_MAPPER.readValue(responseBodyString, User.class), response));
                         return;
                     }
-                    String responseBodyString = responseBody != null ? responseBody.string() : "{}";
                     future.completeExceptionally(new SeedMultiLineDocsApiException(
                             "Error with status code " + response.code(),
                             response.code(),

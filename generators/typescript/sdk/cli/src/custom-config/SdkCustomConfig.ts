@@ -13,6 +13,7 @@ export interface SdkCustomConfig {
     shouldGenerateWebsocketClients: boolean;
     includeUtilsOnUnionMembers: boolean;
     includeOtherInUnionTypes: boolean;
+    enableForwardCompatibleEnums: boolean;
     requireDefaultEnvironment: boolean;
     defaultTimeoutInSeconds: number | "infinity" | undefined;
     skipResponseValidation: boolean;

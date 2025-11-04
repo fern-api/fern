@@ -59,12 +59,12 @@ public class AsyncRawBigunionClient {
             @Override
             public void onResponse(@NotNull Call call, @NotNull Response response) throws IOException {
                 try (ResponseBody responseBody = response.body()) {
+                    String responseBodyString = responseBody != null ? responseBody.string() : "{}";
                     if (response.isSuccessful()) {
                         future.complete(new SeedUnionsHttpResponse<>(
-                                ObjectMappers.JSON_MAPPER.readValue(responseBody.string(), BigUnion.class), response));
+                                ObjectMappers.JSON_MAPPER.readValue(responseBodyString, BigUnion.class), response));
                         return;
                     }
-                    String responseBodyString = responseBody != null ? responseBody.string() : "{}";
                     future.completeExceptionally(new SeedUnionsApiException(
                             "Error with status code " + response.code(),
                             response.code(),
@@ -115,12 +115,12 @@ public class AsyncRawBigunionClient {
             @Override
             public void onResponse(@NotNull Call call, @NotNull Response response) throws IOException {
                 try (ResponseBody responseBody = response.body()) {
+                    String responseBodyString = responseBody != null ? responseBody.string() : "{}";
                     if (response.isSuccessful()) {
                         future.complete(new SeedUnionsHttpResponse<>(
-                                ObjectMappers.JSON_MAPPER.readValue(responseBody.string(), boolean.class), response));
+                                ObjectMappers.JSON_MAPPER.readValue(responseBodyString, boolean.class), response));
                         return;
                     }
-                    String responseBodyString = responseBody != null ? responseBody.string() : "{}";
                     future.completeExceptionally(new SeedUnionsApiException(
                             "Error with status code " + response.code(),
                             response.code(),
@@ -173,14 +173,14 @@ public class AsyncRawBigunionClient {
             @Override
             public void onResponse(@NotNull Call call, @NotNull Response response) throws IOException {
                 try (ResponseBody responseBody = response.body()) {
+                    String responseBodyString = responseBody != null ? responseBody.string() : "{}";
                     if (response.isSuccessful()) {
                         future.complete(new SeedUnionsHttpResponse<>(
                                 ObjectMappers.JSON_MAPPER.readValue(
-                                        responseBody.string(), new TypeReference<Map<String, Boolean>>() {}),
+                                        responseBodyString, new TypeReference<Map<String, Boolean>>() {}),
                                 response));
                         return;
                     }
-                    String responseBodyString = responseBody != null ? responseBody.string() : "{}";
                     future.completeExceptionally(new SeedUnionsApiException(
                             "Error with status code " + response.code(),
                             response.code(),
