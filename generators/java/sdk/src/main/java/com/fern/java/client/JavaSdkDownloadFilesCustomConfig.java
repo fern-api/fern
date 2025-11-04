@@ -41,6 +41,12 @@ public interface JavaSdkDownloadFilesCustomConfig extends IDownloadFilesCustomCo
     @JsonProperty("custom-dependencies")
     Optional<List<String>> customDependencies();
 
+    @Value.Default
+    @JsonProperty("collapse-optional-nullable")
+    default Boolean collapseOptionalNullable() {
+        return false;
+    }
+
     static ImmutableJavaSdkDownloadFilesCustomConfig.Builder builder() {
         return ImmutableJavaSdkDownloadFilesCustomConfig.builder();
     }

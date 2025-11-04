@@ -8,7 +8,9 @@ module Seed
           field :parameters, lambda {
             Internal::Types::Array[Seed::V2::Problem::Types::Parameter]
           }, optional: false, nullable: false
-          field :return_type, -> { Seed::Commons::Types::VariableType }, optional: false, nullable: false
+          field :return_type, lambda {
+            Seed::Commons::Types::VariableType
+          }, optional: false, nullable: false, api_name: "returnType"
         end
       end
     end

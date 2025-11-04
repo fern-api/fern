@@ -8,7 +8,7 @@ module Seed
           class GetFunctionSignatureRequest < Internal::Types::Model
             field :function_signature, lambda {
               Seed::V2::V3::Problem::Types::FunctionSignature
-            }, optional: false, nullable: false
+            }, optional: false, nullable: false, api_name: "functionSignature"
           end
         end
       end

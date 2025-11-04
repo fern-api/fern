@@ -3,6 +3,14 @@
     - summary: |
         Added Generation Metadata file to output.
       type: feat
+  createdAt: "2025-11-04"
+  irVersion: 61
+
+- version: 3.11.3
+  changelogEntry:
+    - summary: |
+        Fix `collapse-optional-nullable` config not being applied in download files mode.
+      type: fix
   createdAt: "2025-11-03"
   irVersion: 61
 

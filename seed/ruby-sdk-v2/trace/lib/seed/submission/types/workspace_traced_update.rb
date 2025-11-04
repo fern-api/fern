@@ -4,7 +4,7 @@ module Seed
   module Submission
     module Types
       class WorkspaceTracedUpdate < Internal::Types::Model
-        field :trace_responses_size, -> { Integer }, optional: false, nullable: false
+        field :trace_responses_size, -> { Integer }, optional: false, nullable: false, api_name: "traceResponsesSize"
       end
     end
   end

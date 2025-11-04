@@ -8,7 +8,7 @@ module Seed
           field :string, -> { String }, optional: false, nullable: false
           field :nested_object, lambda {
             Seed::Types::Object_::Types::ObjectWithOptionalField
-          }, optional: false, nullable: false
+          }, optional: false, nullable: false, api_name: "NestedObject"
         end
       end
     end

@@ -15,7 +15,7 @@ module Seed
         field :email, -> { String }, optional: true, nullable: false
         field :nickname, -> { String }, optional: true, nullable: false
         field :bio, -> { String }, optional: true, nullable: false
-        field :profile_image_url, -> { String }, optional: true, nullable: false
+        field :profile_image_url, -> { String }, optional: true, nullable: false, api_name: "profileImageUrl"
         field :settings, lambda {
           Internal::Types::Hash[String, Internal::Types::Hash[String, Object]]
         }, optional: true, nullable: false

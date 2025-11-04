@@ -67,6 +67,13 @@ public interface JavaSdkCustomConfig extends ICustomConfig {
         return false;
     }
 
+    @Override
+    @Value.Default
+    @JsonProperty("collapse-optional-nullable")
+    default Boolean collapseOptionalNullable() {
+        return false;
+    }
+
     static ImmutableJavaSdkCustomConfig.Builder builder() {
         return ImmutableJavaSdkCustomConfig.builder();
     }
