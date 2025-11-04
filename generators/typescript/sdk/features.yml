@@ -100,6 +100,35 @@ features:
       The SDK provides access to raw response data, including headers, through the `.withRawResponse()` method.
       The `.withRawResponse()` method returns a promise that results to an object with a `data` and a `rawResponse` property.
 
+  - id: LOGGING
+    description: |
+      The SDK supports logging. You can configure the logger by passing in a `logging` object to the client options.
+    addendum: |
+      The `logging` object can have the following properties:
+      - `level`: The log level to use. Defaults to `logging.LogLevel.Info`.
+      - `logger`: The logger to use. Defaults to `logging.ConsoleLogger`.
+      - `silent`: Whether to silence the logger. Defaults to `true`.
+
+      The `level` property can be one of the following values:
+      - `logging.LogLevel.Debug`
+      - `logging.LogLevel.Info`
+      - `logging.LogLevel.Warn`
+      - `logging.LogLevel.Error`
+
+      To provide a custom logger, you can pass in a custom logger implementation that implements the `logging.ILogger` interface.
+      Here's an example using the popular `winston` logging library.
+      ```ts
+      import winston from 'winston';
+
+      const winstonLogger = winston.createLogger({...});
+      const logger: logging.ILogger = {
+          debug: (msg, ...args) => winstonLogger.debug(msg, ...args),
+          info: (msg, ...args) => winstonLogger.info(msg, ...args),
+          warn: (msg, ...args) => winstonLogger.warn(msg, ...args),
+          error: (msg, ...args) => winstonLogger.error(msg, ...args),
+      };
+      ```
+
   - id: RUNTIME_COMPATIBILITY
     advanced: true
     description: |
