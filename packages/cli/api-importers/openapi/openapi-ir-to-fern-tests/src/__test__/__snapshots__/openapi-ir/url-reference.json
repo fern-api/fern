@@ -16,7 +16,6 @@
       "headers": [],
       "generatedRequestName": "GetPetsRequest",
       "response": {
-        "description": "A list of pets",
         "schema": {
           "generatedName": "GetPetsResponse",
           "schema": "Pet",
@@ -27,6 +26,7 @@
           "type": "reference"
         },
         "fullExamples": [],
+        "description": "A list of pets",
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"

@@ -226,7 +226,6 @@
       ],
       "generatedRequestName": "GetInteractionsRequest",
       "response": {
-        "description": " ",
         "schema": {
           "generatedName": "GetInteractionsResponse",
           "schema": "ResponseInteractions",
@@ -237,6 +236,7 @@
           "type": "reference"
         },
         "fullExamples": [],
+        "description": " ",
         "source": {
           "file": "../swagger.json",
           "type": "openapi"
@@ -554,7 +554,6 @@
         "type": "json"
       },
       "response": {
-        "description": "Returns the newly created interaction with its assigned ID and WebSocket URL for real-time data streaming.",
         "schema": {
           "generatedName": "PostInteractionsResponse",
           "schema": "ResponseInteractionCreate",
@@ -565,6 +564,7 @@
           "type": "reference"
         },
         "fullExamples": [],
+        "description": "Returns the newly created interaction with its assigned ID and WebSocket URL for real-time data streaming.",
         "source": {
           "file": "../swagger.json",
           "type": "openapi"
@@ -818,7 +818,6 @@
       ],
       "generatedRequestName": "GetInteractionsIdRequest",
       "response": {
-        "description": "Returns the requested interaction with all associated details.",
         "schema": {
           "generatedName": "GetInteractionsIdResponse",
           "schema": "ResponseInteraction",
@@ -829,6 +828,7 @@
           "type": "reference"
         },
         "fullExamples": [],
+        "description": "Returns the requested interaction with all associated details.",
         "source": {
           "file": "../swagger.json",
           "type": "openapi"
@@ -1124,7 +1124,6 @@
       ],
       "generatedRequestName": "DeleteInteractionsIdRequest",
       "response": {
-        "description": "The interaction was successfully deleted. No response body is returned.",
         "schema": {
           "generatedName": "DeleteInteractionsIdResponse",
           "schema": "NoContent",
@@ -1135,6 +1134,7 @@
           "type": "reference"
         },
         "fullExamples": [],
+        "description": "The interaction was successfully deleted. No response body is returned.",
         "source": {
           "file": "../swagger.json",
           "type": "openapi"
@@ -1333,7 +1333,6 @@
         "type": "json"
       },
       "response": {
-        "description": "A request body containing the fields to update within the interaction.",
         "schema": {
           "generatedName": "PatchInteractionsIdResponse",
           "schema": "ResponseInteraction",
@@ -1344,6 +1343,7 @@
           "type": "reference"
         },
         "fullExamples": [],
+        "description": "A request body containing the fields to update within the interaction.",
         "source": {
           "file": "../swagger.json",
           "type": "openapi"
@@ -1643,7 +1643,6 @@
       ],
       "generatedRequestName": "GetInteractionsIdRecordingsRequest",
       "response": {
-        "description": "Returns a list of recording IDs for the interaction.",
         "schema": {
           "generatedName": "GetInteractionsIdRecordingsResponse",
           "schema": "ResponseRecordingList",
@@ -1654,6 +1653,7 @@
           "type": "reference"
         },
         "fullExamples": [],
+        "description": "Returns a list of recording IDs for the interaction.",
         "source": {
           "file": "../swagger.json",
           "type": "openapi"
@@ -1887,7 +1887,6 @@
         "type": "octetStream"
       },
       "response": {
-        "description": "Returns the recording ID in the response.",
         "schema": {
           "generatedName": "PostInteractionsIdRecordingsResponse",
           "schema": "ResponseRecordingCreate",
@@ -1898,6 +1897,7 @@
           "type": "reference"
         },
         "fullExamples": [],
+        "description": "Returns the recording ID in the response.",
         "source": {
           "file": "../swagger.json",
           "type": "openapi"
@@ -2308,7 +2308,6 @@
       ],
       "generatedRequestName": "DeleteInteractionsIdRecordingsRecordingIdRequest",
       "response": {
-        "description": "",
         "schema": {
           "generatedName": "DeleteInteractionsIdRecordingsRecordingIdResponse",
           "schema": "NoContent",
@@ -2319,6 +2318,7 @@
           "type": "reference"
         },
         "fullExamples": [],
+        "description": "",
         "source": {
           "file": "../swagger.json",
           "type": "openapi"
@@ -2674,7 +2674,6 @@
       ],
       "generatedRequestName": "GetInteractionsIdTranscriptsRequest",
       "response": {
-        "description": "Returns a list of transcripts associated with the interaction.",
         "schema": {
           "generatedName": "GetInteractionsIdTranscriptsResponse",
           "schema": "ResponseTranscriptListAll",
@@ -2685,6 +2684,7 @@
           "type": "reference"
         },
         "fullExamples": [],
+        "description": "Returns a list of transcripts associated with the interaction.",
         "source": {
           "file": "../swagger.json",
           "type": "openapi"
@@ -3017,7 +3017,6 @@
         "type": "json"
       },
       "response": {
-        "description": "Returns the generated transcript, including participant roles and timestamps for each utterance.",
         "schema": {
           "generatedName": "PostInteractionsIdTranscriptsResponse",
           "schema": "ResponseTranscriptCreate",
@@ -3028,6 +3027,7 @@
           "type": "reference"
         },
         "fullExamples": [],
+        "description": "Returns the generated transcript, including participant roles and timestamps for each utterance.",
         "source": {
           "file": "../swagger.json",
           "type": "openapi"
@@ -3382,7 +3382,6 @@
       ],
       "generatedRequestName": "GetInteractionsIdTranscriptsTranscriptIdRequest",
       "response": {
-        "description": "",
         "schema": {
           "generatedName": "GetInteractionsIdTranscriptsTranscriptIdResponse",
           "schema": "ResponseTranscriptCreate",
@@ -3393,6 +3392,7 @@
           "type": "reference"
         },
         "fullExamples": [],
+        "description": "",
         "source": {
           "file": "../swagger.json",
           "type": "openapi"
@@ -3731,7 +3731,6 @@
       ],
       "generatedRequestName": "DeleteInteractionsIdTranscriptsTranscriptIdRequest",
       "response": {
-        "description": "",
         "schema": {
           "generatedName": "DeleteInteractionsIdTranscriptsTranscriptIdResponse",
           "schema": "NoContent",
@@ -3742,6 +3741,7 @@
           "type": "reference"
         },
         "fullExamples": [],
+        "description": "",
         "source": {
           "file": "../swagger.json",
           "type": "openapi"
@@ -3988,7 +3988,6 @@
       ],
       "generatedRequestName": "GetFactgroupsRequest",
       "response": {
-        "description": " ",
         "schema": {
           "generatedName": "GetFactgroupsResponse",
           "schema": "ResponseDirectusFactGroupsFiltered",
@@ -3999,6 +3998,7 @@
           "type": "reference"
         },
         "fullExamples": [],
+        "description": " ",
         "source": {
           "file": "../swagger.json",
           "type": "openapi"
@@ -4158,7 +4158,6 @@
       ],
       "generatedRequestName": "GetInteractionsIdFactsRequest",
       "response": {
-        "description": "Returns a list of facts associated with the specified interaction.",
         "schema": {
           "generatedName": "GetInteractionsIdFactsResponse",
           "schema": "ResponseFactsList",
@@ -4169,6 +4168,7 @@
           "type": "reference"
         },
         "fullExamples": [],
+        "description": "Returns a list of facts associated with the specified interaction.",
         "source": {
           "file": "../swagger.json",
           "type": "openapi"
@@ -4398,7 +4398,6 @@
         "type": "json"
       },
       "response": {
-        "description": "Returns the created facts, including their unique identifiers and associated metadata.",
         "schema": {
           "generatedName": "PostInteractionsIdFactsResponse",
           "schema": "ResponseFactsCreate",
@@ -4409,6 +4408,7 @@
           "type": "reference"
         },
         "fullExamples": [],
+        "description": "Returns the created facts, including their unique identifiers and associated metadata.",
         "source": {
           "file": "../swagger.json",
           "type": "openapi"
@@ -4651,7 +4651,6 @@
         "type": "json"
       },
       "response": {
-        "description": "Returns the list of successfully updated facts.",
         "schema": {
           "generatedName": "PatchInteractionsIdFactsResponse",
           "schema": "ResponseFactsUpdate",
@@ -4662,6 +4661,7 @@
           "type": "reference"
         },
         "fullExamples": [],
+        "description": "Returns the list of successfully updated facts.",
         "source": {
           "file": "../swagger.json",
           "type": "openapi"
@@ -4921,7 +4921,6 @@
         "type": "json"
       },
       "response": {
-        "description": "Returns the updated fact, including updated fields.",
         "schema": {
           "generatedName": "PatchInteractionsIdFactsFactIdResponse",
           "schema": "ResponseFactUpdate",
@@ -4932,6 +4931,7 @@
           "type": "reference"
         },
         "fullExamples": [],
+        "description": "Returns the updated fact, including updated fields.",
         "source": {
           "file": "../swagger.json",
           "type": "openapi"
@@ -5149,7 +5149,6 @@
       ],
       "generatedRequestName": "GetInteractionsIdDocumentsRequest",
       "response": {
-        "description": " ",
         "schema": {
           "generatedName": "GetInteractionsIdDocumentsResponse",
           "schema": "ResponseDocumentList",
@@ -5160,6 +5159,7 @@
           "type": "reference"
         },
         "fullExamples": [],
+        "description": " ",
         "source": {
           "file": "../swagger.json",
           "type": "openapi"
@@ -5460,7 +5460,6 @@
         "type": "json"
       },
       "response": {
-        "description": " ",
         "schema": {
           "generatedName": "PostInteractionsIdDocumentsResponse",
           "schema": "ResponseDocumentRead",
@@ -5471,6 +5470,7 @@
           "type": "reference"
         },
         "fullExamples": [],
+        "description": " ",
         "source": {
           "file": "../swagger.json",
           "type": "openapi"
@@ -5905,7 +5905,6 @@
       ],
       "generatedRequestName": "GetInteractionsIdDocumentsDocumentIdRequest",
       "response": {
-        "description": " ",
         "schema": {
           "generatedName": "GetInteractionsIdDocumentsDocumentIdResponse",
           "schema": "ResponseDocumentRead",
@@ -5916,6 +5915,7 @@
           "type": "reference"
         },
         "fullExamples": [],
+        "description": " ",
         "source": {
           "file": "../swagger.json",
           "type": "openapi"
@@ -6268,7 +6268,6 @@
       ],
       "generatedRequestName": "DeleteInteractionsIdDocumentsDocumentIdRequest",
       "response": {
-        "description": "",
         "schema": {
           "generatedName": "DeleteInteractionsIdDocumentsDocumentIdResponse",
           "schema": "NoContent",
@@ -6279,6 +6278,7 @@
           "type": "reference"
         },
         "fullExamples": [],
+        "description": "",
         "source": {
           "file": "../swagger.json",
           "type": "openapi"
@@ -6553,7 +6553,6 @@
         "type": "json"
       },
       "response": {
-        "description": " ",
         "schema": {
           "generatedName": "PatchInteractionsIdDocumentsDocumentIdResponse",
           "schema": "ResponseDocumentRead",
@@ -6564,6 +6563,7 @@
           "type": "reference"
         },
         "fullExamples": [],
+        "description": " ",
         "source": {
           "file": "../swagger.json",
           "type": "openapi"
@@ -6920,7 +6920,6 @@
       ],
       "generatedRequestName": "GetTemplateSectionsRequest",
       "response": {
-        "description": "List of Template Sections",
         "schema": {
           "generatedName": "GetTemplateSectionsResponse",
           "schema": "ResponseAllTemplateSections",
@@ -6931,6 +6930,7 @@
           "type": "reference"
         },
         "fullExamples": [],
+        "description": "List of Template Sections",
         "source": {
           "file": "../swagger.json",
           "type": "openapi"
@@ -7222,7 +7222,6 @@
       ],
       "generatedRequestName": "GetTemplatesRequest",
       "response": {
-        "description": "List of Templates",
         "schema": {
           "generatedName": "GetTemplatesResponse",
           "schema": "ResponseAllTemplates",
@@ -7233,6 +7232,7 @@
           "type": "reference"
         },
         "fullExamples": [],
+        "description": "List of Templates",
         "source": {
           "file": "../swagger.json",
           "type": "openapi"
@@ -7479,7 +7479,6 @@
       ],
       "generatedRequestName": "GetTemplatesKeyRequest",
       "response": {
-        "description": "Template by key",
         "schema": {
           "generatedName": "GetTemplatesKeyResponse",
           "schema": "TemplateFiltered",
@@ -7490,6 +7489,7 @@
           "type": "reference"
         },
         "fullExamples": [],
+        "description": "Template by key",
         "source": {
           "file": "../swagger.json",
           "type": "openapi"
@@ -7736,7 +7736,6 @@
       ],
       "generatedRequestName": "GetInteractionsIdCodesRequest",
       "response": {
-        "description": "List of associated codes.",
         "schema": {
           "generatedName": "GetInteractionsIdCodesResponse",
           "schema": "ResponseCodesList",
@@ -7747,6 +7746,7 @@
           "type": "reference"
         },
         "fullExamples": [],
+        "description": "List of associated codes.",
         "source": {
           "file": "../swagger.json",
           "type": "openapi"
@@ -8034,7 +8034,6 @@
         "type": "json"
       },
       "response": {
-        "description": "List of predicted codes.",
         "schema": {
           "generatedName": "PostInteractionsIdCodesResponse",
           "schema": "ResponseCodesList",
@@ -8045,6 +8044,7 @@
           "type": "reference"
         },
         "fullExamples": [],
+        "description": "List of predicted codes.",
         "source": {
           "file": "../swagger.json",
           "type": "openapi"
@@ -8385,7 +8385,6 @@
         "type": "json"
       },
       "response": {
-        "description": "Updated list of selected codes.",
         "schema": {
           "generatedName": "PutInteractionsIdCodesResponse",
           "schema": "ResponseCodesList",
@@ -8396,6 +8395,7 @@
           "type": "reference"
         },
         "fullExamples": [],
+        "description": "Updated list of selected codes.",
         "source": {
           "file": "../swagger.json",
           "type": "openapi"

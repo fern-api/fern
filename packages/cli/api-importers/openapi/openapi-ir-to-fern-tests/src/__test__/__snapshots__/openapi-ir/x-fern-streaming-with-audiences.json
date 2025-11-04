@@ -237,7 +237,6 @@
         "type": "json"
       },
       "response": {
-        "description": "",
         "schema": {
           "generatedName": "UserGetResponse",
           "schema": "User",
@@ -248,6 +247,7 @@
           "type": "reference"
         },
         "fullExamples": [],
+        "description": "",
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"

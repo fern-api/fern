@@ -47,7 +47,6 @@
       ],
       "generatedRequestName": "AccountDetailsRetrieveRequest",
       "response": {
-        "description": "",
         "schema": {
           "generatedName": "AccountDetailsRetrieveResponse",
           "schema": "AccountDetails",
@@ -58,6 +57,7 @@
           "type": "reference"
         },
         "fullExamples": [],
+        "description": "",
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -203,7 +203,6 @@
       "headers": [],
       "generatedRequestName": "AccountTokenRetrieveRequest",
       "response": {
-        "description": "",
         "schema": {
           "generatedName": "AccountTokenRetrieveResponse",
           "schema": "AccountToken",
@@ -214,6 +213,7 @@
           "type": "reference"
         },
         "fullExamples": [],
+        "description": "",
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -377,7 +377,6 @@
       ],
       "generatedRequestName": "AvailableActionsRetrieveRequest",
       "response": {
-        "description": "",
         "schema": {
           "generatedName": "AvailableActionsRetrieveResponse",
           "schema": "AvailableActions",
@@ -388,6 +387,7 @@
           "type": "reference"
         },
         "fullExamples": [],
+        "description": "",
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -1001,7 +1001,6 @@
       ],
       "generatedRequestName": "BankInfoListRequest",
       "response": {
-        "description": "",
         "schema": {
           "generatedName": "BankInfoListResponse",
           "schema": "PaginatedBankInfoList",
@@ -1012,6 +1011,7 @@
           "type": "reference"
         },
         "fullExamples": [],
+        "description": "",
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -1539,7 +1539,6 @@
       ],
       "generatedRequestName": "BankInfoRetrieveRequest",
       "response": {
-        "description": "",
         "schema": {
           "generatedName": "BankInfoRetrieveResponse",
           "schema": "BankInfo",
@@ -1550,6 +1549,7 @@
           "type": "reference"
         },
         "fullExamples": [],
+        "description": "",
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -2079,7 +2079,6 @@
       ],
       "generatedRequestName": "BenefitsListRequest",
       "response": {
-        "description": "",
         "schema": {
           "generatedName": "BenefitsListResponse",
           "schema": "PaginatedBenefitList",
@@ -2090,6 +2089,7 @@
           "type": "reference"
         },
         "fullExamples": [],
+        "description": "",
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -2539,7 +2539,6 @@
       ],
       "generatedRequestName": "BenefitsRetrieveRequest",
       "response": {
-        "description": "",
         "schema": {
           "generatedName": "BenefitsRetrieveResponse",
           "schema": "Benefit",
@@ -2550,6 +2549,7 @@
           "type": "reference"
         },
         "fullExamples": [],
+        "description": "",
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -3026,7 +3026,6 @@
       ],
       "generatedRequestName": "CompaniesListRequest",
       "response": {
-        "description": "",
         "schema": {
           "generatedName": "CompaniesListResponse",
           "schema": "PaginatedCompanyList",
@@ -3037,6 +3036,7 @@
           "type": "reference"
         },
         "fullExamples": [],
+        "description": "",
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -3435,7 +3435,6 @@
       ],
       "generatedRequestName": "CompaniesRetrieveRequest",
       "response": {
-        "description": "",
         "schema": {
           "generatedName": "CompaniesRetrieveResponse",
           "schema": "Company",
@@ -3446,6 +3445,7 @@
           "type": "reference"
         },
         "fullExamples": [],
+        "description": "",
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -4131,7 +4131,6 @@
       ],
       "generatedRequestName": "EmployeePayrollRunsListRequest",
       "response": {
-        "description": "",
         "schema": {
           "generatedName": "EmployeePayrollRunsListResponse",
           "schema": "PaginatedEmployeePayrollRunList",
@@ -4142,6 +4141,7 @@
           "type": "reference"
         },
         "fullExamples": [],
+        "description": "",
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -4838,7 +4838,6 @@
       ],
       "generatedRequestName": "EmployeePayrollRunsRetrieveRequest",
       "response": {
-        "description": "",
         "schema": {
           "generatedName": "EmployeePayrollRunsRetrieveResponse",
           "schema": "EmployeePayrollRun",
@@ -4849,6 +4848,7 @@
           "type": "reference"
         },
         "fullExamples": [],
+        "description": "",
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -7760,7 +7760,6 @@
       ],
       "generatedRequestName": "EmployeesListRequest",
       "response": {
-        "description": "",
         "schema": {
           "generatedName": "EmployeesListResponse",
           "schema": "PaginatedEmployeeList",
@@ -7771,6 +7770,7 @@
           "type": "reference"
         },
         "fullExamples": [],
+        "description": "",
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -8541,7 +8541,6 @@
         "type": "json"
       },
       "response": {
-        "description": "",
         "schema": {
           "generatedName": "EmployeesCreateResponse",
           "schema": "EmployeeResponse",
@@ -8552,6 +8551,7 @@
           "type": "reference"
         },
         "fullExamples": [],
+        "description": "",
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -10685,7 +10685,6 @@
       ],
       "generatedRequestName": "EmployeesRetrieveRequest",
       "response": {
-        "description": "",
         "schema": {
           "generatedName": "EmployeesRetrieveResponse",
           "schema": "Employee",
@@ -10696,6 +10695,7 @@
           "type": "reference"
         },
         "fullExamples": [],
+        "description": "",
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -11273,7 +11273,6 @@
       ],
       "generatedRequestName": "EmployeesMetaPostRetrieveRequest",
       "response": {
-        "description": "",
         "schema": {
           "generatedName": "EmployeesMetaPostRetrieveResponse",
           "schema": "MetaResponse",
@@ -11284,6 +11283,7 @@
           "type": "reference"
         },
         "fullExamples": [],
+        "description": "",
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -11923,7 +11923,6 @@
       ],
       "generatedRequestName": "EmploymentsListRequest",
       "response": {
-        "description": "",
         "schema": {
           "generatedName": "EmploymentsListResponse",
           "schema": "PaginatedEmploymentList",
@@ -11934,6 +11933,7 @@
           "type": "reference"
         },
         "fullExamples": [],
+        "description": "",
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -12622,7 +12622,6 @@
       ],
       "generatedRequestName": "EmploymentsRetrieveRequest",
       "response": {
-        "description": "",
         "schema": {
           "generatedName": "EmploymentsRetrieveResponse",
           "schema": "Employment",
@@ -12633,6 +12632,7 @@
           "type": "reference"
         },
         "fullExamples": [],
+        "description": "",
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -12937,7 +12937,6 @@
         "type": "json"
       },
       "response": {
-        "description": "",
         "schema": {
           "generatedName": "GenerateKeyCreateResponse",
           "schema": "RemoteKey",
@@ -12948,6 +12947,7 @@
           "type": "reference"
         },
         "fullExamples": [],
+        "description": "",
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -13298,7 +13298,6 @@
       ],
       "generatedRequestName": "GroupsListRequest",
       "response": {
-        "description": "",
         "schema": {
           "generatedName": "GroupsListResponse",
           "schema": "PaginatedGroupList",
@@ -13309,6 +13308,7 @@
           "type": "reference"
         },
         "fullExamples": [],
+        "description": "",
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -13759,7 +13759,6 @@
       ],
       "generatedRequestName": "GroupsRetrieveRequest",
       "response": {
-        "description": "",
         "schema": {
           "generatedName": "GroupsRetrieveResponse",
           "schema": "Group",
@@ -13770,6 +13769,7 @@
           "type": "reference"
         },
         "fullExamples": [],
+        "description": "",
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -14302,7 +14302,6 @@
       "headers": [],
       "generatedRequestName": "IssuesListRequest",
       "response": {
-        "description": "",
         "schema": {
           "generatedName": "IssuesListResponse",
           "schema": "PaginatedIssueList",
@@ -14313,6 +14312,7 @@
           "type": "reference"
         },
         "fullExamples": [],
+        "description": "",
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -14612,7 +14612,6 @@
       "headers": [],
       "generatedRequestName": "IssuesRetrieveRequest",
       "response": {
-        "description": "",
         "schema": {
           "generatedName": "IssuesRetrieveResponse",
           "schema": "Issue",
@@ -14623,6 +14622,7 @@
           "type": "reference"
         },
         "fullExamples": [],
+        "description": "",
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -14783,7 +14783,6 @@
         "type": "json"
       },
       "response": {
-        "description": "",
         "schema": {
           "generatedName": "LinkTokenCreateResponse",
           "schema": "LinkToken",
@@ -14794,6 +14793,7 @@
           "type": "reference"
         },
         "fullExamples": [],
+        "description": "",
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -15214,7 +15214,6 @@
       "headers": [],
       "generatedRequestName": "LinkedAccountsListRequest",
       "response": {
-        "description": "",
         "schema": {
           "generatedName": "LinkedAccountsListResponse",
           "schema": "PaginatedAccountDetailsAndActionsList",
@@ -15225,6 +15224,7 @@
           "type": "reference"
         },
         "fullExamples": [],
+        "description": "",
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -15860,7 +15860,6 @@
       ],
       "generatedRequestName": "LocationsListRequest",
       "response": {
-        "description": "",
         "schema": {
           "generatedName": "LocationsListResponse",
           "schema": "PaginatedLocationList",
@@ -15871,6 +15870,7 @@
           "type": "reference"
         },
         "fullExamples": [],
+        "description": "",
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -16350,7 +16350,6 @@
       ],
       "generatedRequestName": "LocationsRetrieveRequest",
       "response": {
-        "description": "",
         "schema": {
           "generatedName": "LocationsRetrieveResponse",
           "schema": "Location",
@@ -16361,6 +16360,7 @@
           "type": "reference"
         },
         "fullExamples": [],
+        "description": "",
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -16683,7 +16683,6 @@
         "type": "json"
       },
       "response": {
-        "description": "",
         "schema": {
           "generatedName": "PassthroughCreateResponse",
           "schema": "RemoteResponse",
@@ -16694,6 +16693,7 @@
           "type": "reference"
         },
         "fullExamples": [],
+        "description": "",
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -17081,7 +17081,6 @@
       ],
       "generatedRequestName": "PayGroupsListRequest",
       "response": {
-        "description": "",
         "schema": {
           "generatedName": "PayGroupsListResponse",
           "schema": "PaginatedPayGroupList",
@@ -17092,6 +17091,7 @@
           "type": "reference"
         },
         "fullExamples": [],
+        "description": "",
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -17457,7 +17457,6 @@
       ],
       "generatedRequestName": "PayGroupsRetrieveRequest",
       "response": {
-        "description": "",
         "schema": {
           "generatedName": "PayGroupsRetrieveResponse",
           "schema": "PayGroup",
@@ -17468,6 +17467,7 @@
           "type": "reference"
         },
         "fullExamples": [],
+        "description": "",
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -18103,7 +18103,6 @@
       ],
       "generatedRequestName": "PayrollRunsListRequest",
       "response": {
-        "description": "",
         "schema": {
           "generatedName": "PayrollRunsListResponse",
           "schema": "PaginatedPayrollRunList",
@@ -18114,6 +18113,7 @@
           "type": "reference"
         },
         "fullExamples": [],
+        "description": "",
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -18640,7 +18640,6 @@
       ],
       "generatedRequestName": "PayrollRunsRetrieveRequest",
       "response": {
-        "description": "",
         "schema": {
           "generatedName": "PayrollRunsRetrieveResponse",
           "schema": "PayrollRun",
@@ -18651,6 +18650,7 @@
           "type": "reference"
         },
         "fullExamples": [],
+        "description": "",
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -18922,7 +18922,6 @@
         "type": "json"
       },
       "response": {
-        "description": "",
         "schema": {
           "generatedName": "RegenerateKeyCreateResponse",
           "schema": "RemoteKey",
@@ -18933,6 +18932,7 @@
           "type": "reference"
         },
         "fullExamples": [],
+        "description": "",
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -19027,8 +19027,8 @@
       ],
       "generatedRequestName": "SelectiveSyncConfigurationsListRequest",
       "response": {
-        "description": "",
         "schema": {
+          "generatedName": "SelectiveSyncConfigurationsListResponse",
           "value": {
             "generatedName": "SelectiveSyncConfigurationsListResponseItem",
             "schema": "LinkedAccountSelectiveSyncConfiguration",
@@ -19038,7 +19038,6 @@
             },
             "type": "reference"
           },
-          "generatedName": "SelectiveSyncConfigurationsListResponse",
           "groupName": [],
           "type": "array"
         },
@@ -19061,6 +19060,7 @@
             ]
           }
         ],
+        "description": "",
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -19233,8 +19233,8 @@
         "type": "json"
       },
       "response": {
-        "description": "",
         "schema": {
+          "generatedName": "SelectiveSyncConfigurationsUpdateResponse",
           "value": {
             "generatedName": "SelectiveSyncConfigurationsUpdateResponseItem",
             "schema": "LinkedAccountSelectiveSyncConfiguration",
@@ -19244,7 +19244,6 @@
             },
             "type": "reference"
           },
-          "generatedName": "SelectiveSyncConfigurationsUpdateResponse",
           "groupName": [],
           "type": "array"
         },
@@ -19267,6 +19266,7 @@
             ]
           }
         ],
+        "description": "",
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -19490,7 +19490,6 @@
       ],
       "generatedRequestName": "SelectiveSyncMetaListRequest",
       "response": {
-        "description": "",
         "schema": {
           "generatedName": "SelectiveSyncMetaListResponse",
           "schema": "PaginatedConditionSchemaList",
@@ -19529,6 +19528,7 @@
             }
           }
         ],
+        "description": "",
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -19790,7 +19790,6 @@
       ],
       "generatedRequestName": "SyncStatusListRequest",
       "response": {
-        "description": "",
         "schema": {
           "generatedName": "SyncStatusListResponse",
           "schema": "PaginatedSyncStatusList",
@@ -19801,6 +19800,7 @@
           "type": "reference"
         },
         "fullExamples": [],
+        "description": "",
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -19968,8 +19968,8 @@
       ],
       "generatedRequestName": "SyncStatusResyncCreateRequest",
       "response": {
-        "description": "",
         "schema": {
+          "generatedName": "SyncStatusResyncCreateResponse",
           "value": {
             "generatedName": "SyncStatusResyncCreateResponseItem",
             "schema": "SyncStatus",
@@ -19979,11 +19979,11 @@
             },
             "type": "reference"
           },
-          "generatedName": "SyncStatusResyncCreateResponse",
           "groupName": [],
           "type": "array"
         },
         "fullExamples": [],
+        "description": "",
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -20345,7 +20345,6 @@
       ],
       "generatedRequestName": "TeamsListRequest",
       "response": {
-        "description": "",
         "schema": {
           "generatedName": "TeamsListResponse",
           "schema": "PaginatedTeamList",
@@ -20356,6 +20355,7 @@
           "type": "reference"
         },
         "fullExamples": [],
+        "description": "",
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -20770,7 +20770,6 @@
       ],
       "generatedRequestName": "TeamsRetrieveRequest",
       "response": {
-        "description": "",
         "schema": {
           "generatedName": "TeamsRetrieveResponse",
           "schema": "Team",
@@ -20781,6 +20780,7 @@
           "type": "reference"
         },
         "fullExamples": [],
+        "description": "",
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -21524,7 +21524,6 @@
       ],
       "generatedRequestName": "TimeOffListRequest",
       "response": {
-        "description": "",
         "schema": {
           "generatedName": "TimeOffListResponse",
           "schema": "PaginatedTimeOffList",
@@ -21535,6 +21534,7 @@
           "type": "reference"
         },
         "fullExamples": [],
+        "description": "",
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -22025,7 +22025,6 @@
         "type": "json"
       },
       "response": {
-        "description": "",
         "schema": {
           "generatedName": "TimeOffCreateResponse",
           "schema": "TimeOffResponse",
@@ -22036,6 +22035,7 @@
           "type": "reference"
         },
         "fullExamples": [],
+        "description": "",
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -22797,7 +22797,6 @@
       ],
       "generatedRequestName": "TimeOffBalancesListRequest",
       "response": {
-        "description": "",
         "schema": {
           "generatedName": "TimeOffBalancesListResponse",
           "schema": "PaginatedTimeOffBalanceList",
@@ -22808,6 +22807,7 @@
           "type": "reference"
         },
         "fullExamples": [],
+        "description": "",
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -23304,7 +23304,6 @@
       ],
       "generatedRequestName": "TimeOffBalancesRetrieveRequest",
       "response": {
-        "description": "",
         "schema": {
           "generatedName": "TimeOffBalancesRetrieveResponse",
           "schema": "TimeOffBalance",
@@ -23315,6 +23314,7 @@
           "type": "reference"
         },
         "fullExamples": [],
+        "description": "",
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -23792,7 +23792,6 @@
       ],
       "generatedRequestName": "TimeOffRetrieveRequest",
       "response": {
-        "description": "",
         "schema": {
           "generatedName": "TimeOffRetrieveResponse",
           "schema": "TimeOff",
@@ -23803,6 +23802,7 @@
           "type": "reference"
         },
         "fullExamples": [],
+        "description": "",
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -24104,7 +24104,6 @@
       ],
       "generatedRequestName": "TimeOffMetaPostRetrieveRequest",
       "response": {
-        "description": "",
         "schema": {
           "generatedName": "TimeOffMetaPostRetrieveResponse",
           "schema": "MetaResponse",
@@ -24115,6 +24114,7 @@
           "type": "reference"
         },
         "fullExamples": [],
+        "description": "",
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -24269,8 +24269,8 @@
       ],
       "generatedRequestName": "WebhookReceiversListRequest",
       "response": {
-        "description": "",
         "schema": {
+          "generatedName": "WebhookReceiversListResponse",
           "value": {
             "generatedName": "WebhookReceiversListResponseItem",
             "schema": "WebhookReceiver",
@@ -24280,11 +24280,11 @@
             },
             "type": "reference"
           },
-          "generatedName": "WebhookReceiversListResponse",
           "groupName": [],
           "type": "array"
         },
         "fullExamples": [],
+        "description": "",
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -24409,7 +24409,6 @@
         "type": "json"
       },
       "response": {
-        "description": "",
         "schema": {
           "generatedName": "WebhookReceiversCreateResponse",
           "schema": "WebhookReceiver",
@@ -24420,6 +24419,7 @@
           "type": "reference"
         },
         "fullExamples": [],
+        "description": "",
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"

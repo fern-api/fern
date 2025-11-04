@@ -38,7 +38,6 @@
       "headers": [],
       "generatedRequestName": "ListRequest",
       "response": {
-        "description": "Success",
         "schema": {
           "generatedName": "ListResponse",
           "schema": "UsersResponse",
@@ -49,6 +48,7 @@
           "type": "reference"
         },
         "fullExamples": [],
+        "description": "Success",
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -202,7 +202,6 @@
       "headers": [],
       "generatedRequestName": "ListRequest",
       "response": {
-        "description": "Success",
         "schema": {
           "generatedName": "ListResponse",
           "schema": "UsersResponse",
@@ -213,6 +212,7 @@
           "type": "reference"
         },
         "fullExamples": [],
+        "description": "Success",
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"

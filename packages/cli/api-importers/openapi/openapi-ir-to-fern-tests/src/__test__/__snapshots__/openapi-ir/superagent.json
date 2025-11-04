@@ -20,12 +20,13 @@
       "headers": [],
       "generatedRequestName": "ListAllAgentsApiV1AgentsGetRequest",
       "response": {
-        "description": "Successful Response",
         "schema": {
           "generatedName": "ListAllAgentsApiV1AgentsGetResponse",
+          "groupName": [],
           "type": "unknown"
         },
         "fullExamples": [],
+        "description": "Successful Response",
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -110,12 +111,13 @@
         "type": "json"
       },
       "response": {
-        "description": "Successful Response",
         "schema": {
           "generatedName": "CreateAgentApiV1AgentsPostResponse",
+          "groupName": [],
           "type": "unknown"
         },
         "fullExamples": [],
+        "description": "Successful Response",
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -244,12 +246,13 @@
       "headers": [],
       "generatedRequestName": "GetAgentApiV1AgentsAgentIdGetRequest",
       "response": {
-        "description": "Successful Response",
         "schema": {
           "generatedName": "GetAgentApiV1AgentsAgentIdGetResponse",
+          "groupName": [],
           "type": "unknown"
         },
         "fullExamples": [],
+        "description": "Successful Response",
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -370,12 +373,13 @@
       "headers": [],
       "generatedRequestName": "DeleteAgentApiV1AgentsAgentIdDeleteRequest",
       "response": {
-        "description": "Successful Response",
         "schema": {
           "generatedName": "DeleteAgentApiV1AgentsAgentIdDeleteResponse",
+          "groupName": [],
           "type": "unknown"
         },
         "fullExamples": [],
+        "description": "Successful Response",
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -525,12 +529,13 @@
         "type": "json"
       },
       "response": {
-        "description": "Successful Response",
         "schema": {
           "generatedName": "PatchAgentApiV1AgentsAgentIdPatchResponse",
+          "groupName": [],
           "type": "unknown"
         },
         "fullExamples": [],
+        "description": "Successful Response",
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -691,12 +696,13 @@
         "type": "json"
       },
       "response": {
-        "description": "Successful Response",
         "schema": {
           "generatedName": "PromptAgentApiV1AgentsAgentIdPredictPostResponse",
+          "groupName": [],
           "type": "unknown"
         },
         "fullExamples": [],
+        "description": "Successful Response",
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -844,12 +850,13 @@
         "type": "json"
       },
       "response": {
-        "description": "Successful Response",
         "schema": {
           "generatedName": "SignInApiV1AuthSignInPostResponse",
+          "groupName": [],
           "type": "unknown"
         },
         "fullExamples": [],
+        "description": "Successful Response",
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -974,12 +981,13 @@
         "type": "json"
       },
       "response": {
-        "description": "Successful Response",
         "schema": {
           "generatedName": "SignUpApiV1AuthSignUpPostResponse",
+          "groupName": [],
           "type": "unknown"
         },
         "fullExamples": [],
+        "description": "Successful Response",
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -1085,12 +1093,13 @@
       "headers": [],
       "generatedRequestName": "ReadUserMeApiV1UsersMeGetRequest",
       "response": {
-        "description": "Successful Response",
         "schema": {
           "generatedName": "ReadUserMeApiV1UsersMeGetResponse",
+          "groupName": [],
           "type": "unknown"
         },
         "fullExamples": [],
+        "description": "Successful Response",
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -1173,12 +1182,13 @@
       "headers": [],
       "generatedRequestName": "ReadUserApiV1UsersUserIdGetRequest",
       "response": {
-        "description": "Successful Response",
         "schema": {
           "generatedName": "ReadUserApiV1UsersUserIdGetResponse",
+          "groupName": [],
           "type": "unknown"
         },
         "fullExamples": [],
+        "description": "Successful Response",
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -1276,12 +1286,13 @@
       "headers": [],
       "generatedRequestName": "ListApiTokensApiV1ApiTokensGetRequest",
       "response": {
-        "description": "Successful Response",
         "schema": {
           "generatedName": "ListApiTokensApiV1ApiTokensGetResponse",
+          "groupName": [],
           "type": "unknown"
         },
         "fullExamples": [],
+        "description": "Successful Response",
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -1366,12 +1377,13 @@
         "type": "json"
       },
       "response": {
-        "description": "Successful Response",
         "schema": {
           "generatedName": "CreateApiTokenApiV1ApiTokensPostResponse",
+          "groupName": [],
           "type": "unknown"
         },
         "fullExamples": [],
+        "description": "Successful Response",
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -1493,12 +1505,13 @@
       "headers": [],
       "generatedRequestName": "GetApiTokenApiV1ApiTokensTokenIdGetRequest",
       "response": {
-        "description": "Successful Response",
         "schema": {
           "generatedName": "GetApiTokenApiV1ApiTokensTokenIdGetResponse",
+          "groupName": [],
           "type": "unknown"
         },
         "fullExamples": [],
+        "description": "Successful Response",
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -1619,12 +1632,13 @@
       "headers": [],
       "generatedRequestName": "DeleteApiTokenApiV1ApiTokensTokenIdDeleteRequest",
       "response": {
-        "description": "Successful Response",
         "schema": {
           "generatedName": "DeleteApiTokenApiV1ApiTokensTokenIdDeleteResponse",
+          "groupName": [],
           "type": "unknown"
         },
         "fullExamples": [],
+        "description": "Successful Response",
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -1727,12 +1741,13 @@
       "headers": [],
       "generatedRequestName": "ListDocumentsApiV1DocumentsGetRequest",
       "response": {
-        "description": "Successful Response",
         "schema": {
           "generatedName": "ListDocumentsApiV1DocumentsGetResponse",
+          "groupName": [],
           "type": "unknown"
         },
         "fullExamples": [],
+        "description": "Successful Response",
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -1817,12 +1832,13 @@
         "type": "json"
       },
       "response": {
-        "description": "Successful Response",
         "schema": {
           "generatedName": "CreateDocumentApiV1DocumentsPostResponse",
+          "groupName": [],
           "type": "unknown"
         },
         "fullExamples": [],
+        "description": "Successful Response",
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -1958,12 +1974,13 @@
       "headers": [],
       "generatedRequestName": "GetDocumentApiV1DocumentsDocumentIdGetRequest",
       "response": {
-        "description": "Successful Response",
         "schema": {
           "generatedName": "GetDocumentApiV1DocumentsDocumentIdGetResponse",
+          "groupName": [],
           "type": "unknown"
         },
         "fullExamples": [],
+        "description": "Successful Response",
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -2084,12 +2101,13 @@
       "headers": [],
       "generatedRequestName": "DeleteDocumentApiV1DocumentsDocumentIdDeleteRequest",
       "response": {
-        "description": "Successful Response",
         "schema": {
           "generatedName": "DeleteDocumentApiV1DocumentsDocumentIdDeleteResponse",
+          "groupName": [],
           "type": "unknown"
         },
         "fullExamples": [],
+        "description": "Successful Response",
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -2192,12 +2210,13 @@
       "headers": [],
       "generatedRequestName": "ListPromptsApiV1PromptsGetRequest",
       "response": {
-        "description": "Successful Response",
         "schema": {
           "generatedName": "ListPromptsApiV1PromptsGetResponse",
+          "groupName": [],
           "type": "unknown"
         },
         "fullExamples": [],
+        "description": "Successful Response",
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -2282,12 +2301,13 @@
         "type": "json"
       },
       "response": {
-        "description": "Successful Response",
         "schema": {
           "generatedName": "CreateAPromptApiV1PromptsPostResponse",
+          "groupName": [],
           "type": "unknown"
         },
         "fullExamples": [],
+        "description": "Successful Response",
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -2420,12 +2440,13 @@
       "headers": [],
       "generatedRequestName": "GetPromptApiV1PromptsPromptIdGetRequest",
       "response": {
-        "description": "Successful Response",
         "schema": {
           "generatedName": "GetPromptApiV1PromptsPromptIdGetResponse",
+          "groupName": [],
           "type": "unknown"
         },
         "fullExamples": [],
+        "description": "Successful Response",
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -2546,12 +2567,13 @@
       "headers": [],
       "generatedRequestName": "DeletePromptApiV1PromptsPromptIdDeleteRequest",
       "response": {
-        "description": "Successful Response",
         "schema": {
           "generatedName": "DeletePromptApiV1PromptsPromptIdDeleteResponse",
+          "groupName": [],
           "type": "unknown"
         },
         "fullExamples": [],
+        "description": "Successful Response",
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -2701,12 +2723,13 @@
         "type": "json"
       },
       "response": {
-        "description": "Successful Response",
         "schema": {
           "generatedName": "PatchPromptApiV1PromptsPromptIdPatchResponse",
+          "groupName": [],
           "type": "unknown"
         },
         "fullExamples": [],
+        "description": "Successful Response",
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -2830,12 +2853,13 @@
       "headers": [],
       "generatedRequestName": "ListToolsApiV1ToolsGetRequest",
       "response": {
-        "description": "Successful Response",
         "schema": {
           "generatedName": "ListToolsApiV1ToolsGetResponse",
+          "groupName": [],
           "type": "unknown"
         },
         "fullExamples": [],
+        "description": "Successful Response",
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -2920,12 +2944,13 @@
         "type": "json"
       },
       "response": {
-        "description": "Successful Response",
         "schema": {
           "generatedName": "CreateAToolApiV1ToolsPostResponse",
+          "groupName": [],
           "type": "unknown"
         },
         "fullExamples": [],
+        "description": "Successful Response",
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -3054,12 +3079,13 @@
       "headers": [],
       "generatedRequestName": "GetToolApiV1ToolsToolIdGetRequest",
       "response": {
-        "description": "Successful Response",
         "schema": {
           "generatedName": "GetToolApiV1ToolsToolIdGetResponse",
+          "groupName": [],
           "type": "unknown"
         },
         "fullExamples": [],
+        "description": "Successful Response",
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -3180,12 +3206,13 @@
       "headers": [],
       "generatedRequestName": "DeleteToolApiV1ToolsToolIdDeleteRequest",
       "response": {
-        "description": "Successful Response",
         "schema": {
           "generatedName": "DeleteToolApiV1ToolsToolIdDeleteResponse",
+          "groupName": [],
           "type": "unknown"
         },
         "fullExamples": [],
+        "description": "Successful Response",
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -3288,12 +3315,13 @@
       "headers": [],
       "generatedRequestName": "ListAgentTracesApiV1TracesGetRequest",
       "response": {
-        "description": "Successful Response",
         "schema": {
           "generatedName": "ListAgentTracesApiV1TracesGetResponse",
+          "groupName": [],
           "type": "unknown"
         },
         "fullExamples": [],
+        "description": "Successful Response",
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"

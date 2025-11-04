@@ -24,7 +24,6 @@
       "headers": [],
       "generatedRequestName": "UserGetRequest",
       "response": {
-        "description": "Success",
         "schema": {
           "generatedName": "UserGetResponse",
           "schema": "User",
@@ -35,6 +34,7 @@
           "type": "reference"
         },
         "fullExamples": [],
+        "description": "Success",
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"

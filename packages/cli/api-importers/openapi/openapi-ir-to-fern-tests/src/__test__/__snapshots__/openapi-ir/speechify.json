@@ -41,7 +41,6 @@
         "type": "json"
       },
       "response": {
-        "description": "",
         "schema": {
           "generatedName": "ExperimentalStreamCreateResponse",
           "schema": "ExperimentalStreamResponse",
@@ -52,6 +51,7 @@
           "type": "reference"
         },
         "fullExamples": [],
+        "description": "",
         "source": {
           "file": "../openapi.json",
           "type": "openapi"
@@ -204,7 +204,6 @@
         "type": "json"
       },
       "response": {
-        "description": "",
         "schema": {
           "generatedName": "GetSpeechResponse",
           "schema": "GetSpeechResponse",
@@ -215,6 +214,7 @@
           "type": "reference"
         },
         "fullExamples": [],
+        "description": "",
         "source": {
           "file": "../openapi.json",
           "type": "openapi"
@@ -466,21 +466,21 @@
         "type": "json"
       },
       "response": {
-        "description": "",
         "schema": {
+          "generatedName": "GetStreamResponse",
           "value": {
+            "generatedName": "GetStreamResponseItem",
             "schema": {
               "type": "int"
             },
-            "generatedName": "GetStreamResponseItem",
             "groupName": [],
             "type": "primitive"
           },
-          "generatedName": "GetStreamResponse",
           "groupName": [],
           "type": "array"
         },
         "fullExamples": [],
+        "description": "",
         "source": {
           "file": "../openapi.json",
           "type": "openapi"
@@ -634,7 +634,6 @@
         "type": "json"
       },
       "response": {
-        "description": "Contains the details of the token which can be used by the user to access the API",
         "schema": {
           "generatedName": "CreateAccessTokenResponse",
           "schema": "AccessToken",
@@ -645,6 +644,7 @@
           "type": "reference"
         },
         "fullExamples": [],
+        "description": "Contains the details of the token which can be used by the user to access the API",
         "source": {
           "file": "../openapi.json",
           "type": "openapi"
@@ -759,8 +759,8 @@
       "headers": [],
       "generatedRequestName": "ListApiKeysRequest",
       "response": {
-        "description": "An array of all API keys for the user for the given request",
         "schema": {
+          "generatedName": "ListApiKeysResponse",
           "value": {
             "generatedName": "ListApiKeysResponseItem",
             "schema": "APIKey",
@@ -770,11 +770,11 @@
             },
             "type": "reference"
           },
-          "generatedName": "ListApiKeysResponse",
           "groupName": [],
           "type": "array"
         },
         "fullExamples": [],
+        "description": "An array of all API keys for the user for the given request",
         "source": {
           "file": "../openapi.json",
           "type": "openapi"
@@ -873,7 +873,6 @@
       "headers": [],
       "generatedRequestName": "CreateApiKeyRequest",
       "response": {
-        "description": "APIKeyResponseWrapper contains the details of the API key which can be used by the user to access the API",
         "schema": {
           "generatedName": "CreateApiKeyResponse",
           "schema": "APIKey",
@@ -884,6 +883,7 @@
           "type": "reference"
         },
         "fullExamples": [],
+        "description": "APIKeyResponseWrapper contains the details of the API key which can be used by the user to access the API",
         "source": {
           "file": "../openapi.json",
           "type": "openapi"
@@ -1075,7 +1075,6 @@
         "type": "json"
       },
       "response": {
-        "description": "APIKeyResponseWrapper contains the details of the API key which can be used by the user to access the API",
         "schema": {
           "generatedName": "UpdateApiKeyResponse",
           "schema": "APIKey",
@@ -1086,6 +1085,7 @@
           "type": "reference"
         },
         "fullExamples": [],
+        "description": "APIKeyResponseWrapper contains the details of the API key which can be used by the user to access the API",
         "source": {
           "file": "../openapi.json",
           "type": "openapi"
@@ -1197,8 +1197,8 @@
       "headers": [],
       "generatedRequestName": "GetVoicesRequest",
       "response": {
-        "description": "A list of voices",
         "schema": {
+          "generatedName": "GetVoicesResponse",
           "value": {
             "generatedName": "GetVoicesResponseItem",
             "schema": "GetVoice",
@@ -1208,11 +1208,11 @@
             },
             "type": "reference"
           },
-          "generatedName": "GetVoicesResponse",
           "groupName": [],
           "type": "array"
         },
         "fullExamples": [],
+        "description": "A list of voices",
         "source": {
           "file": "../openapi.json",
           "type": "openapi"
@@ -1404,7 +1404,6 @@
         "type": "multipart"
       },
       "response": {
-        "description": "A created voice",
         "schema": {
           "generatedName": "CreateVoiceResponse",
           "schema": "CreatedVoice",
@@ -1415,6 +1414,7 @@
           "type": "reference"
         },
         "fullExamples": [],
+        "description": "A created voice",
         "source": {
           "file": "../openapi.json",
           "type": "openapi"

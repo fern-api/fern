@@ -200,7 +200,6 @@
         "type": "json"
       },
       "response": {
-        "description": "Successful",
         "schema": {
           "generatedName": "CreateOrUpdateCompanyResponse",
           "schema": "company",
@@ -240,6 +239,7 @@
             }
           }
         ],
+        "description": "Successful",
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"

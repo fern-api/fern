@@ -73,54 +73,54 @@
         "type": "formUrlEncoded"
       },
       "response": {
-        "description": "Successful operation",
         "schema": {
-          "allOf": [],
           "properties": [
             {
-              "conflict": {},
-              "generatedName": "postSubmitResponseStatus",
               "key": "status",
               "schema": {
                 "generatedName": "PostSubmitResponseStatus",
                 "value": {
+                  "generatedName": "PostSubmitResponseStatus",
                   "schema": {
                     "example": "success",
                     "type": "string"
                   },
-                  "generatedName": "PostSubmitResponseStatus",
                   "groupName": [],
                   "type": "primitive"
                 },
                 "groupName": [],
                 "type": "optional"
               },
-              "audiences": []
+              "audiences": [],
+              "conflict": {},
+              "generatedName": "postSubmitResponseStatus"
             },
             {
-              "conflict": {},
-              "generatedName": "postSubmitResponseMessage",
               "key": "message",
               "schema": {
                 "generatedName": "PostSubmitResponseMessage",
                 "value": {
+                  "generatedName": "PostSubmitResponseMessage",
                   "schema": {
                     "example": "Data received successfully.",
                     "type": "string"
                   },
-                  "generatedName": "PostSubmitResponseMessage",
                   "groupName": [],
                   "type": "primitive"
                 },
                 "groupName": [],
                 "type": "optional"
               },
-              "audiences": []
+              "audiences": [],
+              "conflict": {},
+              "generatedName": "postSubmitResponseMessage"
             }
           ],
-          "allOfPropertyConflicts": [],
           "generatedName": "PostSubmitResponse",
+          "allOf": [],
+          "allOfPropertyConflicts": [],
           "groupName": [],
+          "fullExamples": [],
           "additionalProperties": false,
           "source": {
             "file": "../openapi.yml",
@@ -129,6 +129,7 @@
           "type": "object"
         },
         "fullExamples": [],
+        "description": "Successful operation",
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"

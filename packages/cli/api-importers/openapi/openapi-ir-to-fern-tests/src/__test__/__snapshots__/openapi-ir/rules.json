@@ -16,7 +16,6 @@
       "headers": [],
       "generatedRequestName": "GetExampleRequest",
       "response": {
-        "description": "Successful response",
         "schema": {
           "value": {
             "generatedName": "GetExampleResponse",
@@ -31,31 +30,32 @@
                 "type": "reference"
               },
               {
-                "allOf": [],
                 "properties": [
                   {
-                    "conflict": {},
-                    "generatedName": "getExampleResponseMessageMessage",
                     "key": "message",
                     "schema": {
                       "generatedName": "GetExampleResponseMessageMessage",
                       "value": {
+                        "generatedName": "GetExampleResponseMessageMessage",
                         "schema": {
                           "type": "string"
                         },
-                        "generatedName": "GetExampleResponseMessageMessage",
                         "groupName": [],
                         "type": "primitive"
                       },
                       "groupName": [],
                       "type": "optional"
                     },
-                    "audiences": []
+                    "audiences": [],
+                    "conflict": {},
+                    "generatedName": "getExampleResponseMessageMessage"
                   }
                 ],
-                "allOfPropertyConflicts": [],
                 "generatedName": "GetExampleResponseMessage",
+                "allOf": [],
+                "allOfPropertyConflicts": [],
                 "groupName": [],
+                "fullExamples": [],
                 "additionalProperties": false,
                 "source": {
                   "file": "../openapi.yml",
@@ -74,6 +74,7 @@
           "type": "oneOf"
         },
         "fullExamples": [],
+        "description": "Successful response",
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
