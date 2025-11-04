@@ -1,3 +1,4 @@
+import { type LogConfig, type Logger } from "../logging/logger.js";
 import type { APIResponse } from "./APIResponse.js";
 import type { EndpointMetadata } from "./EndpointMetadata.js";
 import { EndpointSupplier } from "./EndpointSupplier.js";
@@ -19,6 +20,7 @@ export declare namespace Fetcher {
         duplex?: "half";
         endpointMetadata?: EndpointMetadata;
         fetchFn?: typeof fetch;
+        logging?: LogConfig | Logger;
     }
     type Error = FailedStatusCodeError | NonJsonError | TimeoutError | UnknownError;
     interface FailedStatusCodeError {
