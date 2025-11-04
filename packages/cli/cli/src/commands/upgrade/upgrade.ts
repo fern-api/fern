@@ -82,7 +82,27 @@ export async function upgrade({
         }
     }
 
-    if (fernCliUpgradeInfo && !fernCliUpgradeInfo.isUpgradeAvailable) {
+    const fernDirectory = await getFernDirectory();
+    let projectConfig: Awaited<ReturnType<typeof loadProjectConfig>> | undefined;
+    let pinnedVersion: string | undefined;
+    let isPinnedBehind = false;
+
+    if (fernDirectory != null) {
+        projectConfig = await cliContext.runTask((context) => loadProjectConfig({ directory: fernDirectory, context }));
+        pinnedVersion = projectConfig.version;
+
+        // Check if the pinned version is behind the target version
+        if (
+            fernCliUpgradeInfo != null &&
+            pinnedVersion != null &&
+            pinnedVersion !== "*" &&
+            isVersionAhead(fernCliUpgradeInfo.targetVersion, pinnedVersion)
+        ) {
+            isPinnedBehind = true;
+        }
+    }
+
+    if (fernCliUpgradeInfo && !fernCliUpgradeInfo.isUpgradeAvailable && !isPinnedBehind) {
         const previousVersion = process.env[PREVIOUS_VERSION_ENV_VAR];
         if (previousVersion == null) {
             cliContext.logger.info("No upgrade available.");
@@ -90,13 +110,14 @@ export async function upgrade({
         }
         await runPostUpgradeSteps({ cliContext, previousVersion, newVersion: fernCliUpgradeInfo.targetVersion });
     } else if (fernCliUpgradeInfo != null) {
-        const fernDirectory = await getFernDirectory();
         if (fernDirectory == null) {
             return cliContext.failAndThrow(`Directory "${FERN_DIRECTORY}" not found.`);
         }
-        const projectConfig = await cliContext.runTask((context) =>
-            loadProjectConfig({ directory: fernDirectory, context })
-        );
+        if (projectConfig == null) {
+            projectConfig = await cliContext.runTask((context) =>
+                loadProjectConfig({ directory: fernDirectory, context })
+            );
+        }
 
         const newProjectConfig = produce(projectConfig.rawConfig, (draft) => {
             draft.version = fernCliUpgradeInfo.targetVersion;
@@ -112,9 +133,10 @@ export async function upgrade({
             )}`
         );
 
+        const previousVersion = cliContext.environment.packageVersion;
         cliContext.environment.packageVersion = fernCliUpgradeInfo.targetVersion;
         // special case: if we're running the local-dev version of the CLI, simulate a re-run
-        if (cliContext.environment.packageVersion === "0.0.0") {
+        if (previousVersion === "0.0.0") {
             await runPostUpgradeSteps({
                 cliContext,
                 previousVersion: projectConfig.version,
@@ -131,7 +153,7 @@ export async function upgrade({
                 version: fernCliUpgradeInfo.targetVersion,
                 cliContext,
                 env: {
-                    [PREVIOUS_VERSION_ENV_VAR]: cliContext.environment.packageVersion
+                    [PREVIOUS_VERSION_ENV_VAR]: previousVersion
                 }
             });
         }
