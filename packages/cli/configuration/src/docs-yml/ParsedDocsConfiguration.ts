@@ -1,6 +1,5 @@
+import { FdrAPI as CjsFdrSdk } from "@fern-api/fdr-sdk";
 import { AbsoluteFilePath, RelativeFilePath } from "@fern-api/path-utils";
-
-import { FernRegistry as CjsFdrSdk } from "@fern-fern/fdr-cjs-sdk";
 
 import { Audiences } from "../commons";
 import {
