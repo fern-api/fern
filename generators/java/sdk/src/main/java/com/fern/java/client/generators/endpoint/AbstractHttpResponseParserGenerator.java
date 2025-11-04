@@ -488,16 +488,11 @@ public abstract class AbstractHttpResponseParserGenerator {
                         .endControlFlow();
             }
         }
-        httpResponseBuilder.addStatement("$T errorBody", Object.class);
-        httpResponseBuilder.beginControlFlow("try");
         httpResponseBuilder.addStatement(
-                "errorBody = $L",
-                objectMapperUtils.readValueCall(
-                        CodeBlock.of("$L", variables.getResponseBodyStringName()), Optional.empty()));
-        httpResponseBuilder
-                .nextControlFlow("catch ($T ignored)", JsonProcessingException.class)
-                .addStatement("errorBody = $L", variables.getResponseBodyStringName())
-                .endControlFlow();
+                "$T errorBody = $T.parseErrorBody($L)",
+                Object.class,
+                clientGeneratorContext.getPoetClassNameFactory().getObjectMapperClassName(),
+                variables.getResponseBodyStringName());
 
         handleExceptionalResult(
                 httpResponseBuilder,
