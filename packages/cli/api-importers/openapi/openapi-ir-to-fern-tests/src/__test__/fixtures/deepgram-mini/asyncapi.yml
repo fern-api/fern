@@ -20,22 +20,19 @@ channels:
   SpeakV1:
     messages:
       SpeakV1Text:
-        $ref: '#/components/messages/SpeakV1TextMessage'
+        $ref: "#/components/messages/SpeakV1TextMessage"
     x-fern-examples:
       - name: WebSocket Example Messages
         messages:
           - type: SpeakV1Text
             channelId: SpeakV1
             messageId: SpeakV1Text
-            value:
-              {
-                "type": "Text"
-              }
+            value: { "type": "Text" }
 operations:
   SpeakV1Text:
     description: Text to convert to audio
     action: send
     channel:
-      $ref: '#/channels/SpeakV1'
+      $ref: "#/channels/SpeakV1"
     messages:
-      - $ref: '#/channels/SpeakV1/messages/SpeakV1Text'
+      - $ref: "#/channels/SpeakV1/messages/SpeakV1Text"
