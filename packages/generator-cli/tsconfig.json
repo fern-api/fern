@@ -2,8 +2,9 @@
   "extends": "@fern-api/configs/tsconfig/main.json",
   "compilerOptions": {
     "outDir": "lib",
-    "rootDir": ".",
-    "types": ["vitest/globals"]
+    "rootDir": "src",
+    "types": ["vitest/globals"],
+    "composite": false
   },
   "include": ["./src/**/*"],
   "references": [
