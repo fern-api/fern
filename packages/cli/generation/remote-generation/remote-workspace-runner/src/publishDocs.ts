@@ -14,7 +14,7 @@ type DocsDefinition = DocsV1Write.DocsDefinition;
 import { AbsoluteFilePath, convertToFernHostRelativeFilePath, RelativeFilePath, resolve } from "@fern-api/fs-utils";
 import { convertIrToFdrApi } from "@fern-api/register";
 import { TaskContext } from "@fern-api/task-context";
-import { AbstractAPIWorkspace, DocsWorkspace, FernWorkspace } from "@fern-api/workspace-loader";
+import { AbstractAPIWorkspace, DocsWorkspace } from "@fern-api/workspace-loader";
 import axios from "axios";
 import chalk from "chalk";
 import { readFile } from "fs/promises";
