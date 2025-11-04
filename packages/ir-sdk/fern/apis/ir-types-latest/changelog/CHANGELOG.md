@@ -7,7 +7,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [v62.0.0] - 2025-11-04
 
-- **BREAKING**: Add file upload examples support to ExampleRequestBody with fileUpload variant. This is a breaking change because adding a new union variant requires all generators to handle it.
+- Feature: Add file upload examples support to ExampleRequestBody with fileUpload variant. This is a breaking change because adding a new union variant requires all generators to handle it.
 
 ## [v61.7.0] - 2025-10-31
 

@@ -51,6 +51,7 @@ export const V62_TO_V61_MIGRATION: IrMigration<
     ): IrVersions.V61.ir.IntermediateRepresentation => {
         return {
             ...v62,
+            irVersion: "v61",
             services: convertServices(v62.services)
         };
     }
@@ -95,7 +96,11 @@ function convertExampleRequestBody(
     return visitDiscriminatedUnion(requestBody, "type")._visit<IrVersions.V61.http.ExampleRequestBody | undefined>({
         inlinedRequestBody: (inlined) => IrVersions.V61.http.ExampleRequestBody.inlinedRequestBody(inlined),
         reference: (reference) => IrVersions.V61.http.ExampleRequestBody.reference(reference),
-        fileUpload: () => undefined,
+        fileUpload: () => {
+            // biome-ignore lint/suspicious/noConsole: Warning requested by reviewer to log when dropping fileUpload examples
+            console.warn("Dropping fileUpload example during migration from v62 to v61 (not supported in v61)");
+            return undefined;
+        },
         _unknown: () => undefined
     });
 }
