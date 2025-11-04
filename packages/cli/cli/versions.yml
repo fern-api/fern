@@ -1,4 +1,13 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+
+- changelogEntry:
+    - summary: |
+        Bump FDR version.
+      type: chore
+  irVersion: 61
+  createdAt: "2025-11-03"
+  version: 0.107.4
+
 - changelogEntry:
     - summary: |
         Revert the change in 0.107.0 which didn't deduplicate types as expected
