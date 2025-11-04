@@ -116,6 +116,7 @@ export declare namespace SdkGenerator {
         shouldGenerateWebsocketClients: boolean;
         includeUtilsOnUnionMembers: boolean;
         includeOtherInUnionTypes: boolean;
+        enableForwardCompatibleEnums: boolean;
         requireDefaultEnvironment: boolean;
         defaultTimeoutInSeconds: number | "infinity" | undefined;
         skipResponseValidation: boolean;
@@ -397,6 +398,7 @@ export class SdkGenerator {
             useBrandedStringAliases: config.shouldUseBrandedStringAliases,
             includeUtilsOnUnionMembers: config.includeUtilsOnUnionMembers,
             includeOtherInUnionTypes: config.includeOtherInUnionTypes,
+            enableForwardCompatibleEnums: config.enableForwardCompatibleEnums,
             includeSerdeLayer: config.includeSerdeLayer,
             noOptionalProperties: config.noOptionalProperties,
             retainOriginalCasing: config.retainOriginalCasing,
