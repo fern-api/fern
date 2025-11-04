@@ -19,32 +19,26 @@
     "compile:api": "tsup ./src/api.ts --format cjs --dts",
     "compile:cli": "tsup ./src/cli.ts --format cjs && echo '#!/usr/bin/env node' | cat - dist/cli.cjs > dist/tmp && mv dist/tmp dist/cli.cjs",
     "depcheck": "depcheck",
-    "format": "prettier --write --ignore-unknown \"**\"",
-    "format:check": "prettier --check --ignore-unknown \"**\"",
-    "lint:eslint": "eslint --max-warnings 0 .",
-    "lint:eslint:fix": "pnpm lint:eslint --fix",
-    "lint:style": "stylelint 'src/**/*.scss' --allow-empty-input --max-warnings 0",
-    "lint:style:fix": "pnpm lint:style --fix",
     "test": "vitest --run --passWithNoTests --globals --disable-console-intercept",
     "test:update": "vitest -u --run --passWithNoTests --globals --disable-console-intercept"
   },
   "dependencies": {
     "@octokit/rest": "^20.1.2",
-    "es-toolkit": "^1.32.0"
+    "es-toolkit": "^1.32.0",
+    "@fern-api/fs-utils": "workspace:*",
+    "@fern-api/github": "workspace:*"
   },
   "devDependencies": {
-    "@fern-api/fs-utils": "0.15.0-rc63",
-    "@fern-api/github": "workspace:*",
     "@types/jest": "^29.5.11",
     "@types/node": "^22.0.0",
     "@types/yargs": "^17.0.32",
     "depcheck": "^1.4.7",
-    "esbuild": "0.25.9",
+    "esbuild": "^0.24.2",
     "execa": "^9.5.1",
     "tmp-promise": "^3.0.3",
-    "tsup": "catalog:",
-    "typescript": "catalog:",
-    "vitest": "catalog:",
+    "tsup": "^8.5.0",
+    "typescript": "5.9.3",
+    "vitest": "^2.1.9",
     "yargs": "^17.4.1"
   }
 }

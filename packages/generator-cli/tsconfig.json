@@ -1,7 +1,7 @@
 {
-  "extends": "../../shared/tsconfig.shared.json",
+  "extends": "@fern-api/configs/tsconfig/main.json",
   "compilerOptions": {
-    "outDir": "dist",
+    "outDir": "lib",
     "rootDir": ".",
     "types": ["vitest/globals"]
   },
@@ -9,6 +9,9 @@
   "references": [
     {
       "path": "../../packages/commons/github"
+    },
+    {
+      "path": "../../packages/commons/fs-utils"
     }
   ]
 }
