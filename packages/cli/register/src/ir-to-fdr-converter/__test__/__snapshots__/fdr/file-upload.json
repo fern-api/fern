@@ -320,7 +320,125 @@
           "requestsV2": {},
           "responsesV2": {},
           "errorsV2": [],
-          "examples": []
+          "examples": [
+            {
+              "name": "UploadMultipleFiles",
+              "path": "/",
+              "pathParameters": {},
+              "queryParameters": {},
+              "headers": {},
+              "requestBody": {
+                "maybe_string": "hello",
+                "integer": 42,
+                "file": {
+                  "filename": "document.pdf",
+                  "contentType": "application/pdf"
+                },
+                "file_list": [
+                  "image1.png",
+                  {
+                    "filename": "image2.jpg",
+                    "contentType": "image/jpeg"
+                  }
+                ],
+                "list_of_objects": [
+                  {
+                    "foo": "bar"
+                  }
+                ],
+                "alias_object": {
+                  "foo": "baz"
+                },
+                "list_of_alias_object": [
+                  {
+                    "foo": "qux"
+                  }
+                ],
+                "alias_list_of_object": [
+                  {
+                    "foo": "quux"
+                  }
+                ]
+              },
+              "requestBodyV3": {
+                "type": "form",
+                "value": {
+                  "maybe_string": {
+                    "type": "json",
+                    "value": "hello"
+                  },
+                  "integer": {
+                    "type": "json",
+                    "value": 42
+                  },
+                  "file": {
+                    "type": "filename",
+                    "value": "<file1>"
+                  },
+                  "file_list": {
+                    "type": "filenames",
+                    "value": [
+                      "image1.png"
+                    ]
+                  },
+                  "maybe_file": {
+                    "type": "filename",
+                    "value": "<file1>"
+                  },
+                  "maybe_file_list": {
+                    "type": "filenames",
+                    "value": []
+                  },
+                  "maybe_integer": {
+                    "type": "json"
+                  },
+                  "optional_list_of_strings": {
+                    "type": "json"
+                  },
+                  "list_of_objects": {
+                    "type": "json",
+                    "value": [
+                      {
+                        "foo": "bar"
+                      }
+                    ]
+                  },
+                  "optional_metadata": {
+                    "type": "json"
+                  },
+                  "optional_object_type": {
+                    "type": "json"
+                  },
+                  "optional_id": {
+                    "type": "json"
+                  },
+                  "alias_object": {
+                    "type": "json",
+                    "value": {
+                      "foo": "baz"
+                    }
+                  },
+                  "list_of_alias_object": {
+                    "type": "json",
+                    "value": [
+                      {
+                        "foo": "qux"
+                      }
+                    ]
+                  },
+                  "alias_list_of_object": {
+                    "type": "json",
+                    "value": [
+                      {
+                        "foo": "quux"
+                      }
+                    ]
+                  }
+                }
+              },
+              "responseStatusCode": 204
+            }
+          ]
         },
         {
           "auth": false,
@@ -366,17 +484,20 @@
           "errorsV2": [],
           "examples": [
             {
+              "name": "UploadSingleFile",
               "path": "/just-file",
               "pathParameters": {},
               "queryParameters": {},
               "headers": {},
-              "requestBody": {},
+              "requestBody": {
+                "file": "avatar.png"
+              },
               "requestBodyV3": {
                 "type": "form",
                 "value": {
                   "file": {
                     "type": "filename",
-                    "value": "<file1>"
+                    "value": "avatar.png"
                   }
                 }
               },
