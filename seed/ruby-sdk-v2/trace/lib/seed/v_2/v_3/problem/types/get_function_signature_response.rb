@@ -8,7 +8,7 @@ module Seed
           class GetFunctionSignatureResponse < Internal::Types::Model
             field :function_by_language, lambda {
               Internal::Types::Hash[Seed::Commons::Types::Language, String]
-            }, optional: false, nullable: false
+            }, optional: false, nullable: false, api_name: "functionByLanguage"
           end
         end
       end
