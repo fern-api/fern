@@ -1,14 +1,14 @@
 FROM docker:28.4.0-dind-alpine3.22
 
-# Install Ruby 3.3
-ENV RUBY_VERSION=3.3
+# Install Ruby and dependencies
 RUN apk add --no-cache \
-    ruby=${RUBY_VERSION} \
+    ruby \
     ruby-dev \
     ruby-bundler \
     build-base \
     git \
-    bash
+    bash \
+    docker-cli-compose
 
 # Create entrypoint script to start dockerd and execute commands
 RUN echo '#!/bin/sh' > /entrypoint.sh && \
