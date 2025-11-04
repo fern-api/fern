@@ -308,11 +308,14 @@ export class BaseClientContextImpl implements BaseClientContext {
         properties.push({
             kind: StructureKind.PropertySignature,
             name: "logging",
-            type: getTextOfTsNode(context.coreUtilities.logger.LogConfig._getReferenceToType()),
+            type: getTextOfTsNode(
+                ts.factory.createUnionTypeNode([
+                    context.coreUtilities.logging.LogConfig._getReferenceToType(),
+                    context.coreUtilities.logging.Logger._getReferenceToType()
+                ])
+            ),
             hasQuestionToken: true,
-            docs: [
-                "Configure logging for HTTP requests. Provide a custom logger and/or log level (debug, info, warn, error, silent). Defaults to silent (no logging)."
-            ]
+            docs: ["Configure logging for the client."]
         });
 
         return {

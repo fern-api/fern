@@ -3,7 +3,7 @@ import { CallbackQueue } from "./CallbackQueue";
 import { Fetcher } from "./Fetcher";
 import { FileUtils } from "./FileUtils";
 import { FormDataUtils } from "./FormDataUtils";
-import { Logger } from "./Logging";
+import { Logging } from "./Logging";
 import { Pagination } from "./Pagination";
 import { Runtime } from "./Runtime";
 import { Stream } from "./Stream";
@@ -25,5 +25,5 @@ export interface CoreUtilities {
     websocket: Websocket;
     fileUtils: FileUtils;
     urlUtils: UrlUtils;
-    logger: Logger;
+    logging: Logging;
 }

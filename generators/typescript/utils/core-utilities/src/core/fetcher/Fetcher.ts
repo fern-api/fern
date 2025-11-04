@@ -1,5 +1,5 @@
 import { toJson } from "../json";
-import { createLogger, type Logger } from "../logging/logger";
+import { createLogger, type LogConfig, type Logger } from "../logging/logger";
 import type { APIResponse } from "./APIResponse";
 import { createRequestUrl } from "./createRequestUrl";
 import type { EndpointMetadata } from "./EndpointMetadata";
@@ -31,7 +31,7 @@ export declare namespace Fetcher {
         duplex?: "half";
         endpointMetadata?: EndpointMetadata;
         fetchFn?: typeof fetch;
-        logger?: Logger;
+        logging?: LogConfig | Logger;
     }
 
     export type Error = FailedStatusCodeError | NonJsonError | TimeoutError | UnknownError;
@@ -114,7 +114,7 @@ export async function fetcherImpl<R = unknown>(args: Fetcher.Args): Promise<APIR
     });
     const fetchFn = args.fetchFn ?? (await getFetchFn());
     const headers = await getHeaders(args);
-    const logger = createLogger(args.logger);
+    const logger = createLogger(args.logging);
 
     if (logger.isDebug()) {
         const metadata = {

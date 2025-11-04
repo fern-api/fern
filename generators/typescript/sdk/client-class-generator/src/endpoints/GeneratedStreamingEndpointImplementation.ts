@@ -258,7 +258,7 @@ export class GeneratedStreamingEndpointImplementation implements GeneratedEndpoi
                 )
             }),
             fetchFn: this.generatedSdkClientClass.getReferenceToFetch(),
-            logger: this.generatedSdkClientClass.getReferenceToLogger(context),
+            logging: this.generatedSdkClientClass.getReferenceToLogger(context),
             responseType: "sse",
             withCredentials: this.includeCredentialsOnCrossOriginRequests,
             endpointMetadata: this.generateEndpointMetadata

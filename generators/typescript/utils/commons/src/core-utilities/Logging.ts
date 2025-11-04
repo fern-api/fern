@@ -2,7 +2,7 @@ import { ts } from "ts-morph";
 
 import { CoreUtility } from "./CoreUtility";
 
-export interface Logger {
+export interface Logging {
     LogLevel: {
         _getReferenceToType: () => ts.TypeNode;
     };
@@ -24,20 +24,20 @@ export interface Logger {
     };
 
     createLogger: {
-        _invoke: (args: ts.Expression[], options: { isOptional: boolean }) => ts.Expression;
+        _invoke: (arg: ts.Expression) => ts.Expression;
     };
 }
 
 export const MANIFEST: CoreUtility.Manifest = {
     name: "logging",
-    pathInCoreUtilities: { nameOnDisk: "logging", exportDeclaration: { exportAll: true, namespaceExport: "logging" } },
+    pathInCoreUtilities: { nameOnDisk: "logging", exportDeclaration: { namespaceExport: "logging" } },
     dependsOn: [],
     getFilesPatterns: () => {
         return { patterns: ["src/core/logging/**"] };
     }
 };
 
-export class LoggerImpl extends CoreUtility implements Logger {
+export class LoggingImpl extends CoreUtility implements Logging {
     public readonly MANIFEST = MANIFEST;
 
     public readonly LogLevel = {
@@ -64,12 +64,8 @@ export class LoggerImpl extends CoreUtility implements Logger {
     };
 
     public readonly createLogger = {
-        _invoke: this.withExportedName(
-            "createLogger",
-            (createLogger) =>
-                (args: ts.Expression[], _options: { isOptional: boolean }): ts.Expression => {
-                    return ts.factory.createCallExpression(createLogger.getExpression(), undefined, args);
-                }
-        )
+        _invoke: this.withExportedName("createLogger", (createLogger) => (arg: ts.Expression): ts.Expression => {
+            return ts.factory.createCallExpression(createLogger.getExpression(), undefined, [arg]);
+        })
     };
 }

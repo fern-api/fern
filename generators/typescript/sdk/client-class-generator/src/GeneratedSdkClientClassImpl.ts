@@ -755,7 +755,7 @@ export class GeneratedSdkClientClassImpl implements GeneratedSdkClientClass {
                 ${OAuthTokenProviderGenerator.OAUTH_CLIENT_SECRET_PROPERTY_NAME}: this._options.${OAuthTokenProviderGenerator.OAUTH_CLIENT_SECRET_PROPERTY_NAME}
             `;
             const statements = code`
-                ${this.getHeadersStatements(context)}
+                ${this.getCtorOptionsStatements(context)}
                 ${readClientId}
 
                 ${readClientSecret}
@@ -793,7 +793,7 @@ export class GeneratedSdkClientClassImpl implements GeneratedSdkClientClass {
                 }
             ];
             const statements = code`
-                ${this.getHeadersStatements(context)}
+                ${this.getCtorOptionsStatements(context)}
                 ${getTextOfTsNode(AuthProviderInstance.getReferenceToField())} = ${getTextOfTsNode(
                     this.authProvider.instantiate({
                         context,
@@ -846,7 +846,7 @@ export class GeneratedSdkClientClassImpl implements GeneratedSdkClientClass {
                 }
             ];
             const statements = code`
-                ${this.getHeadersStatements(context)}
+                ${this.getCtorOptionsStatements(context)}
                 ${getTextOfTsNode(AuthProviderInstance.getReferenceToField())} = _options.${AuthProviderInstance.OPTIONS_PROPERTY_NAME};
             `;
             serviceClass.ctors.push({
@@ -855,7 +855,7 @@ export class GeneratedSdkClientClassImpl implements GeneratedSdkClientClass {
             });
         } else {
             serviceClass.ctors.push({
-                statements: this.getHeadersStatements(context).toString({ dprintOptions: { indentWidth: 4 } }),
+                statements: this.getCtorOptionsStatements(context).toString({ dprintOptions: { indentWidth: 4 } }),
                 parameters: [
                     {
                         name: GeneratedSdkClientClassImpl.OPTIONS_PRIVATE_MEMBER,
@@ -1060,7 +1060,7 @@ export class GeneratedSdkClientClassImpl implements GeneratedSdkClientClass {
         context.sourceFile.addClass(serviceClass);
     }
 
-    private getHeadersStatements(context: SdkContext): Code {
+    private getCtorOptionsStatements(context: SdkContext): Code {
         const rootHeaders = this.isRoot ? this.getRootHeaders(context) : [];
         const shouldGenerateRootHeaders = this.isRoot && rootHeaders.length > 0;
         if (shouldGenerateRootHeaders) {
@@ -1069,6 +1069,11 @@ export class GeneratedSdkClientClassImpl implements GeneratedSdkClientClass {
             });
             return code`this._options = {
                     ..._options,
+                    logging: ${getTextOfTsNode(
+                        context.coreUtilities.logging.createLogger._invoke(
+                            ts.factory.createIdentifier("_options?.logging")
+                        )
+                    )},
                     headers: mergeHeaders(${getTextOfTsNode(
                         ts.factory.createObjectLiteralExpression(
                             rootHeaders.map(({ header, value }) =>
@@ -1640,10 +1645,8 @@ export class GeneratedSdkClientClassImpl implements GeneratedSdkClientClass {
         );
     }
 
-    public getReferenceToLogger(context: SdkContext): ts.Expression {
-        return context.coreUtilities.logger.createLogger._invoke([this.getReferenceToOption("logging")], {
-            isOptional: false
-        });
+    public getReferenceToLogger(_context: SdkContext): ts.Expression {
+        return this.getReferenceToOption("logging");
     }
 
     public getReferenceToOptions(): ts.Expression {

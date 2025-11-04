@@ -27,7 +27,7 @@ export interface Fetcher {
                 timeoutMs: "timeoutMs";
                 endpointMetadata: "endpointMetadata";
                 fetchFn: "fetchFn";
-                logger: "logger";
+                logging: "logging";
             };
         };
         Error: {
@@ -156,7 +156,7 @@ export declare namespace Fetcher {
         duplex?: ts.Expression;
         endpointMetadata?: ts.Expression;
         fetchFn?: ts.Expression;
-        logger?: ts.Expression;
+        logging?: ts.Expression;
     }
 }
 
@@ -229,7 +229,7 @@ export class FetcherImpl extends CoreUtility implements Fetcher {
                 timeoutInSeconds: "timeoutInSeconds",
                 endpointMetadata: "endpointMetadata",
                 fetchFn: "fetchFn",
-                logger: "logger"
+                logging: "logging"
             },
             _getReferenceToType: this.getReferenceToTypeInFetcherModule("Args")
         },
@@ -345,8 +345,10 @@ export class FetcherImpl extends CoreUtility implements Fetcher {
                     ts.factory.createPropertyAssignment(this.Fetcher.Args.properties.fetchFn, args.fetchFn)
                 );
             }
-            if (args.logger != null) {
-                properties.push(ts.factory.createPropertyAssignment(this.Fetcher.Args.properties.logger, args.logger));
+            if (args.logging != null) {
+                properties.push(
+                    ts.factory.createPropertyAssignment(this.Fetcher.Args.properties.logging, args.logging)
+                );
             }
 
             return ts.factory.createAwaitExpression(
