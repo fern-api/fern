@@ -1,8 +1,12 @@
 import { AbsoluteFilePath, doesPathExist, join, RelativeFilePath } from "@fern-api/fs-utils";
 import { TaskContext } from "@fern-api/task-context";
 import * as serializers from "@fern-fern/generators-sdk/serialization";
+import chalk from "chalk";
+import { readFile } from "fs/promises";
+import yaml from "js-yaml";
 import { GeneratorWorkspace } from "../../loadGeneratorWorkspaces";
-import { validateVersionsYml } from "./validateVersionsYml";
+import { validateAngleBracketEscaping } from "./angleBracketValidator";
+import { assertValidSemVerChangeOrThrow, assertValidSemVerOrThrow } from "./semVerUtils";
 
 const parseReleaseOrThrow = serializers.generators.GeneratorReleaseRequest.parseOrThrow;
 
@@ -31,13 +35,64 @@ export async function validateGenerator({
         return;
     }
 
-    // Use validateVersionsYml with generator-specific schema parser
-    await validateVersionsYml({
-        absolutePathToChangelog,
-        context,
-        schemaParser: (entry) => {
-            // Validate against GeneratorReleaseRequest schema
-            parseReleaseOrThrow({ generatorId, ...entry });
+    await validateGeneratorChangelog({ absolutePathToChangelog, context, generatorId });
+}
+
+async function validateGeneratorChangelog({
+    generatorId,
+    absolutePathToChangelog,
+    context
+}: {
+    generatorId: string;
+    absolutePathToChangelog: AbsoluteFilePath;
+    context: TaskContext;
+}): Promise<void> {
+    let hasErrors = false;
+    const changelogs = yaml.load((await readFile(absolutePathToChangelog)).toString());
+    if (Array.isArray(changelogs)) {
+        for (const entry of changelogs) {
+            const angleBracketErrors = validateAngleBracketEscaping(entry);
+            context.logger.debug(
+                `Checking version ${entry.version}: Found ${angleBracketErrors.length} angle bracket errors`
+            );
+            if (angleBracketErrors.length > 0) {
+                hasErrors = true;
+                for (const error of angleBracketErrors) {
+                    context.logger.error(chalk.red(error));
+                }
+            }
+
+            try {
+                const release = parseReleaseOrThrow({ generatorId, ...entry });
+                assertValidSemVerOrThrow(release.version);
+                context.logger.debug(chalk.green(`${release.version} is valid`));
+            } catch (e) {
+                hasErrors = true;
+                const maybeVersion = (entry as any)?.version;
+                if (maybeVersion != null) {
+                    context.logger.error(`${maybeVersion} is invalid`);
+                } else {
+                    context.logger.error(`Failed to parse: ${yaml.dump(entry)}`);
+                }
+                // biome-ignore lint: ignore next line
+                context.logger.error((e as Error)?.message);
+            }
         }
-    });
+        if (changelogs.length > 1) {
+            try {
+                const currentRelease = parseReleaseOrThrow({ generatorId, ...changelogs[0] });
+                const previousRelease = parseReleaseOrThrow({ generatorId, ...changelogs[1] });
+                assertValidSemVerChangeOrThrow(currentRelease, previousRelease);
+            } catch (e) {
+                context.logger.error(`Failed to validate semver change: ${yaml.dump(changelogs[0])}`);
+                context.logger.error((e as Error)?.message);
+                hasErrors = true;
+            }
+        }
+    }
+    if (!hasErrors) {
+        context.logger.info(chalk.green("All changelogs are valid"));
+    } else {
+        context.failAndThrow();
+    }
 }

@@ -1,4 +1,4 @@
-# yaml-language-server: $schema=../../generator-cli-versions-yml.schema.json
+# yaml-language-server: $schema=../../versions-yml.schema.json
 - changelogEntry:
     - summary: |
         Test new version detection.

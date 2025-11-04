@@ -9,18 +9,10 @@ import path from "path";
 import { validateAngleBracketEscaping } from "./angleBracketValidator";
 import { assertValidSemVerChangeOrThrow, assertValidSemVerOrThrow } from "./semVerUtils";
 
+// Note: If no JSON Schema is found in the file header, validation will fail.
 export interface ValidateVersionsYmlOptions {
     absolutePathToChangelog: AbsoluteFilePath;
     context: TaskContext;
-    /**
-     * Optional parser function to validate schema-specific requirements.
-     * If provided, will be called for each entry after basic validation.
-     * Should throw if entry doesn't match schema.
-     *
-     * Note: This is deprecated in favor of JSON Schema validation.
-     * If no JSON Schema is found in the file header, validation will fail.
-     */
-    schemaParser?: (entry: any) => void;
 }
 
 interface ChangelogEntry {
@@ -93,8 +85,7 @@ async function loadJsonSchema(
  */
 export async function validateVersionsYml({
     absolutePathToChangelog,
-    context,
-    schemaParser
+    context
 }: ValidateVersionsYmlOptions): Promise<void> {
     // Check if file exists
     if (!(await doesPathExist(absolutePathToChangelog))) {
@@ -194,22 +185,6 @@ export async function validateVersionsYml({
             hasErrors = true;
             context.logger.error(`${entry.version} is invalid semver`);
             context.logger.error((e as Error)?.message);
-        }
-
-        // Validate schema-specific requirements if parser provided
-        if (schemaParser) {
-            try {
-                schemaParser(entry);
-            } catch (e) {
-                hasErrors = true;
-                const maybeVersion = (entry as any)?.version;
-                if (maybeVersion != null) {
-                    context.logger.error(`${maybeVersion} failed schema validation`);
-                } else {
-                    context.logger.error(`Failed to parse: ${yaml.dump(entry)}`);
-                }
-                context.logger.error((e as Error)?.message);
-            }
         }
     }
 
