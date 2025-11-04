@@ -1190,49 +1190,184 @@ jobs:
           sparse-checkout: |
             .github/
 
-      # Filter out patches from incomplete generators
-      - name: Filter patches from incomplete generators
-        shell: bash
-        run: |
-          # Only keep patches for generators whose job result == success
-          [ "${{ needs.ruby-model-seed-update.result }}" = "success" ] || rm -f seed-ruby-model-*.patch || true
-          [ "${{ needs.ruby-sdk-seed-update.result }}" = "success" ] || rm -f seed-ruby-sdk-*.patch || true
-          [ "${{ needs.ruby-sdk-v2-seed-update.result }}" = "success" ] || rm -f seed-ruby-sdk-v2-*.patch || true
-          [ "${{ needs.pydantic-seed-update.result }}" = "success" ] || rm -f seed-pydantic-*.patch || true
-          [ "${{ needs.python-sdk-seed-update.result }}" = "success" ] || rm -f seed-python-sdk-*.patch || true
-          [ "${{ needs.fastapi-seed-update.result }}" = "success" ] || rm -f seed-fastapi-*.patch || true
-          [ "${{ needs.openapi-seed-update.result }}" = "success" ] || rm -f seed-openapi-*.patch || true
-          [ "${{ needs.postman-seed-update.result }}" = "success" ] || rm -f seed-postman-*.patch || true
-          [ "${{ needs.java-sdk-seed-update.result }}" = "success" ] || rm -f seed-java-sdk-*.patch || true
-          [ "${{ needs.java-model-seed-update.result }}" = "success" ] || rm -f seed-java-model-*.patch || true
-          [ "${{ needs.java-spring-seed-update.result }}" = "success" ] || rm -f seed-java-spring-*.patch || true
-          [ "${{ needs.typescript-sdk-seed-update.result }}" = "success" ] || rm -f seed-ts-sdk-*.patch || true
-          [ "${{ needs.typescript-express-seed-update.result }}" = "success" ] || rm -f seed-ts-express-*.patch || true
-          [ "${{ needs.go-fiber-seed-update.result }}" = "success" ] || rm -f seed-go-fiber-*.patch || true
-          [ "${{ needs.go-model-seed-update.result }}" = "success" ] || rm -f seed-go-model-*.patch || true
-          [ "${{ needs.go-sdk-seed-update.result }}" = "success" ] || rm -f seed-go-sdk-*.patch || true
-          [ "${{ needs.csharp-model-seed-update.result }}" = "success" ] || rm -f seed-csharp-model-*.patch || true
-          [ "${{ needs.csharp-sdk-seed-update.result }}" = "success" ] || rm -f seed-csharp-sdk-*.patch || true
-          [ "${{ needs.php-model-seed-update.result }}" = "success" ] || rm -f seed-php-model-*.patch || true
-          [ "${{ needs.php-sdk-seed-update.result }}" = "success" ] || rm -f seed-php-sdk-*.patch || true
-          [ "${{ needs.swift-sdk-seed-update.result }}" = "success" ] || rm -f seed-swift-sdk-*.patch || true
-          [ "${{ needs.rust-model-seed-update.result }}" = "success" ] || rm -f seed-rust-model-*.patch || true
-          [ "${{ needs.rust-sdk-seed-update.result }}" = "success" ] || rm -f seed-rust-sdk-*.patch || true
-
-      # Match to all patch files, since we are committing all generator changes at once
-      # Checkout the branch directly to avoid detaching the head so we can commit back changes
-      - name: Apply Patches
-        id: apply-patches
+      # Apply patches per generator, only for successful jobs
+      - name: Apply patches (ruby-model)
+        if: needs.ruby-model-seed-update.result == 'success'
         uses: ./.github/actions/apply-update-seed-patches
         with:
-          patch-pattern: seed-*.patch
+          patch-pattern: seed-ruby-model-*.patch
           checkout-ref: ${{ steps.extract-branch.outputs.branch }}
 
-      # Commit all applied patches back to branch (will be checked out in apply-patches step)
+      - name: Apply patches (ruby-sdk)
+        if: needs.ruby-sdk-seed-update.result == 'success'
+        uses: ./.github/actions/apply-update-seed-patches
+        with:
+          patch-pattern: seed-ruby-sdk-*.patch
+          checkout-ref: ${{ steps.extract-branch.outputs.branch }}
+
+      - name: Apply patches (ruby-sdk-v2)
+        if: needs.ruby-sdk-v2-seed-update.result == 'success'
+        uses: ./.github/actions/apply-update-seed-patches
+        with:
+          patch-pattern: seed-ruby-sdk-v2-*.patch
+          checkout-ref: ${{ steps.extract-branch.outputs.branch }}
+
+      - name: Apply patches (pydantic)
+        if: needs.pydantic-seed-update.result == 'success'
+        uses: ./.github/actions/apply-update-seed-patches
+        with:
+          patch-pattern: seed-pydantic-*.patch
+          checkout-ref: ${{ steps.extract-branch.outputs.branch }}
+
+      - name: Apply patches (python-sdk)
+        if: needs.python-sdk-seed-update.result == 'success'
+        uses: ./.github/actions/apply-update-seed-patches
+        with:
+          patch-pattern: seed-python-sdk-*.patch
+          checkout-ref: ${{ steps.extract-branch.outputs.branch }}
+
+      - name: Apply patches (fastapi)
+        if: needs.fastapi-seed-update.result == 'success'
+        uses: ./.github/actions/apply-update-seed-patches
+        with:
+          patch-pattern: seed-fastapi-*.patch
+          checkout-ref: ${{ steps.extract-branch.outputs.branch }}
+
+      - name: Apply patches (openapi)
+        if: needs.openapi-seed-update.result == 'success'
+        uses: ./.github/actions/apply-update-seed-patches
+        with:
+          patch-pattern: seed-openapi-*.patch
+          checkout-ref: ${{ steps.extract-branch.outputs.branch }}
+
+      - name: Apply patches (postman)
+        if: needs.postman-seed-update.result == 'success'
+        uses: ./.github/actions/apply-update-seed-patches
+        with:
+          patch-pattern: seed-postman-*.patch
+          checkout-ref: ${{ steps.extract-branch.outputs.branch }}
+
+      - name: Apply patches (java-sdk)
+        if: needs.java-sdk-seed-update.result == 'success'
+        uses: ./.github/actions/apply-update-seed-patches
+        with:
+          patch-pattern: seed-java-sdk-*.patch
+          checkout-ref: ${{ steps.extract-branch.outputs.branch }}
+
+      - name: Apply patches (java-model)
+        if: needs.java-model-seed-update.result == 'success'
+        uses: ./.github/actions/apply-update-seed-patches
+        with:
+          patch-pattern: seed-java-model-*.patch
+          checkout-ref: ${{ steps.extract-branch.outputs.branch }}
+
+      - name: Apply patches (java-spring)
+        if: needs.java-spring-seed-update.result == 'success'
+        uses: ./.github/actions/apply-update-seed-patches
+        with:
+          patch-pattern: seed-java-spring-*.patch
+          checkout-ref: ${{ steps.extract-branch.outputs.branch }}
+
+      - name: Apply patches (ts-sdk)
+        if: needs.typescript-sdk-seed-update.result == 'success'
+        uses: ./.github/actions/apply-update-seed-patches
+        with:
+          patch-pattern: seed-ts-sdk-*.patch
+          checkout-ref: ${{ steps.extract-branch.outputs.branch }}
+
+      - name: Apply patches (ts-express)
+        if: needs.typescript-express-seed-update.result == 'success'
+        uses: ./.github/actions/apply-update-seed-patches
+        with:
+          patch-pattern: seed-ts-express-*.patch
+          checkout-ref: ${{ steps.extract-branch.outputs.branch }}
+
+      - name: Apply patches (go-fiber)
+        if: needs.go-fiber-seed-update.result == 'success'
+        uses: ./.github/actions/apply-update-seed-patches
+        with:
+          patch-pattern: seed-go-fiber-*.patch
+          checkout-ref: ${{ steps.extract-branch.outputs.branch }}
+
+      - name: Apply patches (go-model)
+        if: needs.go-model-seed-update.result == 'success'
+        uses: ./.github/actions/apply-update-seed-patches
+        with:
+          patch-pattern: seed-go-model-*.patch
+          checkout-ref: ${{ steps.extract-branch.outputs.branch }}
+
+      - name: Apply patches (go-sdk)
+        if: needs.go-sdk-seed-update.result == 'success'
+        uses: ./.github/actions/apply-update-seed-patches
+        with:
+          patch-pattern: seed-go-sdk-*.patch
+          checkout-ref: ${{ steps.extract-branch.outputs.branch }}
+
+      - name: Apply patches (csharp-model)
+        if: needs.csharp-model-seed-update.result == 'success'
+        uses: ./.github/actions/apply-update-seed-patches
+        with:
+          patch-pattern: seed-csharp-model-*.patch
+          checkout-ref: ${{ steps.extract-branch.outputs.branch }}
+
+      - name: Apply patches (csharp-sdk)
+        if: needs.csharp-sdk-seed-update.result == 'success'
+        uses: ./.github/actions/apply-update-seed-patches
+        with:
+          patch-pattern: seed-csharp-sdk-*.patch
+          checkout-ref: ${{ steps.extract-branch.outputs.branch }}
+
+      - name: Apply patches (php-model)
+        if: needs.php-model-seed-update.result == 'success'
+        uses: ./.github/actions/apply-update-seed-patches
+        with:
+          patch-pattern: seed-php-model-*.patch
+          checkout-ref: ${{ steps.extract-branch.outputs.branch }}
+
+      - name: Apply patches (php-sdk)
+        if: needs.php-sdk-seed-update.result == 'success'
+        uses: ./.github/actions/apply-update-seed-patches
+        with:
+          patch-pattern: seed-php-sdk-*.patch
+          checkout-ref: ${{ steps.extract-branch.outputs.branch }}
+
+      - name: Apply patches (swift-sdk)
+        if: needs.swift-sdk-seed-update.result == 'success'
+        uses: ./.github/actions/apply-update-seed-patches
+        with:
+          patch-pattern: seed-swift-sdk-*.patch
+          checkout-ref: ${{ steps.extract-branch.outputs.branch }}
+
+      - name: Apply patches (rust-model)
+        if: needs.rust-model-seed-update.result == 'success'
+        uses: ./.github/actions/apply-update-seed-patches
+        with:
+          patch-pattern: seed-rust-model-*.patch
+          checkout-ref: ${{ steps.extract-branch.outputs.branch }}
+
+      - name: Apply patches (rust-sdk)
+        if: needs.rust-sdk-seed-update.result == 'success'
+        uses: ./.github/actions/apply-update-seed-patches
+        with:
+          patch-pattern: seed-rust-sdk-*.patch
+          checkout-ref: ${{ steps.extract-branch.outputs.branch }}
+
+      # Detect if any changes were made
+      - name: Detect changes
+        id: detect-changes
+        shell: bash
+        run: |
+          if [ -n "$(git status --porcelain -- seed/)" ]; then
+            echo "has_changes=true" >> $GITHUB_OUTPUT
+          else
+            echo "has_changes=false" >> $GITHUB_OUTPUT
+          fi
+
+      # Commit all applied patches back to branch (will be checked out in apply-patches steps)
       - name: Add and Commit Changes
         id: commit-changes
         uses: EndBug/add-and-commit@v9
-        if: ${{ steps.apply-patches.outputs.has-patches == 'true' }}
+        if: ${{ steps.detect-changes.outputs.has_changes == 'true' }}
         with:
           add: "seed/*"
           push: true
