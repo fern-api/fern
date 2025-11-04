@@ -3,7 +3,7 @@ import { FernToken } from "@fern-api/auth";
 import { SourceResolverImpl } from "@fern-api/cli-source-resolver";
 import { Audiences } from "@fern-api/configuration";
 import { createFdrService } from "@fern-api/core";
-import { FernRegistry as FdrCjsSdk } from "@fern-api/fdr-sdk";
+import { FdrAPI as FdrCjsSdk } from "@fern-api/fdr-sdk";
 import { generateIntermediateRepresentation } from "@fern-api/ir-generator";
 import { IntermediateRepresentation } from "@fern-api/ir-sdk";
 import { TaskContext } from "@fern-api/task-context";

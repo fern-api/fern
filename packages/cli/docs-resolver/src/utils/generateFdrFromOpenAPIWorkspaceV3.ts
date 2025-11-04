@@ -1,6 +1,6 @@
 import { AbstractAPIWorkspace } from "@fern-api/api-workspace-commons";
 import { Audiences } from "@fern-api/configuration";
-import { FernRegistry as FdrCjsSdk } from "@fern-api/fdr-sdk";
+import { FdrAPI as FdrCjsSdk } from "@fern-api/fdr-sdk";
 import { LazyFernWorkspace, OSSWorkspace } from "@fern-api/lazy-fern-workspace";
 import { convertIrToFdrApi } from "@fern-api/register";
 import { TaskContext } from "@fern-api/task-context";

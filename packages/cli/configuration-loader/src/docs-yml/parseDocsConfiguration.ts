@@ -1,6 +1,6 @@
 import { docsYml } from "@fern-api/configuration";
 import { assertNever, isPlainObject } from "@fern-api/core-utils";
-import { FernRegistry as CjsFdrSdk } from "@fern-api/fdr-sdk";
+import { FdrAPI as CjsFdrSdk } from "@fern-api/fdr-sdk";
 import { AbsoluteFilePath, dirname, doesPathExist, listFiles, resolve } from "@fern-api/fs-utils";
 import { TaskContext } from "@fern-api/task-context";
 import { readFile } from "fs/promises";

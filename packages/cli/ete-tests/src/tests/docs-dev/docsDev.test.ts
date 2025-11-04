@@ -1,4 +1,4 @@
-import { FernRegistry as FdrCjsSdk } from "@fern-api/fdr-sdk";
+import { FdrAPI as FdrCjsSdk } from "@fern-api/fdr-sdk";
 import { AbsoluteFilePath, join, RelativeFilePath } from "@fern-api/fs-utils";
 import fetch from "node-fetch";
 

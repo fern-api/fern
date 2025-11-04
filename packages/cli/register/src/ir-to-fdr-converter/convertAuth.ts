@@ -1,5 +1,5 @@
 import { assertNever } from "@fern-api/core-utils";
-import { FernRegistry as FdrCjsSdk } from "@fern-api/fdr-sdk";
+import { FdrAPI as FdrCjsSdk } from "@fern-api/fdr-sdk";
 import { FernIr as Ir } from "@fern-api/ir-sdk";
 import { TaskContext } from "@fern-api/task-context";
 

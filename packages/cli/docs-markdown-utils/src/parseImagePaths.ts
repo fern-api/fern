@@ -1,4 +1,4 @@
-import { FernRegistry as CjsFdrSdk } from "@fern-api/fdr-sdk";
+import { FdrAPI as CjsFdrSdk, DocsV1Write } from "@fern-api/fdr-sdk";
 import { AbsoluteFilePath, dirname, RelativeFilePath, resolve } from "@fern-api/fs-utils";
 import { TaskContext } from "@fern-api/task-context";
 import type { Node as EstreeNode } from "estree";
@@ -337,7 +337,7 @@ export function trimAnchor(text: unknown): string | undefined {
 }
 
 function visitFrontmatterImages(
-    data: Record<string, string | CjsFdrSdk.docs.v1.commons.FileIdOrUrl>,
+    data: Record<string, string | DocsV1Write.FileIdOrUrl>,
     keys: string[],
     mapImage: (image: string | undefined) => string | undefined
 ) {
@@ -380,7 +380,7 @@ const LogoOverrideFrontmatterSchema = z.union([
 export function convertImageToFileIdOrUrl(
     value: string,
     mapImage: (image: string | undefined) => string | undefined
-): CjsFdrSdk.docs.latest.FileIdOrUrl {
+): DocsV1Write.FileIdOrUrl {
     const mappedImage = mapImage(value);
     return mappedImage
         ? {

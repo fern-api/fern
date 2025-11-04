@@ -1,4 +1,4 @@
-import { FernRegistry as CjsFdrSdk, FernRegistry } from "@fern-api/fdr-sdk";
+import { FernDocs } from "@fern-api/fdr-sdk";
 import { AbsoluteFilePath, RelativeFilePath } from "@fern-api/fs-utils";
 import { readFile } from "fs/promises";
 import grayMatter from "gray-matter";
@@ -14,7 +14,7 @@ export declare namespace convertMarkdown {
     interface Return {
         mintlifyFrontmatter: ParsedFrontmatter;
         relativeFilepathFromRoot: RelativeFilePath;
-        frontmatter: CjsFdrSdk.docs.latest.Frontmatter;
+        frontmatter: FernDocs.Frontmatter;
         sidebarTitle: string | undefined;
         content: string;
     }
@@ -39,7 +39,8 @@ export async function convertMarkdown({
             layout: data.mode != null ? "reference" : undefined,
             // biome-ignore lint/suspicious/noExplicitAny: allow explicit any
             image: data["og:image"] as any,
-            slug: FernRegistry.navigation.latest.Slug(slug),
+            // biome-ignore lint/suspicious/noExplicitAny: branded type compatibility
+            slug: slug as any,
 
             // TODO: check if any of these can be set:
             headline: undefined,

@@ -1,6 +1,6 @@
 import { docsYml } from "@fern-api/configuration";
 import { assertNever } from "@fern-api/core-utils";
-import { FernRegistry as CjsFdrSdk } from "@fern-api/fdr-sdk";
+import { FdrAPI as CjsFdrSdk } from "@fern-api/fdr-sdk";
 import { TaskContext } from "@fern-api/task-context";
 import tinycolor from "tinycolor2";
 

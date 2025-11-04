@@ -3,7 +3,7 @@ import { SourceResolverImpl } from "@fern-api/cli-source-resolver";
 import { Audiences, fernConfigJson, generatorsYml } from "@fern-api/configuration";
 import { createFdrService, createVenusService } from "@fern-api/core";
 import { replaceEnvVariables } from "@fern-api/core-utils";
-import { FernRegistry as FdrAPI, FernRegistryClient as FdrClient } from "@fern-api/fdr-sdk";
+import { FdrAPI, FdrClient } from "@fern-api/fdr-sdk";
 import { AbsoluteFilePath } from "@fern-api/fs-utils";
 import { generateIntermediateRepresentation } from "@fern-api/ir-generator";
 import { FernIr } from "@fern-api/ir-sdk";

@@ -3,7 +3,8 @@
   "compilerOptions": {
     "composite": true,
     "outDir": "lib",
-    "rootDir": "src"
+    "rootDir": "src",
+    "moduleResolution": "bundler"
   },
   "include": ["./src/**/*"]
 }

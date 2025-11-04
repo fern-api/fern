@@ -1,5 +1,5 @@
 import { docsYml } from "@fern-api/configuration";
-import { FernRegistry as CjsFdrSdk } from "@fern-api/fdr-sdk";
+import { FdrAPI as CjsFdrSdk } from "@fern-api/fdr-sdk";
 import { AbsoluteFilePath, RelativeFilePath } from "@fern-api/fs-utils";
 
 /**
