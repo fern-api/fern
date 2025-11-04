@@ -4,7 +4,7 @@
     - summary: |
         Upgrade to IRv61.
       type: chore
-  createdAt: "2025-11-03"
+  createdAt: "2025-11-04"
   irVersion: 61
 
 - version: 0.23.8
