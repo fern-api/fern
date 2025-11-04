@@ -192,7 +192,8 @@ export class WireTestGenerator {
 
         const methodCall = this.parseMethodCall(snippet);
         if (methodCall) {
-            lines.push(`    ${methodCall}`);
+            const normalizedMethodCall = this.normalizeMethodCall(methodCall, endpoint);
+            lines.push(`    ${normalizedMethodCall}`);
             lines.push("");
         }
 
@@ -264,6 +265,55 @@ export class WireTestGenerator {
         }
 
         return null;
+    }
+
+    private normalizeMethodCall(methodCall: string, endpoint: HttpEndpoint): string {
+        let normalized = methodCall.trim();
+
+        normalized = normalized.replace(/;+$/, "");
+
+        const hashArgMatch = normalized.match(/(\w+)\s*\(\s*\{([\s\S]*?)\}\s*\)/);
+        if (hashArgMatch) {
+            normalized = normalized.replace(/\(\s*\{([\s\S]*?)\}\s*\)/, "($1)");
+        }
+
+        const mappingKey = this.wiremockMappingKey({
+            requestMethod: endpoint.method,
+            requestUrlPathTemplate:
+                endpoint.fullPath.head +
+                endpoint.fullPath.parts.map((part) => `{${part.pathParameter}}${part.tail}`).join("")
+        });
+
+        const wiremockMapping = this.wireMockConfigContent[mappingKey];
+        if (!wiremockMapping) {
+            return normalized;
+        }
+
+        const pathParams = wiremockMapping.request.pathParameters || {};
+        const pathParamEntries: string[] = [];
+
+        for (const [paramName, paramValue] of Object.entries(pathParams)) {
+            if (paramValue && typeof paramValue === "object" && "equalTo" in paramValue) {
+                const paramValueStr = JSON.stringify(String(paramValue.equalTo));
+                if (!normalized.includes(`${paramName}:`)) {
+                    pathParamEntries.push(`${paramName}: ${paramValueStr}`);
+                }
+            }
+        }
+
+        if (pathParamEntries.length > 0) {
+            if (normalized.includes("(")) {
+                if (normalized.match(/\(\s*\)/)) {
+                    normalized = normalized.replace(/\(\s*\)/, `(${pathParamEntries.join(", ")})`);
+                } else {
+                    normalized = normalized.replace(/\(/, `(${pathParamEntries.join(", ")}, `);
+                }
+            } else {
+                normalized = `${normalized}(${pathParamEntries.join(", ")})`;
+            }
+        }
+
+        return normalized;
     }
 
     private getTestClassName(serviceName: string): string {
