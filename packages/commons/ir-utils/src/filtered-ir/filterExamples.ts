@@ -348,6 +348,30 @@ function filterExampleRequestBody({
             const filteredReference = filterExampleTypeReference({ filteredIr, exampleTypeReference: reference });
             return filteredReference !== undefined ? ExampleRequestBody.reference(filteredReference) : undefined;
         },
+        fileUpload: (fileUpload) => {
+            return {
+                ...requestBody,
+                properties: fileUpload.properties
+                    .filter((p) =>
+                        p.originalTypeDeclaration
+                            ? filteredIr.hasProperty(p.originalTypeDeclaration.typeId, p.name.wireValue)
+                            : true
+                    )
+                    .map((property) => {
+                        const filteredProperty = filterExampleTypeReference({
+                            filteredIr,
+                            exampleTypeReference: property.value
+                        });
+                        return filteredProperty !== undefined
+                            ? {
+                                  ...property,
+                                  value: filteredProperty
+                              }
+                            : undefined;
+                    })
+                    .filter((property): property is ExampleInlinedRequestBodyProperty => property !== undefined)
+            };
+        },
         _other: () => {
             throw new Error("Received unknown type for example.");
         }

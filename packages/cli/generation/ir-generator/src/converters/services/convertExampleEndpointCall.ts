@@ -392,16 +392,18 @@ function convertExampleRequestBody({
 
             if (inlinedRequestPropertyType != null && parseRawFileType(inlinedRequestPropertyType) != null) {
                 const fileType = parseRawFileType(inlinedRequestPropertyType);
-                const exampleFile = convertExampleFile({ propertyExample, fileType });
-                if (exampleFile != null) {
-                    exampleFileProperties.push({
-                        name: file.casingsGenerator.generateNameAndWireValue({
-                            name: getPropertyName({ propertyKey: wireKey, property: inlinedRequestPropertyDeclaration })
-                                .name,
-                            wireValue: wireKey
-                        }),
-                        value: exampleFile
-                    });
+                if (fileType != null && inlinedRequestPropertyDeclaration != null) {
+                    const exampleFile = convertExampleFile({ propertyExample, fileType });
+                    if (exampleFile != null) {
+                        exampleFileProperties.push({
+                            name: file.casingsGenerator.generateNameAndWireValue({
+                                name: getPropertyName({ propertyKey: wireKey, property: inlinedRequestPropertyDeclaration })
+                                    .name,
+                                wireValue: wireKey
+                            }),
+                            value: exampleFile
+                        });
+                    }
                 }
             } else if (inlinedRequestPropertyDeclaration != null) {
                 exampleProperties.push({
