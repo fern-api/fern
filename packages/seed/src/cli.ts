@@ -20,6 +20,7 @@ import { DockerTestRunner, LocalTestRunner, TestRunner } from "./commands/test/t
 import { FIXTURES, LANGUAGE_SPECIFIC_FIXTURE_PREFIXES, testGenerator } from "./commands/test/testWorkspaceFixtures";
 import { validateCliRelease } from "./commands/validate/validateCliChangelog";
 import { validateGenerator } from "./commands/validate/validateGeneratorChangelog";
+import { validateVersionsYml } from "./commands/validate/validateVersionsYml";
 import { GeneratorWorkspace, loadGeneratorWorkspaces } from "./loadGeneratorWorkspaces";
 import { Semaphore } from "./Semaphore";
 
@@ -746,6 +747,34 @@ function addValidateCommands(cli: Argv) {
                             context: taskContextFactory.create(argv.generator)
                         });
                     }
+                }
+            )
+            .command(
+                "versions-yml",
+                "validate an arbitrary versions.yml (changelog) file",
+                (yargs) =>
+                    yargs
+                        .option("path", {
+                            type: "string",
+                            demandOption: true,
+                            description: "Path to the versions.yml file to validate"
+                        })
+                        .option("log-level", {
+                            default: LogLevel.Info,
+                            choices: LOG_LEVELS
+                        }),
+                async (argv) => {
+                    const taskContextFactory = new TaskContextFactory(argv["log-level"]);
+                    const context = taskContextFactory.create("Validate");
+
+                    const absolutePath = argv.path.startsWith("/")
+                        ? AbsoluteFilePath.of(argv.path)
+                        : join(AbsoluteFilePath.of(process.cwd()), RelativeFilePath.of(argv.path));
+
+                    await validateVersionsYml({
+                        absolutePathToChangelog: absolutePath,
+                        context
+                    });
                 }
             );
     });
