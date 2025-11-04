@@ -1446,12 +1446,27 @@ importers:
       '@fern-api/configs':
         specifier: workspace:*
         version: link:../../../packages/configs
+      '@fern-api/core-utils':
+        specifier: workspace:*
+        version: link:../../../packages/commons/core-utils
+      '@fern-api/fs-utils':
+        specifier: workspace:*
+        version: link:../../../packages/commons/fs-utils
       '@fern-api/logger':
         specifier: workspace:*
         version: link:../../../packages/cli/logger
+      '@fern-api/mock-utils':
+        specifier: workspace:*
+        version: link:../../../packages/commons/mock-utils
+      '@fern-api/python-ast':
+        specifier: workspace:*
+        version: link:../ast
       '@fern-api/python-base':
         specifier: workspace:*
         version: link:../base
+      '@fern-api/python-dynamic-snippets':
+        specifier: workspace:*
+        version: link:../dynamic-snippets
       '@fern-fern/generator-cli-sdk':
         specifier: ^0.1.5
         version: 0.1.5

@@ -6,6 +6,7 @@ import { IntermediateRepresentation } from "@fern-fern/ir-sdk/api";
 
 import { SdkCustomConfigSchema } from "./SdkCustomConfig";
 import { SdkGeneratorContext } from "./SdkGeneratorContext";
+import { WireTestGenerator } from "./wire-tests/WireTestGenerator";
 
 export class SdkGeneratorCli extends AbstractPythonGeneratorCli<SdkCustomConfigSchema, SdkGeneratorContext> {
     protected constructContext({
@@ -46,6 +47,16 @@ export class SdkGeneratorCli extends AbstractPythonGeneratorCli<SdkCustomConfigS
     }
 
     protected async generate(context: SdkGeneratorContext): Promise<void> {
+        if (context.customConfig.generateWireTests === true) {
+            try {
+                const wireTestGenerator = new WireTestGenerator(context);
+                await wireTestGenerator.generate();
+                context.logger.info("Generated wire tests successfully");
+            } catch (error) {
+                context.logger.warn(`Failed to generate wire tests: ${error}`);
+            }
+        }
+        
         await context.project.persist();
     }
 
