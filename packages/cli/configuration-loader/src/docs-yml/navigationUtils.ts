@@ -134,8 +134,8 @@ export async function buildNavigationForDirectory({
     ];
 
     itemsWithMeta.sort((a, b) => {
-        const aHasPosition = a.position != null;
-        const bHasPosition = b.position != null;
+        const aHasPosition = typeof a.position === "number";
+        const bHasPosition = typeof b.position === "number";
 
         if (aHasPosition && !bHasPosition) {
             return -1;
@@ -144,8 +144,8 @@ export async function buildNavigationForDirectory({
             return 1;
         }
 
-        if (aHasPosition && bHasPosition) {
-            const positionDiff = a.position! - b.position!;
+        if (typeof a.position === "number" && typeof b.position === "number") {
+            const positionDiff = a.position - b.position;
             if (positionDiff !== 0) {
                 return positionDiff;
             }

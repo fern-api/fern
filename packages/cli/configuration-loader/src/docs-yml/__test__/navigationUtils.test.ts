@@ -431,8 +431,12 @@ describe("buildNavigationForDirectory with position-based sorting", () => {
         ];
 
         const mockReadFile = async (path: string) => {
-            if (path === "/test/a.md") return "---\nposition: 1\n---\n# A";
-            if (path === "/test/d.md") return "---\nposition: 99\n---\n# D";
+            if (path === "/test/a.md") {
+                return "---\nposition: 1\n---\n# A";
+            }
+            if (path === "/test/d.md") {
+                return "---\nposition: 99\n---\n# D";
+            }
             return "---\ntitle: Test\n---\n# Content";
         };
 
@@ -509,8 +513,12 @@ describe("buildNavigationForDirectory with position-based sorting", () => {
         ];
 
         const mockReadFile = async (path: string) => {
-            if (path === "/test/a.md") return "---\nposition: -5\n---\n# A";
-            if (path === "/test/b.md") return "---\nposition: 2\n---\n# B";
+            if (path === "/test/a.md") {
+                return "---\nposition: -5\n---\n# A";
+            }
+            if (path === "/test/b.md") {
+                return "---\nposition: 2\n---\n# B";
+            }
             return "---\ntitle: Test\n---\n# C";
         };
 
@@ -557,7 +565,9 @@ describe("buildNavigationForDirectory with position-based sorting", () => {
         };
 
         const mockReadFile = async (path: string) => {
-            if (path === "/test/apple.md") return "---\nposition: 1\n---\n# Apple";
+            if (path === "/test/apple.md") {
+                return "---\nposition: 1\n---\n# Apple";
+            }
             return "---\ntitle: Test\n---\n# Content";
         };
 
@@ -590,8 +600,12 @@ describe("buildNavigationForDirectory with position-based sorting", () => {
         ];
 
         const mockReadFile = async (path: string) => {
-            if (path === "/test/a.md") return "---\nposition: '10'\n---\n# A";
-            if (path === "/test/b.md") return "---\nposition: 5\n---\n# B";
+            if (path === "/test/a.md") {
+                return "---\nposition: '10'\n---\n# A";
+            }
+            if (path === "/test/b.md") {
+                return "---\nposition: 5\n---\n# B";
+            }
             return "---\ntitle: Test\n---\n# Content";
         };
 
@@ -629,8 +643,12 @@ describe("buildNavigationForDirectory with position-based sorting", () => {
         ];
 
         const mockReadFile = async (path: string) => {
-            if (path === "/test/a.md") return "---\nposition: 'foo'\n---\n# A";
-            if (path === "/test/b.md") return "---\nposition: 1\n---\n# B";
+            if (path === "/test/a.md") {
+                return "---\nposition: 'foo'\n---\n# A";
+            }
+            if (path === "/test/b.md") {
+                return "---\nposition: 1\n---\n# B";
+            }
             return "---\ntitle: Test\n---\n# C";
         };
 
@@ -663,8 +681,12 @@ describe("buildNavigationForDirectory with position-based sorting", () => {
         ];
 
         const mockReadFile = async (path: string) => {
-            if (path === "/test/a.mdx") return "---\nposition: 2\n---\n# A";
-            if (path === "/test/b.mdx") return "---\nposition: 1\n---\n# B";
+            if (path === "/test/a.mdx") {
+                return "---\nposition: 2\n---\n# A";
+            }
+            if (path === "/test/b.mdx") {
+                return "---\nposition: 1\n---\n# B";
+            }
             return "---\ntitle: Test\n---\n# Content";
         };
 
@@ -702,9 +724,15 @@ describe("buildNavigationForDirectory with position-based sorting", () => {
         ];
 
         const mockReadFile = async (path: string) => {
-            if (path === "/test/a.md") return "---\nposition: 1.5\n---\n# A";
-            if (path === "/test/b.md") return "---\nposition: 1\n---\n# B";
-            if (path === "/test/c.md") return "---\nposition: 2\n---\n# C";
+            if (path === "/test/a.md") {
+                return "---\nposition: 1.5\n---\n# A";
+            }
+            if (path === "/test/b.md") {
+                return "---\nposition: 1\n---\n# B";
+            }
+            if (path === "/test/c.md") {
+                return "---\nposition: 2\n---\n# C";
+            }
             return "---\ntitle: Test\n---\n# Content";
         };
 
