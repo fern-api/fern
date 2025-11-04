@@ -1,0 +1,98 @@
+{
+  "servers": [],
+  "websocketServers": [],
+  "tags": {
+    "tagsById": {}
+  },
+  "hasEndpointsMarkedInternal": false,
+  "endpoints": [],
+  "webhooks": [],
+  "channels": {
+    "SpeakV1": {
+      "audiences": [],
+      "handshake": {
+        "headers": [],
+        "queryParameters": [],
+        "pathParameters": []
+      },
+      "groupName": [
+        "SpeakV1"
+      ],
+      "messages": [
+        {
+          "origin": "client",
+          "name": "SpeakV1Text",
+          "body": {
+            "allOf": [],
+            "properties": [
+              {
+                "conflict": {},
+                "generatedName": "speakV1TextType",
+                "key": "type",
+                "schema": {
+                  "description": "Message type identifier",
+                  "schema": {
+                    "example": "Speak",
+                    "type": "string"
+                  },
+                  "generatedName": "SpeakV1TextType",
+                  "groupName": [],
+                  "type": "primitive"
+                },
+                "audiences": []
+              }
+            ],
+            "allOfPropertyConflicts": [],
+            "generatedName": "SpeakV1Text",
+            "groupName": [],
+            "additionalProperties": false,
+            "source": {
+              "file": "../asyncapi.yml",
+              "type": "openapi"
+            },
+            "type": "object"
+          }
+        }
+      ],
+      "servers": [],
+      "path": "/SpeakV1",
+      "examples": [
+        {
+          "queryParameters": [],
+          "headers": [],
+          "messages": [
+            {
+              "messageType": "SpeakV1Text",
+              "payload": {
+                "properties": {
+                  "type": {
+                    "value": {
+                      "value": "Text",
+                      "type": "string"
+                    },
+                    "type": "primitive"
+                  }
+                },
+                "type": "object"
+              }
+            }
+          ]
+        }
+      ],
+      "source": {
+        "file": "../asyncapi.yml",
+        "type": "openapi"
+      }
+    }
+  },
+  "groupedSchemas": {
+    "rootSchemas": {},
+    "namespacedSchemas": {}
+  },
+  "variables": {},
+  "nonRequestReferencedSchemas": {},
+  "securitySchemes": {},
+  "globalHeaders": [],
+  "idempotencyHeaders": [],
+  "groups": {}
+}

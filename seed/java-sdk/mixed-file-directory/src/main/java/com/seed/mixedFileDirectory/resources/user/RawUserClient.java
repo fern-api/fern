@@ -73,11 +73,9 @@ public class RawUserClient {
                         ObjectMappers.JSON_MAPPER.readValue(responseBodyString, new TypeReference<List<User>>() {}),
                         response);
             }
+            Object errorBody = ObjectMappers.parseErrorBody(responseBodyString);
             throw new SeedMixedFileDirectoryApiException(
-                    "Error with status code " + response.code(),
-                    response.code(),
-                    ObjectMappers.JSON_MAPPER.readValue(responseBodyString, Object.class),
-                    response);
+                    "Error with status code " + response.code(), response.code(), errorBody, response);
         } catch (IOException e) {
             throw new SeedMixedFileDirectoryException("Network error executing HTTP request", e);
         }

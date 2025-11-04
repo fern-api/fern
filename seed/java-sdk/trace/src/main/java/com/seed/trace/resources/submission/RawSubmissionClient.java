@@ -66,11 +66,9 @@ public class RawSubmissionClient {
                         ObjectMappers.JSON_MAPPER.readValue(responseBodyString, ExecutionSessionResponse.class),
                         response);
             }
+            Object errorBody = ObjectMappers.parseErrorBody(responseBodyString);
             throw new SeedTraceApiException(
-                    "Error with status code " + response.code(),
-                    response.code(),
-                    ObjectMappers.JSON_MAPPER.readValue(responseBodyString, Object.class),
-                    response);
+                    "Error with status code " + response.code(), response.code(), errorBody, response);
         } catch (IOException e) {
             throw new SeedTraceException("Network error executing HTTP request", e);
         }
@@ -112,11 +110,9 @@ public class RawSubmissionClient {
                                 responseBodyString, new TypeReference<Optional<ExecutionSessionResponse>>() {}),
                         response);
             }
+            Object errorBody = ObjectMappers.parseErrorBody(responseBodyString);
             throw new SeedTraceApiException(
-                    "Error with status code " + response.code(),
-                    response.code(),
-                    ObjectMappers.JSON_MAPPER.readValue(responseBodyString, Object.class),
-                    response);
+                    "Error with status code " + response.code(), response.code(), errorBody, response);
         } catch (IOException e) {
             throw new SeedTraceException("Network error executing HTTP request", e);
         }
@@ -154,11 +150,9 @@ public class RawSubmissionClient {
                 return new SeedTraceHttpResponse<>(null, response);
             }
             String responseBodyString = responseBody != null ? responseBody.string() : "{}";
+            Object errorBody = ObjectMappers.parseErrorBody(responseBodyString);
             throw new SeedTraceApiException(
-                    "Error with status code " + response.code(),
-                    response.code(),
-                    ObjectMappers.JSON_MAPPER.readValue(responseBodyString, Object.class),
-                    response);
+                    "Error with status code " + response.code(), response.code(), errorBody, response);
         } catch (IOException e) {
             throw new SeedTraceException("Network error executing HTTP request", e);
         }
@@ -193,11 +187,9 @@ public class RawSubmissionClient {
                         ObjectMappers.JSON_MAPPER.readValue(responseBodyString, GetExecutionSessionStateResponse.class),
                         response);
             }
+            Object errorBody = ObjectMappers.parseErrorBody(responseBodyString);
             throw new SeedTraceApiException(
-                    "Error with status code " + response.code(),
-                    response.code(),
-                    ObjectMappers.JSON_MAPPER.readValue(responseBodyString, Object.class),
-                    response);
+                    "Error with status code " + response.code(), response.code(), errorBody, response);
         } catch (IOException e) {
             throw new SeedTraceException("Network error executing HTTP request", e);
         }

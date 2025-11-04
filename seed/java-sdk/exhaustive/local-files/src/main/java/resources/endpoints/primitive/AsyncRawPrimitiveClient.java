@@ -79,7 +79,8 @@ public class AsyncRawPrimitiveClient {
             future.complete(new SeedExhaustiveHttpResponse<>(ObjectMappers.JSON_MAPPER.readValue(responseBodyString, String.class), response));
             return;
           }
-          future.completeExceptionally(new SeedExhaustiveApiException("Error with status code " + response.code(), response.code(), ObjectMappers.JSON_MAPPER.readValue(responseBodyString, Object.class), response));
+          Object errorBody = ObjectMappers.parseErrorBody(responseBodyString);
+          future.completeExceptionally(new SeedExhaustiveApiException("Error with status code " + response.code(), response.code(), errorBody, response));
           return;
         }
         catch (IOException e) {
@@ -133,7 +134,8 @@ public class AsyncRawPrimitiveClient {
             future.complete(new SeedExhaustiveHttpResponse<>(ObjectMappers.JSON_MAPPER.readValue(responseBodyString, int.class), response));
             return;
           }
-          future.completeExceptionally(new SeedExhaustiveApiException("Error with status code " + response.code(), response.code(), ObjectMappers.JSON_MAPPER.readValue(responseBodyString, Object.class), response));
+          Object errorBody = ObjectMappers.parseErrorBody(responseBodyString);
+          future.completeExceptionally(new SeedExhaustiveApiException("Error with status code " + response.code(), response.code(), errorBody, response));
           return;
         }
         catch (IOException e) {
@@ -187,7 +189,8 @@ public class AsyncRawPrimitiveClient {
             future.complete(new SeedExhaustiveHttpResponse<>(ObjectMappers.JSON_MAPPER.readValue(responseBodyString, long.class), response));
             return;
           }
-          future.completeExceptionally(new SeedExhaustiveApiException("Error with status code " + response.code(), response.code(), ObjectMappers.JSON_MAPPER.readValue(responseBodyString, Object.class), response));
+          Object errorBody = ObjectMappers.parseErrorBody(responseBodyString);
+          future.completeExceptionally(new SeedExhaustiveApiException("Error with status code " + response.code(), response.code(), errorBody, response));
           return;
         }
         catch (IOException e) {
@@ -241,7 +244,8 @@ public class AsyncRawPrimitiveClient {
             future.complete(new SeedExhaustiveHttpResponse<>(ObjectMappers.JSON_MAPPER.readValue(responseBodyString, double.class), response));
             return;
           }
-          future.completeExceptionally(new SeedExhaustiveApiException("Error with status code " + response.code(), response.code(), ObjectMappers.JSON_MAPPER.readValue(responseBodyString, Object.class), response));
+          Object errorBody = ObjectMappers.parseErrorBody(responseBodyString);
+          future.completeExceptionally(new SeedExhaustiveApiException("Error with status code " + response.code(), response.code(), errorBody, response));
           return;
         }
         catch (IOException e) {
@@ -295,7 +299,8 @@ public class AsyncRawPrimitiveClient {
             future.complete(new SeedExhaustiveHttpResponse<>(ObjectMappers.JSON_MAPPER.readValue(responseBodyString, boolean.class), response));
             return;
           }
-          future.completeExceptionally(new SeedExhaustiveApiException("Error with status code " + response.code(), response.code(), ObjectMappers.JSON_MAPPER.readValue(responseBodyString, Object.class), response));
+          Object errorBody = ObjectMappers.parseErrorBody(responseBodyString);
+          future.completeExceptionally(new SeedExhaustiveApiException("Error with status code " + response.code(), response.code(), errorBody, response));
           return;
         }
         catch (IOException e) {
@@ -350,7 +355,8 @@ public class AsyncRawPrimitiveClient {
             future.complete(new SeedExhaustiveHttpResponse<>(ObjectMappers.JSON_MAPPER.readValue(responseBodyString, OffsetDateTime.class), response));
             return;
           }
-          future.completeExceptionally(new SeedExhaustiveApiException("Error with status code " + response.code(), response.code(), ObjectMappers.JSON_MAPPER.readValue(responseBodyString, Object.class), response));
+          Object errorBody = ObjectMappers.parseErrorBody(responseBodyString);
+          future.completeExceptionally(new SeedExhaustiveApiException("Error with status code " + response.code(), response.code(), errorBody, response));
           return;
         }
         catch (IOException e) {
@@ -404,7 +410,8 @@ public class AsyncRawPrimitiveClient {
             future.complete(new SeedExhaustiveHttpResponse<>(ObjectMappers.JSON_MAPPER.readValue(responseBodyString, String.class), response));
             return;
           }
-          future.completeExceptionally(new SeedExhaustiveApiException("Error with status code " + response.code(), response.code(), ObjectMappers.JSON_MAPPER.readValue(responseBodyString, Object.class), response));
+          Object errorBody = ObjectMappers.parseErrorBody(responseBodyString);
+          future.completeExceptionally(new SeedExhaustiveApiException("Error with status code " + response.code(), response.code(), errorBody, response));
           return;
         }
         catch (IOException e) {
@@ -458,7 +465,8 @@ public class AsyncRawPrimitiveClient {
             future.complete(new SeedExhaustiveHttpResponse<>(ObjectMappers.JSON_MAPPER.readValue(responseBodyString, UUID.class), response));
             return;
           }
-          future.completeExceptionally(new SeedExhaustiveApiException("Error with status code " + response.code(), response.code(), ObjectMappers.JSON_MAPPER.readValue(responseBodyString, Object.class), response));
+          Object errorBody = ObjectMappers.parseErrorBody(responseBodyString);
+          future.completeExceptionally(new SeedExhaustiveApiException("Error with status code " + response.code(), response.code(), errorBody, response));
           return;
         }
         catch (IOException e) {
@@ -512,7 +520,8 @@ public class AsyncRawPrimitiveClient {
             future.complete(new SeedExhaustiveHttpResponse<>(ObjectMappers.JSON_MAPPER.readValue(responseBodyString, byte[].class), response));
             return;
           }
-          future.completeExceptionally(new SeedExhaustiveApiException("Error with status code " + response.code(), response.code(), ObjectMappers.JSON_MAPPER.readValue(responseBodyString, Object.class), response));
+          Object errorBody = ObjectMappers.parseErrorBody(responseBodyString);
+          future.completeExceptionally(new SeedExhaustiveApiException("Error with status code " + response.code(), response.code(), errorBody, response));
           return;
         }
         catch (IOException e) {

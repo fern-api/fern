@@ -1,6 +1,14 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
 - changelogEntry:
     - summary: |
+        Fix the dereferencing of message $refs in the operations section of AsyncAPI specs.
+      type: fix
+  irVersion: 61
+  createdAt: "2025-11-04"
+  version: 0.107.4
+
+- changelogEntry:
+    - summary: |
         Revert the change in 0.107.0 which didn't deduplicate types as expected
       type: chore
   irVersion: 61
@@ -117,7 +125,7 @@
 
         - `theme.[sidebar, body, tabs]`: controls the theme of the docs
         - `settings.disable-explorer-proxy`: controls whether the explorer uses a proxy
-        - `languages`: initializes localization within fern docs 
+        - `languages`: initializes localization within fern docs
         - `navbarLinks.[dropdown]`: adds a dropdown option for navbar links
         - `navbarLinks.[].viewers`: allows navbar links to be controlled with RBAC
       type: feat

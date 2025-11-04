@@ -65,11 +65,9 @@ public class RawPaymentClient {
                 return new SeedIdempotencyHeadersHttpResponse<>(
                         ObjectMappers.JSON_MAPPER.readValue(responseBodyString, UUID.class), response);
             }
+            Object errorBody = ObjectMappers.parseErrorBody(responseBodyString);
             throw new SeedIdempotencyHeadersApiException(
-                    "Error with status code " + response.code(),
-                    response.code(),
-                    ObjectMappers.JSON_MAPPER.readValue(responseBodyString, Object.class),
-                    response);
+                    "Error with status code " + response.code(), response.code(), errorBody, response);
         } catch (IOException e) {
             throw new SeedIdempotencyHeadersException("Network error executing HTTP request", e);
         }
@@ -100,11 +98,9 @@ public class RawPaymentClient {
                 return new SeedIdempotencyHeadersHttpResponse<>(null, response);
             }
             String responseBodyString = responseBody != null ? responseBody.string() : "{}";
+            Object errorBody = ObjectMappers.parseErrorBody(responseBodyString);
             throw new SeedIdempotencyHeadersApiException(
-                    "Error with status code " + response.code(),
-                    response.code(),
-                    ObjectMappers.JSON_MAPPER.readValue(responseBodyString, Object.class),
-                    response);
+                    "Error with status code " + response.code(), response.code(), errorBody, response);
         } catch (IOException e) {
             throw new SeedIdempotencyHeadersException("Network error executing HTTP request", e);
         }

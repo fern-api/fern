@@ -49,11 +49,9 @@ public class RawServiceClient {
             if (response.isSuccessful()) {
                 return new SeedPlainTextHttpResponse<>(responseBodyString, response);
             }
+            Object errorBody = ObjectMappers.parseErrorBody(responseBodyString);
             throw new SeedPlainTextApiException(
-                    "Error with status code " + response.code(),
-                    response.code(),
-                    ObjectMappers.JSON_MAPPER.readValue(responseBodyString, Object.class),
-                    response);
+                    "Error with status code " + response.code(), response.code(), errorBody, response);
         } catch (IOException e) {
             throw new SeedPlainTextException("Network error executing HTTP request", e);
         }

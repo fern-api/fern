@@ -69,11 +69,9 @@ public class RawServiceClient {
                                 responseBodyString, com.seed.responseProperty.resources.service.types.Response.class);
                 return new SeedResponsePropertyHttpResponse<>(parsedResponse.getData(), response);
             }
+            Object errorBody = ObjectMappers.parseErrorBody(responseBodyString);
             throw new SeedResponsePropertyApiException(
-                    "Error with status code " + response.code(),
-                    response.code(),
-                    ObjectMappers.JSON_MAPPER.readValue(responseBodyString, Object.class),
-                    response);
+                    "Error with status code " + response.code(), response.code(), errorBody, response);
         } catch (IOException e) {
             throw new SeedResponsePropertyException("Network error executing HTTP request", e);
         }
@@ -115,11 +113,9 @@ public class RawServiceClient {
                                 responseBodyString, com.seed.responseProperty.resources.service.types.Response.class);
                 return new SeedResponsePropertyHttpResponse<>(parsedResponse.getDocs(), response);
             }
+            Object errorBody = ObjectMappers.parseErrorBody(responseBodyString);
             throw new SeedResponsePropertyApiException(
-                    "Error with status code " + response.code(),
-                    response.code(),
-                    ObjectMappers.JSON_MAPPER.readValue(responseBodyString, Object.class),
-                    response);
+                    "Error with status code " + response.code(), response.code(), errorBody, response);
         } catch (IOException e) {
             throw new SeedResponsePropertyException("Network error executing HTTP request", e);
         }
@@ -160,11 +156,9 @@ public class RawServiceClient {
                         ObjectMappers.JSON_MAPPER.readValue(responseBodyString, StringResponse.class);
                 return new SeedResponsePropertyHttpResponse<>(parsedResponse.getData(), response);
             }
+            Object errorBody = ObjectMappers.parseErrorBody(responseBodyString);
             throw new SeedResponsePropertyApiException(
-                    "Error with status code " + response.code(),
-                    response.code(),
-                    ObjectMappers.JSON_MAPPER.readValue(responseBodyString, Object.class),
-                    response);
+                    "Error with status code " + response.code(), response.code(), errorBody, response);
         } catch (IOException e) {
             throw new SeedResponsePropertyException("Network error executing HTTP request", e);
         }
@@ -207,11 +201,9 @@ public class RawServiceClient {
                                 responseBodyString, com.seed.responseProperty.resources.service.types.Response.class);
                 return new SeedResponsePropertyHttpResponse<>(parsedResponse.getMetadata(), response);
             }
+            Object errorBody = ObjectMappers.parseErrorBody(responseBodyString);
             throw new SeedResponsePropertyApiException(
-                    "Error with status code " + response.code(),
-                    response.code(),
-                    ObjectMappers.JSON_MAPPER.readValue(responseBodyString, Object.class),
-                    response);
+                    "Error with status code " + response.code(), response.code(), errorBody, response);
         } catch (IOException e) {
             throw new SeedResponsePropertyException("Network error executing HTTP request", e);
         }
@@ -258,11 +250,9 @@ public class RawServiceClient {
                         parsedResponse.map(com.seed.responseProperty.resources.service.types.Response::getData),
                         response);
             }
+            Object errorBody = ObjectMappers.parseErrorBody(responseBodyString);
             throw new SeedResponsePropertyApiException(
-                    "Error with status code " + response.code(),
-                    response.code(),
-                    ObjectMappers.JSON_MAPPER.readValue(responseBodyString, Object.class),
-                    response);
+                    "Error with status code " + response.code(), response.code(), errorBody, response);
         } catch (IOException e) {
             throw new SeedResponsePropertyException("Network error executing HTTP request", e);
         }
@@ -304,11 +294,9 @@ public class RawServiceClient {
                         responseBodyString, new TypeReference<Optional<WithDocs>>() {});
                 return new SeedResponsePropertyHttpResponse<>(parsedResponse.map(WithDocs::getDocs), response);
             }
+            Object errorBody = ObjectMappers.parseErrorBody(responseBodyString);
             throw new SeedResponsePropertyApiException(
-                    "Error with status code " + response.code(),
-                    response.code(),
-                    ObjectMappers.JSON_MAPPER.readValue(responseBodyString, Object.class),
-                    response);
+                    "Error with status code " + response.code(), response.code(), errorBody, response);
         } catch (IOException e) {
             throw new SeedResponsePropertyException("Network error executing HTTP request", e);
         }
@@ -350,11 +338,9 @@ public class RawServiceClient {
                         responseBodyString, new TypeReference<Optional<StringResponse>>() {});
                 return new SeedResponsePropertyHttpResponse<>(parsedResponse.map(StringResponse::getData), response);
             }
+            Object errorBody = ObjectMappers.parseErrorBody(responseBodyString);
             throw new SeedResponsePropertyApiException(
-                    "Error with status code " + response.code(),
-                    response.code(),
-                    ObjectMappers.JSON_MAPPER.readValue(responseBodyString, Object.class),
-                    response);
+                    "Error with status code " + response.code(), response.code(), errorBody, response);
         } catch (IOException e) {
             throw new SeedResponsePropertyException("Network error executing HTTP request", e);
         }
