@@ -4,7 +4,7 @@ module Seed
   module Submission
     module Types
       class SubmissionIdNotFound < Internal::Types::Model
-        field :missing_submission_id, -> { String }, optional: false, nullable: false
+        field :missing_submission_id, -> { String }, optional: false, nullable: false, api_name: "missingSubmissionId"
       end
     end
   end

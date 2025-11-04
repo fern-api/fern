@@ -8,10 +8,10 @@ module Seed
           class TestCaseWithActualResultImplementation < Internal::Types::Model
             field :get_actual_result, lambda {
               Seed::V2::V3::Problem::Types::NonVoidFunctionDefinition
-            }, optional: false, nullable: false
+            }, optional: false, nullable: false, api_name: "getActualResult"
             field :assert_correctness_check, lambda {
               Seed::V2::V3::Problem::Types::AssertCorrectnessCheck
-            }, optional: false, nullable: false
+            }, optional: false, nullable: false, api_name: "assertCorrectnessCheck"
           end
         end
       end

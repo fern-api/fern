@@ -9,7 +9,9 @@ module Seed
         field :tags, -> { Internal::Types::Array[String] }, optional: false, nullable: true
         field :metadata, -> { Seed::Nullable::Types::Metadata }, optional: true, nullable: false
         field :email, -> { String }, optional: false, nullable: false
-        field :favorite_number, -> { Seed::Nullable::Types::WeirdNumber }, optional: false, nullable: false
+        field :favorite_number, lambda {
+          Seed::Nullable::Types::WeirdNumber
+        }, optional: false, nullable: false, api_name: "favorite-number"
         field :numbers, -> { Internal::Types::Array[Integer] }, optional: true, nullable: false
         field :strings, lambda {
           Internal::Types::Hash[String, Internal::Types::Hash[String, Object]]

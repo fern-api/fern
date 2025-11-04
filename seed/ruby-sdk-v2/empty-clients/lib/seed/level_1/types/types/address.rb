@@ -5,8 +5,8 @@ module Seed
     module Types
       module Types
         class Address < Internal::Types::Model
-          field :line_1, -> { String }, optional: false, nullable: false
-          field :line_2, -> { String }, optional: true, nullable: false
+          field :line_1, -> { String }, optional: false, nullable: false, api_name: "line1"
+          field :line_2, -> { String }, optional: true, nullable: false, api_name: "line2"
           field :city, -> { String }, optional: false, nullable: false
           field :state, -> { String }, optional: false, nullable: false
           field :zip, -> { String }, optional: false, nullable: false
