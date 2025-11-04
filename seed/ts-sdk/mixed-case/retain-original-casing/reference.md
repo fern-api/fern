@@ -81,7 +81,7 @@ await client.service.listResources({
 <dl>
 <dd>
 
-**request:** `SeedMixedCase.ListResourcesRequest` 
+**request:** `ListResourcesRequest` 
     
 </dd>
 </dl>

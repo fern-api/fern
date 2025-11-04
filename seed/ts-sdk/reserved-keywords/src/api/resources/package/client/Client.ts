@@ -4,7 +4,7 @@ import type { BaseClientOptions, BaseRequestOptions } from "../../../../BaseClie
 import { mergeHeaders } from "../../../../core/headers.js";
 import * as core from "../../../../core/index.js";
 import * as errors from "../../../../errors/index.js";
-import type * as SeedNurseryApi from "../../../index.js";
+import type { TestRequest } from "./requests/TestRequest.js";
 
 export declare namespace Package {
     export interface Options extends BaseClientOptions {}
@@ -20,7 +20,7 @@ export class Package {
     }
 
     /**
-     * @param {SeedNurseryApi.TestRequest} request
+     * @param {TestRequest} request
      * @param {Package.RequestOptions} requestOptions - Request-specific configuration.
      *
      * @example
@@ -28,15 +28,12 @@ export class Package {
      *         "for": "for"
      *     })
      */
-    public test(
-        request: SeedNurseryApi.TestRequest,
-        requestOptions?: Package.RequestOptions,
-    ): core.HttpResponsePromise<void> {
+    public test(request: TestRequest, requestOptions?: Package.RequestOptions): core.HttpResponsePromise<void> {
         return core.HttpResponsePromise.fromPromise(this.__test(request, requestOptions));
     }
 
     private async __test(
-        request: SeedNurseryApi.TestRequest,
+        request: TestRequest,
         requestOptions?: Package.RequestOptions,
     ): Promise<core.WithRawResponse<void>> {
         const { for: for_ } = request;

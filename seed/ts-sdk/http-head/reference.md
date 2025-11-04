@@ -72,7 +72,7 @@ await client.user.list({
 <dl>
 <dd>
 
-**request:** `SeedHttpHead.ListUsersRequest` 
+**request:** `ListUsersRequest` 
     
 </dd>
 </dl>

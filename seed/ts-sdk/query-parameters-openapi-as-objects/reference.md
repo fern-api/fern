@@ -71,7 +71,7 @@ await client.search({
 <dl>
 <dd>
 
-**request:** `SeedApi.SearchRequest` 
+**request:** `SearchRequest` 
     
 </dd>
 </dl>

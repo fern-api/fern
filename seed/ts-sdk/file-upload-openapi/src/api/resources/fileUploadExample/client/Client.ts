@@ -4,7 +4,8 @@ import type { BaseClientOptions, BaseRequestOptions } from "../../../../BaseClie
 import { mergeHeaders, mergeOnlyDefinedHeaders } from "../../../../core/headers.js";
 import * as core from "../../../../core/index.js";
 import * as errors from "../../../../errors/index.js";
-import type * as SeedApi from "../../../index.js";
+import type { FileId } from "../../../types/FileId.js";
+import type { UploadFileRequest } from "./requests/UploadFileRequest.js";
 
 export declare namespace FileUploadExample {
     export interface Options extends BaseClientOptions {}
@@ -22,7 +23,7 @@ export class FileUploadExample {
     /**
      * Upload a file to the database
      *
-     * @param {SeedApi.UploadFileRequest} request
+     * @param {UploadFileRequest} request
      * @param {FileUploadExample.RequestOptions} requestOptions - Request-specific configuration.
      *
      * @example
@@ -32,16 +33,16 @@ export class FileUploadExample {
      *     })
      */
     public uploadFile(
-        request: SeedApi.UploadFileRequest,
+        request: UploadFileRequest,
         requestOptions?: FileUploadExample.RequestOptions,
-    ): core.HttpResponsePromise<SeedApi.FileId> {
+    ): core.HttpResponsePromise<FileId> {
         return core.HttpResponsePromise.fromPromise(this.__uploadFile(request, requestOptions));
     }
 
     private async __uploadFile(
-        request: SeedApi.UploadFileRequest,
+        request: UploadFileRequest,
         requestOptions?: FileUploadExample.RequestOptions,
-    ): Promise<core.WithRawResponse<SeedApi.FileId>> {
+    ): Promise<core.WithRawResponse<FileId>> {
         const _request = await core.newFormData();
         _request.append("name", request.name);
         if (request.file != null) {
@@ -72,7 +73,7 @@ export class FileUploadExample {
             fetchFn: this._options?.fetch,
         });
         if (_response.ok) {
-            return { data: _response.body as SeedApi.FileId, rawResponse: _response.rawResponse };
+            return { data: _response.body as FileId, rawResponse: _response.rawResponse };
         }
 
         if (_response.error.reason === "status-code") {

@@ -5,7 +5,9 @@ import { mergeHeaders } from "../../../../core/headers.js";
 import * as core from "../../../../core/index.js";
 import * as errors from "../../../../errors/index.js";
 import * as serializers from "../../../../serialization/index.js";
-import type * as SeedStreaming from "../../../index.js";
+import type { StreamResponse } from "../types/StreamResponse.js";
+import type { Generateequest } from "./requests/Generateequest.js";
+import type { GenerateStreamRequest } from "./requests/GenerateStreamRequest.js";
 
 export declare namespace Dummy {
     export interface Options extends BaseClientOptions {}
@@ -21,16 +23,16 @@ export class Dummy {
     }
 
     public generateStream(
-        request: SeedStreaming.GenerateStreamRequest,
+        request: GenerateStreamRequest,
         requestOptions?: Dummy.RequestOptions,
-    ): core.HttpResponsePromise<core.Stream<SeedStreaming.StreamResponse>> {
+    ): core.HttpResponsePromise<core.Stream<StreamResponse>> {
         return core.HttpResponsePromise.fromPromise(this.__generateStream(request, requestOptions));
     }
 
     private async __generateStream(
-        request: SeedStreaming.GenerateStreamRequest,
+        request: GenerateStreamRequest,
         requestOptions?: Dummy.RequestOptions,
-    ): Promise<core.WithRawResponse<core.Stream<SeedStreaming.StreamResponse>>> {
+    ): Promise<core.WithRawResponse<core.Stream<StreamResponse>>> {
         const _headers: core.Fetcher.Args["headers"] = mergeHeaders(this._options?.headers, requestOptions?.headers);
         const _response = await core.fetcher<ReadableStream>({
             url: core.url.join(
@@ -105,7 +107,7 @@ export class Dummy {
     }
 
     /**
-     * @param {SeedStreaming.Generateequest} request
+     * @param {Generateequest} request
      * @param {Dummy.RequestOptions} requestOptions - Request-specific configuration.
      *
      * @example
@@ -114,16 +116,16 @@ export class Dummy {
      *     })
      */
     public generate(
-        request: SeedStreaming.Generateequest,
+        request: Generateequest,
         requestOptions?: Dummy.RequestOptions,
-    ): core.HttpResponsePromise<SeedStreaming.StreamResponse> {
+    ): core.HttpResponsePromise<StreamResponse> {
         return core.HttpResponsePromise.fromPromise(this.__generate(request, requestOptions));
     }
 
     private async __generate(
-        request: SeedStreaming.Generateequest,
+        request: Generateequest,
         requestOptions?: Dummy.RequestOptions,
-    ): Promise<core.WithRawResponse<SeedStreaming.StreamResponse>> {
+    ): Promise<core.WithRawResponse<StreamResponse>> {
         const _headers: core.Fetcher.Args["headers"] = mergeHeaders(this._options?.headers, requestOptions?.headers);
         const _response = await core.fetcher({
             url: core.url.join(

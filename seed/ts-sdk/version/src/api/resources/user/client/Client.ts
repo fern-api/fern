@@ -4,7 +4,8 @@ import type { BaseClientOptions, BaseRequestOptions } from "../../../../BaseClie
 import { mergeHeaders, mergeOnlyDefinedHeaders } from "../../../../core/headers.js";
 import * as core from "../../../../core/index.js";
 import * as errors from "../../../../errors/index.js";
-import type * as SeedVersion from "../../../index.js";
+import { User } from "../types/User.js";
+import type { UserId } from "../types/UserId.js";
 
 export declare namespace User {
     export interface Options extends BaseClientOptions {}
@@ -20,23 +21,17 @@ export class User {
     }
 
     /**
-     * @param {SeedVersion.UserId} userId
+     * @param {UserId} userId
      * @param {User.RequestOptions} requestOptions - Request-specific configuration.
      *
      * @example
      *     await client.user.getUser("userId")
      */
-    public getUser(
-        userId: SeedVersion.UserId,
-        requestOptions?: User.RequestOptions,
-    ): core.HttpResponsePromise<SeedVersion.User> {
+    public getUser(userId: UserId, requestOptions?: User.RequestOptions): core.HttpResponsePromise<User> {
         return core.HttpResponsePromise.fromPromise(this.__getUser(userId, requestOptions));
     }
 
-    private async __getUser(
-        userId: SeedVersion.UserId,
-        requestOptions?: User.RequestOptions,
-    ): Promise<core.WithRawResponse<SeedVersion.User>> {
+    private async __getUser(userId: UserId, requestOptions?: User.RequestOptions): Promise<core.WithRawResponse<User>> {
         const _headers: core.Fetcher.Args["headers"] = mergeHeaders(
             this._options?.headers,
             mergeOnlyDefinedHeaders({ "X-API-Version": requestOptions?.xApiVersion }),
@@ -57,7 +52,7 @@ export class User {
             fetchFn: this._options?.fetch,
         });
         if (_response.ok) {
-            return { data: _response.body as SeedVersion.User, rawResponse: _response.rawResponse };
+            return { data: _response.body as User, rawResponse: _response.rawResponse };
         }
 
         if (_response.error.reason === "status-code") {

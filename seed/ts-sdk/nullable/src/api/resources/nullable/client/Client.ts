@@ -4,7 +4,10 @@ import type { BaseClientOptions, BaseRequestOptions } from "../../../../BaseClie
 import { mergeHeaders } from "../../../../core/headers.js";
 import * as core from "../../../../core/index.js";
 import * as errors from "../../../../errors/index.js";
-import type * as SeedNullable from "../../../index.js";
+import type { User } from "../types/User.js";
+import type { CreateUserRequest } from "./requests/CreateUserRequest.js";
+import type { DeleteUserRequest } from "./requests/DeleteUserRequest.js";
+import type { GetUsersRequest } from "./requests/GetUsersRequest.js";
 
 export declare namespace Nullable {
     export interface Options extends BaseClientOptions {}
@@ -20,7 +23,7 @@ export class Nullable {
     }
 
     /**
-     * @param {SeedNullable.GetUsersRequest} request
+     * @param {GetUsersRequest} request
      * @param {Nullable.RequestOptions} requestOptions - Request-specific configuration.
      *
      * @example
@@ -33,16 +36,16 @@ export class Nullable {
      *     })
      */
     public getUsers(
-        request: SeedNullable.GetUsersRequest = {},
+        request: GetUsersRequest = {},
         requestOptions?: Nullable.RequestOptions,
-    ): core.HttpResponsePromise<SeedNullable.User[]> {
+    ): core.HttpResponsePromise<User[]> {
         return core.HttpResponsePromise.fromPromise(this.__getUsers(request, requestOptions));
     }
 
     private async __getUsers(
-        request: SeedNullable.GetUsersRequest = {},
+        request: GetUsersRequest = {},
         requestOptions?: Nullable.RequestOptions,
-    ): Promise<core.WithRawResponse<SeedNullable.User[]>> {
+    ): Promise<core.WithRawResponse<User[]>> {
         const { usernames, avatar, activated, tags, extra } = request;
         const _queryParams: Record<string, string | string[] | object | object[] | null> = {};
         if (usernames != null) {
@@ -93,7 +96,7 @@ export class Nullable {
             fetchFn: this._options?.fetch,
         });
         if (_response.ok) {
-            return { data: _response.body as SeedNullable.User[], rawResponse: _response.rawResponse };
+            return { data: _response.body as User[], rawResponse: _response.rawResponse };
         }
 
         if (_response.error.reason === "status-code") {
@@ -122,7 +125,7 @@ export class Nullable {
     }
 
     /**
-     * @param {SeedNullable.CreateUserRequest} request
+     * @param {CreateUserRequest} request
      * @param {Nullable.RequestOptions} requestOptions - Request-specific configuration.
      *
      * @example
@@ -145,16 +148,16 @@ export class Nullable {
      *     })
      */
     public createUser(
-        request: SeedNullable.CreateUserRequest,
+        request: CreateUserRequest,
         requestOptions?: Nullable.RequestOptions,
-    ): core.HttpResponsePromise<SeedNullable.User> {
+    ): core.HttpResponsePromise<User> {
         return core.HttpResponsePromise.fromPromise(this.__createUser(request, requestOptions));
     }
 
     private async __createUser(
-        request: SeedNullable.CreateUserRequest,
+        request: CreateUserRequest,
         requestOptions?: Nullable.RequestOptions,
-    ): Promise<core.WithRawResponse<SeedNullable.User>> {
+    ): Promise<core.WithRawResponse<User>> {
         const _headers: core.Fetcher.Args["headers"] = mergeHeaders(this._options?.headers, requestOptions?.headers);
         const _response = await core.fetcher({
             url: core.url.join(
@@ -174,7 +177,7 @@ export class Nullable {
             fetchFn: this._options?.fetch,
         });
         if (_response.ok) {
-            return { data: _response.body as SeedNullable.User, rawResponse: _response.rawResponse };
+            return { data: _response.body as User, rawResponse: _response.rawResponse };
         }
 
         if (_response.error.reason === "status-code") {
@@ -203,7 +206,7 @@ export class Nullable {
     }
 
     /**
-     * @param {SeedNullable.DeleteUserRequest} request
+     * @param {DeleteUserRequest} request
      * @param {Nullable.RequestOptions} requestOptions - Request-specific configuration.
      *
      * @example
@@ -212,14 +215,14 @@ export class Nullable {
      *     })
      */
     public deleteUser(
-        request: SeedNullable.DeleteUserRequest = {},
+        request: DeleteUserRequest = {},
         requestOptions?: Nullable.RequestOptions,
     ): core.HttpResponsePromise<boolean> {
         return core.HttpResponsePromise.fromPromise(this.__deleteUser(request, requestOptions));
     }
 
     private async __deleteUser(
-        request: SeedNullable.DeleteUserRequest = {},
+        request: DeleteUserRequest = {},
         requestOptions?: Nullable.RequestOptions,
     ): Promise<core.WithRawResponse<boolean>> {
         const _headers: core.Fetcher.Args["headers"] = mergeHeaders(this._options?.headers, requestOptions?.headers);

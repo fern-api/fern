@@ -34,7 +34,7 @@ await client.user.createUsername({
 <dl>
 <dd>
 
-**request:** `SeedRequestParameters.CreateUsernameRequest` 
+**request:** `CreateUsernameRequest` 
     
 </dd>
 </dl>
@@ -90,7 +90,7 @@ await client.user.createUsernameWithReferencedType({
 <dl>
 <dd>
 
-**request:** `SeedRequestParameters.CreateUsernameReferencedRequest` 
+**request:** `CreateUsernameReferencedRequest` 
     
 </dd>
 </dl>
@@ -228,7 +228,7 @@ await client.user.getUsername({
 <dl>
 <dd>
 
-**request:** `SeedRequestParameters.GetUsersRequest` 
+**request:** `GetUsersRequest` 
     
 </dd>
 </dl>

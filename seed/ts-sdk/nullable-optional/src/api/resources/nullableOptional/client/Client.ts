@@ -4,7 +4,20 @@ import type { BaseClientOptions, BaseRequestOptions } from "../../../../BaseClie
 import { mergeHeaders } from "../../../../core/headers.js";
 import * as core from "../../../../core/index.js";
 import * as errors from "../../../../errors/index.js";
-import type * as SeedNullableOptional from "../../../index.js";
+import type { ComplexProfile } from "../types/ComplexProfile.js";
+import type { CreateUserRequest } from "../types/CreateUserRequest.js";
+import type { DeserializationTestRequest } from "../types/DeserializationTestRequest.js";
+import type { DeserializationTestResponse } from "../types/DeserializationTestResponse.js";
+import type { NotificationMethod } from "../types/NotificationMethod.js";
+import type { SearchResult } from "../types/SearchResult.js";
+import type { UpdateUserRequest } from "../types/UpdateUserRequest.js";
+import type { UserResponse } from "../types/UserResponse.js";
+import type { FilterByRoleRequest } from "./requests/FilterByRoleRequest.js";
+import type { ListUsersRequest } from "./requests/ListUsersRequest.js";
+import type { SearchRequest } from "./requests/SearchRequest.js";
+import type { SearchUsersRequest } from "./requests/SearchUsersRequest.js";
+import type { UpdateComplexProfileRequest } from "./requests/UpdateComplexProfileRequest.js";
+import type { UpdateTagsRequest } from "./requests/UpdateTagsRequest.js";
 
 export declare namespace NullableOptional {
     export interface Options extends BaseClientOptions {}
@@ -31,14 +44,14 @@ export class NullableOptional {
     public getUser(
         userId: string,
         requestOptions?: NullableOptional.RequestOptions,
-    ): core.HttpResponsePromise<SeedNullableOptional.UserResponse> {
+    ): core.HttpResponsePromise<UserResponse> {
         return core.HttpResponsePromise.fromPromise(this.__getUser(userId, requestOptions));
     }
 
     private async __getUser(
         userId: string,
         requestOptions?: NullableOptional.RequestOptions,
-    ): Promise<core.WithRawResponse<SeedNullableOptional.UserResponse>> {
+    ): Promise<core.WithRawResponse<UserResponse>> {
         const _headers: core.Fetcher.Args["headers"] = mergeHeaders(this._options?.headers, requestOptions?.headers);
         const _response = await core.fetcher({
             url: core.url.join(
@@ -55,7 +68,7 @@ export class NullableOptional {
             fetchFn: this._options?.fetch,
         });
         if (_response.ok) {
-            return { data: _response.body as SeedNullableOptional.UserResponse, rawResponse: _response.rawResponse };
+            return { data: _response.body as UserResponse, rawResponse: _response.rawResponse };
         }
 
         if (_response.error.reason === "status-code") {
@@ -88,7 +101,7 @@ export class NullableOptional {
     /**
      * Create a new user
      *
-     * @param {SeedNullableOptional.CreateUserRequest} request
+     * @param {CreateUserRequest} request
      * @param {NullableOptional.RequestOptions} requestOptions - Request-specific configuration.
      *
      * @example
@@ -108,16 +121,16 @@ export class NullableOptional {
      *     })
      */
     public createUser(
-        request: SeedNullableOptional.CreateUserRequest,
+        request: CreateUserRequest,
         requestOptions?: NullableOptional.RequestOptions,
-    ): core.HttpResponsePromise<SeedNullableOptional.UserResponse> {
+    ): core.HttpResponsePromise<UserResponse> {
         return core.HttpResponsePromise.fromPromise(this.__createUser(request, requestOptions));
     }
 
     private async __createUser(
-        request: SeedNullableOptional.CreateUserRequest,
+        request: CreateUserRequest,
         requestOptions?: NullableOptional.RequestOptions,
-    ): Promise<core.WithRawResponse<SeedNullableOptional.UserResponse>> {
+    ): Promise<core.WithRawResponse<UserResponse>> {
         const _headers: core.Fetcher.Args["headers"] = mergeHeaders(this._options?.headers, requestOptions?.headers);
         const _response = await core.fetcher({
             url: core.url.join(
@@ -137,7 +150,7 @@ export class NullableOptional {
             fetchFn: this._options?.fetch,
         });
         if (_response.ok) {
-            return { data: _response.body as SeedNullableOptional.UserResponse, rawResponse: _response.rawResponse };
+            return { data: _response.body as UserResponse, rawResponse: _response.rawResponse };
         }
 
         if (_response.error.reason === "status-code") {
@@ -169,7 +182,7 @@ export class NullableOptional {
      * Update a user (partial update)
      *
      * @param {string} userId
-     * @param {SeedNullableOptional.UpdateUserRequest} request
+     * @param {UpdateUserRequest} request
      * @param {NullableOptional.RequestOptions} requestOptions - Request-specific configuration.
      *
      * @example
@@ -190,17 +203,17 @@ export class NullableOptional {
      */
     public updateUser(
         userId: string,
-        request: SeedNullableOptional.UpdateUserRequest,
+        request: UpdateUserRequest,
         requestOptions?: NullableOptional.RequestOptions,
-    ): core.HttpResponsePromise<SeedNullableOptional.UserResponse> {
+    ): core.HttpResponsePromise<UserResponse> {
         return core.HttpResponsePromise.fromPromise(this.__updateUser(userId, request, requestOptions));
     }
 
     private async __updateUser(
         userId: string,
-        request: SeedNullableOptional.UpdateUserRequest,
+        request: UpdateUserRequest,
         requestOptions?: NullableOptional.RequestOptions,
-    ): Promise<core.WithRawResponse<SeedNullableOptional.UserResponse>> {
+    ): Promise<core.WithRawResponse<UserResponse>> {
         const _headers: core.Fetcher.Args["headers"] = mergeHeaders(this._options?.headers, requestOptions?.headers);
         const _response = await core.fetcher({
             url: core.url.join(
@@ -220,7 +233,7 @@ export class NullableOptional {
             fetchFn: this._options?.fetch,
         });
         if (_response.ok) {
-            return { data: _response.body as SeedNullableOptional.UserResponse, rawResponse: _response.rawResponse };
+            return { data: _response.body as UserResponse, rawResponse: _response.rawResponse };
         }
 
         if (_response.error.reason === "status-code") {
@@ -253,7 +266,7 @@ export class NullableOptional {
     /**
      * List all users
      *
-     * @param {SeedNullableOptional.ListUsersRequest} request
+     * @param {ListUsersRequest} request
      * @param {NullableOptional.RequestOptions} requestOptions - Request-specific configuration.
      *
      * @example
@@ -265,16 +278,16 @@ export class NullableOptional {
      *     })
      */
     public listUsers(
-        request: SeedNullableOptional.ListUsersRequest = {},
+        request: ListUsersRequest = {},
         requestOptions?: NullableOptional.RequestOptions,
-    ): core.HttpResponsePromise<SeedNullableOptional.UserResponse[]> {
+    ): core.HttpResponsePromise<UserResponse[]> {
         return core.HttpResponsePromise.fromPromise(this.__listUsers(request, requestOptions));
     }
 
     private async __listUsers(
-        request: SeedNullableOptional.ListUsersRequest = {},
+        request: ListUsersRequest = {},
         requestOptions?: NullableOptional.RequestOptions,
-    ): Promise<core.WithRawResponse<SeedNullableOptional.UserResponse[]>> {
+    ): Promise<core.WithRawResponse<UserResponse[]>> {
         const { limit, offset, includeDeleted, sortBy } = request;
         const _queryParams: Record<string, string | string[] | object | object[] | null> = {};
         if (limit != null) {
@@ -309,7 +322,7 @@ export class NullableOptional {
             fetchFn: this._options?.fetch,
         });
         if (_response.ok) {
-            return { data: _response.body as SeedNullableOptional.UserResponse[], rawResponse: _response.rawResponse };
+            return { data: _response.body as UserResponse[], rawResponse: _response.rawResponse };
         }
 
         if (_response.error.reason === "status-code") {
@@ -340,7 +353,7 @@ export class NullableOptional {
     /**
      * Search users
      *
-     * @param {SeedNullableOptional.SearchUsersRequest} request
+     * @param {SearchUsersRequest} request
      * @param {NullableOptional.RequestOptions} requestOptions - Request-specific configuration.
      *
      * @example
@@ -352,16 +365,16 @@ export class NullableOptional {
      *     })
      */
     public searchUsers(
-        request: SeedNullableOptional.SearchUsersRequest,
+        request: SearchUsersRequest,
         requestOptions?: NullableOptional.RequestOptions,
-    ): core.HttpResponsePromise<SeedNullableOptional.UserResponse[]> {
+    ): core.HttpResponsePromise<UserResponse[]> {
         return core.HttpResponsePromise.fromPromise(this.__searchUsers(request, requestOptions));
     }
 
     private async __searchUsers(
-        request: SeedNullableOptional.SearchUsersRequest,
+        request: SearchUsersRequest,
         requestOptions?: NullableOptional.RequestOptions,
-    ): Promise<core.WithRawResponse<SeedNullableOptional.UserResponse[]>> {
+    ): Promise<core.WithRawResponse<UserResponse[]>> {
         const { query, department, role, isActive } = request;
         const _queryParams: Record<string, string | string[] | object | object[] | null> = {};
         _queryParams.query = query;
@@ -393,7 +406,7 @@ export class NullableOptional {
             fetchFn: this._options?.fetch,
         });
         if (_response.ok) {
-            return { data: _response.body as SeedNullableOptional.UserResponse[], rawResponse: _response.rawResponse };
+            return { data: _response.body as UserResponse[], rawResponse: _response.rawResponse };
         }
 
         if (_response.error.reason === "status-code") {
@@ -426,7 +439,7 @@ export class NullableOptional {
     /**
      * Create a complex profile to test nullable enums and unions
      *
-     * @param {SeedNullableOptional.ComplexProfile} request
+     * @param {ComplexProfile} request
      * @param {NullableOptional.RequestOptions} requestOptions - Request-specific configuration.
      *
      * @example
@@ -524,16 +537,16 @@ export class NullableOptional {
      *     })
      */
     public createComplexProfile(
-        request: SeedNullableOptional.ComplexProfile,
+        request: ComplexProfile,
         requestOptions?: NullableOptional.RequestOptions,
-    ): core.HttpResponsePromise<SeedNullableOptional.ComplexProfile> {
+    ): core.HttpResponsePromise<ComplexProfile> {
         return core.HttpResponsePromise.fromPromise(this.__createComplexProfile(request, requestOptions));
     }
 
     private async __createComplexProfile(
-        request: SeedNullableOptional.ComplexProfile,
+        request: ComplexProfile,
         requestOptions?: NullableOptional.RequestOptions,
-    ): Promise<core.WithRawResponse<SeedNullableOptional.ComplexProfile>> {
+    ): Promise<core.WithRawResponse<ComplexProfile>> {
         const _headers: core.Fetcher.Args["headers"] = mergeHeaders(this._options?.headers, requestOptions?.headers);
         const _response = await core.fetcher({
             url: core.url.join(
@@ -553,7 +566,7 @@ export class NullableOptional {
             fetchFn: this._options?.fetch,
         });
         if (_response.ok) {
-            return { data: _response.body as SeedNullableOptional.ComplexProfile, rawResponse: _response.rawResponse };
+            return { data: _response.body as ComplexProfile, rawResponse: _response.rawResponse };
         }
 
         if (_response.error.reason === "status-code") {
@@ -595,14 +608,14 @@ export class NullableOptional {
     public getComplexProfile(
         profileId: string,
         requestOptions?: NullableOptional.RequestOptions,
-    ): core.HttpResponsePromise<SeedNullableOptional.ComplexProfile> {
+    ): core.HttpResponsePromise<ComplexProfile> {
         return core.HttpResponsePromise.fromPromise(this.__getComplexProfile(profileId, requestOptions));
     }
 
     private async __getComplexProfile(
         profileId: string,
         requestOptions?: NullableOptional.RequestOptions,
-    ): Promise<core.WithRawResponse<SeedNullableOptional.ComplexProfile>> {
+    ): Promise<core.WithRawResponse<ComplexProfile>> {
         const _headers: core.Fetcher.Args["headers"] = mergeHeaders(this._options?.headers, requestOptions?.headers);
         const _response = await core.fetcher({
             url: core.url.join(
@@ -619,7 +632,7 @@ export class NullableOptional {
             fetchFn: this._options?.fetch,
         });
         if (_response.ok) {
-            return { data: _response.body as SeedNullableOptional.ComplexProfile, rawResponse: _response.rawResponse };
+            return { data: _response.body as ComplexProfile, rawResponse: _response.rawResponse };
         }
 
         if (_response.error.reason === "status-code") {
@@ -653,7 +666,7 @@ export class NullableOptional {
      * Update complex profile to test nullable field updates
      *
      * @param {string} profileId
-     * @param {SeedNullableOptional.UpdateComplexProfileRequest} request
+     * @param {UpdateComplexProfileRequest} request
      * @param {NullableOptional.RequestOptions} requestOptions - Request-specific configuration.
      *
      * @example
@@ -689,17 +702,17 @@ export class NullableOptional {
      */
     public updateComplexProfile(
         profileId: string,
-        request: SeedNullableOptional.UpdateComplexProfileRequest = {},
+        request: UpdateComplexProfileRequest = {},
         requestOptions?: NullableOptional.RequestOptions,
-    ): core.HttpResponsePromise<SeedNullableOptional.ComplexProfile> {
+    ): core.HttpResponsePromise<ComplexProfile> {
         return core.HttpResponsePromise.fromPromise(this.__updateComplexProfile(profileId, request, requestOptions));
     }
 
     private async __updateComplexProfile(
         profileId: string,
-        request: SeedNullableOptional.UpdateComplexProfileRequest = {},
+        request: UpdateComplexProfileRequest = {},
         requestOptions?: NullableOptional.RequestOptions,
-    ): Promise<core.WithRawResponse<SeedNullableOptional.ComplexProfile>> {
+    ): Promise<core.WithRawResponse<ComplexProfile>> {
         const _headers: core.Fetcher.Args["headers"] = mergeHeaders(this._options?.headers, requestOptions?.headers);
         const _response = await core.fetcher({
             url: core.url.join(
@@ -719,7 +732,7 @@ export class NullableOptional {
             fetchFn: this._options?.fetch,
         });
         if (_response.ok) {
-            return { data: _response.body as SeedNullableOptional.ComplexProfile, rawResponse: _response.rawResponse };
+            return { data: _response.body as ComplexProfile, rawResponse: _response.rawResponse };
         }
 
         if (_response.error.reason === "status-code") {
@@ -752,7 +765,7 @@ export class NullableOptional {
     /**
      * Test endpoint for validating null deserialization
      *
-     * @param {SeedNullableOptional.DeserializationTestRequest} request
+     * @param {DeserializationTestRequest} request
      * @param {NullableOptional.RequestOptions} requestOptions - Request-specific configuration.
      *
      * @example
@@ -809,16 +822,16 @@ export class NullableOptional {
      *     })
      */
     public testDeserialization(
-        request: SeedNullableOptional.DeserializationTestRequest,
+        request: DeserializationTestRequest,
         requestOptions?: NullableOptional.RequestOptions,
-    ): core.HttpResponsePromise<SeedNullableOptional.DeserializationTestResponse> {
+    ): core.HttpResponsePromise<DeserializationTestResponse> {
         return core.HttpResponsePromise.fromPromise(this.__testDeserialization(request, requestOptions));
     }
 
     private async __testDeserialization(
-        request: SeedNullableOptional.DeserializationTestRequest,
+        request: DeserializationTestRequest,
         requestOptions?: NullableOptional.RequestOptions,
-    ): Promise<core.WithRawResponse<SeedNullableOptional.DeserializationTestResponse>> {
+    ): Promise<core.WithRawResponse<DeserializationTestResponse>> {
         const _headers: core.Fetcher.Args["headers"] = mergeHeaders(this._options?.headers, requestOptions?.headers);
         const _response = await core.fetcher({
             url: core.url.join(
@@ -838,10 +851,7 @@ export class NullableOptional {
             fetchFn: this._options?.fetch,
         });
         if (_response.ok) {
-            return {
-                data: _response.body as SeedNullableOptional.DeserializationTestResponse,
-                rawResponse: _response.rawResponse,
-            };
+            return { data: _response.body as DeserializationTestResponse, rawResponse: _response.rawResponse };
         }
 
         if (_response.error.reason === "status-code") {
@@ -874,7 +884,7 @@ export class NullableOptional {
     /**
      * Filter users by role with nullable enum
      *
-     * @param {SeedNullableOptional.FilterByRoleRequest} request
+     * @param {FilterByRoleRequest} request
      * @param {NullableOptional.RequestOptions} requestOptions - Request-specific configuration.
      *
      * @example
@@ -885,16 +895,16 @@ export class NullableOptional {
      *     })
      */
     public filterByRole(
-        request: SeedNullableOptional.FilterByRoleRequest,
+        request: FilterByRoleRequest,
         requestOptions?: NullableOptional.RequestOptions,
-    ): core.HttpResponsePromise<SeedNullableOptional.UserResponse[]> {
+    ): core.HttpResponsePromise<UserResponse[]> {
         return core.HttpResponsePromise.fromPromise(this.__filterByRole(request, requestOptions));
     }
 
     private async __filterByRole(
-        request: SeedNullableOptional.FilterByRoleRequest,
+        request: FilterByRoleRequest,
         requestOptions?: NullableOptional.RequestOptions,
-    ): Promise<core.WithRawResponse<SeedNullableOptional.UserResponse[]>> {
+    ): Promise<core.WithRawResponse<UserResponse[]>> {
         const { role, status, secondaryRole } = request;
         const _queryParams: Record<string, string | string[] | object | object[] | null> = {};
         if (role !== undefined) {
@@ -925,7 +935,7 @@ export class NullableOptional {
             fetchFn: this._options?.fetch,
         });
         if (_response.ok) {
-            return { data: _response.body as SeedNullableOptional.UserResponse[], rawResponse: _response.rawResponse };
+            return { data: _response.body as UserResponse[], rawResponse: _response.rawResponse };
         }
 
         if (_response.error.reason === "status-code") {
@@ -967,14 +977,14 @@ export class NullableOptional {
     public getNotificationSettings(
         userId: string,
         requestOptions?: NullableOptional.RequestOptions,
-    ): core.HttpResponsePromise<SeedNullableOptional.NotificationMethod | null> {
+    ): core.HttpResponsePromise<NotificationMethod | null> {
         return core.HttpResponsePromise.fromPromise(this.__getNotificationSettings(userId, requestOptions));
     }
 
     private async __getNotificationSettings(
         userId: string,
         requestOptions?: NullableOptional.RequestOptions,
-    ): Promise<core.WithRawResponse<SeedNullableOptional.NotificationMethod | null>> {
+    ): Promise<core.WithRawResponse<NotificationMethod | null>> {
         const _headers: core.Fetcher.Args["headers"] = mergeHeaders(this._options?.headers, requestOptions?.headers);
         const _response = await core.fetcher({
             url: core.url.join(
@@ -991,10 +1001,7 @@ export class NullableOptional {
             fetchFn: this._options?.fetch,
         });
         if (_response.ok) {
-            return {
-                data: _response.body as SeedNullableOptional.NotificationMethod | null,
-                rawResponse: _response.rawResponse,
-            };
+            return { data: _response.body as NotificationMethod | null, rawResponse: _response.rawResponse };
         }
 
         if (_response.error.reason === "status-code") {
@@ -1028,7 +1035,7 @@ export class NullableOptional {
      * Update tags to test array handling
      *
      * @param {string} userId
-     * @param {SeedNullableOptional.UpdateTagsRequest} request
+     * @param {UpdateTagsRequest} request
      * @param {NullableOptional.RequestOptions} requestOptions - Request-specific configuration.
      *
      * @example
@@ -1040,7 +1047,7 @@ export class NullableOptional {
      */
     public updateTags(
         userId: string,
-        request: SeedNullableOptional.UpdateTagsRequest,
+        request: UpdateTagsRequest,
         requestOptions?: NullableOptional.RequestOptions,
     ): core.HttpResponsePromise<string[]> {
         return core.HttpResponsePromise.fromPromise(this.__updateTags(userId, request, requestOptions));
@@ -1048,7 +1055,7 @@ export class NullableOptional {
 
     private async __updateTags(
         userId: string,
-        request: SeedNullableOptional.UpdateTagsRequest,
+        request: UpdateTagsRequest,
         requestOptions?: NullableOptional.RequestOptions,
     ): Promise<core.WithRawResponse<string[]>> {
         const _headers: core.Fetcher.Args["headers"] = mergeHeaders(this._options?.headers, requestOptions?.headers);
@@ -1103,7 +1110,7 @@ export class NullableOptional {
     /**
      * Get search results with nullable unions
      *
-     * @param {SeedNullableOptional.SearchRequest} request
+     * @param {SearchRequest} request
      * @param {NullableOptional.RequestOptions} requestOptions - Request-specific configuration.
      *
      * @example
@@ -1116,16 +1123,16 @@ export class NullableOptional {
      *     })
      */
     public getSearchResults(
-        request: SeedNullableOptional.SearchRequest,
+        request: SearchRequest,
         requestOptions?: NullableOptional.RequestOptions,
-    ): core.HttpResponsePromise<SeedNullableOptional.SearchResult[] | null> {
+    ): core.HttpResponsePromise<SearchResult[] | null> {
         return core.HttpResponsePromise.fromPromise(this.__getSearchResults(request, requestOptions));
     }
 
     private async __getSearchResults(
-        request: SeedNullableOptional.SearchRequest,
+        request: SearchRequest,
         requestOptions?: NullableOptional.RequestOptions,
-    ): Promise<core.WithRawResponse<SeedNullableOptional.SearchResult[] | null>> {
+    ): Promise<core.WithRawResponse<SearchResult[] | null>> {
         const _headers: core.Fetcher.Args["headers"] = mergeHeaders(this._options?.headers, requestOptions?.headers);
         const _response = await core.fetcher({
             url: core.url.join(
@@ -1145,10 +1152,7 @@ export class NullableOptional {
             fetchFn: this._options?.fetch,
         });
         if (_response.ok) {
-            return {
-                data: _response.body as SeedNullableOptional.SearchResult[] | null,
-                rawResponse: _response.rawResponse,
-            };
+            return { data: _response.body as SearchResult[] | null, rawResponse: _response.rawResponse };
         }
 
         if (_response.error.reason === "status-code") {

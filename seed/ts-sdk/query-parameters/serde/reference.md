@@ -67,7 +67,7 @@ await client.user.getUsername({
 <dl>
 <dd>
 
-**request:** `SeedQueryParameters.GetUsersRequest` 
+**request:** `GetUsersRequest` 
     
 </dd>
 </dl>

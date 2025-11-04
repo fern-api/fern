@@ -271,7 +271,7 @@ await client.nullableOptional.listUsers({
 <dl>
 <dd>
 
-**request:** `SeedNullableOptional.ListUsersRequest` 
+**request:** `ListUsersRequest` 
     
 </dd>
 </dl>
@@ -339,7 +339,7 @@ await client.nullableOptional.searchUsers({
 <dl>
 <dd>
 
-**request:** `SeedNullableOptional.SearchUsersRequest` 
+**request:** `SearchUsersRequest` 
     
 </dd>
 </dl>
@@ -655,7 +655,7 @@ await client.nullableOptional.updateComplexProfile("profileId", {
 <dl>
 <dd>
 
-**request:** `SeedNullableOptional.UpdateComplexProfileRequest` 
+**request:** `UpdateComplexProfileRequest` 
     
 </dd>
 </dl>
@@ -835,7 +835,7 @@ await client.nullableOptional.filterByRole({
 <dl>
 <dd>
 
-**request:** `SeedNullableOptional.FilterByRoleRequest` 
+**request:** `FilterByRoleRequest` 
     
 </dd>
 </dl>
@@ -973,7 +973,7 @@ await client.nullableOptional.updateTags("userId", {
 <dl>
 <dd>
 
-**request:** `SeedNullableOptional.UpdateTagsRequest` 
+**request:** `UpdateTagsRequest` 
     
 </dd>
 </dl>
@@ -1042,7 +1042,7 @@ await client.nullableOptional.getSearchResults({
 <dl>
 <dd>
 
-**request:** `SeedNullableOptional.SearchRequest` 
+**request:** `SearchRequest` 
     
 </dd>
 </dl>

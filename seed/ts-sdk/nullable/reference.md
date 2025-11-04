@@ -35,7 +35,7 @@ await client.nullable.getUsers({
 <dl>
 <dd>
 
-**request:** `SeedNullable.GetUsersRequest` 
+**request:** `GetUsersRequest` 
     
 </dd>
 </dl>
@@ -100,7 +100,7 @@ await client.nullable.createUser({
 <dl>
 <dd>
 
-**request:** `SeedNullable.CreateUserRequest` 
+**request:** `CreateUserRequest` 
     
 </dd>
 </dl>
@@ -151,7 +151,7 @@ await client.nullable.deleteUser({
 <dl>
 <dd>
 
-**request:** `SeedNullable.DeleteUserRequest` 
+**request:** `DeleteUserRequest` 
     
 </dd>
 </dl>

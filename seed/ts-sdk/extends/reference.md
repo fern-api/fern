@@ -32,7 +32,7 @@ await client.extendedInlineRequestBody({
 <dl>
 <dd>
 
-**request:** `SeedExtends.Inlined` 
+**request:** `Inlined` 
     
 </dd>
 </dl>

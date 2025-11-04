@@ -4,7 +4,8 @@ import type { BaseClientOptions, BaseRequestOptions } from "../../../../BaseClie
 import { mergeHeaders } from "../../../../core/headers.js";
 import * as core from "../../../../core/index.js";
 import * as errors from "../../../../errors/index.js";
-import type * as SeedHttpHead from "../../../index.js";
+import { User } from "../types/User.js";
+import type { ListUsersRequest } from "./requests/ListUsersRequest.js";
 
 export declare namespace User {
     export interface Options extends BaseClientOptions {}
@@ -75,7 +76,7 @@ export class User {
     }
 
     /**
-     * @param {SeedHttpHead.ListUsersRequest} request
+     * @param {ListUsersRequest} request
      * @param {User.RequestOptions} requestOptions - Request-specific configuration.
      *
      * @example
@@ -83,17 +84,14 @@ export class User {
      *         limit: 1
      *     })
      */
-    public list(
-        request: SeedHttpHead.ListUsersRequest,
-        requestOptions?: User.RequestOptions,
-    ): core.HttpResponsePromise<SeedHttpHead.User[]> {
+    public list(request: ListUsersRequest, requestOptions?: User.RequestOptions): core.HttpResponsePromise<User[]> {
         return core.HttpResponsePromise.fromPromise(this.__list(request, requestOptions));
     }
 
     private async __list(
-        request: SeedHttpHead.ListUsersRequest,
+        request: ListUsersRequest,
         requestOptions?: User.RequestOptions,
-    ): Promise<core.WithRawResponse<SeedHttpHead.User[]>> {
+    ): Promise<core.WithRawResponse<User[]>> {
         const { limit } = request;
         const _queryParams: Record<string, string | string[] | object | object[] | null> = {};
         _queryParams.limit = limit.toString();
@@ -113,7 +111,7 @@ export class User {
             fetchFn: this._options?.fetch,
         });
         if (_response.ok) {
-            return { data: _response.body as SeedHttpHead.User[], rawResponse: _response.rawResponse };
+            return { data: _response.body as User[], rawResponse: _response.rawResponse };
         }
 
         if (_response.error.reason === "status-code") {

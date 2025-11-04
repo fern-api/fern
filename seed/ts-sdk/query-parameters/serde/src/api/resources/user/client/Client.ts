@@ -6,7 +6,8 @@ import * as core from "../../../../core/index.js";
 import { toJson } from "../../../../core/json.js";
 import * as errors from "../../../../errors/index.js";
 import * as serializers from "../../../../serialization/index.js";
-import type * as SeedQueryParameters from "../../../index.js";
+import { User } from "../types/User.js";
+import type { GetUsersRequest } from "./requests/GetUsersRequest.js";
 
 export declare namespace User {
     export interface Options extends BaseClientOptions {}
@@ -22,7 +23,7 @@ export class User {
     }
 
     /**
-     * @param {SeedQueryParameters.GetUsersRequest} request
+     * @param {GetUsersRequest} request
      * @param {User.RequestOptions} requestOptions - Request-specific configuration.
      *
      * @example
@@ -66,17 +67,14 @@ export class User {
      *         filter: "filter"
      *     })
      */
-    public getUsername(
-        request: SeedQueryParameters.GetUsersRequest,
-        requestOptions?: User.RequestOptions,
-    ): core.HttpResponsePromise<SeedQueryParameters.User> {
+    public getUsername(request: GetUsersRequest, requestOptions?: User.RequestOptions): core.HttpResponsePromise<User> {
         return core.HttpResponsePromise.fromPromise(this.__getUsername(request, requestOptions));
     }
 
     private async __getUsername(
-        request: SeedQueryParameters.GetUsersRequest,
+        request: GetUsersRequest,
         requestOptions?: User.RequestOptions,
-    ): Promise<core.WithRawResponse<SeedQueryParameters.User>> {
+    ): Promise<core.WithRawResponse<User>> {
         const {
             limit,
             id,

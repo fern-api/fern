@@ -5,7 +5,11 @@ import { mergeHeaders } from "../../../../core/headers.js";
 import * as core from "../../../../core/index.js";
 import { toJson } from "../../../../core/json.js";
 import * as errors from "../../../../errors/index.js";
-import type * as SeedRequestParameters from "../../../index.js";
+import type { CreateUsernameBodyOptionalProperties } from "../types/CreateUsernameBodyOptionalProperties.js";
+import { User } from "../types/User.js";
+import type { CreateUsernameReferencedRequest } from "./requests/CreateUsernameReferencedRequest.js";
+import type { CreateUsernameRequest } from "./requests/CreateUsernameRequest.js";
+import type { GetUsersRequest } from "./requests/GetUsersRequest.js";
 
 export declare namespace User {
     export interface Options extends BaseClientOptions {}
@@ -21,7 +25,7 @@ export class User {
     }
 
     /**
-     * @param {SeedRequestParameters.CreateUsernameRequest} request
+     * @param {CreateUsernameRequest} request
      * @param {User.RequestOptions} requestOptions - Request-specific configuration.
      *
      * @example
@@ -33,14 +37,14 @@ export class User {
      *     })
      */
     public createUsername(
-        request: SeedRequestParameters.CreateUsernameRequest,
+        request: CreateUsernameRequest,
         requestOptions?: User.RequestOptions,
     ): core.HttpResponsePromise<void> {
         return core.HttpResponsePromise.fromPromise(this.__createUsername(request, requestOptions));
     }
 
     private async __createUsername(
-        request: SeedRequestParameters.CreateUsernameRequest,
+        request: CreateUsernameRequest,
         requestOptions?: User.RequestOptions,
     ): Promise<core.WithRawResponse<void>> {
         const { tags, ..._body } = request;
@@ -96,7 +100,7 @@ export class User {
     }
 
     /**
-     * @param {SeedRequestParameters.CreateUsernameReferencedRequest} request
+     * @param {CreateUsernameReferencedRequest} request
      * @param {User.RequestOptions} requestOptions - Request-specific configuration.
      *
      * @example
@@ -108,14 +112,14 @@ export class User {
      *     })
      */
     public createUsernameWithReferencedType(
-        request: SeedRequestParameters.CreateUsernameReferencedRequest,
+        request: CreateUsernameReferencedRequest,
         requestOptions?: User.RequestOptions,
     ): core.HttpResponsePromise<void> {
         return core.HttpResponsePromise.fromPromise(this.__createUsernameWithReferencedType(request, requestOptions));
     }
 
     private async __createUsernameWithReferencedType(
-        request: SeedRequestParameters.CreateUsernameReferencedRequest,
+        request: CreateUsernameReferencedRequest,
         requestOptions?: User.RequestOptions,
     ): Promise<core.WithRawResponse<void>> {
         const { tags, ..._body } = request;
@@ -171,21 +175,21 @@ export class User {
     }
 
     /**
-     * @param {SeedRequestParameters.CreateUsernameBodyOptionalProperties | null} request
+     * @param {CreateUsernameBodyOptionalProperties | null} request
      * @param {User.RequestOptions} requestOptions - Request-specific configuration.
      *
      * @example
      *     await client.user.createUsernameOptional()
      */
     public createUsernameOptional(
-        request?: SeedRequestParameters.CreateUsernameBodyOptionalProperties | null,
+        request?: CreateUsernameBodyOptionalProperties | null,
         requestOptions?: User.RequestOptions,
     ): core.HttpResponsePromise<void> {
         return core.HttpResponsePromise.fromPromise(this.__createUsernameOptional(request, requestOptions));
     }
 
     private async __createUsernameOptional(
-        request?: SeedRequestParameters.CreateUsernameBodyOptionalProperties | null,
+        request?: CreateUsernameBodyOptionalProperties | null,
         requestOptions?: User.RequestOptions,
     ): Promise<core.WithRawResponse<void>> {
         const _headers: core.Fetcher.Args["headers"] = mergeHeaders(this._options?.headers, requestOptions?.headers);
@@ -238,7 +242,7 @@ export class User {
     }
 
     /**
-     * @param {SeedRequestParameters.GetUsersRequest} request
+     * @param {GetUsersRequest} request
      * @param {User.RequestOptions} requestOptions - Request-specific configuration.
      *
      * @example
@@ -284,17 +288,14 @@ export class User {
      *         bigIntParam: "1000000"
      *     })
      */
-    public getUsername(
-        request: SeedRequestParameters.GetUsersRequest,
-        requestOptions?: User.RequestOptions,
-    ): core.HttpResponsePromise<SeedRequestParameters.User> {
+    public getUsername(request: GetUsersRequest, requestOptions?: User.RequestOptions): core.HttpResponsePromise<User> {
         return core.HttpResponsePromise.fromPromise(this.__getUsername(request, requestOptions));
     }
 
     private async __getUsername(
-        request: SeedRequestParameters.GetUsersRequest,
+        request: GetUsersRequest,
         requestOptions?: User.RequestOptions,
-    ): Promise<core.WithRawResponse<SeedRequestParameters.User>> {
+    ): Promise<core.WithRawResponse<User>> {
         const {
             limit,
             id,
@@ -365,7 +366,7 @@ export class User {
             fetchFn: this._options?.fetch,
         });
         if (_response.ok) {
-            return { data: _response.body as SeedRequestParameters.User, rawResponse: _response.rawResponse };
+            return { data: _response.body as User, rawResponse: _response.rawResponse };
         }
 
         if (_response.error.reason === "status-code") {

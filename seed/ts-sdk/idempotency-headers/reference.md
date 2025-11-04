@@ -32,7 +32,7 @@ await client.payment.create({
 <dl>
 <dd>
 
-**request:** `SeedIdempotencyHeaders.CreatePaymentRequest` 
+**request:** `CreatePaymentRequest` 
     
 </dd>
 </dl>

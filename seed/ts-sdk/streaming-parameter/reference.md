@@ -35,7 +35,7 @@ for await (const item of response) {
 <dl>
 <dd>
 
-**request:** `SeedStreaming.GenerateRequest` 
+**request:** `GenerateRequest` 
     
 </dd>
 </dl>

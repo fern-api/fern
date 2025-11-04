@@ -4,7 +4,7 @@ import type { BaseClientOptions, BaseRequestOptions } from "../../../../BaseClie
 import { mergeHeaders, mergeOnlyDefinedHeaders } from "../../../../core/headers.js";
 import * as core from "../../../../core/index.js";
 import * as errors from "../../../../errors/index.js";
-import * as SeedAccept from "../../../index.js";
+import { NotFoundError } from "../errors/NotFoundError.js";
 
 export declare namespace Service {
     export interface Options extends BaseClientOptions {}
@@ -22,7 +22,7 @@ export class Service {
     /**
      * @param {Service.RequestOptions} requestOptions - Request-specific configuration.
      *
-     * @throws {@link SeedAccept.NotFoundError}
+     * @throws {@link NotFoundError}
      *
      * @example
      *     await client.service.endpoint()
@@ -58,7 +58,7 @@ export class Service {
         if (_response.error.reason === "status-code") {
             switch (_response.error.statusCode) {
                 case 404:
-                    throw new SeedAccept.NotFoundError(_response.error.body as unknown, _response.rawResponse);
+                    throw new NotFoundError(_response.error.body as unknown, _response.rawResponse);
                 default:
                     throw new errors.SeedAcceptError({
                         statusCode: _response.error.statusCode,

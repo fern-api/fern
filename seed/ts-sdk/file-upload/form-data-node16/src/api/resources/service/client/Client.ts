@@ -5,7 +5,14 @@ import { mergeHeaders, mergeOnlyDefinedHeaders } from "../../../../core/headers.
 import * as core from "../../../../core/index.js";
 import { toJson } from "../../../../core/json.js";
 import * as errors from "../../../../errors/index.js";
-import type * as SeedFileUpload from "../../../index.js";
+import type { InlineTypeRequest } from "./requests/InlineTypeRequest.js";
+import type { JustFileRequest } from "./requests/JustFileRequest.js";
+import type { JustFileWithQueryParamsRequest } from "./requests/JustFileWithQueryParamsRequest.js";
+import type { MyOtherRequest } from "./requests/MyOtherRequest.js";
+import type { MyRequest } from "./requests/MyRequest.js";
+import type { OptionalArgsRequest } from "./requests/OptionalArgsRequest.js";
+import type { WithContentTypeRequest } from "./requests/WithContentTypeRequest.js";
+import type { WithFormEncodingRequest } from "./requests/WithFormEncodingRequest.js";
 
 export declare namespace Service {
     export interface Options extends BaseClientOptions {}
@@ -21,18 +28,15 @@ export class Service {
     }
 
     /**
-     * @param {SeedFileUpload.MyRequest} request
+     * @param {MyRequest} request
      * @param {Service.RequestOptions} requestOptions - Request-specific configuration.
      */
-    public post(
-        request: SeedFileUpload.MyRequest,
-        requestOptions?: Service.RequestOptions,
-    ): core.HttpResponsePromise<void> {
+    public post(request: MyRequest, requestOptions?: Service.RequestOptions): core.HttpResponsePromise<void> {
         return core.HttpResponsePromise.fromPromise(this.__post(request, requestOptions));
     }
 
     private async __post(
-        request: SeedFileUpload.MyRequest,
+        request: MyRequest,
         requestOptions?: Service.RequestOptions,
     ): Promise<core.WithRawResponse<void>> {
         const _request = await core.newFormData();
@@ -145,7 +149,7 @@ export class Service {
     }
 
     /**
-     * @param {SeedFileUpload.JustFileRequest} request
+     * @param {JustFileRequest} request
      * @param {Service.RequestOptions} requestOptions - Request-specific configuration.
      *
      * @example
@@ -154,15 +158,12 @@ export class Service {
      *         file: fs.createReadStream("/path/to/your/file")
      *     })
      */
-    public justFile(
-        request: SeedFileUpload.JustFileRequest,
-        requestOptions?: Service.RequestOptions,
-    ): core.HttpResponsePromise<void> {
+    public justFile(request: JustFileRequest, requestOptions?: Service.RequestOptions): core.HttpResponsePromise<void> {
         return core.HttpResponsePromise.fromPromise(this.__justFile(request, requestOptions));
     }
 
     private async __justFile(
-        request: SeedFileUpload.JustFileRequest,
+        request: JustFileRequest,
         requestOptions?: Service.RequestOptions,
     ): Promise<core.WithRawResponse<void>> {
         const _request = await core.newFormData();
@@ -220,18 +221,18 @@ export class Service {
     }
 
     /**
-     * @param {SeedFileUpload.JustFileWithQueryParamsRequest} request
+     * @param {JustFileWithQueryParamsRequest} request
      * @param {Service.RequestOptions} requestOptions - Request-specific configuration.
      */
     public justFileWithQueryParams(
-        request: SeedFileUpload.JustFileWithQueryParamsRequest,
+        request: JustFileWithQueryParamsRequest,
         requestOptions?: Service.RequestOptions,
     ): core.HttpResponsePromise<void> {
         return core.HttpResponsePromise.fromPromise(this.__justFileWithQueryParams(request, requestOptions));
     }
 
     private async __justFileWithQueryParams(
-        request: SeedFileUpload.JustFileWithQueryParamsRequest,
+        request: JustFileWithQueryParamsRequest,
         requestOptions?: Service.RequestOptions,
     ): Promise<core.WithRawResponse<void>> {
         const _queryParams: Record<string, string | string[] | object | object[] | null> = {};
@@ -315,18 +316,18 @@ export class Service {
     }
 
     /**
-     * @param {SeedFileUpload.WithContentTypeRequest} request
+     * @param {WithContentTypeRequest} request
      * @param {Service.RequestOptions} requestOptions - Request-specific configuration.
      */
     public withContentType(
-        request: SeedFileUpload.WithContentTypeRequest,
+        request: WithContentTypeRequest,
         requestOptions?: Service.RequestOptions,
     ): core.HttpResponsePromise<void> {
         return core.HttpResponsePromise.fromPromise(this.__withContentType(request, requestOptions));
     }
 
     private async __withContentType(
-        request: SeedFileUpload.WithContentTypeRequest,
+        request: WithContentTypeRequest,
         requestOptions?: Service.RequestOptions,
     ): Promise<core.WithRawResponse<void>> {
         const _request = await core.newFormData();
@@ -390,18 +391,18 @@ export class Service {
     }
 
     /**
-     * @param {SeedFileUpload.WithFormEncodingRequest} request
+     * @param {WithFormEncodingRequest} request
      * @param {Service.RequestOptions} requestOptions - Request-specific configuration.
      */
     public withFormEncoding(
-        request: SeedFileUpload.WithFormEncodingRequest,
+        request: WithFormEncodingRequest,
         requestOptions?: Service.RequestOptions,
     ): core.HttpResponsePromise<void> {
         return core.HttpResponsePromise.fromPromise(this.__withFormEncoding(request, requestOptions));
     }
 
     private async __withFormEncoding(
-        request: SeedFileUpload.WithFormEncodingRequest,
+        request: WithFormEncodingRequest,
         requestOptions?: Service.RequestOptions,
     ): Promise<core.WithRawResponse<void>> {
         const _request = await core.newFormData();
@@ -467,18 +468,18 @@ export class Service {
     }
 
     /**
-     * @param {SeedFileUpload.MyOtherRequest} request
+     * @param {MyOtherRequest} request
      * @param {Service.RequestOptions} requestOptions - Request-specific configuration.
      */
     public withFormEncodedContainers(
-        request: SeedFileUpload.MyOtherRequest,
+        request: MyOtherRequest,
         requestOptions?: Service.RequestOptions,
     ): core.HttpResponsePromise<void> {
         return core.HttpResponsePromise.fromPromise(this.__withFormEncodedContainers(request, requestOptions));
     }
 
     private async __withFormEncodedContainers(
-        request: SeedFileUpload.MyOtherRequest,
+        request: MyOtherRequest,
         requestOptions?: Service.RequestOptions,
     ): Promise<core.WithRawResponse<void>> {
         const _request = await core.newFormData();
@@ -628,7 +629,7 @@ export class Service {
     }
 
     /**
-     * @param {SeedFileUpload.OptionalArgsRequest} request
+     * @param {OptionalArgsRequest} request
      * @param {Service.RequestOptions} requestOptions - Request-specific configuration.
      *
      * @example
@@ -636,14 +637,14 @@ export class Service {
      *     await client.service.optionalArgs({})
      */
     public optionalArgs(
-        request: SeedFileUpload.OptionalArgsRequest,
+        request: OptionalArgsRequest,
         requestOptions?: Service.RequestOptions,
     ): core.HttpResponsePromise<string> {
         return core.HttpResponsePromise.fromPromise(this.__optionalArgs(request, requestOptions));
     }
 
     private async __optionalArgs(
-        request: SeedFileUpload.OptionalArgsRequest,
+        request: OptionalArgsRequest,
         requestOptions?: Service.RequestOptions,
     ): Promise<core.WithRawResponse<string>> {
         const _request = await core.newFormData();
@@ -708,18 +709,18 @@ export class Service {
     }
 
     /**
-     * @param {SeedFileUpload.InlineTypeRequest} request
+     * @param {InlineTypeRequest} request
      * @param {Service.RequestOptions} requestOptions - Request-specific configuration.
      */
     public withInlineType(
-        request: SeedFileUpload.InlineTypeRequest,
+        request: InlineTypeRequest,
         requestOptions?: Service.RequestOptions,
     ): core.HttpResponsePromise<string> {
         return core.HttpResponsePromise.fromPromise(this.__withInlineType(request, requestOptions));
     }
 
     private async __withInlineType(
-        request: SeedFileUpload.InlineTypeRequest,
+        request: InlineTypeRequest,
         requestOptions?: Service.RequestOptions,
     ): Promise<core.WithRawResponse<string>> {
         const _request = await core.newFormData();

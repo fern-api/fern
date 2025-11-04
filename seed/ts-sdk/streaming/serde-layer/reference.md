@@ -34,7 +34,7 @@ for await (const item of response) {
 <dl>
 <dd>
 
-**request:** `SeedStreaming.GenerateStreamRequest` 
+**request:** `GenerateStreamRequest` 
     
 </dd>
 </dl>
@@ -85,7 +85,7 @@ await client.dummy.generate({
 <dl>
 <dd>
 
-**request:** `SeedStreaming.Generateequest` 
+**request:** `Generateequest` 
     
 </dd>
 </dl>
