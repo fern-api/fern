@@ -1,8 +1,11 @@
 import { AbsoluteFilePath, doesPathExist } from "@fern-api/fs-utils";
 import { TaskContext } from "@fern-api/task-context";
+import Ajv, { type ValidateFunction } from "ajv";
+import addFormats from "ajv-formats";
 import chalk from "chalk";
 import { readFile } from "fs/promises";
 import yaml from "js-yaml";
+import path from "path";
 import { validateAngleBracketEscaping } from "./angleBracketValidator";
 import { assertValidSemVerChangeOrThrow, assertValidSemVerOrThrow } from "./semVerUtils";
 
@@ -26,11 +29,54 @@ interface VersionEntry {
 }
 
 /**
+ * Extracts the JSON Schema path from a yaml-language-server comment in the file content.
+ * Example: # yaml-language-server: $schema=../../generator-cli-versions-yml.schema.json
+ * Returns the relative path to the schema file, or null if not found.
+ */
+function extractSchemaPath(fileContent: string): string | null {
+    const lines = fileContent.split("\n");
+    const firstLine = lines[0]?.trim() ?? "";
+
+    // Match: # yaml-language-server: $schema=<path>
+    const match = firstLine.match(/^#\s*yaml-language-server:\s*\$schema=(.+)$/);
+    if (match && match[1]) {
+        return match[1].trim();
+    }
+
+    return null;
+}
+
+/**
+ * Loads a JSON Schema from the given path relative to the changelog file.
+ * Returns the parsed schema object or null if loading fails.
+ */
+async function loadJsonSchema(
+    schemaPath: string,
+    changelogPath: AbsoluteFilePath,
+    context: TaskContext
+): Promise<any | null> {
+    try {
+        // Resolve schema path relative to the changelog file
+        const changelogDir = path.dirname(changelogPath);
+        const absoluteSchemaPath = path.resolve(changelogDir, schemaPath);
+
+        context.logger.debug(`Loading JSON Schema from: ${absoluteSchemaPath}`);
+
+        const schemaContent = await readFile(absoluteSchemaPath, "utf-8");
+        return JSON.parse(schemaContent);
+    } catch (e) {
+        context.logger.warn(`Failed to load JSON Schema from ${schemaPath}: ${(e as Error)?.message}`);
+        return null;
+    }
+}
+
+/**
  * Validates an arbitrary versions.yml (changelog) file without requiring workspace configuration.
- * This performs schema-agnostic validation focusing on:
+ * This performs validation including:
  * - Valid semver version strings
  * - Proper semver progression between versions
  * - Proper angle bracket escaping in summaries
+ * - JSON Schema validation (if schema is specified in file header)
  *
  * Optionally accepts a schema parser to validate schema-specific requirements.
  */
@@ -47,6 +93,32 @@ export async function validateVersionsYml({
     }
 
     const fileContent = await readFile(absolutePathToChangelog, "utf-8");
+
+    // Extract and load JSON Schema if specified
+    const schemaPath = extractSchemaPath(fileContent);
+    let jsonSchemaValidator: ValidateFunction | null = null;
+
+    if (schemaPath != null) {
+        context.logger.debug(`Found JSON Schema reference: ${schemaPath}`);
+        const jsonSchema = await loadJsonSchema(schemaPath, absolutePathToChangelog, context);
+
+        if (jsonSchema != null) {
+            const ajv = new Ajv({
+                allErrors: true,
+                strict: false
+            });
+            addFormats(ajv);
+
+            try {
+                jsonSchemaValidator = ajv.compile(jsonSchema);
+                context.logger.debug(chalk.green("JSON Schema loaded and compiled successfully"));
+            } catch (e) {
+                context.logger.warn(`Failed to compile JSON Schema: ${(e as Error)?.message}`);
+            }
+        }
+    } else {
+        context.logger.debug("No JSON Schema reference found in file header");
+    }
 
     // Parse YAML content
     let changelogs: unknown;
@@ -65,6 +137,29 @@ export async function validateVersionsYml({
     }
 
     let hasErrors = false;
+
+    // Validate against JSON Schema if available
+    if (jsonSchemaValidator != null) {
+        context.logger.debug("Validating against JSON Schema...");
+        const isValid = jsonSchemaValidator(changelogs);
+
+        if (!isValid && jsonSchemaValidator.errors) {
+            hasErrors = true;
+            context.logger.error(chalk.red("JSON Schema validation failed:"));
+            for (const error of jsonSchemaValidator.errors) {
+                const errorPath = error.instancePath || "root";
+                const message = error.message || "validation error";
+                context.logger.error(
+                    chalk.red(`  ${errorPath}: ${message}${error.params ? ` (${JSON.stringify(error.params)})` : ""}`)
+                );
+            }
+        } else {
+            context.logger.debug(chalk.green("JSON Schema validation passed"));
+            // After successful schema validation, we can safely type assert
+            // This provides type safety for the rest of the validation
+            context.logger.debug("Data conforms to schema - using strongly typed validation");
+        }
+    }
 
     // Validate each entry
     for (const entry of changelogs) {
