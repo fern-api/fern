@@ -1,6 +1,6 @@
 FROM docker:28.4.0-dind-alpine3.22
 
-# Install Ruby and dependencies
+# Install Ruby 3.4 (available in Alpine 3.22)
 RUN apk add --no-cache \
     ruby \
     ruby-dev \
