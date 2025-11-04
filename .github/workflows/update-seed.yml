@@ -1182,91 +1182,63 @@ jobs:
           echo "branch=${GITHUB_HEAD_REF:-${GITHUB_REF#refs/heads/}}" >> $GITHUB_OUTPUT
           echo $branch
 
-      # Checkout repo to apply patches
-      - name: Checkout repo
+      # Build list of allowed generators based on successful jobs
+      - name: Build allowed generators list
+        id: build-allowed
+        shell: bash
+        run: |
+          ALLOWED=""
+          [ "${{ needs.ruby-model-seed-update.result }}" = "success" ] && ALLOWED="${ALLOWED}ruby-model,"
+          [ "${{ needs.ruby-sdk-seed-update.result }}" = "success" ] && ALLOWED="${ALLOWED}ruby-sdk,"
+          [ "${{ needs.ruby-sdk-v2-seed-update.result }}" = "success" ] && ALLOWED="${ALLOWED}ruby-sdk-v2,"
+          [ "${{ needs.pydantic-seed-update.result }}" = "success" ] && ALLOWED="${ALLOWED}pydantic,"
+          [ "${{ needs.python-sdk-seed-update.result }}" = "success" ] && ALLOWED="${ALLOWED}python-sdk,"
+          [ "${{ needs.fastapi-seed-update.result }}" = "success" ] && ALLOWED="${ALLOWED}fastapi,"
+          [ "${{ needs.openapi-seed-update.result }}" = "success" ] && ALLOWED="${ALLOWED}openapi,"
+          [ "${{ needs.postman-seed-update.result }}" = "success" ] && ALLOWED="${ALLOWED}postman,"
+          [ "${{ needs.java-sdk-seed-update.result }}" = "success" ] && ALLOWED="${ALLOWED}java-sdk,"
+          [ "${{ needs.java-model-seed-update.result }}" = "success" ] && ALLOWED="${ALLOWED}java-model,"
+          [ "${{ needs.java-spring-seed-update.result }}" = "success" ] && ALLOWED="${ALLOWED}java-spring,"
+          [ "${{ needs.typescript-sdk-seed-update.result }}" = "success" ] && ALLOWED="${ALLOWED}ts-sdk,"
+          [ "${{ needs.typescript-express-seed-update.result }}" = "success" ] && ALLOWED="${ALLOWED}ts-express,"
+          [ "${{ needs.go-fiber-seed-update.result }}" = "success" ] && ALLOWED="${ALLOWED}go-fiber,"
+          [ "${{ needs.go-model-seed-update.result }}" = "success" ] && ALLOWED="${ALLOWED}go-model,"
+          [ "${{ needs.go-sdk-seed-update.result }}" = "success" ] && ALLOWED="${ALLOWED}go-sdk,"
+          [ "${{ needs.csharp-model-seed-update.result }}" = "success" ] && ALLOWED="${ALLOWED}csharp-model,"
+          [ "${{ needs.csharp-sdk-seed-update.result }}" = "success" ] && ALLOWED="${ALLOWED}csharp-sdk,"
+          [ "${{ needs.php-model-seed-update.result }}" = "success" ] && ALLOWED="${ALLOWED}php-model,"
+          [ "${{ needs.php-sdk-seed-update.result }}" = "success" ] && ALLOWED="${ALLOWED}php-sdk,"
+          [ "${{ needs.swift-sdk-seed-update.result }}" = "success" ] && ALLOWED="${ALLOWED}swift-sdk,"
+          [ "${{ needs.rust-model-seed-update.result }}" = "success" ] && ALLOWED="${ALLOWED}rust-model,"
+          [ "${{ needs.rust-sdk-seed-update.result }}" = "success" ] && ALLOWED="${ALLOWED}rust-sdk,"
+          
+          # Remove trailing comma
+          ALLOWED="${ALLOWED%,}"
+          echo "allowed=$ALLOWED" >> $GITHUB_OUTPUT
+          echo "Allowed generators: $ALLOWED"
+
+      # Get action file specific to the running branch
+      - name: Checkout Action File
         uses: actions/checkout@v4
         with:
           ref: ${{ steps.extract-branch.outputs.branch }}
+          sparse-checkout: |
+            .github/
 
-      # Download all patch artifacts
-      - name: Download patch artifacts
-        uses: actions/download-artifact@v5
+      # Apply patches using the enhanced action with selective download
+      - name: Apply Patches
+        id: apply-patches
+        uses: ./.github/actions/apply-update-seed-patches
         with:
-          path: ./artifacts
-          merge-multiple: true
-
-      # Display downloaded artifacts for debugging
-      - name: Display artifacts
-        shell: bash
-        run: |
-          echo "Content of 'artifacts' folder:"
-          ls -R artifacts/
-
-      # Filter out patches from generators that didn't complete successfully
-      - name: Filter patches from incomplete generators
-        shell: bash
-        run: |
-          # Only keep patches for generators whose job result == success
-          [ "${{ needs.ruby-model-seed-update.result }}" = "success" ] || rm -f artifacts/seed-ruby-model-*.patch || true
-          [ "${{ needs.ruby-sdk-seed-update.result }}" = "success" ] || rm -f artifacts/seed-ruby-sdk-*.patch || true
-          [ "${{ needs.ruby-sdk-v2-seed-update.result }}" = "success" ] || rm -f artifacts/seed-ruby-sdk-v2-*.patch || true
-          [ "${{ needs.pydantic-seed-update.result }}" = "success" ] || rm -f artifacts/seed-pydantic-*.patch || true
-          [ "${{ needs.python-sdk-seed-update.result }}" = "success" ] || rm -f artifacts/seed-python-sdk-*.patch || true
-          [ "${{ needs.fastapi-seed-update.result }}" = "success" ] || rm -f artifacts/seed-fastapi-*.patch || true
-          [ "${{ needs.openapi-seed-update.result }}" = "success" ] || rm -f artifacts/seed-openapi-*.patch || true
-          [ "${{ needs.postman-seed-update.result }}" = "success" ] || rm -f artifacts/seed-postman-*.patch || true
-          [ "${{ needs.java-sdk-seed-update.result }}" = "success" ] || rm -f artifacts/seed-java-sdk-*.patch || true
-          [ "${{ needs.java-model-seed-update.result }}" = "success" ] || rm -f artifacts/seed-java-model-*.patch || true
-          [ "${{ needs.java-spring-seed-update.result }}" = "success" ] || rm -f artifacts/seed-java-spring-*.patch || true
-          [ "${{ needs.typescript-sdk-seed-update.result }}" = "success" ] || rm -f artifacts/seed-ts-sdk-*.patch || true
-          [ "${{ needs.typescript-express-seed-update.result }}" = "success" ] || rm -f artifacts/seed-ts-express-*.patch || true
-          [ "${{ needs.go-fiber-seed-update.result }}" = "success" ] || rm -f artifacts/seed-go-fiber-*.patch || true
-          [ "${{ needs.go-model-seed-update.result }}" = "success" ] || rm -f artifacts/seed-go-model-*.patch || true
-          [ "${{ needs.go-sdk-seed-update.result }}" = "success" ] || rm -f artifacts/seed-go-sdk-*.patch || true
-          [ "${{ needs.csharp-model-seed-update.result }}" = "success" ] || rm -f artifacts/seed-csharp-model-*.patch || true
-          [ "${{ needs.csharp-sdk-seed-update.result }}" = "success" ] || rm -f artifacts/seed-csharp-sdk-*.patch || true
-          [ "${{ needs.php-model-seed-update.result }}" = "success" ] || rm -f artifacts/seed-php-model-*.patch || true
-          [ "${{ needs.php-sdk-seed-update.result }}" = "success" ] || rm -f artifacts/seed-php-sdk-*.patch || true
-          [ "${{ needs.swift-sdk-seed-update.result }}" = "success" ] || rm -f artifacts/seed-swift-sdk-*.patch || true
-          [ "${{ needs.rust-model-seed-update.result }}" = "success" ] || rm -f artifacts/seed-rust-model-*.patch || true
-          [ "${{ needs.rust-sdk-seed-update.result }}" = "success" ] || rm -f artifacts/seed-rust-sdk-*.patch || true
-
-      # Count remaining patches
-      - name: Count patches
-        id: count-patches
-        shell: bash
-        run: |
-          file_count=$(find ./artifacts -type f -name "seed-*.patch" | wc -l)
-          echo "Number of patches after filtering: $file_count"
-          if [ "$file_count" -gt 0 ]; then
-            echo "has_patches=true" >> $GITHUB_OUTPUT
-          else
-            echo "has_patches=false" >> $GITHUB_OUTPUT
-          fi
-
-      # Apply all remaining patches
-      - name: Apply patches
-        if: steps.count-patches.outputs.has_patches == 'true'
-        shell: bash
-        run: |
-          git apply artifacts/seed-*.patch
-
-      # Detect if any changes were made
-      - name: Detect changes
-        id: detect-changes
-        shell: bash
-        run: |
-          if [ -n "$(git status --porcelain -- seed/)" ]; then
-            echo "has_changes=true" >> $GITHUB_OUTPUT
-          else
-            echo "has_changes=false" >> $GITHUB_OUTPUT
-          fi
+          patch-pattern: seed-*.patch
+          checkout-ref: ${{ steps.extract-branch.outputs.branch }}
+          allowed-generators: ${{ steps.build-allowed.outputs.allowed }}
 
       # Commit all applied patches back to branch
       - name: Add and Commit Changes
         id: commit-changes
         uses: EndBug/add-and-commit@v9
-        if: ${{ steps.detect-changes.outputs.has_changes == 'true' }}
+        if: ${{ steps.apply-patches.outputs.has-patches == 'true' }}
         with:
           add: "seed/*"
           push: true

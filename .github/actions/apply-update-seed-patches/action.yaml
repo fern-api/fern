@@ -9,6 +9,10 @@ inputs:
     description: "Specific branch to checkout, depending on workflow. No input will checkout default branch in detached HEAD (okay for applying by PR workflow)"
     required: false
     default: ""
+  allowed-generators:
+    description: "Comma-separated list of generator names to include (e.g., 'ruby-model,python-sdk,ts-sdk'). If provided, only patches for these generators will be downloaded and applied."
+    required: false
+    default: ""
 
 outputs:
   has-patches:
@@ -34,6 +38,25 @@ runs:
           echo "WARNING: Directory '$DIRECTORY' already exists. Not an immediate error but could cause a problem downstream."
         fi
 
+    - name: Build artifact pattern
+      id: build-pattern
+      shell: bash
+      run: |
+        ALLOWED="${{ inputs.allowed-generators }}"
+        if [ -n "$ALLOWED" ]; then
+          echo "Building artifact pattern from allowed generators: $ALLOWED"
+          echo "pattern<<EOF" >> $GITHUB_OUTPUT
+          IFS=',' read -ra GENERATORS <<< "$ALLOWED"
+          for gen in "${GENERATORS[@]}"; do
+            gen=$(echo "$gen" | xargs)
+            echo "seed-${gen}-*.patch" >> $GITHUB_OUTPUT
+          done
+          echo "EOF" >> $GITHUB_OUTPUT
+        else
+          echo "No allowed-generators filter provided, will download all artifacts"
+          echo "pattern=" >> $GITHUB_OUTPUT
+        fi
+
     # Merge-multiple is set so all patches are downloaded into the same folder. Otherwise
     # they are subfoldered into folders that match *.patch pattern and cause errors downstream
     - name: Download patches
@@ -41,6 +64,7 @@ runs:
       with:
         path: ./artifacts
         merge-multiple: true
+        pattern: ${{ steps.build-pattern.outputs.pattern }}
 
     - name: Display content of a folder
       shell: bash
@@ -48,14 +72,50 @@ runs:
         echo "Content of 'artifacts' folder:"
         ls -R artifacts/
 
+    - name: Filter patches by allowed generators
+      shell: bash
+      run: |
+        ALLOWED="${{ inputs.allowed-generators }}"
+        if [ -n "$ALLOWED" ]; then
+          echo "Post-download filtering: keeping only patches for allowed generators"
+          IFS=',' read -ra GENERATORS <<< "$ALLOWED"
+          
+          ALLOWED_LIST=()
+          for gen in "${GENERATORS[@]}"; do
+            gen=$(echo "$gen" | xargs)
+            ALLOWED_LIST+=("$gen")
+          done
+          
+          for patch in artifacts/seed-*.patch; do
+            if [ -f "$patch" ]; then
+              filename=$(basename "$patch")
+              gen_name=$(echo "$filename" | sed 's/^seed-\(.*\)-[0-9]*\.patch$/\1/')
+              
+              is_allowed=false
+              for allowed_gen in "${ALLOWED_LIST[@]}"; do
+                if [ "$gen_name" = "$allowed_gen" ]; then
+                  is_allowed=true
+                  break
+                fi
+              done
+              
+              if [ "$is_allowed" = false ]; then
+                echo "Removing patch for non-allowed generator: $filename"
+                rm -f "$patch"
+              fi
+            fi
+          done
+        else
+          echo "No allowed-generators filter, keeping all downloaded patches"
+        fi
+
     - name: Get number of patches
       shell: bash
       id: get-number-of-patches
       run: |
-        # Apply patches per generator for multiple, separate, PRs
         PATCHES_PATTERN="${{ inputs.patch-pattern }}"
         file_count=$(find ./artifacts -type f -name "$PATCHES_PATTERN" | wc -l)
-        echo "Number of patches downloaded: $file_count"
+        echo "Number of patches after filtering: $file_count"
         if [ "$file_count" -gt 0 ]; then
           echo "HAS_PATCHES=true" >> $GITHUB_OUTPUT
         else
