@@ -67,7 +67,7 @@ const SENSITIVE_HEADERS = new Set([
     "set-cookie",
     "proxy-authorization",
     "x-csrf-token",
-    "x-xsrf-token",
+    "x-xsrf-token"
 ]);
 
 function redactHeaders(headers: Record<string, string>): Record<string, string> {
@@ -100,7 +100,7 @@ const SENSITIVE_QUERY_PARAMS = new Set([
     "key",
     "session",
     "session_id",
-    "session-id",
+    "session-id"
 ]);
 
 function redactQueryParameters(queryParameters?: Record<string, unknown>): Record<string, unknown> | undefined {
@@ -133,7 +133,7 @@ function redactUrl(url: string): string {
         const firstDelimiter = Math.min(
             pathStart === -1 ? url.length : pathStart,
             queryStart === -1 ? url.length : queryStart,
-            fragmentStart === -1 ? url.length : fragmentStart,
+            fragmentStart === -1 ? url.length : fragmentStart
         );
 
         if (atIndex < firstDelimiter) {
@@ -221,7 +221,7 @@ export async function fetcherImpl<R = unknown>(args: Fetcher.Args): Promise<APIR
     const url = createRequestUrl(args.url, args.queryParameters);
     const requestBody: BodyInit | undefined = await getRequestBody({
         body: args.body,
-        type: args.requestType ?? "other",
+        type: args.requestType ?? "other"
     });
     const fetchFn = args.fetchFn ?? (await getFetchFn());
     const headers = await getHeaders(args);
@@ -233,7 +233,7 @@ export async function fetcherImpl<R = unknown>(args: Fetcher.Args): Promise<APIR
             url: redactUrl(url),
             headers: redactHeaders(headers),
             queryParameters: redactQueryParameters(args.queryParameters),
-            hasBody: requestBody != null,
+            hasBody: requestBody != null
         };
         logger.debug("Making HTTP request", metadata);
     }
@@ -250,9 +250,9 @@ export async function fetcherImpl<R = unknown>(args: Fetcher.Args): Promise<APIR
                     args.timeoutMs,
                     args.abortSignal,
                     args.withCredentials,
-                    args.duplex,
+                    args.duplex
                 ),
-            args.maxRetries,
+            args.maxRetries
         );
 
         if (response.status >= 200 && response.status < 400) {
@@ -260,7 +260,7 @@ export async function fetcherImpl<R = unknown>(args: Fetcher.Args): Promise<APIR
                 const metadata = {
                     method: args.method,
                     url: redactUrl(url),
-                    statusCode: response.status,
+                    statusCode: response.status
                 };
                 logger.debug("HTTP request succeeded", metadata);
             }
@@ -268,14 +268,14 @@ export async function fetcherImpl<R = unknown>(args: Fetcher.Args): Promise<APIR
                 ok: true,
                 body: (await getResponseBody(response, args.responseType)) as R,
                 headers: response.headers,
-                rawResponse: toRawResponse(response),
+                rawResponse: toRawResponse(response)
             };
         } else {
             if (logger.isError()) {
                 const metadata = {
                     method: args.method,
                     url: redactUrl(url),
-                    statusCode: response.status,
+                    statusCode: response.status
                 };
                 logger.error("HTTP request failed with error status", metadata);
             }
@@ -284,9 +284,9 @@ export async function fetcherImpl<R = unknown>(args: Fetcher.Args): Promise<APIR
                 error: {
                     reason: "status-code",
                     statusCode: response.status,
-                    body: await getErrorResponseBody(response),
+                    body: await getErrorResponseBody(response)
                 },
-                rawResponse: toRawResponse(response),
+                rawResponse: toRawResponse(response)
             };
         }
     } catch (error) {
@@ -294,7 +294,7 @@ export async function fetcherImpl<R = unknown>(args: Fetcher.Args): Promise<APIR
             if (logger.isError()) {
                 const metadata = {
                     method: args.method,
-                    url: redactUrl(url),
+                    url: redactUrl(url)
                 };
                 logger.error("HTTP request was aborted", metadata);
             }
@@ -302,32 +302,32 @@ export async function fetcherImpl<R = unknown>(args: Fetcher.Args): Promise<APIR
                 ok: false,
                 error: {
                     reason: "unknown",
-                    errorMessage: "The user aborted a request",
+                    errorMessage: "The user aborted a request"
                 },
-                rawResponse: abortRawResponse,
+                rawResponse: abortRawResponse
             };
         } else if (error instanceof Error && error.name === "AbortError") {
             if (logger.isError()) {
                 const metadata = {
                     method: args.method,
                     url: redactUrl(url),
-                    timeoutMs: args.timeoutMs,
+                    timeoutMs: args.timeoutMs
                 };
                 logger.error("HTTP request timed out", metadata);
             }
             return {
                 ok: false,
                 error: {
-                    reason: "timeout",
+                    reason: "timeout"
                 },
-                rawResponse: abortRawResponse,
+                rawResponse: abortRawResponse
             };
         } else if (error instanceof Error) {
             if (logger.isError()) {
                 const metadata = {
                     method: args.method,
                     url: redactUrl(url),
-                    errorMessage: error.message,
+                    errorMessage: error.message
                 };
                 logger.error("HTTP request failed with error", metadata);
             }
@@ -335,9 +335,9 @@ export async function fetcherImpl<R = unknown>(args: Fetcher.Args): Promise<APIR
                 ok: false,
                 error: {
                     reason: "unknown",
-                    errorMessage: error.message,
+                    errorMessage: error.message
                 },
-                rawResponse: unknownRawResponse,
+                rawResponse: unknownRawResponse
             };
         }
 
@@ -345,7 +345,7 @@ export async function fetcherImpl<R = unknown>(args: Fetcher.Args): Promise<APIR
             const metadata = {
                 method: args.method,
                 url: redactUrl(url),
-                error: toJson(error),
+                error: toJson(error)
             };
             logger.error("HTTP request failed with unknown error", metadata);
         }
@@ -353,9 +353,9 @@ export async function fetcherImpl<R = unknown>(args: Fetcher.Args): Promise<APIR
             ok: false,
             error: {
                 reason: "unknown",
-                errorMessage: toJson(error),
+                errorMessage: toJson(error)
             },
-            rawResponse: unknownRawResponse,
+            rawResponse: unknownRawResponse
         };
     }
 }
