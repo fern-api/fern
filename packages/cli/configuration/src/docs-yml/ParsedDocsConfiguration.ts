@@ -308,6 +308,7 @@ export declare namespace DocsNavigationItem {
         snippetsConfiguration: SnippetsConfiguration | undefined;
         overviewAbsolutePath: AbsoluteFilePath | undefined;
         navigation: ParsedApiReferenceLayoutItem[];
+        collapsed: boolean | undefined;
         hidden: boolean | undefined;
         slug: string | undefined;
         skipUrlSlug: boolean | undefined;
