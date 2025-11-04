@@ -384,7 +384,7 @@ function convertSettingsConfig(
     return {
         darkModeCode: settings.darkModeCode ?? false,
         defaultSearchFilters: settings.defaultSearchFilters ?? false,
-        language: undefined,
+        language: "en",
         disableSearch: settings.disableSearch ?? false,
         hide404Page: settings.hide404Page ?? false,
         httpSnippets: settings.httpSnippets ?? true,
