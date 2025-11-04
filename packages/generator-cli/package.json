@@ -12,9 +12,7 @@
   "bin": {
     "generator-cli": "dist/cli.cjs"
   },
-  "files": [
-    "dist"
-  ],
+  "files": ["dist"],
   "scripts": {
     "clean": "rm -rf ./dist && tsc --build --clean",
     "compile": "pnpm compile:api && pnpm compile:cli",
