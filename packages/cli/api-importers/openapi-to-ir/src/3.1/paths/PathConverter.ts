@@ -40,7 +40,7 @@ export class PathConverter extends AbstractConverter<OpenAPIConverterContext3_1,
         this.topLevelServers = topLevelServers;
     }
 
-    public convert(): PathConverter.Output | undefined {
+    public async convert(): Promise<PathConverter.Output | undefined> {
         const endpoints: OperationConverter.Output[] = [];
         const webhooks: WebhookConverter.Output[] = [];
         const inlinedTypes: Record<string, Converters.SchemaConverters.SchemaConverter.ConvertedSchema> = {};
@@ -54,7 +54,7 @@ export class PathConverter extends AbstractConverter<OpenAPIConverterContext3_1,
 
             const operationBreadcrumbs = [...this.breadcrumbs, method];
 
-            const convertedWebhook = this.tryParseAsWebhook({
+            const convertedWebhook = await this.tryParseAsWebhook({
                 operationBreadcrumbs,
                 operation,
                 method,
@@ -73,7 +73,7 @@ export class PathConverter extends AbstractConverter<OpenAPIConverterContext3_1,
             });
             const streamingExtension = streamingExtensionConverter.convert();
 
-            const convertedEndpoint = this.tryParseAsHttpEndpoint({
+            const convertedEndpoint = await this.tryParseAsHttpEndpoint({
                 operationBreadcrumbs,
                 operation,
                 method,
@@ -92,7 +92,7 @@ export class PathConverter extends AbstractConverter<OpenAPIConverterContext3_1,
         };
     }
 
-    private tryParseAsWebhook({
+    private async tryParseAsWebhook({
         operation,
         method,
         operationBreadcrumbs,
@@ -102,7 +102,7 @@ export class PathConverter extends AbstractConverter<OpenAPIConverterContext3_1,
         method: string;
         operationBreadcrumbs: string[];
         context: OpenAPIConverterContext3_1;
-    }): WebhookConverter.Output | undefined {
+    }): Promise<WebhookConverter.Output | undefined> {
         const webhookExtensionConverter = new FernWebhookExtension({
             breadcrumbs: operationBreadcrumbs,
             operation,
@@ -120,10 +120,10 @@ export class PathConverter extends AbstractConverter<OpenAPIConverterContext3_1,
             method: OpenAPIV3.HttpMethods[method.toUpperCase() as keyof typeof OpenAPIV3.HttpMethods],
             path: this.path
         });
-        return webhookConverter.convert();
+        return await webhookConverter.convert();
     }
 
-    private tryParseAsHttpEndpoint({
+    private async tryParseAsHttpEndpoint({
         operation,
         method,
         operationBreadcrumbs,
@@ -133,7 +133,7 @@ export class PathConverter extends AbstractConverter<OpenAPIConverterContext3_1,
         method: string;
         operationBreadcrumbs: string[];
         streamingExtension: FernStreamingExtension.Output | undefined;
-    }): OperationConverter.Output | undefined {
+    }): Promise<OperationConverter.Output | undefined> {
         const paginationExtensionConverter = new FernPaginationExtension({
             breadcrumbs: operationBreadcrumbs,
             operation,
@@ -164,6 +164,6 @@ export class PathConverter extends AbstractConverter<OpenAPIConverterContext3_1,
             topLevelServers: this.topLevelServers,
             streamingExtension
         });
-        return operationConverter.convert();
+        return await operationConverter.convert();
     }
 }

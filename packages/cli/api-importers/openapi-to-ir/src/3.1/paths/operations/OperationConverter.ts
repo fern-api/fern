@@ -74,7 +74,7 @@ export class OperationConverter extends AbstractOperationConverter {
         this.streamingExtension = streamingExtension;
     }
 
-    public convert(): OperationConverter.Output | undefined {
+    public async convert(): Promise<OperationConverter.Output | undefined> {
         const httpMethod = this.convertHttpMethod();
         if (httpMethod == null) {
             return undefined;
@@ -117,7 +117,7 @@ export class OperationConverter extends AbstractOperationConverter {
         const path = constructHttpPath(this.path);
         const baseUrl = this.getEndpointBaseUrl();
         const v2BaseUrls = this.getEndpointBaseUrls();
-        const fernExamples = this.convertExamples({
+        const fernExamples = await this.convertExamples({
             httpPath: path,
             httpMethod,
             baseUrl
@@ -462,7 +462,7 @@ export class OperationConverter extends AbstractOperationConverter {
         return headers;
     }
 
-    private convertExamples({
+    private async convertExamples({
         httpPath,
         httpMethod,
         baseUrl
@@ -470,16 +470,16 @@ export class OperationConverter extends AbstractOperationConverter {
         httpPath: HttpPath;
         httpMethod: FernIr.HttpMethod;
         baseUrl: string | undefined;
-    }): {
+    }): Promise<{
         examples: Record<string, FernIr.V2HttpEndpointExample>;
         streamExamples: Record<string, FernIr.V2HttpEndpointExample>;
-    } {
+    }> {
         const fernExamplesExtension = new FernExamplesExtension({
             context: this.context,
             breadcrumbs: this.breadcrumbs,
             operation: this.operation as object
         });
-        const fernExamples = fernExamplesExtension.convert();
+        const fernExamples = await fernExamplesExtension.convert();
         if (fernExamples == null) {
             return { examples: {}, streamExamples: {} };
         }

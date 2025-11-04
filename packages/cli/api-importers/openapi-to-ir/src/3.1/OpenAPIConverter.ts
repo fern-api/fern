@@ -36,9 +36,9 @@ export class OpenAPIConverter extends AbstractSpecConverter<OpenAPIConverterCont
 
         this.convertSchemas();
 
-        this.convertWebhooks();
+        await this.convertWebhooks();
 
-        const { endpointLevelServers, errors } = this.convertPaths();
+        const { endpointLevelServers, errors } = await this.convertPaths();
 
         this.addErrorsToIr(errors);
 
@@ -165,7 +165,7 @@ export class OpenAPIConverter extends AbstractSpecConverter<OpenAPIConverterCont
         }
     }
 
-    private convertWebhooks(): void {
+    private async convertWebhooks(): Promise<void> {
         for (const [, webhookItem] of Object.entries(this.context.spec.webhooks ?? {})) {
             if (webhookItem == null) {
                 this.context.errorCollector.collect({
@@ -200,7 +200,7 @@ export class OpenAPIConverter extends AbstractSpecConverter<OpenAPIConverterCont
                 path: operationId
             });
 
-            const convertedWebHook = webHookConverter.convert();
+            const convertedWebHook = await webHookConverter.convert();
 
             if (convertedWebHook != null) {
                 this.addWebhookToIr({
@@ -214,10 +214,10 @@ export class OpenAPIConverter extends AbstractSpecConverter<OpenAPIConverterCont
         }
     }
 
-    private convertPaths(): {
+    private async convertPaths(): Promise<{
         endpointLevelServers?: OpenAPIV3_1.ServerObject[];
         errors: Record<FernIr.ErrorId, FernIr.ErrorDeclaration>;
-    } {
+    }> {
         const endpointLevelServers: OpenAPIV3_1.ServerObject[] = [];
         const errors: Record<FernIr.ErrorId, FernIr.ErrorDeclaration> = {};
 
@@ -233,7 +233,7 @@ export class OpenAPIConverter extends AbstractSpecConverter<OpenAPIConverterCont
                 pathItem,
                 path
             });
-            const convertedPath = pathConverter.convert();
+            const convertedPath = await pathConverter.convert();
             if (convertedPath != null) {
                 for (const endpoint of convertedPath.endpoints) {
                     if (endpoint.streamEndpoint != null) {

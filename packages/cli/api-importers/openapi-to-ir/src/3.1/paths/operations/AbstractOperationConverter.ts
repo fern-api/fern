@@ -58,7 +58,7 @@ export abstract class AbstractOperationConverter extends AbstractConverter<
         this.path = path;
     }
 
-    public abstract convert(): AbstractOperationConverter.Output | undefined;
+    public abstract convert(): Promise<AbstractOperationConverter.Output | undefined>;
 
     protected convertHttpMethod(): HttpMethod | undefined {
         switch (this.method) {
