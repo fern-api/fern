@@ -16,6 +16,7 @@
 package com.fern.java.generators;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
@@ -72,6 +73,7 @@ public final class ObjectMappersGenerator extends AbstractFileGenerator {
                         .addModifiers(Modifier.PRIVATE)
                         .build())
                 .addMethod(getStringifyMethod())
+                .addMethod(getParseErrorBodyMethod())
                 .build();
         JavaFile enumFile =
                 JavaFile.builder(className.packageName(), enumTypeSpec).build();
@@ -99,6 +101,24 @@ public final class ObjectMappersGenerator extends AbstractFileGenerator {
                 .endControlFlow()
                 .beginControlFlow("catch ($T e)", IOException.class)
                 .addStatement("return o.getClass().getName() + $S + $T.toHexString(o.hashCode())", "@", Integer.class)
+                .endControlFlow()
+                .build();
+    }
+
+    private static MethodSpec getParseErrorBodyMethod() {
+        return MethodSpec.methodBuilder("parseErrorBody")
+                .addModifiers(Modifier.PUBLIC, Modifier.STATIC)
+                .returns(Object.class)
+                .addParameter(ParameterSpec.builder(String.class, "responseBodyString")
+                        .build())
+                .beginControlFlow("try")
+                .addStatement(
+                        "return $L.readValue(responseBodyString, $T.class)",
+                        JSON_MAPPER_STATIC_FIELD_NAME,
+                        Object.class)
+                .endControlFlow()
+                .beginControlFlow("catch ($T ignored)", JsonProcessingException.class)
+                .addStatement("return responseBodyString")
                 .endControlFlow()
                 .build();
     }
