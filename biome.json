@@ -195,7 +195,8 @@
         "generators/base/src/AbstractGeneratorCli.ts",
         "packages/cli/docs-resolver/src/__test__/fixtures/dry/fern/fibonacci.js",
         "packages/cli/ete-tests/src/tests/generate/fixtures/docs/fern/js/custom.js",
-        "packages/generator-cli/src/**/*.ts"
+        "packages/generator-cli/src/**/*.ts",
+        "packages/commons/github/src/**/*.ts"
       ],
       "linter": {
         "rules": {
