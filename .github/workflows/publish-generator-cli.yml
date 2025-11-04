@@ -3,7 +3,8 @@ name: Publish Generator CLI
 on:
   push:
     branches:
-      - main
+      # - main
+      - jsklan/copy-generator-cli
     paths:
       - "packages/generator-cli/versions.yml"
 
@@ -93,12 +94,16 @@ jobs:
           NODE_AUTH_TOKEN: ${{ env.NPM_TOKEN }}
           NEW_VERSION: ${{ needs.check-version.outputs.version }}
         run: |
-          cd packages/generator-cli
-          mv package.json package.json.tmp
-          version_replace="s/0.0.0/${NEW_VERSION}/"
-          cat package.json.tmp| sed "${version_replace}" > package.json
-          rm -rf package.json.tmp
-          npm publish --access public --tag latest
+          echo "🚀 TEST MODE: Would publish generator-cli version ${NEW_VERSION} to npm"
+          echo "   Package: ${PACKAGE_NAME}"
+          echo "   Version: ${NEW_VERSION}"
+          echo "   Tag: latest"
+          # cd packages/generator-cli
+          # mv package.json package.json.tmp
+          # version_replace="s/0.0.0/${NEW_VERSION}/"
+          # cat package.json.tmp| sed "${version_replace}" > package.json
+          # rm -rf package.json.tmp
+          # npm publish --access public --tag latest
 
   publish-sdks:
     needs: check-version
@@ -115,4 +120,8 @@ jobs:
           FERN_TOKEN: ${{ secrets.FERN_TOKEN }}
           NEW_VERSION: ${{ needs.check-version.outputs.version }}
         run: |
-          fern generate --api generator-cli --version "${NEW_VERSION}" --group sdk
+          echo "🚀 TEST MODE: Would publish generator-cli SDKs version ${NEW_VERSION}"
+          echo "   API: generator-cli"
+          echo "   Version: ${NEW_VERSION}"
+          echo "   Group: sdk"
+          # fern generate --api generator-cli --version "${NEW_VERSION}" --group sdk
