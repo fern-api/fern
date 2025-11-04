@@ -62,11 +62,9 @@ public class RawUnionClient {
                 return new BestHttpResponse<>(
                         ObjectMappers.JSON_MAPPER.readValue(responseBodyString, Animal.class), response);
             }
+            Object errorBody = ObjectMappers.parseErrorBody(responseBodyString);
             throw new BestApiException(
-                    "Error with status code " + response.code(),
-                    response.code(),
-                    ObjectMappers.JSON_MAPPER.readValue(responseBodyString, Object.class),
-                    response);
+                    "Error with status code " + response.code(), response.code(), errorBody, response);
         } catch (IOException e) {
             throw new BestException("Network error executing HTTP request", e);
         }

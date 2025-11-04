@@ -61,11 +61,9 @@ public class RawServiceClient {
                 return new SeedExamplesHttpResponse<>(
                         ObjectMappers.JSON_MAPPER.readValue(responseBodyString, Movie.class), response);
             }
+            Object errorBody = ObjectMappers.parseErrorBody(responseBodyString);
             throw new SeedExamplesApiException(
-                    "Error with status code " + response.code(),
-                    response.code(),
-                    ObjectMappers.JSON_MAPPER.readValue(responseBodyString, Object.class),
-                    response);
+                    "Error with status code " + response.code(), response.code(), errorBody, response);
         } catch (IOException e) {
             throw new SeedExamplesException("Network error executing HTTP request", e);
         }
@@ -105,11 +103,9 @@ public class RawServiceClient {
                 return new SeedExamplesHttpResponse<>(
                         ObjectMappers.JSON_MAPPER.readValue(responseBodyString, String.class), response);
             }
+            Object errorBody = ObjectMappers.parseErrorBody(responseBodyString);
             throw new SeedExamplesApiException(
-                    "Error with status code " + response.code(),
-                    response.code(),
-                    ObjectMappers.JSON_MAPPER.readValue(responseBodyString, Object.class),
-                    response);
+                    "Error with status code " + response.code(), response.code(), errorBody, response);
         } catch (IOException e) {
             throw new SeedExamplesException("Network error executing HTTP request", e);
         }
@@ -148,11 +144,9 @@ public class RawServiceClient {
                 return new SeedExamplesHttpResponse<>(
                         ObjectMappers.JSON_MAPPER.readValue(responseBodyString, Metadata.class), response);
             }
+            Object errorBody = ObjectMappers.parseErrorBody(responseBodyString);
             throw new SeedExamplesApiException(
-                    "Error with status code " + response.code(),
-                    response.code(),
-                    ObjectMappers.JSON_MAPPER.readValue(responseBodyString, Object.class),
-                    response);
+                    "Error with status code " + response.code(), response.code(), errorBody, response);
         } catch (IOException e) {
             throw new SeedExamplesException("Network error executing HTTP request", e);
         }
@@ -200,11 +194,9 @@ public class RawServiceClient {
                                 responseBodyString, com.seed.examples.resources.types.types.Response.class),
                         response);
             }
+            Object errorBody = ObjectMappers.parseErrorBody(responseBodyString);
             throw new SeedExamplesApiException(
-                    "Error with status code " + response.code(),
-                    response.code(),
-                    ObjectMappers.JSON_MAPPER.readValue(responseBodyString, Object.class),
-                    response);
+                    "Error with status code " + response.code(), response.code(), errorBody, response);
         } catch (IOException e) {
             throw new SeedExamplesException("Network error executing HTTP request", e);
         }
@@ -250,11 +242,9 @@ public class RawServiceClient {
                 return new SeedExamplesHttpResponse<>(null, response);
             }
             String responseBodyString = responseBody != null ? responseBody.string() : "{}";
+            Object errorBody = ObjectMappers.parseErrorBody(responseBodyString);
             throw new SeedExamplesApiException(
-                    "Error with status code " + response.code(),
-                    response.code(),
-                    ObjectMappers.JSON_MAPPER.readValue(responseBodyString, Object.class),
-                    response);
+                    "Error with status code " + response.code(), response.code(), errorBody, response);
         } catch (IOException e) {
             throw new SeedExamplesException("Network error executing HTTP request", e);
         }
