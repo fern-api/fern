@@ -180,7 +180,13 @@ export class GenerationRunner {
             version: outputVersionOverride,
             packageName: generatorsYml.getPackageName({ generatorInvocation }),
             context,
-            sourceResolver: new SourceResolverImpl(context, workspace)
+            sourceResolver: new SourceResolverImpl(context, workspace),
+            generationMetadata: {
+                cliVersion: workspace.cliVersion,
+                generatorName: generatorInvocation.name,
+                generatorVersion: generatorInvocation.version,
+                generatorConfig: generatorInvocation.config
+            }
         });
 
         const workspaceTempDir = await getWorkspaceTempDir();

@@ -22,6 +22,6 @@ export abstract class AbstractTypescriptMcpGeneratorCli<
     }
 
     protected async generateMetadata(context: TypescriptMcpGeneratorContext): Promise<void> {
-        context.logger.warn("Typescript MCP Generator doesn't yet support generation metadata")
+        context.logger.warn("Typescript MCP Generator doesn't yet support generation metadata");
     }
 }

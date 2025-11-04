@@ -86,7 +86,13 @@ export async function runRemoteGenerationForGenerator({
         version: version ?? (await computeSemanticVersion({ fdr, packageName, generatorInvocation })),
         context: interactiveTaskContext,
         sourceResolver: new SourceResolverImpl(interactiveTaskContext, workspace),
-        dynamicGeneratorConfig
+        dynamicGeneratorConfig,
+        generationMetadata: {
+            cliVersion: workspace.cliVersion,
+            generatorName: generatorInvocation.name,
+            generatorVersion: generatorInvocation.version,
+            generatorConfig: generatorInvocation.config
+        }
     });
 
     const venus = createVenusService({ token: token.value });
@@ -100,13 +106,6 @@ export async function runRemoteGenerationForGenerator({
             ir.readmeConfig.whiteLabel = true;
         }
     }
-
-    ir.generationMetadata = {
-        cliVersion: workspace.cliVersion,
-        generatorName: generatorInvocation.name,
-        generatorVersion: generatorInvocation.version,
-        generatorConfig: generatorInvocation.config
-    };
 
     const sources = workspace.getSources();
     const apiDefinition = convertIrToFdrApi({
