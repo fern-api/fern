@@ -9,8 +9,6 @@ export interface FolderConfiguration extends FernDocsConfig.WithPermissions, Fer
     folder: string;
     /** The title to display for this folder section. If not provided, the folder name will be used. */
     title?: string;
-    /** The relative path to the markdown file that will be displayed when the folder section is clicked. */
-    path?: string;
     slug?: string;
     icon?: string;
     hidden?: boolean;
