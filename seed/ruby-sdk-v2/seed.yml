@@ -76,6 +76,10 @@ fixtures:
         enableWireTests: true
     - outputFolder: no-custom-config
       customConfig: null
+  auth0:
+    - outputFolder: with-wiremock-tests
+      customConfig:
+        enableWireTests: true
 
 allowedFailures: []
 features:
