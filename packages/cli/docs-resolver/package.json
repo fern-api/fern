@@ -47,7 +47,6 @@
     "@fern-api/register": "workspace:*",
     "@fern-api/task-context": "workspace:*",
     "@fern-api/ui-core-utils": "0.129.4-b6c699ad2",
-    "@fern-fern/fdr-cjs-sdk": "0.139.37-f5b57f86e",
     "@open-rpc/meta-schema": "^1.14.9",
     "@types/fast-levenshtein": "^0.0.4",
     "dayjs": "^1.11.11",

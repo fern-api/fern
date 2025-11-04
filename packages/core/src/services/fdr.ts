@@ -1,4 +1,4 @@
-import { FernRegistryClient as FdrClient } from "@fern-fern/fdr-cjs-sdk";
+import { FernRegistryClient as FdrClient } from "@fern-api/fdr-sdk";
 import { FernRegistryClient } from "@fern-fern/fdr-test-sdk";
 
 export function createFdrService({

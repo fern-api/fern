@@ -1,6 +1,5 @@
+import { FernRegistry as FdrCjsSdk } from "@fern-api/fdr-sdk";
 import { FernIr as Ir, TypeReference } from "@fern-api/ir-sdk";
-
-import { FernRegistry as FdrCjsSdk } from "@fern-fern/fdr-cjs-sdk";
 
 import { convertIrAvailability } from "./convertPackage";
 

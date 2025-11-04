@@ -1,9 +1,9 @@
+import { FernRegistry as FdrAPI } from "@fern-api/fdr-sdk";
 import { AbsoluteFilePath, join, RelativeFilePath } from "@fern-api/fs-utils";
 import { ApiDefinitionSource, SourceConfig } from "@fern-api/ir-sdk";
 import { loggingExeca } from "@fern-api/logging-execa";
 import { InteractiveTaskContext } from "@fern-api/task-context";
 import { IdentifiableSource } from "@fern-api/workspace-loader";
-import { FernRegistry as FdrAPI } from "@fern-fern/fdr-cjs-sdk";
 import { readFile, unlink } from "fs/promises";
 import tmp from "tmp-promise";
 

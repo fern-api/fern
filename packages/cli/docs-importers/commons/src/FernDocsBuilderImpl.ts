@@ -5,8 +5,8 @@ import {
     GENERATORS_CONFIGURATION_FILENAME,
     generatorsYml
 } from "@fern-api/configuration";
+import { FernRegistry as CjsFdrSdk } from "@fern-api/fdr-sdk";
 import { AbsoluteFilePath, dirname, join, RelativeFilePath } from "@fern-api/fs-utils";
-import { FernRegistry as CjsFdrSdk } from "@fern-fern/fdr-cjs-sdk";
 import { cp, mkdir, writeFile } from "fs/promises";
 import yaml from "js-yaml";
 

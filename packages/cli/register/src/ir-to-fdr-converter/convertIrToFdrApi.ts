@@ -1,6 +1,6 @@
+import { FernRegistry as FdrCjsSdk } from "@fern-api/fdr-sdk";
 import { IntermediateRepresentation } from "@fern-api/ir-sdk";
 import { TaskContext } from "@fern-api/task-context";
-import { FernRegistry as FdrCjsSdk } from "@fern-fern/fdr-cjs-sdk";
 import { convertAllAuthSchemes, convertAuth, PlaygroundConfig } from "./convertAuth";
 import { convertIrAvailability, convertPackage } from "./convertPackage";
 import { convertTypeReference, convertTypeShape } from "./convertTypeShape";

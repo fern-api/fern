@@ -1,6 +1,6 @@
+import { FernRegistry as CjsFdrSdk } from "@fern-api/fdr-sdk";
 import { AbsoluteFilePath, dirname, RelativeFilePath, resolve } from "@fern-api/fs-utils";
 import { TaskContext } from "@fern-api/task-context";
-import { FernRegistry as CjsFdrSdk } from "@fern-fern/fdr-cjs-sdk";
 import type { Node as EstreeNode } from "estree";
 import grayMatter from "gray-matter";
 import { isAbsolute } from "path";

@@ -1,6 +1,6 @@
 import { FernDocsBuilder } from "@fern-api/docs-importer-commons";
+import { FernRegistry as CjsFdrSdk, FernRegistry } from "@fern-api/fdr-sdk";
 import { AbsoluteFilePath, dirname, join, RelativeFilePath } from "@fern-api/fs-utils";
-import { FernRegistry as CjsFdrSdk, FernRegistry } from "@fern-fern/fdr-cjs-sdk";
 import { readFile } from "fs/promises";
 import grayMatter from "gray-matter";
 

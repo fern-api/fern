@@ -4,18 +4,18 @@ import { docsYml } from "@fern-api/configuration";
 import { createFdrService } from "@fern-api/core";
 import { MediaType } from "@fern-api/core-utils";
 import { DocsDefinitionResolver, UploadedFile, wrapWithHttps } from "@fern-api/docs-resolver";
+import { FernRegistry as CjsFdrSdk, FernRegistryClient } from "@fern-api/fdr-sdk";
+import {
+    DynamicIr,
+    DynamicIrUpload,
+    SnippetsConfig
+} from "@fern-api/fdr-sdk/api/resources/api/resources/v1/resources/register";
+import { DocsDefinition } from "@fern-api/fdr-sdk/api/resources/docs/resources/v1/resources/write/types/DocsDefinition";
 import { AbsoluteFilePath, convertToFernHostRelativeFilePath, RelativeFilePath, resolve } from "@fern-api/fs-utils";
 import { convertIrToDynamicSnippetsIr, generateIntermediateRepresentation } from "@fern-api/ir-generator";
 import { convertIrToFdrApi } from "@fern-api/register";
 import { TaskContext } from "@fern-api/task-context";
 import { AbstractAPIWorkspace, DocsWorkspace, FernWorkspace } from "@fern-api/workspace-loader";
-import { FernRegistry as CjsFdrSdk, FernRegistryClient } from "@fern-fern/fdr-cjs-sdk";
-import {
-    DynamicIr,
-    DynamicIrUpload,
-    SnippetsConfig
-} from "@fern-fern/fdr-cjs-sdk/api/resources/api/resources/v1/resources/register";
-import { DocsDefinition } from "@fern-fern/fdr-cjs-sdk/api/resources/docs/resources/v1/resources/write/types/DocsDefinition";
 import axios from "axios";
 import chalk from "chalk";
 import { readFile } from "fs/promises";
