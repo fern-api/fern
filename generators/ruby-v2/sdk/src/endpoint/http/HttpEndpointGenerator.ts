@@ -281,12 +281,35 @@ export class HttpEndpointGenerator {
         typeReference: TypeReference;
     }): void {
         switch (typeReference.type) {
-            case "named":
-                writer.writeLine(
-                    `${this.context.getReferenceToTypeId(typeReference.typeId)}.load(${HTTP_RESPONSE_VN}.body)`
-                );
+            case "named": {
+                const typeDeclaration = this.context.getTypeDeclarationOrThrow(typeReference.typeId);
+                if (typeDeclaration.shape.type === "alias") {
+                    this.loadResponseBodyFromJson({ writer, typeReference: typeDeclaration.shape.aliasOf });
+                } else {
+                    writer.writeLine(
+                        `${this.context.getReferenceToTypeId(typeReference.typeId)}.load(${HTTP_RESPONSE_VN}.body)`
+                    );
+                }
+                break;
+            }
+            case "primitive":
+                writer.writeLine(`JSON.parse(${HTTP_RESPONSE_VN}.body)`);
+                break;
+            case "container":
+                switch (typeReference.container.type) {
+                    case "optional":
+                        this.loadResponseBodyFromJson({ writer, typeReference: typeReference.container.optional });
+                        break;
+                    case "nullable":
+                        this.loadResponseBodyFromJson({ writer, typeReference: typeReference.container.nullable });
+                        break;
+                    default:
+                        writer.writeLine(`JSON.parse(${HTTP_RESPONSE_VN}.body)`);
+                        break;
+                }
                 break;
             default:
+                writer.writeLine(`JSON.parse(${HTTP_RESPONSE_VN}.body)`);
                 break;
         }
     }
