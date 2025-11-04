@@ -5549,8 +5549,8 @@ importers:
         specifier: workspace:*
         version: link:../../commons/core-utils
       '@fern-api/fdr-sdk':
-        specifier: 0.139.33-c9426f366
-        version: 0.139.33-c9426f366(typescript@5.9.3)
+        specifier: 0.139.41-9a38b8587
+        version: 0.139.41-9a38b8587(typescript@5.9.3)
       '@fern-api/ir-generator':
         specifier: workspace:*
         version: link:../generation/ir-generator
@@ -5578,7 +5578,7 @@ importers:
         version: 5.9.3
       vitest:
         specifier: ^2.1.9
-        version: 2.1.9(@types/node@18.15.3)(msw@2.11.3(@types/node@18.15.3)(typescript@5.9.3))(sass@1.93.2)
+        version: 2.1.9(@types/node@18.15.3)(jsdom@20.0.3)(msw@2.11.3(@types/node@18.15.3)(typescript@5.9.3))(sass@1.93.2)(terser@5.44.0)
 
   packages/cli/ete-tests:
     dependencies:
