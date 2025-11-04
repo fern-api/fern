@@ -61,9 +61,7 @@ export class ImportsManager {
     }): string {
         const existingImports = this.imports[moduleSpecifier];
         if (existingImports != null) {
-            const existingImport = existingImports.namedImports.find(
-                (namedImport) => namedImport.name === name
-            );
+            const existingImport = existingImports.namedImports.find((namedImport) => namedImport.name === name);
             if (existingImport != null) {
                 return existingImport.alias ?? name;
             }
