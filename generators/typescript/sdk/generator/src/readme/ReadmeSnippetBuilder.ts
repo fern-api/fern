@@ -34,6 +34,7 @@ export class ReadmeSnippetBuilder extends AbstractReadmeSnippetBuilder {
     public static readonly BINARY_RESPONSE_FEATURE_ID: FernGeneratorCli.FeatureId = "BINARY_RESPONSE";
     public static readonly FILE_UPLOAD_REQUEST_FEATURE_ID: FernGeneratorCli.FeatureId = "FILE_UPLOADS";
     public static readonly STREAMING_RESPONSE_FEATURE_ID: FernGeneratorCli.FeatureId = "STREAMING_RESPONSE";
+    public static readonly LOGGING_FEATURE_ID: FernGeneratorCli.FeatureId = "LOGGING";
 
     private readonly context: SdkContext;
     private readonly isPaginationEnabled: boolean;
@@ -88,6 +89,7 @@ export class ReadmeSnippetBuilder extends AbstractReadmeSnippetBuilder {
         snippets[ReadmeSnippetBuilder.ADDITIONAL_HEADERS_FEATURE_ID] = this.buildAdditionalHeadersSnippets();
         snippets[ReadmeSnippetBuilder.ADDITIONAL_QUERY_STRING_PARAMETERS_FEATURE_ID] =
             this.buildAdditionalQueryStringParametersSnippets();
+        snippets[ReadmeSnippetBuilder.LOGGING_FEATURE_ID] = this.buildLoggingSnippets();
 
         if (this.isPaginationEnabled) {
             snippets[FernGeneratorCli.StructuredFeatureId.Pagination] = this.buildPaginationSnippets();
@@ -394,6 +396,25 @@ controller.abort(); // aborts the request
 `
             )
         );
+    }
+
+    private buildLoggingSnippets(): string[] {
+        return [
+            this.writeCode(
+                code`
+import { ${this.rootClientConstructorName}, logging } from "${this.rootPackageName}";
+
+const ${this.clientVariableName} = new ${this.rootClientConstructorName}({
+    ...
+    logging: {
+        level: logging.LogLevel.Debug, // defaults to logging.LogLevel.Info
+        logger: new logging.ConsoleLogger(), // defaults to ConsoleLogger
+        silent: false, // defaults to true, set to false to enable logging
+    }
+});
+`
+            )
+        ];
     }
 
     private buildRuntimeCompatibilitySnippets(): string[] {
