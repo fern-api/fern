@@ -918,16 +918,36 @@ async function expandFolderConfiguration({
     const title = rawConfig.title ?? nameToTitle({ name: folderName });
     const slug = rawConfig.slug ?? nameToSlug({ name: folderName });
 
+    let overviewAbsolutePath: AbsoluteFilePath | undefined = undefined;
+    const mdxPath = resolve(folderPath, `${folderName}.mdx` as AbsoluteFilePath);
+    const mdPath = resolve(folderPath, `${folderName}.md` as AbsoluteFilePath);
+
+    if (await doesPathExist(mdxPath)) {
+        overviewAbsolutePath = mdxPath;
+    } else if (await doesPathExist(mdPath)) {
+        overviewAbsolutePath = mdPath;
+    }
+
+    const filteredContents =
+        overviewAbsolutePath != null
+            ? contents.filter((item) => {
+                  if (item.type === "page") {
+                      return item.absolutePath !== overviewAbsolutePath;
+                  }
+                  return true;
+              })
+            : contents;
+
     return {
         type: "section",
         title,
         icon: resolveIconPath(rawConfig.icon, absolutePathToConfig),
-        contents,
+        contents: filteredContents,
         slug,
         collapsed: rawConfig.collapsed ?? undefined,
         hidden: rawConfig.hidden ?? undefined,
         skipUrlSlug: rawConfig.skipSlug ?? false,
-        overviewAbsolutePath: undefined,
+        overviewAbsolutePath,
         viewers: parseRoles(rawConfig.viewers),
         orphaned: rawConfig.orphaned,
         featureFlags: convertFeatureFlag(rawConfig.featureFlag),
