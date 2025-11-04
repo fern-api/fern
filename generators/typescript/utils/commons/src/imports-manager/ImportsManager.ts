@@ -53,11 +53,13 @@ export class ImportsManager {
     public ensureNamedImport({
         moduleSpecifier,
         name,
-        isTypeOnly
+        isTypeOnly,
+        aliasSuffix
     }: {
         moduleSpecifier: ModuleSpecifier;
         name: string;
         isTypeOnly?: boolean;
+        aliasSuffix?: string;
     }): string {
         const existingImports = this.imports[moduleSpecifier];
         if (existingImports != null) {
@@ -67,7 +69,7 @@ export class ImportsManager {
             }
         }
 
-        const localName = this.getAvailableLocalName(name);
+        const localName = this.getAvailableLocalName(name, aliasSuffix);
         const alias = localName !== name ? localName : undefined;
 
         this.addImport(moduleSpecifier, {
@@ -86,10 +88,18 @@ export class ImportsManager {
     /**
      * Get an available local name, adding a suffix if needed to avoid conflicts.
      */
-    private getAvailableLocalName(preferredName: string): string {
+    private getAvailableLocalName(preferredName: string, aliasSuffix?: string): string {
         if (!this.reservedIdentifiers.has(preferredName) && !this.allocatedLocalNames.has(preferredName)) {
             this.allocatedLocalNames.add(preferredName);
             return preferredName;
+        }
+
+        if (aliasSuffix != null) {
+            const packageVariant = `${preferredName}_${aliasSuffix}`;
+            if (!this.reservedIdentifiers.has(packageVariant) && !this.allocatedLocalNames.has(packageVariant)) {
+                this.allocatedLocalNames.add(packageVariant);
+                return packageVariant;
+            }
         }
 
         const typeVariant = `${preferredName}Type`;

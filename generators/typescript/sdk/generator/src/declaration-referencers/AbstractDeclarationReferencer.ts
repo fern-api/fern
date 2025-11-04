@@ -60,7 +60,8 @@ export abstract class AbstractDeclarationReferencer<Name = never> implements Dec
                     importsManager,
                     exportsManager,
                     referencedIn,
-                    subImport
+                    subImport,
+                    aliasSuffix: this.namespaceExport
                 });
             case "fromRoot":
                 return getReferenceToExportFromRoot({

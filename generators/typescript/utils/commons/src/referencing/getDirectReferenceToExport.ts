@@ -12,7 +12,8 @@ export function getDirectReferenceToExport({
     exportsManager,
     referencedIn,
     importAlias,
-    subImport = []
+    subImport = [],
+    aliasSuffix
 }: {
     exportedName: NamedExport;
     exportedFromPath: ExportedFilePath;
@@ -21,10 +22,16 @@ export function getDirectReferenceToExport({
     referencedIn: SourceFile;
     importAlias: string | undefined;
     subImport?: string[];
+    aliasSuffix?: string;
 }): Reference {
+    const exportedFilePath = exportsManager.convertExportedFilePathToFilePath(exportedFromPath);
+    const referencedInPath = referencedIn.getFilePath();
+    
+    const isSelfImport = exportedFilePath === referencedInPath;
+
     const moduleSpecifier = getRelativePathAsModuleSpecifierTo({
         from: referencedIn,
-        to: exportsManager.convertExportedFilePathToFilePath(exportedFromPath)
+        to: exportedFilePath
     });
 
     let localName: string | undefined;
@@ -35,6 +42,11 @@ export function getDirectReferenceToExport({
             return;
         }
         importAdded = true;
+
+        if (isSelfImport) {
+            localName = NamedExport.getName(exportedName);
+            return;
+        }
 
         if (importAlias != null) {
             importsManager.addImport(moduleSpecifier, {
@@ -51,7 +63,8 @@ export function getDirectReferenceToExport({
             localName = importsManager.ensureNamedImport({
                 moduleSpecifier,
                 name: NamedExport.getName(exportedName),
-                isTypeOnly: NamedExport.isTypeExport(exportedName)
+                isTypeOnly: NamedExport.isTypeExport(exportedName),
+                aliasSuffix
             });
         }
     };
