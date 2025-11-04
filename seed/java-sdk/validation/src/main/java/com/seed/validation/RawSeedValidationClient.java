@@ -65,11 +65,9 @@ public class RawSeedValidationClient {
                 return new SeedValidationHttpResponse<>(
                         ObjectMappers.JSON_MAPPER.readValue(responseBodyString, Type.class), response);
             }
+            Object errorBody = ObjectMappers.parseErrorBody(responseBodyString);
             throw new SeedValidationApiException(
-                    "Error with status code " + response.code(),
-                    response.code(),
-                    ObjectMappers.JSON_MAPPER.readValue(responseBodyString, Object.class),
-                    response);
+                    "Error with status code " + response.code(), response.code(), errorBody, response);
         } catch (IOException e) {
             throw new SeedValidationException("Network error executing HTTP request", e);
         }
@@ -103,11 +101,9 @@ public class RawSeedValidationClient {
                 return new SeedValidationHttpResponse<>(
                         ObjectMappers.JSON_MAPPER.readValue(responseBodyString, Type.class), response);
             }
+            Object errorBody = ObjectMappers.parseErrorBody(responseBodyString);
             throw new SeedValidationApiException(
-                    "Error with status code " + response.code(),
-                    response.code(),
-                    ObjectMappers.JSON_MAPPER.readValue(responseBodyString, Object.class),
-                    response);
+                    "Error with status code " + response.code(), response.code(), errorBody, response);
         } catch (IOException e) {
             throw new SeedValidationException("Network error executing HTTP request", e);
         }

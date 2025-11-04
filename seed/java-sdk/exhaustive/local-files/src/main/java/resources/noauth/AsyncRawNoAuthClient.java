@@ -91,7 +91,8 @@ public class AsyncRawNoAuthClient {
           catch (JsonProcessingException ignored) {
             // unable to map error response, throwing generic error
           }
-          future.completeExceptionally(new SeedExhaustiveApiException("Error with status code " + response.code(), response.code(), ObjectMappers.JSON_MAPPER.readValue(responseBodyString, Object.class), response));
+          Object errorBody = ObjectMappers.parseErrorBody(responseBodyString);
+          future.completeExceptionally(new SeedExhaustiveApiException("Error with status code " + response.code(), response.code(), errorBody, response));
           return;
         }
         catch (IOException e) {

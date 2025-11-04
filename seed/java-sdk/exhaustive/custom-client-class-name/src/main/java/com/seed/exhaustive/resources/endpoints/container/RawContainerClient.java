@@ -70,11 +70,9 @@ public class RawContainerClient {
                         ObjectMappers.JSON_MAPPER.readValue(responseBodyString, new TypeReference<List<String>>() {}),
                         response);
             }
+            Object errorBody = ObjectMappers.parseErrorBody(responseBodyString);
             throw new BestApiException(
-                    "Error with status code " + response.code(),
-                    response.code(),
-                    ObjectMappers.JSON_MAPPER.readValue(responseBodyString, Object.class),
-                    response);
+                    "Error with status code " + response.code(), response.code(), errorBody, response);
         } catch (IOException e) {
             throw new BestException("Network error executing HTTP request", e);
         }
@@ -119,11 +117,9 @@ public class RawContainerClient {
                                 responseBodyString, new TypeReference<List<ObjectWithRequiredField>>() {}),
                         response);
             }
+            Object errorBody = ObjectMappers.parseErrorBody(responseBodyString);
             throw new BestApiException(
-                    "Error with status code " + response.code(),
-                    response.code(),
-                    ObjectMappers.JSON_MAPPER.readValue(responseBodyString, Object.class),
-                    response);
+                    "Error with status code " + response.code(), response.code(), errorBody, response);
         } catch (IOException e) {
             throw new BestException("Network error executing HTTP request", e);
         }
@@ -166,11 +162,9 @@ public class RawContainerClient {
                         ObjectMappers.JSON_MAPPER.readValue(responseBodyString, new TypeReference<Set<String>>() {}),
                         response);
             }
+            Object errorBody = ObjectMappers.parseErrorBody(responseBodyString);
             throw new BestApiException(
-                    "Error with status code " + response.code(),
-                    response.code(),
-                    ObjectMappers.JSON_MAPPER.readValue(responseBodyString, Object.class),
-                    response);
+                    "Error with status code " + response.code(), response.code(), errorBody, response);
         } catch (IOException e) {
             throw new BestException("Network error executing HTTP request", e);
         }
@@ -215,11 +209,9 @@ public class RawContainerClient {
                                 responseBodyString, new TypeReference<Set<ObjectWithRequiredField>>() {}),
                         response);
             }
+            Object errorBody = ObjectMappers.parseErrorBody(responseBodyString);
             throw new BestApiException(
-                    "Error with status code " + response.code(),
-                    response.code(),
-                    ObjectMappers.JSON_MAPPER.readValue(responseBodyString, Object.class),
-                    response);
+                    "Error with status code " + response.code(), response.code(), errorBody, response);
         } catch (IOException e) {
             throw new BestException("Network error executing HTTP request", e);
         }
@@ -263,11 +255,9 @@ public class RawContainerClient {
                                 responseBodyString, new TypeReference<Map<String, String>>() {}),
                         response);
             }
+            Object errorBody = ObjectMappers.parseErrorBody(responseBodyString);
             throw new BestApiException(
-                    "Error with status code " + response.code(),
-                    response.code(),
-                    ObjectMappers.JSON_MAPPER.readValue(responseBodyString, Object.class),
-                    response);
+                    "Error with status code " + response.code(), response.code(), errorBody, response);
         } catch (IOException e) {
             throw new BestException("Network error executing HTTP request", e);
         }
@@ -312,11 +302,9 @@ public class RawContainerClient {
                                 responseBodyString, new TypeReference<Map<String, ObjectWithRequiredField>>() {}),
                         response);
             }
+            Object errorBody = ObjectMappers.parseErrorBody(responseBodyString);
             throw new BestApiException(
-                    "Error with status code " + response.code(),
-                    response.code(),
-                    ObjectMappers.JSON_MAPPER.readValue(responseBodyString, Object.class),
-                    response);
+                    "Error with status code " + response.code(), response.code(), errorBody, response);
         } catch (IOException e) {
             throw new BestException("Network error executing HTTP request", e);
         }
@@ -368,11 +356,9 @@ public class RawContainerClient {
                                 responseBodyString, new TypeReference<Optional<ObjectWithRequiredField>>() {}),
                         response);
             }
+            Object errorBody = ObjectMappers.parseErrorBody(responseBodyString);
             throw new BestApiException(
-                    "Error with status code " + response.code(),
-                    response.code(),
-                    ObjectMappers.JSON_MAPPER.readValue(responseBodyString, Object.class),
-                    response);
+                    "Error with status code " + response.code(), response.code(), errorBody, response);
         } catch (IOException e) {
             throw new BestException("Network error executing HTTP request", e);
         }
