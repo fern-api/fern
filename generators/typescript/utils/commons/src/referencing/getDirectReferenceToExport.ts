@@ -30,17 +30,6 @@ export function getDirectReferenceToExport({
 
     const isSelfImport = exportedFilePath === referencedInPath;
 
-    if (isSelfImport) {
-        return getReferenceToExportFromRoot({
-            exportedName,
-            exportedFromPath,
-            importsManager,
-            exportsManager,
-            referencedIn,
-            subImport
-        });
-    }
-
     const moduleSpecifier = getRelativePathAsModuleSpecifierTo({
         from: referencedIn,
         to: exportedFilePath
@@ -54,6 +43,11 @@ export function getDirectReferenceToExport({
             return;
         }
         importAdded = true;
+
+        if (isSelfImport) {
+            localName = NamedExport.getName(exportedName);
+            return;
+        }
 
         if (importAlias != null) {
             importsManager.addImport(moduleSpecifier, {
