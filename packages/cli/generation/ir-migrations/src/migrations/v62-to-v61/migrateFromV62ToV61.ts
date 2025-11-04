@@ -1,4 +1,5 @@
 import { GeneratorName } from "@fern-api/configuration-loader";
+import { visitDiscriminatedUnion } from "@fern-api/core-utils";
 import { IrSerialization } from "../../ir-serialization";
 import { IrVersions } from "../../ir-versions";
 import { GeneratorWasNeverUpdatedToConsumeNewIR, IrMigration } from "../../types/IrMigration";
@@ -91,10 +92,10 @@ function convertExampleEndpointCall(
 function convertExampleRequestBody(
     requestBody: IrVersions.V62.http.ExampleRequestBody
 ): IrVersions.V61.http.ExampleRequestBody | undefined {
-    return requestBody._visit<IrVersions.V61.http.ExampleRequestBody | undefined>({
+    return visitDiscriminatedUnion(requestBody, "type")._visit<IrVersions.V61.http.ExampleRequestBody | undefined>({
         inlinedRequestBody: (inlined) => IrVersions.V61.http.ExampleRequestBody.inlinedRequestBody(inlined),
         reference: (reference) => IrVersions.V61.http.ExampleRequestBody.reference(reference),
         fileUpload: () => undefined,
-        _other: () => undefined
+        _unknown: () => undefined
     });
 }
