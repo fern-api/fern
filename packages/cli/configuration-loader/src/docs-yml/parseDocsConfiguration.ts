@@ -927,7 +927,7 @@ async function expandFolderConfiguration({
         collapsed: rawConfig.collapsed ?? undefined,
         hidden: rawConfig.hidden ?? undefined,
         skipUrlSlug: rawConfig.skipSlug ?? false,
-        overviewAbsolutePath: undefined,
+        overviewAbsolutePath: resolveFilepath(rawConfig.path, absolutePathToConfig),
         viewers: parseRoles(rawConfig.viewers),
         orphaned: rawConfig.orphaned,
         featureFlags: convertFeatureFlag(rawConfig.featureFlag),

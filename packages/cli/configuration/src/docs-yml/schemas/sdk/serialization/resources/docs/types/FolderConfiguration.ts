@@ -16,6 +16,7 @@ export const FolderConfiguration: core.serialization.ObjectSchema<
     .object({
         folder: core.serialization.string(),
         title: core.serialization.string().optional(),
+        path: core.serialization.string().optional(),
         slug: core.serialization.string().optional(),
         icon: core.serialization.string().optional(),
         hidden: core.serialization.boolean().optional(),
@@ -30,6 +31,7 @@ export declare namespace FolderConfiguration {
     export interface Raw extends WithPermissions.Raw, WithFeatureFlags.Raw {
         folder: string;
         title?: string | null;
+        path?: string | null;
         slug?: string | null;
         icon?: string | null;
         hidden?: boolean | null;

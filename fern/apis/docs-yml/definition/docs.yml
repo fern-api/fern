@@ -811,6 +811,10 @@ types:
         type: optional<string>
         docs: |
           The title to display for this folder section. If not provided, the folder name will be used.
+      path:
+        type: optional<string>
+        docs: |
+          The relative path to the markdown file that will be displayed when the folder section is clicked.
       slug: optional<string>
       icon: optional<string>
       hidden: optional<boolean>
