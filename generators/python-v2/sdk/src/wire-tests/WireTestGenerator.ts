@@ -8,9 +8,7 @@ import {
     ExampleEndpointCall,
     FernFilepath,
     HttpEndpoint,
-    HttpService,
-    PrimitiveTypeV1,
-    TypeReference
+    HttpService
 } from "@fern-fern/ir-sdk/api";
 import { SdkGeneratorContext } from "../SdkGeneratorContext";
 import { convertDynamicEndpointSnippetRequest } from "./convertEndpointSnippetRequest";

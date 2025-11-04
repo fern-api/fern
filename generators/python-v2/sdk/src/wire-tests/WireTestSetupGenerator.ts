@@ -26,7 +26,6 @@ export class WireTestSetupGenerator {
     }
 
     public static getWiremockConfigContent(ir: IntermediateRepresentation): unknown {
-        // eslint-disable-next-line @typescript-eslint/no-explicit-any
         return new WireMock().convertToWireMock(ir as any);
     }
 
