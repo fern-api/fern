@@ -241,7 +241,8 @@
         "packages/cli/ete-tests/src/tests/upgrade-generator/upgrade-generator.test.ts",
         "packages/cli/generation/ir-generator-tests/src/ir/__test__/breakingChangeDetector.test.ts",
         "packages/cli/generation/ir-generator-tests/src/ir/__test__/generateIntermediateRepresentation.test.ts",
-        "packages/generator-cli/src/__test__/pr.test.ts"
+        "packages/generator-cli/src/__test__/pr.test.ts",
+        "packages/commons/github/src/__test__/getLatestTag.test.ts"
       ],
       "linter": {
         "rules": {
