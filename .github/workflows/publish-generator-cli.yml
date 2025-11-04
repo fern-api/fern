@@ -1,0 +1,62 @@
+name: Publish Generator CLI
+
+on:
+  push:
+    tags: ["*"]
+
+env:
+  PACKAGE_NAME: "@fern-api/generator-cli"
+  TURBO_TOKEN: ${{ secrets.TURBO_TOKEN }}
+  TURBO_TEAM: "buildwithfern"
+  FERN_TOKEN: ${{ secrets.FERN_TOKEN }}
+  GITHUB_TOKEN: ${{ secrets.FERN_GITHUB_TOKEN }}
+
+permissions:
+  id-token: write # Required for OIDC
+  contents: read
+
+jobs:
+  publish-cli:
+    if: github.ref_type == 'tag' && github.event_name == 'push'  && startsWith(github.ref, 'refs/tags/generator-cli@')
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: 📥 Install
+        uses: ./.github/actions/install
+        with:
+          registry-url: 'https://registry.npmjs.org'
+
+      - name: Update npm
+        run: npm install -g npm@latest
+
+      - name: 🧪 Build and test
+        run: pnpm turbo codegen build test --filter=${{ env.PACKAGE_NAME }}
+
+      - name: Publish generator-cli
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.FERN_NPM_TOKEN }}
+        run: |
+          git_version="$(scripts/generator-cli-version.sh)"
+          cd packages/generator-cli
+          mv package.json package.json.tmp
+          version_replace="s/0.0.0/${git_version}/"
+          cat package.json.tmp| sed "${version_replace}" > package.json
+          rm -rf package.json.tmp
+          npm publish --access public --tag latest
+
+  publish-sdks:
+    if: github.ref_type == 'tag' && github.event_name == 'push'  && startsWith(github.ref, 'refs/tags/generator-cli@')
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: 📥 Install Fern
+        run: npm install -g fern-api
+
+      - name: Publish generator-cli
+        env:
+          FERN_TOKEN: ${{ secrets.FERN_TOKEN }}
+        run: |
+          git_version="$(scripts/generator-cli-version.sh)"
+          fern generate --api generator-cli --version "${git_version}" --group sdk
