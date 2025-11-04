@@ -15,6 +15,7 @@ import { SdkGeneratorContext } from "./SdkGeneratorContext";
 import { SubPackageClientGenerator } from "./subpackage-client/SubPackageClientGenerator";
 import { convertDynamicEndpointSnippetRequest } from "./utils/convertEndpointSnippetRequest";
 import { convertIr } from "./utils/convertIr";
+import { WireTestGenerator } from "./wire-tests/WireTestGenerator";
 import { WrappedRequestGenerator } from "./wrapped-request/WrappedRequestGenerator";
 
 export class SdkGeneratorCLI extends AbstractRubyGeneratorCli<SdkCustomConfigSchema, SdkGeneratorContext> {
@@ -120,6 +121,20 @@ export class SdkGeneratorCLI extends AbstractRubyGeneratorCli<SdkCustomConfigSch
             if (error instanceof Error) {
                 context.logger.warn((error as Error)?.message);
                 context.logger.warn((error as Error)?.stack ?? "");
+            }
+        }
+
+        if (context.ir.dynamic != null) {
+            try {
+                const wireTestGenerator = new WireTestGenerator(context);
+                await wireTestGenerator.generate();
+                context.logger.info("Generated WireMock tests");
+            } catch (error) {
+                context.logger.warn("Failed to generate WireMock tests, this is OK.");
+                if (error instanceof Error) {
+                    context.logger.warn((error as Error)?.message);
+                    context.logger.warn((error as Error)?.stack ?? "");
+                }
             }
         }
 
