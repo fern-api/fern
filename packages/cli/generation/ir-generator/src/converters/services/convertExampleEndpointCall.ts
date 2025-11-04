@@ -397,8 +397,10 @@ function convertExampleRequestBody({
                     if (exampleFile != null) {
                         exampleFileProperties.push({
                             name: file.casingsGenerator.generateNameAndWireValue({
-                                name: getPropertyName({ propertyKey: wireKey, property: inlinedRequestPropertyDeclaration })
-                                    .name,
+                                name: getPropertyName({
+                                    propertyKey: wireKey,
+                                    property: inlinedRequestPropertyDeclaration
+                                }).name,
                                 wireValue: wireKey
                             }),
                             value: exampleFile
