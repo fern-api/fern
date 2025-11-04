@@ -1,15 +1,9 @@
 import { RelativeFilePath } from "@fern-api/fs-utils";
+import { WireMockMapping } from "@fern-api/mock-utils";
 import { python } from "@fern-api/python-ast";
 import { WriteablePythonFile } from "@fern-api/python-base";
 import { DynamicSnippetsGenerator } from "@fern-api/python-dynamic-snippets";
-import { WireMockMapping } from "@fern-api/mock-utils";
-import {
-    dynamic,
-    ExampleEndpointCall,
-    FernFilepath,
-    HttpEndpoint,
-    HttpService
-} from "@fern-fern/ir-sdk/api";
+import { dynamic, ExampleEndpointCall, FernFilepath, HttpEndpoint, HttpService } from "@fern-fern/ir-sdk/api";
 import { SdkGeneratorContext } from "../SdkGeneratorContext";
 import { convertDynamicEndpointSnippetRequest } from "./convertEndpointSnippetRequest";
 import { convertIr } from "./convertIr";
@@ -409,12 +403,20 @@ export class WireTestGenerator {
             for (let j = 0; j < line.length; j++) {
                 const char = line[j];
                 if (char === "{" || char === "(") {
-                    if (char === "{") braceCount++;
-                    if (char === "(") parenCount++;
+                    if (char === "{") {
+                        braceCount++;
+                    }
+                    if (char === "(") {
+                        parenCount++;
+                    }
                     foundOpen = true;
                 } else if (char === "}" || char === ")") {
-                    if (char === "}") braceCount--;
-                    if (char === ")") parenCount--;
+                    if (char === "}") {
+                        braceCount--;
+                    }
+                    if (char === ")") {
+                        parenCount--;
+                    }
                     if (foundOpen && braceCount === 0 && parenCount === 0) {
                         requestEndIndex = i;
                         break;

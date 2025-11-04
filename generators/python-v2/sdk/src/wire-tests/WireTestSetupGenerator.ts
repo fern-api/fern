@@ -26,6 +26,7 @@ export class WireTestSetupGenerator {
     }
 
     public static getWiremockConfigContent(ir: IntermediateRepresentation): unknown {
+        // biome-ignore lint/suspicious/noExplicitAny: IR version compatibility requires type assertion
         return new WireMock().convertToWireMock(ir as any);
     }
 
