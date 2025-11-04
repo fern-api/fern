@@ -206,18 +206,28 @@ public final class HttpUrlBuilder {
         if (!strippedHead.isEmpty()) {
             codeBlock.add(".addPathSegments($S)", strippedHead);
         }
-        for (HttpPathPart httpPathPart : httpPath.getParts()) {
+
+        // Track prefix from previous part's tail that should be prepended to next parameter.
+        // This handles paths like "/{id}/metadata/v{version}" where "v" should be concatenated
+        String prefixForNextParam = "";
+
+        for (int i = 0; i < httpPath.getParts().size(); i++) {
+            HttpPathPart httpPathPart = httpPath.getParts().get(i);
             PathParamInfo poetPathParameter = pathParameters.get(httpPathPart.getPathParameter());
+
             if (poetPathParameter.irParam().getVariable().isPresent()) {
                 VariableId variableId =
                         poetPathParameter.irParam().getVariable().get();
                 MethodSpec variableGetter =
                         generatedClientOptions.variableGetters().get(variableId);
-                codeBlock.add(
-                        "\n.addPathSegment($L)",
-                        PoetTypeNameStringifier.stringify(
-                                clientOptionsField.name + "." + variableGetter.name + "()",
-                                poetPathParameter.poetParam().type));
+                CodeBlock paramValue = PoetTypeNameStringifier.stringify(
+                        clientOptionsField.name + "." + variableGetter.name + "()", poetPathParameter.poetParam().type);
+
+                if (!prefixForNextParam.isEmpty()) {
+                    codeBlock.add("\n.addPathSegment($S + $L)", prefixForNextParam, paramValue);
+                } else {
+                    codeBlock.add("\n.addPathSegment($L)", paramValue);
+                }
             } else {
                 String paramName = poetPathParameter.poetParam().name;
                 if (inlinePathParams
@@ -235,26 +245,82 @@ public final class HttpUrlBuilder {
                 }
                 if (typeNameIsOptional(poetPathParameter.poetParam().type)) {
                     codeBlock.add(";\n");
-                    codeBlock
-                            .beginControlFlow("if ($L.isPresent())", poetPathParameter.poetParam().name)
-                            .addStatement(
-                                    "$L.addPathSegment($L)",
-                                    httpUrlname,
-                                    PoetTypeNameStringifier.stringify(
-                                            paramName + ".get()", poetPathParameter.poetParam().type))
-                            .endControlFlow();
+                    CodeBlock paramValue =
+                            PoetTypeNameStringifier.stringify(paramName + ".get()", poetPathParameter.poetParam().type);
+
+                    if (!prefixForNextParam.isEmpty()) {
+                        codeBlock
+                                .beginControlFlow("if ($L.isPresent())", poetPathParameter.poetParam().name)
+                                .addStatement("$L.addPathSegment($S + $L)", httpUrlname, prefixForNextParam, paramValue)
+                                .endControlFlow();
+                    } else {
+                        codeBlock
+                                .beginControlFlow("if ($L.isPresent())", poetPathParameter.poetParam().name)
+                                .addStatement("$L.addPathSegment($L)", httpUrlname, paramValue)
+                                .endControlFlow();
+                    }
                     endedWithStatement = true;
                 } else {
-                    codeBlock.add(
-                            "\n.addPathSegment($L)",
-                            PoetTypeNameStringifier.stringify(paramName, poetPathParameter.poetParam().type));
+                    CodeBlock paramValue =
+                            PoetTypeNameStringifier.stringify(paramName, poetPathParameter.poetParam().type);
+
+                    if (!prefixForNextParam.isEmpty()) {
+                        codeBlock.add("\n.addPathSegment($S + $L)", prefixForNextParam, paramValue);
+                    } else {
+                        codeBlock.add("\n.addPathSegment($L)", paramValue);
+                    }
                 }
             }
-            String pathTail = stripLeadingAndTrailingSlash(httpPathPart.getTail());
+
+            // Process tail: extract segments and prefix for next parameter.
+            String originalTail = httpPathPart.getTail();
+            String pathTail = stripLeadingAndTrailingSlash(originalTail);
+            boolean isLastPart = (i == httpPath.getParts().size() - 1);
+
+            // If the original tail ends with '/', it represents complete path segments.
+            // If it doesn't end with '/', the last part should be treated as a prefix for the next parameter.
+            // Example: tail="/v" (no trailing slash) → "v" should prefix the next parameter
+            // Example: tail="/users/" (trailing slash) → "users" is a complete segment
+            boolean tailEndsWithSlash = originalTail.endsWith("/");
+
             if (!pathTail.isEmpty()) {
-                codeBlock.add("\n.addPathSegments($S)", pathTail);
+                if (tailEndsWithSlash) {
+                    codeBlock.add("\n.addPathSegments($S)", pathTail);
+                    prefixForNextParam = "";
+                } else {
+                    int lastSlashIndex = pathTail.lastIndexOf('/');
+                    if (lastSlashIndex >= 0) {
+                        String segments = pathTail.substring(0, lastSlashIndex);
+                        String potentialPrefix = pathTail.substring(lastSlashIndex + 1);
+
+                        if (!segments.isEmpty()) {
+                            codeBlock.add("\n.addPathSegments($S)", segments);
+                        }
+
+                        if (!isLastPart && !potentialPrefix.isEmpty()) {
+                            prefixForNextParam = potentialPrefix;
+                        } else if (!potentialPrefix.isEmpty()) {
+                            codeBlock.add("\n.addPathSegments($S)", potentialPrefix);
+                            prefixForNextParam = "";
+                        }
+                    } else {
+                        if (!isLastPart) {
+                            prefixForNextParam = pathTail;
+                        } else {
+                            codeBlock.add("\n.addPathSegments($S)", pathTail);
+                            prefixForNextParam = "";
+                        }
+                    }
+                }
+            } else {
+                prefixForNextParam = "";
             }
         }
+
+        if (!prefixForNextParam.isEmpty()) {
+            codeBlock.add("\n.addPathSegments($S)", prefixForNextParam);
+        }
+
         if (addNewLine) {
             codeBlock.add("\n");
         }
