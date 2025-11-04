@@ -5160,7 +5160,7 @@ docs: Real-time transcription
                   },
                   "status": {
                     "docs": "Filter by transcript status",
-                    "type": "optional<root.TranscriptListRequestStatus>",
+                    "type": "optional<TranscriptListRequestStatus>",
                   },
                   "throttled_only": {
                     "docs": "Only get throttled transcripts, overrides the status filter",
@@ -5223,8 +5223,51 @@ docs: Real-time transcription
             "openapi": "../openapi.yml",
           },
         },
+        "types": {
+          "TranscriptListRequestStatus": {
+            "docs": "The status of your transcription. Possible values are queued, processing, completed, or error.",
+            "enum": [
+              {
+                "docs": "The audio file is in the queue to be processed by the API.",
+                "value": "queued",
+              },
+              {
+                "docs": "The audio file is being processed by the API.",
+                "value": "processing",
+              },
+              {
+                "docs": "The transcription job has been completed successfully.",
+                "value": "completed",
+              },
+              {
+                "docs": "An error occurred while processing the audio file.",
+                "value": "error",
+              },
+            ],
+            "inline": undefined,
+            "source": {
+              "openapi": "../openapi.yml",
+            },
+          },
+        },
       },
-      "rawContents": "imports:
+      "rawContents": "types:
+  TranscriptListRequestStatus:
+    enum:
+      - value: queued
+        docs: The audio file is in the queue to be processed by the API.
+      - value: processing
+        docs: The audio file is being processed by the API.
+      - value: completed
+        docs: The transcription job has been completed successfully.
+      - value: error
+        docs: An error occurred while processing the audio file.
+    docs: >-
+      The status of your transcription. Possible values are queued, processing,
+      completed, or error.
+    source:
+      openapi: ../openapi.yml
+imports:
   root: __package__.yml
 service:
   auth: false
@@ -5245,7 +5288,7 @@ service:
             default: 10
             docs: Maximum amount of transcripts to retrieve
           status:
-            type: optional<root.TranscriptListRequestStatus>
+            type: optional<TranscriptListRequestStatus>
             docs: Filter by transcript status
           created_on:
             type: optional<string>
@@ -6000,7 +6043,7 @@ docs: Transcript related operations
             "subscribe": {
               "body": {
                 "docs": "Receive messages from the WebSocket",
-                "type": "root.receiveMessage",
+                "type": "receiveMessage",
               },
               "origin": "server",
             },
@@ -6034,6 +6077,22 @@ The parameter should map to a JSON encoded list of strings.
           "root": "__package__.yml",
         },
         "types": {
+          "receiveMessage": {
+            "discriminated": false,
+            "docs": "Receive messages from the WebSocket",
+            "encoding": undefined,
+            "inline": undefined,
+            "source": {
+              "openapi": "../asyncapi.yml",
+            },
+            "union": [
+              "root.SessionBegins",
+              "root.PartialTranscript",
+              "root.FinalTranscript",
+              "root.SessionTerminated",
+              "root.RealtimeError",
+            ],
+          },
           "sendMessage": {
             "discriminated": false,
             "docs": "Send messages to the WebSocket",
@@ -6085,7 +6144,7 @@ The parameter should map to a JSON encoded list of strings.
     subscribe:
       origin: server
       body:
-        type: root.receiveMessage
+        type: receiveMessage
         docs: Receive messages from the WebSocket
   examples:
     - messages:
@@ -6111,6 +6170,17 @@ types:
     union:
       - root.AudioData
       - root.TerminateSession
+    source:
+      openapi: ../asyncapi.yml
+  receiveMessage:
+    discriminated: false
+    docs: Receive messages from the WebSocket
+    union:
+      - root.SessionBegins
+      - root.PartialTranscript
+      - root.FinalTranscript
+      - root.SessionTerminated
+      - root.RealtimeError
     source:
       openapi: ../asyncapi.yml
 ",

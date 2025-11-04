@@ -7120,9 +7120,6 @@ service:
     "stream/__package__.yml": {
       "absoluteFilepath": "/DUMMY_PATH",
       "contents": {
-        "imports": {
-          "root": "../__package__.yml",
-        },
         "types": {
           "AudioPacket": {
             "docs": undefined,
@@ -7160,8 +7157,19 @@ service:
             "properties": {
               "outputLocale": "optional<string>",
               "templateId": "optional<string>",
-              "type": "optional<root.ConfigModeType>",
+              "type": "optional<ConfigModeType>",
             },
+            "source": {
+              "openapi": "../asyncapi-original.json",
+            },
+          },
+          "ConfigModeType": {
+            "enum": [
+              "facts",
+              "documentation",
+              "transcription",
+            ],
+            "inline": true,
             "source": {
               "openapi": "../asyncapi-original.json",
             },
@@ -7487,9 +7495,17 @@ service:
       reason: optional<string>
     source:
       openapi: ../asyncapi-original.json
+  ConfigModeType:
+    enum:
+      - facts
+      - documentation
+      - transcription
+    inline: true
+    source:
+      openapi: ../asyncapi-original.json
   ConfigMode:
     properties:
-      type: optional<root.ConfigModeType>
+      type: optional<ConfigModeType>
       outputLocale: optional<string>
       templateId: optional<string>
     source:
@@ -7537,8 +7553,6 @@ service:
       configuration: optional<ConfigData>
     source:
       openapi: ../asyncapi-original.json
-imports:
-  root: ../__package__.yml
 ",
     },
     "stream/stream.yml": {
