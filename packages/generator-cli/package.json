@@ -1,0 +1,52 @@
+{
+  "name": "@fern-api/generator-cli",
+  "version": "0.0.0",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/fern-api/fern"
+  },
+  "type": "module",
+  "main": "dist/api.cjs",
+  "source": "src/index.ts",
+  "types": "dist/api.d.cts",
+  "bin": {
+    "generator-cli": "dist/cli.cjs"
+  },
+  "files": [
+    "dist"
+  ],
+  "scripts": {
+    "clean": "rm -rf ./dist && tsc --build --clean",
+    "compile": "pnpm compile:api && pnpm compile:cli",
+    "compile:api": "tsup ./src/api.ts --format cjs --dts",
+    "compile:cli": "tsup ./src/cli.ts --format cjs && echo '#!/usr/bin/env node' | cat - dist/cli.cjs > dist/tmp && mv dist/tmp dist/cli.cjs",
+    "depcheck": "depcheck",
+    "format": "prettier --write --ignore-unknown \"**\"",
+    "format:check": "prettier --check --ignore-unknown \"**\"",
+    "lint:eslint": "eslint --max-warnings 0 .",
+    "lint:eslint:fix": "pnpm lint:eslint --fix",
+    "lint:style": "stylelint 'src/**/*.scss' --allow-empty-input --max-warnings 0",
+    "lint:style:fix": "pnpm lint:style --fix",
+    "test": "vitest --run --passWithNoTests --globals --disable-console-intercept",
+    "test:update": "vitest -u --run --passWithNoTests --globals --disable-console-intercept"
+  },
+  "dependencies": {
+    "@octokit/rest": "^20.1.2",
+    "es-toolkit": "^1.32.0"
+  },
+  "devDependencies": {
+    "@fern-api/fs-utils": "0.15.0-rc63",
+    "@fern-api/github": "workspace:*",
+    "@types/jest": "^29.5.11",
+    "@types/node": "^22.0.0",
+    "@types/yargs": "^17.0.32",
+    "depcheck": "^1.4.7",
+    "esbuild": "0.25.9",
+    "execa": "^9.5.1",
+    "tmp-promise": "^3.0.3",
+    "tsup": "catalog:",
+    "typescript": "catalog:",
+    "vitest": "catalog:",
+    "yargs": "^17.4.1"
+  }
+}

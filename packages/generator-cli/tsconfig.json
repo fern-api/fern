@@ -1,0 +1,14 @@
+{
+  "extends": "../../shared/tsconfig.shared.json",
+  "compilerOptions": {
+    "outDir": "dist",
+    "rootDir": ".",
+    "types": ["vitest/globals"]
+  },
+  "include": ["./src/**/*"],
+  "references": [
+    {
+      "path": "../../packages/commons/github"
+    }
+  ]
+}
