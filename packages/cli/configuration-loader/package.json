@@ -21,7 +21,9 @@
   "main": "lib/index.js",
   "source": "src/index.ts",
   "types": "lib/index.d.ts",
-  "files": ["lib"],
+  "files": [
+    "lib"
+  ],
   "scripts": {
     "clean": "rm -rf ./lib && tsc --build --clean",
     "compile": "tsc --build",
@@ -41,6 +43,7 @@
     "@fern-fern/fiddle-sdk": "0.0.656",
     "@fern-fern/generators-sdk": "0.114.0-5745f9e74",
     "find-up": "^6.3.0",
+    "gray-matter": "^4.0.3",
     "js-yaml": "^4.1.0",
     "lodash-es": "^4.17.21",
     "semver": "^7.6.2",
