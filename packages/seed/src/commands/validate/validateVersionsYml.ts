@@ -16,16 +16,27 @@ export interface ValidateVersionsYmlOptions {
      * Optional parser function to validate schema-specific requirements.
      * If provided, will be called for each entry after basic validation.
      * Should throw if entry doesn't match schema.
+     *
+     * Note: This is deprecated in favor of JSON Schema validation.
+     * If no JSON Schema is found in the file header, validation will fail.
      */
     schemaParser?: (entry: any) => void;
 }
 
+interface ChangelogEntry {
+    summary: string;
+    type: string;
+    fixed?: string[];
+    added?: string[];
+    changed?: string[];
+    removed?: string[];
+}
+
 interface VersionEntry {
     version: string;
-    changelogEntry?: Array<{
-        summary?: string;
-        type?: string;
-    }>;
+    changelogEntry: ChangelogEntry[];
+    createdAt?: string;
+    [key: string]: unknown;
 }
 
 /**
@@ -94,58 +105,52 @@ export async function validateVersionsYml({
 
     const fileContent = await readFile(absolutePathToChangelog, "utf-8");
 
-    // Extract and load JSON Schema if specified
+    // Extract and load JSON Schema - REQUIRED
     const schemaPath = extractSchemaPath(fileContent);
-    let jsonSchemaValidator: ValidateFunction | null = null;
 
-    if (schemaPath != null) {
-        context.logger.debug(`Found JSON Schema reference: ${schemaPath}`);
-        const jsonSchema = await loadJsonSchema(schemaPath, absolutePathToChangelog, context);
-
-        if (jsonSchema != null) {
-            const ajv = new Ajv({
-                allErrors: true,
-                strict: false
-            });
-            addFormats(ajv);
-
-            try {
-                jsonSchemaValidator = ajv.compile(jsonSchema);
-                context.logger.debug(chalk.green("JSON Schema loaded and compiled successfully"));
-            } catch (e) {
-                context.logger.warn(`Failed to compile JSON Schema: ${(e as Error)?.message}`);
-            }
-        }
-    } else {
-        context.logger.debug("No JSON Schema reference found in file header");
+    if (schemaPath == null) {
+        context.logger.error("No JSON Schema reference found in file header. Add a comment like:");
+        context.logger.error("  # yaml-language-server: $schema=../../path/to/schema.json");
+        context.failAndThrow();
+        return;
     }
 
+    context.logger.debug(`Found JSON Schema reference: ${schemaPath}`);
+    const jsonSchema = await loadJsonSchema(schemaPath, absolutePathToChangelog, context);
+
+    if (jsonSchema == null) {
+        context.logger.error(`Failed to load JSON Schema from ${schemaPath}`);
+        context.failAndThrow();
+        return;
+    }
+
+    // Compile schema validator
+    const ajv = new Ajv({
+        allErrors: true,
+        strict: false
+    });
+    addFormats(ajv);
+
+    const jsonSchemaValidator = ajv.compile<VersionEntry[]>(jsonSchema);
+    context.logger.debug(chalk.green("JSON Schema loaded and compiled successfully"));
+
     // Parse YAML content
-    let changelogs: unknown;
+    let parsedYaml: unknown;
     try {
-        changelogs = yaml.load(fileContent);
+        parsedYaml = yaml.load(fileContent);
     } catch (e) {
         context.logger.error(`Failed to parse YAML file: ${(e as Error)?.message}`);
         context.failAndThrow();
         return;
     }
 
-    if (!Array.isArray(changelogs)) {
-        context.logger.error("Changelog file must contain an array of entries");
-        context.failAndThrow();
-        return;
-    }
+    // Validate against JSON Schema
+    context.logger.debug("Validating against JSON Schema...");
+    const isValid = jsonSchemaValidator(parsedYaml);
 
-    let hasErrors = false;
-
-    // Validate against JSON Schema if available
-    if (jsonSchemaValidator != null) {
-        context.logger.debug("Validating against JSON Schema...");
-        const isValid = jsonSchemaValidator(changelogs);
-
-        if (!isValid && jsonSchemaValidator.errors) {
-            hasErrors = true;
-            context.logger.error(chalk.red("JSON Schema validation failed:"));
+    if (!isValid) {
+        context.logger.error(chalk.red("JSON Schema validation failed:"));
+        if (jsonSchemaValidator.errors) {
             for (const error of jsonSchemaValidator.errors) {
                 const errorPath = error.instancePath || "root";
                 const message = error.message || "validation error";
@@ -153,29 +158,26 @@ export async function validateVersionsYml({
                     chalk.red(`  ${errorPath}: ${message}${error.params ? ` (${JSON.stringify(error.params)})` : ""}`)
                 );
             }
-        } else {
-            context.logger.debug(chalk.green("JSON Schema validation passed"));
-            // After successful schema validation, we can safely type assert
-            // This provides type safety for the rest of the validation
-            context.logger.debug("Data conforms to schema - using strongly typed validation");
         }
+        context.failAndThrow();
+        return;
     }
 
-    // Validate each entry
-    for (const entry of changelogs) {
-        const typedEntry = entry as VersionEntry;
+    context.logger.debug(chalk.green("JSON Schema validation passed"));
+    // After successful validation, parsedYaml is guaranteed to be VersionEntry[]
+    const typedChangelogs = parsedYaml as VersionEntry[];
 
-        // Check if version field exists
-        if (!typedEntry.version) {
-            context.logger.error(`Entry missing required 'version' field: ${yaml.dump(entry)}`);
-            hasErrors = true;
-            continue;
-        }
+    let hasErrors = false;
+
+    // Validate each entry
+    for (const entry of typedChangelogs) {
+        // No need to check version field - schema validation already ensured it exists
+        // But we still validate it for clarity
 
         // Validate angle bracket escaping
         const angleBracketErrors = validateAngleBracketEscaping(entry);
         context.logger.debug(
-            `Checking version ${typedEntry.version}: Found ${angleBracketErrors.length} angle bracket errors`
+            `Checking version ${entry.version}: Found ${angleBracketErrors.length} angle bracket errors`
         );
         if (angleBracketErrors.length > 0) {
             hasErrors = true;
@@ -186,11 +188,11 @@ export async function validateVersionsYml({
 
         // Validate semver format
         try {
-            assertValidSemVerOrThrow(typedEntry.version);
-            context.logger.debug(chalk.green(`${typedEntry.version} is valid`));
+            assertValidSemVerOrThrow(entry.version);
+            context.logger.debug(chalk.green(`${entry.version} is valid`));
         } catch (e) {
             hasErrors = true;
-            context.logger.error(`${typedEntry.version} is invalid semver`);
+            context.logger.error(`${entry.version} is invalid semver`);
             context.logger.error((e as Error)?.message);
         }
 
@@ -212,9 +214,7 @@ export async function validateVersionsYml({
     }
 
     // Validate semver changes between consecutive versions
-    if (changelogs.length > 1) {
-        const typedChangelogs = changelogs as VersionEntry[];
-
+    if (typedChangelogs.length > 1) {
         for (let i = 0; i < typedChangelogs.length - 1; i++) {
             const currentEntry = typedChangelogs[i];
             const previousEntry = typedChangelogs[i + 1];
