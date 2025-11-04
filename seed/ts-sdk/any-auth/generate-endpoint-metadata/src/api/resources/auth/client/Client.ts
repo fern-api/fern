@@ -67,6 +67,7 @@ export class Auth {
             abortSignal: requestOptions?.abortSignal,
             endpointMetadata: _metadata,
             fetchFn: this._options?.fetch,
+            logging: this._options.logging,
         });
         if (_response.ok) {
             return { data: _response.body as SeedAnyAuth.TokenResponse, rawResponse: _response.rawResponse };

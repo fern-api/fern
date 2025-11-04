@@ -12,6 +12,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.fetcher = void 0;
 exports.fetcherImpl = fetcherImpl;
 const json_js_1 = require("../json.js");
+const logger_js_1 = require("../logging/logger.js");
 const createRequestUrl_js_1 = require("./createRequestUrl.js");
 const EndpointSupplier_js_1 = require("./EndpointSupplier.js");
 const getErrorResponseBody_js_1 = require("./getErrorResponseBody.js");
@@ -21,6 +22,29 @@ const getResponseBody_js_1 = require("./getResponseBody.js");
 const makeRequest_js_1 = require("./makeRequest.js");
 const RawResponse_js_1 = require("./RawResponse.js");
 const requestWithRetries_js_1 = require("./requestWithRetries.js");
+const SENSITIVE_HEADERS = new Set([
+    "authorization",
+    "x-api-key",
+    "api-key",
+    "x-auth-token",
+    "cookie",
+    "set-cookie",
+    "proxy-authorization",
+    "x-csrf-token",
+    "x-xsrf-token",
+]);
+function filterSensitiveHeaders(headers) {
+    const filtered = {};
+    for (const [key, value] of Object.entries(headers)) {
+        if (SENSITIVE_HEADERS.has(key.toLowerCase())) {
+            filtered[key] = "[REDACTED]";
+        }
+        else {
+            filtered[key] = value;
+        }
+    }
+    return filtered;
+}
 function getHeaders(args) {
     return __awaiter(this, void 0, void 0, function* () {
         var _a;
@@ -54,11 +78,31 @@ function fetcherImpl(args) {
             type: (_a = args.requestType) !== null && _a !== void 0 ? _a : "other",
         });
         const fetchFn = (_b = args.fetchFn) !== null && _b !== void 0 ? _b : (yield (0, getFetchFn_js_1.getFetchFn)());
+        const headers = yield getHeaders(args);
+        const logger = (0, logger_js_1.createLogger)(args.logging);
+        if (logger.isDebug()) {
+            const metadata = {
+                method: args.method,
+                url,
+                headers: filterSensitiveHeaders(headers),
+                queryParameters: args.queryParameters,
+                hasBody: requestBody != null,
+            };
+            logger.debug("Making HTTP request", metadata);
+        }
         try {
             const response = yield (0, requestWithRetries_js_1.requestWithRetries)(() => __awaiter(this, void 0, void 0, function* () {
-                return (0, makeRequest_js_1.makeRequest)(fetchFn, url, args.method, yield getHeaders(args), requestBody, args.timeoutMs, args.abortSignal, args.withCredentials, args.duplex);
+                return (0, makeRequest_js_1.makeRequest)(fetchFn, url, args.method, headers, requestBody, args.timeoutMs, args.abortSignal, args.withCredentials, args.duplex);
             }), args.maxRetries);
             if (response.status >= 200 && response.status < 400) {
+                if (logger.isDebug()) {
+                    const metadata = {
+                        method: args.method,
+                        url,
+                        statusCode: response.status,
+                    };
+                    logger.debug("HTTP request succeeded", metadata);
+                }
                 return {
                     ok: true,
                     body: (yield (0, getResponseBody_js_1.getResponseBody)(response, args.responseType)),
@@ -67,6 +111,14 @@ function fetcherImpl(args) {
                 };
             }
             else {
+                if (logger.isError()) {
+                    const metadata = {
+                        method: args.method,
+                        url,
+                        statusCode: response.status,
+                    };
+                    logger.error("HTTP request failed with error status", metadata);
+                }
                 return {
                     ok: false,
                     error: {
@@ -80,6 +132,13 @@ function fetcherImpl(args) {
         }
         catch (error) {
             if ((_c = args.abortSignal) === null || _c === void 0 ? void 0 : _c.aborted) {
+                if (logger.isError()) {
+                    const metadata = {
+                        method: args.method,
+                        url,
+                    };
+                    logger.error("HTTP request was aborted", metadata);
+                }
                 return {
                     ok: false,
                     error: {
@@ -90,6 +149,14 @@ function fetcherImpl(args) {
                 };
             }
             else if (error instanceof Error && error.name === "AbortError") {
+                if (logger.isError()) {
+                    const metadata = {
+                        method: args.method,
+                        url,
+                        timeoutMs: args.timeoutMs,
+                    };
+                    logger.error("HTTP request timed out", metadata);
+                }
                 return {
                     ok: false,
                     error: {
@@ -99,6 +166,14 @@ function fetcherImpl(args) {
                 };
             }
             else if (error instanceof Error) {
+                if (logger.isError()) {
+                    const metadata = {
+                        method: args.method,
+                        url,
+                        errorMessage: error.message,
+                    };
+                    logger.error("HTTP request failed with error", metadata);
+                }
                 return {
                     ok: false,
                     error: {
@@ -107,6 +182,14 @@ function fetcherImpl(args) {
                     },
                     rawResponse: RawResponse_js_1.unknownRawResponse,
                 };
+            }
+            if (logger.isError()) {
+                const metadata = {
+                    method: args.method,
+                    url,
+                    error: (0, json_js_1.toJson)(error),
+                };
+                logger.error("HTTP request failed with unknown error", metadata);
             }
             return {
                 ok: false,

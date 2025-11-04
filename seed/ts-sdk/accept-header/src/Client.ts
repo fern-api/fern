@@ -18,6 +18,7 @@ export class SeedAcceptClient {
     constructor(_options: SeedAcceptClient.Options) {
         this._options = {
             ..._options,
+            logging: core.logging.createLogger(_options?.logging),
             headers: mergeHeaders(
                 {
                     "X-Fern-Language": "JavaScript",

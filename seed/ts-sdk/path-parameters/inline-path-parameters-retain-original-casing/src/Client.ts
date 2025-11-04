@@ -20,6 +20,7 @@ export class SeedPathParametersClient {
     constructor(_options: SeedPathParametersClient.Options) {
         this._options = {
             ..._options,
+            logging: core.logging.createLogger(_options?.logging),
             headers: mergeHeaders(
                 {
                     "X-Fern-Language": "JavaScript",
