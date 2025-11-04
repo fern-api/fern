@@ -1,6 +1,6 @@
+import { WithGeneration } from "@fern-api/csharp-codegen";
 import { FernIr } from "@fern-fern/ir-sdk";
 import { ExampleEndpointCall, HttpEndpoint } from "@fern-fern/ir-sdk/api";
-
 import { SdkGeneratorContext } from "../../SdkGeneratorContext";
 import { GrpcEndpointGenerator } from "../grpc/GrpcEndpointGenerator";
 import { HttpEndpointGenerator } from "../http/HttpEndpointGenerator";
@@ -16,15 +16,14 @@ export interface SingleEndpointSnippet {
     endpointCall: string;
 }
 
-export class EndpointSnippetsGenerator {
-    public static CLIENT_VARIABLE_NAME = "client";
-
+export class EndpointSnippetsGenerator extends WithGeneration {
     private readonly context: SdkGeneratorContext;
     private readonly grpcEndpointGenerator: GrpcEndpointGenerator;
     private readonly httpEndpointGenerator: HttpEndpointGenerator;
     private readonly snippetsCache: Map<string, EndpointSnippets> = new Map();
 
     constructor({ context }: { context: SdkGeneratorContext }) {
+        super(context);
         this.context = context;
         this.grpcEndpointGenerator = new GrpcEndpointGenerator({ context });
         this.httpEndpointGenerator = new HttpEndpointGenerator({ context });
@@ -166,13 +165,13 @@ export class EndpointSnippetsGenerator {
                   example,
                   endpoint,
                   serviceId,
-                  clientVariableName: EndpointSnippetsGenerator.CLIENT_VARIABLE_NAME,
+                  clientVariableName: this.names.variables.client,
                   parseDatetimes: false
               })
             : this.httpEndpointGenerator.generateHttpEndpointSnippet({
                   example,
                   endpoint,
-                  clientVariableName: EndpointSnippetsGenerator.CLIENT_VARIABLE_NAME,
+                  clientVariableName: this.names.variables.client,
                   serviceId,
                   getResult: true,
                   parseDatetimes: false
@@ -184,8 +183,7 @@ export class EndpointSnippetsGenerator {
         const formattedAstNodeSnippet = await snippet.toFormattedSnippetAsync({
             allNamespaceSegments: this.context.getAllNamespaceSegments(),
             allTypeClassReferences: this.context.getAllTypeClassReferences(),
-            rootNamespace: this.context.getNamespace(),
-            customConfig: this.context.customConfig,
+            generation: this.generation,
             formatter
         });
         return {

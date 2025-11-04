@@ -263,11 +263,7 @@ export class GeneratedSdkEndpointTypeSchemasImpl implements GeneratedSdkEndpoint
         if (this.endpoint.response.body.type === "streamParameter") {
             throw new Error("Cannot deserialize streaming response in deserializeResponse");
         }
-        if (this.endpoint.response.body.type === "bytes") {
-            throw new Error("Cannot deserialize bytes response in deserializeResponse");
-        }
-
-        if (this.endpoint.response.body.type === "fileDownload") {
+        if (this.endpoint.response.body.type === "bytes" || this.endpoint.response.body.type === "fileDownload") {
             return referenceToRawResponse;
         }
 

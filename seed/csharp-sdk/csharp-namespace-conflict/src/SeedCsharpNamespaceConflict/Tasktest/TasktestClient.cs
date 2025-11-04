@@ -1,5 +1,3 @@
-using System.Net.Http;
-using System.Threading;
 using SeedCsharpNamespaceConflict.Core;
 
 namespace SeedCsharpNamespaceConflict;

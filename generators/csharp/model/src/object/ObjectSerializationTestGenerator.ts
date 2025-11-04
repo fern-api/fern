@@ -16,14 +16,13 @@ export declare namespace TestClass {
     }
 }
 
-const SERIALIZATION_TEST_FOLDER = RelativeFilePath.of("Unit/Serialization");
-
 export class ObjectSerializationTestGenerator extends FileGenerator<
     CSharpFile,
     ModelCustomConfigSchema,
     ModelGeneratorContext
 > {
-    private classReference: ast.ClassReference;
+    private classBeingTested: ast.ClassReference;
+    private testClass: ast.TestClass;
 
     constructor(
         context: ModelGeneratorContext,
@@ -31,17 +30,18 @@ export class ObjectSerializationTestGenerator extends FileGenerator<
         private readonly testInputs: TestInput[]
     ) {
         super(context);
-        this.classReference = this.context.csharpTypeMapper.convertToClassReference(this.typeDeclaration.name);
+        this.classBeingTested = this.context.csharpTypeMapper.convertToClassReference(this.typeDeclaration);
+        this.testClass = this.csharp.testClass({
+            name: `${this.classBeingTested.name}Test`,
+            origin: this.model.explicit(this.typeDeclaration, "Test"),
+            namespace: this.namespaces.test
+        });
     }
 
     protected doGenerate(): CSharpFile {
-        const testClass = this.csharp.testClass({
-            name: this.getTestClassName(),
-            namespace: this.context.getTestNamespace()
-        });
         this.testInputs.forEach((testInput, index) => {
             const testNumber = this.testInputs.length > 1 ? `_${index + 1}` : "";
-            testClass.addTestMethod({
+            this.testClass.addTestMethod({
                 name: `TestDeserialization${testNumber}`,
                 body: this.csharp.codeblock((writer) => {
                     writer.writeLine("var json = ");
@@ -51,9 +51,9 @@ export class ObjectSerializationTestGenerator extends FileGenerator<
                     writer.write("var deserializedObject = ");
                     writer.writeNodeStatement(
                         this.csharp.invokeMethod({
-                            on: this.context.getJsonUtilsClassReference(),
+                            on: this.types.JsonUtils,
                             method: "Deserialize",
-                            generics: [this.csharp.Type.reference(this.classReference)],
+                            generics: [this.csharp.Type.reference(this.classBeingTested)],
                             arguments_: [this.csharp.codeblock("json")]
                         })
                     );
@@ -64,7 +64,7 @@ export class ObjectSerializationTestGenerator extends FileGenerator<
                 isAsync: false
             });
 
-            testClass.addTestMethod({
+            this.testClass.addTestMethod({
                 name: `TestSerialization${testNumber}`,
                 body: this.csharp.codeblock((writer) => {
                     writer.writeLine("var expectedJson = ");
@@ -74,7 +74,7 @@ export class ObjectSerializationTestGenerator extends FileGenerator<
                     writer.write("var actualElement = ");
                     writer.writeNodeStatement(
                         this.csharp.invokeMethod({
-                            on: this.context.getJsonUtilsClassReference(),
+                            on: this.types.JsonUtils,
                             method: "SerializeToElement",
                             arguments_: [this.csharp.codeblock("actualObj")]
                         })
@@ -82,9 +82,9 @@ export class ObjectSerializationTestGenerator extends FileGenerator<
                     writer.write("var expectedElement = ");
                     writer.writeNodeStatement(
                         this.csharp.invokeMethod({
-                            on: this.context.getJsonUtilsClassReference(),
+                            on: this.types.JsonUtils,
                             method: "Deserialize",
-                            generics: [this.csharp.Type.reference(this.context.getJsonElementClassReference())],
+                            generics: [this.csharp.Type.reference(this.extern.System.Text.Json.JsonElement)],
                             arguments_: [this.csharp.codeblock("expectedJson")]
                         })
                     );
@@ -96,25 +96,21 @@ export class ObjectSerializationTestGenerator extends FileGenerator<
             });
         });
         return new CSharpFile({
-            clazz: testClass.getClass(),
-            directory: SERIALIZATION_TEST_FOLDER,
+            clazz: this.testClass.getClass(),
+            directory: this.constants.folders.serializationTests,
             allNamespaceSegments: this.context.getAllNamespaceSegments(),
             allTypeClassReferences: this.context.getAllTypeClassReferences(),
-            namespace: this.context.getNamespace(),
-            customConfig: this.context.customConfig
+            namespace: this.namespaces.root,
+            generation: this.generation
         });
     }
 
     protected getFilepath(): RelativeFilePath {
         return join(
-            this.context.project.filepaths.getTestFilesDirectory(),
-            SERIALIZATION_TEST_FOLDER,
-            RelativeFilePath.of(`${this.getTestClassName()}.cs`)
+            this.constants.folders.testFiles,
+            this.constants.folders.serializationTests,
+            RelativeFilePath.of(`${this.testClass.name}.cs`)
         );
-    }
-
-    private getTestClassName(): string {
-        return `${this.classReference.name}Test`;
     }
 
     private convertToCSharpFriendlyJsonString(jsonObject: unknown): string {

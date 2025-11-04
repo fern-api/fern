@@ -6,7 +6,7 @@ module Seed
       class DebugMapValue < Internal::Types::Model
         field :key_value_pairs, lambda {
           Internal::Types::Array[Seed::Commons::Types::DebugKeyValuePairs]
-        }, optional: false, nullable: false
+        }, optional: false, nullable: false, api_name: "keyValuePairs"
       end
     end
   end

@@ -198,13 +198,7 @@ fixtures:
         experimental-enable-websockets: true
       outputFolder: with-websockets
 allowedFailures:
-  - imdb:exported-client-class-name
   - oauth-client-credentials-custom
-  - pagination:no-custom-config
-  - pagination:custom-pager
-  - pagination:custom-pager-with-exception-handler
   - file-upload
-
-  ## Dynamic snippets
   - auth-environment-variables # TODO: Add global headers to ExampleEndpointCall.
  

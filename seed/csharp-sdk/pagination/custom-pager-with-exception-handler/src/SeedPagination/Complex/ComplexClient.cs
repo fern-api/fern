@@ -1,7 +1,4 @@
-using System.Net.Http;
 using System.Text.Json;
-using System.Threading;
-using System.Threading.Tasks;
 using SeedPagination.Core;
 
 namespace SeedPagination;
@@ -76,7 +73,7 @@ public partial class ComplexClient
     ///         Query = new SingleFilterSearchRequest
     ///         {
     ///             Field = "field",
-    ///             Operator = SingleFilterSearchRequestOperator.Equals,
+    ///             Operator = SingleFilterSearchRequestOperator.Equals_,
     ///             Value = "value",
     ///         },
     ///     }
@@ -110,11 +107,11 @@ public partial class ComplexClient
                             SearchInternalAsync(index, request, options, cancellationToken),
                         (request, cursor) =>
                         {
-                            request.Pagination ??= new();
+                            request.Pagination ??= new StartingAfterPaging() { PerPage = 0 };
                             request.Pagination.StartingAfter = cursor;
                         },
-                        response => response?.Pages?.Next?.StartingAfter,
-                        response => response?.Conversations?.ToList(),
+                        response => response.Pages?.Next?.StartingAfter,
+                        response => response.Conversations?.ToList(),
                         cancellationToken
                     )
                     .ConfigureAwait(false);

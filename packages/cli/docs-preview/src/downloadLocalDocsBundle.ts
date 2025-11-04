@@ -78,12 +78,6 @@ export declare namespace DownloadLocalBundle {
     }
 }
 
-// Config file contents as constants
-const PNPM_WORKSPACE_YAML_CONTENTS = `packages:
-  - "packages/**"
-  - "!**/dist"
-`;
-
 const PNPMFILE_CJS_CONTENTS = `module.exports = {
     hooks: {
         readPackage(pkg) {
@@ -295,11 +289,13 @@ export async function downloadBundle({
                     doesPathExist(absPathToInstrumentationJs)
                 ]);
 
-                // Write pnpm-workspace.yaml if it does not exist
+                // Warn if pnpm-workspace.yaml does not exist
                 if (!pnpmWorkspaceExists) {
-                    logger.debug(`Writing pnpm-workspace.yaml at ${pnpmWorkspacePath}`);
-                    await writeFile(pnpmWorkspacePath, PNPM_WORKSPACE_YAML_CONTENTS);
+                    logger.warn(
+                        `Expected pnpm-workspace.yaml at ${pnpmWorkspacePath} but it does not exist. If you are experiencing issues, please contact support@buildwithfern.com.`
+                    );
                 }
+
                 // Write pnpmfile.cjs if it does not exist
                 if (!pnpmfileExists) {
                     logger.debug(`Writing pnpmfile.cjs at ${pnpmfilePath}`);

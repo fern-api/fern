@@ -1,5 +1,4 @@
 using SeedServerSentEvents;
-using System.Threading.Tasks;
 
 namespace Usage;
 

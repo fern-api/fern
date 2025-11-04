@@ -19,6 +19,13 @@
     <DefineConstants>$(DefineConstants);USE_PORTABLE_DATE_ONLY</DefineConstants>
     <UsePortableDateOnly>true</UsePortableDateOnly>
   </PropertyGroup>
+  <ItemGroup Condition="'$(TargetFramework)' == 'net462' Or '$(TargetFramework)' == 'netstandard2.0'">
+    <Using Include="System.Net.Http" />
+    <Using Include="System.Collections.Generic" />
+    <Using Include="System.Linq" />
+    <Using Include="System.Threading" />
+    <Using Include="System.Threading.Tasks" />
+  </ItemGroup>
   <ItemGroup Condition="'$(UsePortableDateOnly)' == 'true'">
     <PackageReference Include="Portable.System.DateTimeOnly" Version="8.0.2" />
   </ItemGroup>

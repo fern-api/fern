@@ -1,5 +1,4 @@
 using SeedUnions;
-using System.Threading.Tasks;
 
 namespace Usage;
 
@@ -12,7 +11,7 @@ public class Example3
             }
         );
 
-        await client.Bigunion.GetAsync(
+        await client.Union.GetAsync(
             "id"
         );
     }

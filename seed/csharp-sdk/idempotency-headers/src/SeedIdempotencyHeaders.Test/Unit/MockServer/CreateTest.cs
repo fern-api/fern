@@ -1,4 +1,3 @@
-using System.Threading.Tasks;
 using NUnit.Framework;
 using SeedIdempotencyHeaders;
 using SeedIdempotencyHeaders.Core;

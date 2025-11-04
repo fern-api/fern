@@ -1,4 +1,3 @@
-using System.Threading.Tasks;
 using NUnit.Framework;
 using SeedPagination.Test.Unit.MockServer;
 
@@ -61,7 +60,7 @@ public class ListWithDoubleOffsetPaginationTest : BaseMockServerTest
             {
                 Page = 1.1,
                 PerPage = 1.1,
-                Order = InlineUsers.Order.Asc,
+                Order = SeedPagination.InlineUsers.Order.Asc,
                 StartingAfter = "starting_after",
             }
         );

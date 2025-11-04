@@ -1,0 +1,16 @@
+{
+    "endpoints": [
+        {
+            "id": {
+                "path": "/snippet",
+                "method": "POST",
+                "identifier_override": "endpoint_service.simple"
+            },
+            "snippet": {
+                "type": "typescript",
+                "client": "import { SeedBytesDownloadClient } from \"@fern/bytes-download\";\n\nconst client = new SeedBytesDownloadClient({ environment: \"YOUR_BASE_URL\" });\nawait client.service.simple();\n"
+            }
+        }
+    ],
+    "types": {}
+}

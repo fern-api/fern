@@ -67,11 +67,9 @@ public class RawDummyClient {
                         Stream.fromJson(StreamResponse.class, new ResponseBodyReader(response), "\\n"), response);
             }
             String responseBodyString = responseBody != null ? responseBody.string() : "{}";
+            Object errorBody = ObjectMappers.parseErrorBody(responseBodyString);
             throw new SeedStreamingApiException(
-                    "Error with status code " + response.code(),
-                    response.code(),
-                    ObjectMappers.JSON_MAPPER.readValue(responseBodyString, Object.class),
-                    response);
+                    "Error with status code " + response.code(), response.code(), errorBody, response);
         } catch (IOException e) {
             throw new SeedStreamingException("Network error executing HTTP request", e);
         }
@@ -106,16 +104,14 @@ public class RawDummyClient {
         }
         try (Response response = client.newCall(okhttpRequest).execute()) {
             ResponseBody responseBody = response.body();
+            String responseBodyString = responseBody != null ? responseBody.string() : "{}";
             if (response.isSuccessful()) {
                 return new SeedStreamingHttpResponse<>(
-                        ObjectMappers.JSON_MAPPER.readValue(responseBody.string(), StreamResponse.class), response);
+                        ObjectMappers.JSON_MAPPER.readValue(responseBodyString, StreamResponse.class), response);
             }
-            String responseBodyString = responseBody != null ? responseBody.string() : "{}";
+            Object errorBody = ObjectMappers.parseErrorBody(responseBodyString);
             throw new SeedStreamingApiException(
-                    "Error with status code " + response.code(),
-                    response.code(),
-                    ObjectMappers.JSON_MAPPER.readValue(responseBodyString, Object.class),
-                    response);
+                    "Error with status code " + response.code(), response.code(), errorBody, response);
         } catch (IOException e) {
             throw new SeedStreamingException("Network error executing HTTP request", e);
         }

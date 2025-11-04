@@ -377,6 +377,15 @@ fixtures:
     - outputFolder: allow-custom-fetcher
       customConfig:
         allowCustomFetcher: true
+  enum:
+    - outputFolder: no-custom-config
+      customConfig: null
+    - outputFolder: forward-compatible-enums
+      customConfig:
+        enableForwardCompatibleEnums: true
+    - outputFolder: serde
+      customConfig:
+        noSerdeLayer: false
 scripts:
   - docker: fernapi/ts-seed
     commands:
@@ -416,9 +425,10 @@ scripts:
           if grep -q '"test":' package.json; then corepack yarn test; fi
         fi
 allowedFailures:
-  - bytes-download
   - circular-references
-  - enum
+  - enum:no-custom-config
+  - enum:forward-compatible-enums
+  - enum:serde
   - error-property:no-custom-config
   - error-property:union-utils
   - errors

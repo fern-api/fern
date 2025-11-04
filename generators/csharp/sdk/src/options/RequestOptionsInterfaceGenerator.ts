@@ -6,9 +6,6 @@ import { SdkCustomConfigSchema } from "../SdkCustomConfig";
 import { SdkGeneratorContext } from "../SdkGeneratorContext";
 import { BaseOptionsGenerator } from "./BaseOptionsGenerator";
 
-export const REQUEST_OPTIONS_INTERFACE_NAME = "IRequestOptions";
-export const REQUEST_OPTIONS_PARAMETER_NAME = "options";
-
 export class RequestOptionsInterfaceGenerator extends FileGenerator<
     CSharpFile,
     SdkCustomConfigSchema,
@@ -24,24 +21,24 @@ export class RequestOptionsInterfaceGenerator extends FileGenerator<
 
     public doGenerate(): CSharpFile {
         const interace_ = this.csharp.interface_({
-            ...this.context.getRequestOptionsInterfaceReference(),
+            ...this.types.RequestOptionsInterface,
             access: ast.Access.Internal
         });
-        interace_.addFields(this.baseOptionsGenerator.getRequestOptionInterfaceFields());
+        this.baseOptionsGenerator.getRequestOptionInterfaceFields(interace_);
         return new CSharpFile({
             clazz: interace_,
             directory: this.context.getCoreDirectory(),
             allNamespaceSegments: this.context.getAllNamespaceSegments(),
             allTypeClassReferences: this.context.getAllTypeClassReferences(),
-            namespace: this.context.getCoreNamespace(),
-            customConfig: this.context.customConfig
+            namespace: this.namespaces.core,
+            generation: this.generation
         });
     }
 
     protected getFilepath(): RelativeFilePath {
         return join(
-            this.context.project.filepaths.getCoreFilesDirectory(),
-            RelativeFilePath.of(`${REQUEST_OPTIONS_INTERFACE_NAME}.cs`)
+            this.constants.folders.coreFiles,
+            RelativeFilePath.of(`${this.types.RequestOptionsInterface.name}.cs`)
         );
     }
 }

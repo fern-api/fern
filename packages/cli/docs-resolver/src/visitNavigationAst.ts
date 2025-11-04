@@ -98,6 +98,7 @@ async function visitNavigationItem({
         summary: noop,
         title: noop,
         layout: noop,
+        collapsed: noop,
         icon: noop,
         slug: noop,
         hidden: noop,

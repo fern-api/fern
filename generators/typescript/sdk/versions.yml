@@ -35,6 +35,31 @@
   createdAt: "2025-11-04"
   irVersion: 61
 
+- version: 3.24.0
+  changelogEntry:
+    - summary: |
+        Add support for forward-compatible enums.
+        To enable forward-compatible enums, add the following configuration to your _generators.yml_ file:
+        ```yaml
+        # In generators.yml
+        groups:
+          generators:
+            - name: fernapi/fern-typescript-sdk
+              config:
+                enableForwardCompatibleEnums: true
+        ```
+      type: feat
+  createdAt: "2025-11-03"
+  irVersion: 61
+
+- version: 3.23.0
+  changelogEntry:
+    - summary: |
+        Add support for bytes download responses.
+      type: feat
+  createdAt: "2025-11-03"
+  irVersion: 61
+
 - version: 3.22.0
   changelogEntry:
     - summary: |

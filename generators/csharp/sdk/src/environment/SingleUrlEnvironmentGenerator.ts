@@ -28,25 +28,26 @@ export class SingleUrlEnvironmentGenerator extends FileGenerator<
 
     public doGenerate(): CSharpFile {
         const class_ = this.csharp.class_({
-            ...this.context.getEnvironmentsClassReference(),
+            reference: this.types.Environments,
             partial: false,
             access: ast.Access.Public,
-            annotations: [this.context.getSerializableAttribute()]
+            annotations: [this.extern.System.Serializable]
         });
 
         for (const environment of this.singleUrlEnvironments.environments) {
-            class_.addField(
-                this.csharp.field({
-                    access: ast.Access.Public,
-                    const_: true,
-                    name:
-                        (this.context.customConfig["pascal-case-environments"] ?? true)
-                            ? environment.name.pascalCase.safeName
-                            : environment.name.screamingSnakeCase.safeName,
-                    type: this.csharp.Type.string(),
-                    initializer: this.csharp.codeblock(this.csharp.string_({ string: environment.url }))
-                })
-            );
+            class_.addField({
+                origin: class_.explicit(
+                    this.settings.pascalCaseEnvironments
+                        ? environment.name.pascalCase.safeName
+                        : environment.name.screamingSnakeCase.safeName
+                ),
+
+                enclosingType: class_,
+                access: ast.Access.Public,
+                const_: true,
+                type: this.csharp.Type.string,
+                initializer: this.csharp.codeblock(this.csharp.string_({ string: environment.url }))
+            });
         }
 
         return new CSharpFile({
@@ -54,15 +55,12 @@ export class SingleUrlEnvironmentGenerator extends FileGenerator<
             directory: RelativeFilePath.of(this.context.getPublicCoreDirectory()),
             allNamespaceSegments: this.context.getAllNamespaceSegments(),
             allTypeClassReferences: this.context.getAllTypeClassReferences(),
-            namespace: this.context.getNamespace(),
-            customConfig: this.context.customConfig
+            namespace: this.namespaces.root,
+            generation: this.generation
         });
     }
 
     protected getFilepath(): RelativeFilePath {
-        return join(
-            this.context.project.filepaths.getPublicCoreFilesDirectory(),
-            RelativeFilePath.of(`${this.context.getEnvironmentsClassReference().name}.cs`)
-        );
+        return join(this.constants.folders.publicCoreFiles, RelativeFilePath.of(`${this.types.Environments.name}.cs`));
     }
 }

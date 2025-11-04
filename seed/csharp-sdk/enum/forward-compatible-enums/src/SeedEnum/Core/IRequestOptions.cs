@@ -1,6 +1,3 @@
-using System.Collections.Generic;
-using System.Net.Http;
-
 namespace SeedEnum.Core;
 
 internal interface IRequestOptions

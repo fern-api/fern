@@ -13,6 +13,7 @@ export function generateFields({
 }): ruby.AstNode[] {
     return properties.map((prop, index) => {
         const fieldName = prop.name.name.snakeCase.safeName;
+        const wireValue = prop.name.wireValue;
         const rubyType = context.typeMapper.convert({ reference: prop.valueType });
 
         let isCircular: boolean = false;
@@ -30,6 +31,9 @@ export function generateFields({
             rubyType.write(writer);
             writer.write(" }");
             writer.write(`, optional: ${isOptional}, nullable: ${isNullable}`);
+            if (wireValue !== fieldName) {
+                writer.write(`, api_name: "${wireValue}"`);
+            }
             // Only add newline for the last statement to ensure 'end' appears on its own line
             if (index === properties.length - 1) {
                 writer.newLine();

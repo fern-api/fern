@@ -79,7 +79,7 @@ async function tryRunDocker({
     runner?: ContainerRunner;
 }): Promise<void> {
     if (process.env["FERN_STACK_TRACK"]) {
-        envVars["FERN_STACK_TRACK"] = "true";
+        envVars["FERN_STACK_TRACK"] = process.env["FERN_STACK_TRACK"];
     }
     const dockerArgs = [
         "run",
