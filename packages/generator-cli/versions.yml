@@ -1,13 +1,6 @@
 # yaml-language-server: $schema=../../generator-cli-versions-yml.schema.json
 - changelogEntry:
     - summary: |
-        Test new version detection.
-      type: chore
-  createdAt: "2025-11-04"
-  version: 0.4.1
-
-- changelogEntry:
-    - summary: |
         Move generator-cli source code from fern-platform to fern repository.
       type: chore
   createdAt: "2025-11-04"
