@@ -2,7 +2,7 @@ const LogLevel = {
     Debug: 4,
     Info: 3,
     Warn: 2,
-    Error: 1,
+    Error: 1
 } as const;
 export type LogLevel = (typeof LogLevel)[keyof typeof LogLevel];
 
@@ -99,5 +99,5 @@ export function createLogger(config?: LogConfig | Logger): Logger {
 const defaultLogger: Logger = new Logger({
     level: LogLevel.Info,
     logger: new ConsoleLogger(),
-    silent: true,
+    silent: true
 });

@@ -1,5 +1,5 @@
 import { toJson } from "../json";
-import { getLogger, type Logger } from "../logger/Logger";
+import { createLogger, type Logger } from "../logging/logger";
 import type { APIResponse } from "./APIResponse";
 import { createRequestUrl } from "./createRequestUrl";
 import type { EndpointMetadata } from "./EndpointMetadata";
@@ -114,7 +114,7 @@ export async function fetcherImpl<R = unknown>(args: Fetcher.Args): Promise<APIR
     });
     const fetchFn = args.fetchFn ?? (await getFetchFn());
     const headers = await getHeaders(args);
-    const logger = getLogger(args.logger);
+    const logger = createLogger(args.logger);
 
     if (logger.isDebug()) {
         const metadata = {

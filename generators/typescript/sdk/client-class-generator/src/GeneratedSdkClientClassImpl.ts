@@ -1646,12 +1646,6 @@ export class GeneratedSdkClientClassImpl implements GeneratedSdkClientClass {
         });
     }
 
-    public getReferenceToLogLevel(context: SdkContext): ts.Expression {
-        return context.coreUtilities.logger.resolveLogLevel._invoke([this.getReferenceToOption("logging")], {
-            isOptional: false
-        });
-    }
-
     public getReferenceToOptions(): ts.Expression {
         return ts.factory.createPropertyAccessExpression(
             ts.factory.createThis(),

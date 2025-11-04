@@ -3,7 +3,7 @@ import { CallbackQueue } from "./CallbackQueue";
 import { Fetcher } from "./Fetcher";
 import { FileUtils } from "./FileUtils";
 import { FormDataUtils } from "./FormDataUtils";
-import { Logger } from "./Logger";
+import { Logger } from "./Logging";
 import { Pagination } from "./Pagination";
 import { Runtime } from "./Runtime";
 import { Stream } from "./Stream";

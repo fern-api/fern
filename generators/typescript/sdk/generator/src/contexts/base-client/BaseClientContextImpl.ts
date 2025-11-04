@@ -308,7 +308,7 @@ export class BaseClientContextImpl implements BaseClientContext {
         properties.push({
             kind: StructureKind.PropertySignature,
             name: "logging",
-            type: getTextOfTsNode(context.coreUtilities.logger.LoggingConfig._getReferenceToType()),
+            type: getTextOfTsNode(context.coreUtilities.logger.LogConfig._getReferenceToType()),
             hasQuestionToken: true,
             docs: [
                 "Configure logging for HTTP requests. Provide a custom logger and/or log level (debug, info, warn, error, silent). Defaults to silent (no logging)."

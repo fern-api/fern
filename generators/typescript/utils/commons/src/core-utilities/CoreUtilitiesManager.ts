@@ -15,7 +15,7 @@ import { CoreUtility, CoreUtilityName } from "./CoreUtility";
 import { FetcherImpl } from "./Fetcher";
 import { FileUtilsImpl } from "./FileUtils";
 import { FormDataUtilsImpl } from "./FormDataUtils";
-import { LoggingImpl } from "./Logging";
+import { LoggerImpl } from "./Logging";
 import { PaginationImpl } from "./Pagination";
 import { RuntimeImpl } from "./Runtime";
 import { StreamImpl } from "./Stream";

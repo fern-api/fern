@@ -505,7 +505,6 @@ export class GeneratedDefaultEndpointImplementation implements GeneratedEndpoint
             }),
             fetchFn: this.generatedSdkClientClass.getReferenceToFetch(),
             logger: this.generatedSdkClientClass.getReferenceToLogger(context),
-            logLevel: this.generatedSdkClientClass.getReferenceToLogLevel(context),
             withCredentials: this.includeCredentialsOnCrossOriginRequests,
             endpointMetadata: this.generateEndpointMetadata
                 ? this.generatedSdkClientClass.getReferenceToMetadataForEndpointSupplier()
