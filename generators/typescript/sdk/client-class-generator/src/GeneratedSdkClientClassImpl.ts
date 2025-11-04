@@ -179,6 +179,8 @@ export class GeneratedSdkClientClassImpl implements GeneratedSdkClientClass {
         useDefaultRequestParameterValues,
         generateEndpointMetadata
     }: GeneratedSdkClientClassImpl.Init) {
+        importsManager.reserveLocal(serviceClassName);
+
         this.isRoot = isRoot;
         this.intermediateRepresentation = intermediateRepresentation;
         this.serviceClassName = serviceClassName;

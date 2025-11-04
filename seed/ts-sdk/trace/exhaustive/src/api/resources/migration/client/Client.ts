@@ -5,6 +5,8 @@ import { mergeHeaders, mergeOnlyDefinedHeaders } from "../../../../core/headers.
 import * as core from "../../../../core/index.js";
 import * as environments from "../../../../environments.js";
 import * as SeedTrace from "../../../index.js";
+import type { Migration as MigrationType } from "../types/Migration.js";
+import type { GetAttemptedMigrationsRequest } from "./requests/GetAttemptedMigrationsRequest.js";
 
 export declare namespace Migration {
     export interface Options extends BaseClientOptions {}
@@ -20,7 +22,7 @@ export class Migration {
     }
 
     /**
-     * @param {SeedTrace.GetAttemptedMigrationsRequest} request
+     * @param {GetAttemptedMigrationsRequest} request
      * @param {Migration.RequestOptions} requestOptions - Request-specific configuration.
      *
      * @example
@@ -29,19 +31,17 @@ export class Migration {
      *     })
      */
     public getAttemptedMigrations(
-        request: SeedTrace.GetAttemptedMigrationsRequest,
+        request: GetAttemptedMigrationsRequest,
         requestOptions?: Migration.RequestOptions,
-    ): core.HttpResponsePromise<
-        core.APIResponse<SeedTrace.Migration[], SeedTrace.migration.getAttemptedMigrations.Error>
-    > {
+    ): core.HttpResponsePromise<core.APIResponse<MigrationType[], SeedTrace.migration.getAttemptedMigrations.Error>> {
         return core.HttpResponsePromise.fromPromise(this.__getAttemptedMigrations(request, requestOptions));
     }
 
     private async __getAttemptedMigrations(
-        request: SeedTrace.GetAttemptedMigrationsRequest,
+        request: GetAttemptedMigrationsRequest,
         requestOptions?: Migration.RequestOptions,
     ): Promise<
-        core.WithRawResponse<core.APIResponse<SeedTrace.Migration[], SeedTrace.migration.getAttemptedMigrations.Error>>
+        core.WithRawResponse<core.APIResponse<MigrationType[], SeedTrace.migration.getAttemptedMigrations.Error>>
     > {
         const { "admin-key-header": adminKeyHeader } = request;
         const _headers: core.Fetcher.Args["headers"] = mergeHeaders(
@@ -78,7 +78,7 @@ export class Migration {
             return {
                 data: {
                     ok: true,
-                    body: _response.body as SeedTrace.Migration[],
+                    body: _response.body as MigrationType[],
                     headers: _response.headers,
                     rawResponse: _response.rawResponse,
                 },

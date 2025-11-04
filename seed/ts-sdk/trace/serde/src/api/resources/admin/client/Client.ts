@@ -6,7 +6,15 @@ import * as core from "../../../../core/index.js";
 import * as environments from "../../../../environments.js";
 import * as errors from "../../../../errors/index.js";
 import * as serializers from "../../../../serialization/index.js";
-import type * as SeedTrace from "../../../index.js";
+import type { SubmissionId } from "../../submission/types/SubmissionId.js";
+import type { TestSubmissionStatus } from "../../submission/types/TestSubmissionStatus.js";
+import type { TestSubmissionUpdate } from "../../submission/types/TestSubmissionUpdate.js";
+import type { TraceResponseV2 } from "../../submission/types/TraceResponseV2.js";
+import type { WorkspaceSubmissionStatus } from "../../submission/types/WorkspaceSubmissionStatus.js";
+import type { WorkspaceSubmissionUpdate } from "../../submission/types/WorkspaceSubmissionUpdate.js";
+import type { TestCaseId } from "../../v2/resources/problem/types/TestCaseId.js";
+import type { StoreTracedTestCaseRequest } from "./requests/StoreTracedTestCaseRequest.js";
+import type { StoreTracedWorkspaceRequest } from "./requests/StoreTracedWorkspaceRequest.js";
 
 export declare namespace Admin {
     export interface Options extends BaseClientOptions {}
@@ -22,8 +30,8 @@ export class Admin {
     }
 
     /**
-     * @param {SeedTrace.SubmissionId} submissionId
-     * @param {SeedTrace.TestSubmissionStatus} request
+     * @param {SubmissionId} submissionId
+     * @param {TestSubmissionStatus} request
      * @param {Admin.RequestOptions} requestOptions - Request-specific configuration.
      *
      * @example
@@ -32,8 +40,8 @@ export class Admin {
      *     })
      */
     public updateTestSubmissionStatus(
-        submissionId: SeedTrace.SubmissionId,
-        request: SeedTrace.TestSubmissionStatus,
+        submissionId: SubmissionId,
+        request: TestSubmissionStatus,
         requestOptions?: Admin.RequestOptions,
     ): core.HttpResponsePromise<void> {
         return core.HttpResponsePromise.fromPromise(
@@ -42,8 +50,8 @@ export class Admin {
     }
 
     private async __updateTestSubmissionStatus(
-        submissionId: SeedTrace.SubmissionId,
-        request: SeedTrace.TestSubmissionStatus,
+        submissionId: SubmissionId,
+        request: TestSubmissionStatus,
         requestOptions?: Admin.RequestOptions,
     ): Promise<core.WithRawResponse<void>> {
         const _headers: core.Fetcher.Args["headers"] = mergeHeaders(
@@ -107,8 +115,8 @@ export class Admin {
     }
 
     /**
-     * @param {SeedTrace.SubmissionId} submissionId
-     * @param {SeedTrace.TestSubmissionUpdate} request
+     * @param {SubmissionId} submissionId
+     * @param {TestSubmissionUpdate} request
      * @param {Admin.RequestOptions} requestOptions - Request-specific configuration.
      *
      * @example
@@ -121,8 +129,8 @@ export class Admin {
      *     })
      */
     public sendTestSubmissionUpdate(
-        submissionId: SeedTrace.SubmissionId,
-        request: SeedTrace.TestSubmissionUpdate,
+        submissionId: SubmissionId,
+        request: TestSubmissionUpdate,
         requestOptions?: Admin.RequestOptions,
     ): core.HttpResponsePromise<void> {
         return core.HttpResponsePromise.fromPromise(
@@ -131,8 +139,8 @@ export class Admin {
     }
 
     private async __sendTestSubmissionUpdate(
-        submissionId: SeedTrace.SubmissionId,
-        request: SeedTrace.TestSubmissionUpdate,
+        submissionId: SubmissionId,
+        request: TestSubmissionUpdate,
         requestOptions?: Admin.RequestOptions,
     ): Promise<core.WithRawResponse<void>> {
         const _headers: core.Fetcher.Args["headers"] = mergeHeaders(
@@ -196,8 +204,8 @@ export class Admin {
     }
 
     /**
-     * @param {SeedTrace.SubmissionId} submissionId
-     * @param {SeedTrace.WorkspaceSubmissionStatus} request
+     * @param {SubmissionId} submissionId
+     * @param {WorkspaceSubmissionStatus} request
      * @param {Admin.RequestOptions} requestOptions - Request-specific configuration.
      *
      * @example
@@ -206,8 +214,8 @@ export class Admin {
      *     })
      */
     public updateWorkspaceSubmissionStatus(
-        submissionId: SeedTrace.SubmissionId,
-        request: SeedTrace.WorkspaceSubmissionStatus,
+        submissionId: SubmissionId,
+        request: WorkspaceSubmissionStatus,
         requestOptions?: Admin.RequestOptions,
     ): core.HttpResponsePromise<void> {
         return core.HttpResponsePromise.fromPromise(
@@ -216,8 +224,8 @@ export class Admin {
     }
 
     private async __updateWorkspaceSubmissionStatus(
-        submissionId: SeedTrace.SubmissionId,
-        request: SeedTrace.WorkspaceSubmissionStatus,
+        submissionId: SubmissionId,
+        request: WorkspaceSubmissionStatus,
         requestOptions?: Admin.RequestOptions,
     ): Promise<core.WithRawResponse<void>> {
         const _headers: core.Fetcher.Args["headers"] = mergeHeaders(
@@ -281,8 +289,8 @@ export class Admin {
     }
 
     /**
-     * @param {SeedTrace.SubmissionId} submissionId
-     * @param {SeedTrace.WorkspaceSubmissionUpdate} request
+     * @param {SubmissionId} submissionId
+     * @param {WorkspaceSubmissionUpdate} request
      * @param {Admin.RequestOptions} requestOptions - Request-specific configuration.
      *
      * @example
@@ -295,8 +303,8 @@ export class Admin {
      *     })
      */
     public sendWorkspaceSubmissionUpdate(
-        submissionId: SeedTrace.SubmissionId,
-        request: SeedTrace.WorkspaceSubmissionUpdate,
+        submissionId: SubmissionId,
+        request: WorkspaceSubmissionUpdate,
         requestOptions?: Admin.RequestOptions,
     ): core.HttpResponsePromise<void> {
         return core.HttpResponsePromise.fromPromise(
@@ -305,8 +313,8 @@ export class Admin {
     }
 
     private async __sendWorkspaceSubmissionUpdate(
-        submissionId: SeedTrace.SubmissionId,
-        request: SeedTrace.WorkspaceSubmissionUpdate,
+        submissionId: SubmissionId,
+        request: WorkspaceSubmissionUpdate,
         requestOptions?: Admin.RequestOptions,
     ): Promise<core.WithRawResponse<void>> {
         const _headers: core.Fetcher.Args["headers"] = mergeHeaders(
@@ -370,9 +378,9 @@ export class Admin {
     }
 
     /**
-     * @param {SeedTrace.SubmissionId} submissionId
+     * @param {SubmissionId} submissionId
      * @param {string} testCaseId
-     * @param {SeedTrace.StoreTracedTestCaseRequest} request
+     * @param {StoreTracedTestCaseRequest} request
      * @param {Admin.RequestOptions} requestOptions - Request-specific configuration.
      *
      * @example
@@ -466,9 +474,9 @@ export class Admin {
      *     })
      */
     public storeTracedTestCase(
-        submissionId: SeedTrace.SubmissionId,
+        submissionId: SubmissionId,
         testCaseId: string,
-        request: SeedTrace.StoreTracedTestCaseRequest,
+        request: StoreTracedTestCaseRequest,
         requestOptions?: Admin.RequestOptions,
     ): core.HttpResponsePromise<void> {
         return core.HttpResponsePromise.fromPromise(
@@ -477,9 +485,9 @@ export class Admin {
     }
 
     private async __storeTracedTestCase(
-        submissionId: SeedTrace.SubmissionId,
+        submissionId: SubmissionId,
         testCaseId: string,
-        request: SeedTrace.StoreTracedTestCaseRequest,
+        request: StoreTracedTestCaseRequest,
         requestOptions?: Admin.RequestOptions,
     ): Promise<core.WithRawResponse<void>> {
         const _headers: core.Fetcher.Args["headers"] = mergeHeaders(
@@ -543,9 +551,9 @@ export class Admin {
     }
 
     /**
-     * @param {SeedTrace.SubmissionId} submissionId
-     * @param {SeedTrace.v2.TestCaseId} testCaseId
-     * @param {SeedTrace.TraceResponseV2[]} request
+     * @param {SubmissionId} submissionId
+     * @param {TestCaseId} testCaseId
+     * @param {TraceResponseV2[]} request
      * @param {Admin.RequestOptions} requestOptions - Request-specific configuration.
      *
      * @example
@@ -628,9 +636,9 @@ export class Admin {
      *         }])
      */
     public storeTracedTestCaseV2(
-        submissionId: SeedTrace.SubmissionId,
-        testCaseId: SeedTrace.v2.TestCaseId,
-        request: SeedTrace.TraceResponseV2[],
+        submissionId: SubmissionId,
+        testCaseId: TestCaseId,
+        request: TraceResponseV2[],
         requestOptions?: Admin.RequestOptions,
     ): core.HttpResponsePromise<void> {
         return core.HttpResponsePromise.fromPromise(
@@ -639,9 +647,9 @@ export class Admin {
     }
 
     private async __storeTracedTestCaseV2(
-        submissionId: SeedTrace.SubmissionId,
-        testCaseId: SeedTrace.v2.TestCaseId,
-        request: SeedTrace.TraceResponseV2[],
+        submissionId: SubmissionId,
+        testCaseId: TestCaseId,
+        request: TraceResponseV2[],
         requestOptions?: Admin.RequestOptions,
     ): Promise<core.WithRawResponse<void>> {
         const _headers: core.Fetcher.Args["headers"] = mergeHeaders(
@@ -705,8 +713,8 @@ export class Admin {
     }
 
     /**
-     * @param {SeedTrace.SubmissionId} submissionId
-     * @param {SeedTrace.StoreTracedWorkspaceRequest} request
+     * @param {SubmissionId} submissionId
+     * @param {StoreTracedWorkspaceRequest} request
      * @param {Admin.RequestOptions} requestOptions - Request-specific configuration.
      *
      * @example
@@ -797,16 +805,16 @@ export class Admin {
      *     })
      */
     public storeTracedWorkspace(
-        submissionId: SeedTrace.SubmissionId,
-        request: SeedTrace.StoreTracedWorkspaceRequest,
+        submissionId: SubmissionId,
+        request: StoreTracedWorkspaceRequest,
         requestOptions?: Admin.RequestOptions,
     ): core.HttpResponsePromise<void> {
         return core.HttpResponsePromise.fromPromise(this.__storeTracedWorkspace(submissionId, request, requestOptions));
     }
 
     private async __storeTracedWorkspace(
-        submissionId: SeedTrace.SubmissionId,
-        request: SeedTrace.StoreTracedWorkspaceRequest,
+        submissionId: SubmissionId,
+        request: StoreTracedWorkspaceRequest,
         requestOptions?: Admin.RequestOptions,
     ): Promise<core.WithRawResponse<void>> {
         const _headers: core.Fetcher.Args["headers"] = mergeHeaders(
@@ -870,8 +878,8 @@ export class Admin {
     }
 
     /**
-     * @param {SeedTrace.SubmissionId} submissionId
-     * @param {SeedTrace.TraceResponseV2[]} request
+     * @param {SubmissionId} submissionId
+     * @param {TraceResponseV2[]} request
      * @param {Admin.RequestOptions} requestOptions - Request-specific configuration.
      *
      * @example
@@ -954,8 +962,8 @@ export class Admin {
      *         }])
      */
     public storeTracedWorkspaceV2(
-        submissionId: SeedTrace.SubmissionId,
-        request: SeedTrace.TraceResponseV2[],
+        submissionId: SubmissionId,
+        request: TraceResponseV2[],
         requestOptions?: Admin.RequestOptions,
     ): core.HttpResponsePromise<void> {
         return core.HttpResponsePromise.fromPromise(
@@ -964,8 +972,8 @@ export class Admin {
     }
 
     private async __storeTracedWorkspaceV2(
-        submissionId: SeedTrace.SubmissionId,
-        request: SeedTrace.TraceResponseV2[],
+        submissionId: SubmissionId,
+        request: TraceResponseV2[],
         requestOptions?: Admin.RequestOptions,
     ): Promise<core.WithRawResponse<void>> {
         const _headers: core.Fetcher.Args["headers"] = mergeHeaders(

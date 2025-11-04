@@ -4,7 +4,7 @@ import type { BaseClientOptions, BaseRequestOptions } from "../../../../BaseClie
 import { mergeHeaders } from "../../../../core/headers.js";
 import * as core from "../../../../core/index.js";
 import * as errors from "../../../../errors/index.js";
-import type * as SeedEnum from "../../../index.js";
+import type { SendEnumInlinedRequest } from "./requests/SendEnumInlinedRequest.js";
 
 export declare namespace InlinedRequest {
     export interface Options extends BaseClientOptions {}
@@ -20,7 +20,7 @@ export class InlinedRequest {
     }
 
     /**
-     * @param {SeedEnum.SendEnumInlinedRequest} request
+     * @param {SendEnumInlinedRequest} request
      * @param {InlinedRequest.RequestOptions} requestOptions - Request-specific configuration.
      *
      * @example
@@ -30,14 +30,14 @@ export class InlinedRequest {
      *     })
      */
     public send(
-        request: SeedEnum.SendEnumInlinedRequest,
+        request: SendEnumInlinedRequest,
         requestOptions?: InlinedRequest.RequestOptions,
     ): core.HttpResponsePromise<void> {
         return core.HttpResponsePromise.fromPromise(this.__send(request, requestOptions));
     }
 
     private async __send(
-        request: SeedEnum.SendEnumInlinedRequest,
+        request: SendEnumInlinedRequest,
         requestOptions?: InlinedRequest.RequestOptions,
     ): Promise<core.WithRawResponse<void>> {
         const _headers: core.Fetcher.Args["headers"] = mergeHeaders(this._options?.headers, requestOptions?.headers);

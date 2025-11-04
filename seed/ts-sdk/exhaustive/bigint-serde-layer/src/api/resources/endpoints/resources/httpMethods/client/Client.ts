@@ -5,7 +5,8 @@ import { mergeHeaders, mergeOnlyDefinedHeaders } from "../../../../../../core/he
 import * as core from "../../../../../../core/index.js";
 import * as errors from "../../../../../../errors/index.js";
 import * as serializers from "../../../../../../serialization/index.js";
-import type * as SeedExhaustive from "../../../../../index.js";
+import type { ObjectWithOptionalField } from "../../../../types/resources/object/types/ObjectWithOptionalField.js";
+import type { ObjectWithRequiredField } from "../../../../types/resources/object/types/ObjectWithRequiredField.js";
 
 export declare namespace HttpMethods {
     export interface Options extends BaseClientOptions {}
@@ -93,7 +94,7 @@ export class HttpMethods {
     }
 
     /**
-     * @param {SeedExhaustive.types.ObjectWithRequiredField} request
+     * @param {ObjectWithRequiredField} request
      * @param {HttpMethods.RequestOptions} requestOptions - Request-specific configuration.
      *
      * @example
@@ -102,16 +103,16 @@ export class HttpMethods {
      *     })
      */
     public testPost(
-        request: SeedExhaustive.types.ObjectWithRequiredField,
+        request: ObjectWithRequiredField,
         requestOptions?: HttpMethods.RequestOptions,
-    ): core.HttpResponsePromise<SeedExhaustive.types.ObjectWithOptionalField> {
+    ): core.HttpResponsePromise<ObjectWithOptionalField> {
         return core.HttpResponsePromise.fromPromise(this.__testPost(request, requestOptions));
     }
 
     private async __testPost(
-        request: SeedExhaustive.types.ObjectWithRequiredField,
+        request: ObjectWithRequiredField,
         requestOptions?: HttpMethods.RequestOptions,
-    ): Promise<core.WithRawResponse<SeedExhaustive.types.ObjectWithOptionalField>> {
+    ): Promise<core.WithRawResponse<ObjectWithOptionalField>> {
         const _headers: core.Fetcher.Args["headers"] = mergeHeaders(
             this._options?.headers,
             mergeOnlyDefinedHeaders({ Authorization: await this._getAuthorizationHeader() }),
@@ -177,7 +178,7 @@ export class HttpMethods {
 
     /**
      * @param {string} id
-     * @param {SeedExhaustive.types.ObjectWithRequiredField} request
+     * @param {ObjectWithRequiredField} request
      * @param {HttpMethods.RequestOptions} requestOptions - Request-specific configuration.
      *
      * @example
@@ -187,17 +188,17 @@ export class HttpMethods {
      */
     public testPut(
         id: string,
-        request: SeedExhaustive.types.ObjectWithRequiredField,
+        request: ObjectWithRequiredField,
         requestOptions?: HttpMethods.RequestOptions,
-    ): core.HttpResponsePromise<SeedExhaustive.types.ObjectWithOptionalField> {
+    ): core.HttpResponsePromise<ObjectWithOptionalField> {
         return core.HttpResponsePromise.fromPromise(this.__testPut(id, request, requestOptions));
     }
 
     private async __testPut(
         id: string,
-        request: SeedExhaustive.types.ObjectWithRequiredField,
+        request: ObjectWithRequiredField,
         requestOptions?: HttpMethods.RequestOptions,
-    ): Promise<core.WithRawResponse<SeedExhaustive.types.ObjectWithOptionalField>> {
+    ): Promise<core.WithRawResponse<ObjectWithOptionalField>> {
         const _headers: core.Fetcher.Args["headers"] = mergeHeaders(
             this._options?.headers,
             mergeOnlyDefinedHeaders({ Authorization: await this._getAuthorizationHeader() }),
@@ -263,7 +264,7 @@ export class HttpMethods {
 
     /**
      * @param {string} id
-     * @param {SeedExhaustive.types.ObjectWithOptionalField} request
+     * @param {ObjectWithOptionalField} request
      * @param {HttpMethods.RequestOptions} requestOptions - Request-specific configuration.
      *
      * @example
@@ -287,17 +288,17 @@ export class HttpMethods {
      */
     public testPatch(
         id: string,
-        request: SeedExhaustive.types.ObjectWithOptionalField,
+        request: ObjectWithOptionalField,
         requestOptions?: HttpMethods.RequestOptions,
-    ): core.HttpResponsePromise<SeedExhaustive.types.ObjectWithOptionalField> {
+    ): core.HttpResponsePromise<ObjectWithOptionalField> {
         return core.HttpResponsePromise.fromPromise(this.__testPatch(id, request, requestOptions));
     }
 
     private async __testPatch(
         id: string,
-        request: SeedExhaustive.types.ObjectWithOptionalField,
+        request: ObjectWithOptionalField,
         requestOptions?: HttpMethods.RequestOptions,
-    ): Promise<core.WithRawResponse<SeedExhaustive.types.ObjectWithOptionalField>> {
+    ): Promise<core.WithRawResponse<ObjectWithOptionalField>> {
         const _headers: core.Fetcher.Args["headers"] = mergeHeaders(
             this._options?.headers,
             mergeOnlyDefinedHeaders({ Authorization: await this._getAuthorizationHeader() }),

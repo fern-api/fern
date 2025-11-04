@@ -4,7 +4,7 @@ import type { BaseClientOptions, BaseRequestOptions } from "../../../../../../..
 import { mergeHeaders, mergeOnlyDefinedHeaders } from "../../../../../../../../core/headers.js";
 import * as core from "../../../../../../../../core/index.js";
 import * as errors from "../../../../../../../../errors/index.js";
-import type * as SeedExamples from "../../../../../../../index.js";
+import type { Exception } from "../../../../../../types/types/Exception.js";
 
 export declare namespace Service {
     export interface Options extends BaseClientOptions {}
@@ -29,14 +29,14 @@ export class Service {
     public getException(
         notificationId: string,
         requestOptions?: Service.RequestOptions,
-    ): core.HttpResponsePromise<SeedExamples.Exception> {
+    ): core.HttpResponsePromise<Exception> {
         return core.HttpResponsePromise.fromPromise(this.__getException(notificationId, requestOptions));
     }
 
     private async __getException(
         notificationId: string,
         requestOptions?: Service.RequestOptions,
-    ): Promise<core.WithRawResponse<SeedExamples.Exception>> {
+    ): Promise<core.WithRawResponse<Exception>> {
         const _headers: core.Fetcher.Args["headers"] = mergeHeaders(
             this._options?.headers,
             mergeOnlyDefinedHeaders({ Authorization: await this._getAuthorizationHeader() }),
@@ -57,7 +57,7 @@ export class Service {
             fetchFn: this._options?.fetch,
         });
         if (_response.ok) {
-            return { data: _response.body as SeedExamples.Exception, rawResponse: _response.rawResponse };
+            return { data: _response.body as Exception, rawResponse: _response.rawResponse };
         }
 
         if (_response.error.reason === "status-code") {

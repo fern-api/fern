@@ -4,7 +4,8 @@ import type { BaseClientOptions, BaseRequestOptions } from "../../../../BaseClie
 import { mergeHeaders } from "../../../../core/headers.js";
 import * as core from "../../../../core/index.js";
 import * as errors from "../../../../errors/index.js";
-import type * as SeedMixedFileDirectory from "../../../index.js";
+import type { CreateOrganizationRequest } from "../types/CreateOrganizationRequest.js";
+import type { Organization as OrganizationType } from "../types/Organization.js";
 
 export declare namespace Organization {
     export interface Options extends BaseClientOptions {}
@@ -22,7 +23,7 @@ export class Organization {
     /**
      * Create a new organization.
      *
-     * @param {SeedMixedFileDirectory.CreateOrganizationRequest} request
+     * @param {CreateOrganizationRequest} request
      * @param {Organization.RequestOptions} requestOptions - Request-specific configuration.
      *
      * @example
@@ -31,16 +32,16 @@ export class Organization {
      *     })
      */
     public create(
-        request: SeedMixedFileDirectory.CreateOrganizationRequest,
+        request: CreateOrganizationRequest,
         requestOptions?: Organization.RequestOptions,
-    ): core.HttpResponsePromise<SeedMixedFileDirectory.Organization> {
+    ): core.HttpResponsePromise<OrganizationType> {
         return core.HttpResponsePromise.fromPromise(this.__create(request, requestOptions));
     }
 
     private async __create(
-        request: SeedMixedFileDirectory.CreateOrganizationRequest,
+        request: CreateOrganizationRequest,
         requestOptions?: Organization.RequestOptions,
-    ): Promise<core.WithRawResponse<SeedMixedFileDirectory.Organization>> {
+    ): Promise<core.WithRawResponse<OrganizationType>> {
         const _headers: core.Fetcher.Args["headers"] = mergeHeaders(this._options?.headers, requestOptions?.headers);
         const _response = await core.fetcher({
             url: core.url.join(
@@ -60,7 +61,7 @@ export class Organization {
             fetchFn: this._options?.fetch,
         });
         if (_response.ok) {
-            return { data: _response.body as SeedMixedFileDirectory.Organization, rawResponse: _response.rawResponse };
+            return { data: _response.body as OrganizationType, rawResponse: _response.rawResponse };
         }
 
         if (_response.error.reason === "status-code") {

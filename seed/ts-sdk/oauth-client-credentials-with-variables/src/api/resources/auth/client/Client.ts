@@ -4,7 +4,9 @@ import type { BaseClientOptions, BaseRequestOptions } from "../../../../BaseClie
 import { mergeHeaders, mergeOnlyDefinedHeaders } from "../../../../core/headers.js";
 import * as core from "../../../../core/index.js";
 import * as errors from "../../../../errors/index.js";
-import type * as SeedOauthClientCredentialsWithVariables from "../../../index.js";
+import type { TokenResponse } from "../types/TokenResponse.js";
+import type { GetTokenRequest } from "./requests/GetTokenRequest.js";
+import type { RefreshTokenRequest } from "./requests/RefreshTokenRequest.js";
 
 export declare namespace Auth {
     export interface Options extends BaseClientOptions {
@@ -22,7 +24,7 @@ export class Auth {
     }
 
     /**
-     * @param {SeedOauthClientCredentialsWithVariables.GetTokenRequest} request
+     * @param {GetTokenRequest} request
      * @param {Auth.RequestOptions} requestOptions - Request-specific configuration.
      *
      * @example
@@ -33,16 +35,16 @@ export class Auth {
      *     })
      */
     public getTokenWithClientCredentials(
-        request: SeedOauthClientCredentialsWithVariables.GetTokenRequest,
+        request: GetTokenRequest,
         requestOptions?: Auth.RequestOptions,
-    ): core.HttpResponsePromise<SeedOauthClientCredentialsWithVariables.TokenResponse> {
+    ): core.HttpResponsePromise<TokenResponse> {
         return core.HttpResponsePromise.fromPromise(this.__getTokenWithClientCredentials(request, requestOptions));
     }
 
     private async __getTokenWithClientCredentials(
-        request: SeedOauthClientCredentialsWithVariables.GetTokenRequest,
+        request: GetTokenRequest,
         requestOptions?: Auth.RequestOptions,
-    ): Promise<core.WithRawResponse<SeedOauthClientCredentialsWithVariables.TokenResponse>> {
+    ): Promise<core.WithRawResponse<TokenResponse>> {
         const _headers: core.Fetcher.Args["headers"] = mergeHeaders(
             this._options?.headers,
             mergeOnlyDefinedHeaders({ Authorization: await this._getAuthorizationHeader() }),
@@ -66,10 +68,7 @@ export class Auth {
             fetchFn: this._options?.fetch,
         });
         if (_response.ok) {
-            return {
-                data: _response.body as SeedOauthClientCredentialsWithVariables.TokenResponse,
-                rawResponse: _response.rawResponse,
-            };
+            return { data: _response.body as TokenResponse, rawResponse: _response.rawResponse };
         }
 
         if (_response.error.reason === "status-code") {
@@ -100,7 +99,7 @@ export class Auth {
     }
 
     /**
-     * @param {SeedOauthClientCredentialsWithVariables.RefreshTokenRequest} request
+     * @param {RefreshTokenRequest} request
      * @param {Auth.RequestOptions} requestOptions - Request-specific configuration.
      *
      * @example
@@ -112,16 +111,16 @@ export class Auth {
      *     })
      */
     public refreshToken(
-        request: SeedOauthClientCredentialsWithVariables.RefreshTokenRequest,
+        request: RefreshTokenRequest,
         requestOptions?: Auth.RequestOptions,
-    ): core.HttpResponsePromise<SeedOauthClientCredentialsWithVariables.TokenResponse> {
+    ): core.HttpResponsePromise<TokenResponse> {
         return core.HttpResponsePromise.fromPromise(this.__refreshToken(request, requestOptions));
     }
 
     private async __refreshToken(
-        request: SeedOauthClientCredentialsWithVariables.RefreshTokenRequest,
+        request: RefreshTokenRequest,
         requestOptions?: Auth.RequestOptions,
-    ): Promise<core.WithRawResponse<SeedOauthClientCredentialsWithVariables.TokenResponse>> {
+    ): Promise<core.WithRawResponse<TokenResponse>> {
         const _headers: core.Fetcher.Args["headers"] = mergeHeaders(
             this._options?.headers,
             mergeOnlyDefinedHeaders({ Authorization: await this._getAuthorizationHeader() }),
@@ -145,10 +144,7 @@ export class Auth {
             fetchFn: this._options?.fetch,
         });
         if (_response.ok) {
-            return {
-                data: _response.body as SeedOauthClientCredentialsWithVariables.TokenResponse,
-                rawResponse: _response.rawResponse,
-            };
+            return { data: _response.body as TokenResponse, rawResponse: _response.rawResponse };
         }
 
         if (_response.error.reason === "status-code") {

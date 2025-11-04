@@ -31,7 +31,7 @@ await client.service.justFile({
 <dl>
 <dd>
 
-**request:** `JustFileRequest` 
+**request:** `SeedFileUpload.JustFileRequest` 
     
 </dd>
 </dl>
@@ -80,7 +80,7 @@ await client.service.optionalArgs({});
 <dl>
 <dd>
 
-**request:** `OptionalArgsRequest` 
+**request:** `SeedFileUpload.OptionalArgsRequest` 
     
 </dd>
 </dl>

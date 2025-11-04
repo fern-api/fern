@@ -5,6 +5,9 @@ import { mergeHeaders, mergeOnlyDefinedHeaders } from "../../../../../../../../c
 import * as core from "../../../../../../../../core/index.js";
 import * as environments from "../../../../../../../../environments.js";
 import * as SeedTrace from "../../../../../../../index.js";
+import type { ProblemId } from "../../../../../../commons/types/ProblemId.js";
+import type { LightweightProblemInfoV2 } from "../types/LightweightProblemInfoV2.js";
+import type { ProblemInfoV2 } from "../types/ProblemInfoV2.js";
 
 export declare namespace Problem {
     export interface Options extends BaseClientOptions {}
@@ -30,10 +33,7 @@ export class Problem {
     public getLightweightProblems(
         requestOptions?: Problem.RequestOptions,
     ): core.HttpResponsePromise<
-        core.APIResponse<
-            SeedTrace.v2.v3.LightweightProblemInfoV2[],
-            SeedTrace.v2.v3.problem.getLightweightProblems.Error
-        >
+        core.APIResponse<LightweightProblemInfoV2[], SeedTrace.v2.v3.problem.getLightweightProblems.Error>
     > {
         return core.HttpResponsePromise.fromPromise(this.__getLightweightProblems(requestOptions));
     }
@@ -42,10 +42,7 @@ export class Problem {
         requestOptions?: Problem.RequestOptions,
     ): Promise<
         core.WithRawResponse<
-            core.APIResponse<
-                SeedTrace.v2.v3.LightweightProblemInfoV2[],
-                SeedTrace.v2.v3.problem.getLightweightProblems.Error
-            >
+            core.APIResponse<LightweightProblemInfoV2[], SeedTrace.v2.v3.problem.getLightweightProblems.Error>
         >
     > {
         const _headers: core.Fetcher.Args["headers"] = mergeHeaders(
@@ -81,7 +78,7 @@ export class Problem {
             return {
                 data: {
                     ok: true,
-                    body: _response.body as SeedTrace.v2.v3.LightweightProblemInfoV2[],
+                    body: _response.body as LightweightProblemInfoV2[],
                     headers: _response.headers,
                     rawResponse: _response.rawResponse,
                 },
@@ -109,19 +106,13 @@ export class Problem {
      */
     public getProblems(
         requestOptions?: Problem.RequestOptions,
-    ): core.HttpResponsePromise<
-        core.APIResponse<SeedTrace.v2.v3.ProblemInfoV2[], SeedTrace.v2.v3.problem.getProblems.Error>
-    > {
+    ): core.HttpResponsePromise<core.APIResponse<ProblemInfoV2[], SeedTrace.v2.v3.problem.getProblems.Error>> {
         return core.HttpResponsePromise.fromPromise(this.__getProblems(requestOptions));
     }
 
     private async __getProblems(
         requestOptions?: Problem.RequestOptions,
-    ): Promise<
-        core.WithRawResponse<
-            core.APIResponse<SeedTrace.v2.v3.ProblemInfoV2[], SeedTrace.v2.v3.problem.getProblems.Error>
-        >
-    > {
+    ): Promise<core.WithRawResponse<core.APIResponse<ProblemInfoV2[], SeedTrace.v2.v3.problem.getProblems.Error>>> {
         const _headers: core.Fetcher.Args["headers"] = mergeHeaders(
             this._options?.headers,
             mergeOnlyDefinedHeaders({
@@ -155,7 +146,7 @@ export class Problem {
             return {
                 data: {
                     ok: true,
-                    body: _response.body as SeedTrace.v2.v3.ProblemInfoV2[],
+                    body: _response.body as ProblemInfoV2[],
                     headers: _response.headers,
                     rawResponse: _response.rawResponse,
                 },
@@ -176,29 +167,23 @@ export class Problem {
     /**
      * Returns latest version of a problem
      *
-     * @param {SeedTrace.ProblemId} problemId
+     * @param {ProblemId} problemId
      * @param {Problem.RequestOptions} requestOptions - Request-specific configuration.
      *
      * @example
-     *     await client.v2.v3.problem.getLatestProblem(SeedTrace.ProblemId("problemId"))
+     *     await client.v2.v3.problem.getLatestProblem(ProblemId("problemId"))
      */
     public getLatestProblem(
-        problemId: SeedTrace.ProblemId,
+        problemId: ProblemId,
         requestOptions?: Problem.RequestOptions,
-    ): core.HttpResponsePromise<
-        core.APIResponse<SeedTrace.v2.v3.ProblemInfoV2, SeedTrace.v2.v3.problem.getLatestProblem.Error>
-    > {
+    ): core.HttpResponsePromise<core.APIResponse<ProblemInfoV2, SeedTrace.v2.v3.problem.getLatestProblem.Error>> {
         return core.HttpResponsePromise.fromPromise(this.__getLatestProblem(problemId, requestOptions));
     }
 
     private async __getLatestProblem(
-        problemId: SeedTrace.ProblemId,
+        problemId: ProblemId,
         requestOptions?: Problem.RequestOptions,
-    ): Promise<
-        core.WithRawResponse<
-            core.APIResponse<SeedTrace.v2.v3.ProblemInfoV2, SeedTrace.v2.v3.problem.getLatestProblem.Error>
-        >
-    > {
+    ): Promise<core.WithRawResponse<core.APIResponse<ProblemInfoV2, SeedTrace.v2.v3.problem.getLatestProblem.Error>>> {
         const _headers: core.Fetcher.Args["headers"] = mergeHeaders(
             this._options?.headers,
             mergeOnlyDefinedHeaders({
@@ -232,7 +217,7 @@ export class Problem {
             return {
                 data: {
                     ok: true,
-                    body: _response.body as SeedTrace.v2.v3.ProblemInfoV2,
+                    body: _response.body as ProblemInfoV2,
                     headers: _response.headers,
                     rawResponse: _response.rawResponse,
                 },
@@ -253,34 +238,28 @@ export class Problem {
     /**
      * Returns requested version of a problem
      *
-     * @param {SeedTrace.ProblemId} problemId
+     * @param {ProblemId} problemId
      * @param {number} problemVersion
      * @param {Problem.RequestOptions} requestOptions - Request-specific configuration.
      *
      * @example
-     *     await client.v2.v3.problem.getProblemVersion(SeedTrace.ProblemId("problemId"), 1)
+     *     await client.v2.v3.problem.getProblemVersion(ProblemId("problemId"), 1)
      */
     public getProblemVersion(
-        problemId: SeedTrace.ProblemId,
+        problemId: ProblemId,
         problemVersion: number,
         requestOptions?: Problem.RequestOptions,
-    ): core.HttpResponsePromise<
-        core.APIResponse<SeedTrace.v2.v3.ProblemInfoV2, SeedTrace.v2.v3.problem.getProblemVersion.Error>
-    > {
+    ): core.HttpResponsePromise<core.APIResponse<ProblemInfoV2, SeedTrace.v2.v3.problem.getProblemVersion.Error>> {
         return core.HttpResponsePromise.fromPromise(
             this.__getProblemVersion(problemId, problemVersion, requestOptions),
         );
     }
 
     private async __getProblemVersion(
-        problemId: SeedTrace.ProblemId,
+        problemId: ProblemId,
         problemVersion: number,
         requestOptions?: Problem.RequestOptions,
-    ): Promise<
-        core.WithRawResponse<
-            core.APIResponse<SeedTrace.v2.v3.ProblemInfoV2, SeedTrace.v2.v3.problem.getProblemVersion.Error>
-        >
-    > {
+    ): Promise<core.WithRawResponse<core.APIResponse<ProblemInfoV2, SeedTrace.v2.v3.problem.getProblemVersion.Error>>> {
         const _headers: core.Fetcher.Args["headers"] = mergeHeaders(
             this._options?.headers,
             mergeOnlyDefinedHeaders({
@@ -314,7 +293,7 @@ export class Problem {
             return {
                 data: {
                     ok: true,
-                    body: _response.body as SeedTrace.v2.v3.ProblemInfoV2,
+                    body: _response.body as ProblemInfoV2,
                     headers: _response.headers,
                     rawResponse: _response.rawResponse,
                 },

@@ -4,7 +4,9 @@ import type { BaseClientOptions, BaseRequestOptions } from "../../../../BaseClie
 import { mergeHeaders, mergeOnlyDefinedHeaders } from "../../../../core/headers.js";
 import * as core from "../../../../core/index.js";
 import * as errors from "../../../../errors/index.js";
-import * as SeedCustomAuth from "../../../index.js";
+import { BadRequest } from "../../errors/errors/BadRequest.js";
+import { UnauthorizedRequest } from "../../errors/errors/UnauthorizedRequest.js";
+import type { UnauthorizedRequestErrorBody } from "../../errors/types/UnauthorizedRequestErrorBody.js";
 
 export declare namespace CustomAuth {
     export interface Options extends BaseClientOptions {}
@@ -24,7 +26,7 @@ export class CustomAuth {
      *
      * @param {CustomAuth.RequestOptions} requestOptions - Request-specific configuration.
      *
-     * @throws {@link SeedCustomAuth.UnauthorizedRequest}
+     * @throws {@link UnauthorizedRequest}
      *
      * @example
      *     await client.customAuth.getWithCustomAuth()
@@ -62,8 +64,8 @@ export class CustomAuth {
         if (_response.error.reason === "status-code") {
             switch (_response.error.statusCode) {
                 case 401:
-                    throw new SeedCustomAuth.UnauthorizedRequest(
-                        _response.error.body as SeedCustomAuth.UnauthorizedRequestErrorBody,
+                    throw new UnauthorizedRequest(
+                        _response.error.body as UnauthorizedRequestErrorBody,
                         _response.rawResponse,
                     );
                 default:
@@ -98,8 +100,8 @@ export class CustomAuth {
      * @param {unknown} request
      * @param {CustomAuth.RequestOptions} requestOptions - Request-specific configuration.
      *
-     * @throws {@link SeedCustomAuth.UnauthorizedRequest}
-     * @throws {@link SeedCustomAuth.BadRequest}
+     * @throws {@link UnauthorizedRequest}
+     * @throws {@link BadRequest}
      *
      * @example
      *     await client.customAuth.postWithCustomAuth({
@@ -146,12 +148,12 @@ export class CustomAuth {
         if (_response.error.reason === "status-code") {
             switch (_response.error.statusCode) {
                 case 401:
-                    throw new SeedCustomAuth.UnauthorizedRequest(
-                        _response.error.body as SeedCustomAuth.UnauthorizedRequestErrorBody,
+                    throw new UnauthorizedRequest(
+                        _response.error.body as UnauthorizedRequestErrorBody,
                         _response.rawResponse,
                     );
                 case 400:
-                    throw new SeedCustomAuth.BadRequest(_response.rawResponse);
+                    throw new BadRequest(_response.rawResponse);
                 default:
                     throw new errors.SeedCustomAuthError({
                         statusCode: _response.error.statusCode,

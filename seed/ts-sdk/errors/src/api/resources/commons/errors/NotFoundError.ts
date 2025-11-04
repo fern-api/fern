@@ -2,10 +2,10 @@
 
 import type * as core from "../../../../core/index.js";
 import * as errors from "../../../../errors/index.js";
-import type * as SeedErrors from "../../../index.js";
+import type { ErrorBody } from "../types/ErrorBody.js";
 
 export class NotFoundError extends errors.SeedErrorsError {
-    constructor(body: SeedErrors.ErrorBody, rawResponse?: core.RawResponse) {
+    constructor(body: ErrorBody, rawResponse?: core.RawResponse) {
         super({
             message: "NotFoundError",
             statusCode: 404,

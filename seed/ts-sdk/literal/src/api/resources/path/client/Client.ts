@@ -4,7 +4,7 @@ import type { BaseClientOptions, BaseRequestOptions } from "../../../../BaseClie
 import { mergeHeaders, mergeOnlyDefinedHeaders } from "../../../../core/headers.js";
 import * as core from "../../../../core/index.js";
 import * as errors from "../../../../errors/index.js";
-import type * as SeedLiteral from "../../../index.js";
+import type { SendResponse } from "../../../types/SendResponse.js";
 
 export declare namespace Path {
     export interface Options extends BaseClientOptions {}
@@ -26,14 +26,11 @@ export class Path {
      * @example
      *     await client.path.send("123")
      */
-    public send(id: "123", requestOptions?: Path.RequestOptions): core.HttpResponsePromise<SeedLiteral.SendResponse> {
+    public send(id: "123", requestOptions?: Path.RequestOptions): core.HttpResponsePromise<SendResponse> {
         return core.HttpResponsePromise.fromPromise(this.__send(id, requestOptions));
     }
 
-    private async __send(
-        id: "123",
-        requestOptions?: Path.RequestOptions,
-    ): Promise<core.WithRawResponse<SeedLiteral.SendResponse>> {
+    private async __send(id: "123", requestOptions?: Path.RequestOptions): Promise<core.WithRawResponse<SendResponse>> {
         const _headers: core.Fetcher.Args["headers"] = mergeHeaders(
             this._options?.headers,
             mergeOnlyDefinedHeaders({
@@ -57,7 +54,7 @@ export class Path {
             fetchFn: this._options?.fetch,
         });
         if (_response.ok) {
-            return { data: _response.body as SeedLiteral.SendResponse, rawResponse: _response.rawResponse };
+            return { data: _response.body as SendResponse, rawResponse: _response.rawResponse };
         }
 
         if (_response.error.reason === "status-code") {

@@ -4,7 +4,12 @@ import type { BaseClientOptions, BaseRequestOptions } from "../../../../BaseClie
 import { mergeHeaders } from "../../../../core/headers.js";
 import * as core from "../../../../core/index.js";
 import * as errors from "../../../../errors/index.js";
-import type * as SeedUndiscriminatedUnions from "../../../index.js";
+import type { Metadata } from "../types/Metadata.js";
+import type { MetadataUnion } from "../types/MetadataUnion.js";
+import type { MyUnion } from "../types/MyUnion.js";
+import type { NestedUnionRoot } from "../types/NestedUnionRoot.js";
+import type { Request } from "../types/Request.js";
+import type { UnionWithDuplicateTypes } from "../types/UnionWithDuplicateTypes.js";
 
 export declare namespace Union {
     export interface Options extends BaseClientOptions {}
@@ -20,23 +25,20 @@ export class Union {
     }
 
     /**
-     * @param {SeedUndiscriminatedUnions.MyUnion} request
+     * @param {MyUnion} request
      * @param {Union.RequestOptions} requestOptions - Request-specific configuration.
      *
      * @example
      *     await client.union.get("string")
      */
-    public get(
-        request: SeedUndiscriminatedUnions.MyUnion,
-        requestOptions?: Union.RequestOptions,
-    ): core.HttpResponsePromise<SeedUndiscriminatedUnions.MyUnion> {
+    public get(request: MyUnion, requestOptions?: Union.RequestOptions): core.HttpResponsePromise<MyUnion> {
         return core.HttpResponsePromise.fromPromise(this.__get(request, requestOptions));
     }
 
     private async __get(
-        request: SeedUndiscriminatedUnions.MyUnion,
+        request: MyUnion,
         requestOptions?: Union.RequestOptions,
-    ): Promise<core.WithRawResponse<SeedUndiscriminatedUnions.MyUnion>> {
+    ): Promise<core.WithRawResponse<MyUnion>> {
         const _headers: core.Fetcher.Args["headers"] = mergeHeaders(this._options?.headers, requestOptions?.headers);
         const _response = await core.fetcher({
             url:
@@ -54,7 +56,7 @@ export class Union {
             fetchFn: this._options?.fetch,
         });
         if (_response.ok) {
-            return { data: _response.body as SeedUndiscriminatedUnions.MyUnion, rawResponse: _response.rawResponse };
+            return { data: _response.body as MyUnion, rawResponse: _response.rawResponse };
         }
 
         if (_response.error.reason === "status-code") {
@@ -88,15 +90,11 @@ export class Union {
      * @example
      *     await client.union.getMetadata()
      */
-    public getMetadata(
-        requestOptions?: Union.RequestOptions,
-    ): core.HttpResponsePromise<SeedUndiscriminatedUnions.Metadata> {
+    public getMetadata(requestOptions?: Union.RequestOptions): core.HttpResponsePromise<Metadata> {
         return core.HttpResponsePromise.fromPromise(this.__getMetadata(requestOptions));
     }
 
-    private async __getMetadata(
-        requestOptions?: Union.RequestOptions,
-    ): Promise<core.WithRawResponse<SeedUndiscriminatedUnions.Metadata>> {
+    private async __getMetadata(requestOptions?: Union.RequestOptions): Promise<core.WithRawResponse<Metadata>> {
         const _headers: core.Fetcher.Args["headers"] = mergeHeaders(this._options?.headers, requestOptions?.headers);
         const _response = await core.fetcher({
             url: core.url.join(
@@ -113,7 +111,7 @@ export class Union {
             fetchFn: this._options?.fetch,
         });
         if (_response.ok) {
-            return { data: _response.body as SeedUndiscriminatedUnions.Metadata, rawResponse: _response.rawResponse };
+            return { data: _response.body as Metadata, rawResponse: _response.rawResponse };
         }
 
         if (_response.error.reason === "status-code") {
@@ -142,7 +140,7 @@ export class Union {
     }
 
     /**
-     * @param {SeedUndiscriminatedUnions.MetadataUnion} request
+     * @param {MetadataUnion} request
      * @param {Union.RequestOptions} requestOptions - Request-specific configuration.
      *
      * @example
@@ -153,14 +151,14 @@ export class Union {
      *     })
      */
     public updateMetadata(
-        request: SeedUndiscriminatedUnions.MetadataUnion,
+        request: MetadataUnion,
         requestOptions?: Union.RequestOptions,
     ): core.HttpResponsePromise<boolean> {
         return core.HttpResponsePromise.fromPromise(this.__updateMetadata(request, requestOptions));
     }
 
     private async __updateMetadata(
-        request: SeedUndiscriminatedUnions.MetadataUnion,
+        request: MetadataUnion,
         requestOptions?: Union.RequestOptions,
     ): Promise<core.WithRawResponse<boolean>> {
         const _headers: core.Fetcher.Args["headers"] = mergeHeaders(this._options?.headers, requestOptions?.headers);
@@ -211,7 +209,7 @@ export class Union {
     }
 
     /**
-     * @param {SeedUndiscriminatedUnions.Request} request
+     * @param {Request} request
      * @param {Union.RequestOptions} requestOptions - Request-specific configuration.
      *
      * @example
@@ -223,15 +221,12 @@ export class Union {
      *         }
      *     })
      */
-    public call(
-        request: SeedUndiscriminatedUnions.Request,
-        requestOptions?: Union.RequestOptions,
-    ): core.HttpResponsePromise<boolean> {
+    public call(request: Request, requestOptions?: Union.RequestOptions): core.HttpResponsePromise<boolean> {
         return core.HttpResponsePromise.fromPromise(this.__call(request, requestOptions));
     }
 
     private async __call(
-        request: SeedUndiscriminatedUnions.Request,
+        request: Request,
         requestOptions?: Union.RequestOptions,
     ): Promise<core.WithRawResponse<boolean>> {
         const _headers: core.Fetcher.Args["headers"] = mergeHeaders(this._options?.headers, requestOptions?.headers);
@@ -282,23 +277,23 @@ export class Union {
     }
 
     /**
-     * @param {SeedUndiscriminatedUnions.UnionWithDuplicateTypes} request
+     * @param {UnionWithDuplicateTypes} request
      * @param {Union.RequestOptions} requestOptions - Request-specific configuration.
      *
      * @example
      *     await client.union.duplicateTypesUnion("string")
      */
     public duplicateTypesUnion(
-        request: SeedUndiscriminatedUnions.UnionWithDuplicateTypes,
+        request: UnionWithDuplicateTypes,
         requestOptions?: Union.RequestOptions,
-    ): core.HttpResponsePromise<SeedUndiscriminatedUnions.UnionWithDuplicateTypes> {
+    ): core.HttpResponsePromise<UnionWithDuplicateTypes> {
         return core.HttpResponsePromise.fromPromise(this.__duplicateTypesUnion(request, requestOptions));
     }
 
     private async __duplicateTypesUnion(
-        request: SeedUndiscriminatedUnions.UnionWithDuplicateTypes,
+        request: UnionWithDuplicateTypes,
         requestOptions?: Union.RequestOptions,
-    ): Promise<core.WithRawResponse<SeedUndiscriminatedUnions.UnionWithDuplicateTypes>> {
+    ): Promise<core.WithRawResponse<UnionWithDuplicateTypes>> {
         const _headers: core.Fetcher.Args["headers"] = mergeHeaders(this._options?.headers, requestOptions?.headers);
         const _response = await core.fetcher({
             url: core.url.join(
@@ -318,10 +313,7 @@ export class Union {
             fetchFn: this._options?.fetch,
         });
         if (_response.ok) {
-            return {
-                data: _response.body as SeedUndiscriminatedUnions.UnionWithDuplicateTypes,
-                rawResponse: _response.rawResponse,
-            };
+            return { data: _response.body as UnionWithDuplicateTypes, rawResponse: _response.rawResponse };
         }
 
         if (_response.error.reason === "status-code") {
@@ -352,21 +344,21 @@ export class Union {
     }
 
     /**
-     * @param {SeedUndiscriminatedUnions.NestedUnionRoot} request
+     * @param {NestedUnionRoot} request
      * @param {Union.RequestOptions} requestOptions - Request-specific configuration.
      *
      * @example
      *     await client.union.nestedUnions("string")
      */
     public nestedUnions(
-        request: SeedUndiscriminatedUnions.NestedUnionRoot,
+        request: NestedUnionRoot,
         requestOptions?: Union.RequestOptions,
     ): core.HttpResponsePromise<string> {
         return core.HttpResponsePromise.fromPromise(this.__nestedUnions(request, requestOptions));
     }
 
     private async __nestedUnions(
-        request: SeedUndiscriminatedUnions.NestedUnionRoot,
+        request: NestedUnionRoot,
         requestOptions?: Union.RequestOptions,
     ): Promise<core.WithRawResponse<string>> {
         const _headers: core.Fetcher.Args["headers"] = mergeHeaders(this._options?.headers, requestOptions?.headers);

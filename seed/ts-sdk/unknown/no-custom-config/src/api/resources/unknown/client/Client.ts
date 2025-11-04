@@ -4,7 +4,7 @@ import type { BaseClientOptions, BaseRequestOptions } from "../../../../BaseClie
 import { mergeHeaders } from "../../../../core/headers.js";
 import * as core from "../../../../core/index.js";
 import * as errors from "../../../../errors/index.js";
-import type * as SeedUnknownAsAny from "../../../index.js";
+import type { MyObject } from "../types/MyObject.js";
 
 export declare namespace Unknown {
     export interface Options extends BaseClientOptions {}
@@ -82,7 +82,7 @@ export class Unknown {
     }
 
     /**
-     * @param {SeedUnknownAsAny.MyObject} request
+     * @param {MyObject} request
      * @param {Unknown.RequestOptions} requestOptions - Request-specific configuration.
      *
      * @example
@@ -92,15 +92,12 @@ export class Unknown {
      *         }
      *     })
      */
-    public postObject(
-        request: SeedUnknownAsAny.MyObject,
-        requestOptions?: Unknown.RequestOptions,
-    ): core.HttpResponsePromise<unknown[]> {
+    public postObject(request: MyObject, requestOptions?: Unknown.RequestOptions): core.HttpResponsePromise<unknown[]> {
         return core.HttpResponsePromise.fromPromise(this.__postObject(request, requestOptions));
     }
 
     private async __postObject(
-        request: SeedUnknownAsAny.MyObject,
+        request: MyObject,
         requestOptions?: Unknown.RequestOptions,
     ): Promise<core.WithRawResponse<unknown[]>> {
         const _headers: core.Fetcher.Args["headers"] = mergeHeaders(this._options?.headers, requestOptions?.headers);

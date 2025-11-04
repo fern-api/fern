@@ -2,10 +2,10 @@
 
 import type * as core from "../../../../../../core/index.js";
 import * as errors from "../../../../../../errors/index.js";
-import type * as SeedExhaustive from "../../../../../index.js";
+import type { ObjectWithOptionalField } from "../types/types.js";
 
 export class ObjectWithOptionalFieldError extends errors.SeedExhaustiveError {
-    constructor(body: SeedExhaustive.types.ObjectWithOptionalField, rawResponse?: core.RawResponse) {
+    constructor(body: ObjectWithOptionalField, rawResponse?: core.RawResponse) {
         super({
             message: "ObjectWithOptionalFieldError",
             statusCode: 400,

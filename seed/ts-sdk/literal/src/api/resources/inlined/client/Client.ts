@@ -4,7 +4,8 @@ import type { BaseClientOptions, BaseRequestOptions } from "../../../../BaseClie
 import { mergeHeaders, mergeOnlyDefinedHeaders } from "../../../../core/headers.js";
 import * as core from "../../../../core/index.js";
 import * as errors from "../../../../errors/index.js";
-import type * as SeedLiteral from "../../../index.js";
+import type { SendResponse } from "../../../types/SendResponse.js";
+import type { SendLiteralsInlinedRequest } from "./requests/SendLiteralsInlinedRequest.js";
 
 export declare namespace Inlined {
     export interface Options extends BaseClientOptions {}
@@ -20,7 +21,7 @@ export class Inlined {
     }
 
     /**
-     * @param {SeedLiteral.SendLiteralsInlinedRequest} request
+     * @param {SendLiteralsInlinedRequest} request
      * @param {Inlined.RequestOptions} requestOptions - Request-specific configuration.
      *
      * @example
@@ -37,16 +38,16 @@ export class Inlined {
      *     })
      */
     public send(
-        request: SeedLiteral.SendLiteralsInlinedRequest,
+        request: SendLiteralsInlinedRequest,
         requestOptions?: Inlined.RequestOptions,
-    ): core.HttpResponsePromise<SeedLiteral.SendResponse> {
+    ): core.HttpResponsePromise<SendResponse> {
         return core.HttpResponsePromise.fromPromise(this.__send(request, requestOptions));
     }
 
     private async __send(
-        request: SeedLiteral.SendLiteralsInlinedRequest,
+        request: SendLiteralsInlinedRequest,
         requestOptions?: Inlined.RequestOptions,
-    ): Promise<core.WithRawResponse<SeedLiteral.SendResponse>> {
+    ): Promise<core.WithRawResponse<SendResponse>> {
         const _headers: core.Fetcher.Args["headers"] = mergeHeaders(
             this._options?.headers,
             mergeOnlyDefinedHeaders({
@@ -78,7 +79,7 @@ export class Inlined {
             fetchFn: this._options?.fetch,
         });
         if (_response.ok) {
-            return { data: _response.body as SeedLiteral.SendResponse, rawResponse: _response.rawResponse };
+            return { data: _response.body as SendResponse, rawResponse: _response.rawResponse };
         }
 
         if (_response.error.reason === "status-code") {

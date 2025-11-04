@@ -4,7 +4,8 @@ import type { BaseClientOptions, BaseRequestOptions } from "../../../../../../..
 import { mergeHeaders } from "../../../../../../../../core/headers.js";
 import * as core from "../../../../../../../../core/index.js";
 import * as errors from "../../../../../../../../errors/index.js";
-import type * as SeedMixedFileDirectory from "../../../../../../../index.js";
+import type { Metadata as MetadataType } from "../types/Metadata.js";
+import type { GetEventMetadataRequest } from "./requests/GetEventMetadataRequest.js";
 
 export declare namespace Metadata {
     export interface Options extends BaseClientOptions {}
@@ -22,7 +23,7 @@ export class Metadata {
     /**
      * Get event metadata.
      *
-     * @param {SeedMixedFileDirectory.user.events.GetEventMetadataRequest} request
+     * @param {GetEventMetadataRequest} request
      * @param {Metadata.RequestOptions} requestOptions - Request-specific configuration.
      *
      * @example
@@ -31,16 +32,16 @@ export class Metadata {
      *     })
      */
     public getMetadata(
-        request: SeedMixedFileDirectory.user.events.GetEventMetadataRequest,
+        request: GetEventMetadataRequest,
         requestOptions?: Metadata.RequestOptions,
-    ): core.HttpResponsePromise<SeedMixedFileDirectory.user.events.Metadata> {
+    ): core.HttpResponsePromise<MetadataType> {
         return core.HttpResponsePromise.fromPromise(this.__getMetadata(request, requestOptions));
     }
 
     private async __getMetadata(
-        request: SeedMixedFileDirectory.user.events.GetEventMetadataRequest,
+        request: GetEventMetadataRequest,
         requestOptions?: Metadata.RequestOptions,
-    ): Promise<core.WithRawResponse<SeedMixedFileDirectory.user.events.Metadata>> {
+    ): Promise<core.WithRawResponse<MetadataType>> {
         const { id } = request;
         const _queryParams: Record<string, string | string[] | object | object[] | null> = {};
         _queryParams.id = id;
@@ -60,10 +61,7 @@ export class Metadata {
             fetchFn: this._options?.fetch,
         });
         if (_response.ok) {
-            return {
-                data: _response.body as SeedMixedFileDirectory.user.events.Metadata,
-                rawResponse: _response.rawResponse,
-            };
+            return { data: _response.body as MetadataType, rawResponse: _response.rawResponse };
         }
 
         if (_response.error.reason === "status-code") {

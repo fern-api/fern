@@ -4,6 +4,8 @@ import type { BaseClientOptions, BaseRequestOptions } from "../../../../../../Ba
 import { mergeHeaders, mergeOnlyDefinedHeaders } from "../../../../../../core/headers.js";
 import * as core from "../../../../../../core/index.js";
 import * as SeedExhaustive from "../../../../../index.js";
+import type { PutResponse } from "../types/PutResponse.js";
+import type { PutRequest } from "./requests/PutRequest.js";
 
 export declare namespace Put {
     export interface Options extends BaseClientOptions {}
@@ -19,7 +21,7 @@ export class Put {
     }
 
     /**
-     * @param {SeedExhaustive.endpoints.PutRequest} request
+     * @param {PutRequest} request
      * @param {Put.RequestOptions} requestOptions - Request-specific configuration.
      *
      * @example
@@ -28,22 +30,16 @@ export class Put {
      *     })
      */
     public add(
-        request: SeedExhaustive.endpoints.PutRequest,
+        request: PutRequest,
         requestOptions?: Put.RequestOptions,
-    ): core.HttpResponsePromise<
-        core.APIResponse<SeedExhaustive.endpoints.PutResponse, SeedExhaustive.endpoints.put.add.Error>
-    > {
+    ): core.HttpResponsePromise<core.APIResponse<PutResponse, SeedExhaustive.endpoints.put.add.Error>> {
         return core.HttpResponsePromise.fromPromise(this.__add(request, requestOptions));
     }
 
     private async __add(
-        request: SeedExhaustive.endpoints.PutRequest,
+        request: PutRequest,
         requestOptions?: Put.RequestOptions,
-    ): Promise<
-        core.WithRawResponse<
-            core.APIResponse<SeedExhaustive.endpoints.PutResponse, SeedExhaustive.endpoints.put.add.Error>
-        >
-    > {
+    ): Promise<core.WithRawResponse<core.APIResponse<PutResponse, SeedExhaustive.endpoints.put.add.Error>>> {
         const { id } = request;
         const _headers: core.Fetcher.Args["headers"] = mergeHeaders(
             this._options?.headers,
@@ -68,7 +64,7 @@ export class Put {
             return {
                 data: {
                     ok: true,
-                    body: _response.body as SeedExhaustive.endpoints.PutResponse,
+                    body: _response.body as PutResponse,
                     headers: _response.headers,
                     rawResponse: _response.rawResponse,
                 },

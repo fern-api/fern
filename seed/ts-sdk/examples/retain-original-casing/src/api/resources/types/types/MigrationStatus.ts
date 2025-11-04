@@ -2,10 +2,10 @@
 
 /**
  * @example
- *     SeedExamples.MigrationStatus.Running
+ *     MigrationStatus.Running
  *
  * @example
- *     SeedExamples.MigrationStatus.Failed
+ *     MigrationStatus.Failed
  */
 export const MigrationStatus = {
     /**

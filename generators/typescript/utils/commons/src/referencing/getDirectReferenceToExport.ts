@@ -27,43 +27,63 @@ export function getDirectReferenceToExport({
         to: exportsManager.convertExportedFilePathToFilePath(exportedFromPath)
     });
 
-    const addImport = () => {
-        importsManager.addImport(moduleSpecifier, {
-            namedImports: [
-                {
-                    name: NamedExport.getName(exportedName),
-                    alias: importAlias !== exportedName ? importAlias : undefined,
-                    type: NamedExport.isTypeExport(exportedName) ? "type" : undefined
-                }
-            ]
-        });
+    let localName: string | undefined;
+    let importAdded = false;
+
+    const ensureImportAdded = () => {
+        if (importAdded) {
+            return;
+        }
+        importAdded = true;
+
+        if (importAlias != null) {
+            importsManager.addImport(moduleSpecifier, {
+                namedImports: [
+                    {
+                        name: NamedExport.getName(exportedName),
+                        alias: importAlias !== exportedName ? importAlias : undefined,
+                        type: NamedExport.isTypeExport(exportedName) ? "type" : undefined
+                    }
+                ]
+            });
+            localName = importAlias;
+        } else {
+            localName = importsManager.ensureNamedImport({
+                moduleSpecifier,
+                name: NamedExport.getName(exportedName),
+                isTypeOnly: NamedExport.isTypeExport(exportedName)
+            });
+        }
     };
 
-    const importedName = importAlias ?? exportedName;
+    const getImportedName = () => {
+        ensureImportAdded();
+        return localName!;
+    };
 
     const entityName = subImport.reduce<ts.EntityName>(
         (acc, subImport) => ts.factory.createQualifiedName(acc, subImport),
-        ts.factory.createIdentifier(NamedExport.getName(importedName))
+        ts.factory.createIdentifier(NamedExport.getName(getImportedName()))
     );
 
     return {
         getTypeNode: ({ isForComment = false }: GetReferenceOpts = {}) => {
             if (!isForComment) {
-                addImport();
+                ensureImportAdded();
             }
             return ts.factory.createTypeReferenceNode(entityName);
         },
         getEntityName: ({ isForComment = false }: GetReferenceOpts = {}) => {
             if (!isForComment) {
-                addImport();
+                ensureImportAdded();
             }
             return entityName;
         },
         getExpression: ({ isForComment = false }: GetReferenceOpts = {}) => {
             if (!isForComment) {
-                addImport();
+                ensureImportAdded();
             }
-            return ts.factory.createIdentifier(NamedExport.getName(importedName));
+            return ts.factory.createIdentifier(getImportedName());
         }
     };
 }

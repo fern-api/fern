@@ -100,7 +100,7 @@ await client.service.getWithHeader({
 <dl>
 <dd>
 
-**request:** `HeaderAuthRequest` 
+**request:** `SeedAuthEnvironmentVariables.HeaderAuthRequest` 
     
 </dd>
 </dl>

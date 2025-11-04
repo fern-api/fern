@@ -6,6 +6,9 @@ import * as core from "../../../../core/index.js";
 import * as environments from "../../../../environments.js";
 import * as serializers from "../../../../serialization/index.js";
 import * as SeedTrace from "../../../index.js";
+import type { Language } from "../../commons/types/Language.js";
+import type { ExecutionSessionResponse } from "../types/ExecutionSessionResponse.js";
+import type { GetExecutionSessionStateResponse } from "../types/GetExecutionSessionStateResponse.js";
 
 export declare namespace Submission {
     export interface Options extends BaseClientOptions {}
@@ -26,27 +29,27 @@ export class Submission {
     /**
      * Returns sessionId and execution server URL for session. Spins up server.
      *
-     * @param {SeedTrace.Language} language
+     * @param {Language} language
      * @param {Submission.RequestOptions} requestOptions - Request-specific configuration.
      *
      * @example
      *     await client.submission.createExecutionSession("JAVA")
      */
     public createExecutionSession(
-        language: SeedTrace.Language,
+        language: Language,
         requestOptions?: Submission.RequestOptions,
     ): core.HttpResponsePromise<
-        core.APIResponse<SeedTrace.ExecutionSessionResponse, SeedTrace.submission.createExecutionSession.Error>
+        core.APIResponse<ExecutionSessionResponse, SeedTrace.submission.createExecutionSession.Error>
     > {
         return core.HttpResponsePromise.fromPromise(this.__createExecutionSession(language, requestOptions));
     }
 
     private async __createExecutionSession(
-        language: SeedTrace.Language,
+        language: Language,
         requestOptions?: Submission.RequestOptions,
     ): Promise<
         core.WithRawResponse<
-            core.APIResponse<SeedTrace.ExecutionSessionResponse, SeedTrace.submission.createExecutionSession.Error>
+            core.APIResponse<ExecutionSessionResponse, SeedTrace.submission.createExecutionSession.Error>
         >
     > {
         const _headers: core.Fetcher.Args["headers"] = mergeHeaders(
@@ -113,7 +116,7 @@ export class Submission {
         sessionId: string,
         requestOptions?: Submission.RequestOptions,
     ): core.HttpResponsePromise<
-        core.APIResponse<SeedTrace.ExecutionSessionResponse | undefined, SeedTrace.submission.getExecutionSession.Error>
+        core.APIResponse<ExecutionSessionResponse | undefined, SeedTrace.submission.getExecutionSession.Error>
     > {
         return core.HttpResponsePromise.fromPromise(this.__getExecutionSession(sessionId, requestOptions));
     }
@@ -123,10 +126,7 @@ export class Submission {
         requestOptions?: Submission.RequestOptions,
     ): Promise<
         core.WithRawResponse<
-            core.APIResponse<
-                SeedTrace.ExecutionSessionResponse | undefined,
-                SeedTrace.submission.getExecutionSession.Error
-            >
+            core.APIResponse<ExecutionSessionResponse | undefined, SeedTrace.submission.getExecutionSession.Error>
         >
     > {
         const _headers: core.Fetcher.Args["headers"] = mergeHeaders(
@@ -254,10 +254,7 @@ export class Submission {
     public getExecutionSessionsState(
         requestOptions?: Submission.RequestOptions,
     ): core.HttpResponsePromise<
-        core.APIResponse<
-            SeedTrace.GetExecutionSessionStateResponse,
-            SeedTrace.submission.getExecutionSessionsState.Error
-        >
+        core.APIResponse<GetExecutionSessionStateResponse, SeedTrace.submission.getExecutionSessionsState.Error>
     > {
         return core.HttpResponsePromise.fromPromise(this.__getExecutionSessionsState(requestOptions));
     }
@@ -266,10 +263,7 @@ export class Submission {
         requestOptions?: Submission.RequestOptions,
     ): Promise<
         core.WithRawResponse<
-            core.APIResponse<
-                SeedTrace.GetExecutionSessionStateResponse,
-                SeedTrace.submission.getExecutionSessionsState.Error
-            >
+            core.APIResponse<GetExecutionSessionStateResponse, SeedTrace.submission.getExecutionSessionsState.Error>
         >
     > {
         const _headers: core.Fetcher.Args["headers"] = mergeHeaders(

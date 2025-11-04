@@ -5,7 +5,10 @@ import { mergeHeaders } from "../../../../core/headers.js";
 import * as core from "../../../../core/index.js";
 import * as errors from "../../../../errors/index.js";
 import * as serializers from "../../../../serialization/index.js";
-import type * as SeedPathParameters from "../../../index.js";
+import type { User } from "../../user/types/User.js";
+import type { Organization } from "../types/Organization.js";
+import type { GetOrganizationUserRequest } from "./requests/GetOrganizationUserRequest.js";
+import type { SearchOrganizationsRequest } from "./requests/SearchOrganizationsRequest.js";
 
 export declare namespace Organizations {
     export interface Options extends BaseClientOptions {}
@@ -30,14 +33,14 @@ export class Organizations {
     public getOrganization(
         organizationId: string,
         requestOptions?: Organizations.RequestOptions,
-    ): core.HttpResponsePromise<SeedPathParameters.Organization> {
+    ): core.HttpResponsePromise<Organization> {
         return core.HttpResponsePromise.fromPromise(this.__getOrganization(organizationId, requestOptions));
     }
 
     private async __getOrganization(
         organizationId: string,
         requestOptions?: Organizations.RequestOptions,
-    ): Promise<core.WithRawResponse<SeedPathParameters.Organization>> {
+    ): Promise<core.WithRawResponse<Organization>> {
         const _headers: core.Fetcher.Args["headers"] = mergeHeaders(this._options?.headers, requestOptions?.headers);
         const _response = await core.fetcher({
             url: core.url.join(
@@ -94,7 +97,7 @@ export class Organizations {
     }
 
     /**
-     * @param {SeedPathParameters.GetOrganizationUserRequest} request
+     * @param {GetOrganizationUserRequest} request
      * @param {Organizations.RequestOptions} requestOptions - Request-specific configuration.
      *
      * @example
@@ -104,16 +107,16 @@ export class Organizations {
      *     })
      */
     public getOrganizationUser(
-        request: SeedPathParameters.GetOrganizationUserRequest,
+        request: GetOrganizationUserRequest,
         requestOptions?: Organizations.RequestOptions,
-    ): core.HttpResponsePromise<SeedPathParameters.User> {
+    ): core.HttpResponsePromise<User> {
         return core.HttpResponsePromise.fromPromise(this.__getOrganizationUser(request, requestOptions));
     }
 
     private async __getOrganizationUser(
-        request: SeedPathParameters.GetOrganizationUserRequest,
+        request: GetOrganizationUserRequest,
         requestOptions?: Organizations.RequestOptions,
-    ): Promise<core.WithRawResponse<SeedPathParameters.User>> {
+    ): Promise<core.WithRawResponse<User>> {
         const { organizationId, userId } = request;
         const _headers: core.Fetcher.Args["headers"] = mergeHeaders(this._options?.headers, requestOptions?.headers);
         const _response = await core.fetcher({
@@ -172,7 +175,7 @@ export class Organizations {
 
     /**
      * @param {string} organizationId
-     * @param {SeedPathParameters.SearchOrganizationsRequest} request
+     * @param {SearchOrganizationsRequest} request
      * @param {Organizations.RequestOptions} requestOptions - Request-specific configuration.
      *
      * @example
@@ -182,9 +185,9 @@ export class Organizations {
      */
     public searchOrganizations(
         organizationId: string,
-        request: SeedPathParameters.SearchOrganizationsRequest = {},
+        request: SearchOrganizationsRequest = {},
         requestOptions?: Organizations.RequestOptions,
-    ): core.HttpResponsePromise<SeedPathParameters.Organization[]> {
+    ): core.HttpResponsePromise<Organization[]> {
         return core.HttpResponsePromise.fromPromise(
             this.__searchOrganizations(organizationId, request, requestOptions),
         );
@@ -192,9 +195,9 @@ export class Organizations {
 
     private async __searchOrganizations(
         organizationId: string,
-        request: SeedPathParameters.SearchOrganizationsRequest = {},
+        request: SearchOrganizationsRequest = {},
         requestOptions?: Organizations.RequestOptions,
-    ): Promise<core.WithRawResponse<SeedPathParameters.Organization[]>> {
+    ): Promise<core.WithRawResponse<Organization[]>> {
         const { limit } = request;
         const _queryParams: Record<string, string | string[] | object | object[] | null> = {};
         if (limit != null) {

@@ -31,7 +31,7 @@ await client.package.test({
 <dl>
 <dd>
 
-**request:** `TestRequest` 
+**request:** `SeedNurseryApi.TestRequest` 
     
 </dd>
 </dl>

@@ -32,7 +32,7 @@ await client.service.patch({
 <dl>
 <dd>
 
-**request:** `PatchProxyRequest` 
+**request:** `SeedContentTypes.PatchProxyRequest` 
     
 </dd>
 </dl>
@@ -125,7 +125,7 @@ await client.service.patchComplex("id", {
 <dl>
 <dd>
 
-**request:** `PatchComplexRequest` 
+**request:** `SeedContentTypes.PatchComplexRequest` 
     
 </dd>
 </dl>
@@ -201,7 +201,7 @@ await client.service.namedPatchWithMixed("id", {
 <dl>
 <dd>
 
-**request:** `NamedMixedPatchRequest` 
+**request:** `SeedContentTypes.NamedMixedPatchRequest` 
     
 </dd>
 </dl>
@@ -273,7 +273,7 @@ await client.service.optionalMergePatchTest({
 <dl>
 <dd>
 
-**request:** `OptionalMergePatchRequest` 
+**request:** `SeedContentTypes.OptionalMergePatchRequest` 
     
 </dd>
 </dl>
@@ -347,7 +347,7 @@ await client.service.regularPatch("id", {
 <dl>
 <dd>
 
-**request:** `RegularPatchRequest` 
+**request:** `SeedContentTypes.RegularPatchRequest` 
     
 </dd>
 </dl>

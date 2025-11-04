@@ -4,7 +4,7 @@ import type { BaseClientOptions, BaseRequestOptions } from "../../../../../../Ba
 import { mergeHeaders } from "../../../../../../core/headers.js";
 import * as core from "../../../../../../core/index.js";
 import * as errors from "../../../../../../errors/index.js";
-import * as SeedApi from "../../../../../index.js";
+import { NotFoundError } from "../errors/NotFoundError.js";
 
 export declare namespace Service {
     export interface Options extends BaseClientOptions {}
@@ -78,7 +78,7 @@ export class Service {
      * @param {unknown} request
      * @param {Service.RequestOptions} requestOptions - Request-specific configuration.
      *
-     * @throws {@link SeedApi.folder.NotFoundError}
+     * @throws {@link NotFoundError}
      *
      * @example
      *     await client.folder.service.unknownRequest({
@@ -118,7 +118,7 @@ export class Service {
         if (_response.error.reason === "status-code") {
             switch (_response.error.statusCode) {
                 case 404:
-                    throw new SeedApi.folder.NotFoundError(_response.error.body as string, _response.rawResponse);
+                    throw new NotFoundError(_response.error.body as string, _response.rawResponse);
                 default:
                     throw new errors.SeedApiError({
                         statusCode: _response.error.statusCode,

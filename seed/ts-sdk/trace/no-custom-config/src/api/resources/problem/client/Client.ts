@@ -5,7 +5,12 @@ import { mergeHeaders, mergeOnlyDefinedHeaders } from "../../../../core/headers.
 import * as core from "../../../../core/index.js";
 import * as environments from "../../../../environments.js";
 import * as errors from "../../../../errors/index.js";
-import type * as SeedTrace from "../../../index.js";
+import type { ProblemId } from "../../commons/types/ProblemId.js";
+import type { CreateProblemRequest } from "../types/CreateProblemRequest.js";
+import type { CreateProblemResponse } from "../types/CreateProblemResponse.js";
+import type { GetDefaultStarterFilesResponse } from "../types/GetDefaultStarterFilesResponse.js";
+import type { UpdateProblemResponse } from "../types/UpdateProblemResponse.js";
+import type { GetDefaultStarterFilesRequest } from "./requests/GetDefaultStarterFilesRequest.js";
 
 export declare namespace Problem {
     export interface Options extends BaseClientOptions {}
@@ -23,7 +28,7 @@ export class Problem {
     /**
      * Creates a problem
      *
-     * @param {SeedTrace.CreateProblemRequest} request
+     * @param {CreateProblemRequest} request
      * @param {Problem.RequestOptions} requestOptions - Request-specific configuration.
      *
      * @example
@@ -102,16 +107,16 @@ export class Problem {
      *     })
      */
     public createProblem(
-        request: SeedTrace.CreateProblemRequest,
+        request: CreateProblemRequest,
         requestOptions?: Problem.RequestOptions,
-    ): core.HttpResponsePromise<SeedTrace.CreateProblemResponse> {
+    ): core.HttpResponsePromise<CreateProblemResponse> {
         return core.HttpResponsePromise.fromPromise(this.__createProblem(request, requestOptions));
     }
 
     private async __createProblem(
-        request: SeedTrace.CreateProblemRequest,
+        request: CreateProblemRequest,
         requestOptions?: Problem.RequestOptions,
-    ): Promise<core.WithRawResponse<SeedTrace.CreateProblemResponse>> {
+    ): Promise<core.WithRawResponse<CreateProblemResponse>> {
         const _headers: core.Fetcher.Args["headers"] = mergeHeaders(
             this._options?.headers,
             mergeOnlyDefinedHeaders({
@@ -139,7 +144,7 @@ export class Problem {
             fetchFn: this._options?.fetch,
         });
         if (_response.ok) {
-            return { data: _response.body as SeedTrace.CreateProblemResponse, rawResponse: _response.rawResponse };
+            return { data: _response.body as CreateProblemResponse, rawResponse: _response.rawResponse };
         }
 
         if (_response.error.reason === "status-code") {
@@ -170,8 +175,8 @@ export class Problem {
     /**
      * Updates a problem
      *
-     * @param {SeedTrace.ProblemId} problemId
-     * @param {SeedTrace.CreateProblemRequest} request
+     * @param {ProblemId} problemId
+     * @param {CreateProblemRequest} request
      * @param {Problem.RequestOptions} requestOptions - Request-specific configuration.
      *
      * @example
@@ -250,18 +255,18 @@ export class Problem {
      *     })
      */
     public updateProblem(
-        problemId: SeedTrace.ProblemId,
-        request: SeedTrace.CreateProblemRequest,
+        problemId: ProblemId,
+        request: CreateProblemRequest,
         requestOptions?: Problem.RequestOptions,
-    ): core.HttpResponsePromise<SeedTrace.UpdateProblemResponse> {
+    ): core.HttpResponsePromise<UpdateProblemResponse> {
         return core.HttpResponsePromise.fromPromise(this.__updateProblem(problemId, request, requestOptions));
     }
 
     private async __updateProblem(
-        problemId: SeedTrace.ProblemId,
-        request: SeedTrace.CreateProblemRequest,
+        problemId: ProblemId,
+        request: CreateProblemRequest,
         requestOptions?: Problem.RequestOptions,
-    ): Promise<core.WithRawResponse<SeedTrace.UpdateProblemResponse>> {
+    ): Promise<core.WithRawResponse<UpdateProblemResponse>> {
         const _headers: core.Fetcher.Args["headers"] = mergeHeaders(
             this._options?.headers,
             mergeOnlyDefinedHeaders({
@@ -289,7 +294,7 @@ export class Problem {
             fetchFn: this._options?.fetch,
         });
         if (_response.ok) {
-            return { data: _response.body as SeedTrace.UpdateProblemResponse, rawResponse: _response.rawResponse };
+            return { data: _response.body as UpdateProblemResponse, rawResponse: _response.rawResponse };
         }
 
         if (_response.error.reason === "status-code") {
@@ -322,21 +327,21 @@ export class Problem {
     /**
      * Soft deletes a problem
      *
-     * @param {SeedTrace.ProblemId} problemId
+     * @param {ProblemId} problemId
      * @param {Problem.RequestOptions} requestOptions - Request-specific configuration.
      *
      * @example
      *     await client.problem.deleteProblem("problemId")
      */
     public deleteProblem(
-        problemId: SeedTrace.ProblemId,
+        problemId: ProblemId,
         requestOptions?: Problem.RequestOptions,
     ): core.HttpResponsePromise<void> {
         return core.HttpResponsePromise.fromPromise(this.__deleteProblem(problemId, requestOptions));
     }
 
     private async __deleteProblem(
-        problemId: SeedTrace.ProblemId,
+        problemId: ProblemId,
         requestOptions?: Problem.RequestOptions,
     ): Promise<core.WithRawResponse<void>> {
         const _headers: core.Fetcher.Args["headers"] = mergeHeaders(
@@ -396,7 +401,7 @@ export class Problem {
     /**
      * Returns default starter files for problem
      *
-     * @param {SeedTrace.GetDefaultStarterFilesRequest} request
+     * @param {GetDefaultStarterFilesRequest} request
      * @param {Problem.RequestOptions} requestOptions - Request-specific configuration.
      *
      * @example
@@ -419,16 +424,16 @@ export class Problem {
      *     })
      */
     public getDefaultStarterFiles(
-        request: SeedTrace.GetDefaultStarterFilesRequest,
+        request: GetDefaultStarterFilesRequest,
         requestOptions?: Problem.RequestOptions,
-    ): core.HttpResponsePromise<SeedTrace.GetDefaultStarterFilesResponse> {
+    ): core.HttpResponsePromise<GetDefaultStarterFilesResponse> {
         return core.HttpResponsePromise.fromPromise(this.__getDefaultStarterFiles(request, requestOptions));
     }
 
     private async __getDefaultStarterFiles(
-        request: SeedTrace.GetDefaultStarterFilesRequest,
+        request: GetDefaultStarterFilesRequest,
         requestOptions?: Problem.RequestOptions,
-    ): Promise<core.WithRawResponse<SeedTrace.GetDefaultStarterFilesResponse>> {
+    ): Promise<core.WithRawResponse<GetDefaultStarterFilesResponse>> {
         const _headers: core.Fetcher.Args["headers"] = mergeHeaders(
             this._options?.headers,
             mergeOnlyDefinedHeaders({
@@ -456,10 +461,7 @@ export class Problem {
             fetchFn: this._options?.fetch,
         });
         if (_response.ok) {
-            return {
-                data: _response.body as SeedTrace.GetDefaultStarterFilesResponse,
-                rawResponse: _response.rawResponse,
-            };
+            return { data: _response.body as GetDefaultStarterFilesResponse, rawResponse: _response.rawResponse };
         }
 
         if (_response.error.reason === "status-code") {

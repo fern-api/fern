@@ -45,7 +45,7 @@ await client.fileUploadExample.uploadFile({
 <dl>
 <dd>
 
-**request:** `UploadFileRequest` 
+**request:** `SeedApi.UploadFileRequest` 
     
 </dd>
 </dl>

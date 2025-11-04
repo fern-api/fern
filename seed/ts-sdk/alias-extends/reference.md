@@ -31,7 +31,7 @@ await client.extendedInlineRequestBody({
 <dl>
 <dd>
 
-**request:** `InlinedChildRequest` 
+**request:** `SeedAliasExtends.InlinedChildRequest` 
     
 </dd>
 </dl>

@@ -5,6 +5,7 @@ import { mergeHeaders, mergeOnlyDefinedHeaders } from "../../../../core/headers.
 import * as core from "../../../../core/index.js";
 import * as environments from "../../../../environments.js";
 import * as SeedTrace from "../../../index.js";
+import type { Language } from "../../commons/types/Language.js";
 
 export declare namespace Sysprop {
     export interface Options extends BaseClientOptions {}
@@ -20,7 +21,7 @@ export class Sysprop {
     }
 
     /**
-     * @param {SeedTrace.Language} language
+     * @param {Language} language
      * @param {number} numWarmInstances
      * @param {Sysprop.RequestOptions} requestOptions - Request-specific configuration.
      *
@@ -28,7 +29,7 @@ export class Sysprop {
      *     await client.sysprop.setNumWarmInstances("JAVA", 1)
      */
     public setNumWarmInstances(
-        language: SeedTrace.Language,
+        language: Language,
         numWarmInstances: number,
         requestOptions?: Sysprop.RequestOptions,
     ): core.HttpResponsePromise<core.APIResponse<void, SeedTrace.sysprop.setNumWarmInstances.Error>> {
@@ -38,7 +39,7 @@ export class Sysprop {
     }
 
     private async __setNumWarmInstances(
-        language: SeedTrace.Language,
+        language: Language,
         numWarmInstances: number,
         requestOptions?: Sysprop.RequestOptions,
     ): Promise<core.WithRawResponse<core.APIResponse<void, SeedTrace.sysprop.setNumWarmInstances.Error>>> {
@@ -102,7 +103,7 @@ export class Sysprop {
     public getNumWarmInstances(
         requestOptions?: Sysprop.RequestOptions,
     ): core.HttpResponsePromise<
-        core.APIResponse<Record<SeedTrace.Language, number | undefined>, SeedTrace.sysprop.getNumWarmInstances.Error>
+        core.APIResponse<Record<Language, number | undefined>, SeedTrace.sysprop.getNumWarmInstances.Error>
     > {
         return core.HttpResponsePromise.fromPromise(this.__getNumWarmInstances(requestOptions));
     }
@@ -111,10 +112,7 @@ export class Sysprop {
         requestOptions?: Sysprop.RequestOptions,
     ): Promise<
         core.WithRawResponse<
-            core.APIResponse<
-                Record<SeedTrace.Language, number | undefined>,
-                SeedTrace.sysprop.getNumWarmInstances.Error
-            >
+            core.APIResponse<Record<Language, number | undefined>, SeedTrace.sysprop.getNumWarmInstances.Error>
         >
     > {
         const _headers: core.Fetcher.Args["headers"] = mergeHeaders(
@@ -150,7 +148,7 @@ export class Sysprop {
             return {
                 data: {
                     ok: true,
-                    body: _response.body as Record<SeedTrace.Language, number | undefined>,
+                    body: _response.body as Record<Language, number | undefined>,
                     headers: _response.headers,
                     rawResponse: _response.rawResponse,
                 },

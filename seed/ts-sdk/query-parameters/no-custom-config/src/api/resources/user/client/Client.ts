@@ -5,7 +5,7 @@ import { mergeHeaders } from "../../../../core/headers.js";
 import * as core from "../../../../core/index.js";
 import { toJson } from "../../../../core/json.js";
 import * as errors from "../../../../errors/index.js";
-import { User } from "../types/User.js";
+import type { User as UserType } from "../types/User.js";
 import type { GetUsersRequest } from "./requests/GetUsersRequest.js";
 
 export declare namespace User {
@@ -66,14 +66,17 @@ export class User {
      *         filter: "filter"
      *     })
      */
-    public getUsername(request: GetUsersRequest, requestOptions?: User.RequestOptions): core.HttpResponsePromise<User> {
+    public getUsername(
+        request: GetUsersRequest,
+        requestOptions?: User.RequestOptions,
+    ): core.HttpResponsePromise<UserType> {
         return core.HttpResponsePromise.fromPromise(this.__getUsername(request, requestOptions));
     }
 
     private async __getUsername(
         request: GetUsersRequest,
         requestOptions?: User.RequestOptions,
-    ): Promise<core.WithRawResponse<User>> {
+    ): Promise<core.WithRawResponse<UserType>> {
         const {
             limit,
             id,
@@ -140,7 +143,7 @@ export class User {
             fetchFn: this._options?.fetch,
         });
         if (_response.ok) {
-            return { data: _response.body as User, rawResponse: _response.rawResponse };
+            return { data: _response.body as UserType, rawResponse: _response.rawResponse };
         }
 
         if (_response.error.reason === "status-code") {

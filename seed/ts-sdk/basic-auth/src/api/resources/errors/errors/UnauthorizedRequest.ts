@@ -2,10 +2,10 @@
 
 import type * as core from "../../../../core/index.js";
 import * as errors from "../../../../errors/index.js";
-import type * as SeedBasicAuth from "../../../index.js";
+import type { UnauthorizedRequestErrorBody } from "../types/UnauthorizedRequestErrorBody.js";
 
 export class UnauthorizedRequest extends errors.SeedBasicAuthError {
-    constructor(body: SeedBasicAuth.UnauthorizedRequestErrorBody, rawResponse?: core.RawResponse) {
+    constructor(body: UnauthorizedRequestErrorBody, rawResponse?: core.RawResponse) {
         super({
             message: "UnauthorizedRequest",
             statusCode: 401,

@@ -41,7 +41,7 @@ await client.updateFoo("id", {
 <dl>
 <dd>
 
-**request:** `UpdateFooRequest` 
+**request:** `SeedApi.UpdateFooRequest` 
     
 </dd>
 </dl>

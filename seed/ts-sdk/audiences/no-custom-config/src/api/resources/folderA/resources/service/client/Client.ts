@@ -4,7 +4,8 @@ import type { BaseClientOptions, BaseRequestOptions } from "../../../../../../Ba
 import { mergeHeaders } from "../../../../../../core/headers.js";
 import * as core from "../../../../../../core/index.js";
 import * as errors from "../../../../../../errors/index.js";
-import type * as SeedAudiences from "../../../../../index.js";
+import type { Response } from "../types/Response.js";
+import type { GetDirectThreadRequest } from "./requests/GetDirectThreadRequest.js";
 
 export declare namespace Service {
     export interface Options extends BaseClientOptions {}
@@ -20,7 +21,7 @@ export class Service {
     }
 
     /**
-     * @param {SeedAudiences.folderA.GetDirectThreadRequest} request
+     * @param {GetDirectThreadRequest} request
      * @param {Service.RequestOptions} requestOptions - Request-specific configuration.
      *
      * @example
@@ -30,16 +31,16 @@ export class Service {
      *     })
      */
     public getDirectThread(
-        request: SeedAudiences.folderA.GetDirectThreadRequest,
+        request: GetDirectThreadRequest,
         requestOptions?: Service.RequestOptions,
-    ): core.HttpResponsePromise<SeedAudiences.folderA.Response> {
+    ): core.HttpResponsePromise<Response> {
         return core.HttpResponsePromise.fromPromise(this.__getDirectThread(request, requestOptions));
     }
 
     private async __getDirectThread(
-        request: SeedAudiences.folderA.GetDirectThreadRequest,
+        request: GetDirectThreadRequest,
         requestOptions?: Service.RequestOptions,
-    ): Promise<core.WithRawResponse<SeedAudiences.folderA.Response>> {
+    ): Promise<core.WithRawResponse<Response>> {
         const { ids, tags } = request;
         const _queryParams: Record<string, string | string[] | object | object[] | null> = {};
         if (Array.isArray(ids)) {
@@ -68,7 +69,7 @@ export class Service {
             fetchFn: this._options?.fetch,
         });
         if (_response.ok) {
-            return { data: _response.body as SeedAudiences.folderA.Response, rawResponse: _response.rawResponse };
+            return { data: _response.body as Response, rawResponse: _response.rawResponse };
         }
 
         if (_response.error.reason === "status-code") {

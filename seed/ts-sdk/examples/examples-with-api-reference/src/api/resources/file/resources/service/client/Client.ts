@@ -4,7 +4,9 @@ import type { BaseClientOptions, BaseRequestOptions } from "../../../../../../Ba
 import { mergeHeaders, mergeOnlyDefinedHeaders } from "../../../../../../core/headers.js";
 import * as core from "../../../../../../core/index.js";
 import * as errors from "../../../../../../errors/index.js";
-import * as SeedExamples from "../../../../../index.js";
+import { NotFoundError } from "../../../../types/errors/NotFoundError.js";
+import type { File_ } from "../../../../types/types/File_.js";
+import type { GetFileRequest } from "./requests/GetFileRequest.js";
 
 export declare namespace Service {
     export interface Options extends BaseClientOptions {}
@@ -23,10 +25,10 @@ export class Service {
      * This endpoint returns a file by its name.
      *
      * @param {string} filename - This is a filename
-     * @param {SeedExamples.file.GetFileRequest} request
+     * @param {GetFileRequest} request
      * @param {Service.RequestOptions} requestOptions - Request-specific configuration.
      *
-     * @throws {@link SeedExamples.NotFoundError}
+     * @throws {@link NotFoundError}
      *
      * @example
      *     await client.file.service.getFile("file.txt", {
@@ -35,17 +37,17 @@ export class Service {
      */
     public getFile(
         filename: string,
-        request: SeedExamples.file.GetFileRequest,
+        request: GetFileRequest,
         requestOptions?: Service.RequestOptions,
-    ): core.HttpResponsePromise<SeedExamples.File_> {
+    ): core.HttpResponsePromise<File_> {
         return core.HttpResponsePromise.fromPromise(this.__getFile(filename, request, requestOptions));
     }
 
     private async __getFile(
         filename: string,
-        request: SeedExamples.file.GetFileRequest,
+        request: GetFileRequest,
         requestOptions?: Service.RequestOptions,
-    ): Promise<core.WithRawResponse<SeedExamples.File_>> {
+    ): Promise<core.WithRawResponse<File_>> {
         const { "X-File-API-Version": xFileApiVersion } = request;
         const _headers: core.Fetcher.Args["headers"] = mergeHeaders(
             this._options?.headers,
@@ -70,13 +72,13 @@ export class Service {
             fetchFn: this._options?.fetch,
         });
         if (_response.ok) {
-            return { data: _response.body as SeedExamples.File_, rawResponse: _response.rawResponse };
+            return { data: _response.body as File_, rawResponse: _response.rawResponse };
         }
 
         if (_response.error.reason === "status-code") {
             switch (_response.error.statusCode) {
                 case 404:
-                    throw new SeedExamples.NotFoundError(_response.error.body as string, _response.rawResponse);
+                    throw new NotFoundError(_response.error.body as string, _response.rawResponse);
                 default:
                     throw new errors.SeedExamplesError({
                         statusCode: _response.error.statusCode,

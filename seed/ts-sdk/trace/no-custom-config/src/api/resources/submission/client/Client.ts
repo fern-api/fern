@@ -5,7 +5,9 @@ import { mergeHeaders, mergeOnlyDefinedHeaders } from "../../../../core/headers.
 import * as core from "../../../../core/index.js";
 import * as environments from "../../../../environments.js";
 import * as errors from "../../../../errors/index.js";
-import type * as SeedTrace from "../../../index.js";
+import type { Language } from "../../commons/types/Language.js";
+import type { ExecutionSessionResponse } from "../types/ExecutionSessionResponse.js";
+import type { GetExecutionSessionStateResponse } from "../types/GetExecutionSessionStateResponse.js";
 
 export declare namespace Submission {
     export interface Options extends BaseClientOptions {}
@@ -26,23 +28,23 @@ export class Submission {
     /**
      * Returns sessionId and execution server URL for session. Spins up server.
      *
-     * @param {SeedTrace.Language} language
+     * @param {Language} language
      * @param {Submission.RequestOptions} requestOptions - Request-specific configuration.
      *
      * @example
      *     await client.submission.createExecutionSession("JAVA")
      */
     public createExecutionSession(
-        language: SeedTrace.Language,
+        language: Language,
         requestOptions?: Submission.RequestOptions,
-    ): core.HttpResponsePromise<SeedTrace.ExecutionSessionResponse> {
+    ): core.HttpResponsePromise<ExecutionSessionResponse> {
         return core.HttpResponsePromise.fromPromise(this.__createExecutionSession(language, requestOptions));
     }
 
     private async __createExecutionSession(
-        language: SeedTrace.Language,
+        language: Language,
         requestOptions?: Submission.RequestOptions,
-    ): Promise<core.WithRawResponse<SeedTrace.ExecutionSessionResponse>> {
+    ): Promise<core.WithRawResponse<ExecutionSessionResponse>> {
         const _headers: core.Fetcher.Args["headers"] = mergeHeaders(
             this._options?.headers,
             mergeOnlyDefinedHeaders({
@@ -67,7 +69,7 @@ export class Submission {
             fetchFn: this._options?.fetch,
         });
         if (_response.ok) {
-            return { data: _response.body as SeedTrace.ExecutionSessionResponse, rawResponse: _response.rawResponse };
+            return { data: _response.body as ExecutionSessionResponse, rawResponse: _response.rawResponse };
         }
 
         if (_response.error.reason === "status-code") {
@@ -109,14 +111,14 @@ export class Submission {
     public getExecutionSession(
         sessionId: string,
         requestOptions?: Submission.RequestOptions,
-    ): core.HttpResponsePromise<SeedTrace.ExecutionSessionResponse | undefined> {
+    ): core.HttpResponsePromise<ExecutionSessionResponse | undefined> {
         return core.HttpResponsePromise.fromPromise(this.__getExecutionSession(sessionId, requestOptions));
     }
 
     private async __getExecutionSession(
         sessionId: string,
         requestOptions?: Submission.RequestOptions,
-    ): Promise<core.WithRawResponse<SeedTrace.ExecutionSessionResponse | undefined>> {
+    ): Promise<core.WithRawResponse<ExecutionSessionResponse | undefined>> {
         const _headers: core.Fetcher.Args["headers"] = mergeHeaders(
             this._options?.headers,
             mergeOnlyDefinedHeaders({
@@ -141,10 +143,7 @@ export class Submission {
             fetchFn: this._options?.fetch,
         });
         if (_response.ok) {
-            return {
-                data: _response.body as SeedTrace.ExecutionSessionResponse | undefined,
-                rawResponse: _response.rawResponse,
-            };
+            return { data: _response.body as ExecutionSessionResponse | undefined, rawResponse: _response.rawResponse };
         }
 
         if (_response.error.reason === "status-code") {
@@ -254,13 +253,13 @@ export class Submission {
      */
     public getExecutionSessionsState(
         requestOptions?: Submission.RequestOptions,
-    ): core.HttpResponsePromise<SeedTrace.GetExecutionSessionStateResponse> {
+    ): core.HttpResponsePromise<GetExecutionSessionStateResponse> {
         return core.HttpResponsePromise.fromPromise(this.__getExecutionSessionsState(requestOptions));
     }
 
     private async __getExecutionSessionsState(
         requestOptions?: Submission.RequestOptions,
-    ): Promise<core.WithRawResponse<SeedTrace.GetExecutionSessionStateResponse>> {
+    ): Promise<core.WithRawResponse<GetExecutionSessionStateResponse>> {
         const _headers: core.Fetcher.Args["headers"] = mergeHeaders(
             this._options?.headers,
             mergeOnlyDefinedHeaders({
@@ -285,10 +284,7 @@ export class Submission {
             fetchFn: this._options?.fetch,
         });
         if (_response.ok) {
-            return {
-                data: _response.body as SeedTrace.GetExecutionSessionStateResponse,
-                rawResponse: _response.rawResponse,
-            };
+            return { data: _response.body as GetExecutionSessionStateResponse, rawResponse: _response.rawResponse };
         }
 
         if (_response.error.reason === "status-code") {

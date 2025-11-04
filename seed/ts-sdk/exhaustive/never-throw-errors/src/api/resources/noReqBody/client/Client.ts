@@ -4,6 +4,7 @@ import type { BaseClientOptions, BaseRequestOptions } from "../../../../BaseClie
 import { mergeHeaders, mergeOnlyDefinedHeaders } from "../../../../core/headers.js";
 import * as core from "../../../../core/index.js";
 import * as SeedExhaustive from "../../../index.js";
+import type { ObjectWithOptionalField } from "../../types/resources/object/types/ObjectWithOptionalField.js";
 
 export declare namespace NoReqBody {
     export interface Options extends BaseClientOptions {}
@@ -27,10 +28,7 @@ export class NoReqBody {
     public getWithNoRequestBody(
         requestOptions?: NoReqBody.RequestOptions,
     ): core.HttpResponsePromise<
-        core.APIResponse<
-            SeedExhaustive.types.ObjectWithOptionalField,
-            SeedExhaustive.noReqBody.getWithNoRequestBody.Error
-        >
+        core.APIResponse<ObjectWithOptionalField, SeedExhaustive.noReqBody.getWithNoRequestBody.Error>
     > {
         return core.HttpResponsePromise.fromPromise(this.__getWithNoRequestBody(requestOptions));
     }
@@ -39,10 +37,7 @@ export class NoReqBody {
         requestOptions?: NoReqBody.RequestOptions,
     ): Promise<
         core.WithRawResponse<
-            core.APIResponse<
-                SeedExhaustive.types.ObjectWithOptionalField,
-                SeedExhaustive.noReqBody.getWithNoRequestBody.Error
-            >
+            core.APIResponse<ObjectWithOptionalField, SeedExhaustive.noReqBody.getWithNoRequestBody.Error>
         >
     > {
         const _headers: core.Fetcher.Args["headers"] = mergeHeaders(
@@ -68,7 +63,7 @@ export class NoReqBody {
             return {
                 data: {
                     ok: true,
-                    body: _response.body as SeedExhaustive.types.ObjectWithOptionalField,
+                    body: _response.body as ObjectWithOptionalField,
                     headers: _response.headers,
                     rawResponse: _response.rawResponse,
                 },

@@ -4,7 +4,8 @@ import type { BaseClientOptions, BaseRequestOptions } from "../../../../BaseClie
 import { mergeHeaders } from "../../../../core/headers.js";
 import * as core from "../../../../core/index.js";
 import * as errors from "../../../../errors/index.js";
-import * as SeedErrorProperty from "../../../index.js";
+import { PropertyBasedErrorTest } from "../../errors/errors/PropertyBasedErrorTest.js";
+import type { PropertyBasedErrorTestBody } from "../../errors/types/PropertyBasedErrorTestBody.js";
 
 export declare namespace PropertyBasedError {
     export interface Options extends BaseClientOptions {}
@@ -24,7 +25,7 @@ export class PropertyBasedError {
      *
      * @param {PropertyBasedError.RequestOptions} requestOptions - Request-specific configuration.
      *
-     * @throws {@link SeedErrorProperty.PropertyBasedErrorTest}
+     * @throws {@link PropertyBasedErrorTest}
      *
      * @example
      *     await client.propertyBasedError.throwError()
@@ -58,8 +59,8 @@ export class PropertyBasedError {
         if (_response.error.reason === "status-code") {
             switch ((_response.error.body as any)?.errorName) {
                 case "PropertyBasedErrorTest":
-                    throw new SeedErrorProperty.PropertyBasedErrorTest(
-                        _response.error.body as SeedErrorProperty.PropertyBasedErrorTestBody,
+                    throw new PropertyBasedErrorTest(
+                        _response.error.body as PropertyBasedErrorTestBody,
                         _response.rawResponse,
                     );
                 default:

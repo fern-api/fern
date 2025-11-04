@@ -34,7 +34,7 @@ for await (const item of response) {
 <dl>
 <dd>
 
-**request:** `StreamCompletionRequest` 
+**request:** `SeedServerSentEvents.StreamCompletionRequest` 
     
 </dd>
 </dl>

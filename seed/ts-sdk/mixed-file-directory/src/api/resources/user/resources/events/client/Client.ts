@@ -4,8 +4,9 @@ import type { BaseClientOptions, BaseRequestOptions } from "../../../../../../Ba
 import { mergeHeaders } from "../../../../../../core/headers.js";
 import * as core from "../../../../../../core/index.js";
 import * as errors from "../../../../../../errors/index.js";
-import type * as SeedMixedFileDirectory from "../../../../../index.js";
 import { Metadata } from "../resources/metadata/client/Client.js";
+import type { Event } from "../types/Event.js";
+import type { ListUserEventsRequest } from "./requests/ListUserEventsRequest.js";
 
 export declare namespace Events {
     export interface Options extends BaseClientOptions {}
@@ -28,7 +29,7 @@ export class Events {
     /**
      * List all user events.
      *
-     * @param {SeedMixedFileDirectory.user.ListUserEventsRequest} request
+     * @param {ListUserEventsRequest} request
      * @param {Events.RequestOptions} requestOptions - Request-specific configuration.
      *
      * @example
@@ -37,16 +38,16 @@ export class Events {
      *     })
      */
     public listEvents(
-        request: SeedMixedFileDirectory.user.ListUserEventsRequest = {},
+        request: ListUserEventsRequest = {},
         requestOptions?: Events.RequestOptions,
-    ): core.HttpResponsePromise<SeedMixedFileDirectory.user.Event[]> {
+    ): core.HttpResponsePromise<Event[]> {
         return core.HttpResponsePromise.fromPromise(this.__listEvents(request, requestOptions));
     }
 
     private async __listEvents(
-        request: SeedMixedFileDirectory.user.ListUserEventsRequest = {},
+        request: ListUserEventsRequest = {},
         requestOptions?: Events.RequestOptions,
-    ): Promise<core.WithRawResponse<SeedMixedFileDirectory.user.Event[]>> {
+    ): Promise<core.WithRawResponse<Event[]>> {
         const { limit } = request;
         const _queryParams: Record<string, string | string[] | object | object[] | null> = {};
         if (limit != null) {
@@ -69,7 +70,7 @@ export class Events {
             fetchFn: this._options?.fetch,
         });
         if (_response.ok) {
-            return { data: _response.body as SeedMixedFileDirectory.user.Event[], rawResponse: _response.rawResponse };
+            return { data: _response.body as Event[], rawResponse: _response.rawResponse };
         }
 
         if (_response.error.reason === "status-code") {

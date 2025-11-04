@@ -6,7 +6,7 @@ import * as core from "../../../../core/index.js";
 import * as environments from "../../../../environments.js";
 import * as errors from "../../../../errors/index.js";
 import * as serializers from "../../../../serialization/index.js";
-import type * as SeedTrace from "../../../index.js";
+import type { ProblemId } from "../../commons/types/ProblemId.js";
 
 export declare namespace Homepage {
     export interface Options extends BaseClientOptions {}
@@ -27,15 +27,13 @@ export class Homepage {
      * @example
      *     await client.homepage.getHomepageProblems()
      */
-    public getHomepageProblems(
-        requestOptions?: Homepage.RequestOptions,
-    ): core.HttpResponsePromise<SeedTrace.ProblemId[]> {
+    public getHomepageProblems(requestOptions?: Homepage.RequestOptions): core.HttpResponsePromise<ProblemId[]> {
         return core.HttpResponsePromise.fromPromise(this.__getHomepageProblems(requestOptions));
     }
 
     private async __getHomepageProblems(
         requestOptions?: Homepage.RequestOptions,
-    ): Promise<core.WithRawResponse<SeedTrace.ProblemId[]>> {
+    ): Promise<core.WithRawResponse<ProblemId[]>> {
         const _headers: core.Fetcher.Args["headers"] = mergeHeaders(
             this._options?.headers,
             mergeOnlyDefinedHeaders({
@@ -98,21 +96,21 @@ export class Homepage {
     }
 
     /**
-     * @param {SeedTrace.ProblemId[]} request
+     * @param {ProblemId[]} request
      * @param {Homepage.RequestOptions} requestOptions - Request-specific configuration.
      *
      * @example
      *     await client.homepage.setHomepageProblems(["string", "string"])
      */
     public setHomepageProblems(
-        request: SeedTrace.ProblemId[],
+        request: ProblemId[],
         requestOptions?: Homepage.RequestOptions,
     ): core.HttpResponsePromise<void> {
         return core.HttpResponsePromise.fromPromise(this.__setHomepageProblems(request, requestOptions));
     }
 
     private async __setHomepageProblems(
-        request: SeedTrace.ProblemId[],
+        request: ProblemId[],
         requestOptions?: Homepage.RequestOptions,
     ): Promise<core.WithRawResponse<void>> {
         const _headers: core.Fetcher.Args["headers"] = mergeHeaders(

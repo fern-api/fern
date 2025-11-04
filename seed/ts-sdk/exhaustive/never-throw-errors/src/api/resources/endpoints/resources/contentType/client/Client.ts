@@ -4,6 +4,7 @@ import type { BaseClientOptions, BaseRequestOptions } from "../../../../../../Ba
 import { mergeHeaders, mergeOnlyDefinedHeaders } from "../../../../../../core/headers.js";
 import * as core from "../../../../../../core/index.js";
 import * as SeedExhaustive from "../../../../../index.js";
+import type { ObjectWithOptionalField } from "../../../../types/resources/object/types/ObjectWithOptionalField.js";
 
 export declare namespace ContentType {
     export interface Options extends BaseClientOptions {}
@@ -19,7 +20,7 @@ export class ContentType {
     }
 
     /**
-     * @param {SeedExhaustive.types.ObjectWithOptionalField} request
+     * @param {ObjectWithOptionalField} request
      * @param {ContentType.RequestOptions} requestOptions - Request-specific configuration.
      *
      * @example
@@ -42,7 +43,7 @@ export class ContentType {
      *     })
      */
     public postJsonPatchContentType(
-        request: SeedExhaustive.types.ObjectWithOptionalField,
+        request: ObjectWithOptionalField,
         requestOptions?: ContentType.RequestOptions,
     ): core.HttpResponsePromise<
         core.APIResponse<void, SeedExhaustive.endpoints.contentType.postJsonPatchContentType.Error>
@@ -51,7 +52,7 @@ export class ContentType {
     }
 
     private async __postJsonPatchContentType(
-        request: SeedExhaustive.types.ObjectWithOptionalField,
+        request: ObjectWithOptionalField,
         requestOptions?: ContentType.RequestOptions,
     ): Promise<
         core.WithRawResponse<
@@ -103,7 +104,7 @@ export class ContentType {
     }
 
     /**
-     * @param {SeedExhaustive.types.ObjectWithOptionalField} request
+     * @param {ObjectWithOptionalField} request
      * @param {ContentType.RequestOptions} requestOptions - Request-specific configuration.
      *
      * @example
@@ -126,7 +127,7 @@ export class ContentType {
      *     })
      */
     public postJsonPatchContentWithCharsetType(
-        request: SeedExhaustive.types.ObjectWithOptionalField,
+        request: ObjectWithOptionalField,
         requestOptions?: ContentType.RequestOptions,
     ): core.HttpResponsePromise<
         core.APIResponse<void, SeedExhaustive.endpoints.contentType.postJsonPatchContentWithCharsetType.Error>
@@ -137,7 +138,7 @@ export class ContentType {
     }
 
     private async __postJsonPatchContentWithCharsetType(
-        request: SeedExhaustive.types.ObjectWithOptionalField,
+        request: ObjectWithOptionalField,
         requestOptions?: ContentType.RequestOptions,
     ): Promise<
         core.WithRawResponse<

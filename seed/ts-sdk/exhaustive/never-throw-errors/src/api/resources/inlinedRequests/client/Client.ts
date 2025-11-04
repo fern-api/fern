@@ -4,6 +4,9 @@ import type { BaseClientOptions, BaseRequestOptions } from "../../../../BaseClie
 import { mergeHeaders, mergeOnlyDefinedHeaders } from "../../../../core/headers.js";
 import * as core from "../../../../core/index.js";
 import * as SeedExhaustive from "../../../index.js";
+import type { BadObjectRequestInfo } from "../../generalErrors/types/BadObjectRequestInfo.js";
+import type { ObjectWithOptionalField } from "../../types/resources/object/types/ObjectWithOptionalField.js";
+import type { PostWithObjectBody } from "./requests/PostWithObjectBody.js";
 
 export declare namespace InlinedRequests {
     export interface Options extends BaseClientOptions {}
@@ -21,7 +24,7 @@ export class InlinedRequests {
     /**
      * POST with custom object in request body, response is an object
      *
-     * @param {SeedExhaustive.PostWithObjectBody} request
+     * @param {PostWithObjectBody} request
      * @param {InlinedRequests.RequestOptions} requestOptions - Request-specific configuration.
      *
      * @example
@@ -48,24 +51,21 @@ export class InlinedRequests {
      *     })
      */
     public postWithObjectBodyandResponse(
-        request: SeedExhaustive.PostWithObjectBody,
+        request: PostWithObjectBody,
         requestOptions?: InlinedRequests.RequestOptions,
     ): core.HttpResponsePromise<
-        core.APIResponse<
-            SeedExhaustive.types.ObjectWithOptionalField,
-            SeedExhaustive.inlinedRequests.postWithObjectBodyandResponse.Error
-        >
+        core.APIResponse<ObjectWithOptionalField, SeedExhaustive.inlinedRequests.postWithObjectBodyandResponse.Error>
     > {
         return core.HttpResponsePromise.fromPromise(this.__postWithObjectBodyandResponse(request, requestOptions));
     }
 
     private async __postWithObjectBodyandResponse(
-        request: SeedExhaustive.PostWithObjectBody,
+        request: PostWithObjectBody,
         requestOptions?: InlinedRequests.RequestOptions,
     ): Promise<
         core.WithRawResponse<
             core.APIResponse<
-                SeedExhaustive.types.ObjectWithOptionalField,
+                ObjectWithOptionalField,
                 SeedExhaustive.inlinedRequests.postWithObjectBodyandResponse.Error
             >
         >
@@ -96,7 +96,7 @@ export class InlinedRequests {
             return {
                 data: {
                     ok: true,
-                    body: _response.body as SeedExhaustive.types.ObjectWithOptionalField,
+                    body: _response.body as ObjectWithOptionalField,
                     headers: _response.headers,
                     rawResponse: _response.rawResponse,
                 },
@@ -111,7 +111,7 @@ export class InlinedRequests {
                         data: {
                             ok: false,
                             error: SeedExhaustive.inlinedRequests.postWithObjectBodyandResponse.Error.badRequestBody(
-                                _response.error.body as SeedExhaustive.BadObjectRequestInfo,
+                                _response.error.body as BadObjectRequestInfo,
                             ),
                             rawResponse: _response.rawResponse,
                         },

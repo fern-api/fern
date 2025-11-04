@@ -4,7 +4,8 @@ import type { BaseClientOptions, BaseRequestOptions } from "../../../../BaseClie
 import { mergeHeaders, mergeOnlyDefinedHeaders } from "../../../../core/headers.js";
 import * as core from "../../../../core/index.js";
 import * as errors from "../../../../errors/index.js";
-import type * as SeedLiteral from "../../../index.js";
+import type { SendResponse } from "../../../types/SendResponse.js";
+import type { SendLiteralsInQueryRequest } from "./requests/SendLiteralsInQueryRequest.js";
 
 export declare namespace Query {
     export interface Options extends BaseClientOptions {}
@@ -20,7 +21,7 @@ export class Query {
     }
 
     /**
-     * @param {SeedLiteral.SendLiteralsInQueryRequest} request
+     * @param {SendLiteralsInQueryRequest} request
      * @param {Query.RequestOptions} requestOptions - Request-specific configuration.
      *
      * @example
@@ -37,16 +38,16 @@ export class Query {
      *     })
      */
     public send(
-        request: SeedLiteral.SendLiteralsInQueryRequest,
+        request: SendLiteralsInQueryRequest,
         requestOptions?: Query.RequestOptions,
-    ): core.HttpResponsePromise<SeedLiteral.SendResponse> {
+    ): core.HttpResponsePromise<SendResponse> {
         return core.HttpResponsePromise.fromPromise(this.__send(request, requestOptions));
     }
 
     private async __send(
-        request: SeedLiteral.SendLiteralsInQueryRequest,
+        request: SendLiteralsInQueryRequest,
         requestOptions?: Query.RequestOptions,
-    ): Promise<core.WithRawResponse<SeedLiteral.SendResponse>> {
+    ): Promise<core.WithRawResponse<SendResponse>> {
         const {
             prompt,
             optional_prompt: optionalPrompt,
@@ -103,7 +104,7 @@ export class Query {
             fetchFn: this._options?.fetch,
         });
         if (_response.ok) {
-            return { data: _response.body as SeedLiteral.SendResponse, rawResponse: _response.rawResponse };
+            return { data: _response.body as SendResponse, rawResponse: _response.rawResponse };
         }
 
         if (_response.error.reason === "status-code") {

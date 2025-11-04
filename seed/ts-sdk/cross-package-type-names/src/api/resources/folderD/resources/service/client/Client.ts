@@ -4,7 +4,7 @@ import type { BaseClientOptions, BaseRequestOptions } from "../../../../../../Ba
 import { mergeHeaders } from "../../../../../../core/headers.js";
 import * as core from "../../../../../../core/index.js";
 import * as errors from "../../../../../../errors/index.js";
-import type * as SeedCrossPackageTypeNames from "../../../../../index.js";
+import type { Response } from "../types/Response.js";
 
 export declare namespace Service {
     export interface Options extends BaseClientOptions {}
@@ -25,15 +25,11 @@ export class Service {
      * @example
      *     await client.folderD.service.getDirectThread()
      */
-    public getDirectThread(
-        requestOptions?: Service.RequestOptions,
-    ): core.HttpResponsePromise<SeedCrossPackageTypeNames.folderD.Response> {
+    public getDirectThread(requestOptions?: Service.RequestOptions): core.HttpResponsePromise<Response> {
         return core.HttpResponsePromise.fromPromise(this.__getDirectThread(requestOptions));
     }
 
-    private async __getDirectThread(
-        requestOptions?: Service.RequestOptions,
-    ): Promise<core.WithRawResponse<SeedCrossPackageTypeNames.folderD.Response>> {
+    private async __getDirectThread(requestOptions?: Service.RequestOptions): Promise<core.WithRawResponse<Response>> {
         const _headers: core.Fetcher.Args["headers"] = mergeHeaders(this._options?.headers, requestOptions?.headers);
         const _response = await core.fetcher({
             url:
@@ -48,10 +44,7 @@ export class Service {
             fetchFn: this._options?.fetch,
         });
         if (_response.ok) {
-            return {
-                data: _response.body as SeedCrossPackageTypeNames.folderD.Response,
-                rawResponse: _response.rawResponse,
-            };
+            return { data: _response.body as Response, rawResponse: _response.rawResponse };
         }
 
         if (_response.error.reason === "status-code") {

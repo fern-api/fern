@@ -4,6 +4,7 @@ import type { BaseClientOptions, BaseRequestOptions } from "../../../../../../Ba
 import { mergeHeaders, mergeOnlyDefinedHeaders } from "../../../../../../core/headers.js";
 import * as core from "../../../../../../core/index.js";
 import * as SeedExhaustive from "../../../../../index.js";
+import type { WeatherReport } from "../../../../types/resources/enum/types/WeatherReport.js";
 
 export declare namespace Enum {
     export interface Options extends BaseClientOptions {}
@@ -19,28 +20,26 @@ export class Enum {
     }
 
     /**
-     * @param {SeedExhaustive.types.WeatherReport} request
+     * @param {WeatherReport} request
      * @param {Enum.RequestOptions} requestOptions - Request-specific configuration.
      *
      * @example
      *     await client.endpoints.enum.getAndReturnEnum("SUNNY")
      */
     public getAndReturnEnum(
-        request: SeedExhaustive.types.WeatherReport,
+        request: WeatherReport,
         requestOptions?: Enum.RequestOptions,
     ): core.HttpResponsePromise<
-        core.APIResponse<SeedExhaustive.types.WeatherReport, SeedExhaustive.endpoints.enum_.getAndReturnEnum.Error>
+        core.APIResponse<WeatherReport, SeedExhaustive.endpoints.enum_.getAndReturnEnum.Error>
     > {
         return core.HttpResponsePromise.fromPromise(this.__getAndReturnEnum(request, requestOptions));
     }
 
     private async __getAndReturnEnum(
-        request: SeedExhaustive.types.WeatherReport,
+        request: WeatherReport,
         requestOptions?: Enum.RequestOptions,
     ): Promise<
-        core.WithRawResponse<
-            core.APIResponse<SeedExhaustive.types.WeatherReport, SeedExhaustive.endpoints.enum_.getAndReturnEnum.Error>
-        >
+        core.WithRawResponse<core.APIResponse<WeatherReport, SeedExhaustive.endpoints.enum_.getAndReturnEnum.Error>>
     > {
         const _headers: core.Fetcher.Args["headers"] = mergeHeaders(
             this._options?.headers,
@@ -68,7 +67,7 @@ export class Enum {
             return {
                 data: {
                     ok: true,
-                    body: _response.body as SeedExhaustive.types.WeatherReport,
+                    body: _response.body as WeatherReport,
                     headers: _response.headers,
                     rawResponse: _response.rawResponse,
                 },

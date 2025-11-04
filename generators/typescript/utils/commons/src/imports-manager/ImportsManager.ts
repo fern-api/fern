@@ -30,9 +30,91 @@ export class ImportsManager {
     private packagePath: string | undefined;
 
     private imports: Record<ModuleSpecifier, CombinedImportDeclarations> = {};
+    private reservedIdentifiers: Set<string> = new Set();
+    private allocatedLocalNames: Set<string> = new Set();
 
     public constructor({ packagePath }: { packagePath?: string }) {
         this.packagePath = packagePath;
+    }
+
+    /**
+     * Reserve a local identifier to prevent imports from using it.
+     * This should be called for top-level declarations like client class names.
+     */
+    public reserveLocal(name: string): void {
+        this.reservedIdentifiers.add(name);
+        this.allocatedLocalNames.add(name);
+    }
+
+    /**
+     * Ensure a named import is added and return the local name to use.
+     * If the name conflicts with a reserved identifier, an alias will be used.
+     */
+    public ensureNamedImport({
+        moduleSpecifier,
+        name,
+        isTypeOnly
+    }: {
+        moduleSpecifier: ModuleSpecifier;
+        name: string;
+        isTypeOnly?: boolean;
+    }): string {
+        const existingImports = this.imports[moduleSpecifier];
+        if (existingImports != null) {
+            const existingImport = existingImports.namedImports.find(
+                (namedImport) => namedImport.name === name
+            );
+            if (existingImport != null) {
+                return existingImport.alias ?? name;
+            }
+        }
+
+        const localName = this.getAvailableLocalName(name);
+        const alias = localName !== name ? localName : undefined;
+
+        this.addImport(moduleSpecifier, {
+            namedImports: [
+                {
+                    name,
+                    alias,
+                    type: isTypeOnly ? "type" : undefined
+                }
+            ]
+        });
+
+        return localName;
+    }
+
+    /**
+     * Get an available local name, adding a suffix if needed to avoid conflicts.
+     */
+    private getAvailableLocalName(preferredName: string): string {
+        if (!this.reservedIdentifiers.has(preferredName) && !this.allocatedLocalNames.has(preferredName)) {
+            this.allocatedLocalNames.add(preferredName);
+            return preferredName;
+        }
+
+        const typeVariant = `${preferredName}Type`;
+        if (!this.reservedIdentifiers.has(typeVariant) && !this.allocatedLocalNames.has(typeVariant)) {
+            this.allocatedLocalNames.add(typeVariant);
+            return typeVariant;
+        }
+
+        const underscoreVariant = `${preferredName}_`;
+        if (!this.reservedIdentifiers.has(underscoreVariant) && !this.allocatedLocalNames.has(underscoreVariant)) {
+            this.allocatedLocalNames.add(underscoreVariant);
+            return underscoreVariant;
+        }
+
+        let counter = 1;
+        while (true) {
+            const numberedVariant = `${preferredName}${counter}`;
+            if (!this.reservedIdentifiers.has(numberedVariant) && !this.allocatedLocalNames.has(numberedVariant)) {
+                this.allocatedLocalNames.add(numberedVariant);
+                return numberedVariant;
+            }
+            counter++;
+        }
     }
 
     public addImportFromRoot(modulePath: string, importDeclaration: ImportDeclaration, packagePath?: string): void {

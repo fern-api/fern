@@ -4,7 +4,10 @@ import type { BaseClientOptions, BaseRequestOptions } from "../../../../BaseClie
 import { mergeHeaders } from "../../../../core/headers.js";
 import * as core from "../../../../core/index.js";
 import * as errors from "../../../../errors/index.js";
-import type * as SeedResponseProperty from "../../../index.js";
+import type { OptionalStringResponse } from "../../../types/OptionalStringResponse.js";
+import type { StringResponse } from "../../../types/StringResponse.js";
+import type { OptionalWithDocs } from "../types/OptionalWithDocs.js";
+import type { Response } from "../types/Response.js";
 
 export declare namespace Service {
     export interface Options extends BaseClientOptions {}
@@ -26,17 +29,14 @@ export class Service {
      * @example
      *     await client.service.getMovie("string")
      */
-    public getMovie(
-        request: string,
-        requestOptions?: Service.RequestOptions,
-    ): core.HttpResponsePromise<SeedResponseProperty.Response> {
+    public getMovie(request: string, requestOptions?: Service.RequestOptions): core.HttpResponsePromise<Response> {
         return core.HttpResponsePromise.fromPromise(this.__getMovie(request, requestOptions));
     }
 
     private async __getMovie(
         request: string,
         requestOptions?: Service.RequestOptions,
-    ): Promise<core.WithRawResponse<SeedResponseProperty.Response>> {
+    ): Promise<core.WithRawResponse<Response>> {
         const _headers: core.Fetcher.Args["headers"] = mergeHeaders(this._options?.headers, requestOptions?.headers);
         const _response = await core.fetcher({
             url: core.url.join(
@@ -56,7 +56,7 @@ export class Service {
             fetchFn: this._options?.fetch,
         });
         if (_response.ok) {
-            return { data: _response.body as SeedResponseProperty.Response, rawResponse: _response.rawResponse };
+            return { data: _response.body as Response, rawResponse: _response.rawResponse };
         }
 
         if (_response.error.reason === "status-code") {
@@ -91,17 +91,14 @@ export class Service {
      * @example
      *     await client.service.getMovieDocs("string")
      */
-    public getMovieDocs(
-        request: string,
-        requestOptions?: Service.RequestOptions,
-    ): core.HttpResponsePromise<SeedResponseProperty.Response> {
+    public getMovieDocs(request: string, requestOptions?: Service.RequestOptions): core.HttpResponsePromise<Response> {
         return core.HttpResponsePromise.fromPromise(this.__getMovieDocs(request, requestOptions));
     }
 
     private async __getMovieDocs(
         request: string,
         requestOptions?: Service.RequestOptions,
-    ): Promise<core.WithRawResponse<SeedResponseProperty.Response>> {
+    ): Promise<core.WithRawResponse<Response>> {
         const _headers: core.Fetcher.Args["headers"] = mergeHeaders(this._options?.headers, requestOptions?.headers);
         const _response = await core.fetcher({
             url: core.url.join(
@@ -121,7 +118,7 @@ export class Service {
             fetchFn: this._options?.fetch,
         });
         if (_response.ok) {
-            return { data: _response.body as SeedResponseProperty.Response, rawResponse: _response.rawResponse };
+            return { data: _response.body as Response, rawResponse: _response.rawResponse };
         }
 
         if (_response.error.reason === "status-code") {
@@ -159,14 +156,14 @@ export class Service {
     public getMovieName(
         request: string,
         requestOptions?: Service.RequestOptions,
-    ): core.HttpResponsePromise<SeedResponseProperty.StringResponse> {
+    ): core.HttpResponsePromise<StringResponse> {
         return core.HttpResponsePromise.fromPromise(this.__getMovieName(request, requestOptions));
     }
 
     private async __getMovieName(
         request: string,
         requestOptions?: Service.RequestOptions,
-    ): Promise<core.WithRawResponse<SeedResponseProperty.StringResponse>> {
+    ): Promise<core.WithRawResponse<StringResponse>> {
         const _headers: core.Fetcher.Args["headers"] = mergeHeaders(this._options?.headers, requestOptions?.headers);
         const _response = await core.fetcher({
             url: core.url.join(
@@ -186,7 +183,7 @@ export class Service {
             fetchFn: this._options?.fetch,
         });
         if (_response.ok) {
-            return { data: _response.body as SeedResponseProperty.StringResponse, rawResponse: _response.rawResponse };
+            return { data: _response.body as StringResponse, rawResponse: _response.rawResponse };
         }
 
         if (_response.error.reason === "status-code") {
@@ -224,14 +221,14 @@ export class Service {
     public getMovieMetadata(
         request: string,
         requestOptions?: Service.RequestOptions,
-    ): core.HttpResponsePromise<SeedResponseProperty.Response> {
+    ): core.HttpResponsePromise<Response> {
         return core.HttpResponsePromise.fromPromise(this.__getMovieMetadata(request, requestOptions));
     }
 
     private async __getMovieMetadata(
         request: string,
         requestOptions?: Service.RequestOptions,
-    ): Promise<core.WithRawResponse<SeedResponseProperty.Response>> {
+    ): Promise<core.WithRawResponse<Response>> {
         const _headers: core.Fetcher.Args["headers"] = mergeHeaders(this._options?.headers, requestOptions?.headers);
         const _response = await core.fetcher({
             url: core.url.join(
@@ -251,7 +248,7 @@ export class Service {
             fetchFn: this._options?.fetch,
         });
         if (_response.ok) {
-            return { data: _response.body as SeedResponseProperty.Response, rawResponse: _response.rawResponse };
+            return { data: _response.body as Response, rawResponse: _response.rawResponse };
         }
 
         if (_response.error.reason === "status-code") {
@@ -289,14 +286,14 @@ export class Service {
     public getOptionalMovie(
         request: string,
         requestOptions?: Service.RequestOptions,
-    ): core.HttpResponsePromise<SeedResponseProperty.Response | undefined> {
+    ): core.HttpResponsePromise<Response | undefined> {
         return core.HttpResponsePromise.fromPromise(this.__getOptionalMovie(request, requestOptions));
     }
 
     private async __getOptionalMovie(
         request: string,
         requestOptions?: Service.RequestOptions,
-    ): Promise<core.WithRawResponse<SeedResponseProperty.Response | undefined>> {
+    ): Promise<core.WithRawResponse<Response | undefined>> {
         const _headers: core.Fetcher.Args["headers"] = mergeHeaders(this._options?.headers, requestOptions?.headers);
         const _response = await core.fetcher({
             url: core.url.join(
@@ -316,10 +313,7 @@ export class Service {
             fetchFn: this._options?.fetch,
         });
         if (_response.ok) {
-            return {
-                data: _response.body as SeedResponseProperty.Response | undefined,
-                rawResponse: _response.rawResponse,
-            };
+            return { data: _response.body as Response | undefined, rawResponse: _response.rawResponse };
         }
 
         if (_response.error.reason === "status-code") {
@@ -357,14 +351,14 @@ export class Service {
     public getOptionalMovieDocs(
         request: string,
         requestOptions?: Service.RequestOptions,
-    ): core.HttpResponsePromise<SeedResponseProperty.OptionalWithDocs | undefined> {
+    ): core.HttpResponsePromise<OptionalWithDocs | undefined> {
         return core.HttpResponsePromise.fromPromise(this.__getOptionalMovieDocs(request, requestOptions));
     }
 
     private async __getOptionalMovieDocs(
         request: string,
         requestOptions?: Service.RequestOptions,
-    ): Promise<core.WithRawResponse<SeedResponseProperty.OptionalWithDocs | undefined>> {
+    ): Promise<core.WithRawResponse<OptionalWithDocs | undefined>> {
         const _headers: core.Fetcher.Args["headers"] = mergeHeaders(this._options?.headers, requestOptions?.headers);
         const _response = await core.fetcher({
             url: core.url.join(
@@ -384,10 +378,7 @@ export class Service {
             fetchFn: this._options?.fetch,
         });
         if (_response.ok) {
-            return {
-                data: _response.body as SeedResponseProperty.OptionalWithDocs | undefined,
-                rawResponse: _response.rawResponse,
-            };
+            return { data: _response.body as OptionalWithDocs | undefined, rawResponse: _response.rawResponse };
         }
 
         if (_response.error.reason === "status-code") {
@@ -425,14 +416,14 @@ export class Service {
     public getOptionalMovieName(
         request: string,
         requestOptions?: Service.RequestOptions,
-    ): core.HttpResponsePromise<SeedResponseProperty.OptionalStringResponse | undefined> {
+    ): core.HttpResponsePromise<OptionalStringResponse | undefined> {
         return core.HttpResponsePromise.fromPromise(this.__getOptionalMovieName(request, requestOptions));
     }
 
     private async __getOptionalMovieName(
         request: string,
         requestOptions?: Service.RequestOptions,
-    ): Promise<core.WithRawResponse<SeedResponseProperty.OptionalStringResponse | undefined>> {
+    ): Promise<core.WithRawResponse<OptionalStringResponse | undefined>> {
         const _headers: core.Fetcher.Args["headers"] = mergeHeaders(this._options?.headers, requestOptions?.headers);
         const _response = await core.fetcher({
             url: core.url.join(
@@ -452,10 +443,7 @@ export class Service {
             fetchFn: this._options?.fetch,
         });
         if (_response.ok) {
-            return {
-                data: _response.body as SeedResponseProperty.OptionalStringResponse | undefined,
-                rawResponse: _response.rawResponse,
-            };
+            return { data: _response.body as OptionalStringResponse | undefined, rawResponse: _response.rawResponse };
         }
 
         if (_response.error.reason === "status-code") {

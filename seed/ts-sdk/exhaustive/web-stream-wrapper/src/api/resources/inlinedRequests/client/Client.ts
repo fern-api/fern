@@ -4,7 +4,10 @@ import type { BaseClientOptions, BaseRequestOptions } from "../../../../BaseClie
 import { mergeHeaders, mergeOnlyDefinedHeaders } from "../../../../core/headers.js";
 import * as core from "../../../../core/index.js";
 import * as errors from "../../../../errors/index.js";
-import * as SeedExhaustive from "../../../index.js";
+import { BadRequestBody } from "../../generalErrors/errors/BadRequestBody.js";
+import type { BadObjectRequestInfo } from "../../generalErrors/types/BadObjectRequestInfo.js";
+import type { ObjectWithOptionalField } from "../../types/resources/object/types/ObjectWithOptionalField.js";
+import type { PostWithObjectBody } from "./requests/PostWithObjectBody.js";
 
 export declare namespace InlinedRequests {
     export interface Options extends BaseClientOptions {}
@@ -22,10 +25,10 @@ export class InlinedRequests {
     /**
      * POST with custom object in request body, response is an object
      *
-     * @param {SeedExhaustive.PostWithObjectBody} request
+     * @param {PostWithObjectBody} request
      * @param {InlinedRequests.RequestOptions} requestOptions - Request-specific configuration.
      *
-     * @throws {@link SeedExhaustive.BadRequestBody}
+     * @throws {@link BadRequestBody}
      *
      * @example
      *     await client.inlinedRequests.postWithObjectBodyandResponse({
@@ -51,16 +54,16 @@ export class InlinedRequests {
      *     })
      */
     public postWithObjectBodyandResponse(
-        request: SeedExhaustive.PostWithObjectBody,
+        request: PostWithObjectBody,
         requestOptions?: InlinedRequests.RequestOptions,
-    ): core.HttpResponsePromise<SeedExhaustive.types.ObjectWithOptionalField> {
+    ): core.HttpResponsePromise<ObjectWithOptionalField> {
         return core.HttpResponsePromise.fromPromise(this.__postWithObjectBodyandResponse(request, requestOptions));
     }
 
     private async __postWithObjectBodyandResponse(
-        request: SeedExhaustive.PostWithObjectBody,
+        request: PostWithObjectBody,
         requestOptions?: InlinedRequests.RequestOptions,
-    ): Promise<core.WithRawResponse<SeedExhaustive.types.ObjectWithOptionalField>> {
+    ): Promise<core.WithRawResponse<ObjectWithOptionalField>> {
         const _headers: core.Fetcher.Args["headers"] = mergeHeaders(
             this._options?.headers,
             mergeOnlyDefinedHeaders({ Authorization: await this._getAuthorizationHeader() }),
@@ -84,19 +87,13 @@ export class InlinedRequests {
             fetchFn: this._options?.fetch,
         });
         if (_response.ok) {
-            return {
-                data: _response.body as SeedExhaustive.types.ObjectWithOptionalField,
-                rawResponse: _response.rawResponse,
-            };
+            return { data: _response.body as ObjectWithOptionalField, rawResponse: _response.rawResponse };
         }
 
         if (_response.error.reason === "status-code") {
             switch (_response.error.statusCode) {
                 case 400:
-                    throw new SeedExhaustive.BadRequestBody(
-                        _response.error.body as SeedExhaustive.BadObjectRequestInfo,
-                        _response.rawResponse,
-                    );
+                    throw new BadRequestBody(_response.error.body as BadObjectRequestInfo, _response.rawResponse);
                 default:
                     throw new errors.SeedExhaustiveError({
                         statusCode: _response.error.statusCode,

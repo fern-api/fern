@@ -2,7 +2,7 @@
 
 /**
  * @example
- *     SeedEnum.Color.Red
+ *     Color.Red
  */
 export const Color = {
     Red: "red",

@@ -2,6 +2,7 @@
 
 import type * as core from "../../../../core/index.js";
 import type * as SeedExhaustive from "../../../index.js";
+import type { BadObjectRequestInfo } from "../../generalErrors/types/BadObjectRequestInfo.js";
 
 export type Error =
     | SeedExhaustive.inlinedRequests.postWithObjectBodyandResponse.Error.BadRequestBody
@@ -10,7 +11,7 @@ export type Error =
 export namespace Error {
     export interface BadRequestBody {
         statusCode: 400;
-        content: SeedExhaustive.BadObjectRequestInfo;
+        content: BadObjectRequestInfo;
     }
 
     export interface _Unknown {
@@ -19,14 +20,14 @@ export namespace Error {
     }
 
     export interface _Visitor<_Result> {
-        badRequestBody: (value: SeedExhaustive.BadObjectRequestInfo) => _Result;
+        badRequestBody: (value: BadObjectRequestInfo) => _Result;
         _other: (value: core.Fetcher.Error) => _Result;
     }
 }
 
 export const Error = {
     badRequestBody: (
-        value: SeedExhaustive.BadObjectRequestInfo,
+        value: BadObjectRequestInfo,
     ): SeedExhaustive.inlinedRequests.postWithObjectBodyandResponse.Error.BadRequestBody => {
         return {
             content: value,
