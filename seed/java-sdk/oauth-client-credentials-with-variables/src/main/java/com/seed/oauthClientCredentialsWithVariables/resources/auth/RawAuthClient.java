@@ -66,11 +66,9 @@ public class RawAuthClient {
                 return new SeedOauthClientCredentialsWithVariablesHttpResponse<>(
                         ObjectMappers.JSON_MAPPER.readValue(responseBodyString, TokenResponse.class), response);
             }
+            Object errorBody = ObjectMappers.parseErrorBody(responseBodyString);
             throw new SeedOauthClientCredentialsWithVariablesApiException(
-                    "Error with status code " + response.code(),
-                    response.code(),
-                    ObjectMappers.JSON_MAPPER.readValue(responseBodyString, Object.class),
-                    response);
+                    "Error with status code " + response.code(), response.code(), errorBody, response);
         } catch (IOException e) {
             throw new SeedOauthClientCredentialsWithVariablesException("Network error executing HTTP request", e);
         }
@@ -112,11 +110,9 @@ public class RawAuthClient {
                 return new SeedOauthClientCredentialsWithVariablesHttpResponse<>(
                         ObjectMappers.JSON_MAPPER.readValue(responseBodyString, TokenResponse.class), response);
             }
+            Object errorBody = ObjectMappers.parseErrorBody(responseBodyString);
             throw new SeedOauthClientCredentialsWithVariablesApiException(
-                    "Error with status code " + response.code(),
-                    response.code(),
-                    ObjectMappers.JSON_MAPPER.readValue(responseBodyString, Object.class),
-                    response);
+                    "Error with status code " + response.code(), response.code(), errorBody, response);
         } catch (IOException e) {
             throw new SeedOauthClientCredentialsWithVariablesException("Network error executing HTTP request", e);
         }

@@ -67,11 +67,9 @@ public class RawFooClient {
                 return new SeedCrossPackageTypeNamesHttpResponse<>(
                         ObjectMappers.JSON_MAPPER.readValue(responseBodyString, ImportingType.class), response);
             }
+            Object errorBody = ObjectMappers.parseErrorBody(responseBodyString);
             throw new SeedCrossPackageTypeNamesApiException(
-                    "Error with status code " + response.code(),
-                    response.code(),
-                    ObjectMappers.JSON_MAPPER.readValue(responseBodyString, Object.class),
-                    response);
+                    "Error with status code " + response.code(), response.code(), errorBody, response);
         } catch (IOException e) {
             throw new SeedCrossPackageTypeNamesException("Network error executing HTTP request", e);
         }

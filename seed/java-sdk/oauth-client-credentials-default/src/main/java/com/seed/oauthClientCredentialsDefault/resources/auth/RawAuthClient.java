@@ -64,11 +64,9 @@ public class RawAuthClient {
                 return new SeedOauthClientCredentialsDefaultHttpResponse<>(
                         ObjectMappers.JSON_MAPPER.readValue(responseBodyString, TokenResponse.class), response);
             }
+            Object errorBody = ObjectMappers.parseErrorBody(responseBodyString);
             throw new SeedOauthClientCredentialsDefaultApiException(
-                    "Error with status code " + response.code(),
-                    response.code(),
-                    ObjectMappers.JSON_MAPPER.readValue(responseBodyString, Object.class),
-                    response);
+                    "Error with status code " + response.code(), response.code(), errorBody, response);
         } catch (IOException e) {
             throw new SeedOauthClientCredentialsDefaultException("Network error executing HTTP request", e);
         }

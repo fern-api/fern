@@ -67,11 +67,9 @@ public class RawUnionClient {
                 return new SeedUndiscriminatedUnionsHttpResponse<>(
                         ObjectMappers.JSON_MAPPER.readValue(responseBodyString, MyUnion.class), response);
             }
+            Object errorBody = ObjectMappers.parseErrorBody(responseBodyString);
             throw new SeedUndiscriminatedUnionsApiException(
-                    "Error with status code " + response.code(),
-                    response.code(),
-                    ObjectMappers.JSON_MAPPER.readValue(responseBodyString, Object.class),
-                    response);
+                    "Error with status code " + response.code(), response.code(), errorBody, response);
         } catch (IOException e) {
             throw new SeedUndiscriminatedUnionsException("Network error executing HTTP request", e);
         }
@@ -105,11 +103,9 @@ public class RawUnionClient {
                                 responseBodyString, new TypeReference<Map<Key, String>>() {}),
                         response);
             }
+            Object errorBody = ObjectMappers.parseErrorBody(responseBodyString);
             throw new SeedUndiscriminatedUnionsApiException(
-                    "Error with status code " + response.code(),
-                    response.code(),
-                    ObjectMappers.JSON_MAPPER.readValue(responseBodyString, Object.class),
-                    response);
+                    "Error with status code " + response.code(), response.code(), errorBody, response);
         } catch (IOException e) {
             throw new SeedUndiscriminatedUnionsException("Network error executing HTTP request", e);
         }
@@ -150,11 +146,9 @@ public class RawUnionClient {
                 return new SeedUndiscriminatedUnionsHttpResponse<>(
                         ObjectMappers.JSON_MAPPER.readValue(responseBodyString, boolean.class), response);
             }
+            Object errorBody = ObjectMappers.parseErrorBody(responseBodyString);
             throw new SeedUndiscriminatedUnionsApiException(
-                    "Error with status code " + response.code(),
-                    response.code(),
-                    ObjectMappers.JSON_MAPPER.readValue(responseBodyString, Object.class),
-                    response);
+                    "Error with status code " + response.code(), response.code(), errorBody, response);
         } catch (IOException e) {
             throw new SeedUndiscriminatedUnionsException("Network error executing HTTP request", e);
         }
@@ -207,11 +201,9 @@ public class RawUnionClient {
                 return new SeedUndiscriminatedUnionsHttpResponse<>(
                         ObjectMappers.JSON_MAPPER.readValue(responseBodyString, boolean.class), response);
             }
+            Object errorBody = ObjectMappers.parseErrorBody(responseBodyString);
             throw new SeedUndiscriminatedUnionsApiException(
-                    "Error with status code " + response.code(),
-                    response.code(),
-                    ObjectMappers.JSON_MAPPER.readValue(responseBodyString, Object.class),
-                    response);
+                    "Error with status code " + response.code(), response.code(), errorBody, response);
         } catch (IOException e) {
             throw new SeedUndiscriminatedUnionsException("Network error executing HTTP request", e);
         }
@@ -254,11 +246,9 @@ public class RawUnionClient {
                         ObjectMappers.JSON_MAPPER.readValue(responseBodyString, UnionWithDuplicateTypes.class),
                         response);
             }
+            Object errorBody = ObjectMappers.parseErrorBody(responseBodyString);
             throw new SeedUndiscriminatedUnionsApiException(
-                    "Error with status code " + response.code(),
-                    response.code(),
-                    ObjectMappers.JSON_MAPPER.readValue(responseBodyString, Object.class),
-                    response);
+                    "Error with status code " + response.code(), response.code(), errorBody, response);
         } catch (IOException e) {
             throw new SeedUndiscriminatedUnionsException("Network error executing HTTP request", e);
         }
@@ -299,11 +289,9 @@ public class RawUnionClient {
                 return new SeedUndiscriminatedUnionsHttpResponse<>(
                         ObjectMappers.JSON_MAPPER.readValue(responseBodyString, String.class), response);
             }
+            Object errorBody = ObjectMappers.parseErrorBody(responseBodyString);
             throw new SeedUndiscriminatedUnionsApiException(
-                    "Error with status code " + response.code(),
-                    response.code(),
-                    ObjectMappers.JSON_MAPPER.readValue(responseBodyString, Object.class),
-                    response);
+                    "Error with status code " + response.code(), response.code(), errorBody, response);
         } catch (IOException e) {
             throw new SeedUndiscriminatedUnionsException("Network error executing HTTP request", e);
         }
