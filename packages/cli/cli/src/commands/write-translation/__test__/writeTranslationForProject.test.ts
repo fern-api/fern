@@ -234,14 +234,18 @@ describe("writeTranslationForProject", () => {
                     // - /private/var/folders/XX/XXXX/T/tmp-NNNNN-XXXX
                     // - /tmp/tmp-NNNNN-XXXX
                     // - /var/folders/XX/XXXX/T/tmp-NNNNN-XXXX
-                    return msg
-                        .replace(
-                            /\/private\/var\/folders\/[a-z0-9_]+\/[a-z0-9_]+\/T\/tmp-\d+-[a-zA-Z0-9_]+/g,
-                            "<temp-dir>"
-                        )
-                        .replace(/\/var\/folders\/[a-z0-9_]+\/[a-z0-9_]+\/T\/tmp-\d+-[a-zA-Z0-9_]+/g, "<temp-dir>")
-                        .replace(/\/tmp\/tmp-\d+-[a-zA-Z0-9_]+/g, "<temp-dir>")
-                        .replace(/tmp-\d+-[a-zA-Z0-9_]+/g, "<temp-dir>");
+                    return (
+                        msg
+                            .replace(
+                                /\/private\/var\/folders\/[a-z0-9_]+\/[a-z0-9_]+\/T\/tmp-\d+-[a-zA-Z0-9_]+/g,
+                                "<temp-dir>"
+                            )
+                            .replace(/\/var\/folders\/[a-z0-9_]+\/[a-z0-9_]+\/T\/tmp-\d+-[a-zA-Z0-9_]+/g, "<temp-dir>")
+                            .replace(/\/tmp\/tmp-\d+-[a-zA-Z0-9_]+/g, "<temp-dir>")
+                            // Handle cases where previous replacements left /private<temp-dir>
+                            .replace(/\/private<temp-dir>/g, "<temp-dir>")
+                            .replace(/tmp-\d+-[a-zA-Z0-9_]+/g, "<temp-dir>")
+                    );
                 }
                 return msg;
             });
