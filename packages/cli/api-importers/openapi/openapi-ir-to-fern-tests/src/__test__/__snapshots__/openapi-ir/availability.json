@@ -254,7 +254,6 @@
       ],
       "generatedRequestName": "GetCollectionIdActiveIdDeprecatedRefIdXFernAvailabilityPathParamRequest",
       "response": {
-        "description": "OK",
         "schema": {
           "generatedName": "GetCollectionIdActiveIdDeprecatedRefIdXFernAvailabilityPathParamResponse",
           "schema": "WholeDeprecatedSettings",
@@ -265,6 +264,7 @@
           "type": "reference"
         },
         "fullExamples": [],
+        "description": "OK",
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -457,7 +457,6 @@
         "type": "json"
       },
       "response": {
-        "description": "OK",
         "schema": {
           "generatedName": "PostSuccessRefResponse",
           "schema": "NotDeprecatedSettings",
@@ -468,6 +467,7 @@
           "type": "reference"
         },
         "fullExamples": [],
+        "description": "OK",
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -587,7 +587,6 @@
         "type": "json"
       },
       "response": {
-        "description": "OK",
         "schema": {
           "generatedName": "PostSuccessInlinePropertyDeprecationResponse",
           "schema": "NotDeprecatedSettings",
@@ -598,6 +597,7 @@
           "type": "reference"
         },
         "fullExamples": [],
+        "description": "OK",
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -696,7 +696,6 @@
         "type": "json"
       },
       "response": {
-        "description": "OK",
         "schema": {
           "generatedName": "PostSuccessInlineObjectDeprecationResponse",
           "schema": "NotDeprecatedSettings",
@@ -707,6 +706,7 @@
           "type": "reference"
         },
         "fullExamples": [],
+        "description": "OK",
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -806,7 +806,6 @@
         "type": "json"
       },
       "response": {
-        "description": "OK",
         "schema": {
           "generatedName": "PostSuccessInlineBetaBodyResponse",
           "schema": "NotDeprecatedSettings",
@@ -817,6 +816,7 @@
           "type": "reference"
         },
         "fullExamples": [],
+        "description": "OK",
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"

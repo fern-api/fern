@@ -23,7 +23,6 @@
       "headers": [],
       "generatedRequestName": "UserGetRequest",
       "response": {
-        "description": "Success",
         "schema": {
           "generatedName": "UserGetResponse",
           "schema": "User",
@@ -34,6 +33,7 @@
           "type": "reference"
         },
         "fullExamples": [],
+        "description": "Success",
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -92,8 +92,8 @@
       "headers": [],
       "generatedRequestName": "UserGetAllRequest",
       "response": {
-        "description": "Success",
         "schema": {
+          "generatedName": "UserGetAllResponse",
           "value": {
             "generatedName": "UserGetAllResponseItem",
             "schema": "User",
@@ -103,11 +103,11 @@
             },
             "type": "reference"
           },
-          "generatedName": "UserGetAllResponse",
           "groupName": [],
           "type": "array"
         },
         "fullExamples": [],
+        "description": "Success",
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"

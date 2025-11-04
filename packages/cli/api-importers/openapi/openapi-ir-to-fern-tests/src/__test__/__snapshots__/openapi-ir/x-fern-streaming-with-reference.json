@@ -216,7 +216,6 @@
         "type": "json"
       },
       "response": {
-        "description": "",
         "schema": {
           "generatedName": "ChatCompletionsCreateResponse",
           "schema": "Completion",
@@ -227,6 +226,7 @@
           "type": "reference"
         },
         "fullExamples": [],
+        "description": "",
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"

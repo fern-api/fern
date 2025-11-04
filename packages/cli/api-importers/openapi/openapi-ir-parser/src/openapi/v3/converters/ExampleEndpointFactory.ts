@@ -572,10 +572,10 @@ function getResponseSchema(response: ResponseWithExample | null | undefined): Sc
     if (response == null) {
         return undefined;
     }
-    if (response.type !== "json" && response.type !== "streamingJson" && response.type !== "streamingSse") {
-        return { type: "unsupported" };
+    if (response.type === "json" || response.type === "streamingJson" || response.type === "streamingSse") {
+        return { type: "present", schema: response.schema, examples: response.fullExamples ?? [] };
     }
-    return { type: "present", schema: response.schema, examples: response.fullExamples ?? [] };
+    return { type: "unsupported" };
 }
 
 export function isExamplePrimitive(example: FullExample): boolean {

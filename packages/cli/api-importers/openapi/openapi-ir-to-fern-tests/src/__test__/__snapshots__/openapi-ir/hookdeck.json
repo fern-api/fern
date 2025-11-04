@@ -531,7 +531,6 @@
       "headers": [],
       "generatedRequestName": "GetIssueTriggersRequest",
       "response": {
-        "description": "List of issue triggers",
         "schema": {
           "generatedName": "GetIssueTriggersResponse",
           "schema": "IssueTriggerPaginatedResult",
@@ -542,6 +541,7 @@
           "type": "reference"
         },
         "fullExamples": [],
+        "description": "List of issue triggers",
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -1024,7 +1024,6 @@
         "type": "json"
       },
       "response": {
-        "description": "A single issue trigger",
         "schema": {
           "generatedName": "CreateIssueTriggerResponse",
           "schema": "IssueTrigger",
@@ -1035,6 +1034,7 @@
           "type": "reference"
         },
         "fullExamples": [],
+        "description": "A single issue trigger",
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -1405,7 +1405,6 @@
         "type": "json"
       },
       "response": {
-        "description": "A single issue trigger",
         "schema": {
           "generatedName": "UpsertIssueTriggerResponse",
           "schema": "IssueTrigger",
@@ -1416,6 +1415,7 @@
           "type": "reference"
         },
         "fullExamples": [],
+        "description": "A single issue trigger",
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -1678,7 +1678,6 @@
       "headers": [],
       "generatedRequestName": "GetIssueTriggerRequest",
       "response": {
-        "description": "A single issue trigger",
         "schema": {
           "generatedName": "GetIssueTriggerResponse",
           "schema": "IssueTrigger",
@@ -1689,6 +1688,7 @@
           "type": "reference"
         },
         "fullExamples": [],
+        "description": "A single issue trigger",
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -2051,7 +2051,6 @@
         "type": "json"
       },
       "response": {
-        "description": "A single issue trigger",
         "schema": {
           "generatedName": "UpdateIssueTriggerResponse",
           "schema": "IssueTrigger",
@@ -2062,6 +2061,7 @@
           "type": "reference"
         },
         "fullExamples": [],
+        "description": "A single issue trigger",
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -2323,7 +2323,6 @@
       "headers": [],
       "generatedRequestName": "DeleteIssueTriggerRequest",
       "response": {
-        "description": "An object with deleted issue trigger's id",
         "schema": {
           "generatedName": "DeleteIssueTriggerResponse",
           "schema": "DeletedIssueTriggerResponse",
@@ -2334,6 +2333,7 @@
           "type": "reference"
         },
         "fullExamples": [],
+        "description": "An object with deleted issue trigger's id",
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -2465,7 +2465,6 @@
       "headers": [],
       "generatedRequestName": "DisableIssueTriggerRequest",
       "response": {
-        "description": "A single issue trigger",
         "schema": {
           "generatedName": "DisableIssueTriggerResponse",
           "schema": "IssueTrigger",
@@ -2476,6 +2475,7 @@
           "type": "reference"
         },
         "fullExamples": [],
+        "description": "A single issue trigger",
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -2686,7 +2686,6 @@
       "headers": [],
       "generatedRequestName": "EnableIssueTriggerRequest",
       "response": {
-        "description": "A single issue trigger",
         "schema": {
           "generatedName": "EnableIssueTriggerResponse",
           "schema": "IssueTrigger",
@@ -2697,6 +2696,7 @@
           "type": "reference"
         },
         "fullExamples": [],
+        "description": "A single issue trigger",
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -3134,7 +3134,6 @@
       "headers": [],
       "generatedRequestName": "GetAttemptsRequest",
       "response": {
-        "description": "List of attempts",
         "schema": {
           "generatedName": "GetAttemptsResponse",
           "schema": "EventAttemptPaginatedResult",
@@ -3145,6 +3144,7 @@
           "type": "reference"
         },
         "fullExamples": [],
+        "description": "List of attempts",
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -3548,7 +3548,6 @@
       "headers": [],
       "generatedRequestName": "GetAttemptRequest",
       "response": {
-        "description": "A single attempt",
         "schema": {
           "generatedName": "GetAttemptResponse",
           "value": {
@@ -3563,6 +3562,7 @@
           "type": "nullable"
         },
         "fullExamples": [],
+        "description": "A single attempt",
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -4440,7 +4440,6 @@
       "headers": [],
       "generatedRequestName": "GetBookmarksRequest",
       "response": {
-        "description": "List of bookmarks",
         "schema": {
           "generatedName": "GetBookmarksResponse",
           "schema": "BookmarkPaginatedResult",
@@ -4451,6 +4450,7 @@
           "type": "reference"
         },
         "fullExamples": [],
+        "description": "List of bookmarks",
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -4929,7 +4929,6 @@
         "type": "json"
       },
       "response": {
-        "description": "A single bookmark",
         "schema": {
           "generatedName": "CreateBookmarkResponse",
           "schema": "Bookmark",
@@ -4940,6 +4939,7 @@
           "type": "reference"
         },
         "fullExamples": [],
+        "description": "A single bookmark",
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -5236,7 +5236,6 @@
       "headers": [],
       "generatedRequestName": "GetBookmarkRequest",
       "response": {
-        "description": "A single bookmark",
         "schema": {
           "generatedName": "GetBookmarkResponse",
           "schema": "Bookmark",
@@ -5247,6 +5246,7 @@
           "type": "reference"
         },
         "fullExamples": [],
+        "description": "A single bookmark",
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -5594,7 +5594,6 @@
         "type": "json"
       },
       "response": {
-        "description": "A single bookmark",
         "schema": {
           "generatedName": "UpdateBookmarkResponse",
           "schema": "Bookmark",
@@ -5605,6 +5604,7 @@
           "type": "reference"
         },
         "fullExamples": [],
+        "description": "A single bookmark",
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -5937,7 +5937,6 @@
       "headers": [],
       "generatedRequestName": "DeleteBookmarkRequest",
       "response": {
-        "description": "An object with deleted bookmark's id",
         "schema": {
           "generatedName": "DeleteBookmarkResponse",
           "schema": "DeletedBookmarkResponse",
@@ -5948,6 +5947,7 @@
           "type": "reference"
         },
         "fullExamples": [],
+        "description": "An object with deleted bookmark's id",
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -6137,7 +6137,6 @@
         "type": "json"
       },
       "response": {
-        "description": "Array of created events",
         "schema": {
           "generatedName": "TriggerBookmarkResponse",
           "schema": "EventArray",
@@ -6148,6 +6147,7 @@
           "type": "reference"
         },
         "fullExamples": [],
+        "description": "Array of created events",
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -7273,7 +7273,6 @@
       "headers": [],
       "generatedRequestName": "GetDestinationsRequest",
       "response": {
-        "description": "List of destinations",
         "schema": {
           "generatedName": "GetDestinationsResponse",
           "schema": "DestinationPaginatedResult",
@@ -7284,6 +7283,7 @@
           "type": "reference"
         },
         "fullExamples": [],
+        "description": "List of destinations",
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -7847,7 +7847,6 @@
         "type": "json"
       },
       "response": {
-        "description": "A single destination",
         "schema": {
           "generatedName": "CreateDestinationResponse",
           "schema": "Destination",
@@ -7858,6 +7857,7 @@
           "type": "reference"
         },
         "fullExamples": [],
+        "description": "A single destination",
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -8268,7 +8268,6 @@
         "type": "json"
       },
       "response": {
-        "description": "A single destination",
         "schema": {
           "generatedName": "UpsertDestinationResponse",
           "schema": "Destination",
@@ -8279,6 +8278,7 @@
           "type": "reference"
         },
         "fullExamples": [],
+        "description": "A single destination",
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -8525,7 +8525,6 @@
       "headers": [],
       "generatedRequestName": "GetDestinationRequest",
       "response": {
-        "description": "A single destination",
         "schema": {
           "generatedName": "GetDestinationResponse",
           "schema": "Destination",
@@ -8536,6 +8535,7 @@
           "type": "reference"
         },
         "fullExamples": [],
+        "description": "A single destination",
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -8942,7 +8942,6 @@
         "type": "json"
       },
       "response": {
-        "description": "A single destination",
         "schema": {
           "generatedName": "UpdateDestinationResponse",
           "schema": "Destination",
@@ -8953,6 +8952,7 @@
           "type": "reference"
         },
         "fullExamples": [],
+        "description": "A single destination",
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -9257,7 +9257,6 @@
       "headers": [],
       "generatedRequestName": "ArchiveDestinationRequest",
       "response": {
-        "description": "A single destination",
         "schema": {
           "generatedName": "ArchiveDestinationResponse",
           "schema": "Destination",
@@ -9268,6 +9267,7 @@
           "type": "reference"
         },
         "fullExamples": [],
+        "description": "A single destination",
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -9466,7 +9466,6 @@
       "headers": [],
       "generatedRequestName": "UnarchiveDestinationRequest",
       "response": {
-        "description": "A single destination",
         "schema": {
           "generatedName": "UnarchiveDestinationResponse",
           "schema": "Destination",
@@ -9477,6 +9476,7 @@
           "type": "reference"
         },
         "fullExamples": [],
+        "description": "A single destination",
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -11458,7 +11458,6 @@
       "headers": [],
       "generatedRequestName": "GetEventsRequest",
       "response": {
-        "description": "List of events",
         "schema": {
           "generatedName": "GetEventsResponse",
           "schema": "EventPaginatedResult",
@@ -11469,6 +11468,7 @@
           "type": "reference"
         },
         "fullExamples": [],
+        "description": "List of events",
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -12076,7 +12076,6 @@
       "headers": [],
       "generatedRequestName": "GetEventRequest",
       "response": {
-        "description": "A single event",
         "schema": {
           "generatedName": "GetEventResponse",
           "schema": "Event",
@@ -12087,6 +12086,7 @@
           "type": "reference"
         },
         "fullExamples": [],
+        "description": "A single event",
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -12381,7 +12381,6 @@
       "headers": [],
       "generatedRequestName": "GetRequestRawBodyRequest",
       "response": {
-        "description": "A request raw body data",
         "schema": {
           "generatedName": "GetRequestRawBodyResponse",
           "schema": "RawBody",
@@ -12392,6 +12391,7 @@
           "type": "reference"
         },
         "fullExamples": [],
+        "description": "A request raw body data",
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -12523,7 +12523,6 @@
       "headers": [],
       "generatedRequestName": "RetryEventRequest",
       "response": {
-        "description": "Retried event with event attempt",
         "schema": {
           "generatedName": "RetryEventResponse",
           "schema": "RetriedEvent",
@@ -12534,6 +12533,7 @@
           "type": "reference"
         },
         "fullExamples": [],
+        "description": "Retried event with event attempt",
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -12966,7 +12966,6 @@
       "headers": [],
       "generatedRequestName": "MuteEventRequest",
       "response": {
-        "description": "A single event",
         "schema": {
           "generatedName": "MuteEventResponse",
           "schema": "Event",
@@ -12977,6 +12976,7 @@
           "type": "reference"
         },
         "fullExamples": [],
+        "description": "A single event",
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -15882,7 +15882,6 @@
       "headers": [],
       "generatedRequestName": "GetEventBulkRetriesRequest",
       "response": {
-        "description": "List of events bulk retries",
         "schema": {
           "generatedName": "GetEventBulkRetriesResponse",
           "schema": "BatchOperationPaginatedResult",
@@ -15893,6 +15892,7 @@
           "type": "reference"
         },
         "fullExamples": [],
+        "description": "List of events bulk retries",
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -17933,7 +17933,6 @@
         "type": "json"
       },
       "response": {
-        "description": "A single events bulk retry",
         "schema": {
           "generatedName": "CreateEventBulkRetryResponse",
           "schema": "BatchOperation",
@@ -17944,6 +17943,7 @@
           "type": "reference"
         },
         "fullExamples": [],
+        "description": "A single events bulk retry",
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -19801,7 +19801,6 @@
       "headers": [],
       "generatedRequestName": "GenerateEventBulkRetryPlanRequest",
       "response": {
-        "description": "Events bulk retry plan",
         "schema": {
           "generatedName": "GenerateEventBulkRetryPlanResponse",
           "schema": "BatchOperationPlan",
@@ -19812,6 +19811,7 @@
           "type": "reference"
         },
         "fullExamples": [],
+        "description": "Events bulk retry plan",
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -19993,7 +19993,6 @@
       "headers": [],
       "generatedRequestName": "GetEventBulkRetryRequest",
       "response": {
-        "description": "A single events bulk retry",
         "schema": {
           "generatedName": "GetEventBulkRetryResponse",
           "schema": "BatchOperation",
@@ -20004,6 +20003,7 @@
           "type": "reference"
         },
         "fullExamples": [],
+        "description": "A single events bulk retry",
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -20247,7 +20247,6 @@
       "headers": [],
       "generatedRequestName": "CancelEventBulkRetryRequest",
       "response": {
-        "description": "A single events bulk retry",
         "schema": {
           "generatedName": "CancelEventBulkRetryResponse",
           "schema": "BatchOperation",
@@ -20258,6 +20257,7 @@
           "type": "reference"
         },
         "fullExamples": [],
+        "description": "A single events bulk retry",
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -21432,7 +21432,6 @@
       "headers": [],
       "generatedRequestName": "GetIgnoredEventBulkRetriesRequest",
       "response": {
-        "description": "List of ignored events bulk retries",
         "schema": {
           "generatedName": "GetIgnoredEventBulkRetriesResponse",
           "schema": "BatchOperationPaginatedResult",
@@ -21443,6 +21442,7 @@
           "type": "reference"
         },
         "fullExamples": [],
+        "description": "List of ignored events bulk retries",
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -22043,7 +22043,6 @@
         "type": "json"
       },
       "response": {
-        "description": "A single ignored events bulk retry",
         "schema": {
           "generatedName": "CreateIgnoredEventBulkRetryResponse",
           "schema": "BatchOperation",
@@ -22054,6 +22053,7 @@
           "type": "reference"
         },
         "fullExamples": [],
+        "description": "A single ignored events bulk retry",
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -22471,7 +22471,6 @@
       "headers": [],
       "generatedRequestName": "GenerateIgnoredEventBulkRetryPlanRequest",
       "response": {
-        "description": "Ignored events bulk retry plan",
         "schema": {
           "generatedName": "GenerateIgnoredEventBulkRetryPlanResponse",
           "schema": "BatchOperationPlan",
@@ -22482,6 +22481,7 @@
           "type": "reference"
         },
         "fullExamples": [],
+        "description": "Ignored events bulk retry plan",
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -22663,7 +22663,6 @@
       "headers": [],
       "generatedRequestName": "GetIgnoredEventBulkRetryRequest",
       "response": {
-        "description": "A single ignored events bulk retry",
         "schema": {
           "generatedName": "GetIgnoredEventBulkRetryResponse",
           "schema": "BatchOperation",
@@ -22674,6 +22673,7 @@
           "type": "reference"
         },
         "fullExamples": [],
+        "description": "A single ignored events bulk retry",
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -22917,7 +22917,6 @@
       "headers": [],
       "generatedRequestName": "CancelIgnoredEventBulkRetryRequest",
       "response": {
-        "description": "A single ignored events bulk retry",
         "schema": {
           "generatedName": "CancelIgnoredEventBulkRetryResponse",
           "schema": "BatchOperation",
@@ -22928,6 +22927,7 @@
           "type": "reference"
         },
         "fullExamples": [],
+        "description": "A single ignored events bulk retry",
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -23197,7 +23197,6 @@
       "headers": [],
       "generatedRequestName": "GetIntegrationsRequest",
       "response": {
-        "description": "List of integrations",
         "schema": {
           "generatedName": "GetIntegrationsResponse",
           "schema": "IntegrationPaginatedResult",
@@ -23208,6 +23207,7 @@
           "type": "reference"
         },
         "fullExamples": [],
+        "description": "List of integrations",
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -23653,7 +23653,6 @@
         "type": "json"
       },
       "response": {
-        "description": "A single integration",
         "schema": {
           "generatedName": "CreateIntegrationResponse",
           "schema": "Integration",
@@ -23664,6 +23663,7 @@
           "type": "reference"
         },
         "fullExamples": [],
+        "description": "A single integration",
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -23963,7 +23963,6 @@
       "headers": [],
       "generatedRequestName": "GetIntegrationRequest",
       "response": {
-        "description": "A single integration",
         "schema": {
           "generatedName": "GetIntegrationResponse",
           "schema": "Integration",
@@ -23974,6 +23973,7 @@
           "type": "reference"
         },
         "fullExamples": [],
+        "description": "A single integration",
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -24350,7 +24350,6 @@
         "type": "json"
       },
       "response": {
-        "description": "A single integration",
         "schema": {
           "generatedName": "UpdateIntegrationResponse",
           "schema": "Integration",
@@ -24361,6 +24360,7 @@
           "type": "reference"
         },
         "fullExamples": [],
+        "description": "A single integration",
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -24670,7 +24670,6 @@
       "headers": [],
       "generatedRequestName": "DeleteIntegrationRequest",
       "response": {
-        "description": "An object with deleted integration id",
         "schema": {
           "generatedName": "DeleteIntegrationResponse",
           "schema": "DeletedIntegration",
@@ -24681,6 +24680,7 @@
           "type": "reference"
         },
         "fullExamples": [],
+        "description": "An object with deleted integration id",
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -24828,7 +24828,6 @@
       "headers": [],
       "generatedRequestName": "AttachIntegrationToSourceRequest",
       "response": {
-        "description": "Attach operation success status",
         "schema": {
           "generatedName": "AttachIntegrationToSourceResponse",
           "schema": "AttachedIntegrationToSource",
@@ -24839,6 +24838,7 @@
           "type": "reference"
         },
         "fullExamples": [],
+        "description": "Attach operation success status",
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -25043,7 +25043,6 @@
       "headers": [],
       "generatedRequestName": "DetachIntegrationToSourceRequest",
       "response": {
-        "description": "Detach operation success status",
         "schema": {
           "generatedName": "DetachIntegrationToSourceResponse",
           "schema": "DetachedIntegrationFromSource",
@@ -25054,6 +25053,7 @@
           "type": "reference"
         },
         "fullExamples": [],
+        "description": "Detach operation success status",
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -26657,7 +26657,6 @@
       "headers": [],
       "generatedRequestName": "GetIssuesRequest",
       "response": {
-        "description": "List of issues",
         "schema": {
           "generatedName": "GetIssuesResponse",
           "schema": "IssueWithDataPaginatedResult",
@@ -26668,6 +26667,7 @@
           "type": "reference"
         },
         "fullExamples": [],
+        "description": "List of issues",
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -28594,7 +28594,6 @@
       "headers": [],
       "generatedRequestName": "GetIssueCountRequest",
       "response": {
-        "description": "Issue count",
         "schema": {
           "generatedName": "GetIssueCountResponse",
           "schema": "IssueCount",
@@ -28605,6 +28604,7 @@
           "type": "reference"
         },
         "fullExamples": [],
+        "description": "Issue count",
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -28866,7 +28866,6 @@
       "headers": [],
       "generatedRequestName": "GetIssueRequest",
       "response": {
-        "description": "A single issue",
         "schema": {
           "generatedName": "GetIssueResponse",
           "schema": "IssueWithData",
@@ -28877,6 +28876,7 @@
           "type": "reference"
         },
         "fullExamples": [],
+        "description": "A single issue",
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -29489,7 +29489,6 @@
         "type": "json"
       },
       "response": {
-        "description": "Updated issue",
         "schema": {
           "generatedName": "UpdateIssueResponse",
           "schema": "Issue",
@@ -29500,6 +29499,7 @@
           "type": "reference"
         },
         "fullExamples": [],
+        "description": "Updated issue",
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -29828,7 +29828,6 @@
       "headers": [],
       "generatedRequestName": "DismissIssueRequest",
       "response": {
-        "description": "Dismissed issue",
         "schema": {
           "generatedName": "DismissIssueResponse",
           "schema": "Issue",
@@ -29839,6 +29838,7 @@
           "type": "reference"
         },
         "fullExamples": [],
+        "description": "Dismissed issue",
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -31544,7 +31544,6 @@
       "headers": [],
       "generatedRequestName": "GetRequestsRequest",
       "response": {
-        "description": "List of requests",
         "schema": {
           "generatedName": "GetRequestsResponse",
           "schema": "RequestPaginatedResult",
@@ -31555,6 +31554,7 @@
           "type": "reference"
         },
         "fullExamples": [],
+        "description": "List of requests",
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -32082,7 +32082,6 @@
       "headers": [],
       "generatedRequestName": "GetRequestRequest",
       "response": {
-        "description": "A single request",
         "schema": {
           "generatedName": "GetRequestResponse",
           "schema": "Request",
@@ -32093,6 +32092,7 @@
           "type": "reference"
         },
         "fullExamples": [],
+        "description": "A single request",
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -32370,7 +32370,6 @@
       "headers": [],
       "generatedRequestName": "GetRequestRawBodyRequest",
       "response": {
-        "description": "A request raw body data",
         "schema": {
           "generatedName": "GetRequestRawBodyResponse",
           "schema": "RawBody",
@@ -32381,6 +32380,7 @@
           "type": "reference"
         },
         "fullExamples": [],
+        "description": "A request raw body data",
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -32558,7 +32558,6 @@
         "type": "json"
       },
       "response": {
-        "description": "Retry request operation result",
         "schema": {
           "generatedName": "RetryRequestResponse",
           "schema": "RetryRequest",
@@ -32569,6 +32568,7 @@
           "type": "reference"
         },
         "fullExamples": [],
+        "description": "Retry request operation result",
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -34907,7 +34907,6 @@
       "headers": [],
       "generatedRequestName": "GetRequestEventsRequest",
       "response": {
-        "description": "List of events",
         "schema": {
           "generatedName": "GetRequestEventsResponse",
           "schema": "EventPaginatedResult",
@@ -34918,6 +34917,7 @@
           "type": "reference"
         },
         "fullExamples": [],
+        "description": "List of events",
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -35827,7 +35827,6 @@
       "headers": [],
       "generatedRequestName": "GetRequestIgnoredEventsRequest",
       "response": {
-        "description": "List of ignored events",
         "schema": {
           "generatedName": "GetRequestIgnoredEventsResponse",
           "schema": "IgnoredEventPaginatedResult",
@@ -35838,6 +35837,7 @@
           "type": "reference"
         },
         "fullExamples": [],
+        "description": "List of ignored events",
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -38465,7 +38465,6 @@
       "headers": [],
       "generatedRequestName": "GetRequestBulkRetriesRequest",
       "response": {
-        "description": "List of request bulk retries",
         "schema": {
           "generatedName": "GetRequestBulkRetriesResponse",
           "schema": "BatchOperationPaginatedResult",
@@ -38476,6 +38475,7 @@
           "type": "reference"
         },
         "fullExamples": [],
+        "description": "List of request bulk retries",
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -40164,7 +40164,6 @@
         "type": "json"
       },
       "response": {
-        "description": "A single requests bulk retry",
         "schema": {
           "generatedName": "CreateRequestBulkRetryResponse",
           "schema": "BatchOperation",
@@ -40175,6 +40174,7 @@
           "type": "reference"
         },
         "fullExamples": [],
+        "description": "A single requests bulk retry",
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -41680,7 +41680,6 @@
       "headers": [],
       "generatedRequestName": "GenerateRequestBulkRetryPlanRequest",
       "response": {
-        "description": "Requests bulk retry plan",
         "schema": {
           "generatedName": "GenerateRequestBulkRetryPlanResponse",
           "schema": "BatchOperationPlan",
@@ -41691,6 +41690,7 @@
           "type": "reference"
         },
         "fullExamples": [],
+        "description": "Requests bulk retry plan",
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -41872,7 +41872,6 @@
       "headers": [],
       "generatedRequestName": "GetRequestBulkRetryRequest",
       "response": {
-        "description": "A single requests bulk retry",
         "schema": {
           "generatedName": "GetRequestBulkRetryResponse",
           "schema": "BatchOperation",
@@ -41883,6 +41882,7 @@
           "type": "reference"
         },
         "fullExamples": [],
+        "description": "A single requests bulk retry",
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -42126,7 +42126,6 @@
       "headers": [],
       "generatedRequestName": "CancelRequestBulkRetryRequest",
       "response": {
-        "description": "A single requests bulk retry",
         "schema": {
           "generatedName": "CancelRequestBulkRetryResponse",
           "schema": "BatchOperation",
@@ -42137,6 +42136,7 @@
           "type": "reference"
         },
         "fullExamples": [],
+        "description": "A single requests bulk retry",
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -43207,7 +43207,6 @@
       "headers": [],
       "generatedRequestName": "GetRulesetsRequest",
       "response": {
-        "description": "List of rulesets",
         "schema": {
           "generatedName": "GetRulesetsResponse",
           "schema": "RulesetPaginatedResult",
@@ -43218,6 +43217,7 @@
           "type": "reference"
         },
         "fullExamples": [],
+        "description": "List of rulesets",
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -43666,7 +43666,6 @@
         "type": "json"
       },
       "response": {
-        "description": "A single ruleset",
         "schema": {
           "generatedName": "CreateRulesetResponse",
           "value": {
@@ -43681,6 +43680,7 @@
           "type": "nullable"
         },
         "fullExamples": [],
+        "description": "A single ruleset",
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -44010,7 +44010,6 @@
         "type": "json"
       },
       "response": {
-        "description": "A single ruleset",
         "schema": {
           "generatedName": "UpsertRulesetResponse",
           "value": {
@@ -44025,6 +44024,7 @@
           "type": "nullable"
         },
         "fullExamples": [],
+        "description": "A single ruleset",
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -44284,7 +44284,6 @@
       "headers": [],
       "generatedRequestName": "GetRulesetRequest",
       "response": {
-        "description": "A single ruleset",
         "schema": {
           "generatedName": "GetRulesetResponse",
           "value": {
@@ -44299,6 +44298,7 @@
           "type": "nullable"
         },
         "fullExamples": [],
+        "description": "A single ruleset",
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -44630,7 +44630,6 @@
         "type": "json"
       },
       "response": {
-        "description": "A single ruleset",
         "schema": {
           "generatedName": "UpdateRulesetResponse",
           "value": {
@@ -44645,6 +44644,7 @@
           "type": "nullable"
         },
         "fullExamples": [],
+        "description": "A single ruleset",
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -44954,7 +44954,6 @@
       "headers": [],
       "generatedRequestName": "ArchiveRulesetRequest",
       "response": {
-        "description": "A single ruleset",
         "schema": {
           "generatedName": "ArchiveRulesetResponse",
           "value": {
@@ -44969,6 +44968,7 @@
           "type": "nullable"
         },
         "fullExamples": [],
+        "description": "A single ruleset",
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -45180,7 +45180,6 @@
       "headers": [],
       "generatedRequestName": "UnarchiveRulesetRequest",
       "response": {
-        "description": "A single ruleset",
         "schema": {
           "generatedName": "UnarchiveRulesetResponse",
           "value": {
@@ -45195,6 +45194,7 @@
           "type": "nullable"
         },
         "fullExamples": [],
+        "description": "A single ruleset",
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -46073,7 +46073,6 @@
       "headers": [],
       "generatedRequestName": "GetSourcesRequest",
       "response": {
-        "description": "List of sources",
         "schema": {
           "generatedName": "GetSourcesResponse",
           "schema": "SourcePaginatedResult",
@@ -46084,6 +46083,7 @@
           "type": "reference"
         },
         "fullExamples": [],
+        "description": "List of sources",
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -46511,7 +46511,6 @@
         "type": "json"
       },
       "response": {
-        "description": "A single source",
         "schema": {
           "generatedName": "CreateSourceResponse",
           "schema": "Source",
@@ -46522,6 +46521,7 @@
           "type": "reference"
         },
         "fullExamples": [],
+        "description": "A single source",
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -46806,7 +46806,6 @@
         "type": "json"
       },
       "response": {
-        "description": "A single source",
         "schema": {
           "generatedName": "UpsertSourceResponse",
           "schema": "Source",
@@ -46817,6 +46816,7 @@
           "type": "reference"
         },
         "fullExamples": [],
+        "description": "A single source",
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -47077,7 +47077,6 @@
       "headers": [],
       "generatedRequestName": "GetSourceRequest",
       "response": {
-        "description": "A single source",
         "schema": {
           "generatedName": "GetSourceResponse",
           "schema": "Source",
@@ -47088,6 +47087,7 @@
           "type": "reference"
         },
         "fullExamples": [],
+        "description": "A single source",
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -47374,7 +47374,6 @@
         "type": "json"
       },
       "response": {
-        "description": "A single source",
         "schema": {
           "generatedName": "UpdateSourceResponse",
           "schema": "Source",
@@ -47385,6 +47384,7 @@
           "type": "reference"
         },
         "fullExamples": [],
+        "description": "A single source",
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -47695,7 +47695,6 @@
       "headers": [],
       "generatedRequestName": "ArchiveSourceRequest",
       "response": {
-        "description": "A single source",
         "schema": {
           "generatedName": "ArchiveSourceResponse",
           "schema": "Source",
@@ -47706,6 +47705,7 @@
           "type": "reference"
         },
         "fullExamples": [],
+        "description": "A single source",
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -47918,7 +47918,6 @@
       "headers": [],
       "generatedRequestName": "UnarchiveSourceRequest",
       "response": {
-        "description": "A single source",
         "schema": {
           "generatedName": "UnarchiveSourceResponse",
           "schema": "Source",
@@ -47929,6 +47928,7 @@
           "type": "reference"
         },
         "fullExamples": [],
+        "description": "A single source",
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -48217,7 +48217,6 @@
         "type": "json"
       },
       "response": {
-        "description": "Toggle operation status response",
         "schema": {
           "generatedName": "ToggleWebhookNotificationsResponse",
           "schema": "ToggleWebhookNotifications",
@@ -48228,6 +48227,7 @@
           "type": "reference"
         },
         "fullExamples": [],
+        "description": "Toggle operation status response",
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -48608,7 +48608,6 @@
       "headers": [],
       "generatedRequestName": "GetTransformationsRequest",
       "response": {
-        "description": "List of transformations",
         "schema": {
           "generatedName": "GetTransformationsResponse",
           "schema": "TransformationPaginatedResult",
@@ -48619,6 +48618,7 @@
           "type": "reference"
         },
         "fullExamples": [],
+        "description": "List of transformations",
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -49056,7 +49056,6 @@
         "type": "json"
       },
       "response": {
-        "description": "A single transformation",
         "schema": {
           "generatedName": "CreateTransformationResponse",
           "schema": "Transformation",
@@ -49067,6 +49066,7 @@
           "type": "reference"
         },
         "fullExamples": [],
+        "description": "A single transformation",
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -49416,7 +49416,6 @@
         "type": "json"
       },
       "response": {
-        "description": "A single transformation",
         "schema": {
           "generatedName": "UpsertTransformationResponse",
           "schema": "Transformation",
@@ -49427,6 +49426,7 @@
           "type": "reference"
         },
         "fullExamples": [],
+        "description": "A single transformation",
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -49680,7 +49680,6 @@
       "headers": [],
       "generatedRequestName": "GetTransformationRequest",
       "response": {
-        "description": "A single transformation",
         "schema": {
           "generatedName": "GetTransformationResponse",
           "schema": "Transformation",
@@ -49691,6 +49690,7 @@
           "type": "reference"
         },
         "fullExamples": [],
+        "description": "A single transformation",
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -50014,7 +50014,6 @@
         "type": "json"
       },
       "response": {
-        "description": "A single transformation",
         "schema": {
           "generatedName": "UpdateTransformationResponse",
           "schema": "Transformation",
@@ -50025,6 +50024,7 @@
           "type": "reference"
         },
         "fullExamples": [],
+        "description": "A single transformation",
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -50619,7 +50619,6 @@
         "type": "json"
       },
       "response": {
-        "description": "Transformation run output",
         "schema": {
           "generatedName": "TestTransformationResponse",
           "schema": "TransformationExecutorOutput",
@@ -50630,6 +50629,7 @@
           "type": "reference"
         },
         "fullExamples": [],
+        "description": "Transformation run output",
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -51425,7 +51425,6 @@
       "headers": [],
       "generatedRequestName": "GetTransformationExecutionsRequest",
       "response": {
-        "description": "List of transformation executions",
         "schema": {
           "generatedName": "GetTransformationExecutionsResponse",
           "schema": "TransformationExecutionPaginatedResult",
@@ -51436,6 +51435,7 @@
           "type": "reference"
         },
         "fullExamples": [],
+        "description": "List of transformation executions",
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -51880,7 +51880,6 @@
       "headers": [],
       "generatedRequestName": "GetTransformationExecutionRequest",
       "response": {
-        "description": "A single transformation execution",
         "schema": {
           "generatedName": "GetTransformationExecutionResponse",
           "schema": "TransformationExecution",
@@ -51891,6 +51890,7 @@
           "type": "reference"
         },
         "fullExamples": [],
+        "description": "A single transformation execution",
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -53096,7 +53096,6 @@
       "headers": [],
       "generatedRequestName": "GetConnectionsRequest",
       "response": {
-        "description": "List of connections",
         "schema": {
           "generatedName": "GetConnectionsResponse",
           "schema": "ConnectionPaginatedResult",
@@ -53107,6 +53106,7 @@
           "type": "reference"
         },
         "fullExamples": [],
+        "description": "List of connections",
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -54160,7 +54160,6 @@
         "type": "json"
       },
       "response": {
-        "description": "A single connection",
         "schema": {
           "generatedName": "CreateConnectionResponse",
           "schema": "Connection",
@@ -54171,6 +54170,7 @@
           "type": "reference"
         },
         "fullExamples": [],
+        "description": "A single connection",
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -55171,7 +55171,6 @@
         "type": "json"
       },
       "response": {
-        "description": "A single connection",
         "schema": {
           "generatedName": "UpsertConnectionResponse",
           "schema": "Connection",
@@ -55182,6 +55181,7 @@
           "type": "reference"
         },
         "fullExamples": [],
+        "description": "A single connection",
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -55729,7 +55729,6 @@
       "headers": [],
       "generatedRequestName": "GetConnectionRequest",
       "response": {
-        "description": "A single connection",
         "schema": {
           "generatedName": "GetConnectionResponse",
           "schema": "Connection",
@@ -55740,6 +55739,7 @@
           "type": "reference"
         },
         "fullExamples": [],
+        "description": "A single connection",
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -56431,7 +56431,6 @@
         "type": "json"
       },
       "response": {
-        "description": "A single connection",
         "schema": {
           "generatedName": "UpdateConnectionResponse",
           "schema": "Connection",
@@ -56442,6 +56441,7 @@
           "type": "reference"
         },
         "fullExamples": [],
+        "description": "A single connection",
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -57039,7 +57039,6 @@
       "headers": [],
       "generatedRequestName": "ArchiveConnectionRequest",
       "response": {
-        "description": "A single connection",
         "schema": {
           "generatedName": "ArchiveConnectionResponse",
           "schema": "Connection",
@@ -57050,6 +57049,7 @@
           "type": "reference"
         },
         "fullExamples": [],
+        "description": "A single connection",
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -57549,7 +57549,6 @@
       "headers": [],
       "generatedRequestName": "UnarchiveConnectionRequest",
       "response": {
-        "description": "A single connection",
         "schema": {
           "generatedName": "UnarchiveConnectionResponse",
           "schema": "Connection",
@@ -57560,6 +57559,7 @@
           "type": "reference"
         },
         "fullExamples": [],
+        "description": "A single connection",
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -58059,7 +58059,6 @@
       "headers": [],
       "generatedRequestName": "PauseConnectionRequest",
       "response": {
-        "description": "A single connection",
         "schema": {
           "generatedName": "PauseConnectionResponse",
           "schema": "Connection",
@@ -58070,6 +58069,7 @@
           "type": "reference"
         },
         "fullExamples": [],
+        "description": "A single connection",
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -58569,7 +58569,6 @@
       "headers": [],
       "generatedRequestName": "UnpauseConnectionRequest",
       "response": {
-        "description": "A single connection",
         "schema": {
           "generatedName": "UnpauseConnectionResponse",
           "schema": "Connection",
@@ -58580,6 +58579,7 @@
           "type": "reference"
         },
         "fullExamples": [],
+        "description": "A single connection",
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"

@@ -213,7 +213,6 @@
         "type": "json"
       },
       "response": {
-        "description": "",
         "schema": {
           "generatedName": "UserResponse",
           "schema": "User",
@@ -224,6 +223,7 @@
           "type": "reference"
         },
         "fullExamples": [],
+        "description": "",
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -498,7 +498,6 @@
         "type": "json"
       },
       "response": {
-        "description": "",
         "schema": {
           "generatedName": "UserV2Response",
           "schema": "User-2",
@@ -509,6 +508,7 @@
           "type": "reference"
         },
         "fullExamples": [],
+        "description": "",
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -861,53 +861,53 @@
         "type": "json"
       },
       "response": {
-        "description": "",
         "schema": {
-          "allOf": [],
           "properties": [
             {
-              "conflict": {},
-              "generatedName": "userV3ResponseId",
               "key": "id",
               "schema": {
                 "generatedName": "UserV3ResponseId",
                 "value": {
+                  "generatedName": "UserV3ResponseId",
                   "schema": {
                     "format": "uuid",
                     "type": "string"
                   },
-                  "generatedName": "UserV3ResponseId",
                   "groupName": [],
                   "type": "primitive"
                 },
                 "groupName": [],
                 "type": "optional"
               },
-              "audiences": []
+              "audiences": [],
+              "conflict": {},
+              "generatedName": "userV3ResponseId"
             },
             {
-              "conflict": {},
-              "generatedName": "userV3ResponseInline",
               "key": "inline",
               "schema": {
                 "generatedName": "UserV3ResponseInline",
                 "value": {
+                  "generatedName": "UserV3ResponseInline",
                   "schema": {
                     "type": "boolean"
                   },
-                  "generatedName": "UserV3ResponseInline",
                   "groupName": [],
                   "type": "primitive"
                 },
                 "groupName": [],
                 "type": "optional"
               },
-              "audiences": []
+              "audiences": [],
+              "conflict": {},
+              "generatedName": "userV3ResponseInline"
             }
           ],
-          "allOfPropertyConflicts": [],
           "generatedName": "UserV3Response",
+          "allOf": [],
+          "allOfPropertyConflicts": [],
           "groupName": [],
+          "fullExamples": [],
           "additionalProperties": false,
           "source": {
             "file": "../openapi.yml",
@@ -916,6 +916,7 @@
           "type": "object"
         },
         "fullExamples": [],
+        "description": "",
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"

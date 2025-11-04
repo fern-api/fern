@@ -62,7 +62,6 @@
         "type": "octetStream"
       },
       "response": {
-        "description": "File uploaded successfully",
         "schema": {
           "generatedName": "FilesUploadResponse",
           "schema": "UploadedFile",
@@ -73,6 +72,7 @@
           "type": "reference"
         },
         "fullExamples": [],
+        "description": "File uploaded successfully",
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -493,7 +493,6 @@
       "headers": [],
       "generatedRequestName": "TranscriptListRequest",
       "response": {
-        "description": "A list of transcripts filtered by `limit` and `status`",
         "schema": {
           "generatedName": "TranscriptListResponse",
           "schema": "TranscriptList",
@@ -504,6 +503,7 @@
           "type": "reference"
         },
         "fullExamples": [],
+        "description": "A list of transcripts filtered by `limit` and `status`",
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -914,7 +914,6 @@
         "type": "json"
       },
       "response": {
-        "description": "Transcript created and queued for processing.",
         "schema": {
           "generatedName": "TranscriptCreateResponse",
           "schema": "Transcript",
@@ -925,6 +924,7 @@
           "type": "reference"
         },
         "fullExamples": [],
+        "description": "Transcript created and queued for processing.",
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -2051,7 +2051,6 @@
       "headers": [],
       "generatedRequestName": "TranscriptGetRequest",
       "response": {
-        "description": "The transcript resource",
         "schema": {
           "generatedName": "TranscriptGetResponse",
           "schema": "Transcript",
@@ -2062,6 +2061,7 @@
           "type": "reference"
         },
         "fullExamples": [],
+        "description": "The transcript resource",
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -3187,7 +3187,6 @@
       "headers": [],
       "generatedRequestName": "TranscriptDeleteRequest",
       "response": {
-        "description": "The deleted transcript response.",
         "schema": {
           "generatedName": "TranscriptDeleteResponse",
           "schema": "Transcript",
@@ -3198,6 +3197,7 @@
           "type": "reference"
         },
         "fullExamples": [],
+        "description": "The deleted transcript response.",
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -4608,7 +4608,6 @@
       "headers": [],
       "generatedRequestName": "TranscriptGetSentencesRequest",
       "response": {
-        "description": "Exported sentences",
         "schema": {
           "generatedName": "TranscriptGetSentencesResponse",
           "schema": "SentencesResponse",
@@ -4619,6 +4618,7 @@
           "type": "reference"
         },
         "fullExamples": [],
+        "description": "Exported sentences",
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -4988,7 +4988,6 @@
       "headers": [],
       "generatedRequestName": "TranscriptGetParagraphsRequest",
       "response": {
-        "description": "Exported paragraphs",
         "schema": {
           "generatedName": "TranscriptGetParagraphsResponse",
           "schema": "ParagraphsResponse",
@@ -4999,6 +4998,7 @@
           "type": "reference"
         },
         "fullExamples": [],
+        "description": "Exported paragraphs",
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -5390,7 +5390,6 @@
       "headers": [],
       "generatedRequestName": "TranscriptWordSearchRequest",
       "response": {
-        "description": "Word search response",
         "schema": {
           "generatedName": "TranscriptWordSearchResponse",
           "schema": "WordSearchResponse",
@@ -5401,6 +5400,7 @@
           "type": "reference"
         },
         "fullExamples": [],
+        "description": "Word search response",
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -5646,7 +5646,6 @@
       "headers": [],
       "generatedRequestName": "TranscriptGetRedactedAudioRequest",
       "response": {
-        "description": "The redacted audio object containing the status and URL to the redacted audio.",
         "schema": {
           "generatedName": "TranscriptGetRedactedAudioResponse",
           "schema": "RedactedAudioResponse",
@@ -5657,6 +5656,7 @@
           "type": "reference"
         },
         "fullExamples": [],
+        "description": "The redacted audio object containing the status and URL to the redacted audio.",
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -5945,7 +5945,6 @@
         "type": "json"
       },
       "response": {
-        "description": "Temporary authentication token generated.",
         "schema": {
           "generatedName": "RealtimeCreateTemporaryTokenResponse",
           "schema": "RealtimeTemporaryTokenResponse",
@@ -5956,6 +5955,7 @@
           "type": "reference"
         },
         "fullExamples": [],
+        "description": "Temporary authentication token generated.",
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -6238,7 +6238,6 @@
         "type": "json"
       },
       "response": {
-        "description": "LeMUR summary response",
         "schema": {
           "generatedName": "LemurSummaryResponse",
           "schema": "LemurSummaryResponse",
@@ -6249,6 +6248,7 @@
           "type": "reference"
         },
         "fullExamples": [],
+        "description": "LeMUR summary response",
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -6543,7 +6543,6 @@
         "type": "json"
       },
       "response": {
-        "description": "LeMUR question & answer response",
         "schema": {
           "generatedName": "LemurQuestionAnswerResponse",
           "schema": "LemurQuestionAnswerResponse",
@@ -6554,6 +6553,7 @@
           "type": "reference"
         },
         "fullExamples": [],
+        "description": "LeMUR question & answer response",
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -6882,7 +6882,6 @@
         "type": "json"
       },
       "response": {
-        "description": "LeMUR action items response",
         "schema": {
           "generatedName": "LemurActionItemsResponse",
           "schema": "LemurActionItemsResponse",
@@ -6893,6 +6892,7 @@
           "type": "reference"
         },
         "fullExamples": [],
+        "description": "LeMUR action items response",
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -7187,7 +7187,6 @@
         "type": "json"
       },
       "response": {
-        "description": "LeMUR task response",
         "schema": {
           "generatedName": "LemurTaskResponse",
           "schema": "LemurTaskResponse",
@@ -7198,6 +7197,7 @@
           "type": "reference"
         },
         "fullExamples": [],
+        "description": "LeMUR task response",
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -7497,7 +7497,6 @@
       "headers": [],
       "generatedRequestName": "LemurPurgeRequestDataRequest",
       "response": {
-        "description": "LeMUR request data deleted.",
         "schema": {
           "generatedName": "LemurPurgeRequestDataResponse",
           "schema": "PurgeLemurRequestDataResponse",
@@ -7508,6 +7507,7 @@
           "type": "reference"
         },
         "fullExamples": [],
+        "description": "LeMUR request data deleted.",
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"

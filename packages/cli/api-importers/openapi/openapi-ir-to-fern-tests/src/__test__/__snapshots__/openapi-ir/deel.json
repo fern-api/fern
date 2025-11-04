@@ -125,7 +125,6 @@
         "type": "json"
       },
       "response": {
-        "description": "Hris direct employee object that was created or edited",
         "schema": {
           "generatedName": "CreateDirectEmployeeResponse",
           "schema": "HrisDirectEmployeeContainer",
@@ -136,6 +135,7 @@
           "type": "reference"
         },
         "fullExamples": [],
+        "description": "Hris direct employee object that was created or edited",
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -676,7 +676,6 @@
       "headers": [],
       "generatedRequestName": "GetEorCountryValidationsRequest",
       "response": {
-        "description": "Successful operation.",
         "schema": {
           "generatedName": "GetEorCountryValidationsResponse",
           "schema": "EorCountryValidationsContainer",
@@ -687,6 +686,7 @@
           "type": "reference"
         },
         "fullExamples": [],
+        "description": "Successful operation.",
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -1118,7 +1118,6 @@
         "type": "json"
       },
       "response": {
-        "description": "Successful operation.",
         "schema": {
           "generatedName": "CreateEorContractResponse",
           "schema": "EorContractCreatedContainer",
@@ -1129,6 +1128,7 @@
           "type": "reference"
         },
         "fullExamples": [],
+        "description": "Successful operation.",
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -1547,7 +1547,6 @@
         "type": "json"
       },
       "response": {
-        "description": "Successful operation.",
         "schema": {
           "generatedName": "CreateContractTimeBasedResponse",
           "schema": "ContractContainer_pay_as_you_go_time_based",
@@ -1558,6 +1557,7 @@
           "type": "reference"
         },
         "fullExamples": [],
+        "description": "Successful operation.",
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -2456,7 +2456,6 @@
         "type": "json"
       },
       "response": {
-        "description": "Successful operation.",
         "schema": {
           "generatedName": "CreateContractTaskBasedResponse",
           "schema": "ContractContainer_payg_tasks",
@@ -2467,6 +2466,7 @@
           "type": "reference"
         },
         "fullExamples": [],
+        "description": "Successful operation.",
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -3354,7 +3354,6 @@
         "type": "json"
       },
       "response": {
-        "description": "Successful operation.",
         "schema": {
           "generatedName": "CreateContractMilestoneBasedResponse",
           "schema": "ContractContainer_payg_milestones",
@@ -3365,6 +3364,7 @@
           "type": "reference"
         },
         "fullExamples": [],
+        "description": "Successful operation.",
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -4252,7 +4252,6 @@
         "type": "json"
       },
       "response": {
-        "description": "Successful operation.",
         "schema": {
           "generatedName": "CreateContractFixedRateResponse",
           "schema": "ContractContainer_ongoing_time_based",
@@ -4263,6 +4262,7 @@
           "type": "reference"
         },
         "fullExamples": [],
+        "description": "Successful operation.",
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -5375,7 +5375,6 @@
       "headers": [],
       "generatedRequestName": "GetContractListRequest",
       "response": {
-        "description": "Successful operation.",
         "schema": {
           "generatedName": "GetContractListResponse",
           "schema": "ContractListContainer",
@@ -5386,6 +5385,7 @@
           "type": "reference"
         },
         "fullExamples": [],
+        "description": "Successful operation.",
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -5849,7 +5849,6 @@
         "type": "json"
       },
       "response": {
-        "description": "Successful operation.",
         "schema": {
           "generatedName": "CreateContractResponse",
           "schema": "ContractContainer",
@@ -5860,6 +5859,7 @@
           "type": "reference"
         },
         "fullExamples": [],
+        "description": "Successful operation.",
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -6757,7 +6757,6 @@
       "headers": [],
       "generatedRequestName": "GetContractByIdRequest",
       "response": {
-        "description": "Successful operation.",
         "schema": {
           "generatedName": "GetContractByIdResponse",
           "schema": "ContractContainer",
@@ -6768,6 +6767,7 @@
           "type": "reference"
         },
         "fullExamples": [],
+        "description": "Successful operation.",
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -7578,7 +7578,6 @@
         "type": "json"
       },
       "response": {
-        "description": "Successful operation.",
         "schema": {
           "generatedName": "AttachExternalIdResponse",
           "schema": "GenericResultCreated",
@@ -7589,6 +7588,7 @@
           "type": "reference"
         },
         "fullExamples": [],
+        "description": "Successful operation.",
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -7901,7 +7901,6 @@
         "type": "multipart"
       },
       "response": {
-        "description": "Successful operation.",
         "schema": {
           "generatedName": "AddContractDocumentResponse",
           "schema": "ContractDocumentContainer",
@@ -7912,6 +7911,7 @@
           "type": "reference"
         },
         "fullExamples": [],
+        "description": "Successful operation.",
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -8219,7 +8219,6 @@
         "type": "multipart"
       },
       "response": {
-        "description": "Successful operation.",
         "schema": {
           "generatedName": "EditContractDocumentResponse",
           "schema": "ContractDocumentContainer",
@@ -8230,6 +8229,7 @@
           "type": "reference"
         },
         "fullExamples": [],
+        "description": "Successful operation.",
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -8796,7 +8796,6 @@
       "headers": [],
       "generatedRequestName": "GetTasksByContractRequest",
       "response": {
-        "description": "Successful operation.",
         "schema": {
           "generatedName": "GetTasksByContractResponse",
           "schema": "TaskListContainer",
@@ -8807,6 +8806,7 @@
           "type": "reference"
         },
         "fullExamples": [],
+        "description": "Successful operation.",
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -9150,7 +9150,6 @@
         "type": "json"
       },
       "response": {
-        "description": "Successful operation.",
         "schema": {
           "generatedName": "CreateContractPgoTakResponse",
           "schema": "GenericResultCreated",
@@ -9161,6 +9160,7 @@
           "type": "reference"
         },
         "fullExamples": [],
+        "description": "Successful operation.",
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -9459,7 +9459,6 @@
       "headers": [],
       "generatedRequestName": "GetAlternateEmailsByContractIdRequest",
       "response": {
-        "description": "Successful operation.",
         "schema": {
           "generatedName": "GetAlternateEmailsByContractIdResponse",
           "schema": "AlternateEmailList",
@@ -9470,6 +9469,7 @@
           "type": "reference"
         },
         "fullExamples": [],
+        "description": "Successful operation.",
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -9721,7 +9721,6 @@
         "type": "json"
       },
       "response": {
-        "description": "Successful operation.",
         "schema": {
           "generatedName": "CreateTaskManyReviewResponse",
           "schema": "TaskListContainer",
@@ -9732,6 +9731,7 @@
           "type": "reference"
         },
         "fullExamples": [],
+        "description": "Successful operation.",
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -10123,7 +10123,6 @@
         "type": "json"
       },
       "response": {
-        "description": "Successful operation.",
         "schema": {
           "generatedName": "CreateTaskReviewByIdResponse",
           "schema": "TaskListContainer",
@@ -10134,6 +10133,7 @@
           "type": "reference"
         },
         "fullExamples": [],
+        "description": "Successful operation.",
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -10519,7 +10519,6 @@
       "headers": [],
       "generatedRequestName": "DeleteContractPgoTakRequest",
       "response": {
-        "description": "Successful operation.",
         "schema": {
           "generatedName": "DeleteContractPgoTakResponse",
           "schema": "GenericResultDeleted",
@@ -10530,6 +10529,7 @@
           "type": "reference"
         },
         "fullExamples": [],
+        "description": "Successful operation.",
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -10844,7 +10844,6 @@
         "type": "json"
       },
       "response": {
-        "description": "Successful operation.",
         "schema": {
           "generatedName": "AmendContractDetailsResponse",
           "schema": "GenericResultCreated",
@@ -10855,6 +10854,7 @@
           "type": "reference"
         },
         "fullExamples": [],
+        "description": "Successful operation.",
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -11157,7 +11157,6 @@
         "type": "json"
       },
       "response": {
-        "description": "Successful operation.",
         "schema": {
           "generatedName": "TerminateContractResponse",
           "schema": "ContractTerminationResultContainer",
@@ -11168,6 +11167,7 @@
           "type": "reference"
         },
         "fullExamples": [],
+        "description": "Successful operation.",
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -11477,7 +11477,6 @@
         "type": "json"
       },
       "response": {
-        "description": "Successful operation.",
         "schema": {
           "generatedName": "SignContractResponse",
           "schema": "GenericResultCreated",
@@ -11488,6 +11487,7 @@
           "type": "reference"
         },
         "fullExamples": [],
+        "description": "Successful operation.",
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -11779,7 +11779,6 @@
       "headers": [],
       "generatedRequestName": "ArchiveContractRequest",
       "response": {
-        "description": "Successful operation.",
         "schema": {
           "generatedName": "ArchiveContractResponse",
           "schema": "GenericResultUpdated",
@@ -11790,6 +11789,7 @@
           "type": "reference"
         },
         "fullExamples": [],
+        "description": "Successful operation.",
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -12033,7 +12033,6 @@
         "type": "json"
       },
       "response": {
-        "description": "Successful operation.",
         "schema": {
           "generatedName": "InviteToSignContractResponse",
           "schema": "GenericResultCreated",
@@ -12044,6 +12043,7 @@
           "type": "reference"
         },
         "fullExamples": [],
+        "description": "Successful operation.",
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -12342,7 +12342,6 @@
       "headers": [],
       "generatedRequestName": "UninviteToSignContractRequest",
       "response": {
-        "description": "Successful operation.",
         "schema": {
           "generatedName": "UninviteToSignContractResponse",
           "schema": "GenericResultDeleted",
@@ -12353,6 +12352,7 @@
           "type": "reference"
         },
         "fullExamples": [],
+        "description": "Successful operation.",
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -12777,7 +12777,6 @@
       "headers": [],
       "generatedRequestName": "GetTimesheetsByContractRequest",
       "response": {
-        "description": "Successful operation.",
         "schema": {
           "generatedName": "GetTimesheetsByContractResponse",
           "schema": "TimesheetListContainer",
@@ -12788,6 +12787,7 @@
           "type": "reference"
         },
         "fullExamples": [],
+        "description": "Successful operation.",
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -13332,7 +13332,6 @@
       "headers": [],
       "generatedRequestName": "GetMilestonesByContractRequest",
       "response": {
-        "description": "Successful operation.",
         "schema": {
           "generatedName": "GetMilestonesByContractResponse",
           "schema": "MilestoneListContainer",
@@ -13343,6 +13342,7 @@
           "type": "reference"
         },
         "fullExamples": [],
+        "description": "Successful operation.",
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -13722,7 +13722,6 @@
         "type": "json"
       },
       "response": {
-        "description": "Successful operation.",
         "schema": {
           "generatedName": "CreateMilestoneResponse",
           "schema": "GenericResultCreated",
@@ -13733,6 +13732,7 @@
           "type": "reference"
         },
         "fullExamples": [],
+        "description": "Successful operation.",
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -14054,7 +14054,6 @@
       "headers": [],
       "generatedRequestName": "GetMilestonesByContractAndIdRequest",
       "response": {
-        "description": "Successful operation.",
         "schema": {
           "generatedName": "GetMilestonesByContractAndIdResponse",
           "schema": "MilestoneContainer",
@@ -14065,6 +14064,7 @@
           "type": "reference"
         },
         "fullExamples": [],
+        "description": "Successful operation.",
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -14446,7 +14446,6 @@
       "headers": [],
       "generatedRequestName": "DeleteMilestoneByIdRequest",
       "response": {
-        "description": "Successful operation.",
         "schema": {
           "generatedName": "DeleteMilestoneByIdResponse",
           "schema": "GenericResultDeleted",
@@ -14457,6 +14456,7 @@
           "type": "reference"
         },
         "fullExamples": [],
+        "description": "Successful operation.",
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -14776,7 +14776,6 @@
         "type": "json"
       },
       "response": {
-        "description": "Successful operation.",
         "schema": {
           "generatedName": "CreateMilestoneReviewResponse",
           "schema": "GenericResultCreated",
@@ -14787,6 +14786,7 @@
           "type": "reference"
         },
         "fullExamples": [],
+        "description": "Successful operation.",
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -15104,7 +15104,6 @@
         "type": "json"
       },
       "response": {
-        "description": "Successful operation.",
         "schema": {
           "generatedName": "CreateMilestoneReviewsResponse",
           "schema": "GenericResultCreated",
@@ -15115,6 +15114,7 @@
           "type": "reference"
         },
         "fullExamples": [],
+        "description": "Successful operation.",
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -15415,7 +15415,6 @@
       "headers": [],
       "generatedRequestName": "GetOffCyclePaymentsByContractRequest",
       "response": {
-        "description": "Successful operation.",
         "schema": {
           "generatedName": "GetOffCyclePaymentsByContractResponse",
           "schema": "OffCyclePaymentListContainer",
@@ -15426,6 +15425,7 @@
           "type": "reference"
         },
         "fullExamples": [],
+        "description": "Successful operation.",
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -15823,7 +15823,6 @@
         "type": "json"
       },
       "response": {
-        "description": "Successful operation.",
         "schema": {
           "generatedName": "CreateOffCyclePaymentResponse",
           "schema": "GenericResultCreated",
@@ -15834,6 +15833,7 @@
           "type": "reference"
         },
         "fullExamples": [],
+        "description": "Successful operation.",
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -16148,7 +16148,6 @@
       "headers": [],
       "generatedRequestName": "GetOffCyclePaymentByContractAndIdRequest",
       "response": {
-        "description": "Successful operation.",
         "schema": {
           "generatedName": "GetOffCyclePaymentByContractAndIdResponse",
           "schema": "OffCyclePaymentContainer",
@@ -16159,6 +16158,7 @@
           "type": "reference"
         },
         "fullExamples": [],
+        "description": "Successful operation.",
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -16561,7 +16561,6 @@
         "type": "json"
       },
       "response": {
-        "description": "Successful operation.",
         "schema": {
           "generatedName": "AddPremiumResponse",
           "schema": "PremiumResultAddedContainer",
@@ -16572,6 +16571,7 @@
           "type": "reference"
         },
         "fullExamples": [],
+        "description": "Successful operation.",
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -16881,7 +16881,6 @@
       "headers": [],
       "generatedRequestName": "RemovePremiumFromContractRequest",
       "response": {
-        "description": "Successful operation.",
         "schema": {
           "generatedName": "RemovePremiumFromContractResponse",
           "schema": "GenericResultDeleted",
@@ -16892,6 +16891,7 @@
           "type": "reference"
         },
         "fullExamples": [],
+        "description": "Successful operation.",
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -17286,7 +17286,6 @@
       "headers": [],
       "generatedRequestName": "CalculateFinalPaymentRequest",
       "response": {
-        "description": "Successful operation.",
         "schema": {
           "generatedName": "CalculateFinalPaymentResponse",
           "schema": "FinalPaymentCalculatedContainer",
@@ -17297,6 +17296,7 @@
           "type": "reference"
         },
         "fullExamples": [],
+        "description": "Successful operation.",
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -17594,7 +17594,6 @@
         "type": "json"
       },
       "response": {
-        "description": "Successful operation.",
         "schema": {
           "generatedName": "PostContractEstimateResponse",
           "schema": "ResponseEstimateFirstPaymentContainer",
@@ -17605,6 +17604,7 @@
           "type": "reference"
         },
         "fullExamples": [],
+        "description": "Successful operation.",
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -17894,7 +17894,6 @@
       "headers": [],
       "generatedRequestName": "GetEorTimeOffsRequest",
       "response": {
-        "description": "Successful operation.",
         "schema": {
           "generatedName": "GetEorTimeOffsResponse",
           "schema": "EorTimeoffsContainer",
@@ -17905,6 +17904,7 @@
           "type": "reference"
         },
         "fullExamples": [],
+        "description": "Successful operation.",
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -18411,7 +18411,6 @@
         "type": "json"
       },
       "response": {
-        "description": "Successful operation.",
         "schema": {
           "generatedName": "CreateEorTimeOffsResponse",
           "schema": "EorTimeoffsItemContainer",
@@ -18422,6 +18421,7 @@
           "type": "reference"
         },
         "fullExamples": [],
+        "description": "Successful operation.",
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -19110,7 +19110,6 @@
         "type": "json"
       },
       "response": {
-        "description": "Successful operation.",
         "schema": {
           "generatedName": "EditEorTimeOffsResponse",
           "schema": "EorTimeoffsItemContainer",
@@ -19121,6 +19120,7 @@
           "type": "reference"
         },
         "fullExamples": [],
+        "description": "Successful operation.",
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -19800,7 +19800,6 @@
       "headers": [],
       "generatedRequestName": "DeleteEorTimeOffsRequest",
       "response": {
-        "description": "Successful operation.",
         "schema": {
           "generatedName": "DeleteEorTimeOffsResponse",
           "schema": "GenericResultDeleted",
@@ -19811,6 +19810,7 @@
           "type": "reference"
         },
         "fullExamples": [],
+        "description": "Successful operation.",
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -20173,7 +20173,6 @@
       "headers": [],
       "generatedRequestName": "GetTimesheetsRequest",
       "response": {
-        "description": "Successful operation.",
         "schema": {
           "generatedName": "GetTimesheetsResponse",
           "schema": "TimesheetListContainer",
@@ -20184,6 +20183,7 @@
           "type": "reference"
         },
         "fullExamples": [],
+        "description": "Successful operation.",
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -20728,7 +20728,6 @@
         "type": "json"
       },
       "response": {
-        "description": "Successful operation.",
         "schema": {
           "generatedName": "CreateTimesheetResponse",
           "schema": "InvoiceAdjustmentCreatedContainer",
@@ -20739,6 +20738,7 @@
           "type": "reference"
         },
         "fullExamples": [],
+        "description": "Successful operation.",
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -21064,7 +21064,6 @@
       "headers": [],
       "generatedRequestName": "GetTimesheetByIdRequest",
       "response": {
-        "description": "Successful operation.",
         "schema": {
           "generatedName": "GetTimesheetByIdResponse",
           "schema": "TimesheetContainer",
@@ -21075,6 +21074,7 @@
           "type": "reference"
         },
         "fullExamples": [],
+        "description": "Successful operation.",
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -21622,7 +21622,6 @@
       "headers": [],
       "generatedRequestName": "DeleteTimesheetByIdRequest",
       "response": {
-        "description": "Successful operation.",
         "schema": {
           "generatedName": "DeleteTimesheetByIdResponse",
           "schema": "GenericResultDeleted",
@@ -21633,6 +21632,7 @@
           "type": "reference"
         },
         "fullExamples": [],
+        "description": "Successful operation.",
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -21936,7 +21936,6 @@
         "type": "json"
       },
       "response": {
-        "description": "Successful operation.",
         "schema": {
           "generatedName": "UpdateTimesheetByIdResponse",
           "schema": "GenericResultUpdated",
@@ -21947,6 +21946,7 @@
           "type": "reference"
         },
         "fullExamples": [],
+        "description": "Successful operation.",
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -22263,7 +22263,6 @@
         "type": "json"
       },
       "response": {
-        "description": "Successful operation.",
         "schema": {
           "generatedName": "CreateTimesheetReviewResponse",
           "schema": "GenericResultCreated",
@@ -22274,6 +22273,7 @@
           "type": "reference"
         },
         "fullExamples": [],
+        "description": "Successful operation.",
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -22563,7 +22563,6 @@
         "type": "json"
       },
       "response": {
-        "description": "Successful operation.",
         "schema": {
           "generatedName": "CreateTimesheetReviewsResponse",
           "schema": "GenericResultCreated",
@@ -22574,6 +22573,7 @@
           "type": "reference"
         },
         "fullExamples": [],
+        "description": "Successful operation.",
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -23057,7 +23057,6 @@
       "headers": [],
       "generatedRequestName": "GetInvoiceAdjustmentsByContractIdRequest",
       "response": {
-        "description": "Successful operation.",
         "schema": {
           "generatedName": "GetInvoiceAdjustmentsByContractIdResponse",
           "schema": "InvoiceAdjustmentListContainer",
@@ -23068,6 +23067,7 @@
           "type": "reference"
         },
         "fullExamples": [],
+        "description": "Successful operation.",
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -23841,7 +23841,6 @@
       "headers": [],
       "generatedRequestName": "GetInvoiceAdjustmentsRequest",
       "response": {
-        "description": "Successful operation.",
         "schema": {
           "generatedName": "GetInvoiceAdjustmentsResponse",
           "schema": "InvoiceAdjustmentListContainer",
@@ -23852,6 +23851,7 @@
           "type": "reference"
         },
         "fullExamples": [],
+        "description": "Successful operation.",
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -24428,7 +24428,6 @@
         "type": "json"
       },
       "response": {
-        "description": "Successful operation.",
         "schema": {
           "generatedName": "CreateInvoiceAdjustmentResponse",
           "schema": "InvoiceAdjustmentCreatedContainer",
@@ -24439,6 +24438,7 @@
           "type": "reference"
         },
         "fullExamples": [],
+        "description": "Successful operation.",
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -24783,7 +24783,6 @@
       "headers": [],
       "generatedRequestName": "DeleteInvoiceAdjustmentByIdRequest",
       "response": {
-        "description": "Successful operation.",
         "schema": {
           "generatedName": "DeleteInvoiceAdjustmentByIdResponse",
           "schema": "GenericResultDeleted",
@@ -24794,6 +24793,7 @@
           "type": "reference"
         },
         "fullExamples": [],
+        "description": "Successful operation.",
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -25097,7 +25097,6 @@
         "type": "json"
       },
       "response": {
-        "description": "Successful operation.",
         "schema": {
           "generatedName": "UpdateInvoiceAdjustmentByIdResponse",
           "schema": "GenericResultUpdated",
@@ -25108,6 +25107,7 @@
           "type": "reference"
         },
         "fullExamples": [],
+        "description": "Successful operation.",
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -25417,7 +25417,6 @@
         "type": "json"
       },
       "response": {
-        "description": "Successful operation.",
         "schema": {
           "generatedName": "CreateInvoiceAdjustmentReviewResponse",
           "schema": "GenericResultCreated",
@@ -25428,6 +25427,7 @@
           "type": "reference"
         },
         "fullExamples": [],
+        "description": "Successful operation.",
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -25717,7 +25717,6 @@
         "type": "json"
       },
       "response": {
-        "description": "Successful operation.",
         "schema": {
           "generatedName": "CreateInvoiceAdjustmentReviewsResponse",
           "schema": "GenericResultCreated",
@@ -25728,6 +25727,7 @@
           "type": "reference"
         },
         "fullExamples": [],
+        "description": "Successful operation.",
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -25999,7 +25999,6 @@
       "headers": [],
       "generatedRequestName": "GetLegalEntityListRequest",
       "response": {
-        "description": "Successful operation.",
         "schema": {
           "generatedName": "GetLegalEntityListResponse",
           "schema": "LegalEntityListContainer",
@@ -26010,6 +26009,7 @@
           "type": "reference"
         },
         "fullExamples": [],
+        "description": "Successful operation.",
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -26279,7 +26279,6 @@
       "headers": [],
       "generatedRequestName": "GetCountriesRequest",
       "response": {
-        "description": "Successful operation.",
         "schema": {
           "generatedName": "GetCountriesResponse",
           "schema": "CountryListContainer",
@@ -26290,6 +26289,7 @@
           "type": "reference"
         },
         "fullExamples": [],
+        "description": "Successful operation.",
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -26590,7 +26590,6 @@
       "headers": [],
       "generatedRequestName": "GetCurrenciesRequest",
       "response": {
-        "description": "Successful operation.",
         "schema": {
           "generatedName": "GetCurrenciesResponse",
           "schema": "CurrencyListContainer",
@@ -26601,6 +26600,7 @@
           "type": "reference"
         },
         "fullExamples": [],
+        "description": "Successful operation.",
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -26900,7 +26900,6 @@
       "headers": [],
       "generatedRequestName": "GetJobTitleListRequest",
       "response": {
-        "description": "Successful operation.",
         "schema": {
           "generatedName": "GetJobTitleListResponse",
           "schema": "JobTitleListContainer",
@@ -26911,6 +26910,7 @@
           "type": "reference"
         },
         "fullExamples": [],
+        "description": "Successful operation.",
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -27222,7 +27222,6 @@
       "headers": [],
       "generatedRequestName": "GetSeniorityListRequest",
       "response": {
-        "description": "Successful operation.",
         "schema": {
           "generatedName": "GetSeniorityListResponse",
           "schema": "SeniorityListContainer",
@@ -27233,6 +27232,7 @@
           "type": "reference"
         },
         "fullExamples": [],
+        "description": "Successful operation.",
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -27507,7 +27507,6 @@
       "headers": [],
       "generatedRequestName": "GetTimeoffTypeListRequest",
       "response": {
-        "description": "Successful operation.",
         "schema": {
           "generatedName": "GetTimeoffTypeListResponse",
           "schema": "TimeoffTypeListContainer",
@@ -27518,6 +27517,7 @@
           "type": "reference"
         },
         "fullExamples": [],
+        "description": "Successful operation.",
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -27775,7 +27775,6 @@
       "headers": [],
       "generatedRequestName": "GetOrganizationsRequest",
       "response": {
-        "description": "Successful operation.",
         "schema": {
           "generatedName": "GetOrganizationsResponse",
           "schema": "OrganizationListContainer",
@@ -27786,6 +27785,7 @@
           "type": "reference"
         },
         "fullExamples": [],
+        "description": "Successful operation.",
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -28043,7 +28043,6 @@
       "headers": [],
       "generatedRequestName": "GetTeamsRequest",
       "response": {
-        "description": "Successful operation.",
         "schema": {
           "generatedName": "GetTeamsResponse",
           "schema": "TeamListContainer",
@@ -28054,6 +28053,7 @@
           "type": "reference"
         },
         "fullExamples": [],
+        "description": "Successful operation.",
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -28331,7 +28331,6 @@
         "type": "json"
       },
       "response": {
-        "description": "Successful operation.",
         "schema": {
           "generatedName": "CreateFileRefResponse",
           "schema": "OutputToCreateFileRefContainer",
@@ -28342,6 +28341,7 @@
           "type": "reference"
         },
         "fullExamples": [],
+        "description": "Successful operation.",
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -28654,7 +28654,6 @@
       "headers": [],
       "generatedRequestName": "GetAgreementsRequest",
       "response": {
-        "description": "Successful operation.",
         "schema": {
           "generatedName": "GetAgreementsResponse",
           "schema": "AgreementListContainer",
@@ -28665,6 +28664,7 @@
           "type": "reference"
         },
         "fullExamples": [],
+        "description": "Successful operation.",
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -29005,7 +29005,6 @@
       "headers": [],
       "generatedRequestName": "GetContractTemplatesRequest",
       "response": {
-        "description": "Successful operation.",
         "schema": {
           "generatedName": "GetContractTemplatesResponse",
           "schema": "ContractTemplateListContainer",
@@ -29016,6 +29015,7 @@
           "type": "reference"
         },
         "fullExamples": [],
+        "description": "Successful operation.",
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -29267,7 +29267,6 @@
       "headers": [],
       "generatedRequestName": "GetEorEntitlementsRequest",
       "response": {
-        "description": "Successful operation.",
         "schema": {
           "generatedName": "GetEorEntitlementsResponse",
           "schema": "EorEntitlementsContainer",
@@ -29278,6 +29277,7 @@
           "type": "reference"
         },
         "fullExamples": [],
+        "description": "Successful operation.",
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -29575,7 +29575,6 @@
       "headers": [],
       "generatedRequestName": "GetEorClientTimeOffsRequest",
       "response": {
-        "description": "successful operation",
         "schema": {
           "generatedName": "GetEorClientTimeOffsResponse",
           "schema": "EorClientTimeoffsContainer",
@@ -29586,6 +29585,7 @@
           "type": "reference"
         },
         "fullExamples": [],
+        "description": "successful operation",
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -30066,7 +30066,6 @@
         "type": "json"
       },
       "response": {
-        "description": "Successful operation.",
         "schema": {
           "generatedName": "ReviewTimeoffResponse",
           "schema": "GenericResultUpdated",
@@ -30077,6 +30076,7 @@
           "type": "reference"
         },
         "fullExamples": [],
+        "description": "Successful operation.",
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -30435,7 +30435,6 @@
       "headers": [],
       "generatedRequestName": "GetInvoiceListRequest",
       "response": {
-        "description": "Successful operation.",
         "schema": {
           "generatedName": "GetInvoiceListResponse",
           "schema": "InvoiceListContainer",
@@ -30446,6 +30445,7 @@
           "type": "reference"
         },
         "fullExamples": [],
+        "description": "Successful operation.",
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -30757,7 +30757,6 @@
       "headers": [],
       "generatedRequestName": "GetInvoiceDownloadLinkRequest",
       "response": {
-        "description": "Successful operation.",
         "schema": {
           "generatedName": "GetInvoiceDownloadLinkResponse",
           "schema": "InvoiceDownloadContainer",
@@ -30768,6 +30767,7 @@
           "type": "reference"
         },
         "fullExamples": [],
+        "description": "Successful operation.",
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -31055,7 +31055,6 @@
       "headers": [],
       "generatedRequestName": "GetBillingInvoiceDownloadLinkRequest",
       "response": {
-        "description": "Successful operation.",
         "schema": {
           "generatedName": "GetBillingInvoiceDownloadLinkResponse",
           "schema": "InvoiceDownloadContainer",
@@ -31066,6 +31065,7 @@
           "type": "reference"
         },
         "fullExamples": [],
+        "description": "Successful operation.",
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -31442,7 +31442,6 @@
       "headers": [],
       "generatedRequestName": "GetPaymentListRequest",
       "response": {
-        "description": "Successful operation.",
         "schema": {
           "generatedName": "GetPaymentListResponse",
           "schema": "PaymentListContainer",
@@ -31453,6 +31452,7 @@
           "type": "reference"
         },
         "fullExamples": [],
+        "description": "Successful operation.",
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -31792,7 +31792,6 @@
       "headers": [],
       "generatedRequestName": "GetPeopleListRequest",
       "response": {
-        "description": "Successful operation.",
         "schema": {
           "generatedName": "GetPeopleListResponse",
           "schema": "PeopleContainer",
@@ -31803,6 +31802,7 @@
           "type": "reference"
         },
         "fullExamples": [],
+        "description": "Successful operation.",
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -32361,7 +32361,6 @@
       "headers": [],
       "generatedRequestName": "GetPeopleRequest",
       "response": {
-        "description": "Successful operation.",
         "schema": {
           "generatedName": "GetPeopleResponse",
           "schema": "PeopleMeContainer",
@@ -32372,6 +32371,7 @@
           "type": "reference"
         },
         "fullExamples": [],
+        "description": "Successful operation.",
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -32714,7 +32714,6 @@
       "headers": [],
       "generatedRequestName": "GetAllWebhooksRequest",
       "response": {
-        "description": "successful operation",
         "schema": {
           "generatedName": "GetAllWebhooksResponse",
           "schema": "WebhookListResponse",
@@ -32725,6 +32724,7 @@
           "type": "reference"
         },
         "fullExamples": [],
+        "description": "successful operation",
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -33066,7 +33066,6 @@
         "type": "json"
       },
       "response": {
-        "description": "successful operation",
         "schema": {
           "generatedName": "CreateWebhookResponse",
           "schema": "WebhookItemResponse",
@@ -33077,6 +33076,7 @@
           "type": "reference"
         },
         "fullExamples": [],
+        "description": "successful operation",
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -33445,7 +33445,6 @@
       "headers": [],
       "generatedRequestName": "WebhookControllerGetByIdRequest",
       "response": {
-        "description": "successful operation",
         "schema": {
           "generatedName": "WebhookControllerGetByIdResponse",
           "schema": "WebhookItemResponse",
@@ -33456,6 +33455,7 @@
           "type": "reference"
         },
         "fullExamples": [],
+        "description": "successful operation",
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -34063,7 +34063,6 @@
         "type": "json"
       },
       "response": {
-        "description": "successful operation",
         "schema": {
           "generatedName": "WebhookControllerEditByIdResponse",
           "schema": "WebhookItemResponse",
@@ -34074,6 +34073,7 @@
           "type": "reference"
         },
         "fullExamples": [],
+        "description": "successful operation",
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -34446,7 +34446,6 @@
       "headers": [],
       "generatedRequestName": "GetPaymentsBreakDownByIdRequest",
       "response": {
-        "description": "Successful operation.",
         "schema": {
           "generatedName": "GetPaymentsBreakDownByIdResponse",
           "schema": "PaymentBreakDownContainer",
@@ -34457,6 +34456,7 @@
           "type": "reference"
         },
         "fullExamples": [],
+        "description": "Successful operation.",
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"

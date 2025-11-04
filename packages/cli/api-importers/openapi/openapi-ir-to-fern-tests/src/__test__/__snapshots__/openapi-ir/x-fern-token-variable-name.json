@@ -40,16 +40,16 @@
         "type": "json"
       },
       "response": {
-        "description": "Success!",
         "schema": {
+          "generatedName": "ChatCompletionsCreateResponse",
           "schema": {
             "type": "string"
           },
-          "generatedName": "ChatCompletionsCreateResponse",
           "groupName": [],
           "type": "primitive"
         },
         "fullExamples": [],
+        "description": "Success!",
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"

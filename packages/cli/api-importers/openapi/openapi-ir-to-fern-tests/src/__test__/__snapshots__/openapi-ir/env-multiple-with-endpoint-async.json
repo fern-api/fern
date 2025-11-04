@@ -34,16 +34,16 @@
       "headers": [],
       "generatedRequestName": "ListRequest",
       "response": {
-        "description": "A response",
         "schema": {
+          "generatedName": "ListResponse",
           "schema": {
             "type": "string"
           },
-          "generatedName": "ListResponse",
           "groupName": [],
           "type": "primitive"
         },
         "fullExamples": [],
+        "description": "A response",
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"

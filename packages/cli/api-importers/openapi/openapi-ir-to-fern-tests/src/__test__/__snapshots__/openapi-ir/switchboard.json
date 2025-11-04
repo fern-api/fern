@@ -151,11 +151,10 @@
       "headers": [],
       "generatedRequestName": "ExtensionsGetRequest",
       "response": {
-        "description": "OK",
         "schema": {
-          "description": "List of extensions",
           "generatedName": "ExtensionsGetResponse",
           "schema": "ListExtensionV1EnvelopeDefaultMetaWrapper",
+          "description": "List of extensions",
           "source": {
             "file": "../openapi.yml",
             "type": "openapi"
@@ -163,6 +162,7 @@
           "type": "reference"
         },
         "fullExamples": [],
+        "description": "OK",
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -383,11 +383,10 @@
         "type": "json"
       },
       "response": {
-        "description": "Created",
         "schema": {
-          "description": "Extension",
           "generatedName": "ExtensionsPostResponse",
           "schema": "ExtensionV1EnvelopeDefaultMetaWrapper",
+          "description": "Extension",
           "source": {
             "file": "../openapi.yml",
             "type": "openapi"
@@ -395,6 +394,7 @@
           "type": "reference"
         },
         "fullExamples": [],
+        "description": "Created",
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -681,11 +681,10 @@
       "headers": [],
       "generatedRequestName": "ExtensionsGetByIdRequest",
       "response": {
-        "description": "OK",
         "schema": {
-          "description": "Extension",
           "generatedName": "ExtensionsGetByIdResponse",
           "schema": "ExtensionV1EnvelopeDefaultMetaWrapper",
+          "description": "Extension",
           "source": {
             "file": "../openapi.yml",
             "type": "openapi"
@@ -693,6 +692,7 @@
           "type": "reference"
         },
         "fullExamples": [],
+        "description": "OK",
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -997,7 +997,6 @@
       "headers": [],
       "generatedRequestName": "ProfilesGetRequest",
       "response": {
-        "description": "OK",
         "schema": {
           "generatedName": "ProfilesGetResponse",
           "schema": "ListProfileV1EnvelopeDefaultMetaWrapper",
@@ -1008,6 +1007,7 @@
           "type": "reference"
         },
         "fullExamples": [],
+        "description": "OK",
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -1241,11 +1241,10 @@
         "type": "json"
       },
       "response": {
-        "description": "Created",
         "schema": {
-          "description": "created Profile",
           "generatedName": "ProfilesPostResponse",
           "schema": "ProfileV1EnvelopeDefaultMetaWrapper",
+          "description": "created Profile",
           "source": {
             "file": "../openapi.yml",
             "type": "openapi"
@@ -1253,6 +1252,7 @@
           "type": "reference"
         },
         "fullExamples": [],
+        "description": "Created",
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -1578,11 +1578,10 @@
       "headers": [],
       "generatedRequestName": "ProfilesGetByIdRequest",
       "response": {
-        "description": "OK",
         "schema": {
-          "description": "created Profile",
           "generatedName": "ProfilesGetByIdResponse",
           "schema": "ProfileV1EnvelopeDefaultMetaWrapper",
+          "description": "created Profile",
           "source": {
             "file": "../openapi.yml",
             "type": "openapi"
@@ -1590,6 +1589,7 @@
           "type": "reference"
         },
         "fullExamples": [],
+        "description": "OK",
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -1978,11 +1978,10 @@
       "headers": [],
       "generatedRequestName": "SessionsListRequest",
       "response": {
-        "description": "OK",
         "schema": {
-          "description": "List of sessions",
           "generatedName": "SessionsListResponse",
           "schema": "SessionsWithPaginationEnvelopeDefaultMetaWrapper",
+          "description": "List of sessions",
           "source": {
             "file": "../openapi.yml",
             "type": "openapi"
@@ -1990,6 +1989,7 @@
           "type": "reference"
         },
         "fullExamples": [],
+        "description": "OK",
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -2368,11 +2368,10 @@
         "type": "json"
       },
       "response": {
-        "description": "Created",
         "schema": {
-          "description": "Session data",
           "generatedName": "SessionsPostResponse",
           "schema": "SessionWithConnectionInfoEnvelopeDefaultMetaWrapper",
+          "description": "Session data",
           "source": {
             "file": "../openapi.yml",
             "type": "openapi"
@@ -2380,6 +2379,7 @@
           "type": "reference"
         },
         "fullExamples": [],
+        "description": "Created",
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -2687,11 +2687,10 @@
       "headers": [],
       "generatedRequestName": "SessionsGetInfoRequest",
       "response": {
-        "description": "OK",
         "schema": {
-          "description": "Session data",
           "generatedName": "SessionsGetInfoResponse",
           "schema": "SessionWithConnectionInfoEnvelopeDefaultMetaWrapper",
+          "description": "Session data",
           "source": {
             "file": "../openapi.yml",
             "type": "openapi"
@@ -2699,6 +2698,7 @@
           "type": "reference"
         },
         "fullExamples": [],
+        "description": "OK",
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -3584,11 +3584,10 @@
       "headers": [],
       "generatedRequestName": "GetWindowInfoRequest",
       "response": {
-        "description": "Created",
         "schema": {
-          "description": "Window info",
           "generatedName": "GetWindowInfoResponse",
           "schema": "WindowEnvelopeDefaultMetaWrapper",
+          "description": "Window info",
           "source": {
             "file": "../openapi.yml",
             "type": "openapi"
@@ -3596,6 +3595,7 @@
           "type": "reference"
         },
         "fullExamples": [],
+        "description": "Created",
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -3883,7 +3883,6 @@
         "type": "json"
       },
       "response": {
-        "description": "Created",
         "schema": {
           "generatedName": "PromptContentResponse",
           "schema": "ModelResponseExternalSessionAiResponseMetadataWrapper",
@@ -3894,6 +3893,7 @@
           "type": "reference"
         },
         "fullExamples": [],
+        "description": "Created",
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -4171,7 +4171,6 @@
       "headers": [],
       "generatedRequestName": "ScrapeContentRequest",
       "response": {
-        "description": "Created",
         "schema": {
           "generatedName": "ScrapeContentResponse",
           "schema": "ScrapeModelResponseExternalSessionAiResponseMetadataWrapper",
@@ -4182,6 +4181,7 @@
           "type": "reference"
         },
         "fullExamples": [],
+        "description": "Created",
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -4497,7 +4497,6 @@
         "type": "json"
       },
       "response": {
-        "description": "Created",
         "schema": {
           "generatedName": "SummarizeContentResponse",
           "schema": "ModelResponseExternalSessionAiResponseMetadataWrapper",
@@ -4508,6 +4507,7 @@
           "type": "reference"
         },
         "fullExamples": [],
+        "description": "Created",
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"

@@ -179,93 +179,93 @@
         "type": "json"
       },
       "response": {
-        "description": "Successful token response",
         "schema": {
-          "allOf": [],
           "properties": [
             {
-              "conflict": {},
-              "generatedName": "authGetTokenResponseAccessToken",
               "key": "access_token",
               "schema": {
                 "generatedName": "AuthGetTokenResponseAccessToken",
                 "value": {
+                  "generatedName": "AuthGetTokenResponseAccessToken",
                   "schema": {
                     "type": "string"
                   },
-                  "generatedName": "AuthGetTokenResponseAccessToken",
                   "groupName": [],
                   "type": "primitive"
                 },
                 "groupName": [],
                 "type": "optional"
               },
-              "audiences": []
+              "audiences": [],
+              "conflict": {},
+              "generatedName": "authGetTokenResponseAccessToken"
             },
             {
-              "conflict": {},
-              "generatedName": "authGetTokenResponseTokenType",
               "key": "token_type",
               "schema": {
                 "generatedName": "AuthGetTokenResponseTokenType",
                 "value": {
+                  "generatedName": "AuthGetTokenResponseTokenType",
                   "schema": {
                     "example": "Bearer",
                     "type": "string"
                   },
-                  "generatedName": "AuthGetTokenResponseTokenType",
                   "groupName": [],
                   "type": "primitive"
                 },
                 "groupName": [],
                 "type": "optional"
               },
-              "audiences": []
+              "audiences": [],
+              "conflict": {},
+              "generatedName": "authGetTokenResponseTokenType"
             },
             {
-              "conflict": {},
-              "generatedName": "authGetTokenResponseExpiresIn",
               "key": "expires_in",
               "schema": {
                 "generatedName": "AuthGetTokenResponseExpiresIn",
-                "description": "Token expiration time in seconds",
                 "value": {
-                  "description": "Token expiration time in seconds",
+                  "generatedName": "AuthGetTokenResponseExpiresIn",
                   "schema": {
                     "type": "int"
                   },
-                  "generatedName": "AuthGetTokenResponseExpiresIn",
+                  "description": "Token expiration time in seconds",
                   "groupName": [],
                   "type": "primitive"
                 },
                 "groupName": [],
+                "description": "Token expiration time in seconds",
                 "type": "optional"
               },
-              "audiences": []
+              "audiences": [],
+              "conflict": {},
+              "generatedName": "authGetTokenResponseExpiresIn"
             },
             {
-              "conflict": {},
-              "generatedName": "authGetTokenResponseRefreshToken",
               "key": "refresh_token",
               "schema": {
                 "generatedName": "AuthGetTokenResponseRefreshToken",
                 "value": {
+                  "generatedName": "AuthGetTokenResponseRefreshToken",
                   "schema": {
                     "type": "string"
                   },
-                  "generatedName": "AuthGetTokenResponseRefreshToken",
                   "groupName": [],
                   "type": "primitive"
                 },
                 "groupName": [],
                 "type": "optional"
               },
-              "audiences": []
+              "audiences": [],
+              "conflict": {},
+              "generatedName": "authGetTokenResponseRefreshToken"
             }
           ],
-          "allOfPropertyConflicts": [],
           "generatedName": "AuthGetTokenResponse",
+          "allOf": [],
+          "allOfPropertyConflicts": [],
           "groupName": [],
+          "fullExamples": [],
           "additionalProperties": false,
           "source": {
             "file": "../openapi.yml",
@@ -274,6 +274,7 @@
           "type": "object"
         },
         "fullExamples": [],
+        "description": "Successful token response",
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"

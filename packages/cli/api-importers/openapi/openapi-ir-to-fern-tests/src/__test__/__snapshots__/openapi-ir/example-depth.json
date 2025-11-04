@@ -18,7 +18,6 @@
       "headers": [],
       "generatedRequestName": "GetTreeRequest",
       "response": {
-        "description": "Successfully retrieved tree",
         "schema": {
           "generatedName": "GetTreeResponse",
           "schema": "TreeNode",
@@ -29,6 +28,7 @@
           "type": "reference"
         },
         "fullExamples": [],
+        "description": "Successfully retrieved tree",
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"

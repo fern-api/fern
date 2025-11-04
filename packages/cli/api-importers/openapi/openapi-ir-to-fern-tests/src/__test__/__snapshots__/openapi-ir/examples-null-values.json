@@ -35,7 +35,6 @@
         "type": "json"
       },
       "response": {
-        "description": "User created successfully",
         "schema": {
           "generatedName": "PostUsersResponse",
           "schema": "User",
@@ -46,6 +45,7 @@
           "type": "reference"
         },
         "fullExamples": [],
+        "description": "User created successfully",
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"

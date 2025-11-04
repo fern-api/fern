@@ -113,7 +113,6 @@
         "type": "json"
       },
       "response": {
-        "description": "Successful response",
         "schema": {
           "value": {
             "generatedName": "UploadDocumentResponse",
@@ -147,6 +146,7 @@
           "type": "oneOf"
         },
         "fullExamples": [],
+        "description": "Successful response",
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -253,7 +253,6 @@
         "type": "octetStream"
       },
       "response": {
-        "description": "Successful response",
         "schema": {
           "value": {
             "generatedName": "UploadDocumentResponse",
@@ -287,6 +286,7 @@
           "type": "oneOf"
         },
         "fullExamples": [],
+        "description": "Successful response",
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"

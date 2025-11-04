@@ -140,8 +140,29 @@
         "type": "json"
       },
       "response": {
-        "description": "Created",
         "schema": {
+          "properties": [
+            {
+              "key": "message",
+              "schema": {
+                "generatedName": "PostConsumerTransactionResponseMessage",
+                "value": {
+                  "generatedName": "PostConsumerTransactionResponseMessage",
+                  "schema": {
+                    "type": "string"
+                  },
+                  "groupName": [],
+                  "type": "primitive"
+                },
+                "groupName": [],
+                "type": "optional"
+              },
+              "audiences": [],
+              "conflict": {},
+              "generatedName": "postConsumerTransactionResponseMessage"
+            }
+          ],
+          "generatedName": "PostConsumerTransactionResponse",
           "allOf": [
             {
               "generatedName": "TransactionMonitoringResult",
@@ -153,30 +174,9 @@
               "type": "reference"
             }
           ],
-          "properties": [
-            {
-              "conflict": {},
-              "generatedName": "postConsumerTransactionResponseMessage",
-              "key": "message",
-              "schema": {
-                "generatedName": "PostConsumerTransactionResponseMessage",
-                "value": {
-                  "schema": {
-                    "type": "string"
-                  },
-                  "generatedName": "PostConsumerTransactionResponseMessage",
-                  "groupName": [],
-                  "type": "primitive"
-                },
-                "groupName": [],
-                "type": "optional"
-              },
-              "audiences": []
-            }
-          ],
           "allOfPropertyConflicts": [],
-          "generatedName": "PostConsumerTransactionResponse",
           "groupName": [],
+          "fullExamples": [],
           "additionalProperties": false,
           "source": {
             "file": "../openapi.yml",
@@ -209,6 +209,7 @@
             }
           }
         ],
+        "description": "Created",
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -739,7 +740,6 @@
       "headers": [],
       "generatedRequestName": "GetConsumerTransactionRequest",
       "response": {
-        "description": "OK",
         "schema": {
           "generatedName": "GetConsumerTransactionResponse",
           "schema": "TransactionWithRulesResult",
@@ -822,6 +822,7 @@
             }
           }
         ],
+        "description": "OK",
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -1623,7 +1624,6 @@
         "type": "json"
       },
       "response": {
-        "description": "Created",
         "schema": {
           "generatedName": "PostTransactionEventResponse",
           "schema": "TransactionEventMonitoringResult",
@@ -1709,6 +1709,7 @@
             }
           }
         ],
+        "description": "Created",
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -2502,8 +2503,29 @@
         "type": "json"
       },
       "response": {
-        "description": "Created",
         "schema": {
+          "properties": [
+            {
+              "key": "message",
+              "schema": {
+                "generatedName": "PostConsumerUserResponseMessage",
+                "value": {
+                  "generatedName": "PostConsumerUserResponseMessage",
+                  "schema": {
+                    "type": "string"
+                  },
+                  "groupName": [],
+                  "type": "primitive"
+                },
+                "groupName": [],
+                "type": "optional"
+              },
+              "audiences": [],
+              "conflict": {},
+              "generatedName": "postConsumerUserResponseMessage"
+            }
+          ],
+          "generatedName": "PostConsumerUserResponse",
           "allOf": [
             {
               "generatedName": "ConsumerUsersResponse",
@@ -2524,27 +2546,6 @@
               "type": "reference"
             }
           ],
-          "properties": [
-            {
-              "conflict": {},
-              "generatedName": "postConsumerUserResponseMessage",
-              "key": "message",
-              "schema": {
-                "generatedName": "PostConsumerUserResponseMessage",
-                "value": {
-                  "schema": {
-                    "type": "string"
-                  },
-                  "generatedName": "PostConsumerUserResponseMessage",
-                  "groupName": [],
-                  "type": "primitive"
-                },
-                "groupName": [],
-                "type": "optional"
-              },
-              "audiences": []
-            }
-          ],
           "allOfPropertyConflicts": [
             {
               "propertyKey": "userId",
@@ -2555,8 +2556,8 @@
               "conflictingTypeSignatures": false
             }
           ],
-          "generatedName": "PostConsumerUserResponse",
           "groupName": [],
+          "fullExamples": [],
           "additionalProperties": false,
           "source": {
             "file": "../openapi.yml",
@@ -2572,6 +2573,7 @@
             }
           }
         ],
+        "description": "Created",
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -3081,7 +3083,6 @@
       "headers": [],
       "generatedRequestName": "GetConsumerUserRequest",
       "response": {
-        "description": "OK",
         "schema": {
           "generatedName": "GetConsumerUserResponse",
           "schema": "User",
@@ -3159,6 +3160,7 @@
             }
           }
         ],
+        "description": "OK",
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -3763,8 +3765,29 @@
         "type": "json"
       },
       "response": {
-        "description": "Created",
         "schema": {
+          "properties": [
+            {
+              "key": "message",
+              "schema": {
+                "generatedName": "PostBusinessUserResponseMessage",
+                "value": {
+                  "generatedName": "PostBusinessUserResponseMessage",
+                  "schema": {
+                    "type": "string"
+                  },
+                  "groupName": [],
+                  "type": "primitive"
+                },
+                "groupName": [],
+                "type": "optional"
+              },
+              "audiences": [],
+              "conflict": {},
+              "generatedName": "postBusinessUserResponseMessage"
+            }
+          ],
+          "generatedName": "PostBusinessUserResponse",
           "allOf": [
             {
               "generatedName": "BusinessUsersResponse",
@@ -3785,27 +3808,6 @@
               "type": "reference"
             }
           ],
-          "properties": [
-            {
-              "conflict": {},
-              "generatedName": "postBusinessUserResponseMessage",
-              "key": "message",
-              "schema": {
-                "generatedName": "PostBusinessUserResponseMessage",
-                "value": {
-                  "schema": {
-                    "type": "string"
-                  },
-                  "generatedName": "PostBusinessUserResponseMessage",
-                  "groupName": [],
-                  "type": "primitive"
-                },
-                "groupName": [],
-                "type": "optional"
-              },
-              "audiences": []
-            }
-          ],
           "allOfPropertyConflicts": [
             {
               "propertyKey": "userId",
@@ -3816,8 +3818,8 @@
               "conflictingTypeSignatures": false
             }
           ],
-          "generatedName": "PostBusinessUserResponse",
           "groupName": [],
+          "fullExamples": [],
           "additionalProperties": false,
           "source": {
             "file": "../openapi.yml",
@@ -3833,6 +3835,7 @@
             }
           }
         ],
+        "description": "Created",
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -4088,7 +4091,6 @@
       "headers": [],
       "generatedRequestName": "GetBusinessUserUserIdRequest",
       "response": {
-        "description": "OK",
         "schema": {
           "generatedName": "GetBusinessUserUserIdResponse",
           "schema": "Business",
@@ -4286,6 +4288,7 @@
             }
           }
         ],
+        "description": "OK",
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -5686,7 +5689,6 @@
         "type": "json"
       },
       "response": {
-        "description": "Created",
         "schema": {
           "generatedName": "PostUserEventResponse",
           "schema": "UserWithRulesResult",
@@ -5697,6 +5699,7 @@
           "type": "reference"
         },
         "fullExamples": [],
+        "description": "Created",
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -6438,7 +6441,6 @@
         "type": "json"
       },
       "response": {
-        "description": "Created",
         "schema": {
           "generatedName": "PostBusinessUserEventResponse",
           "schema": "BusinessWithRulesResult",
@@ -6449,6 +6451,7 @@
           "type": "reference"
         },
         "fullExamples": [],
+        "description": "Created",
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"

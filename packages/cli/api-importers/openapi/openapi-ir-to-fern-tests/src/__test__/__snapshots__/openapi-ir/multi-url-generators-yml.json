@@ -21,7 +21,6 @@
       "headers": [],
       "generatedRequestName": "GetUsersRequest",
       "response": {
-        "description": "Successful response",
         "schema": {
           "generatedName": "GetUsersResponse",
           "schema": "User",
@@ -32,6 +31,7 @@
           "type": "reference"
         },
         "fullExamples": [],
+        "description": "Successful response",
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -146,7 +146,6 @@
       "headers": [],
       "generatedRequestName": "GetUsersUserIdRequest",
       "response": {
-        "description": "Successful response",
         "schema": {
           "generatedName": "GetUsersUserIdResponse",
           "schema": "User",
@@ -157,6 +156,7 @@
           "type": "reference"
         },
         "fullExamples": [],
+        "description": "Successful response",
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -270,7 +270,6 @@
       "headers": [],
       "generatedRequestName": "GetTokenRequest",
       "response": {
-        "description": "Successful response",
         "schema": {
           "generatedName": "GetTokenResponse",
           "schema": "Token",
@@ -281,6 +280,7 @@
           "type": "reference"
         },
         "fullExamples": [],
+        "description": "Successful response",
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"

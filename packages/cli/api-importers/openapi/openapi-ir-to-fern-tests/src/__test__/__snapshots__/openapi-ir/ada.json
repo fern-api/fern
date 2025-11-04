@@ -50,7 +50,6 @@
       "headers": [],
       "generatedRequestName": "GetEndUserByIdRequest",
       "response": {
-        "description": "OK",
         "schema": {
           "generatedName": "GetEndUserByIdResponse",
           "schema": "EndUser",
@@ -61,6 +60,7 @@
           "type": "reference"
         },
         "fullExamples": [],
+        "description": "OK",
         "source": {
           "file": "../openapi.json",
           "type": "openapi"
@@ -633,7 +633,6 @@
         "type": "json"
       },
       "response": {
-        "description": "OK",
         "schema": {
           "generatedName": "UpdateEndUserByIdResponse",
           "schema": "EndUser",
@@ -644,6 +643,7 @@
           "type": "reference"
         },
         "fullExamples": [],
+        "description": "OK",
         "source": {
           "file": "../openapi.json",
           "type": "openapi"
@@ -1456,7 +1456,6 @@
       "headers": [],
       "generatedRequestName": "GetEndUsersRequest",
       "response": {
-        "description": "OK",
         "schema": {
           "generatedName": "GetEndUsersResponse",
           "schema": "EndUsers",
@@ -1467,6 +1466,7 @@
           "type": "reference"
         },
         "fullExamples": [],
+        "description": "OK",
         "source": {
           "file": "../openapi.json",
           "type": "openapi"
