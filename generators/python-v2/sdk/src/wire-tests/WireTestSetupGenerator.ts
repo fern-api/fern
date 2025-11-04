@@ -1,6 +1,6 @@
 import { File } from "@fern-api/base-generator";
 import { RelativeFilePath } from "@fern-api/fs-utils";
-import { WireMock } from "@fern-api/mock-utils";
+import { WireMock, WireMockStubMapping } from "@fern-api/mock-utils";
 import { IntermediateRepresentation } from "@fern-fern/ir-sdk/api";
 import { SdkGeneratorContext } from "../SdkGeneratorContext";
 
@@ -25,7 +25,7 @@ export class WireTestSetupGenerator {
         this.generateDockerComposeFile();
     }
 
-    public static getWiremockConfigContent(ir: IntermediateRepresentation): unknown {
+    public static getWiremockConfigContent(ir: IntermediateRepresentation): WireMockStubMapping {
         // biome-ignore lint/suspicious/noExplicitAny: IR version compatibility requires type assertion
         return new WireMock().convertToWireMock(ir as any);
     }

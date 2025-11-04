@@ -41,8 +41,8 @@ export class WireTestGenerator {
 
     private getWireMockConfigContent(): Record<string, WireMockMapping> {
         const out: Record<string, WireMockMapping> = {};
-        const wiremockStubMapping = WireTestSetupGenerator.getWiremockConfigContent(this.context.ir);
-        for (const mapping of wiremockStubMapping.mappings) {
+        const wireMockStubMapping = WireTestSetupGenerator.getWiremockConfigContent(this.context.ir);
+        for (const mapping of wireMockStubMapping.mappings) {
             const key = this.wiremockMappingKey({
                 requestMethod: mapping.request.method,
                 requestUrlPathTemplate: mapping.request.urlPathTemplate
