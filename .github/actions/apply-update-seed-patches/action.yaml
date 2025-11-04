@@ -38,33 +38,11 @@ runs:
           echo "WARNING: Directory '$DIRECTORY' already exists. Not an immediate error but could cause a problem downstream."
         fi
 
-    - name: Build artifact pattern
-      id: build-pattern
-      shell: bash
-      run: |
-        ALLOWED="${{ inputs.allowed-generators }}"
-        if [ -n "$ALLOWED" ]; then
-          echo "Building artifact pattern from allowed generators: $ALLOWED"
-          echo "pattern<<EOF" >> $GITHUB_OUTPUT
-          IFS=',' read -ra GENERATORS <<< "$ALLOWED"
-          for gen in "${GENERATORS[@]}"; do
-            gen=$(echo "$gen" | xargs)
-            echo "seed-${gen}-*.patch" >> $GITHUB_OUTPUT
-          done
-          echo "EOF" >> $GITHUB_OUTPUT
-        else
-          echo "No allowed-generators filter provided, will download all artifacts"
-          echo "pattern=" >> $GITHUB_OUTPUT
-        fi
-
-    # Merge-multiple is set so all patches are downloaded into the same folder. Otherwise
-    # they are subfoldered into folders that match *.patch pattern and cause errors downstream
     - name: Download patches
       uses: actions/download-artifact@v5
       with:
         path: ./artifacts
         merge-multiple: true
-        pattern: ${{ steps.build-pattern.outputs.pattern }}
 
     - name: Display content of a folder
       shell: bash
