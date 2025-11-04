@@ -9,6 +9,12 @@ import { assertValidSemVerChangeOrThrow, assertValidSemVerOrThrow } from "./semV
 export interface ValidateVersionsYmlOptions {
     absolutePathToChangelog: AbsoluteFilePath;
     context: TaskContext;
+    /**
+     * Optional parser function to validate schema-specific requirements.
+     * If provided, will be called for each entry after basic validation.
+     * Should throw if entry doesn't match schema.
+     */
+    schemaParser?: (entry: any) => void;
 }
 
 interface VersionEntry {
@@ -25,10 +31,13 @@ interface VersionEntry {
  * - Valid semver version strings
  * - Proper semver progression between versions
  * - Proper angle bracket escaping in summaries
+ *
+ * Optionally accepts a schema parser to validate schema-specific requirements.
  */
 export async function validateVersionsYml({
     absolutePathToChangelog,
-    context
+    context,
+    schemaParser
 }: ValidateVersionsYmlOptions): Promise<void> {
     // Check if file exists
     if (!(await doesPathExist(absolutePathToChangelog))) {
@@ -88,6 +97,22 @@ export async function validateVersionsYml({
             hasErrors = true;
             context.logger.error(`${typedEntry.version} is invalid semver`);
             context.logger.error((e as Error)?.message);
+        }
+
+        // Validate schema-specific requirements if parser provided
+        if (schemaParser) {
+            try {
+                schemaParser(entry);
+            } catch (e) {
+                hasErrors = true;
+                const maybeVersion = (entry as any)?.version;
+                if (maybeVersion != null) {
+                    context.logger.error(`${maybeVersion} failed schema validation`);
+                } else {
+                    context.logger.error(`Failed to parse: ${yaml.dump(entry)}`);
+                }
+                context.logger.error((e as Error)?.message);
+            }
         }
     }
 

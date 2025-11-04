@@ -1,13 +1,8 @@
 import { AbsoluteFilePath, doesPathExist, join, RelativeFilePath } from "@fern-api/fs-utils";
 import { TaskContext } from "@fern-api/task-context";
 import * as serializers from "@fern-fern/generators-sdk/serialization";
-import chalk from "chalk";
-import { readFile } from "fs/promises";
-import yaml from "js-yaml";
-
 import { loadCliWorkspace } from "../../loadGeneratorWorkspaces";
-import { validateAngleBracketEscaping } from "./angleBracketValidator";
-import { assertValidSemVerChangeOrThrow, assertValidSemVerOrThrow } from "./semVerUtils";
+import { validateVersionsYml } from "./validateVersionsYml";
 
 export async function validateCliRelease({ context }: { context: TaskContext }): Promise<void> {
     const cliWorkspace = await loadCliWorkspace();
@@ -31,62 +26,13 @@ export async function validateCliRelease({ context }: { context: TaskContext }):
         return;
     }
 
-    await validateCliChangelog({ absolutePathToChangelog, context });
-}
-
-async function validateCliChangelog({
-    absolutePathToChangelog,
-    context
-}: {
-    absolutePathToChangelog: AbsoluteFilePath;
-    context: TaskContext;
-}): Promise<void> {
-    let hasErrors = false;
-    const changelogs = yaml.load((await readFile(absolutePathToChangelog)).toString());
-    if (Array.isArray(changelogs)) {
-        for (const entry of changelogs) {
-            const angleBracketErrors = validateAngleBracketEscaping(entry);
-            context.logger.debug(
-                `Checking version ${entry.version}: Found ${angleBracketErrors.length} angle bracket errors`
-            );
-            if (angleBracketErrors.length > 0) {
-                hasErrors = true;
-                for (const error of angleBracketErrors) {
-                    context.logger.error(chalk.red(error));
-                }
-            }
-
-            try {
-                const release = serializers.generators.CliReleaseRequest.parseOrThrow(entry);
-                assertValidSemVerOrThrow(release.version);
-                context.logger.debug(chalk.green(`${release.version} is valid`));
-            } catch (e) {
-                hasErrors = true;
-                const maybeVersion = (entry as any)?.version;
-                if (maybeVersion != null) {
-                    context.logger.error(`${maybeVersion} is invalid`);
-                } else {
-                    context.logger.error(`Failed to parse: ${yaml.dump(entry)}`);
-                }
-                // biome-ignore lint: ignore next line
-                context.logger.error((e as Error)?.message);
-            }
+    // Use validateVersionsYml with CLI-specific schema parser
+    await validateVersionsYml({
+        absolutePathToChangelog,
+        context,
+        schemaParser: (entry) => {
+            // Validate against CliReleaseRequest schema
+            serializers.generators.CliReleaseRequest.parseOrThrow(entry);
         }
-        if (changelogs.length > 1) {
-            try {
-                const currentRelease = serializers.generators.CliReleaseRequest.parseOrThrow(changelogs[0]);
-                const previousRelease = serializers.generators.CliReleaseRequest.parseOrThrow(changelogs[1]);
-                assertValidSemVerChangeOrThrow(currentRelease, previousRelease);
-            } catch (e) {
-                context.logger.error(`Failed to validate semver change: ${yaml.dump(changelogs[0])}`);
-                context.logger.error((e as Error)?.message);
-                hasErrors = true;
-            }
-        }
-    }
-    if (!hasErrors) {
-        context.logger.info(chalk.green("All changelogs are valid"));
-    } else {
-        context.failAndThrow();
-    }
+    });
 }
