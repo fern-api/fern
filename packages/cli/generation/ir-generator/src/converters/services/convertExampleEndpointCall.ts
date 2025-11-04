@@ -375,8 +375,7 @@ function convertExampleRequestBody({
 
     // Check if this is a file upload request by looking for file properties
     const hasFileProperties = Object.entries(requestType.properties ?? {}).some(([_, propertyDeclaration]) => {
-        const propertyType =
-            typeof propertyDeclaration === "string" ? propertyDeclaration : propertyDeclaration?.type;
+        const propertyType = typeof propertyDeclaration === "string" ? propertyDeclaration : propertyDeclaration?.type;
         return propertyType != null && parseRawFileType(propertyType) != null;
     });
 
