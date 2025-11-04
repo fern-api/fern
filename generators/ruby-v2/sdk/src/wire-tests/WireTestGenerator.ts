@@ -302,7 +302,9 @@ export class WireTestGenerator {
         }
 
         Object.entries(wiremockMapping.request.pathParameters || {}).forEach(([paramName, paramValue]) => {
-            basePath = basePath.replace(`{${paramName}}`, paramValue.equalTo);
+            if (paramValue && typeof paramValue === "object" && "equalTo" in paramValue) {
+                basePath = basePath.replace(`{${paramName}}`, String(paramValue.equalTo));
+            }
         });
 
         return basePath;

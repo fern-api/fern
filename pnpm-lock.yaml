@@ -1675,6 +1675,9 @@ importers:
       '@fern-api/logging-execa':
         specifier: workspace:*
         version: link:../../../packages/commons/logging-execa
+      '@fern-api/mock-utils':
+        specifier: workspace:*
+        version: link:../../../packages/commons/mock-utils
       '@fern-api/path-utils':
         specifier: workspace:*
         version: link:../../../packages/commons/path-utils
