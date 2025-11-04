@@ -13,7 +13,7 @@ import { getAllPages, loadAllPages } from "./getAllPages";
 import { buildNavigationForDirectory, nameToSlug, nameToTitle } from "./navigationUtils";
 
 function shouldProcessIconPath(iconPath?: string): boolean {
-    if (!iconPath) {
+    if (!iconPath || iconPath.startsWith("<")) {
         return false;
     }
 
