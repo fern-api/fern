@@ -687,8 +687,7 @@ public final class ClientOptionsGenerator extends AbstractFileGenerator {
                                                 .getPoetTypeNameMapper()
                                                 .convertToTypeName(true, pathParameter.getValueType()),
                                         pathParameter.getName().getCamelCase().getSafeName(),
-                                        Modifier.PRIVATE,
-                                        Modifier.FINAL)
+                                        Modifier.PRIVATE)
                                 .build()));
     }
 
