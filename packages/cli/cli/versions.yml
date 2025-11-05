@@ -1,16 +1,16 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
 - changelogEntry:
     - summary: |
-        Update migration logic to support new generator versions with ir v61.
-      type: chore
+        Fix AsyncAPI v3 message parsing where channel messages were not being included in generated WebSocket clients. Messages defined in AsyncAPI v3 specs are now correctly resolved and included in the SDK.
+      type: fix
   irVersion: 61
   createdAt: "2025-11-05"
-  version: 0.107.10
+  version: 0.107.11
 
 - changelogEntry:
     - summary: |
-        Fix AsyncAPI v3 message parsing where channel messages were not being included in generated WebSocket clients. Messages defined in AsyncAPI v3 specs are now correctly resolved and included in the SDK.
-      type: fix
+        Update migration logic to support new generator versions with ir v61.
+      type: chore
   irVersion: 61
   createdAt: "2025-11-05"
   version: 0.107.10

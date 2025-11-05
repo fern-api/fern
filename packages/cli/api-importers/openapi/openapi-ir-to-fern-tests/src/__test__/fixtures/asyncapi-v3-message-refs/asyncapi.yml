@@ -17,24 +17,24 @@ channels:
     description: Chat channel for testing message references
     messages:
       userMessage:
-        $ref: '#/components/messages/UserMessage'
+        $ref: "#/components/messages/UserMessage"
       serverResponse:
-        $ref: '#/components/messages/ServerResponse'
+        $ref: "#/components/messages/ServerResponse"
 
 operations:
   sendMessage:
     action: send
     channel:
-      $ref: '#/channels/chat'
+      $ref: "#/channels/chat"
     messages:
-      - $ref: '#/channels/chat/messages/userMessage'
+      - $ref: "#/channels/chat/messages/userMessage"
 
   receiveResponse:
     action: receive
     channel:
-      $ref: '#/channels/chat'
+      $ref: "#/channels/chat"
     messages:
-      - $ref: '#/channels/chat/messages/serverResponse'
+      - $ref: "#/channels/chat/messages/serverResponse"
 
 components:
   messages:
@@ -43,14 +43,14 @@ components:
       title: User Message
       contentType: application/json
       payload:
-        $ref: '#/components/schemas/UserMessagePayload'
+        $ref: "#/components/schemas/UserMessagePayload"
 
     ServerResponse:
       name: ServerResponse
       title: Server Response
       contentType: application/json
       payload:
-        $ref: '#/components/schemas/ServerResponsePayload'
+        $ref: "#/components/schemas/ServerResponsePayload"
 
   schemas:
     UserMessagePayload:
