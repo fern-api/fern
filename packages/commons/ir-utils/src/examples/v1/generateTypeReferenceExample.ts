@@ -1,6 +1,7 @@
 import {
     ExampleTypeReference,
     ExampleTypeReferenceShape,
+    ExampleTypeShape,
     TypeDeclaration,
     TypeId,
     TypeReference
