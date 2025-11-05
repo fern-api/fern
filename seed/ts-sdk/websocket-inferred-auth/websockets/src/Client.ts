@@ -27,6 +27,7 @@ export class SeedWebsocketAuthClient {
     constructor(_options: SeedWebsocketAuthClient.Options) {
         this._options = {
             ..._options,
+            logging: core.logging.createLogger(_options?.logging),
             headers: mergeHeaders(
                 {
                     "X-Fern-Language": "JavaScript",

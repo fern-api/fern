@@ -62,11 +62,9 @@ public class RawSeedPropertyAccessClient {
                 return new SeedPropertyAccessHttpResponse<>(
                         ObjectMappers.JSON_MAPPER.readValue(responseBodyString, User.class), response);
             }
+            Object errorBody = ObjectMappers.parseErrorBody(responseBodyString);
             throw new SeedPropertyAccessApiException(
-                    "Error with status code " + response.code(),
-                    response.code(),
-                    ObjectMappers.JSON_MAPPER.readValue(responseBodyString, Object.class),
-                    response);
+                    "Error with status code " + response.code(), response.code(), errorBody, response);
         } catch (IOException e) {
             throw new SeedPropertyAccessException("Network error executing HTTP request", e);
         }

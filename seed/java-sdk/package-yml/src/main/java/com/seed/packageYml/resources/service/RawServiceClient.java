@@ -31,6 +31,7 @@ public class RawServiceClient {
     public SeedPackageYmlHttpResponse<Void> nop(String nestedId, RequestOptions requestOptions) {
         HttpUrl httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
                 .newBuilder()
+                .addPathSegment(clientOptions.id())
                 .addPathSegment(nestedId)
                 .build();
         Request okhttpRequest = new Request.Builder()
@@ -48,11 +49,9 @@ public class RawServiceClient {
                 return new SeedPackageYmlHttpResponse<>(null, response);
             }
             String responseBodyString = responseBody != null ? responseBody.string() : "{}";
+            Object errorBody = ObjectMappers.parseErrorBody(responseBodyString);
             throw new SeedPackageYmlApiException(
-                    "Error with status code " + response.code(),
-                    response.code(),
-                    ObjectMappers.JSON_MAPPER.readValue(responseBodyString, Object.class),
-                    response);
+                    "Error with status code " + response.code(), response.code(), errorBody, response);
         } catch (IOException e) {
             throw new SeedPackageYmlException("Network error executing HTTP request", e);
         }

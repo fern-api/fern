@@ -62,11 +62,9 @@ public class AsyncRawUnionClient {
                                 ObjectMappers.JSON_MAPPER.readValue(responseBodyString, Shape.class), response));
                         return;
                     }
+                    Object errorBody = ObjectMappers.parseErrorBody(responseBodyString);
                     future.completeExceptionally(new SeedUnionsApiException(
-                            "Error with status code " + response.code(),
-                            response.code(),
-                            ObjectMappers.JSON_MAPPER.readValue(responseBodyString, Object.class),
-                            response));
+                            "Error with status code " + response.code(), response.code(), errorBody, response));
                     return;
                 } catch (IOException e) {
                     future.completeExceptionally(new SeedUnionsException("Network error executing HTTP request", e));
@@ -118,11 +116,9 @@ public class AsyncRawUnionClient {
                                 ObjectMappers.JSON_MAPPER.readValue(responseBodyString, boolean.class), response));
                         return;
                     }
+                    Object errorBody = ObjectMappers.parseErrorBody(responseBodyString);
                     future.completeExceptionally(new SeedUnionsApiException(
-                            "Error with status code " + response.code(),
-                            response.code(),
-                            ObjectMappers.JSON_MAPPER.readValue(responseBodyString, Object.class),
-                            response));
+                            "Error with status code " + response.code(), response.code(), errorBody, response));
                     return;
                 } catch (IOException e) {
                     future.completeExceptionally(new SeedUnionsException("Network error executing HTTP request", e));

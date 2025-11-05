@@ -5933,14 +5933,14 @@
                   {
                     "entities": {
                       "counterparty": {
-                        "id": "string",
-                        "name": "string",
-                        "website": "string",
-                        "logo": "string",
+                        "id": "d4bc3c80-ec1a-3da2-836e-2a4ca4758be5",
+                        "name": "Starbucks",
+                        "website": "starbucks.com",
+                        "logo": "https://logos.ntropy.com/starbucks.com",
                         "mccs": [
-                          1
+                          5814
                         ],
-                        "type": "person"
+                        "type": "organization"
                       },
                       "intermediaries": [
                         {
@@ -5991,14 +5991,14 @@
                     {
                       "entities": {
                         "counterparty": {
-                          "id": "string",
-                          "name": "string",
-                          "website": "string",
-                          "logo": "string",
+                          "id": "d4bc3c80-ec1a-3da2-836e-2a4ca4758be5",
+                          "name": "Starbucks",
+                          "website": "starbucks.com",
+                          "logo": "https://logos.ntropy.com/starbucks.com",
                           "mccs": [
-                            1
+                            5814
                           ],
-                          "type": "person"
+                          "type": "organization"
                         },
                         "intermediaries": [
                           {
@@ -6938,14 +6938,14 @@
                     {
                       "entities": {
                         "counterparty": {
-                          "id": "string",
-                          "name": "string",
-                          "website": "string",
-                          "logo": "string",
+                          "id": "d4bc3c80-ec1a-3da2-836e-2a4ca4758be5",
+                          "name": "Starbucks",
+                          "website": "starbucks.com",
+                          "logo": "https://logos.ntropy.com/starbucks.com",
                           "mccs": [
-                            1
+                            5814
                           ],
-                          "type": "person"
+                          "type": "organization"
                         },
                         "intermediaries": [
                           {
@@ -7001,14 +7001,14 @@
                       {
                         "entities": {
                           "counterparty": {
-                            "id": "string",
-                            "name": "string",
-                            "website": "string",
-                            "logo": "string",
+                            "id": "d4bc3c80-ec1a-3da2-836e-2a4ca4758be5",
+                            "name": "Starbucks",
+                            "website": "starbucks.com",
+                            "logo": "https://logos.ntropy.com/starbucks.com",
                             "mccs": [
-                              1
+                              5814
                             ],
-                            "type": "person"
+                            "type": "organization"
                           },
                           "intermediaries": [
                             {

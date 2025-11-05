@@ -9,8 +9,8 @@
             },
             "snippet": {
                 "type": "java",
-                "sync_client": "package com.example.usage;\n\nimport com.seed.apiWideBasePath.SeedApiWideBasePathClient;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedApiWideBasePathClient client = SeedApiWideBasePathClient\n            .builder()\n            .build();\n\n        client.service().post(\"pathParam\", \"serviceParam\", \"resourceParam\", 1);\n    }\n}\n",
-                "async_client": "package com.example.usage;\n\nimport com.seed.apiWideBasePath.SeedApiWideBasePathClient;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedApiWideBasePathClient client = SeedApiWideBasePathClient\n            .builder()\n            .build();\n\n        client.service().post(\"pathParam\", \"serviceParam\", \"resourceParam\", 1);\n    }\n}\n"
+                "sync_client": "package com.example.usage;\n\nimport com.seed.apiWideBasePath.SeedApiWideBasePathClient;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedApiWideBasePathClient client = SeedApiWideBasePathClient\n            .builder()\n            .pathParam(\"pathParam\")\n            .build();\n\n        client.service().post(\"serviceParam\", \"resourceParam\", 1);\n    }\n}\n",
+                "async_client": "package com.example.usage;\n\nimport com.seed.apiWideBasePath.SeedApiWideBasePathClient;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedApiWideBasePathClient client = SeedApiWideBasePathClient\n            .builder()\n            .pathParam(\"pathParam\")\n            .build();\n\n        client.service().post(\"serviceParam\", \"resourceParam\", 1);\n    }\n}\n"
             }
         }
     ],

@@ -38,6 +38,8 @@ public class AsyncRawServiceClient {
             String serviceParam, String resourceParam, int endpointParam, RequestOptions requestOptions) {
         HttpUrl httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
                 .newBuilder()
+                .addPathSegments("test")
+                .addPathSegment(clientOptions.pathParam())
                 .addPathSegment(serviceParam)
                 .addPathSegment(Integer.toString(endpointParam))
                 .addPathSegment(resourceParam)
@@ -61,11 +63,9 @@ public class AsyncRawServiceClient {
                         return;
                     }
                     String responseBodyString = responseBody != null ? responseBody.string() : "{}";
+                    Object errorBody = ObjectMappers.parseErrorBody(responseBodyString);
                     future.completeExceptionally(new SeedApiWideBasePathApiException(
-                            "Error with status code " + response.code(),
-                            response.code(),
-                            ObjectMappers.JSON_MAPPER.readValue(responseBodyString, Object.class),
-                            response));
+                            "Error with status code " + response.code(), response.code(), errorBody, response));
                     return;
                 } catch (IOException e) {
                     future.completeExceptionally(

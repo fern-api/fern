@@ -15,6 +15,7 @@ import { CoreUtility, CoreUtilityName } from "./CoreUtility";
 import { FetcherImpl } from "./Fetcher";
 import { FileUtilsImpl } from "./FileUtils";
 import { FormDataUtilsImpl } from "./FormDataUtils";
+import { LoggingImpl } from "./Logging";
 import { PaginationImpl } from "./Pagination";
 import { RuntimeImpl } from "./Runtime";
 import { StreamImpl } from "./Stream";
@@ -117,6 +118,10 @@ export class CoreUtilitiesManager {
                 generateEndpointMetadata: this.generateEndpointMetadata
             }),
             urlUtils: new UrlUtilsImpl({
+                getReferenceToExport,
+                generateEndpointMetadata: this.generateEndpointMetadata
+            }),
+            logging: new LoggingImpl({
                 getReferenceToExport,
                 generateEndpointMetadata: this.generateEndpointMetadata
             })

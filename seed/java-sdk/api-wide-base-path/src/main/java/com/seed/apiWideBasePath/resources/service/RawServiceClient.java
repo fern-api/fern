@@ -33,6 +33,8 @@ public class RawServiceClient {
             String serviceParam, String resourceParam, int endpointParam, RequestOptions requestOptions) {
         HttpUrl httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
                 .newBuilder()
+                .addPathSegments("test")
+                .addPathSegment(clientOptions.pathParam())
                 .addPathSegment(serviceParam)
                 .addPathSegment(Integer.toString(endpointParam))
                 .addPathSegment(resourceParam)
@@ -52,11 +54,9 @@ public class RawServiceClient {
                 return new SeedApiWideBasePathHttpResponse<>(null, response);
             }
             String responseBodyString = responseBody != null ? responseBody.string() : "{}";
+            Object errorBody = ObjectMappers.parseErrorBody(responseBodyString);
             throw new SeedApiWideBasePathApiException(
-                    "Error with status code " + response.code(),
-                    response.code(),
-                    ObjectMappers.JSON_MAPPER.readValue(responseBodyString, Object.class),
-                    response);
+                    "Error with status code " + response.code(), response.code(), errorBody, response);
         } catch (IOException e) {
             throw new SeedApiWideBasePathException("Network error executing HTTP request", e);
         }

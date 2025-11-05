@@ -46,9 +46,10 @@ public class Example {
     public static void main(String[] args) {
         SeedApiWideBasePathClient client = SeedApiWideBasePathClient
             .builder()
+            .pathParam("pathParam")
             .build();
 
-        client.service().post("pathParam", "serviceParam", "resourceParam", 1);
+        client.service().post("serviceParam", "resourceParam", 1);
     }
 }
 ```

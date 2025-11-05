@@ -71,11 +71,9 @@ public class AsyncRawSinglePropertyClient {
                                 ObjectMappers.JSON_MAPPER.readValue(responseBodyString, String.class), response));
                         return;
                     }
+                    Object errorBody = ObjectMappers.parseErrorBody(responseBodyString);
                     future.completeExceptionally(new SeedSinglePropertyApiException(
-                            "Error with status code " + response.code(),
-                            response.code(),
-                            ObjectMappers.JSON_MAPPER.readValue(responseBodyString, Object.class),
-                            response));
+                            "Error with status code " + response.code(), response.code(), errorBody, response));
                     return;
                 } catch (IOException e) {
                     future.completeExceptionally(

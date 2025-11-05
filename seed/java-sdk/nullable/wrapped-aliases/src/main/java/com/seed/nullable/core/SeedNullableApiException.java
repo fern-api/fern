@@ -65,9 +65,9 @@ public class SeedNullableApiException extends SeedNullableException {
         return this.headers;
     }
 
-    @java.lang.Override
+    @Override
     public String toString() {
         return "SeedNullableApiException{" + "message: " + getMessage() + ", statusCode: " + statusCode + ", body: "
-                + body + "}";
+                + ObjectMappers.stringify(body) + "}";
     }
 }

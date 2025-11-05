@@ -62,6 +62,8 @@ export function parseAsyncAPIV3({
     const duplicatedMessageIds: Array<SchemaId> = [];
     const parsedChannels: Record<string, WebsocketChannel> = {};
 
+    context.logger.debug("Parsing V3 AsyncAPI...");
+
     for (const [schemaId, schema] of Object.entries(document.components?.schemas ?? {})) {
         schemas[schemaId] = convertSchema(schema, false, false, context, [schemaId], source, context.namespace);
     }
@@ -72,22 +74,20 @@ export function parseAsyncAPIV3({
         }
         if (channel.messages) {
             for (const [messageId, message] of Object.entries(channel.messages)) {
-                if (context.isReferenceObject(message) || context.isMessageWithPayload(message)) {
-                    if (!seenMessages[messageId]) {
-                        seenMessages[messageId] = [];
-                    }
-                    if (context.isReferenceObject(message)) {
-                        const resolved = context.resolveMessageReference(message);
-                        seenMessages[messageId].push({
-                            channelId,
-                            payload: resolved.payload
-                        });
-                    } else {
-                        seenMessages[messageId].push({
-                            channelId,
-                            payload: message.payload
-                        });
-                    }
+                if (!seenMessages[messageId]) {
+                    seenMessages[messageId] = [];
+                }
+                if (context.isReferenceObject(message)) {
+                    const resolved = context.resolveMessageReference(message);
+                    seenMessages[messageId].push({
+                        channelId,
+                        payload: resolved.payload
+                    });
+                } else if (context.isMessageWithPayload(message)) {
+                    seenMessages[messageId].push({
+                        channelId,
+                        payload: message.payload
+                    });
                 }
             }
         }
@@ -323,6 +323,17 @@ export function parseAsyncAPIV3({
                 FernAsyncAPIExtension.FERN_SDK_GROUP_NAME
             );
 
+            const channelServers = (
+                channel.servers?.map((serverRef) => getServerNameFromServerRef(servers, serverRef)) ??
+                Object.values(servers)
+            ).map((server) => ({
+                ...server,
+                name: server.name as string
+            }));
+            // TODO (Eden): This can be a LOT more complicated than this. See the link below for more details:
+            // https://www.asyncapi.com/docs/reference/specification/v3.0.0#channelObject
+            const parsedChannelPath = channel.address?.split("?")[0] ?? transformToValidPath(channelPath);
+
             parsedChannels[channelPath] = {
                 audiences: getExtension<string[] | undefined>(channel, FernOpenAPIExtension.AUDIENCES) ?? [],
                 handshake: {
@@ -346,31 +357,31 @@ export function parseAsyncAPIV3({
                 ),
                 messages,
                 summary: getExtension<string | undefined>(channel, FernAsyncAPIExtension.FERN_DISPLAY_NAME),
-                servers: (
-                    channel.servers?.map((serverRef) => getServerNameFromServerRef(servers, serverRef)) ??
-                    Object.values(servers)
-                ).map((server) => ({
-                    ...server,
-                    name: server.name as string
-                })),
-                // TODO (Eden): This can be a LOT more complicated than this. See the link below for more details:
-                // https://www.asyncapi.com/docs/reference/specification/v3.0.0#channelObject
-                path: channel.address?.split("?")[0] ?? transformToValidPath(channelPath),
+                servers: channelServers,
+                path: parsedChannelPath,
                 description: channel.description,
                 examples,
                 source
             };
+        } else {
+            context.logger.warn(
+                `Skipping AsyncAPI channel ${channelPath} as it does not qualify for inclusion (no headers, query params, or operations)`
+            );
         }
     }
 
+    const groupedSchemas = getSchemas(context.namespace, schemas);
+    const finalServers = Object.values(servers).map((server) => ({
+        ...server,
+        name: server.name as string
+    }));
+    const basePath = getExtension<string | undefined>(document, FernAsyncAPIExtension.BASE_PATH);
+
     return {
-        groupedSchemas: getSchemas(context.namespace, schemas),
+        groupedSchemas,
         channels: parsedChannels,
-        servers: Object.values(servers).map((server) => ({
-            ...server,
-            name: server.name as string
-        })),
-        basePath: getExtension<string | undefined>(document, FernAsyncAPIExtension.BASE_PATH)
+        servers: finalServers,
+        basePath
     };
 }
 
@@ -439,8 +450,8 @@ function convertMessageReferencesToWebsocketSchemas({
     const results: WebsocketMessageSchema[] = [];
 
     messages.forEach((messageRef, i) => {
-        const resolvedMessage = context.resolveMessageReference(messageRef);
-        let schemaId = resolvedMessage.name as string;
+        const channelMessage = context.resolveMessageReference(messageRef, true);
+        let schemaId = channelMessage.name as string;
 
         if (duplicatedMessageIds.includes(schemaId)) {
             schemaId = `${channelPath}_${schemaId}`;

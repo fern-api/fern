@@ -15,6 +15,8 @@ export interface BaseClientOptions {
     maxRetries?: number;
     /** Provide a custom fetch implementation. Useful for platforms that don't have a built-in fetch or need a custom implementation. */
     fetch?: typeof fetch;
+    /** Configure logging for the client. */
+    logging?: core.logging.LogConfig | core.logging.Logger;
 }
 
 export interface BaseRequestOptions {

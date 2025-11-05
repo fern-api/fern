@@ -65,11 +65,9 @@ public class RawHeadersClient {
                 return new SeedLiteralHttpResponse<>(
                         ObjectMappers.JSON_MAPPER.readValue(responseBodyString, SendResponse.class), response);
             }
+            Object errorBody = ObjectMappers.parseErrorBody(responseBodyString);
             throw new SeedLiteralApiException(
-                    "Error with status code " + response.code(),
-                    response.code(),
-                    ObjectMappers.JSON_MAPPER.readValue(responseBodyString, Object.class),
-                    response);
+                    "Error with status code " + response.code(), response.code(), errorBody, response);
         } catch (IOException e) {
             throw new SeedLiteralException("Network error executing HTTP request", e);
         }

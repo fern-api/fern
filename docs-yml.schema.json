@@ -2083,6 +2083,16 @@
             }
           ]
         },
+        "collapsed": {
+          "oneOf": [
+            {
+              "type": "boolean"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
         "icon": {
           "oneOf": [
             {
@@ -4491,6 +4501,16 @@
           "oneOf": [
             {
               "type": "boolean"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "language": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/docs.Language"
             },
             {
               "type": "null"

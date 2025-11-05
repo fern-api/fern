@@ -1,5 +1,14 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
 
+- version: 1.0.0-rc32
+  createdAt: "2025-11-04"
+  changelogEntry:
+    - type: feat
+      summary: |
+        Add support for undiscriminated unions in Ruby v2 SDK generator.
+        The generator now creates proper union type classes for undiscriminated unions that were previously being skipped.
+  irVersion: 59
+
 - version: 1.0.0-rc31
   createdAt: "2025-11-04"
   changelogEntry:

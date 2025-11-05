@@ -39,6 +39,7 @@ public class RawOrganizationsClient {
             String organizationId, RequestOptions requestOptions) {
         HttpUrl httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
                 .newBuilder()
+                .addPathSegment(clientOptions.tenantId())
                 .addPathSegments("organizations")
                 .addPathSegment(organizationId)
                 .build();
@@ -59,11 +60,9 @@ public class RawOrganizationsClient {
                 return new SeedPathParametersHttpResponse<>(
                         ObjectMappers.JSON_MAPPER.readValue(responseBodyString, Organization.class), response);
             }
+            Object errorBody = ObjectMappers.parseErrorBody(responseBodyString);
             throw new SeedPathParametersApiException(
-                    "Error with status code " + response.code(),
-                    response.code(),
-                    ObjectMappers.JSON_MAPPER.readValue(responseBodyString, Object.class),
-                    response);
+                    "Error with status code " + response.code(), response.code(), errorBody, response);
         } catch (IOException e) {
             throw new SeedPathParametersException("Network error executing HTTP request", e);
         }
@@ -83,6 +82,7 @@ public class RawOrganizationsClient {
             String organizationId, String userId, GetOrganizationUserRequest request, RequestOptions requestOptions) {
         HttpUrl httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
                 .newBuilder()
+                .addPathSegment(clientOptions.tenantId())
                 .addPathSegments("organizations")
                 .addPathSegment(organizationId)
                 .addPathSegments("users")
@@ -105,11 +105,9 @@ public class RawOrganizationsClient {
                 return new SeedPathParametersHttpResponse<>(
                         ObjectMappers.JSON_MAPPER.readValue(responseBodyString, User.class), response);
             }
+            Object errorBody = ObjectMappers.parseErrorBody(responseBodyString);
             throw new SeedPathParametersApiException(
-                    "Error with status code " + response.code(),
-                    response.code(),
-                    ObjectMappers.JSON_MAPPER.readValue(responseBodyString, Object.class),
-                    response);
+                    "Error with status code " + response.code(), response.code(), errorBody, response);
         } catch (IOException e) {
             throw new SeedPathParametersException("Network error executing HTTP request", e);
         }
@@ -129,6 +127,7 @@ public class RawOrganizationsClient {
             String organizationId, SearchOrganizationsRequest request, RequestOptions requestOptions) {
         HttpUrl.Builder httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
                 .newBuilder()
+                .addPathSegment(clientOptions.tenantId())
                 .addPathSegments("organizations")
                 .addPathSegment(organizationId)
                 .addPathSegments("search");
@@ -155,11 +154,9 @@ public class RawOrganizationsClient {
                                 responseBodyString, new TypeReference<List<Organization>>() {}),
                         response);
             }
+            Object errorBody = ObjectMappers.parseErrorBody(responseBodyString);
             throw new SeedPathParametersApiException(
-                    "Error with status code " + response.code(),
-                    response.code(),
-                    ObjectMappers.JSON_MAPPER.readValue(responseBodyString, Object.class),
-                    response);
+                    "Error with status code " + response.code(), response.code(), errorBody, response);
         } catch (IOException e) {
             throw new SeedPathParametersException("Network error executing HTTP request", e);
         }

@@ -43,6 +43,7 @@ public class AsyncRawOrganizationsClient {
             String organizationId, RequestOptions requestOptions) {
         HttpUrl httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
                 .newBuilder()
+                .addPathSegment(clientOptions.tenantId())
                 .addPathSegments("organizations")
                 .addPathSegment(organizationId)
                 .build();
@@ -67,11 +68,9 @@ public class AsyncRawOrganizationsClient {
                                 ObjectMappers.JSON_MAPPER.readValue(responseBodyString, Organization.class), response));
                         return;
                     }
+                    Object errorBody = ObjectMappers.parseErrorBody(responseBodyString);
                     future.completeExceptionally(new SeedPathParametersApiException(
-                            "Error with status code " + response.code(),
-                            response.code(),
-                            ObjectMappers.JSON_MAPPER.readValue(responseBodyString, Object.class),
-                            response));
+                            "Error with status code " + response.code(), response.code(), errorBody, response));
                     return;
                 } catch (IOException e) {
                     future.completeExceptionally(
@@ -103,6 +102,7 @@ public class AsyncRawOrganizationsClient {
             String organizationId, String userId, GetOrganizationUserRequest request, RequestOptions requestOptions) {
         HttpUrl httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
                 .newBuilder()
+                .addPathSegment(clientOptions.tenantId())
                 .addPathSegments("organizations")
                 .addPathSegment(organizationId)
                 .addPathSegments("users")
@@ -129,11 +129,9 @@ public class AsyncRawOrganizationsClient {
                                 ObjectMappers.JSON_MAPPER.readValue(responseBodyString, User.class), response));
                         return;
                     }
+                    Object errorBody = ObjectMappers.parseErrorBody(responseBodyString);
                     future.completeExceptionally(new SeedPathParametersApiException(
-                            "Error with status code " + response.code(),
-                            response.code(),
-                            ObjectMappers.JSON_MAPPER.readValue(responseBodyString, Object.class),
-                            response));
+                            "Error with status code " + response.code(), response.code(), errorBody, response));
                     return;
                 } catch (IOException e) {
                     future.completeExceptionally(
@@ -165,6 +163,7 @@ public class AsyncRawOrganizationsClient {
             String organizationId, SearchOrganizationsRequest request, RequestOptions requestOptions) {
         HttpUrl.Builder httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
                 .newBuilder()
+                .addPathSegment(clientOptions.tenantId())
                 .addPathSegments("organizations")
                 .addPathSegment(organizationId)
                 .addPathSegments("search");
@@ -195,11 +194,9 @@ public class AsyncRawOrganizationsClient {
                                 response));
                         return;
                     }
+                    Object errorBody = ObjectMappers.parseErrorBody(responseBodyString);
                     future.completeExceptionally(new SeedPathParametersApiException(
-                            "Error with status code " + response.code(),
-                            response.code(),
-                            ObjectMappers.JSON_MAPPER.readValue(responseBodyString, Object.class),
-                            response));
+                            "Error with status code " + response.code(), response.code(), errorBody, response));
                     return;
                 } catch (IOException e) {
                     future.completeExceptionally(

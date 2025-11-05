@@ -48,10 +48,10 @@ public class Example {
     public static void main(String[] args) {
         SeedPathParametersClient client = SeedPathParametersClient
             .builder()
+            .tenantId("tenant_id")
             .build();
 
         client.user().createUser(
-            "tenant_id",
             User
                 .builder()
                 .name("name")

@@ -13,6 +13,7 @@ import com.seed.pathParameters.core.RequestOptions;
 import com.seed.pathParameters.core.SeedPathParametersApiException;
 import com.seed.pathParameters.core.SeedPathParametersException;
 import com.seed.pathParameters.core.SeedPathParametersHttpResponse;
+import com.seed.pathParameters.resources.user.requests.GetUserMetadataRequest;
 import com.seed.pathParameters.resources.user.requests.GetUsersRequest;
 import com.seed.pathParameters.resources.user.requests.SearchUsersRequest;
 import com.seed.pathParameters.resources.user.requests.UpdateUserRequest;
@@ -46,6 +47,7 @@ public class RawUserClient {
             String userId, GetUsersRequest request, RequestOptions requestOptions) {
         HttpUrl httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
                 .newBuilder()
+                .addPathSegment(clientOptions.tenantId())
                 .addPathSegments("user")
                 .addPathSegment(userId)
                 .build();
@@ -66,11 +68,9 @@ public class RawUserClient {
                 return new SeedPathParametersHttpResponse<>(
                         ObjectMappers.JSON_MAPPER.readValue(responseBodyString, User.class), response);
             }
+            Object errorBody = ObjectMappers.parseErrorBody(responseBodyString);
             throw new SeedPathParametersApiException(
-                    "Error with status code " + response.code(),
-                    response.code(),
-                    ObjectMappers.JSON_MAPPER.readValue(responseBodyString, Object.class),
-                    response);
+                    "Error with status code " + response.code(), response.code(), errorBody, response);
         } catch (IOException e) {
             throw new SeedPathParametersException("Network error executing HTTP request", e);
         }
@@ -83,6 +83,7 @@ public class RawUserClient {
     public SeedPathParametersHttpResponse<User> createUser(User request, RequestOptions requestOptions) {
         HttpUrl httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
                 .newBuilder()
+                .addPathSegment(clientOptions.tenantId())
                 .addPathSegments("user")
                 .build();
         RequestBody body;
@@ -110,11 +111,9 @@ public class RawUserClient {
                 return new SeedPathParametersHttpResponse<>(
                         ObjectMappers.JSON_MAPPER.readValue(responseBodyString, User.class), response);
             }
+            Object errorBody = ObjectMappers.parseErrorBody(responseBodyString);
             throw new SeedPathParametersApiException(
-                    "Error with status code " + response.code(),
-                    response.code(),
-                    ObjectMappers.JSON_MAPPER.readValue(responseBodyString, Object.class),
-                    response);
+                    "Error with status code " + response.code(), response.code(), errorBody, response);
         } catch (IOException e) {
             throw new SeedPathParametersException("Network error executing HTTP request", e);
         }
@@ -128,6 +127,7 @@ public class RawUserClient {
             String userId, UpdateUserRequest request, RequestOptions requestOptions) {
         HttpUrl httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
                 .newBuilder()
+                .addPathSegment(clientOptions.tenantId())
                 .addPathSegments("user")
                 .addPathSegment(userId)
                 .build();
@@ -156,11 +156,9 @@ public class RawUserClient {
                 return new SeedPathParametersHttpResponse<>(
                         ObjectMappers.JSON_MAPPER.readValue(responseBodyString, User.class), response);
             }
+            Object errorBody = ObjectMappers.parseErrorBody(responseBodyString);
             throw new SeedPathParametersApiException(
-                    "Error with status code " + response.code(),
-                    response.code(),
-                    ObjectMappers.JSON_MAPPER.readValue(responseBodyString, Object.class),
-                    response);
+                    "Error with status code " + response.code(), response.code(), errorBody, response);
         } catch (IOException e) {
             throw new SeedPathParametersException("Network error executing HTTP request", e);
         }
@@ -178,6 +176,7 @@ public class RawUserClient {
             String userId, SearchUsersRequest request, RequestOptions requestOptions) {
         HttpUrl.Builder httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
                 .newBuilder()
+                .addPathSegment(clientOptions.tenantId())
                 .addPathSegments("user")
                 .addPathSegment(userId)
                 .addPathSegments("search");
@@ -203,11 +202,62 @@ public class RawUserClient {
                         ObjectMappers.JSON_MAPPER.readValue(responseBodyString, new TypeReference<List<User>>() {}),
                         response);
             }
+            Object errorBody = ObjectMappers.parseErrorBody(responseBodyString);
             throw new SeedPathParametersApiException(
-                    "Error with status code " + response.code(),
-                    response.code(),
-                    ObjectMappers.JSON_MAPPER.readValue(responseBodyString, Object.class),
-                    response);
+                    "Error with status code " + response.code(), response.code(), errorBody, response);
+        } catch (IOException e) {
+            throw new SeedPathParametersException("Network error executing HTTP request", e);
+        }
+    }
+
+    /**
+     * Test endpoint with path parameter that has a text prefix (v{version})
+     */
+    public SeedPathParametersHttpResponse<User> getUserMetadata(String userId, int version) {
+        return getUserMetadata(userId, version, GetUserMetadataRequest.builder().build());
+    }
+
+    /**
+     * Test endpoint with path parameter that has a text prefix (v{version})
+     */
+    public SeedPathParametersHttpResponse<User> getUserMetadata(
+            String userId, int version, GetUserMetadataRequest request) {
+        return getUserMetadata(userId, version, request, null);
+    }
+
+    /**
+     * Test endpoint with path parameter that has a text prefix (v{version})
+     */
+    public SeedPathParametersHttpResponse<User> getUserMetadata(
+            String userId, int version, GetUserMetadataRequest request, RequestOptions requestOptions) {
+        HttpUrl httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
+                .newBuilder()
+                .addPathSegment(clientOptions.tenantId())
+                .addPathSegments("user")
+                .addPathSegment(userId)
+                .addPathSegments("metadata")
+                .addPathSegment("v" + Integer.toString(version))
+                .build();
+        Request.Builder _requestBuilder = new Request.Builder()
+                .url(httpUrl)
+                .method("GET", null)
+                .headers(Headers.of(clientOptions.headers(requestOptions)))
+                .addHeader("Accept", "application/json");
+        Request okhttpRequest = _requestBuilder.build();
+        OkHttpClient client = clientOptions.httpClient();
+        if (requestOptions != null && requestOptions.getTimeout().isPresent()) {
+            client = clientOptions.httpClientWithTimeout(requestOptions);
+        }
+        try (Response response = client.newCall(okhttpRequest).execute()) {
+            ResponseBody responseBody = response.body();
+            String responseBodyString = responseBody != null ? responseBody.string() : "{}";
+            if (response.isSuccessful()) {
+                return new SeedPathParametersHttpResponse<>(
+                        ObjectMappers.JSON_MAPPER.readValue(responseBodyString, User.class), response);
+            }
+            Object errorBody = ObjectMappers.parseErrorBody(responseBodyString);
+            throw new SeedPathParametersApiException(
+                    "Error with status code " + response.code(), response.code(), errorBody, response);
         } catch (IOException e) {
             throw new SeedPathParametersException("Network error executing HTTP request", e);
         }

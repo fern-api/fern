@@ -21,6 +21,8 @@ public class AsyncSeedApiWideBasePathClientBuilder {
 
     private OkHttpClient httpClient;
 
+    private String pathParam;
+
     public AsyncSeedApiWideBasePathClientBuilder url(String url) {
         this.environment = Environment.custom(url);
         return this;
@@ -63,9 +65,15 @@ public class AsyncSeedApiWideBasePathClientBuilder {
         return this;
     }
 
+    public AsyncSeedApiWideBasePathClientBuilder pathParam(String pathParam) {
+        this.pathParam = pathParam;
+        return this;
+    }
+
     protected ClientOptions buildClientOptions() {
         ClientOptions.Builder builder = ClientOptions.builder();
         setEnvironment(builder);
+        setApiPathParameters(builder);
         setHttpClient(builder);
         setTimeouts(builder);
         setRetries(builder);
@@ -84,6 +92,18 @@ public class AsyncSeedApiWideBasePathClientBuilder {
      */
     protected void setEnvironment(ClientOptions.Builder builder) {
         builder.environment(this.environment);
+    }
+
+    /**
+     * Override this method to configure API-level path parameters defined in the specification.
+     * Available path parameters: pathParam
+     *
+     * @param builder The ClientOptions.Builder to configure
+     */
+    protected void setApiPathParameters(ClientOptions.Builder builder) {
+        if (this.pathParam != null) {
+            builder.pathParam(this.pathParam);
+        }
     }
 
     /**

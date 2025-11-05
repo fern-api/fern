@@ -1,11 +1,50 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
-
 - changelogEntry:
     - summary: |
         Update migration logic to support new generator versions with ir v61.
       type: chore
   irVersion: 61
+  createdAt: "2025-11-05"
+  version: 0.107.9
+
+- changelogEntry:
+    - summary: |
+        Improve anyOf/oneOf example generation to prefer variants with examples and use schema-level examples when available. This addresses cases where unions with multiple types were generating fallback examples instead of using provided examples.
+      type: fix
+  irVersion: 61
+  createdAt: "2025-11-05"
+  version: 0.107.8
+
+- changelogEntry:
+    - summary: |
+        Enables parsing of the language setting in docs.
+      type: chore
+  irVersion: 61
   createdAt: "2025-11-03"
+  version: 0.107.7
+
+- changelogEntry:
+    - summary: |
+        Silence validation logs in fern docs dev unless there is a validation error
+      type: fix
+  irVersion: 61
+  createdAt: "2025-11-05"
+  version: 0.107.6
+
+- changelogEntry:
+    - summary: |
+        Perform fern docs dev validation in the background instead of foreground
+      type: fix
+  irVersion: 61
+  createdAt: "2025-11-04"
+  version: 0.107.5
+
+- changelogEntry:
+    - summary: |
+        Fix the dereferencing of message $refs in the operations section of AsyncAPI specs.
+      type: fix
+  irVersion: 61
+  createdAt: "2025-11-04"
   version: 0.107.4
 
 - changelogEntry:
@@ -126,7 +165,7 @@
 
         - `theme.[sidebar, body, tabs]`: controls the theme of the docs
         - `settings.disable-explorer-proxy`: controls whether the explorer uses a proxy
-        - `languages`: initializes localization within fern docs 
+        - `languages`: initializes localization within fern docs
         - `navbarLinks.[dropdown]`: adds a dropdown option for navbar links
         - `navbarLinks.[].viewers`: allows navbar links to be controlled with RBAC
       type: feat

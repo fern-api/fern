@@ -53,6 +53,7 @@ export class User {
             abortSignal: requestOptions?.abortSignal,
             endpointMetadata: _metadata,
             fetchFn: this._options?.fetch,
+            logging: this._options.logging,
         });
         if (_response.ok) {
             return { data: _response.body as SeedAnyAuth.User[], rawResponse: _response.rawResponse };
@@ -117,6 +118,7 @@ export class User {
             abortSignal: requestOptions?.abortSignal,
             endpointMetadata: _metadata,
             fetchFn: this._options?.fetch,
+            logging: this._options.logging,
         });
         if (_response.ok) {
             return { data: _response.body as SeedAnyAuth.User[], rawResponse: _response.rawResponse };

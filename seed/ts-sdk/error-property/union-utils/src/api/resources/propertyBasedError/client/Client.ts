@@ -50,6 +50,7 @@ export class PropertyBasedError {
             maxRetries: requestOptions?.maxRetries ?? this._options?.maxRetries,
             abortSignal: requestOptions?.abortSignal,
             fetchFn: this._options?.fetch,
+            logging: this._options.logging,
         });
         if (_response.ok) {
             return { data: _response.body as string, rawResponse: _response.rawResponse };

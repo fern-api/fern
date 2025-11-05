@@ -56,11 +56,9 @@ public class RawServiceClient {
                 return new SeedMixedCaseHttpResponse<>(
                         ObjectMappers.JSON_MAPPER.readValue(responseBodyString, Resource.class), response);
             }
+            Object errorBody = ObjectMappers.parseErrorBody(responseBodyString);
             throw new SeedMixedCaseApiException(
-                    "Error with status code " + response.code(),
-                    response.code(),
-                    ObjectMappers.JSON_MAPPER.readValue(responseBodyString, Object.class),
-                    response);
+                    "Error with status code " + response.code(), response.code(), errorBody, response);
         } catch (IOException e) {
             throw new SeedMixedCaseException("Network error executing HTTP request", e);
         }
@@ -95,11 +93,9 @@ public class RawServiceClient {
                         ObjectMappers.JSON_MAPPER.readValue(responseBodyString, new TypeReference<List<Resource>>() {}),
                         response);
             }
+            Object errorBody = ObjectMappers.parseErrorBody(responseBodyString);
             throw new SeedMixedCaseApiException(
-                    "Error with status code " + response.code(),
-                    response.code(),
-                    ObjectMappers.JSON_MAPPER.readValue(responseBodyString, Object.class),
-                    response);
+                    "Error with status code " + response.code(), response.code(), errorBody, response);
         } catch (IOException e) {
             throw new SeedMixedCaseException("Network error executing HTTP request", e);
         }

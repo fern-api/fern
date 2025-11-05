@@ -1192,6 +1192,16 @@
             }
           ]
         },
+        "collapsed": {
+          "oneOf": [
+            {
+              "type": "boolean"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
         "icon": {
           "oneOf": [
             {

@@ -65,9 +65,9 @@ public class SeedPackageYmlApiException extends SeedPackageYmlException {
         return this.headers;
     }
 
-    @java.lang.Override
+    @Override
     public String toString() {
         return "SeedPackageYmlApiException{" + "message: " + getMessage() + ", statusCode: " + statusCode + ", body: "
-                + body + "}";
+                + ObjectMappers.stringify(body) + "}";
     }
 }
