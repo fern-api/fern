@@ -271,12 +271,15 @@ export class ExampleTypeFactory {
                         return FullExample.oneOf(FullOneOfExample.discriminated(result));
                     }
                     case "undiscriminated": {
-                        const unionVariantSchema = this.getUnDiscriminatedUnionVariantSchema(schema.value, example);
+                        const exampleForSelection = example ?? schema.value.example;
+                        const unionVariantSchema = this.getUnDiscriminatedUnionVariantSchema(
+                            schema.value,
+                            exampleForSelection
+                        );
                         if (unionVariantSchema != null) {
-                            // TODO (we should select the oneOf schema based on the example)
                             return this.buildExampleHelper({
                                 exampleId,
-                                example,
+                                example: exampleForSelection,
                                 schema: unionVariantSchema,
                                 visitedSchemaIds,
                                 depth,
