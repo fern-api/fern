@@ -2,7 +2,7 @@
 # For unreleased changes, use unreleased.yml
 - version: 5.0.0-rc0
   changelogEntry:
-    - summary: Switch to `uv` for package management and builds; convert `pyproject.toml` to PEP 621 syntax, allowing it to be used with `poetry` or `uv`.
+    - summary: Switch to `uv` for package management and builds; convert `pyproject.toml` to PEP 621 syntax, allowing it to be used with `poetry>=2.0`, `uv`, or `pip`.
       type: feat
   createdAt: "2025-10-30"
   irVersion: 60
