@@ -662,11 +662,12 @@ export class ExampleConverter extends AbstractConverter<AbstractConverterContext
 
             if (propertyIsOmittedFromExample && propertyIsOptional) {
                 if (this.example === undefined && this.generateOptionalProperties) {
+                    const propertyExample = this.maybeResolveSchemaExample(property);
                     const exampleConverter = new ExampleConverter({
                         breadcrumbs: [...this.breadcrumbs, key],
                         context: this.context,
                         schema: property,
-                        example: undefined,
+                        example: propertyExample,
                         depth: this.depth + 1,
                         generateOptionalProperties: this.generateOptionalProperties,
                         exampleGenerationStrategy: this.exampleGenerationStrategy,
@@ -676,11 +677,13 @@ export class ExampleConverter extends AbstractConverter<AbstractConverterContext
                 }
                 return { key, result: { isValid: true, coerced: false, validExample: undefined, errors: [] } };
             } else {
+                const propExampleFromParent = exampleObj[key];
+                const propertyExample = propExampleFromParent ?? this.maybeResolveSchemaExample(property);
                 const exampleConverter = new ExampleConverter({
                     breadcrumbs: [...this.breadcrumbs, key],
                     context: this.context,
                     schema: property,
-                    example: exampleObj[key],
+                    example: propertyExample,
                     depth: this.depth + 1,
                     generateOptionalProperties: this.generateOptionalProperties,
                     exampleGenerationStrategy: this.exampleGenerationStrategy,
@@ -851,6 +854,8 @@ export class ExampleConverter extends AbstractConverter<AbstractConverterContext
             return { isValid: false, coerced: false, validExample: null, errors: [] };
         }
 
+        const containerExample = this.example ?? this.maybeResolveSchemaExample(resolvedSchema);
+
         const results: ExampleConverter.Output[] = [];
         let firstValidResult: ExampleConverter.Output | null = null;
 
@@ -864,11 +869,13 @@ export class ExampleConverter extends AbstractConverter<AbstractConverterContext
             const schemaToUse =
                 unionType === "oneOf" ? { ...resolvedSchema, ...subSchema, oneOf: undefined } : subSchema;
 
+            const variantExample = containerExample ?? this.maybeResolveSchemaExample(schemaToUse);
+
             const exampleConverter = new ExampleConverter({
                 breadcrumbs: [...this.breadcrumbs, `${unionType}[${index}]`],
                 context: this.context,
                 schema: schemaToUse,
-                example: this.example,
+                example: variantExample,
                 depth: this.depth + 1,
                 generateOptionalProperties: this.generateOptionalProperties,
                 exampleGenerationStrategy: this.exampleGenerationStrategy,
