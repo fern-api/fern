@@ -155,8 +155,10 @@ public final class ClientOptionsGenerator extends AbstractFileGenerator {
         MethodSpec httpClientGetter = createGetter(OKHTTP_CLIENT_FIELD);
         Map<VariableId, FieldSpec> variableFields = getVariableFields();
         Map<VariableId, MethodSpec> variableGetters = getVariableGetters(variableFields);
-        Map<String, FieldSpec> apiPathParamFields = getApiPathParamFields();
-        Map<String, MethodSpec> apiPathParamGetters = getApiPathParamGetters(apiPathParamFields);
+        // Create separate field specs for main class (with final) and builder (without final)
+        Map<String, FieldSpec> apiPathParamFieldsForMainClass = getApiPathParamFieldsForMainClass();
+        Map<String, FieldSpec> apiPathParamFieldsForBuilder = getApiPathParamFieldsForBuilder();
+        Map<String, MethodSpec> apiPathParamGetters = getApiPathParamGetters(apiPathParamFieldsForMainClass);
 
         String platformHeadersPutString = getPlatformHeadersEntries(
                         generatorContext.getIr().getSdkConfig().getPlatformHeaders(),
@@ -183,7 +185,7 @@ public final class ClientOptionsGenerator extends AbstractFileGenerator {
                         .map(fieldSpec -> ParameterSpec.builder(fieldSpec.type, fieldSpec.name)
                                 .build())
                         .collect(Collectors.toList()))
-                .addParameters(apiPathParamFields.values().stream()
+                .addParameters(apiPathParamFieldsForMainClass.values().stream()
                         .map(fieldSpec -> ParameterSpec.builder(fieldSpec.type, fieldSpec.name)
                                 .build())
                         .collect(Collectors.toList()))
@@ -207,7 +209,7 @@ public final class ClientOptionsGenerator extends AbstractFileGenerator {
                 .values()
                 .forEach(fieldSpec -> constructorBuilder.addStatement("this.$N = $N", fieldSpec, fieldSpec));
 
-        apiPathParamFields
+        apiPathParamFieldsForMainClass
                 .values()
                 .forEach(fieldSpec -> constructorBuilder.addStatement("this.$N = $N", fieldSpec, fieldSpec));
 
@@ -219,7 +221,7 @@ public final class ClientOptionsGenerator extends AbstractFileGenerator {
                 .addField(OKHTTP_CLIENT_FIELD)
                 .addField(TIMEOUT_FIELD)
                 .addFields(variableFields.values())
-                .addFields(apiPathParamFields.values())
+                .addFields(apiPathParamFieldsForMainClass.values())
                 .addMethod(constructorBuilder.build())
                 .addMethod(environmentGetter)
                 .addMethod(headersFromRequestOptions);
@@ -299,7 +301,7 @@ public final class ClientOptionsGenerator extends AbstractFileGenerator {
                         .returns(builderClassName)
                         .addStatement("return new $T()", builderClassName)
                         .build())
-                .addType(createBuilder(variableFields, apiPathParamFields))
+                .addType(createBuilder(variableFields, apiPathParamFieldsForBuilder))
                 .build();
 
         JavaFile environmentsFile =
@@ -449,7 +451,8 @@ public final class ClientOptionsGenerator extends AbstractFileGenerator {
                 .addStatement("return values");
     }
 
-    private TypeSpec createBuilder(Map<VariableId, FieldSpec> variableFields, Map<String, FieldSpec> apiPathParamFields) {
+    private TypeSpec createBuilder(
+            Map<VariableId, FieldSpec> variableFields, Map<String, FieldSpec> apiPathParamFields) {
         TypeSpec.Builder builder = TypeSpec.classBuilder(builderClassName)
                 .addModifiers(Modifier.PUBLIC, Modifier.STATIC)
                 .addField(FieldSpec.builder(environmentField.type, environmentField.name)
@@ -678,11 +681,31 @@ public final class ClientOptionsGenerator extends AbstractFileGenerator {
                 }));
     }
 
-    private Map<String, FieldSpec> getApiPathParamFields() {
+    /**
+     * Creates field specs for API-level path parameters in the main ClientOptions class. These fields MUST be final for
+     * thread safety and immutability.
+     */
+    private Map<String, FieldSpec> getApiPathParamFieldsForMainClass() {
         return generatorContext.getIr().getPathParameters().stream()
                 .collect(Collectors.toMap(
-                        pathParameter -> pathParameter.getName().getOriginalName(),
-                        pathParameter -> FieldSpec.builder(
+                        pathParameter -> pathParameter.getName().getOriginalName(), pathParameter -> FieldSpec.builder(
+                                        generatorContext
+                                                .getPoetTypeNameMapper()
+                                                .convertToTypeName(true, pathParameter.getValueType()),
+                                        pathParameter.getName().getCamelCase().getSafeName(),
+                                        Modifier.PRIVATE,
+                                        Modifier.FINAL)
+                                .build()));
+    }
+
+    /**
+     * Creates field specs for API-level path parameters in the Builder class. These fields MUST NOT be final so they
+     * can be set via setter methods.
+     */
+    private Map<String, FieldSpec> getApiPathParamFieldsForBuilder() {
+        return generatorContext.getIr().getPathParameters().stream()
+                .collect(Collectors.toMap(
+                        pathParameter -> pathParameter.getName().getOriginalName(), pathParameter -> FieldSpec.builder(
                                         generatorContext
                                                 .getPoetTypeNameMapper()
                                                 .convertToTypeName(true, pathParameter.getValueType()),
@@ -694,15 +717,16 @@ public final class ClientOptionsGenerator extends AbstractFileGenerator {
     private Map<String, MethodSpec> getApiPathParamGetters(Map<String, FieldSpec> apiPathParamFields) {
         return generatorContext.getIr().getPathParameters().stream()
                 .collect(Collectors.toMap(
-                        pathParameter -> pathParameter.getName().getOriginalName(),
-                        pathParameter -> {
+                        pathParameter -> pathParameter.getName().getOriginalName(), pathParameter -> {
                             FieldSpec pathParamField = apiPathParamFields.get(
                                     pathParameter.getName().getOriginalName());
                             TypeName pathParamTypeName = generatorContext
                                     .getPoetTypeNameMapper()
                                     .convertToTypeName(true, pathParameter.getValueType());
-                            return MethodSpec.methodBuilder(
-                                            pathParameter.getName().getCamelCase().getSafeName())
+                            return MethodSpec.methodBuilder(pathParameter
+                                            .getName()
+                                            .getCamelCase()
+                                            .getSafeName())
                                     .addModifiers(Modifier.PUBLIC)
                                     .returns(pathParamTypeName)
                                     .addStatement("return this.$N", pathParamField)
@@ -713,9 +737,10 @@ public final class ClientOptionsGenerator extends AbstractFileGenerator {
     private List<MethodSpec> getApiPathParamBuilders(Map<String, FieldSpec> apiPathParamFields) {
         return generatorContext.getIr().getPathParameters().stream()
                 .map(pathParameter -> {
-                    FieldSpec pathParamField = apiPathParamFields.get(
-                            pathParameter.getName().getOriginalName());
-                    String pathParamName = pathParameter.getName().getCamelCase().getSafeName();
+                    FieldSpec pathParamField =
+                            apiPathParamFields.get(pathParameter.getName().getOriginalName());
+                    String pathParamName =
+                            pathParameter.getName().getCamelCase().getSafeName();
                     return MethodSpec.methodBuilder(pathParamName)
                             .addModifiers(Modifier.PUBLIC)
                             .returns(builderClassName)
@@ -797,7 +822,8 @@ public final class ClientOptionsGenerator extends AbstractFileGenerator {
         return fromMethod.build();
     }
 
-    private MethodSpec getBuildMethod(Map<VariableId, FieldSpec> variableFields, Map<String, FieldSpec> apiPathParamFields) {
+    private MethodSpec getBuildMethod(
+            Map<VariableId, FieldSpec> variableFields, Map<String, FieldSpec> apiPathParamFields) {
         ImmutableList.Builder<Object> argsBuilder = ImmutableList.builder();
         argsBuilder.add(
                 className,

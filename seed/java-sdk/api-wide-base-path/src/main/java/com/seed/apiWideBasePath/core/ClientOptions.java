@@ -105,7 +105,7 @@ public final class ClientOptions {
 
         private OkHttpClient httpClient = null;
 
-        private final String pathParam;
+        private String pathParam;
 
         public Builder environment(Environment environment) {
             this.environment = environment;

@@ -242,7 +242,8 @@ public final class HttpUrlBuilder {
                 }
             } else if (poetPathParameter.irParam().getLocation().equals(PathParameterLocation.ROOT)) {
                 String originalName = poetPathParameter.irParam().getName().getOriginalName();
-                MethodSpec apiPathParamGetter = generatedClientOptions.apiPathParamGetters().get(originalName);
+                MethodSpec apiPathParamGetter =
+                        generatedClientOptions.apiPathParamGetters().get(originalName);
                 CodeBlock paramValue = PoetTypeNameStringifier.stringify(
                         clientOptionsField.name + "." + apiPathParamGetter.name + "()",
                         poetPathParameter.poetParam().type);
