@@ -55,8 +55,7 @@
               },
               "queryParameters": {},
               "headers": {},
-              "responseStatusCode": 204,
-              "codeSamples": []
+              "responseStatusCode": 204
             }
           ]
         }

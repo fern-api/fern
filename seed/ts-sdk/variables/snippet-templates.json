@@ -28,6 +28,16 @@
                                 {
                                     "value": {
                                         "imports": [],
+                                        "templateString": "rootVariable: \"YOUR_ROOT_VARIABLE\"",
+                                        "isOptional": false,
+                                        "templateInputs": [],
+                                        "type": "generic"
+                                    },
+                                    "type": "template"
+                                },
+                                {
+                                    "value": {
+                                        "imports": [],
                                         "templateString": "environment: \"YOUR_BASE_URL\"",
                                         "isOptional": false,
                                         "templateInputs": [],

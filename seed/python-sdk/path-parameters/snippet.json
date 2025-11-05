@@ -91,6 +91,19 @@
                 "async_client": "import asyncio\n\nfrom seed import AsyncSeedPathParameters\n\nclient = AsyncSeedPathParameters(\n    base_url=\"https://yourhost.com/path/to/api\",\n)\n\n\nasync def main() -> None:\n    await client.user.search_users(\n        user_id=\"user_id\",\n        limit=1,\n    )\n\n\nasyncio.run(main())\n",
                 "type": "python"
             }
+        },
+        {
+            "example_identifier": "default",
+            "id": {
+                "path": "/{tenant_id}/user/{user_id}/metadata/v{version}",
+                "method": "GET",
+                "identifier_override": "endpoint_user.getUserMetadata"
+            },
+            "snippet": {
+                "sync_client": "from seed import SeedPathParameters\n\nclient = SeedPathParameters(\n    base_url=\"https://yourhost.com/path/to/api\",\n)\nclient.user.get_user_metadata(\n    user_id=\"user_id\",\n    version=1,\n)\n",
+                "async_client": "import asyncio\n\nfrom seed import AsyncSeedPathParameters\n\nclient = AsyncSeedPathParameters(\n    base_url=\"https://yourhost.com/path/to/api\",\n)\n\n\nasync def main() -> None:\n    await client.user.get_user_metadata(\n        user_id=\"user_id\",\n        version=1,\n    )\n\n\nasyncio.run(main())\n",
+                "type": "python"
+            }
         }
     ]
 }

@@ -235,4 +235,59 @@ public partial class UserClient
             );
         }
     }
+
+    /// <summary>
+    /// Test endpoint with path parameter that has a text prefix (v{version})
+    /// </summary>
+    /// <example><code>
+    /// await client.User.GetUserMetadataAsync("tenant_id", "user_id", 1, new GetUserMetadataRequest());
+    /// </code></example>
+    public async Task<User> GetUserMetadataAsync(
+        string tenantId,
+        string userId,
+        int version,
+        GetUserMetadataRequest request,
+        RequestOptions? options = null,
+        CancellationToken cancellationToken = default
+    )
+    {
+        var response = await _client
+            .SendRequestAsync(
+                new JsonRequest
+                {
+                    BaseUrl = _client.Options.BaseUrl,
+                    Method = HttpMethod.Get,
+                    Path = string.Format(
+                        "/{0}/user/{1}/metadata/v{2}",
+                        ValueConvert.ToPathParameterString(tenantId),
+                        ValueConvert.ToPathParameterString(userId),
+                        ValueConvert.ToPathParameterString(version)
+                    ),
+                    Options = options,
+                },
+                cancellationToken
+            )
+            .ConfigureAwait(false);
+        if (response.StatusCode is >= 200 and < 400)
+        {
+            var responseBody = await response.Raw.Content.ReadAsStringAsync();
+            try
+            {
+                return JsonUtils.Deserialize<User>(responseBody)!;
+            }
+            catch (JsonException e)
+            {
+                throw new SeedPathParametersException("Failed to deserialize response", e);
+            }
+        }
+
+        {
+            var responseBody = await response.Raw.Content.ReadAsStringAsync();
+            throw new SeedPathParametersApiException(
+                $"Error with status code {response.StatusCode}",
+                response.StatusCode,
+                responseBody
+            );
+        }
+    }
 }

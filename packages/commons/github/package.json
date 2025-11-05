@@ -1,0 +1,48 @@
+{
+  "name": "@fern-api/github",
+  "version": "0.0.0",
+  "private": true,
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/fern-api/fern",
+    "directory": "packages/commons/github"
+  },
+  "sideEffects": false,
+  "type": "module",
+  "exports": {
+    ".": {
+      "types": "./lib/index.d.ts",
+      "default": "./lib/index.js"
+    }
+  },
+  "main": "lib/index.js",
+  "module": "src/index.ts",
+  "source": "src/index.ts",
+  "types": "lib/index.d.ts",
+  "files": ["lib"],
+  "scripts": {
+    "clean": "rm -rf ./lib ./dist && tsc --build --clean",
+    "compile": "tsc --build",
+    "depcheck": "depcheck",
+    "format": "prettier --write --ignore-unknown \"**\"",
+    "format:check": "prettier --check --ignore-unknown \"**\"",
+    "lint:eslint": "eslint --max-warnings 0 .",
+    "lint:eslint:fix": "pnpm lint:eslint --fix",
+    "lint:style": "stylelint 'src/**/*.scss' --allow-empty-input --max-warnings 0",
+    "lint:style:fix": "pnpm lint:style --fix",
+    "test": "vitest --run --passWithNoTests --globals"
+  },
+  "dependencies": {
+    "octokit": "^4.1.4",
+    "tmp-promise": "^3.0.3"
+  },
+  "devDependencies": {
+    "@fern-api/configs": "workspace:*",
+    "@types/node": "^22.0.0",
+    "depcheck": "^1.4.7",
+    "simple-git": "^3.24.0",
+    "stylelint": "^16.1.0",
+    "typescript": "5.9.3",
+    "vitest": "^2.1.9"
+  }
+}

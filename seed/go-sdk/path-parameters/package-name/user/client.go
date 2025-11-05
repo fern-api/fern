@@ -97,3 +97,20 @@ func (c *Client) SearchUsers(
 	}
 	return response.Body, nil
 }
+
+// Test endpoint with path parameter that has a text prefix (v{version})
+func (c *Client) GetUserMetadata(
+	ctx context.Context,
+	request *path.GetUserMetadataRequest,
+	opts ...option.RequestOption,
+) (*path.User, error) {
+	response, err := c.WithRawResponse.GetUserMetadata(
+		ctx,
+		request,
+		opts...,
+	)
+	if err != nil {
+		return nil, err
+	}
+	return response.Body, nil
+}

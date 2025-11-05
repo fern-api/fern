@@ -7,6 +7,7 @@ on:
     paths:
       - "packages/seed/src/commands/validate/**/*"
       - "packages/cli/cli/versions.yml"
+      - "packages/generator-cli/versions.yml"
       - "generators/**/versions.yml"
   pull_request:
     branches:
@@ -14,6 +15,7 @@ on:
     paths:
       - "packages/seed/src/commands/validate/**/*"
       - "packages/cli/cli/versions.yml"
+      - "packages/generator-cli/versions.yml"
       - "generators/**/versions.yml"
 
 concurrency:

@@ -16,7 +16,8 @@ import {
     PrimitiveTypeV1,
     TypeReference,
     UndiscriminatedUnionTypeDeclaration,
-    UnionTypeDeclaration
+    UnionTypeDeclaration,
+    VariableDeclaration
 } from "@fern-fern/ir-sdk/api";
 import { FdrSnippetTemplate } from "@fern-fern/snippet-sdk";
 import * as FDRAPIV1Read from "@fern-fern/snippet-sdk/api/resources/api/resources/v1/resources/read";
@@ -36,6 +37,7 @@ export class TemplateGenerator {
     private npmPackage: NpmPackage;
     private auth: ApiAuth;
     private headers: HttpHeader[];
+    private variables: VariableDeclaration[];
     private endpoint: HttpEndpoint;
     private packageId: PackageId;
     private rootPackageId: PackageId;
@@ -50,6 +52,7 @@ export class TemplateGenerator {
         npmPackage,
         auth,
         headers,
+        variables,
         endpoint,
         packageId,
         rootPackageId,
@@ -63,6 +66,7 @@ export class TemplateGenerator {
         npmPackage: NpmPackage;
         auth: ApiAuth;
         headers: HttpHeader[];
+        variables: VariableDeclaration[];
         endpoint: HttpEndpoint;
         packageId: PackageId;
         rootPackageId: PackageId;
@@ -76,6 +80,7 @@ export class TemplateGenerator {
         this.npmPackage = npmPackage;
         this.auth = auth;
         this.headers = headers;
+        this.variables = variables;
         this.endpoint = endpoint;
         this.packageId = packageId;
         this.rootPackageId = rootPackageId;
@@ -975,6 +980,20 @@ export class TemplateGenerator {
         addEnvironmentProperty: boolean
     ): FdrSnippetTemplate.TemplateInput[] {
         const topLevelTemplateInputs: FdrSnippetTemplate.TemplateInput[] = [];
+
+        for (const variable of this.variables) {
+            const variableName = this.getPropertyKey(variable.name);
+            topLevelTemplateInputs.push(
+                FdrSnippetTemplate.TemplateInput.template(
+                    FdrSnippetTemplate.Template.generic({
+                        imports: [],
+                        templateString: `${variableName}: "YOUR_${variable.name.screamingSnakeCase.unsafeName}"`,
+                        isOptional: false,
+                        templateInputs: []
+                    })
+                )
+            );
+        }
 
         if (addEnvironmentProperty) {
             const firstEnvironment = this.clientContext.environments.getReferenceToFirstEnvironmentEnum();
