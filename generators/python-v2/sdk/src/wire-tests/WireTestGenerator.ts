@@ -9,7 +9,7 @@ import { WireTestSetupGenerator } from "./WireTestSetupGenerator";
 export class WireTestGenerator {
     // Configuration constants - can be made into constructor parameters later if needed
     private static readonly DEFAULT_WIREMOCK_PORT = 8080;
-    private static readonly DEFAULT_OUTPUT_DIRECTORY = "tests";
+    private static readonly DEFAULT_OUTPUT_DIRECTORY = "tests/wire";
     private static readonly DEFAULT_TEST_CLASS_PREFIX = "Test";
 
     private readonly context: SdkGeneratorContext;
@@ -68,6 +68,10 @@ export class WireTestGenerator {
         const endpointsByService = this.groupEndpointsByService();
         const testFiles: WriteablePythonFile[] = [];
 
+        // Generate shared utilities file
+        const utilitiesFile = this.generateSharedUtilitiesFile();
+        testFiles.push(utilitiesFile);
+
         for (const [serviceName, endpoints] of endpointsByService.entries()) {
             const endpointsWithExamples = endpoints.filter((endpoint) => {
                 const dynamicEndpoint = this.dynamicIr.endpoints[endpoint.id];
@@ -86,46 +90,18 @@ export class WireTestGenerator {
         return testFiles;
     }
 
-    private generateServiceTestFile(serviceName: string, endpoints: HttpEndpoint[]): WriteablePythonFile {
-        const testClassName = `${this.testClassPrefix}${this.getCapitalizedServiceName(serviceName)}`;
-
-        // Create the test class using simplified approach
-        const testClass = python.class_({
-            name: testClassName,
-            docs: `Wire tests for ${serviceName} service`
-        });
-
-        // Add fixture methods using simplified code blocks
-        this.addSimpleFixtures(testClass);
-
-        // Add test methods for each endpoint
-        endpoints.forEach((endpoint) => {
-            const testMethod = this.generateSimpleEndpointTestMethod(endpoint, serviceName);
-            testClass.add(testMethod);
-        });
-
-        // Create the Python file
+    private generateSharedUtilitiesFile(): WriteablePythonFile {
+        // Create the utilities file
         const file = python.file({
-            path: ["tests", `test_${serviceName}_wire`]
+            path: ["tests", "wire", "utils"]
         });
 
         // Add imports
         file.addReference(python.reference({ name: "pytest", modulePath: ["pytest"] }));
         file.addReference(python.reference({ name: "requests", modulePath: ["requests"] }));
-        file.addReference(python.reference({ name: "json", modulePath: ["json"] }));
+        file.addReference(python.reference({ name: "Any", modulePath: ["typing"] }));
 
-        // Add the test class to the file
-        file.addStatement(testClass);
-
-        return new WriteablePythonFile({
-            contents: file,
-            filename: `test_${serviceName}_wire`,
-            directory: RelativeFilePath.of(this.outputDirectory)
-        });
-    }
-
-    private addSimpleFixtures(testClass: python.Class): void {
-        // Add wiremock_base_url fixture
+        // Create wiremock_base_url fixture
         const baseUrlFixture = python.method({
             name: "wiremock_base_url",
             decorators: [
@@ -136,9 +112,8 @@ export class WireTestGenerator {
             return_: python.Type.str()
         });
         baseUrlFixture.addStatement(python.codeBlock(`return "http://localhost:${this.wiremockPort}"`));
-        testClass.add(baseUrlFixture);
 
-        // Add client fixture
+        // Create client fixture
         const clientFixture = python.method({
             name: "client",
             decorators: [
@@ -151,7 +126,8 @@ export class WireTestGenerator {
                     name: "wiremock_base_url",
                     type: python.Type.str()
                 })
-            ]
+            ],
+            return_: python.Type.any()
         });
         clientFixture.addStatement(
             python.codeBlock(`# TODO: Generate actual client instantiation based on SDK
@@ -160,20 +136,19 @@ import importlib
 # Dynamic client creation would go here
 return None  # Placeholder`)
         );
-        testClass.add(clientFixture);
 
-        // Add utility methods
-        const resetMethod = python.method({
+        // Create reset function
+        const resetFunction = python.method({
             name: "reset_wiremock_requests"
         });
-        resetMethod.addStatement(
+        resetFunction.addStatement(
             python.codeBlock(`wiremock_admin_url = "http://localhost:${this.wiremockPort}/__admin"
 response = requests.post(f"{wiremock_admin_url}/requests/reset")
 assert response.status_code == 200`)
         );
-        testClass.add(resetMethod);
 
-        const verifyMethod = python.method({
+        // Create verify function
+        const verifyFunction = python.method({
             name: "verify_request_count",
             parameters: [
                 python.parameter({ name: "method", type: python.Type.str() }),
@@ -181,7 +156,7 @@ assert response.status_code == 200`)
                 python.parameter({ name: "expected", type: python.Type.int() })
             ]
         });
-        verifyMethod.addStatement(
+        verifyFunction.addStatement(
             python.codeBlock(`wiremock_admin_url = "http://localhost:${this.wiremockPort}/__admin"
 req_body = {"method": method, "urlPath": url_path}
 response = requests.post(f"{wiremock_admin_url}/requests/find", json=req_body)
@@ -190,7 +165,57 @@ result = response.json()
 actual_count = len(result.get("requests", []))
 assert actual_count == expected, f"Expected {expected} requests, got {actual_count}"`)
         );
-        testClass.add(verifyMethod);
+
+        // Add all functions to the file
+        file.addStatement(baseUrlFixture);
+        file.addStatement(clientFixture);
+        file.addStatement(resetFunction);
+        file.addStatement(verifyFunction);
+
+        return new WriteablePythonFile({
+            contents: file,
+            filename: "utils",
+            directory: RelativeFilePath.of(this.outputDirectory)
+        });
+    }
+
+    private generateServiceTestFile(serviceName: string, endpoints: HttpEndpoint[]): WriteablePythonFile {
+        const testClassName = `${this.testClassPrefix}${this.getCapitalizedServiceName(serviceName)}`;
+
+        // Create the test class using simplified approach
+        const testClass = python.class_({
+            name: testClassName,
+            docs: `Wire tests for ${serviceName} service`
+        });
+
+        // Add test methods for each endpoint (fixtures come from shared utils)
+        endpoints.forEach((endpoint) => {
+            const testMethod = this.generateSimpleEndpointTestMethod(endpoint, serviceName);
+            testClass.add(testMethod);
+        });
+
+        // Create the Python file
+        const file = python.file({
+            path: ["tests", "wire", `test_${serviceName}_wire`]
+        });
+
+        // Add imports (including shared utilities)
+        file.addReference(python.reference({ name: "Any", modulePath: ["typing"] }));
+        file.addReference(
+            python.reference({
+                name: "client, wiremock_base_url, reset_wiremock_requests, verify_request_count",
+                modulePath: ["tests", "wire", "utils"]
+            })
+        );
+
+        // Add the test class to the file
+        file.addStatement(testClass);
+
+        return new WriteablePythonFile({
+            contents: file,
+            filename: `test_${serviceName}_wire`,
+            directory: RelativeFilePath.of(this.outputDirectory)
+        });
     }
 
     private generateSimpleEndpointTestMethod(endpoint: HttpEndpoint, serviceName: string): python.Method {
@@ -199,6 +224,7 @@ assert actual_count == expected, f"Expected {expected} requests, got {actual_cou
         const testMethod = python.method({
             name: methodName,
             parameters: [
+                python.parameter({ name: "self", type: python.Type.any() }),
                 python.parameter({
                     name: "client",
                     type: python.Type.any()
@@ -210,7 +236,7 @@ assert actual_count == expected, f"Expected {expected} requests, got {actual_cou
         // Simple test method implementation
         testMethod.addStatement(
             python.codeBlock(`# Reset WireMock requests
-self.reset_wiremock_requests()
+reset_wiremock_requests()
 
 # TODO: Parse and generate client call from dynamic snippet
 # This would be populated with actual client method calls
@@ -219,7 +245,7 @@ self.reset_wiremock_requests()
 # Example: response = client.${serviceName}.${endpoint.name?.originalName}(request)
 
 # Verify request was made to correct endpoint
-self.verify_request_count(
+verify_request_count(
     method="${endpoint.method}",
     url_path="${this.buildSimplePath(endpoint)}",
     expected=1
@@ -264,6 +290,30 @@ self.verify_request_count(
     }
 
     private getSnakeCaseEndpointName(endpoint: HttpEndpoint): string {
-        return endpoint.name?.originalName ?? endpoint.id;
+        // Use snake_case version if available, otherwise convert originalName to snake_case
+        const snakeCaseName = endpoint.name?.snakeCase?.safeName;
+        if (snakeCaseName) {
+            return snakeCaseName;
+        }
+
+        // Fallback: convert originalName or id to snake_case
+        const originalName = endpoint.name?.originalName ?? endpoint.id;
+        return this.toSnakeCase(originalName);
+    }
+
+    private toSnakeCase(str: string): string {
+        return (
+            str
+                // Insert underscores before capital letters (but not at the start)
+                .replace(/([a-z])([A-Z])/g, "$1_$2")
+                // Convert to lowercase
+                .toLowerCase()
+                // Replace any non-alphanumeric characters with underscores
+                .replace(/[^a-z0-9]/g, "_")
+                // Remove duplicate underscores
+                .replace(/_+/g, "_")
+                // Remove leading/trailing underscores
+                .replace(/^_+|_+$/g, "")
+        );
     }
 }
