@@ -15,6 +15,9 @@ public partial class FileUploadExampleClient
     /// <summary>
     /// Upload a file to the database
     /// </summary>
+    /// <example><code>
+    /// await client.FileUploadExample.UploadFileAsync(new UploadFileRequest { Name = "name" });
+    /// </code></example>
     public async Task<string> UploadFileAsync(
         UploadFileRequest request,
         RequestOptions? options = null,
