@@ -163,6 +163,8 @@ export class OperationConverter extends AbstractOperationConverter {
                 breadcrumbs: this.breadcrumbs
             }) ?? [];
 
+        const apiPlayground = Extensions.getExtension<boolean>(this.operation, FernOpenAPIExtension.PLAYGROUND_ENABLED);
+
         const baseEndpoint: OperationConverter.BaseEndpoint = {
             displayName: this.operation.summary,
             method: httpMethod,
@@ -192,7 +194,8 @@ export class OperationConverter extends AbstractOperationConverter {
             transport: undefined,
             source: HttpEndpointSource.openapi(),
             audiences,
-            retries: undefined
+            retries: undefined,
+            apiPlayground
         };
 
         const endpointGroupParts = this.context.namespace != null ? [this.context.namespace] : [];

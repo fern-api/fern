@@ -7685,7 +7685,11 @@ importers:
         version: 29.7.0(@types/node@18.19.129)(babel-plugin-macros@3.1.0)
       ts-jest:
         specifier: ^29.1.1
+<<<<<<< HEAD
         version: 29.4.5(@babel/core@7.28.4)(@jest/transform@30.2.0)(@jest/types@30.2.0)(babel-jest@30.2.0(@babel/core@7.28.4))(jest-util@30.2.0)(jest@29.7.0(@types/node@18.19.129)(babel-plugin-macros@3.1.0))(typescript@5.9.3)
+=======
+        version: 29.4.5(@babel/core@7.28.4)(@jest/transform@29.7.0)(@jest/types@29.6.3)(babel-jest@29.7.0(@babel/core@7.28.4))(esbuild@0.25.10)(jest-util@29.7.0)(jest@29.7.0(@types/node@18.19.129)(babel-plugin-macros@3.1.0))(typescript@5.9.3)
+>>>>>>> 016b434f081 (feat(internal): add x-fern-playground-enabled extension support and update versions.yml)
       typescript:
         specifier: ^5.2.2
         version: 5.9.3
@@ -10193,8 +10197,13 @@ packages:
     resolution: {integrity: sha512-JWaTfCxI1eTmJ1BIv86vUfjVatOdxwD0DAVKYevY8SazeUUZtW+tNbsdejVO1GYE0GXJW1N1ahmiC3TFd+7wZA==}
     engines: {node: '>=18'}
 
+<<<<<<< HEAD
   '@inquirer/ansi@1.0.2':
     resolution: {integrity: sha512-S8qNSZiYzFd0wAcyG5AXCvUHC5Sr7xpZ9wZ2py9XR88jUz8wooStVx5M6dRzczbBWjic9NP7+rY0Xi7qqK/aMQ==}
+=======
+  '@inquirer/ansi@1.0.1':
+    resolution: {integrity: sha512-yqq0aJW/5XPhi5xOAL1xRCpe1eh8UFVgYFpFsjEqmIR8rKLyP+HINvFXwUaxYICflJrVlxnp7lLN6As735kVpw==}
+>>>>>>> 016b434f081 (feat(internal): add x-fern-playground-enabled extension support and update versions.yml)
     engines: {node: '>=18'}
 
   '@inquirer/checkbox@4.2.4':
@@ -10215,8 +10224,13 @@ packages:
       '@types/node':
         optional: true
 
+<<<<<<< HEAD
   '@inquirer/confirm@5.1.20':
     resolution: {integrity: sha512-HDGiWh2tyRZa0M1ZnEIUCQro25gW/mN8ODByicQrbR1yHx4hT+IOpozCMi5TgBtUdklLwRI2mv14eNpftDluEw==}
+=======
+  '@inquirer/confirm@5.1.19':
+    resolution: {integrity: sha512-wQNz9cfcxrtEnUyG5PndC8g3gZ7lGDBzmWiXZkX8ot3vfZ+/BLjR8EvyGX4YzQLeVqtAlY/YScZpW7CW8qMoDQ==}
+>>>>>>> 016b434f081 (feat(internal): add x-fern-playground-enabled extension support and update versions.yml)
     engines: {node: '>=18'}
     peerDependencies:
       '@types/node': '>=18'
@@ -10233,8 +10247,13 @@ packages:
       '@types/node':
         optional: true
 
+<<<<<<< HEAD
   '@inquirer/core@10.3.1':
     resolution: {integrity: sha512-hzGKIkfomGFPgxKmnKEKeA+uCYBqC+TKtRx5LgyHRCrF6S2MliwRIjp3sUaWwVzMp7ZXVs8elB0Tfe682Rpg4w==}
+=======
+  '@inquirer/core@10.3.0':
+    resolution: {integrity: sha512-Uv2aPPPSK5jeCplQmQ9xadnFx2Zhj9b5Dj7bU6ZeCdDNNY11nhYy4btcSdtDguHqCT2h5oNeQTcUNSGGLA7NTA==}
+>>>>>>> 016b434f081 (feat(internal): add x-fern-playground-enabled extension support and update versions.yml)
     engines: {node: '>=18'}
     peerDependencies:
       '@types/node': '>=18'
@@ -10273,8 +10292,13 @@ packages:
     resolution: {integrity: sha512-lGPVU3yO9ZNqA7vTYz26jny41lE7yoQansmqdMLBEfqaGsmdg7V3W9mK9Pvb5IL4EVZ9GnSDGMO/cJXud5dMaw==}
     engines: {node: '>=18'}
 
+<<<<<<< HEAD
   '@inquirer/figures@1.0.15':
     resolution: {integrity: sha512-t2IEY+unGHOzAaVM5Xx6DEWKeXlDDcNPeDyUpsRc6CUhBfU3VQOEl+Vssh7VNp1dR8MdUJBWhuObjXCsVpjN5g==}
+=======
+  '@inquirer/figures@1.0.14':
+    resolution: {integrity: sha512-DbFgdt+9/OZYFM+19dbpXOSeAstPy884FPy1KjDu4anWwymZeOYhMY1mdFri172htv6mvc/uvIAAi7b7tvjJBQ==}
+>>>>>>> 016b434f081 (feat(internal): add x-fern-playground-enabled extension support and update versions.yml)
     engines: {node: '>=18'}
 
   '@inquirer/input@4.2.4':
@@ -10351,6 +10375,15 @@ packages:
 
   '@inquirer/type@3.0.8':
     resolution: {integrity: sha512-lg9Whz8onIHRthWaN1Q9EGLa/0LFJjyM8mEUbL1eTi6yMGvBf8gvyDLtxSXztQsxMvhxxNpJYrwa1YHdq+w4Jw==}
+    engines: {node: '>=18'}
+    peerDependencies:
+      '@types/node': '>=18'
+    peerDependenciesMeta:
+      '@types/node':
+        optional: true
+
+  '@inquirer/type@3.0.9':
+    resolution: {integrity: sha512-QPaNt/nmE2bLGQa9b7wwyRJoLZ7pN6rcyXvzU0YCmivmJyq1BVo94G98tStRWkoD1RgDX5C+dPlhhHzNdu/W/w==}
     engines: {node: '>=18'}
     peerDependencies:
       '@types/node': '>=18'
@@ -10511,8 +10544,13 @@ packages:
       '@types/react': '>=16'
       react: '>=16'
 
+<<<<<<< HEAD
   '@mswjs/interceptors@0.40.0':
     resolution: {integrity: sha512-EFd6cVbHsgLa6wa4RljGj6Wk75qoHxUSyc5asLyyPSyuhIcdS2Q3Phw6ImS1q+CkALthJRShiYfKANcQMuMqsQ==}
+=======
+  '@mswjs/interceptors@0.39.8':
+    resolution: {integrity: sha512-2+BzZbjRO7Ct61k8fMNHEtoKjeWI9pIlHFTqBwZ5icHpqszIgEZbjb1MW5Z0+bITTCTl3gk4PDBxs9tA/csXvA==}
+>>>>>>> 016b434f081 (feat(internal): add x-fern-playground-enabled extension support and update versions.yml)
     engines: {node: '>=18'}
 
   '@napi-rs/wasm-runtime@0.2.4':
@@ -15426,9 +15464,12 @@ packages:
     resolution: {integrity: sha512-DvEy55V3DB7uknRo+4iOGT5fP1slR8wQohVdknigZPMpMstaKJQWhwiYBACJE3Ul2pTnATihhBYnRhZQHGBiRw==}
     engines: {node: '>= 0.8'}
 
+<<<<<<< HEAD
   std-env@3.10.0:
     resolution: {integrity: sha512-5GS12FdOZNliM5mAOxFRg7Ir0pWz8MdpYm6AY6VPkGpbA7ZzmbzNcBJQ0GPvvyWgcY7QAhCgf9Uy89I03faLkg==}
 
+=======
+>>>>>>> 016b434f081 (feat(internal): add x-fern-playground-enabled extension support and update versions.yml)
   std-env@3.9.0:
     resolution: {integrity: sha512-UGvjygr6F6tpH7o2qyqR6QYpwraIjKSdtzyBdyytFOHmPZY917kwdwLG0RbOjWOnKmnm3PeHjaoLLMie7kPLQw==}
 
@@ -17432,6 +17473,7 @@ snapshots:
 
   '@cacheable/memory@2.0.4':
     dependencies:
+<<<<<<< HEAD
       '@cacheable/utils': 2.2.0
       '@keyv/bigmap': 1.1.0(keyv@5.5.3)
       hookified: 1.12.2
@@ -17440,6 +17482,10 @@ snapshots:
   '@cacheable/utils@2.2.0':
     dependencies:
       keyv: 5.5.3
+=======
+      statuses: 2.0.2
+    optional: true
+>>>>>>> 016b434f081 (feat(internal): add x-fern-playground-enabled extension support and update versions.yml)
 
   '@cspell/cspell-bundled-dicts@8.19.4':
     dependencies:
@@ -18521,7 +18567,11 @@ snapshots:
 
   '@inquirer/ansi@1.0.0': {}
 
+<<<<<<< HEAD
   '@inquirer/ansi@1.0.2':
+=======
+  '@inquirer/ansi@1.0.1':
+>>>>>>> 016b434f081 (feat(internal): add x-fern-playground-enabled extension support and update versions.yml)
     optional: true
 
   '@inquirer/checkbox@4.2.4(@types/node@18.15.3)':
@@ -18541,10 +18591,25 @@ snapshots:
     optionalDependencies:
       '@types/node': 18.15.3
 
+<<<<<<< HEAD
   '@inquirer/confirm@5.1.20(@types/node@18.15.3)':
     dependencies:
       '@inquirer/core': 10.3.1(@types/node@18.15.3)
       '@inquirer/type': 3.0.10(@types/node@18.15.3)
+=======
+  '@inquirer/confirm@5.1.19(@types/node@18.15.3)':
+    dependencies:
+      '@inquirer/core': 10.3.0(@types/node@18.15.3)
+      '@inquirer/type': 3.0.9(@types/node@18.15.3)
+    optionalDependencies:
+      '@types/node': 18.15.3
+    optional: true
+
+  '@inquirer/confirm@5.1.19(@types/node@18.19.129)':
+    dependencies:
+      '@inquirer/core': 10.3.0(@types/node@18.19.129)
+      '@inquirer/type': 3.0.9(@types/node@18.19.129)
+>>>>>>> 016b434f081 (feat(internal): add x-fern-playground-enabled extension support and update versions.yml)
     optionalDependencies:
       '@types/node': 18.15.3
     optional: true
@@ -18578,11 +18643,33 @@ snapshots:
     optionalDependencies:
       '@types/node': 18.15.3
 
+<<<<<<< HEAD
   '@inquirer/core@10.3.1(@types/node@18.15.3)':
     dependencies:
       '@inquirer/ansi': 1.0.2
       '@inquirer/figures': 1.0.15
       '@inquirer/type': 3.0.10(@types/node@18.15.3)
+=======
+  '@inquirer/core@10.3.0(@types/node@18.15.3)':
+    dependencies:
+      '@inquirer/ansi': 1.0.1
+      '@inquirer/figures': 1.0.14
+      '@inquirer/type': 3.0.9(@types/node@18.15.3)
+      cli-width: 4.1.0
+      mute-stream: 2.0.0
+      signal-exit: 4.1.0
+      wrap-ansi: 6.2.0
+      yoctocolors-cjs: 2.1.3
+    optionalDependencies:
+      '@types/node': 18.15.3
+    optional: true
+
+  '@inquirer/core@10.3.0(@types/node@18.19.129)':
+    dependencies:
+      '@inquirer/ansi': 1.0.1
+      '@inquirer/figures': 1.0.14
+      '@inquirer/type': 3.0.9(@types/node@18.19.129)
+>>>>>>> 016b434f081 (feat(internal): add x-fern-playground-enabled extension support and update versions.yml)
       cli-width: 4.1.0
       mute-stream: 3.0.0
       signal-exit: 4.1.0
@@ -18645,7 +18732,11 @@ snapshots:
 
   '@inquirer/figures@1.0.13': {}
 
+<<<<<<< HEAD
   '@inquirer/figures@1.0.15':
+=======
+  '@inquirer/figures@1.0.14':
+>>>>>>> 016b434f081 (feat(internal): add x-fern-playground-enabled extension support and update versions.yml)
     optional: true
 
   '@inquirer/input@4.2.4(@types/node@18.15.3)':
@@ -18731,6 +18822,19 @@ snapshots:
     optionalDependencies:
       '@types/node': 18.15.3
 
+<<<<<<< HEAD
+=======
+  '@inquirer/type@3.0.9(@types/node@18.15.3)':
+    optionalDependencies:
+      '@types/node': 18.15.3
+    optional: true
+
+  '@inquirer/type@3.0.9(@types/node@18.19.129)':
+    optionalDependencies:
+      '@types/node': 18.19.129
+    optional: true
+
+>>>>>>> 016b434f081 (feat(internal): add x-fern-playground-enabled extension support and update versions.yml)
   '@isaacs/balanced-match@4.0.1': {}
 
   '@isaacs/brace-expansion@5.0.0':
@@ -19040,7 +19144,11 @@ snapshots:
       '@types/react': 19.2.2
       react: 19.2.0
 
+<<<<<<< HEAD
   '@mswjs/interceptors@0.40.0':
+=======
+  '@mswjs/interceptors@0.39.8':
+>>>>>>> 016b434f081 (feat(internal): add x-fern-playground-enabled extension support and update versions.yml)
     dependencies:
       '@open-draft/deferred-promise': 2.2.0
       '@open-draft/logger': 0.3.0
@@ -23978,11 +24086,21 @@ snapshots:
 
   msw@2.12.1(@types/node@18.15.3)(typescript@5.9.2):
     dependencies:
+<<<<<<< HEAD
       '@inquirer/confirm': 5.1.20(@types/node@18.15.3)
       '@mswjs/interceptors': 0.40.0
+=======
+      '@bundled-es-modules/cookie': 2.0.1
+      '@bundled-es-modules/statuses': 1.0.1
+      '@inquirer/confirm': 5.1.19(@types/node@18.15.3)
+      '@mswjs/interceptors': 0.39.8
+>>>>>>> 016b434f081 (feat(internal): add x-fern-playground-enabled extension support and update versions.yml)
       '@open-draft/deferred-promise': 2.2.0
       '@types/statuses': 2.0.6
+<<<<<<< HEAD
       cookie: 1.0.2
+=======
+>>>>>>> 016b434f081 (feat(internal): add x-fern-playground-enabled extension support and update versions.yml)
       graphql: 16.12.0
       headers-polyfill: 4.0.3
       is-node-process: 1.2.0
@@ -24004,11 +24122,21 @@ snapshots:
 
   msw@2.12.1(@types/node@18.15.3)(typescript@5.9.3):
     dependencies:
+<<<<<<< HEAD
       '@inquirer/confirm': 5.1.20(@types/node@18.15.3)
       '@mswjs/interceptors': 0.40.0
+=======
+      '@bundled-es-modules/cookie': 2.0.1
+      '@bundled-es-modules/statuses': 1.0.1
+      '@inquirer/confirm': 5.1.19(@types/node@18.15.3)
+      '@mswjs/interceptors': 0.39.8
+>>>>>>> 016b434f081 (feat(internal): add x-fern-playground-enabled extension support and update versions.yml)
       '@open-draft/deferred-promise': 2.2.0
       '@types/statuses': 2.0.6
+<<<<<<< HEAD
       cookie: 1.0.2
+=======
+>>>>>>> 016b434f081 (feat(internal): add x-fern-playground-enabled extension support and update versions.yml)
       graphql: 16.12.0
       headers-polyfill: 4.0.3
       is-node-process: 1.2.0
@@ -24030,11 +24158,21 @@ snapshots:
 
   msw@2.12.1(@types/node@22.19.0)(typescript@5.9.3):
     dependencies:
+<<<<<<< HEAD
       '@inquirer/confirm': 5.1.20(@types/node@22.19.0)
       '@mswjs/interceptors': 0.40.0
+=======
+      '@bundled-es-modules/cookie': 2.0.1
+      '@bundled-es-modules/statuses': 1.0.1
+      '@inquirer/confirm': 5.1.19(@types/node@18.19.129)
+      '@mswjs/interceptors': 0.39.8
+>>>>>>> 016b434f081 (feat(internal): add x-fern-playground-enabled extension support and update versions.yml)
       '@open-draft/deferred-promise': 2.2.0
       '@types/statuses': 2.0.6
+<<<<<<< HEAD
       cookie: 1.0.2
+=======
+>>>>>>> 016b434f081 (feat(internal): add x-fern-playground-enabled extension support and update versions.yml)
       graphql: 16.12.0
       headers-polyfill: 4.0.3
       is-node-process: 1.2.0
@@ -25305,8 +25443,11 @@ snapshots:
   statuses@2.0.2:
     optional: true
 
+<<<<<<< HEAD
   std-env@3.10.0: {}
 
+=======
+>>>>>>> 016b434f081 (feat(internal): add x-fern-playground-enabled extension support and update versions.yml)
   std-env@3.9.0: {}
 
   stdin-discarder@0.1.0:
@@ -25803,7 +25944,11 @@ snapshots:
 
   ts-interface-checker@0.1.13: {}
 
+<<<<<<< HEAD
   ts-jest@29.4.5(@babel/core@7.28.4)(@jest/transform@30.2.0)(@jest/types@30.2.0)(babel-jest@30.2.0(@babel/core@7.28.4))(jest-util@30.2.0)(jest@29.7.0(@types/node@18.19.129)(babel-plugin-macros@3.1.0))(typescript@5.9.3):
+=======
+  ts-jest@29.4.5(@babel/core@7.28.4)(@jest/transform@29.7.0)(@jest/types@29.6.3)(babel-jest@29.7.0(@babel/core@7.28.4))(esbuild@0.25.10)(jest-util@29.7.0)(jest@29.7.0(@types/node@18.19.129)(babel-plugin-macros@3.1.0))(typescript@5.9.3):
+>>>>>>> 016b434f081 (feat(internal): add x-fern-playground-enabled extension support and update versions.yml)
     dependencies:
       bs-logger: 0.2.6
       fast-json-stable-stringify: 2.1.0
@@ -25818,10 +25963,18 @@ snapshots:
       yargs-parser: 21.1.1
     optionalDependencies:
       '@babel/core': 7.28.4
+<<<<<<< HEAD
       '@jest/transform': 30.2.0
       '@jest/types': 30.2.0
       babel-jest: 30.2.0(@babel/core@7.28.4)
       jest-util: 30.2.0
+=======
+      '@jest/transform': 29.7.0
+      '@jest/types': 29.6.3
+      babel-jest: 29.7.0(@babel/core@7.28.4)
+      esbuild: 0.25.10
+      jest-util: 29.7.0
+>>>>>>> 016b434f081 (feat(internal): add x-fern-playground-enabled extension support and update versions.yml)
 
   ts-morph@15.1.0:
     dependencies:
