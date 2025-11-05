@@ -21,9 +21,7 @@ export class Set extends AstNode {
     }
 
     public write(writer: Writer): void {
-        writer.write("new HashSet<");
-        this.itemType.write(writer);
-        writer.write(">()");
+        writer.write(this.System.Collections.Generic.HashSet(this.itemType).new());
         writer.pushScope();
         this.entries.forEach((item, index) => {
             writer.writeNode(item);

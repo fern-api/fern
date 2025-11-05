@@ -1,5 +1,5 @@
 import { assertNever } from "@fern-api/core-utils";
-import { ast, WithGeneration } from "@fern-api/csharp-codegen";
+import { ast, is, WithGeneration } from "@fern-api/csharp-codegen";
 import { FernIr } from "@fern-api/dynamic-ir-sdk";
 
 import { DynamicSnippetsGeneratorContext } from "./DynamicSnippetsGeneratorContext";
@@ -32,18 +32,30 @@ export class FilePropertyMapper extends WithGeneration {
         for (const property of body.properties) {
             switch (property.type) {
                 case "file":
+                    // if we don't have a record, we can fake some data for it.
+                    if (is.Record.missingKey(record, property.wireValue)) {
+                        record[property.wireValue] = "[bytes]";
+                    }
                     result.fileFields.push({
                         name: this.context.getPropertyName(property.name),
                         value: this.getSingleFileProperty({ property, record })
                     });
                     break;
                 case "fileArray":
+                    // if we don't have a record, we can fake some data for it.
+                    if (is.Record.missingKey(record, property.wireValue)) {
+                        record[property.wireValue] = ["[bytes]"];
+                    }
                     result.fileFields.push({
                         name: this.context.getPropertyName(property.name),
                         value: this.getArrayFileProperty({ property, record })
                     });
                     break;
                 case "bodyProperty":
+                    // if we don't have a record, we can fake some data for it.
+                    if (is.Record.missingKey(record, property.name.wireValue)) {
+                        record[property.name.wireValue] = {};
+                    }
                     result.bodyPropertyFields.push({
                         name: this.context.getPropertyName(property.name.name),
                         value: this.getBodyProperty({ property, record })

@@ -89,8 +89,14 @@ export class ObjectGenerator extends FileGenerator<CSharpFile, ModelCustomConfig
                     }
                 ),
                 initializer: this.objectDeclaration.extraProperties
-                    ? this.csharp.codeblock("new Dictionary<string, object?>()")
-                    : this.csharp.codeblock("new Dictionary<string, JsonElement>()")
+                    ? this.System.Collections.Generic.Dictionary(
+                          this.csharp.Type.string,
+                          this.csharp.Type.object.toOptionalIfNotAlready()
+                      ).new()
+                    : this.System.Collections.Generic.Dictionary(
+                          this.csharp.Type.string,
+                          this.extern.System.Text.Json.JsonElement
+                      ).new()
             });
         }
     }
@@ -120,7 +126,10 @@ export class ObjectGenerator extends FileGenerator<CSharpFile, ModelCustomConfig
                   type: this.csharp.Type.idictionary(this.csharp.Type.string, this.extern.System.Text.Json.JsonElement),
                   set: ast.Access.Internal,
                   get: ast.Access.Public,
-                  initializer: this.csharp.codeblock("new Dictionary<string, JsonElement>()")
+                  initializer: this.System.Collections.Generic.Dictionary(
+                      this.csharp.Type.string,
+                      this.extern.System.Text.Json.JsonElement
+                  ).new()
               });
     }
 

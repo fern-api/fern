@@ -57,6 +57,22 @@ export class Extern {
                       : undefined
             }),
         /**
+         * Reference to System.DateOnly class.
+         */
+        DateOnly: () =>
+            this.csharp.classReference({
+                name: "DateOnly",
+                namespace: "System"
+            }),
+        /**
+         * Reference to System.DateTime class.
+         */
+        DateTime: () =>
+            this.csharp.classReference({
+                name: "DateTime",
+                namespace: "System"
+            }),
+        /**
          * Reference to System.Enum class.
          */
         Enum: () =>

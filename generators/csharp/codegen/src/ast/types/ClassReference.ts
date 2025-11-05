@@ -359,14 +359,8 @@ export class ClassReference extends Node {
     }
 
     /** returns a class instantiation node for this class reference */
-    public instantiate(args: Omit<ClassInstantiation.Args, "classReference">) {
-        return this.csharp.instantiateClass({
-            ...args,
-            classReference: this
-        });
-    }
-
-    public new(args: Omit<ClassInstantiation.Args, "classReference">) {
+    public new(args?: Omit<ClassInstantiation.Args, "classReference">) {
+        args = args ?? { arguments_: [] };
         return this.csharp.instantiateClass({
             ...args,
             classReference: this
