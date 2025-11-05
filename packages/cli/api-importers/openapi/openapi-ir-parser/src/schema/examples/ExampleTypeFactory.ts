@@ -855,7 +855,7 @@ export class ExampleTypeFactory {
 
     private getSchemaExample(schema: SchemaWithExample): unknown | undefined {
         return schema._visit({
-            primitive: (s) => s.example,
+            primitive: (s) => s.schema.example,
             object: (s) => s.fullExamples?.[0]?.value,
             array: (s) => s.example,
             map: (s) => s.example,
