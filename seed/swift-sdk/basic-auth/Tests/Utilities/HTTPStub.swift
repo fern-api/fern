@@ -12,7 +12,7 @@ final class HTTPStub {
         config.protocolClasses = [StubURLProtocol.self]
         config.requestCachePolicy = .reloadIgnoringLocalCacheData
         config.urlCache = nil
-        config.httpAdditionalHeaders = ["WireStub-ID": stubId]
+        config.httpAdditionalHeaders = ["Stub-ID": stubId]
         return config
     }
 
@@ -185,7 +185,7 @@ private final class StubURLProtocol: URLProtocol {
 
     override class func canInit(with request: URLRequest) -> Bool {
         #if canImport(Darwin)
-            return request.value(forHTTPHeaderField: "WireStub-ID") != nil
+            return request.value(forHTTPHeaderField: "Stub-ID") != nil
         #else
             // On Linux, intercept all requests created by the session that installed this protocol.
             // We'll resolve the correct stub id during startLoading using the active id stack.
@@ -200,7 +200,7 @@ private final class StubURLProtocol: URLProtocol {
     override func startLoading() {
         guard let client else { return }
         #if canImport(Darwin)
-            guard let idValue = request.value(forHTTPHeaderField: "WireStub-ID"),
+            guard let idValue = request.value(forHTTPHeaderField: "Stub-ID"),
                 let id = UUID(uuidString: idValue)
             else {
                 client.urlProtocol(self, didFailWithError: URLError(.cannotFindHost))
