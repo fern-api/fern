@@ -1,5 +1,5 @@
 import { AbsoluteFilePath } from "@fern-api/fs-utils";
-import { AsyncAPIV2, AsyncAPIV3 } from "@fern-api/openapi-ir-parser";
+import { AsyncAPIV2, AsyncAPIV3 } from "@fern-api/spec-to-openapi-ir";
 import { TaskContext } from "@fern-api/task-context";
 import { readFile } from "fs/promises";
 import yaml from "js-yaml";

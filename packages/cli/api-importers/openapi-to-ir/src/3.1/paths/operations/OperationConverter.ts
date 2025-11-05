@@ -8,7 +8,7 @@ import {
     V2HttpRequestBodies
 } from "@fern-api/ir-sdk";
 import { constructHttpPath } from "@fern-api/ir-utils";
-import { FernOpenAPIExtension } from "@fern-api/openapi-ir-parser";
+import { FernOpenAPIExtension } from "@fern-api/spec-to-openapi-ir";
 import { AbstractConverter, Extensions, ServersConverter } from "@fern-api/v3-importer-commons";
 import { camelCase } from "lodash-es";
 import { OpenAPIV3_1 } from "openapi-types";

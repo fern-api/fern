@@ -32,7 +32,7 @@
       "path": "./generators/typescript/model/type-reference-example-generator"
     },
     {
-      "path": "./packages/cli/api-importers/openapi/openapi-ir-to-fern-tests"
+      "path": "./packages/cli/api-importers/openapi/spec-to-openapi-ir-tests"
     },
     {
       "path": "./generators/typescript/utils/abstract-error-class-generator"
@@ -74,7 +74,7 @@
       "path": "./generators/typescript/model/type-reference-converters"
     },
     {
-      "path": "./packages/cli/api-importers/openapi/openapi-ir-parser"
+      "path": "./packages/cli/api-importers/openapi/spec-to-openapi-ir"
     },
     {
       "path": "./generators/typescript/sdk/sdk-error-schema-generator"

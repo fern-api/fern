@@ -47,7 +47,7 @@
     "@fern-api/logger": "workspace:*",
     "@fern-api/logging-execa": "workspace:*",
     "@fern-api/openapi-ir": "workspace:*",
-    "@fern-api/openapi-ir-parser": "workspace:*",
+    "@fern-api/spec-to-openapi-ir": "workspace:*",
     "@fern-api/openapi-to-ir": "workspace:*",
     "@fern-api/openrpc-to-ir": "workspace:*",
     "@fern-api/semver-utils": "workspace:*",

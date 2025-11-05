@@ -1,5 +1,5 @@
-import { ParseOpenAPIOptions } from "@fern-api/openapi-ir-parser";
 import { AbsoluteFilePath, RelativeFilePath } from "@fern-api/path-utils";
+import { ParseOpenAPIOptions } from "@fern-api/spec-to-openapi-ir";
 
 import { Source } from "./Source";
 

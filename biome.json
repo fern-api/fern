@@ -152,7 +152,7 @@
       "!generators/typescript/utils/**",
       "!generators/typescript/utils/commons/src/core-utilities/**",
       "!packages/cli/api-importers/conjure/conjure-sdk/**",
-      "!packages/cli/api-importers/openapi/openapi-ir-to-fern-tests/src/__test__/fixtures/unions-v1/openapi.json",
+      "!packages/cli/api-importers/openapi/spec-to-openapi-ir-tests/src/__test__/fixtures/unions-v1/openapi.json",
       "!packages/cli/api-importers/openapi/openapi-ir/src/sdk/**",
       "!packages/cli/api-importers/v3-importer-tests/src/__test__/fixtures/unions-v1/openapi.json",
       "!packages/cli/configuration/src/docs-yml/schemas/**",
