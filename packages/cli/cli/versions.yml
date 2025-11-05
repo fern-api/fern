@@ -232,7 +232,7 @@
       type: fix
   irVersion: 61
   createdAt: "2025-11-05"
-  version: 0.107.9
+  version: 0.108.0
 
 - changelogEntry:
     - summary: |
