@@ -1,4 +1,4 @@
-irVersion: v60
+irVersion: v61
 displayName: Java SDK
 changelogLocation: ../../generators/java/sdk/versions.yml
 image: fernapi/fern-java-sdk

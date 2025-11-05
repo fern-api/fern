@@ -1,4 +1,4 @@
-import { AbstractGeneratorCli, parseIR } from "@fern-api/base-generator";
+import { AbstractGeneratorCli, File, parseIR } from "@fern-api/base-generator";
 import { AbsoluteFilePath } from "@fern-api/fs-utils";
 import { BasePhpCustomConfigSchema } from "@fern-api/php-codegen";
 
@@ -21,5 +21,12 @@ export abstract class AbstractPhpGeneratorCli<
             absolutePathToIR: AbsoluteFilePath.of(irFilepath),
             parse: IrSerialization.IntermediateRepresentation.parse
         });
+    }
+
+    protected async generateMetadata(context: PhpGeneratorContext): Promise<void> {
+        const content = JSON.stringify(context.ir.generationMetadata, null, 2);
+        context.project.addRawFiles(
+            new File(this.GENERATION_METADATA_FILENAME, this.GENERATION_METADATA_FILEPATH, content)
+        );
     }
 }

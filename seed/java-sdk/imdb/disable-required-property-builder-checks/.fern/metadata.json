@@ -1,0 +1,8 @@
+{
+  "cliVersion": "DUMMY",
+  "generatorName": "fernapi/fern-java-sdk",
+  "generatorVersion": "latest",
+  "generatorConfig": {
+    "disable-required-property-builder-checks": true
+  }
+}

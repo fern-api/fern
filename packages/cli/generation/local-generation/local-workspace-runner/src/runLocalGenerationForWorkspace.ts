@@ -67,7 +67,13 @@ export async function runLocalGenerationForWorkspace({
                     version: version,
                     packageName: generatorsYml.getPackageName({ generatorInvocation }),
                     context,
-                    sourceResolver: new SourceResolverImpl(context, fernWorkspace)
+                    sourceResolver: new SourceResolverImpl(context, fernWorkspace),
+                    generationMetadata: {
+                        cliVersion: workspace.cliVersion,
+                        generatorName: generatorInvocation.name,
+                        generatorVersion: generatorInvocation.version,
+                        generatorConfig: generatorInvocation.config
+                    }
                 });
 
                 const venus = createVenusService({ token: token?.value });

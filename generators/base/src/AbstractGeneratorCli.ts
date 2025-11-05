@@ -7,6 +7,7 @@ import {
     NopGeneratorNotificationService
 } from "@fern-api/browser-compatible-base-generator";
 import { assertNever } from "@fern-api/core-utils";
+import { RelativeFilePath } from "@fern-api/fs-utils";
 import { readFile } from "fs/promises";
 
 export declare namespace AbstractGeneratorCli {
@@ -21,6 +22,9 @@ export abstract class AbstractGeneratorCli<
     IntermediateRepresentation,
     GeneratorContext extends AbstractGeneratorContext
 > {
+    protected readonly GENERATION_METADATA_FILEPATH = RelativeFilePath.of("./.fern");
+    protected readonly GENERATION_METADATA_FILENAME = "metadata.json";
+
     public async run(options: AbstractGeneratorCli.Options = {}): Promise<void> {
         const config = await getGeneratorConfig();
         const generatorNotificationService = options.disableNotifications
@@ -40,6 +44,7 @@ export abstract class AbstractGeneratorCli<
                 generatorConfig: config,
                 generatorNotificationService
             });
+            await this.generateMetadata(context);
             switch (config.output.mode.type) {
                 case "publish":
                     await this.publishPackage(context);
@@ -114,6 +119,13 @@ export abstract class AbstractGeneratorCli<
      * @param context
      */
     protected abstract writeForDownload(context: GeneratorContext): Promise<void>;
+
+    /**
+     * Adds the /.fern/metadata.json file to the project
+     * Included in this layer to ensure it's generated for all generation types
+     * @param context
+     */
+    protected abstract generateMetadata(context: GeneratorContext): Promise<void>;
 }
 
 async function getGeneratorConfig(): Promise<FernGeneratorExec.GeneratorConfig> {
