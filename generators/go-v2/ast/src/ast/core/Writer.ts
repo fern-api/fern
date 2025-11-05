@@ -82,7 +82,7 @@ export class Writer extends AbstractWriter {
      * that should be used to reference the package. If a conflict exists, we try to use
      * path components to create a unique alias, and only fall back to prepending '_'
      * as a last resort.
-     * 
+     *
      * @param importPath The import path to add
      * @param explicitAlias Optional explicit alias to use for this import
      */
