@@ -6,7 +6,7 @@ pub struct GetUsernameQueryRequest {
     pub id: Uuid,
     pub date: NaiveDate,
     pub deadline: DateTime<Utc>,
-    pub bytes: String,
+    pub bytes: Vec<u8>,
     pub user: User,
     #[serde(rename = "userList")]
     pub user_list: Vec<User>,
