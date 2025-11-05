@@ -62,7 +62,7 @@ public abstract class AbstractWebSocketChannelWriter {
     // Common field specs for generated class
     protected final FieldSpec objectMapperField;
     protected final FieldSpec okHttpClientField;
-    protected final FieldSpec webSocketField;
+    // Removed webSocketField - we access it through reconnectingListener.getWebSocket()
     protected final FieldSpec timeoutExecutorField;
     protected final FieldSpec readyStateField;
 
@@ -107,8 +107,7 @@ public abstract class AbstractWebSocketChannelWriter {
         this.okHttpClientField = FieldSpec.builder(OkHttpClient.class, "okHttpClient", Modifier.PRIVATE, Modifier.FINAL)
                 .build();
 
-        this.webSocketField = FieldSpec.builder(WebSocket.class, "webSocket", Modifier.PRIVATE)
-                .build();
+        // webSocketField removed - accessed through reconnectingListener.getWebSocket()
 
         this.timeoutExecutorField = FieldSpec.builder(
                         ScheduledExecutorService.class, "timeoutExecutor", Modifier.PRIVATE)
@@ -201,7 +200,7 @@ public abstract class AbstractWebSocketChannelWriter {
         classBuilder.addField(clientOptionsField);
         classBuilder.addField(objectMapperField);
         classBuilder.addField(okHttpClientField);
-        classBuilder.addField(webSocketField);
+        // webSocketField removed - accessed through reconnectingListener
         classBuilder.addField(timeoutExecutorField);
         classBuilder.addField(readyStateField);
 
@@ -229,22 +228,16 @@ public abstract class AbstractWebSocketChannelWriter {
 
     protected abstract MethodSpec generateSendMessageHelper();
 
-    protected MethodSpec generateDisconnectMethod() {
-        return MethodSpec.methodBuilder("disconnect")
-                .addModifiers(Modifier.PUBLIC)
-                .addJavadoc("Disconnects the WebSocket connection and releases resources.\n")
-                .beginControlFlow("if ($N != null)", webSocketField)
-                .addStatement("$N.close(1000, $S)", webSocketField, "Client disconnecting")
-                .addStatement("$N = null", webSocketField)
-                .endControlFlow()
-                .beginControlFlow("if ($N != null)", timeoutExecutorField)
-                .addStatement("$N.shutdownNow()", timeoutExecutorField)
-                .addStatement("$N = null", timeoutExecutorField)
-                .endControlFlow()
-                .build();
-    }
+    // Disconnect method must be implemented by subclasses
+    // since they have access to reconnectingListenerField
+    protected abstract MethodSpec generateDisconnectMethod();
 
     protected MethodSpec generateIsConnectedMethod() {
+        // This method doesn't need webSocketField anymore
+        // It's checking the ready state, not the socket instance
+        ClassName readyStateClassName =
+                ClassName.get(className.packageName(), className.simpleName(), "WebSocketReadyState");
+
         return MethodSpec.methodBuilder("hasWebSocketInstance")
                 .addModifiers(Modifier.PUBLIC)
                 .returns(TypeName.BOOLEAN)
@@ -256,7 +249,9 @@ public abstract class AbstractWebSocketChannelWriter {
                 .addJavadoc("@return true if a WebSocket instance exists, false otherwise\n")
                 .addJavadoc("@deprecated Use getReadyState() for accurate connection status\n")
                 .addAnnotation(Deprecated.class)
-                .addStatement("return $N != null", webSocketField)
+                .addComment("Check if WebSocket connection is open based on ready state")
+                .addStatement("return $N == $T.OPEN || $N == $T.CONNECTING",
+                        readyStateField, readyStateClassName, readyStateField, readyStateClassName)
                 .build();
     }
 
@@ -333,19 +328,9 @@ public abstract class AbstractWebSocketChannelWriter {
                 .build();
     }
 
-    protected MethodSpec generateAssertSocketIsOpen() {
-        return MethodSpec.methodBuilder("assertSocketIsOpen")
-                .addModifiers(Modifier.PRIVATE)
-                .addJavadoc("Ensures the WebSocket is connected and ready to send messages.\n")
-                .addJavadoc("@throws IllegalStateException if the socket is not connected or not open\n")
-                .beginControlFlow("if ($N == null)", webSocketField)
-                .addStatement(
-                        "throw new $T($S)",
-                        IllegalStateException.class,
-                        "WebSocket is not connected. Call connect() first.")
-                .endControlFlow()
-                .build();
-    }
+    // Note: assertSocketIsOpen must be implemented by subclasses
+    // since they have access to reconnectingListenerField
+    protected abstract MethodSpec generateAssertSocketIsOpen();
 
     protected MethodSpec generateHandleIncomingMessageHelper() {
         MethodSpec.Builder builder = MethodSpec.methodBuilder("handleIncomingMessage")
