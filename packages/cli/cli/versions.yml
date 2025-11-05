@@ -1,6 +1,14 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
 - changelogEntry:
     - summary: |
+        Silence validation logs in fern docs dev unless there is a validation error
+      type: fix
+  irVersion: 61
+  createdAt: "2025-11-05"
+  version: 0.107.6
+
+- changelogEntry:
+    - summary: |
         Perform fern docs dev validation in the background instead of foreground
       type: fix
   irVersion: 61
