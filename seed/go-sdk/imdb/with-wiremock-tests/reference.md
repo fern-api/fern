@@ -1,6 +1,6 @@
 # Reference
 ## Imdb
-<details><summary><code>client.Imdb.CreateMovie(request) -> fern.MovieId</code></summary>
+<details><summary><code>client.Imdb.CreateMovie(request) -> testPackageName.MovieId</code></summary>
 <dl>
 <dd>
 
@@ -27,7 +27,7 @@ Add a movie to the database using the movies/* /... path.
 <dd>
 
 ```go
-request := &fern.CreateMovieRequest{
+request := &testPackageName.CreateMovieRequest{
         Title: "title",
         Rating: 1.1,
     }
@@ -50,7 +50,7 @@ client.Imdb.CreateMovie(
 <dl>
 <dd>
 
-**request:** `*fern.CreateMovieRequest` 
+**request:** `*testPackageName.CreateMovieRequest` 
     
 </dd>
 </dl>
@@ -62,7 +62,7 @@ client.Imdb.CreateMovie(
 </dl>
 </details>
 
-<details><summary><code>client.Imdb.GetMovie(MovieId) -> *fern.Movie</code></summary>
+<details><summary><code>client.Imdb.GetMovie(MovieId) -> *testPackageName.Movie</code></summary>
 <dl>
 <dd>
 
@@ -94,7 +94,7 @@ client.Imdb.GetMovie(
 <dl>
 <dd>
 
-**movieId:** `fern.MovieId` 
+**movieId:** `testPackageName.MovieId` 
     
 </dd>
 </dl>

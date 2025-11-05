@@ -3,6 +3,7 @@
 exports[`snippets (default) > examples > 'GET /metadata (allow-multiple)' 1`] = `
 "using Acme;
 using Acme.Service;
+using System.Collections.Generic;
 
 var client = new AcmeClient(
     token: "<YOUR_API_KEY>"
@@ -25,6 +26,7 @@ await client.Service.GetMetadataAsync(
 exports[`snippets (default) > examples > 'GET /metadata (simple)' 1`] = `
 "using Acme;
 using Acme.Service;
+using System.Collections.Generic;
 
 var client = new AcmeClient(
     token: "<YOUR_API_KEY>"
@@ -46,6 +48,7 @@ await client.Service.GetMetadataAsync(
 exports[`snippets (default) > examples > 'POST /big-entity (simple)' 1`] = `
 "using Acme;
 using Acme.Types;
+using System.Collections.Generic;
 using Acme.Commons.Types;
 
 var client = new AcmeClient(
@@ -121,6 +124,7 @@ exports[`snippets (default) > examples > 'POST /movie (invalid request body)' 1`
 exports[`snippets (default) > examples > 'POST /movie (simple)' 1`] = `
 "using Acme;
 using Acme.Types;
+using System.Collections.Generic;
 
 var client = new AcmeClient(
     token: "<YOUR_API_KEY>"
@@ -161,7 +165,9 @@ await client.Service.CreateMovieAsync(
 exports[`snippets (default) > exhaustive > 'GET /object/get-and-return-with-optio…' 1`] = `
 "using Acme;
 using Acme.Types.Object;
+using System;
 using System.Globalization;
+using System.Collections.Generic;
 
 var client = new AcmeClient(
     token: "<YOUR_API_KEY>"
@@ -228,6 +234,7 @@ exports[`snippets (default) > exhaustive > 'POST /container/list-of-objects (inv
 
 exports[`snippets (default) > exhaustive > 'POST /container/list-of-objects (simp…' 1`] = `
 "using Acme;
+using System.Collections.Generic;
 using Acme.Types.Object;
 
 var client = new AcmeClient(
@@ -252,6 +259,7 @@ await client.Endpoints.Container.GetAndReturnListOfObjectsAsync(
 
 exports[`snippets (default) > exhaustive > 'POST /container/list-of-primitives (s…' 1`] = `
 "using Acme;
+using System.Collections.Generic;
 
 var client = new AcmeClient(
     token: "<YOUR_API_KEY>"
@@ -272,6 +280,7 @@ exports[`snippets (default) > file-upload > 'POST /' 1`] = `
 using Acme.Service;
 using System.IO;
 using System.Text;
+using System.Collections.Generic;
 
 var client = new AcmeClient();
 
@@ -288,7 +297,17 @@ await client.Service.PostAsync(
                 Stream = new MemoryStream(Encoding.UTF8.GetBytes("Second"))
             },
         }
-
+        ,
+        MaybeFile = new FileParameter(){
+            Stream = new MemoryStream(Encoding.UTF8.GetBytes("[bytes]"))
+        },
+        MaybeFileList = new List<FileParameter>(){
+            new FileParameter(){
+                Stream = new MemoryStream(Encoding.UTF8.GetBytes("[bytes]"))
+            },
+        }
+        ,
+        Integer = 123
     }
 );
 "
@@ -445,6 +464,8 @@ exports[`snippets (default) > multi-url-environment > 'Unrecognized environment'
 exports[`snippets (default) > nullable > 'Body properties' 1`] = `
 "using Acme;
 using Acme.Nullable;
+using System.Collections.Generic;
+using System;
 using System.Globalization;
 
 var client = new AcmeClient(
@@ -487,6 +508,7 @@ exports[`snippets (default) > nullable > 'Invalid null value' 1`] = `
 exports[`snippets (default) > nullable > 'Query parameters' 1`] = `
 "using Acme;
 using Acme.Nullable;
+using System.Collections.Generic;
 
 var client = new AcmeClient(
     clientOptions: new ClientOptions {

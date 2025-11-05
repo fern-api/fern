@@ -1,6 +1,7 @@
 import { fail } from "node:assert";
 
 import { Type } from "../ast";
+import { TypeLiteral } from "../ast/code/TypeLiteral";
 import { type Provenance } from "../context/model-navigator";
 import { is as DynamicIR } from "./dynamic-ir-type-guards";
 import { is as IR } from "./ir-type-guards";
@@ -24,6 +25,16 @@ export const is = {
     Explicit: (value: unknown): value is Provenance & { explicit: true } =>
         is.Provenance(value) && value.explicit === true,
     NonNullable: <T>(value: T): value is NonNullable<T> => value != null,
+    Record: {
+        empty: (value: unknown): value is Record<string, unknown> =>
+            value == null || Object.keys(value || {}).length === 0,
+        nonEmpty: (value: unknown): value is Record<string, unknown> =>
+            is.object(value) && Object.keys(value).length > 0,
+        withKey: <K extends string>(value: unknown, key: K): value is Record<K, unknown> =>
+            is.object(value) && key in value,
+        missingKey: <K extends string>(value: unknown, key: K): value is Record<K, unknown> =>
+            is.object(value) && !(key in value)
+    },
 
     Type: {
         string: (value: Type | undefined) => value instanceof Type.String,
@@ -55,6 +66,27 @@ export const is = {
         oneOf: (value: Type | undefined) => value instanceof Type.OneOf,
         oneOfBase: (value: Type | undefined) => value instanceof Type.OneOfBase,
         stringEnum: (value: Type | undefined) => value instanceof Type.StringEnum
+    },
+
+    TypeLiteral: {
+        string: (value: TypeLiteral | undefined) => value instanceof TypeLiteral.String,
+        boolean: (value: TypeLiteral | undefined) => value instanceof TypeLiteral.Boolean,
+        decimal: (value: TypeLiteral | undefined) => value instanceof TypeLiteral.Decimal,
+        double: (value: TypeLiteral | undefined) => value instanceof TypeLiteral.Double,
+        date: (value: TypeLiteral | undefined) => value instanceof TypeLiteral.Date,
+        dateTime: (value: TypeLiteral | undefined) => value instanceof TypeLiteral.DateTime,
+        float: (value: TypeLiteral | undefined) => value instanceof TypeLiteral.Float,
+        int: (value: TypeLiteral | undefined) => value instanceof TypeLiteral.Integer,
+        long: (value: TypeLiteral | undefined) => value instanceof TypeLiteral.Long,
+        uint: (value: TypeLiteral | undefined) => value instanceof TypeLiteral.Uint,
+        ulong: (value: TypeLiteral | undefined) => value instanceof TypeLiteral.Ulong,
+        class: (value: TypeLiteral | undefined) => value instanceof TypeLiteral.Class_,
+        list: (value: TypeLiteral | undefined) => value instanceof TypeLiteral.List,
+        set: (value: TypeLiteral | undefined) => value instanceof TypeLiteral.Set,
+        dictionary: (value: TypeLiteral | undefined) => value instanceof TypeLiteral.Dictionary,
+        nop: (value: TypeLiteral | undefined) => value instanceof TypeLiteral.Nop,
+        null: (value: TypeLiteral | undefined) => value instanceof TypeLiteral.Null,
+        unknown: (value: TypeLiteral | undefined) => value instanceof TypeLiteral.Unknown
     },
 
     IR, // Intermediate Representation typeguards

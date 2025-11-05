@@ -24,7 +24,7 @@ export class TypeParameter extends AstNode {
         return this.name === "IAsyncEnumerable";
     }
 
-    public isOptional(): boolean {
+    public get isOptional(): boolean {
         return false;
     }
 }

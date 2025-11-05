@@ -51,7 +51,7 @@ export class IdempotentRequestOptionsGenerator extends FileGenerator<
                     const toString = isString ? "" : ".ToString()";
                     // In header values, we only accept simple types, so we can assume that none are nullable (apart from string),
                     // unless the type is optional
-                    const nullConditionalOperator = !isString && type.isOptional() ? "?" : "";
+                    const nullConditionalOperator = !isString && type.isOptional ? "?" : "";
                     writer.writeLine(
                         `["${header.name.wireValue}"] = ${header.name.name.pascalCase.safeName}${nullConditionalOperator}${toString},`
                     );
