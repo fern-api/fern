@@ -43,6 +43,7 @@ public class AsyncRawOrganizationsClient {
             String organizationId, RequestOptions requestOptions) {
         HttpUrl httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
                 .newBuilder()
+                .addPathSegment(clientOptions.tenantId())
                 .addPathSegments("organizations")
                 .addPathSegment(organizationId)
                 .build();
@@ -101,6 +102,7 @@ public class AsyncRawOrganizationsClient {
             String organizationId, String userId, GetOrganizationUserRequest request, RequestOptions requestOptions) {
         HttpUrl httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
                 .newBuilder()
+                .addPathSegment(clientOptions.tenantId())
                 .addPathSegments("organizations")
                 .addPathSegment(organizationId)
                 .addPathSegments("users")
@@ -161,6 +163,7 @@ public class AsyncRawOrganizationsClient {
             String organizationId, SearchOrganizationsRequest request, RequestOptions requestOptions) {
         HttpUrl.Builder httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
                 .newBuilder()
+                .addPathSegment(clientOptions.tenantId())
                 .addPathSegments("organizations")
                 .addPathSegment(organizationId)
                 .addPathSegments("search");

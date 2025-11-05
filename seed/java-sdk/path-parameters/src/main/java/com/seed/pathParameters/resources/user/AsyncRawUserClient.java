@@ -51,6 +51,7 @@ public class AsyncRawUserClient {
             String userId, GetUsersRequest request, RequestOptions requestOptions) {
         HttpUrl httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
                 .newBuilder()
+                .addPathSegment(clientOptions.tenantId())
                 .addPathSegments("user")
                 .addPathSegment(userId)
                 .build();
@@ -102,6 +103,7 @@ public class AsyncRawUserClient {
             User request, RequestOptions requestOptions) {
         HttpUrl httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
                 .newBuilder()
+                .addPathSegment(clientOptions.tenantId())
                 .addPathSegments("user")
                 .build();
         RequestBody body;
@@ -161,6 +163,7 @@ public class AsyncRawUserClient {
             String userId, UpdateUserRequest request, RequestOptions requestOptions) {
         HttpUrl httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
                 .newBuilder()
+                .addPathSegment(clientOptions.tenantId())
                 .addPathSegments("user")
                 .addPathSegment(userId)
                 .build();
@@ -225,6 +228,7 @@ public class AsyncRawUserClient {
             String userId, SearchUsersRequest request, RequestOptions requestOptions) {
         HttpUrl.Builder httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
                 .newBuilder()
+                .addPathSegment(clientOptions.tenantId())
                 .addPathSegments("user")
                 .addPathSegment(userId)
                 .addPathSegments("search");
@@ -296,6 +300,7 @@ public class AsyncRawUserClient {
             String userId, int version, GetUserMetadataRequest request, RequestOptions requestOptions) {
         HttpUrl httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
                 .newBuilder()
+                .addPathSegment(clientOptions.tenantId())
                 .addPathSegments("user")
                 .addPathSegment(userId)
                 .addPathSegments("metadata")
