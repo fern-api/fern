@@ -1,0 +1,171 @@
+# yaml-language-server: $schema=https://raw.githubusercontent.com/fern-api/fern/main/fern.schema.json
+
+imports:
+  feature: feature.yml
+  reference: reference.yml
+
+types:
+  ReadmeConfig:
+    docs: |
+      The configuration used to generate a README.md file.
+      The information described here is a combination of user-defined information
+      (i.e. specified in the generators.yml), and dynamically generated information
+      that comes from each generator (i.e. features, requirements, and more).
+    properties:
+      remote:
+        docs: |
+          If specified, the original README.md will be fetched from this remote (if it exists).
+        type: optional<Remote>
+      language: LanguageInfo
+      organization: string
+      apiName: optional<string>
+      bannerLink: optional<string>
+      introduction: optional<string>
+      apiReferenceLink: optional<string>
+      referenceMarkdownPath: optional<string>
+      requirements: optional<list<string>>
+      disabledFeatures: optional<list<feature.FeatureId>>
+      whiteLabel: optional<boolean>
+      customSections: optional<list<CustomSection>>
+      features:
+        docs: |
+          Specifies the list of features supported by a specific generator.
+          The features are rendered in the order they're specified.
+        type: optional<list<ReadmeFeature>>
+      exampleStyle:
+        docs: "Controls whether usage examples show only required parameters (minimal) or all parameters (comprehensive). Defaults to comprehensive."
+        type: optional<ExampleStyle>
+
+  CustomSection:
+    properties:
+      name: string
+      language: reference.Language
+      content: string
+
+  Remote:
+    docs: |
+      The remote where the README.md is hosted.
+    union:
+      github: GithubRemote
+
+  GithubRemote:
+    properties:
+      repoUrl:
+        docs: A full repo url (i.e. https://github.com/fern-api/fern)
+        type: string
+      installationToken:
+        docs: The token used to clone the GitHub repository.
+        type: string
+
+  ReadmeFeature:
+    docs: |
+      A single feature supported by a generator (e.g. PAGINATION).
+    extends: feature.FeatureSpec
+    properties:
+      snippets: optional<list<string>>
+      snippetsAreOptional:
+        docs: |
+          If true, the feature block should be rendered even if we don't receive a snippet for it.
+          This is useful for features that are always supported, but might not require a snippet
+          to explain.
+        type: boolean
+
+  LanguageInfo:
+    docs: |
+      The language and its associated publish information (if any).
+      This is used to generate badges, the installation guide, and determine what language to
+      use when surrounding the snippets in a code block.
+    union:
+      typescript: TypescriptInfo
+      python: PythonInfo
+      go: GoInfo
+      java: JavaInfo
+      ruby: RubyInfo
+      csharp: CsharpInfo
+      php: PhpInfo
+      rust: RustInfo
+      swift: SwiftInfo
+
+  TypescriptInfo:
+    properties:
+      publishInfo: optional<NpmPublishInfo>
+
+  PythonInfo:
+    properties:
+      publishInfo: optional<PypiPublishInfo>
+
+  GoInfo:
+    properties:
+      publishInfo: optional<GoPublishInfo>
+
+  JavaInfo:
+    properties:
+      publishInfo: optional<MavenPublishInfo>
+
+  RubyInfo:
+    properties:
+      publishInfo: optional<RubyGemsPublishInfo>
+
+  CsharpInfo:
+    properties:
+      publishInfo: optional<NugetPublishInfo>
+
+  PhpInfo:
+    properties:
+      publishInfo: optional<ComposerPublishInfo>
+
+  RustInfo:
+    properties:
+      publishInfo: optional<CargoPublishInfo>
+
+  SwiftInfo:
+    properties:
+      publishInfo: optional<SwiftPackageManagerPublishInfo>
+
+  ComposerPublishInfo:
+    properties:
+      packageName: string
+
+  NpmPublishInfo:
+    properties:
+      packageName: string
+
+  PypiPublishInfo:
+    properties:
+      packageName: string
+
+  GoPublishInfo:
+    properties:
+      owner: string
+      repo: string
+      version: string
+
+  MavenPublishInfo:
+    properties:
+      artifact: string
+      group: string
+      version: string
+
+  RubyGemsPublishInfo:
+    properties:
+      packageName: string
+
+  NugetPublishInfo:
+    properties:
+      packageName: string
+
+  CargoPublishInfo:
+    properties:
+      packageName: string
+      version: string
+
+  SwiftPackageManagerPublishInfo:
+    properties:
+      gitUrl: string
+      minVersion: string
+
+  ExampleStyle:
+    docs: "Controls the verbosity of usage examples in README generation"
+    enum:
+      - minimal
+      - comprehensive
