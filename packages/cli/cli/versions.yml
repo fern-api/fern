@@ -9,6 +9,14 @@
 
 - changelogEntry:
     - summary: |
+        Fix AsyncAPI v3 message parsing where channel messages were not being included in generated WebSocket clients. Messages defined in AsyncAPI v3 specs are now correctly resolved and included in the SDK.
+      type: fix
+  irVersion: 61
+  createdAt: "2025-11-05"
+  version: 0.107.10
+
+- changelogEntry:
+    - summary: |
         Implement variant ranking in anyOf/oneOf example generation to prefer variants that use provided examples without coercion over variants that require coercion or generate fallback examples. When a schema has anyOf: [number, string] with examples: ["2500"], the string variant is now preferred since it can use the provided example as-is, rather than the number variant which would coerce it to a number.
       type: fix
   irVersion: 61
