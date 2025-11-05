@@ -220,7 +220,7 @@ export class EndpointSnippetGenerator extends WithGeneration {
         environment: FernIr.dynamic.EnvironmentValues | undefined;
     }): NamedArgument[] {
         const baseUrlArg = this.getBaseUrlArg({ baseUrl, environment });
-        if (this.csharp.TypeLiteral.isNop(baseUrlArg)) {
+        if (is.TypeLiteral.nop(baseUrlArg)) {
             return [];
         }
         return [
@@ -431,7 +431,7 @@ export class EndpointSnippetGenerator extends WithGeneration {
             typeReference: header.typeReference,
             value
         });
-        if (this.csharp.TypeLiteral.isNop(typeLiteral)) {
+        if (is.TypeLiteral.nop(typeLiteral)) {
             // Literal header values (e.g. "X-API-Version") should not be included in the
             // client constructor.
             return undefined;

@@ -11,6 +11,9 @@ public partial class ServiceClient
         _client = client;
     }
 
+    /// <example><code>
+    /// await client.Service.UploadAsync(new MemoryStream(Encoding.UTF8.GetBytes("[bytes]")));
+    /// </code></example>
     public async Task UploadAsync(
         Stream request,
         RequestOptions? options = null,

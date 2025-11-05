@@ -1,7 +1,7 @@
 # Seed C# Library
 
 [![fern shield](https://img.shields.io/badge/%F0%9F%8C%BF-Built%20with%20Fern-brightgreen)](https://buildwithfern.com?utm_source=github&utm_medium=github&utm_campaign=readme&utm_source=Seed%2FC%23)
-[![nuget shield](https://img.shields.io/nuget/v/SeedFileUpload)](https://nuget.org/packages/SeedFileUpload)
+[![nuget shield](https://img.shields.io/nuget/v/SeedBytesUpload)](https://nuget.org/packages/SeedBytesUpload)
 
 The Seed C# library provides convenient access to the Seed APIs from C#.
 
@@ -12,7 +12,7 @@ This SDK requires:
 ## Installation
 
 ```sh
-dotnet add package SeedFileUpload
+dotnet add package SeedBytesUpload
 ```
 
 ## Reference
@@ -24,10 +24,12 @@ A full reference for this library is available [here](./reference.md).
 Instantiate and use the client with the following:
 
 ```csharp
-using SeedFileUpload;
+using SeedBytesUpload;
+using System.IO;
+using System.Text;
 
-var client = new SeedFileUploadClient();
-await client.Service.JustFileAsync(new JustFileRequest());
+var client = new SeedBytesUploadClient();
+await client.Service.UploadAsync(new MemoryStream(Encoding.UTF8.GetBytes("[bytes]")));
 ```
 
 ## Exception Handling
@@ -36,11 +38,11 @@ When the API returns a non-success status code (4xx or 5xx response), a subclass
 will be thrown.
 
 ```csharp
-using SeedFileUpload;
+using SeedBytesUpload;
 
 try {
-    var response = await client.Service.JustFileAsync(...);
-} catch (SeedFileUploadApiException e) {
+    var response = await client.Service.UploadAsync(...);
+} catch (SeedBytesUploadApiException e) {
     System.Console.WriteLine(e.Body);
     System.Console.WriteLine(e.StatusCode);
 }
@@ -63,7 +65,7 @@ A request is deemed retryable when any of the following HTTP status codes is ret
 Use the `MaxRetries` request option to configure this behavior.
 
 ```csharp
-var response = await client.Service.JustFileAsync(
+var response = await client.Service.UploadAsync(
     ...,
     new RequestOptions {
         MaxRetries: 0 // Override MaxRetries at the request level
@@ -76,41 +78,12 @@ var response = await client.Service.JustFileAsync(
 The SDK defaults to a 30 second timeout. Use the `Timeout` option to configure this behavior.
 
 ```csharp
-var response = await client.Service.JustFileAsync(
+var response = await client.Service.UploadAsync(
     ...,
     new RequestOptions {
         Timeout: TimeSpan.FromSeconds(3) // Override timeout to 3s
     }
 );
-```
-
-### Forward Compatible Enums
-
-This SDK uses forward-compatible enums that can handle unknown values gracefully.
-
-```csharp
-using SeedFileUpload;
-
-// Using a built-in value
-var objectType = ObjectType.Foo;
-
-// Using a custom value
-var customObjectType = ObjectType.FromCustom("custom-value");
-
-// Using in a switch statement
-switch (objectType.Value)
-{
-    case ObjectType.Values.Foo:
-        Console.WriteLine("Foo");
-        break;
-    default:
-        Console.WriteLine($"Unknown value: {objectType.Value}");
-        break;
-}
-
-// Explicit casting
-string objectTypeString = (string)ObjectType.Foo;
-ObjectType objectTypeFromString = (ObjectType)"FOO";
 ```
 
 ## Contributing

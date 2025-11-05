@@ -1,404 +1,681 @@
-import { assertNever } from "@fern-api/core-utils";
 import { type Generation } from "../../context/generation-info";
+import { is } from "../../utils/type-guards";
 import { AstNode } from "../core/AstNode";
 import { Writer } from "../core/Writer";
 import { ClassReference } from "../types/ClassReference";
 import { Type } from "../types/Type";
-import { ClassInstantiation } from "./ClassInstantiation";
 
-type InternalTypeLiteral =
-    | Boolean_
-    | Class_
-    | Date_
-    | DateTime
-    | Dictionary
-    | Decimal
-    | Double
-    | Float
-    | Integer
-    | List
-    | Long
-    | Reference
-    | Set
-    | String_
-    | Uint
-    | Ulong
-    | Unknown_
-    | Null_
-    | Nop;
-
-interface Boolean_ {
-    type: "boolean";
-    value: boolean;
-}
-
-interface Class_ {
-    type: "class";
-    reference: ClassReference;
-    fields: ConstructorField[];
-}
-
+/**
+ * Represents a field in a class constructor initialization.
+ */
 export interface ConstructorField {
+    /**
+     * The name of the field.
+     */
     name: string;
+
+    /**
+     * The literal value to assign to the field.
+     */
     value: TypeLiteral;
 }
 
-interface Date_ {
-    type: "date";
-    value: string;
-}
-
-interface DateTime {
-    type: "datetime";
-    value: string;
-}
-
-interface Decimal {
-    type: "decimal";
-    value: number;
-}
-
-interface Double {
-    type: "double";
-    value: number;
-}
-
-interface Float {
-    type: "float";
-    value: number;
-}
-
-interface List {
-    type: "list";
-    valueType: Type;
-    values: TypeLiteral[];
-}
-
-interface Dictionary {
-    type: "dictionary";
-    keyType: Type;
-    valueType: Type;
-    entries: DictionaryEntry[];
-}
-
+/**
+ * Represents a key-value pair in a dictionary literal.
+ */
 export interface DictionaryEntry {
+    /**
+     * The key of the dictionary entry.
+     */
     key: TypeLiteral;
+
+    /**
+     * The value of the dictionary entry.
+     */
     value: TypeLiteral;
 }
 
-interface Integer {
-    type: "integer";
-    value: number;
-}
+/**
+ * Base class for all C# literal value representations in the AST.
+ *
+ * TypeLiterals represent concrete values that can be written directly into code,
+ * such as numbers (42, 3.14), strings ("hello"), booleans (true), collections ([1, 2, 3]),
+ * and object initializers. Each subclass knows how to render its specific literal type
+ * using the appropriate C# syntax.
+ */
+export abstract class TypeLiteral extends AstNode {
+    /**
+     * Writes this literal value to the provided writer using appropriate C# syntax.
+     */
+    public abstract override write(writer: Writer): void;
 
-interface Long {
-    type: "long";
-    value: number;
-}
-
-interface Uint {
-    type: "uint";
-    value: number;
-}
-
-interface Ulong {
-    type: "ulong";
-    value: number;
-}
-
-interface Reference {
-    type: "reference";
-    value: AstNode;
-}
-
-interface Set {
-    type: "set";
-    valueType: Type;
-    values: TypeLiteral[];
-}
-
-interface String_ {
-    type: "string";
-    value: string;
-}
-
-interface Unknown_ {
-    type: "unknown";
-    value: unknown;
-}
-
-interface Null_ {
-    type: "null";
-}
-
-interface Nop {
-    type: "nop";
-}
-
-export class TypeLiteral extends AstNode {
-    constructor(
-        public readonly internalType: InternalTypeLiteral,
-        generation: Generation
-    ) {
-        super(generation);
+    /**
+     * Gets the name of this literal type, typically the constructor name.
+     * Used primarily for debugging and type identification.
+     */
+    public get typeName(): string {
+        return this.constructor.name;
     }
+}
 
-    public write(writer: Writer): void {
-        switch (this.internalType.type) {
-            case "class": {
-                this.writeClass({ writer, class_: this.internalType });
-                break;
-            }
-            case "dictionary": {
-                this.writeDictionary({ writer, dictionary: this.internalType });
-                break;
-            }
-            case "list": {
-                this.writeList({ writer, list: this.internalType });
-                break;
-            }
-            case "set": {
-                this.writeSet({ writer, set: this.internalType });
-                break;
-            }
-            case "reference": {
-                writer.writeNode(this.internalType.value);
-                break;
-            }
-            case "date": {
-                this.writeDate({ writer, value: this.internalType.value });
-                break;
-            }
-            case "datetime": {
-                this.writeDateTime({ writer, value: this.internalType.value });
-                break;
-            }
-            case "boolean": {
-                writer.write(this.internalType.value.toString());
-                break;
-            }
-            case "integer": {
-                writer.write(this.internalType.value.toString());
-                break;
-            }
-            case "long": {
-                writer.write(`${this.internalType.value}L`);
-                break;
-            }
-            case "uint": {
-                writer.write(`${this.internalType.value}u`);
-                break;
-            }
-            case "ulong": {
-                writer.write(`${this.internalType.value}ul`);
-                break;
-            }
-            case "decimal": {
-                writer.write(`${this.internalType.value}m`);
-                break;
-            }
-            case "double": {
-                writer.write(this.internalType.value.toString());
-                break;
-            }
-            case "float": {
-                writer.write(`${this.internalType.value}f`);
-                break;
-            }
-            case "string": {
-                writer.writeNode(this.csharp.string_({ string: this.internalType.value }));
-                break;
-            }
-            case "unknown": {
-                this.writeUnknown({ writer, value: this.internalType.value });
-                break;
-            }
-            case "null": {
-                writer.write("null");
-                break;
-            }
-            case "nop":
-                break;
-            default:
-                assertNever(this.internalType);
+// Namespace for all TypeLiteral classes
+export namespace TypeLiteral {
+    /**
+     * Represents a boolean literal value in C# (true or false).
+     */
+    export class Boolean extends TypeLiteral {
+        /**
+         * The boolean value.
+         */
+        public readonly value: boolean;
+
+        /**
+         * Creates a new boolean literal.
+         * @param value - The boolean value (true or false)
+         * @param generation - The generation context for code generation
+         */
+        constructor(value: boolean, generation: Generation) {
+            super(generation);
+            this.value = value;
+        }
+
+        public write(writer: Writer): void {
+            writer.write(this.value.toString());
         }
     }
 
-    public isClass(): this is Class_ {
-        return (this.internalType as Class_).type === "class";
-    }
+    /**
+     * Represents a class instantiation literal with constructor arguments.
+     * This generates code like `new ClassName(field1: value1, field2: value2)`.
+     */
+    export class Class_ extends TypeLiteral {
+        /**
+         * The fields to initialize in the constructor.
+         */
+        public readonly fields: ConstructorField[];
 
-    public asClassOrThrow(): Class_ {
-        if (this.isClass()) {
-            return this.internalType as Class_;
+        /**
+         * The class reference being instantiated.
+         */
+        public readonly reference: ClassReference;
+
+        /**
+         * Creates a new class instantiation literal.
+         * @param reference - The class reference to instantiate
+         * @param fields - The fields to initialize with their values
+         * @param generation - The generation context for code generation
+         */
+        constructor(reference: ClassReference, fields: ConstructorField[], generation: Generation) {
+            super(generation);
+            this.reference = reference;
+            this.fields = fields;
         }
-        throw new Error("Internal error; ts.TypeLiteral is not a class");
-    }
 
-    private writeClass({ writer, class_: class_ }: { writer: Writer; class_: Class_ }): void {
-        const fields = filterNopConstructorFields({ fields: class_.fields });
-        writer.writeNode(
-            new ClassInstantiation(
-                {
-                    classReference: class_.reference,
+        public write(writer: Writer): void {
+            const fields = this.fields.filter((field) => !(field.value instanceof TypeLiteral.Nop));
+            writer.writeNode(
+                this.reference.new({
                     arguments_: fields.map((field) => ({ name: field.name, assignment: field.value })),
                     multiline: true
-                },
-                this.generation
-            )
-        );
+                })
+            );
+        }
     }
 
-    private writeDate({ writer, value }: { writer: Writer; value: string }): void {
-        writer.write(`DateOnly.Parse("${value}")`);
+    /**
+     * Represents a DateOnly literal in C# (date without time component).
+     * This generates code like `DateOnly.Parse("2023-01-15")`.
+     */
+    export class Date extends TypeLiteral {
+        /**
+         * The date string in a parseable format.
+         */
+        public readonly value: string;
+
+        /**
+         * Creates a new DateOnly literal.
+         * @param value - The date string (e.g., "2023-01-15")
+         * @param generation - The generation context for code generation
+         */
+        constructor(value: string, generation: Generation) {
+            super(generation);
+            this.value = value;
+        }
+
+        public write(writer: Writer): void {
+            writer.write(this.System.DateOnly, `.Parse("${this.value}")`);
+        }
     }
 
-    private writeDateTime({ writer, value }: { writer: Writer; value: string }): void {
-        writer.write(`DateTime.Parse("${value}", null, `);
-        writer.writeNode(this.extern.System.Globalization.DateTimeStyles);
-        writer.write(".AdjustToUniversal)");
+    /**
+     * Represents a DateTime literal in C# with timezone adjustment.
+     * This generates code like `DateTime.Parse("...", null, DateTimeStyles.AdjustToUniversal)`.
+     */
+    export class DateTime extends TypeLiteral {
+        /**
+         * The datetime string in a parseable format.
+         */
+        public readonly value: string;
+
+        /**
+         * Creates a new DateTime literal.
+         * @param value - The datetime string (e.g., "2023-01-15T10:30:00Z")
+         * @param generation - The generation context for code generation
+         */
+        constructor(value: string, generation: Generation) {
+            super(generation);
+            this.value = value;
+        }
+
+        public write(writer: Writer): void {
+            writer.write(
+                this.System.DateTime,
+                `.Parse("${this.value}", null, `,
+                this.extern.System.Globalization.DateTimeStyles,
+                ".AdjustToUniversal)"
+            );
+        }
     }
 
-    private writeList({ writer, list }: { writer: Writer; list: List }): void {
-        writer.write("new List<");
-        writer.writeNode(list.valueType);
-        writer.write(">()");
+    /**
+     * Represents a decimal literal in C# (high-precision decimal number).
+     * This generates code like `42.5m` (the 'm' suffix denotes decimal type).
+     */
+    export class Decimal extends TypeLiteral {
+        /**
+         * The decimal value.
+         */
+        public readonly value: number;
 
-        const values = filterNopValues({ values: list.values });
-        if (values.length === 0) {
-            writer.write("{}");
-            return;
+        /**
+         * Creates a new decimal literal.
+         * @param value - The decimal value
+         * @param generation - The generation context for code generation
+         */
+        constructor(value: number, generation: Generation) {
+            super(generation);
+            this.value = value;
         }
 
-        writer.pushScope();
-        for (const value of values) {
-            value.write(writer);
-            writer.writeLine(",");
+        public write(writer: Writer): void {
+            writer.write(`${this.value}m`);
         }
-        writer.popScope();
     }
 
-    private writeSet({ writer, set }: { writer: Writer; set: Set }): void {
-        writer.write("new HashSet<");
-        writer.writeNode(set.valueType);
-        writer.write(">()");
+    /**
+     * Represents a double literal in C# (64-bit floating-point number).
+     * This generates code like `3.14` (no suffix needed for double).
+     */
+    export class Double extends TypeLiteral {
+        /**
+         * The double value.
+         */
+        public readonly value: number;
 
-        const values = filterNopValues({ values: set.values });
-        if (values.length === 0) {
-            writer.write("{}");
-            return;
+        /**
+         * Creates a new double literal.
+         * @param value - The double value
+         * @param generation - The generation context for code generation
+         */
+        constructor(value: number, generation: Generation) {
+            super(generation);
+            this.value = value;
         }
 
-        writer.pushScope();
-        for (const value of values) {
-            value.write(writer);
-            writer.writeLine(",");
+        public write(writer: Writer): void {
+            writer.write(this.value.toString());
         }
-        writer.popScope();
     }
 
-    private writeDictionary({ writer, dictionary }: { writer: Writer; dictionary: Dictionary }): void {
-        writer.write("new Dictionary<");
-        writer.writeNode(dictionary.keyType);
-        writer.write(", ");
-        writer.writeNode(dictionary.valueType);
-        writer.write(">()");
+    /**
+     * Represents a float literal in C# (32-bit floating-point number).
+     * This generates code like `3.14f` (the 'f' suffix denotes float type).
+     */
+    export class Float extends TypeLiteral {
+        /**
+         * The float value.
+         */
+        public readonly value: number;
 
-        const entries = filterNopDictionaryEntries({ entries: dictionary.entries });
-        if (entries.length === 0) {
-            writer.write("{}");
-            return;
+        /**
+         * Creates a new float literal.
+         * @param value - The float value
+         * @param generation - The generation context for code generation
+         */
+        constructor(value: number, generation: Generation) {
+            super(generation);
+            this.value = value;
         }
 
-        writer.pushScope();
-
-        for (const entry of entries) {
-            writer.write("[");
-            writer.writeNode(entry.key);
-            writer.write("] = ");
-            writer.writeNode(entry.value);
-            writer.writeLine(",");
+        public write(writer: Writer): void {
+            writer.write(`${this.value}f`);
         }
-        writer.popScope();
     }
 
-    private writeUnknown({ writer, value }: { writer: Writer; value: unknown }): void {
-        switch (typeof value) {
-            case "boolean":
-                writer.write(value.toString());
+    /**
+     * Represents an integer literal in C# (32-bit signed integer).
+     * This generates code like `42` (no suffix needed for int).
+     */
+    export class Integer extends TypeLiteral {
+        /**
+         * The integer value.
+         */
+        public readonly value: number;
+
+        /**
+         * Creates a new integer literal.
+         * @param value - The integer value
+         * @param generation - The generation context for code generation
+         */
+        constructor(value: number, generation: Generation) {
+            super(generation);
+            this.value = value;
+        }
+
+        public write(writer: Writer): void {
+            writer.write(this.value.toString());
+        }
+    }
+
+    /**
+     * Represents a long literal in C# (64-bit signed integer).
+     * This generates code like `42L` (the 'L' suffix denotes long type).
+     */
+    export class Long extends TypeLiteral {
+        /**
+         * The long value.
+         */
+        public readonly value: number;
+
+        /**
+         * Creates a new long literal.
+         * @param value - The long value
+         * @param generation - The generation context for code generation
+         */
+        constructor(value: number, generation: Generation) {
+            super(generation);
+            this.value = value;
+        }
+
+        public write(writer: Writer): void {
+            writer.write(`${this.value}L`);
+        }
+    }
+
+    /**
+     * Represents an unsigned integer literal in C# (32-bit unsigned integer).
+     * This generates code like `42u` (the 'u' suffix denotes unsigned int).
+     */
+    export class Uint extends TypeLiteral {
+        /**
+         * The unsigned integer value.
+         */
+        public readonly value: number;
+
+        /**
+         * Creates a new unsigned integer literal.
+         * @param value - The unsigned integer value
+         * @param generation - The generation context for code generation
+         */
+        constructor(value: number, generation: Generation) {
+            super(generation);
+            this.value = value;
+        }
+
+        public write(writer: Writer): void {
+            writer.write(`${this.value}u`);
+        }
+    }
+
+    /**
+     * Represents an unsigned long literal in C# (64-bit unsigned integer).
+     * This generates code like `42ul` (the 'ul' suffix denotes unsigned long).
+     */
+    export class Ulong extends TypeLiteral {
+        /**
+         * The unsigned long value.
+         */
+        public readonly value: number;
+
+        /**
+         * Creates a new unsigned long literal.
+         * @param value - The unsigned long value
+         * @param generation - The generation context for code generation
+         */
+        constructor(value: number, generation: Generation) {
+            super(generation);
+            this.value = value;
+        }
+
+        public write(writer: Writer): void {
+            writer.write(`${this.value}ul`);
+        }
+    }
+
+    /**
+     * Represents a reference to another AST node as a literal value.
+     * This allows embedding arbitrary AST nodes within literal contexts.
+     */
+    export class Reference extends TypeLiteral {
+        /**
+         * The AST node being referenced.
+         */
+        public readonly value: AstNode;
+
+        /**
+         * Creates a new reference literal.
+         * @param value - The AST node to reference
+         * @param generation - The generation context for code generation
+         */
+        constructor(value: AstNode, generation: Generation) {
+            super(generation);
+            this.value = value;
+        }
+
+        public write(writer: Writer): void {
+            writer.writeNode(this.value);
+        }
+    }
+
+    /**
+     * Represents a string literal in C# with proper escaping.
+     * This generates code like `"hello world"` with appropriate character escaping.
+     */
+    export class String extends TypeLiteral {
+        /**
+         * The string value.
+         */
+        public readonly value: string;
+
+        /**
+         * Creates a new string literal.
+         * @param value - The string value
+         * @param generation - The generation context for code generation
+         */
+        constructor(value: string, generation: Generation) {
+            super(generation);
+            this.value = value;
+        }
+
+        public write(writer: Writer): void {
+            writer.writeNode(this.csharp.string_({ string: this.value }));
+        }
+    }
+
+    /**
+     * Represents a null literal in C#.
+     * This generates the code `null`.
+     */
+    export class Null extends TypeLiteral {
+        public write(writer: Writer): void {
+            writer.write("null");
+        }
+    }
+
+    /**
+     * Represents a no-operation literal that writes nothing.
+     * This is useful for filtering out optional values or placeholder fields.
+     */
+    export class Nop extends TypeLiteral {
+        public write(writer: Writer): void {
+            // No-op: writes nothing
+        }
+    }
+
+    /**
+     * Represents a List<T> collection initializer literal in C#.
+     * This generates code like `new List<int>() { 1, 2, 3 }`.
+     */
+    export class List extends TypeLiteral {
+        /**
+         * The element type of the list.
+         */
+        public readonly valueType: Type;
+
+        /**
+         * The literal values to include in the list.
+         */
+        public readonly values: TypeLiteral[];
+
+        /**
+         * Creates a new List literal.
+         * @param valueType - The type of elements in the list
+         * @param values - The literal values to initialize the list with
+         * @param generation - The generation context for code generation
+         */
+        constructor(valueType: Type, values: TypeLiteral[], generation: Generation) {
+            super(generation);
+            this.valueType = valueType;
+            this.values = values;
+        }
+
+        public write(writer: Writer): void {
+            writer.write("new ", this.System.Collections.Generic.List(this.valueType), "()");
+
+            if (this.values.length === 0) {
                 return;
-            case "string":
-                writer.writeNode(this.csharp.string_({ string: value }));
+            }
+
+            writer.pushScope();
+            for (const value of this.values.filter((value) => !(value instanceof TypeLiteral.Nop))) {
+                value.write(writer);
+                writer.writeLine(",");
+            }
+            writer.popScope();
+        }
+    }
+
+    /**
+     * Represents a HashSet<T> collection initializer literal in C#.
+     * This generates code like `new HashSet<int>() { 1, 2, 3 }`.
+     */
+    export class Set extends TypeLiteral {
+        /**
+         * The element type of the set.
+         */
+        public readonly valueType: Type;
+
+        /**
+         * The literal values to include in the set.
+         */
+        public readonly values: TypeLiteral[];
+
+        /**
+         * Creates a new HashSet literal.
+         * @param valueType - The type of elements in the set
+         * @param values - The literal values to initialize the set with
+         * @param generation - The generation context for code generation
+         */
+        constructor(valueType: Type, values: TypeLiteral[], generation: Generation) {
+            super(generation);
+            this.valueType = valueType;
+            this.values = values;
+        }
+
+        public write(writer: Writer): void {
+            writer.write("new ", this.System.Collections.Generic.HashSet(this.valueType), "()");
+
+            if (this.values.length === 0) {
                 return;
-            case "number":
-                writer.write(value.toString());
+            }
+
+            writer.pushScope();
+            for (const value of this.values.filter((value) => !(value instanceof TypeLiteral.Nop))) {
+                value.write(writer);
+                writer.writeLine(",");
+            }
+            writer.popScope();
+        }
+    }
+
+    /**
+     * Represents a Dictionary<TKey, TValue> collection initializer literal in C#.
+     * This generates code like `new Dictionary<string, int>() { ["key1"] = 1, ["key2"] = 2 }`.
+     */
+    export class Dictionary extends TypeLiteral {
+        /**
+         * The entries to include in the dictionary.
+         */
+        public readonly entries: DictionaryEntry[];
+
+        /**
+         * The key type of the dictionary.
+         */
+        public readonly keyType: Type;
+
+        /**
+         * The value type of the dictionary.
+         */
+        public readonly valueType: Type;
+
+        /**
+         * Creates a new Dictionary literal.
+         * @param keyType - The type of keys in the dictionary
+         * @param valueType - The type of values in the dictionary
+         * @param entries - The key-value pairs to initialize the dictionary with
+         * @param generation - The generation context for code generation
+         */
+        constructor(keyType: Type, valueType: Type, entries: DictionaryEntry[], generation: Generation) {
+            super(generation);
+            this.keyType = keyType;
+            this.valueType = valueType;
+            this.entries = entries;
+        }
+
+        public write(writer: Writer): void {
+            writer.write("new ", this.System.Collections.Generic.Dictionary(this.keyType, this.valueType), "()");
+
+            const entries = this.entries.filter(
+                (entry) => !is.TypeLiteral.nop(entry.key) && !is.TypeLiteral.nop(entry.value)
+            );
+            if (entries.length === 0) {
                 return;
-            case "object":
-                if (value == null) {
-                    writer.write("null");
+            }
+
+            writer.pushScope();
+
+            for (const entry of entries) {
+                writer.write("[");
+                writer.writeNode(entry.key);
+                writer.write("] = ");
+                writer.writeNode(entry.value);
+                writer.writeLine(",");
+            }
+            writer.popScope();
+        }
+    }
+
+    /**
+     * Represents a literal for unknown/dynamic values that are determined at runtime.
+     * This recursively converts JavaScript values (primitives, objects, arrays) into appropriate C# literal syntax.
+     *
+     * For example, a JavaScript object `{ name: "Alice", age: 30 }` becomes
+     * `new Dictionary<string, object>() { ["name"] = "Alice", ["age"] = 30 }`.
+     */
+    export class Unknown extends TypeLiteral {
+        /**
+         * The unknown value to convert to C# syntax.
+         */
+        public readonly value: unknown;
+
+        /**
+         * Creates a new Unknown literal.
+         * @param value - The unknown value (can be primitive, object, or array)
+         * @param generation - The generation context for code generation
+         */
+        constructor(value: unknown, generation: Generation) {
+            super(generation);
+            this.value = value;
+        }
+
+        public write(writer: Writer): void {
+            this.writeUnknown({ writer, value: this.value });
+        }
+
+        /**
+         * Recursively writes an unknown value using appropriate C# syntax.
+         * @param params - Object containing the writer and value
+         * @param params.writer - The writer to output to
+         * @param params.value - The value to write
+         */
+        private writeUnknown({ writer, value }: { writer: Writer; value: unknown }): void {
+            switch (typeof value) {
+                case "boolean":
+                    writer.write(value.toString());
                     return;
-                }
-                if (Array.isArray(value)) {
-                    this.writeUnknownArray({ writer, value });
+                case "string":
+                    writer.writeNode(this.csharp.string_({ string: value }));
                     return;
-                }
-                this.writeUnknownMap({ writer, value });
+                case "number":
+                    writer.write(value.toString());
+                    return;
+                case "object":
+                    if (value == null) {
+                        writer.write("null");
+                        return;
+                    }
+                    if (Array.isArray(value)) {
+                        this.writeUnknownArray({ writer, value });
+                        return;
+                    }
+                    this.writeUnknownMap({ writer, value });
+                    return;
+                default:
+                    throw new Error(`Internal error; unsupported unknown type: ${typeof value}`);
+            }
+        }
+
+        /**
+         * Writes an unknown array as a List<object> literal.
+         * @param params - Object containing the writer and array value
+         * @param params.writer - The writer to output to
+         * @param params.value - The array to write
+         */
+        private writeUnknownArray({
+            writer,
+            value
+        }: {
+            writer: Writer;
+            // biome-ignore lint/suspicious/noExplicitAny: allow
+            value: any[];
+        }): void {
+            writer.write("new ", this.System.Collections.Generic.List(this.csharp.Type.object), "()");
+            if (value.length === 0) {
                 return;
-            default:
-                throw new Error(`Internal error; unsupported unknown type: ${typeof value}`);
+            }
+            writer.writeLine();
+            writer.pushScope();
+            for (const element of value) {
+                writer.writeNode(new Unknown(element, this.generation));
+                writer.writeLine(",");
+            }
+            writer.popScope();
+        }
+
+        /**
+         * Writes an unknown object as a Dictionary<string, object> literal.
+         * @param params - Object containing the writer and object value
+         * @param params.writer - The writer to output to
+         * @param params.value - The object to write
+         */
+        private writeUnknownMap({ writer, value }: { writer: Writer; value: object }): void {
+            const entries = Object.entries(value);
+            writer.write(
+                "new ",
+                this.System.Collections.Generic.Dictionary(this.csharp.Type.string, this.csharp.Type.object),
+                "()"
+            );
+            if (entries.length === 0) {
+                return;
+            }
+            writer.writeLine();
+            writer.pushScope();
+            for (const [key, val] of entries) {
+                writer.write(`["${key}"] = `);
+                writer.writeNode(new Unknown(val, this.generation));
+                writer.writeLine(",");
+            }
+            writer.popScope();
         }
     }
-
-    private writeUnknownArray({
-        writer,
-        value
-    }: {
-        writer: Writer;
-        // biome-ignore lint/suspicious/noExplicitAny: allow
-        value: any[];
-    }): void {
-        if (value.length === 0) {
-            writer.write("new List<object>()");
-            return;
-        }
-        writer.writeLine("new List<object>()");
-        writer.pushScope();
-        for (const element of value) {
-            writer.writeNode(this.csharp.TypeLiteral.unknown(element));
-            writer.writeLine(",");
-        }
-        writer.popScope();
-    }
-
-    private writeUnknownMap({ writer, value }: { writer: Writer; value: object }): void {
-        const entries = Object.entries(value);
-        if (entries.length === 0) {
-            writer.write("new Dictionary<string, object>()");
-            return;
-        }
-        writer.writeLine("new Dictionary<string, object>()");
-        writer.pushScope();
-        for (const [key, val] of entries) {
-            writer.write(`["${key}"] = `);
-            writer.writeNode(this.csharp.TypeLiteral.unknown(val));
-            writer.writeLine(",");
-        }
-        writer.popScope();
-    }
-
-    static isNop(typeLiteral: TypeLiteral): boolean {
-        return typeLiteral.internalType.type === "nop";
-    }
-}
-
-function filterNopConstructorFields({ fields }: { fields: ConstructorField[] }): ConstructorField[] {
-    return fields.filter((field) => !TypeLiteral.isNop(field.value));
-}
-
-function filterNopDictionaryEntries({ entries }: { entries: DictionaryEntry[] }): DictionaryEntry[] {
-    return entries.filter((entry) => !TypeLiteral.isNop(entry.key) && !TypeLiteral.isNop(entry.value));
-}
-
-function filterNopValues({ values }: { values: TypeLiteral[] }): TypeLiteral[] {
-    return values.filter((value) => !TypeLiteral.isNop(value));
 }
