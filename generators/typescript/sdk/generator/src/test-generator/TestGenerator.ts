@@ -863,7 +863,7 @@ describe("${serviceName}", () => {
             const pathParamDef = endpoint.pathParameters.find(
                 (p) => p.name.originalName === examplePathParameter.name.originalName
             );
-            
+
             if (pathParamDef?.variable != null) {
                 const variable = this.ir.variables.find((v) => v.id === pathParamDef.variable);
                 if (variable != null) {
