@@ -1,4 +1,13 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+
+- changelogEntry:
+    - summary: |
+        Enables parsing of the language setting in docs.
+      type: chore
+  irVersion: 61
+  createdAt: "2025-11-03"
+  version: 0.107.6
+
 - changelogEntry:
     - summary: |
         Silence validation logs in fern docs dev unless there is a validation error
