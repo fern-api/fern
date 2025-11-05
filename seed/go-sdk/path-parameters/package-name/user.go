@@ -44,6 +44,49 @@ func (g *GetUsersRequest) SetUserId(userId string) {
 }
 
 var (
+	getUserMetadataRequestFieldTenantId = big.NewInt(1 << 0)
+	getUserMetadataRequestFieldUserId   = big.NewInt(1 << 1)
+	getUserMetadataRequestFieldVersion  = big.NewInt(1 << 2)
+)
+
+type GetUserMetadataRequest struct {
+	TenantId string `json:"-" url:"-"`
+	UserId   string `json:"-" url:"-"`
+	Version  int    `json:"-" url:"-"`
+
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
+}
+
+func (g *GetUserMetadataRequest) require(field *big.Int) {
+	if g.explicitFields == nil {
+		g.explicitFields = big.NewInt(0)
+	}
+	g.explicitFields.Or(g.explicitFields, field)
+}
+
+// SetTenantId sets the TenantId field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (g *GetUserMetadataRequest) SetTenantId(tenantId string) {
+	g.TenantId = tenantId
+	g.require(getUserMetadataRequestFieldTenantId)
+}
+
+// SetUserId sets the UserId field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (g *GetUserMetadataRequest) SetUserId(userId string) {
+	g.UserId = userId
+	g.require(getUserMetadataRequestFieldUserId)
+}
+
+// SetVersion sets the Version field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (g *GetUserMetadataRequest) SetVersion(version int) {
+	g.Version = version
+	g.require(getUserMetadataRequestFieldVersion)
+}
+
+var (
 	searchUsersRequestFieldTenantId = big.NewInt(1 << 0)
 	searchUsersRequestFieldUserId   = big.NewInt(1 << 1)
 	searchUsersRequestFieldLimit    = big.NewInt(1 << 2)
