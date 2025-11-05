@@ -2,6 +2,14 @@
 
 - changelogEntry:
     - summary: |
+        Implement variant ranking in anyOf/oneOf example generation to prefer variants that use provided examples without coercion over variants that require coercion or generate fallback examples. When a schema has anyOf: [number, string] with examples: ["2500"], the string variant is now preferred since it can use the provided example as-is, rather than the number variant which would coerce it to a number.
+      type: fix
+  irVersion: 61
+  createdAt: "2025-11-05"
+  version: 0.107.9
+
+- changelogEntry:
+    - summary: |
         Improve anyOf/oneOf example generation to prefer variants with examples and use schema-level examples when available. This addresses cases where unions with multiple types were generating fallback examples instead of using provided examples.
       type: fix
   irVersion: 61
