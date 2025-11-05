@@ -607,6 +607,13 @@ export class ExampleTypeFactory {
         fullExample: unknown
     ): SchemaWithExample | undefined {
         if (fullExample == null) {
+            const variantWithExample = schema.schemas.find((variant) =>
+                this.hasExample(variant, 0, new Set(), { ignoreOptionals: false, isParameter: false })
+            );
+            if (variantWithExample != null) {
+                return variantWithExample;
+            }
+            // Fall back to first variant if no variant has an example
             return schema.schemas[0];
         }
 
