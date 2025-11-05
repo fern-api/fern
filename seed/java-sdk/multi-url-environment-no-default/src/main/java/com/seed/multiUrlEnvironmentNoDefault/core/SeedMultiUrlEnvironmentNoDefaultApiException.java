@@ -66,9 +66,9 @@ public class SeedMultiUrlEnvironmentNoDefaultApiException extends SeedMultiUrlEn
         return this.headers;
     }
 
-    @java.lang.Override
+    @Override
     public String toString() {
         return "SeedMultiUrlEnvironmentNoDefaultApiException{" + "message: " + getMessage() + ", statusCode: "
-                + statusCode + ", body: " + body + "}";
+                + statusCode + ", body: " + ObjectMappers.stringify(body) + "}";
     }
 }

@@ -65,9 +65,9 @@ public class CustomApiException extends CustomException {
         return this.headers;
     }
 
-    @java.lang.Override
+    @Override
     public String toString() {
-        return "CustomApiException{" + "message: " + getMessage() + ", statusCode: " + statusCode + ", body: " + body
-                + "}";
+        return "CustomApiException{" + "message: " + getMessage() + ", statusCode: " + statusCode + ", body: "
+                + ObjectMappers.stringify(body) + "}";
     }
 }

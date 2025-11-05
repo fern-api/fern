@@ -67,9 +67,9 @@ public class SeedOauthClientCredentialsWithVariablesApiException
         return this.headers;
     }
 
-    @java.lang.Override
+    @Override
     public String toString() {
         return "SeedOauthClientCredentialsWithVariablesApiException{" + "message: " + getMessage() + ", statusCode: "
-                + statusCode + ", body: " + body + "}";
+                + statusCode + ", body: " + ObjectMappers.stringify(body) + "}";
     }
 }
