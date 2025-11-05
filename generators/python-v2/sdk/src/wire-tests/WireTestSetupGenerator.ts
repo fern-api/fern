@@ -9,12 +9,17 @@ import { SdkGeneratorContext } from "../SdkGeneratorContext";
  * to spin up WireMock for testing against.
  */
 export class WireTestSetupGenerator {
+    // Configuration constants - should match WireTestGenerator
+    private static readonly DEFAULT_WIREMOCK_PORT = 8080;
+
     private readonly context: SdkGeneratorContext;
     private readonly ir: IntermediateRepresentation;
+    private readonly wiremockPort: number;
 
     constructor(context: SdkGeneratorContext, ir: IntermediateRepresentation) {
         this.context = context;
         this.ir = ir;
+        this.wiremockPort = WireTestSetupGenerator.DEFAULT_WIREMOCK_PORT;
     }
 
     /**
@@ -77,7 +82,7 @@ export class WireTestSetupGenerator {
   wiremock:
     image: wiremock/wiremock:3.9.1
     ports:
-      - "8080:8080"
+      - "${this.wiremockPort}:8080"
     volumes:
       - ./wiremock-mappings.json:/home/wiremock/mappings/wiremock-mappings.json
     command: ["--global-response-templating", "--verbose"]

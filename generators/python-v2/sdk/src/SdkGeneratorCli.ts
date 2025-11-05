@@ -73,7 +73,7 @@ export class SdkGeneratorCli extends AbstractPythonGeneratorCli<SdkCustomConfigS
      */
     private shouldGenerateWireTests(context: SdkGeneratorContext): boolean {
         // Check if wire tests are explicitly enabled
-        if (!context.customConfig.include_wire_tests) {
+        if (!context.customConfig.enable_wire_tests) {
             return false;
         }
 

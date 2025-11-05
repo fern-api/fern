@@ -7,14 +7,29 @@ import { SdkGeneratorContext } from "../SdkGeneratorContext";
 import { WireTestSetupGenerator } from "./WireTestSetupGenerator";
 
 export class WireTestGenerator {
+    // Configuration constants - can be made into constructor parameters later if needed
+    private static readonly DEFAULT_WIREMOCK_PORT = 8080;
+    private static readonly DEFAULT_OUTPUT_DIRECTORY = "tests";
+    private static readonly DEFAULT_TEST_CLASS_PREFIX = "Test";
+
     private readonly context: SdkGeneratorContext;
     private readonly ir: IntermediateRepresentation;
     private readonly dynamicIr: dynamic.DynamicIntermediateRepresentation;
     private readonly wireMockConfigContent: Record<string, WireMockMapping>;
 
+    // Configuration properties (can be made into constructor parameters later)
+    private readonly wiremockPort: number;
+    private readonly outputDirectory: string;
+    private readonly testClassPrefix: string;
+
     constructor(context: SdkGeneratorContext) {
         this.context = context;
         this.ir = context.ir;
+
+        // Initialize configuration properties with default values
+        this.wiremockPort = WireTestGenerator.DEFAULT_WIREMOCK_PORT;
+        this.outputDirectory = WireTestGenerator.DEFAULT_OUTPUT_DIRECTORY;
+        this.testClassPrefix = WireTestGenerator.DEFAULT_TEST_CLASS_PREFIX;
 
         const dynamicIr = this.ir.dynamic;
         if (!dynamicIr) {
@@ -72,7 +87,7 @@ export class WireTestGenerator {
     }
 
     private generateServiceTestFile(serviceName: string, endpoints: HttpEndpoint[]): WriteablePythonFile {
-        const testClassName = `Test${this.getCapitalizedServiceName(serviceName)}`;
+        const testClassName = `${this.testClassPrefix}${this.getCapitalizedServiceName(serviceName)}`;
 
         // Create the test class using simplified approach
         const testClass = python.class_({
@@ -105,7 +120,7 @@ export class WireTestGenerator {
         return new WriteablePythonFile({
             contents: file,
             filename: `test_${serviceName}_wire`,
-            directory: RelativeFilePath.of("tests")
+            directory: RelativeFilePath.of(this.outputDirectory)
         });
     }
 
@@ -120,7 +135,7 @@ export class WireTestGenerator {
             ],
             return_: python.Type.str()
         });
-        baseUrlFixture.addStatement(python.codeBlock('return "http://localhost:8080"'));
+        baseUrlFixture.addStatement(python.codeBlock(`return "http://localhost:${this.wiremockPort}"`));
         testClass.add(baseUrlFixture);
 
         // Add client fixture
@@ -152,7 +167,7 @@ return None  # Placeholder`)
             name: "reset_wiremock_requests"
         });
         resetMethod.addStatement(
-            python.codeBlock(`wiremock_admin_url = "http://localhost:8080/__admin"
+            python.codeBlock(`wiremock_admin_url = "http://localhost:${this.wiremockPort}/__admin"
 response = requests.post(f"{wiremock_admin_url}/requests/reset")
 assert response.status_code == 200`)
         );
@@ -167,7 +182,7 @@ assert response.status_code == 200`)
             ]
         });
         verifyMethod.addStatement(
-            python.codeBlock(`wiremock_admin_url = "http://localhost:8080/__admin"
+            python.codeBlock(`wiremock_admin_url = "http://localhost:${this.wiremockPort}/__admin"
 req_body = {"method": method, "urlPath": url_path}
 response = requests.post(f"{wiremock_admin_url}/requests/find", json=req_body)
 assert response.status_code == 200
