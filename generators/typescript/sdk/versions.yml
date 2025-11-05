@@ -1,5 +1,12 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
 
+- version: 3.27.0
+  changelogEntry:
+    - summary: Add support for variables in wire tests.
+      type: feat
+  createdAt: "2025-11-05"
+  irVersion: 61
+
 - version: 3.26.0
   changelogEntry:
     - summary: |
