@@ -1,5 +1,12 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
 # For unreleased changes, use unreleased.yml
+- version: 1.10.3
+  changelogEntry:
+    - summary: Upgrade to IRv61
+      type: chore
+  createdAt: "2025-11-04"
+  irVersion: 61
+
 - version: 1.10.2
   changelogEntry:
     - summary: Fix wrapped alias validators to work correctly with frozen RootModel in Pydantic v2.

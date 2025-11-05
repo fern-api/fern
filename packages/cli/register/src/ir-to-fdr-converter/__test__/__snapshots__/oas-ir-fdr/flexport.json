@@ -29991,8 +29991,8 @@
                 "version": 2,
                 "data": {
                   "_object": "/api/collections/paginated",
-                  "prev": "string",
-                  "next": "string",
+                  "prev": null,
+                  "next": null,
                   "data": [
                     {
                       "_object": "/event",
@@ -30004,7 +30004,14 @@
                       "data": {
                         "_object": "/shipment_event_data",
                         "resource": {
-                          "metadata": {},
+                          "metadata": {
+                            "purchase_order": [
+                              "12345"
+                            ],
+                            "sku": [
+                              "abc123"
+                            ]
+                          },
                           "_object": "/shipments",
                           "id": 2983,
                           "name": "ABC Shipment",
@@ -30016,21 +30023,21 @@
                           },
                           "transportation_mode": "ocean",
                           "freight_type": "port_to_door",
-                          "incoterm": "EXW",
+                          "incoterm": "FOB",
                           "calculated_weight": {
                             "_object": "/quantity/weight",
-                            "value": 2300,
+                            "value": 2300.4,
                             "unit": "kg"
                           },
                           "calculated_volume": {
                             "_object": "/quantity/volume",
-                            "value": 473,
+                            "value": 472.62,
                             "unit": "cbm"
                           },
                           "pieces": 8372,
                           "it_number": "V12345678",
                           "created_date": "2024-01-15T09:30:00Z",
-                          "status": "seller_location",
+                          "status": "in_transit_to_arrival_port",
                           "priority": "standard",
                           "updated_at": "2024-01-15T09:30:00Z",
                           "estimated_departure_date": "2024-01-15T09:30:00Z",
@@ -30087,12 +30094,12 @@
                             "master_airway_bill": "22831046871",
                             "chargeable_weight": {
                               "_object": "/quantity/weight",
-                              "value": 2300,
+                              "value": 2300.4,
                               "unit": "kg"
                             },
                             "chargeable_volume": {
                               "_object": "/quantity/volume",
-                              "value": 473,
+                              "value": 472.62,
                               "unit": "cbm"
                             }
                           },
@@ -30251,12 +30258,12 @@
                               "total_units": 523,
                               "total_weight": {
                                 "_object": "/quantity/weight",
-                                "value": 2300,
+                                "value": 2300.4,
                                 "unit": "kg"
                               },
                               "total_volume": {
                                 "_object": "/quantity/volume",
-                                "value": 473,
+                                "value": 472.62,
                                 "unit": "cbm"
                               },
                               "purchase_order_number": "PO002811",
@@ -30323,7 +30330,14 @@
                           "delivered_in_full_date": "2024-01-15T09:30:00Z"
                         },
                         "shipment": {
-                          "metadata": {},
+                          "metadata": {
+                            "purchase_order": [
+                              "12345"
+                            ],
+                            "sku": [
+                              "abc123"
+                            ]
+                          },
                           "_object": "/shipments",
                           "id": 2983,
                           "name": "ABC Shipment",
@@ -30335,21 +30349,21 @@
                           },
                           "transportation_mode": "ocean",
                           "freight_type": "port_to_door",
-                          "incoterm": "EXW",
+                          "incoterm": "FOB",
                           "calculated_weight": {
                             "_object": "/quantity/weight",
-                            "value": 2300,
+                            "value": 2300.4,
                             "unit": "kg"
                           },
                           "calculated_volume": {
                             "_object": "/quantity/volume",
-                            "value": 473,
+                            "value": 472.62,
                             "unit": "cbm"
                           },
                           "pieces": 8372,
                           "it_number": "V12345678",
                           "created_date": "2024-01-15T09:30:00Z",
-                          "status": "seller_location",
+                          "status": "in_transit_to_arrival_port",
                           "priority": "standard",
                           "updated_at": "2024-01-15T09:30:00Z",
                           "estimated_departure_date": "2024-01-15T09:30:00Z",
@@ -30406,12 +30420,12 @@
                             "master_airway_bill": "22831046871",
                             "chargeable_weight": {
                               "_object": "/quantity/weight",
-                              "value": 2300,
+                              "value": 2300.4,
                               "unit": "kg"
                             },
                             "chargeable_volume": {
                               "_object": "/quantity/volume",
-                              "value": 473,
+                              "value": 472.62,
                               "unit": "cbm"
                             }
                           },
@@ -30570,12 +30584,12 @@
                               "total_units": 523,
                               "total_weight": {
                                 "_object": "/quantity/weight",
-                                "value": 2300,
+                                "value": 2300.4,
                                 "unit": "kg"
                               },
                               "total_volume": {
                                 "_object": "/quantity/volume",
-                                "value": 473,
+                                "value": 472.62,
                                 "unit": "cbm"
                               },
                               "purchase_order_number": "PO002811",
@@ -30695,10 +30709,17 @@
                           {
                             "_object": "/ocean/shipment_container",
                             "id": 283910,
-                            "metadata": {},
+                            "metadata": {
+                              "purchase_order": [
+                                "12345"
+                              ],
+                              "sku": [
+                                "abc123"
+                              ]
+                            },
                             "container_type": "dry",
                             "container_number": "BWSE3982156",
-                            "container_size": "twenty_ft",
+                            "container_size": "fourty_ft",
                             "seal_number": "UE_WQ2934875",
                             "pickup_number": "ABCD1234",
                             "estimated_departure_date": "2024-01-15T09:30:00Z",
@@ -30733,12 +30754,12 @@
                                 "total_units": 523,
                                 "total_weight": {
                                   "_object": "/quantity/weight",
-                                  "value": 2300,
+                                  "value": 2300.4,
                                   "unit": "kg"
                                 },
                                 "total_volume": {
                                   "_object": "/quantity/volume",
-                                  "value": 473,
+                                  "value": 472.62,
                                   "unit": "cbm"
                                 },
                                 "purchase_order_number": "PO002811",
@@ -30785,7 +30806,7 @@
                           "_object": "string",
                           "message": "US Customs Hold",
                           "root_cause_name": "Government Agency",
-                          "root_cause_slug": "carrier"
+                          "root_cause_slug": "government_agency"
                         }
                       }
                     }
@@ -30800,8 +30821,8 @@
                   "version": 2,
                   "data": {
                     "_object": "/api/collections/paginated",
-                    "prev": "string",
-                    "next": "string",
+                    "prev": null,
+                    "next": null,
                     "data": [
                       {
                         "_object": "/event",
@@ -30813,7 +30834,14 @@
                         "data": {
                           "_object": "/shipment_event_data",
                           "resource": {
-                            "metadata": {},
+                            "metadata": {
+                              "purchase_order": [
+                                "12345"
+                              ],
+                              "sku": [
+                                "abc123"
+                              ]
+                            },
                             "_object": "/shipments",
                             "id": 2983,
                             "name": "ABC Shipment",
@@ -30825,21 +30853,21 @@
                             },
                             "transportation_mode": "ocean",
                             "freight_type": "port_to_door",
-                            "incoterm": "EXW",
+                            "incoterm": "FOB",
                             "calculated_weight": {
                               "_object": "/quantity/weight",
-                              "value": 2300,
+                              "value": 2300.4,
                               "unit": "kg"
                             },
                             "calculated_volume": {
                               "_object": "/quantity/volume",
-                              "value": 473,
+                              "value": 472.62,
                               "unit": "cbm"
                             },
                             "pieces": 8372,
                             "it_number": "V12345678",
                             "created_date": "2024-01-15T09:30:00Z",
-                            "status": "seller_location",
+                            "status": "in_transit_to_arrival_port",
                             "priority": "standard",
                             "updated_at": "2024-01-15T09:30:00Z",
                             "estimated_departure_date": "2024-01-15T09:30:00Z",
@@ -30896,12 +30924,12 @@
                               "master_airway_bill": "22831046871",
                               "chargeable_weight": {
                                 "_object": "/quantity/weight",
-                                "value": 2300,
+                                "value": 2300.4,
                                 "unit": "kg"
                               },
                               "chargeable_volume": {
                                 "_object": "/quantity/volume",
-                                "value": 473,
+                                "value": 472.62,
                                 "unit": "cbm"
                               }
                             },
@@ -31060,12 +31088,12 @@
                                 "total_units": 523,
                                 "total_weight": {
                                   "_object": "/quantity/weight",
-                                  "value": 2300,
+                                  "value": 2300.4,
                                   "unit": "kg"
                                 },
                                 "total_volume": {
                                   "_object": "/quantity/volume",
-                                  "value": 473,
+                                  "value": 472.62,
                                   "unit": "cbm"
                                 },
                                 "purchase_order_number": "PO002811",
@@ -31132,7 +31160,14 @@
                             "delivered_in_full_date": "2024-01-15T09:30:00Z"
                           },
                           "shipment": {
-                            "metadata": {},
+                            "metadata": {
+                              "purchase_order": [
+                                "12345"
+                              ],
+                              "sku": [
+                                "abc123"
+                              ]
+                            },
                             "_object": "/shipments",
                             "id": 2983,
                             "name": "ABC Shipment",
@@ -31144,21 +31179,21 @@
                             },
                             "transportation_mode": "ocean",
                             "freight_type": "port_to_door",
-                            "incoterm": "EXW",
+                            "incoterm": "FOB",
                             "calculated_weight": {
                               "_object": "/quantity/weight",
-                              "value": 2300,
+                              "value": 2300.4,
                               "unit": "kg"
                             },
                             "calculated_volume": {
                               "_object": "/quantity/volume",
-                              "value": 473,
+                              "value": 472.62,
                               "unit": "cbm"
                             },
                             "pieces": 8372,
                             "it_number": "V12345678",
                             "created_date": "2024-01-15T09:30:00Z",
-                            "status": "seller_location",
+                            "status": "in_transit_to_arrival_port",
                             "priority": "standard",
                             "updated_at": "2024-01-15T09:30:00Z",
                             "estimated_departure_date": "2024-01-15T09:30:00Z",
@@ -31215,12 +31250,12 @@
                               "master_airway_bill": "22831046871",
                               "chargeable_weight": {
                                 "_object": "/quantity/weight",
-                                "value": 2300,
+                                "value": 2300.4,
                                 "unit": "kg"
                               },
                               "chargeable_volume": {
                                 "_object": "/quantity/volume",
-                                "value": 473,
+                                "value": 472.62,
                                 "unit": "cbm"
                               }
                             },
@@ -31379,12 +31414,12 @@
                                 "total_units": 523,
                                 "total_weight": {
                                   "_object": "/quantity/weight",
-                                  "value": 2300,
+                                  "value": 2300.4,
                                   "unit": "kg"
                                 },
                                 "total_volume": {
                                   "_object": "/quantity/volume",
-                                  "value": 473,
+                                  "value": 472.62,
                                   "unit": "cbm"
                                 },
                                 "purchase_order_number": "PO002811",
@@ -31504,10 +31539,17 @@
                             {
                               "_object": "/ocean/shipment_container",
                               "id": 283910,
-                              "metadata": {},
+                              "metadata": {
+                                "purchase_order": [
+                                  "12345"
+                                ],
+                                "sku": [
+                                  "abc123"
+                                ]
+                              },
                               "container_type": "dry",
                               "container_number": "BWSE3982156",
-                              "container_size": "twenty_ft",
+                              "container_size": "fourty_ft",
                               "seal_number": "UE_WQ2934875",
                               "pickup_number": "ABCD1234",
                               "estimated_departure_date": "2024-01-15T09:30:00Z",
@@ -31542,12 +31584,12 @@
                                   "total_units": 523,
                                   "total_weight": {
                                     "_object": "/quantity/weight",
-                                    "value": 2300,
+                                    "value": 2300.4,
                                     "unit": "kg"
                                   },
                                   "total_volume": {
                                     "_object": "/quantity/volume",
-                                    "value": 473,
+                                    "value": 472.62,
                                     "unit": "cbm"
                                   },
                                   "purchase_order_number": "PO002811",
@@ -31594,7 +31636,7 @@
                             "_object": "string",
                             "message": "US Customs Hold",
                             "root_cause_name": "Government Agency",
-                            "root_cause_slug": "carrier"
+                            "root_cause_slug": "government_agency"
                           }
                         }
                       }
@@ -31722,7 +31764,14 @@
                   "data": {
                     "_object": "/shipment_event_data",
                     "resource": {
-                      "metadata": {},
+                      "metadata": {
+                        "purchase_order": [
+                          "12345"
+                        ],
+                        "sku": [
+                          "abc123"
+                        ]
+                      },
                       "_object": "/shipments",
                       "id": 2983,
                       "name": "ABC Shipment",
@@ -31734,21 +31783,21 @@
                       },
                       "transportation_mode": "ocean",
                       "freight_type": "port_to_door",
-                      "incoterm": "EXW",
+                      "incoterm": "FOB",
                       "calculated_weight": {
                         "_object": "/quantity/weight",
-                        "value": 2300,
+                        "value": 2300.4,
                         "unit": "kg"
                       },
                       "calculated_volume": {
                         "_object": "/quantity/volume",
-                        "value": 473,
+                        "value": 472.62,
                         "unit": "cbm"
                       },
                       "pieces": 8372,
                       "it_number": "V12345678",
                       "created_date": "2024-01-15T09:30:00Z",
-                      "status": "seller_location",
+                      "status": "in_transit_to_arrival_port",
                       "priority": "standard",
                       "updated_at": "2024-01-15T09:30:00Z",
                       "estimated_departure_date": "2024-01-15T09:30:00Z",
@@ -31805,12 +31854,12 @@
                         "master_airway_bill": "22831046871",
                         "chargeable_weight": {
                           "_object": "/quantity/weight",
-                          "value": 2300,
+                          "value": 2300.4,
                           "unit": "kg"
                         },
                         "chargeable_volume": {
                           "_object": "/quantity/volume",
-                          "value": 473,
+                          "value": 472.62,
                           "unit": "cbm"
                         }
                       },
@@ -31969,12 +32018,12 @@
                           "total_units": 523,
                           "total_weight": {
                             "_object": "/quantity/weight",
-                            "value": 2300,
+                            "value": 2300.4,
                             "unit": "kg"
                           },
                           "total_volume": {
                             "_object": "/quantity/volume",
-                            "value": 473,
+                            "value": 472.62,
                             "unit": "cbm"
                           },
                           "purchase_order_number": "PO002811",
@@ -32041,7 +32090,14 @@
                       "delivered_in_full_date": "2024-01-15T09:30:00Z"
                     },
                     "shipment": {
-                      "metadata": {},
+                      "metadata": {
+                        "purchase_order": [
+                          "12345"
+                        ],
+                        "sku": [
+                          "abc123"
+                        ]
+                      },
                       "_object": "/shipments",
                       "id": 2983,
                       "name": "ABC Shipment",
@@ -32053,21 +32109,21 @@
                       },
                       "transportation_mode": "ocean",
                       "freight_type": "port_to_door",
-                      "incoterm": "EXW",
+                      "incoterm": "FOB",
                       "calculated_weight": {
                         "_object": "/quantity/weight",
-                        "value": 2300,
+                        "value": 2300.4,
                         "unit": "kg"
                       },
                       "calculated_volume": {
                         "_object": "/quantity/volume",
-                        "value": 473,
+                        "value": 472.62,
                         "unit": "cbm"
                       },
                       "pieces": 8372,
                       "it_number": "V12345678",
                       "created_date": "2024-01-15T09:30:00Z",
-                      "status": "seller_location",
+                      "status": "in_transit_to_arrival_port",
                       "priority": "standard",
                       "updated_at": "2024-01-15T09:30:00Z",
                       "estimated_departure_date": "2024-01-15T09:30:00Z",
@@ -32124,12 +32180,12 @@
                         "master_airway_bill": "22831046871",
                         "chargeable_weight": {
                           "_object": "/quantity/weight",
-                          "value": 2300,
+                          "value": 2300.4,
                           "unit": "kg"
                         },
                         "chargeable_volume": {
                           "_object": "/quantity/volume",
-                          "value": 473,
+                          "value": 472.62,
                           "unit": "cbm"
                         }
                       },
@@ -32288,12 +32344,12 @@
                           "total_units": 523,
                           "total_weight": {
                             "_object": "/quantity/weight",
-                            "value": 2300,
+                            "value": 2300.4,
                             "unit": "kg"
                           },
                           "total_volume": {
                             "_object": "/quantity/volume",
-                            "value": 473,
+                            "value": 472.62,
                             "unit": "cbm"
                           },
                           "purchase_order_number": "PO002811",
@@ -32413,10 +32469,17 @@
                       {
                         "_object": "/ocean/shipment_container",
                         "id": 283910,
-                        "metadata": {},
+                        "metadata": {
+                          "purchase_order": [
+                            "12345"
+                          ],
+                          "sku": [
+                            "abc123"
+                          ]
+                        },
                         "container_type": "dry",
                         "container_number": "BWSE3982156",
-                        "container_size": "twenty_ft",
+                        "container_size": "fourty_ft",
                         "seal_number": "UE_WQ2934875",
                         "pickup_number": "ABCD1234",
                         "estimated_departure_date": "2024-01-15T09:30:00Z",
@@ -32451,12 +32514,12 @@
                             "total_units": 523,
                             "total_weight": {
                               "_object": "/quantity/weight",
-                              "value": 2300,
+                              "value": 2300.4,
                               "unit": "kg"
                             },
                             "total_volume": {
                               "_object": "/quantity/volume",
-                              "value": 473,
+                              "value": 472.62,
                               "unit": "cbm"
                             },
                             "purchase_order_number": "PO002811",
@@ -32503,7 +32566,7 @@
                       "_object": "string",
                       "message": "US Customs Hold",
                       "root_cause_name": "Government Agency",
-                      "root_cause_slug": "carrier"
+                      "root_cause_slug": "government_agency"
                     }
                   }
                 }
@@ -32524,7 +32587,14 @@
                     "data": {
                       "_object": "/shipment_event_data",
                       "resource": {
-                        "metadata": {},
+                        "metadata": {
+                          "purchase_order": [
+                            "12345"
+                          ],
+                          "sku": [
+                            "abc123"
+                          ]
+                        },
                         "_object": "/shipments",
                         "id": 2983,
                         "name": "ABC Shipment",
@@ -32536,21 +32606,21 @@
                         },
                         "transportation_mode": "ocean",
                         "freight_type": "port_to_door",
-                        "incoterm": "EXW",
+                        "incoterm": "FOB",
                         "calculated_weight": {
                           "_object": "/quantity/weight",
-                          "value": 2300,
+                          "value": 2300.4,
                           "unit": "kg"
                         },
                         "calculated_volume": {
                           "_object": "/quantity/volume",
-                          "value": 473,
+                          "value": 472.62,
                           "unit": "cbm"
                         },
                         "pieces": 8372,
                         "it_number": "V12345678",
                         "created_date": "2024-01-15T09:30:00Z",
-                        "status": "seller_location",
+                        "status": "in_transit_to_arrival_port",
                         "priority": "standard",
                         "updated_at": "2024-01-15T09:30:00Z",
                         "estimated_departure_date": "2024-01-15T09:30:00Z",
@@ -32607,12 +32677,12 @@
                           "master_airway_bill": "22831046871",
                           "chargeable_weight": {
                             "_object": "/quantity/weight",
-                            "value": 2300,
+                            "value": 2300.4,
                             "unit": "kg"
                           },
                           "chargeable_volume": {
                             "_object": "/quantity/volume",
-                            "value": 473,
+                            "value": 472.62,
                             "unit": "cbm"
                           }
                         },
@@ -32771,12 +32841,12 @@
                             "total_units": 523,
                             "total_weight": {
                               "_object": "/quantity/weight",
-                              "value": 2300,
+                              "value": 2300.4,
                               "unit": "kg"
                             },
                             "total_volume": {
                               "_object": "/quantity/volume",
-                              "value": 473,
+                              "value": 472.62,
                               "unit": "cbm"
                             },
                             "purchase_order_number": "PO002811",
@@ -32843,7 +32913,14 @@
                         "delivered_in_full_date": "2024-01-15T09:30:00Z"
                       },
                       "shipment": {
-                        "metadata": {},
+                        "metadata": {
+                          "purchase_order": [
+                            "12345"
+                          ],
+                          "sku": [
+                            "abc123"
+                          ]
+                        },
                         "_object": "/shipments",
                         "id": 2983,
                         "name": "ABC Shipment",
@@ -32855,21 +32932,21 @@
                         },
                         "transportation_mode": "ocean",
                         "freight_type": "port_to_door",
-                        "incoterm": "EXW",
+                        "incoterm": "FOB",
                         "calculated_weight": {
                           "_object": "/quantity/weight",
-                          "value": 2300,
+                          "value": 2300.4,
                           "unit": "kg"
                         },
                         "calculated_volume": {
                           "_object": "/quantity/volume",
-                          "value": 473,
+                          "value": 472.62,
                           "unit": "cbm"
                         },
                         "pieces": 8372,
                         "it_number": "V12345678",
                         "created_date": "2024-01-15T09:30:00Z",
-                        "status": "seller_location",
+                        "status": "in_transit_to_arrival_port",
                         "priority": "standard",
                         "updated_at": "2024-01-15T09:30:00Z",
                         "estimated_departure_date": "2024-01-15T09:30:00Z",
@@ -32926,12 +33003,12 @@
                           "master_airway_bill": "22831046871",
                           "chargeable_weight": {
                             "_object": "/quantity/weight",
-                            "value": 2300,
+                            "value": 2300.4,
                             "unit": "kg"
                           },
                           "chargeable_volume": {
                             "_object": "/quantity/volume",
-                            "value": 473,
+                            "value": 472.62,
                             "unit": "cbm"
                           }
                         },
@@ -33090,12 +33167,12 @@
                             "total_units": 523,
                             "total_weight": {
                               "_object": "/quantity/weight",
-                              "value": 2300,
+                              "value": 2300.4,
                               "unit": "kg"
                             },
                             "total_volume": {
                               "_object": "/quantity/volume",
-                              "value": 473,
+                              "value": 472.62,
                               "unit": "cbm"
                             },
                             "purchase_order_number": "PO002811",
@@ -33215,10 +33292,17 @@
                         {
                           "_object": "/ocean/shipment_container",
                           "id": 283910,
-                          "metadata": {},
+                          "metadata": {
+                            "purchase_order": [
+                              "12345"
+                            ],
+                            "sku": [
+                              "abc123"
+                            ]
+                          },
                           "container_type": "dry",
                           "container_number": "BWSE3982156",
-                          "container_size": "twenty_ft",
+                          "container_size": "fourty_ft",
                           "seal_number": "UE_WQ2934875",
                           "pickup_number": "ABCD1234",
                           "estimated_departure_date": "2024-01-15T09:30:00Z",
@@ -33253,12 +33337,12 @@
                               "total_units": 523,
                               "total_weight": {
                                 "_object": "/quantity/weight",
-                                "value": 2300,
+                                "value": 2300.4,
                                 "unit": "kg"
                               },
                               "total_volume": {
                                 "_object": "/quantity/volume",
-                                "value": 473,
+                                "value": 472.62,
                                 "unit": "cbm"
                               },
                               "purchase_order_number": "PO002811",
@@ -33305,7 +33389,7 @@
                         "_object": "string",
                         "message": "US Customs Hold",
                         "root_cause_name": "Government Agency",
-                        "root_cause_slug": "carrier"
+                        "root_cause_slug": "government_agency"
                       }
                     }
                   }

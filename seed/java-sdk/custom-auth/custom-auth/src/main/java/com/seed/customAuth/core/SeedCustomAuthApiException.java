@@ -65,9 +65,9 @@ public class SeedCustomAuthApiException extends SeedCustomAuthException {
         return this.headers;
     }
 
-    @java.lang.Override
+    @Override
     public String toString() {
         return "SeedCustomAuthApiException{" + "message: " + getMessage() + ", statusCode: " + statusCode + ", body: "
-                + body + "}";
+                + ObjectMappers.stringify(body) + "}";
     }
 }

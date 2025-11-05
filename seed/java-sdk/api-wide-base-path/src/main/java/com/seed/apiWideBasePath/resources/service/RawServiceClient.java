@@ -33,6 +33,8 @@ public class RawServiceClient {
             String serviceParam, String resourceParam, int endpointParam, RequestOptions requestOptions) {
         HttpUrl httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
                 .newBuilder()
+                .addPathSegments("test")
+                .addPathSegment(clientOptions.pathParam())
                 .addPathSegment(serviceParam)
                 .addPathSegment(Integer.toString(endpointParam))
                 .addPathSegment(resourceParam)

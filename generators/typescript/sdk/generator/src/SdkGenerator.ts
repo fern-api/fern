@@ -1285,6 +1285,7 @@ export class SdkGenerator {
                         npmPackage: this.npmPackage,
                         auth: this.intermediateRepresentation.auth,
                         headers: this.intermediateRepresentation.headers,
+                        variables: this.intermediateRepresentation.variables,
                         endpoint,
                         packageId,
                         rootPackageId: rootPackage,

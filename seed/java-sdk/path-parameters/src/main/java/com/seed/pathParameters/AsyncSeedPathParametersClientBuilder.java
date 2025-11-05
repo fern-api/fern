@@ -21,6 +21,8 @@ public class AsyncSeedPathParametersClientBuilder {
 
     private OkHttpClient httpClient;
 
+    private String tenantId;
+
     public AsyncSeedPathParametersClientBuilder url(String url) {
         this.environment = Environment.custom(url);
         return this;
@@ -63,9 +65,15 @@ public class AsyncSeedPathParametersClientBuilder {
         return this;
     }
 
+    public AsyncSeedPathParametersClientBuilder tenantId(String tenantId) {
+        this.tenantId = tenantId;
+        return this;
+    }
+
     protected ClientOptions buildClientOptions() {
         ClientOptions.Builder builder = ClientOptions.builder();
         setEnvironment(builder);
+        setApiPathParameters(builder);
         setHttpClient(builder);
         setTimeouts(builder);
         setRetries(builder);
@@ -84,6 +92,18 @@ public class AsyncSeedPathParametersClientBuilder {
      */
     protected void setEnvironment(ClientOptions.Builder builder) {
         builder.environment(this.environment);
+    }
+
+    /**
+     * Override this method to configure API-level path parameters defined in the specification.
+     * Available path parameters: tenantId
+     *
+     * @param builder The ClientOptions.Builder to configure
+     */
+    protected void setApiPathParameters(ClientOptions.Builder builder) {
+        if (this.tenantId != null) {
+            builder.tenantId(this.tenantId);
+        }
     }
 
     /**

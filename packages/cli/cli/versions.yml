@@ -20,6 +20,62 @@
 
 - changelogEntry:
     - summary: |
+        Fix AsyncAPI v3 message parsing where channel messages were not being included in generated WebSocket clients. Messages defined in AsyncAPI v3 specs are now correctly resolved and included in the SDK.
+      type: fix
+  irVersion: 61
+  createdAt: "2025-11-05"
+  version: 0.107.11
+
+- changelogEntry:
+    - summary: |
+        Update migration logic to support new generator versions with ir v61.
+      type: chore
+  irVersion: 61
+  createdAt: "2025-11-05"
+  version: 0.107.10
+
+- changelogEntry:
+    - summary: |
+        Implement variant ranking in anyOf/oneOf example generation to prefer variants that use provided examples without coercion over variants that require coercion or generate fallback examples. When a schema has anyOf: [number, string] with examples: ["2500"], the string variant is now preferred since it can use the provided example as-is, rather than the number variant which would coerce it to a number.
+      type: fix
+  irVersion: 61
+  createdAt: "2025-11-05"
+  version: 0.107.9
+
+- changelogEntry:
+    - summary: |
+        Improve anyOf/oneOf example generation to prefer variants with examples and use schema-level examples when available. This addresses cases where unions with multiple types were generating fallback examples instead of using provided examples.
+      type: fix
+  irVersion: 61
+  createdAt: "2025-11-05"
+  version: 0.107.8
+
+- changelogEntry:
+    - summary: |
+        Enables parsing of the language setting in docs.
+      type: chore
+  irVersion: 61
+  createdAt: "2025-11-03"
+  version: 0.107.7
+
+- changelogEntry:
+    - summary: |
+        Silence validation logs in fern docs dev unless there is a validation error
+      type: fix
+  irVersion: 61
+  createdAt: "2025-11-05"
+  version: 0.107.6
+
+- changelogEntry:
+    - summary: |
+        Perform fern docs dev validation in the background instead of foreground
+      type: fix
+  irVersion: 61
+  createdAt: "2025-11-04"
+  version: 0.107.5
+
+- changelogEntry:
+    - summary: |
         Fix the dereferencing of message $refs in the operations section of AsyncAPI specs.
       type: fix
   irVersion: 61

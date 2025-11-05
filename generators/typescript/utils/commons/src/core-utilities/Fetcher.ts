@@ -2,6 +2,7 @@ import { ts } from "ts-morph";
 
 import { DependencyManager, DependencyType } from "../dependency-manager/DependencyManager";
 import { CoreUtility } from "./CoreUtility";
+import { MANIFEST as LoggingManifest } from "./Logging";
 import { MANIFEST as RuntimeManifest } from "./Runtime";
 import { MANIFEST as UrlManifest } from "./UrlUtils";
 
@@ -26,6 +27,7 @@ export interface Fetcher {
                 timeoutMs: "timeoutMs";
                 endpointMetadata: "endpointMetadata";
                 fetchFn: "fetchFn";
+                logging: "logging";
             };
         };
         Error: {
@@ -154,6 +156,7 @@ export declare namespace Fetcher {
         duplex?: ts.Expression;
         endpointMetadata?: ts.Expression;
         fetchFn?: ts.Expression;
+        logging?: ts.Expression;
     }
 }
 
@@ -189,7 +192,7 @@ export const MANIFEST: CoreUtility.Manifest = {
             type: DependencyType.DEV
         });
     },
-    dependsOn: [RuntimeManifest, UrlManifest],
+    dependsOn: [LoggingManifest, RuntimeManifest, UrlManifest],
     getFilesPatterns: (options) => {
         const ignore: string[] = [];
         if (options.streamType !== "wrapper") {
@@ -225,7 +228,8 @@ export class FetcherImpl extends CoreUtility implements Fetcher {
                 duplex: "duplex",
                 timeoutInSeconds: "timeoutInSeconds",
                 endpointMetadata: "endpointMetadata",
-                fetchFn: "fetchFn"
+                fetchFn: "fetchFn",
+                logging: "logging"
             },
             _getReferenceToType: this.getReferenceToTypeInFetcherModule("Args")
         },
@@ -339,6 +343,11 @@ export class FetcherImpl extends CoreUtility implements Fetcher {
             if (args.fetchFn != null) {
                 properties.push(
                     ts.factory.createPropertyAssignment(this.Fetcher.Args.properties.fetchFn, args.fetchFn)
+                );
+            }
+            if (args.logging != null) {
+                properties.push(
+                    ts.factory.createPropertyAssignment(this.Fetcher.Args.properties.logging, args.logging)
                 );
             }
 

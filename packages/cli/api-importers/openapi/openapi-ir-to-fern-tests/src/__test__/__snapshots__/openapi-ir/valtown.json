@@ -4683,6 +4683,13 @@
                         "type": "double"
                       },
                       "type": "primitive"
+                    },
+                    "lastInsertRowid": {
+                      "value": {
+                        "value": "lastInsertRowid",
+                        "type": "string"
+                      },
+                      "type": "primitive"
                     }
                   },
                   "type": "object"

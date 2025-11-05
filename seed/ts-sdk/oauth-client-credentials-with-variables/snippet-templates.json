@@ -28,6 +28,16 @@
                                 {
                                     "value": {
                                         "imports": [],
+                                        "templateString": "rootVariable: \"YOUR_ROOT_VARIABLE\"",
+                                        "isOptional": false,
+                                        "templateInputs": [],
+                                        "type": "generic"
+                                    },
+                                    "type": "template"
+                                },
+                                {
+                                    "value": {
+                                        "imports": [],
                                         "templateString": "environment: \"YOUR_BASE_URL\"",
                                         "isOptional": false,
                                         "templateInputs": [],
@@ -173,6 +183,16 @@
                             "templateString": "{ $FERN_INPUT }",
                             "isOptional": true,
                             "templateInputs": [
+                                {
+                                    "value": {
+                                        "imports": [],
+                                        "templateString": "rootVariable: \"YOUR_ROOT_VARIABLE\"",
+                                        "isOptional": false,
+                                        "templateInputs": [],
+                                        "type": "generic"
+                                    },
+                                    "type": "template"
+                                },
                                 {
                                     "value": {
                                         "imports": [],
@@ -340,6 +360,16 @@
                                 {
                                     "value": {
                                         "imports": [],
+                                        "templateString": "rootVariable: \"YOUR_ROOT_VARIABLE\"",
+                                        "isOptional": false,
+                                        "templateInputs": [],
+                                        "type": "generic"
+                                    },
+                                    "type": "template"
+                                },
+                                {
+                                    "value": {
+                                        "imports": [],
                                         "templateString": "environment: \"YOUR_BASE_URL\"",
                                         "isOptional": false,
                                         "templateInputs": [],
@@ -427,6 +457,16 @@
                                 {
                                     "value": {
                                         "imports": [],
+                                        "templateString": "rootVariable: \"YOUR_ROOT_VARIABLE\"",
+                                        "isOptional": false,
+                                        "templateInputs": [],
+                                        "type": "generic"
+                                    },
+                                    "type": "template"
+                                },
+                                {
+                                    "value": {
+                                        "imports": [],
                                         "templateString": "environment: \"YOUR_BASE_URL\"",
                                         "isOptional": false,
                                         "templateInputs": [],
@@ -511,6 +551,16 @@
                             "templateString": "{ $FERN_INPUT }",
                             "isOptional": true,
                             "templateInputs": [
+                                {
+                                    "value": {
+                                        "imports": [],
+                                        "templateString": "rootVariable: \"YOUR_ROOT_VARIABLE\"",
+                                        "isOptional": false,
+                                        "templateInputs": [],
+                                        "type": "generic"
+                                    },
+                                    "type": "template"
+                                },
                                 {
                                     "value": {
                                         "imports": [],
@@ -627,6 +677,16 @@
                             "templateString": "{ $FERN_INPUT }",
                             "isOptional": true,
                             "templateInputs": [
+                                {
+                                    "value": {
+                                        "imports": [],
+                                        "templateString": "rootVariable: \"YOUR_ROOT_VARIABLE\"",
+                                        "isOptional": false,
+                                        "templateInputs": [],
+                                        "type": "generic"
+                                    },
+                                    "type": "template"
+                                },
                                 {
                                     "value": {
                                         "imports": [],

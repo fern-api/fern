@@ -1,4 +1,4 @@
-irVersion: v60
+irVersion: v61
 displayName: Go Model
 image: fernapi/fern-go-model
 language: go

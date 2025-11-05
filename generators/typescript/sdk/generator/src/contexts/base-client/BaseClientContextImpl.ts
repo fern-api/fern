@@ -305,6 +305,19 @@ export class BaseClientContextImpl implements BaseClientContext {
             });
         }
 
+        properties.push({
+            kind: StructureKind.PropertySignature,
+            name: "logging",
+            type: getTextOfTsNode(
+                ts.factory.createUnionTypeNode([
+                    context.coreUtilities.logging.LogConfig._getReferenceToType(),
+                    context.coreUtilities.logging.Logger._getReferenceToType()
+                ])
+            ),
+            hasQuestionToken: true,
+            docs: ["Configure logging for the client."]
+        });
+
         return {
             kind: StructureKind.Interface,
             name: OPTIONS_INTERFACE_NAME,

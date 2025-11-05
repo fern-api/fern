@@ -180,6 +180,42 @@ class UserClient:
         _response = self._raw_client.search_users(tenant_id, user_id, limit=limit, request_options=request_options)
         return _response.data
 
+    def get_user_metadata(
+        self, tenant_id: str, user_id: str, version: int, *, request_options: typing.Optional[RequestOptions] = None
+    ) -> User:
+        """
+        Test endpoint with path parameter that has a text prefix (v{version})
+
+        Parameters
+        ----------
+        tenant_id : str
+
+        user_id : str
+
+        version : int
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        User
+
+        Examples
+        --------
+        from seed import SeedPathParameters
+
+        client = SeedPathParameters(
+            base_url="https://yourhost.com/path/to/api",
+        )
+        client.user.get_user_metadata(
+            user_id="user_id",
+            version=1,
+        )
+        """
+        _response = self._raw_client.get_user_metadata(tenant_id, user_id, version, request_options=request_options)
+        return _response.data
+
 
 class AsyncUserClient:
     def __init__(self, *, client_wrapper: AsyncClientWrapper):
@@ -381,5 +417,51 @@ class AsyncUserClient:
         """
         _response = await self._raw_client.search_users(
             tenant_id, user_id, limit=limit, request_options=request_options
+        )
+        return _response.data
+
+    async def get_user_metadata(
+        self, tenant_id: str, user_id: str, version: int, *, request_options: typing.Optional[RequestOptions] = None
+    ) -> User:
+        """
+        Test endpoint with path parameter that has a text prefix (v{version})
+
+        Parameters
+        ----------
+        tenant_id : str
+
+        user_id : str
+
+        version : int
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        User
+
+        Examples
+        --------
+        import asyncio
+
+        from seed import AsyncSeedPathParameters
+
+        client = AsyncSeedPathParameters(
+            base_url="https://yourhost.com/path/to/api",
+        )
+
+
+        async def main() -> None:
+            await client.user.get_user_metadata(
+                user_id="user_id",
+                version=1,
+            )
+
+
+        asyncio.run(main())
+        """
+        _response = await self._raw_client.get_user_metadata(
+            tenant_id, user_id, version, request_options=request_options
         )
         return _response.data

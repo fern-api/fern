@@ -1,0 +1,9 @@
+{
+  "cliVersion": "DUMMY",
+  "generatorName": "fernapi/fern-python-sdk",
+  "generatorVersion": "latest",
+  "generatorConfig": {
+    "default_bytes_stream_chunk_size": 1024,
+    "use_inheritance_for_extended_models": false
+  }
+}

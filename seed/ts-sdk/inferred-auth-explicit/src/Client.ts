@@ -31,6 +31,7 @@ export class SeedInferredAuthExplicitClient {
     constructor(_options: SeedInferredAuthExplicitClient.Options) {
         this._options = {
             ..._options,
+            logging: core.logging.createLogger(_options?.logging),
             headers: mergeHeaders(
                 {
                     "X-Fern-Language": "JavaScript",

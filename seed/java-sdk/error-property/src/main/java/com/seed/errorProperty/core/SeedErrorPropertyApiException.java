@@ -65,9 +65,9 @@ public class SeedErrorPropertyApiException extends SeedErrorPropertyException {
         return this.headers;
     }
 
-    @java.lang.Override
+    @Override
     public String toString() {
         return "SeedErrorPropertyApiException{" + "message: " + getMessage() + ", statusCode: " + statusCode
-                + ", body: " + body + "}";
+                + ", body: " + ObjectMappers.stringify(body) + "}";
     }
 }

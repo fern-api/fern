@@ -18,8 +18,6 @@ package com.fern.java.client.generators;
 
 import static com.fern.java.utils.PoetUtils.createGetter;
 
-import com.fern.java.ObjectMethodFactory;
-import com.fern.java.ObjectMethodFactory.ToStringSpec;
 import com.fern.java.client.ClientGeneratorContext;
 import com.fern.java.generators.AbstractFileGenerator;
 import com.fern.java.output.GeneratedJavaFile;
@@ -77,6 +75,8 @@ public final class ApiErrorGenerator extends AbstractFileGenerator {
 
     @Override
     public GeneratedJavaFile generateFile() {
+        ClassName objectMappersClassName =
+                generatorContext.getPoetClassNameFactory().getObjectMapperClassName();
         TypeSpec apiErrorTypeSpec = TypeSpec.classBuilder(className)
                 .addJavadoc("This exception type will be thrown for any non-2XX API responses.")
                 .addModifiers(Modifier.PUBLIC)
@@ -89,12 +89,7 @@ public final class ApiErrorGenerator extends AbstractFileGenerator {
                 .addMethod(createGetter(STATUS_CODE_FIELD_SPEC))
                 .addMethod(createGetter(BODY_FIELD_SPEC))
                 .addMethod(createGetter(HEADERS_FIELD_SPEC))
-                .addMethod(ObjectMethodFactory.createToStringMethod(
-                        className,
-                        List.of(
-                                ToStringSpec.of("message", "getMessage"),
-                                ToStringSpec.of(STATUS_CODE_FIELD_SPEC),
-                                ToStringSpec.of(BODY_FIELD_SPEC))))
+                .addMethod(createToStringMethod(objectMappersClassName))
                 .build();
         JavaFile apiErrorFile =
                 JavaFile.builder(className.packageName(), apiErrorTypeSpec).build();
@@ -143,6 +138,22 @@ public final class ApiErrorGenerator extends AbstractFileGenerator {
                         HEADERS_FIELD_SPEC.name,
                         ArrayList.class)
                 .addCode("});\n")
+                .build();
+    }
+
+    private MethodSpec createToStringMethod(ClassName objectMappersClassName) {
+        return MethodSpec.methodBuilder("toString")
+                .addAnnotation(Override.class)
+                .addModifiers(Modifier.PUBLIC)
+                .returns(String.class)
+                .addStatement(
+                        "return $S + $S + getMessage() + $S + statusCode + $S + $T.stringify(body) + $S",
+                        className.simpleName() + "{",
+                        "message: ",
+                        ", statusCode: ",
+                        ", body: ",
+                        objectMappersClassName,
+                        "}")
                 .build();
     }
 }

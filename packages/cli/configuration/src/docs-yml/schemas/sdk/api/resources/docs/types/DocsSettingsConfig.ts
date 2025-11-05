@@ -14,4 +14,5 @@ export interface DocsSettingsConfig {
     useJavascriptAsTypescript?: boolean;
     disableExplorerProxy?: boolean;
     disableAnalytics?: boolean;
+    language?: FernDocsConfig.Language;
 }

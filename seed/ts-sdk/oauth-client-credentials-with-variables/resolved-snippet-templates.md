@@ -2,6 +2,7 @@
 import { SeedOauthClientCredentialsWithVariablesClient } from "@fern/oauth-client-credentials-with-variables";
 
 const client = new SeedOauthClientCredentialsWithVariablesClient({
+  rootVariable: "YOUR_ROOT_VARIABLE",
   environment: "YOUR_BASE_URL",
   clientId: "YOUR_AUTHORIZATION",
   clientSecret: "YOUR_AUTHORIZATION",
@@ -19,6 +20,7 @@ await client.auth.getTokenWithClientCredentials({
 import { SeedOauthClientCredentialsWithVariablesClient } from "@fern/oauth-client-credentials-with-variables";
 
 const client = new SeedOauthClientCredentialsWithVariablesClient({
+  rootVariable: "YOUR_ROOT_VARIABLE",
   environment: "YOUR_BASE_URL",
   clientId: "YOUR_AUTHORIZATION",
   clientSecret: "YOUR_AUTHORIZATION",
@@ -37,6 +39,7 @@ await client.auth.refreshToken({
 import { SeedOauthClientCredentialsWithVariablesClient } from "@fern/oauth-client-credentials-with-variables";
 
 const client = new SeedOauthClientCredentialsWithVariablesClient({
+  rootVariable: "YOUR_ROOT_VARIABLE",
   environment: "YOUR_BASE_URL",
   clientId: "YOUR_AUTHORIZATION",
   clientSecret: "YOUR_AUTHORIZATION",
@@ -50,6 +53,7 @@ await client.nestedNoAuth.api.getSomething();
 import { SeedOauthClientCredentialsWithVariablesClient } from "@fern/oauth-client-credentials-with-variables";
 
 const client = new SeedOauthClientCredentialsWithVariablesClient({
+  rootVariable: "YOUR_ROOT_VARIABLE",
   environment: "YOUR_BASE_URL",
   clientId: "YOUR_AUTHORIZATION",
   clientSecret: "YOUR_AUTHORIZATION",
@@ -63,6 +67,7 @@ await client.nested.api.getSomething();
 import { SeedOauthClientCredentialsWithVariablesClient } from "@fern/oauth-client-credentials-with-variables";
 
 const client = new SeedOauthClientCredentialsWithVariablesClient({
+  rootVariable: "YOUR_ROOT_VARIABLE",
   environment: "YOUR_BASE_URL",
   clientId: "YOUR_AUTHORIZATION",
   clientSecret: "YOUR_AUTHORIZATION",
@@ -76,6 +81,7 @@ await client.service.post("endpointParam");
 import { SeedOauthClientCredentialsWithVariablesClient } from "@fern/oauth-client-credentials-with-variables";
 
 const client = new SeedOauthClientCredentialsWithVariablesClient({
+  rootVariable: "YOUR_ROOT_VARIABLE",
   environment: "YOUR_BASE_URL",
   clientId: "YOUR_AUTHORIZATION",
   clientSecret: "YOUR_AUTHORIZATION",

@@ -32,7 +32,9 @@ import com.seed.clientSideParams.resources.types.types.SearchResponse;
 import com.seed.clientSideParams.resources.types.types.UpdateUserRequest;
 import com.seed.clientSideParams.resources.types.types.User;
 import java.io.IOException;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.concurrent.CompletableFuture;
 import okhttp3.Call;
 import okhttp3.Callback;
@@ -67,6 +69,7 @@ public class AsyncRawServiceClient {
             ListResourcesRequest request, RequestOptions requestOptions) {
         HttpUrl.Builder httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
                 .newBuilder()
+                .addPathSegments("api")
                 .addPathSegments("resources");
         QueryStringMapper.addQueryParameter(httpUrl, "page", request.getPage(), false);
         QueryStringMapper.addQueryParameter(
@@ -140,6 +143,7 @@ public class AsyncRawServiceClient {
             String resourceId, GetResourceRequest request, RequestOptions requestOptions) {
         HttpUrl.Builder httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
                 .newBuilder()
+                .addPathSegments("api")
                 .addPathSegments("resources")
                 .addPathSegment(resourceId);
         QueryStringMapper.addQueryParameter(
@@ -201,14 +205,18 @@ public class AsyncRawServiceClient {
             SearchResourcesRequest request, RequestOptions requestOptions) {
         HttpUrl.Builder httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
                 .newBuilder()
+                .addPathSegments("api")
                 .addPathSegments("resources/search");
         QueryStringMapper.addQueryParameter(httpUrl, "limit", request.getLimit().orElse(100), false);
         QueryStringMapper.addQueryParameter(
                 httpUrl, "offset", request.getOffset().orElse(0), false);
+        Map<String, Object> properties = new HashMap<>();
+        properties.put("query", request.getQuery());
+        properties.put("filters", request.getFilters());
         RequestBody body;
         try {
             body = RequestBody.create(
-                    ObjectMappers.JSON_MAPPER.writeValueAsBytes(request), MediaTypes.APPLICATION_JSON);
+                    ObjectMappers.JSON_MAPPER.writeValueAsBytes(properties), MediaTypes.APPLICATION_JSON);
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
@@ -276,6 +284,7 @@ public class AsyncRawServiceClient {
             ListUsersRequest request, RequestOptions requestOptions) {
         HttpUrl.Builder httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
                 .newBuilder()
+                .addPathSegments("api")
                 .addPathSegments("users");
         if (request.getPage().isPresent()) {
             QueryStringMapper.addQueryParameter(
@@ -367,6 +376,7 @@ public class AsyncRawServiceClient {
             String userId, GetUserRequest request, RequestOptions requestOptions) {
         HttpUrl.Builder httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
                 .newBuilder()
+                .addPathSegments("api")
                 .addPathSegments("users")
                 .addPathSegment(userId);
         if (request.getFields().isPresent()) {
@@ -429,6 +439,7 @@ public class AsyncRawServiceClient {
             CreateUserRequest request, RequestOptions requestOptions) {
         HttpUrl httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
                 .newBuilder()
+                .addPathSegments("api")
                 .addPathSegments("users")
                 .build();
         RequestBody body;
@@ -501,6 +512,7 @@ public class AsyncRawServiceClient {
             String userId, UpdateUserRequest request, RequestOptions requestOptions) {
         HttpUrl httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
                 .newBuilder()
+                .addPathSegments("api")
                 .addPathSegments("users")
                 .addPathSegment(userId)
                 .build();
@@ -566,6 +578,7 @@ public class AsyncRawServiceClient {
             String userId, RequestOptions requestOptions) {
         HttpUrl httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
                 .newBuilder()
+                .addPathSegments("api")
                 .addPathSegments("users")
                 .addPathSegment(userId)
                 .build();
@@ -629,6 +642,7 @@ public class AsyncRawServiceClient {
             ListConnectionsRequest request, RequestOptions requestOptions) {
         HttpUrl.Builder httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
                 .newBuilder()
+                .addPathSegments("api")
                 .addPathSegments("connections");
         if (request.getStrategy().isPresent()) {
             QueryStringMapper.addQueryParameter(
@@ -706,6 +720,7 @@ public class AsyncRawServiceClient {
             String connectionId, GetConnectionRequest request, RequestOptions requestOptions) {
         HttpUrl.Builder httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
                 .newBuilder()
+                .addPathSegments("api")
                 .addPathSegments("connections")
                 .addPathSegment(connectionId);
         if (request.getFields().isPresent()) {
@@ -774,6 +789,7 @@ public class AsyncRawServiceClient {
             ListClientsRequest request, RequestOptions requestOptions) {
         HttpUrl.Builder httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
                 .newBuilder()
+                .addPathSegments("api")
                 .addPathSegments("clients");
         if (request.getFields().isPresent()) {
             QueryStringMapper.addQueryParameter(
@@ -870,6 +886,7 @@ public class AsyncRawServiceClient {
             String clientId, GetClientRequest request, RequestOptions requestOptions) {
         HttpUrl.Builder httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
                 .newBuilder()
+                .addPathSegments("api")
                 .addPathSegments("clients")
                 .addPathSegment(clientId);
         if (request.getFields().isPresent()) {

@@ -664,17 +664,26 @@ export function mockAuth(server: MockServer) {
         });
 
         const baseOptions: Record<string, Code> = {};
-        if (this.ir.variables.length > 0) {
-            return; // not supported
-        }
+
+        // Add variables to baseOptions
+        this.ir.variables.forEach((variable) => {
+            const variableName = getParameterNameForVariable({
+                variableName: variable.name,
+                retainOriginalCasing: this.retainOriginalCasing
+            });
+            baseOptions[variableName] = code`${literalOf(variableName)}`;
+        });
 
         this.ir.pathParameters.forEach((pathParameter) => {
+            if (pathParameter.variable != null) {
+                return;
+            }
             baseOptions[
                 getParameterNameForRootPathParameter({
                     pathParameter,
                     retainOriginalCasing: this.retainOriginalCasing
                 })
-            ] = code`${literalOf(pathParameter.variable ?? pathParameter.name.camelCase.unsafeName)}`;
+            ] = code`${literalOf(pathParameter.name.camelCase.unsafeName)}`;
         });
         Object.assign(baseOptions, this.getAuthClientOptions(context));
         this.ir.headers.forEach((header) => {
@@ -849,6 +858,27 @@ describe("${serviceName}", () => {
                     retainOriginalCasing: this.retainOriginalCasing
                 })
             ] = code`${literalOf(pathParameter.value.jsonExample)}`;
+        });
+
+        example.endpointPathParameters.forEach((examplePathParameter) => {
+            const pathParamDef = endpoint.pathParameters.find(
+                (p) => p.name.originalName === examplePathParameter.name.originalName
+            );
+
+            if (pathParamDef?.variable != null) {
+                const variable = this.ir.variables.find((v) => v.id === pathParamDef.variable);
+                if (variable != null) {
+                    const variableName = getParameterNameForVariable({
+                        variableName: variable.name,
+                        retainOriginalCasing: this.retainOriginalCasing
+                    });
+                    options[variableName] = code`${literalOf(examplePathParameter.value.jsonExample)}`;
+                } else {
+                    context.logger.warn(
+                        `Variable with id "${pathParamDef.variable}" not found for path parameter "${examplePathParameter.name.originalName}" in endpoint ${endpoint.id}`
+                    );
+                }
+            }
         });
 
         const isHeadersResponse = endpoint.response?.body === undefined && endpoint.method === HttpMethod.Head;
@@ -1515,4 +1545,20 @@ function isCodeUndefined(code: Code): boolean {
 function isCodeEmptyObject(code: Code): boolean {
     const rawCode = code.toString().trim();
     return rawCode === "{}" || rawCode === "{ }";
+}
+
+/**
+ * Determines the casing of the variable name when used in client constructor options
+ */
+function getParameterNameForVariable({
+    variableName,
+    retainOriginalCasing
+}: {
+    variableName: Name;
+    retainOriginalCasing: boolean;
+}): string {
+    if (retainOriginalCasing) {
+        return variableName.originalName;
+    }
+    return variableName.camelCase.safeName;
 }

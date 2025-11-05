@@ -65,9 +65,9 @@ public class SeedOauthClientCredentialsApiException extends SeedOauthClientCrede
         return this.headers;
     }
 
-    @java.lang.Override
+    @Override
     public String toString() {
         return "SeedOauthClientCredentialsApiException{" + "message: " + getMessage() + ", statusCode: " + statusCode
-                + ", body: " + body + "}";
+                + ", body: " + ObjectMappers.stringify(body) + "}";
     }
 }

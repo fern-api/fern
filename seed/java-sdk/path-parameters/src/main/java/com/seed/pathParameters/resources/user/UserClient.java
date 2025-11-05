@@ -5,6 +5,7 @@ package com.seed.pathParameters.resources.user;
 
 import com.seed.pathParameters.core.ClientOptions;
 import com.seed.pathParameters.core.RequestOptions;
+import com.seed.pathParameters.resources.user.requests.GetUserMetadataRequest;
 import com.seed.pathParameters.resources.user.requests.GetUsersRequest;
 import com.seed.pathParameters.resources.user.requests.SearchUsersRequest;
 import com.seed.pathParameters.resources.user.requests.UpdateUserRequest;
@@ -66,5 +67,29 @@ public class UserClient {
 
     public List<User> searchUsers(String userId, SearchUsersRequest request, RequestOptions requestOptions) {
         return this.rawClient.searchUsers(userId, request, requestOptions).body();
+    }
+
+    /**
+     * Test endpoint with path parameter that has a text prefix (v{version})
+     */
+    public User getUserMetadata(String userId, int version) {
+        return this.rawClient.getUserMetadata(userId, version).body();
+    }
+
+    /**
+     * Test endpoint with path parameter that has a text prefix (v{version})
+     */
+    public User getUserMetadata(String userId, int version, GetUserMetadataRequest request) {
+        return this.rawClient.getUserMetadata(userId, version, request).body();
+    }
+
+    /**
+     * Test endpoint with path parameter that has a text prefix (v{version})
+     */
+    public User getUserMetadata(
+            String userId, int version, GetUserMetadataRequest request, RequestOptions requestOptions) {
+        return this.rawClient
+                .getUserMetadata(userId, version, request, requestOptions)
+                .body();
     }
 }

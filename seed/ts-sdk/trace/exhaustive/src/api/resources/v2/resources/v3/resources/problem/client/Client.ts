@@ -76,6 +76,7 @@ export class Problem {
             withCredentials: true,
             abortSignal: requestOptions?.abortSignal,
             fetchFn: this._options?.fetch,
+            logging: this._options.logging,
         });
         if (_response.ok) {
             return {
@@ -150,6 +151,7 @@ export class Problem {
             withCredentials: true,
             abortSignal: requestOptions?.abortSignal,
             fetchFn: this._options?.fetch,
+            logging: this._options.logging,
         });
         if (_response.ok) {
             return {
@@ -227,6 +229,7 @@ export class Problem {
             withCredentials: true,
             abortSignal: requestOptions?.abortSignal,
             fetchFn: this._options?.fetch,
+            logging: this._options.logging,
         });
         if (_response.ok) {
             return {
@@ -309,6 +312,7 @@ export class Problem {
             withCredentials: true,
             abortSignal: requestOptions?.abortSignal,
             fetchFn: this._options?.fetch,
+            logging: this._options.logging,
         });
         if (_response.ok) {
             return {

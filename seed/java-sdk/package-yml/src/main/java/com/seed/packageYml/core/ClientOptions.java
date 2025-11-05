@@ -21,12 +21,15 @@ public final class ClientOptions {
 
     private final int timeout;
 
+    private final String id;
+
     private ClientOptions(
             Environment environment,
             Map<String, String> headers,
             Map<String, Supplier<String>> headerSuppliers,
             OkHttpClient httpClient,
-            int timeout) {
+            int timeout,
+            String id) {
         this.environment = environment;
         this.headers = new HashMap<>();
         this.headers.putAll(headers);
@@ -39,6 +42,7 @@ public final class ClientOptions {
         this.headerSuppliers = headerSuppliers;
         this.httpClient = httpClient;
         this.timeout = timeout;
+        this.id = id;
     }
 
     public Environment environment() {
@@ -80,6 +84,10 @@ public final class ClientOptions {
                 .build();
     }
 
+    public String id() {
+        return this.id;
+    }
+
     public static Builder builder() {
         return new Builder();
     }
@@ -96,6 +104,8 @@ public final class ClientOptions {
         private Optional<Integer> timeout = Optional.empty();
 
         private OkHttpClient httpClient = null;
+
+        private String id;
 
         public Builder environment(Environment environment) {
             this.environment = environment;
@@ -141,6 +151,11 @@ public final class ClientOptions {
             return this;
         }
 
+        public Builder id(String id) {
+            this.id = id;
+            return this;
+        }
+
         public ClientOptions build() {
             OkHttpClient.Builder httpClientBuilder =
                     this.httpClient != null ? this.httpClient.newBuilder() : new OkHttpClient.Builder();
@@ -163,7 +178,7 @@ public final class ClientOptions {
             this.httpClient = httpClientBuilder.build();
             this.timeout = Optional.of(httpClient.callTimeoutMillis() / 1000);
 
-            return new ClientOptions(environment, headers, headerSuppliers, httpClient, this.timeout.get());
+            return new ClientOptions(environment, headers, headerSuppliers, httpClient, this.timeout.get(), this.id);
         }
 
         /**

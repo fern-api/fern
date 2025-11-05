@@ -35,6 +35,7 @@ public class AsyncRawServiceClient {
     public CompletableFuture<SeedPackageYmlHttpResponse<Void>> nop(String nestedId, RequestOptions requestOptions) {
         HttpUrl httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
                 .newBuilder()
+                .addPathSegment(clientOptions.id())
                 .addPathSegment(nestedId)
                 .build();
         Request okhttpRequest = new Request.Builder()

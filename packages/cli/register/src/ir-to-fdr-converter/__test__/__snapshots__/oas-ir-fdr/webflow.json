@@ -48479,7 +48479,7 @@
                     "responseSettings": {
                       "redirectUrl": "https://example.com",
                       "redirectMethod": "GET",
-                      "redirectAction": null,
+                      "redirectAction": "POST https://example.com",
                       "sendEmailConfirmation": true
                     },
                     "id": "589a331aa51e760df7ccb89e",
@@ -48506,7 +48506,7 @@
                     "responseSettings": {
                       "redirectUrl": "https://example.com",
                       "redirectMethod": "GET",
-                      "redirectAction": null,
+                      "redirectAction": "POST https://example.com",
                       "sendEmailConfirmation": false
                     },
                     "id": "580ff8d7ba3e45ba9fe588e9",
@@ -48553,7 +48553,7 @@
                       "responseSettings": {
                         "redirectUrl": "https://example.com",
                         "redirectMethod": "GET",
-                        "redirectAction": null,
+                        "redirectAction": "POST https://example.com",
                         "sendEmailConfirmation": true
                       },
                       "id": "589a331aa51e760df7ccb89e",
@@ -48580,7 +48580,7 @@
                       "responseSettings": {
                         "redirectUrl": "https://example.com",
                         "redirectMethod": "GET",
-                        "redirectAction": null,
+                        "redirectAction": "POST https://example.com",
                         "sendEmailConfirmation": false
                       },
                       "id": "580ff8d7ba3e45ba9fe588e9",
@@ -48790,7 +48790,7 @@
                 "responseSettings": {
                   "redirectUrl": "https://example.com",
                   "redirectMethod": "GET",
-                  "redirectAction": null,
+                  "redirectAction": "POST https://example.com",
                   "sendEmailConfirmation": true
                 },
                 "id": "589a331aa51e760df7ccb89e",
@@ -48824,7 +48824,7 @@
                   "responseSettings": {
                     "redirectUrl": "https://example.com",
                     "redirectMethod": "GET",
-                    "redirectAction": null,
+                    "redirectAction": "POST https://example.com",
                     "sendEmailConfirmation": true
                   },
                   "id": "589a331aa51e760df7ccb89e",
@@ -49816,7 +49816,7 @@
                     "lastPublished": "2023-04-02T12:45:00.000Z",
                     "previewUrl": "https://d1otoma47x30pg.cloudfront.net/42e63e98c9a982ac9b8b742/198110121200.png",
                     "timeZone": "DeepSpace/Depression",
-                    "parentFolderId": null,
+                    "parentFolderId": "1as2d3f4g5h6j7k8l9z0x1c2v3b4n5m6",
                     "customDomains": [
                       {
                         "id": "589a331aa51e760df7ccb89f",
@@ -49855,7 +49855,7 @@
                     "lastPublished": "2023-04-02T12:50:00.000Z",
                     "previewUrl": "https://d1otoma47x30pg.cloudfront.net/42e63e98c9a982ac9b8b743/198210121200.png",
                     "timeZone": "Vogsphere/PoetryHall",
-                    "parentFolderId": null,
+                    "parentFolderId": "1as2d3f4g5h6j7k8l9z0x1c2v3b4n5m6",
                     "customDomains": [
                       {
                         "id": "589a331aa51e760df7ccb8a0",
@@ -49948,7 +49948,7 @@
                       "lastPublished": "2023-04-02T12:45:00.000Z",
                       "previewUrl": "https://d1otoma47x30pg.cloudfront.net/42e63e98c9a982ac9b8b742/198110121200.png",
                       "timeZone": "DeepSpace/Depression",
-                      "parentFolderId": null,
+                      "parentFolderId": "1as2d3f4g5h6j7k8l9z0x1c2v3b4n5m6",
                       "customDomains": [
                         {
                           "id": "589a331aa51e760df7ccb89f",
@@ -49987,7 +49987,7 @@
                       "lastPublished": "2023-04-02T12:50:00.000Z",
                       "previewUrl": "https://d1otoma47x30pg.cloudfront.net/42e63e98c9a982ac9b8b743/198210121200.png",
                       "timeZone": "Vogsphere/PoetryHall",
-                      "parentFolderId": null,
+                      "parentFolderId": "1as2d3f4g5h6j7k8l9z0x1c2v3b4n5m6",
                       "customDomains": [
                         {
                           "id": "589a331aa51e760df7ccb8a0",
@@ -51055,10 +51055,10 @@
                     "comment": "Customer requested gift wrapping and a personalized note saying: Happy Birthday, Ford! 🎉 Please ensure the item is packed with extra bubble wrap for safe transit.",
                     "orderComment": "Please gift wrap with a personal note saying \"Happy Birthday, Ford! 🎉",
                     "acceptedOn": "2024-04-10T13:16:21.976Z",
-                    "fulfilledOn": null,
-                    "refundedOn": null,
-                    "disputedOn": null,
-                    "disputeUpdatedOn": null,
+                    "fulfilledOn": "2018-12-03T22:06:15.761Z",
+                    "refundedOn": "2018-12-03T22:06:15.761Z",
+                    "disputedOn": "2018-12-03T22:06:15.761Z",
+                    "disputeUpdatedOn": "2018-12-03T22:06:15.761Z",
                     "disputeLastStatus": null,
                     "customerPaid": {
                       "unit": "USD",
@@ -51177,7 +51177,7 @@
                           "value": "8309",
                           "string": "$ 83.09 USD"
                         },
-                        "weight": null,
+                        "weight": 5,
                         "width": 19,
                         "height": 72,
                         "length": 18
@@ -51185,14 +51185,14 @@
                     ],
                     "purchasedItemsCount": 3,
                     "stripeDetails": {
-                      "subscriptionId": null,
+                      "subscriptionId": "sub_1J6xwG2eZvKYlo2CXu9Zt0Tn",
                       "paymentMethod": "pm_1P410gJYFi4lcbXWbeKghqjK",
                       "paymentIntentId": "pi_3P410iJYFi4lcbXW0EKKgcVg",
                       "customerId": "cus_Ptod8KJBiiPgnH",
                       "chargeId": "ch_3P410iJYFi4lcbXW0DxUkzCH",
                       "disputeId": null,
                       "refundId": null,
-                      "refundReason": null
+                      "refundReason": "requested_by_customer"
                     },
                     "stripeCard": {
                       "last4": "4242",
@@ -51219,10 +51219,10 @@
                     "comment": "Example comment to myself",
                     "orderComment": "",
                     "acceptedOn": "2024-03-29T21:29:21.555Z",
-                    "fulfilledOn": null,
+                    "fulfilledOn": "2018-12-03T22:06:15.761Z",
                     "refundedOn": "2024-04-08T18:25:04.238Z",
-                    "disputedOn": null,
-                    "disputeUpdatedOn": null,
+                    "disputedOn": "2018-12-03T22:06:15.761Z",
+                    "disputeUpdatedOn": "2018-12-03T22:06:15.761Z",
                     "disputeLastStatus": null,
                     "customerPaid": {
                       "unit": "USD",
@@ -51348,7 +51348,7 @@
                     ],
                     "purchasedItemsCount": 2,
                     "stripeDetails": {
-                      "subscriptionId": null,
+                      "subscriptionId": "sub_1J6xwG2eZvKYlo2CXu9Zt0Tn",
                       "paymentMethod": "pm_1OzmzBJYFi4lcbXWHKNdXU7j",
                       "paymentIntentId": "pi_3OzmzDJYFi4lcbXW1hTBW6ft",
                       "customerId": "cus_PpRsNHwWdUoRKR",
@@ -51446,10 +51446,10 @@
                       "comment": "Customer requested gift wrapping and a personalized note saying: Happy Birthday, Ford! 🎉 Please ensure the item is packed with extra bubble wrap for safe transit.",
                       "orderComment": "Please gift wrap with a personal note saying \"Happy Birthday, Ford! 🎉",
                       "acceptedOn": "2024-04-10T13:16:21.976Z",
-                      "fulfilledOn": null,
-                      "refundedOn": null,
-                      "disputedOn": null,
-                      "disputeUpdatedOn": null,
+                      "fulfilledOn": "2018-12-03T22:06:15.761Z",
+                      "refundedOn": "2018-12-03T22:06:15.761Z",
+                      "disputedOn": "2018-12-03T22:06:15.761Z",
+                      "disputeUpdatedOn": "2018-12-03T22:06:15.761Z",
                       "disputeLastStatus": null,
                       "customerPaid": {
                         "unit": "USD",
@@ -51568,7 +51568,7 @@
                             "value": "8309",
                             "string": "$ 83.09 USD"
                           },
-                          "weight": null,
+                          "weight": 5,
                           "width": 19,
                           "height": 72,
                           "length": 18
@@ -51576,14 +51576,14 @@
                       ],
                       "purchasedItemsCount": 3,
                       "stripeDetails": {
-                        "subscriptionId": null,
+                        "subscriptionId": "sub_1J6xwG2eZvKYlo2CXu9Zt0Tn",
                         "paymentMethod": "pm_1P410gJYFi4lcbXWbeKghqjK",
                         "paymentIntentId": "pi_3P410iJYFi4lcbXW0EKKgcVg",
                         "customerId": "cus_Ptod8KJBiiPgnH",
                         "chargeId": "ch_3P410iJYFi4lcbXW0DxUkzCH",
                         "disputeId": null,
                         "refundId": null,
-                        "refundReason": null
+                        "refundReason": "requested_by_customer"
                       },
                       "stripeCard": {
                         "last4": "4242",
@@ -51610,10 +51610,10 @@
                       "comment": "Example comment to myself",
                       "orderComment": "",
                       "acceptedOn": "2024-03-29T21:29:21.555Z",
-                      "fulfilledOn": null,
+                      "fulfilledOn": "2018-12-03T22:06:15.761Z",
                       "refundedOn": "2024-04-08T18:25:04.238Z",
-                      "disputedOn": null,
-                      "disputeUpdatedOn": null,
+                      "disputedOn": "2018-12-03T22:06:15.761Z",
+                      "disputeUpdatedOn": "2018-12-03T22:06:15.761Z",
                       "disputeLastStatus": null,
                       "customerPaid": {
                         "unit": "USD",
@@ -51739,7 +51739,7 @@
                       ],
                       "purchasedItemsCount": 2,
                       "stripeDetails": {
-                        "subscriptionId": null,
+                        "subscriptionId": "sub_1J6xwG2eZvKYlo2CXu9Zt0Tn",
                         "paymentMethod": "pm_1OzmzBJYFi4lcbXWHKNdXU7j",
                         "paymentIntentId": "pi_3OzmzDJYFi4lcbXW1hTBW6ft",
                         "customerId": "cus_PpRsNHwWdUoRKR",
@@ -52168,7 +52168,7 @@
                 ],
                 "purchasedItemsCount": 2,
                 "stripeDetails": {
-                  "subscriptionId": null,
+                  "subscriptionId": "sub_1J6xwG2eZvKYlo2CXu9Zt0Tn",
                   "paymentMethod": "pm_1OzmzBJYFi4lcbXWHKNdXU7j",
                   "paymentIntentId": "pi_3OzmzDJYFi4lcbXW1hTBW6ft",
                   "customerId": "cus_PpRsNHwWdUoRKR",
@@ -52387,7 +52387,7 @@
                   ],
                   "purchasedItemsCount": 2,
                   "stripeDetails": {
-                    "subscriptionId": null,
+                    "subscriptionId": "sub_1J6xwG2eZvKYlo2CXu9Zt0Tn",
                     "paymentMethod": "pm_1OzmzBJYFi4lcbXWHKNdXU7j",
                     "paymentIntentId": "pi_3OzmzDJYFi4lcbXW1hTBW6ft",
                     "customerId": "cus_PpRsNHwWdUoRKR",
@@ -52947,7 +52947,7 @@
                 ],
                 "purchasedItemsCount": 2,
                 "stripeDetails": {
-                  "subscriptionId": null,
+                  "subscriptionId": "sub_1J6xwG2eZvKYlo2CXu9Zt0Tn",
                   "paymentMethod": "pm_1OzmzBJYFi4lcbXWHKNdXU7j",
                   "paymentIntentId": "pi_3OzmzDJYFi4lcbXW1hTBW6ft",
                   "customerId": "cus_PpRsNHwWdUoRKR",
@@ -53166,7 +53166,7 @@
                   ],
                   "purchasedItemsCount": 2,
                   "stripeDetails": {
-                    "subscriptionId": null,
+                    "subscriptionId": "sub_1J6xwG2eZvKYlo2CXu9Zt0Tn",
                     "paymentMethod": "pm_1OzmzBJYFi4lcbXWHKNdXU7j",
                     "paymentIntentId": "pi_3OzmzDJYFi4lcbXW1hTBW6ft",
                     "customerId": "cus_PpRsNHwWdUoRKR",
@@ -53650,7 +53650,7 @@
                 ],
                 "purchasedItemsCount": 2,
                 "stripeDetails": {
-                  "subscriptionId": null,
+                  "subscriptionId": "sub_1J6xwG2eZvKYlo2CXu9Zt0Tn",
                   "paymentMethod": "pm_1OzmzBJYFi4lcbXWHKNdXU7j",
                   "paymentIntentId": "pi_3OzmzDJYFi4lcbXW1hTBW6ft",
                   "customerId": "cus_PpRsNHwWdUoRKR",
@@ -53869,7 +53869,7 @@
                   ],
                   "purchasedItemsCount": 2,
                   "stripeDetails": {
-                    "subscriptionId": null,
+                    "subscriptionId": "sub_1J6xwG2eZvKYlo2CXu9Zt0Tn",
                     "paymentMethod": "pm_1OzmzBJYFi4lcbXWHKNdXU7j",
                     "paymentIntentId": "pi_3OzmzDJYFi4lcbXW1hTBW6ft",
                     "customerId": "cus_PpRsNHwWdUoRKR",
@@ -54291,7 +54291,7 @@
                 ],
                 "purchasedItemsCount": 2,
                 "stripeDetails": {
-                  "subscriptionId": null,
+                  "subscriptionId": "sub_1J6xwG2eZvKYlo2CXu9Zt0Tn",
                   "paymentMethod": "pm_1OzmzBJYFi4lcbXWHKNdXU7j",
                   "paymentIntentId": "pi_3OzmzDJYFi4lcbXW1hTBW6ft",
                   "customerId": "cus_PpRsNHwWdUoRKR",
@@ -54510,7 +54510,7 @@
                   ],
                   "purchasedItemsCount": 2,
                   "stripeDetails": {
-                    "subscriptionId": null,
+                    "subscriptionId": "sub_1J6xwG2eZvKYlo2CXu9Zt0Tn",
                     "paymentMethod": "pm_1OzmzBJYFi4lcbXWHKNdXU7j",
                     "paymentIntentId": "pi_3OzmzDJYFi4lcbXW1hTBW6ft",
                     "customerId": "cus_PpRsNHwWdUoRKR",
@@ -54988,7 +54988,7 @@
                 ],
                 "purchasedItemsCount": 2,
                 "stripeDetails": {
-                  "subscriptionId": null,
+                  "subscriptionId": "sub_1J6xwG2eZvKYlo2CXu9Zt0Tn",
                   "paymentMethod": "pm_1OzmzBJYFi4lcbXWHKNdXU7j",
                   "paymentIntentId": "pi_3OzmzDJYFi4lcbXW1hTBW6ft",
                   "customerId": "cus_PpRsNHwWdUoRKR",
@@ -55207,7 +55207,7 @@
                   ],
                   "purchasedItemsCount": 2,
                   "stripeDetails": {
-                    "subscriptionId": null,
+                    "subscriptionId": "sub_1J6xwG2eZvKYlo2CXu9Zt0Tn",
                     "paymentMethod": "pm_1OzmzBJYFi4lcbXWHKNdXU7j",
                     "paymentIntentId": "pi_3OzmzDJYFi4lcbXW1hTBW6ft",
                     "customerId": "cus_PpRsNHwWdUoRKR",
@@ -55886,7 +55886,7 @@
                 ],
                 "purchasedItemsCount": 2,
                 "stripeDetails": {
-                  "subscriptionId": null,
+                  "subscriptionId": "sub_1J6xwG2eZvKYlo2CXu9Zt0Tn",
                   "paymentMethod": "pm_1OzmzBJYFi4lcbXWHKNdXU7j",
                   "paymentIntentId": "pi_3OzmzDJYFi4lcbXW1hTBW6ft",
                   "customerId": "cus_PpRsNHwWdUoRKR",
@@ -56560,7 +56560,7 @@
                 ],
                 "purchasedItemsCount": 2,
                 "stripeDetails": {
-                  "subscriptionId": null,
+                  "subscriptionId": "sub_1J6xwG2eZvKYlo2CXu9Zt0Tn",
                   "paymentMethod": "pm_1OzmzBJYFi4lcbXWHKNdXU7j",
                   "paymentIntentId": "pi_3OzmzDJYFi4lcbXW1hTBW6ft",
                   "customerId": "cus_PpRsNHwWdUoRKR",
@@ -56856,14 +56856,14 @@
               "responseBody": {
                 "id": "5bfedb42bab0ad90fa7dad39",
                 "quantity": 100,
-                "inventoryType": "infinite"
+                "inventoryType": "finite"
               },
               "responseBodyV3": {
                 "type": "json",
                 "value": {
                   "id": "5bfedb42bab0ad90fa7dad39",
                   "quantity": 100,
-                  "inventoryType": "infinite"
+                  "inventoryType": "finite"
                 }
               }
             }
@@ -57167,26 +57167,26 @@
               "queryParameters": {},
               "headers": {},
               "requestBody": {
-                "inventoryType": "infinite"
+                "inventoryType": "finite"
               },
               "requestBodyV3": {
                 "type": "json",
                 "value": {
-                  "inventoryType": "infinite"
+                  "inventoryType": "finite"
                 }
               },
               "responseStatusCode": 200,
               "responseBody": {
                 "id": "5bfedb42bab0ad90fa7dad39",
                 "quantity": 100,
-                "inventoryType": "infinite"
+                "inventoryType": "finite"
               },
               "responseBodyV3": {
                 "type": "json",
                 "value": {
                   "id": "5bfedb42bab0ad90fa7dad39",
                   "quantity": 100,
-                  "inventoryType": "infinite"
+                  "inventoryType": "finite"
                 }
               }
             }
@@ -60869,7 +60869,7 @@
                     "type": "text",
                     "text": {
                       "html": "<div><h3>Don't Panic!</h3><p>Always know where your towel is.</p></div>",
-                      "text": null
+                      "text": "string"
                     },
                     "attributes": {}
                   },
@@ -60908,7 +60908,7 @@
                       "type": "text",
                       "text": {
                         "html": "<div><h3>Don't Panic!</h3><p>Always know where your towel is.</p></div>",
-                        "text": null
+                        "text": "string"
                       },
                       "attributes": {}
                     },
@@ -61826,9 +61826,9 @@
                     },
                     "resourceId": "654c16c7b229e56bcf26870c",
                     "resourceName": "foo-bar",
-                    "newValue": null,
-                    "previousValue": null,
-                    "payload": null
+                    "newValue": "string",
+                    "previousValue": "string",
+                    "payload": {}
                   }
                 ],
                 "pagination": {
@@ -61853,9 +61853,9 @@
                       },
                       "resourceId": "654c16c7b229e56bcf26870c",
                       "resourceName": "foo-bar",
-                      "newValue": null,
-                      "previousValue": null,
-                      "payload": null
+                      "newValue": "string",
+                      "previousValue": "string",
+                      "payload": {}
                     }
                   ],
                   "pagination": {
@@ -69533,7 +69533,7 @@
                 "blocks": [
                   {
                     "siteId": "6258612d1ee792848f805dcf",
-                    "pageId": null,
+                    "pageId": "string",
                     "type": "site",
                     "scripts": [
                       {
@@ -69583,7 +69583,7 @@
                   "blocks": [
                     {
                       "siteId": "6258612d1ee792848f805dcf",
-                      "pageId": null,
+                      "pageId": "string",
                       "type": "site",
                       "scripts": [
                         {
@@ -73917,41 +73917,65 @@
                 "items": [
                   {
                     "product": {
-                      "id": "580e63fc8c9a982ac9b8b745",
+                      "id": "660eb7a486d1d6e0412292d7",
                       "cmsLocaleId": "653ad57de882f528b32e810e",
-                      "lastPublished": "2023-03-17T18:47:35.560Z",
-                      "lastUpdated": "2023-03-17T18:47:35.560Z",
-                      "createdOn": "2023-03-17T18:47:35.560Z",
+                      "lastPublished": "2024-04-04T14:24:19.467Z",
+                      "lastUpdated": "2024-04-04T14:30:19.282Z",
+                      "createdOn": "2024-04-04T14:22:28.547Z",
                       "isArchived": false,
                       "isDraft": false,
                       "fieldData": {
                         "name": "T-Shirt",
                         "slug": "t-shirt",
-                        "description": "A plain cotton t-shirt.",
+                        "description": "A plain t-shirt",
                         "shippable": true,
                         "sku-properties": [
                           {
-                            "id": "Color",
+                            "id": "31b77fa66fa376c2c0abb458d5be39fb",
+                            "name": "Size",
+                            "enum": [
+                              {
+                                "id": "8d21a625d655ab260e9941c27180c75b",
+                                "name": "Small",
+                                "slug": "small"
+                              },
+                              {
+                                "id": "ecdca17106ad86c0dfe3b5f3ac8be6c9",
+                                "name": "Medium",
+                                "slug": "medium"
+                              },
+                              {
+                                "id": "ec7877d6137ecf7ec86f726c135b1812",
+                                "name": "Large",
+                                "slug": "large"
+                              }
+                            ]
+                          },
+                          {
+                            "id": "74d3738e62c568d5634dd6989daec5ec",
                             "name": "Color",
                             "enum": [
                               {
-                                "id": [
-                                  "royal-blue",
-                                  "crimson-red",
-                                  "forrest-green"
-                                ],
+                                "id": "e539b0d6c3a609cd06ddb2da804f68f0",
                                 "name": "Royal Blue",
                                 "slug": "royal-blue"
+                              },
+                              {
+                                "id": "68d98f2fbafc0fd45651cddc44798dd0",
+                                "name": "Crimson Red",
+                                "slug": "crimson-red"
+                              },
+                              {
+                                "id": "996cd95c97fd5620d0a374c835b37205",
+                                "name": "Forrest Green",
+                                "slug": "forrest-green"
                               }
                             ]
                           }
                         ],
-                        "categories": [
-                          "string"
-                        ],
                         "tax-category": "standard-taxable",
-                        "default-sku": "string",
-                        "ec-product-type": "ff42fee0113744f693a764e3431a9cc2"
+                        "default-sku": "66072fb71b89448912e2681c",
+                        "ec-product-type": "b6ccc1830db4b1babeb06a9ac5f6dd76"
                       }
                     },
                     "skus": [
@@ -73962,7 +73986,9 @@
                         "lastUpdated": "2023-03-17T18:47:35.560Z",
                         "createdOn": "2023-03-17T18:47:35.560Z",
                         "fieldData": {
-                          "sku-values": {},
+                          "sku-values": {
+                            "ff42fee0113744f693a764e3431a9cc2": "64a74715c456e36762fc39a1"
+                          },
                           "name": "Blue T-shirt",
                           "slug": "t-shirt-blue",
                           "price": {
@@ -74005,41 +74031,65 @@
                   "items": [
                     {
                       "product": {
-                        "id": "580e63fc8c9a982ac9b8b745",
+                        "id": "660eb7a486d1d6e0412292d7",
                         "cmsLocaleId": "653ad57de882f528b32e810e",
-                        "lastPublished": "2023-03-17T18:47:35.560Z",
-                        "lastUpdated": "2023-03-17T18:47:35.560Z",
-                        "createdOn": "2023-03-17T18:47:35.560Z",
+                        "lastPublished": "2024-04-04T14:24:19.467Z",
+                        "lastUpdated": "2024-04-04T14:30:19.282Z",
+                        "createdOn": "2024-04-04T14:22:28.547Z",
                         "isArchived": false,
                         "isDraft": false,
                         "fieldData": {
                           "name": "T-Shirt",
                           "slug": "t-shirt",
-                          "description": "A plain cotton t-shirt.",
+                          "description": "A plain t-shirt",
                           "shippable": true,
                           "sku-properties": [
                             {
-                              "id": "Color",
+                              "id": "31b77fa66fa376c2c0abb458d5be39fb",
+                              "name": "Size",
+                              "enum": [
+                                {
+                                  "id": "8d21a625d655ab260e9941c27180c75b",
+                                  "name": "Small",
+                                  "slug": "small"
+                                },
+                                {
+                                  "id": "ecdca17106ad86c0dfe3b5f3ac8be6c9",
+                                  "name": "Medium",
+                                  "slug": "medium"
+                                },
+                                {
+                                  "id": "ec7877d6137ecf7ec86f726c135b1812",
+                                  "name": "Large",
+                                  "slug": "large"
+                                }
+                              ]
+                            },
+                            {
+                              "id": "74d3738e62c568d5634dd6989daec5ec",
                               "name": "Color",
                               "enum": [
                                 {
-                                  "id": [
-                                    "royal-blue",
-                                    "crimson-red",
-                                    "forrest-green"
-                                  ],
+                                  "id": "e539b0d6c3a609cd06ddb2da804f68f0",
                                   "name": "Royal Blue",
                                   "slug": "royal-blue"
+                                },
+                                {
+                                  "id": "68d98f2fbafc0fd45651cddc44798dd0",
+                                  "name": "Crimson Red",
+                                  "slug": "crimson-red"
+                                },
+                                {
+                                  "id": "996cd95c97fd5620d0a374c835b37205",
+                                  "name": "Forrest Green",
+                                  "slug": "forrest-green"
                                 }
                               ]
                             }
                           ],
-                          "categories": [
-                            "string"
-                          ],
                           "tax-category": "standard-taxable",
-                          "default-sku": "string",
-                          "ec-product-type": "ff42fee0113744f693a764e3431a9cc2"
+                          "default-sku": "66072fb71b89448912e2681c",
+                          "ec-product-type": "b6ccc1830db4b1babeb06a9ac5f6dd76"
                         }
                       },
                       "skus": [
@@ -74050,7 +74100,9 @@
                           "lastUpdated": "2023-03-17T18:47:35.560Z",
                           "createdOn": "2023-03-17T18:47:35.560Z",
                           "fieldData": {
-                            "sku-values": {},
+                            "sku-values": {
+                              "ff42fee0113744f693a764e3431a9cc2": "64a74715c456e36762fc39a1"
+                            },
                             "name": "Blue T-shirt",
                             "slug": "t-shirt-blue",
                             "price": {
@@ -74494,41 +74546,65 @@
               "responseStatusCode": 200,
               "responseBody": {
                 "product": {
-                  "id": "580e63fc8c9a982ac9b8b745",
+                  "id": "660eb7a486d1d6e0412292d7",
                   "cmsLocaleId": "653ad57de882f528b32e810e",
-                  "lastPublished": "2023-03-17T18:47:35.560Z",
-                  "lastUpdated": "2023-03-17T18:47:35.560Z",
-                  "createdOn": "2023-03-17T18:47:35.560Z",
+                  "lastPublished": "2024-04-04T14:24:19.467Z",
+                  "lastUpdated": "2024-04-04T14:30:19.282Z",
+                  "createdOn": "2024-04-04T14:22:28.547Z",
                   "isArchived": false,
                   "isDraft": false,
                   "fieldData": {
                     "name": "T-Shirt",
                     "slug": "t-shirt",
-                    "description": "A plain cotton t-shirt.",
+                    "description": "A plain t-shirt",
                     "shippable": true,
                     "sku-properties": [
                       {
-                        "id": "Color",
+                        "id": "31b77fa66fa376c2c0abb458d5be39fb",
+                        "name": "Size",
+                        "enum": [
+                          {
+                            "id": "8d21a625d655ab260e9941c27180c75b",
+                            "name": "Small",
+                            "slug": "small"
+                          },
+                          {
+                            "id": "ecdca17106ad86c0dfe3b5f3ac8be6c9",
+                            "name": "Medium",
+                            "slug": "medium"
+                          },
+                          {
+                            "id": "ec7877d6137ecf7ec86f726c135b1812",
+                            "name": "Large",
+                            "slug": "large"
+                          }
+                        ]
+                      },
+                      {
+                        "id": "74d3738e62c568d5634dd6989daec5ec",
                         "name": "Color",
                         "enum": [
                           {
-                            "id": [
-                              "royal-blue",
-                              "crimson-red",
-                              "forrest-green"
-                            ],
+                            "id": "e539b0d6c3a609cd06ddb2da804f68f0",
                             "name": "Royal Blue",
                             "slug": "royal-blue"
+                          },
+                          {
+                            "id": "68d98f2fbafc0fd45651cddc44798dd0",
+                            "name": "Crimson Red",
+                            "slug": "crimson-red"
+                          },
+                          {
+                            "id": "996cd95c97fd5620d0a374c835b37205",
+                            "name": "Forrest Green",
+                            "slug": "forrest-green"
                           }
                         ]
                       }
                     ],
-                    "categories": [
-                      "string"
-                    ],
                     "tax-category": "standard-taxable",
-                    "default-sku": "string",
-                    "ec-product-type": "ff42fee0113744f693a764e3431a9cc2"
+                    "default-sku": "66072fb71b89448912e2681c",
+                    "ec-product-type": "b6ccc1830db4b1babeb06a9ac5f6dd76"
                   }
                 },
                 "skus": [
@@ -74539,7 +74615,9 @@
                     "lastUpdated": "2023-03-17T18:47:35.560Z",
                     "createdOn": "2023-03-17T18:47:35.560Z",
                     "fieldData": {
-                      "sku-values": {},
+                      "sku-values": {
+                        "ff42fee0113744f693a764e3431a9cc2": "64a74715c456e36762fc39a1"
+                      },
                       "name": "Blue T-shirt",
                       "slug": "t-shirt-blue",
                       "price": {
@@ -74573,41 +74651,65 @@
                 "type": "json",
                 "value": {
                   "product": {
-                    "id": "580e63fc8c9a982ac9b8b745",
+                    "id": "660eb7a486d1d6e0412292d7",
                     "cmsLocaleId": "653ad57de882f528b32e810e",
-                    "lastPublished": "2023-03-17T18:47:35.560Z",
-                    "lastUpdated": "2023-03-17T18:47:35.560Z",
-                    "createdOn": "2023-03-17T18:47:35.560Z",
+                    "lastPublished": "2024-04-04T14:24:19.467Z",
+                    "lastUpdated": "2024-04-04T14:30:19.282Z",
+                    "createdOn": "2024-04-04T14:22:28.547Z",
                     "isArchived": false,
                     "isDraft": false,
                     "fieldData": {
                       "name": "T-Shirt",
                       "slug": "t-shirt",
-                      "description": "A plain cotton t-shirt.",
+                      "description": "A plain t-shirt",
                       "shippable": true,
                       "sku-properties": [
                         {
-                          "id": "Color",
+                          "id": "31b77fa66fa376c2c0abb458d5be39fb",
+                          "name": "Size",
+                          "enum": [
+                            {
+                              "id": "8d21a625d655ab260e9941c27180c75b",
+                              "name": "Small",
+                              "slug": "small"
+                            },
+                            {
+                              "id": "ecdca17106ad86c0dfe3b5f3ac8be6c9",
+                              "name": "Medium",
+                              "slug": "medium"
+                            },
+                            {
+                              "id": "ec7877d6137ecf7ec86f726c135b1812",
+                              "name": "Large",
+                              "slug": "large"
+                            }
+                          ]
+                        },
+                        {
+                          "id": "74d3738e62c568d5634dd6989daec5ec",
                           "name": "Color",
                           "enum": [
                             {
-                              "id": [
-                                "royal-blue",
-                                "crimson-red",
-                                "forrest-green"
-                              ],
+                              "id": "e539b0d6c3a609cd06ddb2da804f68f0",
                               "name": "Royal Blue",
                               "slug": "royal-blue"
+                            },
+                            {
+                              "id": "68d98f2fbafc0fd45651cddc44798dd0",
+                              "name": "Crimson Red",
+                              "slug": "crimson-red"
+                            },
+                            {
+                              "id": "996cd95c97fd5620d0a374c835b37205",
+                              "name": "Forrest Green",
+                              "slug": "forrest-green"
                             }
                           ]
                         }
                       ],
-                      "categories": [
-                        "string"
-                      ],
                       "tax-category": "standard-taxable",
-                      "default-sku": "string",
-                      "ec-product-type": "ff42fee0113744f693a764e3431a9cc2"
+                      "default-sku": "66072fb71b89448912e2681c",
+                      "ec-product-type": "b6ccc1830db4b1babeb06a9ac5f6dd76"
                     }
                   },
                   "skus": [
@@ -74618,7 +74720,9 @@
                       "lastUpdated": "2023-03-17T18:47:35.560Z",
                       "createdOn": "2023-03-17T18:47:35.560Z",
                       "fieldData": {
-                        "sku-values": {},
+                        "sku-values": {
+                          "ff42fee0113744f693a764e3431a9cc2": "64a74715c456e36762fc39a1"
+                        },
                         "name": "Blue T-shirt",
                         "slug": "t-shirt-blue",
                         "price": {
@@ -74855,41 +74959,65 @@
               "responseStatusCode": 200,
               "responseBody": {
                 "product": {
-                  "id": "580e63fc8c9a982ac9b8b745",
+                  "id": "660eb7a486d1d6e0412292d7",
                   "cmsLocaleId": "653ad57de882f528b32e810e",
-                  "lastPublished": "2023-03-17T18:47:35.560Z",
-                  "lastUpdated": "2023-03-17T18:47:35.560Z",
-                  "createdOn": "2023-03-17T18:47:35.560Z",
+                  "lastPublished": "2024-04-04T14:24:19.467Z",
+                  "lastUpdated": "2024-04-04T14:30:19.282Z",
+                  "createdOn": "2024-04-04T14:22:28.547Z",
                   "isArchived": false,
                   "isDraft": false,
                   "fieldData": {
                     "name": "T-Shirt",
                     "slug": "t-shirt",
-                    "description": "A plain cotton t-shirt.",
+                    "description": "A plain t-shirt",
                     "shippable": true,
                     "sku-properties": [
                       {
-                        "id": "Color",
+                        "id": "31b77fa66fa376c2c0abb458d5be39fb",
+                        "name": "Size",
+                        "enum": [
+                          {
+                            "id": "8d21a625d655ab260e9941c27180c75b",
+                            "name": "Small",
+                            "slug": "small"
+                          },
+                          {
+                            "id": "ecdca17106ad86c0dfe3b5f3ac8be6c9",
+                            "name": "Medium",
+                            "slug": "medium"
+                          },
+                          {
+                            "id": "ec7877d6137ecf7ec86f726c135b1812",
+                            "name": "Large",
+                            "slug": "large"
+                          }
+                        ]
+                      },
+                      {
+                        "id": "74d3738e62c568d5634dd6989daec5ec",
                         "name": "Color",
                         "enum": [
                           {
-                            "id": [
-                              "royal-blue",
-                              "crimson-red",
-                              "forrest-green"
-                            ],
+                            "id": "e539b0d6c3a609cd06ddb2da804f68f0",
                             "name": "Royal Blue",
                             "slug": "royal-blue"
+                          },
+                          {
+                            "id": "68d98f2fbafc0fd45651cddc44798dd0",
+                            "name": "Crimson Red",
+                            "slug": "crimson-red"
+                          },
+                          {
+                            "id": "996cd95c97fd5620d0a374c835b37205",
+                            "name": "Forrest Green",
+                            "slug": "forrest-green"
                           }
                         ]
                       }
                     ],
-                    "categories": [
-                      "string"
-                    ],
                     "tax-category": "standard-taxable",
-                    "default-sku": "string",
-                    "ec-product-type": "ff42fee0113744f693a764e3431a9cc2"
+                    "default-sku": "66072fb71b89448912e2681c",
+                    "ec-product-type": "b6ccc1830db4b1babeb06a9ac5f6dd76"
                   }
                 },
                 "skus": [
@@ -74900,7 +75028,9 @@
                     "lastUpdated": "2023-03-17T18:47:35.560Z",
                     "createdOn": "2023-03-17T18:47:35.560Z",
                     "fieldData": {
-                      "sku-values": {},
+                      "sku-values": {
+                        "ff42fee0113744f693a764e3431a9cc2": "64a74715c456e36762fc39a1"
+                      },
                       "name": "Blue T-shirt",
                       "slug": "t-shirt-blue",
                       "price": {
@@ -74934,41 +75064,65 @@
                 "type": "json",
                 "value": {
                   "product": {
-                    "id": "580e63fc8c9a982ac9b8b745",
+                    "id": "660eb7a486d1d6e0412292d7",
                     "cmsLocaleId": "653ad57de882f528b32e810e",
-                    "lastPublished": "2023-03-17T18:47:35.560Z",
-                    "lastUpdated": "2023-03-17T18:47:35.560Z",
-                    "createdOn": "2023-03-17T18:47:35.560Z",
+                    "lastPublished": "2024-04-04T14:24:19.467Z",
+                    "lastUpdated": "2024-04-04T14:30:19.282Z",
+                    "createdOn": "2024-04-04T14:22:28.547Z",
                     "isArchived": false,
                     "isDraft": false,
                     "fieldData": {
                       "name": "T-Shirt",
                       "slug": "t-shirt",
-                      "description": "A plain cotton t-shirt.",
+                      "description": "A plain t-shirt",
                       "shippable": true,
                       "sku-properties": [
                         {
-                          "id": "Color",
+                          "id": "31b77fa66fa376c2c0abb458d5be39fb",
+                          "name": "Size",
+                          "enum": [
+                            {
+                              "id": "8d21a625d655ab260e9941c27180c75b",
+                              "name": "Small",
+                              "slug": "small"
+                            },
+                            {
+                              "id": "ecdca17106ad86c0dfe3b5f3ac8be6c9",
+                              "name": "Medium",
+                              "slug": "medium"
+                            },
+                            {
+                              "id": "ec7877d6137ecf7ec86f726c135b1812",
+                              "name": "Large",
+                              "slug": "large"
+                            }
+                          ]
+                        },
+                        {
+                          "id": "74d3738e62c568d5634dd6989daec5ec",
                           "name": "Color",
                           "enum": [
                             {
-                              "id": [
-                                "royal-blue",
-                                "crimson-red",
-                                "forrest-green"
-                              ],
+                              "id": "e539b0d6c3a609cd06ddb2da804f68f0",
                               "name": "Royal Blue",
                               "slug": "royal-blue"
+                            },
+                            {
+                              "id": "68d98f2fbafc0fd45651cddc44798dd0",
+                              "name": "Crimson Red",
+                              "slug": "crimson-red"
+                            },
+                            {
+                              "id": "996cd95c97fd5620d0a374c835b37205",
+                              "name": "Forrest Green",
+                              "slug": "forrest-green"
                             }
                           ]
                         }
                       ],
-                      "categories": [
-                        "string"
-                      ],
                       "tax-category": "standard-taxable",
-                      "default-sku": "string",
-                      "ec-product-type": "ff42fee0113744f693a764e3431a9cc2"
+                      "default-sku": "66072fb71b89448912e2681c",
+                      "ec-product-type": "b6ccc1830db4b1babeb06a9ac5f6dd76"
                     }
                   },
                   "skus": [
@@ -74979,7 +75133,9 @@
                       "lastUpdated": "2023-03-17T18:47:35.560Z",
                       "createdOn": "2023-03-17T18:47:35.560Z",
                       "fieldData": {
-                        "sku-values": {},
+                        "sku-values": {
+                          "ff42fee0113744f693a764e3431a9cc2": "64a74715c456e36762fc39a1"
+                        },
                         "name": "Blue T-shirt",
                         "slug": "t-shirt-blue",
                         "price": {
@@ -75862,7 +76018,9 @@
                     "lastUpdated": "2023-03-17T18:47:35.560Z",
                     "createdOn": "2023-03-17T18:47:35.560Z",
                     "fieldData": {
-                      "sku-values": {},
+                      "sku-values": {
+                        "ff42fee0113744f693a764e3431a9cc2": "64a74715c456e36762fc39a1"
+                      },
                       "name": "Blue T-shirt",
                       "slug": "t-shirt-blue",
                       "price": {
@@ -75903,7 +76061,9 @@
                       "lastUpdated": "2023-03-17T18:47:35.560Z",
                       "createdOn": "2023-03-17T18:47:35.560Z",
                       "fieldData": {
-                        "sku-values": {},
+                        "sku-values": {
+                          "ff42fee0113744f693a764e3431a9cc2": "64a74715c456e36762fc39a1"
+                        },
                         "name": "Blue T-shirt",
                         "slug": "t-shirt-blue",
                         "price": {
@@ -76241,7 +76401,9 @@
                 "lastUpdated": "2023-03-17T18:47:35.560Z",
                 "createdOn": "2023-03-17T18:47:35.560Z",
                 "fieldData": {
-                  "sku-values": {},
+                  "sku-values": {
+                    "ff42fee0113744f693a764e3431a9cc2": "64a74715c456e36762fc39a1"
+                  },
                   "name": "Blue T-shirt",
                   "slug": "t-shirt-blue",
                   "price": {
@@ -76278,7 +76440,9 @@
                   "lastUpdated": "2023-03-17T18:47:35.560Z",
                   "createdOn": "2023-03-17T18:47:35.560Z",
                   "fieldData": {
-                    "sku-values": {},
+                    "sku-values": {
+                      "ff42fee0113744f693a764e3431a9cc2": "64a74715c456e36762fc39a1"
+                    },
                     "name": "Blue T-shirt",
                     "slug": "t-shirt-blue",
                     "price": {
