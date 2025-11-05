@@ -5046,6 +5046,9 @@ importers:
       find-up:
         specifier: ^6.3.0
         version: 6.3.0
+      gray-matter:
+        specifier: ^4.0.3
+        version: 4.0.3
       js-yaml:
         specifier: ^4.1.0
         version: 4.1.0
@@ -5378,6 +5381,9 @@ importers:
       express:
         specifier: ^4.21.2
         version: 4.21.2
+      gray-matter:
+        specifier: ^4.0.3
+        version: 4.0.3
       tmp-promise:
         specifier: ^3.0.3
         version: 3.0.3
@@ -7715,7 +7721,7 @@ importers:
         version: 29.7.0(@types/node@18.19.129)(babel-plugin-macros@3.1.0)
       ts-jest:
         specifier: ^29.1.1
-        version: 29.4.5(@babel/core@7.28.4)(@jest/transform@29.7.0)(@jest/types@29.6.3)(babel-jest@29.7.0(@babel/core@7.28.4))(jest-util@29.7.0)(jest@29.7.0(@types/node@18.19.129)(babel-plugin-macros@3.1.0))(typescript@5.9.3)
+        version: 29.4.5(@babel/core@7.28.4)(@jest/transform@29.7.0)(@jest/types@29.6.3)(babel-jest@29.7.0(@babel/core@7.28.4))(esbuild@0.25.10)(jest-util@29.7.0)(jest@29.7.0(@types/node@18.19.129)(babel-plugin-macros@3.1.0))(typescript@5.9.3)
       typescript:
         specifier: ^5.2.2
         version: 5.9.3
@@ -24673,7 +24679,7 @@ snapshots:
 
   ts-interface-checker@0.1.13: {}
 
-  ts-jest@29.4.5(@babel/core@7.28.4)(@jest/transform@29.7.0)(@jest/types@29.6.3)(babel-jest@29.7.0(@babel/core@7.28.4))(jest-util@29.7.0)(jest@29.7.0(@types/node@18.19.129)(babel-plugin-macros@3.1.0))(typescript@5.9.3):
+  ts-jest@29.4.5(@babel/core@7.28.4)(@jest/transform@29.7.0)(@jest/types@29.6.3)(babel-jest@29.7.0(@babel/core@7.28.4))(esbuild@0.25.10)(jest-util@29.7.0)(jest@29.7.0(@types/node@18.19.129)(babel-plugin-macros@3.1.0))(typescript@5.9.3):
     dependencies:
       bs-logger: 0.2.6
       fast-json-stable-stringify: 2.1.0
@@ -24691,6 +24697,7 @@ snapshots:
       '@jest/transform': 29.7.0
       '@jest/types': 29.6.3
       babel-jest: 29.7.0(@babel/core@7.28.4)
+      esbuild: 0.25.10
       jest-util: 29.7.0
 
   ts-morph@15.1.0:
