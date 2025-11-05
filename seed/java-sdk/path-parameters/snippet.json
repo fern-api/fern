@@ -90,6 +90,19 @@
                 "sync_client": "package com.example.usage;\n\nimport com.seed.pathParameters.SeedPathParametersClient;\nimport com.seed.pathParameters.resources.user.requests.SearchUsersRequest;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedPathParametersClient client = SeedPathParametersClient\n            .builder()\n            .build();\n\n        client.user().searchUsers(\n            \"tenant_id\",\n            \"user_id\",\n            SearchUsersRequest\n                .builder()\n                .limit(1)\n                .build()\n        );\n    }\n}\n",
                 "async_client": "package com.example.usage;\n\nimport com.seed.pathParameters.SeedPathParametersClient;\nimport com.seed.pathParameters.resources.user.requests.SearchUsersRequest;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedPathParametersClient client = SeedPathParametersClient\n            .builder()\n            .build();\n\n        client.user().searchUsers(\n            \"tenant_id\",\n            \"user_id\",\n            SearchUsersRequest\n                .builder()\n                .limit(1)\n                .build()\n        );\n    }\n}\n"
             }
+        },
+        {
+            "example_identifier": "218446d0",
+            "id": {
+                "method": "GET",
+                "path": "/{tenant_id}/user/{user_id}/metadata/v/{version}",
+                "identifier_override": "endpoint_user.getUserMetadata"
+            },
+            "snippet": {
+                "type": "java",
+                "sync_client": "package com.example.usage;\n\nimport com.seed.pathParameters.SeedPathParametersClient;\nimport com.seed.pathParameters.resources.user.requests.GetUserMetadataRequest;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedPathParametersClient client = SeedPathParametersClient\n            .builder()\n            .build();\n\n        client.user().getUserMetadata(\n            \"tenant_id\",\n            \"user_id\",\n            1,\n            GetUserMetadataRequest\n                .builder()\n                .build()\n        );\n    }\n}\n",
+                "async_client": "package com.example.usage;\n\nimport com.seed.pathParameters.SeedPathParametersClient;\nimport com.seed.pathParameters.resources.user.requests.GetUserMetadataRequest;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedPathParametersClient client = SeedPathParametersClient\n            .builder()\n            .build();\n\n        client.user().getUserMetadata(\n            \"tenant_id\",\n            \"user_id\",\n            1,\n            GetUserMetadataRequest\n                .builder()\n                .build()\n        );\n    }\n}\n"
+            }
         }
     ],
     "types": {}

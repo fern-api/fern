@@ -65,9 +65,9 @@ public class BestApiException extends BestException {
         return this.headers;
     }
 
-    @java.lang.Override
+    @Override
     public String toString() {
-        return "BestApiException{" + "message: " + getMessage() + ", statusCode: " + statusCode + ", body: " + body
-                + "}";
+        return "BestApiException{" + "message: " + getMessage() + ", statusCode: " + statusCode + ", body: "
+                + ObjectMappers.stringify(body) + "}";
     }
 }

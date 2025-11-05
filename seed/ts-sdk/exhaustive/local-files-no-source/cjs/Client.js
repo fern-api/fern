@@ -44,7 +44,7 @@ const headers_js_1 = require("./core/headers.js");
 const core = __importStar(require("./core/index.js"));
 class SeedExhaustiveClient {
     constructor(_options) {
-        this._options = Object.assign(Object.assign({}, _options), { headers: (0, headers_js_1.mergeHeaders)({
+        this._options = Object.assign(Object.assign({}, _options), { logging: core.logging.createLogger(_options === null || _options === void 0 ? void 0 : _options.logging), headers: (0, headers_js_1.mergeHeaders)({
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,

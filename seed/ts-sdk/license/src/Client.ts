@@ -17,6 +17,7 @@ export class SeedLicenseClient {
     constructor(_options: SeedLicenseClient.Options) {
         this._options = {
             ..._options,
+            logging: core.logging.createLogger(_options?.logging),
             headers: mergeHeaders(
                 {
                     "X-Fern-Language": "JavaScript",
@@ -56,6 +57,7 @@ export class SeedLicenseClient {
             maxRetries: requestOptions?.maxRetries ?? this._options?.maxRetries,
             abortSignal: requestOptions?.abortSignal,
             fetchFn: this._options?.fetch,
+            logging: this._options.logging,
         });
         if (_response.ok) {
             return { data: undefined, rawResponse: _response.rawResponse };
