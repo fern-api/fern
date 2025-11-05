@@ -615,14 +615,14 @@ class EndpointFunctionGenerator:
                 request_options_variable_name = last_param.name
 
             # If retries are disabled, enforce max_retries=0 by overriding request_options
-            if endpoint.retries is not None and hasattr(endpoint.retries, 'disabled') and endpoint.retries.disabled:
+            if endpoint.retries is not None and hasattr(endpoint.retries, "disabled") and endpoint.retries.disabled:
                 overridden_request_options_var = "_request_options_with_retries_disabled"
-                
+
                 def write_override_logic(writer: AST.NodeWriter) -> None:
                     writer.write(f'({{**{request_options_variable_name}, "max_retries": 0}} ')
-                    writer.write(f'if {request_options_variable_name} is not None ')
+                    writer.write(f"if {request_options_variable_name} is not None ")
                     writer.write('else {"max_retries": 0})')
-                
+
                 writer.write_node(
                     AST.VariableDeclaration(
                         name=overridden_request_options_var,
