@@ -17,6 +17,7 @@ import { IntermediateRepresentation } from "@fern-fern/ir-sdk/api";
 
 import {
     PackageSwiftGenerator,
+    RetryTestSuiteGenerator,
     RootClientGenerator,
     SingleUrlEnvironmentGenerator,
     SubClientGenerator,
@@ -565,6 +566,7 @@ export class SdkGeneratorCLI extends AbstractSwiftGeneratorCli<SdkCustomConfigSc
             return;
         }
         await this.generateTestAsIsFiles(context);
+        this.generateRetryTestSuiteFiles(context);
         if (context.customConfig.enableWireTests) {
             this.generateWireTestSuiteFiles(context);
         }
@@ -580,6 +582,28 @@ export class SdkGeneratorCLI extends AbstractSwiftGeneratorCli<SdkCustomConfigSc
                 });
             })
         );
+    }
+
+    private generateRetryTestSuiteFiles(context: SdkGeneratorContext): void {
+        const rootClientSymbol = context.project.nameRegistry.getRootClientSymbolOrThrow();
+        const testSuiteSymbol = context.project.nameRegistry.getRetryTestSuiteSymbolOrThrow();
+        const testSuiteGenerator = new RetryTestSuiteGenerator({
+            symbol: testSuiteSymbol,
+            rootClientName: rootClientSymbol.name,
+            sdkGeneratorContext: context
+        });
+        const struct = testSuiteGenerator.generate();
+        context.project.addTestFile({
+            nameCandidateWithoutExtension: struct.name,
+            directory: RelativeFilePath.of("Core"),
+            contents: [
+                swift.Statement.import("Foundation"),
+                swift.Statement.import("Testing"),
+                swift.Statement.import(context.sourceTargetName),
+                swift.LineBreak.single(),
+                struct
+            ]
+        });
     }
 
     private generateWireTestSuiteFiles(context: SdkGeneratorContext): void {
