@@ -65,9 +65,9 @@ public class SeedWebsocketBearerAuthApiException extends SeedWebsocketBearerAuth
         return this.headers;
     }
 
-    @java.lang.Override
+    @Override
     public String toString() {
         return "SeedWebsocketBearerAuthApiException{" + "message: " + getMessage() + ", statusCode: " + statusCode
-                + ", body: " + body + "}";
+                + ", body: " + ObjectMappers.stringify(body) + "}";
     }
 }

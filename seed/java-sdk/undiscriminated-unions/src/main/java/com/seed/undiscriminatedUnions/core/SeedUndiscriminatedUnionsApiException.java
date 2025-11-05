@@ -65,9 +65,9 @@ public class SeedUndiscriminatedUnionsApiException extends SeedUndiscriminatedUn
         return this.headers;
     }
 
-    @java.lang.Override
+    @Override
     public String toString() {
         return "SeedUndiscriminatedUnionsApiException{" + "message: " + getMessage() + ", statusCode: " + statusCode
-                + ", body: " + body + "}";
+                + ", body: " + ObjectMappers.stringify(body) + "}";
     }
 }
