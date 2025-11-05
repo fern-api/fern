@@ -1,4 +1,4 @@
-import { FernGeneratorCli } from "../../../configuration/generated";
+import { FernGeneratorCli } from "../../../configuration/sdk";
 
 const CONFIG: FernGeneratorCli.ReadmeConfig = {
     language: FernGeneratorCli.LanguageInfo.go({
