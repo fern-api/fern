@@ -109,7 +109,7 @@ types:
   CsharpInfo:
     properties:
       publishInfo: optional<NugetPublishInfo>
-  
+
   PhpInfo:
     properties:
       publishInfo: optional<ComposerPublishInfo>
@@ -117,7 +117,7 @@ types:
   RustInfo:
     properties:
       publishInfo: optional<CargoPublishInfo>
-  
+
   SwiftInfo:
     properties:
       publishInfo: optional<SwiftPackageManagerPublishInfo>
