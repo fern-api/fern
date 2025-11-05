@@ -6,7 +6,7 @@ import * as core from "../../../../core/index.js";
 import * as environments from "../../../../environments.js";
 import * as errors from "../../../../errors/index.js";
 import * as serializers from "../../../../serialization/index.js";
-import type { Migration as Migration_SeedTrace } from "../types/Migration.js";
+import type { Migration as MigrationType } from "../types/Migration.js";
 import type { GetAttemptedMigrationsRequest } from "./requests/GetAttemptedMigrationsRequest.js";
 
 export declare namespace Migration {
@@ -34,14 +34,14 @@ export class Migration {
     public getAttemptedMigrations(
         request: GetAttemptedMigrationsRequest,
         requestOptions?: Migration.RequestOptions,
-    ): core.HttpResponsePromise<Migration_SeedTrace[]> {
+    ): core.HttpResponsePromise<MigrationType[]> {
         return core.HttpResponsePromise.fromPromise(this.__getAttemptedMigrations(request, requestOptions));
     }
 
     private async __getAttemptedMigrations(
         request: GetAttemptedMigrationsRequest,
         requestOptions?: Migration.RequestOptions,
-    ): Promise<core.WithRawResponse<Migration_SeedTrace[]>> {
+    ): Promise<core.WithRawResponse<MigrationType[]>> {
         const { adminKeyHeader } = request;
         const _headers: core.Fetcher.Args["headers"] = mergeHeaders(
             this._options?.headers,

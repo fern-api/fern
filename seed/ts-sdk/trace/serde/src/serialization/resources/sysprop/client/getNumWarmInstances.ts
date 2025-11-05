@@ -3,13 +3,13 @@
 import type { Language } from "../../../../api/resources/commons/types/Language.js";
 import * as core from "../../../../core/index.js";
 import type * as serializers from "../../../index.js";
-import { Language as Language_SeedTrace } from "../../commons/types/Language.js";
+import { Language as LanguageType } from "../../commons/types/Language.js";
 
 export const Response: core.serialization.Schema<
     serializers.sysprop.getNumWarmInstances.Response.Raw,
     Record<Language, number | undefined>
-> = core.serialization.record(Language_SeedTrace, core.serialization.number().optional());
+> = core.serialization.record(LanguageType, core.serialization.number().optional());
 
 export declare namespace Response {
-    export type Raw = Record<Language_SeedTrace.Raw, number | null | undefined>;
+    export type Raw = Record<LanguageType.Raw, number | null | undefined>;
 }

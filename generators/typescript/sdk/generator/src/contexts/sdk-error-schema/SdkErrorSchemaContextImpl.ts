@@ -66,9 +66,12 @@ export class SdkErrorSchemaContextImpl implements SdkErrorSchemaContext {
     }
 
     public getGeneratedSdkErrorSchema(errorName: DeclaredErrorName): GeneratedSdkErrorSchema | undefined {
+        const schemaErrorName = this.sdkErrorSchemaDeclarationReferencer.getExportedName(errorName);
+        this.importsManager.reserveLocal(schemaErrorName);
+
         return this.sdkErrorSchemaGenerator.generateSdkErrorSchema({
             errorDeclaration: this.errorResolver.getErrorDeclarationFromName(errorName),
-            errorName: this.sdkErrorSchemaDeclarationReferencer.getExportedName(errorName)
+            errorName: schemaErrorName
         });
     }
 

@@ -3,13 +3,13 @@
 import type { Migration } from "../../../../api/resources/migration/types/Migration.js";
 import * as core from "../../../../core/index.js";
 import type * as serializers from "../../../index.js";
-import { Migration as Migration_SeedTrace } from "../types/Migration.js";
+import { Migration as MigrationType } from "../types/Migration.js";
 
 export const Response: core.serialization.Schema<
     serializers.migration.getAttemptedMigrations.Response.Raw,
     Migration[]
-> = core.serialization.list(Migration_SeedTrace);
+> = core.serialization.list(MigrationType);
 
 export declare namespace Response {
-    export type Raw = Migration_SeedTrace.Raw[];
+    export type Raw = MigrationType.Raw[];
 }

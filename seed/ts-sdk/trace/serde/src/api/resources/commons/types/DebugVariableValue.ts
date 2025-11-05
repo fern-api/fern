@@ -3,7 +3,7 @@
 import type { BinaryTreeNodeAndTreeValue } from "./BinaryTreeNodeAndTreeValue.js";
 import type { DebugMapValue } from "./DebugMapValue.js";
 import type { DoublyLinkedListNodeAndListValue } from "./DoublyLinkedListNodeAndListValue.js";
-import type { GenericValue as GenericValue_SeedTrace } from "./GenericValue.js";
+import type { GenericValue as GenericValueType } from "./GenericValue.js";
 import type { SinglyLinkedListNodeAndListValue } from "./SinglyLinkedListNodeAndListValue.js";
 
 export type DebugVariableValue =
@@ -76,7 +76,7 @@ export namespace DebugVariableValue {
         type: "nullValue";
     }
 
-    export interface GenericValue extends GenericValue_SeedTrace {
+    export interface GenericValue extends GenericValueType {
         type: "genericValue";
     }
 }

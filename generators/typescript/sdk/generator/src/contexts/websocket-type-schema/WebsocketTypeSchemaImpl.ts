@@ -48,14 +48,17 @@ export class WebsocketTypeSchemaContextImpl implements WebsocketTypeSchemaContex
         channel: WebSocketChannel,
         receiveMessages: WebSocketMessageBodyReference[]
     ): GeneratedWebsocketTypeSchema {
+        const schemaTypeName = this.websocketTypeSchemaDeclarationReferencer.getExportedName({
+            packageId,
+            channel
+        });
+        this.importsManager.reserveLocal(schemaTypeName);
+
         return this.websocketTypeSchemaGenerator.generateInlinedWebsocketMessageBodySchema({
             packageId,
             channel,
             receiveMessages,
-            typeName: this.websocketTypeSchemaDeclarationReferencer.getExportedName({
-                packageId,
-                channel
-            })
+            typeName: schemaTypeName
         });
     }
 
