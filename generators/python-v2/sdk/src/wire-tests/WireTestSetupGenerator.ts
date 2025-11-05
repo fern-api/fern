@@ -32,11 +32,11 @@ export class WireTestSetupGenerator {
     }
 
     public static getWiremockConfigContent(ir: IntermediateRepresentation) {
-        return WireTestSetup.generateWiremockConfigContent(ir as any);
+        return WireTestSetup.generateWiremockConfigContent(ir);
     }
 
     private generateWireMockConfigFile(): void {
-        const wireMockConfigFileContent = WireTestSetup.generateWiremockMappingsFileContent(this.ir as any);
+        const wireMockConfigFileContent = WireTestSetup.generateWiremockMappingsFileContent(this.ir);
         const wireMockConfigFile = new File(
             "wiremock-mappings.json",
             RelativeFilePath.of("wiremock"),
