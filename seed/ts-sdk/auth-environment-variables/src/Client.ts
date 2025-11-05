@@ -18,6 +18,7 @@ export class SeedAuthEnvironmentVariablesClient {
     constructor(_options: SeedAuthEnvironmentVariablesClient.Options) {
         this._options = {
             ..._options,
+            logging: core.logging.createLogger(_options?.logging),
             headers: mergeHeaders(
                 {
                     "X-Another-Header": _options?.xAnotherHeader,

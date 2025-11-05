@@ -18,6 +18,7 @@ export class SeedNullableOptionalClient {
     constructor(_options: SeedNullableOptionalClient.Options) {
         this._options = {
             ..._options,
+            logging: core.logging.createLogger(_options?.logging),
             headers: mergeHeaders(
                 {
                     "X-Fern-Language": "JavaScript",
