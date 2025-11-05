@@ -161,4 +161,37 @@ import PathParameters
         )
         try #require(response == expectedResponse)
     }
+
+    @Test func getUserMetadata1() async throws -> Void {
+        let stub = WireStub()
+        stub.setResponse(
+            body: Data(
+                """
+                {
+                  "name": "name",
+                  "tags": [
+                    "tags",
+                    "tags"
+                  ]
+                }
+                """.utf8
+            )
+        )
+        let client = PathParametersClient(
+            baseURL: "https://api.fern.com",
+            urlSession: stub.urlSession
+        )
+        let expectedResponse = User(
+            name: "name",
+            tags: [
+                "tags",
+                "tags"
+            ]
+        )
+        let response = try await client.user.getUserMetadata(
+            userId: "user_id",
+            version: 1
+        )
+        try #require(response == expectedResponse)
+    }
 }
