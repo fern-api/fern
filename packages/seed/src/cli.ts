@@ -9,6 +9,7 @@ import { generateCliChangelog } from "./commands/generate/generateCliChangelog";
 import { generateGeneratorChangelog } from "./commands/generate/generateGeneratorChangelog";
 import { getLatestCli } from "./commands/latest/getLatestCli";
 import { getLatestGenerator } from "./commands/latest/getLatestGenerator";
+import { getLatestVersionsYml } from "./commands/latest/getLatestVersionsYml";
 import { publishCli } from "./commands/publish/publishCli";
 import { publishGenerator } from "./commands/publish/publishGenerator";
 import { registerCliRelease } from "./commands/register/registerCliRelease";
@@ -689,6 +690,87 @@ function addLatestCommands(cli: Argv) {
                         await writeFile(argv.output, ver);
                     } else {
                         process.stdout.write(ver);
+                    }
+                }
+            )
+            .command(
+                "versions-yml",
+                "Get latest version from an arbitrary versions.yml file, optionally comparing with a previous version",
+                (yargs) =>
+                    yargs
+                        .option("path", {
+                            type: "string",
+                            demandOption: true,
+                            description: "Path to the current versions.yml file"
+                        })
+                        .option("previous-path", {
+                            type: "string",
+                            demandOption: false,
+                            description: "Path to the previous versions.yml file for comparison"
+                        })
+                        .option("log-level", {
+                            default: LogLevel.Info,
+                            choices: LOG_LEVELS
+                        })
+                        .option("output", {
+                            alias: "o",
+                            type: "string",
+                            demandOption: false,
+                            description: "Output file path (writes to stdout if not provided)"
+                        })
+                        .option("format", {
+                            type: "string",
+                            choices: ["version", "json"],
+                            default: "version",
+                            description:
+                                "Output format: 'version' (just the version string) or 'json' (version + has_new_version flag)"
+                        }),
+                async (argv) => {
+                    const taskContextFactory = new TaskContextFactory(argv["log-level"]);
+                    const context = taskContextFactory.create("Latest");
+
+                    const absolutePath = argv.path.startsWith("/")
+                        ? AbsoluteFilePath.of(argv.path)
+                        : join(AbsoluteFilePath.of(process.cwd()), RelativeFilePath.of(argv.path));
+
+                    const previousAbsolutePath = argv["previous-path"]
+                        ? argv["previous-path"].startsWith("/")
+                            ? AbsoluteFilePath.of(argv["previous-path"])
+                            : join(AbsoluteFilePath.of(process.cwd()), RelativeFilePath.of(argv["previous-path"]))
+                        : undefined;
+
+                    const result = await getLatestVersionsYml({
+                        absolutePathToChangelog: absolutePath,
+                        previousAbsolutePathToChangelog: previousAbsolutePath,
+                        context
+                    });
+
+                    if (result == null) {
+                        context.logger.error("Failed to get latest version");
+                        return;
+                    }
+
+                    // Format output
+                    let output: string;
+                    if (argv.format === "json") {
+                        output = JSON.stringify(
+                            {
+                                version: result.version,
+                                has_new_version: result.hasNewVersion
+                            },
+                            null,
+                            2
+                        );
+                    } else {
+                        output = result.version;
+                    }
+
+                    // Write output
+                    if (argv.output) {
+                        await writeFile(argv.output, output);
+                        context.logger.info(`Wrote version to ${argv.output}`);
+                    } else {
+                        process.stdout.write(output);
                     }
                 }
             );
