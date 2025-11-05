@@ -667,9 +667,10 @@ export function mockAuth(server: MockServer) {
 
         // Add variables to baseOptions
         this.ir.variables.forEach((variable) => {
-            const variableName = this.retainOriginalCasing
-                ? variable.name.originalName
-                : variable.name.camelCase.unsafeName;
+            const variableName = getParameterNameForVariable({
+                variableName: variable.name,
+                retainOriginalCasing: this.retainOriginalCasing
+            });
             baseOptions[variableName] = code`${literalOf(variableName)}`;
         });
 
@@ -867,9 +868,10 @@ describe("${serviceName}", () => {
             if (pathParamDef?.variable != null) {
                 const variable = this.ir.variables.find((v) => v.id === pathParamDef.variable);
                 if (variable != null) {
-                    const variableName = this.retainOriginalCasing
-                        ? variable.name.originalName
-                        : variable.name.camelCase.unsafeName;
+                    const variableName = getParameterNameForVariable({
+                        variableName: variable.name,
+                        retainOriginalCasing: this.retainOriginalCasing
+                    });
                     options[variableName] = code`${literalOf(examplePathParameter.value.jsonExample)}`;
                 }
             }
@@ -1539,4 +1541,20 @@ function isCodeUndefined(code: Code): boolean {
 function isCodeEmptyObject(code: Code): boolean {
     const rawCode = code.toString().trim();
     return rawCode === "{}" || rawCode === "{ }";
+}
+
+/**
+ * Determines the casing of the variable name when used in client constructor options
+ */
+function getParameterNameForVariable({
+    variableName,
+    retainOriginalCasing
+}: {
+    variableName: Name;
+    retainOriginalCasing: boolean;
+}): string {
+    if (retainOriginalCasing) {
+        return variableName.originalName;
+    }
+    return variableName.camelCase.safeName;
 }
