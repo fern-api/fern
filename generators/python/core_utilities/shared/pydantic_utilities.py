@@ -88,7 +88,11 @@ class UniversalBaseModel(pydantic.BaseModel):
             **kwargs,
         }
         if IS_PYDANTIC_V2:
-            return super().model_dump_json(**kwargs_with_defaults)  # type: ignore[misc]
+            import json
+            
+            dict_representation = self.dict(**kwargs_with_defaults)
+            jsonable = to_jsonable_with_fallback(dict_representation, fallback_serializer=serialize_datetime)
+            return json.dumps(jsonable)
         return super().json(**kwargs_with_defaults)
 
     def dict(self, **kwargs: Any) -> Dict[str, Any]:
