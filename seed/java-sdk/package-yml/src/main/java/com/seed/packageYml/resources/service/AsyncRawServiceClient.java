@@ -35,6 +35,7 @@ public class AsyncRawServiceClient {
     public CompletableFuture<SeedPackageYmlHttpResponse<Void>> nop(String nestedId, RequestOptions requestOptions) {
         HttpUrl httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
                 .newBuilder()
+                .addPathSegment(clientOptions.id())
                 .addPathSegment(nestedId)
                 .build();
         Request okhttpRequest = new Request.Builder()
@@ -56,11 +57,9 @@ public class AsyncRawServiceClient {
                         return;
                     }
                     String responseBodyString = responseBody != null ? responseBody.string() : "{}";
+                    Object errorBody = ObjectMappers.parseErrorBody(responseBodyString);
                     future.completeExceptionally(new SeedPackageYmlApiException(
-                            "Error with status code " + response.code(),
-                            response.code(),
-                            ObjectMappers.JSON_MAPPER.readValue(responseBodyString, Object.class),
-                            response));
+                            "Error with status code " + response.code(), response.code(), errorBody, response));
                     return;
                 } catch (IOException e) {
                     future.completeExceptionally(

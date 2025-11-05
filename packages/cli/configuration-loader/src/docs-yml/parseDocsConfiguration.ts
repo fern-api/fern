@@ -13,7 +13,7 @@ import { getAllPages, loadAllPages } from "./getAllPages";
 import { buildNavigationForDirectory, nameToSlug, nameToTitle } from "./navigationUtils";
 
 function shouldProcessIconPath(iconPath?: string): boolean {
-    if (!iconPath) {
+    if (!iconPath || iconPath.startsWith("<")) {
         return false;
     }
 
@@ -384,6 +384,7 @@ function convertSettingsConfig(
     return {
         darkModeCode: settings.darkModeCode ?? false,
         defaultSearchFilters: settings.defaultSearchFilters ?? false,
+        language: settings.language ?? "en",
         disableSearch: settings.disableSearch ?? false,
         hide404Page: settings.hide404Page ?? false,
         httpSnippets: settings.httpSnippets ?? true,

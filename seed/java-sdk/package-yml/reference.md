@@ -13,7 +13,6 @@
 
 ```java
 client.echo(
-    "id-ksfd9c1",
     EchoRequest
         .builder()
         .name("Hello world!")
@@ -68,7 +67,7 @@ client.echo(
 <dd>
 
 ```java
-client.service().nop("id-a2ijs82", "id-219xca8");
+client.service().nop("id-219xca8");
 ```
 </dd>
 </dl>

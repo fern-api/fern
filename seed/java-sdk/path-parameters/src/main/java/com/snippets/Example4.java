@@ -6,15 +6,15 @@ import java.util.Arrays;
 
 public class Example4 {
     public static void main(String[] args) {
-        SeedPathParametersClient client =
-                SeedPathParametersClient.builder().url("https://api.fern.com").build();
+        SeedPathParametersClient client = SeedPathParametersClient.builder()
+                .url("https://api.fern.com")
+                .tenantId("tenant_id")
+                .build();
 
         client.user()
-                .createUser(
-                        "tenant_id",
-                        User.builder()
-                                .name("name")
-                                .tags(Arrays.asList("tags", "tags"))
-                                .build());
+                .createUser(User.builder()
+                        .name("name")
+                        .tags(Arrays.asList("tags", "tags"))
+                        .build());
     }
 }

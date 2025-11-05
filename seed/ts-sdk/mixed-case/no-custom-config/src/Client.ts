@@ -18,6 +18,7 @@ export class SeedMixedCaseClient {
     constructor(_options: SeedMixedCaseClient.Options) {
         this._options = {
             ..._options,
+            logging: core.logging.createLogger(_options?.logging),
             headers: mergeHeaders(
                 {
                     "X-Fern-Language": "JavaScript",

@@ -58,6 +58,7 @@ export class Organization {
             maxRetries: requestOptions?.maxRetries ?? this._options?.maxRetries,
             abortSignal: requestOptions?.abortSignal,
             fetchFn: this._options?.fetch,
+            logging: this._options.logging,
         });
         if (_response.ok) {
             return { data: _response.body as SeedMixedFileDirectory.Organization, rawResponse: _response.rawResponse };

@@ -181,6 +181,16 @@ export class EndpointSnippetGenerator {
                 }
             }
         }
+
+        this.context.errors.scope(Scope.PathParameters);
+        if (this.context.ir.pathParameters != null && this.context.ir.pathParameters.length > 0) {
+            const apiPathParams = this.context.ir.pathParameters.filter((param) => param.variable == null);
+            if (apiPathParams.length > 0) {
+                builderArgs.push(...this.getPathParameters({ namedParameters: apiPathParams, snippet }));
+            }
+        }
+        this.context.errors.unscope();
+
         return builderArgs;
     }
 
@@ -432,11 +442,9 @@ export class EndpointSnippetGenerator {
         const args: java.TypeLiteral[] = [];
 
         this.context.errors.scope(Scope.PathParameters);
-        // Only include path parameters that don't reference variables
+        // Only include endpoint-level path parameters that don't reference variables
         // Variables are configured at client level, not passed as method args
-        const allPathParams = [...(this.context.ir.pathParameters ?? []), ...(request.pathParameters ?? [])];
-
-        const pathParameters = allPathParams.filter((param) => param.variable == null);
+        const pathParameters = (request.pathParameters ?? []).filter((param) => param.variable == null);
         if (pathParameters.length > 0) {
             args.push(
                 ...this.getPathParameters({ namedParameters: pathParameters, snippet }).map((field) => field.value)
@@ -534,9 +542,8 @@ export class EndpointSnippetGenerator {
 
         this.context.errors.scope(Scope.PathParameters);
         const pathParameterFields: java.BuilderParameter[] = [];
-        // Combine global and request path parameters, then filter out those with variables
-        const allPathParams = [...(this.context.ir.pathParameters ?? []), ...(request.pathParameters ?? [])];
-        const nonVariablePathParams = allPathParams.filter((param) => param.variable == null);
+        // Only include endpoint-level path parameters that don't reference variables
+        const nonVariablePathParams = (request.pathParameters ?? []).filter((param) => param.variable == null);
         if (nonVariablePathParams.length > 0) {
             pathParameterFields.push(...this.getPathParameters({ namedParameters: nonVariablePathParams, snippet }));
         }

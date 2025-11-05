@@ -21,6 +21,8 @@ public class SeedPackageYmlClientBuilder {
 
     private OkHttpClient httpClient;
 
+    private String id;
+
     public SeedPackageYmlClientBuilder url(String url) {
         this.environment = Environment.custom(url);
         return this;
@@ -63,9 +65,15 @@ public class SeedPackageYmlClientBuilder {
         return this;
     }
 
+    public SeedPackageYmlClientBuilder id(String id) {
+        this.id = id;
+        return this;
+    }
+
     protected ClientOptions buildClientOptions() {
         ClientOptions.Builder builder = ClientOptions.builder();
         setEnvironment(builder);
+        setApiPathParameters(builder);
         setHttpClient(builder);
         setTimeouts(builder);
         setRetries(builder);
@@ -84,6 +92,18 @@ public class SeedPackageYmlClientBuilder {
      */
     protected void setEnvironment(ClientOptions.Builder builder) {
         builder.environment(this.environment);
+    }
+
+    /**
+     * Override this method to configure API-level path parameters defined in the specification.
+     * Available path parameters: id
+     *
+     * @param builder The ClientOptions.Builder to configure
+     */
+    protected void setApiPathParameters(ClientOptions.Builder builder) {
+        if (this.id != null) {
+            builder.id(this.id);
+        }
     }
 
     /**

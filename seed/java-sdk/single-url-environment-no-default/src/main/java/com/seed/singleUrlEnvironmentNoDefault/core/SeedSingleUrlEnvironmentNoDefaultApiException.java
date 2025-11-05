@@ -66,9 +66,9 @@ public class SeedSingleUrlEnvironmentNoDefaultApiException extends SeedSingleUrl
         return this.headers;
     }
 
-    @java.lang.Override
+    @Override
     public String toString() {
         return "SeedSingleUrlEnvironmentNoDefaultApiException{" + "message: " + getMessage() + ", statusCode: "
-                + statusCode + ", body: " + body + "}";
+                + statusCode + ", body: " + ObjectMappers.stringify(body) + "}";
     }
 }

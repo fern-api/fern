@@ -488,16 +488,20 @@ public abstract class AbstractHttpResponseParserGenerator {
                         .endControlFlow();
             }
         }
+        httpResponseBuilder.addStatement(
+                "$T errorBody = $T.parseErrorBody($L)",
+                Object.class,
+                clientGeneratorContext.getPoetClassNameFactory().getObjectMapperClassName(),
+                variables.getResponseBodyStringName());
+
         handleExceptionalResult(
                 httpResponseBuilder,
                 CodeBlock.of(
-                        "new $T($S + $L.code(), $L.code(), $L, $L)",
+                        "new $T($S + $L.code(), $L.code(), errorBody, $L)",
                         apiErrorClassName,
                         "Error with status code ",
                         variables.getResponseName(),
                         variables.getResponseName(),
-                        objectMapperUtils.readValueCall(
-                                CodeBlock.of("$L", variables.getResponseBodyStringName()), Optional.empty()),
                         "response"));
     }
 

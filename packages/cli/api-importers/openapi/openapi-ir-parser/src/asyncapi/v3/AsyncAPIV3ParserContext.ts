@@ -30,7 +30,11 @@ export class AsyncAPIV3ParserContext extends AbstractAsyncAPIParserContext<Async
         return resolvedParameter as AsyncAPIV3.ChannelParameter;
     }
 
-    public resolveMessageReference(message: OpenAPIV3.ReferenceObject): AsyncAPIV3.ChannelMessage {
+    // Resolve a message reference. Use 'shallow' to prevent resolving nested references.
+    public resolveMessageReference(
+        message: OpenAPIV3.ReferenceObject,
+        shallow: boolean = false
+    ): AsyncAPIV3.ChannelMessage {
         const CHANNELS_PATH_PART = "#/channels/";
         const MESSAGE_REFERENCE_PREFIX = "#/components/messages/";
 
@@ -48,7 +52,7 @@ export class AsyncAPIV3ParserContext extends AbstractAsyncAPIParserContext<Async
             if (resolvedInChannel == null) {
                 throw new Error(`${message.$ref} is undefined`);
             }
-            if ("$ref" in resolvedInChannel) {
+            if ("$ref" in resolvedInChannel && !shallow) {
                 return this.resolveMessageReference(resolvedInChannel as OpenAPIV3.ReferenceObject);
             } else {
                 return {

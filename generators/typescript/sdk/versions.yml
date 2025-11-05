@@ -1,5 +1,40 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
 
+- version: 3.25.0
+  changelogEntry:
+    - summary: |
+        Add support for logging to the generated SDK.
+        Users can configure the logger by passing in a `logging` object to the client options.
+
+        ```ts
+        import { FooClient, logging } from "foo";
+
+        const client = new FooClient({
+            logging: {
+               level: logging.LogLevel.Info, // LogLevel.Info is the default
+               logger: new logging.ConsoleLogger(), // ConsoleLogger is the default
+               silent: false, // true is the default, set to false to enable logging
+            }
+        });
+        ```
+
+        The `logging` object can have the following properties:
+        - `level`: The log level to use. Defaults to `logging.LogLevel.Info`.
+        - `logger`: The logger to use. Defaults to `logging.ConsoleLogger`.
+        - `silent`: Whether to silence the logger. Defaults to `true`.
+
+        The `level` property can be one of the following values:
+        - `logging.LogLevel.Debug`
+        - `logging.LogLevel.Info`
+        - `logging.LogLevel.Warn`
+        - `logging.LogLevel.Error`
+
+        To provide a custom logger, users can pass in a custom logger implementation that implements the `logging.ILogger` interface.
+
+      type: feat
+  createdAt: "2025-11-04"
+  irVersion: 61
+
 - version: 3.24.0
   changelogEntry:
     - summary: |
