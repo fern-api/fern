@@ -92,8 +92,20 @@ class UniversalBaseModel(pydantic.BaseModel):
         if IS_PYDANTIC_V2:
             import json
 
+            def _convert_datetimes(obj: Any) -> Any:
+                if isinstance(obj, dt.datetime):
+                    return serialize_datetime(obj)
+                elif isinstance(obj, dict):
+                    return {k: _convert_datetimes(v) for k, v in obj.items()}
+                elif isinstance(obj, list):
+                    return [_convert_datetimes(item) for item in obj]
+                elif isinstance(obj, tuple):
+                    return tuple(_convert_datetimes(item) for item in obj)
+                return obj
+
             dict_representation = self.dict(**kwargs_with_defaults)
-            jsonable = to_jsonable_with_fallback(dict_representation, fallback_serializer=serialize_datetime)
+            datetime_converted = _convert_datetimes(dict_representation)
+            jsonable = to_jsonable_with_fallback(datetime_converted, fallback_serializer=encode_by_type)
             return json.dumps(jsonable)
         return super().json(**kwargs_with_defaults)
 
