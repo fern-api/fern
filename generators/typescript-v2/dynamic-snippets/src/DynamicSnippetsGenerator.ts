@@ -17,16 +17,6 @@ export class DynamicSnippetsGenerator extends AbstractDynamicSnippetsGenerator<
         super(new DynamicSnippetsGeneratorContext({ ir, config }));
     }
 
-    public async generate(
-        request: FernIr.dynamic.EndpointSnippetRequest
-    ): Promise<FernIr.dynamic.EndpointSnippetResponse> {
-        return super.generate(request);
-    }
-
-    public generateSync(request: FernIr.dynamic.EndpointSnippetRequest): FernIr.dynamic.EndpointSnippetResponse {
-        return super.generateSync(request);
-    }
-
     protected createSnippetGenerator(context: DynamicSnippetsGeneratorContext): EndpointSnippetGenerator {
         return new EndpointSnippetGenerator({ context });
     }

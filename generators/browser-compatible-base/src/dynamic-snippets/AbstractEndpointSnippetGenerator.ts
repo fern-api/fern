@@ -1,16 +1,18 @@
-import { FernIr } from "@fern-api/dynamic-ir-sdk";
-
-import { AbstractDynamicSnippetsGeneratorContext } from "./AbstractDynamicSnippetsGeneratorContext";
 import { Options } from "./Options";
+import { DynamicSnippetsGeneratorContextLike, EndpointLike, EndpointSnippetRequestLike } from "./types";
 
-export abstract class AbstractEndpointSnippetGenerator<Context extends AbstractDynamicSnippetsGeneratorContext> {
+export abstract class AbstractEndpointSnippetGenerator<
+    Context extends DynamicSnippetsGeneratorContextLike<EndpointT>,
+    EndpointT extends EndpointLike = EndpointLike,
+    RequestT extends EndpointSnippetRequestLike = EndpointSnippetRequestLike
+> {
     public abstract generateSnippet({
         endpoint,
         request,
         options
     }: {
-        endpoint: FernIr.dynamic.Endpoint;
-        request: FernIr.dynamic.EndpointSnippetRequest;
+        endpoint: EndpointT;
+        request: RequestT;
         options?: Options;
     }): Promise<string>;
 
@@ -19,8 +21,8 @@ export abstract class AbstractEndpointSnippetGenerator<Context extends AbstractD
         request,
         options
     }: {
-        endpoint: FernIr.dynamic.Endpoint;
-        request: FernIr.dynamic.EndpointSnippetRequest;
+        endpoint: EndpointT;
+        request: RequestT;
         options?: Options;
     }): string;
 }

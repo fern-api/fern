@@ -7,8 +7,11 @@ import { DiscriminatedUnionTypeInstance } from "./DiscriminatedUnionTypeInstance
 import { ErrorReporter, Severity } from "./ErrorReporter";
 import { Options } from "./Options";
 import { TypeInstance } from "./TypeInstance";
+import { DynamicSnippetsGeneratorContextLike, EndpointLike, EndpointLocationLike } from "./types";
 
-export abstract class AbstractDynamicSnippetsGeneratorContext {
+export abstract class AbstractDynamicSnippetsGeneratorContext<EndpointT extends EndpointLike = FernIr.dynamic.Endpoint>
+    implements DynamicSnippetsGeneratorContextLike<EndpointT>
+{
     public config: FernGeneratorExec.GeneratorConfig;
     public options: Options;
     public errors: ErrorReporter;
@@ -32,7 +35,7 @@ export abstract class AbstractDynamicSnippetsGeneratorContext {
         this.httpEndpointReferenceParser = new HttpEndpointReferenceParser();
     }
 
-    public abstract clone(): AbstractDynamicSnippetsGeneratorContext;
+    public abstract clone(): AbstractDynamicSnippetsGeneratorContext<EndpointT>;
 
     public associateQueryParametersByWireValue({
         parameters,
@@ -317,10 +320,10 @@ export abstract class AbstractDynamicSnippetsGeneratorContext {
         return this.resolveEndpointLocationOrThrow(parsedEndpoint);
     }
 
-    public resolveEndpointLocation(location: FernIr.dynamic.EndpointLocation): FernIr.dynamic.Endpoint[] {
+    public resolveEndpointLocation(location: EndpointLocationLike): FernIr.dynamic.Endpoint[] {
         const endpoints: FernIr.dynamic.Endpoint[] = [];
         for (const endpoint of Object.values(this._ir.endpoints)) {
-            if (this.parsedEndpointMatches({ endpoint, parsedEndpoint: location })) {
+            if (endpoint.location.method === location.method && endpoint.location.path === location.path) {
                 endpoints.push(endpoint);
             }
         }
@@ -328,12 +331,12 @@ export abstract class AbstractDynamicSnippetsGeneratorContext {
         return endpoints;
     }
 
-    public resolveEndpointLocationOrThrow(location: FernIr.dynamic.EndpointLocation): FernIr.dynamic.Endpoint[] {
+    public resolveEndpointLocationOrThrow(location: EndpointLocationLike): EndpointT[] {
         const endpoints = this.resolveEndpointLocation(location);
         if (endpoints.length === 0) {
             throw new Error(`Failed to find endpoint identified by "${location.method} ${location.path}"`);
         }
-        return endpoints;
+        return endpoints as EndpointT[];
     }
 
     public needsRequestParameter({

@@ -1,22 +1,25 @@
-import { FernIr } from "@fern-api/dynamic-ir-sdk";
-
-import { AbstractDynamicSnippetsGeneratorContext } from "./AbstractDynamicSnippetsGeneratorContext";
-import { AbstractEndpointSnippetGenerator } from "./AbstractEndpointSnippetGenerator";
 import { Options } from "./Options";
 import { Result } from "./Result";
+import {
+    DynamicSnippetsGeneratorContextLike,
+    EndpointLike,
+    EndpointSnippetGeneratorLike,
+    EndpointSnippetRequestLike,
+    EndpointSnippetResponseLike
+} from "./types";
 
 export abstract class AbstractDynamicSnippetsGenerator<
-    Context extends AbstractDynamicSnippetsGeneratorContext,
-    EndpointSnippetGenerator extends AbstractEndpointSnippetGenerator<Context>
+    Context extends DynamicSnippetsGeneratorContextLike<EndpointT>,
+    EndpointSnippetGenerator extends EndpointSnippetGeneratorLike<Context, EndpointT, RequestT>,
+    EndpointT extends EndpointLike = EndpointLike,
+    RequestT extends EndpointSnippetRequestLike = EndpointSnippetRequestLike,
+    ResponseT extends EndpointSnippetResponseLike = EndpointSnippetResponseLike
 > {
     public constructor(public readonly context: Context) {}
 
     protected abstract createSnippetGenerator(context: Context): EndpointSnippetGenerator;
 
-    public async generate(
-        request: FernIr.dynamic.EndpointSnippetRequest,
-        options: Options = {}
-    ): Promise<FernIr.dynamic.EndpointSnippetResponse> {
+    public async generate(request: RequestT, options: Options = {}): Promise<ResponseT> {
         const endpoints = this.context.resolveEndpointLocationOrThrow(request.endpoint);
         if (endpoints.length === 0) {
             throw new Error(`No endpoints found that match "${request.endpoint.method} ${request.endpoint.path}"`);
@@ -43,10 +46,7 @@ export abstract class AbstractDynamicSnippetsGenerator<
         return result.getResponseOrThrow({ endpoint: request.endpoint });
     }
 
-    public generateSync(
-        request: FernIr.dynamic.EndpointSnippetRequest,
-        options: Options = {}
-    ): FernIr.dynamic.EndpointSnippetResponse {
+    public generateSync(request: RequestT, options: Options = {}): ResponseT {
         const endpoints = this.context.resolveEndpointLocationOrThrow(request.endpoint);
         if (endpoints.length === 0) {
             throw new Error(`No endpoints found that match "${request.endpoint.method} ${request.endpoint.path}"`);

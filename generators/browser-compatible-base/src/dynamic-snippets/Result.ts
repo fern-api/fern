@@ -1,7 +1,5 @@
-import { FernIr } from "@fern-api/dynamic-ir-sdk";
-
-import { AbstractDynamicSnippetsGeneratorContext } from "./AbstractDynamicSnippetsGeneratorContext";
 import { ErrorReporter } from "./ErrorReporter";
+import { DynamicSnippetsGeneratorContextLike, EndpointLocationLike, EndpointSnippetResponseLike } from "./types";
 
 export class Result {
     public reporter: ErrorReporter | undefined;
@@ -14,18 +12,16 @@ export class Result {
         this.err = undefined;
     }
 
-    public update({ context, snippet }: { context: AbstractDynamicSnippetsGeneratorContext; snippet: string }): void {
+    public update({ context, snippet }: { context: DynamicSnippetsGeneratorContextLike; snippet: string }): void {
         if (this.shouldUpdate({ snippet, reporter: context.errors })) {
-            this.reporter = context.errors.clone();
+            if ("clone" in context.errors && typeof context.errors.clone === "function") {
+                this.reporter = context.errors.clone() as ErrorReporter;
+            }
             this.snippet = snippet;
         }
     }
 
-    public getResponseOrThrow({
-        endpoint
-    }: {
-        endpoint: FernIr.dynamic.EndpointLocation;
-    }): FernIr.dynamic.EndpointSnippetResponse {
+    public getResponseOrThrow({ endpoint }: { endpoint: EndpointLocationLike }): EndpointSnippetResponseLike {
         if (this.snippet != null && this.reporter != null) {
             return {
                 snippet: this.snippet,
