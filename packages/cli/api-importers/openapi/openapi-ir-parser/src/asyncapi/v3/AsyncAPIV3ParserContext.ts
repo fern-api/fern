@@ -56,8 +56,8 @@ export class AsyncAPIV3ParserContext extends AbstractAsyncAPIParserContext<Async
                 return this.resolveMessageReference(resolvedInChannel as OpenAPIV3.ReferenceObject);
             } else {
                 return {
-                    name: messageKey,
-                    ...resolvedInChannel
+                    ...resolvedInChannel,
+                    name: messageKey
                 };
             }
         }
@@ -74,8 +74,8 @@ export class AsyncAPIV3ParserContext extends AbstractAsyncAPIParserContext<Async
         }
 
         return {
-            name: messageKey,
-            ...resolvedInComponents
+            ...resolvedInComponents,
+            name: messageKey
         };
     }
 

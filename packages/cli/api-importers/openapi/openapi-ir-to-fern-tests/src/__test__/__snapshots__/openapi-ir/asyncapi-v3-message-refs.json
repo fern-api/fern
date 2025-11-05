@@ -1,0 +1,146 @@
+{
+  "servers": [],
+  "websocketServers": [
+    {
+      "name": "production",
+      "url": "wss://api.example.com"
+    }
+  ],
+  "tags": {
+    "tagsById": {}
+  },
+  "hasEndpointsMarkedInternal": false,
+  "endpoints": [],
+  "webhooks": [],
+  "channels": {
+    "chat": {
+      "audiences": [],
+      "handshake": {
+        "headers": [],
+        "queryParameters": [],
+        "pathParameters": []
+      },
+      "groupName": [
+        "chat"
+      ],
+      "messages": [
+        {
+          "origin": "server",
+          "name": "serverResponse",
+          "body": {
+            "generatedName": "ServerResponse",
+            "schema": "ServerResponsePayload",
+            "source": {
+              "file": "../asyncapi.yml",
+              "type": "openapi"
+            },
+            "type": "reference"
+          }
+        },
+        {
+          "origin": "client",
+          "name": "userMessage",
+          "body": {
+            "generatedName": "UserMessage",
+            "schema": "UserMessagePayload",
+            "source": {
+              "file": "../asyncapi.yml",
+              "type": "openapi"
+            },
+            "type": "reference"
+          }
+        }
+      ],
+      "servers": [
+        {
+          "name": "production",
+          "url": "wss://api.example.com"
+        }
+      ],
+      "path": "/v1/ws/chat",
+      "description": "Chat channel for testing message references",
+      "examples": [
+        {
+          "queryParameters": [],
+          "headers": [],
+          "messages": []
+        }
+      ],
+      "source": {
+        "file": "../asyncapi.yml",
+        "type": "openapi"
+      }
+    }
+  },
+  "groupedSchemas": {
+    "rootSchemas": {
+      "UserMessagePayload": {
+        "properties": [
+          {
+            "key": "text",
+            "schema": {
+              "generatedName": "UserMessagePayloadText",
+              "schema": {
+                "type": "string"
+              },
+              "description": "Message text",
+              "groupName": [],
+              "type": "primitive"
+            },
+            "audiences": [],
+            "conflict": {},
+            "generatedName": "userMessagePayloadText"
+          }
+        ],
+        "generatedName": "UserMessagePayload",
+        "allOf": [],
+        "allOfPropertyConflicts": [],
+        "groupName": [],
+        "fullExamples": [],
+        "additionalProperties": false,
+        "source": {
+          "file": "../asyncapi.yml",
+          "type": "openapi"
+        },
+        "type": "object"
+      },
+      "ServerResponsePayload": {
+        "properties": [
+          {
+            "key": "reply",
+            "schema": {
+              "generatedName": "ServerResponsePayloadReply",
+              "schema": {
+                "type": "string"
+              },
+              "description": "Response text",
+              "groupName": [],
+              "type": "primitive"
+            },
+            "audiences": [],
+            "conflict": {},
+            "generatedName": "serverResponsePayloadReply"
+          }
+        ],
+        "generatedName": "ServerResponsePayload",
+        "allOf": [],
+        "allOfPropertyConflicts": [],
+        "groupName": [],
+        "fullExamples": [],
+        "additionalProperties": false,
+        "source": {
+          "file": "../asyncapi.yml",
+          "type": "openapi"
+        },
+        "type": "object"
+      }
+    },
+    "namespacedSchemas": {}
+  },
+  "variables": {},
+  "nonRequestReferencedSchemas": {},
+  "securitySchemes": {},
+  "globalHeaders": [],
+  "idempotencyHeaders": [],
+  "groups": {}
+}
