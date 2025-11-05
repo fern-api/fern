@@ -548,7 +548,7 @@ export async function runAppPreviewServer({
             void validateProject(project).catch((err) => {
                 const validationTime = Date.now() - validationStartTime;
                 context.logger.error(
-                    `❌ Background validation failed after ${validationTime}ms: ${err instanceof Error ? err.message : String(err)}`
+                    `Validation failed (took ${validationTime}ms): ${err instanceof Error ? err.message : String(err)}`
                 );
                 // Still log validation errors to help developers
                 if (err instanceof Error && err.stack) {
