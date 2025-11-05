@@ -95,12 +95,14 @@ public class ReconnectingWebSocketListenerGenerator {
                         .initializer("new $T(true)", AtomicBoolean.class)
                         .build(),
                 FieldSpec.builder(
-                                ClassName.get("okhttp3", "WebSocket"), "webSocket", Modifier.PROTECTED, Modifier.VOLATILE)
+                                ClassName.get("okhttp3", "WebSocket"),
+                                "webSocket",
+                                Modifier.PROTECTED,
+                                Modifier.VOLATILE)
                         .build(),
 
                 // Connection time tracking for min uptime check
-                FieldSpec.builder(
-                                TypeName.LONG, "connectionEstablishedTime", Modifier.PRIVATE, Modifier.VOLATILE)
+                FieldSpec.builder(TypeName.LONG, "connectionEstablishedTime", Modifier.PRIVATE, Modifier.VOLATILE)
                         .initializer("0L")
                         .build(),
 
@@ -192,18 +194,26 @@ public class ReconnectingWebSocketListenerGenerator {
                 .addStatement("return")
                 .endControlFlow()
                 .beginControlFlow("try")
-                .addStatement("$T<? extends $T> connectionFuture = $T.supplyAsync(connectionSupplier)",
-                        CompletableFuture.class, ClassName.get("okhttp3", "WebSocket"), CompletableFuture.class)
+                .addStatement(
+                        "$T<? extends $T> connectionFuture = $T.supplyAsync(connectionSupplier)",
+                        CompletableFuture.class,
+                        ClassName.get("okhttp3", "WebSocket"),
+                        CompletableFuture.class)
                 .beginControlFlow("try")
-                .addStatement("webSocket = connectionFuture.get($L, $T.MILLISECONDS)",
-                        CONNECTION_TIMEOUT_MS, TimeUnit.class)
+                .addStatement(
+                        "webSocket = connectionFuture.get($L, $T.MILLISECONDS)", CONNECTION_TIMEOUT_MS, TimeUnit.class)
                 .endControlFlow()
                 .beginControlFlow("catch ($T e)", TimeoutException.class)
                 .addStatement("connectionFuture.cancel(true)")
-                .addStatement("$T timeoutError = new $T($S + $L + $S + (retryCount.get() > 0 ? $S + retryCount.get() : $S))",
-                        TimeoutException.class, TimeoutException.class,
-                        "WebSocket connection timeout after ", CONNECTION_TIMEOUT_MS, " milliseconds",
-                        " (retry attempt #", " (initial connection attempt)")
+                .addStatement(
+                        "$T timeoutError = new $T($S + $L + $S + (retryCount.get() > 0 ? $S + retryCount.get() : $S))",
+                        TimeoutException.class,
+                        TimeoutException.class,
+                        "WebSocket connection timeout after ",
+                        CONNECTION_TIMEOUT_MS,
+                        " milliseconds",
+                        " (retry attempt #",
+                        " (initial connection attempt)")
                 .addStatement("onWebSocketFailure(null, timeoutError, null)")
                 .beginControlFlow("if (shouldReconnect.get())")
                 .addStatement("scheduleReconnect()")
@@ -212,21 +222,28 @@ public class ReconnectingWebSocketListenerGenerator {
                 .beginControlFlow("catch ($T e)", InterruptedException.class)
                 .addStatement("connectionFuture.cancel(true)")
                 .addStatement("$T.currentThread().interrupt()", Thread.class)
-                .addStatement("$T interruptError = new $T($S + (retryCount.get() > 0 ? $S + retryCount.get() : $S))",
-                        InterruptedException.class, InterruptedException.class,
+                .addStatement(
+                        "$T interruptError = new $T($S + (retryCount.get() > 0 ? $S + retryCount.get() : $S))",
+                        InterruptedException.class,
+                        InterruptedException.class,
                         "WebSocket connection interrupted",
-                        " during retry attempt #", " during initial connection")
+                        " during retry attempt #",
+                        " during initial connection")
                 .addStatement("interruptError.initCause(e)")
                 .addStatement("onWebSocketFailure(null, interruptError, null)")
                 .endControlFlow()
                 .beginControlFlow("catch ($T e)", ExecutionException.class)
                 .addStatement("$T cause = e.getCause() != null ? e.getCause() : e", Throwable.class)
-                .addStatement("String context = retryCount.get() > 0 ? $S + retryCount.get() : $S",
+                .addStatement(
+                        "String context = retryCount.get() > 0 ? $S + retryCount.get() : $S",
                         "WebSocket connection failed during retry attempt #",
                         "WebSocket connection failed during initial attempt")
-                .addStatement("$T wrappedException = new $T(context + $S + cause.getClass().getSimpleName() + $S + cause.getMessage())",
-                        RuntimeException.class, RuntimeException.class,
-                        ": ", ": ")
+                .addStatement(
+                        "$T wrappedException = new $T(context + $S + cause.getClass().getSimpleName() + $S + cause.getMessage())",
+                        RuntimeException.class,
+                        RuntimeException.class,
+                        ": ",
+                        ": ")
                 .addStatement("wrappedException.initCause(cause)")
                 .addStatement("onWebSocketFailure(null, wrappedException, null)")
                 .beginControlFlow("if (shouldReconnect.get())")
@@ -368,11 +385,13 @@ public class ReconnectingWebSocketListenerGenerator {
                 .addStatement("errorContext += $S + (uptime / 1000) + $S", " after ", " seconds")
                 .endControlFlow()
                 .beginControlFlow("if (response != null)")
-                .addStatement("errorContext += $S + response.code() + $S + response.message()",
-                        " with HTTP ", " ")
+                .addStatement("errorContext += $S + response.code() + $S + response.message()", " with HTTP ", " ")
                 .endControlFlow()
-                .addStatement("enhancedError = new $T(errorContext + $S + t.getClass().getSimpleName() + $S + t.getMessage())",
-                        RuntimeException.class, ": ", ": ")
+                .addStatement(
+                        "enhancedError = new $T(errorContext + $S + t.getClass().getSimpleName() + $S + t.getMessage())",
+                        RuntimeException.class,
+                        ": ",
+                        ": ")
                 .addStatement("enhancedError.initCause(t)")
                 .endControlFlow()
                 .addStatement("onWebSocketFailure(webSocket, enhancedError, response)")
@@ -452,7 +471,8 @@ public class ReconnectingWebSocketListenerGenerator {
                         + "4. Preserves message ordering during re-queueing\n")
                 .addStatement("$T ws = webSocket", ClassName.get("okhttp3", "WebSocket"))
                 .beginControlFlow("if (ws != null)")
-                .addStatement("$T<String> tempQueue = new $T<>()",
+                .addStatement(
+                        "$T<String> tempQueue = new $T<>()",
                         ClassName.get("java.util", "ArrayList"),
                         ClassName.get("java.util", "ArrayList"))
                 .addStatement("String message")
@@ -572,34 +592,38 @@ public class ReconnectingWebSocketListenerGenerator {
                                 + "@return The validated ReconnectOptions instance\n"
                                 + "@throws IllegalArgumentException if configuration is invalid\n")
                         .beginControlFlow("if (minReconnectionDelayMs <= 0)")
-                        .addStatement("throw new $T($S)",
+                        .addStatement(
+                                "throw new $T($S)",
                                 IllegalArgumentException.class,
                                 "minReconnectionDelayMs must be positive")
                         .endControlFlow()
                         .beginControlFlow("if (maxReconnectionDelayMs <= 0)")
-                        .addStatement("throw new $T($S)",
+                        .addStatement(
+                                "throw new $T($S)",
                                 IllegalArgumentException.class,
                                 "maxReconnectionDelayMs must be positive")
                         .endControlFlow()
                         .beginControlFlow("if (minReconnectionDelayMs > maxReconnectionDelayMs)")
-                        .addStatement("throw new $T($S + minReconnectionDelayMs + $S + maxReconnectionDelayMs + $S)",
+                        .addStatement(
+                                "throw new $T($S + minReconnectionDelayMs + $S + maxReconnectionDelayMs + $S)",
                                 IllegalArgumentException.class,
                                 "minReconnectionDelayMs (",
                                 ") must not exceed maxReconnectionDelayMs (",
                                 ")")
                         .endControlFlow()
                         .beginControlFlow("if (reconnectionDelayGrowFactor < 1.0)")
-                        .addStatement("throw new $T($S)",
+                        .addStatement(
+                                "throw new $T($S)",
                                 IllegalArgumentException.class,
                                 "reconnectionDelayGrowFactor must be >= 1.0")
                         .endControlFlow()
                         .beginControlFlow("if (maxRetries < 0)")
-                        .addStatement("throw new $T($S)",
-                                IllegalArgumentException.class,
-                                "maxRetries must be non-negative")
+                        .addStatement(
+                                "throw new $T($S)", IllegalArgumentException.class, "maxRetries must be non-negative")
                         .endControlFlow()
                         .beginControlFlow("if (maxEnqueuedMessages < 0)")
-                        .addStatement("throw new $T($S)",
+                        .addStatement(
+                                "throw new $T($S)",
                                 IllegalArgumentException.class,
                                 "maxEnqueuedMessages must be non-negative")
                         .endControlFlow()

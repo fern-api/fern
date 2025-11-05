@@ -42,7 +42,7 @@ public class RealtimeWebSocketClient {
 
     private volatile WebSocketReadyState readyState = WebSocketReadyState.CLOSED;
 
-    private final String id;
+    private final String sessionId;
 
     private final Optional<String> model;
 
@@ -68,16 +68,16 @@ public class RealtimeWebSocketClient {
 
     /**
      * Creates a new async WebSocket client for the realtime channel.
-     * @param id the id path parameter
+     * @param sessionId the sessionId path parameter
      * @param model Optional model query parameter
      * @param temperature Optional temperature query parameter
      */
     public RealtimeWebSocketClient(
-            ClientOptions clientOptions, String id, Optional<String> model, Optional<Integer> temperature) {
+            ClientOptions clientOptions, String sessionId, Optional<String> model, Optional<Integer> temperature) {
         this.clientOptions = clientOptions;
         this.objectMapper = ObjectMappers.JSON_MAPPER;
         this.okHttpClient = clientOptions.httpClient();
-        this.id = id;
+        this.sessionId = sessionId;
         this.model = model;
         this.temperature = temperature;
     }
@@ -91,7 +91,7 @@ public class RealtimeWebSocketClient {
         String baseUrl = clientOptions.environment().getUrl();
         StringBuilder pathBuilder = new StringBuilder();
         pathBuilder.append("/realtime/");
-        pathBuilder.append(id);
+        pathBuilder.append(sessionId);
         pathBuilder.append("");
         String fullPath = pathBuilder.toString();
         if (baseUrl.endsWith("/") && fullPath.startsWith("/")) {

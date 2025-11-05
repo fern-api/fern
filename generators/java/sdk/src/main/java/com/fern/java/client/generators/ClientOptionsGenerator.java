@@ -146,14 +146,22 @@ public final class ClientOptionsGenerator extends AbstractFileGenerator {
                         Modifier.PRIVATE,
                         Modifier.FINAL)
                 .build();
-        this.webSocketFactoryField = FieldSpec.builder(
-                        ParameterizedTypeName.get(
-                                ClassName.get(Optional.class),
-                                clientGeneratorContext.getPoetClassNameFactory().getCoreClassName("WebSocketFactory")),
-                        "webSocketFactory",
-                        Modifier.PRIVATE,
-                        Modifier.FINAL)
-                .build();
+        // Only create WebSocketFactory field if WebSocket channels are present
+        if (clientGeneratorContext.getIr().getWebsocketChannels().isPresent()
+                && !clientGeneratorContext.getIr().getWebsocketChannels().get().isEmpty()) {
+            this.webSocketFactoryField = FieldSpec.builder(
+                            ParameterizedTypeName.get(
+                                    ClassName.get(Optional.class),
+                                    clientGeneratorContext
+                                            .getPoetClassNameFactory()
+                                            .getCoreClassName("WebSocketFactory")),
+                            "webSocketFactory",
+                            Modifier.PRIVATE,
+                            Modifier.FINAL)
+                    .build();
+        } else {
+            this.webSocketFactoryField = null;
+        }
     }
 
     @Override
@@ -191,9 +199,16 @@ public final class ClientOptionsGenerator extends AbstractFileGenerator {
                 .addParameter(ParameterSpec.builder(TIMEOUT_FIELD.type, TIMEOUT_FIELD.name)
                         .build())
                 .addParameter(ParameterSpec.builder(MAX_RETRIES_FIELD.type, MAX_RETRIES_FIELD.name)
-                        .build())
-                .addParameter(ParameterSpec.builder(webSocketFactoryField.type, webSocketFactoryField.name)
-                        .build())
+                        .build());
+
+        // Only add webSocketFactory parameter if WebSocket channels are present
+        if (webSocketFactoryField != null) {
+            constructorBuilder.addParameter(
+                    ParameterSpec.builder(webSocketFactoryField.type, webSocketFactoryField.name)
+                            .build());
+        }
+
+        constructorBuilder
                 .addParameters(variableFields.values().stream()
                         .map(fieldSpec -> ParameterSpec.builder(fieldSpec.type, fieldSpec.name)
                                 .build())
@@ -215,8 +230,12 @@ public final class ClientOptionsGenerator extends AbstractFileGenerator {
                 .addStatement("this.$L = $L", HEADER_SUPPLIERS_FIELD.name, HEADER_SUPPLIERS_FIELD.name)
                 .addStatement("this.$L = $L", OKHTTP_CLIENT_FIELD.name, OKHTTP_CLIENT_FIELD.name)
                 .addStatement("this.$L = $L", TIMEOUT_FIELD.name, TIMEOUT_FIELD.name)
-                .addStatement("this.$L = $L", MAX_RETRIES_FIELD.name, MAX_RETRIES_FIELD.name)
-                .addStatement("this.$L = $L", webSocketFactoryField.name, webSocketFactoryField.name);
+                .addStatement("this.$L = $L", MAX_RETRIES_FIELD.name, MAX_RETRIES_FIELD.name);
+
+        // Only add webSocketFactory assignment if WebSocket channels are present
+        if (webSocketFactoryField != null) {
+            constructorBuilder.addStatement("this.$L = $L", webSocketFactoryField.name, webSocketFactoryField.name);
+        }
 
         addApiVersionToConstructor(constructorBuilder);
 
@@ -235,8 +254,14 @@ public final class ClientOptionsGenerator extends AbstractFileGenerator {
                 .addField(HEADER_SUPPLIERS_FIELD)
                 .addField(OKHTTP_CLIENT_FIELD)
                 .addField(TIMEOUT_FIELD)
-                .addField(MAX_RETRIES_FIELD)
-                .addField(webSocketFactoryField)
+                .addField(MAX_RETRIES_FIELD);
+
+        // Only add webSocketFactory field if WebSocket channels are present
+        if (webSocketFactoryField != null) {
+            clientOptionsBuilder.addField(webSocketFactoryField);
+        }
+
+        clientOptionsBuilder
                 .addFields(variableFields.values())
                 .addFields(apiPathParamFieldsForMainClass.values())
                 .addMethod(constructorBuilder.build())
@@ -307,15 +332,21 @@ public final class ClientOptionsGenerator extends AbstractFileGenerator {
                         TimeUnit.class)
                 .build();
 
-        MethodSpec webSocketFactoryGetter = createGetter(webSocketFactoryField);
         MethodSpec maxRetriesGetter = createGetter(MAX_RETRIES_FIELD);
 
-        TypeSpec clientOptions = clientOptionsBuilder
+        clientOptionsBuilder
                 .addMethod(timeoutGetter)
                 .addMethod(httpClientGetter)
                 .addMethod(httpClientWithTimeoutGetter)
-                .addMethod(maxRetriesGetter)
-                .addMethod(webSocketFactoryGetter)
+                .addMethod(maxRetriesGetter);
+
+        // Only add webSocketFactory getter if WebSocket channels are present
+        if (webSocketFactoryField != null) {
+            MethodSpec webSocketFactoryGetter = createGetter(webSocketFactoryField);
+            clientOptionsBuilder.addMethod(webSocketFactoryGetter);
+        }
+
+        TypeSpec clientOptions = clientOptionsBuilder
                 .addMethods(variableGetters.values())
                 .addMethods(apiPathParamGetters.values())
                 .addMethod(MethodSpec.methodBuilder("builder")
@@ -497,11 +528,16 @@ public final class ClientOptionsGenerator extends AbstractFileGenerator {
                         .build())
                 .addField(FieldSpec.builder(OkHttpClient.class, OKHTTP_CLIENT_FIELD.name, Modifier.PRIVATE)
                         .initializer(CodeBlock.builder().add("null").build())
-                        .build())
-                .addField(FieldSpec.builder(webSocketFactoryField.type, webSocketFactoryField.name, Modifier.PRIVATE)
-                        .initializer("$T.empty()", Optional.class)
-                        .build())
-                .addFields(variableFields.values())
+                        .build());
+
+        // Only add webSocketFactory field to builder if WebSocket channels are present
+        if (webSocketFactoryField != null) {
+            builder.addField(FieldSpec.builder(webSocketFactoryField.type, webSocketFactoryField.name, Modifier.PRIVATE)
+                    .initializer("$T.empty()", Optional.class)
+                    .build());
+        }
+
+        builder.addFields(variableFields.values())
                 .addFields(apiPathParamFields.values())
                 .addMethod(getEnvironmentBuilder())
                 .addMethod(getHeaderBuilder())
@@ -538,23 +574,27 @@ public final class ClientOptionsGenerator extends AbstractFileGenerator {
                         .addParameter(OkHttpClient.class, OKHTTP_CLIENT_FIELD.name)
                         .addStatement("this.$L = $L", OKHTTP_CLIENT_FIELD.name, OKHTTP_CLIENT_FIELD.name)
                         .addStatement("return this")
-                        .build())
-                .addMethod(MethodSpec.methodBuilder(webSocketFactoryField.name)
-                        .addModifiers(Modifier.PUBLIC)
-                        .addJavadoc("Set a custom WebSocketFactory for creating WebSocket connections.\n")
-                        .returns(builderClassName)
-                        .addParameter(
-                                clientGeneratorContext.getPoetClassNameFactory().getCoreClassName("WebSocketFactory"),
-                                webSocketFactoryField.name)
-                        .addStatement(
-                                "this.$L = $T.of($L)",
-                                webSocketFactoryField.name,
-                                Optional.class,
-                                webSocketFactoryField.name)
-                        .addStatement("return this")
-                        .build())
-                .addMethods(getVariableBuilders(variableFields))
-                .addMethods(getApiPathParamBuilders(apiPathParamFields));
+                        .build());
+
+        // Only add webSocketFactory method to builder if WebSocket channels are present
+        if (webSocketFactoryField != null) {
+            builder.addMethod(MethodSpec.methodBuilder(webSocketFactoryField.name)
+                    .addModifiers(Modifier.PUBLIC)
+                    .addJavadoc("Set a custom WebSocketFactory for creating WebSocket connections.\n")
+                    .returns(builderClassName)
+                    .addParameter(
+                            clientGeneratorContext.getPoetClassNameFactory().getCoreClassName("WebSocketFactory"),
+                            webSocketFactoryField.name)
+                    .addStatement(
+                            "this.$L = $T.of($L)",
+                            webSocketFactoryField.name,
+                            Optional.class,
+                            webSocketFactoryField.name)
+                    .addStatement("return this")
+                    .build());
+        }
+
+        builder.addMethods(getVariableBuilders(variableFields)).addMethods(getApiPathParamBuilders(apiPathParamFields));
 
         addApiVersionToBuilder(builder);
 
@@ -871,13 +911,24 @@ public final class ClientOptionsGenerator extends AbstractFileGenerator {
                 HEADER_SUPPLIERS_FIELD.name,
                 OKHTTP_CLIENT_FIELD.name);
 
-        String returnString = "return new $T($L, $L, $L, $L, this.timeout.get(), this." + MAX_RETRIES_FIELD.name
-                + ", this." + webSocketFactoryField.name;
+        // Build return string conditionally based on WebSocket presence
+        String returnString;
+        if (webSocketFactoryField != null) {
+            returnString = "return new $T($L, $L, $L, $L, this.timeout.get(), this." + MAX_RETRIES_FIELD.name
+                    + ", this." + webSocketFactoryField.name;
+        } else {
+            returnString = "return new $T($L, $L, $L, $L, this.timeout.get(), this." + MAX_RETRIES_FIELD.name;
+        }
 
         if (clientGeneratorContext.getIr().getApiVersion().isPresent()) {
             argsBuilder.add(apiVersionField.name);
-            returnString = "return new $T($L, $L, $L, $L, this.timeout.get(), this." + MAX_RETRIES_FIELD.name
-                    + ", this." + webSocketFactoryField.name + ", $L";
+            if (webSocketFactoryField != null) {
+                returnString = "return new $T($L, $L, $L, $L, this.timeout.get(), this." + MAX_RETRIES_FIELD.name
+                        + ", this." + webSocketFactoryField.name + ", $L";
+            } else {
+                returnString =
+                        "return new $T($L, $L, $L, $L, this.timeout.get(), this." + MAX_RETRIES_FIELD.name + ", $L";
+            }
         }
 
         Object[] args = argsBuilder.build().toArray();

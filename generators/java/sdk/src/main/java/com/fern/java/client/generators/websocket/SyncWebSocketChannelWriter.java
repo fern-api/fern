@@ -42,9 +42,6 @@ import java.util.concurrent.TimeUnit;
 import javax.lang.model.element.Modifier;
 import okhttp3.HttpUrl;
 import okhttp3.Request;
-import okhttp3.Response;
-import okhttp3.WebSocket;
-import okhttp3.WebSocketListener;
 
 public class SyncWebSocketChannelWriter extends AbstractWebSocketChannelWriter {
 
