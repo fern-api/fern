@@ -192,8 +192,8 @@ export class WireTestGenerator {
             directory: RelativeFilePath.of(`./${packageLocation.directory}/${serviceName}_test`),
             filename: serviceName + "_test.go",
             packageName: `${serviceName}_test`,
-            rootImportPath: this.context.getRootPackageName(),
-            importPath: this.context.getRootPackageName(),
+            rootImportPath: this.context.getRootImportPath(),
+            importPath: "", // unecessary for wire tests since nothing will import FROM this file
             customConfig: this.context.customConfig ?? {},
             formatter: undefined
         });
