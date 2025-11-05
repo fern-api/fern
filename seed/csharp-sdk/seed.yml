@@ -210,5 +210,4 @@ fixtures:
       outputFolder: with-websockets
 allowedFailures:
   - oauth-client-credentials-custom
-  - auth-environment-variables # TODO: Add global headers to ExampleEndpointCall.
  
