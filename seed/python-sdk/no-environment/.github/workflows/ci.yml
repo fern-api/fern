@@ -8,12 +8,11 @@ jobs:
       - name: Set up python
         uses: actions/setup-python@v4
         with:
-        run: |
-          curl -sSL https://install.python-poetry.org | python - -y --version 1.5.1
-      - name: Install dependencies
-        run: poetry install
+          python-version: 3.8
+      - name: Install uv
+        run: pip install uv==0.8.23
       - name: Compile
-        run: poetry run mypy .
+        run: uv run --frozen mypy .
   test:
     runs-on: ubuntu-latest
     steps:
@@ -23,14 +22,11 @@ jobs:
         uses: actions/setup-python@v4
         with:
           python-version: 3.8
-      - name: Bootstrap poetry
-        run: |
-          curl -sSL https://install.python-poetry.org | python - -y --version 1.5.1
-      - name: Install dependencies
-        run: poetry install
+      - name: Install uv
+        run: pip install uv==0.8.23
 
       - name: Test
-        run: poetry run pytest -rP .
+        run: uv run --frozen pytest -rP .
 
   publish:
     needs: [compile, test]
@@ -43,15 +39,12 @@ jobs:
         uses: actions/setup-python@v4
         with:
           python-version: 3.8
-      - name: Bootstrap poetry
-        run: |
-          curl -sSL https://install.python-poetry.org | python - -y --version 1.5.1
-      - name: Install dependencies
-        run: poetry install
+      - name: Install uv
+        run: pip install uv==0.8.23
       - name: Publish to pypi
         run: |
-          poetry config repositories.remote 
-          poetry --no-interaction -v publish --build --repository remote --username "$" --password "$"
+          uv build
+          uv publish --publish-url  --username "$" --password "$"
         env:
           : ${{ secrets. }}
           : ${{ secrets. }}

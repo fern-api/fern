@@ -1,2 +1,2 @@
-pydantic>= 2.0.0
+pydantic>=2.0.0
 pydantic-core>=2.18.2
