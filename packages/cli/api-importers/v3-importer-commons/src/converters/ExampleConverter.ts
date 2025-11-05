@@ -651,7 +651,13 @@ export class ExampleConverter extends AbstractConverter<AbstractConverterContext
 
     private convertObject({ resolvedSchema }: { resolvedSchema: OpenAPIV3_1.SchemaObject }): ExampleConverter.Output {
         if (resolvedSchema.type == "object" && resolvedSchema.properties == null && resolvedSchema.allOf == null) {
-            return { isValid: true, coerced: false, usedProvidedExample: this.example !== undefined, validExample: this.example ?? {}, errors: [] };
+            return {
+                isValid: true,
+                coerced: false,
+                usedProvidedExample: this.example !== undefined,
+                validExample: this.example ?? {},
+                errors: []
+            };
         }
 
         const exampleObj =
@@ -659,7 +665,16 @@ export class ExampleConverter extends AbstractConverter<AbstractConverterContext
 
         const resultsByKey = Object.entries(resolvedSchema.properties ?? {}).map(([key, property]) => {
             if (typeof property !== "object") {
-                return { key, result: { isValid: true, coerced: false, usedProvidedExample: false, validExample: undefined, errors: [] } };
+                return {
+                    key,
+                    result: {
+                        isValid: true,
+                        coerced: false,
+                        usedProvidedExample: false,
+                        validExample: undefined,
+                        errors: []
+                    }
+                };
             }
 
             if (this.isDeprecatedProperty(property)) {
@@ -667,7 +682,13 @@ export class ExampleConverter extends AbstractConverter<AbstractConverterContext
                 if (isOptionalProperty) {
                     return {
                         key,
-                        result: { isValid: true, coerced: false, usedProvidedExample: false, validExample: undefined, errors: [] }
+                        result: {
+                            isValid: true,
+                            coerced: false,
+                            usedProvidedExample: false,
+                            validExample: undefined,
+                            errors: []
+                        }
                     };
                 }
             }
@@ -678,18 +699,45 @@ export class ExampleConverter extends AbstractConverter<AbstractConverterContext
                 "writeOnly" in property &&
                 property.writeOnly === true
             ) {
-                return { key, result: { isValid: true, coerced: false, usedProvidedExample: false, validExample: undefined, errors: [] } };
+                return {
+                    key,
+                    result: {
+                        isValid: true,
+                        coerced: false,
+                        usedProvidedExample: false,
+                        validExample: undefined,
+                        errors: []
+                    }
+                };
             }
             // TODO: Do we want to collect an error when the request / response example does not respect the readOnly / writeOnly property?
             if ("readOnly" in property && property.readOnly === true && this.exampleGenerationStrategy === "request") {
-                return { key, result: { isValid: true, coerced: false, usedProvidedExample: false, validExample: undefined, errors: [] } };
+                return {
+                    key,
+                    result: {
+                        isValid: true,
+                        coerced: false,
+                        usedProvidedExample: false,
+                        validExample: undefined,
+                        errors: []
+                    }
+                };
             }
             if (
                 "writeOnly" in property &&
                 property.writeOnly === true &&
                 this.exampleGenerationStrategy === "response"
             ) {
-                return { key, result: { isValid: true, coerced: false, usedProvidedExample: false, validExample: undefined, errors: [] } };
+                return {
+                    key,
+                    result: {
+                        isValid: true,
+                        coerced: false,
+                        usedProvidedExample: false,
+                        validExample: undefined,
+                        errors: []
+                    }
+                };
             }
             const propertyIsOmittedFromExample =
                 !(key in exampleObj) ||
@@ -712,7 +760,16 @@ export class ExampleConverter extends AbstractConverter<AbstractConverterContext
                     });
                     return { key, result: exampleConverter.convert() };
                 }
-                return { key, result: { isValid: true, coerced: false, usedProvidedExample: false, validExample: undefined, errors: [] } };
+                return {
+                    key,
+                    result: {
+                        isValid: true,
+                        coerced: false,
+                        usedProvidedExample: false,
+                        validExample: undefined,
+                        errors: []
+                    }
+                };
             } else {
                 const propExampleFromParent = exampleObj[key];
                 const propertyExample = propExampleFromParent ?? this.maybeResolveSchemaExample(property);
