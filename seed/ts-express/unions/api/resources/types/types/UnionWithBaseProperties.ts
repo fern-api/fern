@@ -6,18 +6,21 @@ import type * as SeedUnions from "../../../index";
  * @example
  *     {
  *         type: "integer",
+ *         id: "id",
  *         value: 5
  *     }
  *
  * @example
  *     {
  *         type: "string",
+ *         id: "id",
  *         value: "string"
  *     }
  *
  * @example
  *     {
  *         type: "foo",
+ *         id: "id",
  *         name: "name"
  *     }
  */

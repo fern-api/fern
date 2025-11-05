@@ -49,6 +49,7 @@ export class SdkGeneratorCli extends AbstractGeneratorCli<SdkCustomConfig> {
             shouldGenerateWebsocketClients: parsed?.shouldGenerateWebsocketClients ?? false,
             includeUtilsOnUnionMembers: !noSerdeLayer && (parsed?.includeUtilsOnUnionMembers ?? false),
             includeOtherInUnionTypes: parsed?.includeOtherInUnionTypes ?? false,
+            enableForwardCompatibleEnums: parsed?.enableForwardCompatibleEnums ?? false,
             requireDefaultEnvironment: parsed?.requireDefaultEnvironment ?? false,
             defaultTimeoutInSeconds: parsed?.defaultTimeoutInSeconds ?? parsed?.timeoutInSeconds,
             skipResponseValidation: noSerdeLayer || (parsed?.skipResponseValidation ?? true),
@@ -127,6 +128,16 @@ export class SdkGeneratorCli extends AbstractGeneratorCli<SdkCustomConfig> {
             }
         }
 
+        if (config.formatter === "oxfmt") {
+            logger.warn("Warning: oxfmt is currently in beta. Use with caution.");
+        }
+
+        if (config.linter === "oxlint") {
+            logger.warn(
+                "Warning: oxlint is currently in beta. Use with caution. Type-aware linting is supported via the --type-aware flag."
+            );
+        }
+
         return config;
     }
 
@@ -185,6 +196,7 @@ export class SdkGeneratorCli extends AbstractGeneratorCli<SdkCustomConfig> {
                 shouldGenerateWebsocketClients: customConfig.shouldGenerateWebsocketClients,
                 includeUtilsOnUnionMembers: customConfig.includeUtilsOnUnionMembers,
                 includeOtherInUnionTypes: customConfig.includeOtherInUnionTypes,
+                enableForwardCompatibleEnums: customConfig.enableForwardCompatibleEnums,
                 requireDefaultEnvironment: customConfig.requireDefaultEnvironment,
                 defaultTimeoutInSeconds: customConfig.defaultTimeoutInSeconds,
                 skipResponseValidation: customConfig.skipResponseValidation,

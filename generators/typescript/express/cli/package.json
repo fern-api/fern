@@ -37,7 +37,7 @@
     "@fern-api/configs": "workspace:*",
     "@fern-api/logger": "workspace:*",
     "@fern-fern/generator-exec-sdk": "^0.0.1167",
-    "@fern-fern/ir-sdk": "61.2.0",
+    "@fern-fern/ir-sdk": "^61.7.0",
     "@fern-typescript/abstract-generator-cli": "workspace:*",
     "@fern-typescript/commons": "workspace:*",
     "@fern-typescript/contexts": "workspace:*",

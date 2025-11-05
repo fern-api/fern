@@ -1,6 +1,3 @@
-using System.Collections.Generic;
-using System.Net.Http;
-
 namespace SeedUnknownAsAny.Core;
 
 internal interface IRequestOptions

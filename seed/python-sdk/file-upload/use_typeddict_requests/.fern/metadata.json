@@ -1,0 +1,9 @@
+{
+  "cliVersion": "DUMMY",
+  "generatorName": "fernapi/fern-python-sdk",
+  "generatorVersion": "latest",
+  "generatorConfig": {
+    "use_typeddict_requests": true,
+    "use_typeddict_requests_for_file_upload": true
+  }
+}

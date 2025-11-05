@@ -37,7 +37,7 @@
     "@fern-api/browser-compatible-base-generator": "workspace:*",
     "@fern-api/configs": "workspace:*",
     "@fern-api/core-utils": "workspace:*",
-    "@fern-api/dynamic-ir-sdk": "^59.6.1",
+    "@fern-api/dynamic-ir-sdk": "^61.7.0",
     "@fern-api/path-utils": "workspace:*",
     "@fern-api/swift-codegen": "workspace:*",
     "@types/lodash-es": "^4.17.12",

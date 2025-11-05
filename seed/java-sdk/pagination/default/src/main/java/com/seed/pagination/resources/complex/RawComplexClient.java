@@ -44,7 +44,8 @@ public class RawComplexClient {
         HttpUrl httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
                 .newBuilder()
                 .addPathSegment(index)
-                .addPathSegments("conversations/search")
+                .addPathSegments("conversations")
+                .addPathSegments("search")
                 .build();
         RequestBody body;
         try {
@@ -66,9 +67,10 @@ public class RawComplexClient {
         }
         try (Response response = client.newCall(okhttpRequest).execute()) {
             ResponseBody responseBody = response.body();
+            String responseBodyString = responseBody != null ? responseBody.string() : "{}";
             if (response.isSuccessful()) {
                 PaginatedConversationResponse parsedResponse =
-                        ObjectMappers.JSON_MAPPER.readValue(responseBody.string(), PaginatedConversationResponse.class);
+                        ObjectMappers.JSON_MAPPER.readValue(responseBodyString, PaginatedConversationResponse.class);
                 Optional<String> startingAfter = parsedResponse
                         .getPages()
                         .flatMap(CursorPages::getNext)
@@ -90,12 +92,9 @@ public class RawComplexClient {
                                         .body()),
                         response);
             }
-            String responseBodyString = responseBody != null ? responseBody.string() : "{}";
+            Object errorBody = ObjectMappers.parseErrorBody(responseBodyString);
             throw new SeedPaginationApiException(
-                    "Error with status code " + response.code(),
-                    response.code(),
-                    ObjectMappers.JSON_MAPPER.readValue(responseBodyString, Object.class),
-                    response);
+                    "Error with status code " + response.code(), response.code(), errorBody, response);
         } catch (IOException e) {
             throw new SeedPaginationException("Network error executing HTTP request", e);
         }

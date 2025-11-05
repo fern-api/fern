@@ -68,6 +68,17 @@
         },
         {
             "id": {
+                "path": "/{tenant_id}/user/{user_id}/metadata/v/{version}",
+                "method": "GET",
+                "identifier_override": "endpoint_user.getUserMetadata"
+            },
+            "snippet": {
+                "type": "go",
+                "client": "import (\n\tcontext \"context\"\n\tfernclient \"github.com/path-parameters/fern/client\"\n)\n\nclient := fernclient.NewClient()\nresponse, err := client.User.GetUserMetadata(\n\tcontext.TODO(),\n\t\"tenant_id\",\n\t\"user_id\",\n\t1,\n)\n"
+            }
+        },
+        {
+            "id": {
                 "path": "/{tenant_id}/user/{user_id}/search",
                 "method": "GET",
                 "identifier_override": "endpoint_user.searchUsers"

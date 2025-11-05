@@ -8,10 +8,10 @@ module Seed
           class GeneratedFiles < Internal::Types::Model
             field :generated_test_case_files, lambda {
               Internal::Types::Hash[Seed::Commons::Types::Language, Seed::V2::V3::Problem::Types::Files]
-            }, optional: false, nullable: false
+            }, optional: false, nullable: false, api_name: "generatedTestCaseFiles"
             field :generated_template_files, lambda {
               Internal::Types::Hash[Seed::Commons::Types::Language, Seed::V2::V3::Problem::Types::Files]
-            }, optional: false, nullable: false
+            }, optional: false, nullable: false, api_name: "generatedTemplateFiles"
             field :other, lambda {
               Internal::Types::Hash[Seed::Commons::Types::Language, Seed::V2::V3::Problem::Types::Files]
             }, optional: false, nullable: false

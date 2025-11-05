@@ -7,54 +7,28 @@ namespace SeedEnum.Test.Unit.MockServer;
 public class SendTest : BaseMockServerTest
 {
     [NUnit.Framework.Test]
-    public void MockServerTest_1()
+    public void MockServerTest()
     {
         Server
             .Given(
                 WireMock
                     .RequestBuilders.Request.Create()
-                    .WithPath("/query")
-                    .WithParam("operand", ">")
-                    .WithParam("maybeOperand", ">")
-                    .WithParam("operandOrColor", "red")
-                    .WithParam("maybeOperandOrColor", "red")
+                    .WithPath("/headers")
+                    .WithHeader("operand", ">")
+                    .WithHeader("maybeOperand", ">")
+                    .WithHeader("operandOrColor", "red")
                     .UsingPost()
             )
             .RespondWith(WireMock.ResponseBuilders.Response.Create().WithStatusCode(200));
 
         Assert.DoesNotThrowAsync(async () =>
-            await Client.QueryParam.SendAsync(
-                new SendEnumAsQueryParamRequest
+            await Client.Headers.SendAsync(
+                new SendEnumAsHeaderRequest
                 {
                     Operand = Operand.GreaterThan,
                     MaybeOperand = Operand.GreaterThan,
                     OperandOrColor = Color.Red,
-                    MaybeOperandOrColor = Color.Red,
-                }
-            )
-        );
-    }
-
-    [NUnit.Framework.Test]
-    public void MockServerTest_2()
-    {
-        Server
-            .Given(
-                WireMock
-                    .RequestBuilders.Request.Create()
-                    .WithPath("/query")
-                    .WithParam("operand", ">")
-                    .WithParam("operandOrColor", "red")
-                    .UsingPost()
-            )
-            .RespondWith(WireMock.ResponseBuilders.Response.Create().WithStatusCode(200));
-
-        Assert.DoesNotThrowAsync(async () =>
-            await Client.QueryParam.SendAsync(
-                new SendEnumAsQueryParamRequest
-                {
-                    Operand = Operand.GreaterThan,
-                    OperandOrColor = Color.Red,
+                    MaybeOperandOrColor = null,
                 }
             )
         );

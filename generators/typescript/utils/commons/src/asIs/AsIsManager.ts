@@ -14,8 +14,8 @@ export namespace AsIsManager {
         relativePackagePath: string;
         relativeTestPath: string;
         generatorType: "sdk" | "model" | "express";
-        formatter: "prettier" | "biome";
-        linter: "biome" | "none";
+        formatter: "prettier" | "biome" | "oxfmt";
+        linter: "biome" | "oxlint" | "none";
     }
 }
 
@@ -25,8 +25,8 @@ export class AsIsManager {
     private readonly relativePackagePath: string;
     private readonly relativeTestPath: string;
     private readonly generatorType: "sdk" | "model" | "express";
-    private readonly formatter: "prettier" | "biome";
-    private readonly linter: "biome" | "none";
+    private readonly formatter: "prettier" | "biome" | "oxfmt";
+    private readonly linter: "biome" | "oxlint" | "none";
 
     constructor({
         useBigInt,
@@ -52,6 +52,7 @@ export class AsIsManager {
     private getAsIsFiles() {
         return {
             biomeJson: { "biome.json": "biome.json" },
+            oxfmtrcJson: { "oxfmtrc.json": ".oxfmtrc.json" },
             core: {
                 mergeHeaders: { "core/headers.ts": `${this.relativePackagePath}/core/headers.ts` },
                 json: {
@@ -79,6 +80,9 @@ export class AsIsManager {
 
         if (this.formatter === "biome" || this.linter === "biome") {
             filesToCopy.push(asIsFiles.biomeJson);
+        }
+        if (this.formatter === "oxfmt") {
+            filesToCopy.push(asIsFiles.oxfmtrcJson);
         }
         if (this.generatorType === "sdk" || this.generatorType === "model") {
             filesToCopy.push(asIsFiles.core.mergeHeaders);

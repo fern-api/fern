@@ -22,6 +22,7 @@ export class SeedSimpleApiClient {
 
         this._options = {
                             ..._options,
+                            logging: core.logging.createLogger(_options?.logging),
                             headers: mergeHeaders({ "X-Fern-Language": "JavaScript", "X-Fern-SDK-Name": "@fern/simple-api", "X-Fern-SDK-Version": "0.0.1", "User-Agent": "@fern/simple-api/0.0.1", "X-Fern-Runtime": core.RUNTIME.type, "X-Fern-Runtime-Version": core.RUNTIME.version }, _options?.headers),
                         };
     }

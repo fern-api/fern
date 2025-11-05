@@ -1,4 +1,3 @@
-using System.Threading.Tasks;
 using NUnit.Framework;
 using SeedCrossPackageTypeNames.Core;
 using SeedCrossPackageTypeNames.Test.Unit.MockServer;

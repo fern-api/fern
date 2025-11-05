@@ -1431,6 +1431,7 @@
         "generatorConfig": null
     },
     "audiences": null,
+    "generationMetadata": null,
     "subpackages": {
         "subpackage_ec2": {
             "name": {

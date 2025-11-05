@@ -1,4 +1,33 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 2.7.1
+  changelogEntry:
+    - type: fix
+      summary: |
+        Improved generation of snippets and example code for file-upload scenarios.
+  createdAt: "2025-11-05"
+  irVersion: 61
+
+- version: 2.7.0
+  changelogEntry:
+    - type: feat
+      summary: |
+        Added Generation Metadata file to output
+  createdAt: "2025-11-04"
+  irVersion: 61
+
+- version: 2.6.0
+  changelogEntry:
+    - type: feat
+      summary: |
+        Significant improvements to class/property/namespace tracking, collisions reduced.
+        Generated snippets and examples are far more accurate.
+        Resolved a case where files with duplicate names were clobbered.
+        Implicit namespaces are consistent across .NET frameworks now.
+        Eliminated unnecessary namespace and scoping in generated code.
+        Significant fixes to generated code for Pagination scenarios.
+  createdAt: "2025-10-31"
+  irVersion: 61
+
 - version: 2.5.0
   changelogEntry:
     - type: feat

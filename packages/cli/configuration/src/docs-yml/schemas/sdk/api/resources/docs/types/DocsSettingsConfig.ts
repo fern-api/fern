@@ -13,4 +13,6 @@ export interface DocsSettingsConfig {
     hide404Page?: boolean;
     useJavascriptAsTypescript?: boolean;
     disableExplorerProxy?: boolean;
+    disableAnalytics?: boolean;
+    language?: FernDocsConfig.Language;
 }

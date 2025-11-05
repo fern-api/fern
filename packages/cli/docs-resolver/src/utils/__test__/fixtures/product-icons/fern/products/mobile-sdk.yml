@@ -1,0 +1,5 @@
+navigation:
+  - page: Mobile SDK Guide
+    path: ../mobile/guide.mdx
+  - page: Quick Start
+    path: ../mobile/quickstart.mdx

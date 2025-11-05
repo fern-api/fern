@@ -53,7 +53,7 @@ export class ReadmeConfigBuilder {
     private getLanguageInfo({ context }: { context: SdkGeneratorContext }): FernGeneratorCli.LanguageInfo {
         return FernGeneratorCli.LanguageInfo.csharp({
             publishInfo: {
-                packageName: context.getPackageId()
+                packageName: context.generation.names.project.packageId
             }
         });
     }

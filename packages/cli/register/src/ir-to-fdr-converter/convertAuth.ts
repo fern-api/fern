@@ -1,8 +1,7 @@
 import { assertNever } from "@fern-api/core-utils";
+import { FdrAPI as FdrCjsSdk } from "@fern-api/fdr-sdk";
 import { FernIr as Ir } from "@fern-api/ir-sdk";
 import { TaskContext } from "@fern-api/task-context";
-
-import { FernRegistry as FdrCjsSdk } from "@fern-fern/fdr-cjs-sdk";
 
 export interface PlaygroundConfig {
     oauth?: boolean;

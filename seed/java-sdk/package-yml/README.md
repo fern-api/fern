@@ -47,10 +47,10 @@ public class Example {
     public static void main(String[] args) {
         SeedPackageYmlClient client = SeedPackageYmlClient
             .builder()
+            .id("id-ksfd9c1")
             .build();
 
         client.echo(
-            "id-ksfd9c1",
             EchoRequest
                 .builder()
                 .name("Hello world!")

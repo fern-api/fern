@@ -1,5 +1,4 @@
 using SeedBasicAuthEnvironmentVariables;
-using System.Threading.Tasks;
 
 namespace Usage;
 

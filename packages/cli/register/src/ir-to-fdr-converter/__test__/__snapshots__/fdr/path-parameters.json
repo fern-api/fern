@@ -926,6 +926,128 @@
               "codeSamples": []
             }
           ]
+        },
+        {
+          "auth": false,
+          "description": "Test endpoint with path parameter that has a text prefix (v{version})",
+          "method": "GET",
+          "id": "getUserMetadata",
+          "originalEndpointId": "endpoint_user.getUserMetadata",
+          "name": "Get User Metadata",
+          "path": {
+            "pathParameters": [
+              {
+                "key": "tenant_id",
+                "type": {
+                  "type": "primitive",
+                  "value": {
+                    "type": "string"
+                  }
+                }
+              },
+              {
+                "key": "user_id",
+                "type": {
+                  "type": "primitive",
+                  "value": {
+                    "type": "string"
+                  }
+                }
+              },
+              {
+                "key": "version",
+                "type": {
+                  "type": "primitive",
+                  "value": {
+                    "type": "integer"
+                  }
+                }
+              }
+            ],
+            "parts": [
+              {
+                "type": "literal",
+                "value": "/"
+              },
+              {
+                "type": "pathParameter",
+                "value": "tenant_id"
+              },
+              {
+                "type": "literal",
+                "value": ""
+              },
+              {
+                "type": "literal",
+                "value": "/user"
+              },
+              {
+                "type": "literal",
+                "value": "/"
+              },
+              {
+                "type": "pathParameter",
+                "value": "user_id"
+              },
+              {
+                "type": "literal",
+                "value": "/metadata/v"
+              },
+              {
+                "type": "pathParameter",
+                "value": "version"
+              },
+              {
+                "type": "literal",
+                "value": ""
+              }
+            ]
+          },
+          "queryParameters": [],
+          "headers": [],
+          "requestsV2": {},
+          "response": {
+            "type": {
+              "type": "reference",
+              "value": {
+                "type": "id",
+                "value": "type_user:User"
+              }
+            }
+          },
+          "responsesV2": {},
+          "errorsV2": [],
+          "examples": [
+            {
+              "path": "/tenant_id/user/user_id/metadata/v1",
+              "pathParameters": {
+                "tenant_id": "tenant_id",
+                "user_id": "user_id",
+                "version": 1
+              },
+              "queryParameters": {},
+              "headers": {},
+              "responseStatusCode": 200,
+              "responseBody": {
+                "name": "name",
+                "tags": [
+                  "tags",
+                  "tags"
+                ]
+              },
+              "responseBodyV3": {
+                "type": "json",
+                "value": {
+                  "name": "name",
+                  "tags": [
+                    "tags",
+                    "tags"
+                  ]
+                }
+              },
+              "codeSamples": []
+            }
+          ]
         }
       ],
       "webhooks": [],

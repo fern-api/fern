@@ -13,6 +13,8 @@ import com.seed.literal.core.SeedLiteralHttpResponse;
 import com.seed.literal.resources.headers.requests.SendLiteralsInHeadersRequest;
 import com.seed.literal.types.SendResponse;
 import java.io.IOException;
+import java.util.HashMap;
+import java.util.Map;
 import okhttp3.Headers;
 import okhttp3.HttpUrl;
 import okhttp3.OkHttpClient;
@@ -38,10 +40,12 @@ public class RawHeadersClient {
                 .newBuilder()
                 .addPathSegments("headers")
                 .build();
+        Map<String, Object> properties = new HashMap<>();
+        properties.put("query", request.getQuery());
         RequestBody body;
         try {
             body = RequestBody.create(
-                    ObjectMappers.JSON_MAPPER.writeValueAsBytes(request), MediaTypes.APPLICATION_JSON);
+                    ObjectMappers.JSON_MAPPER.writeValueAsBytes(properties), MediaTypes.APPLICATION_JSON);
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
@@ -60,16 +64,14 @@ public class RawHeadersClient {
         }
         try (Response response = client.newCall(okhttpRequest).execute()) {
             ResponseBody responseBody = response.body();
+            String responseBodyString = responseBody != null ? responseBody.string() : "{}";
             if (response.isSuccessful()) {
                 return new SeedLiteralHttpResponse<>(
-                        ObjectMappers.JSON_MAPPER.readValue(responseBody.string(), SendResponse.class), response);
+                        ObjectMappers.JSON_MAPPER.readValue(responseBodyString, SendResponse.class), response);
             }
-            String responseBodyString = responseBody != null ? responseBody.string() : "{}";
+            Object errorBody = ObjectMappers.parseErrorBody(responseBodyString);
             throw new SeedLiteralApiException(
-                    "Error with status code " + response.code(),
-                    response.code(),
-                    ObjectMappers.JSON_MAPPER.readValue(responseBodyString, Object.class),
-                    response);
+                    "Error with status code " + response.code(), response.code(), errorBody, response);
         } catch (IOException e) {
             throw new SeedLiteralException("Network error executing HTTP request", e);
         }

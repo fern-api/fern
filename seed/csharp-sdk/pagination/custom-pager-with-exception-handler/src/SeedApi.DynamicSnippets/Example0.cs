@@ -1,5 +1,4 @@
 using SeedPagination;
-using System.Threading.Tasks;
 
 namespace Usage;
 
@@ -22,7 +21,7 @@ public class Example0
                 },
                 Query = new SingleFilterSearchRequest {
                     Field = "field",
-                    Operator = SingleFilterSearchRequestOperator.Equals,
+                    Operator = SingleFilterSearchRequestOperator.Equals_,
                     Value = "value"
                 }
             }

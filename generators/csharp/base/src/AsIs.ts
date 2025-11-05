@@ -1,16 +1,3 @@
-export const COLLECTION_ITEM_SERIALIZER_CLASS_NAME = "CollectionItemSerializer";
-export const CONSTANTS_CLASS_NAME = "Constants";
-export const DATETIME_SERIALIZER_CLASS_NAME = "DateTimeSerializer";
-export const ENUM_SERIALIZER_CLASS_NAME = "EnumSerializer";
-export const FILE_PARAMETER_CLASS_NAME = "FileParameter";
-export const FORM_URL_ENCODER_CLASS_NAME = "FormUrlEncoder";
-export const JSON_ACCESS_ATTRIBUTE_NAME = "JsonAccess";
-export const JSON_UTILS_CLASS_NAME = "JsonUtils";
-export const ONE_OF_SERIALIZER_CLASS_NAME = "OneOfSerializer";
-export const QUERY_STRING_CONVERTER_CLASS_NAME = "QueryStringConverter";
-export const STRING_ENUM_SERIALIZER_CLASS_NAME = "StringEnumSerializer";
-export const VALUE_CONVERT_CLASS_NAME = "ValueConvert";
-
 export const AsIsFiles = {
     CiYaml: "github-ci.yml",
     Constants: "Constants.Template.cs",

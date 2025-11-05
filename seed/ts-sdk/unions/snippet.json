@@ -19,7 +19,7 @@
             },
             "snippet": {
                 "type": "typescript",
-                "client": "import { SeedUnionsClient } from \"@fern/unions\";\n\nconst client = new SeedUnionsClient({ environment: \"YOUR_BASE_URL\" });\nawait client.bigunion.update({\n    type: \"normalSweet\",\n    value: \"value\"\n});\n"
+                "client": "import { SeedUnionsClient } from \"@fern/unions\";\n\nconst client = new SeedUnionsClient({ environment: \"YOUR_BASE_URL\" });\nawait client.bigunion.update({\n    type: \"normalSweet\",\n    id: \"id\",\n    \"created-at\": \"2024-01-15T09:30:00Z\",\n    \"archived-at\": \"2024-01-15T09:30:00Z\",\n    value: \"value\"\n});\n"
             }
         },
         {
@@ -30,7 +30,7 @@
             },
             "snippet": {
                 "type": "typescript",
-                "client": "import { SeedUnionsClient } from \"@fern/unions\";\n\nconst client = new SeedUnionsClient({ environment: \"YOUR_BASE_URL\" });\nawait client.bigunion.updateMany([{\n        type: \"normalSweet\",\n        value: \"value\"\n    }, {\n        type: \"normalSweet\",\n        value: \"value\"\n    }]);\n"
+                "client": "import { SeedUnionsClient } from \"@fern/unions\";\n\nconst client = new SeedUnionsClient({ environment: \"YOUR_BASE_URL\" });\nawait client.bigunion.updateMany([{\n        type: \"normalSweet\",\n        id: \"id\",\n        \"created-at\": \"2024-01-15T09:30:00Z\",\n        \"archived-at\": \"2024-01-15T09:30:00Z\",\n        value: \"value\"\n    }, {\n        type: \"normalSweet\",\n        id: \"id\",\n        \"created-at\": \"2024-01-15T09:30:00Z\",\n        \"archived-at\": \"2024-01-15T09:30:00Z\",\n        value: \"value\"\n    }]);\n"
             }
         },
         {
@@ -52,7 +52,7 @@
             },
             "snippet": {
                 "type": "typescript",
-                "client": "import { SeedUnionsClient } from \"@fern/unions\";\n\nconst client = new SeedUnionsClient({ environment: \"YOUR_BASE_URL\" });\nawait client.union.update({\n    type: \"circle\",\n    radius: 1.1\n});\n"
+                "client": "import { SeedUnionsClient } from \"@fern/unions\";\n\nconst client = new SeedUnionsClient({ environment: \"YOUR_BASE_URL\" });\nawait client.union.update({\n    type: \"circle\",\n    id: \"id\",\n    name: \"name\",\n    radius: 1.1\n});\n"
             }
         }
     ],

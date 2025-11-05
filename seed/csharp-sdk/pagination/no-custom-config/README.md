@@ -35,7 +35,7 @@ var items = await client.Complex.SearchAsync(
         Query = new SingleFilterSearchRequest
         {
             Field = "field",
-            Operator = SingleFilterSearchRequestOperator.Equals,
+            Operator = SingleFilterSearchRequestOperator.Equals_,
             Value = "value",
         },
     }
@@ -79,7 +79,7 @@ var items = await client.Complex.SearchAsync(
         Query = new SingleFilterSearchRequest
         {
             Field = "field",
-            Operator = SingleFilterSearchRequestOperator.Equals,
+            Operator = SingleFilterSearchRequestOperator.Equals_,
             Value = "value",
         },
     }

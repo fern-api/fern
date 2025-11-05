@@ -19202,25 +19202,7 @@
             "source": null,
             "userProvidedExamples": [
                 {
-                    "name": {
-                        "originalName": "example",
-                        "camelCase": {
-                            "unsafeName": "example",
-                            "safeName": "example"
-                        },
-                        "snakeCase": {
-                            "unsafeName": "example",
-                            "safeName": "example"
-                        },
-                        "screamingSnakeCase": {
-                            "unsafeName": "EXAMPLE",
-                            "safeName": "EXAMPLE"
-                        },
-                        "pascalCase": {
-                            "unsafeName": "Example",
-                            "safeName": "Example"
-                        }
-                    },
+                    "name": null,
                     "shape": {
                         "type": "object",
                         "properties": [
@@ -20199,10 +20181,10 @@
                         ]
                     },
                     "jsonExample": {
-                        "name": "circle",
                         "type": "circle",
                         "id": "example",
-                        "radius": 5
+                        "radius": 5,
+                        "name": "circle"
                     },
                     "docs": null
                 },
@@ -20529,10 +20511,10 @@
                         ]
                     },
                     "jsonExample": {
-                        "name": "square",
                         "type": "square",
                         "id": "example",
-                        "length": 5
+                        "length": 5,
+                        "name": "square"
                     },
                     "docs": null
                 }
@@ -35450,6 +35432,7 @@
         "generatorConfig": null
     },
     "audiences": null,
+    "generationMetadata": null,
     "subpackages": {
         "subpackage_bigunion": {
             "name": {

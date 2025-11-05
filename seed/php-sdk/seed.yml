@@ -1,4 +1,4 @@
-irVersion: v59
+irVersion: v61
 displayName: PHP SDK
 image: fernapi/fern-php-sdk
 changelogLocation: ../../generators/php/sdk/versions.yml
@@ -177,7 +177,6 @@ allowedFailures:
   - unions:no-custom-config
   - unions:property-accessors
   # unknown
-  - enum
   - file-upload
   - http-head
   - oauth-client-credentials-with-variables

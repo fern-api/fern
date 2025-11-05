@@ -1,6 +1,6 @@
 # Reference
 ## Dummy
-<details><summary><code>client.Dummy.<a href="/src/SeedStreaming/Dummy/DummyClient.cs">GenerateStreamAsync</a>(GenerateStreamRequest { ... }) -> System.Collections.Generic.IAsyncEnumerable<StreamResponse></code></summary>
+<details><summary><code>client.Dummy.<a href="/src/SeedStreaming/Dummy/DummyClient.cs">GenerateStreamAsync</a>(GenerateStreamRequest { ... }) -> IAsyncEnumerable<StreamResponse></code></summary>
 <dl>
 <dd>
 

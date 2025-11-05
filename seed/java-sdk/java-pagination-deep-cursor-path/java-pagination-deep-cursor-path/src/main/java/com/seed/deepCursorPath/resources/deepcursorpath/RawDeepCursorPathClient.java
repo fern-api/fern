@@ -72,10 +72,11 @@ public class RawDeepCursorPathClient {
         }
         try (Response response = client.newCall(okhttpRequest).execute()) {
             ResponseBody responseBody = response.body();
+            String responseBodyString = responseBody != null ? responseBody.string() : "{}";
             if (response.isSuccessful()) {
                 com.seed.deepCursorPath.resources.deepcursorpath.types.Response parsedResponse =
                         ObjectMappers.JSON_MAPPER.readValue(
-                                responseBody.string(),
+                                responseBodyString,
                                 com.seed.deepCursorPath.resources.deepcursorpath.types.Response.class);
                 Optional<String> startingAfter = parsedResponse.getStartingAfter();
                 Optional<D> d = request.getB().map(B::getC).flatMap(C::getD).map((D d_) -> D.builder()
@@ -95,12 +96,9 @@ public class RawDeepCursorPathClient {
                                 .body()),
                         response);
             }
-            String responseBodyString = responseBody != null ? responseBody.string() : "{}";
+            Object errorBody = ObjectMappers.parseErrorBody(responseBodyString);
             throw new SeedDeepCursorPathApiException(
-                    "Error with status code " + response.code(),
-                    response.code(),
-                    ObjectMappers.JSON_MAPPER.readValue(responseBodyString, Object.class),
-                    response);
+                    "Error with status code " + response.code(), response.code(), errorBody, response);
         } catch (IOException e) {
             throw new SeedDeepCursorPathException("Network error executing HTTP request", e);
         }
@@ -135,10 +133,11 @@ public class RawDeepCursorPathClient {
         }
         try (Response response = client.newCall(okhttpRequest).execute()) {
             ResponseBody responseBody = response.body();
+            String responseBodyString = responseBody != null ? responseBody.string() : "{}";
             if (response.isSuccessful()) {
                 com.seed.deepCursorPath.resources.deepcursorpath.types.Response parsedResponse =
                         ObjectMappers.JSON_MAPPER.readValue(
-                                responseBody.string(),
+                                responseBodyString,
                                 com.seed.deepCursorPath.resources.deepcursorpath.types.Response.class);
                 Optional<String> startingAfter = parsedResponse.getStartingAfter();
                 IndirectionRequired indirection = IndirectionRequired.builder()
@@ -157,12 +156,9 @@ public class RawDeepCursorPathClient {
                                         .body()),
                         response);
             }
-            String responseBodyString = responseBody != null ? responseBody.string() : "{}";
+            Object errorBody = ObjectMappers.parseErrorBody(responseBodyString);
             throw new SeedDeepCursorPathApiException(
-                    "Error with status code " + response.code(),
-                    response.code(),
-                    ObjectMappers.JSON_MAPPER.readValue(responseBodyString, Object.class),
-                    response);
+                    "Error with status code " + response.code(), response.code(), errorBody, response);
         } catch (IOException e) {
             throw new SeedDeepCursorPathException("Network error executing HTTP request", e);
         }
@@ -201,10 +197,11 @@ public class RawDeepCursorPathClient {
         }
         try (Response response = client.newCall(okhttpRequest).execute()) {
             ResponseBody responseBody = response.body();
+            String responseBodyString = responseBody != null ? responseBody.string() : "{}";
             if (response.isSuccessful()) {
                 com.seed.deepCursorPath.resources.deepcursorpath.types.Response parsedResponse =
                         ObjectMappers.JSON_MAPPER.readValue(
-                                responseBody.string(),
+                                responseBodyString,
                                 com.seed.deepCursorPath.resources.deepcursorpath.types.Response.class);
                 Optional<String> startingAfter = parsedResponse.getStartingAfter();
                 Optional<InlineD> b = request.getB()
@@ -228,12 +225,9 @@ public class RawDeepCursorPathClient {
                                         .body()),
                         response);
             }
-            String responseBodyString = responseBody != null ? responseBody.string() : "{}";
+            Object errorBody = ObjectMappers.parseErrorBody(responseBodyString);
             throw new SeedDeepCursorPathApiException(
-                    "Error with status code " + response.code(),
-                    response.code(),
-                    ObjectMappers.JSON_MAPPER.readValue(responseBodyString, Object.class),
-                    response);
+                    "Error with status code " + response.code(), response.code(), errorBody, response);
         } catch (IOException e) {
             throw new SeedDeepCursorPathException("Network error executing HTTP request", e);
         }

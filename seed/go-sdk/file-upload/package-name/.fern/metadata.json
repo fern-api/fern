@@ -1,0 +1,12 @@
+{
+  "cliVersion": "DUMMY",
+  "generatorName": "fernapi/fern-go-sdk",
+  "generatorVersion": "latest",
+  "generatorConfig": {
+    "enableWireTests": false,
+    "packageName": "upload",
+    "module": {
+      "path": "github.com/fern-api/file-upload-go"
+    }
+  }
+}

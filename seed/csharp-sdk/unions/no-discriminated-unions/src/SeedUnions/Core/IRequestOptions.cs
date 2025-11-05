@@ -1,6 +1,3 @@
-using System.Collections.Generic;
-using System.Net.Http;
-
 namespace SeedUnions.Core;
 
 internal interface IRequestOptions

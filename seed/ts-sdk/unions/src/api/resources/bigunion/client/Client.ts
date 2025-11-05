@@ -47,6 +47,8 @@ export class Bigunion {
             timeoutMs: (requestOptions?.timeoutInSeconds ?? this._options?.timeoutInSeconds ?? 60) * 1000,
             maxRetries: requestOptions?.maxRetries ?? this._options?.maxRetries,
             abortSignal: requestOptions?.abortSignal,
+            fetchFn: this._options?.fetch,
+            logging: this._options.logging,
         });
         if (_response.ok) {
             return { data: _response.body as SeedUnions.BigUnion, rawResponse: _response.rawResponse };
@@ -84,6 +86,9 @@ export class Bigunion {
      * @example
      *     await client.bigunion.update({
      *         type: "normalSweet",
+     *         id: "id",
+     *         "created-at": "2024-01-15T09:30:00Z",
+     *         "archived-at": "2024-01-15T09:30:00Z",
      *         value: "value"
      *     })
      */
@@ -112,6 +117,8 @@ export class Bigunion {
             timeoutMs: (requestOptions?.timeoutInSeconds ?? this._options?.timeoutInSeconds ?? 60) * 1000,
             maxRetries: requestOptions?.maxRetries ?? this._options?.maxRetries,
             abortSignal: requestOptions?.abortSignal,
+            fetchFn: this._options?.fetch,
+            logging: this._options.logging,
         });
         if (_response.ok) {
             return { data: _response.body as boolean, rawResponse: _response.rawResponse };
@@ -149,9 +156,15 @@ export class Bigunion {
      * @example
      *     await client.bigunion.updateMany([{
      *             type: "normalSweet",
+     *             id: "id",
+     *             "created-at": "2024-01-15T09:30:00Z",
+     *             "archived-at": "2024-01-15T09:30:00Z",
      *             value: "value"
      *         }, {
      *             type: "normalSweet",
+     *             id: "id",
+     *             "created-at": "2024-01-15T09:30:00Z",
+     *             "archived-at": "2024-01-15T09:30:00Z",
      *             value: "value"
      *         }])
      */
@@ -182,6 +195,8 @@ export class Bigunion {
             timeoutMs: (requestOptions?.timeoutInSeconds ?? this._options?.timeoutInSeconds ?? 60) * 1000,
             maxRetries: requestOptions?.maxRetries ?? this._options?.maxRetries,
             abortSignal: requestOptions?.abortSignal,
+            fetchFn: this._options?.fetch,
+            logging: this._options.logging,
         });
         if (_response.ok) {
             return { data: _response.body as Record<string, boolean>, rawResponse: _response.rawResponse };

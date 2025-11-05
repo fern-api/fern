@@ -50,7 +50,8 @@ public class AsyncRawComplexClient {
         HttpUrl httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
                 .newBuilder()
                 .addPathSegment(index)
-                .addPathSegments("conversations/search")
+                .addPathSegments("conversations")
+                .addPathSegments("search")
                 .build();
         RequestBody body;
         try {
@@ -76,9 +77,10 @@ public class AsyncRawComplexClient {
             @Override
             public void onResponse(@NotNull Call call, @NotNull Response response) throws IOException {
                 try (ResponseBody responseBody = response.body()) {
+                    String responseBodyString = responseBody != null ? responseBody.string() : "{}";
                     if (response.isSuccessful()) {
                         PaginatedConversationResponse parsedResponse = ObjectMappers.JSON_MAPPER.readValue(
-                                responseBody.string(), PaginatedConversationResponse.class);
+                                responseBodyString, PaginatedConversationResponse.class);
                         Optional<String> startingAfter = parsedResponse
                                 .getPages()
                                 .flatMap(CursorPages::getNext)
@@ -107,12 +109,9 @@ public class AsyncRawComplexClient {
                                 response));
                         return;
                     }
-                    String responseBodyString = responseBody != null ? responseBody.string() : "{}";
+                    Object errorBody = ObjectMappers.parseErrorBody(responseBodyString);
                     future.completeExceptionally(new SeedPaginationApiException(
-                            "Error with status code " + response.code(),
-                            response.code(),
-                            ObjectMappers.JSON_MAPPER.readValue(responseBodyString, Object.class),
-                            response));
+                            "Error with status code " + response.code(), response.code(), errorBody, response));
                     return;
                 } catch (IOException e) {
                     future.completeExceptionally(

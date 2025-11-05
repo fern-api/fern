@@ -438,6 +438,7 @@ objx
 Octo
 odata
 oganizations
+oidc
 Oidc
 okhttp
 Okhttp
@@ -466,6 +467,9 @@ ossrh
 OSSRH
 ostruct
 OURCYGPATTERN
+oxfmt
+oxfmtrc
+oxlint
 oxtbtc
 oxteth
 oxtusd
@@ -481,6 +485,7 @@ perserv
 Phila
 phpstan
 phpunit
+pino
 pirsch
 Pirsch
 pjpeg

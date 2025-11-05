@@ -1,4 +1,4 @@
-irVersion: v58
+irVersion: v61
 displayName: Ruby SDK
 image: fernapi/fern-ruby-sdk
 changelogLocation: ../../generators/ruby-v2/sdk/versions.yml

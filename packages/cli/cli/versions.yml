@@ -1,4 +1,166 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- changelogEntry:
+    - summary: |
+        Add position-based sorting for folder navigation in docs.yml. Pages can now control their order using a `position` field in frontmatter. Pages with position values sort first (ascending), then pages without position sort alphabetically.
+
+        Example:
+        ```markdown
+        ---
+        position: 1
+        ---
+        # Getting Started
+        ```
+      type: feat
+    - summary: |
+        Fix hot-reload in `fern docs dev` to detect frontmatter position changes. Previously, changing position values required restarting the dev server. Now position changes, file additions, and file deletions trigger automatic navigation rebuilds.
+      type: fix
+  irVersion: 61
+  createdAt: "2025-11-05"
+  version: 0.108.0
+
+- changelogEntry:
+    - summary: |
+        Fix AsyncAPI v3 message parsing where channel messages were not being included in generated WebSocket clients. Messages defined in AsyncAPI v3 specs are now correctly resolved and included in the SDK.
+      type: fix
+  irVersion: 61
+  createdAt: "2025-11-05"
+  version: 0.107.11
+
+- changelogEntry:
+    - summary: |
+        Update migration logic to support new generator versions with ir v61.
+      type: chore
+  irVersion: 61
+  createdAt: "2025-11-05"
+  version: 0.107.10
+
+- changelogEntry:
+    - summary: |
+        Implement variant ranking in anyOf/oneOf example generation to prefer variants that use provided examples without coercion over variants that require coercion or generate fallback examples. When a schema has anyOf: [number, string] with examples: ["2500"], the string variant is now preferred since it can use the provided example as-is, rather than the number variant which would coerce it to a number.
+      type: fix
+  irVersion: 61
+  createdAt: "2025-11-05"
+  version: 0.107.9
+
+- changelogEntry:
+    - summary: |
+        Improve anyOf/oneOf example generation to prefer variants with examples and use schema-level examples when available. This addresses cases where unions with multiple types were generating fallback examples instead of using provided examples.
+      type: fix
+  irVersion: 61
+  createdAt: "2025-11-05"
+  version: 0.107.8
+
+- changelogEntry:
+    - summary: |
+        Enables parsing of the language setting in docs.
+      type: chore
+  irVersion: 61
+  createdAt: "2025-11-03"
+  version: 0.107.7
+
+- changelogEntry:
+    - summary: |
+        Silence validation logs in fern docs dev unless there is a validation error
+      type: fix
+  irVersion: 61
+  createdAt: "2025-11-05"
+  version: 0.107.6
+
+- changelogEntry:
+    - summary: |
+        Perform fern docs dev validation in the background instead of foreground
+      type: fix
+  irVersion: 61
+  createdAt: "2025-11-04"
+  version: 0.107.5
+
+- changelogEntry:
+    - summary: |
+        Fix the dereferencing of message $refs in the operations section of AsyncAPI specs.
+      type: fix
+  irVersion: 61
+  createdAt: "2025-11-04"
+  version: 0.107.4
+
+- changelogEntry:
+    - summary: |
+        Revert the change in 0.107.0 which didn't deduplicate types as expected
+      type: chore
+  irVersion: 61
+  createdAt: "2025-11-03"
+  version: 0.107.3
+
+- changelogEntry:
+    - summary: |
+        Fix fern docs dev on windows
+      type: fix
+  irVersion: 61
+  createdAt: "2025-11-03"
+  version: 0.107.2
+
+- changelogEntry:
+    - summary: |
+        Allow unknown types in query parameters
+      type: fix
+  irVersion: 61
+  createdAt: "2025-11-03"
+  version: 0.107.1
+
+- changelogEntry:
+    - summary: |
+        Fixes fern definition creating duplicate types in separate files
+      type: fix
+  irVersion: 61
+  createdAt: "2025-11-03"
+  version: 0.107.0
+
+- changelogEntry:
+    - summary: |
+        Add support for external product links.
+      type: feat
+  irVersion: 61
+  createdAt: "2025-11-03"
+  version: 0.106.0
+
+- changelogEntry:
+    - summary: |
+        Add a disable-analytics setting in docs.yml
+      type: feat
+  irVersion: 61
+  createdAt: "2025-11-02"
+  version: 0.105.0
+
+- changelogEntry:
+    - summary: |
+        Adds support for custom icons.
+      type: feat
+  irVersion: 61
+  createdAt: "2025-11-01"
+  version: 0.104.0
+
+- changelogEntry:
+    - summary: |
+        Add support for new IR property: GenerationMetadata.
+      type: feat
+  irVersion: 61
+  createdAt: "2025-10-31"
+  version: 0.103.0
+
+- changelogEntry:
+    - summary: |
+        Fix discriminated union validation in `fern check` to include base properties and extends.
+      type: fix
+  irVersion: 61
+  createdAt: "2025-10-31"
+  version: 0.102.1
+
+- changelogEntry:
+    - summary: |
+        Add discriminated union base property and extend property examples to IR.
+      type: feat
+  irVersion: 61
+  createdAt: "2025-10-31"
+  version: 0.102.0
 
 - changelogEntry:
     - summary: |
@@ -15,14 +177,6 @@
   irVersion: 61
   createdAt: "2025-10-31"
   version: 0.101.3
-
-- changelogEntry:
-    - summary: |
-        Add discriminated union base property and extend property examples to IR.
-      type: feat
-  irVersion: 61
-  createdAt: "2025-10-31"
-  version: 0.102.0
 
 - changelogEntry:
     - summary: |
@@ -46,7 +200,7 @@
 
         - `theme.[sidebar, body, tabs]`: controls the theme of the docs
         - `settings.disable-explorer-proxy`: controls whether the explorer uses a proxy
-        - `languages`: initializes localization within fern docs 
+        - `languages`: initializes localization within fern docs
         - `navbarLinks.[dropdown]`: adds a dropdown option for navbar links
         - `navbarLinks.[].viewers`: allows navbar links to be controlled with RBAC
       type: feat

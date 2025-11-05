@@ -8924,15 +8924,14 @@
                         }
                       ],
                       "invite": {
-                        "member_id": "string",
-                        "email": "string",
+                        "email": "jane@coolcompany.com",
                         "role": "admin",
-                        "id": "string",
-                        "organization_id": "string",
-                        "invite_code": "string",
-                        "created_at": "2024-01-15T09:30:00Z",
+                        "id": "497f6eca-6276-4993-bfeb-53cbbbba6f08",
+                        "organization_id": "7c60d51f-b44e-4682-87d6-449835ea4de6",
+                        "invite_code": "40ef0e48-a11f-4963-a229-e396c9eeefff",
+                        "created_at": "2019-08-24T14:15:22Z",
                         "status": "pending",
-                        "failed_reason": "string"
+                        "failed_reason": ""
                       },
                       "settings": {},
                       "grants": [
@@ -9016,15 +9015,14 @@
                           }
                         ],
                         "invite": {
-                          "member_id": "string",
-                          "email": "string",
+                          "email": "jane@coolcompany.com",
                           "role": "admin",
-                          "id": "string",
-                          "organization_id": "string",
-                          "invite_code": "string",
-                          "created_at": "2024-01-15T09:30:00Z",
+                          "id": "497f6eca-6276-4993-bfeb-53cbbbba6f08",
+                          "organization_id": "7c60d51f-b44e-4682-87d6-449835ea4de6",
+                          "invite_code": "40ef0e48-a11f-4963-a229-e396c9eeefff",
+                          "created_at": "2019-08-24T14:15:22Z",
                           "status": "pending",
-                          "failed_reason": "string"
+                          "failed_reason": ""
                         },
                         "settings": {},
                         "grants": [
@@ -19915,19 +19913,39 @@
                     "created_at": "2024-01-15T09:30:00Z",
                     "updated_at": "2024-01-15T09:30:00Z",
                     "resource": {
-                      "key": "string",
-                      "id": "string",
-                      "organization_id": "string",
-                      "project_id": "string",
-                      "environment_id": "string",
-                      "created_at": "2024-01-15T09:30:00Z",
-                      "updated_at": "2024-01-15T09:30:00Z",
-                      "name": "string",
-                      "urn": "string",
-                      "description": "string",
-                      "actions": {},
-                      "attributes": {},
-                      "action_groups": {}
+                      "key": "repository",
+                      "id": "497f6eca-6276-4993-bfeb-53cbbbba6f08",
+                      "organization_id": "7c60d51f-b44e-4682-87d6-449835ea4de6",
+                      "project_id": "405d8375-3514-403b-8c43-83ae74cfe0e9",
+                      "environment_id": "40ef0e48-a11f-4963-a229-e396c9f7e7c4",
+                      "created_at": "2019-08-24T14:15:22Z",
+                      "updated_at": "2019-08-24T14:15:22Z",
+                      "name": "Repository",
+                      "urn": "prn:github:scm:repository",
+                      "description": "a git repository stored on github",
+                      "actions": {
+                        "clone": {
+                          "id": "90e21d70-2b1b-42f0-b492-8fd69c1d79d1"
+                        },
+                        "read": {
+                          "id": "2bc27751-6115-43c0-b68c-928cb46e34bc"
+                        },
+                        "push": {
+                          "id": "e06da336-6e03-41d6-a495-40b0d7537b2a"
+                        }
+                      },
+                      "attributes": {
+                        "created": {
+                          "id": "497f6eca-6276-4993-bfeb-53cbbbba6f11",
+                          "type": "time",
+                          "description": "the time (timestamp) the repository was created"
+                        },
+                        "private": {
+                          "id": "497f6eca-6276-4993-bfeb-53cbbbba6f22",
+                          "type": "bool",
+                          "description": "whether the repo is private (if false, the repo is public)"
+                        }
+                      }
                     },
                     "name": "string",
                     "description": "string",
@@ -19954,19 +19972,39 @@
                       "created_at": "2024-01-15T09:30:00Z",
                       "updated_at": "2024-01-15T09:30:00Z",
                       "resource": {
-                        "key": "string",
-                        "id": "string",
-                        "organization_id": "string",
-                        "project_id": "string",
-                        "environment_id": "string",
-                        "created_at": "2024-01-15T09:30:00Z",
-                        "updated_at": "2024-01-15T09:30:00Z",
-                        "name": "string",
-                        "urn": "string",
-                        "description": "string",
-                        "actions": {},
-                        "attributes": {},
-                        "action_groups": {}
+                        "key": "repository",
+                        "id": "497f6eca-6276-4993-bfeb-53cbbbba6f08",
+                        "organization_id": "7c60d51f-b44e-4682-87d6-449835ea4de6",
+                        "project_id": "405d8375-3514-403b-8c43-83ae74cfe0e9",
+                        "environment_id": "40ef0e48-a11f-4963-a229-e396c9f7e7c4",
+                        "created_at": "2019-08-24T14:15:22Z",
+                        "updated_at": "2019-08-24T14:15:22Z",
+                        "name": "Repository",
+                        "urn": "prn:github:scm:repository",
+                        "description": "a git repository stored on github",
+                        "actions": {
+                          "clone": {
+                            "id": "90e21d70-2b1b-42f0-b492-8fd69c1d79d1"
+                          },
+                          "read": {
+                            "id": "2bc27751-6115-43c0-b68c-928cb46e34bc"
+                          },
+                          "push": {
+                            "id": "e06da336-6e03-41d6-a495-40b0d7537b2a"
+                          }
+                        },
+                        "attributes": {
+                          "created": {
+                            "id": "497f6eca-6276-4993-bfeb-53cbbbba6f11",
+                            "type": "time",
+                            "description": "the time (timestamp) the repository was created"
+                          },
+                          "private": {
+                            "id": "497f6eca-6276-4993-bfeb-53cbbbba6f22",
+                            "type": "bool",
+                            "description": "whether the repo is private (if false, the repo is public)"
+                          }
+                        }
                       },
                       "name": "string",
                       "description": "string",
@@ -21091,19 +21129,39 @@
                   "created_at": "2024-01-15T09:30:00Z",
                   "updated_at": "2024-01-15T09:30:00Z",
                   "resource": {
-                    "key": "string",
-                    "id": "string",
-                    "organization_id": "string",
-                    "project_id": "string",
-                    "environment_id": "string",
-                    "created_at": "2024-01-15T09:30:00Z",
-                    "updated_at": "2024-01-15T09:30:00Z",
-                    "name": "string",
-                    "urn": "string",
-                    "description": "string",
-                    "actions": {},
-                    "attributes": {},
-                    "action_groups": {}
+                    "key": "repository",
+                    "id": "497f6eca-6276-4993-bfeb-53cbbbba6f08",
+                    "organization_id": "7c60d51f-b44e-4682-87d6-449835ea4de6",
+                    "project_id": "405d8375-3514-403b-8c43-83ae74cfe0e9",
+                    "environment_id": "40ef0e48-a11f-4963-a229-e396c9f7e7c4",
+                    "created_at": "2019-08-24T14:15:22Z",
+                    "updated_at": "2019-08-24T14:15:22Z",
+                    "name": "Repository",
+                    "urn": "prn:github:scm:repository",
+                    "description": "a git repository stored on github",
+                    "actions": {
+                      "clone": {
+                        "id": "90e21d70-2b1b-42f0-b492-8fd69c1d79d1"
+                      },
+                      "read": {
+                        "id": "2bc27751-6115-43c0-b68c-928cb46e34bc"
+                      },
+                      "push": {
+                        "id": "e06da336-6e03-41d6-a495-40b0d7537b2a"
+                      }
+                    },
+                    "attributes": {
+                      "created": {
+                        "id": "497f6eca-6276-4993-bfeb-53cbbbba6f11",
+                        "type": "time",
+                        "description": "the time (timestamp) the repository was created"
+                      },
+                      "private": {
+                        "id": "497f6eca-6276-4993-bfeb-53cbbbba6f22",
+                        "type": "bool",
+                        "description": "whether the repo is private (if false, the repo is public)"
+                      }
+                    }
                   },
                   "name": "string",
                   "description": "string",
@@ -21126,19 +21184,39 @@
                     "created_at": "2024-01-15T09:30:00Z",
                     "updated_at": "2024-01-15T09:30:00Z",
                     "resource": {
-                      "key": "string",
-                      "id": "string",
-                      "organization_id": "string",
-                      "project_id": "string",
-                      "environment_id": "string",
-                      "created_at": "2024-01-15T09:30:00Z",
-                      "updated_at": "2024-01-15T09:30:00Z",
-                      "name": "string",
-                      "urn": "string",
-                      "description": "string",
-                      "actions": {},
-                      "attributes": {},
-                      "action_groups": {}
+                      "key": "repository",
+                      "id": "497f6eca-6276-4993-bfeb-53cbbbba6f08",
+                      "organization_id": "7c60d51f-b44e-4682-87d6-449835ea4de6",
+                      "project_id": "405d8375-3514-403b-8c43-83ae74cfe0e9",
+                      "environment_id": "40ef0e48-a11f-4963-a229-e396c9f7e7c4",
+                      "created_at": "2019-08-24T14:15:22Z",
+                      "updated_at": "2019-08-24T14:15:22Z",
+                      "name": "Repository",
+                      "urn": "prn:github:scm:repository",
+                      "description": "a git repository stored on github",
+                      "actions": {
+                        "clone": {
+                          "id": "90e21d70-2b1b-42f0-b492-8fd69c1d79d1"
+                        },
+                        "read": {
+                          "id": "2bc27751-6115-43c0-b68c-928cb46e34bc"
+                        },
+                        "push": {
+                          "id": "e06da336-6e03-41d6-a495-40b0d7537b2a"
+                        }
+                      },
+                      "attributes": {
+                        "created": {
+                          "id": "497f6eca-6276-4993-bfeb-53cbbbba6f11",
+                          "type": "time",
+                          "description": "the time (timestamp) the repository was created"
+                        },
+                        "private": {
+                          "id": "497f6eca-6276-4993-bfeb-53cbbbba6f22",
+                          "type": "bool",
+                          "description": "whether the repo is private (if false, the repo is public)"
+                        }
+                      }
                     },
                     "name": "string",
                     "description": "string",
@@ -21345,19 +21423,39 @@
                   "created_at": "2024-01-15T09:30:00Z",
                   "updated_at": "2024-01-15T09:30:00Z",
                   "resource": {
-                    "key": "string",
-                    "id": "string",
-                    "organization_id": "string",
-                    "project_id": "string",
-                    "environment_id": "string",
-                    "created_at": "2024-01-15T09:30:00Z",
-                    "updated_at": "2024-01-15T09:30:00Z",
-                    "name": "string",
-                    "urn": "string",
-                    "description": "string",
-                    "actions": {},
-                    "attributes": {},
-                    "action_groups": {}
+                    "key": "repository",
+                    "id": "497f6eca-6276-4993-bfeb-53cbbbba6f08",
+                    "organization_id": "7c60d51f-b44e-4682-87d6-449835ea4de6",
+                    "project_id": "405d8375-3514-403b-8c43-83ae74cfe0e9",
+                    "environment_id": "40ef0e48-a11f-4963-a229-e396c9f7e7c4",
+                    "created_at": "2019-08-24T14:15:22Z",
+                    "updated_at": "2019-08-24T14:15:22Z",
+                    "name": "Repository",
+                    "urn": "prn:github:scm:repository",
+                    "description": "a git repository stored on github",
+                    "actions": {
+                      "clone": {
+                        "id": "90e21d70-2b1b-42f0-b492-8fd69c1d79d1"
+                      },
+                      "read": {
+                        "id": "2bc27751-6115-43c0-b68c-928cb46e34bc"
+                      },
+                      "push": {
+                        "id": "e06da336-6e03-41d6-a495-40b0d7537b2a"
+                      }
+                    },
+                    "attributes": {
+                      "created": {
+                        "id": "497f6eca-6276-4993-bfeb-53cbbbba6f11",
+                        "type": "time",
+                        "description": "the time (timestamp) the repository was created"
+                      },
+                      "private": {
+                        "id": "497f6eca-6276-4993-bfeb-53cbbbba6f22",
+                        "type": "bool",
+                        "description": "whether the repo is private (if false, the repo is public)"
+                      }
+                    }
                   },
                   "name": "string",
                   "description": "string",
@@ -21380,19 +21478,39 @@
                     "created_at": "2024-01-15T09:30:00Z",
                     "updated_at": "2024-01-15T09:30:00Z",
                     "resource": {
-                      "key": "string",
-                      "id": "string",
-                      "organization_id": "string",
-                      "project_id": "string",
-                      "environment_id": "string",
-                      "created_at": "2024-01-15T09:30:00Z",
-                      "updated_at": "2024-01-15T09:30:00Z",
-                      "name": "string",
-                      "urn": "string",
-                      "description": "string",
-                      "actions": {},
-                      "attributes": {},
-                      "action_groups": {}
+                      "key": "repository",
+                      "id": "497f6eca-6276-4993-bfeb-53cbbbba6f08",
+                      "organization_id": "7c60d51f-b44e-4682-87d6-449835ea4de6",
+                      "project_id": "405d8375-3514-403b-8c43-83ae74cfe0e9",
+                      "environment_id": "40ef0e48-a11f-4963-a229-e396c9f7e7c4",
+                      "created_at": "2019-08-24T14:15:22Z",
+                      "updated_at": "2019-08-24T14:15:22Z",
+                      "name": "Repository",
+                      "urn": "prn:github:scm:repository",
+                      "description": "a git repository stored on github",
+                      "actions": {
+                        "clone": {
+                          "id": "90e21d70-2b1b-42f0-b492-8fd69c1d79d1"
+                        },
+                        "read": {
+                          "id": "2bc27751-6115-43c0-b68c-928cb46e34bc"
+                        },
+                        "push": {
+                          "id": "e06da336-6e03-41d6-a495-40b0d7537b2a"
+                        }
+                      },
+                      "attributes": {
+                        "created": {
+                          "id": "497f6eca-6276-4993-bfeb-53cbbbba6f11",
+                          "type": "time",
+                          "description": "the time (timestamp) the repository was created"
+                        },
+                        "private": {
+                          "id": "497f6eca-6276-4993-bfeb-53cbbbba6f22",
+                          "type": "bool",
+                          "description": "whether the repo is private (if false, the repo is public)"
+                        }
+                      }
                     },
                     "name": "string",
                     "description": "string",

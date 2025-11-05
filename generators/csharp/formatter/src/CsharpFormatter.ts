@@ -11,7 +11,7 @@ export class CsharpFormatter extends AbstractFormatter {
     }
 
     private appendSemicolon(content: string): string {
-        return content.endsWith(";") ? content : content + ";";
+        return content.endsWith(";") ? content : `${content};`;
     }
 
     public async format(content: string): Promise<string> {

@@ -86,6 +86,9 @@ async function getTestFixturePath(fixtureFilePath: AbsoluteFilePath): Promise<Ab
     const yamlFixturePath = join(fixtureFilePath, RelativeFilePath.of("openapi.yaml"));
     const ymlFixturePath = join(fixtureFilePath, RelativeFilePath.of("openapi.yml"));
     const jsonFixturePath = join(fixtureFilePath, RelativeFilePath.of("openapi.json"));
+    const asyncYamlFixturePath = join(fixtureFilePath, RelativeFilePath.of("asyncapi.yaml"));
+    const asyncYmlFixturePath = join(fixtureFilePath, RelativeFilePath.of("asyncapi.yml"));
+    const asyncJsonFixturePath = join(fixtureFilePath, RelativeFilePath.of("asyncapi.json"));
     const swaggerFixturePath = join(fixtureFilePath, RelativeFilePath.of("swagger.json"));
     return (await doesPathExist(yamlFixturePath))
         ? yamlFixturePath
@@ -93,7 +96,13 @@ async function getTestFixturePath(fixtureFilePath: AbsoluteFilePath): Promise<Ab
           ? ymlFixturePath
           : (await doesPathExist(jsonFixturePath))
             ? jsonFixturePath
-            : swaggerFixturePath;
+            : (await doesPathExist(asyncYamlFixturePath))
+              ? asyncYamlFixturePath
+              : (await doesPathExist(asyncYmlFixturePath))
+                ? asyncYmlFixturePath
+                : (await doesPathExist(asyncJsonFixturePath))
+                  ? asyncJsonFixturePath
+                  : swaggerFixturePath;
 }
 
 const SWAGGER_OPENAPI_FIXTURES = new Set(["suger"]);

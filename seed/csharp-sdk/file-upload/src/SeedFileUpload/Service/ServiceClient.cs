@@ -1,7 +1,4 @@
-using System.Net.Http;
 using System.Text.Json;
-using System.Threading;
-using System.Threading.Tasks;
 using SeedFileUpload.Core;
 
 namespace SeedFileUpload;
@@ -63,6 +60,9 @@ public partial class ServiceClient
         }
     }
 
+    /// <example><code>
+    /// await client.Service.JustFileAsync(new JustFileRequest());
+    /// </code></example>
     public async Task JustFileAsync(
         JustFileRequest request,
         RequestOptions? options = null,
@@ -274,6 +274,9 @@ public partial class ServiceClient
         }
     }
 
+    /// <example><code>
+    /// await client.Service.OptionalArgsAsync(new OptionalArgsRequest());
+    /// </code></example>
     public async Task<string> OptionalArgsAsync(
         OptionalArgsRequest request,
         RequestOptions? options = null,

@@ -1,0 +1,1049 @@
+import { fail } from "node:assert";
+import { PrimitiveTypeV1 } from "@fern-fern/ir-sdk/api";
+import { type Generation } from "../../context/generation-info";
+import { TypeLiteral } from "../code/TypeLiteral";
+import { AstNode } from "../core/AstNode";
+import { Writer } from "../core/Writer";
+import { ClassReference } from "./ClassReference";
+import { CoreClassReference } from "./CoreClassReference";
+import { TypeParameter } from "./TypeParameter";
+
+/**
+ * Base class for all C# type representations in the AST.
+ *
+ * This class provides a polymorphic type system that makes it easier to work with
+ * different C# types without requiring switch statements on discriminated unions.
+ * Each concrete type (Integer, String, List, etc.) extends this base class and
+ * provides its own implementation of abstract members.
+ */
+export abstract class Type extends AstNode {
+    /**
+     * Gets the multipart form method name used when this type is added to a multipart/form-data request.
+     * For example, primitives use "AddStringPart", while objects use "AddJsonPart".
+     */
+    public abstract get multipartMethodName(): string;
+
+    /**
+     * Gets the multipart form method name used when a collection of this type is added to a multipart/form-data request.
+     * For example, primitives use "AddStringParts", while objects use "AddJsonParts".
+     */
+    public abstract get multipartMethodNameForCollection(): string;
+
+    /**
+     * The default value for this type (e.g., null for reference types, 0 for integers, etc.).
+     */
+    public readonly defaultValue: TypeLiteral = this.csharp.TypeLiteral.null();
+
+    /**
+     * Indicates whether this type is optional (nullable). Defaults to false.
+     */
+    public readonly isOptional: boolean = false;
+
+    /**
+     * Indicates whether this type is a reference type (true), value type (false), or indeterminate (undefined).
+     * Reference types include classes, interfaces, strings, etc. Value types include structs, primitives, etc.
+     */
+    public readonly isReferenceType: boolean | undefined = false;
+
+    /**
+     * The string representation of this type, typically the constructor name.
+     * Used primarily for debugging and default write implementations.
+     */
+    public readonly type: string = this.constructor.name;
+
+    /**
+     * Indicates whether this type represents an async enumerable (IAsyncEnumerable<T>).
+     */
+    public get isAsyncEnumerable(): boolean {
+        return false;
+    }
+
+    /**
+     * Indicates whether this type represents a collection (List, Set, Map, etc.).
+     */
+    public get isCollection(): boolean {
+        return false;
+    }
+
+    /**
+     * Gets the item type for collection types (e.g., T in List<T>, or KeyValuePair<K,V> in Map<K,V>).
+     * Returns undefined for non-collection types.
+     */
+    public getCollectionItemType(): Type | undefined {
+        return undefined;
+    }
+
+    /**
+     * Wraps this type in an Optional type if it's not already optional.
+     * If this type is already optional, returns it unchanged.
+     */
+    public toOptionalIfNotAlready(): Type {
+        return this.csharp.Type.optional(this);
+    }
+
+    /**
+     * Gets the underlying type if this is an Optional type, otherwise returns undefined.
+     * For example, Optional<int> would return int.
+     */
+    public underlyingTypeIfOptional(): Type | undefined {
+        return undefined;
+    }
+
+    /**
+     * Returns the underlying type if this is an Optional type, otherwise returns this type unchanged.
+     * This is useful for getting the non-nullable version of a type.
+     */
+    public unwrapIfOptional(): Type {
+        return this;
+    }
+
+    /**
+     * Writes this type to the provided writer.
+     * The default implementation writes the type name, but most subclasses override this
+     * to provide more specific C# type syntax.
+     */
+    public override write(writer: Writer): void {
+        writer.write(this.type);
+    }
+
+    /**
+     * Writes an empty collection initializer for this type (e.g., "= new List<T>();").
+     * The default implementation is a no-op. Collection types override this to provide
+     * appropriate initialization syntax.
+     */
+    public writeEmptyCollectionInitializer(writer: Writer): void {
+        // default - no-op
+    }
+}
+
+/**
+ * Base class for all primitive types in C# (int, string, bool, double, etc.).
+ * Primitive types are serialized as strings in multipart form data.
+ */
+abstract class PrimitiveType extends Type {
+    public override get multipartMethodName(): string {
+        return "AddStringPart";
+    }
+
+    public override get multipartMethodNameForCollection(): string {
+        return "AddStringParts";
+    }
+}
+
+/**
+ * Base class for types that are always reference types but don't fit into CollectionType or ObjectType categories.
+ * This includes delegates (Action, Func), optional types, union types, and special types like Binary and SystemType.
+ */
+abstract class ReferenceType extends Type {
+    public override readonly isReferenceType: boolean | undefined = true;
+}
+
+/**
+ * Base class for all collection types in C# (List, Set, Map, etc.).
+ * Collection types are serialized as JSON in multipart form data and are always reference types.
+ */
+abstract class CollectionType extends ReferenceType {
+    public override get isCollection(): boolean {
+        return true;
+    }
+
+    public override get multipartMethodName(): string {
+        return "AddJsonPart";
+    }
+
+    public override get multipartMethodNameForCollection(): string {
+        return "AddJsonParts";
+    }
+}
+
+/**
+ * Base class for all object/reference types in C# (classes, interfaces, etc.).
+ * Object types are serialized as JSON in multipart form data and are always reference types.
+ */
+abstract class ObjectType extends ReferenceType {
+    public override get multipartMethodName(): string {
+        return "AddJsonPart";
+    }
+
+    public override get multipartMethodNameForCollection(): string {
+        return "AddJsonParts";
+    }
+
+    public override underlyingTypeIfOptional(): Type | undefined {
+        return undefined;
+    }
+}
+
+export namespace Type {
+    /**
+     * Represents the C# `int` type (32-bit signed integer).
+     */
+    export class Integer extends PrimitiveType {
+        public override type = "int";
+        public override defaultValue = this.csharp.TypeLiteral.integer(0);
+    }
+
+    /**
+     * Represents the C# `long` type (64-bit signed integer).
+     */
+    export class Long extends PrimitiveType {
+        public override type = "long";
+        public override defaultValue = this.csharp.TypeLiteral.long(0);
+    }
+
+    /**
+     * Represents the C# `uint` type (32-bit unsigned integer).
+     */
+    export class Uint extends PrimitiveType {
+        public override type = "uint";
+        public override defaultValue = this.csharp.TypeLiteral.uint(0);
+    }
+
+    /**
+     * Represents the C# `ulong` type (64-bit unsigned integer).
+     */
+    export class ULong extends PrimitiveType {
+        public override type = "ulong";
+        public override defaultValue = this.csharp.TypeLiteral.ulong(0);
+    }
+
+    /**
+     * Represents the C# `string` type.
+     * Strings are reference types in C#.
+     */
+    export class String extends PrimitiveType {
+        public override type = "string";
+        public override defaultValue = this.csharp.TypeLiteral.string("");
+        public override readonly isReferenceType: boolean | undefined = true;
+    }
+
+    /**
+     * Represents the C# `bool` type.
+     */
+    export class Boolean extends PrimitiveType {
+        public override type = "bool";
+        public override defaultValue = this.csharp.TypeLiteral.boolean(false);
+    }
+
+    /**
+     * Represents the C# `float` type (32-bit floating-point number).
+     */
+    export class Float extends PrimitiveType {
+        public override type = "float";
+        public override defaultValue = this.csharp.TypeLiteral.float(0);
+    }
+
+    /**
+     * Represents the C# `double` type (64-bit floating-point number).
+     */
+    export class Double extends PrimitiveType {
+        public override type = "double";
+        public override defaultValue = this.csharp.TypeLiteral.double(0);
+    }
+
+    /**
+     * Represents the C# `DateOnly` type (date without time component).
+     */
+    export class DateOnly extends PrimitiveType {
+        public override type = "DateOnly";
+    }
+
+    /**
+     * Represents the C# `DateTime` type.
+     */
+    export class DateTime extends PrimitiveType {
+        public override type = "DateTime";
+    }
+
+    /**
+     * Represents a UUID type, which is represented as a C# `string`.
+     * Note: C# GUID is a value type, but we use string for UUID compatibility.
+     */
+    export class Uuid extends PrimitiveType {
+        public override type = "string";
+        public override defaultValue = this.csharp.TypeLiteral.string("");
+
+        // C# GUID is a value type, but we use string for UUID
+        public override readonly isReferenceType: boolean | undefined = true;
+    }
+
+    /**
+     * Represents the C# `object` type (base type for all reference types).
+     */
+    export class Object extends ObjectType {
+        public override type = "object";
+    }
+
+    /**
+     * Represents a C# array type (T[]).
+     * Arrays can be rendered as ReadOnlyMemory<T> for certain primitive types when configured.
+     */
+    export class Array extends ObjectType {
+        public override readonly isReferenceType: boolean | undefined = true;
+
+        /**
+         * The element type of the array.
+         */
+        public readonly value: Type;
+
+        /**
+         * Creates a new array type.
+         * @param value - The element type of the array
+         * @param generation - The generation context for code generation
+         */
+        constructor(value: Type, generation: Generation) {
+            super(generation);
+            this.value = value;
+        }
+
+        public override getCollectionItemType(): Type | undefined {
+            return this.value;
+        }
+
+        public override write(writer: Writer): void {
+            if (isReadOnlyMemoryType({ writer, value: this.value })) {
+                this.writeReadOnlyMemoryType({ writer, value: this.value });
+                return;
+            }
+            this.value.write(writer);
+            writer.write("[]");
+        }
+
+        private writeReadOnlyMemoryType({ writer, value }: { writer: Writer; value: Type }): void {
+            writer.writeNode(this.extern.System.ReadOnlyMemory(value));
+        }
+    }
+
+    /**
+     * Represents the concrete C# `List<T>` type.
+     * Can be rendered as ReadOnlyMemory<T> for certain primitive types when configured.
+     */
+    export class ListType extends CollectionType {
+        /**
+         * The element type of the list.
+         */
+        public readonly value: Type;
+
+        /**
+         * Creates a new List<T> type.
+         * @param value - The element type of the list
+         * @param generation - The generation context for code generation
+         */
+        constructor(value: Type, generation: Generation) {
+            super(generation);
+            this.value = value;
+        }
+
+        public override get multipartMethodName(): string {
+            return this.value.multipartMethodNameForCollection;
+        }
+
+        public override get multipartMethodNameForCollection(): string {
+            return this.value.multipartMethodNameForCollection;
+        }
+
+        public override getCollectionItemType(): Type | undefined {
+            return this.value;
+        }
+
+        public override write(writer: Writer): void {
+            if (isReadOnlyMemoryType({ writer, value: this.value })) {
+                this.writeReadOnlyMemoryType({ writer, value: this.value });
+                return;
+            }
+            writer.writeNode(this.extern.System.Collections.Generic.List(this.value));
+        }
+
+        public override writeEmptyCollectionInitializer(writer: Writer): void {
+            if (isReadOnlyMemoryType({ writer, value: this.value })) {
+                return;
+            }
+            writer.write(" = new ", this.extern.System.Collections.Generic.List(this.value), "();");
+        }
+
+        private writeReadOnlyMemoryType({ writer, value }: { writer: Writer; value: Type }): void {
+            writer.writeNode(this.extern.System.ReadOnlyMemory(value));
+        }
+    }
+
+    /**
+     * Represents the C# `IEnumerable<T>` interface type.
+     * Can be rendered as ReadOnlyMemory<T> for certain primitive types when configured.
+     */
+    export class List extends CollectionType {
+        /**
+         * The element type of the enumerable.
+         */
+        public readonly value: Type;
+
+        /**
+         * Creates a new IEnumerable<T> type.
+         * @param value - The element type of the enumerable
+         * @param generation - The generation context for code generation
+         */
+        constructor(value: Type, generation: Generation) {
+            super(generation);
+            this.value = value;
+        }
+
+        public override get multipartMethodName(): string {
+            return this.value.multipartMethodNameForCollection;
+        }
+
+        public override get multipartMethodNameForCollection(): string {
+            return this.value.multipartMethodNameForCollection;
+        }
+
+        public override getCollectionItemType(): Type {
+            return this.value;
+        }
+
+        public override write(writer: Writer): void {
+            if (isReadOnlyMemoryType({ writer, value: this.value })) {
+                this.writeReadOnlyMemoryType({ writer, value: this.value });
+                return;
+            }
+            writer.writeNode(this.extern.System.Collections.Generic.IEnumerable(this.value));
+        }
+
+        public override writeEmptyCollectionInitializer(writer: Writer): void {
+            if (isReadOnlyMemoryType({ writer, value: this.value })) {
+                return;
+            }
+            writer.writeStatement(" = ", this.extern.System.Collections.Generic.List(this.value).new());
+        }
+
+        private writeReadOnlyMemoryType({ writer, value }: { writer: Writer; value: Type }): void {
+            writer.writeNode(this.extern.System.ReadOnlyMemory(value));
+        }
+    }
+
+    /**
+     * Represents the C# `HashSet<T>` type.
+     */
+    export class Set extends CollectionType {
+        /**
+         * The element type of the set.
+         */
+        public readonly value: Type;
+
+        /**
+         * Creates a new HashSet<T> type.
+         * @param value - The element type of the set
+         * @param generation - The generation context for code generation
+         */
+        constructor(value: Type, generation: Generation) {
+            super(generation);
+            this.value = value;
+        }
+
+        public override getCollectionItemType(): Type | undefined {
+            return this.value;
+        }
+
+        public override write(writer: Writer): void {
+            writer.writeNode(this.extern.System.Collections.Generic.HashSet(this.value));
+        }
+
+        public override writeEmptyCollectionInitializer(writer: Writer): void {
+            writer.write(" = new ", this.extern.System.Collections.Generic.HashSet(this.value), "();");
+        }
+    }
+
+    /**
+     * Represents the concrete C# `Dictionary<TKey, TValue>` type.
+     * Can optionally simplify Dictionary<string, object?> to just `object` based on settings.
+     */
+    export class Map extends CollectionType {
+        /**
+         * The key type of the dictionary.
+         */
+        public readonly keyType: Type;
+
+        /**
+         * Optional configuration for this map type.
+         */
+        public readonly options?: { dontSimplify?: boolean };
+
+        /**
+         * The value type of the dictionary.
+         */
+        public readonly valueType: Type;
+
+        /**
+         * Creates a new Dictionary<TKey, TValue> type.
+         * @param keyType - The key type of the dictionary
+         * @param valueType - The value type of the dictionary
+         * @param generation - The generation context for code generation
+         * @param options - Optional configuration (e.g., whether to skip simplification)
+         */
+        constructor(keyType: Type, valueType: Type, generation: Generation, options?: { dontSimplify?: boolean }) {
+            super(generation);
+            this.keyType = keyType;
+            this.valueType = valueType;
+            this.options = options;
+        }
+
+        public override getCollectionItemType(): Type | undefined {
+            return this.csharp.Type.keyValuePair(this.keyType, this.valueType);
+        }
+
+        public override write(writer: Writer): void {
+            if (
+                this.options?.dontSimplify !== true &&
+                writer.generation.settings.simplifyObjectDictionaries &&
+                this.keyType instanceof Type.String &&
+                this.valueType instanceof Type.Optional &&
+                this.valueType.value instanceof Type.Object
+            ) {
+                writer.write("object");
+                return;
+            }
+            writer.write(this.extern.System.Collections.Generic.Dictionary(this.keyType, this.valueType));
+        }
+
+        public override writeEmptyCollectionInitializer(writer: Writer): void {
+            writer.writeStatement(
+                " = ",
+                this.extern.System.Collections.Generic.Dictionary(this.keyType, this.valueType).new()
+            );
+        }
+    }
+
+    /**
+     * Represents the C# `IDictionary<TKey, TValue>` interface type.
+     * Can optionally simplify IDictionary<string, object?> to just `object` based on settings.
+     */
+    export class IDictionary extends CollectionType {
+        /**
+         * The key type of the dictionary.
+         */
+        public readonly keyType: Type;
+
+        /**
+         * Optional configuration for this dictionary type.
+         */
+        public readonly options?: { dontSimplify?: boolean };
+
+        /**
+         * The value type of the dictionary.
+         */
+        public readonly valueType: Type;
+
+        /**
+         * Creates a new IDictionary<TKey, TValue> type.
+         * @param keyType - The key type of the dictionary
+         * @param valueType - The value type of the dictionary
+         * @param generation - The generation context for code generation
+         * @param options - Optional configuration (e.g., whether to skip simplification)
+         */
+        constructor(keyType: Type, valueType: Type, generation: Generation, options?: { dontSimplify?: boolean }) {
+            super(generation);
+            this.keyType = keyType;
+            this.valueType = valueType;
+            this.options = options;
+        }
+
+        public override getCollectionItemType(): Type | undefined {
+            return this.csharp.Type.keyValuePair(this.keyType, this.valueType);
+        }
+
+        public override write(writer: Writer): void {
+            if (
+                this.options?.dontSimplify !== true &&
+                writer.generation.settings.simplifyObjectDictionaries &&
+                this.keyType instanceof Type.String &&
+                this.valueType instanceof Type.Optional &&
+                this.valueType.value instanceof Type.Object
+            ) {
+                writer.write("object");
+                return;
+            }
+            writer.writeNode(this.extern.System.Collections.Generic.IDictionary(this.keyType, this.valueType));
+        }
+    }
+
+    /**
+     * Represents the C# `KeyValuePair<TKey, TValue>` struct type.
+     * This is a value type (struct) in C#, not a reference type.
+     */
+    export class KeyValuePair extends ObjectType {
+        public override readonly isReferenceType: boolean | undefined = false;
+
+        /**
+         * The key type of the key-value pair.
+         */
+        public readonly keyType: Type;
+
+        /**
+         * The value type of the key-value pair.
+         */
+        public readonly valueType: Type;
+
+        /**
+         * Creates a new KeyValuePair<TKey, TValue> type.
+         * @param keyType - The key type
+         * @param valueType - The value type
+         * @param generation - The generation context for code generation
+         */
+        constructor(keyType: Type, valueType: Type, generation: Generation) {
+            super(generation);
+            this.keyType = keyType;
+            this.valueType = valueType;
+        }
+
+        public override write(writer: Writer): void {
+            writer.writeNode(this.extern.System.Collections.Generic.KeyValuePair(this.keyType, this.valueType));
+        }
+    }
+
+    /**
+     * Represents an optional (nullable) type in C#.
+     * For value types, this renders as T?, and for reference types, it also uses the nullable syntax.
+     */
+    export class Optional extends ReferenceType {
+        public override readonly isOptional = true;
+
+        /**
+         * The underlying non-nullable type.
+         */
+        public readonly value: Type;
+
+        /**
+         * Creates a new optional type.
+         * @param value - The underlying non-nullable type
+         * @param generation - The generation context for code generation
+         */
+        constructor(value: Type, generation: Generation) {
+            super(generation);
+            this.value = value;
+        }
+
+        public override get isCollection(): boolean {
+            return false;
+        }
+
+        public override get multipartMethodName(): string {
+            return this.value.multipartMethodName;
+        }
+
+        public override get multipartMethodNameForCollection(): string {
+            return this.value.multipartMethodNameForCollection;
+        }
+
+        public override toOptionalIfNotAlready(): Type {
+            return this;
+        }
+
+        public override underlyingTypeIfOptional(): Type | undefined {
+            return this.value;
+        }
+
+        public override unwrapIfOptional(): Type {
+            return this.value;
+        }
+
+        public override write(writer: Writer): void {
+            this.value.write(writer);
+            if (!this.value.isOptional) {
+                writer.write("?");
+            }
+        }
+    }
+
+    /**
+     * Represents a reference to a user-defined class or interface.
+     * The reference type status is indeterminate (undefined) as it depends on the referenced type.
+     */
+    export class Reference extends ObjectType {
+        public override readonly isReferenceType: boolean | undefined = undefined;
+
+        /**
+         * The class reference being referenced.
+         */
+        public readonly value: ClassReference;
+
+        /**
+         * Creates a new reference to a class or interface.
+         * @param value - The class reference
+         * @param generation - The generation context for code generation
+         */
+        constructor(value: ClassReference, generation: Generation) {
+            super(generation);
+            this.value = value;
+        }
+
+        public override get isAsyncEnumerable(): boolean {
+            return this.value.isAsyncEnumerable;
+        }
+
+        public override write(writer: Writer): void {
+            writer.writeNode(this.value);
+        }
+    }
+
+    /**
+     * Represents a reference to a core/runtime class.
+     * The reference type status is indeterminate (undefined) as it depends on the referenced type.
+     */
+    export class CoreReference extends ObjectType {
+        public override readonly isReferenceType: boolean | undefined = undefined;
+
+        /**
+         * The core class reference being referenced.
+         */
+        public readonly value: CoreClassReference;
+
+        /**
+         * Creates a new reference to a core class.
+         * @param value - The core class reference
+         * @param generation - The generation context for code generation
+         */
+        constructor(value: CoreClassReference, generation: Generation) {
+            super(generation);
+            this.value = value;
+        }
+
+        public override write(writer: Writer): void {
+            writer.write(this.value.name);
+        }
+    }
+
+    /**
+     * Represents a discriminated union type using the OneOf library.
+     * This type allows a value to be one of several possible types.
+     * @remarks
+     * TODO: Handle multipart form detection in the .NET runtime to determine whether struct/string/enum/string enum
+     * should become string part, or anything else which should become json part.
+     */
+    export class OneOf extends Type {
+        /**
+         * The possible member types that this OneOf can represent.
+         */
+        public readonly memberValues: Type[];
+
+        /**
+         * Creates a new OneOf type.
+         * @param memberValues - The array of possible types for this union
+         * @param generation - The generation context for code generation
+         */
+        constructor(memberValues: Type[], generation: Generation) {
+            super(generation);
+            this.memberValues = memberValues;
+        }
+
+        public override get multipartMethodName(): string {
+            return "AddJsonPart";
+        }
+
+        public override get multipartMethodNameForCollection(): string {
+            return "AddJsonParts";
+        }
+
+        /**
+         * Returns the array of possible types that this OneOf can represent.
+         * @returns An array of Type objects representing the possible values
+         */
+        public oneOfTypes(): Type[] {
+            return this.memberValues;
+        }
+
+        public override write(writer: Writer): void {
+            const oneOf = this.extern.OneOf.OneOf(this.memberValues);
+            writer.addReference(oneOf);
+            writer.writeNode(oneOf);
+        }
+    }
+
+    /**
+     * Represents the base class for a OneOf discriminated union type.
+     * This is used when generating base classes for union types.
+     * @remarks
+     * TODO: Handle multipart form detection in the .NET runtime to determine whether struct/string/enum/string enum
+     * should become string part, or anything else which should become json part.
+     */
+    export class OneOfBase extends ReferenceType {
+        /**
+         * The possible member types that this OneOfBase can represent.
+         */
+        public readonly memberValues: Type[];
+
+        /**
+         * Creates a new OneOfBase type.
+         * @param memberValues - The array of possible types for this union
+         * @param generation - The generation context for code generation
+         */
+        constructor(memberValues: Type[], generation: Generation) {
+            super(generation);
+            this.memberValues = memberValues;
+        }
+
+        public override get multipartMethodName(): string {
+            return "AddJsonPart";
+        }
+
+        public override get multipartMethodNameForCollection(): string {
+            return "AddJsonParts";
+        }
+
+        public override write(writer: Writer): void {
+            const oneOfBase = this.extern.OneOf.OneOfBase(this.memberValues);
+            writer.addReference(oneOfBase);
+            writer.writeNode(oneOfBase);
+        }
+    }
+
+    /**
+     * Represents a string enum type (enum backed by string values).
+     * This extends PrimitiveType because string enums are serialized as strings.
+     */
+    export class StringEnum extends PrimitiveType {
+        /**
+         * The class reference for the string enum type.
+         */
+        public readonly value: ClassReference;
+
+        /**
+         * Creates a new string enum type.
+         * @param value - The class reference for the enum
+         * @param generation - The generation context for code generation
+         */
+        constructor(value: ClassReference, generation: Generation) {
+            super(generation);
+            this.value = value;
+        }
+
+        public override write(writer: Writer): void {
+            this.types.StringEnum(this.value).write(writer);
+        }
+    }
+
+    /**
+     * Represents a C# `Action<T1, T2, ...>` delegate type.
+     * Action delegates represent methods that don't return a value.
+     */
+    export class Action extends ReferenceType {
+        /**
+         * The type parameters for the Action delegate (parameter types).
+         */
+        public readonly typeParameters: (Type | TypeParameter)[];
+
+        /**
+         * Creates a new Action delegate type.
+         * @param typeParameters - The parameter types for the action
+         * @param generation - The generation context for code generation
+         */
+        constructor(typeParameters: (Type | TypeParameter)[], generation: Generation) {
+            super(generation);
+            this.typeParameters = typeParameters;
+        }
+
+        public override get multipartMethodName(): string {
+            throw new Error("Action can not be added to multipart form");
+        }
+
+        public override get multipartMethodNameForCollection(): string {
+            throw new Error("Action can not be added to multipart form");
+        }
+
+        public override write(writer: Writer): void {
+            this.System.Action(this.typeParameters).write(writer);
+        }
+    }
+
+    /**
+     * Represents a C# `Func<T1, T2, ..., TResult>` delegate type.
+     * Func delegates represent methods that return a value.
+     */
+    export class Func extends ReferenceType {
+        /**
+         * The return type of the function.
+         */
+        public readonly returnType: Type | TypeParameter;
+
+        /**
+         * The type parameters for the Func delegate (parameter types).
+         */
+        public readonly typeParameters: (Type | TypeParameter)[];
+
+        /**
+         * Creates a new Func delegate type.
+         * @param typeParameters - The parameter types for the function
+         * @param returnType - The return type of the function
+         * @param generation - The generation context for code generation
+         */
+        constructor(
+            typeParameters: (Type | TypeParameter)[],
+            returnType: Type | TypeParameter,
+            generation: Generation
+        ) {
+            super(generation);
+            this.typeParameters = typeParameters;
+            this.returnType = returnType;
+        }
+
+        public override get multipartMethodName(): string {
+            fail("Func can not be added to multipart form");
+            return "";
+        }
+
+        public override get multipartMethodNameForCollection(): string {
+            fail("Func can not be added to multipart form");
+            return "";
+        }
+
+        public override write(writer: Writer): void {
+            writer.writeNode(this.extern.System.Func(this.typeParameters, this.returnType));
+        }
+    }
+
+    /**
+     * Represents a file parameter type used for file uploads.
+     * This type is specifically used in multipart form data for file uploads.
+     */
+    export class FileParameter extends ReferenceType {
+        /**
+         * The class reference representing the file parameter type.
+         */
+        public readonly value: ClassReference;
+
+        /**
+         * Creates a new file parameter type.
+         * @param value - The class reference for the file parameter
+         * @param generation - The generation context for code generation
+         */
+        constructor(value: ClassReference, generation: Generation) {
+            super(generation);
+            this.value = value;
+        }
+
+        public override get multipartMethodName(): string {
+            return "AddFileParameterPart";
+        }
+
+        public override get multipartMethodNameForCollection(): string {
+            return "AddFileParameterParts";
+        }
+
+        public override write(writer: Writer): void {
+            writer.writeNode(this.value);
+        }
+    }
+
+    /**
+     * Represents the C# `System.Type` type (type reflection).
+     * This type represents type metadata at runtime.
+     */
+    export class SystemType extends ReferenceType {
+        public override get multipartMethodName(): string {
+            fail("System.Type can not be added to multipart form");
+            return "";
+        }
+
+        public override get multipartMethodNameForCollection(): string {
+            fail("System.Type can not be added to multipart form");
+            return "";
+        }
+
+        public override write(writer: Writer): void {
+            writer.write("global::System.Type");
+        }
+    }
+
+    /**
+     * Represents the C# `byte[]` type (byte array/binary data).
+     * This type is used for binary data.
+     */
+    export class Binary extends ReferenceType {
+        public override get multipartMethodName(): string {
+            fail("byte[] can not be added to multipart form");
+            return "";
+        }
+
+        public override get multipartMethodNameForCollection(): string {
+            fail("byte[] can not be added to multipart form");
+            return "";
+        }
+
+        public override write(writer: Writer): void {
+            writer.write("byte[]");
+        }
+    }
+}
+
+/**
+ * Converts an array of C# type names to their corresponding PrimitiveTypeV1 enum values.
+ * This is used for converting ReadOnlyMemory type configurations.
+ *
+ * @param readOnlyMemoryTypeNames - Array of C# type names (e.g., "int", "string", "bool")
+ * @returns Array of PrimitiveTypeV1 enum values
+ * @throws Error if an unknown type name is encountered (should be unreachable if validated earlier)
+ */
+export function convertReadOnlyPrimitiveTypes(readOnlyMemoryTypeNames: string[]): PrimitiveTypeV1[] {
+    return readOnlyMemoryTypeNames.map((typeName) => {
+        switch (typeName) {
+            case "int":
+                return PrimitiveTypeV1.Integer;
+            case "long":
+                return PrimitiveTypeV1.Long;
+            case "uint":
+                return PrimitiveTypeV1.Uint;
+            case "ulong":
+                return PrimitiveTypeV1.Uint64;
+            case "string":
+                return PrimitiveTypeV1.String;
+            case "bool":
+            case "boolean":
+                return PrimitiveTypeV1.Boolean;
+            case "float":
+                return PrimitiveTypeV1.Float;
+            case "double":
+                return PrimitiveTypeV1.Double;
+            default:
+                // This should be unreachable; the ReadOnlyMemory types should have already
+                // been validated at this point.
+                throw new Error(`Internal error; unknown ReadOnlyMemory type: ${typeName}`);
+        }
+    });
+}
+
+/**
+ * Determines whether a given type should be rendered as `ReadOnlyMemory<T>` instead of an array or list.
+ * This check is recursive for Optional types and delegates to the writer's configuration for the actual check.
+ *
+ * @param params - Object containing the writer and type to check
+ * @param params.writer - The writer instance containing configuration for ReadOnlyMemory types
+ * @param params.value - The type to check
+ * @returns true if the type should be rendered as ReadOnlyMemory, false otherwise
+ */
+function isReadOnlyMemoryType({ writer, value }: { writer: Writer; value: Type }): boolean {
+    if (value instanceof Type.Optional) {
+        return isReadOnlyMemoryType({ writer, value: value.value });
+    }
+    // Check if it's a primitive type that should be ReadOnlyMemory
+    if (value instanceof Type.Integer) {
+        return writer.isReadOnlyMemoryType("int");
+    }
+    if (value instanceof Type.Long) {
+        return writer.isReadOnlyMemoryType("long");
+    }
+    if (value instanceof Type.Uint) {
+        return writer.isReadOnlyMemoryType("uint");
+    }
+    if (value instanceof Type.ULong) {
+        return writer.isReadOnlyMemoryType("ulong");
+    }
+    if (value instanceof Type.String) {
+        return writer.isReadOnlyMemoryType("string");
+    }
+    if (value instanceof Type.Boolean) {
+        return writer.isReadOnlyMemoryType("bool");
+    }
+    if (value instanceof Type.Float) {
+        return writer.isReadOnlyMemoryType("float");
+    }
+    if (value instanceof Type.Double) {
+        return writer.isReadOnlyMemoryType("double");
+    }
+    return false;
+}

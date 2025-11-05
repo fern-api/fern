@@ -30345,6 +30345,21 @@ client.connect()
                         "no_interest_payment": 2690.83,
                       },
                       "currency": "MXN",
+                      "funds_data": [
+                        {
+                          "balance": 88427.94,
+                          "collected_at": "2020-04-23T21:32:55Z",
+                          "name": "FIX X",
+                          "percentage": 100,
+                          "public_identifications": [
+                            {
+                              "name": "CNPJ",
+                              "value": "05.954.445/0221-68",
+                            },
+                          ],
+                          "type": "CNPJ",
+                        },
+                      ],
                       "id": "c21f3914-bcbe-44c4-a2e8-a5e33f6888d4",
                       "institution": {
                         "name": "erebor_mx_retail",
@@ -30496,6 +30511,21 @@ client.connect()
                         "no_interest_payment": 11550.15,
                       },
                       "currency": "MXN",
+                      "funds_data": [
+                        {
+                          "balance": 88427.94,
+                          "collected_at": "2020-04-23T21:32:55Z",
+                          "name": "FIX X",
+                          "percentage": 100,
+                          "public_identifications": [
+                            {
+                              "name": "CNPJ",
+                              "value": "05.954.445/0221-68",
+                            },
+                          ],
+                          "type": "CNPJ",
+                        },
+                      ],
                       "id": "0f82c5db-13a2-43c7-a69a-e036160aba3a",
                       "institution": {
                         "name": "erebor_mx_retail",
@@ -30647,6 +30677,21 @@ client.connect()
                         "no_interest_payment": 2690.83,
                       },
                       "currency": "MXN",
+                      "funds_data": [
+                        {
+                          "balance": 88427.94,
+                          "collected_at": "2020-04-23T21:32:55Z",
+                          "name": "FIX X",
+                          "percentage": 100,
+                          "public_identifications": [
+                            {
+                              "name": "CNPJ",
+                              "value": "05.954.445/0221-68",
+                            },
+                          ],
+                          "type": "CNPJ",
+                        },
+                      ],
                       "id": "0f82c5db-13a2-43c7-a69a-e036160aba3a",
                       "institution": {
                         "name": "erebor_mx_retail",
@@ -30985,6 +31030,21 @@ client.connect()
                         "no_interest_payment": 2690.83,
                       },
                       "currency": "COP",
+                      "funds_data": [
+                        {
+                          "balance": 88427.94,
+                          "collected_at": "2020-04-23T21:32:55Z",
+                          "name": "FIX X",
+                          "percentage": 100,
+                          "public_identifications": [
+                            {
+                              "name": "CNPJ",
+                              "value": "05.954.445/0221-68",
+                            },
+                          ],
+                          "type": "CNPJ",
+                        },
+                      ],
                       "id": "3d5b0f90-90df-455d-a647-5b74feb746f6",
                       "institution": {
                         "name": "erebor_co_retail",
@@ -31198,6 +31258,7 @@ client.connect()
                       "results": [
                         {
                           "balance": {
+                            "available": 5621.12,
                             "current": 5874.13,
                           },
                           "balance_type": "ASSET",
@@ -31216,7 +31277,11 @@ client.connect()
                           "currency": "MXN",
                           "funds_data": [
                             {
+                              "balance": 88427.94,
                               "collected_at": "2020-04-23T21:32:55Z",
+                              "name": "FIX X",
+                              "percentage": 100,
+                              "type": "CNPJ",
                             },
                           ],
                           "id": "0d3ffb69-f83b-456e-ad8e-208d0998d71d",
@@ -31227,10 +31292,18 @@ client.connect()
                           "link": "30cb4806-6e00-48a4-91c9-ca55968576c8",
                           "loan_data": {
                             "collected_at": "2022-02-09T08:45:50Z",
+                            "contract_amount": 202000,
                             "contract_end_date": "2027-10-01",
+                            "contract_number": "890ASLDJF87SD00",
+                            "contract_start_date": "2020-03-01",
                             "interest_rates": null,
+                            "loan_type": "Consignado",
                             "monthly_payment": 1000,
+                            "number_of_installments_outstanding": 48,
+                            "number_of_installments_total": 60,
                             "outstanding_balance": 182000,
+                            "outstanding_principal": 142023,
+                            "payment_day": "27",
                             "principal": 192000,
                           },
                           "name": "Cuenta Perfiles- M.N. - MXN-666",
@@ -31586,6 +31659,15 @@ client.connect()
                           "no_interest_payment": 2690.83,
                         },
                         "currency": "MXN",
+                        "funds_data": [
+                          {
+                            "balance": 88427.94,
+                            "collected_at": "2020-04-23T21:32:55Z",
+                            "name": "FIX X",
+                            "percentage": 100,
+                            "type": "CNPJ",
+                          },
+                        ],
                         "id": "c21f3914-bcbe-44c4-a2e8-a5e33f6888d4",
                         "institution": {
                           "name": "erebor_mx_retail",
@@ -31754,6 +31836,15 @@ client.connect()
                           "no_interest_payment": 11550.15,
                         },
                         "currency": "MXN",
+                        "funds_data": [
+                          {
+                            "balance": 88427.94,
+                            "collected_at": "2020-04-23T21:32:55Z",
+                            "name": "FIX X",
+                            "percentage": 100,
+                            "type": "CNPJ",
+                          },
+                        ],
                         "id": "0f82c5db-13a2-43c7-a69a-e036160aba3a",
                         "institution": {
                           "name": "erebor_mx_retail",
@@ -31922,6 +32013,15 @@ client.connect()
                           "no_interest_payment": 2690.83,
                         },
                         "currency": "MXN",
+                        "funds_data": [
+                          {
+                            "balance": 88427.94,
+                            "collected_at": "2020-04-23T21:32:55Z",
+                            "name": "FIX X",
+                            "percentage": 100,
+                            "type": "CNPJ",
+                          },
+                        ],
                         "id": "0f82c5db-13a2-43c7-a69a-e036160aba3a",
                         "institution": {
                           "name": "erebor_mx_retail",
@@ -32297,6 +32397,15 @@ client.connect()
                           "no_interest_payment": 2690.83,
                         },
                         "currency": "COP",
+                        "funds_data": [
+                          {
+                            "balance": 88427.94,
+                            "collected_at": "2020-04-23T21:32:55Z",
+                            "name": "FIX X",
+                            "percentage": 100,
+                            "type": "CNPJ",
+                          },
+                        ],
                         "id": "3d5b0f90-90df-455d-a647-5b74feb746f6",
                         "institution": {
                           "name": "erebor_co_retail",
@@ -32510,6 +32619,15 @@ client.connect()
                           "no_interest_payment": 2690.83,
                         },
                         "currency": "MXN",
+                        "funds_data": [
+                          {
+                            "balance": 88427.94,
+                            "collected_at": "2020-04-23T21:32:55Z",
+                            "name": "FIX X",
+                            "percentage": 100,
+                            "type": "CNPJ",
+                          },
+                        ],
                         "id": "c21f3914-bcbe-44c4-a2e8-a5e33f6888d4",
                         "institution": {
                           "name": "erebor_mx_retail",
@@ -32669,6 +32787,15 @@ client.connect()
                           "no_interest_payment": 11550.15,
                         },
                         "currency": "MXN",
+                        "funds_data": [
+                          {
+                            "balance": 88427.94,
+                            "collected_at": "2020-04-23T21:32:55Z",
+                            "name": "FIX X",
+                            "percentage": 100,
+                            "type": "CNPJ",
+                          },
+                        ],
                         "id": "0f82c5db-13a2-43c7-a69a-e036160aba3a",
                         "institution": {
                           "name": "erebor_mx_retail",
@@ -32828,6 +32955,15 @@ client.connect()
                           "no_interest_payment": 2690.83,
                         },
                         "currency": "MXN",
+                        "funds_data": [
+                          {
+                            "balance": 88427.94,
+                            "collected_at": "2020-04-23T21:32:55Z",
+                            "name": "FIX X",
+                            "percentage": 100,
+                            "type": "CNPJ",
+                          },
+                        ],
                         "id": "0f82c5db-13a2-43c7-a69a-e036160aba3a",
                         "institution": {
                           "name": "erebor_mx_retail",
@@ -33185,6 +33321,15 @@ client.connect()
                           "no_interest_payment": 2690.83,
                         },
                         "currency": "COP",
+                        "funds_data": [
+                          {
+                            "balance": 88427.94,
+                            "collected_at": "2020-04-23T21:32:55Z",
+                            "name": "FIX X",
+                            "percentage": 100,
+                            "type": "CNPJ",
+                          },
+                        ],
                         "id": "3d5b0f90-90df-455d-a647-5b74feb746f6",
                         "institution": {
                           "name": "erebor_co_retail",
@@ -33552,6 +33697,7 @@ service:
                   number: '4057068115181'
                   balance:
                     current: 5874.13
+                    available: 5621.12
                   currency: MXN
                   public_identification_name: CLABE
                   public_identification_value: '150194683119900273'
@@ -33566,13 +33712,25 @@ service:
                     interest_rate: 4
                   loan_data:
                     collected_at: '2022-02-09T08:45:50Z'
+                    contract_amount: 202000
                     principal: 192000
+                    loan_type: Consignado
+                    payment_day: '27'
+                    outstanding_principal: 142023
                     outstanding_balance: 182000
                     monthly_payment: 1000
                     interest_rates: null
+                    number_of_installments_total: 60
+                    number_of_installments_outstanding: 48
+                    contract_start_date: '2020-03-01'
                     contract_end_date: '2027-10-01'
+                    contract_number: 890ASLDJF87SD00
                   funds_data:
                     - collected_at: '2020-04-23T21:32:55Z'
+                      name: FIX X
+                      type: CNPJ
+                      balance: 88427.94
+                      percentage: 100
                   receivables_data:
                     current: 2193.83
                     available: 800.37
@@ -33750,6 +33908,12 @@ service:
                   contract_start_date: '2020-03-01'
                   contract_end_date: '2027-10-01'
                   contract_number: 890ASLDJF87SD00
+                funds_data:
+                  - collected_at: '2020-04-23T21:32:55Z'
+                    name: FIX X
+                    type: CNPJ
+                    balance: 88427.94
+                    percentage: 100
                 receivables_data:
                   current: 2193.83
                   available: 800.37
@@ -33881,6 +34045,12 @@ service:
                   contract_start_date: '2020-03-01'
                   contract_end_date: '2027-10-01'
                   contract_number: 890ASLDJF87SD00
+                funds_data:
+                  - collected_at: '2020-04-23T21:32:55Z'
+                    name: FIX X
+                    type: CNPJ
+                    balance: 88427.94
+                    percentage: 100
                 receivables_data:
                   current: 2193.83
                   available: 800.37
@@ -34013,6 +34183,12 @@ service:
                   contract_start_date: '2018-01-01'
                   contract_end_date: '2027-10-01'
                   contract_number: ER8072930097
+                funds_data:
+                  - collected_at: '2020-04-23T21:32:55Z'
+                    name: FIX X
+                    type: CNPJ
+                    balance: 88427.94
+                    percentage: 100
                 receivables_data:
                   current: 2193.83
                   available: 800.37
@@ -34296,6 +34472,12 @@ service:
                   contract_start_date: '2020-03-01'
                   contract_end_date: '2027-10-01'
                   contract_number: 890ASLDJF87SD00
+                funds_data:
+                  - collected_at: '2020-04-23T21:32:55Z'
+                    name: FIX X
+                    type: CNPJ
+                    balance: 88427.94
+                    percentage: 100
                 receivables_data:
                   current: 2193.83
                   available: 800.37
@@ -34481,6 +34663,12 @@ service:
                   contract_start_date: '2020-03-01'
                   contract_end_date: '2027-10-01'
                   contract_number: 890ASLDJF87SD00
+                funds_data:
+                  - collected_at: '2020-04-23T21:32:55Z'
+                    name: FIX X
+                    type: CNPJ
+                    balance: 88427.94
+                    percentage: 100
                 receivables_data:
                   current: 2193.83
                   available: 800.37
@@ -34621,6 +34809,12 @@ service:
                   contract_start_date: '2020-03-01'
                   contract_end_date: '2027-10-01'
                   contract_number: 890ASLDJF87SD00
+                funds_data:
+                  - collected_at: '2020-04-23T21:32:55Z'
+                    name: FIX X
+                    type: CNPJ
+                    balance: 88427.94
+                    percentage: 100
                 receivables_data:
                   current: 2193.83
                   available: 800.37
@@ -34762,6 +34956,12 @@ service:
                   contract_start_date: '2018-01-01'
                   contract_end_date: '2027-10-01'
                   contract_number: ER8072930097
+                funds_data:
+                  - collected_at: '2020-04-23T21:32:55Z'
+                    name: FIX X
+                    type: CNPJ
+                    balance: 88427.94
+                    percentage: 100
                 receivables_data:
                   current: 2193.83
                   available: 800.37
@@ -35063,6 +35263,12 @@ service:
                   contract_start_date: '2020-03-01'
                   contract_end_date: '2027-10-01'
                   contract_number: 890ASLDJF87SD00
+                funds_data:
+                  - collected_at: '2020-04-23T21:32:55Z'
+                    name: FIX X
+                    type: CNPJ
+                    balance: 88427.94
+                    percentage: 100
                 receivables_data:
                   current: 2193.83
                   available: 800.37
@@ -35254,6 +35460,15 @@ service:
                 contract_start_date: '2020-03-01'
                 contract_end_date: '2027-10-01'
                 contract_number: 890ASLDJF87SD00
+              funds_data:
+                - collected_at: '2020-04-23T21:32:55Z'
+                  name: FIX X
+                  type: CNPJ
+                  public_identifications:
+                    - name: CNPJ
+                      value: 05.954.445/0221-68
+                  balance: 88427.94
+                  percentage: 100
               receivables_data:
                 current: 2193.83
                 available: 800.37
@@ -35377,6 +35592,15 @@ service:
                 contract_start_date: '2020-03-01'
                 contract_end_date: '2027-10-01'
                 contract_number: 890ASLDJF87SD00
+              funds_data:
+                - collected_at: '2020-04-23T21:32:55Z'
+                  name: FIX X
+                  type: CNPJ
+                  public_identifications:
+                    - name: CNPJ
+                      value: 05.954.445/0221-68
+                  balance: 88427.94
+                  percentage: 100
               receivables_data:
                 current: 2193.83
                 available: 800.37
@@ -35500,6 +35724,15 @@ service:
                 contract_start_date: '2018-01-01'
                 contract_end_date: '2027-10-01'
                 contract_number: ER8072930097
+              funds_data:
+                - collected_at: '2020-04-23T21:32:55Z'
+                  name: FIX X
+                  type: CNPJ
+                  public_identifications:
+                    - name: CNPJ
+                      value: 05.954.445/0221-68
+                  balance: 88427.94
+                  percentage: 100
               receivables_data:
                 current: 2193.83
                 available: 800.37
@@ -35767,6 +36000,15 @@ service:
                 contract_start_date: '2020-03-01'
                 contract_end_date: '2027-10-01'
                 contract_number: 890ASLDJF87SD00
+              funds_data:
+                - collected_at: '2020-04-23T21:32:55Z'
+                  name: FIX X
+                  type: CNPJ
+                  public_identifications:
+                    - name: CNPJ
+                      value: 05.954.445/0221-68
+                  balance: 88427.94
+                  percentage: 100
               receivables_data:
                 current: 2193.83
                 available: 800.37
@@ -36373,7 +36615,11 @@ client.connect()
                         "currency": "BRL",
                         "funds_data": [
                           {
+                            "balance": 88427.94,
                             "collected_at": "2020-04-23T21:32:55Z",
+                            "name": "FIX X",
+                            "percentage": 100,
+                            "type": "CNPJ",
                           },
                         ],
                         "id": "26428311-7108-40b8-a22b-c310187dd005",
@@ -36577,6 +36823,7 @@ client.connect()
                     "body": {
                       "count": 385,
                       "next": "https://sandbox.belvo.com/api/balances/?page=2",
+                      "previous": "previous",
                       "results": [
                         {
                           "account": {
@@ -36907,7 +37154,11 @@ client.connect()
                           "currency": "BRL",
                           "funds_data": [
                             {
+                              "balance": 88427.94,
                               "collected_at": "2020-04-23T21:32:55Z",
+                              "name": "FIX X",
+                              "percentage": 100,
+                              "type": "CNPJ",
                             },
                           ],
                           "id": "26428311-7108-40b8-a22b-c310187dd005",
@@ -36919,10 +37170,18 @@ client.connect()
                           "link": "b834e69b-1aa4-465d-969c-07c886a4fbed",
                           "loan_data": {
                             "collected_at": "2022-02-09T08:45:50Z",
+                            "contract_amount": 202000,
                             "contract_end_date": "2027-10-01",
+                            "contract_number": "890ASLDJF87SD00",
+                            "contract_start_date": "2020-03-01",
                             "interest_rates": null,
+                            "loan_type": "Consignado",
                             "monthly_payment": 1000,
+                            "number_of_installments_outstanding": 48,
+                            "number_of_installments_total": 60,
                             "outstanding_balance": 182000,
+                            "outstanding_principal": 142023,
+                            "payment_day": "27",
                             "principal": 192000,
                           },
                           "name": "Erebor Gold",
@@ -37110,7 +37369,11 @@ client.connect()
                           "currency": "BRL",
                           "funds_data": [
                             {
+                              "balance": 88427.94,
                               "collected_at": "2020-04-23T21:32:55Z",
+                              "name": "FIX X",
+                              "percentage": 100,
+                              "type": "CNPJ",
                             },
                           ],
                           "id": "26428311-7108-40b8-a22b-c310187dd005",
@@ -37122,10 +37385,18 @@ client.connect()
                           "link": "b834e69b-1aa4-465d-969c-07c886a4fbed",
                           "loan_data": {
                             "collected_at": "2022-02-09T08:45:50Z",
+                            "contract_amount": 202000,
                             "contract_end_date": "2027-10-01",
+                            "contract_number": "890ASLDJF87SD00",
+                            "contract_start_date": "2020-03-01",
                             "interest_rates": null,
+                            "loan_type": "Consignado",
                             "monthly_payment": 1000,
+                            "number_of_installments_outstanding": 48,
+                            "number_of_installments_total": 60,
                             "outstanding_balance": 182000,
+                            "outstanding_principal": 142023,
+                            "payment_day": "27",
                             "principal": 192000,
                           },
                           "name": "Erebor Gold",
@@ -37440,6 +37711,7 @@ service:
             body:
               count: 385
               next: https://sandbox.belvo.com/api/balances/?page=2
+              previous: previous
               results:
                 - id: b834e69b-1aa4-465d-969c-07c886a4fbed
                   account:
@@ -37658,13 +37930,25 @@ service:
                     interest_rate: 4
                   loan_data:
                     collected_at: '2022-02-09T08:45:50Z'
+                    contract_amount: 202000
                     principal: 192000
+                    loan_type: Consignado
+                    payment_day: '27'
+                    outstanding_principal: 142023
                     outstanding_balance: 182000
                     monthly_payment: 1000
                     interest_rates: null
+                    number_of_installments_total: 60
+                    number_of_installments_outstanding: 48
+                    contract_start_date: '2020-03-01'
                     contract_end_date: '2027-10-01'
+                    contract_number: 890ASLDJF87SD00
                   funds_data:
                     - collected_at: '2020-04-23T21:32:55Z'
+                      name: FIX X
+                      type: CNPJ
+                      balance: 88427.94
+                      percentage: 100
                   receivables_data:
                     current: 2193.83
                     available: 800.37
@@ -37831,13 +38115,25 @@ service:
                     interest_rate: 4
                   loan_data:
                     collected_at: '2022-02-09T08:45:50Z'
+                    contract_amount: 202000
                     principal: 192000
+                    loan_type: Consignado
+                    payment_day: '27'
+                    outstanding_principal: 142023
                     outstanding_balance: 182000
                     monthly_payment: 1000
                     interest_rates: null
+                    number_of_installments_total: 60
+                    number_of_installments_outstanding: 48
+                    contract_start_date: '2020-03-01'
                     contract_end_date: '2027-10-01'
+                    contract_number: 890ASLDJF87SD00
                   funds_data:
                     - collected_at: '2020-04-23T21:32:55Z'
+                      name: FIX X
+                      type: CNPJ
+                      balance: 88427.94
+                      percentage: 100
                   receivables_data:
                     current: 2193.83
                     available: 800.37
@@ -38019,6 +38315,10 @@ service:
                   contract_number: 890ASLDJF87SD00
                 funds_data:
                   - collected_at: '2020-04-23T21:32:55Z'
+                    name: FIX X
+                    type: CNPJ
+                    balance: 88427.94
+                    percentage: 100
                 receivables_data:
                   current: 2193.83
                   available: 800.37
@@ -38621,6 +38921,7 @@ docs: >-
                     "body": {
                       "count": 110,
                       "next": "https://api.belvo.com/payments/{endpoint}/?page=2",
+                      "previous": "previous",
                       "results": [
                         {
                           "created_at": "2023-02-15T07:52:31Z",
@@ -38670,6 +38971,7 @@ docs: >-
                     "body": {
                       "count": 110,
                       "next": "https://api.belvo.com/payments/{endpoint}/?page=2",
+                      "previous": "previous",
                       "results": [
                         {
                           "created_at": "2023-02-15T07:52:31Z",
@@ -38717,6 +39019,7 @@ docs: >-
                     "body": {
                       "count": 110,
                       "next": "https://api.belvo.com/payments/{endpoint}/?page=2",
+                      "previous": "previous",
                       "results": [
                         {
                           "created_at": "2023-02-15T07:52:31Z",
@@ -38971,6 +39274,7 @@ service:
             body:
               count: 110
               next: https://api.belvo.com/payments/{endpoint}/?page=2
+              previous: previous
               results:
                 - id: 90d90e38-0087-4b6d-b6dc-94ea561bb9cb
                   created_at: '2023-02-15T07:52:31Z'
@@ -39010,6 +39314,7 @@ service:
             body:
               count: 110
               next: https://api.belvo.com/payments/{endpoint}/?page=2
+              previous: previous
               results:
                 - id: 7c2be016-37e3-44e2-8643-db2eb1129a3f
                   created_at: '2023-02-15T07:52:31Z'
@@ -39047,6 +39352,7 @@ service:
             body:
               count: 110
               next: https://api.belvo.com/payments/{endpoint}/?page=2
+              previous: previous
               results:
                 - id: 7c2be016-37e3-44e2-8643-db2eb1129a3f
                   created_at: '2023-02-15T07:52:31Z'
@@ -39369,6 +39675,7 @@ types:
                           "currency": "BRL",
                           "description": "OXXO SP",
                           "institution": "BCO DO BRASIL",
+                          "mcc": 2345,
                           "merchant": {
                             "logo": "https://storage.googleapis.com/new-cdn.mercafacil.com/wl_assets/dynamic/65d84ba0-a2f3-11ed-8928-dd578f525074-MOBILE_1OCo1.png",
                             "merchant_name": "Merchants R Us Global",
@@ -39522,6 +39829,7 @@ service:
                   amount: 999.9
                   currency: BRL
                   institution: BCO DO BRASIL
+                  mcc: 2345
                   category: Income & Payments
                   subcategory: Freelance
                   merchant:
@@ -39781,6 +40089,7 @@ docs: >-
                     "body": {
                       "count": 110,
                       "next": "https://api.belvo.com/payments/{endpoint}/?page=2",
+                      "previous": "previous",
                       "results": [
                         {
                           "address": "Rua de Caetano Veloso 432, 70200 Brasilia",
@@ -39830,6 +40139,7 @@ docs: >-
                     "body": {
                       "count": 110,
                       "next": "https://api.belvo.com/payments/{endpoint}/?page=2",
+                      "previous": "previous",
                       "results": [
                         {
                           "address": "Rua de Caetano Veloso 432, 70200 Brasilia",
@@ -39879,6 +40189,7 @@ docs: >-
                     "body": {
                       "count": 110,
                       "next": "https://api.belvo.com/payments/{endpoint}/?page=2",
+                      "previous": "previous",
                       "results": [
                         {
                           "address": "Calle Carlos Vives 432, 80300 Bogota",
@@ -40122,6 +40433,7 @@ service:
             body:
               count: 110
               next: https://api.belvo.com/payments/{endpoint}/?page=2
+              previous: previous
               results:
                 - id: 7c2be016-37e3-44e2-8643-db2eb1129a3f
                   created_at: '2022-02-09T08:45:50Z'
@@ -40162,6 +40474,7 @@ service:
             body:
               count: 110
               next: https://api.belvo.com/payments/{endpoint}/?page=2
+              previous: previous
               results:
                 - id: 7c2be016-37e3-44e2-8643-db2eb1129a3f
                   created_at: '2022-02-09T08:45:50Z'
@@ -40202,6 +40515,7 @@ service:
             body:
               count: 110
               next: https://api.belvo.com/payments/{endpoint}/?page=2
+              previous: previous
               results:
                 - id: 7c2be016-37e3-44e2-8643-db2eb1129a3f
                   created_at: '2022-02-09T08:45:50Z'
@@ -40513,7 +40827,9 @@ At the moment, the employment records resource is available for:
                       "personal_data": {
                         "birth_date": "2022-02-09",
                         "document_ids": [
-                          {},
+                          {
+                            "document_number": "10277663582",
+                          },
                         ],
                         "email": "bruce.banner@avengers.com",
                         "entitlements": {
@@ -40613,7 +40929,19 @@ At the moment, the employment records resource is available for:
                           "id": "fef05fc8-7357-4a4a-9d29-55038ea31a04",
                           "internal_identification": "BLPM951331IONVGR54",
                           "link": "27c1d5cf-e8fb-433a-a2f7-d246de199c01",
+                          "personal_data": {
+                            "birth_date": "2022-02-09",
+                            "email": "bruce.banner@avengers.com",
+                            "first_name": "Bruce",
+                            "last_name": "Banner del Torro",
+                            "official_name": "Bruce Banner del Torro",
+                          },
                           "report_date": "2023-01-19",
+                          "social_security_summary": {
+                            "weeks_contributed": 188,
+                            "weeks_redeemed": 0,
+                            "weeks_reinstated": 0,
+                          },
                         },
                       ],
                     },
@@ -40715,7 +41043,9 @@ At the moment, the employment records resource is available for:
                         "personal_data": {
                           "birth_date": "2022-02-09",
                           "document_ids": [
-                            {},
+                            {
+                              "document_number": "10277663582",
+                            },
                           ],
                           "email": "bruce.banner@avengers.com",
                           "entitlements": {
@@ -40869,6 +41199,16 @@ service:
                   collected_at: '2020-04-23T21:32:55Z'
                   report_date: '2023-01-19'
                   internal_identification: BLPM951331IONVGR54
+                  personal_data:
+                    official_name: Bruce Banner del Torro
+                    first_name: Bruce
+                    last_name: Banner del Torro
+                    email: bruce.banner@avengers.com
+                    birth_date: '2022-02-09'
+                  social_security_summary:
+                    weeks_redeemed: 0
+                    weeks_reinstated: 0
+                    weeks_contributed: 188
                   employment_records:
                     - collected_at: '2020-04-23T21:32:55Z'
                       employer: Batman Enterprises CDMX
@@ -40965,7 +41305,7 @@ service:
                     entitled_to_health_insurance: true
                     entitled_to_company_benefits: true
                   document_ids:
-                    - {}
+                    - document_number: '10277663582'
                 social_security_summary:
                   weeks_redeemed: 0
                   weeks_reinstated: 0
@@ -41046,7 +41386,7 @@ service:
                   valid_until: valid_until
                   status: EMPLOYED
                 document_ids:
-                  - {}
+                  - document_number: '10277663582'
               social_security_summary:
                 weeks_redeemed: 0
                 weeks_reinstated: 0
@@ -41708,7 +42048,27 @@ client.connect()
                         "first_transaction_date": "2022-06-09",
                         "id": "076c66e5-90f5-4e01-99c7-50e32f65ae42",
                         "income_source_type": "BANK",
-                        "income_streams": [],
+                        "income_streams": [
+                          {
+                            "account_id": "EBACA-89077589",
+                            "average_income_amount": 2500,
+                            "confidence": "HIGH",
+                            "currency": "BRL",
+                            "frequency": "MONTHLY",
+                            "full_periods": 12,
+                            "income_type": "SALARY",
+                            "last_income_amount": 2500,
+                            "last_income_date": "2022-02-09",
+                            "last_income_description": "Salário",
+                            "lookback_periods": 4,
+                            "monthly_average": 2500,
+                            "number_of_incomes": 4,
+                            "periods_with_income": 3,
+                            "regularity": 0.75,
+                            "stability": 1,
+                            "trend": 0,
+                          },
+                        ],
                         "last_transaction_date": "2023-02-09",
                         "link": "f4621548-2f9e-440e-9ebd-ae8decac8c02",
                         "monthly_average": 1705.46,
@@ -41865,7 +42225,27 @@ client.connect()
                           "first_transaction_date": "2022-06-09",
                           "id": "076c66e5-90f5-4e01-99c7-50e32f65ae42",
                           "income_source_type": "BANK",
-                          "income_streams": [],
+                          "income_streams": [
+                            {
+                              "account_id": "EBACA-89077589",
+                              "average_income_amount": 2500,
+                              "confidence": "HIGH",
+                              "currency": "BRL",
+                              "frequency": "MONTHLY",
+                              "full_periods": 12,
+                              "income_type": "SALARY",
+                              "last_income_amount": 2500,
+                              "last_income_date": "2022-02-09",
+                              "last_income_description": "Salário",
+                              "lookback_periods": 4,
+                              "monthly_average": 2500,
+                              "number_of_incomes": 4,
+                              "periods_with_income": 3,
+                              "regularity": 0.75,
+                              "stability": 1,
+                              "trend": 0,
+                            },
+                          ],
                           "last_transaction_date": "2023-02-09",
                           "link": "f4621548-2f9e-440e-9ebd-ae8decac8c02",
                           "monthly_average": 1705.46,
@@ -42077,7 +42457,27 @@ client.connect()
                         "first_transaction_date": "2022-06-09",
                         "id": "076c66e5-90f5-4e01-99c7-50e32f65ae42",
                         "income_source_type": "BANK",
-                        "income_streams": [],
+                        "income_streams": [
+                          {
+                            "account_id": "EBACA-89077589",
+                            "average_income_amount": 2500,
+                            "confidence": "HIGH",
+                            "currency": "BRL",
+                            "frequency": "MONTHLY",
+                            "full_periods": 12,
+                            "income_type": "SALARY",
+                            "last_income_amount": 2500,
+                            "last_income_date": "2022-02-09",
+                            "last_income_description": "Salário",
+                            "lookback_periods": 4,
+                            "monthly_average": 2500,
+                            "number_of_incomes": 4,
+                            "periods_with_income": 3,
+                            "regularity": 0.75,
+                            "stability": 1,
+                            "trend": 0,
+                          },
+                        ],
                         "last_transaction_date": "2023-02-09",
                         "link": "f4621548-2f9e-440e-9ebd-ae8decac8c02",
                         "monthly_average": 1705.46,
@@ -42244,9 +42644,7 @@ client.connect()
                           "income_type": "SALARY",
                           "last_income_amount": 2500,
                           "last_income_date": "2022-02-09",
-                          "last_income_description": {
-                            "key": "value",
-                          },
+                          "last_income_description": "Salário",
                           "lookback_periods": 4,
                           "monthly_average": 2500,
                           "number_of_incomes": 4,
@@ -42463,7 +42861,24 @@ service:
                 - id: 076c66e5-90f5-4e01-99c7-50e32f65ae42
                   link: f4621548-2f9e-440e-9ebd-ae8decac8c02
                   created_at: '2022-02-09T08:45:50Z'
-                  income_streams: []
+                  income_streams:
+                    - account_id: EBACA-89077589
+                      income_type: SALARY
+                      frequency: MONTHLY
+                      monthly_average: 2500
+                      average_income_amount: 2500
+                      last_income_amount: 2500
+                      currency: BRL
+                      last_income_description: Salário
+                      last_income_date: '2022-02-09'
+                      stability: 1
+                      regularity: 0.75
+                      trend: 0
+                      lookback_periods: 4
+                      full_periods: 12
+                      periods_with_income: 3
+                      number_of_incomes: 4
+                      confidence: HIGH
                   income_source_type: BANK
                   first_transaction_date: '2022-06-09'
                   last_transaction_date: '2023-02-09'
@@ -42655,8 +43070,7 @@ service:
                   average_income_amount: 2500
                   last_income_amount: 2500
                   currency: BRL
-                  last_income_description:
-                    key: value
+                  last_income_description: Salário
                   last_income_date: '2022-02-09'
                   stability: 1
                   regularity: 0.75
@@ -42802,7 +43216,24 @@ service:
               - id: 076c66e5-90f5-4e01-99c7-50e32f65ae42
                 link: f4621548-2f9e-440e-9ebd-ae8decac8c02
                 created_at: '2022-02-09T08:45:50Z'
-                income_streams: []
+                income_streams:
+                  - account_id: EBACA-89077589
+                    income_type: SALARY
+                    frequency: MONTHLY
+                    monthly_average: 2500
+                    average_income_amount: 2500
+                    last_income_amount: 2500
+                    currency: BRL
+                    last_income_description: Salário
+                    last_income_date: '2022-02-09'
+                    stability: 1
+                    regularity: 0.75
+                    trend: 0
+                    lookback_periods: 4
+                    full_periods: 12
+                    periods_with_income: 3
+                    number_of_incomes: 4
+                    confidence: HIGH
                 income_source_type: BANK
                 first_transaction_date: '2022-06-09'
                 last_transaction_date: '2023-02-09'
@@ -42943,7 +43374,24 @@ service:
               - id: 076c66e5-90f5-4e01-99c7-50e32f65ae42
                 link: f4621548-2f9e-440e-9ebd-ae8decac8c02
                 created_at: '2022-02-09T08:45:50Z'
-                income_streams: []
+                income_streams:
+                  - account_id: EBACA-89077589
+                    income_type: SALARY
+                    frequency: MONTHLY
+                    monthly_average: 2500
+                    average_income_amount: 2500
+                    last_income_amount: 2500
+                    currency: BRL
+                    last_income_description: Salário
+                    last_income_date: '2022-02-09'
+                    stability: 1
+                    regularity: 0.75
+                    trend: 0
+                    lookback_periods: 4
+                    full_periods: 12
+                    periods_with_income: 3
+                    number_of_incomes: 4
+                    confidence: HIGH
                 income_source_type: BANK
                 first_transaction_date: '2022-06-09'
                 last_transaction_date: '2023-02-09'
@@ -45900,6 +46348,7 @@ client.connect()
                           "quantity": 1,
                           "retained_taxes": [
                             {
+                              "collected_at": "2019-09-27T13:01:41Z",
                               "retained_tax_amount": 209.79,
                               "tax": "ISR",
                               "tax_percentage": 10,
@@ -46084,6 +46533,7 @@ client.connect()
                           "quantity": 1,
                           "retained_taxes": [
                             {
+                              "collected_at": "2019-09-27T13:01:41Z",
                               "retained_tax_amount": 209.79,
                               "tax": "ISR",
                               "tax_percentage": 10,
@@ -46101,6 +46551,7 @@ client.connect()
                       "invoice_identification": "862B9918-3K6H-4E0B-NAI9-2BE2D833B840",
                       "invoice_type": "Pago",
                       "link": "1bd948f7-245d-4313-b604-34d1044cb908",
+                      "payment_method": "PUE",
                       "payment_type": "99",
                       "payment_type_description": "payment_type_description",
                       "payments": [
@@ -46267,6 +46718,7 @@ client.connect()
                           "quantity": 1,
                           "retained_taxes": [
                             {
+                              "collected_at": "2019-09-27T13:01:41Z",
                               "retained_tax_amount": 209.79,
                               "tax": "ISR",
                               "tax_percentage": 10,
@@ -46451,6 +46903,7 @@ client.connect()
                           "quantity": 1,
                           "retained_taxes": [
                             {
+                              "collected_at": "2019-09-27T13:01:41Z",
                               "retained_tax_amount": 209.79,
                               "tax": "ISR",
                               "tax_percentage": 10,
@@ -46635,6 +47088,7 @@ client.connect()
                           "quantity": 1,
                           "retained_taxes": [
                             {
+                              "collected_at": "2019-09-27T13:01:41Z",
                               "retained_tax_amount": 209.79,
                               "tax": "ISR",
                               "tax_percentage": 10,
@@ -46652,6 +47106,7 @@ client.connect()
                       "invoice_identification": "862B9918-3K6H-4E0B-NAI9-2BE2D833B840",
                       "invoice_type": "Traslado",
                       "link": "1bd948f7-245d-4313-b604-34d1044cb908",
+                      "payment_method": "PUE",
                       "payment_type": "99",
                       "payment_type_description": "payment_type_description",
                       "payments": [
@@ -46866,6 +47321,7 @@ client.connect()
                     "body": {
                       "count": 110,
                       "next": "https://sandbox.belvo.com/api/{endpoint}/?page=2",
+                      "previous": "previous",
                       "results": [
                         {
                           "cancelation_status": "cancelation_status",
@@ -46889,6 +47345,7 @@ client.connect()
                               "quantity": 1,
                               "retained_taxes": [
                                 {
+                                  "collected_at": "2019-09-27T13:01:41Z",
                                   "retained_tax_amount": 209.79,
                                   "tax": "ISR",
                                   "tax_percentage": 10,
@@ -46912,6 +47369,7 @@ client.connect()
                             {
                               "amount": 8000.5,
                               "beneficiary_account_number": "12343453245633",
+                              "beneficiary_rfc": "BNM840515VB1",
                               "currency": "BRL",
                               "date": "2020-03-17T12:00:00Z",
                               "exchange_rate": "3.75",
@@ -46935,6 +47393,7 @@ client.connect()
                           ],
                           "payroll": {
                             "amount": 20400.1,
+                            "collected_at": "2019-09-27T13:01:41Z",
                             "date_from": "2018-07-01",
                             "date_to": "2018-07-31",
                             "days": 30,
@@ -47080,6 +47539,7 @@ client.connect()
                     "body": {
                       "count": 110,
                       "next": "https://sandbox.belvo.com/api/{endpoint}/?page=2",
+                      "previous": "previous",
                       "results": [
                         {
                           "cancelation_status": "cancelation_status",
@@ -47103,6 +47563,7 @@ client.connect()
                               "quantity": 1,
                               "retained_taxes": [
                                 {
+                                  "collected_at": "2019-09-27T13:01:41Z",
                                   "retained_tax_amount": 209.79,
                                   "tax": "ISR",
                                   "tax_percentage": 10,
@@ -47119,6 +47580,7 @@ client.connect()
                           "invoice_identification": "862B9918-3K6H-4E0B-NAI9-2BE2D833B840",
                           "invoice_type": "Pago",
                           "link": "1bd948f7-245d-4313-b604-34d1044cb908",
+                          "payment_method": "PUE",
                           "payment_type": "99",
                           "payment_type_description": "payment_type_description",
                           "payments": [
@@ -47149,6 +47611,7 @@ client.connect()
                           ],
                           "payroll": {
                             "amount": 20400.1,
+                            "collected_at": "2019-09-27T13:01:41Z",
                             "date_from": "2018-07-01",
                             "date_to": "2018-07-31",
                             "days": 30,
@@ -47294,6 +47757,7 @@ client.connect()
                     "body": {
                       "count": 110,
                       "next": "https://sandbox.belvo.com/api/{endpoint}/?page=2",
+                      "previous": "previous",
                       "results": [
                         {
                           "cancelation_status": "cancelation_status",
@@ -47317,6 +47781,7 @@ client.connect()
                               "quantity": 1,
                               "retained_taxes": [
                                 {
+                                  "collected_at": "2019-09-27T13:01:41Z",
                                   "retained_tax_amount": 209.79,
                                   "tax": "ISR",
                                   "tax_percentage": 10,
@@ -47340,6 +47805,7 @@ client.connect()
                             {
                               "amount": 8000.5,
                               "beneficiary_account_number": "12343453245633",
+                              "beneficiary_rfc": "BNM840515VB1",
                               "currency": "BRL",
                               "date": "2020-03-17T12:00:00Z",
                               "exchange_rate": "3.75",
@@ -47509,6 +47975,7 @@ client.connect()
                     "body": {
                       "count": 110,
                       "next": "https://sandbox.belvo.com/api/{endpoint}/?page=2",
+                      "previous": "previous",
                       "results": [
                         {
                           "cancelation_status": "cancelation_status",
@@ -47532,6 +47999,7 @@ client.connect()
                               "quantity": 1,
                               "retained_taxes": [
                                 {
+                                  "collected_at": "2019-09-27T13:01:41Z",
                                   "retained_tax_amount": 209.79,
                                   "tax": "ISR",
                                   "tax_percentage": 10,
@@ -47555,6 +48023,7 @@ client.connect()
                             {
                               "amount": 8000.5,
                               "beneficiary_account_number": "12343453245633",
+                              "beneficiary_rfc": "BNM840515VB1",
                               "currency": "BRL",
                               "date": "2020-03-17T12:00:00Z",
                               "exchange_rate": "3.75",
@@ -47578,6 +48047,7 @@ client.connect()
                           ],
                           "payroll": {
                             "amount": 20400.1,
+                            "collected_at": "2019-09-27T13:01:41Z",
                             "date_from": "2018-07-01",
                             "date_to": "2018-07-31",
                             "days": 30,
@@ -47723,6 +48193,7 @@ client.connect()
                     "body": {
                       "count": 110,
                       "next": "https://sandbox.belvo.com/api/{endpoint}/?page=2",
+                      "previous": "previous",
                       "results": [
                         {
                           "cancelation_status": "cancelation_status",
@@ -47746,6 +48217,7 @@ client.connect()
                               "quantity": 1,
                               "retained_taxes": [
                                 {
+                                  "collected_at": "2019-09-27T13:01:41Z",
                                   "retained_tax_amount": 209.79,
                                   "tax": "ISR",
                                   "tax_percentage": 10,
@@ -47762,12 +48234,14 @@ client.connect()
                           "invoice_identification": "862B9918-3K6H-4E0B-NAI9-2BE2D833B840",
                           "invoice_type": "Traslado",
                           "link": "1bd948f7-245d-4313-b604-34d1044cb908",
+                          "payment_method": "PUE",
                           "payment_type": "99",
                           "payment_type_description": "payment_type_description",
                           "payments": [
                             {
                               "amount": 8000.5,
                               "beneficiary_account_number": "12343453245633",
+                              "beneficiary_rfc": "BNM840515VB1",
                               "currency": "BRL",
                               "date": "2020-03-17T12:00:00Z",
                               "exchange_rate": "3.75",
@@ -47791,6 +48265,7 @@ client.connect()
                           ],
                           "payroll": {
                             "amount": 20400.1,
+                            "collected_at": "2019-09-27T13:01:41Z",
                             "date_from": "2018-07-01",
                             "date_to": "2018-07-31",
                             "days": 30,
@@ -48112,6 +48587,7 @@ client.connect()
                         "invoice_date": "2019-12-01",
                         "invoice_details": [
                           {
+                            "collected_at": "2019-09-27T13:01:41Z",
                             "description": "December 2019 accounting fees",
                             "pre_tax_amount": 400,
                             "product_identification": "84101600",
@@ -48134,6 +48610,7 @@ client.connect()
                           {
                             "amount": 8000.5,
                             "beneficiary_account_number": "12343453245633",
+                            "beneficiary_rfc": "BNM840515VB1",
                             "currency": "BRL",
                             "date": "2020-03-17T12:00:00Z",
                             "exchange_rate": "3.75",
@@ -48354,6 +48831,7 @@ client.connect()
                             "quantity": 1,
                             "retained_taxes": [
                               {
+                                "collected_at": "2019-09-27T13:01:41Z",
                                 "retained_tax_amount": 209.79,
                                 "tax": "ISR",
                                 "tax_percentage": 10,
@@ -48377,6 +48855,7 @@ client.connect()
                           {
                             "amount": 8000.5,
                             "beneficiary_account_number": "12343453245633",
+                            "beneficiary_rfc": "BNM840515VB1",
                             "currency": "BRL",
                             "date": "2020-03-17T12:00:00Z",
                             "exchange_rate": "3.75",
@@ -48556,6 +49035,7 @@ client.connect()
                             "quantity": 1,
                             "retained_taxes": [
                               {
+                                "collected_at": "2019-09-27T13:01:41Z",
                                 "retained_tax_amount": 209.79,
                                 "tax": "ISR",
                                 "tax_percentage": 10,
@@ -48572,6 +49052,7 @@ client.connect()
                         "invoice_identification": "862B9918-3K6H-4E0B-NAI9-2BE2D833B840",
                         "invoice_type": "Pago",
                         "link": "1bd948f7-245d-4313-b604-34d1044cb908",
+                        "payment_method": "PUE",
                         "payment_type": "99",
                         "payment_type_description": "payment_type_description",
                         "payments": [
@@ -48758,6 +49239,7 @@ client.connect()
                             "quantity": 1,
                             "retained_taxes": [
                               {
+                                "collected_at": "2019-09-27T13:01:41Z",
                                 "retained_tax_amount": 209.79,
                                 "tax": "ISR",
                                 "tax_percentage": 10,
@@ -48781,6 +49263,7 @@ client.connect()
                           {
                             "amount": 8000.5,
                             "beneficiary_account_number": "12343453245633",
+                            "beneficiary_rfc": "BNM840515VB1",
                             "currency": "BRL",
                             "date": "2020-03-17T12:00:00Z",
                             "exchange_rate": "3.75",
@@ -48960,6 +49443,7 @@ client.connect()
                             "quantity": 1,
                             "retained_taxes": [
                               {
+                                "collected_at": "2019-09-27T13:01:41Z",
                                 "retained_tax_amount": 209.79,
                                 "tax": "ISR",
                                 "tax_percentage": 10,
@@ -48983,6 +49467,7 @@ client.connect()
                           {
                             "amount": 8000.5,
                             "beneficiary_account_number": "12343453245633",
+                            "beneficiary_rfc": "BNM840515VB1",
                             "currency": "BRL",
                             "date": "2020-03-17T12:00:00Z",
                             "exchange_rate": "3.75",
@@ -49162,6 +49647,7 @@ client.connect()
                             "quantity": 1,
                             "retained_taxes": [
                               {
+                                "collected_at": "2019-09-27T13:01:41Z",
                                 "retained_tax_amount": 209.79,
                                 "tax": "ISR",
                                 "tax_percentage": 10,
@@ -49178,12 +49664,14 @@ client.connect()
                         "invoice_identification": "862B9918-3K6H-4E0B-NAI9-2BE2D833B840",
                         "invoice_type": "Traslado",
                         "link": "1bd948f7-245d-4313-b604-34d1044cb908",
+                        "payment_method": "PUE",
                         "payment_type": "99",
                         "payment_type_description": "payment_type_description",
                         "payments": [
                           {
                             "amount": 8000.5,
                             "beneficiary_account_number": "12343453245633",
+                            "beneficiary_rfc": "BNM840515VB1",
                             "currency": "BRL",
                             "date": "2020-03-17T12:00:00Z",
                             "exchange_rate": "3.75",
@@ -49592,6 +50080,7 @@ service:
             body:
               count: 110
               next: https://sandbox.belvo.com/api/{endpoint}/?page=2
+              previous: previous
               results:
                 - id: 90d90e38-0087-4b6d-b6dc-94ea561bb9cb
                   link: 1bd948f7-245d-4313-b604-34d1044cb908
@@ -49630,7 +50119,8 @@ service:
                       tax_amount: 4
                       total_amount: 29
                       retained_taxes:
-                        - tax: ISR
+                        - collected_at: '2019-09-27T13:01:41Z'
+                          tax: ISR
                           tax_percentage: 10
                           retained_tax_amount: 209.79
                       collected_at: '2022-02-09T08:45:50Z'
@@ -49647,6 +50137,7 @@ service:
                       exchange_rate: '3.75'
                       amount: 8000.5
                       operation_number: '831840'
+                      beneficiary_rfc: BNM840515VB1
                       beneficiary_account_number: '12343453245633'
                       payer_rfc: BKJM840515VB1
                       payer_account_number: '13343663245699'
@@ -49666,6 +50157,7 @@ service:
                     version: '1.2'
                     date_from: '2018-07-01'
                     date_to: '2018-07-31'
+                    collected_at: '2019-09-27T13:01:41Z'
                     payment_date: payment_date
                   folio: '28'
                   xml: '=XML-STRING='
@@ -49777,6 +50269,7 @@ service:
             body:
               count: 110
               next: https://sandbox.belvo.com/api/{endpoint}/?page=2
+              previous: previous
               results:
                 - id: 90d90e38-0087-4b6d-b6dc-94ea561bb9cb
                   link: 1bd948f7-245d-4313-b604-34d1044cb908
@@ -49799,6 +50292,7 @@ service:
                   certification_authority: FGV330542BG6
                   payment_type: '99'
                   payment_type_description: payment_type_description
+                  payment_method: PUE
                   usage: P01
                   version: '3.3'
                   place_of_issue: '11000'
@@ -49814,7 +50308,8 @@ service:
                       tax_amount: 0
                       total_amount: 0
                       retained_taxes:
-                        - tax: ISR
+                        - collected_at: '2019-09-27T13:01:41Z'
+                          tax: ISR
                           tax_percentage: 10
                           retained_tax_amount: 209.79
                       collected_at: '2022-02-09T08:45:50Z'
@@ -49851,6 +50346,7 @@ service:
                     version: '1.2'
                     date_from: '2018-07-01'
                     date_to: '2018-07-31'
+                    collected_at: '2019-09-27T13:01:41Z'
                     payment_date: payment_date
                   folio: '28'
                   xml: '=XML-STRING='
@@ -49962,6 +50458,7 @@ service:
             body:
               count: 110
               next: https://sandbox.belvo.com/api/{endpoint}/?page=2
+              previous: previous
               results:
                 - id: 90d90e38-0087-4b6d-b6dc-94ea561bb9cb
                   link: 1bd948f7-245d-4313-b604-34d1044cb908
@@ -50000,7 +50497,8 @@ service:
                       tax_amount: 0
                       total_amount: 20400.1
                       retained_taxes:
-                        - tax: ISR
+                        - collected_at: '2019-09-27T13:01:41Z'
+                          tax: ISR
                           tax_percentage: 10
                           retained_tax_amount: 209.79
                       collected_at: '2022-02-09T08:45:50Z'
@@ -50017,6 +50515,7 @@ service:
                       exchange_rate: '3.75'
                       amount: 8000.5
                       operation_number: '831840'
+                      beneficiary_rfc: BNM840515VB1
                       beneficiary_account_number: '12343453245633'
                       payer_rfc: BKJM840515VB1
                       payer_account_number: '13343663245699'
@@ -50148,6 +50647,7 @@ service:
             body:
               count: 110
               next: https://sandbox.belvo.com/api/{endpoint}/?page=2
+              previous: previous
               results:
                 - id: 90d90e38-0087-4b6d-b6dc-94ea561bb9cb
                   link: 1bd948f7-245d-4313-b604-34d1044cb908
@@ -50186,7 +50686,8 @@ service:
                       tax_amount: 4
                       total_amount: 29
                       retained_taxes:
-                        - tax: ISR
+                        - collected_at: '2019-09-27T13:01:41Z'
+                          tax: ISR
                           tax_percentage: 10
                           retained_tax_amount: 209.79
                       collected_at: '2022-02-09T08:45:50Z'
@@ -50203,6 +50704,7 @@ service:
                       exchange_rate: '3.75'
                       amount: 8000.5
                       operation_number: '831840'
+                      beneficiary_rfc: BNM840515VB1
                       beneficiary_account_number: '12343453245633'
                       payer_rfc: BKJM840515VB1
                       payer_account_number: '13343663245699'
@@ -50222,6 +50724,7 @@ service:
                     version: '1.2'
                     date_from: '2018-07-01'
                     date_to: '2018-07-31'
+                    collected_at: '2019-09-27T13:01:41Z'
                     payment_date: payment_date
                   folio: '28'
                   xml: '=XML-STRING='
@@ -50333,6 +50836,7 @@ service:
             body:
               count: 110
               next: https://sandbox.belvo.com/api/{endpoint}/?page=2
+              previous: previous
               results:
                 - id: 90d90e38-0087-4b6d-b6dc-94ea561bb9cb
                   link: 1bd948f7-245d-4313-b604-34d1044cb908
@@ -50355,6 +50859,7 @@ service:
                   certification_authority: FGV330542BG6
                   payment_type: '99'
                   payment_type_description: payment_type_description
+                  payment_method: PUE
                   usage: G03
                   version: '3.3'
                   place_of_issue: '11000'
@@ -50370,7 +50875,8 @@ service:
                       tax_amount: 0
                       total_amount: 21000
                       retained_taxes:
-                        - tax: ISR
+                        - collected_at: '2019-09-27T13:01:41Z'
+                          tax: ISR
                           tax_percentage: 10
                           retained_tax_amount: 209.79
                       collected_at: '2022-02-09T08:45:50Z'
@@ -50387,6 +50893,7 @@ service:
                       exchange_rate: '3.75'
                       amount: 8000.5
                       operation_number: '831840'
+                      beneficiary_rfc: BNM840515VB1
                       beneficiary_account_number: '12343453245633'
                       payer_rfc: BKJM840515VB1
                       payer_account_number: '13343663245699'
@@ -50406,6 +50913,7 @@ service:
                     version: '1.2'
                     date_from: '2018-07-01'
                     date_to: '2018-07-31'
+                    collected_at: '2019-09-27T13:01:41Z'
                     payment_date: payment_date
                   folio: '28'
                   xml: '=XML-STRING='
@@ -50615,7 +51123,8 @@ service:
                     tax_amount: 4
                     total_amount: 29
                     retained_taxes:
-                      - tax: ISR
+                      - collected_at: '2019-09-27T13:01:41Z'
+                        tax: ISR
                         tax_percentage: 10
                         retained_tax_amount: 209.79
                     collected_at: '2022-02-09T08:45:50Z'
@@ -50632,6 +51141,7 @@ service:
                     exchange_rate: '3.75'
                     amount: 8000.5
                     operation_number: '831840'
+                    beneficiary_rfc: BNM840515VB1
                     beneficiary_account_number: '12343453245633'
                     payer_rfc: BKJM840515VB1
                     payer_account_number: '13343663245699'
@@ -50769,6 +51279,7 @@ service:
                 certification_authority: FGV330542BG6
                 payment_type: '99'
                 payment_type_description: payment_type_description
+                payment_method: PUE
                 usage: P01
                 version: '3.3'
                 place_of_issue: '11000'
@@ -50784,7 +51295,8 @@ service:
                     tax_amount: 0
                     total_amount: 0
                     retained_taxes:
-                      - tax: ISR
+                      - collected_at: '2019-09-27T13:01:41Z'
+                        tax: ISR
                         tax_percentage: 10
                         retained_tax_amount: 209.79
                     collected_at: '2022-02-09T08:45:50Z'
@@ -50955,7 +51467,8 @@ service:
                     tax_amount: 0
                     total_amount: 20400.1
                     retained_taxes:
-                      - tax: ISR
+                      - collected_at: '2019-09-27T13:01:41Z'
+                        tax: ISR
                         tax_percentage: 10
                         retained_tax_amount: 209.79
                     collected_at: '2022-02-09T08:45:50Z'
@@ -50972,6 +51485,7 @@ service:
                     exchange_rate: '3.75'
                     amount: 8000.5
                     operation_number: '831840'
+                    beneficiary_rfc: BNM840515VB1
                     beneficiary_account_number: '12343453245633'
                     payer_rfc: BKJM840515VB1
                     payer_account_number: '13343663245699'
@@ -51125,7 +51639,8 @@ service:
                     tax_amount: 4
                     total_amount: 29
                     retained_taxes:
-                      - tax: ISR
+                      - collected_at: '2019-09-27T13:01:41Z'
+                        tax: ISR
                         tax_percentage: 10
                         retained_tax_amount: 209.79
                     collected_at: '2022-02-09T08:45:50Z'
@@ -51142,6 +51657,7 @@ service:
                     exchange_rate: '3.75'
                     amount: 8000.5
                     operation_number: '831840'
+                    beneficiary_rfc: BNM840515VB1
                     beneficiary_account_number: '12343453245633'
                     payer_rfc: BKJM840515VB1
                     payer_account_number: '13343663245699'
@@ -51279,6 +51795,7 @@ service:
                 certification_authority: FGV330542BG6
                 payment_type: '99'
                 payment_type_description: payment_type_description
+                payment_method: PUE
                 usage: G03
                 version: '3.3'
                 place_of_issue: '11000'
@@ -51294,7 +51811,8 @@ service:
                     tax_amount: 0
                     total_amount: 21000
                     retained_taxes:
-                      - tax: ISR
+                      - collected_at: '2019-09-27T13:01:41Z'
+                        tax: ISR
                         tax_percentage: 10
                         retained_tax_amount: 209.79
                     collected_at: '2022-02-09T08:45:50Z'
@@ -51311,6 +51829,7 @@ service:
                     exchange_rate: '3.75'
                     amount: 8000.5
                     operation_number: '831840'
+                    beneficiary_rfc: BNM840515VB1
                     beneficiary_account_number: '12343453245633'
                     payer_rfc: BKJM840515VB1
                     payer_account_number: '13343663245699'
@@ -51500,6 +52019,7 @@ service:
                     tax_percentage: 16
                     tax_amount: 64
                     total_amount: 464
+                    collected_at: '2019-09-27T13:01:41Z'
                 currency: MXN
                 subtotal_amount: 400
                 exchange_rate: 0.052
@@ -51513,6 +52033,7 @@ service:
                     exchange_rate: '3.75'
                     amount: 8000.5
                     operation_number: '831840'
+                    beneficiary_rfc: BNM840515VB1
                     beneficiary_account_number: '12343453245633'
                     payer_rfc: BKJM840515VB1
                     payer_account_number: '13343663245699'
@@ -51703,7 +52224,8 @@ service:
                   tax_amount: 4
                   total_amount: 29
                   retained_taxes:
-                    - tax: ISR
+                    - collected_at: '2019-09-27T13:01:41Z'
+                      tax: ISR
                       tax_percentage: 10
                       retained_tax_amount: 209.79
                   collected_at: '2022-02-09T08:45:50Z'
@@ -51840,6 +52362,7 @@ service:
               certification_authority: FGV330542BG6
               payment_type: '99'
               payment_type_description: payment_type_description
+              payment_method: PUE
               usage: P01
               version: '3.3'
               place_of_issue: '11000'
@@ -51856,7 +52379,8 @@ service:
                   tax_amount: 0
                   total_amount: 0
                   retained_taxes:
-                    - tax: ISR
+                    - collected_at: '2019-09-27T13:01:41Z'
+                      tax: ISR
                       tax_percentage: 10
                       retained_tax_amount: 209.79
                   collected_at: '2022-02-09T08:45:50Z'
@@ -52010,7 +52534,8 @@ service:
                   tax_amount: 0
                   total_amount: 20400.1
                   retained_taxes:
-                    - tax: ISR
+                    - collected_at: '2019-09-27T13:01:41Z'
+                      tax: ISR
                       tax_percentage: 10
                       retained_tax_amount: 209.79
                   collected_at: '2022-02-09T08:45:50Z'
@@ -52164,7 +52689,8 @@ service:
                   tax_amount: 4
                   total_amount: 29
                   retained_taxes:
-                    - tax: ISR
+                    - collected_at: '2019-09-27T13:01:41Z'
+                      tax: ISR
                       tax_percentage: 10
                       retained_tax_amount: 209.79
                   collected_at: '2022-02-09T08:45:50Z'
@@ -52301,6 +52827,7 @@ service:
               certification_authority: FGV330542BG6
               payment_type: '99'
               payment_type_description: payment_type_description
+              payment_method: PUE
               usage: G03
               version: '3.3'
               place_of_issue: '11000'
@@ -52317,7 +52844,8 @@ service:
                   tax_amount: 0
                   total_amount: 21000
                   retained_taxes:
-                    - tax: ISR
+                    - collected_at: '2019-09-27T13:01:41Z'
+                      tax: ISR
                       tax_percentage: 10
                       retained_tax_amount: 209.79
                   collected_at: '2022-02-09T08:45:50Z'
@@ -55673,6 +56201,7 @@ client.connect()
                     "body": {
                       "count": 108,
                       "next": "https://sandbox.belvo.com/api/{endpoint}/?page=2",
+                      "previous": "previous",
                       "results": [
                         {
                           "address": "Retorno Gran Canaria 453 723
@@ -56227,6 +56756,7 @@ service:
             body:
               count: 108
               next: https://sandbox.belvo.com/api/{endpoint}/?page=2
+              previous: previous
               results:
                 - id: c749315b-eec2-435d-a458-06912878564f
                   link: c38fb126-fc98-4d6c-8c80-587a97dd56cf
@@ -57297,6 +57827,7 @@ A payment intent captures all payment information (such as the amount to be char
                               "display_name": "Wakanda National Bank",
                               "icon_logo": "https://belvo-api-media.s3.amazonaws.com/logos/wakandanational_icon_logo.png",
                               "id": "bbaceead-7b96-46d8-9354-38dec9707004",
+                              "legal_entity_name": "Wakanda Bank, National Association",
                               "logo": "https://belvo-api-media.s3.amazonaws.com/logos/wakandanational_logo.png",
                               "name": "wakanda_national",
                               "primary_color": "#fdbc24",
@@ -57444,6 +57975,7 @@ A payment intent captures all payment information (such as the amount to be char
                               "display_name": "Wakanda National Bank",
                               "icon_logo": "https://belvo-api-media.s3.amazonaws.com/logos/wakandanational_icon_logo.png",
                               "id": "bbaceead-7b96-46d8-9354-38dec9707004",
+                              "legal_entity_name": "Wakanda Bank, National Association",
                               "logo": "https://belvo-api-media.s3.amazonaws.com/logos/wakandanational_logo.png",
                               "name": "wakanda_national",
                               "primary_color": "#fdbc24",
@@ -57729,6 +58261,7 @@ During the payment intent flow, you need to fill in the payment intent with requ
                               "display_name": "Wakanda National Bank",
                               "icon_logo": "https://belvo-api-media.s3.amazonaws.com/logos/wakandanational_icon_logo.png",
                               "id": "bbaceead-7b96-46d8-9354-38dec9707004",
+                              "legal_entity_name": "Wakanda Bank, National Association",
                               "logo": "https://belvo-api-media.s3.amazonaws.com/logos/wakandanational_logo.png",
                               "name": "wakanda_national",
                               "primary_color": "#fdbc24",
@@ -58086,6 +58619,7 @@ service:
                       active: true
                       name: wakanda_national
                       display_name: Wakanda National Bank
+                      legal_entity_name: Wakanda Bank, National Association
                       website: https://www.wakandanational.com
                       logo: >-
                         https://belvo-api-media.s3.amazonaws.com/logos/wakandanational_logo.png
@@ -58165,6 +58699,7 @@ service:
                       active: true
                       name: wakanda_national
                       display_name: Wakanda National Bank
+                      legal_entity_name: Wakanda Bank, National Association
                       website: https://www.wakandanational.com
                       logo: >-
                         https://belvo-api-media.s3.amazonaws.com/logos/wakandanational_logo.png
@@ -58274,6 +58809,7 @@ service:
                       active: true
                       name: wakanda_national
                       display_name: Wakanda National Bank
+                      legal_entity_name: Wakanda Bank, National Association
                       website: https://www.wakandanational.com
                       logo: >-
                         https://belvo-api-media.s3.amazonaws.com/logos/wakandanational_logo.png
@@ -58419,10 +58955,17 @@ types:
                           "open_finance": {
                             "beneficiary_bank_account": "a80d5a9d-20ae-479a-8dd7-ff3443bcbbfc",
                             "callback_url": "https://www.acmecorp.com/checkout/3487321",
+                            "cpf": "***444777**",
                             "payer_institution": "600f1b4a-1ef9-4f89-b341-1a35f0c32cc0",
                           },
                         },
-                        "payment_method_information": {},
+                        "payment_method_information": {
+                          "open_finance": {
+                            "end_to_end_id": "F203262942022211117487a213b1d140",
+                            "provider_request_id": "978c0c97ea847e78e8849634473c1f1",
+                            "redirect_url": "https://wakandanational.com/",
+                          },
+                        },
                         "provider": "belvo",
                         "selected_payment_method_type": "open_finance",
                         "status": "REQUIRES_PAYMENT_METHOD",
@@ -58504,10 +59047,17 @@ types:
                           "open_finance": {
                             "beneficiary_bank_account": "a80d5a9d-20ae-479a-8dd7-ff3443bcbbfc",
                             "callback_url": "https://www.acmecorp.com/checkout/3487321",
+                            "cpf": "***444777**",
                             "payer_institution": "600f1b4a-1ef9-4f89-b341-1a35f0c32cc0",
                           },
                         },
-                        "payment_method_information": {},
+                        "payment_method_information": {
+                          "open_finance": {
+                            "end_to_end_id": "F203262942022211117487a213b1d140",
+                            "provider_request_id": "978c0c97ea847e78e8849634473c1f1",
+                            "redirect_url": "https://wakandanational.com/",
+                          },
+                        },
                         "provider": "belvo",
                         "selected_payment_method_type": "open_finance",
                         "status": "REQUIRES_PAYMENT_METHOD",
@@ -58976,7 +59526,12 @@ service:
                     beneficiary_bank_account: a80d5a9d-20ae-479a-8dd7-ff3443bcbbfc
                     payer_institution: 600f1b4a-1ef9-4f89-b341-1a35f0c32cc0
                     callback_url: https://www.acmecorp.com/checkout/3487321
-                payment_method_information: {}
+                    cpf: '***444777**'
+                payment_method_information:
+                  open_finance:
+                    provider_request_id: 978c0c97ea847e78e8849634473c1f1
+                    redirect_url: https://wakandanational.com/
+                    end_to_end_id: F203262942022211117487a213b1d140
                 provider: belvo
                 selected_payment_method_type: open_finance
                 status: REQUIRES_PAYMENT_METHOD
@@ -59049,7 +59604,12 @@ service:
                     beneficiary_bank_account: a80d5a9d-20ae-479a-8dd7-ff3443bcbbfc
                     payer_institution: 600f1b4a-1ef9-4f89-b341-1a35f0c32cc0
                     callback_url: https://www.acmecorp.com/checkout/3487321
-                payment_method_information: {}
+                    cpf: '***444777**'
+                payment_method_information:
+                  open_finance:
+                    provider_request_id: 978c0c97ea847e78e8849634473c1f1
+                    redirect_url: https://wakandanational.com/
+                    end_to_end_id: F203262942022211117487a213b1d140
                 provider: belvo
                 selected_payment_method_type: open_finance
                 status: REQUIRES_PAYMENT_METHOD
@@ -59565,9 +60125,7 @@ docs: >
                       "created_at": "2022-02-09T08:45:50Z",
                       "created_by": "38322582-7c76-4775-abe8-0fb2bdeb8204",
                       "id": "32ab6809-6253-4fb0-be0f-94cce6ebb692",
-                      "name": {
-                        "key": "value",
-                      },
+                      "name": "Your webhook name",
                       "url": "https://mycompany.com/security/webhook",
                     },
                   },
@@ -59612,9 +60170,7 @@ docs: >
                           "created_at": "2022-02-09T08:45:50Z",
                           "created_by": "38322582-7c76-4775-abe8-0fb2bdeb8204",
                           "id": "32ab6809-6253-4fb0-be0f-94cce6ebb692",
-                          "name": {
-                            "key": "value",
-                          },
+                          "name": "Your webhook name",
                           "url": "https://mycompany.com/security/webhook",
                         },
                       ],
@@ -59659,9 +60215,7 @@ docs: >
                         "created_at": "2022-02-09T08:45:50Z",
                         "created_by": "38322582-7c76-4775-abe8-0fb2bdeb8204",
                         "id": "32ab6809-6253-4fb0-be0f-94cce6ebb692",
-                        "name": {
-                          "key": "value",
-                        },
+                        "name": "Your webhook name",
                         "url": "https://mycompany.com/security/webhook",
                       },
                     ],
@@ -59744,8 +60298,7 @@ service:
               previous: previous
               results:
                 - id: 32ab6809-6253-4fb0-be0f-94cce6ebb692
-                  name:
-                    key: value
+                  name: Your webhook name
                   url: https://mycompany.com/security/webhook
                   auth_header: Authorization
                   auth_token: '*******'
@@ -59800,8 +60353,7 @@ service:
           response:
             body:
               - id: 32ab6809-6253-4fb0-be0f-94cce6ebb692
-                name:
-                  key: value
+                name: Your webhook name
                 url: https://mycompany.com/security/webhook
                 auth_header: Authorization
                 auth_token: '*******'
@@ -59831,8 +60383,7 @@ service:
           response:
             body:
               id: 32ab6809-6253-4fb0-be0f-94cce6ebb692
-              name:
-                key: value
+              name: Your webhook name
               url: https://mycompany.com/security/webhook
               auth_header: Authorization
               auth_token: '*******'
@@ -60955,6 +61506,7 @@ client.connect()
                       {
                         "account": {
                           "balance": {
+                            "available": 5621.12,
                             "current": 5874.13,
                           },
                           "balance_type": "ASSET",
@@ -60973,7 +61525,11 @@ client.connect()
                           "currency": "MXN",
                           "funds_data": [
                             {
+                              "balance": 88427.94,
                               "collected_at": "2020-04-23T21:32:55Z",
+                              "name": "FIX X",
+                              "percentage": 100,
+                              "type": "CNPJ",
                             },
                           ],
                           "id": "0d3ffb69-f83b-456e-ad8e-208d0998d71d",
@@ -60984,10 +61540,18 @@ client.connect()
                           "link": "30cb4806-6e00-48a4-91c9-ca55968576c8",
                           "loan_data": {
                             "collected_at": "2022-02-09T08:45:50Z",
+                            "contract_amount": 202000,
                             "contract_end_date": "2027-10-01",
+                            "contract_number": "890ASLDJF87SD00",
+                            "contract_start_date": "2020-03-01",
                             "interest_rates": null,
+                            "loan_type": "Consignado",
                             "monthly_payment": 1000,
+                            "number_of_installments_outstanding": 48,
+                            "number_of_installments_total": 60,
                             "outstanding_balance": 182000,
+                            "outstanding_principal": 142023,
+                            "payment_day": "27",
                             "principal": 192000,
                           },
                           "name": "Cuenta Perfiles- M.N. - MXN-666",
@@ -61150,6 +61714,7 @@ client.connect()
                         {
                           "account": {
                             "balance": {
+                              "available": 5621.12,
                               "current": 5874.13,
                             },
                             "balance_type": "ASSET",
@@ -61160,6 +61725,7 @@ client.connect()
                             "currency": "MXN",
                             "id": "0d3ffb69-f83b-456e-ad8e-208d0998d71d",
                             "last_accessed_at": "2021-03-09T10:28:40Z",
+                            "link": "30cb4806-6e00-48a4-91c9-ca55968576c8",
                             "loan_data": null,
                             "name": "Cuenta Perfiles- M.N. - MXN-666",
                             "number": "4057068115181",
@@ -61370,6 +61936,7 @@ client.connect()
                       {
                         "account": {
                           "balance": {
+                            "available": 5621.12,
                             "current": 5874.13,
                           },
                           "balance_type": "ASSET",
@@ -61388,7 +61955,11 @@ client.connect()
                           "currency": "MXN",
                           "funds_data": [
                             {
+                              "balance": 88427.94,
                               "collected_at": "2020-04-23T21:32:55Z",
+                              "name": "FIX X",
+                              "percentage": 100,
+                              "type": "CNPJ",
                             },
                           ],
                           "id": "0d3ffb69-f83b-456e-ad8e-208d0998d71d",
@@ -61399,10 +61970,18 @@ client.connect()
                           "link": "30cb4806-6e00-48a4-91c9-ca55968576c8",
                           "loan_data": {
                             "collected_at": "2022-02-09T08:45:50Z",
+                            "contract_amount": 202000,
                             "contract_end_date": "2027-10-01",
+                            "contract_number": "890ASLDJF87SD00",
+                            "contract_start_date": "2020-03-01",
                             "interest_rates": null,
+                            "loan_type": "Consignado",
                             "monthly_payment": 1000,
+                            "number_of_installments_outstanding": 48,
+                            "number_of_installments_total": 60,
                             "outstanding_balance": 182000,
+                            "outstanding_principal": 142023,
+                            "payment_day": "27",
                             "principal": 192000,
                           },
                           "name": "Cuenta Perfiles- M.N. - MXN-666",
@@ -61557,6 +62136,7 @@ client.connect()
                       {
                         "account": {
                           "balance": {
+                            "available": 5621.12,
                             "current": 5874.13,
                           },
                           "balance_type": "ASSET",
@@ -61575,7 +62155,11 @@ client.connect()
                           "currency": "MXN",
                           "funds_data": [
                             {
+                              "balance": 88427.94,
                               "collected_at": "2020-04-23T21:32:55Z",
+                              "name": "FIX X",
+                              "percentage": 100,
+                              "type": "CNPJ",
                             },
                           ],
                           "id": "0d3ffb69-f83b-456e-ad8e-208d0998d71d",
@@ -61586,10 +62170,18 @@ client.connect()
                           "link": "30cb4806-6e00-48a4-91c9-ca55968576c8",
                           "loan_data": {
                             "collected_at": "2022-02-09T08:45:50Z",
+                            "contract_amount": 202000,
                             "contract_end_date": "2027-10-01",
+                            "contract_number": "890ASLDJF87SD00",
+                            "contract_start_date": "2020-03-01",
                             "interest_rates": null,
+                            "loan_type": "Consignado",
                             "monthly_payment": 1000,
+                            "number_of_installments_outstanding": 48,
+                            "number_of_installments_total": 60,
                             "outstanding_balance": 182000,
+                            "outstanding_principal": 142023,
+                            "payment_day": "27",
                             "principal": 192000,
                           },
                           "name": "Cuenta Perfiles- M.N. - MXN-666",
@@ -61821,6 +62413,7 @@ service:
                 - id: 076c66e5-90f5-4e01-99c7-50e32f65ae42
                   account:
                     id: 0d3ffb69-f83b-456e-ad8e-208d0998d71d
+                    link: 30cb4806-6e00-48a4-91c9-ca55968576c8
                     collected_at: '2019-09-27T13:01:41Z'
                     created_at: '2022-02-09T08:45:50Z'
                     category: null
@@ -61830,6 +62423,7 @@ service:
                     number: '4057068115181'
                     balance:
                       current: 5874.13
+                      available: 5621.12
                     currency: MXN
                     public_identification_name: CLABE
                     public_identification_value: '150194683119900273'
@@ -62016,6 +62610,7 @@ service:
                   number: '4057068115181'
                   balance:
                     current: 5874.13
+                    available: 5621.12
                   currency: MXN
                   public_identification_name: CLABE
                   public_identification_value: '150194683119900273'
@@ -62030,13 +62625,25 @@ service:
                     interest_rate: 4
                   loan_data:
                     collected_at: '2022-02-09T08:45:50Z'
+                    contract_amount: 202000
                     principal: 192000
+                    loan_type: Consignado
+                    payment_day: '27'
+                    outstanding_principal: 142023
                     outstanding_balance: 182000
                     monthly_payment: 1000
                     interest_rates: null
+                    number_of_installments_total: 60
+                    number_of_installments_outstanding: 48
+                    contract_start_date: '2020-03-01'
                     contract_end_date: '2027-10-01'
+                    contract_number: 890ASLDJF87SD00
                   funds_data:
                     - collected_at: '2020-04-23T21:32:55Z'
+                      name: FIX X
+                      type: CNPJ
+                      balance: 88427.94
+                      percentage: 100
                   receivables_data:
                     current: 2193.83
                     available: 800.37
@@ -62177,6 +62784,7 @@ service:
                   number: '4057068115181'
                   balance:
                     current: 5874.13
+                    available: 5621.12
                   currency: MXN
                   public_identification_name: CLABE
                   public_identification_value: '150194683119900273'
@@ -62191,13 +62799,25 @@ service:
                     interest_rate: 4
                   loan_data:
                     collected_at: '2022-02-09T08:45:50Z'
+                    contract_amount: 202000
                     principal: 192000
+                    loan_type: Consignado
+                    payment_day: '27'
+                    outstanding_principal: 142023
                     outstanding_balance: 182000
                     monthly_payment: 1000
                     interest_rates: null
+                    number_of_installments_total: 60
+                    number_of_installments_outstanding: 48
+                    contract_start_date: '2020-03-01'
                     contract_end_date: '2027-10-01'
+                    contract_number: 890ASLDJF87SD00
                   funds_data:
                     - collected_at: '2020-04-23T21:32:55Z'
+                      name: FIX X
+                      type: CNPJ
+                      balance: 88427.94
+                      percentage: 100
                   receivables_data:
                     current: 2193.83
                     available: 800.37
@@ -62342,6 +62962,7 @@ service:
                   number: '4057068115181'
                   balance:
                     current: 5874.13
+                    available: 5621.12
                   currency: MXN
                   public_identification_name: CLABE
                   public_identification_value: '150194683119900273'
@@ -62356,13 +62977,25 @@ service:
                     interest_rate: 4
                   loan_data:
                     collected_at: '2022-02-09T08:45:50Z'
+                    contract_amount: 202000
                     principal: 192000
+                    loan_type: Consignado
+                    payment_day: '27'
+                    outstanding_principal: 142023
                     outstanding_balance: 182000
                     monthly_payment: 1000
                     interest_rates: null
+                    number_of_installments_total: 60
+                    number_of_installments_outstanding: 48
+                    contract_start_date: '2020-03-01'
                     contract_end_date: '2027-10-01'
+                    contract_number: 890ASLDJF87SD00
                   funds_data:
                     - collected_at: '2020-04-23T21:32:55Z'
+                      name: FIX X
+                      type: CNPJ
+                      balance: 88427.94
+                      percentage: 100
                   receivables_data:
                     current: 2193.83
                     available: 800.37
@@ -70528,9 +71161,7 @@ client.connect()
                     "body": {
                       "count": 101,
                       "next": "https://sandbox.belvo.com/api/{endpoint}/?page=2",
-                      "previous": {
-                        "key": "value",
-                      },
+                      "previous": "previous",
                       "results": [
                         {
                           "collected_at": "2022-02-09T08:45:50Z",
@@ -70838,9 +71469,7 @@ client.connect()
                     "body": {
                       "count": 101,
                       "next": "https://sandbox.belvo.com/api/{endpoint}/?page=2",
-                      "previous": {
-                        "key": "value",
-                      },
+                      "previous": "previous",
                       "results": [
                         {
                           "collected_at": "2022-02-09T08:45:50Z",
@@ -71001,9 +71630,7 @@ client.connect()
                     "body": {
                       "count": 101,
                       "next": "https://sandbox.belvo.com/api/{endpoint}/?page=2",
-                      "previous": {
-                        "key": "value",
-                      },
+                      "previous": "previous",
                       "results": [
                         {
                           "collected_at": "2022-02-09T08:45:50Z",
@@ -71172,9 +71799,7 @@ client.connect()
                     "body": {
                       "count": 101,
                       "next": "https://sandbox.belvo.com/api/{endpoint}/?page=2",
-                      "previous": {
-                        "key": "value",
-                      },
+                      "previous": "previous",
                       "results": [
                         {
                           "cifras_cierre_ejercicio": {
@@ -71450,9 +72075,7 @@ client.connect()
                     "body": {
                       "count": 101,
                       "next": "https://sandbox.belvo.com/api/{endpoint}/?page=2",
-                      "previous": {
-                        "key": "value",
-                      },
+                      "previous": "previous",
                       "results": [
                         {
                           "collected_at": "2022-02-09T08:45:50Z",
@@ -73772,6 +74395,7 @@ service:
             body:
               count: 101
               next: https://sandbox.belvo.com/api/{endpoint}/?page=2
+              previous: previous
               results:
                 - id: 02589c41-ba22-4d44-8558-8111cc751318
                   link: 19697249-01b8-443e-a451-76bfc5fbeebf
@@ -73899,8 +74523,6 @@ service:
                   pdf: '=PDF-STRING='
                   receipt_pdf: '=PDF-STRING='
                   type: yearly
-              previous:
-                key: value
           code-samples:
             - language: cURL
               code: |
@@ -73995,6 +74617,7 @@ service:
             body:
               count: 101
               next: https://sandbox.belvo.com/api/{endpoint}/?page=2
+              previous: previous
               results:
                 - id: 0d3ffb69-f83b-456e-ad8e-208d0998d71d
                   collected_at: '2022-02-09T08:45:50Z'
@@ -74039,8 +74662,6 @@ service:
                   pdf: '===PDF_BINARY===='
                   receipt_pdf: '===PDF_BINARY===='
                   type: monthly
-              previous:
-                key: value
           code-samples:
             - language: cURL
               code: |
@@ -74135,6 +74756,7 @@ service:
             body:
               count: 101
               next: https://sandbox.belvo.com/api/{endpoint}/?page=2
+              previous: previous
               results:
                 - id: 0d3ffb69-f83b-456e-ad8e-208d0998d71d
                   collected_at: '2022-02-09T08:45:50Z'
@@ -74187,8 +74809,6 @@ service:
                   pdf: '===PDF_BINARY===='
                   receipt_pdf: '===PDF_BINARY===='
                   type: monthly
-              previous:
-                key: value
           code-samples:
             - language: cURL
               code: |
@@ -74283,6 +74903,7 @@ service:
             body:
               count: 101
               next: https://sandbox.belvo.com/api/{endpoint}/?page=2
+              previous: previous
               results:
                 - id: 02589c41-ba22-4d44-8558-8111cc751318
                   collected_at: '2022-02-09T08:45:50Z'
@@ -74429,8 +75050,6 @@ service:
                   link: 19697249-01b8-443e-a451-76bfc5fbeebf
                   dividendos_o_utilidades_distribuidos: {}
                   type: yearly
-              previous:
-                key: value
           code-samples:
             - language: cURL
               code: |
@@ -74525,6 +75144,7 @@ service:
             body:
               count: 101
               next: https://sandbox.belvo.com/api/{endpoint}/?page=2
+              previous: previous
               results:
                 - id: 0d3ffb69-f83b-456e-ad8e-208d0998d71d
                   collected_at: '2022-02-09T08:45:50Z'
@@ -74641,8 +75261,6 @@ service:
                   pdf: '===PDF_BINARY===='
                   receipt_pdf: '===PDF_BINARY===='
                   type: monthly
-              previous:
-                key: value
           code-samples:
             - language: cURL
               code: |
@@ -77715,6 +78333,7 @@ client.connect()
                         ],
                         "exterior_number": "4360",
                         "interior_number": "PLANTA BAJA",
+                        "locality": "none",
                         "municipality": "ALTOS DE MIRAMAR",
                         "postal_code": "21255",
                         "state": "CIUDAD DE MEXICO",
@@ -77729,6 +78348,7 @@ client.connect()
                       "economic_activity": [
                         {
                           "economic_activity": "Asalariado",
+                          "end_date": "end_date",
                           "initial_date": "2014-11-05",
                           "order": "1",
                           "percentage": "100",
@@ -77739,11 +78359,13 @@ client.connect()
                       "link": "401d5a8e-79e2-472e-a1ca-8f4646f5cb24",
                       "obligations": [
                         {
+                          "end_date": "end_date",
                           "expiration": "Conjuntamente con la declaración anual del ejercicio.",
                           "initial_date": "2004-03-31",
                           "obligation": "Declaración informativa de IVA con la anual de ISR",
                         },
                         {
+                          "end_date": "end_date",
                           "expiration": "A más tardar el día 17 del mes inmediato posterior al periodo que corresponda.",
                           "initial_date": "2004-03-31",
                           "obligation": "Pago definitivo mensual de IVA.",
@@ -77769,6 +78391,7 @@ client.connect()
                         "phone": "667507132",
                         "rfc": "GGTF770303G7",
                         "second_last_name": "Robin",
+                        "social_name": "John Doe SA DE CV",
                         "start_operations_date": "2000-06-01",
                         "status_padron": "ACTIVO",
                       },
@@ -77868,6 +78491,7 @@ client.connect()
                         ],
                         "exterior_number": "4360",
                         "interior_number": "PLANTA BAJA",
+                        "locality": "none",
                         "municipality": "ALTOS DE MIRAMAR",
                         "postal_code": "21255",
                         "state": "CIUDAD DE MEXICO",
@@ -77882,6 +78506,7 @@ client.connect()
                       "economic_activity": [
                         {
                           "economic_activity": "Otros servicios profesionales, científicos y técnicos",
+                          "end_date": "end_date",
                           "initial_date": "2014-11-05",
                           "order": "1",
                           "percentage": "100",
@@ -77892,11 +78517,13 @@ client.connect()
                       "link": "0b2edc42-7214-4c68-b22e-ae6885bf7c07",
                       "obligations": [
                         {
+                          "end_date": "end_date",
                           "expiration": "Conjuntamente con la declaración anual del ejercicio.",
                           "initial_date": "2004-03-31",
                           "obligation": "Declaración informativa de IVA con la anual de ISR",
                         },
                         {
+                          "end_date": "end_date",
                           "expiration": "A más tardar el día 17 del mes inmediato posterior al periodo que corresponda.",
                           "initial_date": "2004-03-31",
                           "obligation": "Pago definitivo mensual de IVA.",
@@ -77913,10 +78540,15 @@ client.connect()
                         },
                       ],
                       "tax_payer_information": {
+                        "commercial_name": "Jar Jar Transport",
+                        "curp": "curp",
                         "email": "contact@acne.com",
+                        "first_last_name": "DOE",
                         "last_status_change_date": "1995-08-01",
+                        "name": "JOHN",
                         "phone": "555507122",
                         "rfc": "GHTF980303F7",
+                        "second_last_name": "SCHMOE",
                         "social_name": "ACNE SA DE CV",
                         "start_operations_date": "1995-08-01",
                         "status_padron": "ACTIVO",
@@ -78058,6 +78690,7 @@ client.connect()
                     "body": {
                       "count": 101,
                       "next": "https://sandbox.belvo.com/api/{endpoint}/?page=2",
+                      "previous": "previous",
                       "results": [
                         {
                           "address": {
@@ -78069,6 +78702,7 @@ client.connect()
                             ],
                             "exterior_number": "4360",
                             "interior_number": "PLANTA BAJA",
+                            "locality": "none",
                             "municipality": "ALTOS DE MIRAMAR",
                             "postal_code": "21255",
                             "state": "CIUDAD DE MEXICO",
@@ -78123,6 +78757,7 @@ client.connect()
                             "phone": "667507132",
                             "rfc": "GGTF770303G7",
                             "second_last_name": "Robin",
+                            "social_name": "John Doe SA DE CV",
                             "start_operations_date": "2000-06-01",
                             "status_padron": "ACTIVO",
                           },
@@ -78225,6 +78860,7 @@ client.connect()
                     "body": {
                       "count": 101,
                       "next": "https://sandbox.belvo.com/api/{endpoint}/?page=2",
+                      "previous": "previous",
                       "results": [
                         {
                           "address": {
@@ -78236,6 +78872,7 @@ client.connect()
                             ],
                             "exterior_number": "4360",
                             "interior_number": "PLANTA BAJA",
+                            "locality": "none",
                             "municipality": "ALTOS DE MIRAMAR",
                             "postal_code": "21255",
                             "state": "CIUDAD DE MEXICO",
@@ -78281,10 +78918,14 @@ client.connect()
                             },
                           ],
                           "tax_payer_information": {
+                            "commercial_name": "Jar Jar Transport",
                             "email": "contact@acne.com",
+                            "first_last_name": "DOE",
                             "last_status_change_date": "1995-08-01",
+                            "name": "JOHN",
                             "phone": "555507122",
                             "rfc": "GHTF980303F7",
+                            "second_last_name": "SCHMOE",
                             "social_name": "ACNE SA DE CV",
                             "start_operations_date": "1995-08-01",
                             "status_padron": "ACTIVO",
@@ -78498,6 +79139,7 @@ client.connect()
                         ],
                         "exterior_number": "4360",
                         "interior_number": "PLANTA BAJA",
+                        "locality": "none",
                         "municipality": "ALTOS DE MIRAMAR",
                         "postal_code": "21255",
                         "state": "CIUDAD DE MEXICO",
@@ -78512,6 +79154,7 @@ client.connect()
                       "economic_activity": [
                         {
                           "economic_activity": "Asalariado",
+                          "end_date": "end_date",
                           "initial_date": "2014-11-05",
                           "order": "1",
                           "percentage": "100",
@@ -78522,11 +79165,13 @@ client.connect()
                       "link": "401d5a8e-79e2-472e-a1ca-8f4646f5cb24",
                       "obligations": [
                         {
+                          "end_date": "end_date",
                           "expiration": "Conjuntamente con la declaración anual del ejercicio.",
                           "initial_date": "2004-03-31",
                           "obligation": "Declaración informativa de IVA con la anual de ISR",
                         },
                         {
+                          "end_date": "end_date",
                           "expiration": "A más tardar el día 17 del mes inmediato posterior al periodo que corresponda.",
                           "initial_date": "2004-03-31",
                           "obligation": "Pago definitivo mensual de IVA.",
@@ -78552,6 +79197,7 @@ client.connect()
                         "phone": "667507132",
                         "rfc": "GGTF770303G7",
                         "second_last_name": "Robin",
+                        "social_name": "John Doe SA DE CV",
                         "start_operations_date": "2000-06-01",
                         "status_padron": "ACTIVO",
                       },
@@ -78661,6 +79307,7 @@ client.connect()
                         ],
                         "exterior_number": "4360",
                         "interior_number": "PLANTA BAJA",
+                        "locality": "none",
                         "municipality": "ALTOS DE MIRAMAR",
                         "postal_code": "21255",
                         "state": "CIUDAD DE MEXICO",
@@ -78675,6 +79322,7 @@ client.connect()
                       "economic_activity": [
                         {
                           "economic_activity": "Otros servicios profesionales, científicos y técnicos",
+                          "end_date": "end_date",
                           "initial_date": "2014-11-05",
                           "order": "1",
                           "percentage": "100",
@@ -78685,11 +79333,13 @@ client.connect()
                       "link": "0b2edc42-7214-4c68-b22e-ae6885bf7c07",
                       "obligations": [
                         {
+                          "end_date": "end_date",
                           "expiration": "Conjuntamente con la declaración anual del ejercicio.",
                           "initial_date": "2004-03-31",
                           "obligation": "Declaración informativa de IVA con la anual de ISR",
                         },
                         {
+                          "end_date": "end_date",
                           "expiration": "A más tardar el día 17 del mes inmediato posterior al periodo que corresponda.",
                           "initial_date": "2004-03-31",
                           "obligation": "Pago definitivo mensual de IVA.",
@@ -78706,10 +79356,15 @@ client.connect()
                         },
                       ],
                       "tax_payer_information": {
+                        "commercial_name": "Jar Jar Transport",
+                        "curp": "curp",
                         "email": "contact@acne.com",
+                        "first_last_name": "DOE",
                         "last_status_change_date": "1995-08-01",
+                        "name": "JOHN",
                         "phone": "555507122",
                         "rfc": "GHTF980303F7",
+                        "second_last_name": "SCHMOE",
                         "social_name": "ACNE SA DE CV",
                         "start_operations_date": "1995-08-01",
                         "status_padron": "ACTIVO",
@@ -78935,6 +79590,7 @@ service:
             body:
               count: 101
               next: https://sandbox.belvo.com/api/{endpoint}/?page=2
+              previous: previous
               results:
                 - id: e88d29d1-3dc6-407f-825c-a9b50453e349
                   link: 401d5a8e-79e2-472e-a1ca-8f4646f5cb24
@@ -78953,6 +79609,7 @@ service:
                     status_padron: ACTIVO
                     last_status_change_date: '2000-06-01'
                     commercial_name: Alfredo Gonzalo Robin
+                    social_name: John Doe SA DE CV
                     email: alfredo@robin.com
                     phone: '667507132'
                   address:
@@ -78962,6 +79619,7 @@ service:
                     exterior_number: '4360'
                     interior_number: PLANTA BAJA
                     suburb: BUENAVENTURA
+                    locality: none
                     municipality: ALTOS DE MIRAMAR
                     state: CIUDAD DE MEXICO
                     between_street:
@@ -79076,6 +79734,7 @@ service:
             body:
               count: 101
               next: https://sandbox.belvo.com/api/{endpoint}/?page=2
+              previous: previous
               results:
                 - id: 6de34cb3-bf0d-445d-b832-7ec7781e2c6f
                   link: 0b2edc42-7214-4c68-b22e-ae6885bf7c07
@@ -79086,9 +79745,13 @@ service:
                   id_cif: '2274235873432'
                   tax_payer_information:
                     rfc: GHTF980303F7
+                    name: JOHN
+                    first_last_name: DOE
+                    second_last_name: SCHMOE
                     start_operations_date: '1995-08-01'
                     status_padron: ACTIVO
                     last_status_change_date: '1995-08-01'
+                    commercial_name: Jar Jar Transport
                     social_name: ACNE SA DE CV
                     email: contact@acne.com
                     phone: '555507122'
@@ -79099,6 +79762,7 @@ service:
                     exterior_number: '4360'
                     interior_number: PLANTA BAJA
                     suburb: BUENAVENTURA
+                    locality: none
                     municipality: ALTOS DE MIRAMAR
                     state: CIUDAD DE MEXICO
                     between_street:
@@ -79273,6 +79937,7 @@ service:
                 status_padron: ACTIVO
                 last_status_change_date: '2000-06-01'
                 commercial_name: Alfredo Gonzalo Robin
+                social_name: John Doe SA DE CV
                 email: alfredo@robin.com
                 phone: '667507132'
               address:
@@ -79282,6 +79947,7 @@ service:
                 exterior_number: '4360'
                 interior_number: PLANTA BAJA
                 suburb: BUENAVENTURA
+                locality: none
                 municipality: ALTOS DE MIRAMAR
                 state: CIUDAD DE MEXICO
                 between_street:
@@ -79290,6 +79956,7 @@ service:
               economic_activity:
                 - economic_activity: Asalariado
                   initial_date: '2014-11-05'
+                  end_date: end_date
                   order: '1'
                   percentage: '100'
               regimes:
@@ -79302,11 +79969,13 @@ service:
                 - obligation: Declaración informativa de IVA con la anual de ISR
                   expiration: Conjuntamente con la declaración anual del ejercicio.
                   initial_date: '2004-03-31'
+                  end_date: end_date
                 - obligation: Pago definitivo mensual de IVA.
                   expiration: >-
                     A más tardar el día 17 del mes inmediato posterior al
                     periodo que corresponda.
                   initial_date: '2004-03-31'
+                  end_date: end_date
               digital_stamp: >-
                 ||2020/09/26|GHTF980303F7|CONSTANCIA DE SITUACIÓN
                 FISCAL|2044441088666600000034||
@@ -79402,9 +80071,14 @@ service:
               id_cif: '2274235873432'
               tax_payer_information:
                 rfc: GHTF980303F7
+                curp: curp
+                name: JOHN
+                first_last_name: DOE
+                second_last_name: SCHMOE
                 start_operations_date: '1995-08-01'
                 status_padron: ACTIVO
                 last_status_change_date: '1995-08-01'
+                commercial_name: Jar Jar Transport
                 social_name: ACNE SA DE CV
                 email: contact@acne.com
                 phone: '555507122'
@@ -79415,6 +80089,7 @@ service:
                 exterior_number: '4360'
                 interior_number: PLANTA BAJA
                 suburb: BUENAVENTURA
+                locality: none
                 municipality: ALTOS DE MIRAMAR
                 state: CIUDAD DE MEXICO
                 between_street:
@@ -79423,6 +80098,7 @@ service:
               economic_activity:
                 - economic_activity: Otros servicios profesionales, científicos y técnicos
                   initial_date: '2014-11-05'
+                  end_date: end_date
                   order: '1'
                   percentage: '100'
               regimes:
@@ -79433,11 +80109,13 @@ service:
                 - obligation: Declaración informativa de IVA con la anual de ISR
                   expiration: Conjuntamente con la declaración anual del ejercicio.
                   initial_date: '2004-03-31'
+                  end_date: end_date
                 - obligation: Pago definitivo mensual de IVA.
                   expiration: >-
                     A más tardar el día 17 del mes inmediato posterior al
                     periodo que corresponda.
                   initial_date: '2004-03-31'
+                  end_date: end_date
               digital_stamp: >-
                 ||2020/04/26|GHTF980303F7|CONSTANCIA DE SITUACIÓN
                 FISCAL|2044441088666600000034||
@@ -79577,6 +80255,7 @@ service:
                 status_padron: ACTIVO
                 last_status_change_date: '2000-06-01'
                 commercial_name: Alfredo Gonzalo Robin
+                social_name: John Doe SA DE CV
                 email: alfredo@robin.com
                 phone: '667507132'
               address:
@@ -79586,6 +80265,7 @@ service:
                 exterior_number: '4360'
                 interior_number: PLANTA BAJA
                 suburb: BUENAVENTURA
+                locality: none
                 municipality: ALTOS DE MIRAMAR
                 state: CIUDAD DE MEXICO
                 between_street:
@@ -79594,6 +80274,7 @@ service:
               economic_activity:
                 - economic_activity: Asalariado
                   initial_date: '2014-11-05'
+                  end_date: end_date
                   order: '1'
                   percentage: '100'
               regimes:
@@ -79606,11 +80287,13 @@ service:
                 - obligation: Declaración informativa de IVA con la anual de ISR
                   expiration: Conjuntamente con la declaración anual del ejercicio.
                   initial_date: '2004-03-31'
+                  end_date: end_date
                 - obligation: Pago definitivo mensual de IVA.
                   expiration: >-
                     A más tardar el día 17 del mes inmediato posterior al
                     periodo que corresponda.
                   initial_date: '2004-03-31'
+                  end_date: end_date
               digital_stamp: >-
                 ||2020/09/26|GHTF980303F7|CONSTANCIA DE SITUACIÓN
                 FISCAL|2044441088666600000034||
@@ -79696,9 +80379,14 @@ service:
               id_cif: '2274235873432'
               tax_payer_information:
                 rfc: GHTF980303F7
+                curp: curp
+                name: JOHN
+                first_last_name: DOE
+                second_last_name: SCHMOE
                 start_operations_date: '1995-08-01'
                 status_padron: ACTIVO
                 last_status_change_date: '1995-08-01'
+                commercial_name: Jar Jar Transport
                 social_name: ACNE SA DE CV
                 email: contact@acne.com
                 phone: '555507122'
@@ -79709,6 +80397,7 @@ service:
                 exterior_number: '4360'
                 interior_number: PLANTA BAJA
                 suburb: BUENAVENTURA
+                locality: none
                 municipality: ALTOS DE MIRAMAR
                 state: CIUDAD DE MEXICO
                 between_street:
@@ -79717,6 +80406,7 @@ service:
               economic_activity:
                 - economic_activity: Otros servicios profesionales, científicos y técnicos
                   initial_date: '2014-11-05'
+                  end_date: end_date
                   order: '1'
                   percentage: '100'
               regimes:
@@ -79727,11 +80417,13 @@ service:
                 - obligation: Declaración informativa de IVA con la anual de ISR
                   expiration: Conjuntamente con la declaración anual del ejercicio.
                   initial_date: '2004-03-31'
+                  end_date: end_date
                 - obligation: Pago definitivo mensual de IVA.
                   expiration: >-
                     A más tardar el día 17 del mes inmediato posterior al
                     periodo que corresponda.
                   initial_date: '2004-03-31'
+                  end_date: end_date
               digital_stamp: >-
                 ||2020/04/26|GHTF980303F7|CONSTANCIA DE SITUACIÓN
                 FISCAL|2044441088666600000034||
@@ -80272,7 +80964,11 @@ client.connect()
                         "currency": "MXN",
                         "funds_data": [
                           {
+                            "balance": 88427.94,
                             "collected_at": "2020-04-23T21:32:55Z",
+                            "name": "FIX X",
+                            "percentage": 100,
+                            "type": "CNPJ",
                           },
                         ],
                         "id": "02589c41-ba22-4d44-8558-8111cc751318",
@@ -80455,7 +81151,11 @@ client.connect()
                         "currency": "MXN",
                         "funds_data": [
                           {
+                            "balance": 88427.94,
                             "collected_at": "2020-04-23T21:32:55Z",
+                            "name": "FIX X",
+                            "percentage": 100,
+                            "type": "CNPJ",
                           },
                         ],
                         "id": "02589c41-ba22-4d44-8558-8111cc751318",
@@ -80636,6 +81336,15 @@ client.connect()
                           "no_interest_payment": 37390.83,
                         },
                         "currency": "MXN",
+                        "funds_data": [
+                          {
+                            "balance": 88427.94,
+                            "collected_at": "2020-04-23T21:32:55Z",
+                            "name": "FIX X",
+                            "percentage": 100,
+                            "type": "CNPJ",
+                          },
+                        ],
                         "id": "02589c41-ba22-4d44-8558-8111cc751318",
                         "institution": {
                           "name": "erebor_mx_retail",
@@ -80892,6 +81601,7 @@ client.connect()
                     "body": {
                       "count": 198,
                       "next": "https://sandbox.belvo.com/api/{endpoint}/?page=2",
+                      "previous": "previous",
                       "results": [
                         {
                           "account": {
@@ -80925,6 +81635,12 @@ client.connect()
                           "category": "Income & Payments",
                           "collected_at": "2022-07-20T22:09:33Z",
                           "created_at": "2022-07-20T22:09:35Z",
+                          "credit_card_data": {
+                            "bill_amount": 300,
+                            "bill_name": "apr-2020",
+                            "collected_at": "2019-09-27T13:01:41Z",
+                            "previous_bill_total": "9614.30",
+                          },
                           "currency": "MXN",
                           "description": "Transferencia interbancaria",
                           "id": "e5588958-48f2-427c-9300-945207532f5d",
@@ -81086,6 +81802,7 @@ client.connect()
                     "body": {
                       "count": 198,
                       "next": "https://sandbox.belvo.com/api/{endpoint}/?page=2",
+                      "previous": "previous",
                       "results": [
                         {
                           "account": {
@@ -81119,6 +81836,12 @@ client.connect()
                           "category": "Income & Payments",
                           "collected_at": "2022-07-20T22:09:33Z",
                           "created_at": "2022-07-20T22:09:35Z",
+                          "credit_card_data": {
+                            "bill_amount": 300,
+                            "bill_name": "apr-2020",
+                            "collected_at": "2019-09-27T13:01:41Z",
+                            "previous_bill_total": "9614.30",
+                          },
                           "currency": "MXN",
                           "description": "Interes",
                           "id": "e5588958-48f2-427c-9300-945207532f5d",
@@ -81280,6 +82003,7 @@ client.connect()
                     "body": {
                       "count": 198,
                       "next": "https://sandbox.belvo.com/api/{endpoint}/?page=2",
+                      "previous": "previous",
                       "results": [
                         {
                           "account": {
@@ -81322,6 +82046,7 @@ client.connect()
                           "collected_at": "2022-02-09T08:45:50Z",
                           "created_at": "2022-02-09T08:45:50Z",
                           "credit_card_data": {
+                            "bill_amount": 300,
                             "bill_name": "apr-2020",
                             "collected_at": "2022-02-09T08:45:50Z",
                             "previous_bill_total": "2000.00",
@@ -81761,7 +82486,11 @@ client.connect()
                           "currency": "MXN",
                           "funds_data": [
                             {
+                              "balance": 88427.94,
                               "collected_at": "2020-04-23T21:32:55Z",
+                              "name": "FIX X",
+                              "percentage": 100,
+                              "type": "CNPJ",
                             },
                           ],
                           "id": "02589c41-ba22-4d44-8558-8111cc751318",
@@ -81773,10 +82502,18 @@ client.connect()
                           "link": "30cb4806-6e00-48a4-91c9-ca55968576c8",
                           "loan_data": {
                             "collected_at": "2022-02-09T08:45:50Z",
+                            "contract_amount": 202000,
                             "contract_end_date": "2027-10-01",
+                            "contract_number": "890ASLDJF87SD00",
+                            "contract_start_date": "2020-03-01",
                             "interest_rates": null,
+                            "loan_type": "Consignado",
                             "monthly_payment": 1000,
+                            "number_of_installments_outstanding": 48,
+                            "number_of_installments_total": 60,
                             "outstanding_balance": 182000,
+                            "outstanding_principal": 142023,
+                            "payment_day": "27",
                             "principal": 192000,
                           },
                           "name": "CUENTA NARANJA LITE +",
@@ -81947,7 +82684,11 @@ client.connect()
                           "currency": "MXN",
                           "funds_data": [
                             {
+                              "balance": 88427.94,
                               "collected_at": "2020-04-23T21:32:55Z",
+                              "name": "FIX X",
+                              "percentage": 100,
+                              "type": "CNPJ",
                             },
                           ],
                           "id": "02589c41-ba22-4d44-8558-8111cc751318",
@@ -81959,10 +82700,18 @@ client.connect()
                           "link": "30cb4806-6e00-48a4-91c9-ca55968576c8",
                           "loan_data": {
                             "collected_at": "2022-02-09T08:45:50Z",
+                            "contract_amount": 202000,
                             "contract_end_date": "2027-10-01",
+                            "contract_number": "890ASLDJF87SD00",
+                            "contract_start_date": "2020-03-01",
                             "interest_rates": null,
+                            "loan_type": "Consignado",
                             "monthly_payment": 1000,
+                            "number_of_installments_outstanding": 48,
+                            "number_of_installments_total": 60,
                             "outstanding_balance": 182000,
+                            "outstanding_principal": 142023,
+                            "payment_day": "27",
                             "principal": 192000,
                           },
                           "name": "Mi ahorro Erebor",
@@ -82131,6 +82880,15 @@ client.connect()
                             "no_interest_payment": 37390.83,
                           },
                           "currency": "MXN",
+                          "funds_data": [
+                            {
+                              "balance": 88427.94,
+                              "collected_at": "2020-04-23T21:32:55Z",
+                              "name": "FIX X",
+                              "percentage": 100,
+                              "type": "CNPJ",
+                            },
+                          ],
                           "id": "02589c41-ba22-4d44-8558-8111cc751318",
                           "institution": {
                             "name": "erebor_mx_retail",
@@ -82140,10 +82898,18 @@ client.connect()
                           "link": "30cb4806-6e00-48a4-91c9-ca55968576c8",
                           "loan_data": {
                             "collected_at": "2022-02-09T08:45:50Z",
+                            "contract_amount": 202000,
                             "contract_end_date": "2027-10-01",
+                            "contract_number": "890ASLDJF87SD00",
+                            "contract_start_date": "2020-03-01",
                             "interest_rates": null,
+                            "loan_type": "Consignado",
                             "monthly_payment": 1000,
+                            "number_of_installments_outstanding": 48,
+                            "number_of_installments_total": 60,
                             "outstanding_balance": 182000,
+                            "outstanding_principal": 142023,
+                            "payment_day": "27",
                             "principal": 192000,
                           },
                           "name": "Erebor Gold",
@@ -82362,7 +83128,11 @@ client.connect()
                           "currency": "MXN",
                           "funds_data": [
                             {
+                              "balance": 88427.94,
                               "collected_at": "2020-04-23T21:32:55Z",
+                              "name": "FIX X",
+                              "percentage": 100,
+                              "type": "CNPJ",
                             },
                           ],
                           "id": "02589c41-ba22-4d44-8558-8111cc751318",
@@ -82374,10 +83144,18 @@ client.connect()
                           "link": "30cb4806-6e00-48a4-91c9-ca55968576c8",
                           "loan_data": {
                             "collected_at": "2022-02-09T08:45:50Z",
+                            "contract_amount": 202000,
                             "contract_end_date": "2027-10-01",
+                            "contract_number": "890ASLDJF87SD00",
+                            "contract_start_date": "2020-03-01",
                             "interest_rates": null,
+                            "loan_type": "Consignado",
                             "monthly_payment": 1000,
+                            "number_of_installments_outstanding": 48,
+                            "number_of_installments_total": 60,
                             "outstanding_balance": 182000,
+                            "outstanding_principal": 142023,
+                            "payment_day": "27",
                             "principal": 192000,
                           },
                           "name": "CUENTA NARANJA LITE +",
@@ -82553,7 +83331,11 @@ client.connect()
                           "currency": "MXN",
                           "funds_data": [
                             {
+                              "balance": 88427.94,
                               "collected_at": "2020-04-23T21:32:55Z",
+                              "name": "FIX X",
+                              "percentage": 100,
+                              "type": "CNPJ",
                             },
                           ],
                           "id": "02589c41-ba22-4d44-8558-8111cc751318",
@@ -82565,10 +83347,18 @@ client.connect()
                           "link": "30cb4806-6e00-48a4-91c9-ca55968576c8",
                           "loan_data": {
                             "collected_at": "2022-02-09T08:45:50Z",
+                            "contract_amount": 202000,
                             "contract_end_date": "2027-10-01",
+                            "contract_number": "890ASLDJF87SD00",
+                            "contract_start_date": "2020-03-01",
                             "interest_rates": null,
+                            "loan_type": "Consignado",
                             "monthly_payment": 1000,
+                            "number_of_installments_outstanding": 48,
+                            "number_of_installments_total": 60,
                             "outstanding_balance": 182000,
+                            "outstanding_principal": 142023,
+                            "payment_day": "27",
                             "principal": 192000,
                           },
                           "name": "Mi ahorro Erebor",
@@ -82742,6 +83532,15 @@ client.connect()
                             "no_interest_payment": 37390.83,
                           },
                           "currency": "MXN",
+                          "funds_data": [
+                            {
+                              "balance": 88427.94,
+                              "collected_at": "2020-04-23T21:32:55Z",
+                              "name": "FIX X",
+                              "percentage": 100,
+                              "type": "CNPJ",
+                            },
+                          ],
                           "id": "02589c41-ba22-4d44-8558-8111cc751318",
                           "institution": {
                             "name": "erebor_mx_retail",
@@ -82751,10 +83550,18 @@ client.connect()
                           "link": "30cb4806-6e00-48a4-91c9-ca55968576c8",
                           "loan_data": {
                             "collected_at": "2022-02-09T08:45:50Z",
+                            "contract_amount": 202000,
                             "contract_end_date": "2027-10-01",
+                            "contract_number": "890ASLDJF87SD00",
+                            "contract_start_date": "2020-03-01",
                             "interest_rates": null,
+                            "loan_type": "Consignado",
                             "monthly_payment": 1000,
+                            "number_of_installments_outstanding": 48,
+                            "number_of_installments_total": 60,
                             "outstanding_balance": 182000,
+                            "outstanding_principal": 142023,
+                            "payment_day": "27",
                             "principal": 192000,
                           },
                           "name": "Erebor Gold",
@@ -83380,6 +84187,7 @@ service:
             body:
               count: 198
               next: https://sandbox.belvo.com/api/{endpoint}/?page=2
+              previous: previous
               results:
                 - id: e5588958-48f2-427c-9300-945207532f5d
                   internal_identification: LCzHexIyHi
@@ -83423,6 +84231,11 @@ service:
                   reference: '085904452810319225'
                   type: INFLOW
                   status: UNCATEGORIZED
+                  credit_card_data:
+                    collected_at: '2019-09-27T13:01:41Z'
+                    bill_name: apr-2020
+                    bill_amount: 300
+                    previous_bill_total: '9614.30'
           code-samples:
             - language: cURL
               code: |
@@ -83553,6 +84366,7 @@ service:
             body:
               count: 198
               next: https://sandbox.belvo.com/api/{endpoint}/?page=2
+              previous: previous
               results:
                 - id: e5588958-48f2-427c-9300-945207532f5d
                   internal_identification: '0089608418'
@@ -83596,6 +84410,11 @@ service:
                   reference: '8703'
                   type: INFLOW
                   status: UNCATEGORIZED
+                  credit_card_data:
+                    collected_at: '2019-09-27T13:01:41Z'
+                    bill_name: apr-2020
+                    bill_amount: 300
+                    previous_bill_total: '9614.30'
           code-samples:
             - language: cURL
               code: |
@@ -83726,6 +84545,7 @@ service:
             body:
               count: 198
               next: https://sandbox.belvo.com/api/{endpoint}/?page=2
+              previous: previous
               results:
                 - id: 076c66e5-90f5-4e01-99c7-50e32f65ae42
                   internal_identification: TXpRMU9UQTROMWhZV2xSU1FUazJSMDl
@@ -83779,6 +84599,7 @@ service:
                   credit_card_data:
                     collected_at: '2022-02-09T08:45:50Z'
                     bill_name: apr-2020
+                    bill_amount: 300
                     previous_bill_total: '2000.00'
           code-samples:
             - language: cURL
@@ -83937,13 +84758,25 @@ service:
                     interest_rate: 4
                   loan_data:
                     collected_at: '2022-02-09T08:45:50Z'
+                    contract_amount: 202000
                     principal: 192000
+                    loan_type: Consignado
+                    payment_day: '27'
+                    outstanding_principal: 142023
                     outstanding_balance: 182000
                     monthly_payment: 1000
                     interest_rates: null
+                    number_of_installments_total: 60
+                    number_of_installments_outstanding: 48
+                    contract_start_date: '2020-03-01'
                     contract_end_date: '2027-10-01'
+                    contract_number: 890ASLDJF87SD00
                   funds_data:
                     - collected_at: '2020-04-23T21:32:55Z'
+                      name: FIX X
+                      type: CNPJ
+                      balance: 88427.94
+                      percentage: 100
                   receivables_data:
                     current: 2193.83
                     available: 800.37
@@ -84098,13 +84931,25 @@ service:
                     interest_rate: 4
                   loan_data:
                     collected_at: '2022-02-09T08:45:50Z'
+                    contract_amount: 202000
                     principal: 192000
+                    loan_type: Consignado
+                    payment_day: '27'
+                    outstanding_principal: 142023
                     outstanding_balance: 182000
                     monthly_payment: 1000
                     interest_rates: null
+                    number_of_installments_total: 60
+                    number_of_installments_outstanding: 48
+                    contract_start_date: '2020-03-01'
                     contract_end_date: '2027-10-01'
+                    contract_number: 890ASLDJF87SD00
                   funds_data:
                     - collected_at: '2020-04-23T21:32:55Z'
+                      name: FIX X
+                      type: CNPJ
+                      balance: 88427.94
+                      percentage: 100
                   receivables_data:
                     current: 2193.83
                     available: 800.37
@@ -84259,11 +85104,25 @@ service:
                     interest_rate: 4
                   loan_data:
                     collected_at: '2022-02-09T08:45:50Z'
+                    contract_amount: 202000
                     principal: 192000
+                    loan_type: Consignado
+                    payment_day: '27'
+                    outstanding_principal: 142023
                     outstanding_balance: 182000
                     monthly_payment: 1000
                     interest_rates: null
+                    number_of_installments_total: 60
+                    number_of_installments_outstanding: 48
+                    contract_start_date: '2020-03-01'
                     contract_end_date: '2027-10-01'
+                    contract_number: 890ASLDJF87SD00
+                  funds_data:
+                    - collected_at: '2020-04-23T21:32:55Z'
+                      name: FIX X
+                      type: CNPJ
+                      balance: 88427.94
+                      percentage: 100
                   receivables_data:
                     current: 2193.83
                     available: 800.37
@@ -84605,13 +85464,25 @@ service:
                     interest_rate: 4
                   loan_data:
                     collected_at: '2022-02-09T08:45:50Z'
+                    contract_amount: 202000
                     principal: 192000
+                    loan_type: Consignado
+                    payment_day: '27'
+                    outstanding_principal: 142023
                     outstanding_balance: 182000
                     monthly_payment: 1000
                     interest_rates: null
+                    number_of_installments_total: 60
+                    number_of_installments_outstanding: 48
+                    contract_start_date: '2020-03-01'
                     contract_end_date: '2027-10-01'
+                    contract_number: 890ASLDJF87SD00
                   funds_data:
                     - collected_at: '2020-04-23T21:32:55Z'
+                      name: FIX X
+                      type: CNPJ
+                      balance: 88427.94
+                      percentage: 100
                   receivables_data:
                     current: 2193.83
                     available: 800.37
@@ -84761,13 +85632,25 @@ service:
                     interest_rate: 4
                   loan_data:
                     collected_at: '2022-02-09T08:45:50Z'
+                    contract_amount: 202000
                     principal: 192000
+                    loan_type: Consignado
+                    payment_day: '27'
+                    outstanding_principal: 142023
                     outstanding_balance: 182000
                     monthly_payment: 1000
                     interest_rates: null
+                    number_of_installments_total: 60
+                    number_of_installments_outstanding: 48
+                    contract_start_date: '2020-03-01'
                     contract_end_date: '2027-10-01'
+                    contract_number: 890ASLDJF87SD00
                   funds_data:
                     - collected_at: '2020-04-23T21:32:55Z'
+                      name: FIX X
+                      type: CNPJ
+                      balance: 88427.94
+                      percentage: 100
                   receivables_data:
                     current: 2193.83
                     available: 800.37
@@ -84917,11 +85800,25 @@ service:
                     interest_rate: 4
                   loan_data:
                     collected_at: '2022-02-09T08:45:50Z'
+                    contract_amount: 202000
                     principal: 192000
+                    loan_type: Consignado
+                    payment_day: '27'
+                    outstanding_principal: 142023
                     outstanding_balance: 182000
                     monthly_payment: 1000
                     interest_rates: null
+                    number_of_installments_total: 60
+                    number_of_installments_outstanding: 48
+                    contract_start_date: '2020-03-01'
                     contract_end_date: '2027-10-01'
+                    contract_number: 890ASLDJF87SD00
+                  funds_data:
+                    - collected_at: '2020-04-23T21:32:55Z'
+                      name: FIX X
+                      type: CNPJ
+                      balance: 88427.94
+                      percentage: 100
                   receivables_data:
                     current: 2193.83
                     available: 800.37
@@ -85126,6 +86023,10 @@ service:
                   contract_number: 890ASLDJF87SD00
                 funds_data:
                   - collected_at: '2020-04-23T21:32:55Z'
+                    name: FIX X
+                    type: CNPJ
+                    balance: 88427.94
+                    percentage: 100
                 receivables_data:
                   current: 2193.83
                   available: 800.37
@@ -85277,6 +86178,10 @@ service:
                   contract_number: 890ASLDJF87SD00
                 funds_data:
                   - collected_at: '2020-04-23T21:32:55Z'
+                    name: FIX X
+                    type: CNPJ
+                    balance: 88427.94
+                    percentage: 100
                 receivables_data:
                   current: 2193.83
                   available: 800.37
@@ -85426,6 +86331,12 @@ service:
                   contract_start_date: '2020-03-01'
                   contract_end_date: '2027-10-01'
                   contract_number: 890ASLDJF87SD00
+                funds_data:
+                  - collected_at: '2020-04-23T21:32:55Z'
+                    name: FIX X
+                    type: CNPJ
+                    balance: 88427.94
+                    percentage: 100
                 receivables_data:
                   current: 2193.83
                   available: 800.37

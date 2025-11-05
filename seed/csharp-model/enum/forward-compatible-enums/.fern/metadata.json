@@ -1,0 +1,8 @@
+{
+  "cliVersion": "DUMMY",
+  "generatorName": "fernapi/fern-csharp-model",
+  "generatorVersion": "latest",
+  "generatorConfig": {
+    "experimental-enable-forward-compatible-enums": true
+  }
+}

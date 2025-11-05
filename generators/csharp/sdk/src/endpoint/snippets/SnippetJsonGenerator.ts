@@ -1,3 +1,4 @@
+import { WithGeneration } from "@fern-api/csharp-codegen";
 import { FernGeneratorExec } from "@fern-fern/generator-exec-sdk";
 import { HttpEndpoint } from "@fern-fern/ir-sdk/api";
 import urlJoin from "url-join";
@@ -5,10 +6,11 @@ import { RootClientGenerator } from "../../root-client/RootClientGenerator";
 import { SdkGeneratorContext } from "../../SdkGeneratorContext";
 import { SingleEndpointSnippet } from "./EndpointSnippetsGenerator";
 
-export class SnippetJsonGenerator {
+export class SnippetJsonGenerator extends WithGeneration {
     private readonly context: SdkGeneratorContext;
     private readonly rootClientGenerator: RootClientGenerator;
     constructor({ context }: { context: SdkGeneratorContext }) {
+        super(context);
         this.context = context;
         this.rootClientGenerator = new RootClientGenerator(context);
     }
@@ -19,8 +21,7 @@ export class SnippetJsonGenerator {
             .toFormattedSnippetAsync({
                 allNamespaceSegments: this.context.getAllNamespaceSegments(),
                 allTypeClassReferences: this.context.getAllTypeClassReferences(),
-                rootNamespace: this.context.getNamespace(),
-                customConfig: this.context.customConfig,
+                generation: this.generation,
                 formatter: this.context.formatter
             });
         const rootClientImportList = rootClientSnippet.imports?.split("\n") ?? [];
@@ -31,16 +32,16 @@ export class SnippetJsonGenerator {
             const uniqueOrderedImports = Array.from(new Set([...rootClientImportList, ...snippetImportList]))
                 .filter((importString) => importString !== "")
                 .sort();
-            snippet += `${uniqueOrderedImports.join("\n")}\n\nvar client = ${rootClientSnippet.body}`;
+            snippet = `${snippet}${uniqueOrderedImports.join("\n")}\n\nvar client = ${rootClientSnippet.body}`;
 
             if (isPager) {
-                snippet += "var items = ";
+                snippet = `${snippet}var items = `;
             }
 
-            snippet += endpointSnippet.endpointCall;
+            snippet = `${snippet}${endpointSnippet.endpointCall}`;
 
             if (isPager) {
-                snippet += `\nawait foreach (var item in items)
+                snippet = `${snippet}\nawait foreach (var item in items)
 {
     // do something with item
 }\n`;
@@ -105,7 +106,7 @@ export class SnippetJsonGenerator {
             url = urlJoin(url, endpoint.fullPath.head);
         }
         for (const part of endpoint.fullPath.parts) {
-            url = urlJoin(url, "{" + part.pathParameter + "}");
+            url = urlJoin(url, `{${part.pathParameter}}`);
             if (part.tail.length > 0) {
                 url = urlJoin(url, part.tail);
             }

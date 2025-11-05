@@ -69,8 +69,9 @@ export declare namespace ExpressGenerator {
         noOptionalProperties: boolean;
         packagePath: string | undefined;
         packageManager: "pnpm" | "yarn";
-        formatter: "prettier" | "biome";
-        linter: "biome" | "none";
+        formatter: "prettier" | "biome" | "oxfmt";
+        linter: "biome" | "oxlint" | "none";
+        enableForwardCompatibleEnums: boolean;
     }
 }
 
@@ -223,7 +224,8 @@ export class ExpressGenerator {
             retainOriginalCasing: config.retainOriginalCasing,
             noOptionalProperties: config.noOptionalProperties,
             enableInlineTypes: false,
-            generateReadWriteOnlyTypes: false
+            generateReadWriteOnlyTypes: false,
+            enableForwardCompatibleEnums: config.enableForwardCompatibleEnums
         });
         this.typeSchemaGenerator = new TypeSchemaGenerator({
             includeUtilsOnUnionMembers: config.includeUtilsOnUnionMembers,

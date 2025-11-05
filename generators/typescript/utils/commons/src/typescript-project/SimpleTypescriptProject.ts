@@ -281,9 +281,7 @@ export class SimpleTypescriptProject extends TypescriptProject {
                 ...this.dependencies[DependencyType.PROD],
                 ...this.extraDependencies
             };
-            if (Object.keys(dependencies).length > 0) {
-                draft.dependencies = dependencies;
-            }
+            draft.dependencies = dependencies;
 
             const peerDependencies = {
                 ...this.dependencies[DependencyType.PEER],

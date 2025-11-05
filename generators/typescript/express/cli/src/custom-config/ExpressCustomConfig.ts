@@ -20,6 +20,7 @@ export interface ExpressCustomConfig {
     enableInlineTypes: boolean;
     packagePath: string | undefined;
     packageManager: "pnpm" | "yarn";
-    linter: "biome" | "none";
-    formatter: "prettier" | "biome";
+    linter: "biome" | "oxlint" | "none";
+    formatter: "prettier" | "biome" | "oxfmt";
+    enableForwardCompatibleEnums: boolean;
 }

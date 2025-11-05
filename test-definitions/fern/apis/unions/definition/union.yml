@@ -3,8 +3,7 @@ types:
     properties:
       id: string
     examples:
-      - name: example
-        value:
+      - value:
           id: example
 
   WithName:
@@ -21,16 +20,16 @@ types:
     examples:
       - name: circle
         value:
-          name: circle
           type: circle
           id: example
           radius: 5.0
+          name: circle
       - name: square
         value:
-          name: square
           type: square
           id: example
           length: 5.0
+          name: square
 
   Circle:
     properties:

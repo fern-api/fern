@@ -1,4 +1,3 @@
-using System.Threading.Tasks;
 using NUnit.Framework;
 using SeedPagination.Test.Unit.MockServer;
 
@@ -64,7 +63,7 @@ public class ListWithBodyCursorPaginationTest : BaseMockServerTest
         var items = await Client.InlineUsers.InlineUsers.ListWithBodyCursorPaginationAsync(
             new SeedPagination.InlineUsers.ListUsersBodyCursorPaginationRequest
             {
-                Pagination = new InlineUsers.WithCursor { Cursor = "cursor" },
+                Pagination = new SeedPagination.InlineUsers.WithCursor { Cursor = "cursor" },
             }
         );
         await foreach (var item in items)

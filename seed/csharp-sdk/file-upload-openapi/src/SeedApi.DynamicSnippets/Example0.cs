@@ -1,5 +1,5 @@
 using SeedApi;
-using System.Threading.Tasks;
+using System.Text;
 
 namespace Usage;
 
@@ -14,6 +14,9 @@ public class Example0
 
         await client.FileUploadExample.UploadFileAsync(
             new UploadFileRequest {
+                File = new FileParameter(){
+                    Stream = new MemoryStream(Encoding.UTF8.GetBytes("[bytes]"))
+                },
                 Name = "name"
             }
         );

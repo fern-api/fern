@@ -1563,6 +1563,22 @@
                           },
                           "type": "object"
                         },
+                        "error": {
+                          "properties": {
+                            "code": {
+                              "value": "account_holder_not_found",
+                              "type": "enum"
+                            },
+                            "message": {
+                              "value": {
+                                "value": "message",
+                                "type": "string"
+                              },
+                              "type": "primitive"
+                            }
+                          },
+                          "type": "object"
+                        },
                         "created_at": {
                           "value": {
                             "value": "2024-03-30T00:00:00",
