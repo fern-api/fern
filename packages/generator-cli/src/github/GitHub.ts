@@ -27,16 +27,29 @@ export class GitHub {
                 installationToken: this.githubConfig.token
             });
 
-            const branch = this.githubConfig.branch ?? (await repository.getDefaultBranch());
+            const isEmptyRepo = await repository.isRemoteEmpty();
 
-            await repository.checkout(branch);
-            await repository.pull(branch);
+            let branch: string;
+            if (isEmptyRepo) {
+                branch = this.githubConfig.branch ?? "main";
+                await repository.checkoutOrCreateLocal(branch);
+            } else {
+                branch = this.githubConfig.branch ?? (await repository.getDefaultBranch());
+                await repository.checkout(branch);
+                await repository.pull(branch);
+            }
+
             const fernIgnoreFiles = await this.getFernignoreFiles(repository);
             await repository.overwriteLocalContents(sourceDirectory);
             await repository.add(".");
             await this.restoreFiles(repository, fernIgnoreFiles);
             await repository.commit("SDK Generation");
-            await repository.push();
+
+            if (isEmptyRepo) {
+                await repository.pushUpstream(branch);
+            } else {
+                await repository.push();
+            }
         } catch (error) {
             // TODO: migrate this to use @fern-api/logger
             console.error("Error during GitHub push:", error);
@@ -54,13 +67,23 @@ export class GitHub {
                 installationToken: this.githubConfig.token
             });
 
-            const baseBranch = this.githubConfig.branch ?? (await repository.getDefaultBranch());
+            const isEmptyRepo = await repository.isRemoteEmpty();
+
+            let baseBranch: string;
+            if (isEmptyRepo) {
+                baseBranch = this.githubConfig.branch ?? "main";
+                await repository.checkoutOrCreateLocal(baseBranch);
+                await repository.commit("Initial commit");
+                await repository.pushUpstream(baseBranch);
+            } else {
+                baseBranch = this.githubConfig.branch ?? (await repository.getDefaultBranch());
+                await repository.checkout(baseBranch);
+                await repository.pull(baseBranch);
+            }
 
             const now = new Date();
             const formattedDate = now.toISOString().replace("T", "_").replace(/:/g, "-").replace(/\..+/, "");
             const prBranch = `fern-bot/${formattedDate}`;
-            await repository.checkout(baseBranch);
-            await repository.pull(baseBranch);
             await repository.checkout(prBranch);
 
             const fernIgnoreFiles = await this.getFernignoreFiles(repository);
