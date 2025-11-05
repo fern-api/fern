@@ -47,6 +47,17 @@ echo "  Starting validation for cli..."
 # Run CLI validation in background, redirecting both stdout and stderr
 (pnpm seed validate cli --log-level debug > "$cli_error_file" 2>&1; echo $? > "$cli_exit_file") &
 
+echo "🚀 Starting validation for generator-cli..."
+
+generator_cli_error_file="$temp_dir/generator-cli.log"
+generator_cli_exit_file="$temp_dir/generator-cli.exit"
+error_files+=("$generator_cli_error_file")
+
+echo "  Starting validation for generator-cli..."
+
+# Run generator-cli validation in background, redirecting both stdout and stderr
+(pnpm seed validate versions-yml --log-level debug > "$generator_cli_error_file" 2>&1; echo $? > "$generator_cli_exit_file") &
+
 echo "🚀 Starting validation for ${#generators[@]} generators..."
 
 for generator in "${generators[@]}"; do
@@ -84,6 +95,20 @@ else
     echo "❌ cli changelog failed to start or crashed"
 fi
 
+# Check generator-cli results
+if [ -f "$generator_cli_exit_file" ]; then
+    generator_cli_exit_code=$(cat "$generator_cli_exit_file")
+    if [ "$generator_cli_exit_code" -ne 0 ]; then
+        failed_changelogs+=("generator-cli")
+        echo "❌ generator-cli changelog failed"
+    else
+        echo "✅ generator-cli passed"
+    fi
+else
+    failed_changelogs+=("generator-cli")
+    echo "❌ generator-cli changelog failed to start or crashed"
+fi
+
 # Check generator results
 for generator in "${generators[@]}"; do
     exit_file="$temp_dir/${generator}.exit"
@@ -115,6 +140,13 @@ if [ ${#failed_changelogs[@]} -gt 0 ]; then
     if [[ " ${failed_changelogs[@]} " =~ " cli " ]]; then
         echo "❌ CLI changelog error:"
         cat "$cli_error_file"
+        echo ""
+    fi
+
+    # Show generator-cli error logs if it failed
+    if [[ " ${failed_changelogs[@]} " =~ " generator-cli " ]]; then
+        echo "❌ generator-cli changelog error:"
+        cat "$generator_cli_error_file"
         echo ""
     fi
     
