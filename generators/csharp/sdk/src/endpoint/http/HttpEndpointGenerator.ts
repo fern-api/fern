@@ -821,7 +821,7 @@ export class HttpEndpointGenerator extends AbstractEndpointGenerator {
                                         .filter((each) => each.needsIntialization)
                                         .map((each) => ({
                                             name: each.name,
-                                            value: each.type.getDeterminsticDefault(each.name)
+                                            value: each.type.defaultValue
                                         }))
                                 })
                             );
