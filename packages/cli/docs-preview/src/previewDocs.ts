@@ -234,7 +234,8 @@ class ReferencedAPICollector {
                         this.context.logger.debug(
                             `Generated dynamic IRs for ${Object.keys(dynamicIRsByLanguage).length} languages`
                         );
-                        this.dynamicIRsByAPI[workspace.name] = dynamicIRsByLanguage;
+                        const workspaceName = workspace.workspaceName ?? "default";
+                        this.dynamicIRsByAPI[workspaceName] = dynamicIRsByLanguage;
                     }
                 } catch (error) {
                     this.context.logger.debug(

@@ -5549,8 +5549,8 @@ importers:
         specifier: workspace:*
         version: link:../../commons/core-utils
       '@fern-api/fdr-sdk':
-        specifier: 0.139.41-9a38b8587
-        version: 0.139.41-9a38b8587(typescript@5.9.3)
+        specifier: 0.139.43-309880147
+        version: 0.139.43-309880147(typescript@5.9.3)
       '@fern-api/ir-generator':
         specifier: workspace:*
         version: link:../generation/ir-generator
