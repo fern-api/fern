@@ -9,8 +9,8 @@ import * as core from "../../../../core";
 export const ConjurePrimitive: core.serialization.Schema<
     serializers.ConjurePrimitive.Raw,
     FernConjure.ConjurePrimitive
-> = core.serialization.enum_(["rid", "string", "safelong", "integer", "double", "boolean"]);
+> = core.serialization.enum_(["rid", "string", "safelong", "integer", "double", "boolean", "binary"]);
 
 export declare namespace ConjurePrimitive {
-    export type Raw = "rid" | "string" | "safelong" | "integer" | "double" | "boolean";
+    export type Raw = "rid" | "string" | "safelong" | "integer" | "double" | "boolean" | "binary";
 }

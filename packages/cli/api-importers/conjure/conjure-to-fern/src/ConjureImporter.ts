@@ -223,6 +223,18 @@ export class ConjureImporter extends APIDefinitionImporter<ConjureImporter.Args>
         return this.fernDefinitionBuilder.build();
     }
 
+    private convertBinaryType(
+        type: string | { type: string; docs?: string }
+    ): string | { type: string; docs?: string } {
+        if (typeof type === "string") {
+            return type === "binary" ? "bytes" : type;
+        }
+        return {
+            ...type,
+            type: type.type === "binary" ? "bytes" : type.type
+        };
+    }
+
     private importAllTypes({
         conjureFile,
         fernFilePath
@@ -236,7 +248,7 @@ export class ConjureImporter extends APIDefinitionImporter<ConjureImporter.Args>
                     this.fernDefinitionBuilder.addType(fernFilePath, {
                         name: typeName,
                         schema: {
-                            type: value.alias,
+                            type: value.alias === "binary" ? "bytes" : value.alias,
                             docs: value.docs
                         }
                     });
@@ -245,7 +257,12 @@ export class ConjureImporter extends APIDefinitionImporter<ConjureImporter.Args>
                     this.fernDefinitionBuilder.addType(fernFilePath, {
                         name: typeName,
                         schema: {
-                            properties: value.fields
+                            properties: Object.fromEntries(
+                                Object.entries(value.fields).map(([fieldName, fieldType]) => [
+                                    fieldName,
+                                    this.convertBinaryType(fieldType)
+                                ])
+                            )
                         }
                     });
                 },
@@ -263,11 +280,13 @@ export class ConjureImporter extends APIDefinitionImporter<ConjureImporter.Args>
                         schema: {
                             union: Object.fromEntries(
                                 Object.entries(value.union).map(([key, type]) => {
+                                    const convertedType = this.convertBinaryType(type);
                                     return [
                                         key,
                                         {
-                                            type: typeof type === "string" ? type : type.type,
-                                            docs: typeof type === "string" ? undefined : type.docs,
+                                            type:
+                                                typeof convertedType === "string" ? convertedType : convertedType.type,
+                                            docs: typeof convertedType === "string" ? undefined : convertedType.docs,
                                             key
                                         }
                                     ];
