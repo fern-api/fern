@@ -563,6 +563,7 @@ types:
       use-javascript-as-typescript: optional<boolean>
       disable-explorer-proxy: optional<boolean>
       disable-analytics: optional<boolean>
+      language: optional<Language>
 
   ThemeConfig:
     properties:

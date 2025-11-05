@@ -38,7 +38,7 @@
     "@fern-api/fs-utils": "workspace:*",
     "@fern-api/logger": "workspace:*",
     "@fern-api/task-context": "workspace:*",
-    "@fern-api/fdr-sdk": "0.139.37-f5b57f86e",
+    "@fern-api/fdr-sdk": "0.139.43-309880147",
     "gray-matter": "^4.0.3",
     "hast-util-to-mdast": "^10.1.0",
     "mdast-util-mdx-jsx": "^3.1.3",

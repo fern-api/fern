@@ -544,23 +544,17 @@ export async function runAppPreviewServer({
             await snippetTracker.buildDependencyMap(project);
 
             // Start validation in background - don't block the reload
-            context.logger.info("⚡ Starting validation in background...");
             const validationStartTime = Date.now();
-            void validateProject(project)
-                .then(() => {
-                    const validationTime = Date.now() - validationStartTime;
-                    context.logger.info(`✅ Background validation completed in ${validationTime}ms`);
-                })
-                .catch((err) => {
-                    const validationTime = Date.now() - validationStartTime;
-                    context.logger.error(
-                        `❌ Background validation failed after ${validationTime}ms: ${err instanceof Error ? err.message : String(err)}`
-                    );
-                    // Still log validation errors to help developers
-                    if (err instanceof Error && err.stack) {
-                        context.logger.debug(`Validation error stack: ${err.stack}`);
-                    }
-                });
+            void validateProject(project).catch((err) => {
+                const validationTime = Date.now() - validationStartTime;
+                context.logger.error(
+                    `Validation failed (took ${validationTime}ms): ${err instanceof Error ? err.message : String(err)}`
+                );
+                // Still log validation errors to help developers
+                if (err instanceof Error && err.stack) {
+                    context.logger.debug(`Validation error stack: ${err.stack}`);
+                }
+            });
 
             const newDocsDefinition = await getPreviewDocsDefinition({
                 domain: `${instance.host}${instance.pathname}`,
