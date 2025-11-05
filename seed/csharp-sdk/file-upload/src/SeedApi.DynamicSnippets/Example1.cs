@@ -16,8 +16,7 @@ public class Example1
             new OptionalArgsRequest {
                 ImageFile = new FileParameter(){
                     Stream = new MemoryStream(Encoding.UTF8.GetBytes("[bytes]"))
-                },
-                Request = new Dictionary<string, object>()
+                }
             }
         );
     }
