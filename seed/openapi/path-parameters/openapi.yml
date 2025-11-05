@@ -191,6 +191,35 @@ paths:
                 type: array
                 items:
                   $ref: '#/components/schemas/User'
+  /{tenant_id}/user/{user_id}/metadata/v{version}:
+    get:
+      description: Test endpoint with path parameter that has a text prefix (v{version})
+      operationId: user_getUserMetadata
+      tags:
+        - User
+      parameters:
+        - name: tenant_id
+          in: path
+          required: true
+          schema:
+            type: string
+        - name: user_id
+          in: path
+          required: true
+          schema:
+            type: string
+        - name: version
+          in: path
+          required: true
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/User'
 components:
   schemas:
     Organization:
