@@ -1,0 +1,124 @@
+{
+  "absoluteFilePath": "/DUMMY_PATH",
+  "importedDefinitions": {},
+  "namedDefinitionFiles": {
+    "__package__.yml": {
+      "absoluteFilepath": "/DUMMY_PATH",
+      "contents": {
+        "types": {
+          "ServerResponsePayload": {
+            "docs": undefined,
+            "inline": undefined,
+            "properties": {
+              "reply": {
+                "docs": "Response text",
+                "type": "string",
+              },
+            },
+            "source": {
+              "openapi": "../asyncapi.yml",
+            },
+          },
+          "UserMessagePayload": {
+            "docs": undefined,
+            "inline": undefined,
+            "properties": {
+              "text": {
+                "docs": "Message text",
+                "type": "string",
+              },
+            },
+            "source": {
+              "openapi": "../asyncapi.yml",
+            },
+          },
+        },
+      },
+      "rawContents": "types:
+  UserMessagePayload:
+    properties:
+      text:
+        type: string
+        docs: Message text
+    source:
+      openapi: ../asyncapi.yml
+  ServerResponsePayload:
+    properties:
+      reply:
+        type: string
+        docs: Response text
+    source:
+      openapi: ../asyncapi.yml
+",
+    },
+    "chat.yml": {
+      "absoluteFilepath": "/DUMMY_PATH",
+      "contents": {
+        "channel": {
+          "auth": false,
+          "docs": "Chat channel for testing message references",
+          "examples": [
+            {
+              "messages": [],
+            },
+          ],
+          "messages": {
+            "serverResponse": {
+              "body": "root.ServerResponsePayload",
+              "origin": "server",
+            },
+            "userMessage": {
+              "body": "root.UserMessagePayload",
+              "origin": "client",
+            },
+          },
+          "path": "/v1/ws/chat",
+          "url": "production",
+        },
+        "imports": {
+          "root": "__package__.yml",
+        },
+      },
+      "rawContents": "channel:
+  path: /v1/ws/chat
+  url: production
+  auth: false
+  docs: Chat channel for testing message references
+  messages:
+    serverResponse:
+      origin: server
+      body: root.ServerResponsePayload
+    userMessage:
+      origin: client
+      body: root.UserMessagePayload
+  examples:
+    - messages: []
+imports:
+  root: __package__.yml
+",
+    },
+  },
+  "packageMarkers": {},
+  "rootApiFile": {
+    "contents": {
+      "default-environment": "production",
+      "default-url": "Base",
+      "environments": {
+        "production": "wss://api.example.com",
+      },
+      "error-discrimination": {
+        "strategy": "status-code",
+      },
+      "name": "api",
+    },
+    "defaultUrl": "Base",
+    "rawContents": "name: api
+error-discrimination:
+  strategy: status-code
+environments:
+  production: wss://api.example.com
+default-environment: production
+default-url: Base
+",
+  },
+}

@@ -1,0 +1,129 @@
+{
+  "type": "openapi",
+  "value": {
+    "asyncapi": "3.0.0",
+    "info": {
+      "title": "Message Reference Test API",
+      "version": "1.0.0",
+      "description": "Tests that channel messages with component references are correctly resolved"
+    },
+    "servers": {
+      "production": {
+        "host": "api.example.com",
+        "protocol": "wss",
+        "pathname": "/v1/ws"
+      }
+    },
+    "channels": {
+      "chat": {
+        "address": "/v1/ws/chat",
+        "description": "Chat channel for testing message references",
+        "messages": {
+          "userMessage": {
+            "$ref": "#/components/messages/UserMessage"
+          },
+          "serverResponse": {
+            "$ref": "#/components/messages/ServerResponse"
+          }
+        }
+      }
+    },
+    "operations": {
+      "sendMessage": {
+        "action": "send",
+        "channel": {
+          "$ref": "#/channels/chat"
+        },
+        "messages": [
+          {
+            "$ref": "#/channels/chat/messages/userMessage"
+          }
+        ]
+      },
+      "receiveResponse": {
+        "action": "receive",
+        "channel": {
+          "$ref": "#/channels/chat"
+        },
+        "messages": [
+          {
+            "$ref": "#/channels/chat/messages/serverResponse"
+          }
+        ]
+      }
+    },
+    "components": {
+      "messages": {
+        "UserMessage": {
+          "name": "UserMessage",
+          "title": "User Message",
+          "contentType": "application/json",
+          "payload": {
+            "$ref": "#/components/schemas/UserMessagePayload"
+          }
+        },
+        "ServerResponse": {
+          "name": "ServerResponse",
+          "title": "Server Response",
+          "contentType": "application/json",
+          "payload": {
+            "$ref": "#/components/schemas/ServerResponsePayload"
+          }
+        }
+      },
+      "schemas": {
+        "UserMessagePayload": {
+          "type": "object",
+          "required": [
+            "text"
+          ],
+          "properties": {
+            "text": {
+              "type": "string",
+              "description": "Message text"
+            }
+          }
+        },
+        "ServerResponsePayload": {
+          "type": "object",
+          "required": [
+            "reply"
+          ],
+          "properties": {
+            "reply": {
+              "type": "string",
+              "description": "Response text"
+            }
+          }
+        }
+      }
+    }
+  },
+  "settings": {
+    "disableExamples": false,
+    "discriminatedUnionV2": false,
+    "useTitlesAsName": true,
+    "optionalAdditionalProperties": true,
+    "coerceEnumsToLiterals": true,
+    "respectReadonlySchemas": false,
+    "respectNullableSchemas": false,
+    "onlyIncludeReferencedSchemas": false,
+    "inlinePathParameters": false,
+    "preserveSchemaIds": false,
+    "shouldUseUndiscriminatedUnionsWithLiterals": false,
+    "shouldUseIdiomaticRequestNames": false,
+    "objectQueryParameters": false,
+    "asyncApiNaming": "v1",
+    "useBytesForBinaryResponse": false,
+    "respectForwardCompatibleEnums": false,
+    "additionalPropertiesDefaultsTo": false,
+    "typeDatesAsStrings": true,
+    "preserveSingleSchemaOneOf": false,
+    "inlineAllOfSchemas": false,
+    "resolveAliases": false,
+    "groupMultiApiEnvironments": false,
+    "groupEnvironmentsByHost": false,
+    "wrapReferencesToNullableInOptional": true,
+    "coerceOptionalSchemasToNullable": true
+  }
+}
