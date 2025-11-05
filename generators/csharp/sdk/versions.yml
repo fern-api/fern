@@ -1,4 +1,12 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 2.6.1
+  changelogEntry:
+    - type: fix
+      summary: |
+        Improved generation of snippets and example code for file-upload scenarios.
+  createdAt: "2025-11-05"
+  irVersion: 61
+
 - version: 2.6.0
   changelogEntry:
     - type: feat
