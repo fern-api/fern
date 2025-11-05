@@ -1,0 +1,296 @@
+import Foundation
+import Testing
+import BasicAuth
+
+@Suite("BasicAuthClient Retry Tests") struct BasicAuthClient_RetryTests {
+    
+    @Test func testRetryOn408RequestTimeout() async throws -> Void {
+        let stub = WireStub()
+        stub.setResponseSequence([
+            (statusCode: 408, headers: ["Content-Type": "application/json"], body: Data()),
+            (statusCode: 408, headers: ["Content-Type": "application/json"], body: Data()),
+            (statusCode: 200, headers: ["Content-Type": "application/json"], body: Data("true".utf8))
+        ])
+        
+        let client = BasicAuthClient(
+            baseURL: "https://api.fern.com",
+            username: "<username>",
+            password: "<password>",
+            urlSession: stub.urlSession
+        )
+        
+        let response = try await client.basicAuth.getWithBasicAuth()
+        try #require(response == true)
+        try #require(stub.getRequestCount() == 3)
+    }
+    
+    @Test func testRetryOn429TooManyRequests() async throws -> Void {
+        let stub = WireStub()
+        stub.setResponseSequence([
+            (statusCode: 429, headers: ["Content-Type": "application/json"], body: Data()),
+            (statusCode: 429, headers: ["Content-Type": "application/json"], body: Data()),
+            (statusCode: 200, headers: ["Content-Type": "application/json"], body: Data("true".utf8))
+        ])
+        
+        let client = BasicAuthClient(
+            baseURL: "https://api.fern.com",
+            username: "<username>",
+            password: "<password>",
+            urlSession: stub.urlSession
+        )
+        
+        let response = try await client.basicAuth.getWithBasicAuth()
+        try #require(response == true)
+        try #require(stub.getRequestCount() == 3)
+    }
+    
+    @Test func testRetryOn500InternalServerError() async throws -> Void {
+        let stub = WireStub()
+        stub.setResponseSequence([
+            (statusCode: 500, headers: ["Content-Type": "application/json"], body: Data()),
+            (statusCode: 500, headers: ["Content-Type": "application/json"], body: Data()),
+            (statusCode: 200, headers: ["Content-Type": "application/json"], body: Data("true".utf8))
+        ])
+        
+        let client = BasicAuthClient(
+            baseURL: "https://api.fern.com",
+            username: "<username>",
+            password: "<password>",
+            urlSession: stub.urlSession
+        )
+        
+        let response = try await client.basicAuth.getWithBasicAuth()
+        try #require(response == true)
+        try #require(stub.getRequestCount() == 3)
+    }
+    
+    @Test func testRetryOn503ServiceUnavailable() async throws -> Void {
+        let stub = WireStub()
+        stub.setResponseSequence([
+            (statusCode: 503, headers: ["Content-Type": "application/json"], body: Data()),
+            (statusCode: 200, headers: ["Content-Type": "application/json"], body: Data("true".utf8))
+        ])
+        
+        let client = BasicAuthClient(
+            baseURL: "https://api.fern.com",
+            username: "<username>",
+            password: "<password>",
+            urlSession: stub.urlSession
+        )
+        
+        let response = try await client.basicAuth.getWithBasicAuth()
+        try #require(response == true)
+        try #require(stub.getRequestCount() == 2)
+    }
+    
+    @Test func testNoRetryOn400BadRequest() async throws -> Void {
+        let stub = WireStub()
+        stub.setResponseSequence([
+            (statusCode: 400, headers: ["Content-Type": "application/json"], body: Data("{\"errorName\":\"BadRequest\"}".utf8))
+        ])
+        
+        let client = BasicAuthClient(
+            baseURL: "https://api.fern.com",
+            username: "<username>",
+            password: "<password>",
+            urlSession: stub.urlSession
+        )
+        
+        do {
+            _ = try await client.basicAuth.getWithBasicAuth()
+            Issue.record("Expected error to be thrown")
+        } catch {
+            try #require(stub.getRequestCount() == 1)
+        }
+    }
+    
+    @Test func testNoRetryOn404NotFound() async throws -> Void {
+        let stub = WireStub()
+        stub.setResponseSequence([
+            (statusCode: 404, headers: ["Content-Type": "application/json"], body: Data("{\"errorName\":\"NotFound\"}".utf8))
+        ])
+        
+        let client = BasicAuthClient(
+            baseURL: "https://api.fern.com",
+            username: "<username>",
+            password: "<password>",
+            urlSession: stub.urlSession
+        )
+        
+        do {
+            _ = try await client.basicAuth.getWithBasicAuth()
+            Issue.record("Expected error to be thrown")
+        } catch {
+            try #require(stub.getRequestCount() == 1)
+        }
+    }
+    
+    @Test func testMaxRetriesExhausted() async throws -> Void {
+        let stub = WireStub()
+        stub.setResponseSequence([
+            (statusCode: 500, headers: ["Content-Type": "application/json"], body: Data()),
+            (statusCode: 500, headers: ["Content-Type": "application/json"], body: Data()),
+            (statusCode: 500, headers: ["Content-Type": "application/json"], body: Data()),
+            (statusCode: 500, headers: ["Content-Type": "application/json"], body: Data())
+        ])
+        
+        let client = BasicAuthClient(
+            baseURL: "https://api.fern.com",
+            username: "<username>",
+            password: "<password>",
+            urlSession: stub.urlSession
+        )
+        
+        do {
+            _ = try await client.basicAuth.getWithBasicAuth()
+            Issue.record("Expected error to be thrown")
+        } catch {
+            try #require(stub.getRequestCount() == 3)
+        }
+    }
+    
+    @Test func testRetryAfterHeaderWithSeconds() async throws -> Void {
+        let stub = WireStub()
+        stub.setResponseSequence([
+            (statusCode: 429, headers: ["Content-Type": "application/json", "Retry-After": "1"], body: Data()),
+            (statusCode: 200, headers: ["Content-Type": "application/json"], body: Data("true".utf8))
+        ])
+        
+        let client = BasicAuthClient(
+            baseURL: "https://api.fern.com",
+            username: "<username>",
+            password: "<password>",
+            urlSession: stub.urlSession
+        )
+        
+        let startTime = Date()
+        let response = try await client.basicAuth.getWithBasicAuth()
+        let elapsed = Date().timeIntervalSince(startTime)
+        
+        try #require(response == true)
+        try #require(stub.getRequestCount() == 2)
+        try #require(elapsed >= 1.0)
+    }
+    
+    @Test func testRetryAfterHeaderWithHTTPDate() async throws -> Void {
+        let stub = WireStub()
+        let futureDate = Date().addingTimeInterval(1.0)
+        let formatter = DateFormatter()
+        formatter.locale = Locale(identifier: "en_US_POSIX")
+        formatter.timeZone = TimeZone(abbreviation: "GMT")
+        formatter.dateFormat = "EEE, dd MMM yyyy HH:mm:ss zzz"
+        let httpDate = formatter.string(from: futureDate)
+        
+        stub.setResponseSequence([
+            (statusCode: 429, headers: ["Content-Type": "application/json", "Retry-After": httpDate], body: Data()),
+            (statusCode: 200, headers: ["Content-Type": "application/json"], body: Data("true".utf8))
+        ])
+        
+        let client = BasicAuthClient(
+            baseURL: "https://api.fern.com",
+            username: "<username>",
+            password: "<password>",
+            urlSession: stub.urlSession
+        )
+        
+        let startTime = Date()
+        let response = try await client.basicAuth.getWithBasicAuth()
+        let elapsed = Date().timeIntervalSince(startTime)
+        
+        try #require(response == true)
+        try #require(stub.getRequestCount() == 2)
+        try #require(elapsed >= 0.9)
+    }
+    
+    @Test func testXRateLimitResetHeader() async throws -> Void {
+        let stub = WireStub()
+        let futureTimestamp = Int(Date().addingTimeInterval(1.0).timeIntervalSince1970)
+        
+        stub.setResponseSequence([
+            (statusCode: 429, headers: ["Content-Type": "application/json", "X-RateLimit-Reset": "\(futureTimestamp)"], body: Data()),
+            (statusCode: 200, headers: ["Content-Type": "application/json"], body: Data("true".utf8))
+        ])
+        
+        let client = BasicAuthClient(
+            baseURL: "https://api.fern.com",
+            username: "<username>",
+            password: "<password>",
+            urlSession: stub.urlSession
+        )
+        
+        let startTime = Date()
+        let response = try await client.basicAuth.getWithBasicAuth()
+        let elapsed = Date().timeIntervalSince(startTime)
+        
+        try #require(response == true)
+        try #require(stub.getRequestCount() == 2)
+        try #require(elapsed >= 0.9)
+    }
+    
+    @Test func testEndpointLevelMaxRetriesOverride() async throws -> Void {
+        let stub = WireStub()
+        stub.setResponseSequence([
+            (statusCode: 500, headers: ["Content-Type": "application/json"], body: Data()),
+            (statusCode: 500, headers: ["Content-Type": "application/json"], body: Data()),
+            (statusCode: 500, headers: ["Content-Type": "application/json"], body: Data()),
+            (statusCode: 500, headers: ["Content-Type": "application/json"], body: Data()),
+            (statusCode: 500, headers: ["Content-Type": "application/json"], body: Data()),
+            (statusCode: 200, headers: ["Content-Type": "application/json"], body: Data("true".utf8))
+        ])
+        
+        let client = BasicAuthClient(
+            baseURL: "https://api.fern.com",
+            username: "<username>",
+            password: "<password>",
+            urlSession: stub.urlSession
+        )
+        
+        let response = try await client.basicAuth.getWithBasicAuth(
+            requestOptions: RequestOptions(maxRetries: 5)
+        )
+        
+        try #require(response == true)
+        try #require(stub.getRequestCount() == 6)
+    }
+    
+    @Test func testEndpointLevelMaxRetriesZero() async throws -> Void {
+        let stub = WireStub()
+        stub.setResponseSequence([
+            (statusCode: 500, headers: ["Content-Type": "application/json"], body: Data())
+        ])
+        
+        let client = BasicAuthClient(
+            baseURL: "https://api.fern.com",
+            username: "<username>",
+            password: "<password>",
+            urlSession: stub.urlSession
+        )
+        
+        do {
+            _ = try await client.basicAuth.getWithBasicAuth(
+                requestOptions: RequestOptions(maxRetries: 0)
+            )
+            Issue.record("Expected error to be thrown")
+        } catch {
+            try #require(stub.getRequestCount() == 1)
+        }
+    }
+    
+    @Test func testSuccessOnFirstAttempt() async throws -> Void {
+        let stub = WireStub()
+        stub.setResponseSequence([
+            (statusCode: 200, headers: ["Content-Type": "application/json"], body: Data("true".utf8))
+        ])
+        
+        let client = BasicAuthClient(
+            baseURL: "https://api.fern.com",
+            username: "<username>",
+            password: "<password>",
+            urlSession: stub.urlSession
+        )
+        
+        let response = try await client.basicAuth.getWithBasicAuth()
+        try #require(response == true)
+        try #require(stub.getRequestCount() == 1)
+    }
+}
