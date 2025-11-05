@@ -1,3 +1,11 @@
+- version: 3.13.0
+  changelogEntry:
+    - summary: |
+        Added Generation Metadata file to output.
+      type: feat
+  createdAt: "2025-11-05"
+  irVersion: 61
+
 - version: 3.12.1
   changelogEntry:
     - summary: |

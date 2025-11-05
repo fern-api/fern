@@ -75,12 +75,12 @@ export class DynamicSnippetsGeneratorContext extends AbstractDynamicSnippetsGene
         return name.pascalCase.unsafeName;
     }
 
-    public getImportPath(fernFilepath: FernIr.FernFilepath): string {
+    public getImportPath(fernFilepath: FernIr.dynamic.FernFilepath): string {
         const parts = fernFilepath.packagePath.map((path) => path.pascalCase.unsafeName.toLowerCase());
         return [this.rootImportPath, ...parts].join("/");
     }
 
-    public getImportPathForRequest(fernFilepath: FernIr.FernFilepath): string {
+    public getImportPathForRequest(fernFilepath: FernIr.dynamic.FernFilepath): string {
         if (this.customConfig?.exportAllRequestsAtRoot) {
             return this.rootImportPath;
         }

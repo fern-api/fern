@@ -10,7 +10,7 @@
   irVersion: 59
 
 - version: 1.0.0-rc31
-  createdAt: "2025-11-03"
+  createdAt: "2025-11-04"
   changelogEntry:
     - type: fix
       summary: |

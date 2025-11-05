@@ -1,0 +1,13 @@
+{
+  "cliVersion": "DUMMY",
+  "generatorName": "fernapi/fern-python-sdk",
+  "generatorVersion": "latest",
+  "generatorConfig": {
+    "extra_dev_dependencies": {
+      "requests_mock": "1.12.1"
+    },
+    "extra_dependencies": {
+      "boto3": "1.28.57"
+    }
+  }
+}

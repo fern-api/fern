@@ -47,6 +47,8 @@ fixtures:
     - customConfig:
         disable-required-property-builder-checks: true
       outputFolder: disable-required-property-builder-checks
+    - customConfig: null
+      outputFolder: no-custom-config
 allowedFailures:
   - trace
   - alias-extends

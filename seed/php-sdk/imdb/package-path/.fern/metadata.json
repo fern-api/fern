@@ -1,0 +1,9 @@
+{
+  "cliVersion": "DUMMY",
+  "generatorName": "fernapi/fern-php-sdk",
+  "generatorVersion": "latest",
+  "generatorConfig": {
+    "packagePath": "Custom/Package/Path",
+    "namespace": "Custom\\Package\\Path"
+  }
+}

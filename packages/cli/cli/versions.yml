@@ -1,4 +1,11 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- changelogEntry:
+    - summary: |
+        Update migration logic to support new generator versions with ir v61.
+      type: chore
+  irVersion: 61
+  createdAt: "2025-11-05"
+  version: 0.107.10
 
 - changelogEntry:
     - summary: |
