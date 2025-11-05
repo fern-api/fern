@@ -210,6 +210,9 @@ public final class HttpUrlBuilder {
             HttpPath httpPath,
             Map<String, PathParamInfo> pathParameters,
             boolean addNewLine) {
+        if (httpPath == null) {
+            return false;
+        }
         boolean endedWithStatement = false;
         String strippedHead = stripLeadingAndTrailingSlash(httpPath.getHead());
         if (!strippedHead.isEmpty()) {
