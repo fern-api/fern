@@ -944,7 +944,11 @@ export class ExampleConverter extends AbstractConverter<AbstractConverterContext
             return resolvedSchema.example as Type;
         }
         if ("examples" in resolvedSchema) {
-            return Object.values(resolvedSchema.examples ?? {})[0] as Type;
+            const examples = resolvedSchema.examples;
+            if (Array.isArray(examples) && examples.length > 0) {
+                return examples[0] as Type;
+            }
+            return Object.values(examples ?? {})[0] as Type;
         }
         return undefined;
     }
