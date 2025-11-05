@@ -73,6 +73,33 @@ export class WrappedEndpointRequest extends EndpointRequest {
         if (this.endpoint.requestBody == null) {
             return undefined;
         }
+        
+        if (this.endpoint.requestBody.type === "inlinedRequestBody") {
+            const wrapperReference = this.context.getRequestWrapperReference(
+                this.serviceId,
+                this.wrapper.wrapperName
+            );
+            
+            if (this.hasPathParameters()) {
+                return {
+                    code: ruby.codeblock((writer) => {
+                        writer.writeLine(`${PATH_PARAM_NAMES_VN} = ${toExplicitArray(this.getPathParameterNames())}`);
+                        writer.writeLine(`${BODY_BAG_NAME} = params.except(*${PATH_PARAM_NAMES_VN})`);
+                    }),
+                    requestBodyReference: ruby.codeblock((writer) => {
+                        writer.writeNode(wrapperReference);
+                        writer.write(`.new(${BODY_BAG_NAME}).to_h`);
+                    })
+                };
+            }
+            return {
+                requestBodyReference: ruby.codeblock((writer) => {
+                    writer.writeNode(wrapperReference);
+                    writer.write(`.new(params).to_h`);
+                })
+            };
+        }
+        
         if (this.hasPathParameters()) {
             return {
                 code: ruby.codeblock((writer) => {
