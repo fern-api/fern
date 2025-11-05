@@ -64,10 +64,10 @@ class UniversalBaseModel(pydantic.BaseModel):
             json_encoders = {dt.datetime: serialize_datetime}
 
         def model_dump(self, **kwargs: Any) -> Dict[str, Any]:
-            return super().dict(**kwargs)
+            return self.dict(**kwargs)
 
         def model_dump_json(self, **kwargs: Any) -> str:
-            return super().json(**kwargs)
+            return self.json(**kwargs)
 
     @classmethod
     def model_construct(cls: Type["Model"], _fields_set: Optional[Set[str]] = None, **values: Any) -> "Model":

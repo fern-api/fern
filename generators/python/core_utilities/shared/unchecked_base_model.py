@@ -110,14 +110,13 @@ class UncheckedBaseModel(UniversalBaseModel):
                     _fields_set.add(key)
                     fields_values[key] = value
 
+        object.__setattr__(m, "__dict__", fields_values)
+
         if IS_PYDANTIC_V2:
-            base_cls = typing.cast(typing.Type[UniversalBaseModel], cls)
-            m_universal = base_cls.model_construct(_fields_set=_fields_set, **fields_values)
-            m = typing.cast("Model", m_universal)
-            if extras:
-                object.__setattr__(m, "__pydantic_extra__", extras)
+            object.__setattr__(m, "__pydantic_private__", None)
+            object.__setattr__(m, "__pydantic_extra__", extras)
+            object.__setattr__(m, "__pydantic_fields_set__", _fields_set)
         else:
-            object.__setattr__(m, "__dict__", fields_values)
             object.__setattr__(m, "__fields_set__", _fields_set)
             m._init_private_attributes()  # type: ignore # Pydantic v1
         return m
