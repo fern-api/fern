@@ -29,6 +29,7 @@
     "@fern-api/github": "workspace:*"
   },
   "devDependencies": {
+    "@fern-api/configs": "workspace:*",
     "@types/jest": "^29.5.11",
     "@types/node": "^22.0.0",
     "@types/yargs": "^17.0.32",

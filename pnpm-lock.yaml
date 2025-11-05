@@ -7835,6 +7835,9 @@ importers:
         specifier: ^1.39.10
         version: 1.39.10
     devDependencies:
+      '@fern-api/configs':
+        specifier: workspace:*
+        version: link:../configs
       '@types/jest':
         specifier: ^29.5.11
         version: 29.5.14
