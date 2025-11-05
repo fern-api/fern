@@ -1,0 +1,10 @@
+components:
+  schemas:
+    CreateImportUsersRequestContent:
+      properties:
+        users:
+          format: binary
+    ClientAddonOAG:
+      x-fern-type-name: ClientAddonOag
+    ClientComplianceLevelEnum:
+      x-fern-type-name: ClientComplianceLevel
