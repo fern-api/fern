@@ -1,6 +1,46 @@
 import Ajv, { ErrorObject } from "ajv";
 import { JSONSchema4 } from "json-schema";
 
+// Type guards and interfaces
+interface SchemaWithUnion extends JSONSchema4 {
+    oneOf?: JSONSchema4[];
+    anyOf?: JSONSchema4[];
+}
+
+interface SchemaWithRef extends JSONSchema4 {
+    $ref?: string;
+}
+
+interface SchemaWithProperties extends JSONSchema4 {
+    properties?: Record<string, JSONSchema4>;
+    definitions?: Record<string, JSONSchema4 | SchemaWithUnion>;
+}
+
+interface ErrorObjectWithParams extends ErrorObject {
+    params: Record<string, unknown>;
+}
+
+// Type guard functions
+function isSchemaWithUnion(schema: unknown): schema is SchemaWithUnion {
+    return typeof schema === "object" && schema !== null && ("oneOf" in schema || "anyOf" in schema);
+}
+
+function isSchemaWithRef(schema: unknown): schema is SchemaWithRef {
+    return typeof schema === "object" && schema !== null && "$ref" in schema;
+}
+
+function isSchemaWithProperties(schema: unknown): schema is SchemaWithProperties {
+    return typeof schema === "object" && schema !== null;
+}
+
+function hasAdditionalProperty(params: unknown): params is { additionalProperty: string } {
+    return typeof params === "object" && params !== null && "additionalProperty" in params;
+}
+
+function hasMissingProperty(params: unknown): params is { missingProperty: string } {
+    return typeof params === "object" && params !== null && "missingProperty" in params;
+}
+
 export declare namespace validateAgainstJsonSchema {
     export interface ValidationSuccess {
         success: true;
@@ -416,7 +456,7 @@ export function validateAgainstJsonSchema(
                 if (!errorsByPath.has(path)) {
                     errorsByPath.set(path, []);
                 }
-                errorsByPath.get(path)!.push(error);
+                errorsByPath.get(path)?.push(error);
             }
 
             // Find the most specific error using a priority-based approach
@@ -434,6 +474,9 @@ export function validateAgainstJsonSchema(
             }
 
             if (mostGranularError.keyword === "additionalProperties") {
+                if (!hasAdditionalProperty(mostGranularError.params)) {
+                    throw new Error("additionalProperties error missing expected params");
+                }
                 const additionalProp = mostGranularError.params.additionalProperty;
                 const path = formatJsonPath(mostGranularError.instancePath, additionalProp);
                 const actualValue = getValueAtPath(payload, mostGranularError.instancePath);
@@ -462,19 +505,24 @@ export function validateAgainstJsonSchema(
                         let unionSchemas: JSONSchema4[] | null = null;
 
                         // First try to get schemas from the error object
-                        if (unionError?.schema && typeof unionError.schema === "object") {
-                            const unionSchema = unionError.schema as any;
-                            unionSchemas = unionSchema.oneOf || unionSchema.anyOf;
+                        if (unionError?.schema && isSchemaWithUnion(unionError.schema)) {
+                            unionSchemas = unionError.schema.oneOf || unionError.schema.anyOf || null;
                         }
 
                         // If that fails, navigate to the schema using the schemaPath
                         if (!unionSchemas && unionError?.schemaPath) {
                             const pathSegments = unionError.schemaPath.replace("#/", "").split("/");
-                            let currentSchema: any = schema;
+                            let currentSchema: JSONSchema4 | null = schema;
 
                             for (const segment of pathSegments) {
                                 if (currentSchema && typeof currentSchema === "object" && segment in currentSchema) {
-                                    currentSchema = currentSchema[segment];
+                                    const nextSchema = (currentSchema as Record<string, unknown>)[segment];
+                                    if (typeof nextSchema === "object" && nextSchema !== null) {
+                                        currentSchema = nextSchema as JSONSchema4;
+                                    } else {
+                                        currentSchema = null;
+                                        break;
+                                    }
                                 } else {
                                     currentSchema = null;
                                     break;
@@ -484,18 +532,26 @@ export function validateAgainstJsonSchema(
                             if (Array.isArray(currentSchema)) {
                                 // Resolve $ref references if needed
                                 unionSchemas = currentSchema
-                                    .map((schemaItem: any) => {
-                                        if (schemaItem && typeof schemaItem === "object" && schemaItem.$ref) {
+                                    .map((schemaItem: unknown) => {
+                                        if (isSchemaWithRef(schemaItem) && schemaItem.$ref) {
                                             // Extract reference path (e.g., "#/definitions/docs.ApiReferenceConfiguration")
                                             const refPath = schemaItem.$ref.replace("#/", "").split("/");
-                                            let resolvedSchema: any = schema;
+                                            let resolvedSchema: JSONSchema4 | null = schema;
                                             for (const refSegment of refPath) {
                                                 if (
                                                     resolvedSchema &&
                                                     typeof resolvedSchema === "object" &&
                                                     refSegment in resolvedSchema
                                                 ) {
-                                                    resolvedSchema = resolvedSchema[refSegment];
+                                                    const nextSchema = (resolvedSchema as Record<string, unknown>)[
+                                                        refSegment
+                                                    ];
+                                                    if (typeof nextSchema === "object" && nextSchema !== null) {
+                                                        resolvedSchema = nextSchema as JSONSchema4;
+                                                    } else {
+                                                        resolvedSchema = null;
+                                                        break;
+                                                    }
                                                 } else {
                                                     resolvedSchema = null;
                                                     break;
@@ -503,44 +559,56 @@ export function validateAgainstJsonSchema(
                                             }
                                             return resolvedSchema;
                                         }
-                                        return schemaItem;
+                                        if (typeof schemaItem === "object" && schemaItem !== null) {
+                                            return schemaItem as JSONSchema4;
+                                        }
+                                        return null;
                                     })
-                                    .filter(Boolean); // Remove any null results from failed resolutions
+                                    .filter((s): s is JSONSchema4 => s !== null); // Remove any null results from failed resolutions
                             }
                         }
 
                         // Special handling for docs.yml navigation items - directly extract the known union schemas
                         if (!unionSchemas && mostGranularError.instancePath.includes("/navigation/")) {
                             // Try to extract navigation item schemas directly from the schema definitions
-                            const definitions = (schema as any)?.definitions;
-                            if (
-                                definitions &&
-                                definitions["docs.NavigationItem"] &&
-                                definitions["docs.NavigationItem"].anyOf
-                            ) {
-                                const navItemSchemas = definitions["docs.NavigationItem"].anyOf;
-                                unionSchemas = navItemSchemas
-                                    .map((schemaRef: any) => {
-                                        if (schemaRef.$ref) {
-                                            const refPath = schemaRef.$ref.replace("#/", "").split("/");
-                                            let resolvedSchema: any = schema;
-                                            for (const segment of refPath) {
-                                                if (
-                                                    resolvedSchema &&
-                                                    typeof resolvedSchema === "object" &&
-                                                    segment in resolvedSchema
-                                                ) {
-                                                    resolvedSchema = resolvedSchema[segment];
-                                                } else {
-                                                    resolvedSchema = null;
-                                                    break;
+                            if (isSchemaWithProperties(schema) && schema.definitions) {
+                                const navigationItem = schema.definitions["docs.NavigationItem"];
+                                if (isSchemaWithUnion(navigationItem) && navigationItem.anyOf) {
+                                    const navItemSchemas = navigationItem.anyOf;
+                                    unionSchemas = navItemSchemas
+                                        .map((schemaRef: unknown) => {
+                                            if (isSchemaWithRef(schemaRef) && schemaRef.$ref) {
+                                                const refPath = schemaRef.$ref.replace("#/", "").split("/");
+                                                let resolvedSchema: JSONSchema4 | null = schema;
+                                                for (const segment of refPath) {
+                                                    if (
+                                                        resolvedSchema &&
+                                                        typeof resolvedSchema === "object" &&
+                                                        segment in resolvedSchema
+                                                    ) {
+                                                        const nextSchema = (resolvedSchema as Record<string, unknown>)[
+                                                            segment
+                                                        ];
+                                                        if (typeof nextSchema === "object" && nextSchema !== null) {
+                                                            resolvedSchema = nextSchema as JSONSchema4;
+                                                        } else {
+                                                            resolvedSchema = null;
+                                                            break;
+                                                        }
+                                                    } else {
+                                                        resolvedSchema = null;
+                                                        break;
+                                                    }
                                                 }
+                                                return resolvedSchema;
                                             }
-                                            return resolvedSchema;
-                                        }
-                                        return schemaRef;
-                                    })
-                                    .filter(Boolean);
+                                            if (typeof schemaRef === "object" && schemaRef !== null) {
+                                                return schemaRef as JSONSchema4;
+                                            }
+                                            return null;
+                                        })
+                                        .filter((s): s is JSONSchema4 => s !== null);
+                                }
                             }
                         }
 
@@ -601,6 +669,9 @@ export function validateAgainstJsonSchema(
                     allErrors: validate.errors ?? []
                 };
             } else if (mostGranularError.keyword === "required") {
+                if (!hasMissingProperty(mostGranularError.params)) {
+                    throw new Error("required error missing expected params");
+                }
                 const missingProperty = mostGranularError.params.missingProperty;
                 const path = formatJsonPath(mostGranularError.instancePath, missingProperty);
                 const actualValue = getValueAtPath(payload, mostGranularError.instancePath);
@@ -691,14 +762,13 @@ export function validateAgainstJsonSchema(
                     let unionSchemas: JSONSchema4[] | null = null;
 
                     // Try to get union schemas from the error
-                    if (mostGranularError.schema && typeof mostGranularError.schema === "object") {
-                        const unionSchema = mostGranularError.schema as any;
-                        unionSchemas = unionSchema.oneOf || unionSchema.anyOf;
+                    if (mostGranularError.schema && isSchemaWithUnion(mostGranularError.schema)) {
+                        unionSchemas = mostGranularError.schema.oneOf || mostGranularError.schema.anyOf || null;
                     }
 
                     // Fallback: if schema has direct oneOf/anyOf, try that
                     if (!unionSchemas && (schema.oneOf || schema.anyOf)) {
-                        unionSchemas = (schema.oneOf || schema.anyOf) as JSONSchema4[] | null;
+                        unionSchemas = schema.oneOf || schema.anyOf || null;
                     }
 
                     // Navigate to nested schemas if needed (for complex nested structures)

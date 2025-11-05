@@ -879,7 +879,11 @@ describe("validateAgainstJsonSchema", () => {
                 // Look for errors specifically related to the 'foo' property
                 const fooErrors = result.allErrors?.filter(
                     (error) =>
-                        error.instancePath?.includes("/layout/0") || (error.params as any)?.additionalProperty === "foo"
+                        error.instancePath?.includes("/layout/0") ||
+                        (error.params &&
+                            typeof error.params === "object" &&
+                            "additionalProperty" in error.params &&
+                            error.params.additionalProperty === "foo")
                 );
                 console.log("Foo-related errors:", fooErrors?.length || 0);
                 fooErrors?.forEach((error, i) => {
