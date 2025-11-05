@@ -66,10 +66,12 @@ export async function loadRawDocsConfiguration({
     const contentsStr = await readFile(absolutePathOfConfiguration);
     const contentsJson = yaml.load(contentsStr.toString());
     // biome-ignore lint/suspicious/noExplicitAny: allow explicit any
-    const result = validateAgainstJsonSchema(contentsJson, DocsYmlJsonSchema as any);
+    const result = validateAgainstJsonSchema(contentsJson, DocsYmlJsonSchema as any, {
+        filePath: absolutePathOfConfiguration
+    });
     if (result.success) {
         return docsYml.RawSchemas.Serializer.DocsConfiguration.parseOrThrow(contentsJson);
     } else {
-        throw new Error(`Failed to parse docs.yml because of ${result.error?.message ?? "Unknown error"}`);
+        throw new Error(`Failed to parse docs.yml:\n${result.error?.message ?? "Unknown error"}`);
     }
 }
