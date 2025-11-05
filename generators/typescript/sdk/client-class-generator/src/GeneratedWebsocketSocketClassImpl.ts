@@ -606,6 +606,12 @@ export class GeneratedWebsocketSocketClassImpl implements GeneratedWebsocketSock
 
     private getUnionedNodeForOrigin(context: SdkContext, origin: "client" | "server"): ts.TypeNode {
         const allReturnTypes = this.getAllMessageNodesForOrigin(context, origin);
+        if (allReturnTypes.length === 0) {
+            context.logger.warn(
+                `WebSocket channel ${this.channel.name} has no ${origin} messages defined. Using 'never' as the type.`
+            );
+            return ts.factory.createKeywordTypeNode(ts.SyntaxKind.NeverKeyword);
+        }
         return ts.factory.createUnionTypeNode(allReturnTypes);
     }
 
