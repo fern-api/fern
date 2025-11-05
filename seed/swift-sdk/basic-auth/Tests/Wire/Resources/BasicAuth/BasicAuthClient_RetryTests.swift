@@ -231,11 +231,11 @@ import BasicAuth
     @Test func testEndpointLevelMaxRetriesOverride() async throws -> Void {
         let stub = WireStub()
         stub.setResponseSequence([
-            (statusCode: 500, headers: ["Content-Type": "application/json"], body: Data()),
-            (statusCode: 500, headers: ["Content-Type": "application/json"], body: Data()),
-            (statusCode: 500, headers: ["Content-Type": "application/json"], body: Data()),
-            (statusCode: 500, headers: ["Content-Type": "application/json"], body: Data()),
-            (statusCode: 500, headers: ["Content-Type": "application/json"], body: Data()),
+            (statusCode: 500, headers: ["Content-Type": "application/json", "Retry-After": "0.1"], body: Data()),
+            (statusCode: 500, headers: ["Content-Type": "application/json", "Retry-After": "0.1"], body: Data()),
+            (statusCode: 500, headers: ["Content-Type": "application/json", "Retry-After": "0.1"], body: Data()),
+            (statusCode: 500, headers: ["Content-Type": "application/json", "Retry-After": "0.1"], body: Data()),
+            (statusCode: 500, headers: ["Content-Type": "application/json", "Retry-After": "0.1"], body: Data()),
             (statusCode: 200, headers: ["Content-Type": "application/json"], body: Data("true".utf8))
         ])
         
