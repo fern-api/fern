@@ -14,7 +14,38 @@ export function titleCase(name: string): string {
 
     // regex match "V 2", "V 4", etc. and replace it with "V2", "V4", etc.
     const versionedTitle = titleCased.replace(/V\s(\d)/g, "V$1");
-    return versionedTitle;
+
+    const words = versionedTitle.split(" ");
+    const lowercaseWords = [
+        "and",
+        "or",
+        "nor",
+        "but",
+        "for",
+        "yet",
+        "so",
+        "at",
+        "by",
+        "in",
+        "of",
+        "on",
+        "to",
+        "up",
+        "as",
+        "is"
+    ];
+    const result = words
+        .map((word, index) => {
+            const isFirstWord = index === 0;
+            const isLastWord = index === words.length - 1;
+            if (!isFirstWord && !isLastWord && lowercaseWords.includes(word.toLowerCase())) {
+                return word.toLowerCase();
+            }
+            return word;
+        })
+        .join(" ");
+
+    return result;
 }
 
 export const SPECIAL_TOKENS = [
