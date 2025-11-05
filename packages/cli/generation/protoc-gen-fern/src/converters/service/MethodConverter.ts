@@ -105,7 +105,8 @@ export class MethodConverter extends AbstractConverter<ProtofileConverterContext
                     methodType: this.getGrpcMethodType()
                 }),
                 audiences: [],
-                retries: undefined
+                retries: undefined,
+                apiPlayground: undefined
             }
         };
     }
