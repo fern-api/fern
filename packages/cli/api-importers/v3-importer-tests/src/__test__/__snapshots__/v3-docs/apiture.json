@@ -2329,20 +2329,20 @@
                     "label": "Checking *1008",
                     "maskedNumber": "*1008",
                     "product": {
-                      "type": "savings",
-                      "code": "CD001",
-                      "label": "string",
-                      "description": "string"
+                      "type": "cd",
+                      "code": "180D_CDA",
+                      "label": "180 Day CD",
+                      "description": "Certificate of Deposit with a 180 day term"
                     },
                     "location": "internal",
                     "allows": {
-                      "billPay": true,
+                      "billPay": false,
                       "mobileCheckDeposit": true,
                       "transferFrom": true,
                       "transferTo": true,
                       "view": true,
                       "viewCards": true,
-                      "manageCards": true
+                      "manageCards": false
                     }
                   }
                 ]
@@ -3103,10 +3103,10 @@
             "label": "Checking *1008",
             "maskedNumber": "*1008",
             "product": {
-              "type": "savings",
-              "code": "CD001",
-              "label": "string",
-              "description": "string"
+              "type": "cd",
+              "code": "180D_CDA",
+              "label": "180 Day CD",
+              "description": "Certificate of Deposit with a 180 day term"
             },
             "location": "internal"
           }
@@ -6656,9 +6656,11 @@
                     "name": "string",
                     "address": {
                       "address1": "1805 Tiburon Dr.",
+                      "address2": "Building 14, Suite 1500",
                       "locality": "Wilmington",
                       "countryCode": "US",
-                      "postalCode": "20521"
+                      "regionName": "North Carolina",
+                      "postalCode": "28412"
                     },
                     "locator": "string",
                     "locatorType": "abaRoutingNumber"
@@ -13801,7 +13803,10 @@
                   {
                     "id": "string",
                     "schedule": {
-                      "frequency": "once"
+                      "scheduledOn": "2026-06-28",
+                      "frequency": "once",
+                      "creditsOn": "2026-06-26",
+                      "debitsOn": "2026-06-24"
                     },
                     "state": "unscheduled"
                   }

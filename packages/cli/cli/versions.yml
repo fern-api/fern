@@ -2,6 +2,14 @@
 
 - changelogEntry:
     - summary: |
+        Improve anyOf/oneOf example generation to prefer variants with examples and use schema-level examples when available. This addresses cases where unions with multiple types were generating fallback examples instead of using provided examples.
+      type: fix
+  irVersion: 61
+  createdAt: "2025-11-05"
+  version: 0.107.8
+
+- changelogEntry:
+    - summary: |
         Enables parsing of the language setting in docs.
       type: chore
   irVersion: 61

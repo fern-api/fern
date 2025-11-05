@@ -27163,15 +27163,26 @@
                     "credential": {
                       "@context": [
                         "https://www.w3.org/2018/credentials/v1",
-                        "https://www.w3.org/2018/credentials/examples/v1"
+                        "https://w3id.org/citizenship/v1"
                       ],
-                      "credentialSubject": {},
-                      "issuanceDate": "2010-01-01 19:23:24+00:00",
-                      "issuer": {},
+                      "credentialSubject": {
+                        "familyName": "SMITH",
+                        "gender": "Male",
+                        "givenName": "JOHN",
+                        "type": [
+                          "PermanentResident",
+                          "Person"
+                        ]
+                      },
+                      "issuanceDate": "2019-12-03 12:19:52+00:00",
+                      "issuer": "did:key:z6MkmjY8GnV5i9YTDtPETC2uUAW6ejw3nk5mXF5yci5ab7th",
                       "type": [
                         "VerifiableCredential",
-                        "AlumniCredential"
-                      ]
+                        "PermanentResidentCard"
+                      ],
+                      "description": "Government of Example Permanent Resident Card.",
+                      "identifier": "83627465",
+                      "name": "Permanent Resident Card"
                     },
                     "options": {
                       "proofType": "Ed25519Signature2018"
@@ -27192,15 +27203,26 @@
                       "credential": {
                         "@context": [
                           "https://www.w3.org/2018/credentials/v1",
-                          "https://www.w3.org/2018/credentials/examples/v1"
+                          "https://w3id.org/citizenship/v1"
                         ],
-                        "credentialSubject": {},
-                        "issuanceDate": "2010-01-01 19:23:24+00:00",
-                        "issuer": {},
+                        "credentialSubject": {
+                          "familyName": "SMITH",
+                          "gender": "Male",
+                          "givenName": "JOHN",
+                          "type": [
+                            "PermanentResident",
+                            "Person"
+                          ]
+                        },
+                        "issuanceDate": "2019-12-03 12:19:52+00:00",
+                        "issuer": "did:key:z6MkmjY8GnV5i9YTDtPETC2uUAW6ejw3nk5mXF5yci5ab7th",
                         "type": [
                           "VerifiableCredential",
-                          "AlumniCredential"
-                        ]
+                          "PermanentResidentCard"
+                        ],
+                        "description": "Government of Example Permanent Resident Card.",
+                        "identifier": "83627465",
+                        "name": "Permanent Resident Card"
                       },
                       "options": {
                         "proofType": "Ed25519Signature2018"
@@ -34385,7 +34407,54 @@
                 "connection_id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
                 "created_at": "2021-12-31 23:59:59+00:00",
                 "invi_msg_id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
-                "invitation": {},
+                "invitation": {
+                  "@id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
+                  "@type": "https://didcomm.org/my-family/1.0/my-message-type",
+                  "accept": [
+                    "didcomm/aip1",
+                    "didcomm/aip2;env=rfc19"
+                  ],
+                  "handshake_protocols": [
+                    "did:sov:BzCbsNYhMrjHiqZDTUASHg;spec/didexchange/1.0"
+                  ],
+                  "imageUrl": "http://192.168.56.101/img/logo.jpg",
+                  "label": "Bob",
+                  "requests~attach": [
+                    {
+                      "@id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
+                      "byte_count": 1234,
+                      "data": {
+                        "base64": "ey4uLn0=",
+                        "json": "{\"sample\": \"content\"}",
+                        "links": [
+                          "https://link.to/data",
+                          "https://link.to/data"
+                        ],
+                        "sha256": "617a48c7c8afe0521efdc03e5bb0ad9e655893e6b4b51f0e794d70fba132aacb",
+                        "jws": {}
+                      },
+                      "description": "view from doorway, facing east, with lights off",
+                      "filename": "IMG1092348.png",
+                      "lastmod_time": "2021-12-31 23:59:59+00:00",
+                      "mime-type": "image/png"
+                    }
+                  ],
+                  "services": [
+                    {
+                      "did": "WgWxqztrNooG92RXvxSTWv",
+                      "id": "string",
+                      "recipientKeys": [
+                        "did:key:z6MkpTHR8VNsBxYAAWHut2Geadd9jSwuBV8xRoAnwWsdvktH"
+                      ],
+                      "routingKeys": [
+                        "did:key:z6MkpTHR8VNsBxYAAWHut2Geadd9jSwuBV8xRoAnwWsdvktH"
+                      ],
+                      "serviceEndpoint": "http://192.168.56.101:8020",
+                      "type": "string"
+                    },
+                    "did:sov:WgWxqztrNooG92RXvxSTWv"
+                  ]
+                },
                 "oob_id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
                 "our_recipient_key": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
                 "role": "receiver",
@@ -34411,7 +34480,54 @@
                   "connection_id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
                   "created_at": "2021-12-31 23:59:59+00:00",
                   "invi_msg_id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
-                  "invitation": {},
+                  "invitation": {
+                    "@id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
+                    "@type": "https://didcomm.org/my-family/1.0/my-message-type",
+                    "accept": [
+                      "didcomm/aip1",
+                      "didcomm/aip2;env=rfc19"
+                    ],
+                    "handshake_protocols": [
+                      "did:sov:BzCbsNYhMrjHiqZDTUASHg;spec/didexchange/1.0"
+                    ],
+                    "imageUrl": "http://192.168.56.101/img/logo.jpg",
+                    "label": "Bob",
+                    "requests~attach": [
+                      {
+                        "@id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
+                        "byte_count": 1234,
+                        "data": {
+                          "base64": "ey4uLn0=",
+                          "json": "{\"sample\": \"content\"}",
+                          "links": [
+                            "https://link.to/data",
+                            "https://link.to/data"
+                          ],
+                          "sha256": "617a48c7c8afe0521efdc03e5bb0ad9e655893e6b4b51f0e794d70fba132aacb",
+                          "jws": {}
+                        },
+                        "description": "view from doorway, facing east, with lights off",
+                        "filename": "IMG1092348.png",
+                        "lastmod_time": "2021-12-31 23:59:59+00:00",
+                        "mime-type": "image/png"
+                      }
+                    ],
+                    "services": [
+                      {
+                        "did": "WgWxqztrNooG92RXvxSTWv",
+                        "id": "string",
+                        "recipientKeys": [
+                          "did:key:z6MkpTHR8VNsBxYAAWHut2Geadd9jSwuBV8xRoAnwWsdvktH"
+                        ],
+                        "routingKeys": [
+                          "did:key:z6MkpTHR8VNsBxYAAWHut2Geadd9jSwuBV8xRoAnwWsdvktH"
+                        ],
+                        "serviceEndpoint": "http://192.168.56.101:8020",
+                        "type": "string"
+                      },
+                      "did:sov:WgWxqztrNooG92RXvxSTWv"
+                    ]
+                  },
                   "oob_id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
                   "our_recipient_key": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
                   "role": "receiver",

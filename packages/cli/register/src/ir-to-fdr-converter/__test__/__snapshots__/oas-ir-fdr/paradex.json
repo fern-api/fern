@@ -12974,7 +12974,7 @@
                       "taker_rate": "0.0001"
                     },
                     "isolated_market": "ETHUSD-PERP",
-                    "kind": "",
+                    "kind": "main",
                     "parent_account": "0x495d2eb5236a12b8b4ad7d3849ce6a203ce21c43f473c248dfd5ce70d",
                     "public_key": "0x495d2eb5236a12b8b4ad7d3849ce6a203ce21c43f473c248dfd5ce70d",
                     "username": "username"
@@ -12998,7 +12998,7 @@
                         "taker_rate": "0.0001"
                       },
                       "isolated_market": "ETHUSD-PERP",
-                      "kind": "",
+                      "kind": "main",
                       "parent_account": "0x495d2eb5236a12b8b4ad7d3849ce6a203ce21c43f473c248dfd5ce70d",
                       "public_key": "0x495d2eb5236a12b8b4ad7d3849ce6a203ce21c43f473c248dfd5ce70d",
                       "username": "username"
@@ -14577,7 +14577,7 @@
                       "taker_rate": "0.0001"
                     },
                     "isolated_market": "ETHUSD-PERP",
-                    "kind": "",
+                    "kind": "main",
                     "parent_account": "0x495d2eb5236a12b8b4ad7d3849ce6a203ce21c43f473c248dfd5ce70d",
                     "public_key": "0x495d2eb5236a12b8b4ad7d3849ce6a203ce21c43f473c248dfd5ce70d",
                     "username": "username"
@@ -14601,7 +14601,7 @@
                         "taker_rate": "0.0001"
                       },
                       "isolated_market": "ETHUSD-PERP",
-                      "kind": "",
+                      "kind": "main",
                       "parent_account": "0x495d2eb5236a12b8b4ad7d3849ce6a203ce21c43f473c248dfd5ce70d",
                       "public_key": "0x495d2eb5236a12b8b4ad7d3849ce6a203ce21c43f473c248dfd5ce70d",
                       "username": "username"
@@ -14911,7 +14911,7 @@
                     "created_at": 1681375176910,
                     "fee": "7.56",
                     "fee_currency": "USDC",
-                    "fill_type": "LIQUIDATION",
+                    "fill_type": "FILL",
                     "id": "8615262148007718462",
                     "liquidity": "TAKER",
                     "market": "BTC-USD-PERP",
@@ -14938,7 +14938,7 @@
                       "created_at": 1681375176910,
                       "fee": "7.56",
                       "fee_currency": "USDC",
-                      "fill_type": "LIQUIDATION",
+                      "fill_type": "FILL",
                       "id": "8615262148007718462",
                       "liquidity": "TAKER",
                       "market": "BTC-USD-PERP",
@@ -15832,7 +15832,7 @@
                 "results": [
                   {
                     "account": "0x4638e3041366aa71720be63e32e53e1223316c7f0d56f7aa617542ed1e7512",
-                    "algo_type": "",
+                    "algo_type": "TWAP",
                     "avg_fill_price": "26000",
                     "cancel_reason": "NOT_ENOUGH_MARGIN",
                     "created_at": 1681493746016,
@@ -15853,7 +15853,7 @@
                   "results": [
                     {
                       "account": "0x4638e3041366aa71720be63e32e53e1223316c7f0d56f7aa617542ed1e7512",
-                      "algo_type": "",
+                      "algo_type": "TWAP",
                       "avg_fill_price": "26000",
                       "cancel_reason": "NOT_ENOUGH_MARGIN",
                       "created_at": 1681493746016,
@@ -16015,7 +16015,7 @@
               "responseStatusCode": 201,
               "responseBody": {
                 "account": "0x4638e3041366aa71720be63e32e53e1223316c7f0d56f7aa617542ed1e7512",
-                "algo_type": "",
+                "algo_type": "TWAP",
                 "avg_fill_price": "26000",
                 "cancel_reason": "NOT_ENOUGH_MARGIN",
                 "created_at": 1681493746016,
@@ -16032,7 +16032,7 @@
                 "type": "json",
                 "value": {
                   "account": "0x4638e3041366aa71720be63e32e53e1223316c7f0d56f7aa617542ed1e7512",
-                  "algo_type": "",
+                  "algo_type": "TWAP",
                   "avg_fill_price": "26000",
                   "cancel_reason": "NOT_ENOUGH_MARGIN",
                   "created_at": 1681493746016,
@@ -16258,7 +16258,7 @@
                 "results": [
                   {
                     "account": "0x4638e3041366aa71720be63e32e53e1223316c7f0d56f7aa617542ed1e7512",
-                    "algo_type": "",
+                    "algo_type": "TWAP",
                     "avg_fill_price": "26000",
                     "cancel_reason": "NOT_ENOUGH_MARGIN",
                     "created_at": 1681493746016,
@@ -16281,7 +16281,7 @@
                   "results": [
                     {
                       "account": "0x4638e3041366aa71720be63e32e53e1223316c7f0d56f7aa617542ed1e7512",
-                      "algo_type": "",
+                      "algo_type": "TWAP",
                       "avg_fill_price": "26000",
                       "cancel_reason": "NOT_ENOUGH_MARGIN",
                       "created_at": 1681493746016,
@@ -16408,7 +16408,7 @@
               "responseStatusCode": 200,
               "responseBody": {
                 "account": "0x4638e3041366aa71720be63e32e53e1223316c7f0d56f7aa617542ed1e7512",
-                "algo_type": "",
+                "algo_type": "TWAP",
                 "avg_fill_price": "26000",
                 "cancel_reason": "NOT_ENOUGH_MARGIN",
                 "created_at": 1681493746016,
@@ -16425,7 +16425,7 @@
                 "type": "json",
                 "value": {
                   "account": "0x4638e3041366aa71720be63e32e53e1223316c7f0d56f7aa617542ed1e7512",
-                  "algo_type": "",
+                  "algo_type": "TWAP",
                   "avg_fill_price": "26000",
                   "cancel_reason": "NOT_ENOUGH_MARGIN",
                   "created_at": 1681493746016,
@@ -20977,10 +20977,10 @@
                     "account": "0x495d2eb5236a12b8b4ad7d3849ce6a203ce21c43f473c248dfd5ce70d9454fa",
                     "amount": "100",
                     "auto_withdrawal_fee": "4.5",
-                    "bridge": "",
+                    "bridge": "STARKGATE",
                     "counterparty": "0x495d2eb5236a12b8b4ad7d3849ce6a203ce21c43f473c248dfd5ce70d9454fa",
                     "created_at": 1681497002041,
-                    "direction": "IN",
+                    "direction": "OUT",
                     "external_account": "0x495d2eb5236a12b8b4ad7d3849ce6a203ce21c43f473c248dfd5ce70d9454fa",
                     "external_chain": "ETHEREUM",
                     "external_txn_hash": "0x495d2eb5236a12b8b4ad7d3849ce6a203ce21c43f473c248dfd5ce70d9454fa",
@@ -21007,10 +21007,10 @@
                       "account": "0x495d2eb5236a12b8b4ad7d3849ce6a203ce21c43f473c248dfd5ce70d9454fa",
                       "amount": "100",
                       "auto_withdrawal_fee": "4.5",
-                      "bridge": "",
+                      "bridge": "STARKGATE",
                       "counterparty": "0x495d2eb5236a12b8b4ad7d3849ce6a203ce21c43f473c248dfd5ce70d9454fa",
                       "created_at": 1681497002041,
-                      "direction": "IN",
+                      "direction": "OUT",
                       "external_account": "0x495d2eb5236a12b8b4ad7d3849ce6a203ce21c43f473c248dfd5ce70d9454fa",
                       "external_chain": "ETHEREUM",
                       "external_txn_hash": "0x495d2eb5236a12b8b4ad7d3849ce6a203ce21c43f473c248dfd5ce70d9454fa",
@@ -21255,7 +21255,7 @@
                     "operator_account": "0x1234567890abcdef",
                     "owner_account": "0x0234567890abcdef",
                     "profit_share": 10,
-                    "status": "INITIALIZING",
+                    "status": "ACTIVE",
                     "strategies": [
                       {
                         "address": "0x29464b79b02543ed8746bba6e71c8a15401dd27b7279a5fa2f2fe8e8cdfabb",
@@ -21282,7 +21282,7 @@
                       "operator_account": "0x1234567890abcdef",
                       "owner_account": "0x0234567890abcdef",
                       "profit_share": 10,
-                      "status": "INITIALIZING",
+                      "status": "ACTIVE",
                       "strategies": [
                         {
                           "address": "0x29464b79b02543ed8746bba6e71c8a15401dd27b7279a5fa2f2fe8e8cdfabb",
@@ -21475,7 +21475,7 @@
                 "operator_account": "0x1234567890abcdef",
                 "owner_account": "0x0234567890abcdef",
                 "profit_share": 10,
-                "status": "INITIALIZING",
+                "status": "ACTIVE",
                 "strategies": [
                   {
                     "address": "0x29464b79b02543ed8746bba6e71c8a15401dd27b7279a5fa2f2fe8e8cdfabb",
@@ -21498,7 +21498,7 @@
                   "operator_account": "0x1234567890abcdef",
                   "owner_account": "0x0234567890abcdef",
                   "profit_share": 10,
-                  "status": "INITIALIZING",
+                  "status": "ACTIVE",
                   "strategies": [
                     {
                       "address": "0x29464b79b02543ed8746bba6e71c8a15401dd27b7279a5fa2f2fe8e8cdfabb",
@@ -22469,10 +22469,10 @@
                     "account": "0x495d2eb5236a12b8b4ad7d3849ce6a203ce21c43f473c248dfd5ce70d9454fa",
                     "amount": "100",
                     "auto_withdrawal_fee": "4.5",
-                    "bridge": "",
+                    "bridge": "STARKGATE",
                     "counterparty": "0x495d2eb5236a12b8b4ad7d3849ce6a203ce21c43f473c248dfd5ce70d9454fa",
                     "created_at": 1681497002041,
-                    "direction": "IN",
+                    "direction": "OUT",
                     "external_account": "0x495d2eb5236a12b8b4ad7d3849ce6a203ce21c43f473c248dfd5ce70d9454fa",
                     "external_chain": "ETHEREUM",
                     "external_txn_hash": "0x495d2eb5236a12b8b4ad7d3849ce6a203ce21c43f473c248dfd5ce70d9454fa",
@@ -22497,10 +22497,10 @@
                       "account": "0x495d2eb5236a12b8b4ad7d3849ce6a203ce21c43f473c248dfd5ce70d9454fa",
                       "amount": "100",
                       "auto_withdrawal_fee": "4.5",
-                      "bridge": "",
+                      "bridge": "STARKGATE",
                       "counterparty": "0x495d2eb5236a12b8b4ad7d3849ce6a203ce21c43f473c248dfd5ce70d9454fa",
                       "created_at": 1681497002041,
-                      "direction": "IN",
+                      "direction": "OUT",
                       "external_account": "0x495d2eb5236a12b8b4ad7d3849ce6a203ce21c43f473c248dfd5ce70d9454fa",
                       "external_chain": "ETHEREUM",
                       "external_txn_hash": "0x495d2eb5236a12b8b4ad7d3849ce6a203ce21c43f473c248dfd5ce70d9454fa",
@@ -24056,7 +24056,7 @@
                   "price": "30001.2",
                   "side": "BUY",
                   "size": "0.01",
-                  "trade_type": "LIQUIDATION"
+                  "trade_type": "FILL"
                 }
               ]
             },
@@ -24073,7 +24073,7 @@
                     "price": "30001.2",
                     "side": "BUY",
                     "size": "0.01",
-                    "trade_type": "LIQUIDATION"
+                    "trade_type": "FILL"
                   }
                 ]
               }

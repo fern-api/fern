@@ -8828,6 +8828,10 @@ enriched = sdk.transactions.create([
                               },
                             ],
                           },
+                          "error": {
+                            "code": "account_holder_not_found",
+                            "message": "message",
+                          },
                           "id": "xbx8YP14g565Xk",
                           "location": {
                             "raw_address": "Nw 43rd Street 5480, Gainesville, Florida 32653, US",
@@ -9344,6 +9348,9 @@ service:
                       google_maps_url: >-
                         https://www.google.com/maps/search/?api=1&query=29.704558,-82.389277
                       apple_maps_url: https://maps.apple.com/?q=29.704558,-82.389277
+                  error:
+                    code: account_holder_not_found
+                    message: message
                   created_at: '2024-03-30T00:00:00Z'
                   id: xbx8YP14g565Xk
           code-samples:

@@ -10657,6 +10657,7 @@ errors:
                               ],
                             },
                             "name": "PO 123",
+                            "notify_party": "John Doe | john@example.com | 905-555-1234",
                             "ocean_booking": {
                               "_object": "/ocean/booking",
                               "container_counts": {
@@ -10673,9 +10674,13 @@ errors:
                                   "city": "Los Angeles",
                                   "country": "United States",
                                   "country_code": "US",
+                                  "ref": "address_ref_x",
+                                  "state": "MN",
                                   "street_address": "123 Queen St",
+                                  "street_address2": "STE 2918",
                                   "timezone": "America/Los_Angeles",
                                   "unlocode": "USLA",
+                                  "zip": "56307",
                                 },
                                 "details": [
                                   {
@@ -10698,9 +10703,13 @@ errors:
                                   "city": "Shanghai",
                                   "country": "China",
                                   "country_code": "CN",
+                                  "ref": "address_ref_x",
+                                  "state": "MN",
                                   "street_address": "123 Queen St",
+                                  "street_address2": "STE 2918",
                                   "timezone": "America/Los_Angeles",
                                   "unlocode": "CNSZP",
+                                  "zip": "56307",
                                 },
                                 "details": [
                                   {
@@ -10724,6 +10733,7 @@ errors:
                                     "_object": "/hs_code",
                                     "code": "9101.00",
                                     "country_code": "US",
+                                    "description": "N-Butyl-2,2,6,6-tetramethylpiperidin-4-amine (CAS No. 36177-92-1) (provided for in subheading 2933.39.91)",
                                   },
                                 },
                               ],
@@ -10762,6 +10772,7 @@ errors:
                             "wants_import_customs_service": true,
                           },
                         ],
+                        "next": "https://api.flexport.com/bookings?page=3&per=10",
                         "prev": "https://api.flexport.com/bookings?page=12&per=10",
                       },
                       "self": "https://api.flexport.com/bookings?page=13&per=10",
@@ -10948,6 +10959,7 @@ errors:
                       {},
                     ],
                     "name": "PO 123",
+                    "notify_party": "John Doe, doe@example.com",
                     "ocean_booking": {
                       "container_counts": {
                         "forty_five_ft_hc": 5,
@@ -10978,6 +10990,28 @@ errors:
                       "_object": "/api/response",
                       "data": {
                         "_object": "/booking",
+                        "air_booking": {
+                          "_object": "/air/booking",
+                          "destination_port": {
+                            "_object": "/place",
+                            "name": "ORD - Chicago - IL",
+                          },
+                          "incoterm": "EXW",
+                          "origin_port": {
+                            "_object": "/place",
+                            "name": "ORD - Chicago - IL",
+                          },
+                          "product_descriptions": [
+                            {
+                              "_object": "/bookings/product_descriptions",
+                              "description": "Wristwatches",
+                              "description_for_export_customs": "手表",
+                              "description_for_export_customs_locale": "zh_CN",
+                            },
+                          ],
+                          "wants_delivery_service": false,
+                          "wants_pickup_service": true,
+                        },
                         "booking_line_items": {
                           "_object": "/api/refs/collection",
                           "link": "https://api.flexport.com/booking_line_items?f.booking.id=123",
@@ -11091,6 +11125,7 @@ errors:
                           ],
                         },
                         "name": "PO 123",
+                        "notify_party": "John Doe | john@example.com | 905-555-1234",
                         "ocean_booking": {
                           "_object": "/ocean/booking",
                           "container_counts": {
@@ -11108,9 +11143,12 @@ errors:
                               "country": "United States",
                               "country_code": "US",
                               "ref": "la-address-ref",
+                              "state": "MN",
                               "street_address": "123 Queen St",
+                              "street_address2": "STE 2918",
                               "timezone": "America/Los_Angeles",
                               "unlocode": "USLA",
+                              "zip": "56307",
                             },
                             "details": [
                               {
@@ -11134,9 +11172,12 @@ errors:
                               "country": "China",
                               "country_code": "CN",
                               "ref": "shanghai-ref",
+                              "state": "MN",
                               "street_address": "123 Queen St",
+                              "street_address2": "STE 2918",
                               "timezone": "America/Los_Angeles",
                               "unlocode": "CNSZP",
+                              "zip": "56307",
                             },
                             "details": [
                               {
@@ -11180,6 +11221,7 @@ errors:
                           "unlocode": "US AL2",
                           "zip": "56307",
                         },
+                        "quote_status": "pending_quote",
                         "shipment": {
                           "_object": "/api/refs/object",
                           "id": 123,
@@ -11215,6 +11257,12 @@ errors:
                         "special_instructions": "Handle carefully",
                         "status": "archived",
                         "transportation_mode": "ocean",
+                        "trucking_booking": {
+                          "_object": "/trucking/booking",
+                          "description_of_products": "Wristwatches",
+                          "is_ftl": false,
+                          "payment_terms": "collect",
+                        },
                         "wants_export_customs_service": true,
                         "wants_import_customs_service": true,
                       },
@@ -11348,6 +11396,28 @@ errors:
                       "_object": "/api/response",
                       "data": {
                         "_object": "/booking",
+                        "air_booking": {
+                          "_object": "/air/booking",
+                          "destination_port": {
+                            "_object": "/place",
+                            "name": "ORD - Chicago - IL",
+                          },
+                          "incoterm": "EXW",
+                          "origin_port": {
+                            "_object": "/place",
+                            "name": "ORD - Chicago - IL",
+                          },
+                          "product_descriptions": [
+                            {
+                              "_object": "/bookings/product_descriptions",
+                              "description": "Wristwatches",
+                              "description_for_export_customs": "手表",
+                              "description_for_export_customs_locale": "zh_CN",
+                            },
+                          ],
+                          "wants_delivery_service": false,
+                          "wants_pickup_service": true,
+                        },
                         "booking_line_items": {
                           "_object": "/api/refs/collection",
                           "link": "https://api.flexport.com/booking_line_items?f.booking.id=123",
@@ -11479,9 +11549,12 @@ errors:
                               "country": "China",
                               "country_code": "CN",
                               "ref": "my-shanghai-ref",
+                              "state": "MN",
                               "street_address": "123 Queen St",
+                              "street_address2": "STE 2918",
                               "timezone": "China/Shanghai",
                               "unlocode": "CNSHA",
+                              "zip": "56307",
                             },
                             "details": [
                               {
@@ -11505,9 +11578,12 @@ errors:
                               "country": "China",
                               "country_code": "CN",
                               "ref": "my-shanghai-ref",
+                              "state": "MN",
                               "street_address": "123 Queen St",
+                              "street_address2": "STE 2918",
                               "timezone": "China/Shanghai",
                               "unlocode": "CNSHA",
+                              "zip": "56307",
                             },
                             "details": [
                               {
@@ -11581,6 +11657,12 @@ errors:
                         "special_instructions": "",
                         "status": "archived",
                         "transportation_mode": "ocean",
+                        "trucking_booking": {
+                          "_object": "/trucking/booking",
+                          "description_of_products": "Wristwatches",
+                          "is_ftl": false,
+                          "payment_terms": "collect",
+                        },
                         "wants_export_customs_service": true,
                         "wants_import_customs_service": true,
                       },
@@ -11917,6 +11999,7 @@ service:
               data:
                 _object: /api/collections/paginated
                 prev: https://api.flexport.com/bookings?page=12&per=10
+                next: https://api.flexport.com/bookings?page=3&per=10
                 data:
                   - _object: /booking
                     id: 123
@@ -11964,6 +12047,7 @@ service:
                         - _object: company_entity/vat_number
                           country_code: US
                           number: US 123746396
+                    notify_party: John Doe | john@example.com | 905-555-1234
                     ocean_booking:
                       _object: /ocean/booking
                       is_lcl: false
@@ -11982,10 +12066,14 @@ service:
                         address:
                           _object: /address
                           street_address: 123 Queen St
+                          street_address2: STE 2918
                           city: Shanghai
+                          state: MN
                           country: China
                           country_code: CN
+                          zip: '56307'
                           timezone: America/Los_Angeles
+                          ref: address_ref_x
                           unlocode: CNSZP
                         details:
                           - _object: /trucking/port
@@ -11998,10 +12086,14 @@ service:
                         address:
                           _object: /address
                           street_address: 123 Queen St
+                          street_address2: STE 2918
                           city: Los Angeles
+                          state: MN
                           country: United States
                           country_code: US
+                          zip: '56307'
                           timezone: America/Los_Angeles
+                          ref: address_ref_x
                           unlocode: USLA
                         details:
                           - _object: /trucking/port
@@ -12015,6 +12107,10 @@ service:
                           description_for_export_customs_locale: zh_CN
                           hs_code:
                             _object: /hs_code
+                            description: >-
+                              N-Butyl-2,2,6,6-tetramethylpiperidin-4-amine (CAS
+                              No. 36177-92-1) (provided for in subheading
+                              2933.39.91)
                             code: '9101.00'
                             country_code: US
                     cargo_ready_date: '2019-06-30'
@@ -12188,6 +12284,7 @@ service:
             name: PO 123
             shipper_entity_ref: zoomit-us
             consignee_entity_ref: zoomit_ref
+            notify_party: John Doe, doe@example.com
             ocean_booking:
               is_lcl: false
               container_counts:
@@ -12261,6 +12358,7 @@ service:
                   link: https://api.flexport.com/shipments/123
                   id: 123
                 status: archived
+                quote_status: pending_quote
                 shipper_entity:
                   _object: /company_entity
                   id: 9281
@@ -12303,6 +12401,7 @@ service:
                     - _object: company_entity/vat_number
                       country_code: US
                       number: US 123746396
+                notify_party: John Doe | john@example.com | 905-555-1234
                 transportation_mode: ocean
                 ocean_booking:
                   _object: /ocean/booking
@@ -12322,9 +12421,12 @@ service:
                     address:
                       _object: /address
                       street_address: 123 Queen St
+                      street_address2: STE 2918
                       city: Shanghai
+                      state: MN
                       country: China
                       country_code: CN
+                      zip: '56307'
                       timezone: America/Los_Angeles
                       ref: shanghai-ref
                       unlocode: CNSZP
@@ -12339,9 +12441,12 @@ service:
                     address:
                       _object: /address
                       street_address: 123 Queen St
+                      street_address2: STE 2918
                       city: Los Angeles
+                      state: MN
                       country: United States
                       country_code: US
+                      zip: '56307'
                       timezone: America/Los_Angeles
                       ref: la-address-ref
                       unlocode: USLA
@@ -12362,6 +12467,27 @@ service:
                           36177-92-1) (provided for in subheading 2933.39.91)
                         code: '9101.00'
                         country_code: US
+                air_booking:
+                  _object: /air/booking
+                  incoterm: EXW
+                  wants_pickup_service: true
+                  wants_delivery_service: false
+                  origin_port:
+                    _object: /place
+                    name: ORD - Chicago - IL
+                  destination_port:
+                    _object: /place
+                    name: ORD - Chicago - IL
+                  product_descriptions:
+                    - _object: /bookings/product_descriptions
+                      description: Wristwatches
+                      description_for_export_customs: 手表
+                      description_for_export_customs_locale: zh_CN
+                trucking_booking:
+                  _object: /trucking/booking
+                  is_ftl: false
+                  payment_terms: collect
+                  description_of_products: Wristwatches
                 origin_address:
                   _object: /address
                   street_address: 1641 Settlers Lane
@@ -12545,9 +12671,12 @@ service:
                     address:
                       _object: /address
                       street_address: 123 Queen St
+                      street_address2: STE 2918
                       city: Shanghai
+                      state: MN
                       country: China
                       country_code: CN
+                      zip: '56307'
                       timezone: China/Shanghai
                       ref: my-shanghai-ref
                       unlocode: CNSHA
@@ -12562,9 +12691,12 @@ service:
                     address:
                       _object: /address
                       street_address: 123 Queen St
+                      street_address2: STE 2918
                       city: Shanghai
+                      state: MN
                       country: China
                       country_code: CN
+                      zip: '56307'
                       timezone: China/Shanghai
                       ref: my-shanghai-ref
                       unlocode: CNSHA
@@ -12578,6 +12710,27 @@ service:
                       description: Wristwatches
                       description_for_export_customs: 手表
                       description_for_export_customs_locale: zh_CN
+                air_booking:
+                  _object: /air/booking
+                  incoterm: EXW
+                  wants_pickup_service: true
+                  wants_delivery_service: false
+                  origin_port:
+                    _object: /place
+                    name: ORD - Chicago - IL
+                  destination_port:
+                    _object: /place
+                    name: ORD - Chicago - IL
+                  product_descriptions:
+                    - _object: /bookings/product_descriptions
+                      description: Wristwatches
+                      description_for_export_customs: 手表
+                      description_for_export_customs_locale: zh_CN
+                trucking_booking:
+                  _object: /trucking/booking
+                  is_ftl: false
+                  payment_terms: collect
+                  description_of_products: Wristwatches
                 origin_address:
                   _object: /address
                   street_address: 1641 Settlers Lane
@@ -12842,9 +12995,12 @@ docs: Endpoints relating to Booking objects
                           "country": "China",
                           "country_code": "CN",
                           "ref": "my-shanghai-address-ref",
+                          "state": "MN",
                           "street_address": "123 Queen St",
+                          "street_address2": "STE 2918",
                           "timezone": "China/Shanghai",
                           "unlocode": "CNSHA",
+                          "zip": "56307",
                         },
                         "new_port_of_loading": {
                           "_object": "/address",
@@ -12852,9 +13008,12 @@ docs: Endpoints relating to Booking objects
                           "country": "China",
                           "country_code": "CN",
                           "ref": "my-shanghai-address-ref",
+                          "state": "MN",
                           "street_address": "123 Queen St",
+                          "street_address2": "STE 2918",
                           "timezone": "China/Shanghai",
                           "unlocode": "CNSHA",
+                          "zip": "56307",
                         },
                         "new_port_of_unloading": {
                           "_object": "/address",
@@ -13157,18 +13316,24 @@ service:
                 new_origin_address:
                   _object: /address
                   street_address: 123 Queen St
+                  street_address2: STE 2918
                   city: Shanghai
+                  state: MN
                   country: China
                   country_code: CN
+                  zip: '56307'
                   timezone: China/Shanghai
                   ref: my-shanghai-address-ref
                   unlocode: CNSHA
                 new_port_of_loading:
                   _object: /address
                   street_address: 123 Queen St
+                  street_address2: STE 2918
                   city: Shanghai
+                  state: MN
                   country: China
                   country_code: CN
+                  zip: '56307'
                   timezone: China/Shanghai
                   ref: my-shanghai-address-ref
                   unlocode: CNSHA
@@ -13377,6 +13542,7 @@ docs: >-
                             "units": 200,
                           },
                         ],
+                        "next": "https://api.flexport.com/booking_line_items?page=3&per=10",
                         "prev": "https://api.flexport.com/booking_line_items?page=12&per=10",
                       },
                       "self": "https://api.flexport.com/booking_line_items?page=13&per=10",
@@ -13681,6 +13847,7 @@ service:
               data:
                 _object: /api/collections/paginated
                 prev: https://api.flexport.com/booking_line_items?page=12&per=10
+                next: https://api.flexport.com/booking_line_items?page=3&per=10
                 data:
                   - _object: /purchase_orders/booking_line_item
                     id: 123456
@@ -14522,6 +14689,7 @@ docs: Endpoints relating to Carbon Calculations
                             },
                           },
                         ],
+                        "next": "https://api.flexport.com/commercial_invoices?page=3&per=10",
                         "prev": "https://api.flexport.com/commercial_invoices?page=1&per=10",
                       },
                       "self": "https://api.flexport.com/commercial_invoices?page=2&per=10",
@@ -15085,6 +15253,7 @@ service:
               data:
                 _object: /api/collections/paginated
                 prev: https://api.flexport.com/commercial_invoices?page=1&per=10
+                next: https://api.flexport.com/commercial_invoices?page=3&per=10
                 data:
                   - _object: /commercial_invoices
                     id: abcxyz-23456-def
@@ -15759,6 +15928,7 @@ docs: Endpoints relating to Commercial Invoice objects
                             "ref": "ref_for_company",
                           },
                         ],
+                        "next": "https://api.flexport.com/network/companies?page=3&per=10",
                         "prev": "https://api.flexport.com/network/companies?page=12&per=10",
                         "total_count": 121,
                       },
@@ -16300,6 +16470,7 @@ service:
               data:
                 _object: /api/collections/paginated
                 prev: https://api.flexport.com/network/companies?page=12&per=10
+                next: https://api.flexport.com/network/companies?page=3&per=10
                 total_count: 121
                 data:
                   - _object: /network/company
@@ -16680,6 +16851,7 @@ docs: Endpoints relating to Company objects
                             ],
                           },
                         ],
+                        "next": "https://api.flexport.com/network/company_entities?page=3&per=10",
                         "prev": "https://api.flexport.com/network/company_entities?page=12&per=10",
                         "total_count": 121,
                       },
@@ -17175,6 +17347,8 @@ service:
                 _object: /api/collections/paginated
                 prev: >-
                   https://api.flexport.com/network/company_entities?page=12&per=10
+                next: >-
+                  https://api.flexport.com/network/company_entities?page=3&per=10
                 total_count: 121
                 data:
                   - _object: /company_entity
@@ -17525,6 +17699,7 @@ docs: Endpoints relating to CompanyEntity objects
                             "phone_number": "6789998212",
                           },
                         ],
+                        "next": "https://api.flexport.com/network/contacts?page=3&per=10",
                         "prev": "https://api.flexport.com/network/contacts?page=12&per=10",
                         "total_count": 121,
                       },
@@ -17906,6 +18081,7 @@ service:
               data:
                 _object: /api/collections/paginated
                 prev: https://api.flexport.com/network/contacts?page=12&per=10
+                next: https://api.flexport.com/network/contacts?page=3&per=10
                 total_count: 121
                 data:
                   - _object: /network/contact
@@ -18152,6 +18328,7 @@ docs: Endpoints relating to Contact objects
                                 "id": 29820,
                                 "product": {
                                   "_object": "/product",
+                                  "archived_at": "2019-01-18T22:08:38Z",
                                   "client_verified": true,
                                   "description": "The best 12V AC Adapter on the market",
                                   "id": 84291,
@@ -18177,6 +18354,7 @@ docs: Endpoints relating to Contact objects
                             "metadata": {
                               "key": "value",
                             },
+                            "pickup_number": "ABCD1234",
                             "seal_number": "UE_WQ2934875",
                             "shipment": {
                               "_object": "/api/refs/object",
@@ -18294,6 +18472,7 @@ docs: Endpoints relating to Contact objects
                             "id": 29820,
                             "product": {
                               "_object": "/product",
+                              "archived_at": "2019-01-18T22:08:38Z",
                               "client_verified": true,
                               "description": "The best 12V AC Adapter on the market",
                               "id": 84291,
@@ -18506,6 +18685,7 @@ service:
                     container_number: BWSE3982156
                     container_size: fourty_ft
                     seal_number: UE_WQ2934875
+                    pickup_number: ABCD1234
                     estimated_departure_date: '2019-02-06T19:28:25Z'
                     actual_departure_date: '2019-02-06T19:28:25Z'
                     estimated_arrival_date: '2019-02-06T19:28:25Z'
@@ -18549,6 +18729,7 @@ service:
                           name: AC Adapter 12V
                           sku: WDVCDFD-RM00472
                           description: The best 12V AC Adapter on the market
+                          archived_at: '2019-01-18T22:08:38Z'
                           product_category: Cosmetics
                           client_verified: true
     show:
@@ -18630,6 +18811,7 @@ service:
                       name: AC Adapter 12V
                       sku: WDVCDFD-RM00472
                       description: The best 12V AC Adapter on the market
+                      archived_at: '2019-01-18T22:08:38Z'
                       product_category: Cosmetics
                       client_verified: true
   source:
@@ -19063,6 +19245,7 @@ docs: Endpoints relating to ContainerLeg objects
                             },
                           },
                         ],
+                        "next": "https://api.flexport.com/customs_entries?page=3&per=10",
                         "prev": "https://api.flexport.com/customs_entries?page=12&per=10",
                       },
                       "self": "https://api.flexport.com/customs_entries?page=13&per=10",
@@ -19296,6 +19479,7 @@ service:
               data:
                 _object: /api/collections/paginated
                 prev: https://api.flexport.com/customs_entries?page=12&per=10
+                next: https://api.flexport.com/customs_entries?page=3&per=10
                 data:
                   - _object: /customs_entries
                     id: ABC123
@@ -19484,6 +19668,7 @@ docs: Endpoints relating to Customs Entry objects
                             },
                           },
                         ],
+                        "next": "https://api.flexport.com/documents?page=3&per=10",
                         "prev": "https://api.flexport.com/documents?page=12&per=10",
                         "total_count": 121,
                       },
@@ -19580,6 +19765,7 @@ docs: Endpoints relating to Customs Entry objects
                       "_object": "/api/response",
                       "data": {
                         "_object": "/document",
+                        "archived_at": "2024-01-15T09:30:00Z",
                         "document_type": "billing_packet",
                         "file_link": "https://api.flexport.com/documents/ABC123/download",
                         "file_metadata": {
@@ -19589,6 +19775,7 @@ docs: Endpoints relating to Customs Entry objects
                         },
                         "file_name": "readme.txt",
                         "id": "ABC123",
+                        "memo": "memo",
                         "shipment": {
                           "_object": "/api/refs/object",
                           "id": 123456,
@@ -19802,6 +19989,7 @@ service:
               data:
                 _object: /api/collections/paginated
                 prev: https://api.flexport.com/documents?page=12&per=10
+                next: https://api.flexport.com/documents?page=3&per=10
                 total_count: 121
                 data:
                   - _object: /document
@@ -19886,7 +20074,9 @@ service:
                 id: ABC123
                 file_name: readme.txt
                 document_type: billing_packet
+                memo: memo
                 file_link: https://api.flexport.com/documents/ABC123/download
+                archived_at: '2024-01-15T09:30:00Z'
                 file_metadata:
                   _object: file/metadata
                   size: 20000
@@ -20043,6 +20233,8 @@ docs: Endpoints relating to Document objects
                                   "abc123",
                                 ],
                               },
+                              "pickup_number": "ABCD1234",
+                              "seal_number": "UE_WQ2934875",
                             },
                           ],
                           "exception": {
@@ -20409,6 +20601,8 @@ service:
                         sku:
                           - abc123
                       container_number: BWSE3982156
+                      seal_number: UE_WQ2934875
+                      pickup_number: ABCD1234
                   exception:
                     message: US Customs Hold
                     root_cause_name: Government Agency
@@ -20505,6 +20699,7 @@ docs: Endpoints relating to Event objects
                                 "street_address": "760 MARKET ST FL 8",
                                 "street_address2": "",
                                 "timezone": "America/Los_Angeles",
+                                "unlocode": "US AL2",
                                 "zip": "94102-2300",
                               },
                               "name": "Flexport LLC",
@@ -20662,6 +20857,7 @@ Other details about this invoice",
                                 "street_address": "123 MAIN ST",
                                 "street_address2": "",
                                 "timezone": "America/Los_Angeles",
+                                "unlocode": "US AL2",
                                 "zip": "12345",
                               },
                               "name": "Your Company Name",
@@ -20690,6 +20886,7 @@ Other details about this invoice",
                           },
                         ],
                         "next": "https://api.flexport.com/invoices?page=2&per=10",
+                        "prev": "https://api.flexport.com/invoices?page=1&per=10",
                       },
                       "self": "https://api.flexport.com/invoices",
                       "version": 2,
@@ -20855,6 +21052,7 @@ This parameter is mutually exclusive with the f.shipment.id filter.
                             "street_address": "760 MARKET ST FL 8",
                             "street_address2": "",
                             "timezone": "America/Los_Angeles",
+                            "unlocode": "US AL2",
                             "zip": "94102-2300",
                           },
                           "name": "Flexport LLC",
@@ -21012,6 +21210,7 @@ Other details about this invoice",
                             "street_address": "123 MAIN ST",
                             "street_address2": "",
                             "timezone": "America/Los_Angeles",
+                            "unlocode": "US AL2",
                             "zip": "12345",
                           },
                           "name": "Your Company Name",
@@ -21297,6 +21496,7 @@ service:
               version: 2
               data:
                 _object: /api/collections/paginated
+                prev: https://api.flexport.com/invoices?page=1&per=10
                 next: https://api.flexport.com/invoices?page=2&per=10
                 data:
                   - _object: /invoice
@@ -21330,6 +21530,7 @@ service:
                         zip: '12345'
                         timezone: America/Los_Angeles
                         ref: my-address-ref
+                        unlocode: US AL2
                       vat_numbers:
                         - _object: company_entity/vat_number
                           country_code: US
@@ -21350,6 +21551,7 @@ service:
                         zip: 94102-2300
                         timezone: America/Los_Angeles
                         ref: flexport-address-ref
+                        unlocode: US AL2
                       vat_numbers:
                         - _object: company_entity/vat_number
                           country_code: US
@@ -21531,6 +21733,7 @@ service:
                     zip: '12345'
                     timezone: America/Los_Angeles
                     ref: my-address-ref
+                    unlocode: US AL2
                   vat_numbers:
                     - _object: company_entity/vat_number
                       country_code: US
@@ -21551,6 +21754,7 @@ service:
                     zip: 94102-2300
                     timezone: America/Los_Angeles
                     ref: flexport-address-ref
+                    unlocode: US AL2
                   vat_numbers:
                     - _object: company_entity/vat_number
                       country_code: US
@@ -21750,6 +21954,7 @@ docs: Endpoints relating to Invoice objects
                             "name": "Wayne Enterprises",
                           },
                         ],
+                        "next": "https://api.flexport.com/network/locations?page=3&per=10",
                         "prev": "https://api.flexport.com/network/locations?page=1&per=10",
                         "total_count": 11,
                       },
@@ -22025,6 +22230,7 @@ docs: Endpoints relating to Invoice objects
                           "ref": "zoomit-management-co",
                           "state": "CA",
                           "street_address": "2 World Way",
+                          "street_address2": "STE 2918",
                           "timezone": "America/Los_Angeles",
                           "unlocode": "USLAX",
                           "zip": "90045",
@@ -22293,6 +22499,7 @@ service:
               data:
                 _object: /api/collections/paginated
                 prev: https://api.flexport.com/network/locations?page=1&per=10
+                next: https://api.flexport.com/network/locations?page=3&per=10
                 total_count: 11
                 data:
                   - _object: /network/location
@@ -22514,6 +22721,7 @@ service:
                 address:
                   _object: /address
                   street_address: 2 World Way
+                  street_address2: STE 2918
                   city: Los Angeles
                   state: CA
                   country: United States of America
@@ -22615,6 +22823,7 @@ docs: Endpoints relating to Location objects
                               "ref": "oakland-ref",
                               "state": "CA",
                               "street_address": "530 Water St",
+                              "street_address2": "STE 2918",
                               "timezone": "America/Los_Angeles",
                               "unlocode": "US AL2",
                               "zip": "94607",
@@ -22856,6 +23065,7 @@ service:
                     address:
                       _object: /address
                       street_address: 530 Water St
+                      street_address2: STE 2918
                       city: Oakland
                       state: CA
                       country: United States of America
@@ -23943,8 +24153,12 @@ docs: Endpoints relating to Product objects
                             "country": "United States of America",
                             "country_code": "US",
                             "ref": "address_ref_x",
+                            "state": "MN",
                             "street_address": "1641 Settlers Lane",
+                            "street_address2": "STE 2918",
                             "timezone": "America/Los_Angeles",
+                            "unlocode": "US AL2",
+                            "zip": "56307",
                           },
                           "role": "buyer",
                         },
@@ -24018,7 +24232,9 @@ docs: Endpoints relating to Product objects
                                 "ref": "id-318238",
                                 "state": "North Rhine Westphalia",
                                 "street_address": "Vandelay street 1",
+                                "street_address2": "STE 2918",
                                 "timezone": "Europe/Berlin",
+                                "unlocode": "US AL2",
                                 "zip": "56776",
                               },
                             ],
@@ -24031,18 +24247,24 @@ docs: Endpoints relating to Product objects
                                 "country_code": "US",
                                 "ref": "id-313120",
                                 "state": "GA",
+                                "street_address": "1641 Settlers Lane",
+                                "street_address2": "STE 2918",
                                 "timezone": "America/New_York",
                                 "unlocode": "USFBN",
+                                "zip": "56307",
                               },
                               "details": [
                                 {
                                   "_object": "/ocean/railport",
+                                  "port_code": "3901",
                                 },
                                 {
                                   "_object": "/trucking/port",
+                                  "port_code": "3901",
                                 },
                                 {
                                   "_object": "/ocean/port",
+                                  "port_code": "3901",
                                 },
                               ],
                               "name": "Fairburn",
@@ -24072,7 +24294,10 @@ docs: Endpoints relating to Product objects
                               "ref": "id-274346",
                               "state": "Beijing",
                               "street_address": "No 1, 123 St",
+                              "street_address2": "STE 2918",
                               "timezone": "Asia/Shanghai",
+                              "unlocode": "US AL2",
+                              "zip": "56307",
                             },
                             "origin_port": {
                               "_object": "/place",
@@ -24083,18 +24308,24 @@ docs: Endpoints relating to Product objects
                                 "country_code": "US",
                                 "ref": "id-313120",
                                 "state": "GA",
+                                "street_address": "1641 Settlers Lane",
+                                "street_address2": "STE 2918",
                                 "timezone": "America/New_York",
                                 "unlocode": "USFBN",
+                                "zip": "56307",
                               },
                               "details": [
                                 {
                                   "_object": "/ocean/railport",
+                                  "port_code": "3901",
                                 },
                                 {
                                   "_object": "/trucking/port",
+                                  "port_code": "3901",
                                 },
                                 {
                                   "_object": "/ocean/port",
+                                  "port_code": "3901",
                                 },
                               ],
                               "name": "Fairburn",
@@ -24109,9 +24340,13 @@ docs: Endpoints relating to Product objects
                                     "city": "shanghai",
                                     "country": "China",
                                     "country_code": "CN",
+                                    "ref": "address_ref_x",
                                     "state": "Shanghai",
                                     "street_address": "test",
+                                    "street_address2": "STE 2918",
                                     "timezone": "Asia/Shanghai",
+                                    "unlocode": "US AL2",
+                                    "zip": "56307",
                                   },
                                   "name": "test",
                                   "ref": "id-754619",
@@ -24168,9 +24403,13 @@ docs: Endpoints relating to Product objects
                                     "city": "shanghai",
                                     "country": "China",
                                     "country_code": "CN",
+                                    "ref": "address_ref_x",
                                     "state": "Shanghai",
                                     "street_address": "test",
+                                    "street_address2": "STE 2918",
                                     "timezone": "Asia/Shanghai",
+                                    "unlocode": "US AL2",
+                                    "zip": "56307",
                                   },
                                   "name": "test",
                                   "ref": "id-754619",
@@ -24200,6 +24439,7 @@ docs: Endpoints relating to Product objects
                             "updated_at": "2020-07-31T19:52:58.161Z",
                           },
                         ],
+                        "next": "https://api.flexport.com/purchase_orders?page=3&per=10",
                         "prev": "https://api.flexport.com/purchase_orders?page=12&per=10",
                       },
                       "self": "https://api.flexport.com/purchase_orders?page=13&per=10",
@@ -24335,8 +24575,12 @@ docs: Endpoints relating to Product objects
                             "country": "United States of America",
                             "country_code": "US",
                             "ref": "address_ref_x",
+                            "state": "MN",
                             "street_address": "1641 Settlers Lane",
+                            "street_address2": "STE 2918",
                             "timezone": "America/Los_Angeles",
+                            "unlocode": "US AL2",
+                            "zip": "56307",
                           },
                         ],
                         "destination_port": {
@@ -24347,8 +24591,12 @@ docs: Endpoints relating to Product objects
                             "country": "United States of America",
                             "country_code": "US",
                             "ref": "address_ref_x",
+                            "state": "MN",
                             "street_address": "1641 Settlers Lane",
+                            "street_address2": "STE 2918",
                             "timezone": "America/Los_Angeles",
+                            "unlocode": "US AL2",
+                            "zip": "56307",
                           },
                           "details": [
                             {
@@ -24404,8 +24652,12 @@ docs: Endpoints relating to Product objects
                             "country": "United States of America",
                             "country_code": "US",
                             "ref": "address_ref_x",
+                            "state": "MN",
                             "street_address": "1641 Settlers Lane",
+                            "street_address2": "STE 2918",
                             "timezone": "America/Los_Angeles",
+                            "unlocode": "US AL2",
+                            "zip": "56307",
                           },
                           "details": [
                             {
@@ -24652,8 +24904,12 @@ docs: Endpoints relating to Product objects
                             "country": "United States of America",
                             "country_code": "US",
                             "ref": "address_ref_x",
+                            "state": "MN",
                             "street_address": "1641 Settlers Lane",
+                            "street_address2": "STE 2918",
                             "timezone": "America/Los_Angeles",
+                            "unlocode": "US AL2",
+                            "zip": "56307",
                           },
                           "role": "buyer",
                         },
@@ -24945,6 +25201,7 @@ service:
               data:
                 _object: /api/collections/paginated
                 prev: https://api.flexport.com/purchase_orders?page=12&per=10
+                next: https://api.flexport.com/purchase_orders?page=3&per=10
                 data:
                   - id: 109771
                     _object: /purchase_order
@@ -24962,45 +25219,61 @@ service:
                       name: Fairburn
                       address:
                         _object: /address
+                        street_address: 1641 Settlers Lane
+                        street_address2: STE 2918
                         city: Fairburn
                         state: GA
                         country: United States
                         country_code: US
+                        zip: '56307'
                         timezone: America/New_York
                         ref: id-313120
                         unlocode: USFBN
                       details:
                         - _object: /ocean/railport
+                          port_code: '3901'
                         - _object: /trucking/port
+                          port_code: '3901'
                         - _object: /ocean/port
+                          port_code: '3901'
                     origin_address:
                       _object: /address
                       street_address: No 1, 123 St
+                      street_address2: STE 2918
                       city: Shenzhen
                       state: Beijing
                       country: China
                       country_code: CN
+                      zip: '56307'
                       timezone: Asia/Shanghai
                       ref: id-274346
+                      unlocode: US AL2
                     destination_port:
                       _object: /place
                       name: Fairburn
                       address:
                         _object: /address
+                        street_address: 1641 Settlers Lane
+                        street_address2: STE 2918
                         city: Fairburn
                         state: GA
                         country: United States
                         country_code: US
+                        zip: '56307'
                         timezone: America/New_York
                         ref: id-313120
                         unlocode: USFBN
                       details:
                         - _object: /ocean/railport
+                          port_code: '3901'
                         - _object: /trucking/port
+                          port_code: '3901'
                         - _object: /ocean/port
+                          port_code: '3901'
                     destination_addresses:
                       - _object: /address
                         street_address: Vandelay street 1
+                        street_address2: STE 2918
                         city: Duisburg
                         state: North Rhine Westphalia
                         country: Germany
@@ -25008,6 +25281,7 @@ service:
                         zip: '56776'
                         timezone: Europe/Berlin
                         ref: id-318238
+                        unlocode: US AL2
                     parties:
                       - role: buyer
                         company_entity:
@@ -25018,11 +25292,15 @@ service:
                           mailing_address:
                             _object: /address
                             street_address: test
+                            street_address2: STE 2918
                             city: shanghai
                             state: Shanghai
                             country: China
                             country_code: CN
+                            zip: '56307'
                             timezone: Asia/Shanghai
+                            ref: address_ref_x
+                            unlocode: US AL2
                           vat_numbers:
                             - _object: /company_entity/vat_number
                               country_code: GB
@@ -25058,11 +25336,15 @@ service:
                           mailing_address:
                             _object: /address
                             street_address: test
+                            street_address2: STE 2918
                             city: shanghai
                             state: Shanghai
                             country: China
                             country_code: CN
+                            zip: '56307'
                             timezone: Asia/Shanghai
+                            ref: address_ref_x
+                            unlocode: US AL2
                           vat_numbers:
                             - _object: /company_entity/vat_number
                               country_code: GB
@@ -25279,11 +25561,15 @@ service:
                   location:
                     _object: /address
                     street_address: 1641 Settlers Lane
+                    street_address2: STE 2918
                     city: Albany
+                    state: MN
                     country: United States of America
                     country_code: US
+                    zip: '56307'
                     timezone: America/Los_Angeles
                     ref: address_ref_x
+                    unlocode: US AL2
                   contacts:
                     - name: John Doe
                       phone: 767 878 8888
@@ -25361,11 +25647,15 @@ service:
                   address:
                     _object: /address
                     street_address: 1641 Settlers Lane
+                    street_address2: STE 2918
                     city: Albany
+                    state: MN
                     country: United States of America
                     country_code: US
+                    zip: '56307'
                     timezone: America/Los_Angeles
                     ref: address_ref_x
+                    unlocode: US AL2
                   details:
                     - _object: /air/port
                       port_code: '3901'
@@ -25390,11 +25680,15 @@ service:
                   address:
                     _object: /address
                     street_address: 1641 Settlers Lane
+                    street_address2: STE 2918
                     city: Albany
+                    state: MN
                     country: United States of America
                     country_code: US
+                    zip: '56307'
                     timezone: America/Los_Angeles
                     ref: address_ref_x
+                    unlocode: US AL2
                   details:
                     - _object: /air/port
                       port_code: '3901'
@@ -25404,11 +25698,15 @@ service:
                 destination_addresses:
                   - _object: /address
                     street_address: 1641 Settlers Lane
+                    street_address2: STE 2918
                     city: Albany
+                    state: MN
                     country: United States of America
                     country_code: US
+                    zip: '56307'
                     timezone: America/Los_Angeles
                     ref: address_ref_x
+                    unlocode: US AL2
                 parties:
                   - {}
                 memo: This message is written in invisible ink
@@ -25575,11 +25873,15 @@ service:
                   location:
                     _object: /address
                     street_address: 1641 Settlers Lane
+                    street_address2: STE 2918
                     city: Albany
+                    state: MN
                     country: United States of America
                     country_code: US
+                    zip: '56307'
                     timezone: America/Los_Angeles
                     ref: address_ref_x
+                    unlocode: US AL2
                   contacts:
                     - name: John Doe
                       phone: 767 878 8888
@@ -25656,6 +25958,7 @@ docs: >-
                                 "city": "Albany",
                                 "country": "United States of America",
                                 "country_code": "US",
+                                "ref": "address_ref_x",
                                 "state": "MN",
                                 "street_address": "1641 Settlers Lane",
                                 "street_address2": "STE 2918",
@@ -25689,6 +25992,7 @@ docs: >-
                                 "_object": "/hs_code",
                                 "code": "8309.90.10.00",
                                 "country_code": "US",
+                                "description": "N-Butyl-2,2,6,6-tetramethylpiperidin-4-amine (CAS No. 36177-92-1) (provided for in subheading 2933.39.91)",
                               },
                             ],
                             "id": 123456,
@@ -25717,7 +26021,10 @@ docs: >-
                               "ref": "sellingcoaddress",
                               "state": "44",
                               "street_address": "10th YouSong Industrial District",
+                              "street_address2": "STE 2918",
                               "timezone": "China/Shenzhen",
+                              "unlocode": "US AL2",
+                              "zip": "56307",
                             },
                             "product": {
                               "color": "red",
@@ -25748,6 +26055,7 @@ docs: >-
                             "units": 20,
                           },
                         ],
+                        "next": "https://api.flexport.com/purchase_order_line_items?page=3&per=10",
                         "prev": "https://api.flexport.com/purchase_orders?page=12&per=10",
                       },
                       "self": "https://api.flexport.com/purchase_orders?page=13&per=10",
@@ -25844,6 +26152,7 @@ docs: >-
                             "city": "Albany",
                             "country": "United States of America",
                             "country_code": "US",
+                            "ref": "address_ref_x",
                             "state": "MN",
                             "street_address": "1641 Settlers Lane",
                             "street_address2": "STE 2918",
@@ -25872,11 +26181,38 @@ docs: >-
                             "units": 1,
                           },
                         ],
+                        "destination_port": {
+                          "_object": "/place",
+                          "address": {
+                            "_object": "/address",
+                            "city": "Albany",
+                            "country": "United States of America",
+                            "country_code": "US",
+                            "ref": "address_ref_x",
+                            "state": "MN",
+                            "street_address": "1641 Settlers Lane",
+                            "street_address2": "STE 2918",
+                            "timezone": "America/Los_Angeles",
+                            "unlocode": "US AL2",
+                            "zip": "56307",
+                          },
+                          "details": [
+                            {
+                              "_object": "/air/port",
+                              "country_code": "US",
+                              "iata_code": "LAX",
+                              "icao_code": "KLAX",
+                              "port_code": "3901",
+                            },
+                          ],
+                          "name": "ORD - Chicago - IL",
+                        },
                         "hs_codes": [
                           {
                             "_object": "/hs_code",
                             "code": "8309.90.10.00",
                             "country_code": "US",
+                            "description": "N-Butyl-2,2,6,6-tetramethylpiperidin-4-amine (CAS No. 36177-92-1) (provided for in subheading 2933.39.91)",
                           },
                         ],
                         "id": 123456,
@@ -25905,8 +26241,38 @@ docs: >-
                           "ref": "sellingcoaddress",
                           "state": "44",
                           "street_address": "10th YouSong Industrial District",
+                          "street_address2": "STE 2918",
                           "timezone": "China/Shenzhen",
+                          "unlocode": "US AL2",
+                          "zip": "56307",
                         },
+                        "origin_port": {
+                          "_object": "/place",
+                          "address": {
+                            "_object": "/address",
+                            "city": "Albany",
+                            "country": "United States of America",
+                            "country_code": "US",
+                            "ref": "address_ref_x",
+                            "state": "MN",
+                            "street_address": "1641 Settlers Lane",
+                            "street_address2": "STE 2918",
+                            "timezone": "America/Los_Angeles",
+                            "unlocode": "US AL2",
+                            "zip": "56307",
+                          },
+                          "details": [
+                            {
+                              "_object": "/air/port",
+                              "country_code": "US",
+                              "iata_code": "LAX",
+                              "icao_code": "KLAX",
+                              "port_code": "3901",
+                            },
+                          ],
+                          "name": "ORD - Chicago - IL",
+                        },
+                        "parent_line_key": "parent_line_key",
                         "product": {
                           "color": "red",
                           "country_of_origin": "US",
@@ -26123,6 +26489,8 @@ service:
               data:
                 _object: /api/collections/paginated
                 prev: https://api.flexport.com/purchase_orders?page=12&per=10
+                next: >-
+                  https://api.flexport.com/purchase_order_line_items?page=3&per=10
                 data:
                   - _object: /purchase_orders/line_item
                     id: 123456
@@ -26163,17 +26531,23 @@ service:
                     origin_location:
                       _object: /address
                       street_address: 10th YouSong Industrial District
+                      street_address2: STE 2918
                       city: Shenzhen
                       state: '44'
                       country: China
                       country_code: CN
+                      zip: '56307'
                       timezone: China/Shenzhen
                       ref: sellingcoaddress
+                      unlocode: US AL2
                     destination_addresses:
                       - location_ref: id-1234
                         units: 1
                     hs_codes:
                       - _object: /hs_code
+                        description: >-
+                          N-Butyl-2,2,6,6-tetramethylpiperidin-4-amine (CAS No.
+                          36177-92-1) (provided for in subheading 2933.39.91)
                         code: 8309.90.10.00
                         country_code: US
                     assigned_party:
@@ -26191,6 +26565,7 @@ service:
                         country_code: US
                         zip: '56307'
                         timezone: America/Los_Angeles
+                        ref: address_ref_x
                         unlocode: US AL2
                       vat_numbers:
                         - _object: company_entity/vat_number
@@ -26266,22 +26641,71 @@ service:
                 transportation_mode: air
                 unit_of_measure: HUN
                 must_arrive_date: '2019-03-11'
+                origin_port:
+                  _object: /place
+                  name: ORD - Chicago - IL
+                  address:
+                    _object: /address
+                    street_address: 1641 Settlers Lane
+                    street_address2: STE 2918
+                    city: Albany
+                    state: MN
+                    country: United States of America
+                    country_code: US
+                    zip: '56307'
+                    timezone: America/Los_Angeles
+                    ref: address_ref_x
+                    unlocode: US AL2
+                  details:
+                    - _object: /air/port
+                      port_code: '3901'
+                      country_code: US
+                      iata_code: LAX
+                      icao_code: KLAX
                 origin_location:
                   _object: /address
                   street_address: 10th YouSong Industrial District
+                  street_address2: STE 2918
                   city: Shenzhen
                   state: '44'
                   country: China
                   country_code: CN
+                  zip: '56307'
                   timezone: China/Shenzhen
                   ref: sellingcoaddress
+                  unlocode: US AL2
+                destination_port:
+                  _object: /place
+                  name: ORD - Chicago - IL
+                  address:
+                    _object: /address
+                    street_address: 1641 Settlers Lane
+                    street_address2: STE 2918
+                    city: Albany
+                    state: MN
+                    country: United States of America
+                    country_code: US
+                    zip: '56307'
+                    timezone: America/Los_Angeles
+                    ref: address_ref_x
+                    unlocode: US AL2
+                  details:
+                    - _object: /air/port
+                      port_code: '3901'
+                      country_code: US
+                      iata_code: LAX
+                      icao_code: KLAX
                 destination_addresses:
                   - location_ref: id-1234
                     units: 1
                 hs_codes:
                   - _object: /hs_code
+                    description: >-
+                      N-Butyl-2,2,6,6-tetramethylpiperidin-4-amine (CAS No.
+                      36177-92-1) (provided for in subheading 2933.39.91)
                     code: 8309.90.10.00
                     country_code: US
+                parent_line_key: parent_line_key
                 assigned_party:
                   _object: /company_entity
                   id: 9281
@@ -26297,6 +26721,7 @@ service:
                     country_code: US
                     zip: '56307'
                     timezone: America/Los_Angeles
+                    ref: address_ref_x
                     unlocode: US AL2
                   vat_numbers:
                     - _object: company_entity/vat_number
@@ -26528,6 +26953,7 @@ docs: >-
                                 "id": 29820,
                                 "product": {
                                   "_object": "/product",
+                                  "archived_at": "2019-01-18T22:08:38Z",
                                   "client_verified": true,
                                   "description": "The best 12V AC Adapter on the market",
                                   "id": 84291,
@@ -26645,6 +27071,8 @@ docs: >-
                             "wants_trade_declaration_service": false,
                           },
                         ],
+                        "next": "next",
+                        "prev": "prev",
                       },
                       "self": "https://api.flexport.com/shipments?page=1&per=20&sort=id&direction=desc",
                       "version": 2,
@@ -26900,6 +27328,19 @@ docs: >-
                         "actual_delivered_in_full_date": "2019-02-06T19:28:25Z",
                         "actual_departure_date": "2019-02-06T19:28:25Z",
                         "actual_picked_up_in_full_date": "2019-02-06T19:28:25Z",
+                        "air_shipment": {
+                          "_object": "/air/shipment",
+                          "chargeable_volume": {
+                            "_object": "/quantity/volume",
+                            "value": 472.62,
+                          },
+                          "chargeable_weight": {
+                            "_object": "/quantity/weight",
+                            "value": 2300.4,
+                          },
+                          "house_airway_bill": "HWXJKE67732",
+                          "master_airway_bill": "22831046871",
+                        },
                         "arrival_date": "2019-02-06T19:28:25Z",
                         "belongs_to_a_buyers_consol": false,
                         "booking": {
@@ -26947,6 +27388,14 @@ docs: >-
                           "value": 2300.4,
                         },
                         "cargo_ready_date": "2019-02-06",
+                        "child_shipments": [
+                          {
+                            "_object": "/api/refs/object",
+                            "id": 123,
+                            "link": "https://api.flexport.com/shipments/123",
+                            "ref_type": "/shipment",
+                          },
+                        ],
                         "commercial_invoices": {
                           "_object": "/api/refs/collection",
                           "link": "https://api.flexport.com/commercial_invoices?f.shipment.id=2983",
@@ -27043,6 +27492,7 @@ docs: >-
                             "id": 29820,
                             "product": {
                               "_object": "/product",
+                              "archived_at": "2019-01-18T22:08:38Z",
                               "client_verified": true,
                               "description": "The best 12V AC Adapter on the market",
                               "id": 84291,
@@ -27085,6 +27535,12 @@ docs: >-
                           "house_bill_number": "TUWSANR18658",
                           "is_lcl": false,
                           "master_bill_number": "NEWO697216024",
+                        },
+                        "parent_shipment": {
+                          "_object": "/api/refs/object",
+                          "id": 123,
+                          "link": "https://api.flexport.com/shipments/123",
+                          "ref_type": "/shipment",
                         },
                         "picked_up_in_full_date": "2019-02-06T19:28:25Z",
                         "pieces": 8372,
@@ -27207,6 +27663,19 @@ docs: >-
                         "actual_delivered_in_full_date": "2019-02-06T19:28:25Z",
                         "actual_departure_date": "2019-02-06T19:28:25Z",
                         "actual_picked_up_in_full_date": "2019-02-06T19:28:25Z",
+                        "air_shipment": {
+                          "_object": "/air/shipment",
+                          "chargeable_volume": {
+                            "_object": "/quantity/volume",
+                            "value": 472.62,
+                          },
+                          "chargeable_weight": {
+                            "_object": "/quantity/weight",
+                            "value": 2300.4,
+                          },
+                          "house_airway_bill": "HWXJKE67732",
+                          "master_airway_bill": "22831046871",
+                        },
                         "arrival_date": "2019-02-06T19:28:25Z",
                         "belongs_to_a_buyers_consol": true,
                         "booking": {
@@ -27358,6 +27827,7 @@ docs: >-
                             "id": 29820,
                             "product": {
                               "_object": "/product",
+                              "archived_at": "2019-01-18T22:08:38Z",
                               "client_verified": true,
                               "description": "The best 12V AC Adapter on the market",
                               "id": 84291,
@@ -27926,6 +28396,8 @@ service:
               version: 2
               data:
                 _object: /api/collections/paginated
+                prev: prev
+                next: next
                 data:
                   - metadata:
                       key: value
@@ -28116,6 +28588,7 @@ service:
                           name: AC Adapter 12V
                           sku: WDVCDFD-RM00472
                           description: The best 12V AC Adapter on the market
+                          archived_at: '2019-01-18T22:08:38Z'
                           product_category: Cosmetics
                           client_verified: true
                     legs:
@@ -28209,6 +28682,16 @@ service:
                 visibility_only: false
                 wants_delivery_service: false
                 belongs_to_a_buyers_consol: false
+                child_shipments:
+                  - _object: /api/refs/object
+                    ref_type: /shipment
+                    link: https://api.flexport.com/shipments/123
+                    id: 123
+                parent_shipment:
+                  _object: /api/refs/object
+                  ref_type: /shipment
+                  link: https://api.flexport.com/shipments/123
+                  id: 123
                 estimated_picked_up_in_full_date: '2019-02-06T19:28:25Z'
                 actual_picked_up_in_full_date: '2019-02-06T19:28:25Z'
                 target_delivery_date: target_delivery_date
@@ -28228,6 +28711,16 @@ service:
                     ref_type: /ocean/shipment_container
                     link: >-
                       https://api.flexport.com/ocean/shipment_containers?f.shipment.id=123
+                air_shipment:
+                  _object: /air/shipment
+                  house_airway_bill: HWXJKE67732
+                  master_airway_bill: '22831046871'
+                  chargeable_weight:
+                    value: 2300.4
+                    _object: /quantity/weight
+                  chargeable_volume:
+                    value: 472.62
+                    _object: /quantity/volume
                 dangerous_goods:
                   _object: /shipment/dangerous_goods
                   review_status: complete
@@ -28358,6 +28851,7 @@ service:
                       name: AC Adapter 12V
                       sku: WDVCDFD-RM00472
                       description: The best 12V AC Adapter on the market
+                      archived_at: '2019-01-18T22:08:38Z'
                       product_category: Cosmetics
                       client_verified: true
                 legs:
@@ -28490,6 +28984,16 @@ service:
                     ref_type: /ocean/shipment_container
                     link: >-
                       https://api.flexport.com/ocean/shipment_containers?f.shipment.id=123
+                air_shipment:
+                  _object: /air/shipment
+                  house_airway_bill: HWXJKE67732
+                  master_airway_bill: '22831046871'
+                  chargeable_weight:
+                    value: 2300.4
+                    _object: /quantity/weight
+                  chargeable_volume:
+                    value: 472.62
+                    _object: /quantity/volume
                 dangerous_goods:
                   _object: /shipment/dangerous_goods
                   review_status: complete
@@ -28620,6 +29124,7 @@ service:
                       name: AC Adapter 12V
                       sku: WDVCDFD-RM00472
                       description: The best 12V AC Adapter on the market
+                      archived_at: '2019-01-18T22:08:38Z'
                       product_category: Cosmetics
                       client_verified: true
                 legs:
@@ -28837,6 +29342,7 @@ docs: Endpoints relating to Shipment objects
                                   "ref": "address_ref_1",
                                   "state": "MN",
                                   "street_address": "1645 Settlers Lane",
+                                  "street_address2": "STE 2918",
                                   "timezone": "America/Chicago",
                                   "unlocode": "US AL2",
                                   "zip": "56307",
@@ -28949,6 +29455,12 @@ docs: Endpoints relating to Shipment objects
                           "delivery_completed": "2019-07-14T04:00:00Z",
                           "loaded_on_truck_date": "2019-07-13T04:00:00Z",
                         },
+                        "air_leg": {
+                          "_object": "/air/shipment_leg",
+                          "flight_number": "Y8 1234",
+                          "iata_code": "2Q",
+                          "icao_code": "SNC",
+                        },
                         "cargo_ready_date": "cargo_ready_date",
                         "carrier_name": "Liberty Carrier",
                         "deleted_at": "2024-01-15T09:30:00Z",
@@ -28987,6 +29499,11 @@ docs: Endpoints relating to Shipment objects
                           "tags": [
                             "port_of_loading",
                           ],
+                          "terminal": {
+                            "_object": "/shipment_node/terminal",
+                            "firms_code": "I092",
+                            "name": "Terminal 3",
+                          },
                         },
                         "estimated_arrival_date": "2019-02-06T19:28:25Z",
                         "estimated_departure_date": "2019-02-06T19:28:25Z",
@@ -29048,12 +29565,21 @@ docs: Endpoints relating to Shipment objects
                               "ref": "address_ref_1",
                               "state": "MN",
                               "street_address": "1645 Settlers Lane",
+                              "street_address2": "STE 2918",
                               "timezone": "America/Chicago",
                               "unlocode": "US AL2",
                               "zip": "56307",
                             },
                             "firms_code": "I092",
                             "name": "Terminal 3",
+                          },
+                        },
+                        "rail_leg": {
+                          "_object": "/rail/shipment_leg",
+                          "container_legs": {
+                            "_object": "/api/refs/collection",
+                            "link": "https://api.flexport.com/ocean/shipment_container_legs?f.shipment_container.id=123",
+                            "ref_type": "/ocean/shipment_container_leg",
                           },
                         },
                         "shipment": {
@@ -29063,6 +29589,18 @@ docs: Endpoints relating to Shipment objects
                           "ref_type": "/shipment",
                         },
                         "transportation_mode": "ocean",
+                        "trucking_leg": {
+                          "_object": "/trucking/shipment_leg",
+                          "container_legs": {
+                            "_object": "/api/refs/collection",
+                            "link": "https://api.flexport.com/ocean/shipment_container_legs?f.shipment_container.id=123",
+                            "ref_type": "/ocean/shipment_container_leg",
+                          },
+                          "pieces": 32,
+                          "scac_code": "ABCD",
+                          "service_type": "ltl",
+                          "tracking_number": "FBA123456789",
+                        },
                       },
                       "self": "https://api.flexport.com/shipment_legs/948211",
                       "version": 2,
@@ -29291,6 +29829,7 @@ service:
                         address:
                           _object: /address
                           street_address: 1645 Settlers Lane
+                          street_address2: STE 2918
                           city: Albany
                           state: MN
                           country: United States of America
@@ -29428,6 +29967,7 @@ service:
                     address:
                       _object: /address
                       street_address: 1645 Settlers Lane
+                      street_address2: STE 2918
                       city: Albany
                       state: MN
                       country: United States of America
@@ -29463,14 +30003,41 @@ service:
                         icao_code: KORD
                       - _object: /trucking/port
                         port_code: '3901'
+                  terminal:
+                    _object: /shipment_node/terminal
+                    name: Terminal 3
+                    firms_code: I092
                 transportation_mode: ocean
                 carrier_name: Liberty Carrier
+                air_leg:
+                  _object: /air/shipment_leg
+                  iata_code: 2Q
+                  icao_code: SNC
+                  flight_number: Y8 1234
                 ocean_leg:
                   _object: /ocean/shipment_leg
                   scac_code: XJAE
                   vessel_name: Lenox
                   vessel_imo: IMO9074729
                   voyage_number: 059E
+                  container_legs:
+                    _object: /api/refs/collection
+                    ref_type: /ocean/shipment_container_leg
+                    link: >-
+                      https://api.flexport.com/ocean/shipment_container_legs?f.shipment_container.id=123
+                trucking_leg:
+                  _object: /trucking/shipment_leg
+                  tracking_number: FBA123456789
+                  service_type: ltl
+                  pieces: 32
+                  scac_code: ABCD
+                  container_legs:
+                    _object: /api/refs/collection
+                    ref_type: /ocean/shipment_container_leg
+                    link: >-
+                      https://api.flexport.com/ocean/shipment_container_legs?f.shipment_container.id=123
+                rail_leg:
+                  _object: /rail/shipment_leg
                   container_legs:
                     _object: /api/refs/collection
                     ref_type: /ocean/shipment_container_leg

@@ -11398,24 +11398,59 @@ service:
                               "company_deduction": 78.78,
                               "employee_deduction": 34.54,
                               "employee_payroll_run": "35347df1-95e7-46e2-93cc-66f1191edca5",
+                              "field_mappings": {
+                                "linked_account_defined_targets": {
+                                  "custom_key": "custom_value",
+                                },
+                                "organization_defined_targets": {
+                                  "custom_key": "custom_value",
+                                },
+                              },
                               "id": "5fd439fc-1b64-4755-b275-64918936c365",
                               "modified_at": "2021-10-16T00:00:00Z",
                               "name": "Social Security",
+                              "remote_data": [
+                                {
+                                  "data": {
+                                    "0": "Varies by platform",
+                                  },
+                                  "path": "/payroll-deduction",
+                                },
+                              ],
+                              "remote_id": "93478612",
                             },
                           ],
                           "earnings": [
                             {
                               "amount": 1002.34,
                               "employee_payroll_run": "35347df1-95e7-46e2-93cc-66f1191edca5",
+                              "field_mappings": {
+                                "linked_account_defined_targets": {
+                                  "custom_key": "custom_value",
+                                },
+                                "organization_defined_targets": {
+                                  "custom_key": "custom_value",
+                                },
+                              },
                               "id": "babbced6-3a81-4775-8da2-490dc6385259",
                               "modified_at": "2021-10-16T00:00:00Z",
+                              "remote_id": "52802",
                               "type": "SALARY",
                             },
                             {
                               "amount": 8342.34,
                               "employee_payroll_run": "35347df1-95e7-46e2-93cc-66f1191edca5",
+                              "field_mappings": {
+                                "linked_account_defined_targets": {
+                                  "custom_key": "custom_value",
+                                },
+                                "organization_defined_targets": {
+                                  "custom_key": "custom_value",
+                                },
+                              },
                               "id": "babbced6-3a81-4775-8da2-490dc6385259",
                               "modified_at": "2021-10-16T00:00:00Z",
+                              "remote_id": "52802",
                               "type": "OVERTIME",
                             },
                           ],
@@ -11450,9 +11485,18 @@ service:
                               "amount": 100.25,
                               "employee_payroll_run": "35347df1-95e7-46e2-93cc-66f1191edca5",
                               "employer_tax": true,
+                              "field_mappings": {
+                                "linked_account_defined_targets": {
+                                  "custom_key": "custom_value",
+                                },
+                                "organization_defined_targets": {
+                                  "custom_key": "custom_value",
+                                },
+                              },
                               "id": "e3a825fd-c38d-4095-a717-df98c4cb9ebc",
                               "modified_at": "2021-10-16T00:00:00Z",
                               "name": "California State Income Tax",
+                              "remote_id": "26806834",
                             },
                           ],
                         },
@@ -11903,29 +11947,57 @@ service:
                   check_date: '2020-11-10T00:00:00Z'
                   earnings:
                     - id: babbced6-3a81-4775-8da2-490dc6385259
+                      remote_id: '52802'
                       employee_payroll_run: 35347df1-95e7-46e2-93cc-66f1191edca5
                       amount: 1002.34
                       type: SALARY
                       modified_at: '2021-10-16T00:00:00Z'
+                      field_mappings:
+                        organization_defined_targets:
+                          custom_key: custom_value
+                        linked_account_defined_targets:
+                          custom_key: custom_value
                     - id: babbced6-3a81-4775-8da2-490dc6385259
+                      remote_id: '52802'
                       employee_payroll_run: 35347df1-95e7-46e2-93cc-66f1191edca5
                       amount: 8342.34
                       type: OVERTIME
                       modified_at: '2021-10-16T00:00:00Z'
+                      field_mappings:
+                        organization_defined_targets:
+                          custom_key: custom_value
+                        linked_account_defined_targets:
+                          custom_key: custom_value
                   deductions:
                     - id: 5fd439fc-1b64-4755-b275-64918936c365
+                      remote_id: '93478612'
                       employee_payroll_run: 35347df1-95e7-46e2-93cc-66f1191edca5
                       name: Social Security
                       employee_deduction: 34.54
                       company_deduction: 78.78
                       modified_at: '2021-10-16T00:00:00Z'
+                      field_mappings:
+                        organization_defined_targets:
+                          custom_key: custom_value
+                        linked_account_defined_targets:
+                          custom_key: custom_value
+                      remote_data:
+                        - path: /payroll-deduction
+                          data:
+                            '0': Varies by platform
                   taxes:
                     - id: e3a825fd-c38d-4095-a717-df98c4cb9ebc
+                      remote_id: '26806834'
                       employee_payroll_run: 35347df1-95e7-46e2-93cc-66f1191edca5
                       name: California State Income Tax
                       amount: 100.25
                       employer_tax: true
                       modified_at: '2021-10-16T00:00:00Z'
+                      field_mappings:
+                        organization_defined_targets:
+                          custom_key: custom_value
+                        linked_account_defined_targets:
+                          custom_key: custom_value
                   remote_was_deleted: true
                   modified_at: '2021-10-16T00:00:00Z'
                   field_mappings:
@@ -19379,7 +19451,16 @@ service:
                       "method": "GET",
                       "path": "/scooters",
                       "response": {
-                        "key": "value",
+                        "scooters": [
+                          {
+                            "company": "Lime",
+                            "model": "Gen 2.5",
+                          },
+                          {
+                            "company": "Bird",
+                            "model": "Bird Zero",
+                          },
+                        ],
                       },
                       "response_headers": {
                         "X-Page-Token": "value",
@@ -19528,7 +19609,11 @@ service:
               path: /scooters
               status: 200
               response:
-                key: value
+                scooters:
+                  - company: Lime
+                    model: Gen 2.5
+                  - company: Bird
+                    model: Bird Zero
               response_headers:
                 X-Page-Token: value
               response_type: JSON
