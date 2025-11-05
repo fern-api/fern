@@ -5381,6 +5381,9 @@ importers:
       express:
         specifier: ^4.21.2
         version: 4.21.2
+      gray-matter:
+        specifier: ^4.0.3
+        version: 4.0.3
       tmp-promise:
         specifier: ^3.0.3
         version: 3.0.3
