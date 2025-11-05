@@ -11,6 +11,21 @@ import { generateContainerExample, generateEmptyContainerExample } from "./gener
 import { generatePrimitiveExample } from "./generatePrimitiveExample";
 import { generateTypeDeclarationExample } from "./generateTypeDeclarationExample";
 
+export interface ExampleGenerationCache {
+    // biome-ignore lint/suspicious/noExplicitAny: Cache stores results of various example types
+    typeDeclarationCache: Map<string, ExampleGenerationResult<any>>;
+}
+
+export function createExampleGenerationCache(): ExampleGenerationCache {
+    return {
+        typeDeclarationCache: new Map()
+    };
+}
+
+function getCacheKey(typeId: TypeId, currentDepth: number, maxDepth: number, skipOptionalProperties: boolean): string {
+    return `${typeId}:${currentDepth}:${maxDepth}:${skipOptionalProperties}`;
+}
+
 export declare namespace generateTypeReferenceExample {
     interface Args {
         /* The field name that the example is being generated for*/
@@ -22,6 +37,8 @@ export declare namespace generateTypeReferenceExample {
         currentDepth: number;
 
         skipOptionalProperties: boolean;
+        
+        cache?: ExampleGenerationCache;
     }
 }
 
@@ -31,7 +48,8 @@ export function generateTypeReferenceExample({
     typeDeclarations,
     maxDepth,
     currentDepth,
-    skipOptionalProperties
+    skipOptionalProperties,
+    cache
 }: generateTypeReferenceExample.Args): ExampleGenerationResult<ExampleTypeReference> {
     if (currentDepth > maxDepth) {
         return { type: "failure", message: `Exceeded max depth of ${maxDepth}` };
@@ -42,14 +60,43 @@ export function generateTypeReferenceExample({
             if (typeDeclaration == null) {
                 return { type: "failure", message: `Failed to find type declaration with id ${typeReference.typeId}` };
             }
+            
+            if (cache != null) {
+                const cacheKey = getCacheKey(typeReference.typeId, currentDepth, maxDepth, skipOptionalProperties);
+                const cached = cache.typeDeclarationCache.get(cacheKey);
+                if (cached != null) {
+                    if (cached.type === "failure") {
+                        return cached;
+                    }
+                    return {
+                        type: "success",
+                        example: {
+                            jsonExample: cached.jsonExample,
+                            shape: ExampleTypeReferenceShape.named({
+                                shape: cached.example,
+                                typeName: typeDeclaration.name
+                            })
+                        },
+                        jsonExample: cached.jsonExample
+                    };
+                }
+            }
+            
             const generatedExample = generateTypeDeclarationExample({
                 fieldName,
                 typeDeclaration,
                 typeDeclarations,
                 maxDepth,
                 currentDepth,
-                skipOptionalProperties
+                skipOptionalProperties,
+                cache
             });
+            
+            if (cache != null && generatedExample != null) {
+                const cacheKey = getCacheKey(typeReference.typeId, currentDepth, maxDepth, skipOptionalProperties);
+                cache.typeDeclarationCache.set(cacheKey, generatedExample);
+            }
+            
             if (generatedExample == null) {
                 return { type: "failure", message: "Failed to generate example for type declaration" };
             }
@@ -76,7 +123,8 @@ export function generateTypeReferenceExample({
                 typeDeclarations,
                 maxDepth,
                 currentDepth,
-                skipOptionalProperties
+                skipOptionalProperties,
+                cache
             });
             if (generatedExample.type === "failure") {
                 const { example, jsonExample } = generateEmptyContainerExample({

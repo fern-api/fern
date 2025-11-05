@@ -26,7 +26,7 @@ import {
     generateQueryParameterExamples
 } from "./generateParameterExamples";
 import { generateTypeDeclarationExample } from "./generateTypeDeclarationExample";
-import { generateTypeReferenceExample } from "./generateTypeReferenceExample";
+import { createExampleGenerationCache, generateTypeReferenceExample } from "./generateTypeReferenceExample";
 
 export declare namespace generateEndpointExample {
     interface Args {
@@ -68,6 +68,8 @@ export function generateEndpointExample({
     skipOptionalRequestProperties,
     generationResponse
 }: generateEndpointExample.Args): ExampleGenerationResult<ExampleEndpointCall> {
+    const cache = createExampleGenerationCache();
+    
     const result: Omit<ExampleEndpointCall, "id" | "url"> = {
         name: undefined,
         endpointHeaders: [],
@@ -84,7 +86,8 @@ export function generateEndpointExample({
     const endpointPathResult = generatePathParameterExamples(endpoint.pathParameters, {
         typeDeclarations,
         skipOptionalRequestProperties,
-        maxDepth: 1
+        maxDepth: 1,
+        cache
     });
     if (endpointPathResult.type === "failure") {
         return endpointPathResult;
@@ -94,7 +97,8 @@ export function generateEndpointExample({
     const servicePathResult = generatePathParameterExamples(service.pathParameters, {
         typeDeclarations,
         skipOptionalRequestProperties,
-        maxDepth: 1
+        maxDepth: 1,
+        cache
     });
     if (servicePathResult.type === "failure") {
         return servicePathResult;
@@ -104,7 +108,8 @@ export function generateEndpointExample({
     const rootPathResult = generatePathParameterExamples(ir.pathParameters, {
         typeDeclarations,
         skipOptionalRequestProperties,
-        maxDepth: 1
+        maxDepth: 1,
+        cache
     });
     if (rootPathResult.type === "failure") {
         return rootPathResult;
@@ -114,7 +119,8 @@ export function generateEndpointExample({
     const queryParamsResult = generateQueryParameterExamples(endpoint.queryParameters, {
         typeDeclarations,
         skipOptionalRequestProperties,
-        maxDepth: 10
+        maxDepth: 10,
+        cache
     });
     if (queryParamsResult.type === "failure") {
         return queryParamsResult;
@@ -124,7 +130,8 @@ export function generateEndpointExample({
     const endpointHeadersResult = generateHeaderExamples(endpoint.headers, {
         typeDeclarations,
         skipOptionalRequestProperties,
-        maxDepth: 1
+        maxDepth: 1,
+        cache
     });
     if (endpointHeadersResult.type === "failure") {
         return endpointHeadersResult;
@@ -134,7 +141,8 @@ export function generateEndpointExample({
     const serviceHeadersResult = generateHeaderExamples(service.headers, {
         typeDeclarations,
         skipOptionalRequestProperties,
-        maxDepth: 1
+        maxDepth: 1,
+        cache
     });
     if (serviceHeadersResult.type === "failure") {
         return serviceHeadersResult;
@@ -164,7 +172,8 @@ export function generateEndpointExample({
                             typeDeclarations,
                             currentDepth: 1,
                             maxDepth: 10,
-                            skipOptionalProperties: skipOptionalRequestProperties
+                            skipOptionalProperties: skipOptionalRequestProperties,
+                            cache
                         });
                         if (extendedExample == null) {
                             continue;
@@ -185,7 +194,8 @@ export function generateEndpointExample({
                         typeDeclarations,
                         currentDepth: 1,
                         maxDepth: 10,
-                        skipOptionalProperties: skipOptionalRequestProperties
+                        skipOptionalProperties: skipOptionalRequestProperties,
+                        cache
                     });
                     if (
                         propertyExample.type === "failure" &&
@@ -219,7 +229,8 @@ export function generateEndpointExample({
                     maxDepth: 10,
                     typeDeclarations,
                     typeReference: endpoint.requestBody.requestBodyType,
-                    skipOptionalProperties: skipOptionalRequestProperties
+                    skipOptionalProperties: skipOptionalRequestProperties,
+                    cache
                 });
                 if (generatedExample.type === "failure") {
                     return generatedExample;
@@ -243,7 +254,8 @@ export function generateEndpointExample({
                     maxDepth: 10,
                     typeDeclarations,
                     typeReference: endpoint.response.body.value.responseBodyType,
-                    skipOptionalProperties: false
+                    skipOptionalProperties: false,
+                    cache
                 });
                 if (generatedExample.type === "failure") {
                     return generatedExample;
@@ -265,7 +277,8 @@ export function generateEndpointExample({
                             maxDepth: 10,
                             typeDeclarations,
                             typeReference: endpoint.response.body.nonStreamResponse.value.responseBodyType,
-                            skipOptionalProperties: false
+                            skipOptionalProperties: false,
+                            cache
                         });
                         break;
                     case "text":
@@ -274,7 +287,8 @@ export function generateEndpointExample({
                             maxDepth: 10,
                             typeDeclarations,
                             typeReference: TEXT_TYPE_REFERENCE,
-                            skipOptionalProperties: false
+                            skipOptionalProperties: false,
+                            cache
                         });
                         break;
                     default:
@@ -296,7 +310,8 @@ export function generateEndpointExample({
                             maxDepth: 10,
                             typeDeclarations,
                             typeReference: endpoint.response.body.value.payload,
-                            skipOptionalProperties: false
+                            skipOptionalProperties: false,
+                            cache
                         });
                         if (generatedExample.type === "failure") {
                             return generatedExample;
@@ -313,7 +328,8 @@ export function generateEndpointExample({
                             maxDepth: 10,
                             typeDeclarations,
                             typeReference: endpoint.response.body.value.payload,
-                            skipOptionalProperties: false
+                            skipOptionalProperties: false,
+                            cache
                         });
                         if (generatedExample.type === "failure") {
                             return generatedExample;
@@ -330,7 +346,8 @@ export function generateEndpointExample({
                             maxDepth: 10,
                             typeDeclarations,
                             typeReference: TEXT_TYPE_REFERENCE,
-                            skipOptionalProperties: false
+                            skipOptionalProperties: false,
+                            cache
                         });
                         if (generatedExample.type === "failure") {
                             return generatedExample;
@@ -353,7 +370,8 @@ export function generateEndpointExample({
                     maxDepth: 10,
                     typeDeclarations,
                     typeReference: TEXT_TYPE_REFERENCE,
-                    skipOptionalProperties: false
+                    skipOptionalProperties: false,
+                    cache
                 });
                 if (generatedExample.type === "failure") {
                     return generatedExample;
@@ -379,7 +397,8 @@ export function generateEndpointExample({
                 maxDepth: 10,
                 typeDeclarations,
                 typeReference: generationResponse.declaration.type,
-                skipOptionalProperties: skipOptionalRequestProperties
+                skipOptionalProperties: skipOptionalRequestProperties,
+                cache
             });
             if (generatedExample.type === "failure") {
                 return generatedExample;

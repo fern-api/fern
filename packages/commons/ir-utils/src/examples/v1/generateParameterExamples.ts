@@ -12,12 +12,13 @@ import {
 
 import { isTypeReferenceOptional } from "../../utils/isTypeReferenceOptional";
 import { ExampleGenerationResult } from "./ExampleGenerationResult";
-import { generateTypeReferenceExample } from "./generateTypeReferenceExample";
+import { ExampleGenerationCache, generateTypeReferenceExample } from "./generateTypeReferenceExample";
 
 export interface GenerateParamsOptions {
     typeDeclarations: Record<TypeId, TypeDeclaration>;
     skipOptionalRequestProperties: boolean;
-    maxDepth?: number; // optional: let each function pass a default
+    maxDepth?: number;
+    cache?: ExampleGenerationCache;
 }
 
 /**
@@ -36,7 +37,8 @@ export function generatePathParameterExamples(
             maxDepth: options.maxDepth ?? 1,
             typeDeclarations: options.typeDeclarations,
             typeReference: p.valueType,
-            skipOptionalProperties: options.skipOptionalRequestProperties
+            skipOptionalProperties: options.skipOptionalRequestProperties,
+            cache: options.cache
         });
         if (generatedExample.type === "failure") {
             return generatedExample; // short-circuit failure
@@ -78,7 +80,8 @@ export function generateHeaderExamples(
             maxDepth: options.maxDepth ?? 1,
             typeDeclarations: options.typeDeclarations,
             typeReference: h.valueType,
-            skipOptionalProperties: options.skipOptionalRequestProperties
+            skipOptionalProperties: options.skipOptionalRequestProperties,
+            cache: options.cache
         });
         if (generatedExample.type === "failure") {
             return generatedExample;
@@ -119,7 +122,8 @@ export function generateQueryParameterExamples(
             maxDepth: options.maxDepth ?? 10,
             typeDeclarations: options.typeDeclarations,
             typeReference: q.valueType,
-            skipOptionalProperties: options.skipOptionalRequestProperties
+            skipOptionalProperties: options.skipOptionalRequestProperties,
+            cache: options.cache
         });
 
         if (generatedExample.type === "failure") {
