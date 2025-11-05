@@ -80,7 +80,7 @@ export class WireTestFunctionGenerator {
                 const statements: swift.Statement[] = [
                     swift.Statement.constantDeclaration({
                         unsafeName: "stub",
-                        value: swift.Expression.structInitialization({ unsafeName: "WireStub" })
+                        value: swift.Expression.structInitialization({ unsafeName: "HTTPStub" })
                     }),
                     swift.Statement.expressionStatement(
                         swift.Expression.methodCall({

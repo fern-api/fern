@@ -4,7 +4,7 @@ import BasicAuth
 
 @Suite("BasicAuthClient_ Wire Tests") struct BasicAuthClient_WireTests {
     @Test func getWithBasicAuth1() async throws -> Void {
-        let stub = WireStub()
+        let stub = HTTPStub()
         stub.setResponse(
             body: Data(
                 """
@@ -24,7 +24,7 @@ import BasicAuth
     }
 
     @Test func getWithBasicAuth2() async throws -> Void {
-        let stub = WireStub()
+        let stub = HTTPStub()
         stub.setResponse(
             body: Data(
                 """
@@ -44,7 +44,7 @@ import BasicAuth
     }
 
     @Test func postWithBasicAuth1() async throws -> Void {
-        let stub = WireStub()
+        let stub = HTTPStub()
         stub.setResponse(
             body: Data(
                 """
@@ -66,7 +66,7 @@ import BasicAuth
     }
 
     @Test func postWithBasicAuth2() async throws -> Void {
-        let stub = WireStub()
+        let stub = HTTPStub()
         stub.setResponse(
             body: Data(
                 """

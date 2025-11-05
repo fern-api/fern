@@ -1,19 +1,18 @@
 import Foundation
 
-final class WireStub {
-    private static func buildURLSession(wireStubId: String) -> URLSession {
-        let config = buildURLSessionConfiguration(wireStubId: wireStubId)
+final class HTTPStub {
+    private static func buildURLSession(stubId: String) -> URLSession {
+        let config = buildURLSessionConfiguration(stubId: stubId)
         let operationQueue = buildOperationQueue()
         return URLSession(configuration: config, delegate: nil, delegateQueue: operationQueue)
     }
 
-    private static func buildURLSessionConfiguration(wireStubId: String) -> URLSessionConfiguration
-    {
+    private static func buildURLSessionConfiguration(stubId: String) -> URLSessionConfiguration {
         let config = URLSessionConfiguration.ephemeral
         config.protocolClasses = [StubURLProtocol.self]
         config.requestCachePolicy = .reloadIgnoringLocalCacheData
         config.urlCache = nil
-        config.httpAdditionalHeaders = ["WireStub-ID": wireStubId]
+        config.httpAdditionalHeaders = ["WireStub-ID": stubId]
         return config
     }
 
@@ -29,7 +28,7 @@ final class WireStub {
 
     init() {
         self.identifier = UUID()
-        self.session = Self.buildURLSession(wireStubId: identifier.uuidString)
+        self.session = Self.buildURLSession(stubId: identifier.uuidString)
         #if !canImport(Darwin)
             // On Linux, URLProtocol doesn't get the additional headers at canInit time.
             // Track the active stub id so the protocol can resolve responses without headers.
@@ -53,7 +52,7 @@ final class WireStub {
             body: body
         )
     }
-    
+
     func setResponseSequence(
         _ responses: [(statusCode: Int, headers: [String: String], body: Data)]
     ) {
@@ -63,7 +62,7 @@ final class WireStub {
     func takeLastRequest() -> URLRequest? {
         StubURLProtocol.takeLastRequest(for: identifier)
     }
-    
+
     func getRequestCount() -> Int {
         StubURLProtocol.getRequestCount(for: identifier)
     }
@@ -83,12 +82,12 @@ private final class StubURLProtocol: URLProtocol {
         let body: Data
         var lastRequest: URLRequest?
     }
-    
+
     struct ResponseSequence {
         var responses: [Response]
         var currentIndex: Int = 0
         var lastRequest: URLRequest?
-        
+
         mutating func nextResponse() -> Response? {
             guard currentIndex < responses.count else { return nil }
             let response = responses[currentIndex]
@@ -117,13 +116,16 @@ private final class StubURLProtocol: URLProtocol {
         responseSequences[id] = nil
         lock.unlock()
     }
-    
+
     static func configureSequence(
         id: UUID,
         responses: [(statusCode: Int, headers: [String: String], body: Data)]
     ) {
         lock.lock()
-        let responseList = responses.map { Response(statusCode: $0.statusCode, headers: $0.headers, body: $0.body, lastRequest: nil) }
+        let responseList = responses.map {
+            Response(
+                statusCode: $0.statusCode, headers: $0.headers, body: $0.body, lastRequest: nil)
+        }
         responseSequences[id] = ResponseSequence(responses: responseList)
         StubURLProtocol.responses[id] = nil
         lock.unlock()
@@ -132,13 +134,13 @@ private final class StubURLProtocol: URLProtocol {
     static func takeLastRequest(for id: UUID) -> URLRequest? {
         lock.lock()
         defer { lock.unlock() }
-        
+
         if var sequence = responseSequences[id], let request = sequence.lastRequest {
             sequence.lastRequest = nil
             responseSequences[id] = sequence
             return request
         }
-        
+
         guard var response = responses[id], let request = response.lastRequest else {
             return nil
         }
@@ -146,15 +148,15 @@ private final class StubURLProtocol: URLProtocol {
         responses[id] = response
         return request
     }
-    
+
     static func getRequestCount(for id: UUID) -> Int {
         lock.lock()
         defer { lock.unlock() }
-        
+
         if let sequence = responseSequences[id] {
             return sequence.currentIndex
         }
-        
+
         return responses[id]?.lastRequest != nil ? 1 : 0
     }
 
@@ -216,7 +218,7 @@ private final class StubURLProtocol: URLProtocol {
         #endif
 
         StubURLProtocol.lock.lock()
-        
+
         if var sequence = StubURLProtocol.responseSequences[id] {
             guard let response = sequence.nextResponse() else {
                 StubURLProtocol.lock.unlock()
@@ -226,25 +228,25 @@ private final class StubURLProtocol: URLProtocol {
             sequence.lastRequest = request
             StubURLProtocol.responseSequences[id] = sequence
             StubURLProtocol.lock.unlock()
-            
+
             guard let url = request.url else {
                 client.urlProtocol(self, didFailWithError: URLError(.badURL))
                 return
             }
-            
+
             let httpResponse = HTTPURLResponse(
                 url: url,
                 statusCode: response.statusCode,
                 httpVersion: "HTTP/1.1",
                 headerFields: response.headers
             )!
-            
+
             client.urlProtocol(self, didReceive: httpResponse, cacheStoragePolicy: .notAllowed)
             client.urlProtocol(self, didLoad: response.body)
             client.urlProtocolDidFinishLoading(self)
             return
         }
-        
+
         guard var response = StubURLProtocol.responses[id] else {
             StubURLProtocol.lock.unlock()
             client.urlProtocol(self, didFailWithError: URLError(.unknown))
