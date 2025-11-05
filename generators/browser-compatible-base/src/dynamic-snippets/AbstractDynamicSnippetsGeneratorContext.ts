@@ -317,7 +317,7 @@ export abstract class AbstractDynamicSnippetsGeneratorContext<EndpointT extends 
         if (parsedEndpoint == null) {
             throw new Error(`Failed to parse endpoint reference "${rawEndpoint}"`);
         }
-        return this.resolveEndpointLocationOrThrow(parsedEndpoint);
+        return this.resolveEndpointLocation(parsedEndpoint);
     }
 
     public resolveEndpointLocation(location: EndpointLocationLike): FernIr.dynamic.Endpoint[] {
@@ -336,7 +336,7 @@ export abstract class AbstractDynamicSnippetsGeneratorContext<EndpointT extends 
         if (endpoints.length === 0) {
             throw new Error(`Failed to find endpoint identified by "${location.method} ${location.path}"`);
         }
-        return endpoints as EndpointT[];
+        return endpoints as unknown as EndpointT[];
     }
 
     public needsRequestParameter({

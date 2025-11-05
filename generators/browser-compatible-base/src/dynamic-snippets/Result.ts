@@ -1,5 +1,5 @@
 import { ErrorReporter } from "./ErrorReporter";
-import { DynamicSnippetsGeneratorContextLike, EndpointLocationLike, EndpointSnippetResponseLike } from "./types";
+import { EndpointLocationLike, EndpointSnippetResponseLike } from "./types";
 
 export class Result {
     public reporter: ErrorReporter | undefined;
@@ -12,11 +12,9 @@ export class Result {
         this.err = undefined;
     }
 
-    public update({ context, snippet }: { context: DynamicSnippetsGeneratorContextLike; snippet: string }): void {
+    public update({ context, snippet }: { context: { errors: ErrorReporter }; snippet: string }): void {
         if (this.shouldUpdate({ snippet, reporter: context.errors })) {
-            if ("clone" in context.errors && typeof context.errors.clone === "function") {
-                this.reporter = context.errors.clone() as ErrorReporter;
-            }
+            this.reporter = context.errors.clone();
             this.snippet = snippet;
         }
     }

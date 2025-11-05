@@ -1,3 +1,4 @@
+import { ErrorReporter } from "./ErrorReporter";
 import { Options } from "./Options";
 import { Result } from "./Result";
 import {
@@ -19,6 +20,14 @@ export abstract class AbstractDynamicSnippetsGenerator<
 
     protected abstract createSnippetGenerator(context: Context): EndpointSnippetGenerator;
 
+    /**
+     * Adapter hook to convert EndpointSnippetResponseLike to the generic ResponseT.
+     * Subclasses can override this if they need to adapt to a richer response shape.
+     */
+    protected toResponse(value: EndpointSnippetResponseLike): ResponseT {
+        return value as unknown as ResponseT;
+    }
+
     public async generate(request: RequestT, options: Options = {}): Promise<ResponseT> {
         const endpoints = this.context.resolveEndpointLocationOrThrow(request.endpoint);
         if (endpoints.length === 0) {
@@ -31,19 +40,19 @@ export abstract class AbstractDynamicSnippetsGenerator<
             try {
                 const snippet = await snippetGenerator.generateSnippet({ endpoint, request, options });
                 if (context.errors.empty()) {
-                    return {
+                    return this.toResponse({
                         snippet,
                         errors: undefined
-                    };
+                    });
                 }
-                result.update({ context, snippet });
+                result.update({ context: context as { errors: ErrorReporter }, snippet });
             } catch (error) {
                 if (result.err == null) {
                     result.err = error as Error;
                 }
             }
         }
-        return result.getResponseOrThrow({ endpoint: request.endpoint });
+        return this.toResponse(result.getResponseOrThrow({ endpoint: request.endpoint }));
     }
 
     public generateSync(request: RequestT, options: Options = {}): ResponseT {
@@ -58,18 +67,18 @@ export abstract class AbstractDynamicSnippetsGenerator<
             try {
                 const snippet = snippetGenerator.generateSnippetSync({ endpoint, request, options });
                 if (context.errors.empty()) {
-                    return {
+                    return this.toResponse({
                         snippet,
                         errors: undefined
-                    };
+                    });
                 }
-                result.update({ context, snippet });
+                result.update({ context: context as { errors: ErrorReporter }, snippet });
             } catch (error) {
                 if (result.err == null) {
                     result.err = error as Error;
                 }
             }
         }
-        return result.getResponseOrThrow({ endpoint: request.endpoint });
+        return this.toResponse(result.getResponseOrThrow({ endpoint: request.endpoint }));
     }
 }
