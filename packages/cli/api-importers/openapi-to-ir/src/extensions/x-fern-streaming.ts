@@ -8,8 +8,8 @@ const StreamingExtensionObjectSchema = z.object({
     "stream-condition": z.string().optional(),
     format: z.enum(["sse", "json"]).optional(),
     "stream-description": z.string().optional(),
-    "response-stream": z.any(),
-    response: z.any()
+    "response-stream": z.any().optional(),
+    response: z.any().optional()
 });
 
 const StreamingExtensionSchema = z.union([z.boolean(), StreamingExtensionObjectSchema]);
@@ -68,20 +68,12 @@ export class FernStreamingExtension extends AbstractExtension<FernStreamingExten
             return { type: "stream", format: result.data.format };
         }
 
-        if (result.data["stream-condition"] == null) {
-            this.context.errorCollector.collect({
-                message: "Missing stream-condition property without specified format.",
-                path: this.breadcrumbs
-            });
-            return undefined;
-        }
-
         return {
             type: "streamCondition",
             format: result.data.format ?? "json",
             streamDescription: result.data["stream-description"],
             streamConditionProperty: AbstractConverterContext.maybeTrimPrefix(
-                result.data["stream-condition"],
+                result.data["stream-condition"] ?? "",
                 REQUEST_PREFIX
             ),
             responseStream: result.data["response-stream"],
