@@ -385,6 +385,35 @@ public abstract class AbstractRootClientGenerator extends AbstractFileGenerator 
                 })
                 .forEach(clientBuilder::addMethod);
 
+        generatorContext.getIr().getPathParameters().forEach(pathParameter -> {
+            String pathParamName = pathParameter.getName().getCamelCase().getSafeName();
+            clientBuilder.addField(FieldSpec.builder(
+                            generatorContext
+                                    .getPoetTypeNameMapper()
+                                    .convertToTypeName(true, pathParameter.getValueType()),
+                            pathParamName)
+                    .addModifiers(Modifier.PRIVATE)
+                    .build());
+        });
+
+        generatorContext.getIr().getPathParameters().stream()
+                .map(pathParameter -> {
+                    String pathParamName =
+                            pathParameter.getName().getCamelCase().getSafeName();
+                    return MethodSpec.methodBuilder(pathParamName)
+                            .addModifiers(Modifier.PUBLIC)
+                            .returns(isExtensible ? TypeVariableName.get("T") : builderName)
+                            .addParameter(
+                                    generatorContext
+                                            .getPoetTypeNameMapper()
+                                            .convertToTypeName(true, pathParameter.getValueType()),
+                                    pathParamName)
+                            .addStatement("this.$L = $L", pathParamName, pathParamName)
+                            .addStatement(isExtensible ? "return self()" : "return this")
+                            .build();
+                })
+                .forEach(clientBuilder::addMethod);
+
         MethodSpec.Builder buildClientOptionsMethodBuilder = MethodSpec.methodBuilder("buildClientOptions")
                 .addModifiers(Modifier.PROTECTED)
                 .returns(generatedClientOptions.getClassName())
@@ -405,6 +434,11 @@ public abstract class AbstractRootClientGenerator extends AbstractFileGenerator 
 
         if (hasVariables) {
             buildClientOptionsMethodBuilder.addStatement("setVariables(builder)");
+        }
+
+        boolean hasApiPathParams = !generatorContext.getIr().getPathParameters().isEmpty();
+        if (hasApiPathParams) {
+            buildClientOptionsMethodBuilder.addStatement("setApiPathParameters(builder)");
         }
 
         buildClientOptionsMethodBuilder
@@ -462,6 +496,33 @@ public abstract class AbstractRootClientGenerator extends AbstractFileGenerator 
             });
 
             clientBuilder.addMethod(setVariablesMethodBuilder.build());
+        }
+
+        if (hasApiPathParams) {
+            MethodSpec.Builder setApiPathParametersMethodBuilder = MethodSpec.methodBuilder("setApiPathParameters")
+                    .addModifiers(Modifier.PROTECTED)
+                    .addParameter(generatedClientOptions.builderClassName(), "builder")
+                    .addJavadoc(
+                            "Override this method to configure API-level path parameters defined in the specification.\n"
+                                    + "Available path parameters: "
+                                    + generatorContext.getIr().getPathParameters().stream()
+                                            .map(p -> p.getName().getCamelCase().getSafeName())
+                                            .collect(java.util.stream.Collectors.joining(", "))
+                                    + "\n\n"
+                                    + "@param builder The ClientOptions.Builder to configure");
+
+            generatorContext.getIr().getPathParameters().forEach(pathParameter -> {
+                String pathParamName = pathParameter.getName().getCamelCase().getSafeName();
+                String originalName = pathParameter.getName().getOriginalName();
+                MethodSpec pathParamMethod =
+                        generatedClientOptions.apiPathParamGetters().get(originalName);
+                setApiPathParametersMethodBuilder
+                        .beginControlFlow("if (this.$L != null)", pathParamName)
+                        .addStatement("builder.$N(this.$L)", pathParamMethod, pathParamName)
+                        .endControlFlow();
+            });
+
+            clientBuilder.addMethod(setApiPathParametersMethodBuilder.build());
         }
 
         MethodSpec setTimeoutsMethod = MethodSpec.methodBuilder("setTimeouts")
