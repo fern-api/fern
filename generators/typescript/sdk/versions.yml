@@ -1,5 +1,19 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
 
+- version: 3.26.1
+  changelogEntry:
+    - summary: |
+        Refactor variable naming in wire test generation to use helper function for consistency with path parameter naming (using `safeName` instead of `unsafeName`).
+      type: fix
+    - summary: |
+        Add variables to snippet template generation so client constructor examples include variable placeholders (e.g., `YOUR_ROOT_VARIABLE`).
+      type: fix
+    - summary: |
+        Add warning log when a variable referenced by a path parameter is not found in the IR during wire test generation.
+      type: fix
+  createdAt: "2025-11-05"
+  irVersion: 61
+
 - version: 3.26.0
   changelogEntry:
     - summary: |

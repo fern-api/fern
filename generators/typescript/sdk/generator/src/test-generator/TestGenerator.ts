@@ -873,6 +873,10 @@ describe("${serviceName}", () => {
                         retainOriginalCasing: this.retainOriginalCasing
                     });
                     options[variableName] = code`${literalOf(examplePathParameter.value.jsonExample)}`;
+                } else {
+                    context.logger.warn(
+                        `Variable with id "${pathParamDef.variable}" not found for path parameter "${examplePathParameter.name.originalName}" in endpoint ${endpoint.id}`
+                    );
                 }
             }
         });
