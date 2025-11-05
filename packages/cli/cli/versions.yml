@@ -2,11 +2,11 @@
 
 - changelogEntry:
     - summary: |
-        Bump FDR version.
+        Enables parsing of the language setting in docs.
       type: chore
   irVersion: 61
   createdAt: "2025-11-03"
-  version: 0.107.4
+  version: 0.107.6
 
 - changelogEntry:
     - summary: |
