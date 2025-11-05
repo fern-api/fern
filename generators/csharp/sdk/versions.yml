@@ -5,6 +5,7 @@
       summary: |
         Improved generation of snippets and example code for file-upload scenarios.
   createdAt: "2025-11-05"
+  irVersion: 61
   
 - version: 2.7.0
   changelogEntry:
