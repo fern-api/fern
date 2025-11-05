@@ -73,13 +73,10 @@ export class WrappedEndpointRequest extends EndpointRequest {
         if (this.endpoint.requestBody == null) {
             return undefined;
         }
-        
+
         if (this.endpoint.requestBody.type === "inlinedRequestBody") {
-            const wrapperReference = this.context.getRequestWrapperReference(
-                this.serviceId,
-                this.wrapper.wrapperName
-            );
-            
+            const wrapperReference = this.context.getRequestWrapperReference(this.serviceId, this.wrapper.wrapperName);
+
             if (this.hasPathParameters()) {
                 return {
                     code: ruby.codeblock((writer) => {
@@ -99,7 +96,7 @@ export class WrappedEndpointRequest extends EndpointRequest {
                 })
             };
         }
-        
+
         if (this.hasPathParameters()) {
             return {
                 code: ruby.codeblock((writer) => {
