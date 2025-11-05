@@ -48,13 +48,9 @@ export class SdkGeneratorCli extends AbstractPythonGeneratorCli<SdkCustomConfigS
 
     protected async generate(context: SdkGeneratorContext): Promise<void> {
         if (context.customConfig.generateWireTests === true) {
-            try {
-                const wireTestGenerator = new WireTestGenerator(context);
-                await wireTestGenerator.generate();
-                context.logger.info("Generated wire tests successfully");
-            } catch (error) {
-                context.logger.warn(`Failed to generate wire tests: ${error}`);
-            }
+            const wireTestGenerator = new WireTestGenerator(context);
+            await wireTestGenerator.generate();
+            context.logger.info("Generated wire tests successfully");
         }
 
         await context.project.persist();

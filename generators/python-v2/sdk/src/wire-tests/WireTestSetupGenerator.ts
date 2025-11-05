@@ -26,7 +26,10 @@ export class WireTestSetupGenerator {
     }
 
     public static getWiremockConfigContent(ir: IntermediateRepresentation): WireMockStubMapping {
-        // biome-ignore lint/suspicious/noExplicitAny: IR version compatibility requires type assertion
+        // Type assertion needed due to TypeScript type identity mismatch between
+        // @fern-fern/ir-sdk versions (60.3.0 vs ^60.3.1). The runtime IR structure
+        // is compatible, but TypeScript sees them as different types.
+        // biome-ignore lint/suspicious/noExplicitAny: Type identity mismatch between IR SDK versions
         return new WireMock().convertToWireMock(ir as any);
     }
 
