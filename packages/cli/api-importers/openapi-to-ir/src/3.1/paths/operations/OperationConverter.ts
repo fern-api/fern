@@ -9,7 +9,7 @@ import {
 } from "@fern-api/ir-sdk";
 import { constructHttpPath } from "@fern-api/ir-utils";
 import { FernOpenAPIExtension } from "@fern-api/openapi-ir-parser";
-import { AbstractConverter, ServerFromOperationNameExtension, ServersConverter } from "@fern-api/v3-importer-commons";
+import { AbstractConverter, Extensions, ServersConverter } from "@fern-api/v3-importer-commons";
 import { camelCase } from "lodash-es";
 import { OpenAPIV3_1 } from "openapi-types";
 import { FernExamplesExtension } from "../../../extensions/x-fern-examples";
@@ -627,7 +627,7 @@ export class OperationConverter extends AbstractOperationConverter {
     }
 
     private getEndpointBaseUrl(): string | undefined {
-        const serverFromOperationNameExtension = new ServerFromOperationNameExtension({
+        const serverFromOperationNameExtension = new Extensions.ServerFromOperationNameExtension({
             breadcrumbs: this.breadcrumbs,
             operation: this.operation,
             context: this.context
