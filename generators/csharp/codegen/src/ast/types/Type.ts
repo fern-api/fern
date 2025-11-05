@@ -1,6 +1,7 @@
 import { fail } from "node:assert";
 import { PrimitiveTypeV1 } from "@fern-fern/ir-sdk/api";
 import { type Generation } from "../../context/generation-info";
+import { hash, uniqueId } from "../../utils/text";
 import { TypeLiteral } from "../code/TypeLiteral";
 import { AstNode } from "../core/AstNode";
 import { Writer } from "../core/Writer";
@@ -114,6 +115,20 @@ export abstract class Type extends AstNode {
     public writeEmptyCollectionInitializer(writer: Writer): void {
         // default - no-op
     }
+
+    /**
+     * This returns a typeLiteral for the appropriate type with a value,
+     * derived from the getDefaultFor string
+     *
+     * The value should give a deterministic result for the same input string.
+     * This is used to generate a default value for a type when no value is provided.
+     *
+     * @param input - The input string to derive the default value from
+     * @returns A typeLiteral for the appropriate type with a value, derived from the input string
+     * */
+    public getDeterminsticDefault(input: string): TypeLiteral {
+        return this.csharp.TypeLiteral.nop();
+    }
 }
 
 /**
@@ -181,6 +196,10 @@ export namespace Type {
     export class Integer extends PrimitiveType {
         public override type = "int";
         public override defaultValue = this.csharp.TypeLiteral.integer(0);
+        public override getDeterminsticDefault(input: string): TypeLiteral {
+            // make a unique number using the defualtWith string as the seed.
+            return this.csharp.TypeLiteral.integer(hash(input) & 0x7fffffff);
+        }
     }
 
     /**
@@ -189,6 +208,10 @@ export namespace Type {
     export class Long extends PrimitiveType {
         public override type = "long";
         public override defaultValue = this.csharp.TypeLiteral.long(0);
+        public override getDeterminsticDefault(input: string): TypeLiteral {
+            // make a unique number using the defualtWith string as the seed.
+            return this.csharp.TypeLiteral.long(hash(input) & 0x7ffffffffffff);
+        }
     }
 
     /**
@@ -197,6 +220,10 @@ export namespace Type {
     export class Uint extends PrimitiveType {
         public override type = "uint";
         public override defaultValue = this.csharp.TypeLiteral.uint(0);
+        public override getDeterminsticDefault(input: string): TypeLiteral {
+            // make a unique number using the defualtWith string as the seed.
+            return this.csharp.TypeLiteral.uint(hash(input) & 0x7fffffff);
+        }
     }
 
     /**
@@ -205,6 +232,10 @@ export namespace Type {
     export class ULong extends PrimitiveType {
         public override type = "ulong";
         public override defaultValue = this.csharp.TypeLiteral.ulong(0);
+        public override getDeterminsticDefault(input: string): TypeLiteral {
+            // make a unique number using the defualtWith string as the seed.
+            return this.csharp.TypeLiteral.ulong(hash(input) & 0x7ffffffffffff);
+        }
     }
 
     /**
@@ -215,6 +246,10 @@ export namespace Type {
         public override type = "string";
         public override defaultValue = this.csharp.TypeLiteral.string("");
         public override readonly isReferenceType: boolean | undefined = true;
+        public override getDeterminsticDefault(input: string): TypeLiteral {
+            // make a unique string using the defualtWith string as the seed.
+            return this.csharp.TypeLiteral.string(`<${input}>`);
+        }
     }
 
     /**
@@ -223,6 +258,10 @@ export namespace Type {
     export class Boolean extends PrimitiveType {
         public override type = "bool";
         public override defaultValue = this.csharp.TypeLiteral.boolean(false);
+        public override getDeterminsticDefault(input: string): TypeLiteral {
+            // make a unique boolean using the defualtWith string as the seed.
+            return this.csharp.TypeLiteral.boolean(hash(input) % 2 === 0);
+        }
     }
 
     /**
@@ -231,6 +270,10 @@ export namespace Type {
     export class Float extends PrimitiveType {
         public override type = "float";
         public override defaultValue = this.csharp.TypeLiteral.float(0);
+        public override getDeterminsticDefault(input: string): TypeLiteral {
+            // make a unique float using the defualtWith string as the seed.
+            return this.csharp.TypeLiteral.float((hash(input) & 0x7fffffff) / 100);
+        }
     }
 
     /**
@@ -239,6 +282,10 @@ export namespace Type {
     export class Double extends PrimitiveType {
         public override type = "double";
         public override defaultValue = this.csharp.TypeLiteral.double(0);
+        public override getDeterminsticDefault(input: string): TypeLiteral {
+            // make a unique double using the defualtWith string as the seed.
+            return this.csharp.TypeLiteral.double((hash(input) & 0x7ffffffffffff) / 100);
+        }
     }
 
     /**
@@ -246,6 +293,11 @@ export namespace Type {
      */
     export class DateOnly extends PrimitiveType {
         public override type = "DateOnly";
+        public override getDeterminsticDefault(input: string): TypeLiteral {
+            // make a unique date using the defualtWith string as the seed.
+            const date = new Date(hash(input) & 0x7ffffffffffff);
+            return this.csharp.TypeLiteral.date(date.toISOString());
+        }
     }
 
     /**
@@ -253,6 +305,11 @@ export namespace Type {
      */
     export class DateTime extends PrimitiveType {
         public override type = "DateTime";
+        public override getDeterminsticDefault(input: string): TypeLiteral {
+            // make a unique date using the defualtWith string as the seed.
+            const date = new Date(hash(input) & 0x7ffffffffffff);
+            return this.csharp.TypeLiteral.datetime(date.toISOString());
+        }
     }
 
     /**
@@ -265,6 +322,10 @@ export namespace Type {
 
         // C# GUID is a value type, but we use string for UUID
         public override readonly isReferenceType: boolean | undefined = true;
+        public override getDeterminsticDefault(input: string): TypeLiteral {
+            // make a unique UUID using the defualtWith string as the seed.
+            return this.csharp.TypeLiteral.string(uniqueId(input));
+        }
     }
 
     /**
