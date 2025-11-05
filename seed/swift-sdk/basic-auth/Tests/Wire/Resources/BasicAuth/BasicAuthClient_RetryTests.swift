@@ -174,7 +174,8 @@ import BasicAuth
     
     @Test func testRetryAfterHeaderWithHTTPDate() async throws -> Void {
         let stub = WireStub()
-        let futureDate = Date().addingTimeInterval(1.0)
+        let futureEpoch = ceil(Date().timeIntervalSince1970) + 1.0
+        let futureDate = Date(timeIntervalSince1970: futureEpoch)
         let formatter = DateFormatter()
         formatter.locale = Locale(identifier: "en_US_POSIX")
         formatter.timeZone = TimeZone(abbreviation: "GMT")
@@ -204,7 +205,7 @@ import BasicAuth
     
     @Test func testXRateLimitResetHeader() async throws -> Void {
         let stub = WireStub()
-        let futureTimestamp = Int(Date().addingTimeInterval(1.0).timeIntervalSince1970)
+        let futureTimestamp = Int(ceil(Date().timeIntervalSince1970)) + 1
         
         stub.setResponseSequence([
             (statusCode: 429, headers: ["Content-Type": "application/json", "X-RateLimit-Reset": "\(futureTimestamp)"], body: Data()),
