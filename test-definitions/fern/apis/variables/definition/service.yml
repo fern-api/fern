@@ -8,7 +8,5 @@ service:
         endpointParam: $rootVariable
       method: POST
       examples:
-        - root-path-parameters:
-            rootVariable: "test-value"
-          response:
-            body: null
+        - path-parameters:
+            endpointParam: "test-value"

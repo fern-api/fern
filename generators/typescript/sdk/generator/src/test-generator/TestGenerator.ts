@@ -859,6 +859,22 @@ describe("${serviceName}", () => {
             ] = code`${literalOf(pathParameter.value.jsonExample)}`;
         });
 
+        example.endpointPathParameters.forEach((examplePathParameter) => {
+            const pathParamDef = endpoint.pathParameters.find(
+                (p) => p.name.originalName === examplePathParameter.name.originalName
+            );
+            
+            if (pathParamDef?.variable != null) {
+                const variable = this.ir.variables.find((v) => v.id === pathParamDef.variable);
+                if (variable != null) {
+                    const variableName = this.retainOriginalCasing
+                        ? variable.name.originalName
+                        : variable.name.camelCase.unsafeName;
+                    options[variableName] = code`${literalOf(examplePathParameter.value.jsonExample)}`;
+                }
+            }
+        });
+
         const isHeadersResponse = endpoint.response?.body === undefined && endpoint.method === HttpMethod.Head;
 
         let mockAuthSnippet: Code | undefined;
