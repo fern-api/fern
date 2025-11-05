@@ -35,6 +35,7 @@ public class RawSeedPackageYmlClient {
     public SeedPackageYmlHttpResponse<String> echo(EchoRequest request, RequestOptions requestOptions) {
         HttpUrl httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
                 .newBuilder()
+                .addPathSegment(clientOptions.id())
                 .build();
         RequestBody body;
         try {

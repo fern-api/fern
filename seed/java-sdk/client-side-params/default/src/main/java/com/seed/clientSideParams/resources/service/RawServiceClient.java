@@ -62,6 +62,7 @@ public class RawServiceClient {
             ListResourcesRequest request, RequestOptions requestOptions) {
         HttpUrl.Builder httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
                 .newBuilder()
+                .addPathSegments("api")
                 .addPathSegments("resources");
         QueryStringMapper.addQueryParameter(httpUrl, "page", request.getPage(), false);
         QueryStringMapper.addQueryParameter(
@@ -118,6 +119,7 @@ public class RawServiceClient {
             String resourceId, GetResourceRequest request, RequestOptions requestOptions) {
         HttpUrl.Builder httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
                 .newBuilder()
+                .addPathSegments("api")
                 .addPathSegments("resources")
                 .addPathSegment(resourceId);
         QueryStringMapper.addQueryParameter(
@@ -163,6 +165,7 @@ public class RawServiceClient {
             SearchResourcesRequest request, RequestOptions requestOptions) {
         HttpUrl.Builder httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
                 .newBuilder()
+                .addPathSegments("api")
                 .addPathSegments("resources/search");
         QueryStringMapper.addQueryParameter(httpUrl, "limit", request.getLimit().orElse(100), false);
         QueryStringMapper.addQueryParameter(
@@ -221,6 +224,7 @@ public class RawServiceClient {
             ListUsersRequest request, RequestOptions requestOptions) {
         HttpUrl.Builder httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
                 .newBuilder()
+                .addPathSegments("api")
                 .addPathSegments("users");
         if (request.getPage().isPresent()) {
             QueryStringMapper.addQueryParameter(
@@ -295,6 +299,7 @@ public class RawServiceClient {
             String userId, GetUserRequest request, RequestOptions requestOptions) {
         HttpUrl.Builder httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
                 .newBuilder()
+                .addPathSegments("api")
                 .addPathSegments("users")
                 .addPathSegment(userId);
         if (request.getFields().isPresent()) {
@@ -341,6 +346,7 @@ public class RawServiceClient {
     public SeedClientSideParamsHttpResponse<User> createUser(CreateUserRequest request, RequestOptions requestOptions) {
         HttpUrl httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
                 .newBuilder()
+                .addPathSegments("api")
                 .addPathSegments("users")
                 .build();
         RequestBody body;
@@ -397,6 +403,7 @@ public class RawServiceClient {
             String userId, UpdateUserRequest request, RequestOptions requestOptions) {
         HttpUrl httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
                 .newBuilder()
+                .addPathSegments("api")
                 .addPathSegments("users")
                 .addPathSegment(userId)
                 .build();
@@ -446,6 +453,7 @@ public class RawServiceClient {
     public SeedClientSideParamsHttpResponse<Void> deleteUser(String userId, RequestOptions requestOptions) {
         HttpUrl httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
                 .newBuilder()
+                .addPathSegments("api")
                 .addPathSegments("users")
                 .addPathSegment(userId)
                 .build();
@@ -493,6 +501,7 @@ public class RawServiceClient {
             ListConnectionsRequest request, RequestOptions requestOptions) {
         HttpUrl.Builder httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
                 .newBuilder()
+                .addPathSegments("api")
                 .addPathSegments("connections");
         if (request.getStrategy().isPresent()) {
             QueryStringMapper.addQueryParameter(
@@ -555,6 +564,7 @@ public class RawServiceClient {
             String connectionId, GetConnectionRequest request, RequestOptions requestOptions) {
         HttpUrl.Builder httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
                 .newBuilder()
+                .addPathSegments("api")
                 .addPathSegments("connections")
                 .addPathSegment(connectionId);
         if (request.getFields().isPresent()) {
@@ -607,6 +617,7 @@ public class RawServiceClient {
             ListClientsRequest request, RequestOptions requestOptions) {
         HttpUrl.Builder httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
                 .newBuilder()
+                .addPathSegments("api")
                 .addPathSegments("clients");
         if (request.getFields().isPresent()) {
             QueryStringMapper.addQueryParameter(
@@ -687,6 +698,7 @@ public class RawServiceClient {
             String clientId, GetClientRequest request, RequestOptions requestOptions) {
         HttpUrl.Builder httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
                 .newBuilder()
+                .addPathSegments("api")
                 .addPathSegments("clients")
                 .addPathSegment(clientId);
         if (request.getFields().isPresent()) {
