@@ -33,7 +33,7 @@
   },
   "dependencies": {
     "@fern-api/core-utils": "workspace:*",
-    "@fern-api/dynamic-ir-sdk": "^61.4.0",
+    "@fern-api/dynamic-ir-sdk": "^61.7.0",
     "@fern-api/fern-definition-schema": "workspace:*",
     "@fern-api/logger": "workspace:*",
     "@fern-api/path-utils": "workspace:*",

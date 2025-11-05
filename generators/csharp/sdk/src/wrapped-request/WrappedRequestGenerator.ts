@@ -122,7 +122,7 @@ export class WrappedRequestGenerator extends FileGenerator<CSharpFile, SdkCustom
         this.endpoint.requestBody?._visit({
             reference: (reference) => {
                 const type = this.context.csharpTypeMapper.convert({ reference: reference.requestBodyType });
-                const useRequired = !type.isOptional();
+                const useRequired = !type.isOptional;
                 class_.addField({
                     origin: this.wrapper.bodyKey,
                     type,

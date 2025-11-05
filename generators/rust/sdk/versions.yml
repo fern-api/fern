@@ -1,4 +1,11 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 0.10.0
+  createdAt: "2025-11-04"
+  changelogEntry:
+    - type: feat
+      summary: |
+        Added Generation Metadata file to output
+  irVersion: 61
 
 - version: 0.9.0
   createdAt: "2025-10-24"

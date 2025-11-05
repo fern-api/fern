@@ -1,0 +1,10 @@
+{
+  "cliVersion": "DUMMY",
+  "generatorName": "fernapi/fern-java-sdk",
+  "generatorVersion": "latest",
+  "generatorConfig": {
+    "inline-path-parameters": true,
+    "base-api-exception-class-name": "CustomApiException",
+    "base-exception-class-name": "CustomException"
+  }
+}

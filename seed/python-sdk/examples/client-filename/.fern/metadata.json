@@ -1,0 +1,14 @@
+{
+  "cliVersion": "DUMMY",
+  "generatorName": "fernapi/fern-python-sdk",
+  "generatorVersion": "latest",
+  "generatorConfig": {
+    "client": {
+      "filename": "base_client.py",
+      "class_name": "BaseSeedExhaustive",
+      "exported_filename": "client.py",
+      "exported_class_name": "SeedExhaustive"
+    },
+    "use_inheritance_for_extended_models": false
+  }
+}

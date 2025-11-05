@@ -496,7 +496,7 @@ export class HttpEndpointGenerator extends AbstractEndpointGenerator {
     }
 
     private getFullPropertyPath(property: RequestProperty | ResponseProperty): Name[] {
-        return [...(property.propertyPath ?? []), property.property.name.name];
+        return [...(property.propertyPath?.map((elem) => elem.name) ?? []), property.property.name.name];
     }
 
     private nullableGet(
@@ -508,7 +508,7 @@ export class HttpEndpointGenerator extends AbstractEndpointGenerator {
             if (propertyPath) {
                 for (const propertyPathElement of propertyPath) {
                     writer.write("?");
-                    writer.writeNode(this.context.getTypeGetter(propertyPathElement));
+                    writer.writeNode(this.context.getTypeGetter(propertyPathElement.name));
                 }
             }
             writer.write("?");

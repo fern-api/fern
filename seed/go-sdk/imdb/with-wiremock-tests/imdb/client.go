@@ -4,7 +4,7 @@ package imdb
 
 import (
 	context "context"
-	fern "github.com/imdb/fern"
+	testPackageName "github.com/imdb/fern"
 	core "github.com/imdb/fern/core"
 	internal "github.com/imdb/fern/internal"
 	option "github.com/imdb/fern/option"
@@ -35,9 +35,9 @@ func NewClient(options *core.RequestOptions) *Client {
 // Add a movie to the database using the movies/* /... path.
 func (c *Client) CreateMovie(
 	ctx context.Context,
-	request *fern.CreateMovieRequest,
+	request *testPackageName.CreateMovieRequest,
 	opts ...option.RequestOption,
-) (fern.MovieId, error) {
+) (testPackageName.MovieId, error) {
 	response, err := c.WithRawResponse.CreateMovie(
 		ctx,
 		request,
@@ -51,9 +51,9 @@ func (c *Client) CreateMovie(
 
 func (c *Client) GetMovie(
 	ctx context.Context,
-	movieId fern.MovieId,
+	movieId testPackageName.MovieId,
 	opts ...option.RequestOption,
-) (*fern.Movie, error) {
+) (*testPackageName.Movie, error) {
 	response, err := c.WithRawResponse.GetMovie(
 		ctx,
 		movieId,

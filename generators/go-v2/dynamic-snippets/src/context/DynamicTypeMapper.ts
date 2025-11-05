@@ -83,7 +83,7 @@ export class DynamicTypeMapper {
         return go.Type.any();
     }
 
-    private convertPrimitive({ primitive }: { primitive: FernIr.PrimitiveTypeV1 }): go.Type {
+    private convertPrimitive({ primitive }: { primitive: FernIr.dynamic.PrimitiveTypeV1 }): go.Type {
         switch (primitive) {
             case "INTEGER":
                 return go.Type.int();
