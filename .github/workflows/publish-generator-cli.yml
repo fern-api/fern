@@ -31,45 +31,41 @@ jobs:
         with:
           fetch-depth: 0
 
+      - name: 📥 Install seed CLI
+        uses: ./.github/actions/install
+
       - name: Get version
         id: get_version
         run: |
-          # Extract the new version from versions.yml
-          new_version=$(head -n 10 packages/generator-cli/versions.yml | grep -A 1 "version:" | tail -n 1 | sed 's/.*version: //' | tr -d ' ')
-          
-          # Try to get previous version
-          previous_version=""
-          commit_count=$(git log --oneline -- packages/generator-cli/versions.yml | wc -l)
-          
-          if [ "${commit_count}" -gt 1 ]; then
-            previous_commit=$(git log -n 2 --pretty=format:"%h" -- packages/generator-cli/versions.yml | tail -n 1)
-            current_commit=$(git log -n 1 --pretty=format:"%h" -- packages/generator-cli/versions.yml)
+          # Build seed CLI
+          pnpm seed:build
 
-            # Get the previous version of the file using the specific commit that last changed it
-            if git show ${previous_commit}:packages/generator-cli/versions.yml > tmp_generator_cli_previous_versions.yml 2>/dev/null; then
-              echo "Preview of the previous file (${previous_commit})"
-              head tmp_generator_cli_previous_versions.yml
+          # Get previous version from git history if it exists
+          previous_commit=$(git log -n 2 --pretty=format:"%h" -- packages/generator-cli/versions.yml | tail -n 1)
 
-              # Extract the previous version
-              previous_version=$(head -n 10 tmp_generator_cli_previous_versions.yml | grep -A 1 "version:" | tail -n 1 | sed 's/.*version: //' | tr -d ' ' || echo "")
-            fi
-          fi
-
-          echo "Preview of the current file"
-          head packages/generator-cli/versions.yml
-          
-          echo "Previous version: ${previous_version:-(none)}"
-          echo "New version: ${new_version}"
-          
-          if [ -z "${previous_version}" ] || [ "${previous_version}" != "${new_version}" ]; then
-            echo "has_new_version=true" >> $GITHUB_OUTPUT
-            echo "version=${new_version}" >> $GITHUB_OUTPUT
-            echo "Found new version: ${new_version}"
+          if [ -n "${previous_commit}" ] && git show ${previous_commit}:packages/generator-cli/versions.yml > /tmp/previous_versions.yml 2>/dev/null; then
+            # Compare with previous version
+            result=$(node --enable-source-maps packages/seed/dist/cli.cjs latest versions-yml \
+              --path packages/generator-cli/versions.yml \
+              --previous-path /tmp/previous_versions.yml \
+              --format json)
+            rm -f /tmp/previous_versions.yml
           else
-            echo "has_new_version=false" >> $GITHUB_OUTPUT
-            echo "version=" >> $GITHUB_OUTPUT
-            echo "No new version detected"
+            # No previous version, just get latest
+            result=$(node --enable-source-maps packages/seed/dist/cli.cjs latest versions-yml \
+              --path packages/generator-cli/versions.yml \
+              --format json)
           fi
+
+          # Parse and output results
+          version=$(echo "$result" | jq -r '.version')
+          has_new=$(echo "$result" | jq -r '.has_new_version')
+
+          echo "Version: ${version}"
+          echo "Has new version: ${has_new}"
+
+          echo "has_new_version=${has_new}" >> $GITHUB_OUTPUT
+          echo "version=${version}" >> $GITHUB_OUTPUT
 
   publish-cli:
     needs: check-version
@@ -81,7 +77,7 @@ jobs:
       - name: 📥 Install
         uses: ./.github/actions/install
         with:
-          registry-url: 'https://registry.npmjs.org'
+          registry-url: "https://registry.npmjs.org"
 
       - name: Update npm
         run: npm install -g npm@latest
