@@ -1,5 +1,12 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
 # For unreleased changes, use unreleased.yml
+- version: 4.34.0
+  changelogEntry:
+    - summary: Add support for disabling retries on endpoints
+      type: feat
+  createdAt: "2025-11-05"
+  irVersion: 61
+
 - version: 4.33.0
   changelogEntry:
     - summary: Added Generation Metadata file to output
