@@ -2,7 +2,7 @@ import BasicAuth
 import Foundation
 import Testing
 
-@Suite("BasicAuthClient Retry Tests") struct BasicAuthClient_RetryTests {
+@Suite("BasicAuthClient Retry Tests") struct BasicAuthClientRetryTests {
 
     @Test func testRetryOn408RequestTimeout() async throws {
         let stub = HTTPStub()
