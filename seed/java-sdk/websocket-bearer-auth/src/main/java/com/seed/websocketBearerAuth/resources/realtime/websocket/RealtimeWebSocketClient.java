@@ -19,6 +19,7 @@ import java.util.Map;
 import java.util.Optional;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.Executors;
+import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.TimeoutException;
 import java.util.function.Consumer;
@@ -41,6 +42,10 @@ public class RealtimeWebSocketClient {
     private final OkHttpClient okHttpClient;
 
     private WebSocket webSocket;
+
+    private ScheduledExecutorService timeoutExecutor;
+
+    private volatile WebSocketReadyState readyState = WebSocketReadyState.CLOSED;
 
     private final String id;
 
@@ -110,6 +115,7 @@ public class RealtimeWebSocketClient {
         this.webSocket = okHttpClient.newWebSocket(request, new WebSocketListener() {
             @Override
             public void onOpen(WebSocket webSocket, Response response) {
+                readyState = WebSocketReadyState.OPEN;
                 if (onConnectedHandler != null) {
                     onConnectedHandler.run();
                 }
@@ -123,6 +129,7 @@ public class RealtimeWebSocketClient {
 
             @Override
             public void onFailure(WebSocket webSocket, Throwable t, Response response) {
+                readyState = WebSocketReadyState.CLOSED;
                 if (onErrorHandler != null) {
                     onErrorHandler.accept(new RuntimeException(t));
                 }
@@ -130,50 +137,74 @@ public class RealtimeWebSocketClient {
             }
 
             @Override
+            public void onClosing(WebSocket webSocket, int code, String reason) {
+                readyState = WebSocketReadyState.CLOSING;
+            }
+
+            @Override
             public void onClosed(WebSocket webSocket, int code, String reason) {
+                readyState = WebSocketReadyState.CLOSED;
                 if (onDisconnectedHandler != null) {
                     onDisconnectedHandler.accept(new DisconnectReason(code, reason));
                 }
             }
         });
-        Executors.newSingleThreadScheduledExecutor()
-                .schedule(
-                        () -> {
-                            ;
-                            if (!connectionFuture.isDone()) {
-                                connectionFuture.completeExceptionally(new TimeoutException("Connection timeout"));
-                                if (webSocket != null) {
-                                    webSocket.close(1000, "Connection timeout");
-                                    webSocket = null;
-                                }
-                            }
-                        },
-                        10,
-                        TimeUnit.SECONDS);
+        this.readyState = WebSocketReadyState.CONNECTING;
+        this.timeoutExecutor = Executors.newSingleThreadScheduledExecutor();
+        timeoutExecutor.schedule(
+                () -> {
+                    ;
+                    if (!connectionFuture.isDone()) {
+                        connectionFuture.completeExceptionally(new TimeoutException("Connection timeout"));
+                        if (webSocket != null) {
+                            webSocket.close(1000, "Connection timeout");
+                            webSocket = null;
+                        }
+                        this.readyState = WebSocketReadyState.CLOSED;
+                    }
+                },
+                10,
+                TimeUnit.SECONDS);
         return connectionFuture;
     }
 
     /**
-     * Disconnects the WebSocket connection.
+     * Disconnects the WebSocket connection and releases resources.
      */
     public void disconnect() {
         if (webSocket != null) {
             webSocket.close(1000, "Client disconnecting");
+            webSocket = null;
+        }
+        if (timeoutExecutor != null) {
+            timeoutExecutor.shutdownNow();
+            timeoutExecutor = null;
         }
     }
 
     /**
-     * Checks if the WebSocket is currently connected.
+     * Checks if a WebSocket instance exists (not necessarily connected).
      *
-     * NOTE: This method only checks if a WebSocket object exists, not if the connection
-     * is actively connected. The connection may have been closed by the server or due to
-     * network issues without immediate notification. For accurate connection state tracking,
-     * use the onDisconnected() callback or handle errors from send operations.
+     * This method only verifies that a WebSocket object has been created, not whether
+     * it's actively connected. For actual connection state, use getReadyState().
      *
-     * @return true if a WebSocket object exists (may be disconnected), false otherwise
+     * @return true if a WebSocket instance exists, false otherwise
+     * @deprecated Use getReadyState() for accurate connection status
      */
-    public boolean isConnected() {
+    @Deprecated
+    public boolean hasWebSocketInstance() {
         return webSocket != null;
+    }
+
+    /**
+     * Gets the current state of the WebSocket connection.
+     *
+     * This provides the actual connection state, similar to the W3C WebSocket API.
+     *
+     * @return the current WebSocket ready state
+     */
+    public WebSocketReadyState getReadyState() {
+        return readyState;
     }
 
     /**
@@ -375,5 +406,30 @@ public class RealtimeWebSocketClient {
         public String getReason() {
             return reason;
         }
+    }
+
+    /**
+     * WebSocket connection ready state, based on the W3C WebSocket API.
+     */
+    public enum WebSocketReadyState {
+        /**
+         * The connection is being established.
+         */
+        CONNECTING,
+
+        /**
+         * The connection is open and ready to communicate.
+         */
+        OPEN,
+
+        /**
+         * The connection is in the process of closing.
+         */
+        CLOSING,
+
+        /**
+         * The connection is closed.
+         */
+        CLOSED
     }
 }
