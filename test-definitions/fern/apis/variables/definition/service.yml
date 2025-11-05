@@ -9,4 +9,4 @@ service:
       method: POST
       examples:
         - path-parameters:
-            endpointParam: "test-value"
+            endpointParam: "endpointParam"

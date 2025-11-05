@@ -6,9 +6,9 @@ import { mockServerPool } from "../mock-server/MockServerPool";
 describe("Service", () => {
     test("post", async () => {
         const server = mockServerPool.createServer();
-        const client = new SeedVariablesClient({ rootVariable: "test-value", environment: server.baseUrl });
+        const client = new SeedVariablesClient({ rootVariable: "endpointParam", environment: server.baseUrl });
 
-        server.mockEndpoint().post("/test-value").respondWith().statusCode(200).build();
+        server.mockEndpoint().post("/endpointParam").respondWith().statusCode(200).build();
 
         const response = await client.service.post();
         expect(response).toEqual(undefined);
