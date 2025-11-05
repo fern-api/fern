@@ -1,6 +1,6 @@
 import { File } from "@fern-api/base-generator";
 import { RelativeFilePath } from "@fern-api/fs-utils";
-import { WireMock } from "@fern-api/mock-utils";
+import { WireTestSetup, WireTestSetupConfig } from "@fern-api/mock-utils";
 import { IntermediateRepresentation } from "@fern-fern/ir-sdk/api";
 import { SdkGeneratorContext } from "../SdkGeneratorContext";
 
@@ -9,17 +9,16 @@ import { SdkGeneratorContext } from "../SdkGeneratorContext";
  * to spin up WireMock for testing against.
  */
 export class WireTestSetupGenerator {
-    // Configuration constants - should match WireTestGenerator
-    private static readonly DEFAULT_WIREMOCK_PORT = 8080;
-
     private readonly context: SdkGeneratorContext;
     private readonly ir: IntermediateRepresentation;
-    private readonly wiremockPort: number;
+    private readonly config: WireTestSetupConfig;
 
     constructor(context: SdkGeneratorContext, ir: IntermediateRepresentation) {
         this.context = context;
         this.ir = ir;
-        this.wiremockPort = WireTestSetupGenerator.DEFAULT_WIREMOCK_PORT;
+        this.config = {
+            wiremockPort: WireTestSetup.getDefaultWiremockPort()
+        };
     }
 
     /**
@@ -33,15 +32,15 @@ export class WireTestSetupGenerator {
     }
 
     public static getWiremockConfigContent(ir: IntermediateRepresentation) {
-        return new WireMock().convertToWireMock(ir as any);
+        return WireTestSetup.generateWiremockConfigContent(ir as any);
     }
 
     private generateWireMockConfigFile(): void {
-        const wireMockConfigContent = WireTestSetupGenerator.getWiremockConfigContent(this.ir);
+        const wireMockConfigFileContent = WireTestSetup.generateWiremockMappingsFileContent(this.ir as any);
         const wireMockConfigFile = new File(
             "wiremock-mappings.json",
             RelativeFilePath.of("wiremock"),
-            JSON.stringify(wireMockConfigContent, null, 2)
+            wireMockConfigFileContent
         );
         this.context.project.addRawFiles(wireMockConfigFile);
         this.context.logger.debug("Generated wiremock-mappings.json for WireMock");
@@ -52,7 +51,7 @@ export class WireTestSetupGenerator {
      * for wire test execution.
      */
     private generateDockerComposeFile(): void {
-        const dockerComposeContent = this.buildDockerComposeContent();
+        const dockerComposeContent = WireTestSetup.generateDockerComposeContent(this.config);
         const dockerComposeFile = new File(
             "docker-compose.test.yml",
             RelativeFilePath.of("./wiremock"),
@@ -72,21 +71,6 @@ export class WireTestSetupGenerator {
 
         this.context.project.addRawFiles(pytestConfigFile);
         this.context.logger.debug("Generated pytest.ini for wire test configuration");
-    }
-
-    /**
-     * Builds the content for the docker-compose.test.yml file
-     */
-    private buildDockerComposeContent(): string {
-        return `services:
-  wiremock:
-    image: wiremock/wiremock:3.9.1
-    ports:
-      - "${this.wiremockPort}:8080"
-    volumes:
-      - ./wiremock-mappings.json:/home/wiremock/mappings/wiremock-mappings.json
-    command: ["--global-response-templating", "--verbose"]
-`;
     }
 
     /**

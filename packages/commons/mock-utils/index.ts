@@ -322,3 +322,63 @@ export class WireMock {
         return null;
     }
 }
+
+/**
+ * Shared utilities for setting up wire tests across different language generators
+ */
+export interface WireTestSetupConfig {
+    wiremockPort: number;
+    wiremockVersion?: string;
+}
+
+export class WireTestSetup {
+    private static readonly DEFAULT_WIREMOCK_PORT = 8080;
+    private static readonly DEFAULT_WIREMOCK_VERSION = "3.9.1";
+
+    /**
+     * Generates WireMock configuration content from IR
+     */
+    public static generateWiremockConfigContent(ir: IntermediateRepresentation): WireMockStubMapping {
+        return new WireMock().convertToWireMock(ir);
+    }
+
+    /**
+     * Generates the content for docker-compose.test.yml file
+     */
+    public static generateDockerComposeContent(
+        config: WireTestSetupConfig = { wiremockPort: this.DEFAULT_WIREMOCK_PORT }
+    ): string {
+        const wiremockVersion = config.wiremockVersion ?? this.DEFAULT_WIREMOCK_VERSION;
+        return `services:
+  wiremock:
+    image: wiremock/wiremock:${wiremockVersion}
+    ports:
+      - "${config.wiremockPort}:8080"
+    volumes:
+      - ./wiremock-mappings.json:/home/wiremock/mappings/wiremock-mappings.json
+    command: ["--global-response-templating", "--verbose"]
+`;
+    }
+
+    /**
+     * Generates the content for wiremock-mappings.json file
+     */
+    public static generateWiremockMappingsFileContent(ir: IntermediateRepresentation): string {
+        const wireMockConfigContent = this.generateWiremockConfigContent(ir);
+        return JSON.stringify(wireMockConfigContent, null, 2);
+    }
+
+    /**
+     * Get the default WireMock port
+     */
+    public static getDefaultWiremockPort(): number {
+        return this.DEFAULT_WIREMOCK_PORT;
+    }
+
+    /**
+     * Get the default WireMock version
+     */
+    public static getDefaultWiremockVersion(): string {
+        return this.DEFAULT_WIREMOCK_VERSION;
+    }
+}

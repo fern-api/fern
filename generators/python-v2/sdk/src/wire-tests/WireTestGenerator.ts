@@ -1,5 +1,5 @@
 import { RelativeFilePath } from "@fern-api/fs-utils";
-import { WireMockMapping } from "@fern-api/mock-utils";
+import { WireMockMapping, WireTestSetup } from "@fern-api/mock-utils";
 import { python } from "@fern-api/python-ast";
 import { WriteablePythonFile } from "@fern-api/python-base";
 import { dynamic, HttpEndpoint, HttpService, IntermediateRepresentation } from "@fern-fern/ir-sdk/api";
@@ -8,7 +8,6 @@ import { WireTestSetupGenerator } from "./WireTestSetupGenerator";
 
 export class WireTestGenerator {
     // Configuration constants - can be made into constructor parameters later if needed
-    private static readonly DEFAULT_WIREMOCK_PORT = 8080;
     private static readonly DEFAULT_OUTPUT_DIRECTORY = "tests/wire";
     private static readonly DEFAULT_TEST_CLASS_PREFIX = "Test";
 
@@ -27,7 +26,7 @@ export class WireTestGenerator {
         this.ir = context.ir;
 
         // Initialize configuration properties with default values
-        this.wiremockPort = WireTestGenerator.DEFAULT_WIREMOCK_PORT;
+        this.wiremockPort = WireTestSetup.getDefaultWiremockPort();
         this.outputDirectory = WireTestGenerator.DEFAULT_OUTPUT_DIRECTORY;
         this.testClassPrefix = WireTestGenerator.DEFAULT_TEST_CLASS_PREFIX;
 
