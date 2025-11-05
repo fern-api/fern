@@ -223,6 +223,11 @@ public class SyncWebSocketChannelWriter extends AbstractWebSocketChannelWriter {
 
         builder.addStatement("$T request = requestBuilder.build()", Request.class);
 
+        // Set state to CONNECTING
+        ClassName readyStateClassName =
+                ClassName.get(className.packageName(), className.simpleName(), "WebSocketReadyState");
+        builder.addStatement("this.$N = $T.CONNECTING", readyStateField, readyStateClassName);
+
         // Create WebSocket connection
         builder.addStatement(
                 "this.$N = $N.newWebSocket(request, $L)",
@@ -230,12 +235,23 @@ public class SyncWebSocketChannelWriter extends AbstractWebSocketChannelWriter {
                 okHttpClientField,
                 generateWebSocketListener());
 
-        // Wait for connection
+        // Setup timeout executor
+        builder.addStatement(
+                "this.$N = $T.newSingleThreadScheduledExecutor()",
+                timeoutExecutorField,
+                ClassName.get("java.util.concurrent", "Executors"));
+
+        // Wait for connection with timeout
         builder.beginControlFlow("try");
         builder.beginControlFlow("if (!$N.await(10, $T.SECONDS))", connectionLatchField, TimeUnit.class);
         builder.beginControlFlow("if ($N != null)", webSocketField);
         builder.addStatement("$N.close(1000, $S)", webSocketField, "Connection timeout");
         builder.addStatement("$N = null", webSocketField);
+        builder.endControlFlow();
+        builder.addStatement("this.$N = $T.CLOSED", readyStateField, readyStateClassName);
+        builder.beginControlFlow("if ($N != null)", timeoutExecutorField);
+        builder.addStatement("$N.shutdownNow()", timeoutExecutorField);
+        builder.addStatement("$N = null", timeoutExecutorField);
         builder.endControlFlow();
         builder.addStatement("throw new $T($S)", RuntimeException.class, "WebSocket connection timeout");
         builder.endControlFlow();
@@ -244,6 +260,11 @@ public class SyncWebSocketChannelWriter extends AbstractWebSocketChannelWriter {
         builder.beginControlFlow("if ($N != null)", webSocketField);
         builder.addStatement("$N.close(1000, $S)", webSocketField, "Connection interrupted");
         builder.addStatement("$N = null", webSocketField);
+        builder.endControlFlow();
+        builder.addStatement("this.$N = $T.CLOSED", readyStateField, readyStateClassName);
+        builder.beginControlFlow("if ($N != null)", timeoutExecutorField);
+        builder.addStatement("$N.shutdownNow()", timeoutExecutorField);
+        builder.addStatement("$N = null", timeoutExecutorField);
         builder.endControlFlow();
         builder.addStatement("throw new $T($S, e)", RuntimeException.class, "WebSocket connection interrupted");
         builder.endControlFlow();
@@ -299,6 +320,8 @@ public class SyncWebSocketChannelWriter extends AbstractWebSocketChannelWriter {
     }
 
     private TypeSpec generateWebSocketListener() {
+        ClassName readyStateClassName =
+                ClassName.get(className.packageName(), className.simpleName(), "WebSocketReadyState");
         return TypeSpec.anonymousClassBuilder("")
                 .superclass(WebSocketListener.class)
                 .addMethod(MethodSpec.methodBuilder("onOpen")
@@ -306,6 +329,7 @@ public class SyncWebSocketChannelWriter extends AbstractWebSocketChannelWriter {
                         .addModifiers(Modifier.PUBLIC)
                         .addParameter(WebSocket.class, "webSocket")
                         .addParameter(Response.class, "response")
+                        .addStatement("$N = $T.OPEN", readyStateField, readyStateClassName)
                         .beginControlFlow("if ($N != null)", onConnectedHandlerField)
                         .addStatement("$N.run()", onConnectedHandlerField)
                         .endControlFlow()
@@ -324,10 +348,19 @@ public class SyncWebSocketChannelWriter extends AbstractWebSocketChannelWriter {
                         .addParameter(WebSocket.class, "webSocket")
                         .addParameter(Throwable.class, "t")
                         .addParameter(Response.class, "response")
+                        .addStatement("$N = $T.CLOSED", readyStateField, readyStateClassName)
                         .beginControlFlow("if ($N != null)", onErrorHandlerField)
                         .addStatement("$N.accept(new $T(t))", onErrorHandlerField, RuntimeException.class)
                         .endControlFlow()
                         .addStatement("$N.countDown()", connectionLatchField)
+                        .build())
+                .addMethod(MethodSpec.methodBuilder("onClosing")
+                        .addAnnotation(Override.class)
+                        .addModifiers(Modifier.PUBLIC)
+                        .addParameter(WebSocket.class, "webSocket")
+                        .addParameter(int.class, "code")
+                        .addParameter(String.class, "reason")
+                        .addStatement("$N = $T.CLOSING", readyStateField, readyStateClassName)
                         .build())
                 .addMethod(MethodSpec.methodBuilder("onClosed")
                         .addAnnotation(Override.class)
@@ -335,6 +368,7 @@ public class SyncWebSocketChannelWriter extends AbstractWebSocketChannelWriter {
                         .addParameter(WebSocket.class, "webSocket")
                         .addParameter(int.class, "code")
                         .addParameter(String.class, "reason")
+                        .addStatement("$N = $T.CLOSED", readyStateField, readyStateClassName)
                         .beginControlFlow("if ($N != null)", onDisconnectedHandlerField)
                         .addStatement(
                                 "$N.accept(new $T(code, reason))",

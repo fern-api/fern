@@ -234,10 +234,17 @@ public class AsyncWebSocketChannelWriter extends AbstractWebSocketChannelWriter 
                 okHttpClientField,
                 generateWebSocketListener());
 
-        // Java 8 compatible timeout handling
+        // Set state to CONNECTING
+        ClassName readyStateClassName =
+                ClassName.get(className.packageName(), className.simpleName(), "WebSocketReadyState");
+        builder.addStatement("this.$N = $T.CONNECTING", readyStateField, readyStateClassName);
+
+        // Java 8 compatible timeout handling with proper executor management
         builder.addStatement(
-                "$T.newSingleThreadScheduledExecutor().schedule(() -> {",
+                "this.$N = $T.newSingleThreadScheduledExecutor()",
+                timeoutExecutorField,
                 ClassName.get("java.util.concurrent", "Executors"));
+        builder.addStatement("$N.schedule(() -> {", timeoutExecutorField);
         builder.beginControlFlow("if (!$N.isDone())", connectionFutureField);
         builder.addStatement(
                 "$N.completeExceptionally(new $T($S))",
@@ -248,6 +255,7 @@ public class AsyncWebSocketChannelWriter extends AbstractWebSocketChannelWriter 
         builder.addStatement("$N.close(1000, $S)", webSocketField, "Connection timeout");
         builder.addStatement("$N = null", webSocketField);
         builder.endControlFlow();
+        builder.addStatement("this.$N = $T.CLOSED", readyStateField, readyStateClassName);
         builder.endControlFlow();
         builder.addStatement("}, 10, $T.SECONDS)", TimeUnit.class);
 
@@ -318,6 +326,8 @@ public class AsyncWebSocketChannelWriter extends AbstractWebSocketChannelWriter 
     }
 
     private TypeSpec generateWebSocketListener() {
+        ClassName readyStateClassName =
+                ClassName.get(className.packageName(), className.simpleName(), "WebSocketReadyState");
         return TypeSpec.anonymousClassBuilder("")
                 .superclass(WebSocketListener.class)
                 .addMethod(MethodSpec.methodBuilder("onOpen")
@@ -325,6 +335,7 @@ public class AsyncWebSocketChannelWriter extends AbstractWebSocketChannelWriter 
                         .addModifiers(Modifier.PUBLIC)
                         .addParameter(WebSocket.class, "webSocket")
                         .addParameter(Response.class, "response")
+                        .addStatement("$N = $T.OPEN", readyStateField, readyStateClassName)
                         .beginControlFlow("if ($N != null)", onConnectedHandlerField)
                         .addStatement("$N.run()", onConnectedHandlerField)
                         .endControlFlow()
@@ -343,10 +354,19 @@ public class AsyncWebSocketChannelWriter extends AbstractWebSocketChannelWriter 
                         .addParameter(WebSocket.class, "webSocket")
                         .addParameter(Throwable.class, "t")
                         .addParameter(Response.class, "response")
+                        .addStatement("$N = $T.CLOSED", readyStateField, readyStateClassName)
                         .beginControlFlow("if ($N != null)", onErrorHandlerField)
                         .addStatement("$N.accept(new $T(t))", onErrorHandlerField, RuntimeException.class)
                         .endControlFlow()
                         .addStatement("$N.completeExceptionally(t)", connectionFutureField)
+                        .build())
+                .addMethod(MethodSpec.methodBuilder("onClosing")
+                        .addAnnotation(Override.class)
+                        .addModifiers(Modifier.PUBLIC)
+                        .addParameter(WebSocket.class, "webSocket")
+                        .addParameter(int.class, "code")
+                        .addParameter(String.class, "reason")
+                        .addStatement("$N = $T.CLOSING", readyStateField, readyStateClassName)
                         .build())
                 .addMethod(MethodSpec.methodBuilder("onClosed")
                         .addAnnotation(Override.class)
@@ -354,6 +374,7 @@ public class AsyncWebSocketChannelWriter extends AbstractWebSocketChannelWriter 
                         .addParameter(WebSocket.class, "webSocket")
                         .addParameter(int.class, "code")
                         .addParameter(String.class, "reason")
+                        .addStatement("$N = $T.CLOSED", readyStateField, readyStateClassName)
                         .beginControlFlow("if ($N != null)", onDisconnectedHandlerField)
                         .addStatement(
                                 "$N.accept(new $T(code, reason))",

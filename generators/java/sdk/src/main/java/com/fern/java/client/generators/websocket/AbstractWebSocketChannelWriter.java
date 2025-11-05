@@ -42,6 +42,7 @@ import com.squareup.javapoet.TypeSpec;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Optional;
+import java.util.concurrent.ScheduledExecutorService;
 import java.util.function.Consumer;
 import javax.lang.model.element.Modifier;
 import okhttp3.OkHttpClient;
@@ -62,6 +63,8 @@ public abstract class AbstractWebSocketChannelWriter {
     protected final FieldSpec objectMapperField;
     protected final FieldSpec okHttpClientField;
     protected final FieldSpec webSocketField;
+    protected final FieldSpec timeoutExecutorField;
+    protected final FieldSpec readyStateField;
 
     // Message handlers map
     protected final Map<String, FieldSpec> messageHandlerFields = new HashMap<>();
@@ -107,6 +110,16 @@ public abstract class AbstractWebSocketChannelWriter {
         this.webSocketField = FieldSpec.builder(WebSocket.class, "webSocket", Modifier.PRIVATE)
                 .build();
 
+        this.timeoutExecutorField = FieldSpec.builder(
+                        ScheduledExecutorService.class, "timeoutExecutor", Modifier.PRIVATE)
+                .build();
+
+        ClassName readyStateClassName =
+                ClassName.get(className.packageName(), className.simpleName(), "WebSocketReadyState");
+        this.readyStateField = FieldSpec.builder(readyStateClassName, "readyState", Modifier.PRIVATE, Modifier.VOLATILE)
+                .initializer("$T.CLOSED", readyStateClassName)
+                .build();
+
         // Initialize lifecycle handler fields
         this.onConnectedHandlerField = FieldSpec.builder(Runnable.class, "onConnectedHandler", Modifier.PRIVATE)
                 .build();
@@ -138,6 +151,7 @@ public abstract class AbstractWebSocketChannelWriter {
         classBuilder.addMethod(generateConnectMethod());
         classBuilder.addMethod(generateDisconnectMethod());
         classBuilder.addMethod(generateIsConnectedMethod());
+        classBuilder.addMethod(generateGetReadyStateMethod());
 
         // Add message sending methods (one per client message)
         for (WebSocketMessage message : websocketChannel.getMessages()) {
@@ -174,6 +188,7 @@ public abstract class AbstractWebSocketChannelWriter {
 
         // Add inner classes
         classBuilder.addType(generateDisconnectReasonClass());
+        classBuilder.addType(generateWebSocketReadyStateEnum());
 
         return GeneratedJavaFile.builder()
                 .className(className)
@@ -187,6 +202,8 @@ public abstract class AbstractWebSocketChannelWriter {
         classBuilder.addField(objectMapperField);
         classBuilder.addField(okHttpClientField);
         classBuilder.addField(webSocketField);
+        classBuilder.addField(timeoutExecutorField);
+        classBuilder.addField(readyStateField);
 
         // Add path parameter fields
         for (PathParameter pathParam : websocketChannel.getPathParameters()) {
@@ -215,26 +232,46 @@ public abstract class AbstractWebSocketChannelWriter {
     protected MethodSpec generateDisconnectMethod() {
         return MethodSpec.methodBuilder("disconnect")
                 .addModifiers(Modifier.PUBLIC)
-                .addJavadoc("Disconnects the WebSocket connection.\n")
+                .addJavadoc("Disconnects the WebSocket connection and releases resources.\n")
                 .beginControlFlow("if ($N != null)", webSocketField)
                 .addStatement("$N.close(1000, $S)", webSocketField, "Client disconnecting")
+                .addStatement("$N = null", webSocketField)
+                .endControlFlow()
+                .beginControlFlow("if ($N != null)", timeoutExecutorField)
+                .addStatement("$N.shutdownNow()", timeoutExecutorField)
+                .addStatement("$N = null", timeoutExecutorField)
                 .endControlFlow()
                 .build();
     }
 
     protected MethodSpec generateIsConnectedMethod() {
-        return MethodSpec.methodBuilder("isConnected")
+        return MethodSpec.methodBuilder("hasWebSocketInstance")
                 .addModifiers(Modifier.PUBLIC)
                 .returns(TypeName.BOOLEAN)
-                .addJavadoc("Checks if the WebSocket is currently connected.\n")
+                .addJavadoc("Checks if a WebSocket instance exists (not necessarily connected).\n")
                 .addJavadoc("\n")
-                .addJavadoc("NOTE: This method only checks if a WebSocket object exists, not if the connection\n")
-                .addJavadoc("is actively connected. The connection may have been closed by the server or due to\n")
-                .addJavadoc("network issues without immediate notification. For accurate connection state tracking,\n")
-                .addJavadoc("use the onDisconnected() callback or handle errors from send operations.\n")
+                .addJavadoc("This method only verifies that a WebSocket object has been created, not whether\n")
+                .addJavadoc("it's actively connected. For actual connection state, use getReadyState().\n")
                 .addJavadoc("\n")
-                .addJavadoc("@return true if a WebSocket object exists (may be disconnected), false otherwise\n")
+                .addJavadoc("@return true if a WebSocket instance exists, false otherwise\n")
+                .addJavadoc("@deprecated Use getReadyState() for accurate connection status\n")
+                .addAnnotation(Deprecated.class)
                 .addStatement("return $N != null", webSocketField)
+                .build();
+    }
+
+    protected MethodSpec generateGetReadyStateMethod() {
+        ClassName readyStateClassName =
+                ClassName.get(className.packageName(), className.simpleName(), "WebSocketReadyState");
+        return MethodSpec.methodBuilder("getReadyState")
+                .addModifiers(Modifier.PUBLIC)
+                .returns(readyStateClassName)
+                .addJavadoc("Gets the current state of the WebSocket connection.\n")
+                .addJavadoc("\n")
+                .addJavadoc("This provides the actual connection state, similar to the W3C WebSocket API.\n")
+                .addJavadoc("\n")
+                .addJavadoc("@return the current WebSocket ready state\n")
+                .addStatement("return $N", readyStateField)
                 .build();
     }
 
@@ -408,6 +445,33 @@ public abstract class AbstractWebSocketChannelWriter {
                         .returns(String.class)
                         .addStatement("return reason")
                         .build())
+                .build();
+    }
+
+    protected TypeSpec generateWebSocketReadyStateEnum() {
+        return TypeSpec.enumBuilder("WebSocketReadyState")
+                .addModifiers(Modifier.PUBLIC)
+                .addJavadoc("WebSocket connection ready state, based on the W3C WebSocket API.\n")
+                .addEnumConstant(
+                        "CONNECTING",
+                        TypeSpec.anonymousClassBuilder("")
+                                .addJavadoc("The connection is being established.\n")
+                                .build())
+                .addEnumConstant(
+                        "OPEN",
+                        TypeSpec.anonymousClassBuilder("")
+                                .addJavadoc("The connection is open and ready to communicate.\n")
+                                .build())
+                .addEnumConstant(
+                        "CLOSING",
+                        TypeSpec.anonymousClassBuilder("")
+                                .addJavadoc("The connection is in the process of closing.\n")
+                                .build())
+                .addEnumConstant(
+                        "CLOSED",
+                        TypeSpec.anonymousClassBuilder("")
+                                .addJavadoc("The connection is closed.\n")
+                                .build())
                 .build();
     }
 
