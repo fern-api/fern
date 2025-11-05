@@ -15,7 +15,7 @@ export declare namespace generateContainerExample {
         currentDepth: number;
 
         skipOptionalProperties: boolean;
-        
+
         cache?: ExampleGenerationCache;
     }
 }

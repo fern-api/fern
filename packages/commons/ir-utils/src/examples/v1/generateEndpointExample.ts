@@ -69,7 +69,7 @@ export function generateEndpointExample({
     generationResponse
 }: generateEndpointExample.Args): ExampleGenerationResult<ExampleEndpointCall> {
     const cache = createExampleGenerationCache();
-    
+
     const result: Omit<ExampleEndpointCall, "id" | "url"> = {
         name: undefined,
         endpointHeaders: [],

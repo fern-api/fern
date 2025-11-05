@@ -24,7 +24,7 @@ export declare namespace generateTypeDeclarationExample {
         currentDepth: number;
 
         skipOptionalProperties: boolean;
-        
+
         cache?: ExampleGenerationCache;
     }
 }

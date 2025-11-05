@@ -12,8 +12,7 @@ import { generatePrimitiveExample } from "./generatePrimitiveExample";
 import { generateTypeDeclarationExample } from "./generateTypeDeclarationExample";
 
 export interface ExampleGenerationCache {
-    // biome-ignore lint/suspicious/noExplicitAny: Cache stores results of various example types
-    typeDeclarationCache: Map<string, ExampleGenerationResult<any>>;
+    typeDeclarationCache: Map<string, ExampleGenerationResult<ExampleTypeShape>>;
 }
 
 export function createExampleGenerationCache(): ExampleGenerationCache {
@@ -37,7 +36,7 @@ export declare namespace generateTypeReferenceExample {
         currentDepth: number;
 
         skipOptionalProperties: boolean;
-        
+
         cache?: ExampleGenerationCache;
     }
 }
@@ -60,8 +59,10 @@ export function generateTypeReferenceExample({
             if (typeDeclaration == null) {
                 return { type: "failure", message: `Failed to find type declaration with id ${typeReference.typeId}` };
             }
-            
-            if (cache != null) {
+
+            const shouldCache = cache != null && typeDeclaration.shape.type !== "alias";
+
+            if (shouldCache) {
                 const cacheKey = getCacheKey(typeReference.typeId, currentDepth, maxDepth, skipOptionalProperties);
                 const cached = cache.typeDeclarationCache.get(cacheKey);
                 if (cached != null) {
@@ -81,7 +82,7 @@ export function generateTypeReferenceExample({
                     };
                 }
             }
-            
+
             const generatedExample = generateTypeDeclarationExample({
                 fieldName,
                 typeDeclaration,
@@ -91,12 +92,12 @@ export function generateTypeReferenceExample({
                 skipOptionalProperties,
                 cache
             });
-            
-            if (cache != null && generatedExample != null) {
+
+            if (shouldCache && generatedExample != null) {
                 const cacheKey = getCacheKey(typeReference.typeId, currentDepth, maxDepth, skipOptionalProperties);
                 cache.typeDeclarationCache.set(cacheKey, generatedExample);
             }
-            
+
             if (generatedExample == null) {
                 return { type: "failure", message: "Failed to generate example for type declaration" };
             }
