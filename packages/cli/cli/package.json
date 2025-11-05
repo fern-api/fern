@@ -80,7 +80,7 @@
     "@fern-api/login": "workspace:*",
     "@fern-api/mock": "workspace:*",
     "@fern-api/openapi-ir": "workspace:*",
-    "@fern-api/openapi-ir-parser": "workspace:*",
+    "@fern-api/spec-to-openapi-ir": "workspace:*",
     "@fern-api/openapi-ir-to-fern": "workspace:*",
     "@fern-api/oss-validator": "workspace:*",
     "@fern-api/posthog-manager": "workspace:*",

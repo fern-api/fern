@@ -1,6 +1,6 @@
 import { isOpenAPIV2 } from "@fern-api/api-workspace-commons";
 import { mergeWithOverrides as coreMergeWithOverrides } from "@fern-api/core-utils";
-import { getParseOptions, OpenAPIDocument } from "@fern-api/openapi-ir-parser";
+import { getParseOptions, OpenAPIDocument } from "@fern-api/spec-to-openapi-ir";
 import { OpenAPI, OpenAPIV3 } from "openapi-types";
 
 import { OpenAPIWorkspace } from "./OpenAPIWorkspace";

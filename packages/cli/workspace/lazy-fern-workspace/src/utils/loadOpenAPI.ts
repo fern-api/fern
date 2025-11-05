@@ -1,5 +1,5 @@
 import { AbsoluteFilePath, dirname, join, RelativeFilePath } from "@fern-api/fs-utils";
-import { FernOpenAPIExtension, OpenAPIExtension } from "@fern-api/openapi-ir-parser";
+import { FernOpenAPIExtension, OpenAPIExtension } from "@fern-api/spec-to-openapi-ir";
 import { TaskContext } from "@fern-api/task-context";
 import { OpenAPI } from "openapi-types";
 

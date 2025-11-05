@@ -36,7 +36,7 @@
     "@fern-api/core-utils": "workspace:*",
     "@fern-api/fern-definition-schema": "workspace:*",
     "@fern-api/openapi-ir": "workspace:*",
-    "@fern-api/openapi-ir-parser": "workspace:*",
+    "@fern-api/spec-to-openapi-ir": "workspace:*",
     "@fern-api/openapi-ir-to-fern": "workspace:*",
     "@fern-api/path-utils": "workspace:*",
     "@fern-api/task-context": "workspace:*",

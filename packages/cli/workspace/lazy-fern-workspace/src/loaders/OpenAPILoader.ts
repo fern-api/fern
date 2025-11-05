@@ -1,7 +1,7 @@
 import { isOpenAPIV2, isOpenAPIV3, OpenAPISpec } from "@fern-api/api-workspace-commons";
 import { AbsoluteFilePath, join, relative } from "@fern-api/fs-utils";
 import { Source as OpenApiIrSource } from "@fern-api/openapi-ir";
-import { Document, getParseOptions } from "@fern-api/openapi-ir-parser";
+import { Document, getParseOptions } from "@fern-api/spec-to-openapi-ir";
 import { TaskContext } from "@fern-api/task-context";
 import { readFile } from "fs/promises";
 

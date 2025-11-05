@@ -9,7 +9,7 @@
   "exclude": ["./src/**/__test__/**/generated"],
   "references": [
     {
-      "path": "../openapi/openapi-ir-parser"
+      "path": "../openapi/spec-to-openapi-ir"
     },
     {
       "path": "../v3-importer-commons"

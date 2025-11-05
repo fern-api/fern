@@ -1,9 +1,9 @@
 import { dirname, join, RelativeFilePath } from "@fern-api/fs-utils";
 import { getAllOpenAPISpecs, OpenAPILoader, OSSWorkspace } from "@fern-api/lazy-fern-workspace";
 import { Schema } from "@fern-api/openapi-ir";
-import { parse } from "@fern-api/openapi-ir-parser";
 import { getEndpointLocation } from "@fern-api/openapi-ir-to-fern";
 import { Project } from "@fern-api/project-loader";
+import { parse } from "@fern-api/spec-to-openapi-ir";
 import { TaskContext } from "@fern-api/task-context";
 import { readFile, writeFile } from "fs/promises";
 import yaml from "js-yaml";

@@ -2,8 +2,8 @@ import { generatorsYml } from "@fern-api/configuration-loader";
 import { AbsoluteFilePath, streamObjectToFile } from "@fern-api/fs-utils";
 import { getAllOpenAPISpecs, LazyFernWorkspace, OpenAPILoader, OSSWorkspace } from "@fern-api/lazy-fern-workspace";
 import { serialization } from "@fern-api/openapi-ir";
-import { parse } from "@fern-api/openapi-ir-parser";
 import { Project } from "@fern-api/project-loader";
+import { parse } from "@fern-api/spec-to-openapi-ir";
 import path from "path";
 
 import { CliContext } from "../../cli-context/CliContext";
