@@ -4,6 +4,13 @@
         Test new version detection.
       type: chore
   createdAt: "2025-11-04"
+  version: 0.4.5
+
+- changelogEntry:
+    - summary: |
+        Test new version detection.
+      type: chore
+  createdAt: "2025-11-04"
   version: 0.4.4
 
 - changelogEntry:
