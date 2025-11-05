@@ -17,22 +17,22 @@
       "headers": [],
       "generatedRequestName": "GetAliasArrayRequest",
       "response": {
+        "description": "Array alias response",
         "schema": {
-          "generatedName": "AliasArray",
+          "description": "Alias for array of strings",
           "value": {
-            "generatedName": "AliasArrayItem",
             "schema": {
               "type": "string"
             },
+            "generatedName": "AliasArrayItem",
             "groupName": [],
             "type": "primitive"
           },
-          "description": "Alias for array of strings",
+          "generatedName": "AliasArray",
           "groupName": [],
           "type": "array"
         },
         "fullExamples": [],
-        "description": "Array alias response",
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -85,6 +85,7 @@
       "headers": [],
       "generatedRequestName": "GetAliasObjectRequest",
       "response": {
+        "description": "Object alias response",
         "schema": {
           "generatedName": "GetAliasObjectResponse",
           "schema": "AliasObject",
@@ -95,7 +96,6 @@
           "type": "reference"
         },
         "fullExamples": [],
-        "description": "Object alias response",
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -155,17 +155,17 @@
       "headers": [],
       "generatedRequestName": "GetAliasStringRequest",
       "response": {
+        "description": "String alias response",
         "schema": {
-          "generatedName": "AliasString",
+          "description": "Alias for string",
           "schema": {
             "type": "string"
           },
-          "description": "Alias for string",
+          "generatedName": "AliasString",
           "groupName": [],
           "type": "primitive"
         },
         "fullExamples": [],
-        "description": "String alias response",
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -213,23 +213,23 @@
       "headers": [],
       "generatedRequestName": "GetAliasOptionalStringRequest",
       "response": {
+        "description": "Optional string alias response",
         "schema": {
           "generatedName": "AliasOptionalString",
+          "description": "Alias for optional string",
           "value": {
-            "generatedName": "AliasOptionalString",
+            "description": "Alias for optional string",
             "schema": {
               "type": "string"
             },
-            "description": "Alias for optional string",
+            "generatedName": "AliasOptionalString",
             "groupName": [],
             "type": "primitive"
           },
           "groupName": [],
-          "description": "Alias for optional string",
           "type": "nullable"
         },
         "fullExamples": [],
-        "description": "Optional string alias response",
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -277,6 +277,7 @@
       "headers": [],
       "generatedRequestName": "GetAliasOptionalObjectRequest",
       "response": {
+        "description": "Optional object alias response",
         "schema": {
           "generatedName": "GetAliasOptionalObjectResponse",
           "value": {
@@ -291,7 +292,6 @@
           "type": "nullable"
         },
         "fullExamples": [],
-        "description": "Optional object alias response",
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -344,6 +344,7 @@
       "headers": [],
       "generatedRequestName": "GetDontResolveMeRequest",
       "response": {
+        "description": "Don't resolve me alias response",
         "schema": {
           "generatedName": "GetDontResolveMeResponse",
           "schema": "DontResolveMe",
@@ -354,7 +355,6 @@
           "type": "reference"
         },
         "fullExamples": [],
-        "description": "Don't resolve me alias response",
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"

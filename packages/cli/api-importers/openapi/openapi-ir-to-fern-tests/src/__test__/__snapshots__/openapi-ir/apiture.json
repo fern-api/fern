@@ -208,6 +208,7 @@
       "headers": [],
       "generatedRequestName": "AccountsListAccountsRequest",
       "response": {
+        "description": "OK. A page from the full list of the customer's accounts. This list contains only accounts that the customer is entitled to access. While the `nextPage_url` property is present in the response, the client can fetch the next page of accounts by performing a `GET` on that URL.",
         "schema": {
           "generatedName": "AccountsListAccountsResponse",
           "schema": "accounts",
@@ -218,7 +219,6 @@
           "type": "reference"
         },
         "fullExamples": [],
-        "description": "OK. A page from the full list of the customer's accounts. This list contains only accounts that the customer is entitled to access. While the `nextPage_url` property is present in the response, the client can fetch the next page of accounts by performing a `GET` on that URL.",
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -1143,6 +1143,7 @@
       "headers": [],
       "generatedRequestName": "AccountsGetAccountRequest",
       "response": {
+        "description": "OK. The response is a representation of the customer's account.",
         "schema": {
           "generatedName": "AccountsGetAccountResponse",
           "schema": "account",
@@ -1153,7 +1154,6 @@
           "type": "reference"
         },
         "fullExamples": [],
-        "description": "OK. The response is a representation of the customer's account.",
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -1809,6 +1809,7 @@
       "headers": [],
       "generatedRequestName": "AccountsListAccountBalancesRequest",
       "response": {
+        "description": "OK. The response contains the balances for all the accounts in the `?accounts=` query parameter.",
         "schema": {
           "generatedName": "AccountsListAccountBalancesResponse",
           "schema": "accountBalances",
@@ -1819,7 +1820,6 @@
           "type": "reference"
         },
         "fullExamples": [],
-        "description": "OK. The response contains the balances for all the accounts in the `?accounts=` query parameter.",
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -2661,6 +2661,7 @@
       "headers": [],
       "generatedRequestName": "AccountJointOwnersListAccountJointOwnersRequest",
       "response": {
+        "description": "OK.",
         "schema": {
           "generatedName": "AccountJointOwnersListAccountJointOwnersResponse",
           "schema": "accountJointOwners",
@@ -2671,7 +2672,6 @@
           "type": "reference"
         },
         "fullExamples": [],
-        "description": "OK.",
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -3411,6 +3411,7 @@
       "headers": [],
       "generatedRequestName": "AccountsListEligibleAchAccountsRequest",
       "response": {
+        "description": "OK. A page from the full list of the customer's ACH-eligible accounts. This list contains only accounts that the customer is entitled to access. While the `nextPage_url` property is present in the response, the client can fetch the next page of accounts by performing a `GET` on that URL.",
         "schema": {
           "generatedName": "AccountsListEligibleAchAccountsResponse",
           "schema": "accounts",
@@ -3421,7 +3422,6 @@
           "type": "reference"
         },
         "fullExamples": [],
-        "description": "OK. A page from the full list of the customer's ACH-eligible accounts. This list contains only accounts that the customer is entitled to access. While the `nextPage_url` property is present in the response, the client can fetch the next page of accounts by performing a `GET` on that URL.",
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -4068,6 +4068,7 @@
       "headers": [],
       "generatedRequestName": "OverdraftProtectionListEligibleOverdraftAccountsRequest",
       "response": {
+        "description": "OK. A page from the full list of the customer's eligible overdraft accounts. This list contains only accounts that the customer is entitled to access. While the `nextPage_url` property is present in the response, the client can fetch the next page of accounts by performing a `GET` on that URL.",
         "schema": {
           "generatedName": "OverdraftProtectionListEligibleOverdraftAccountsResponse",
           "schema": "eligibleOverdraftAccounts",
@@ -4078,7 +4079,6 @@
           "type": "reference"
         },
         "fullExamples": [],
-        "description": "OK. A page from the full list of the customer's eligible overdraft accounts. This list contains only accounts that the customer is entitled to access. While the `nextPage_url` property is present in the response, the client can fetch the next page of accounts by performing a `GET` on that URL.",
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -4983,6 +4983,7 @@
       "headers": [],
       "generatedRequestName": "OverdraftProtectionGetOverdraftProtectionRequest",
       "response": {
+        "description": "OK.",
         "schema": {
           "generatedName": "OverdraftProtectionGetOverdraftProtectionResponse",
           "schema": "overdraftProtection",
@@ -4993,7 +4994,6 @@
           "type": "reference"
         },
         "fullExamples": [],
-        "description": "OK.",
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -5529,6 +5529,7 @@
         "type": "json"
       },
       "response": {
+        "description": "OK.",
         "schema": {
           "generatedName": "OverdraftProtectionPatchOverdraftAccountsResponse",
           "schema": "overdraftProtection",
@@ -5539,7 +5540,6 @@
           "type": "reference"
         },
         "fullExamples": [],
-        "description": "OK.",
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -6347,6 +6347,7 @@
         "type": "json"
       },
       "response": {
+        "description": "OK.",
         "schema": {
           "generatedName": "JointOwnersCreateJointOwnerInvitationResponse",
           "schema": "jointOwnerInvitation",
@@ -6357,7 +6358,6 @@
           "type": "reference"
         },
         "fullExamples": [],
-        "description": "OK.",
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -7264,6 +7264,7 @@
       "headers": [],
       "generatedRequestName": "InstitutionsLookUpInstitutionByLocatorRequest",
       "response": {
+        "description": "OK.",
         "schema": {
           "generatedName": "InstitutionsLookUpInstitutionByLocatorResponse",
           "schema": "institutionLookupResult",
@@ -7274,7 +7275,6 @@
           "type": "reference"
         },
         "fullExamples": [],
-        "description": "OK.",
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -8193,6 +8193,7 @@
       "headers": [],
       "generatedRequestName": "InstitutionsListTransferScheduleRequest",
       "response": {
+        "description": "OK.",
         "schema": {
           "generatedName": "InstitutionsListTransferScheduleResponse",
           "schema": "transferSchedules",
@@ -8203,7 +8204,6 @@
           "type": "reference"
         },
         "fullExamples": [],
-        "description": "OK.",
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -9172,6 +9172,7 @@
       ],
       "generatedRequestName": "InstitutionsGetCutoffTimesRequest",
       "response": {
+        "description": "OK.",
         "schema": {
           "generatedName": "InstitutionsGetCutoffTimesResponse",
           "schema": "cutoffTimes",
@@ -9182,7 +9183,6 @@
           "type": "reference"
         },
         "fullExamples": [],
-        "description": "OK.",
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -10263,6 +10263,7 @@
       "headers": [],
       "generatedRequestName": "InstitutionsGetTransferDateRestrictionsRequest",
       "response": {
+        "description": "OK.",
         "schema": {
           "generatedName": "InstitutionsGetTransferDateRestrictionsResponse",
           "schema": "transferDateRestrictions",
@@ -10273,7 +10274,6 @@
           "type": "reference"
         },
         "fullExamples": [],
-        "description": "OK.",
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -11840,6 +11840,7 @@
       "headers": [],
       "generatedRequestName": "TransactionsListTransactionsRequest",
       "response": {
+        "description": "OK.",
         "schema": {
           "generatedName": "TransactionsListTransactionsResponse",
           "schema": "transactions",
@@ -11850,7 +11851,6 @@
           "type": "reference"
         },
         "fullExamples": [],
-        "description": "OK.",
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -13226,6 +13226,7 @@
       ],
       "generatedRequestName": "TransactionCategoriesListTransactionCategoriesRequest",
       "response": {
+        "description": "OK.",
         "schema": {
           "generatedName": "TransactionCategoriesListTransactionCategoriesResponse",
           "schema": "transactionCategories",
@@ -13236,7 +13237,6 @@
           "type": "reference"
         },
         "fullExamples": [],
-        "description": "OK.",
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -14004,6 +14004,7 @@
       "headers": [],
       "generatedRequestName": "TransfersListTransfersRequest",
       "response": {
+        "description": "OK.",
         "schema": {
           "generatedName": "TransfersListTransfersResponse",
           "schema": "transfers",
@@ -14014,7 +14015,6 @@
           "type": "reference"
         },
         "fullExamples": [],
-        "description": "OK.",
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -15051,6 +15051,7 @@
         "type": "json"
       },
       "response": {
+        "description": "Created.",
         "schema": {
           "generatedName": "TransfersCreateTransferResponse",
           "schema": "transfer",
@@ -15061,7 +15062,6 @@
           "type": "reference"
         },
         "fullExamples": [],
-        "description": "Created.",
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -15916,6 +15916,7 @@
       "headers": [],
       "generatedRequestName": "TransfersGetTransferRequest",
       "response": {
+        "description": "OK.",
         "schema": {
           "generatedName": "TransfersGetTransferResponse",
           "schema": "transfer",
@@ -15926,7 +15927,6 @@
           "type": "reference"
         },
         "fullExamples": [],
-        "description": "OK.",
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -17230,6 +17230,7 @@
         "type": "json"
       },
       "response": {
+        "description": "OK.",
         "schema": {
           "generatedName": "TransfersPatchTransferResponse",
           "schema": "transfer",
@@ -17240,7 +17241,6 @@
           "type": "reference"
         },
         "fullExamples": [],
-        "description": "OK.",
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"

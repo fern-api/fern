@@ -124,13 +124,15 @@
       "headers": [],
       "generatedRequestName": "SearchValsRequest",
       "response": {
+        "description": "A paginated result set",
         "schema": {
-          "description": "A paginated result set",
+          "allOf": [],
           "properties": [
             {
+              "conflict": {},
+              "generatedName": "searchValsResponseData",
               "key": "data",
               "schema": {
-                "generatedName": "SearchValsResponseData",
                 "value": {
                   "generatedName": "SearchValsResponseDataItem",
                   "schema": "BasicVal",
@@ -140,14 +142,15 @@
                   },
                   "type": "reference"
                 },
+                "generatedName": "SearchValsResponseData",
                 "groupName": [],
                 "type": "array"
               },
-              "audiences": [],
-              "conflict": {},
-              "generatedName": "searchValsResponseData"
+              "audiences": []
             },
             {
+              "conflict": {},
+              "generatedName": "searchValsResponseLinks",
               "key": "links",
               "schema": {
                 "generatedName": "SearchValsResponseLinks",
@@ -159,17 +162,14 @@
                 "type": "reference"
               },
               "audiences": [],
-              "conflict": {},
-              "generatedName": "searchValsResponseLinks",
               "readonly": false,
               "writeonly": false
             }
           ],
-          "generatedName": "SearchValsResponse",
-          "allOf": [],
           "allOfPropertyConflicts": [],
+          "description": "A paginated result set",
+          "generatedName": "SearchValsResponse",
           "groupName": [],
-          "fullExamples": [],
           "additionalProperties": false,
           "source": {
             "file": "../openapi.yml",
@@ -178,7 +178,6 @@
           "type": "object"
         },
         "fullExamples": [],
-        "description": "A paginated result set",
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -412,6 +411,7 @@
       "headers": [],
       "generatedRequestName": "AliasUsernameRequest",
       "response": {
+        "description": "Default Response",
         "schema": {
           "generatedName": "AliasUsernameResponse",
           "schema": "User",
@@ -422,7 +422,6 @@
           "type": "reference"
         },
         "fullExamples": [],
-        "description": "Default Response",
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -561,108 +560,112 @@
       "headers": [],
       "generatedRequestName": "AliasValRequest",
       "response": {
+        "description": "A Val",
         "schema": {
-          "description": "A Val",
+          "allOf": [],
           "properties": [
             {
+              "conflict": {},
+              "generatedName": "aliasValResponseName",
               "key": "name",
               "schema": {
-                "generatedName": "AliasValResponseName",
+                "description": "The name of this val",
                 "schema": {
                   "type": "string"
                 },
-                "description": "The name of this val",
+                "generatedName": "AliasValResponseName",
                 "groupName": [],
                 "type": "primitive"
               },
-              "audiences": [],
-              "conflict": {},
-              "generatedName": "aliasValResponseName"
+              "audiences": []
             },
             {
+              "conflict": {},
+              "generatedName": "aliasValResponseId",
               "key": "id",
               "schema": {
-                "generatedName": "AliasValResponseId",
+                "description": "This val’s id",
                 "schema": {
                   "format": "uuid",
                   "type": "string"
                 },
-                "description": "This val’s id",
+                "generatedName": "AliasValResponseId",
                 "groupName": [],
                 "type": "primitive"
               },
-              "audiences": [],
-              "conflict": {},
-              "generatedName": "aliasValResponseId"
+              "audiences": []
             },
             {
+              "conflict": {},
+              "generatedName": "aliasValResponseVersion",
               "key": "version",
               "schema": {
-                "generatedName": "AliasValResponseVersion",
+                "description": "The version of this val, starting at zero",
                 "schema": {
                   "minimum": 0,
                   "type": "int"
                 },
-                "description": "The version of this val, starting at zero",
+                "generatedName": "AliasValResponseVersion",
                 "groupName": [],
                 "type": "primitive"
               },
-              "audiences": [],
-              "conflict": {},
-              "generatedName": "aliasValResponseVersion"
+              "audiences": []
             },
             {
+              "conflict": {},
+              "generatedName": "aliasValResponseCode",
               "key": "code",
               "schema": {
                 "generatedName": "AliasValResponseCode",
                 "value": {
-                  "generatedName": "AliasValResponseCode",
+                  "description": "TypeScript code associated with this val",
                   "schema": {
                     "type": "string"
                   },
-                  "description": "TypeScript code associated with this val",
+                  "generatedName": "AliasValResponseCode",
                   "groupName": [],
                   "type": "primitive"
                 },
                 "groupName": [],
                 "type": "nullable"
               },
-              "audiences": [],
-              "conflict": {},
-              "generatedName": "aliasValResponseCode"
+              "audiences": []
             },
             {
+              "conflict": {},
+              "generatedName": "aliasValResponsePublic",
               "key": "public",
               "schema": {
-                "generatedName": "AliasValResponsePublic",
+                "description": "Whether this val is available publicly on Val Town",
                 "schema": {
                   "type": "boolean"
                 },
-                "description": "Whether this val is available publicly on Val Town",
+                "generatedName": "AliasValResponsePublic",
                 "groupName": [],
                 "type": "primitive"
               },
-              "audiences": [],
-              "conflict": {},
-              "generatedName": "aliasValResponsePublic"
+              "audiences": []
             },
             {
+              "conflict": {},
+              "generatedName": "aliasValResponseCreatedAt",
               "key": "createdAt",
               "schema": {
-                "generatedName": "AliasValResponseCreatedAt",
                 "schema": {
                   "type": "datetime"
                 },
+                "generatedName": "AliasValResponseCreatedAt",
                 "groupName": [],
                 "type": "primitive"
               },
-              "audiences": [],
-              "conflict": {},
-              "generatedName": "aliasValResponseCreatedAt"
+              "audiences": []
             },
             {
+              "conflict": {},
+              "generatedName": "aliasValResponsePrivacy",
               "key": "privacy",
               "schema": {
+                "description": "This val’s privacy setting. Unlisted vals do not appear on profile pages or elsewhere, but you can link to them.",
                 "generatedName": "AliasValResponsePrivacy",
                 "values": [
                   {
@@ -681,7 +684,6 @@
                     "casing": {}
                   }
                 ],
-                "description": "This val’s privacy setting. Unlisted vals do not appear on profile pages or elsewhere, but you can link to them.",
                 "groupName": [],
                 "source": {
                   "file": "../openapi.yml",
@@ -689,13 +691,14 @@
                 },
                 "type": "enum"
               },
-              "audiences": [],
-              "conflict": {},
-              "generatedName": "aliasValResponsePrivacy"
+              "audiences": []
             },
             {
+              "conflict": {},
+              "generatedName": "aliasValResponseType",
               "key": "type",
               "schema": {
+                "description": "The type of a val. HTTP can receive web requests, Email can receive emails, Cron runs periodically, and Script can be used for libraries or one-off calculations",
                 "generatedName": "AliasValResponseType",
                 "values": [
                   {
@@ -734,7 +737,6 @@
                     "casing": {}
                   }
                 ],
-                "description": "The type of a val. HTTP can receive web requests, Email can receive emails, Cron runs periodically, and Script can be used for libraries or one-off calculations",
                 "groupName": [],
                 "source": {
                   "file": "../openapi.yml",
@@ -742,84 +744,83 @@
                 },
                 "type": "enum"
               },
-              "audiences": [],
-              "conflict": {},
-              "generatedName": "aliasValResponseType"
+              "audiences": []
             },
             {
+              "conflict": {},
+              "generatedName": "aliasValResponseUrl",
               "key": "url",
               "schema": {
-                "generatedName": "AliasValResponseUrl",
+                "description": "The URL of this val on the Val Town website",
                 "schema": {
                   "format": "uri",
                   "type": "string"
                 },
-                "description": "The URL of this val on the Val Town website",
+                "generatedName": "AliasValResponseUrl",
                 "groupName": [],
                 "type": "primitive"
               },
-              "audiences": [],
-              "conflict": {},
-              "generatedName": "aliasValResponseUrl"
+              "audiences": []
             },
             {
+              "conflict": {},
+              "generatedName": "aliasValResponseLinks",
               "key": "links",
               "schema": {
+                "allOf": [],
                 "properties": [
                   {
+                    "conflict": {},
+                    "generatedName": "aliasValResponseLinksSelf",
                     "key": "self",
                     "schema": {
-                      "generatedName": "AliasValResponseLinksSelf",
+                      "description": "The URL of this val on this API",
                       "schema": {
                         "format": "uri",
                         "type": "string"
                       },
-                      "description": "The URL of this val on this API",
+                      "generatedName": "AliasValResponseLinksSelf",
                       "groupName": [],
                       "type": "primitive"
                     },
-                    "audiences": [],
-                    "conflict": {},
-                    "generatedName": "aliasValResponseLinksSelf"
+                    "audiences": []
                   },
                   {
+                    "conflict": {},
+                    "generatedName": "aliasValResponseLinksVersions",
                     "key": "versions",
                     "schema": {
-                      "generatedName": "AliasValResponseLinksVersions",
+                      "description": "The endpoint to retrieve this val’s versions",
                       "schema": {
                         "format": "uri",
                         "type": "string"
                       },
-                      "description": "The endpoint to retrieve this val’s versions",
+                      "generatedName": "AliasValResponseLinksVersions",
                       "groupName": [],
                       "type": "primitive"
                     },
-                    "audiences": [],
-                    "conflict": {},
-                    "generatedName": "aliasValResponseLinksVersions"
+                    "audiences": []
                   },
                   {
+                    "conflict": {},
+                    "generatedName": "aliasValResponseLinksModule",
                     "key": "module",
                     "schema": {
-                      "generatedName": "AliasValResponseLinksModule",
+                      "description": "The URL of this Val’s source code as a module",
                       "schema": {
                         "format": "uri",
                         "type": "string"
                       },
-                      "description": "The URL of this Val’s source code as a module",
+                      "generatedName": "AliasValResponseLinksModule",
                       "groupName": [],
                       "type": "primitive"
                     },
-                    "audiences": [],
-                    "conflict": {},
-                    "generatedName": "aliasValResponseLinksModule"
+                    "audiences": []
                   }
                 ],
-                "generatedName": "AliasValResponseLinks",
-                "allOf": [],
                 "allOfPropertyConflicts": [],
+                "generatedName": "AliasValResponseLinks",
                 "groupName": [],
-                "fullExamples": [],
                 "additionalProperties": false,
                 "source": {
                   "file": "../openapi.yml",
@@ -827,57 +828,56 @@
                 },
                 "type": "object"
               },
-              "audiences": [],
-              "conflict": {},
-              "generatedName": "aliasValResponseLinks"
+              "audiences": []
             },
             {
+              "conflict": {},
+              "generatedName": "aliasValResponseAuthor",
               "key": "author",
               "schema": {
                 "generatedName": "AliasValResponseAuthor",
                 "value": {
-                  "description": "The user who created this val",
+                  "allOf": [],
                   "properties": [
                     {
+                      "conflict": {},
+                      "generatedName": "aliasValResponseAuthorId",
                       "key": "id",
                       "schema": {
-                        "generatedName": "AliasValResponseAuthorId",
                         "schema": {
                           "format": "uuid",
                           "type": "string"
                         },
+                        "generatedName": "AliasValResponseAuthorId",
                         "groupName": [],
                         "type": "primitive"
                       },
-                      "audiences": [],
-                      "conflict": {},
-                      "generatedName": "aliasValResponseAuthorId"
+                      "audiences": []
                     },
                     {
+                      "conflict": {},
+                      "generatedName": "aliasValResponseAuthorUsername",
                       "key": "username",
                       "schema": {
                         "generatedName": "AliasValResponseAuthorUsername",
                         "value": {
-                          "generatedName": "AliasValResponseAuthorUsername",
                           "schema": {
                             "type": "string"
                           },
+                          "generatedName": "AliasValResponseAuthorUsername",
                           "groupName": [],
                           "type": "primitive"
                         },
                         "groupName": [],
                         "type": "nullable"
                       },
-                      "audiences": [],
-                      "conflict": {},
-                      "generatedName": "aliasValResponseAuthorUsername"
+                      "audiences": []
                     }
                   ],
-                  "generatedName": "AliasValResponseAuthor",
-                  "allOf": [],
                   "allOfPropertyConflicts": [],
+                  "description": "The user who created this val",
+                  "generatedName": "AliasValResponseAuthor",
                   "groupName": [],
-                  "fullExamples": [],
                   "additionalProperties": false,
                   "source": {
                     "file": "../openapi.yml",
@@ -888,67 +888,64 @@
                 "groupName": [],
                 "type": "nullable"
               },
-              "audiences": [],
-              "conflict": {},
-              "generatedName": "aliasValResponseAuthor"
+              "audiences": []
             },
             {
+              "conflict": {},
+              "generatedName": "aliasValResponseLikeCount",
               "key": "likeCount",
               "schema": {
-                "generatedName": "AliasValResponseLikeCount",
+                "description": "How many likes this val has received",
                 "schema": {
                   "minimum": 0,
                   "type": "int"
                 },
-                "description": "How many likes this val has received",
+                "generatedName": "AliasValResponseLikeCount",
                 "groupName": [],
                 "type": "primitive"
               },
-              "audiences": [],
-              "conflict": {},
-              "generatedName": "aliasValResponseLikeCount"
+              "audiences": []
             },
             {
+              "conflict": {},
+              "generatedName": "aliasValResponseReferenceCount",
               "key": "referenceCount",
               "schema": {
-                "generatedName": "AliasValResponseReferenceCount",
                 "schema": {
                   "minimum": 0,
                   "type": "int"
                 },
+                "generatedName": "AliasValResponseReferenceCount",
                 "groupName": [],
                 "type": "primitive"
               },
-              "audiences": [],
-              "conflict": {},
-              "generatedName": "aliasValResponseReferenceCount"
+              "audiences": []
             },
             {
+              "conflict": {},
+              "generatedName": "aliasValResponseReadme",
               "key": "readme",
               "schema": {
                 "generatedName": "AliasValResponseReadme",
                 "value": {
-                  "generatedName": "AliasValResponseReadme",
+                  "description": "This val’s readme, as Markdown",
                   "schema": {
                     "type": "string"
                   },
-                  "description": "This val’s readme, as Markdown",
+                  "generatedName": "AliasValResponseReadme",
                   "groupName": [],
                   "type": "primitive"
                 },
                 "groupName": [],
                 "type": "nullable"
               },
-              "audiences": [],
-              "conflict": {},
-              "generatedName": "aliasValResponseReadme"
+              "audiences": []
             }
           ],
-          "generatedName": "AliasValResponse",
-          "allOf": [],
           "allOfPropertyConflicts": [],
+          "description": "A Val",
+          "generatedName": "AliasValResponse",
           "groupName": [],
-          "fullExamples": [],
           "additionalProperties": false,
           "source": {
             "file": "../openapi.yml",
@@ -957,7 +954,6 @@
           "type": "object"
         },
         "fullExamples": [],
-        "description": "A Val",
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -1149,128 +1145,130 @@
       "headers": [],
       "generatedRequestName": "MeGetRequest",
       "response": {
+        "description": "Your user information, with tier and email included",
         "schema": {
-          "description": "Your user information, with tier and email included",
+          "allOf": [],
           "properties": [
             {
+              "conflict": {},
+              "generatedName": "meGetResponseId",
               "key": "id",
               "schema": {
-                "generatedName": "MeGetResponseId",
+                "description": "The ID of this user",
                 "schema": {
                   "format": "uuid",
                   "type": "string"
                 },
-                "description": "The ID of this user",
+                "generatedName": "MeGetResponseId",
                 "groupName": [],
                 "type": "primitive"
               },
-              "audiences": [],
-              "conflict": {},
-              "generatedName": "meGetResponseId"
+              "audiences": []
             },
             {
+              "conflict": {},
+              "generatedName": "meGetResponseBio",
               "key": "bio",
               "schema": {
                 "generatedName": "MeGetResponseBio",
                 "value": {
-                  "generatedName": "MeGetResponseBio",
+                  "description": "The user’s biography, if they have provided one",
                   "schema": {
                     "type": "string"
                   },
-                  "description": "The user’s biography, if they have provided one",
+                  "generatedName": "MeGetResponseBio",
                   "groupName": [],
                   "type": "primitive"
                 },
                 "groupName": [],
                 "type": "nullable"
               },
-              "audiences": [],
-              "conflict": {},
-              "generatedName": "meGetResponseBio"
+              "audiences": []
             },
             {
+              "conflict": {},
+              "generatedName": "meGetResponseUsername",
               "key": "username",
               "schema": {
                 "generatedName": "MeGetResponseUsername",
                 "value": {
-                  "generatedName": "MeGetResponseUsername",
+                  "description": "The user’s handle that they chose for themselves. Does not include the @ symbol",
                   "schema": {
                     "type": "string"
                   },
-                  "description": "The user’s handle that they chose for themselves. Does not include the @ symbol",
+                  "generatedName": "MeGetResponseUsername",
                   "groupName": [],
                   "type": "primitive"
                 },
                 "groupName": [],
                 "type": "nullable"
               },
-              "audiences": [],
-              "conflict": {},
-              "generatedName": "meGetResponseUsername"
+              "audiences": []
             },
             {
+              "conflict": {},
+              "generatedName": "meGetResponseProfileImageUrl",
               "key": "profileImageUrl",
               "schema": {
                 "generatedName": "MeGetResponseProfileImageUrl",
                 "value": {
-                  "generatedName": "MeGetResponseProfileImageUrl",
+                  "description": "URL that points to the user’s profile image, if one exists",
                   "schema": {
                     "format": "uri",
                     "type": "string"
                   },
-                  "description": "URL that points to the user’s profile image, if one exists",
+                  "generatedName": "MeGetResponseProfileImageUrl",
                   "groupName": [],
                   "type": "primitive"
                 },
                 "groupName": [],
                 "type": "nullable"
               },
-              "audiences": [],
-              "conflict": {},
-              "generatedName": "meGetResponseProfileImageUrl"
+              "audiences": []
             },
             {
+              "conflict": {},
+              "generatedName": "meGetResponseUrl",
               "key": "url",
               "schema": {
-                "generatedName": "MeGetResponseUrl",
+                "description": "URL of this user’s profile on Val Town’s website",
                 "schema": {
                   "format": "uri",
                   "type": "string"
                 },
-                "description": "URL of this user’s profile on Val Town’s website",
+                "generatedName": "MeGetResponseUrl",
                 "groupName": [],
                 "type": "primitive"
               },
-              "audiences": [],
-              "conflict": {},
-              "generatedName": "meGetResponseUrl"
+              "audiences": []
             },
             {
+              "conflict": {},
+              "generatedName": "meGetResponseLinks",
               "key": "links",
               "schema": {
+                "allOf": [],
                 "properties": [
                   {
+                    "conflict": {},
+                    "generatedName": "meGetResponseLinksSelf",
                     "key": "self",
                     "schema": {
-                      "generatedName": "MeGetResponseLinksSelf",
+                      "description": "URL of this user on this API",
                       "schema": {
                         "format": "uri",
                         "type": "string"
                       },
-                      "description": "URL of this user on this API",
+                      "generatedName": "MeGetResponseLinksSelf",
                       "groupName": [],
                       "type": "primitive"
                     },
-                    "audiences": [],
-                    "conflict": {},
-                    "generatedName": "meGetResponseLinksSelf"
+                    "audiences": []
                   }
                 ],
-                "generatedName": "MeGetResponseLinks",
-                "allOf": [],
                 "allOfPropertyConflicts": [],
+                "generatedName": "MeGetResponseLinks",
                 "groupName": [],
-                "fullExamples": [],
                 "additionalProperties": false,
                 "source": {
                   "file": "../openapi.yml",
@@ -1278,15 +1276,16 @@
                 },
                 "type": "object"
               },
-              "audiences": [],
-              "conflict": {},
-              "generatedName": "meGetResponseLinks"
+              "audiences": []
             },
             {
+              "conflict": {},
+              "generatedName": "meGetResponseTier",
               "key": "tier",
               "schema": {
                 "generatedName": "MeGetResponseTier",
                 "value": {
+                  "description": "Your account tier",
                   "generatedName": "MeGetResponseTier",
                   "values": [
                     {
@@ -1300,7 +1299,6 @@
                       "casing": {}
                     }
                   ],
-                  "description": "Your account tier",
                   "groupName": [],
                   "source": {
                     "file": "../openapi.yml",
@@ -1311,31 +1309,28 @@
                 "groupName": [],
                 "type": "nullable"
               },
-              "audiences": [],
-              "conflict": {},
-              "generatedName": "meGetResponseTier"
+              "audiences": []
             },
             {
+              "conflict": {},
+              "generatedName": "meGetResponseEmail",
               "key": "email",
               "schema": {
-                "generatedName": "MeGetResponseEmail",
+                "description": "Your email address",
                 "schema": {
                   "type": "string"
                 },
-                "description": "Your email address",
+                "generatedName": "MeGetResponseEmail",
                 "groupName": [],
                 "type": "primitive"
               },
-              "audiences": [],
-              "conflict": {},
-              "generatedName": "meGetResponseEmail"
+              "audiences": []
             }
           ],
-          "generatedName": "MeGetResponse",
-          "allOf": [],
           "allOfPropertyConflicts": [],
+          "description": "Your user information, with tier and email included",
+          "generatedName": "MeGetResponse",
           "groupName": [],
-          "fullExamples": [],
           "additionalProperties": false,
           "source": {
             "file": "../openapi.yml",
@@ -1355,7 +1350,6 @@
             }
           }
         ],
-        "description": "Your user information, with tier and email included",
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -1499,13 +1493,15 @@
       "headers": [],
       "generatedRequestName": "MeLikesRequest",
       "response": {
+        "description": "A paginated result set",
         "schema": {
-          "description": "A paginated result set",
+          "allOf": [],
           "properties": [
             {
+              "conflict": {},
+              "generatedName": "meLikesResponseData",
               "key": "data",
               "schema": {
-                "generatedName": "MeLikesResponseData",
                 "value": {
                   "generatedName": "MeLikesResponseDataItem",
                   "schema": "BasicVal",
@@ -1515,14 +1511,15 @@
                   },
                   "type": "reference"
                 },
+                "generatedName": "MeLikesResponseData",
                 "groupName": [],
                 "type": "array"
               },
-              "audiences": [],
-              "conflict": {},
-              "generatedName": "meLikesResponseData"
+              "audiences": []
             },
             {
+              "conflict": {},
+              "generatedName": "meLikesResponseLinks",
               "key": "links",
               "schema": {
                 "generatedName": "MeLikesResponseLinks",
@@ -1534,17 +1531,14 @@
                 "type": "reference"
               },
               "audiences": [],
-              "conflict": {},
-              "generatedName": "meLikesResponseLinks",
               "readonly": false,
               "writeonly": false
             }
           ],
-          "generatedName": "MeLikesResponse",
-          "allOf": [],
           "allOfPropertyConflicts": [],
+          "description": "A paginated result set",
+          "generatedName": "MeLikesResponse",
           "groupName": [],
-          "fullExamples": [],
           "additionalProperties": false,
           "source": {
             "file": "../openapi.yml",
@@ -1553,7 +1547,6 @@
           "type": "object"
         },
         "fullExamples": [],
-        "description": "A paginated result set",
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -1879,104 +1872,108 @@
       "headers": [],
       "generatedRequestName": "MeCommentsRequest",
       "response": {
+        "description": "A paginated result set",
         "schema": {
-          "description": "A paginated result set",
+          "allOf": [],
           "properties": [
             {
+              "conflict": {},
+              "generatedName": "meCommentsResponseData",
               "key": "data",
               "schema": {
-                "generatedName": "MeCommentsResponseData",
                 "value": {
+                  "allOf": [],
                   "properties": [
                     {
+                      "conflict": {},
+                      "generatedName": "meCommentsResponseDataItemComment",
                       "key": "comment",
                       "schema": {
-                        "generatedName": "MeCommentsResponseDataItemComment",
+                        "description": "Text of the given comment, in Markdown",
                         "schema": {
                           "type": "string"
                         },
-                        "description": "Text of the given comment, in Markdown",
+                        "generatedName": "MeCommentsResponseDataItemComment",
                         "groupName": [],
                         "type": "primitive"
                       },
-                      "audiences": [],
-                      "conflict": {},
-                      "generatedName": "meCommentsResponseDataItemComment"
+                      "audiences": []
                     },
                     {
+                      "conflict": {},
+                      "generatedName": "meCommentsResponseDataItemId",
                       "key": "id",
                       "schema": {
-                        "generatedName": "MeCommentsResponseDataItemId",
+                        "description": "The comment’s id",
                         "schema": {
                           "format": "uuid",
                           "type": "string"
                         },
-                        "description": "The comment’s id",
+                        "generatedName": "MeCommentsResponseDataItemId",
                         "groupName": [],
                         "type": "primitive"
                       },
-                      "audiences": [],
-                      "conflict": {},
-                      "generatedName": "meCommentsResponseDataItemId"
+                      "audiences": []
                     },
                     {
+                      "conflict": {},
+                      "generatedName": "meCommentsResponseDataItemCreatedAt",
                       "key": "createdAt",
                       "schema": {
-                        "generatedName": "MeCommentsResponseDataItemCreatedAt",
                         "schema": {
                           "type": "datetime"
                         },
+                        "generatedName": "MeCommentsResponseDataItemCreatedAt",
                         "groupName": [],
                         "type": "primitive"
                       },
-                      "audiences": [],
-                      "conflict": {},
-                      "generatedName": "meCommentsResponseDataItemCreatedAt"
+                      "audiences": []
                     },
                     {
+                      "conflict": {},
+                      "generatedName": "meCommentsResponseDataItemAuthor",
                       "key": "author",
                       "schema": {
+                        "allOf": [],
                         "properties": [
                           {
+                            "conflict": {},
+                            "generatedName": "meCommentsResponseDataItemAuthorId",
                             "key": "id",
                             "schema": {
-                              "generatedName": "MeCommentsResponseDataItemAuthorId",
                               "schema": {
                                 "format": "uuid",
                                 "type": "string"
                               },
+                              "generatedName": "MeCommentsResponseDataItemAuthorId",
                               "groupName": [],
                               "type": "primitive"
                             },
-                            "audiences": [],
-                            "conflict": {},
-                            "generatedName": "meCommentsResponseDataItemAuthorId"
+                            "audiences": []
                           },
                           {
+                            "conflict": {},
+                            "generatedName": "meCommentsResponseDataItemAuthorUsername",
                             "key": "username",
                             "schema": {
                               "generatedName": "MeCommentsResponseDataItemAuthorUsername",
                               "value": {
-                                "generatedName": "MeCommentsResponseDataItemAuthorUsername",
                                 "schema": {
                                   "type": "string"
                                 },
+                                "generatedName": "MeCommentsResponseDataItemAuthorUsername",
                                 "groupName": [],
                                 "type": "primitive"
                               },
                               "groupName": [],
                               "type": "nullable"
                             },
-                            "audiences": [],
-                            "conflict": {},
-                            "generatedName": "meCommentsResponseDataItemAuthorUsername"
+                            "audiences": []
                           }
                         ],
-                        "generatedName": "MeCommentsResponseDataItemAuthor",
-                        "allOf": [],
                         "allOfPropertyConflicts": [],
+                        "generatedName": "MeCommentsResponseDataItemAuthor",
                         "groupName": [],
-                        "fullExamples": [],
                         "additionalProperties": false,
                         "source": {
                           "file": "../openapi.yml",
@@ -1984,62 +1981,66 @@
                         },
                         "type": "object"
                       },
-                      "audiences": [],
-                      "conflict": {},
-                      "generatedName": "meCommentsResponseDataItemAuthor"
+                      "audiences": []
                     },
                     {
+                      "conflict": {},
+                      "generatedName": "meCommentsResponseDataItemVal",
                       "key": "val",
                       "schema": {
+                        "allOf": [],
                         "properties": [
                           {
+                            "conflict": {},
+                            "generatedName": "meCommentsResponseDataItemValName",
                             "key": "name",
                             "schema": {
-                              "generatedName": "MeCommentsResponseDataItemValName",
+                              "description": "Name of the val that is being commented on",
                               "schema": {
                                 "type": "string"
                               },
-                              "description": "Name of the val that is being commented on",
+                              "generatedName": "MeCommentsResponseDataItemValName",
                               "groupName": [],
                               "type": "primitive"
                             },
-                            "audiences": [],
-                            "conflict": {},
-                            "generatedName": "meCommentsResponseDataItemValName"
+                            "audiences": []
                           },
                           {
+                            "conflict": {},
+                            "generatedName": "meCommentsResponseDataItemValId",
                             "key": "id",
                             "schema": {
-                              "generatedName": "MeCommentsResponseDataItemValId",
                               "schema": {
                                 "format": "uuid",
                                 "type": "string"
                               },
+                              "generatedName": "MeCommentsResponseDataItemValId",
                               "groupName": [],
                               "type": "primitive"
                             },
-                            "audiences": [],
-                            "conflict": {},
-                            "generatedName": "meCommentsResponseDataItemValId"
+                            "audiences": []
                           },
                           {
+                            "conflict": {},
+                            "generatedName": "meCommentsResponseDataItemValVersion",
                             "key": "version",
                             "schema": {
-                              "generatedName": "MeCommentsResponseDataItemValVersion",
                               "schema": {
                                 "minimum": 0,
                                 "type": "int"
                               },
+                              "generatedName": "MeCommentsResponseDataItemValVersion",
                               "groupName": [],
                               "type": "primitive"
                             },
-                            "audiences": [],
-                            "conflict": {},
-                            "generatedName": "meCommentsResponseDataItemValVersion"
+                            "audiences": []
                           },
                           {
+                            "conflict": {},
+                            "generatedName": "meCommentsResponseDataItemValPrivacy",
                             "key": "privacy",
                             "schema": {
+                              "description": "This val’s privacy setting. Unlisted vals do not appear on profile pages or elsewhere, but you can link to them.",
                               "generatedName": "MeCommentsResponseDataItemValPrivacy",
                               "values": [
                                 {
@@ -2058,7 +2059,6 @@
                                   "casing": {}
                                 }
                               ],
-                              "description": "This val’s privacy setting. Unlisted vals do not appear on profile pages or elsewhere, but you can link to them.",
                               "groupName": [],
                               "source": {
                                 "file": "../openapi.yml",
@@ -2066,57 +2066,56 @@
                               },
                               "type": "enum"
                             },
-                            "audiences": [],
-                            "conflict": {},
-                            "generatedName": "meCommentsResponseDataItemValPrivacy"
+                            "audiences": []
                           },
                           {
+                            "conflict": {},
+                            "generatedName": "meCommentsResponseDataItemValAuthor",
                             "key": "author",
                             "schema": {
                               "generatedName": "MeCommentsResponseDataItemValAuthor",
                               "value": {
-                                "description": "The user who created this val",
+                                "allOf": [],
                                 "properties": [
                                   {
+                                    "conflict": {},
+                                    "generatedName": "meCommentsResponseDataItemValAuthorId",
                                     "key": "id",
                                     "schema": {
-                                      "generatedName": "MeCommentsResponseDataItemValAuthorId",
                                       "schema": {
                                         "format": "uuid",
                                         "type": "string"
                                       },
+                                      "generatedName": "MeCommentsResponseDataItemValAuthorId",
                                       "groupName": [],
                                       "type": "primitive"
                                     },
-                                    "audiences": [],
-                                    "conflict": {},
-                                    "generatedName": "meCommentsResponseDataItemValAuthorId"
+                                    "audiences": []
                                   },
                                   {
+                                    "conflict": {},
+                                    "generatedName": "meCommentsResponseDataItemValAuthorUsername",
                                     "key": "username",
                                     "schema": {
                                       "generatedName": "MeCommentsResponseDataItemValAuthorUsername",
                                       "value": {
-                                        "generatedName": "MeCommentsResponseDataItemValAuthorUsername",
                                         "schema": {
                                           "type": "string"
                                         },
+                                        "generatedName": "MeCommentsResponseDataItemValAuthorUsername",
                                         "groupName": [],
                                         "type": "primitive"
                                       },
                                       "groupName": [],
                                       "type": "nullable"
                                     },
-                                    "audiences": [],
-                                    "conflict": {},
-                                    "generatedName": "meCommentsResponseDataItemValAuthorUsername"
+                                    "audiences": []
                                   }
                                 ],
-                                "generatedName": "MeCommentsResponseDataItemValAuthor",
-                                "allOf": [],
                                 "allOfPropertyConflicts": [],
+                                "description": "The user who created this val",
+                                "generatedName": "MeCommentsResponseDataItemValAuthor",
                                 "groupName": [],
-                                "fullExamples": [],
                                 "additionalProperties": false,
                                 "source": {
                                   "file": "../openapi.yml",
@@ -2127,16 +2126,12 @@
                               "groupName": [],
                               "type": "nullable"
                             },
-                            "audiences": [],
-                            "conflict": {},
-                            "generatedName": "meCommentsResponseDataItemValAuthor"
+                            "audiences": []
                           }
                         ],
-                        "generatedName": "MeCommentsResponseDataItemVal",
-                        "allOf": [],
                         "allOfPropertyConflicts": [],
+                        "generatedName": "MeCommentsResponseDataItemVal",
                         "groupName": [],
-                        "fullExamples": [],
                         "additionalProperties": false,
                         "source": {
                           "file": "../openapi.yml",
@@ -2144,16 +2139,12 @@
                         },
                         "type": "object"
                       },
-                      "audiences": [],
-                      "conflict": {},
-                      "generatedName": "meCommentsResponseDataItemVal"
+                      "audiences": []
                     }
                   ],
-                  "generatedName": "MeCommentsResponseDataItem",
-                  "allOf": [],
                   "allOfPropertyConflicts": [],
+                  "generatedName": "MeCommentsResponseDataItem",
                   "groupName": [],
-                  "fullExamples": [],
                   "additionalProperties": false,
                   "source": {
                     "file": "../openapi.yml",
@@ -2161,14 +2152,15 @@
                   },
                   "type": "object"
                 },
+                "generatedName": "MeCommentsResponseData",
                 "groupName": [],
                 "type": "array"
               },
-              "audiences": [],
-              "conflict": {},
-              "generatedName": "meCommentsResponseData"
+              "audiences": []
             },
             {
+              "conflict": {},
+              "generatedName": "meCommentsResponseLinks",
               "key": "links",
               "schema": {
                 "generatedName": "MeCommentsResponseLinks",
@@ -2180,17 +2172,14 @@
                 "type": "reference"
               },
               "audiences": [],
-              "conflict": {},
-              "generatedName": "meCommentsResponseLinks",
               "readonly": false,
               "writeonly": false
             }
           ],
-          "generatedName": "MeCommentsResponse",
-          "allOf": [],
           "allOfPropertyConflicts": [],
+          "description": "A paginated result set",
+          "generatedName": "MeCommentsResponse",
           "groupName": [],
-          "fullExamples": [],
           "additionalProperties": false,
           "source": {
             "file": "../openapi.yml",
@@ -2199,7 +2188,6 @@
           "type": "object"
         },
         "fullExamples": [],
-        "description": "A paginated result set",
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -2480,99 +2468,102 @@
       "headers": [],
       "generatedRequestName": "MeReferencesRequest",
       "response": {
+        "description": "A paginated result set",
         "schema": {
-          "description": "A paginated result set",
+          "allOf": [],
           "properties": [
             {
+              "conflict": {},
+              "generatedName": "meReferencesResponseData",
               "key": "data",
               "schema": {
-                "generatedName": "MeReferencesResponseData",
                 "value": {
-                  "description": "A description of a dependency from one val (reference) to another (dependsOn) that was introduced at a particular time.",
+                  "allOf": [],
                   "properties": [
                     {
+                      "conflict": {},
+                      "generatedName": "meReferencesResponseDataItemReference",
                       "key": "reference",
                       "schema": {
-                        "description": "A val in a dependency relationship",
+                        "allOf": [],
                         "properties": [
                           {
+                            "conflict": {},
+                            "generatedName": "meReferencesResponseDataItemReferenceId",
                             "key": "id",
                             "schema": {
-                              "generatedName": "MeReferencesResponseDataItemReferenceId",
+                              "description": "The id of this val",
                               "schema": {
                                 "format": "uuid",
                                 "type": "string"
                               },
-                              "description": "The id of this val",
+                              "generatedName": "MeReferencesResponseDataItemReferenceId",
                               "groupName": [],
                               "type": "primitive"
                             },
-                            "audiences": [],
-                            "conflict": {},
-                            "generatedName": "meReferencesResponseDataItemReferenceId"
+                            "audiences": []
                           },
                           {
+                            "conflict": {},
+                            "generatedName": "meReferencesResponseDataItemReferenceUsername",
                             "key": "username",
                             "schema": {
                               "generatedName": "MeReferencesResponseDataItemReferenceUsername",
                               "value": {
-                                "generatedName": "MeReferencesResponseDataItemReferenceUsername",
+                                "description": "The username of the person who authored this val",
                                 "schema": {
                                   "type": "string"
                                 },
-                                "description": "The username of the person who authored this val",
+                                "generatedName": "MeReferencesResponseDataItemReferenceUsername",
                                 "groupName": [],
                                 "type": "primitive"
                               },
                               "groupName": [],
                               "type": "nullable"
                             },
-                            "audiences": [],
-                            "conflict": {},
-                            "generatedName": "meReferencesResponseDataItemReferenceUsername"
+                            "audiences": []
                           },
                           {
+                            "conflict": {},
+                            "generatedName": "meReferencesResponseDataItemReferenceAuthorId",
                             "key": "author_id",
                             "schema": {
                               "generatedName": "MeReferencesResponseDataItemReferenceAuthorId",
                               "value": {
-                                "generatedName": "MeReferencesResponseDataItemReferenceAuthorId",
+                                "description": "The ID of the person who authored this val",
                                 "schema": {
                                   "format": "uuid",
                                   "type": "string"
                                 },
-                                "description": "The ID of the person who authored this val",
+                                "generatedName": "MeReferencesResponseDataItemReferenceAuthorId",
                                 "groupName": [],
                                 "type": "primitive"
                               },
                               "groupName": [],
                               "type": "nullable"
                             },
-                            "audiences": [],
-                            "conflict": {},
-                            "generatedName": "meReferencesResponseDataItemReferenceAuthorId"
+                            "audiences": []
                           },
                           {
+                            "conflict": {},
+                            "generatedName": "meReferencesResponseDataItemReferenceName",
                             "key": "name",
                             "schema": {
-                              "generatedName": "MeReferencesResponseDataItemReferenceName",
+                              "description": "The name of this val",
                               "schema": {
                                 "type": "string"
                               },
-                              "description": "The name of this val",
+                              "generatedName": "MeReferencesResponseDataItemReferenceName",
                               "groupName": [],
                               "type": "primitive"
                             },
-                            "audiences": [],
-                            "conflict": {},
-                            "generatedName": "meReferencesResponseDataItemReferenceName"
+                            "audiences": []
                           }
                         ],
-                        "generatedName": "MeReferencesResponseDataItemReference",
-                        "allOf": [],
                         "allOfPropertyConflicts": [],
+                        "description": "A val in a dependency relationship",
+                        "generatedName": "MeReferencesResponseDataItemReference",
                         "groupName": [],
-                        "fullExamples": [],
                         "additionalProperties": false,
                         "source": {
                           "file": "../openapi.yml",
@@ -2580,93 +2571,92 @@
                         },
                         "type": "object"
                       },
-                      "audiences": [],
-                      "conflict": {},
-                      "generatedName": "meReferencesResponseDataItemReference"
+                      "audiences": []
                     },
                     {
+                      "conflict": {},
+                      "generatedName": "meReferencesResponseDataItemDependsOn",
                       "key": "dependsOn",
                       "schema": {
-                        "description": "A val in a dependency relationship",
+                        "allOf": [],
                         "properties": [
                           {
+                            "conflict": {},
+                            "generatedName": "meReferencesResponseDataItemDependsOnId",
                             "key": "id",
                             "schema": {
-                              "generatedName": "MeReferencesResponseDataItemDependsOnId",
+                              "description": "The id of this val",
                               "schema": {
                                 "format": "uuid",
                                 "type": "string"
                               },
-                              "description": "The id of this val",
+                              "generatedName": "MeReferencesResponseDataItemDependsOnId",
                               "groupName": [],
                               "type": "primitive"
                             },
-                            "audiences": [],
-                            "conflict": {},
-                            "generatedName": "meReferencesResponseDataItemDependsOnId"
+                            "audiences": []
                           },
                           {
+                            "conflict": {},
+                            "generatedName": "meReferencesResponseDataItemDependsOnUsername",
                             "key": "username",
                             "schema": {
                               "generatedName": "MeReferencesResponseDataItemDependsOnUsername",
                               "value": {
-                                "generatedName": "MeReferencesResponseDataItemDependsOnUsername",
+                                "description": "The username of the person who authored this val",
                                 "schema": {
                                   "type": "string"
                                 },
-                                "description": "The username of the person who authored this val",
+                                "generatedName": "MeReferencesResponseDataItemDependsOnUsername",
                                 "groupName": [],
                                 "type": "primitive"
                               },
                               "groupName": [],
                               "type": "nullable"
                             },
-                            "audiences": [],
-                            "conflict": {},
-                            "generatedName": "meReferencesResponseDataItemDependsOnUsername"
+                            "audiences": []
                           },
                           {
+                            "conflict": {},
+                            "generatedName": "meReferencesResponseDataItemDependsOnAuthorId",
                             "key": "author_id",
                             "schema": {
                               "generatedName": "MeReferencesResponseDataItemDependsOnAuthorId",
                               "value": {
-                                "generatedName": "MeReferencesResponseDataItemDependsOnAuthorId",
+                                "description": "The ID of the person who authored this val",
                                 "schema": {
                                   "format": "uuid",
                                   "type": "string"
                                 },
-                                "description": "The ID of the person who authored this val",
+                                "generatedName": "MeReferencesResponseDataItemDependsOnAuthorId",
                                 "groupName": [],
                                 "type": "primitive"
                               },
                               "groupName": [],
                               "type": "nullable"
                             },
-                            "audiences": [],
-                            "conflict": {},
-                            "generatedName": "meReferencesResponseDataItemDependsOnAuthorId"
+                            "audiences": []
                           },
                           {
+                            "conflict": {},
+                            "generatedName": "meReferencesResponseDataItemDependsOnName",
                             "key": "name",
                             "schema": {
-                              "generatedName": "MeReferencesResponseDataItemDependsOnName",
+                              "description": "The name of this val",
                               "schema": {
                                 "type": "string"
                               },
-                              "description": "The name of this val",
+                              "generatedName": "MeReferencesResponseDataItemDependsOnName",
                               "groupName": [],
                               "type": "primitive"
                             },
-                            "audiences": [],
-                            "conflict": {},
-                            "generatedName": "meReferencesResponseDataItemDependsOnName"
+                            "audiences": []
                           }
                         ],
-                        "generatedName": "MeReferencesResponseDataItemDependsOn",
-                        "allOf": [],
                         "allOfPropertyConflicts": [],
+                        "description": "A val in a dependency relationship",
+                        "generatedName": "MeReferencesResponseDataItemDependsOn",
                         "groupName": [],
-                        "fullExamples": [],
                         "additionalProperties": false,
                         "source": {
                           "file": "../openapi.yml",
@@ -2674,30 +2664,27 @@
                         },
                         "type": "object"
                       },
-                      "audiences": [],
-                      "conflict": {},
-                      "generatedName": "meReferencesResponseDataItemDependsOn"
+                      "audiences": []
                     },
                     {
+                      "conflict": {},
+                      "generatedName": "meReferencesResponseDataItemReferencedAt",
                       "key": "referencedAt",
                       "schema": {
-                        "generatedName": "MeReferencesResponseDataItemReferencedAt",
                         "schema": {
                           "type": "datetime"
                         },
+                        "generatedName": "MeReferencesResponseDataItemReferencedAt",
                         "groupName": [],
                         "type": "primitive"
                       },
-                      "audiences": [],
-                      "conflict": {},
-                      "generatedName": "meReferencesResponseDataItemReferencedAt"
+                      "audiences": []
                     }
                   ],
-                  "generatedName": "MeReferencesResponseDataItem",
-                  "allOf": [],
                   "allOfPropertyConflicts": [],
+                  "description": "A description of a dependency from one val (reference) to another (dependsOn) that was introduced at a particular time.",
+                  "generatedName": "MeReferencesResponseDataItem",
                   "groupName": [],
-                  "fullExamples": [],
                   "additionalProperties": false,
                   "source": {
                     "file": "../openapi.yml",
@@ -2705,14 +2692,15 @@
                   },
                   "type": "object"
                 },
+                "generatedName": "MeReferencesResponseData",
                 "groupName": [],
                 "type": "array"
               },
-              "audiences": [],
-              "conflict": {},
-              "generatedName": "meReferencesResponseData"
+              "audiences": []
             },
             {
+              "conflict": {},
+              "generatedName": "meReferencesResponseLinks",
               "key": "links",
               "schema": {
                 "generatedName": "MeReferencesResponseLinks",
@@ -2724,17 +2712,14 @@
                 "type": "reference"
               },
               "audiences": [],
-              "conflict": {},
-              "generatedName": "meReferencesResponseLinks",
               "readonly": false,
               "writeonly": false
             }
           ],
-          "generatedName": "MeReferencesResponse",
-          "allOf": [],
           "allOfPropertyConflicts": [],
+          "description": "A paginated result set",
+          "generatedName": "MeReferencesResponse",
           "groupName": [],
-          "fullExamples": [],
           "additionalProperties": false,
           "source": {
             "file": "../openapi.yml",
@@ -2743,7 +2728,6 @@
           "type": "object"
         },
         "fullExamples": [],
-        "description": "A paginated result set",
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -2947,74 +2931,74 @@
       "headers": [],
       "generatedRequestName": "BlobsListRequest",
       "response": {
+        "description": "List of blobs that you’ve stored",
         "schema": {
-          "generatedName": "BlobsListResponse",
+          "description": "List of blobs that you’ve stored",
           "value": {
+            "allOf": [],
             "properties": [
               {
+                "conflict": {},
+                "generatedName": "blobsListResponseItemKey",
                 "key": "key",
                 "schema": {
-                  "generatedName": "BlobsListResponseItemKey",
                   "schema": {
                     "type": "string"
                   },
+                  "generatedName": "BlobsListResponseItemKey",
                   "groupName": [],
                   "type": "primitive"
                 },
-                "audiences": [],
-                "conflict": {},
-                "generatedName": "blobsListResponseItemKey"
+                "audiences": []
               },
               {
+                "conflict": {},
+                "generatedName": "blobsListResponseItemSize",
                 "key": "size",
                 "schema": {
                   "generatedName": "BlobsListResponseItemSize",
+                  "description": "Size in bytes of the object",
                   "value": {
-                    "generatedName": "BlobsListResponseItemSize",
+                    "description": "Size in bytes of the object",
                     "schema": {
                       "type": "int"
                     },
-                    "description": "Size in bytes of the object",
+                    "generatedName": "BlobsListResponseItemSize",
                     "groupName": [],
                     "type": "primitive"
                   },
                   "groupName": [],
-                  "description": "Size in bytes of the object",
                   "type": "optional"
                 },
-                "audiences": [],
-                "conflict": {},
-                "generatedName": "blobsListResponseItemSize"
+                "audiences": []
               },
               {
+                "conflict": {},
+                "generatedName": "blobsListResponseItemLastModified",
                 "key": "lastModified",
                 "schema": {
                   "generatedName": "BlobsListResponseItemLastModified",
+                  "description": "Creation date of the object",
                   "value": {
-                    "generatedName": "BlobsListResponseItemLastModified",
+                    "description": "Creation date of the object",
                     "schema": {
                       "type": "datetime"
                     },
-                    "description": "Creation date of the object",
+                    "generatedName": "BlobsListResponseItemLastModified",
                     "groupName": [],
                     "type": "primitive"
                   },
                   "groupName": [],
-                  "description": "Creation date of the object",
                   "type": "optional"
                 },
-                "audiences": [],
-                "conflict": {},
-                "generatedName": "blobsListResponseItemLastModified"
+                "audiences": []
               }
             ],
-            "nameOverride": "BlobListingItem",
-            "generatedName": "BlobsListResponseItem",
-            "title": "BlobListingItem",
-            "allOf": [],
             "allOfPropertyConflicts": [],
+            "generatedName": "BlobsListResponseItem",
+            "nameOverride": "BlobListingItem",
+            "title": "BlobListingItem",
             "groupName": [],
-            "fullExamples": [],
             "additionalProperties": false,
             "source": {
               "file": "../openapi.yml",
@@ -3022,7 +3006,7 @@
             },
             "type": "object"
           },
-          "description": "List of blobs that you’ve stored",
+          "generatedName": "BlobsListResponse",
           "groupName": [],
           "type": "array"
         },
@@ -3037,7 +3021,6 @@
             ]
           }
         ],
-        "description": "List of blobs that you’ve stored",
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -3347,6 +3330,7 @@
       "headers": [],
       "generatedRequestName": "UsersGetRequest",
       "response": {
+        "description": "Default Response",
         "schema": {
           "generatedName": "UsersGetResponse",
           "schema": "User",
@@ -3357,7 +3341,6 @@
           "type": "reference"
         },
         "fullExamples": [],
-        "description": "Default Response",
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -3518,13 +3501,15 @@
       "headers": [],
       "generatedRequestName": "UsersValsRequest",
       "response": {
+        "description": "A paginated result set",
         "schema": {
-          "description": "A paginated result set",
+          "allOf": [],
           "properties": [
             {
+              "conflict": {},
+              "generatedName": "usersValsResponseData",
               "key": "data",
               "schema": {
-                "generatedName": "UsersValsResponseData",
                 "value": {
                   "generatedName": "UsersValsResponseDataItem",
                   "schema": "BasicVal",
@@ -3534,14 +3519,15 @@
                   },
                   "type": "reference"
                 },
+                "generatedName": "UsersValsResponseData",
                 "groupName": [],
                 "type": "array"
               },
-              "audiences": [],
-              "conflict": {},
-              "generatedName": "usersValsResponseData"
+              "audiences": []
             },
             {
+              "conflict": {},
+              "generatedName": "usersValsResponseLinks",
               "key": "links",
               "schema": {
                 "generatedName": "UsersValsResponseLinks",
@@ -3553,17 +3539,14 @@
                 "type": "reference"
               },
               "audiences": [],
-              "conflict": {},
-              "generatedName": "usersValsResponseLinks",
               "readonly": false,
               "writeonly": false
             }
           ],
-          "generatedName": "UsersValsResponse",
-          "allOf": [],
           "allOfPropertyConflicts": [],
+          "description": "A paginated result set",
+          "generatedName": "UsersValsResponse",
           "groupName": [],
-          "fullExamples": [],
           "additionalProperties": false,
           "source": {
             "file": "../openapi.yml",
@@ -3572,7 +3555,6 @@
           "type": "object"
         },
         "fullExamples": [],
-        "description": "A paginated result set",
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -4035,6 +4017,7 @@
         "type": "json"
       },
       "response": {
+        "description": "Default Response",
         "schema": {
           "generatedName": "SqliteExecuteResponse",
           "schema": "ResultSet",
@@ -4045,7 +4028,6 @@
           "type": "reference"
         },
         "fullExamples": [],
-        "description": "Default Response",
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -4565,8 +4547,9 @@
         "type": "json"
       },
       "response": {
+        "description": "Array of results from the statements executed",
         "schema": {
-          "generatedName": "SqliteBatchResponse",
+          "description": "Array of results from the statements executed",
           "value": {
             "generatedName": "SqliteBatchResponseItem",
             "schema": "ResultSet",
@@ -4576,7 +4559,7 @@
             },
             "type": "reference"
           },
-          "description": "Array of results from the statements executed",
+          "generatedName": "SqliteBatchResponse",
           "groupName": [],
           "type": "array"
         },
@@ -4601,7 +4584,6 @@
             ]
           }
         ],
-        "description": "Array of results from the statements executed",
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -4808,6 +4790,7 @@
         "type": "json"
       },
       "response": {
+        "description": "Default Response",
         "schema": {
           "generatedName": "EvalPostResponse",
           "value": {
@@ -4815,51 +4798,52 @@
               "generatedName": "EvalPostResponse",
               "schemas": [
                 {
-                  "generatedName": "EvalPostResponse",
                   "schema": {
                     "type": "string"
                   },
+                  "generatedName": "EvalPostResponse",
                   "groupName": [],
                   "type": "primitive"
                 },
                 {
-                  "generatedName": "EvalPostResponse",
                   "schema": {
                     "type": "double"
                   },
+                  "generatedName": "EvalPostResponse",
                   "groupName": [],
                   "type": "primitive"
                 },
                 {
-                  "generatedName": "EvalPostResponseTwo",
                   "key": {
-                    "generatedName": "EvalPostResponseTwoKey",
                     "schema": {
                       "type": "string"
-                    }
+                    },
+                    "generatedName": "EvalPostResponseTwoKey",
+                    "groupName": [],
+                    "type": "primitive"
                   },
                   "value": {
                     "generatedName": "EvalPostResponseTwoValue",
                     "type": "unknown"
                   },
+                  "generatedName": "EvalPostResponseTwo",
                   "groupName": [],
                   "type": "map"
                 },
                 {
-                  "generatedName": "EvalPostResponse",
                   "value": {
                     "generatedName": "EvalPostResponse",
-                    "groupName": [],
                     "type": "unknown"
                   },
+                  "generatedName": "EvalPostResponse",
                   "groupName": [],
                   "type": "array"
                 },
                 {
-                  "generatedName": "EvalPostResponse",
                   "schema": {
                     "type": "boolean"
                   },
+                  "generatedName": "EvalPostResponse",
                   "groupName": [],
                   "type": "primitive"
                 }
@@ -4877,7 +4861,6 @@
           "type": "nullable"
         },
         "fullExamples": [],
-        "description": "Default Response",
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -5099,6 +5082,7 @@
       "headers": [],
       "generatedRequestName": "EvalGetRequest",
       "response": {
+        "description": "Default Response",
         "schema": {
           "generatedName": "EvalGetResponse",
           "value": {
@@ -5106,51 +5090,52 @@
               "generatedName": "EvalGetResponse",
               "schemas": [
                 {
-                  "generatedName": "EvalGetResponse",
                   "schema": {
                     "type": "string"
                   },
+                  "generatedName": "EvalGetResponse",
                   "groupName": [],
                   "type": "primitive"
                 },
                 {
-                  "generatedName": "EvalGetResponse",
                   "schema": {
                     "type": "double"
                   },
+                  "generatedName": "EvalGetResponse",
                   "groupName": [],
                   "type": "primitive"
                 },
                 {
-                  "generatedName": "EvalGetResponseTwo",
                   "key": {
-                    "generatedName": "EvalGetResponseTwoKey",
                     "schema": {
                       "type": "string"
-                    }
+                    },
+                    "generatedName": "EvalGetResponseTwoKey",
+                    "groupName": [],
+                    "type": "primitive"
                   },
                   "value": {
                     "generatedName": "EvalGetResponseTwoValue",
                     "type": "unknown"
                   },
+                  "generatedName": "EvalGetResponseTwo",
                   "groupName": [],
                   "type": "map"
                 },
                 {
-                  "generatedName": "EvalGetResponse",
                   "value": {
                     "generatedName": "EvalGetResponse",
-                    "groupName": [],
                     "type": "unknown"
                   },
+                  "generatedName": "EvalGetResponse",
                   "groupName": [],
                   "type": "array"
                 },
                 {
-                  "generatedName": "EvalGetResponse",
                   "schema": {
                     "type": "boolean"
                   },
+                  "generatedName": "EvalGetResponse",
                   "groupName": [],
                   "type": "primitive"
                 }
@@ -5168,7 +5153,6 @@
           "type": "nullable"
         },
         "fullExamples": [],
-        "description": "Default Response",
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -6542,29 +6526,29 @@
         "type": "json"
       },
       "response": {
+        "description": "Successfully sent email",
         "schema": {
-          "description": "Successfully sent email",
+          "allOf": [],
           "properties": [
             {
+              "conflict": {},
+              "generatedName": "emailsSendResponseMessage",
               "key": "message",
               "schema": {
-                "generatedName": "EmailsSendResponseMessage",
                 "schema": {
                   "type": "string"
                 },
+                "generatedName": "EmailsSendResponseMessage",
                 "groupName": [],
                 "type": "primitive"
               },
-              "audiences": [],
-              "conflict": {},
-              "generatedName": "emailsSendResponseMessage"
+              "audiences": []
             }
           ],
-          "generatedName": "EmailsSendResponse",
-          "allOf": [],
           "allOfPropertyConflicts": [],
+          "description": "Successfully sent email",
+          "generatedName": "EmailsSendResponse",
           "groupName": [],
-          "fullExamples": [],
           "additionalProperties": false,
           "source": {
             "file": "../openapi.yml",
@@ -6573,7 +6557,6 @@
           "type": "object"
         },
         "fullExamples": [],
-        "description": "Successfully sent email",
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -6891,6 +6874,7 @@
         "type": "json"
       },
       "response": {
+        "description": "Default Response",
         "schema": {
           "generatedName": "ValsCreateResponse",
           "schema": "ExtendedVal",
@@ -6901,7 +6885,6 @@
           "type": "reference"
         },
         "fullExamples": [],
-        "description": "Default Response",
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -7248,6 +7231,7 @@
       "headers": [],
       "generatedRequestName": "ValsGetRequest",
       "response": {
+        "description": "Default Response",
         "schema": {
           "generatedName": "ValsGetResponse",
           "schema": "ExtendedVal",
@@ -7258,7 +7242,6 @@
           "type": "reference"
         },
         "fullExamples": [],
-        "description": "Default Response",
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -7847,67 +7830,68 @@
       "headers": [],
       "generatedRequestName": "ValsListRequest",
       "response": {
+        "description": "A paginated result set",
         "schema": {
-          "description": "A paginated result set",
+          "allOf": [],
           "properties": [
             {
+              "conflict": {},
+              "generatedName": "valsListResponseData",
               "key": "data",
               "schema": {
-                "generatedName": "ValsListResponseData",
                 "value": {
+                  "allOf": [],
                   "properties": [
                     {
+                      "conflict": {},
+                      "generatedName": "valsListResponseDataItemValId",
                       "key": "val_id",
                       "schema": {
-                        "generatedName": "ValsListResponseDataItemValId",
+                        "description": "Id of a val",
                         "schema": {
                           "format": "uuid",
                           "type": "string"
                         },
-                        "description": "Id of a val",
+                        "generatedName": "ValsListResponseDataItemValId",
                         "groupName": [],
                         "type": "primitive"
                       },
-                      "audiences": [],
-                      "conflict": {},
-                      "generatedName": "valsListResponseDataItemValId"
+                      "audiences": []
                     },
                     {
+                      "conflict": {},
+                      "generatedName": "valsListResponseDataItemVersion",
                       "key": "version",
                       "schema": {
-                        "generatedName": "ValsListResponseDataItemVersion",
+                        "description": "Version of the val",
                         "schema": {
                           "minimum": 0,
                           "type": "int"
                         },
-                        "description": "Version of the val",
+                        "generatedName": "ValsListResponseDataItemVersion",
                         "groupName": [],
                         "type": "primitive"
                       },
-                      "audiences": [],
-                      "conflict": {},
-                      "generatedName": "valsListResponseDataItemVersion"
+                      "audiences": []
                     },
                     {
+                      "conflict": {},
+                      "generatedName": "valsListResponseDataItemCreatedAt",
                       "key": "createdAt",
                       "schema": {
-                        "generatedName": "ValsListResponseDataItemCreatedAt",
                         "schema": {
                           "type": "datetime"
                         },
+                        "generatedName": "ValsListResponseDataItemCreatedAt",
                         "groupName": [],
                         "type": "primitive"
                       },
-                      "audiences": [],
-                      "conflict": {},
-                      "generatedName": "valsListResponseDataItemCreatedAt"
+                      "audiences": []
                     }
                   ],
-                  "generatedName": "ValsListResponseDataItem",
-                  "allOf": [],
                   "allOfPropertyConflicts": [],
+                  "generatedName": "ValsListResponseDataItem",
                   "groupName": [],
-                  "fullExamples": [],
                   "additionalProperties": false,
                   "source": {
                     "file": "../openapi.yml",
@@ -7915,14 +7899,15 @@
                   },
                   "type": "object"
                 },
+                "generatedName": "ValsListResponseData",
                 "groupName": [],
                 "type": "array"
               },
-              "audiences": [],
-              "conflict": {},
-              "generatedName": "valsListResponseData"
+              "audiences": []
             },
             {
+              "conflict": {},
+              "generatedName": "valsListResponseLinks",
               "key": "links",
               "schema": {
                 "generatedName": "ValsListResponseLinks",
@@ -7934,17 +7919,14 @@
                 "type": "reference"
               },
               "audiences": [],
-              "conflict": {},
-              "generatedName": "valsListResponseLinks",
               "readonly": false,
               "writeonly": false
             }
           ],
-          "generatedName": "ValsListResponse",
-          "allOf": [],
           "allOfPropertyConflicts": [],
+          "description": "A paginated result set",
+          "generatedName": "ValsListResponse",
           "groupName": [],
-          "fullExamples": [],
           "additionalProperties": false,
           "source": {
             "file": "../openapi.yml",
@@ -7953,7 +7935,6 @@
           "type": "object"
         },
         "fullExamples": [],
-        "description": "A paginated result set",
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -8288,6 +8269,7 @@
         "type": "json"
       },
       "response": {
+        "description": "Default Response",
         "schema": {
           "generatedName": "ValsCreateVersionResponse",
           "schema": "ExtendedVal",
@@ -8298,7 +8280,6 @@
           "type": "reference"
         },
         "fullExamples": [],
-        "description": "Default Response",
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -8591,6 +8572,7 @@
       "headers": [],
       "generatedRequestName": "ValsGetVersionRequest",
       "response": {
+        "description": "Default Response",
         "schema": {
           "generatedName": "ValsGetVersionResponse",
           "schema": "ExtendedVal",
@@ -8601,7 +8583,6 @@
           "type": "reference"
         },
         "fullExamples": [],
-        "description": "Default Response",
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -8953,30 +8934,30 @@
       "headers": [],
       "generatedRequestName": "ValsCancelRequest",
       "response": {
+        "description": "The evaluation_id was successfully searched for and the evaluation was either already done or now has been cancelled",
         "schema": {
-          "description": "The evaluation_id was successfully searched for and the evaluation was either already done or now has been cancelled",
+          "allOf": [],
           "properties": [
             {
+              "conflict": {},
+              "generatedName": "valsCancelResponseFound",
               "key": "found",
               "schema": {
-                "generatedName": "ValsCancelResponseFound",
+                "description": "True if the evaluation was found and cancelled",
                 "schema": {
                   "type": "boolean"
                 },
-                "description": "True if the evaluation was found and cancelled",
+                "generatedName": "ValsCancelResponseFound",
                 "groupName": [],
                 "type": "primitive"
               },
-              "audiences": [],
-              "conflict": {},
-              "generatedName": "valsCancelResponseFound"
+              "audiences": []
             }
           ],
-          "generatedName": "ValsCancelResponse",
-          "allOf": [],
           "allOfPropertyConflicts": [],
+          "description": "The evaluation_id was successfully searched for and the evaluation was either already done or now has been cancelled",
+          "generatedName": "ValsCancelResponse",
           "groupName": [],
-          "fullExamples": [],
           "additionalProperties": false,
           "source": {
             "file": "../openapi.yml",
@@ -8985,7 +8966,6 @@
           "type": "object"
         },
         "fullExamples": [],
-        "description": "The evaluation_id was successfully searched for and the evaluation was either already done or now has been cancelled",
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"

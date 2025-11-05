@@ -16,37 +16,37 @@
       "headers": [],
       "generatedRequestName": "GetExampleRequest",
       "response": {
+        "description": "Successful response",
         "schema": {
           "value": {
             "generatedName": "GetExampleResponse",
             "schemas": [
               {
+                "allOf": [],
                 "properties": [
                   {
+                    "conflict": {},
+                    "generatedName": "notFoundMessage",
                     "key": "message",
                     "schema": {
                       "generatedName": "NotFoundMessage",
                       "value": {
-                        "generatedName": "NotFoundMessage",
                         "schema": {
                           "type": "string"
                         },
+                        "generatedName": "NotFoundMessage",
                         "groupName": [],
                         "type": "primitive"
                       },
                       "groupName": [],
                       "type": "optional"
                     },
-                    "audiences": [],
-                    "conflict": {},
-                    "generatedName": "notFoundMessage"
+                    "audiences": []
                   }
                 ],
-                "generatedName": "NotFound",
-                "allOf": [],
                 "allOfPropertyConflicts": [],
+                "generatedName": "NotFound",
                 "groupName": [],
-                "fullExamples": [],
                 "additionalProperties": false,
                 "source": {
                   "file": "../openapi.yml",
@@ -73,32 +73,31 @@
                 "type": "reference"
               },
               {
+                "allOf": [],
                 "properties": [
                   {
+                    "conflict": {},
+                    "generatedName": "getExampleResponseMessageMessage",
                     "key": "message",
                     "schema": {
                       "generatedName": "GetExampleResponseMessageMessage",
                       "value": {
-                        "generatedName": "GetExampleResponseMessageMessage",
                         "schema": {
                           "type": "string"
                         },
+                        "generatedName": "GetExampleResponseMessageMessage",
                         "groupName": [],
                         "type": "primitive"
                       },
                       "groupName": [],
                       "type": "optional"
                     },
-                    "audiences": [],
-                    "conflict": {},
-                    "generatedName": "getExampleResponseMessageMessage"
+                    "audiences": []
                   }
                 ],
-                "generatedName": "GetExampleResponseMessage",
-                "allOf": [],
                 "allOfPropertyConflicts": [],
+                "generatedName": "GetExampleResponseMessage",
                 "groupName": [],
-                "fullExamples": [],
                 "additionalProperties": false,
                 "source": {
                   "file": "../openapi.yml",
@@ -117,7 +116,6 @@
           "type": "oneOf"
         },
         "fullExamples": [],
-        "description": "Successful response",
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"

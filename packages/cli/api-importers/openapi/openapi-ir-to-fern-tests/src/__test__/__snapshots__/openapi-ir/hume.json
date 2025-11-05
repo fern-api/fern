@@ -182,8 +182,8 @@
       "headers": [],
       "generatedRequestName": "ListJobsRequest",
       "response": {
+        "description": "",
         "schema": {
-          "generatedName": "ListJobsResponse",
           "value": {
             "generatedName": "ListJobsResponseItem",
             "schema": "Job_Request",
@@ -193,11 +193,11 @@
             },
             "type": "reference"
           },
+          "generatedName": "ListJobsResponse",
           "groupName": [],
           "type": "array"
         },
         "fullExamples": [],
-        "description": "",
         "source": {
           "file": "../openapi.yaml",
           "type": "openapi"
@@ -400,6 +400,7 @@
         "type": "json"
       },
       "response": {
+        "description": "",
         "schema": {
           "generatedName": "StartJobResponse",
           "schema": "JobId",
@@ -410,7 +411,6 @@
           "type": "reference"
         },
         "fullExamples": [],
-        "description": "",
         "source": {
           "file": "../openapi.yaml",
           "type": "openapi"
@@ -491,8 +491,8 @@
       "headers": [],
       "generatedRequestName": "GetJobPredictionsRequest",
       "response": {
+        "description": "",
         "schema": {
-          "generatedName": "GetJobPredictionsResponse",
           "value": {
             "generatedName": "GetJobPredictionsResponseItem",
             "schema": "SourceResult",
@@ -502,11 +502,11 @@
             },
             "type": "reference"
           },
+          "generatedName": "GetJobPredictionsResponse",
           "groupName": [],
           "type": "array"
         },
         "fullExamples": [],
-        "description": "",
         "source": {
           "file": "../openapi.yaml",
           "type": "openapi"
@@ -725,6 +725,7 @@
       "headers": [],
       "generatedRequestName": "GetJobRequest",
       "response": {
+        "description": "",
         "schema": {
           "generatedName": "GetJobResponse",
           "schema": "Job_Request",
@@ -735,7 +736,6 @@
           "type": "reference"
         },
         "fullExamples": [],
-        "description": "",
         "source": {
           "file": "../openapi.yaml",
           "type": "openapi"

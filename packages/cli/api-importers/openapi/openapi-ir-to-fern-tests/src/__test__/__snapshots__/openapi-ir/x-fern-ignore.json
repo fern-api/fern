@@ -58,6 +58,7 @@
       "headers": [],
       "generatedRequestName": "ListRequest",
       "response": {
+        "description": "Success",
         "schema": {
           "generatedName": "ListResponse",
           "schema": "UsersResponse",
@@ -86,7 +87,6 @@
             }
           }
         ],
-        "description": "Success",
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"

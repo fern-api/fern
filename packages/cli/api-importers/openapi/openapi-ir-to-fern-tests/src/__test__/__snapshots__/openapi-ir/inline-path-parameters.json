@@ -119,38 +119,38 @@
       "headers": [],
       "generatedRequestName": "GetOrganizationUserRequest",
       "response": {
+        "description": "Successful response",
         "schema": {
+          "allOf": [],
           "properties": [
             {
+              "conflict": {},
+              "generatedName": "getOrganizationUserResponseResults",
               "key": "results",
               "schema": {
                 "generatedName": "GetOrganizationUserResponseResults",
                 "value": {
-                  "generatedName": "GetOrganizationUserResponseResults",
                   "value": {
-                    "generatedName": "GetOrganizationUserResponseResultsItem",
                     "schema": {
                       "type": "string"
                     },
+                    "generatedName": "GetOrganizationUserResponseResultsItem",
                     "groupName": [],
                     "type": "primitive"
                   },
+                  "generatedName": "GetOrganizationUserResponseResults",
                   "groupName": [],
                   "type": "array"
                 },
                 "groupName": [],
                 "type": "optional"
               },
-              "audiences": [],
-              "conflict": {},
-              "generatedName": "getOrganizationUserResponseResults"
+              "audiences": []
             }
           ],
-          "generatedName": "GetOrganizationUserResponse",
-          "allOf": [],
           "allOfPropertyConflicts": [],
+          "generatedName": "GetOrganizationUserResponse",
           "groupName": [],
-          "fullExamples": [],
           "additionalProperties": false,
           "source": {
             "file": "../openapi.yml",
@@ -159,7 +159,6 @@
           "type": "object"
         },
         "fullExamples": [],
-        "description": "Successful response",
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -341,38 +340,38 @@
         "type": "json"
       },
       "response": {
+        "description": "Successful response",
         "schema": {
+          "allOf": [],
           "properties": [
             {
+              "conflict": {},
+              "generatedName": "searchResponseResults",
               "key": "results",
               "schema": {
                 "generatedName": "SearchResponseResults",
                 "value": {
-                  "generatedName": "SearchResponseResults",
                   "value": {
-                    "generatedName": "SearchResponseResultsItem",
                     "schema": {
                       "type": "string"
                     },
+                    "generatedName": "SearchResponseResultsItem",
                     "groupName": [],
                     "type": "primitive"
                   },
+                  "generatedName": "SearchResponseResults",
                   "groupName": [],
                   "type": "array"
                 },
                 "groupName": [],
                 "type": "optional"
               },
-              "audiences": [],
-              "conflict": {},
-              "generatedName": "searchResponseResults"
+              "audiences": []
             }
           ],
-          "generatedName": "SearchResponse",
-          "allOf": [],
           "allOfPropertyConflicts": [],
+          "generatedName": "SearchResponse",
           "groupName": [],
-          "fullExamples": [],
           "additionalProperties": false,
           "source": {
             "file": "../openapi.yml",
@@ -381,7 +380,6 @@
           "type": "object"
         },
         "fullExamples": [],
-        "description": "Successful response",
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"

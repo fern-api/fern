@@ -65,16 +65,16 @@
         "type": "json"
       },
       "response": {
+        "description": "Success!",
         "schema": {
-          "generatedName": "SendResponse",
           "schema": {
             "type": "string"
           },
+          "generatedName": "SendResponse",
           "groupName": [],
           "type": "primitive"
         },
         "fullExamples": [],
-        "description": "Success!",
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"

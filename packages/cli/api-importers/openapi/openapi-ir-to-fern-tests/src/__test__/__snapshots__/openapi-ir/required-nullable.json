@@ -102,6 +102,7 @@
       "headers": [],
       "generatedRequestName": "GetFooRequest",
       "response": {
+        "description": "successful operation",
         "schema": {
           "generatedName": "GetFooResponse",
           "schema": "Foo",
@@ -112,7 +113,6 @@
           "type": "reference"
         },
         "fullExamples": [],
-        "description": "successful operation",
         "source": {
           "file": "../openapi.json",
           "type": "openapi"

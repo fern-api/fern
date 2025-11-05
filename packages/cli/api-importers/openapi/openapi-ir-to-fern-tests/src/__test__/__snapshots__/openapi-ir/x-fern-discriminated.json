@@ -59,6 +59,7 @@
         "type": "json"
       },
       "response": {
+        "description": "Success",
         "schema": {
           "value": {
             "generatedName": "PostTestResponse",
@@ -92,7 +93,6 @@
           "type": "oneOf"
         },
         "fullExamples": [],
-        "description": "Success",
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"

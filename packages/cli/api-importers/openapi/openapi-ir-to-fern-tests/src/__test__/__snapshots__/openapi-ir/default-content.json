@@ -38,6 +38,7 @@
       "headers": [],
       "generatedRequestName": "GenerateContentRequest",
       "response": {
+        "description": "Successful operation",
         "schema": {
           "generatedName": "GenerateContentResponse",
           "schema": "GenerateContentResponse",
@@ -48,7 +49,6 @@
           "type": "reference"
         },
         "fullExamples": [],
-        "description": "Successful operation",
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"

@@ -188,10 +188,13 @@
         "type": "json"
       },
       "response": {
+        "description": "",
         "schema": {
-          "description": "",
+          "allOf": [],
           "properties": [
             {
+              "conflict": {},
+              "generatedName": "startIgnitionResponseSuccess",
               "key": "success",
               "schema": {
                 "generatedName": "StartIgnitionResponseSuccess",
@@ -203,51 +206,50 @@
                 "type": "reference"
               },
               "audiences": [],
-              "conflict": {},
-              "generatedName": "startIgnitionResponseSuccess",
               "readonly": false,
               "writeonly": false
             },
             {
+              "conflict": {},
+              "generatedName": "startIgnitionResponseData",
               "key": "data",
               "schema": {
+                "allOf": [],
                 "properties": [
                   {
+                    "conflict": {},
+                    "generatedName": "startIgnitionResponseDataIgnitionUri",
                     "key": "ignitionUri",
                     "schema": {
-                      "generatedName": "StartIgnitionResponseDataIgnitionUri",
+                      "description": "The url you should direct the user to to link their account.",
                       "schema": {
                         "type": "string"
                       },
-                      "description": "The url you should direct the user to to link their account.",
+                      "generatedName": "StartIgnitionResponseDataIgnitionUri",
                       "groupName": [],
                       "type": "primitive"
                     },
-                    "audiences": [],
-                    "conflict": {},
-                    "generatedName": "startIgnitionResponseDataIgnitionUri"
+                    "audiences": []
                   },
                   {
+                    "conflict": {},
+                    "generatedName": "startIgnitionResponseDataIgnitionToken",
                     "key": "ignitionToken",
                     "schema": {
-                      "generatedName": "StartIgnitionResponseDataIgnitionToken",
+                      "description": "The unique ID for the ignition session.",
                       "schema": {
                         "type": "string"
                       },
-                      "description": "The unique ID for the ignition session.",
+                      "generatedName": "StartIgnitionResponseDataIgnitionToken",
                       "groupName": [],
                       "type": "primitive"
                     },
-                    "audiences": [],
-                    "conflict": {},
-                    "generatedName": "startIgnitionResponseDataIgnitionToken"
+                    "audiences": []
                   }
                 ],
-                "generatedName": "StartIgnitionResponseData",
-                "allOf": [],
                 "allOfPropertyConflicts": [],
+                "generatedName": "StartIgnitionResponseData",
                 "groupName": [],
-                "fullExamples": [],
                 "additionalProperties": false,
                 "source": {
                   "file": "../openapi.yml",
@@ -255,20 +257,13 @@
                 },
                 "type": "object"
               },
-              "audiences": [],
-              "conflict": {},
-              "generatedName": "startIgnitionResponseData"
+              "audiences": []
             }
           ],
-          "generatedName": "StartIgnitionResponse",
-          "allOf": [],
           "allOfPropertyConflicts": [],
+          "description": "",
+          "generatedName": "StartIgnitionResponse",
           "groupName": [],
-          "fullExamples": [
-            {
-              "name": "example-1"
-            }
-          ],
           "additionalProperties": false,
           "source": {
             "file": "../openapi.yml",
@@ -287,7 +282,6 @@
             }
           }
         ],
-        "description": "",
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -475,10 +469,13 @@
         "type": "json"
       },
       "response": {
+        "description": "",
         "schema": {
-          "description": "",
+          "allOf": [],
           "properties": [
             {
+              "conflict": {},
+              "generatedName": "exchangeTokenResponseSuccess",
               "key": "success",
               "schema": {
                 "generatedName": "ExchangeTokenResponseSuccess",
@@ -490,68 +487,66 @@
                 "type": "reference"
               },
               "audiences": [],
-              "conflict": {},
-              "generatedName": "exchangeTokenResponseSuccess",
               "readonly": false,
               "writeonly": false
             },
             {
+              "conflict": {},
+              "generatedName": "exchangeTokenResponseData",
               "key": "data",
               "schema": {
+                "allOf": [],
                 "properties": [
                   {
+                    "conflict": {},
+                    "generatedName": "exchangeTokenResponseDataAccessToken",
                     "key": "accessToken",
                     "schema": {
-                      "generatedName": "ExchangeTokenResponseDataAccessToken",
+                      "description": "The token required for access to the requested Account and Policy objects.",
                       "schema": {
                         "type": "string"
                       },
-                      "description": "The token required for access to the requested Account and Policy objects.",
+                      "generatedName": "ExchangeTokenResponseDataAccessToken",
                       "groupName": [],
                       "type": "primitive"
                     },
-                    "audiences": [],
-                    "conflict": {},
-                    "generatedName": "exchangeTokenResponseDataAccessToken"
+                    "audiences": []
                   },
                   {
+                    "conflict": {},
+                    "generatedName": "exchangeTokenResponseDataAccount",
                     "key": "account",
                     "schema": {
-                      "generatedName": "ExchangeTokenResponseDataAccount",
+                      "description": "The unique id for the Account object.",
                       "schema": {
                         "type": "string"
                       },
-                      "description": "The unique id for the Account object.",
+                      "generatedName": "ExchangeTokenResponseDataAccount",
                       "groupName": [],
                       "type": "primitive"
                     },
-                    "audiences": [],
-                    "conflict": {},
-                    "generatedName": "exchangeTokenResponseDataAccount"
+                    "audiences": []
                   },
                   {
+                    "conflict": {},
+                    "generatedName": "exchangeTokenResponseDataPolicies",
                     "key": "policies",
                     "schema": {
-                      "generatedName": "ExchangeTokenResponseDataPolicies",
+                      "description": "List of unique ids for the Policy objects. If Ignition is configured to select a single policy (as is the default), the list will only contain 1 item.",
                       "value": {
                         "generatedName": "ExchangeTokenResponseDataPolicies",
-                        "groupName": [],
                         "type": "unknown"
                       },
-                      "description": "List of unique ids for the Policy objects. If Ignition is configured to select a single policy (as is the default), the list will only contain 1 item.",
+                      "generatedName": "ExchangeTokenResponseDataPolicies",
                       "groupName": [],
                       "type": "array"
                     },
-                    "audiences": [],
-                    "conflict": {},
-                    "generatedName": "exchangeTokenResponseDataPolicies"
+                    "audiences": []
                   }
                 ],
-                "generatedName": "ExchangeTokenResponseData",
-                "allOf": [],
                 "allOfPropertyConflicts": [],
+                "generatedName": "ExchangeTokenResponseData",
                 "groupName": [],
-                "fullExamples": [],
                 "additionalProperties": false,
                 "source": {
                   "file": "../openapi.yml",
@@ -559,16 +554,13 @@
                 },
                 "type": "object"
               },
-              "audiences": [],
-              "conflict": {},
-              "generatedName": "exchangeTokenResponseData"
+              "audiences": []
             }
           ],
-          "generatedName": "ExchangeTokenResponse",
-          "allOf": [],
           "allOfPropertyConflicts": [],
+          "description": "",
+          "generatedName": "ExchangeTokenResponse",
           "groupName": [],
-          "fullExamples": [],
           "additionalProperties": false,
           "source": {
             "file": "../openapi.yml",
@@ -577,7 +569,6 @@
           "type": "object"
         },
         "fullExamples": [],
-        "description": "",
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -780,9 +771,13 @@
       ],
       "generatedRequestName": "GetAccountRequest",
       "response": {
+        "description": "",
         "schema": {
+          "allOf": [],
           "properties": [
             {
+              "conflict": {},
+              "generatedName": "getAccountResponseSuccess",
               "key": "success",
               "schema": {
                 "generatedName": "GetAccountResponseSuccess",
@@ -798,12 +793,12 @@
                 "type": "optional"
               },
               "audiences": [],
-              "conflict": {},
-              "generatedName": "getAccountResponseSuccess",
               "readonly": false,
               "writeonly": false
             },
             {
+              "conflict": {},
+              "generatedName": "getAccountResponseData",
               "key": "data",
               "schema": {
                 "generatedName": "GetAccountResponseData",
@@ -819,17 +814,13 @@
                 "type": "optional"
               },
               "audiences": [],
-              "conflict": {},
-              "generatedName": "getAccountResponseData",
               "readonly": false,
               "writeonly": false
             }
           ],
-          "generatedName": "GetAccountResponse",
-          "allOf": [],
           "allOfPropertyConflicts": [],
+          "generatedName": "GetAccountResponse",
           "groupName": [],
-          "fullExamples": [],
           "additionalProperties": false,
           "source": {
             "file": "../openapi.yml",
@@ -838,7 +829,6 @@
           "type": "object"
         },
         "fullExamples": [],
-        "description": "",
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -1089,9 +1079,13 @@
       ],
       "generatedRequestName": "GetPolicyRequest",
       "response": {
+        "description": "",
         "schema": {
+          "allOf": [],
           "properties": [
             {
+              "conflict": {},
+              "generatedName": "getPolicyResponseSuccess",
               "key": "success",
               "schema": {
                 "generatedName": "GetPolicyResponseSuccess",
@@ -1107,12 +1101,12 @@
                 "type": "optional"
               },
               "audiences": [],
-              "conflict": {},
-              "generatedName": "getPolicyResponseSuccess",
               "readonly": false,
               "writeonly": false
             },
             {
+              "conflict": {},
+              "generatedName": "getPolicyResponseData",
               "key": "data",
               "schema": {
                 "generatedName": "GetPolicyResponseData",
@@ -1128,17 +1122,13 @@
                 "type": "optional"
               },
               "audiences": [],
-              "conflict": {},
-              "generatedName": "getPolicyResponseData",
               "readonly": false,
               "writeonly": false
             }
           ],
-          "generatedName": "GetPolicyResponse",
-          "allOf": [],
           "allOfPropertyConflicts": [],
+          "generatedName": "GetPolicyResponse",
           "groupName": [],
-          "fullExamples": [],
           "additionalProperties": false,
           "source": {
             "file": "../openapi.yml",
@@ -1147,7 +1137,6 @@
           "type": "object"
         },
         "fullExamples": [],
-        "description": "",
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -1634,9 +1623,13 @@
       ],
       "generatedRequestName": "GetCarrierRequest",
       "response": {
+        "description": "",
         "schema": {
+          "allOf": [],
           "properties": [
             {
+              "conflict": {},
+              "generatedName": "getCarrierResponseSuccess",
               "key": "success",
               "schema": {
                 "generatedName": "GetCarrierResponseSuccess",
@@ -1652,12 +1645,12 @@
                 "type": "optional"
               },
               "audiences": [],
-              "conflict": {},
-              "generatedName": "getCarrierResponseSuccess",
               "readonly": false,
               "writeonly": false
             },
             {
+              "conflict": {},
+              "generatedName": "getCarrierResponseData",
               "key": "data",
               "schema": {
                 "generatedName": "GetCarrierResponseData",
@@ -1673,17 +1666,13 @@
                 "type": "optional"
               },
               "audiences": [],
-              "conflict": {},
-              "generatedName": "getCarrierResponseData",
               "readonly": false,
               "writeonly": false
             }
           ],
-          "generatedName": "GetCarrierResponse",
-          "allOf": [],
           "allOfPropertyConflicts": [],
+          "generatedName": "GetCarrierResponse",
           "groupName": [],
-          "fullExamples": [],
           "additionalProperties": false,
           "source": {
             "file": "../openapi.yml",
@@ -1692,7 +1681,6 @@
           "type": "object"
         },
         "fullExamples": [],
-        "description": "",
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -1907,9 +1895,13 @@
       ],
       "generatedRequestName": "GetCarriersRequest",
       "response": {
+        "description": "",
         "schema": {
+          "allOf": [],
           "properties": [
             {
+              "conflict": {},
+              "generatedName": "getCarriersResponseSuccess",
               "key": "success",
               "schema": {
                 "generatedName": "GetCarriersResponseSuccess",
@@ -1925,17 +1917,16 @@
                 "type": "optional"
               },
               "audiences": [],
-              "conflict": {},
-              "generatedName": "getCarriersResponseSuccess",
               "readonly": false,
               "writeonly": false
             },
             {
+              "conflict": {},
+              "generatedName": "getCarriersResponseData",
               "key": "data",
               "schema": {
                 "generatedName": "GetCarriersResponseData",
                 "value": {
-                  "generatedName": "GetCarriersResponseData",
                   "value": {
                     "generatedName": "GetCarriersResponseDataItem",
                     "schema": "Carrier",
@@ -1945,22 +1936,19 @@
                     },
                     "type": "reference"
                   },
+                  "generatedName": "GetCarriersResponseData",
                   "groupName": [],
                   "type": "array"
                 },
                 "groupName": [],
                 "type": "optional"
               },
-              "audiences": [],
-              "conflict": {},
-              "generatedName": "getCarriersResponseData"
+              "audiences": []
             }
           ],
-          "generatedName": "GetCarriersResponse",
-          "allOf": [],
           "allOfPropertyConflicts": [],
+          "generatedName": "GetCarriersResponse",
           "groupName": [],
-          "fullExamples": [],
           "additionalProperties": false,
           "source": {
             "file": "../openapi.yml",
@@ -1969,7 +1957,6 @@
           "type": "object"
         },
         "fullExamples": [],
-        "description": "",
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"

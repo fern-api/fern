@@ -15,6 +15,7 @@
       "headers": [],
       "generatedRequestName": "GetVndFernUserJsonVersion1Request",
       "response": {
+        "description": "Success",
         "schema": {
           "generatedName": "GetVndFernUserJsonVersion1Response",
           "schema": "Data",
@@ -25,7 +26,6 @@
           "type": "reference"
         },
         "fullExamples": [],
-        "description": "Success",
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -83,6 +83,7 @@
       "headers": [],
       "generatedRequestName": "GetApplicationJsonRequest",
       "response": {
+        "description": "Success",
         "schema": {
           "generatedName": "GetApplicationJsonResponse",
           "schema": "Data",
@@ -93,7 +94,6 @@
           "type": "reference"
         },
         "fullExamples": [],
-        "description": "Success",
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"

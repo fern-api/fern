@@ -122,16 +122,16 @@
         "type": "multipart"
       },
       "response": {
+        "description": "The sample response",
         "schema": {
-          "generatedName": "PostTestResponse",
           "schema": {
             "type": "string"
           },
+          "generatedName": "PostTestResponse",
           "groupName": [],
           "type": "primitive"
         },
         "fullExamples": [],
-        "description": "The sample response",
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -265,16 +265,16 @@
         "type": "json"
       },
       "response": {
+        "description": "The sample response",
         "schema": {
-          "generatedName": "PostExampleResponse",
           "schema": {
             "type": "string"
           },
+          "generatedName": "PostExampleResponse",
           "groupName": [],
           "type": "primitive"
         },
         "fullExamples": [],
-        "description": "The sample response",
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"

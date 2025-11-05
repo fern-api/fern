@@ -67,16 +67,16 @@
       ],
       "generatedRequestName": "GetUserRequest",
       "response": {
+        "description": "Success!",
         "schema": {
-          "generatedName": "GetUserResponse",
           "schema": {
             "type": "string"
           },
+          "generatedName": "GetUserResponse",
           "groupName": [],
           "type": "primitive"
         },
         "fullExamples": [],
-        "description": "Success!",
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"

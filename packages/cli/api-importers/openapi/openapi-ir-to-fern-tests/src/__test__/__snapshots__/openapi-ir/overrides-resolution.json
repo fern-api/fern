@@ -35,6 +35,7 @@
         "type": "json"
       },
       "response": {
+        "description": "User created successfully",
         "schema": {
           "generatedName": "PostUsersResponse",
           "schema": "User",
@@ -45,7 +46,6 @@
           "type": "reference"
         },
         "fullExamples": [],
-        "description": "User created successfully",
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -190,6 +190,7 @@
         "type": "json"
       },
       "response": {
+        "description": "User updated successfully",
         "schema": {
           "generatedName": "PutUsersResponse",
           "schema": "User",
@@ -200,7 +201,6 @@
           "type": "reference"
         },
         "fullExamples": [],
-        "description": "User updated successfully",
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"

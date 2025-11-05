@@ -175,9 +175,8 @@
       "headers": [],
       "generatedRequestName": "ListOrganizationsRequest",
       "response": {
+        "description": "Successful Response",
         "schema": {
-          "generatedName": "ListOrganizationsResponse",
-          "title": "Response List Organizations V2 Orgs Get",
           "value": {
             "generatedName": "ListOrganizationsResponseItem",
             "schema": "OrganizationRead",
@@ -187,11 +186,12 @@
             },
             "type": "reference"
           },
+          "generatedName": "ListOrganizationsResponse",
+          "title": "Response List Organizations V2 Orgs Get",
           "groupName": [],
           "type": "array"
         },
         "fullExamples": [],
-        "description": "Successful Response",
         "source": {
           "file": "../openapi.json",
           "type": "openapi"
@@ -378,6 +378,7 @@
         "type": "json"
       },
       "response": {
+        "description": "Successful Response",
         "schema": {
           "generatedName": "CreateOrganizationResponse",
           "schema": "OrganizationReadWithAPIKey",
@@ -388,7 +389,6 @@
           "type": "reference"
         },
         "fullExamples": [],
-        "description": "Successful Response",
         "source": {
           "file": "../openapi.json",
           "type": "openapi"
@@ -582,6 +582,7 @@
       "headers": [],
       "generatedRequestName": "GetOrganizationRequest",
       "response": {
+        "description": "Successful Response",
         "schema": {
           "generatedName": "GetOrganizationResponse",
           "schema": "OrganizationRead",
@@ -592,7 +593,6 @@
           "type": "reference"
         },
         "fullExamples": [],
-        "description": "Successful Response",
         "source": {
           "file": "../openapi.json",
           "type": "openapi"
@@ -875,6 +875,7 @@
         "type": "json"
       },
       "response": {
+        "description": "Successful Response",
         "schema": {
           "generatedName": "UpdateOrganizationResponse",
           "schema": "OrganizationRead",
@@ -885,7 +886,6 @@
           "type": "reference"
         },
         "fullExamples": [],
-        "description": "Successful Response",
         "source": {
           "file": "../openapi.json",
           "type": "openapi"
@@ -1042,6 +1042,7 @@
       "headers": [],
       "generatedRequestName": "GetActiveOrganizationRequest",
       "response": {
+        "description": "Successful Response",
         "schema": {
           "generatedName": "GetActiveOrganizationResponse",
           "schema": "OrganizationRead",
@@ -1052,7 +1053,6 @@
           "type": "reference"
         },
         "fullExamples": [],
-        "description": "Successful Response",
         "source": {
           "file": "../openapi.json",
           "type": "openapi"
@@ -1252,9 +1252,8 @@
       "headers": [],
       "generatedRequestName": "ListProjectsRequest",
       "response": {
+        "description": "Successful Response",
         "schema": {
-          "generatedName": "ListProjectsResponse",
-          "title": "Response List Projects V2 Projects Get",
           "value": {
             "generatedName": "ListProjectsResponseItem",
             "schema": "ProjectRead",
@@ -1264,11 +1263,12 @@
             },
             "type": "reference"
           },
+          "generatedName": "ListProjectsResponse",
+          "title": "Response List Projects V2 Projects Get",
           "groupName": [],
           "type": "array"
         },
         "fullExamples": [],
-        "description": "Successful Response",
         "source": {
           "file": "../openapi.json",
           "type": "openapi"
@@ -1476,6 +1476,7 @@
         "type": "json"
       },
       "response": {
+        "description": "Successful Response",
         "schema": {
           "generatedName": "CreateProjectResponse",
           "schema": "ProjectRead",
@@ -1486,7 +1487,6 @@
           "type": "reference"
         },
         "fullExamples": [],
-        "description": "Successful Response",
         "source": {
           "file": "../openapi.json",
           "type": "openapi"
@@ -1687,6 +1687,7 @@
       "headers": [],
       "generatedRequestName": "GetProjectRequest",
       "response": {
+        "description": "Successful Response",
         "schema": {
           "generatedName": "GetProjectResponse",
           "schema": "ProjectRead",
@@ -1697,7 +1698,6 @@
           "type": "reference"
         },
         "fullExamples": [],
-        "description": "Successful Response",
         "source": {
           "file": "../openapi.json",
           "type": "openapi"
@@ -2001,6 +2001,7 @@
         "type": "json"
       },
       "response": {
+        "description": "Successful Response",
         "schema": {
           "generatedName": "UpdateProjectResponse",
           "schema": "ProjectRead",
@@ -2011,7 +2012,6 @@
           "type": "reference"
         },
         "fullExamples": [],
-        "description": "Successful Response",
         "source": {
           "file": "../openapi.json",
           "type": "openapi"
@@ -2226,6 +2226,7 @@
       "headers": [],
       "generatedRequestName": "StatsEnvironmentsRequest",
       "response": {
+        "description": "Successful Response",
         "schema": {
           "generatedName": "StatsEnvironmentsResponse",
           "schema": "EnvironmentStats",
@@ -2236,7 +2237,6 @@
           "type": "reference"
         },
         "fullExamples": [],
-        "description": "Successful Response",
         "source": {
           "file": "../openapi.json",
           "type": "openapi"
@@ -2914,9 +2914,8 @@
       "headers": [],
       "generatedRequestName": "ListEnvironmentsRequest",
       "response": {
+        "description": "Successful Response",
         "schema": {
-          "generatedName": "ListEnvironmentsResponse",
-          "title": "Response List Environments V2 Projects  Proj Id  Envs Get",
           "value": {
             "generatedName": "ListEnvironmentsResponseItem",
             "schema": "EnvironmentRead",
@@ -2926,11 +2925,12 @@
             },
             "type": "reference"
           },
+          "generatedName": "ListEnvironmentsResponse",
+          "title": "Response List Environments V2 Projects  Proj Id  Envs Get",
           "groupName": [],
           "type": "array"
         },
         "fullExamples": [],
-        "description": "Successful Response",
         "source": {
           "file": "../openapi.json",
           "type": "openapi"
@@ -3199,6 +3199,7 @@
         "type": "json"
       },
       "response": {
+        "description": "Successful Response",
         "schema": {
           "generatedName": "CreateEnvironmentResponse",
           "schema": "EnvironmentRead",
@@ -3209,7 +3210,6 @@
           "type": "reference"
         },
         "fullExamples": [],
-        "description": "Successful Response",
         "source": {
           "file": "../openapi.json",
           "type": "openapi"
@@ -3470,6 +3470,7 @@
       "headers": [],
       "generatedRequestName": "GetEnvironmentRequest",
       "response": {
+        "description": "Successful Response",
         "schema": {
           "generatedName": "GetEnvironmentResponse",
           "schema": "EnvironmentRead",
@@ -3480,7 +3481,6 @@
           "type": "reference"
         },
         "fullExamples": [],
-        "description": "Successful Response",
         "source": {
           "file": "../openapi.json",
           "type": "openapi"
@@ -3871,6 +3871,7 @@
         "type": "json"
       },
       "response": {
+        "description": "Successful Response",
         "schema": {
           "generatedName": "UpdateEnvironmentResponse",
           "schema": "EnvironmentRead",
@@ -3881,7 +3882,6 @@
           "type": "reference"
         },
         "fullExamples": [],
-        "description": "Successful Response",
         "source": {
           "file": "../openapi.json",
           "type": "openapi"
@@ -4156,6 +4156,7 @@
         "type": "json"
       },
       "response": {
+        "description": "Successful Response",
         "schema": {
           "generatedName": "CopyEnvironmentResponse",
           "schema": "EnvironmentRead",
@@ -4166,7 +4167,6 @@
           "type": "reference"
         },
         "fullExamples": [],
-        "description": "Successful Response",
         "source": {
           "file": "../openapi.json",
           "type": "openapi"
@@ -4564,6 +4564,7 @@
       "headers": [],
       "generatedRequestName": "ListResourcesRequest",
       "response": {
+        "description": "Successful Response",
         "schema": {
           "value": {
             "generatedName": "ListResourcesResponse",
@@ -4579,7 +4580,6 @@
                 "type": "reference"
               },
               {
-                "generatedName": "ListResourcesResponse",
                 "value": {
                   "generatedName": "ListResourcesResponseItem",
                   "schema": "ResourceRead",
@@ -4589,6 +4589,7 @@
                   },
                   "type": "reference"
                 },
+                "generatedName": "ListResourcesResponse",
                 "groupName": [],
                 "type": "array"
               }
@@ -4603,7 +4604,6 @@
           "type": "oneOf"
         },
         "fullExamples": [],
-        "description": "Successful Response",
         "source": {
           "file": "../openapi.json",
           "type": "openapi"
@@ -5049,6 +5049,7 @@
         "type": "json"
       },
       "response": {
+        "description": "Successful Response",
         "schema": {
           "generatedName": "CreateResourceResponse",
           "schema": "ResourceRead",
@@ -5059,7 +5060,6 @@
           "type": "reference"
         },
         "fullExamples": [],
-        "description": "Successful Response",
         "source": {
           "file": "../openapi.json",
           "type": "openapi"
@@ -5672,6 +5672,7 @@
       "headers": [],
       "generatedRequestName": "GetResourceRequest",
       "response": {
+        "description": "Successful Response",
         "schema": {
           "generatedName": "GetResourceResponse",
           "schema": "ResourceRead",
@@ -5682,7 +5683,6 @@
           "type": "reference"
         },
         "fullExamples": [],
-        "description": "Successful Response",
         "source": {
           "file": "../openapi.json",
           "type": "openapi"
@@ -6221,6 +6221,7 @@
         "type": "json"
       },
       "response": {
+        "description": "Successful Response",
         "schema": {
           "generatedName": "ReplaceResourceResponse",
           "schema": "ResourceRead",
@@ -6231,7 +6232,6 @@
           "type": "reference"
         },
         "fullExamples": [],
-        "description": "Successful Response",
         "source": {
           "file": "../openapi.json",
           "type": "openapi"
@@ -6945,6 +6945,7 @@
         "type": "json"
       },
       "response": {
+        "description": "Successful Response",
         "schema": {
           "generatedName": "UpdateResourceResponse",
           "schema": "ResourceRead",
@@ -6955,7 +6956,6 @@
           "type": "reference"
         },
         "fullExamples": [],
-        "description": "Successful Response",
         "source": {
           "file": "../openapi.json",
           "type": "openapi"
@@ -7537,9 +7537,8 @@
       "headers": [],
       "generatedRequestName": "ListResourceActionsRequest",
       "response": {
+        "description": "Successful Response",
         "schema": {
-          "generatedName": "ListResourceActionsResponse",
-          "title": "Response List Resource Actions V2 Schema  Proj Id   Env Id  Resources  Resource Id  Actions Get",
           "value": {
             "generatedName": "ListResourceActionsResponseItem",
             "schema": "ResourceActionRead",
@@ -7549,11 +7548,12 @@
             },
             "type": "reference"
           },
+          "generatedName": "ListResourceActionsResponse",
+          "title": "Response List Resource Actions V2 Schema  Proj Id   Env Id  Resources  Resource Id  Actions Get",
           "groupName": [],
           "type": "array"
         },
         "fullExamples": [],
-        "description": "Successful Response",
         "source": {
           "file": "../openapi.json",
           "type": "openapi"
@@ -7861,6 +7861,7 @@
         "type": "json"
       },
       "response": {
+        "description": "Successful Response",
         "schema": {
           "generatedName": "CreateResourceActionResponse",
           "schema": "ResourceActionRead",
@@ -7871,7 +7872,6 @@
           "type": "reference"
         },
         "fullExamples": [],
-        "description": "Successful Response",
         "source": {
           "file": "../openapi.json",
           "type": "openapi"
@@ -8178,6 +8178,7 @@
       "headers": [],
       "generatedRequestName": "GetResourceActionRequest",
       "response": {
+        "description": "Successful Response",
         "schema": {
           "generatedName": "GetResourceActionResponse",
           "schema": "ResourceActionRead",
@@ -8188,7 +8189,6 @@
           "type": "reference"
         },
         "fullExamples": [],
-        "description": "Successful Response",
         "source": {
           "file": "../openapi.json",
           "type": "openapi"
@@ -8674,6 +8674,7 @@
         "type": "json"
       },
       "response": {
+        "description": "Successful Response",
         "schema": {
           "generatedName": "UpdateResourceActionResponse",
           "schema": "ResourceActionRead",
@@ -8684,7 +8685,6 @@
           "type": "reference"
         },
         "fullExamples": [],
-        "description": "Successful Response",
         "source": {
           "file": "../openapi.json",
           "type": "openapi"
@@ -9027,9 +9027,8 @@
       "headers": [],
       "generatedRequestName": "ListResourceActionGroupsRequest",
       "response": {
+        "description": "Successful Response",
         "schema": {
-          "generatedName": "ListResourceActionGroupsResponse",
-          "title": "Response List Resource Action Groups V2 Schema  Proj Id   Env Id  Resources  Resource Id  Action Groups Get",
           "value": {
             "generatedName": "ListResourceActionGroupsResponseItem",
             "schema": "ResourceActionGroupRead",
@@ -9039,11 +9038,12 @@
             },
             "type": "reference"
           },
+          "generatedName": "ListResourceActionGroupsResponse",
+          "title": "Response List Resource Action Groups V2 Schema  Proj Id   Env Id  Resources  Resource Id  Action Groups Get",
           "groupName": [],
           "type": "array"
         },
         "fullExamples": [],
-        "description": "Successful Response",
         "source": {
           "file": "../openapi.json",
           "type": "openapi"
@@ -9363,6 +9363,7 @@
         "type": "json"
       },
       "response": {
+        "description": "Successful Response",
         "schema": {
           "generatedName": "CreateResourceActionGroupResponse",
           "schema": "ResourceActionGroupRead",
@@ -9373,7 +9374,6 @@
           "type": "reference"
         },
         "fullExamples": [],
-        "description": "Successful Response",
         "source": {
           "file": "../openapi.json",
           "type": "openapi"
@@ -9711,6 +9711,7 @@
       "headers": [],
       "generatedRequestName": "GetResourceActionGroupRequest",
       "response": {
+        "description": "Successful Response",
         "schema": {
           "generatedName": "GetResourceActionGroupResponse",
           "schema": "ResourceActionGroupRead",
@@ -9721,7 +9722,6 @@
           "type": "reference"
         },
         "fullExamples": [],
-        "description": "Successful Response",
         "source": {
           "file": "../openapi.json",
           "type": "openapi"
@@ -10219,6 +10219,7 @@
         "type": "json"
       },
       "response": {
+        "description": "Successful Response",
         "schema": {
           "generatedName": "UpdateResourceActionGroupResponse",
           "schema": "ResourceActionGroupRead",
@@ -10229,7 +10230,6 @@
           "type": "reference"
         },
         "fullExamples": [],
-        "description": "Successful Response",
         "source": {
           "file": "../openapi.json",
           "type": "openapi"
@@ -10576,9 +10576,8 @@
       "headers": [],
       "generatedRequestName": "ListResourceRolesRequest",
       "response": {
+        "description": "Successful Response",
         "schema": {
-          "generatedName": "ListResourceRolesResponse",
-          "title": "Response List Resource Roles V2 Schema  Proj Id   Env Id  Resources  Resource Id  Roles Get",
           "value": {
             "generatedName": "ListResourceRolesResponseItem",
             "schema": "ResourceRoleRead",
@@ -10588,11 +10587,12 @@
             },
             "type": "reference"
           },
+          "generatedName": "ListResourceRolesResponse",
+          "title": "Response List Resource Roles V2 Schema  Proj Id   Env Id  Resources  Resource Id  Roles Get",
           "groupName": [],
           "type": "array"
         },
         "fullExamples": [],
-        "description": "Successful Response",
         "source": {
           "file": "../openapi.json",
           "type": "openapi"
@@ -10917,6 +10917,7 @@
         "type": "json"
       },
       "response": {
+        "description": "Successful Response",
         "schema": {
           "generatedName": "CreateResourceRoleResponse",
           "schema": "ResourceRoleRead",
@@ -10927,7 +10928,6 @@
           "type": "reference"
         },
         "fullExamples": [],
-        "description": "Successful Response",
         "source": {
           "file": "../openapi.json",
           "type": "openapi"
@@ -11275,6 +11275,7 @@
       "headers": [],
       "generatedRequestName": "GetResourceRoleRequest",
       "response": {
+        "description": "Successful Response",
         "schema": {
           "generatedName": "GetResourceRoleResponse",
           "schema": "ResourceRoleRead",
@@ -11285,7 +11286,6 @@
           "type": "reference"
         },
         "fullExamples": [],
-        "description": "Successful Response",
         "source": {
           "file": "../openapi.json",
           "type": "openapi"
@@ -11788,6 +11788,7 @@
         "type": "json"
       },
       "response": {
+        "description": "Successful Response",
         "schema": {
           "generatedName": "UpdateResourceRoleResponse",
           "schema": "ResourceRoleRead",
@@ -11798,7 +11799,6 @@
           "type": "reference"
         },
         "fullExamples": [],
-        "description": "Successful Response",
         "source": {
           "file": "../openapi.json",
           "type": "openapi"
@@ -12149,6 +12149,7 @@
         "type": "json"
       },
       "response": {
+        "description": "Successful Response",
         "schema": {
           "generatedName": "AssignPermissionsToResourceRoleResponse",
           "schema": "ResourceRoleRead",
@@ -12159,7 +12160,6 @@
           "type": "reference"
         },
         "fullExamples": [],
-        "description": "Successful Response",
         "source": {
           "file": "../openapi.json",
           "type": "openapi"
@@ -12503,6 +12503,7 @@
         "type": "json"
       },
       "response": {
+        "description": "Successful Response",
         "schema": {
           "generatedName": "RemovePermissionsFromResourceRoleResponse",
           "schema": "ResourceRoleRead",
@@ -12513,7 +12514,6 @@
           "type": "reference"
         },
         "fullExamples": [],
-        "description": "Successful Response",
         "source": {
           "file": "../openapi.json",
           "type": "openapi"
@@ -12838,6 +12838,7 @@
       "headers": [],
       "generatedRequestName": "GetResourceRoleAncestorsRequest",
       "response": {
+        "description": "Successful Response",
         "schema": {
           "generatedName": "GetResourceRoleAncestorsResponse",
           "schema": "ResourceRoleList",
@@ -12848,7 +12849,6 @@
           "type": "reference"
         },
         "fullExamples": [],
-        "description": "Successful Response",
         "source": {
           "file": "../openapi.json",
           "type": "openapi"
@@ -13165,6 +13165,7 @@
       "headers": [],
       "generatedRequestName": "GetResourceRoleDescendantsRequest",
       "response": {
+        "description": "Successful Response",
         "schema": {
           "generatedName": "GetResourceRoleDescendantsResponse",
           "schema": "ResourceRoleList",
@@ -13175,7 +13176,6 @@
           "type": "reference"
         },
         "fullExamples": [],
-        "description": "Successful Response",
         "source": {
           "file": "../openapi.json",
           "type": "openapi"
@@ -13532,9 +13532,8 @@
       "headers": [],
       "generatedRequestName": "ListResourceAttributesRequest",
       "response": {
+        "description": "Successful Response",
         "schema": {
-          "generatedName": "ListResourceAttributesResponse",
-          "title": "Response List Resource Attributes V2 Schema  Proj Id   Env Id  Resources  Resource Id  Attributes Get",
           "value": {
             "generatedName": "ListResourceAttributesResponseItem",
             "schema": "ResourceAttributeRead",
@@ -13544,11 +13543,12 @@
             },
             "type": "reference"
           },
+          "generatedName": "ListResourceAttributesResponse",
+          "title": "Response List Resource Attributes V2 Schema  Proj Id   Env Id  Resources  Resource Id  Attributes Get",
           "groupName": [],
           "type": "array"
         },
         "fullExamples": [],
-        "description": "Successful Response",
         "source": {
           "file": "../openapi.json",
           "type": "openapi"
@@ -13839,6 +13839,7 @@
         "type": "json"
       },
       "response": {
+        "description": "Successful Response",
         "schema": {
           "generatedName": "CreateResourceAttributeResponse",
           "schema": "ResourceAttributeRead",
@@ -13849,7 +13850,6 @@
           "type": "reference"
         },
         "fullExamples": [],
-        "description": "Successful Response",
         "source": {
           "file": "../openapi.json",
           "type": "openapi"
@@ -14136,6 +14136,7 @@
       "headers": [],
       "generatedRequestName": "GetResourceAttributeRequest",
       "response": {
+        "description": "Successful Response",
         "schema": {
           "generatedName": "GetResourceAttributeResponse",
           "schema": "ResourceAttributeRead",
@@ -14146,7 +14147,6 @@
           "type": "reference"
         },
         "fullExamples": [],
-        "description": "Successful Response",
         "source": {
           "file": "../openapi.json",
           "type": "openapi"
@@ -14694,6 +14694,7 @@
         "type": "json"
       },
       "response": {
+        "description": "Successful Response",
         "schema": {
           "generatedName": "UpdateResourceAttributeResponse",
           "schema": "ResourceAttributeRead",
@@ -14704,7 +14705,6 @@
           "type": "reference"
         },
         "fullExamples": [],
-        "description": "Successful Response",
         "source": {
           "file": "../openapi.json",
           "type": "openapi"
@@ -15035,9 +15035,8 @@
       "headers": [],
       "generatedRequestName": "ListUserAttributesRequest",
       "response": {
+        "description": "Successful Response",
         "schema": {
-          "generatedName": "ListUserAttributesResponse",
-          "title": "Response List User Attributes V2 Schema  Proj Id   Env Id  Users Attributes Get",
           "value": {
             "generatedName": "ListUserAttributesResponseItem",
             "schema": "ResourceAttributeRead",
@@ -15047,11 +15046,12 @@
             },
             "type": "reference"
           },
+          "generatedName": "ListUserAttributesResponse",
+          "title": "Response List User Attributes V2 Schema  Proj Id   Env Id  Users Attributes Get",
           "groupName": [],
           "type": "array"
         },
         "fullExamples": [],
-        "description": "Successful Response",
         "source": {
           "file": "../openapi.json",
           "type": "openapi"
@@ -15348,6 +15348,7 @@
         "type": "json"
       },
       "response": {
+        "description": "Successful Response",
         "schema": {
           "generatedName": "CreateUserAttributeResponse",
           "schema": "ResourceAttributeRead",
@@ -15358,7 +15359,6 @@
           "type": "reference"
         },
         "fullExamples": [],
-        "description": "Successful Response",
         "source": {
           "file": "../openapi.json",
           "type": "openapi"
@@ -15652,6 +15652,7 @@
       "headers": [],
       "generatedRequestName": "GetUserAttributeRequest",
       "response": {
+        "description": "Successful Response",
         "schema": {
           "generatedName": "GetUserAttributeResponse",
           "schema": "ResourceAttributeRead",
@@ -15662,7 +15663,6 @@
           "type": "reference"
         },
         "fullExamples": [],
-        "description": "Successful Response",
         "source": {
           "file": "../openapi.json",
           "type": "openapi"
@@ -16222,6 +16222,7 @@
         "type": "json"
       },
       "response": {
+        "description": "Successful Response",
         "schema": {
           "generatedName": "UpdateUserAttributeResponse",
           "schema": "ResourceAttributeRead",
@@ -16232,7 +16233,6 @@
           "type": "reference"
         },
         "fullExamples": [],
-        "description": "Successful Response",
         "source": {
           "file": "../openapi.json",
           "type": "openapi"
@@ -16594,6 +16594,7 @@
       "headers": [],
       "generatedRequestName": "ListRolesRequest",
       "response": {
+        "description": "Successful Response",
         "schema": {
           "value": {
             "generatedName": "ListRolesResponse",
@@ -16609,7 +16610,6 @@
                 "type": "reference"
               },
               {
-                "generatedName": "ListRolesResponse",
                 "value": {
                   "generatedName": "ListRolesResponseItem",
                   "schema": "RoleRead",
@@ -16619,6 +16619,7 @@
                   },
                   "type": "reference"
                 },
+                "generatedName": "ListRolesResponse",
                 "groupName": [],
                 "type": "array"
               }
@@ -16633,7 +16634,6 @@
           "type": "oneOf"
         },
         "fullExamples": [],
-        "description": "Successful Response",
         "source": {
           "file": "../openapi.json",
           "type": "openapi"
@@ -16962,6 +16962,7 @@
         "type": "json"
       },
       "response": {
+        "description": "Successful Response",
         "schema": {
           "generatedName": "CreateRoleResponse",
           "schema": "RoleRead",
@@ -16972,7 +16973,6 @@
           "type": "reference"
         },
         "fullExamples": [],
-        "description": "Successful Response",
         "source": {
           "file": "../openapi.json",
           "type": "openapi"
@@ -17285,6 +17285,7 @@
       "headers": [],
       "generatedRequestName": "GetRoleRequest",
       "response": {
+        "description": "Successful Response",
         "schema": {
           "generatedName": "GetRoleResponse",
           "schema": "RoleRead",
@@ -17295,7 +17296,6 @@
           "type": "reference"
         },
         "fullExamples": [],
-        "description": "Successful Response",
         "source": {
           "file": "../openapi.json",
           "type": "openapi"
@@ -17735,6 +17735,7 @@
         "type": "json"
       },
       "response": {
+        "description": "Successful Response",
         "schema": {
           "generatedName": "UpdateRoleResponse",
           "schema": "RoleRead",
@@ -17745,7 +17746,6 @@
           "type": "reference"
         },
         "fullExamples": [],
-        "description": "Successful Response",
         "source": {
           "file": "../openapi.json",
           "type": "openapi"
@@ -18061,6 +18061,7 @@
         "type": "json"
       },
       "response": {
+        "description": "Successful Response",
         "schema": {
           "generatedName": "AssignPermissionsToRoleResponse",
           "schema": "RoleRead",
@@ -18071,7 +18072,6 @@
           "type": "reference"
         },
         "fullExamples": [],
-        "description": "Successful Response",
         "source": {
           "file": "../openapi.json",
           "type": "openapi"
@@ -18380,6 +18380,7 @@
         "type": "json"
       },
       "response": {
+        "description": "Successful Response",
         "schema": {
           "generatedName": "RemovePermissionsFromRoleResponse",
           "schema": "RoleRead",
@@ -18390,7 +18391,6 @@
           "type": "reference"
         },
         "fullExamples": [],
-        "description": "Successful Response",
         "source": {
           "file": "../openapi.json",
           "type": "openapi"
@@ -18680,6 +18680,7 @@
       "headers": [],
       "generatedRequestName": "GetRoleAncestorsRequest",
       "response": {
+        "description": "Successful Response",
         "schema": {
           "generatedName": "GetRoleAncestorsResponse",
           "schema": "RoleList",
@@ -18690,7 +18691,6 @@
           "type": "reference"
         },
         "fullExamples": [],
-        "description": "Successful Response",
         "source": {
           "file": "../openapi.json",
           "type": "openapi"
@@ -18972,6 +18972,7 @@
       "headers": [],
       "generatedRequestName": "GetRoleDescendantsRequest",
       "response": {
+        "description": "Successful Response",
         "schema": {
           "generatedName": "GetRoleDescendantsResponse",
           "schema": "RoleList",
@@ -18982,7 +18983,6 @@
           "type": "reference"
         },
         "fullExamples": [],
-        "description": "Successful Response",
         "source": {
           "file": "../openapi.json",
           "type": "openapi"
@@ -19380,6 +19380,7 @@
       "headers": [],
       "generatedRequestName": "ListConditionSetsRequest",
       "response": {
+        "description": "Successful Response",
         "schema": {
           "value": {
             "generatedName": "ListConditionSetsResponse",
@@ -19395,7 +19396,6 @@
                 "type": "reference"
               },
               {
-                "generatedName": "ListConditionSetsResponse",
                 "value": {
                   "generatedName": "ListConditionSetsResponseItem",
                   "schema": "ConditionSetRead",
@@ -19405,6 +19405,7 @@
                   },
                   "type": "reference"
                 },
+                "generatedName": "ListConditionSetsResponse",
                 "groupName": [],
                 "type": "array"
               }
@@ -19419,7 +19420,6 @@
           "type": "oneOf"
         },
         "fullExamples": [],
-        "description": "Successful Response",
         "source": {
           "file": "../openapi.json",
           "type": "openapi"
@@ -20021,6 +20021,7 @@
         "type": "json"
       },
       "response": {
+        "description": "Successful Response",
         "schema": {
           "generatedName": "CreateConditionSetResponse",
           "schema": "ConditionSetRead",
@@ -20031,7 +20032,6 @@
           "type": "reference"
         },
         "fullExamples": [],
-        "description": "Successful Response",
         "source": {
           "file": "../openapi.json",
           "type": "openapi"
@@ -20695,6 +20695,7 @@
       "headers": [],
       "generatedRequestName": "GetConditionSetRequest",
       "response": {
+        "description": "Successful Response",
         "schema": {
           "generatedName": "GetConditionSetResponse",
           "schema": "ConditionSetRead",
@@ -20705,7 +20706,6 @@
           "type": "reference"
         },
         "fullExamples": [],
-        "description": "Successful Response",
         "source": {
           "file": "../openapi.json",
           "type": "openapi"
@@ -21434,6 +21434,7 @@
         "type": "json"
       },
       "response": {
+        "description": "Successful Response",
         "schema": {
           "generatedName": "UpdateConditionSetResponse",
           "schema": "ConditionSetRead",
@@ -21444,7 +21445,6 @@
           "type": "reference"
         },
         "fullExamples": [],
-        "description": "Successful Response",
         "source": {
           "file": "../openapi.json",
           "type": "openapi"
@@ -22158,9 +22158,8 @@
       "headers": [],
       "generatedRequestName": "GetConditionSetAncestorsRequest",
       "response": {
+        "description": "Successful Response",
         "schema": {
-          "generatedName": "GetConditionSetAncestorsResponse",
-          "title": "Response Get Condition Set Ancestors V2 Schema  Proj Id   Env Id  Condition Sets  Condition Set Id  Ancestors Get",
           "value": {
             "generatedName": "GetConditionSetAncestorsResponseItem",
             "schema": "ConditionSetRead",
@@ -22170,11 +22169,12 @@
             },
             "type": "reference"
           },
+          "generatedName": "GetConditionSetAncestorsResponse",
+          "title": "Response Get Condition Set Ancestors V2 Schema  Proj Id   Env Id  Condition Sets  Condition Set Id  Ancestors Get",
           "groupName": [],
           "type": "array"
         },
         "fullExamples": [],
-        "description": "Successful Response",
         "source": {
           "file": "../openapi.json",
           "type": "openapi"
@@ -22820,9 +22820,8 @@
       "headers": [],
       "generatedRequestName": "GetConditionSetDescendantsRequest",
       "response": {
+        "description": "Successful Response",
         "schema": {
-          "generatedName": "GetConditionSetDescendantsResponse",
-          "title": "Response Get Condition Set Descendants V2 Schema  Proj Id   Env Id  Condition Sets  Condition Set Id  Descendants Get",
           "value": {
             "generatedName": "GetConditionSetDescendantsResponseItem",
             "schema": "ConditionSetRead",
@@ -22832,11 +22831,12 @@
             },
             "type": "reference"
           },
+          "generatedName": "GetConditionSetDescendantsResponse",
+          "title": "Response Get Condition Set Descendants V2 Schema  Proj Id   Env Id  Condition Sets  Condition Set Id  Descendants Get",
           "groupName": [],
           "type": "array"
         },
         "fullExamples": [],
-        "description": "Successful Response",
         "source": {
           "file": "../openapi.json",
           "type": "openapi"
@@ -23518,6 +23518,7 @@
       "headers": [],
       "generatedRequestName": "ListUsersRequest",
       "response": {
+        "description": "Successful Response",
         "schema": {
           "generatedName": "ListUsersResponse",
           "schema": "PaginatedResult_UserRead_",
@@ -23528,7 +23529,6 @@
           "type": "reference"
         },
         "fullExamples": [],
-        "description": "Successful Response",
         "source": {
           "file": "../openapi.json",
           "type": "openapi"
@@ -23943,6 +23943,7 @@
         "type": "json"
       },
       "response": {
+        "description": "Successful Response",
         "schema": {
           "generatedName": "CreateUserResponse",
           "schema": "UserRead",
@@ -23953,7 +23954,6 @@
           "type": "reference"
         },
         "fullExamples": [],
-        "description": "Successful Response",
         "source": {
           "file": "../openapi.json",
           "type": "openapi"
@@ -24412,6 +24412,7 @@
       "headers": [],
       "generatedRequestName": "GetUserRequest",
       "response": {
+        "description": "Successful Response",
         "schema": {
           "generatedName": "GetUserResponse",
           "schema": "UserRead",
@@ -24422,7 +24423,6 @@
           "type": "reference"
         },
         "fullExamples": [],
-        "description": "Successful Response",
         "source": {
           "file": "../openapi.json",
           "type": "openapi"
@@ -24800,6 +24800,7 @@
         "type": "json"
       },
       "response": {
+        "description": "An existing user was replaced",
         "schema": {
           "generatedName": "ReplaceUserResponse",
           "schema": "UserRead",
@@ -24810,7 +24811,6 @@
           "type": "reference"
         },
         "fullExamples": [],
-        "description": "An existing user was replaced",
         "source": {
           "file": "../openapi.json",
           "type": "openapi"
@@ -25445,6 +25445,7 @@
         "type": "json"
       },
       "response": {
+        "description": "Successful Response",
         "schema": {
           "generatedName": "UpdateUserResponse",
           "schema": "UserRead",
@@ -25455,7 +25456,6 @@
           "type": "reference"
         },
         "fullExamples": [],
-        "description": "Successful Response",
         "source": {
           "file": "../openapi.json",
           "type": "openapi"
@@ -25837,6 +25837,7 @@
         "type": "json"
       },
       "response": {
+        "description": "Successful Response",
         "schema": {
           "generatedName": "AssignRoleToUserResponse",
           "schema": "RoleAssignmentRead",
@@ -25847,7 +25848,6 @@
           "type": "reference"
         },
         "fullExamples": [],
-        "description": "Successful Response",
         "source": {
           "file": "../openapi.json",
           "type": "openapi"
@@ -26406,6 +26406,7 @@
       "headers": [],
       "generatedRequestName": "ListTenantUsersRequest",
       "response": {
+        "description": "Successful Response",
         "schema": {
           "generatedName": "ListTenantUsersResponse",
           "schema": "PaginatedResult_UserRead_",
@@ -26416,7 +26417,6 @@
           "type": "reference"
         },
         "fullExamples": [],
-        "description": "Successful Response",
         "source": {
           "file": "../openapi.json",
           "type": "openapi"
@@ -26932,6 +26932,7 @@
       "headers": [],
       "generatedRequestName": "ListTenantsRequest",
       "response": {
+        "description": "Successful Response",
         "schema": {
           "value": {
             "generatedName": "ListTenantsResponse",
@@ -26947,7 +26948,6 @@
                 "type": "reference"
               },
               {
-                "generatedName": "ListTenantsResponse",
                 "value": {
                   "generatedName": "ListTenantsResponseItem",
                   "schema": "TenantRead",
@@ -26957,6 +26957,7 @@
                   },
                   "type": "reference"
                 },
+                "generatedName": "ListTenantsResponse",
                 "groupName": [],
                 "type": "array"
               }
@@ -26971,7 +26972,6 @@
           "type": "oneOf"
         },
         "fullExamples": [],
-        "description": "Successful Response",
         "source": {
           "file": "../openapi.json",
           "type": "openapi"
@@ -27295,6 +27295,7 @@
         "type": "json"
       },
       "response": {
+        "description": "Successful Response",
         "schema": {
           "generatedName": "CreateTenantResponse",
           "schema": "TenantRead",
@@ -27305,7 +27306,6 @@
           "type": "reference"
         },
         "fullExamples": [],
-        "description": "Successful Response",
         "source": {
           "file": "../openapi.json",
           "type": "openapi"
@@ -27615,6 +27615,7 @@
       "headers": [],
       "generatedRequestName": "GetTenantRequest",
       "response": {
+        "description": "Successful Response",
         "schema": {
           "generatedName": "GetTenantResponse",
           "schema": "TenantRead",
@@ -27625,7 +27626,6 @@
           "type": "reference"
         },
         "fullExamples": [],
-        "description": "Successful Response",
         "source": {
           "file": "../openapi.json",
           "type": "openapi"
@@ -28060,6 +28060,7 @@
         "type": "json"
       },
       "response": {
+        "description": "Successful Response",
         "schema": {
           "generatedName": "UpdateTenantResponse",
           "schema": "TenantRead",
@@ -28070,7 +28071,6 @@
           "type": "reference"
         },
         "fullExamples": [],
-        "description": "Successful Response",
         "source": {
           "file": "../openapi.json",
           "type": "openapi"
@@ -28639,9 +28639,8 @@
       "headers": [],
       "generatedRequestName": "ListRoleAssignmentsRequest",
       "response": {
+        "description": "Successful Response",
         "schema": {
-          "generatedName": "ListRoleAssignmentsResponse",
-          "title": "Response List Role Assignments V2 Facts  Proj Id   Env Id  Role Assignments Get",
           "value": {
             "generatedName": "ListRoleAssignmentsResponseItem",
             "schema": "RoleAssignmentRead",
@@ -28651,11 +28650,12 @@
             },
             "type": "reference"
           },
+          "generatedName": "ListRoleAssignmentsResponse",
+          "title": "Response List Role Assignments V2 Facts  Proj Id   Env Id  Role Assignments Get",
           "groupName": [],
           "type": "array"
         },
         "fullExamples": [],
-        "description": "Successful Response",
         "source": {
           "file": "../openapi.json",
           "type": "openapi"
@@ -28944,6 +28944,7 @@
         "type": "json"
       },
       "response": {
+        "description": "Successful Response",
         "schema": {
           "generatedName": "AssignRoleResponse",
           "schema": "RoleAssignmentRead",
@@ -28954,7 +28955,6 @@
           "type": "reference"
         },
         "fullExamples": [],
-        "description": "Successful Response",
         "source": {
           "file": "../openapi.json",
           "type": "openapi"
@@ -29384,6 +29384,7 @@
         "type": "json"
       },
       "response": {
+        "description": "Successful Response",
         "schema": {
           "generatedName": "BulkAssignRoleResponse",
           "schema": "BulkRoleAssignmentReport",
@@ -29394,7 +29395,6 @@
           "type": "reference"
         },
         "fullExamples": [],
-        "description": "Successful Response",
         "source": {
           "file": "../openapi.json",
           "type": "openapi"
@@ -29593,6 +29593,7 @@
         "type": "json"
       },
       "response": {
+        "description": "Successful Response",
         "schema": {
           "generatedName": "BulkUnassignRoleResponse",
           "schema": "BulkRoleUnAssignmentReport",
@@ -29603,7 +29604,6 @@
           "type": "reference"
         },
         "fullExamples": [],
-        "description": "Successful Response",
         "source": {
           "file": "../openapi.json",
           "type": "openapi"
@@ -29912,9 +29912,8 @@
       "headers": [],
       "generatedRequestName": "ListSetPermissionsRequest",
       "response": {
+        "description": "Successful Response",
         "schema": {
-          "generatedName": "ListSetPermissionsResponse",
-          "title": "Response List Set Permissions V2 Facts  Proj Id   Env Id  Set Rules Get",
           "value": {
             "generatedName": "ListSetPermissionsResponseItem",
             "schema": "ConditionSetRuleRead",
@@ -29924,11 +29923,12 @@
             },
             "type": "reference"
           },
+          "generatedName": "ListSetPermissionsResponse",
+          "title": "Response List Set Permissions V2 Facts  Proj Id   Env Id  Set Rules Get",
           "groupName": [],
           "type": "array"
         },
         "fullExamples": [],
-        "description": "Successful Response",
         "source": {
           "file": "../openapi.json",
           "type": "openapi"
@@ -30210,9 +30210,8 @@
         "type": "json"
       },
       "response": {
+        "description": "Successful Response",
         "schema": {
-          "generatedName": "AssignSetPermissionsResponse",
-          "title": "Response Assign Set Permissions V2 Facts  Proj Id   Env Id  Set Rules Post",
           "value": {
             "generatedName": "AssignSetPermissionsResponseItem",
             "schema": "ConditionSetRuleRead",
@@ -30222,11 +30221,12 @@
             },
             "type": "reference"
           },
+          "generatedName": "AssignSetPermissionsResponse",
+          "title": "Response Assign Set Permissions V2 Facts  Proj Id   Env Id  Set Rules Post",
           "groupName": [],
           "type": "array"
         },
         "fullExamples": [],
-        "description": "Successful Response",
         "source": {
           "file": "../openapi.json",
           "type": "openapi"
@@ -30687,9 +30687,8 @@
       "headers": [],
       "generatedRequestName": "ListResourceInstancesRequest",
       "response": {
+        "description": "Successful Response",
         "schema": {
-          "generatedName": "ListResourceInstancesResponse",
-          "title": "Response List Resource Instances V2 Facts  Proj Id   Env Id  Resource Instances Get",
           "value": {
             "generatedName": "ListResourceInstancesResponseItem",
             "schema": "ResourceInstanceRead",
@@ -30699,11 +30698,12 @@
             },
             "type": "reference"
           },
+          "generatedName": "ListResourceInstancesResponse",
+          "title": "Response List Resource Instances V2 Facts  Proj Id   Env Id  Resource Instances Get",
           "groupName": [],
           "type": "array"
         },
         "fullExamples": [],
-        "description": "Successful Response",
         "source": {
           "file": "../openapi.json",
           "type": "openapi"
@@ -30999,6 +30999,7 @@
         "type": "json"
       },
       "response": {
+        "description": "Successful Response",
         "schema": {
           "generatedName": "CreateResourceInstanceResponse",
           "schema": "ResourceInstanceRead",
@@ -31009,7 +31010,6 @@
           "type": "reference"
         },
         "fullExamples": [],
-        "description": "Successful Response",
         "source": {
           "file": "../openapi.json",
           "type": "openapi"
@@ -31341,6 +31341,7 @@
       "headers": [],
       "generatedRequestName": "GetResourceInstanceRequest",
       "response": {
+        "description": "Successful Response",
         "schema": {
           "generatedName": "GetResourceInstanceResponse",
           "schema": "ResourceInstanceRead",
@@ -31351,7 +31352,6 @@
           "type": "reference"
         },
         "fullExamples": [],
-        "description": "Successful Response",
         "source": {
           "file": "../openapi.json",
           "type": "openapi"
@@ -31797,6 +31797,7 @@
         "type": "json"
       },
       "response": {
+        "description": "Successful Response",
         "schema": {
           "generatedName": "UpdateResourceInstanceResponse",
           "schema": "ResourceInstanceRead",
@@ -31807,7 +31808,6 @@
           "type": "reference"
         },
         "fullExamples": [],
-        "description": "Successful Response",
         "source": {
           "file": "../openapi.json",
           "type": "openapi"
@@ -32129,6 +32129,7 @@
         "type": "json"
       },
       "response": {
+        "description": "Successful Response",
         "schema": {
           "generatedName": "BulkCreateUsersResponse",
           "schema": "UserCreateBulkOperationResult",
@@ -32139,7 +32140,6 @@
           "type": "reference"
         },
         "fullExamples": [],
-        "description": "Successful Response",
         "source": {
           "file": "../openapi.json",
           "type": "openapi"
@@ -32413,6 +32413,7 @@
         "type": "json"
       },
       "response": {
+        "description": "Successful Response",
         "schema": {
           "generatedName": "BulkReplaceUsersResponse",
           "schema": "UserReplaceBulkOperationResult",
@@ -32423,7 +32424,6 @@
           "type": "reference"
         },
         "fullExamples": [],
-        "description": "Successful Response",
         "source": {
           "file": "../openapi.json",
           "type": "openapi"
@@ -32697,6 +32697,7 @@
         "type": "json"
       },
       "response": {
+        "description": "Successful Response",
         "schema": {
           "generatedName": "BulkDeleteUsersResponse",
           "schema": "UserDeleteBulkOperationResult",
@@ -32707,7 +32708,6 @@
           "type": "reference"
         },
         "fullExamples": [],
-        "description": "Successful Response",
         "source": {
           "file": "../openapi.json",
           "type": "openapi"
@@ -32878,6 +32878,7 @@
         "type": "json"
       },
       "response": {
+        "description": "Successful Response",
         "schema": {
           "generatedName": "BulkCreateTenantsResponse",
           "schema": "TenantCreateBulkOperationResult",
@@ -32888,7 +32889,6 @@
           "type": "reference"
         },
         "fullExamples": [],
-        "description": "Successful Response",
         "source": {
           "file": "../openapi.json",
           "type": "openapi"
@@ -33104,6 +33104,7 @@
         "type": "json"
       },
       "response": {
+        "description": "Successful Response",
         "schema": {
           "generatedName": "BulkDeleteTenantsResponse",
           "schema": "TenantDeleteBulkOperationResult",
@@ -33114,7 +33115,6 @@
           "type": "reference"
         },
         "fullExamples": [],
-        "description": "Successful Response",
         "source": {
           "file": "../openapi.json",
           "type": "openapi"

@@ -163,6 +163,7 @@
       "headers": [],
       "generatedRequestName": "CloseMenuByConnIdRequest",
       "response": {
+        "description": "",
         "schema": {
           "generatedName": "CloseMenuByConnIdResponse",
           "schema": "ActionMenuModulesResult",
@@ -173,7 +174,6 @@
           "type": "reference"
         },
         "fullExamples": [],
-        "description": "",
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -265,6 +265,7 @@
       "headers": [],
       "generatedRequestName": "FetchMenuByConnIdRequest",
       "response": {
+        "description": "",
         "schema": {
           "generatedName": "FetchMenuByConnIdResponse",
           "schema": "ActionMenuFetchResult",
@@ -275,7 +276,6 @@
           "type": "reference"
         },
         "fullExamples": [],
-        "description": "",
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -369,6 +369,7 @@
         "type": "json"
       },
       "response": {
+        "description": "",
         "schema": {
           "generatedName": "PerformActionByConnIdResponse",
           "schema": "ActionMenuModulesResult",
@@ -379,7 +380,6 @@
           "type": "reference"
         },
         "fullExamples": [],
-        "description": "",
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -501,6 +501,7 @@
       "headers": [],
       "generatedRequestName": "RequestMenuByConnIdRequest",
       "response": {
+        "description": "",
         "schema": {
           "generatedName": "RequestMenuByConnIdResponse",
           "schema": "ActionMenuModulesResult",
@@ -511,7 +512,6 @@
           "type": "reference"
         },
         "fullExamples": [],
-        "description": "",
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -622,6 +622,7 @@
         "type": "json"
       },
       "response": {
+        "description": "",
         "schema": {
           "generatedName": "SendMenuToConnIdResponse",
           "schema": "ActionMenuModulesResult",
@@ -632,7 +633,6 @@
           "type": "reference"
         },
         "fullExamples": [],
-        "description": "",
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -1020,6 +1020,7 @@
       "headers": [],
       "generatedRequestName": "GetMatchingConnectionsRequest",
       "response": {
+        "description": "",
         "schema": {
           "generatedName": "GetMatchingConnectionsResponse",
           "schema": "ConnectionList",
@@ -1030,7 +1031,6 @@
           "type": "reference"
         },
         "fullExamples": [],
-        "description": "",
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -1529,6 +1529,7 @@
         "type": "json"
       },
       "response": {
+        "description": "",
         "schema": {
           "generatedName": "CreateConnectionInvitationResponse",
           "schema": "InvitationResult",
@@ -1539,7 +1540,6 @@
           "type": "reference"
         },
         "fullExamples": [],
-        "description": "",
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -1810,6 +1810,7 @@
         "type": "json"
       },
       "response": {
+        "description": "",
         "schema": {
           "generatedName": "CreateStaticConnectionResponse",
           "schema": "ConnectionStaticResult",
@@ -1820,7 +1821,6 @@
           "type": "reference"
         },
         "fullExamples": [],
-        "description": "",
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -2178,6 +2178,7 @@
         "type": "json"
       },
       "response": {
+        "description": "",
         "schema": {
           "generatedName": "ReceiveConnectionInvitationResponse",
           "schema": "ConnRecord",
@@ -2188,7 +2189,6 @@
           "type": "reference"
         },
         "fullExamples": [],
-        "description": "",
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -2487,6 +2487,7 @@
       "headers": [],
       "generatedRequestName": "GetConnectionRecordRequest",
       "response": {
+        "description": "",
         "schema": {
           "generatedName": "GetConnectionRecordResponse",
           "schema": "ConnRecord",
@@ -2497,7 +2498,6 @@
           "type": "reference"
         },
         "fullExamples": [],
-        "description": "",
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -2698,6 +2698,7 @@
       "headers": [],
       "generatedRequestName": "DeleteConnectionRecordRequest",
       "response": {
+        "description": "",
         "schema": {
           "generatedName": "DeleteConnectionRecordResponse",
           "schema": "ConnectionModuleResponse",
@@ -2708,7 +2709,6 @@
           "type": "reference"
         },
         "fullExamples": [],
-        "description": "",
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -2866,6 +2866,7 @@
       "headers": [],
       "generatedRequestName": "AcceptConnectionInvitationRequest",
       "response": {
+        "description": "",
         "schema": {
           "generatedName": "AcceptConnectionInvitationResponse",
           "schema": "ConnRecord",
@@ -2876,7 +2877,6 @@
           "type": "reference"
         },
         "fullExamples": [],
-        "description": "",
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -3131,6 +3131,7 @@
       "headers": [],
       "generatedRequestName": "AcceptConnectionRequestRequest",
       "response": {
+        "description": "",
         "schema": {
           "generatedName": "AcceptConnectionRequestResponse",
           "schema": "ConnRecord",
@@ -3141,7 +3142,6 @@
           "type": "reference"
         },
         "fullExamples": [],
-        "description": "",
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -3353,6 +3353,7 @@
       "headers": [],
       "generatedRequestName": "GetConnectionEndpointRequest",
       "response": {
+        "description": "",
         "schema": {
           "generatedName": "GetConnectionEndpointResponse",
           "schema": "EndpointsResult",
@@ -3363,7 +3364,6 @@
           "type": "reference"
         },
         "fullExamples": [],
-        "description": "",
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -3469,6 +3469,7 @@
       "headers": [],
       "generatedRequestName": "SetInboundConnectionRequest",
       "response": {
+        "description": "",
         "schema": {
           "generatedName": "SetInboundConnectionResponse",
           "schema": "ConnectionModuleResponse",
@@ -3479,7 +3480,6 @@
           "type": "reference"
         },
         "fullExamples": [],
-        "description": "",
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -3603,6 +3603,7 @@
       "headers": [],
       "generatedRequestName": "GetConnectionMetadataRequest",
       "response": {
+        "description": "",
         "schema": {
           "generatedName": "GetConnectionMetadataResponse",
           "schema": "ConnectionMetadata",
@@ -3613,7 +3614,6 @@
           "type": "reference"
         },
         "fullExamples": [],
-        "description": "",
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -3718,6 +3718,7 @@
         "type": "json"
       },
       "response": {
+        "description": "",
         "schema": {
           "generatedName": "SetConnectionMetadataResponse",
           "schema": "ConnectionMetadata",
@@ -3728,7 +3729,6 @@
           "type": "reference"
         },
         "fullExamples": [],
-        "description": "",
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -3831,6 +3831,7 @@
         "type": "json"
       },
       "response": {
+        "description": "",
         "schema": {
           "generatedName": "SendMessageResponse",
           "schema": "BasicMessageModuleResponse",
@@ -3841,7 +3842,6 @@
           "type": "reference"
         },
         "fullExamples": [],
-        "description": "",
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -3964,6 +3964,7 @@
         "type": "json"
       },
       "response": {
+        "description": "",
         "schema": {
           "generatedName": "SendPingResponse",
           "schema": "PingRequestResponse",
@@ -3974,7 +3975,6 @@
           "type": "reference"
         },
         "fullExamples": [],
-        "description": "",
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -4107,6 +4107,7 @@
       "headers": [],
       "generatedRequestName": "StartConnectionIntroductionRequest",
       "response": {
+        "description": "",
         "schema": {
           "generatedName": "StartConnectionIntroductionResponse",
           "schema": "IntroModuleResponse",
@@ -4117,7 +4118,6 @@
           "type": "reference"
         },
         "fullExamples": [],
-        "description": "",
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -4275,6 +4275,7 @@
         "type": "json"
       },
       "response": {
+        "description": "",
         "schema": {
           "generatedName": "PublishCredentialDefinitionResponse",
           "schema": "TxnOrCredentialDefinitionSendResult",
@@ -4285,7 +4286,6 @@
           "type": "reference"
         },
         "fullExamples": [],
-        "description": "",
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -4531,6 +4531,7 @@
       "headers": [],
       "generatedRequestName": "GetCreatedCredDefsRequest",
       "response": {
+        "description": "",
         "schema": {
           "generatedName": "GetCreatedCredDefsResponse",
           "schema": "CredentialDefinitionsCreatedResult",
@@ -4541,7 +4542,6 @@
           "type": "reference"
         },
         "fullExamples": [],
-        "description": "",
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -4687,6 +4687,7 @@
       "headers": [],
       "generatedRequestName": "GetCredentialDefinitionRequest",
       "response": {
+        "description": "",
         "schema": {
           "generatedName": "GetCredentialDefinitionResponse",
           "schema": "CredentialDefinitionGetResult",
@@ -4697,7 +4698,6 @@
           "type": "reference"
         },
         "fullExamples": [],
-        "description": "",
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -4828,6 +4828,7 @@
       "headers": [],
       "generatedRequestName": "WriteCredentialDefinitionRequest",
       "response": {
+        "description": "",
         "schema": {
           "generatedName": "WriteCredentialDefinitionResponse",
           "schema": "CredentialDefinitionGetResult",
@@ -4838,7 +4839,6 @@
           "type": "reference"
         },
         "fullExamples": [],
-        "description": "",
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -4968,6 +4968,7 @@
       "headers": [],
       "generatedRequestName": "GetCredentialMimeTypesRequest",
       "response": {
+        "description": "",
         "schema": {
           "generatedName": "GetCredentialMimeTypesResponse",
           "schema": "AttributeMimeTypesResult",
@@ -4978,7 +4979,6 @@
           "type": "reference"
         },
         "fullExamples": [],
-        "description": "",
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -5117,6 +5117,7 @@
       "headers": [],
       "generatedRequestName": "GetRevocationStatusRequest",
       "response": {
+        "description": "",
         "schema": {
           "generatedName": "GetRevocationStatusResponse",
           "schema": "CredRevokedResult",
@@ -5127,7 +5128,6 @@
           "type": "reference"
         },
         "fullExamples": [],
-        "description": "",
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -5231,6 +5231,7 @@
       "headers": [],
       "generatedRequestName": "GetW3CCredentialRequest",
       "response": {
+        "description": "",
         "schema": {
           "generatedName": "GetW3CCredentialResponse",
           "schema": "VCRecord",
@@ -5241,7 +5242,6 @@
           "type": "reference"
         },
         "fullExamples": [],
-        "description": "",
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -5451,6 +5451,7 @@
       "headers": [],
       "generatedRequestName": "DeleteW3CCredentialRequest",
       "response": {
+        "description": "",
         "schema": {
           "generatedName": "DeleteW3CCredentialResponse",
           "schema": "HolderModuleResponse",
@@ -5461,7 +5462,6 @@
           "type": "reference"
         },
         "fullExamples": [],
-        "description": "",
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -5553,6 +5553,7 @@
       "headers": [],
       "generatedRequestName": "GetCredentialRecordRequest",
       "response": {
+        "description": "",
         "schema": {
           "generatedName": "GetCredentialRecordResponse",
           "schema": "IndyCredInfo",
@@ -5563,7 +5564,6 @@
           "type": "reference"
         },
         "fullExamples": [],
-        "description": "",
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -5692,6 +5692,7 @@
       "headers": [],
       "generatedRequestName": "DeleteCredentialRecordRequest",
       "response": {
+        "description": "",
         "schema": {
           "generatedName": "DeleteCredentialRecordResponse",
           "schema": "HolderModuleResponse",
@@ -5702,7 +5703,6 @@
           "type": "reference"
         },
         "fullExamples": [],
-        "description": "",
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -5844,6 +5844,7 @@
       "headers": [],
       "generatedRequestName": "GetCredentialsRequest",
       "response": {
+        "description": "",
         "schema": {
           "generatedName": "GetCredentialsResponse",
           "schema": "CredInfoList",
@@ -5854,7 +5855,6 @@
           "type": "reference"
         },
         "fullExamples": [],
-        "description": "",
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -6140,6 +6140,7 @@
         "type": "json"
       },
       "response": {
+        "description": "",
         "schema": {
           "generatedName": "GetW3CCredentialsResponse",
           "schema": "VCRecordList",
@@ -6150,7 +6151,6 @@
           "type": "reference"
         },
         "fullExamples": [],
-        "description": "",
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -6776,6 +6776,7 @@
       "headers": [],
       "generatedRequestName": "CreateDidexRequestRequest",
       "response": {
+        "description": "",
         "schema": {
           "generatedName": "CreateDidexRequestResponse",
           "schema": "ConnRecord",
@@ -6786,7 +6787,6 @@
           "type": "reference"
         },
         "fullExamples": [],
-        "description": "",
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -7126,6 +7126,7 @@
         "type": "json"
       },
       "response": {
+        "description": "",
         "schema": {
           "generatedName": "ReceiveDidexRequestResponse",
           "schema": "ConnRecord",
@@ -7136,7 +7137,6 @@
           "type": "reference"
         },
         "fullExamples": [],
-        "description": "",
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -7437,6 +7437,7 @@
       "headers": [],
       "generatedRequestName": "AcceptDidexInvitationRequest",
       "response": {
+        "description": "",
         "schema": {
           "generatedName": "AcceptDidexInvitationResponse",
           "schema": "ConnRecord",
@@ -7447,7 +7448,6 @@
           "type": "reference"
         },
         "fullExamples": [],
-        "description": "",
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -7714,6 +7714,7 @@
       "headers": [],
       "generatedRequestName": "AcceptDidexRequestRequest",
       "response": {
+        "description": "",
         "schema": {
           "generatedName": "AcceptDidexRequestResponse",
           "schema": "ConnRecord",
@@ -7724,7 +7725,6 @@
           "type": "reference"
         },
         "fullExamples": [],
-        "description": "",
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -7993,6 +7993,7 @@
       "headers": [],
       "generatedRequestName": "GetV20FeaturesQueriesRequest",
       "response": {
+        "description": "",
         "schema": {
           "generatedName": "GetV20FeaturesQueriesResponse",
           "schema": "V20DiscoveryExchangeResult",
@@ -8003,7 +8004,6 @@
           "type": "reference"
         },
         "fullExamples": [],
-        "description": "",
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -8103,6 +8103,7 @@
       "headers": [],
       "generatedRequestName": "GetV20FeatureRecordsRequest",
       "response": {
+        "description": "",
         "schema": {
           "generatedName": "GetV20FeatureRecordsResponse",
           "schema": "V20DiscoveryExchangeListResult",
@@ -8113,7 +8114,6 @@
           "type": "reference"
         },
         "fullExamples": [],
-        "description": "",
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -8477,6 +8477,7 @@
       "headers": [],
       "generatedRequestName": "GetV10FeaturesQueryRequest",
       "response": {
+        "description": "",
         "schema": {
           "generatedName": "GetV10FeaturesQueryResponse",
           "schema": "V10DiscoveryRecord",
@@ -8487,7 +8488,6 @@
           "type": "reference"
         },
         "fullExamples": [],
-        "description": "",
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -8637,6 +8637,7 @@
       "headers": [],
       "generatedRequestName": "GetV10FeatureRecordsRequest",
       "response": {
+        "description": "",
         "schema": {
           "generatedName": "GetV10FeatureRecordsResponse",
           "schema": "V10DiscoveryExchangeListResult",
@@ -8647,7 +8648,6 @@
           "type": "reference"
         },
         "fullExamples": [],
-        "description": "",
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -8838,6 +8838,7 @@
         "type": "json"
       },
       "response": {
+        "description": "",
         "schema": {
           "generatedName": "CreateCredentialRecordResponse",
           "schema": "V20CredExRecord",
@@ -8848,7 +8849,6 @@
           "type": "reference"
         },
         "fullExamples": [],
-        "description": "",
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -9103,6 +9103,7 @@
         "type": "json"
       },
       "response": {
+        "description": "",
         "schema": {
           "generatedName": "CreateFreeCredentialOfferResponse",
           "schema": "V20CredExRecord",
@@ -9113,7 +9114,6 @@
           "type": "reference"
         },
         "fullExamples": [],
-        "description": "",
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -9514,6 +9514,7 @@
       "headers": [],
       "generatedRequestName": "GetMatchingCredExRecordsV2Request",
       "response": {
+        "description": "",
         "schema": {
           "generatedName": "GetMatchingCredExRecordsV2Response",
           "schema": "V20CredExRecordListResult",
@@ -9524,7 +9525,6 @@
           "type": "reference"
         },
         "fullExamples": [],
-        "description": "",
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -9856,6 +9856,7 @@
       "headers": [],
       "generatedRequestName": "GetCredExRecordRequest",
       "response": {
+        "description": "",
         "schema": {
           "generatedName": "GetCredExRecordResponse",
           "schema": "V20CredExRecordDetail",
@@ -9866,7 +9867,6 @@
           "type": "reference"
         },
         "fullExamples": [],
-        "description": "",
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -10051,6 +10051,7 @@
       "headers": [],
       "generatedRequestName": "DeleteCredExRecordRequest",
       "response": {
+        "description": "",
         "schema": {
           "generatedName": "DeleteCredExRecordResponse",
           "schema": "V20IssueCredentialModuleResponse",
@@ -10061,7 +10062,6 @@
           "type": "reference"
         },
         "fullExamples": [],
-        "description": "",
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -10173,6 +10173,7 @@
         "type": "json"
       },
       "response": {
+        "description": "",
         "schema": {
           "generatedName": "IssueCredentialToHolderResponse",
           "schema": "V20CredExRecordDetail",
@@ -10183,7 +10184,6 @@
           "type": "reference"
         },
         "fullExamples": [],
-        "description": "",
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -10399,6 +10399,7 @@
         "type": "json"
       },
       "response": {
+        "description": "",
         "schema": {
           "generatedName": "ReportCredExProblemResponse",
           "schema": "V20IssueCredentialModuleResponse",
@@ -10409,7 +10410,6 @@
           "type": "reference"
         },
         "fullExamples": [],
-        "description": "",
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -10533,6 +10533,7 @@
         "type": "json"
       },
       "response": {
+        "description": "",
         "schema": {
           "generatedName": "SendCredentialOfferResponse",
           "schema": "V20CredExRecord",
@@ -10543,7 +10544,6 @@
           "type": "reference"
         },
         "fullExamples": [],
-        "description": "",
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -10732,6 +10732,7 @@
         "type": "json"
       },
       "response": {
+        "description": "",
         "schema": {
           "generatedName": "SendCredentialRequestResponse",
           "schema": "V20CredExRecord",
@@ -10742,7 +10743,6 @@
           "type": "reference"
         },
         "fullExamples": [],
-        "description": "",
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -10939,6 +10939,7 @@
         "type": "json"
       },
       "response": {
+        "description": "",
         "schema": {
           "generatedName": "StoreReceivedCredentialResponse",
           "schema": "V20CredExRecordDetail",
@@ -10949,7 +10950,6 @@
           "type": "reference"
         },
         "fullExamples": [],
-        "description": "",
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -11147,6 +11147,7 @@
         "type": "json"
       },
       "response": {
+        "description": "",
         "schema": {
           "generatedName": "SendFreeCredentialResponse",
           "schema": "V20CredExRecord",
@@ -11157,7 +11158,6 @@
           "type": "reference"
         },
         "fullExamples": [],
-        "description": "",
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -11426,6 +11426,7 @@
         "type": "json"
       },
       "response": {
+        "description": "",
         "schema": {
           "generatedName": "SendFreeCredentialOfferResponse",
           "schema": "V20CredExRecord",
@@ -11436,7 +11437,6 @@
           "type": "reference"
         },
         "fullExamples": [],
-        "description": "",
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -11705,6 +11705,7 @@
         "type": "json"
       },
       "response": {
+        "description": "",
         "schema": {
           "generatedName": "SendFreeCredentialProposalResponse",
           "schema": "V20CredExRecord",
@@ -11715,7 +11716,6 @@
           "type": "reference"
         },
         "fullExamples": [],
-        "description": "",
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -11984,6 +11984,7 @@
         "type": "json"
       },
       "response": {
+        "description": "",
         "schema": {
           "generatedName": "SendFreeCredentialRequestResponse",
           "schema": "V20CredExRecord",
@@ -11994,7 +11995,6 @@
           "type": "reference"
         },
         "fullExamples": [],
-        "description": "",
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -12332,6 +12332,7 @@
         "type": "json"
       },
       "response": {
+        "description": "",
         "schema": {
           "generatedName": "CreateCredentialRecordResponse",
           "schema": "V10CredentialExchange",
@@ -12342,7 +12343,6 @@
           "type": "reference"
         },
         "fullExamples": [],
-        "description": "",
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -12673,6 +12673,7 @@
         "type": "json"
       },
       "response": {
+        "description": "",
         "schema": {
           "generatedName": "CreateFreeCredentialOfferResponse",
           "schema": "V10CredentialExchange",
@@ -12683,7 +12684,6 @@
           "type": "reference"
         },
         "fullExamples": [],
-        "description": "",
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -13125,6 +13125,7 @@
       "headers": [],
       "generatedRequestName": "GetMatchingCredExRecordsRequest",
       "response": {
+        "description": "",
         "schema": {
           "generatedName": "GetMatchingCredExRecordsResponse",
           "schema": "V10CredentialExchangeListResult",
@@ -13135,7 +13136,6 @@
           "type": "reference"
         },
         "fullExamples": [],
-        "description": "",
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -13505,6 +13505,7 @@
       "headers": [],
       "generatedRequestName": "GetCredExRecordRequest",
       "response": {
+        "description": "",
         "schema": {
           "generatedName": "GetCredExRecordResponse",
           "schema": "V10CredentialExchange",
@@ -13515,7 +13516,6 @@
           "type": "reference"
         },
         "fullExamples": [],
-        "description": "",
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -13719,6 +13719,7 @@
       "headers": [],
       "generatedRequestName": "DeleteCredExRecordRequest",
       "response": {
+        "description": "",
         "schema": {
           "generatedName": "DeleteCredExRecordResponse",
           "schema": "IssueCredentialModuleResponse",
@@ -13729,7 +13730,6 @@
           "type": "reference"
         },
         "fullExamples": [],
-        "description": "",
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -13841,6 +13841,7 @@
         "type": "json"
       },
       "response": {
+        "description": "",
         "schema": {
           "generatedName": "IssueCredentialToHolderResponse",
           "schema": "V10CredentialExchange",
@@ -13851,7 +13852,6 @@
           "type": "reference"
         },
         "fullExamples": [],
-        "description": "",
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -14086,6 +14086,7 @@
         "type": "json"
       },
       "response": {
+        "description": "",
         "schema": {
           "generatedName": "ReportCredExProblemResponse",
           "schema": "IssueCredentialModuleResponse",
@@ -14096,7 +14097,6 @@
           "type": "reference"
         },
         "fullExamples": [],
-        "description": "",
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -14220,6 +14220,7 @@
         "type": "json"
       },
       "response": {
+        "description": "",
         "schema": {
           "generatedName": "SendCredentialOfferResponse",
           "schema": "V10CredentialExchange",
@@ -14230,7 +14231,6 @@
           "type": "reference"
         },
         "fullExamples": [],
-        "description": "",
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -14438,6 +14438,7 @@
       "headers": [],
       "generatedRequestName": "SendCredentialRequestRequest",
       "response": {
+        "description": "",
         "schema": {
           "generatedName": "SendCredentialRequestResponse",
           "schema": "V10CredentialExchange",
@@ -14448,7 +14449,6 @@
           "type": "reference"
         },
         "fullExamples": [],
-        "description": "",
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -14671,6 +14671,7 @@
         "type": "json"
       },
       "response": {
+        "description": "",
         "schema": {
           "generatedName": "StoreReceivedCredentialResponse",
           "schema": "V10CredentialExchange",
@@ -14681,7 +14682,6 @@
           "type": "reference"
         },
         "fullExamples": [],
-        "description": "",
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -14898,6 +14898,7 @@
         "type": "json"
       },
       "response": {
+        "description": "",
         "schema": {
           "generatedName": "SendFreeCredentialResponse",
           "schema": "V10CredentialExchange",
@@ -14908,7 +14909,6 @@
           "type": "reference"
         },
         "fullExamples": [],
-        "description": "",
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -15246,6 +15246,7 @@
         "type": "json"
       },
       "response": {
+        "description": "",
         "schema": {
           "generatedName": "SendFreeCredentialOfferResponse",
           "schema": "V10CredentialExchange",
@@ -15256,7 +15257,6 @@
           "type": "reference"
         },
         "fullExamples": [],
-        "description": "",
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -15566,6 +15566,7 @@
         "type": "json"
       },
       "response": {
+        "description": "",
         "schema": {
           "generatedName": "SendFreeCredentialProposalResponse",
           "schema": "V10CredentialExchange",
@@ -15576,7 +15577,6 @@
           "type": "reference"
         },
         "fullExamples": [],
-        "description": "",
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -15914,6 +15914,7 @@
         "type": "json"
       },
       "response": {
+        "description": "",
         "schema": {
           "generatedName": "SignResponse",
           "schema": "SignResponse",
@@ -15924,7 +15925,6 @@
           "type": "reference"
         },
         "fullExamples": [],
-        "description": "",
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -16038,6 +16038,7 @@
         "type": "json"
       },
       "response": {
+        "description": "",
         "schema": {
           "generatedName": "VerifyResponse",
           "schema": "VerifyResponse",
@@ -16048,7 +16049,6 @@
           "type": "reference"
         },
         "fullExamples": [],
-        "description": "",
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -16203,6 +16203,7 @@
       "headers": [],
       "generatedRequestName": "GetPublishedDidEndpointRequest",
       "response": {
+        "description": "",
         "schema": {
           "generatedName": "GetPublishedDidEndpointResponse",
           "schema": "GetDIDEndpointResponse",
@@ -16213,7 +16214,6 @@
           "type": "reference"
         },
         "fullExamples": [],
-        "description": "",
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -16304,6 +16304,7 @@
       "headers": [],
       "generatedRequestName": "GetDidVerkeyRequest",
       "response": {
+        "description": "",
         "schema": {
           "generatedName": "GetDidVerkeyResponse",
           "schema": "GetDIDVerkeyResponse",
@@ -16314,7 +16315,6 @@
           "type": "reference"
         },
         "fullExamples": [],
-        "description": "",
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -16398,6 +16398,7 @@
       "headers": [],
       "generatedRequestName": "GetDidNymRoleRequest",
       "response": {
+        "description": "",
         "schema": {
           "generatedName": "GetDidNymRoleResponse",
           "schema": "GetNymRoleResponse",
@@ -16408,7 +16409,6 @@
           "type": "reference"
         },
         "fullExamples": [],
-        "description": "",
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -16471,6 +16471,7 @@
       "headers": [],
       "generatedRequestName": "GetMultipleLedgerConfigRequest",
       "response": {
+        "description": "",
         "schema": {
           "generatedName": "GetMultipleLedgerConfigResponse",
           "schema": "LedgerConfigList",
@@ -16481,7 +16482,6 @@
           "type": "reference"
         },
         "fullExamples": [],
-        "description": "",
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -16614,6 +16614,7 @@
       "headers": [],
       "generatedRequestName": "GetWriteLedgerRequest",
       "response": {
+        "description": "",
         "schema": {
           "generatedName": "GetWriteLedgerResponse",
           "schema": "WriteLedgerRequest",
@@ -16624,7 +16625,6 @@
           "type": "reference"
         },
         "fullExamples": [],
-        "description": "",
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -16826,6 +16826,7 @@
       "headers": [],
       "generatedRequestName": "RegisterNymRequest",
       "response": {
+        "description": "",
         "schema": {
           "generatedName": "RegisterNymResponse",
           "schema": "TxnOrRegisterLedgerNymResponse",
@@ -16836,7 +16837,6 @@
           "type": "reference"
         },
         "fullExamples": [],
-        "description": "",
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -16949,6 +16949,7 @@
       "headers": [],
       "generatedRequestName": "RotatePublicDidKeypairRequest",
       "response": {
+        "description": "",
         "schema": {
           "generatedName": "RotatePublicDidKeypairResponse",
           "schema": "LedgerModulesResult",
@@ -16959,7 +16960,6 @@
           "type": "reference"
         },
         "fullExamples": [],
-        "description": "",
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -17023,6 +17023,7 @@
       "headers": [],
       "generatedRequestName": "GetTaaRequest",
       "response": {
+        "description": "",
         "schema": {
           "generatedName": "GetTaaResponse",
           "schema": "TAAResult",
@@ -17033,7 +17034,6 @@
           "type": "reference"
         },
         "fullExamples": [],
-        "description": "",
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -17194,6 +17194,7 @@
         "type": "json"
       },
       "response": {
+        "description": "",
         "schema": {
           "generatedName": "AcceptTaaResponse",
           "schema": "LedgerModulesResult",
@@ -17204,7 +17205,6 @@
           "type": "reference"
         },
         "fullExamples": [],
-        "description": "",
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -17294,6 +17294,7 @@
       "headers": [],
       "generatedRequestName": "GetDefaultMediatorRequest",
       "response": {
+        "description": "",
         "schema": {
           "generatedName": "GetDefaultMediatorResponse",
           "schema": "MediationRecord",
@@ -17304,7 +17305,6 @@
           "type": "reference"
         },
         "fullExamples": [],
-        "description": "",
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -17458,6 +17458,7 @@
       "headers": [],
       "generatedRequestName": "ClearDefaultMediatorRequest",
       "response": {
+        "description": "",
         "schema": {
           "generatedName": "ClearDefaultMediatorResponse",
           "schema": "MediationRecord",
@@ -17468,7 +17469,6 @@
           "type": "reference"
         },
         "fullExamples": [],
-        "description": "",
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -17684,6 +17684,7 @@
       "headers": [],
       "generatedRequestName": "GetKeylistsRequest",
       "response": {
+        "description": "",
         "schema": {
           "generatedName": "GetKeylistsResponse",
           "schema": "Keylist",
@@ -17694,7 +17695,6 @@
           "type": "reference"
         },
         "fullExamples": [],
-        "description": "",
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -17969,6 +17969,7 @@
         "type": "json"
       },
       "response": {
+        "description": "",
         "schema": {
           "generatedName": "SendKeylistQueryToMediatorResponse",
           "schema": "KeylistQuery",
@@ -17979,7 +17980,6 @@
           "type": "reference"
         },
         "fullExamples": [],
-        "description": "",
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -18114,6 +18114,7 @@
         "type": "json"
       },
       "response": {
+        "description": "",
         "schema": {
           "generatedName": "SendKeylistUpdateToMediatorResponse",
           "schema": "KeylistUpdate",
@@ -18124,7 +18125,6 @@
           "type": "reference"
         },
         "fullExamples": [],
-        "description": "",
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -18312,6 +18312,7 @@
         "type": "json"
       },
       "response": {
+        "description": "",
         "schema": {
           "generatedName": "RequestMediationForConnectionResponse",
           "schema": "MediationRecord",
@@ -18322,7 +18323,6 @@
           "type": "reference"
         },
         "fullExamples": [],
-        "description": "",
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -18646,6 +18646,7 @@
       "headers": [],
       "generatedRequestName": "GetMatchingMediationRecordsRequest",
       "response": {
+        "description": "",
         "schema": {
           "generatedName": "GetMatchingMediationRecordsResponse",
           "schema": "MediationList",
@@ -18656,7 +18657,6 @@
           "type": "reference"
         },
         "fullExamples": [],
-        "description": "",
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -18967,6 +18967,7 @@
       "headers": [],
       "generatedRequestName": "GetMediationRecordRequest",
       "response": {
+        "description": "",
         "schema": {
           "generatedName": "GetMediationRecordResponse",
           "schema": "MediationRecord",
@@ -18977,7 +18978,6 @@
           "type": "reference"
         },
         "fullExamples": [],
-        "description": "",
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -19160,6 +19160,7 @@
       "headers": [],
       "generatedRequestName": "DeleteMediationRecordRequest",
       "response": {
+        "description": "",
         "schema": {
           "generatedName": "DeleteMediationRecordResponse",
           "schema": "MediationRecord",
@@ -19170,7 +19171,6 @@
           "type": "reference"
         },
         "fullExamples": [],
-        "description": "",
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -19372,6 +19372,7 @@
         "type": "json"
       },
       "response": {
+        "description": "",
         "schema": {
           "generatedName": "DenyMediationRequestResponse",
           "schema": "MediationDeny",
@@ -19382,7 +19383,6 @@
           "type": "reference"
         },
         "fullExamples": [],
-        "description": "",
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -19554,6 +19554,7 @@
       "headers": [],
       "generatedRequestName": "GrantMediationRequestRequest",
       "response": {
+        "description": "",
         "schema": {
           "generatedName": "GrantMediationRequestResponse",
           "schema": "MediationGrant",
@@ -19564,7 +19565,6 @@
           "type": "reference"
         },
         "fullExamples": [],
-        "description": "",
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -19699,6 +19699,7 @@
         "type": "json"
       },
       "response": {
+        "description": "",
         "schema": {
           "generatedName": "UpdateKeylistForConnIdResponse",
           "schema": "KeylistUpdate",
@@ -19709,7 +19710,6 @@
           "type": "reference"
         },
         "fullExamples": [],
-        "description": "",
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -19849,6 +19849,7 @@
       "headers": [],
       "generatedRequestName": "SetDefaultMediatorRequest",
       "response": {
+        "description": "",
         "schema": {
           "generatedName": "SetDefaultMediatorResponse",
           "schema": "MediationRecord",
@@ -19859,7 +19860,6 @@
           "type": "reference"
         },
         "fullExamples": [],
-        "description": "",
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -20043,6 +20043,7 @@
         "type": "json"
       },
       "response": {
+        "description": "",
         "schema": {
           "generatedName": "CreateWalletResponse",
           "schema": "CreateWalletResponse",
@@ -20053,7 +20054,6 @@
           "type": "reference"
         },
         "fullExamples": [],
-        "description": "",
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -20228,6 +20228,7 @@
       "headers": [],
       "generatedRequestName": "GetWalletRecordRequest",
       "response": {
+        "description": "",
         "schema": {
           "generatedName": "GetWalletRecordResponse",
           "schema": "WalletRecord",
@@ -20238,7 +20239,6 @@
           "type": "reference"
         },
         "fullExamples": [],
-        "description": "",
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -20365,6 +20365,7 @@
         "type": "json"
       },
       "response": {
+        "description": "",
         "schema": {
           "generatedName": "UpdateWalletResponse",
           "schema": "WalletRecord",
@@ -20375,7 +20376,6 @@
           "type": "reference"
         },
         "fullExamples": [],
-        "description": "",
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -20544,6 +20544,7 @@
         "type": "json"
       },
       "response": {
+        "description": "",
         "schema": {
           "generatedName": "DeleteWalletResponse",
           "schema": "MultitenantModuleResponse",
@@ -20554,7 +20555,6 @@
           "type": "reference"
         },
         "fullExamples": [],
-        "description": "",
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -20676,6 +20676,7 @@
         "type": "json"
       },
       "response": {
+        "description": "",
         "schema": {
           "generatedName": "GetAuthTokenResponse",
           "schema": "CreateWalletTokenResponse",
@@ -20686,7 +20687,6 @@
           "type": "reference"
         },
         "fullExamples": [],
-        "description": "",
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -20786,6 +20786,7 @@
       "headers": [],
       "generatedRequestName": "GetMatchingWalletsRequest",
       "response": {
+        "description": "",
         "schema": {
           "generatedName": "GetMatchingWalletsResponse",
           "schema": "WalletList",
@@ -20796,7 +20797,6 @@
           "type": "reference"
         },
         "fullExamples": [],
-        "description": "",
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -20996,6 +20996,7 @@
         "type": "json"
       },
       "response": {
+        "description": "",
         "schema": {
           "generatedName": "CreateOobInvitationResponse",
           "schema": "InvitationRecord",
@@ -21006,7 +21007,6 @@
           "type": "reference"
         },
         "fullExamples": [],
-        "description": "",
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -21351,6 +21351,7 @@
         "type": "json"
       },
       "response": {
+        "description": "",
         "schema": {
           "generatedName": "ReceiveOobInvitationResponse",
           "schema": "OobRecord",
@@ -21361,7 +21362,6 @@
           "type": "reference"
         },
         "fullExamples": [],
-        "description": "",
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -22414,6 +22414,7 @@
       "headers": [],
       "generatedRequestName": "GetLoadedPluginsRequest",
       "response": {
+        "description": "",
         "schema": {
           "generatedName": "GetLoadedPluginsResponse",
           "schema": "AdminModules",
@@ -22424,7 +22425,6 @@
           "type": "reference"
         },
         "fullExamples": [],
-        "description": "",
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -22510,6 +22510,7 @@
         "type": "json"
       },
       "response": {
+        "description": "",
         "schema": {
           "generatedName": "CreateProofRequestResponse",
           "schema": "V20PresExRecord",
@@ -22520,7 +22521,6 @@
           "type": "reference"
         },
         "fullExamples": [],
-        "description": "",
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -22839,6 +22839,7 @@
       "headers": [],
       "generatedRequestName": "GetMatchingPresExRecordsV2Request",
       "response": {
+        "description": "",
         "schema": {
           "generatedName": "GetMatchingPresExRecordsV2Response",
           "schema": "V20PresExRecordList",
@@ -22849,7 +22850,6 @@
           "type": "reference"
         },
         "fullExamples": [],
-        "description": "",
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -23161,6 +23161,7 @@
       "headers": [],
       "generatedRequestName": "GetPresExRecordRequest",
       "response": {
+        "description": "",
         "schema": {
           "generatedName": "GetPresExRecordResponse",
           "schema": "V20PresExRecord",
@@ -23171,7 +23172,6 @@
           "type": "reference"
         },
         "fullExamples": [],
-        "description": "",
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -23346,6 +23346,7 @@
       "headers": [],
       "generatedRequestName": "DeletePresExRecordRequest",
       "response": {
+        "description": "",
         "schema": {
           "generatedName": "DeletePresExRecordResponse",
           "schema": "V20PresentProofModuleResponse",
@@ -23356,7 +23357,6 @@
           "type": "reference"
         },
         "fullExamples": [],
-        "description": "",
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -23537,8 +23537,8 @@
       "headers": [],
       "generatedRequestName": "GetPresExCredentialsV2Request",
       "response": {
+        "description": "",
         "schema": {
-          "generatedName": "GetPresExCredentialsV2Response",
           "value": {
             "generatedName": "GetPresExCredentialsV2ResponseItem",
             "schema": "IndyCredPrecis",
@@ -23548,11 +23548,11 @@
             },
             "type": "reference"
           },
+          "generatedName": "GetPresExCredentialsV2Response",
           "groupName": [],
           "type": "array"
         },
         "fullExamples": [],
-        "description": "",
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -23713,6 +23713,7 @@
         "type": "json"
       },
       "response": {
+        "description": "",
         "schema": {
           "generatedName": "ReportPresExProblemResponse",
           "schema": "V20PresentProofModuleResponse",
@@ -23723,7 +23724,6 @@
           "type": "reference"
         },
         "fullExamples": [],
-        "description": "",
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -23847,6 +23847,7 @@
         "type": "json"
       },
       "response": {
+        "description": "",
         "schema": {
           "generatedName": "SendProofPresentationResponse",
           "schema": "V20PresExRecord",
@@ -23857,7 +23858,6 @@
           "type": "reference"
         },
         "fullExamples": [],
-        "description": "",
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -24063,6 +24063,7 @@
         "type": "json"
       },
       "response": {
+        "description": "",
         "schema": {
           "generatedName": "SendProofPresentationRequestResponse",
           "schema": "V20PresExRecord",
@@ -24073,7 +24074,6 @@
           "type": "reference"
         },
         "fullExamples": [],
-        "description": "",
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -24267,6 +24267,7 @@
       "headers": [],
       "generatedRequestName": "VerifyReceivedPresentationRequest",
       "response": {
+        "description": "",
         "schema": {
           "generatedName": "VerifyReceivedPresentationResponse",
           "schema": "V20PresExRecord",
@@ -24277,7 +24278,6 @@
           "type": "reference"
         },
         "fullExamples": [],
-        "description": "",
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -24453,6 +24453,7 @@
         "type": "json"
       },
       "response": {
+        "description": "",
         "schema": {
           "generatedName": "SendPresentationProposalResponse",
           "schema": "V20PresExRecord",
@@ -24463,7 +24464,6 @@
           "type": "reference"
         },
         "fullExamples": [],
-        "description": "",
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -24665,6 +24665,7 @@
         "type": "json"
       },
       "response": {
+        "description": "",
         "schema": {
           "generatedName": "SendFreePresentationRequestResponse",
           "schema": "V20PresExRecord",
@@ -24675,7 +24676,6 @@
           "type": "reference"
         },
         "fullExamples": [],
-        "description": "",
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -24877,6 +24877,7 @@
         "type": "json"
       },
       "response": {
+        "description": "",
         "schema": {
           "generatedName": "CreateFreeProofRequestResponse",
           "schema": "V10PresentationExchange",
@@ -24887,7 +24888,6 @@
           "type": "reference"
         },
         "fullExamples": [],
-        "description": "",
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -25394,6 +25394,7 @@
       "headers": [],
       "generatedRequestName": "GetMatchingPresExRecordsRequest",
       "response": {
+        "description": "",
         "schema": {
           "generatedName": "GetMatchingPresExRecordsResponse",
           "schema": "V10PresentationExchangeList",
@@ -25404,7 +25405,6 @@
           "type": "reference"
         },
         "fullExamples": [],
-        "description": "",
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -25722,6 +25722,7 @@
       "headers": [],
       "generatedRequestName": "GetPresExRecordRequest",
       "response": {
+        "description": "",
         "schema": {
           "generatedName": "GetPresExRecordResponse",
           "schema": "V10PresentationExchange",
@@ -25732,7 +25733,6 @@
           "type": "reference"
         },
         "fullExamples": [],
-        "description": "",
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -25910,6 +25910,7 @@
       "headers": [],
       "generatedRequestName": "DeletePresExRecordRequest",
       "response": {
+        "description": "",
         "schema": {
           "generatedName": "DeletePresExRecordResponse",
           "schema": "V10PresentProofModuleResponse",
@@ -25920,7 +25921,6 @@
           "type": "reference"
         },
         "fullExamples": [],
-        "description": "",
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -26101,8 +26101,8 @@
       "headers": [],
       "generatedRequestName": "GetPresExCredentialsRequest",
       "response": {
+        "description": "",
         "schema": {
-          "generatedName": "GetPresExCredentialsResponse",
           "value": {
             "generatedName": "GetPresExCredentialsResponseItem",
             "schema": "IndyCredPrecis",
@@ -26112,11 +26112,11 @@
             },
             "type": "reference"
           },
+          "generatedName": "GetPresExCredentialsResponse",
           "groupName": [],
           "type": "array"
         },
         "fullExamples": [],
-        "description": "",
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -26277,6 +26277,7 @@
         "type": "json"
       },
       "response": {
+        "description": "",
         "schema": {
           "generatedName": "ReportPresExProblemResponse",
           "schema": "V10PresentProofModuleResponse",
@@ -26287,7 +26288,6 @@
           "type": "reference"
         },
         "fullExamples": [],
-        "description": "",
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -26411,6 +26411,7 @@
         "type": "json"
       },
       "response": {
+        "description": "",
         "schema": {
           "generatedName": "SendProofPresentationResponse",
           "schema": "V10PresentationExchange",
@@ -26421,7 +26422,6 @@
           "type": "reference"
         },
         "fullExamples": [],
-        "description": "",
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -26708,6 +26708,7 @@
         "type": "json"
       },
       "response": {
+        "description": "",
         "schema": {
           "generatedName": "SendProofPresentationRequestResponse",
           "schema": "V10PresentationExchange",
@@ -26718,7 +26719,6 @@
           "type": "reference"
         },
         "fullExamples": [],
-        "description": "",
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -26915,6 +26915,7 @@
       "headers": [],
       "generatedRequestName": "VerifyReceivedPresentationRequest",
       "response": {
+        "description": "",
         "schema": {
           "generatedName": "VerifyReceivedPresentationResponse",
           "schema": "V10PresentationExchange",
@@ -26925,7 +26926,6 @@
           "type": "reference"
         },
         "fullExamples": [],
-        "description": "",
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -27104,6 +27104,7 @@
         "type": "json"
       },
       "response": {
+        "description": "",
         "schema": {
           "generatedName": "SendPresentationProposalResponse",
           "schema": "V10PresentationExchange",
@@ -27114,7 +27115,6 @@
           "type": "reference"
         },
         "fullExamples": [],
-        "description": "",
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -27477,6 +27477,7 @@
         "type": "json"
       },
       "response": {
+        "description": "",
         "schema": {
           "generatedName": "SendFreePresentationRequestResponse",
           "schema": "V10PresentationExchange",
@@ -27487,7 +27488,6 @@
           "type": "reference"
         },
         "fullExamples": [],
-        "description": "",
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -27871,6 +27871,7 @@
       "headers": [],
       "generatedRequestName": "GetDidDocumentRequest",
       "response": {
+        "description": "",
         "schema": {
           "generatedName": "GetDidDocumentResponse",
           "schema": "ResolutionResult",
@@ -27881,7 +27882,6 @@
           "type": "reference"
         },
         "fullExamples": [],
-        "description": "",
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -27966,6 +27966,7 @@
       "headers": [],
       "generatedRequestName": "GetActiveRegistryForCredDefIdRequest",
       "response": {
+        "description": "",
         "schema": {
           "generatedName": "GetActiveRegistryForCredDefIdResponse",
           "schema": "RevRegResult",
@@ -27976,7 +27977,6 @@
           "type": "reference"
         },
         "fullExamples": [],
-        "description": "",
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -28176,6 +28176,7 @@
         "type": "json"
       },
       "response": {
+        "description": "",
         "schema": {
           "generatedName": "ClearPendingRevocationsResponse",
           "schema": "PublishRevocations",
@@ -28186,7 +28187,6 @@
           "type": "reference"
         },
         "fullExamples": [],
-        "description": "",
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -28318,6 +28318,7 @@
         "type": "json"
       },
       "response": {
+        "description": "",
         "schema": {
           "generatedName": "CreateRevocationRegistryResponse",
           "schema": "RevRegResult",
@@ -28328,7 +28329,6 @@
           "type": "reference"
         },
         "fullExamples": [],
-        "description": "",
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -28584,6 +28584,7 @@
       "headers": [],
       "generatedRequestName": "GetCredentialRevocationRecordRequest",
       "response": {
+        "description": "",
         "schema": {
           "generatedName": "GetCredentialRevocationRecordResponse",
           "schema": "CredRevRecordResult",
@@ -28594,7 +28595,6 @@
           "type": "reference"
         },
         "fullExamples": [],
-        "description": "",
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -28760,6 +28760,7 @@
         "type": "json"
       },
       "response": {
+        "description": "",
         "schema": {
           "generatedName": "PublishRevocationsResponse",
           "schema": "TxnOrPublishRevocationsResult",
@@ -28770,7 +28771,6 @@
           "type": "reference"
         },
         "fullExamples": [],
-        "description": "",
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -28960,6 +28960,7 @@
       "headers": [],
       "generatedRequestName": "GetCreatedRegistriesRequest",
       "response": {
+        "description": "",
         "schema": {
           "generatedName": "GetCreatedRegistriesResponse",
           "schema": "RevRegsCreated",
@@ -28970,7 +28971,6 @@
           "type": "reference"
         },
         "fullExamples": [],
-        "description": "",
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -29100,6 +29100,7 @@
       "headers": [],
       "generatedRequestName": "DeleteTailsFileRequest",
       "response": {
+        "description": "",
         "schema": {
           "generatedName": "DeleteTailsFileResponse",
           "schema": "TailsDeleteResponse",
@@ -29110,7 +29111,6 @@
           "type": "reference"
         },
         "fullExamples": [],
-        "description": "",
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -29204,6 +29204,7 @@
       "headers": [],
       "generatedRequestName": "GetRevocationRegistryRequest",
       "response": {
+        "description": "",
         "schema": {
           "generatedName": "GetRevocationRegistryResponse",
           "schema": "RevRegResult",
@@ -29214,7 +29215,6 @@
           "type": "reference"
         },
         "fullExamples": [],
-        "description": "",
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -29432,6 +29432,7 @@
         "type": "json"
       },
       "response": {
+        "description": "",
         "schema": {
           "generatedName": "UpdateRevocationRegistryResponse",
           "schema": "RevRegResult",
@@ -29442,7 +29443,6 @@
           "type": "reference"
         },
         "fullExamples": [],
-        "description": "",
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -29696,6 +29696,7 @@
       "headers": [],
       "generatedRequestName": "PublishRevocationRegistryDefinitionRequest",
       "response": {
+        "description": "",
         "schema": {
           "generatedName": "PublishRevocationRegistryDefinitionResponse",
           "schema": "TxnOrRevRegResult",
@@ -29706,7 +29707,6 @@
           "type": "reference"
         },
         "fullExamples": [],
-        "description": "",
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -29974,6 +29974,7 @@
       "headers": [],
       "generatedRequestName": "PublishRevocationRegistryEntryRequest",
       "response": {
+        "description": "",
         "schema": {
           "generatedName": "PublishRevocationRegistryEntryResponse",
           "schema": "RevRegResult",
@@ -29984,7 +29985,6 @@
           "type": "reference"
         },
         "fullExamples": [],
-        "description": "",
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -30221,6 +30221,7 @@
       "headers": [],
       "generatedRequestName": "UpdateRevocationEntryStateRequest",
       "response": {
+        "description": "",
         "schema": {
           "generatedName": "UpdateRevocationEntryStateResponse",
           "schema": "RevRegWalletUpdatedResult",
@@ -30231,7 +30232,6 @@
           "type": "reference"
         },
         "fullExamples": [],
-        "description": "",
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -30318,6 +30318,7 @@
       "headers": [],
       "generatedRequestName": "GetIssuedCredentialsCountRequest",
       "response": {
+        "description": "",
         "schema": {
           "generatedName": "GetIssuedCredentialsCountResponse",
           "schema": "RevRegIssuedResult",
@@ -30328,7 +30329,6 @@
           "type": "reference"
         },
         "fullExamples": [],
-        "description": "",
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -30412,6 +30412,7 @@
       "headers": [],
       "generatedRequestName": "GetIssuedCredentialDetailsRequest",
       "response": {
+        "description": "",
         "schema": {
           "generatedName": "GetIssuedCredentialDetailsResponse",
           "schema": "CredRevRecordDetailsResult",
@@ -30422,7 +30423,6 @@
           "type": "reference"
         },
         "fullExamples": [],
-        "description": "",
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -30640,6 +30640,7 @@
       "headers": [],
       "generatedRequestName": "GetPublishedCredentialDetailsRequest",
       "response": {
+        "description": "",
         "schema": {
           "generatedName": "GetPublishedCredentialDetailsResponse",
           "schema": "CredRevIndyRecordsResult",
@@ -30650,7 +30651,6 @@
           "type": "reference"
         },
         "fullExamples": [],
-        "description": "",
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -30771,6 +30771,7 @@
       "headers": [],
       "generatedRequestName": "SetRevocationRegistryStateRequest",
       "response": {
+        "description": "",
         "schema": {
           "generatedName": "SetRevocationRegistryStateResponse",
           "schema": "RevRegResult",
@@ -30781,7 +30782,6 @@
           "type": "reference"
         },
         "fullExamples": [],
-        "description": "",
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -31088,6 +31088,7 @@
       "headers": [],
       "generatedRequestName": "UploadTailsFileRequest",
       "response": {
+        "description": "",
         "schema": {
           "generatedName": "UploadTailsFileResponse",
           "schema": "RevocationModuleResponse",
@@ -31098,7 +31099,6 @@
           "type": "reference"
         },
         "fullExamples": [],
-        "description": "",
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -31192,6 +31192,7 @@
         "type": "json"
       },
       "response": {
+        "description": "",
         "schema": {
           "generatedName": "RevokeIssuedCredentialResponse",
           "schema": "RevocationModuleResponse",
@@ -31202,7 +31203,6 @@
           "type": "reference"
         },
         "fullExamples": [],
-        "description": "",
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -31393,6 +31393,7 @@
         "type": "json"
       },
       "response": {
+        "description": "",
         "schema": {
           "generatedName": "PublishSchemaResponse",
           "schema": "TxnOrSchemaSendResult",
@@ -31403,7 +31404,6 @@
           "type": "reference"
         },
         "fullExamples": [],
-        "description": "",
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -31597,6 +31597,7 @@
       "headers": [],
       "generatedRequestName": "GetMatchingCreatedSchemasRequest",
       "response": {
+        "description": "",
         "schema": {
           "generatedName": "GetMatchingCreatedSchemasResponse",
           "schema": "SchemasCreatedResult",
@@ -31607,7 +31608,6 @@
           "type": "reference"
         },
         "fullExamples": [],
-        "description": "",
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -31733,6 +31733,7 @@
       "headers": [],
       "generatedRequestName": "GetSchemaRequest",
       "response": {
+        "description": "",
         "schema": {
           "generatedName": "GetSchemaResponse",
           "schema": "SchemaGetResult",
@@ -31743,7 +31744,6 @@
           "type": "reference"
         },
         "fullExamples": [],
-        "description": "",
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -31879,6 +31879,7 @@
       "headers": [],
       "generatedRequestName": "WriteSchemaRecordToWalletRequest",
       "response": {
+        "description": "",
         "schema": {
           "generatedName": "WriteSchemaRecordToWalletResponse",
           "schema": "SchemaGetResult",
@@ -31889,7 +31890,6 @@
           "type": "reference"
         },
         "fullExamples": [],
-        "description": "",
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -32007,6 +32007,7 @@
       "headers": [],
       "generatedRequestName": "ShutdownServerRequest",
       "response": {
+        "description": "",
         "schema": {
           "generatedName": "ShutdownServerResponse",
           "schema": "AdminShutdown",
@@ -32017,7 +32018,6 @@
           "type": "reference"
         },
         "fullExamples": [],
-        "description": "",
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -32081,6 +32081,7 @@
       "headers": [],
       "generatedRequestName": "GetStatusRequest",
       "response": {
+        "description": "",
         "schema": {
           "generatedName": "GetStatusResponse",
           "schema": "AdminStatus",
@@ -32091,7 +32092,6 @@
           "type": "reference"
         },
         "fullExamples": [],
-        "description": "",
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -32153,6 +32153,7 @@
       "headers": [],
       "generatedRequestName": "GetConfigRequest",
       "response": {
+        "description": "",
         "schema": {
           "generatedName": "GetConfigResponse",
           "schema": "AdminConfig",
@@ -32163,7 +32164,6 @@
           "type": "reference"
         },
         "fullExamples": [],
-        "description": "",
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -32210,6 +32210,7 @@
       "headers": [],
       "generatedRequestName": "GetLivelinessRequest",
       "response": {
+        "description": "",
         "schema": {
           "generatedName": "GetLivelinessResponse",
           "schema": "AdminStatusLiveliness",
@@ -32220,7 +32221,6 @@
           "type": "reference"
         },
         "fullExamples": [],
-        "description": "",
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -32275,6 +32275,7 @@
       "headers": [],
       "generatedRequestName": "GetReadinessRequest",
       "response": {
+        "description": "",
         "schema": {
           "generatedName": "GetReadinessResponse",
           "schema": "AdminStatusReadiness",
@@ -32285,7 +32286,6 @@
           "type": "reference"
         },
         "fullExamples": [],
-        "description": "",
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -32340,6 +32340,7 @@
       "headers": [],
       "generatedRequestName": "ResetStatisticsRequest",
       "response": {
+        "description": "",
         "schema": {
           "generatedName": "ResetStatisticsResponse",
           "schema": "AdminReset",
@@ -32350,7 +32351,6 @@
           "type": "reference"
         },
         "fullExamples": [],
-        "description": "",
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -32431,6 +32431,7 @@
       "headers": [],
       "generatedRequestName": "ResendTransactionRequestRequest",
       "response": {
+        "description": "",
         "schema": {
           "generatedName": "ResendTransactionRequestResponse",
           "schema": "TransactionRecord",
@@ -32441,7 +32442,6 @@
           "type": "reference"
         },
         "fullExamples": [],
-        "description": "",
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -32669,6 +32669,7 @@
       "headers": [],
       "generatedRequestName": "GetTransactionListRequest",
       "response": {
+        "description": "",
         "schema": {
           "generatedName": "GetTransactionListResponse",
           "schema": "TransactionList",
@@ -32679,7 +32680,6 @@
           "type": "reference"
         },
         "fullExamples": [],
-        "description": "",
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -33137,6 +33137,7 @@
         "type": "json"
       },
       "response": {
+        "description": "",
         "schema": {
           "generatedName": "CreateTransactionRequestResponse",
           "schema": "TransactionRecord",
@@ -33147,7 +33148,6 @@
           "type": "reference"
         },
         "fullExamples": [],
-        "description": "",
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -33452,6 +33452,7 @@
       "headers": [],
       "generatedRequestName": "SetEndorserInfoForConnIdRequest",
       "response": {
+        "description": "",
         "schema": {
           "generatedName": "SetEndorserInfoForConnIdResponse",
           "schema": "EndorserInfo",
@@ -33462,7 +33463,6 @@
           "type": "reference"
         },
         "fullExamples": [],
-        "description": "",
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -33613,6 +33613,7 @@
       "headers": [],
       "generatedRequestName": "SetEndorserRoleForConnIdRequest",
       "response": {
+        "description": "",
         "schema": {
           "generatedName": "SetEndorserRoleForConnIdResponse",
           "schema": "TransactionJobs",
@@ -33623,7 +33624,6 @@
           "type": "reference"
         },
         "fullExamples": [],
-        "description": "",
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -33715,6 +33715,7 @@
       "headers": [],
       "generatedRequestName": "GetTransactionRecordRequest",
       "response": {
+        "description": "",
         "schema": {
           "generatedName": "GetTransactionRecordResponse",
           "schema": "TransactionRecord",
@@ -33725,7 +33726,6 @@
           "type": "reference"
         },
         "fullExamples": [],
-        "description": "",
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -33970,6 +33970,7 @@
       "headers": [],
       "generatedRequestName": "CancelTransactionRequestRequest",
       "response": {
+        "description": "",
         "schema": {
           "generatedName": "CancelTransactionRequestResponse",
           "schema": "TransactionRecord",
@@ -33980,7 +33981,6 @@
           "type": "reference"
         },
         "fullExamples": [],
-        "description": "",
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -34247,6 +34247,7 @@
       "headers": [],
       "generatedRequestName": "EndorseTransactionRequest",
       "response": {
+        "description": "",
         "schema": {
           "generatedName": "EndorseTransactionResponse",
           "schema": "TransactionRecord",
@@ -34257,7 +34258,6 @@
           "type": "reference"
         },
         "fullExamples": [],
-        "description": "",
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -34513,6 +34513,7 @@
       "headers": [],
       "generatedRequestName": "RefuseTransactionRequest",
       "response": {
+        "description": "",
         "schema": {
           "generatedName": "RefuseTransactionResponse",
           "schema": "TransactionRecord",
@@ -34523,7 +34524,6 @@
           "type": "reference"
         },
         "fullExamples": [],
-        "description": "",
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -34768,6 +34768,7 @@
       "headers": [],
       "generatedRequestName": "PublishEndorsedTransactionRequest",
       "response": {
+        "description": "",
         "schema": {
           "generatedName": "PublishEndorsedTransactionResponse",
           "schema": "TransactionRecord",
@@ -34778,7 +34779,6 @@
           "type": "reference"
         },
         "fullExamples": [],
-        "description": "",
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -35158,6 +35158,7 @@
       "headers": [],
       "generatedRequestName": "GetDidsRequest",
       "response": {
+        "description": "",
         "schema": {
           "generatedName": "GetDidsResponse",
           "schema": "DIDList",
@@ -35168,7 +35169,6 @@
           "type": "reference"
         },
         "fullExamples": [],
-        "description": "",
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -35350,6 +35350,7 @@
         "type": "json"
       },
       "response": {
+        "description": "",
         "schema": {
           "generatedName": "CreateLocalDidResponse",
           "schema": "DIDResult",
@@ -35360,7 +35361,6 @@
           "type": "reference"
         },
         "fullExamples": [],
-        "description": "",
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -35479,6 +35479,7 @@
       "headers": [],
       "generatedRequestName": "RotateKeypairRequest",
       "response": {
+        "description": "",
         "schema": {
           "generatedName": "RotateKeypairResponse",
           "schema": "WalletModuleResponse",
@@ -35489,7 +35490,6 @@
           "type": "reference"
         },
         "fullExamples": [],
-        "description": "",
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -35564,6 +35564,7 @@
       "headers": [],
       "generatedRequestName": "GetPublicDidRequest",
       "response": {
+        "description": "",
         "schema": {
           "generatedName": "GetPublicDidResponse",
           "schema": "DIDResult",
@@ -35574,7 +35575,6 @@
           "type": "reference"
         },
         "fullExamples": [],
-        "description": "",
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -35737,6 +35737,7 @@
       "headers": [],
       "generatedRequestName": "SetPublicDidRequest",
       "response": {
+        "description": "",
         "schema": {
           "generatedName": "SetPublicDidResponse",
           "schema": "DIDResult",
@@ -35747,7 +35748,6 @@
           "type": "reference"
         },
         "fullExamples": [],
-        "description": "",
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -35888,6 +35888,7 @@
       "headers": [],
       "generatedRequestName": "GetDidEndpointRequest",
       "response": {
+        "description": "",
         "schema": {
           "generatedName": "GetDidEndpointResponse",
           "schema": "DIDEndpoint",
@@ -35898,7 +35899,6 @@
           "type": "reference"
         },
         "fullExamples": [],
-        "description": "",
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -36033,6 +36033,7 @@
         "type": "json"
       },
       "response": {
+        "description": "",
         "schema": {
           "generatedName": "SetDidEndpointResponse",
           "schema": "WalletModuleResponse",
@@ -36043,7 +36044,6 @@
           "type": "reference"
         },
         "fullExamples": [],
-        "description": "",
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"

@@ -42,6 +42,7 @@
       "headers": [],
       "generatedRequestName": "DeploymentsRetrieveRequest",
       "response": {
+        "description": "",
         "schema": {
           "generatedName": "DeploymentsRetrieveResponse",
           "schema": "DeploymentRead",
@@ -52,7 +53,6 @@
           "type": "reference"
         },
         "fullExamples": [],
-        "description": "",
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -266,6 +266,7 @@
         "type": "json"
       },
       "response": {
+        "description": "",
         "schema": {
           "generatedName": "DocumentIndexesCreateResponse",
           "schema": "DocumentIndexRead",
@@ -276,7 +277,6 @@
           "type": "reference"
         },
         "fullExamples": [],
-        "description": "",
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -1047,6 +1047,7 @@
       "headers": [],
       "generatedRequestName": "DocumentsListRequest",
       "response": {
+        "description": "",
         "schema": {
           "generatedName": "DocumentsListResponse",
           "schema": "PaginatedSlimDocumentList",
@@ -1057,7 +1058,6 @@
           "type": "reference"
         },
         "fullExamples": [],
-        "description": "",
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -1505,6 +1505,7 @@
         "type": "json"
       },
       "response": {
+        "description": "",
         "schema": {
           "generatedName": "GenerateResponse",
           "schema": "GenerateResponse",
@@ -1515,7 +1516,6 @@
           "type": "reference"
         },
         "fullExamples": [],
-        "description": "",
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -2143,6 +2143,7 @@
       "headers": [],
       "generatedRequestName": "ModelVersionsRetrieveRequest",
       "response": {
+        "description": "",
         "schema": {
           "generatedName": "ModelVersionsRetrieveResponse",
           "schema": "ModelVersionRead",
@@ -2153,7 +2154,6 @@
           "type": "reference"
         },
         "fullExamples": [],
-        "description": "",
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -2470,6 +2470,7 @@
         "type": "json"
       },
       "response": {
+        "description": "",
         "schema": {
           "generatedName": "ModelVersionCompilePromptResponse",
           "schema": "ModelVersionCompilePromptResponse",
@@ -2480,7 +2481,6 @@
           "type": "reference"
         },
         "fullExamples": [],
-        "description": "",
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -2607,6 +2607,7 @@
         "type": "json"
       },
       "response": {
+        "description": "",
         "schema": {
           "generatedName": "RegisterPromptResponse",
           "schema": "RegisterPromptResponse",
@@ -2617,7 +2618,6 @@
           "type": "reference"
         },
         "fullExamples": [],
-        "description": "",
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -3015,6 +3015,7 @@
         "type": "json"
       },
       "response": {
+        "description": "",
         "schema": {
           "generatedName": "UpsertSandboxScenarioResponse",
           "schema": "SandboxScenario",
@@ -3025,7 +3026,6 @@
           "type": "reference"
         },
         "fullExamples": [],
-        "description": "",
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -3518,6 +3518,7 @@
         "type": "json"
       },
       "response": {
+        "description": "",
         "schema": {
           "generatedName": "SearchResponse",
           "schema": "SearchResponse",
@@ -3528,7 +3529,6 @@
           "type": "reference"
         },
         "fullExamples": [],
-        "description": "",
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -3955,6 +3955,7 @@
         "type": "json"
       },
       "response": {
+        "description": "",
         "schema": {
           "generatedName": "UpsertTestSuiteTestCaseResponse",
           "schema": "TestSuiteTestCase",
@@ -3965,7 +3966,6 @@
           "type": "reference"
         },
         "fullExamples": [],
-        "description": "",
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -4326,6 +4326,7 @@
         "type": "multipart"
       },
       "response": {
+        "description": "",
         "schema": {
           "generatedName": "DocumentsUploadResponse",
           "schema": "UploadDocumentResponse",
@@ -4336,7 +4337,6 @@
           "type": "reference"
         },
         "fullExamples": [],
-        "description": "",
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"

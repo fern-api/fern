@@ -38,6 +38,7 @@
         "type": "json"
       },
       "response": {
+        "description": "A simple API response.",
         "schema": {
           "generatedName": "WithAdditionalPropertiesExplicitResponse",
           "schema": "ResponseWithAdditionalPropertiesExplicit",
@@ -48,7 +49,6 @@
           "type": "reference"
         },
         "fullExamples": [],
-        "description": "A simple API response.",
         "source": {
           "file": "../openapi-additional-properties-defaults-to-true.yml",
           "type": "openapi"
@@ -126,6 +126,7 @@
         "type": "json"
       },
       "response": {
+        "description": "A simple API response.",
         "schema": {
           "generatedName": "WithoutAdditionalPropertiesExplicitResponse",
           "schema": "ResponseWithoutAdditionalPropertiesExplicit",
@@ -136,7 +137,6 @@
           "type": "reference"
         },
         "fullExamples": [],
-        "description": "A simple API response.",
         "source": {
           "file": "../openapi-additional-properties-defaults-to-true.yml",
           "type": "openapi"
@@ -214,6 +214,7 @@
         "type": "json"
       },
       "response": {
+        "description": "A simple API response.",
         "schema": {
           "generatedName": "ImplicitResponse",
           "schema": "Response",
@@ -224,7 +225,6 @@
           "type": "reference"
         },
         "fullExamples": [],
-        "description": "A simple API response.",
         "source": {
           "file": "../openapi-additional-properties-defaults-to-true.yml",
           "type": "openapi"
@@ -302,6 +302,7 @@
         "type": "json"
       },
       "response": {
+        "description": "A simple API response.",
         "schema": {
           "generatedName": "WithAdditionalPropertiesExplicitResponse",
           "schema": "ResponseWithAdditionalPropertiesExplicit",
@@ -312,7 +313,6 @@
           "type": "reference"
         },
         "fullExamples": [],
-        "description": "A simple API response.",
         "source": {
           "file": "../openapi-additional-properties-defaults-to-false.yml",
           "type": "openapi"
@@ -390,6 +390,7 @@
         "type": "json"
       },
       "response": {
+        "description": "A simple API response.",
         "schema": {
           "generatedName": "WithoutAdditionalPropertiesExplicitResponse",
           "schema": "ResponseWithoutAdditionalPropertiesExplicit",
@@ -400,7 +401,6 @@
           "type": "reference"
         },
         "fullExamples": [],
-        "description": "A simple API response.",
         "source": {
           "file": "../openapi-additional-properties-defaults-to-false.yml",
           "type": "openapi"
@@ -478,6 +478,7 @@
         "type": "json"
       },
       "response": {
+        "description": "A simple API response.",
         "schema": {
           "generatedName": "ImplicitResponse",
           "schema": "Response",
@@ -488,7 +489,6 @@
           "type": "reference"
         },
         "fullExamples": [],
-        "description": "A simple API response.",
         "source": {
           "file": "../openapi-additional-properties-defaults-to-false.yml",
           "type": "openapi"

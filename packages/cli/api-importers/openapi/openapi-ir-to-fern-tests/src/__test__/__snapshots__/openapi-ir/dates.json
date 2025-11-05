@@ -117,6 +117,7 @@
         "type": "json"
       },
       "response": {
+        "description": "A simple API response.",
         "schema": {
           "generatedName": "PostResponse",
           "schema": "Response",
@@ -127,7 +128,6 @@
           "type": "reference"
         },
         "fullExamples": [],
-        "description": "A simple API response.",
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"

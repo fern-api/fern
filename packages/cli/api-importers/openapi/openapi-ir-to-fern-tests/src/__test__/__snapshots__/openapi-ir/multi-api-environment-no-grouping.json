@@ -78,8 +78,8 @@
       "headers": [],
       "generatedRequestName": "ListWalletsRequest",
       "response": {
+        "description": "Successful response",
         "schema": {
-          "generatedName": "ListWalletsResponse",
           "value": {
             "generatedName": "ListWalletsResponseItem",
             "schema": "Wallet",
@@ -89,11 +89,11 @@
             },
             "type": "reference"
           },
+          "generatedName": "ListWalletsResponse",
           "groupName": [],
           "type": "array"
         },
         "fullExamples": [],
-        "description": "Successful response",
         "source": {
           "file": "../fintech-api.yml",
           "type": "openapi"
@@ -188,6 +188,7 @@
       "headers": [],
       "generatedRequestName": "GetWalletRequest",
       "response": {
+        "description": "Successful response",
         "schema": {
           "generatedName": "GetWalletResponse",
           "schema": "Wallet",
@@ -198,7 +199,6 @@
           "type": "reference"
         },
         "fullExamples": [],
-        "description": "Successful response",
         "source": {
           "file": "../fintech-api.yml",
           "type": "openapi"
@@ -299,6 +299,7 @@
       "headers": [],
       "generatedRequestName": "GetWalletBalanceRequest",
       "response": {
+        "description": "Successful response",
         "schema": {
           "generatedName": "GetWalletBalanceResponse",
           "schema": "Balance",
@@ -309,7 +310,6 @@
           "type": "reference"
         },
         "fullExamples": [],
-        "description": "Successful response",
         "source": {
           "file": "../fintech-api.yml",
           "type": "openapi"
@@ -387,8 +387,8 @@
       "headers": [],
       "generatedRequestName": "ListAccountsRequest",
       "response": {
+        "description": "Successful response",
         "schema": {
-          "generatedName": "ListAccountsResponse",
           "value": {
             "generatedName": "ListAccountsResponseItem",
             "schema": "Account",
@@ -398,11 +398,11 @@
             },
             "type": "reference"
           },
+          "generatedName": "ListAccountsResponse",
           "groupName": [],
           "type": "array"
         },
         "fullExamples": [],
-        "description": "Successful response",
         "source": {
           "file": "../fintech-api.yml",
           "type": "openapi"
@@ -471,8 +471,8 @@
       "headers": [],
       "generatedRequestName": "ListTransactionsRequest",
       "response": {
+        "description": "Successful response",
         "schema": {
-          "generatedName": "ListTransactionsResponse",
           "value": {
             "generatedName": "ListTransactionsResponseItem",
             "schema": "Transaction",
@@ -482,11 +482,11 @@
             },
             "type": "reference"
           },
+          "generatedName": "ListTransactionsResponse",
           "groupName": [],
           "type": "array"
         },
         "fullExamples": [],
-        "description": "Successful response",
         "source": {
           "file": "../payments-api.yml",
           "type": "openapi"
@@ -585,6 +585,7 @@
       "headers": [],
       "generatedRequestName": "GetTransactionRequest",
       "response": {
+        "description": "Successful response",
         "schema": {
           "generatedName": "GetTransactionResponse",
           "schema": "Transaction",
@@ -595,7 +596,6 @@
           "type": "reference"
         },
         "fullExamples": [],
-        "description": "Successful response",
         "source": {
           "file": "../payments-api.yml",
           "type": "openapi"
@@ -703,6 +703,7 @@
         "type": "json"
       },
       "response": {
+        "description": "Successful response",
         "schema": {
           "generatedName": "CreatePaymentResponse",
           "schema": "PaymentResponse",
@@ -713,7 +714,6 @@
           "type": "reference"
         },
         "fullExamples": [],
-        "description": "Successful response",
         "source": {
           "file": "../payments-api.yml",
           "type": "openapi"
@@ -838,6 +838,7 @@
         "type": "json"
       },
       "response": {
+        "description": "Successful response",
         "schema": {
           "generatedName": "RefundPaymentResponse",
           "schema": "RefundResponse",
@@ -848,7 +849,6 @@
           "type": "reference"
         },
         "fullExamples": [],
-        "description": "Successful response",
         "source": {
           "file": "../payments-api.yml",
           "type": "openapi"
@@ -935,8 +935,8 @@
       "headers": [],
       "generatedRequestName": "ListRefundsRequest",
       "response": {
+        "description": "Successful response",
         "schema": {
-          "generatedName": "ListRefundsResponse",
           "value": {
             "generatedName": "ListRefundsResponseItem",
             "schema": "Refund",
@@ -946,11 +946,11 @@
             },
             "type": "reference"
           },
+          "generatedName": "ListRefundsResponse",
           "groupName": [],
           "type": "array"
         },
         "fullExamples": [],
-        "description": "Successful response",
         "source": {
           "file": "../payments-api.yml",
           "type": "openapi"

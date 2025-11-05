@@ -162,41 +162,35 @@
         "type": "multipart"
       },
       "response": {
+        "description": "The file was uploaded successfully.",
         "schema": {
-          "description": "JSON object where the key is the file name of the uploaded file and\nthe value is the unique ID of the file on our systems.\n",
+          "allOf": [],
           "properties": [
             {
+              "conflict": {},
+              "generatedName": "baseUploadResponseFilename",
               "key": "filename",
               "schema": {
                 "generatedName": "BaseUploadResponseFilename",
                 "value": {
-                  "generatedName": "BaseUploadResponseFilename",
                   "schema": {
                     "format": "uuid",
                     "type": "string"
                   },
+                  "generatedName": "BaseUploadResponseFilename",
                   "groupName": [],
                   "type": "primitive"
                 },
                 "groupName": [],
                 "type": "optional"
               },
-              "audiences": [],
-              "conflict": {},
-              "generatedName": "baseUploadResponseFilename"
+              "audiences": []
             }
           ],
-          "generatedName": "BaseUploadResponse",
-          "allOf": [],
           "allOfPropertyConflicts": [],
+          "description": "JSON object where the key is the file name of the uploaded file and\nthe value is the unique ID of the file on our systems.\n",
+          "generatedName": "BaseUploadResponse",
           "groupName": [],
-          "fullExamples": [
-            {
-              "value": {
-                "my_file.jpg": "17be4678-dab7-4bc7-8753-28914a22960a"
-              }
-            }
-          ],
           "additionalProperties": false,
           "source": {
             "file": "../openapi.json",
@@ -205,7 +199,6 @@
           "type": "object"
         },
         "fullExamples": [],
-        "description": "The file was uploaded successfully.",
         "source": {
           "file": "../openapi.json",
           "type": "openapi"
@@ -1121,64 +1114,51 @@
         "type": "multipart"
       },
       "response": {
+        "description": "Multipart upload started successfully.",
         "schema": {
+          "allOf": [],
           "properties": [
             {
+              "conflict": {},
+              "generatedName": "multipartFileUploadStartResponseUuid",
               "key": "uuid",
               "schema": {
-                "generatedName": "MultipartFileUploadStartResponseUuid",
+                "description": "File's UUID.",
                 "schema": {
                   "format": "uuid",
                   "type": "string"
                 },
-                "description": "File's UUID.",
+                "generatedName": "MultipartFileUploadStartResponseUuid",
                 "groupName": [],
                 "type": "primitive"
               },
-              "audiences": [],
-              "conflict": {},
-              "generatedName": "multipartFileUploadStartResponseUuid"
+              "audiences": []
             },
             {
+              "conflict": {},
+              "generatedName": "multipartFileUploadStartResponseParts",
               "key": "parts",
               "schema": {
-                "generatedName": "MultipartFileUploadStartResponseParts",
                 "value": {
-                  "generatedName": "MultipartFileUploadStartResponsePartsItem",
+                  "description": "Upload file parts here.",
                   "schema": {
                     "format": "uri",
                     "type": "string"
                   },
-                  "description": "Upload file parts here.",
+                  "generatedName": "MultipartFileUploadStartResponsePartsItem",
                   "groupName": [],
                   "type": "primitive"
                 },
+                "generatedName": "MultipartFileUploadStartResponseParts",
                 "groupName": [],
                 "type": "array"
               },
-              "audiences": [],
-              "conflict": {},
-              "generatedName": "multipartFileUploadStartResponseParts"
+              "audiences": []
             }
           ],
-          "generatedName": "MultipartFileUploadStartResponse",
-          "allOf": [],
           "allOfPropertyConflicts": [],
+          "generatedName": "MultipartFileUploadStartResponse",
           "groupName": [],
-          "fullExamples": [
-            {
-              "value": {
-                "uuid": "67947755-1584-4e3f-902b-d4e2bf76a841",
-                "parts": [
-                  "<presigned-url-1>",
-                  "<presigned-url-2>",
-                  "<presigned-url-3>",
-                  "<presigned-url-4>",
-                  "<presigned-url-5>"
-                ]
-              }
-            }
-          ],
           "additionalProperties": false,
           "source": {
             "file": "../openapi.json",
@@ -1187,7 +1167,6 @@
           "type": "object"
         },
         "fullExamples": [],
-        "description": "Multipart upload started successfully.",
         "source": {
           "file": "../openapi.json",
           "type": "openapi"
@@ -2130,6 +2109,7 @@
         "type": "multipart"
       },
       "response": {
+        "description": "The file was uploaded successfully.",
         "schema": {
           "generatedName": "MultipartFileUploadCompleteResponse",
           "schema": "fileUploadInfo",
@@ -2140,7 +2120,6 @@
           "type": "reference"
         },
         "fullExamples": [],
-        "description": "The file was uploaded successfully.",
         "source": {
           "file": "../openapi.json",
           "type": "openapi"
@@ -3320,6 +3299,7 @@
         "type": "multipart"
       },
       "response": {
+        "description": "Status Token or File Info of an already downloaded file.",
         "schema": {
           "value": {
             "generatedName": "FromUrlUploadResponse",
@@ -3422,7 +3402,6 @@
             }
           }
         ],
-        "description": "Status Token or File Info of an already downloaded file.",
         "source": {
           "file": "../openapi.json",
           "type": "openapi"
@@ -4882,6 +4861,7 @@
       "headers": [],
       "generatedRequestName": "FromUrlUploadStatusRequest",
       "response": {
+        "description": "Request was processed successfully.\n",
         "schema": {
           "value": {
             "generatedName": "FromUrlUploadStatusResponse",
@@ -5032,7 +5012,6 @@
             }
           }
         ],
-        "description": "Request was processed successfully.\n",
         "source": {
           "file": "../openapi.json",
           "type": "openapi"
@@ -6052,6 +6031,7 @@
       "headers": [],
       "generatedRequestName": "FileUploadInfoRequest",
       "response": {
+        "description": "File information was retrieved successfully.",
         "schema": {
           "generatedName": "FileUploadInfoResponse",
           "schema": "fileUploadInfo",
@@ -6062,7 +6042,6 @@
           "type": "reference"
         },
         "fullExamples": [],
-        "description": "File information was retrieved successfully.",
         "source": {
           "file": "../openapi.json",
           "type": "openapi"
@@ -6962,6 +6941,7 @@
         "type": "multipart"
       },
       "response": {
+        "description": "The group was created successfully.",
         "schema": {
           "generatedName": "CreateFilesGroupResponse",
           "schema": "groupInfo",
@@ -6972,7 +6952,6 @@
           "type": "reference"
         },
         "fullExamples": [],
-        "description": "The group was created successfully.",
         "source": {
           "file": "../openapi.json",
           "type": "openapi"
@@ -8111,6 +8090,7 @@
       "headers": [],
       "generatedRequestName": "FilesGroupInfoRequest",
       "response": {
+        "description": "File group information was retrieved successfully.",
         "schema": {
           "generatedName": "FilesGroupInfoResponse",
           "schema": "groupInfo",
@@ -8121,7 +8101,6 @@
           "type": "reference"
         },
         "fullExamples": [],
-        "description": "File group information was retrieved successfully.",
         "source": {
           "file": "../openapi.json",
           "type": "openapi"

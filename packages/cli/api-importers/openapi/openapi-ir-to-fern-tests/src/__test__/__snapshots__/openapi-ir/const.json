@@ -35,6 +35,7 @@
         "type": "json"
       },
       "response": {
+        "description": "Pet created successfully",
         "schema": {
           "generatedName": "PostPetsResponse",
           "schema": "Pet",
@@ -45,7 +46,6 @@
           "type": "reference"
         },
         "fullExamples": [],
-        "description": "Pet created successfully",
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"

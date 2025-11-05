@@ -37,14 +37,17 @@
       "headers": [],
       "generatedRequestName": "GetUsersRequest",
       "response": {
+        "description": "User retrieved successfully",
         "schema": {
+          "allOf": [],
           "properties": [
             {
+              "conflict": {},
+              "generatedName": "getUsersResponseUsers",
               "key": "users",
               "schema": {
                 "generatedName": "GetUsersResponseUsers",
                 "value": {
-                  "generatedName": "GetUsersResponseUsers",
                   "value": {
                     "generatedName": "GetUsersResponseUsersItem",
                     "schema": "User",
@@ -54,22 +57,19 @@
                     },
                     "type": "reference"
                   },
+                  "generatedName": "GetUsersResponseUsers",
                   "groupName": [],
                   "type": "array"
                 },
                 "groupName": [],
                 "type": "optional"
               },
-              "audiences": [],
-              "conflict": {},
-              "generatedName": "getUsersResponseUsers"
+              "audiences": []
             }
           ],
-          "generatedName": "GetUsersResponse",
-          "allOf": [],
           "allOfPropertyConflicts": [],
+          "generatedName": "GetUsersResponse",
           "groupName": [],
-          "fullExamples": [],
           "additionalProperties": false,
           "source": {
             "file": "../openapi.yml",
@@ -78,7 +78,6 @@
           "type": "object"
         },
         "fullExamples": [],
-        "description": "User retrieved successfully",
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"

@@ -342,6 +342,7 @@
         "type": "json"
       },
       "response": {
+        "description": "",
         "schema": {
           "generatedName": "ChatResponse",
           "schema": "ChatFullResponse",
@@ -352,7 +353,6 @@
           "type": "reference"
         },
         "fullExamples": [],
-        "description": "",
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"

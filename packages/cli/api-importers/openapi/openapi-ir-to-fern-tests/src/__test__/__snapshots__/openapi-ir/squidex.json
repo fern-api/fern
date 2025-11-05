@@ -95,6 +95,7 @@
       "headers": [],
       "generatedRequestName": "UserManagementGetUsersRequest",
       "response": {
+        "description": "Users returned.",
         "schema": {
           "generatedName": "UserManagementGetUsersResponse",
           "schema": "UsersDto",
@@ -105,7 +106,6 @@
           "type": "reference"
         },
         "fullExamples": [],
-        "description": "Users returned.",
         "source": {
           "file": "../openapi.json",
           "type": "openapi"
@@ -380,6 +380,7 @@
         "type": "json"
       },
       "response": {
+        "description": "User created.",
         "schema": {
           "generatedName": "UserManagementPostUserResponse",
           "schema": "UserDto",
@@ -390,7 +391,6 @@
           "type": "reference"
         },
         "fullExamples": [],
-        "description": "User created.",
         "source": {
           "file": "../openapi.json",
           "type": "openapi"
@@ -663,6 +663,7 @@
       "headers": [],
       "generatedRequestName": "UserManagementGetUserRequest",
       "response": {
+        "description": "User returned.",
         "schema": {
           "generatedName": "UserManagementGetUserResponse",
           "schema": "UserDto",
@@ -673,7 +674,6 @@
           "type": "reference"
         },
         "fullExamples": [],
-        "description": "User returned.",
         "source": {
           "file": "../openapi.json",
           "type": "openapi"
@@ -910,6 +910,7 @@
         "type": "json"
       },
       "response": {
+        "description": "User created.",
         "schema": {
           "generatedName": "UserManagementPutUserResponse",
           "schema": "UserDto",
@@ -920,7 +921,6 @@
           "type": "reference"
         },
         "fullExamples": [],
-        "description": "User created.",
         "source": {
           "file": "../openapi.json",
           "type": "openapi"
@@ -1413,6 +1413,7 @@
       "headers": [],
       "generatedRequestName": "UserManagementLockUserRequest",
       "response": {
+        "description": "User locked.",
         "schema": {
           "generatedName": "UserManagementLockUserResponse",
           "schema": "UserDto",
@@ -1423,7 +1424,6 @@
           "type": "reference"
         },
         "fullExamples": [],
-        "description": "User locked.",
         "source": {
           "file": "../openapi.json",
           "type": "openapi"
@@ -1721,6 +1721,7 @@
       "headers": [],
       "generatedRequestName": "UserManagementUnlockUserRequest",
       "response": {
+        "description": "User unlocked.",
         "schema": {
           "generatedName": "UserManagementUnlockUserResponse",
           "schema": "UserDto",
@@ -1731,7 +1732,6 @@
           "type": "reference"
         },
         "fullExamples": [],
-        "description": "User unlocked.",
         "source": {
           "file": "../openapi.json",
           "type": "openapi"
@@ -2012,6 +2012,7 @@
       "headers": [],
       "generatedRequestName": "UsersGetUserResourcesRequest",
       "response": {
+        "description": "User resources returned.",
         "schema": {
           "generatedName": "UsersGetUserResourcesResponse",
           "schema": "ResourcesDto",
@@ -2022,7 +2023,6 @@
           "type": "reference"
         },
         "fullExamples": [],
-        "description": "User resources returned.",
         "source": {
           "file": "../openapi.json",
           "type": "openapi"
@@ -2180,8 +2180,8 @@
       "headers": [],
       "generatedRequestName": "UsersGetUsersRequest",
       "response": {
+        "description": "Users returned.",
         "schema": {
-          "generatedName": "UsersGetUsersResponse",
           "value": {
             "generatedName": "UsersGetUsersResponseItem",
             "schema": "UserDto",
@@ -2191,11 +2191,11 @@
             },
             "type": "reference"
           },
+          "generatedName": "UsersGetUsersResponse",
           "groupName": [],
           "type": "array"
         },
         "fullExamples": [],
-        "description": "Users returned.",
         "source": {
           "file": "../openapi.json",
           "type": "openapi"
@@ -2398,6 +2398,7 @@
       "headers": [],
       "generatedRequestName": "UsersGetUserRequest",
       "response": {
+        "description": "User found.",
         "schema": {
           "generatedName": "UsersGetUserResponse",
           "schema": "UserDto",
@@ -2408,7 +2409,6 @@
           "type": "reference"
         },
         "fullExamples": [],
-        "description": "User found.",
         "source": {
           "file": "../openapi.json",
           "type": "openapi"
@@ -2752,6 +2752,7 @@
         "type": "json"
       },
       "response": {
+        "description": "Text translated.",
         "schema": {
           "generatedName": "TranslationsPostTranslationResponse",
           "schema": "TranslationDto",
@@ -2762,7 +2763,6 @@
           "type": "reference"
         },
         "fullExamples": [],
-        "description": "Text translated.",
         "source": {
           "file": "../openapi.json",
           "type": "openapi"
@@ -2944,6 +2944,7 @@
       "headers": [],
       "generatedRequestName": "TemplatesGetTemplatesRequest",
       "response": {
+        "description": "Templates returned.",
         "schema": {
           "generatedName": "TemplatesGetTemplatesResponse",
           "schema": "TemplatesDto",
@@ -2954,7 +2955,6 @@
           "type": "reference"
         },
         "fullExamples": [],
-        "description": "Templates returned.",
         "source": {
           "file": "../openapi.json",
           "type": "openapi"
@@ -3175,6 +3175,7 @@
       "headers": [],
       "generatedRequestName": "TemplatesGetTemplateRequest",
       "response": {
+        "description": "Template returned.",
         "schema": {
           "generatedName": "TemplatesGetTemplateResponse",
           "schema": "TemplateDetailsDto",
@@ -3185,7 +3186,6 @@
           "type": "reference"
         },
         "fullExamples": [],
-        "description": "Template returned.",
         "source": {
           "file": "../openapi.json",
           "type": "openapi"
@@ -3368,6 +3368,7 @@
       "headers": [],
       "generatedRequestName": "TeamsGetContributorsRequest",
       "response": {
+        "description": "Contributors returned.",
         "schema": {
           "generatedName": "TeamsGetContributorsResponse",
           "schema": "ContributorsDto",
@@ -3378,7 +3379,6 @@
           "type": "reference"
         },
         "fullExamples": [],
-        "description": "Contributors returned.",
         "source": {
           "file": "../openapi.json",
           "type": "openapi"
@@ -3662,6 +3662,7 @@
         "type": "json"
       },
       "response": {
+        "description": "Contributor assigned to team.",
         "schema": {
           "generatedName": "TeamsPostContributorResponse",
           "schema": "ContributorsDto",
@@ -3672,7 +3673,6 @@
           "type": "reference"
         },
         "fullExamples": [],
-        "description": "Contributor assigned to team.",
         "source": {
           "file": "../openapi.json",
           "type": "openapi"
@@ -3989,6 +3989,7 @@
       "headers": [],
       "generatedRequestName": "TeamsDeleteMyselfRequest",
       "response": {
+        "description": "Contributor removed.",
         "schema": {
           "generatedName": "TeamsDeleteMyselfResponse",
           "schema": "ContributorsDto",
@@ -3999,7 +4000,6 @@
           "type": "reference"
         },
         "fullExamples": [],
-        "description": "Contributor removed.",
         "source": {
           "file": "../openapi.json",
           "type": "openapi"
@@ -4318,6 +4318,7 @@
       "headers": [],
       "generatedRequestName": "TeamsDeleteContributorRequest",
       "response": {
+        "description": "Contributor removed.",
         "schema": {
           "generatedName": "TeamsDeleteContributorResponse",
           "schema": "ContributorsDto",
@@ -4328,7 +4329,6 @@
           "type": "reference"
         },
         "fullExamples": [],
-        "description": "Contributor removed.",
         "source": {
           "file": "../openapi.json",
           "type": "openapi"
@@ -4626,8 +4626,8 @@
       "headers": [],
       "generatedRequestName": "TeamsGetTeamsRequest",
       "response": {
+        "description": "Teams returned.",
         "schema": {
-          "generatedName": "TeamsGetTeamsResponse",
           "value": {
             "generatedName": "TeamsGetTeamsResponseItem",
             "schema": "TeamDto",
@@ -4637,11 +4637,11 @@
             },
             "type": "reference"
           },
+          "generatedName": "TeamsGetTeamsResponse",
           "groupName": [],
           "type": "array"
         },
         "fullExamples": [],
-        "description": "Teams returned.",
         "source": {
           "file": "../openapi.json",
           "type": "openapi"
@@ -4837,6 +4837,7 @@
         "type": "json"
       },
       "response": {
+        "description": "Team created.",
         "schema": {
           "generatedName": "TeamsPostTeamResponse",
           "schema": "TeamDto",
@@ -4847,7 +4848,6 @@
           "type": "reference"
         },
         "fullExamples": [],
-        "description": "Team created.",
         "source": {
           "file": "../openapi.json",
           "type": "openapi"
@@ -5135,6 +5135,7 @@
       "headers": [],
       "generatedRequestName": "TeamsGetTeamRequest",
       "response": {
+        "description": "Teams returned.",
         "schema": {
           "generatedName": "TeamsGetTeamResponse",
           "schema": "TeamDto",
@@ -5145,7 +5146,6 @@
           "type": "reference"
         },
         "fullExamples": [],
-        "description": "Teams returned.",
         "source": {
           "file": "../openapi.json",
           "type": "openapi"
@@ -5382,6 +5382,7 @@
         "type": "json"
       },
       "response": {
+        "description": "Team updated.",
         "schema": {
           "generatedName": "TeamsPutTeamResponse",
           "schema": "TeamDto",
@@ -5392,7 +5393,6 @@
           "type": "reference"
         },
         "fullExamples": [],
-        "description": "Team updated.",
         "source": {
           "file": "../openapi.json",
           "type": "openapi"
@@ -5665,6 +5665,7 @@
       "headers": [],
       "generatedRequestName": "StatisticsGetLogRequest",
       "response": {
+        "description": "Usage tracking results returned.",
         "schema": {
           "generatedName": "StatisticsGetLogResponse",
           "schema": "LogDownloadDto",
@@ -5675,7 +5676,6 @@
           "type": "reference"
         },
         "fullExamples": [],
-        "description": "Usage tracking results returned.",
         "source": {
           "file": "../openapi.json",
           "type": "openapi"
@@ -5858,6 +5858,7 @@
       "headers": [],
       "generatedRequestName": "StatisticsGetUsagesRequest",
       "response": {
+        "description": "API call returned.",
         "schema": {
           "generatedName": "StatisticsGetUsagesResponse",
           "schema": "CallsUsageDtoDto",
@@ -5868,7 +5869,6 @@
           "type": "reference"
         },
         "fullExamples": [],
-        "description": "API call returned.",
         "source": {
           "file": "../openapi.json",
           "type": "openapi"
@@ -6168,6 +6168,7 @@
       "headers": [],
       "generatedRequestName": "StatisticsGetUsagesForTeamRequest",
       "response": {
+        "description": "API call returned.",
         "schema": {
           "generatedName": "StatisticsGetUsagesForTeamResponse",
           "schema": "CallsUsageDtoDto",
@@ -6178,7 +6179,6 @@
           "type": "reference"
         },
         "fullExamples": [],
-        "description": "API call returned.",
         "source": {
           "file": "../openapi.json",
           "type": "openapi"
@@ -6445,6 +6445,7 @@
       "headers": [],
       "generatedRequestName": "StatisticsGetCurrentStorageSizeRequest",
       "response": {
+        "description": "Storage usage returned.",
         "schema": {
           "generatedName": "StatisticsGetCurrentStorageSizeResponse",
           "schema": "CurrentStorageDto",
@@ -6455,7 +6456,6 @@
           "type": "reference"
         },
         "fullExamples": [],
-        "description": "Storage usage returned.",
         "source": {
           "file": "../openapi.json",
           "type": "openapi"
@@ -6610,6 +6610,7 @@
       "headers": [],
       "generatedRequestName": "StatisticsGetTeamCurrentStorageSizeForTeamRequest",
       "response": {
+        "description": "Storage usage returned.",
         "schema": {
           "generatedName": "StatisticsGetTeamCurrentStorageSizeForTeamResponse",
           "schema": "CurrentStorageDto",
@@ -6620,7 +6621,6 @@
           "type": "reference"
         },
         "fullExamples": [],
-        "description": "Storage usage returned.",
         "source": {
           "file": "../openapi.json",
           "type": "openapi"
@@ -6810,8 +6810,8 @@
       "headers": [],
       "generatedRequestName": "StatisticsGetStorageSizesRequest",
       "response": {
+        "description": "Storage usage returned.",
         "schema": {
-          "generatedName": "StatisticsGetStorageSizesResponse",
           "value": {
             "generatedName": "StatisticsGetStorageSizesResponseItem",
             "schema": "StorageUsagePerDateDto",
@@ -6821,11 +6821,11 @@
             },
             "type": "reference"
           },
+          "generatedName": "StatisticsGetStorageSizesResponse",
           "groupName": [],
           "type": "array"
         },
         "fullExamples": [],
-        "description": "Storage usage returned.",
         "source": {
           "file": "../openapi.json",
           "type": "openapi"
@@ -7046,8 +7046,8 @@
       "headers": [],
       "generatedRequestName": "StatisticsGetStorageSizesForTeamRequest",
       "response": {
+        "description": "Storage usage returned.",
         "schema": {
-          "generatedName": "StatisticsGetStorageSizesForTeamResponse",
           "value": {
             "generatedName": "StatisticsGetStorageSizesForTeamResponseItem",
             "schema": "StorageUsagePerDateDto",
@@ -7057,11 +7057,11 @@
             },
             "type": "reference"
           },
+          "generatedName": "StatisticsGetStorageSizesForTeamResponse",
           "groupName": [],
           "type": "array"
         },
         "fullExamples": [],
-        "description": "Storage usage returned.",
         "source": {
           "file": "../openapi.json",
           "type": "openapi"
@@ -7271,8 +7271,8 @@
       "headers": [],
       "generatedRequestName": "SearchGetSearchResultsRequest",
       "response": {
+        "description": "Search results returned.",
         "schema": {
-          "generatedName": "SearchGetSearchResultsResponse",
           "value": {
             "generatedName": "SearchGetSearchResultsResponseItem",
             "schema": "SearchResultDto",
@@ -7282,11 +7282,11 @@
             },
             "type": "reference"
           },
+          "generatedName": "SearchGetSearchResultsResponse",
           "groupName": [],
           "type": "array"
         },
         "fullExamples": [],
-        "description": "Search results returned.",
         "source": {
           "file": "../openapi.json",
           "type": "openapi"
@@ -7527,6 +7527,7 @@
         "type": "json"
       },
       "response": {
+        "description": "Schema field created.",
         "schema": {
           "generatedName": "SchemasPostFieldResponse",
           "schema": "SchemaDto",
@@ -7537,7 +7538,6 @@
           "type": "reference"
         },
         "fullExamples": [],
-        "description": "Schema field created.",
         "source": {
           "file": "../openapi.json",
           "type": "openapi"
@@ -8429,6 +8429,7 @@
         "type": "json"
       },
       "response": {
+        "description": "Schema field created.",
         "schema": {
           "generatedName": "SchemasPostNestedFieldResponse",
           "schema": "SchemaDto",
@@ -8439,7 +8440,6 @@
           "type": "reference"
         },
         "fullExamples": [],
-        "description": "Schema field created.",
         "source": {
           "file": "../openapi.json",
           "type": "openapi"
@@ -9325,6 +9325,7 @@
         "type": "json"
       },
       "response": {
+        "description": "Schema UI fields defined.",
         "schema": {
           "generatedName": "SchemasPutSchemaUiFieldsResponse",
           "schema": "SchemaDto",
@@ -9335,7 +9336,6 @@
           "type": "reference"
         },
         "fullExamples": [],
-        "description": "Schema UI fields defined.",
         "source": {
           "file": "../openapi.json",
           "type": "openapi"
@@ -10112,6 +10112,7 @@
         "type": "json"
       },
       "response": {
+        "description": "Schema fields reordered.",
         "schema": {
           "generatedName": "SchemasPutSchemaFieldOrderingResponse",
           "schema": "SchemaDto",
@@ -10122,7 +10123,6 @@
           "type": "reference"
         },
         "fullExamples": [],
-        "description": "Schema fields reordered.",
         "source": {
           "file": "../openapi.json",
           "type": "openapi"
@@ -10928,6 +10928,7 @@
         "type": "json"
       },
       "response": {
+        "description": "Schema fields reordered.",
         "schema": {
           "generatedName": "SchemasPutNestedFieldOrderingResponse",
           "schema": "SchemaDto",
@@ -10938,7 +10939,6 @@
           "type": "reference"
         },
         "fullExamples": [],
-        "description": "Schema fields reordered.",
         "source": {
           "file": "../openapi.json",
           "type": "openapi"
@@ -11754,6 +11754,7 @@
         "type": "json"
       },
       "response": {
+        "description": "Schema field updated.",
         "schema": {
           "generatedName": "SchemasPutFieldResponse",
           "schema": "SchemaDto",
@@ -11764,7 +11765,6 @@
           "type": "reference"
         },
         "fullExamples": [],
-        "description": "Schema field updated.",
         "source": {
           "file": "../openapi.json",
           "type": "openapi"
@@ -12600,6 +12600,7 @@
       "headers": [],
       "generatedRequestName": "SchemasDeleteFieldRequest",
       "response": {
+        "description": "Schema field deleted.",
         "schema": {
           "generatedName": "SchemasDeleteFieldResponse",
           "schema": "SchemaDto",
@@ -12610,7 +12611,6 @@
           "type": "reference"
         },
         "fullExamples": [],
-        "description": "Schema field deleted.",
         "source": {
           "file": "../openapi.json",
           "type": "openapi"
@@ -13425,6 +13425,7 @@
         "type": "json"
       },
       "response": {
+        "description": "Schema field updated.",
         "schema": {
           "generatedName": "SchemasPutNestedFieldResponse",
           "schema": "SchemaDto",
@@ -13435,7 +13436,6 @@
           "type": "reference"
         },
         "fullExamples": [],
-        "description": "Schema field updated.",
         "source": {
           "file": "../openapi.json",
           "type": "openapi"
@@ -14297,6 +14297,7 @@
       "headers": [],
       "generatedRequestName": "SchemasDeleteNestedFieldRequest",
       "response": {
+        "description": "Schema field deleted.",
         "schema": {
           "generatedName": "SchemasDeleteNestedFieldResponse",
           "schema": "SchemaDto",
@@ -14307,7 +14308,6 @@
           "type": "reference"
         },
         "fullExamples": [],
-        "description": "Schema field deleted.",
         "source": {
           "file": "../openapi.json",
           "type": "openapi"
@@ -15097,6 +15097,7 @@
       "headers": [],
       "generatedRequestName": "SchemasLockFieldRequest",
       "response": {
+        "description": "Schema field shown.",
         "schema": {
           "generatedName": "SchemasLockFieldResponse",
           "schema": "SchemaDto",
@@ -15107,7 +15108,6 @@
           "type": "reference"
         },
         "fullExamples": [],
-        "description": "Schema field shown.",
         "source": {
           "file": "../openapi.json",
           "type": "openapi"
@@ -15904,6 +15904,7 @@
       "headers": [],
       "generatedRequestName": "SchemasLockNestedFieldRequest",
       "response": {
+        "description": "Schema field hidden.",
         "schema": {
           "generatedName": "SchemasLockNestedFieldResponse",
           "schema": "SchemaDto",
@@ -15914,7 +15915,6 @@
           "type": "reference"
         },
         "fullExamples": [],
-        "description": "Schema field hidden.",
         "source": {
           "file": "../openapi.json",
           "type": "openapi"
@@ -16705,6 +16705,7 @@
       "headers": [],
       "generatedRequestName": "SchemasHideFieldRequest",
       "response": {
+        "description": "Schema field hidden.",
         "schema": {
           "generatedName": "SchemasHideFieldResponse",
           "schema": "SchemaDto",
@@ -16715,7 +16716,6 @@
           "type": "reference"
         },
         "fullExamples": [],
-        "description": "Schema field hidden.",
         "source": {
           "file": "../openapi.json",
           "type": "openapi"
@@ -17512,6 +17512,7 @@
       "headers": [],
       "generatedRequestName": "SchemasHideNestedFieldRequest",
       "response": {
+        "description": "Schema field hidden.",
         "schema": {
           "generatedName": "SchemasHideNestedFieldResponse",
           "schema": "SchemaDto",
@@ -17522,7 +17523,6 @@
           "type": "reference"
         },
         "fullExamples": [],
-        "description": "Schema field hidden.",
         "source": {
           "file": "../openapi.json",
           "type": "openapi"
@@ -18313,6 +18313,7 @@
       "headers": [],
       "generatedRequestName": "SchemasShowFieldRequest",
       "response": {
+        "description": "Schema field shown.",
         "schema": {
           "generatedName": "SchemasShowFieldResponse",
           "schema": "SchemaDto",
@@ -18323,7 +18324,6 @@
           "type": "reference"
         },
         "fullExamples": [],
-        "description": "Schema field shown.",
         "source": {
           "file": "../openapi.json",
           "type": "openapi"
@@ -19120,6 +19120,7 @@
       "headers": [],
       "generatedRequestName": "SchemasShowNestedFieldRequest",
       "response": {
+        "description": "Schema field shown.",
         "schema": {
           "generatedName": "SchemasShowNestedFieldResponse",
           "schema": "SchemaDto",
@@ -19130,7 +19131,6 @@
           "type": "reference"
         },
         "fullExamples": [],
-        "description": "Schema field shown.",
         "source": {
           "file": "../openapi.json",
           "type": "openapi"
@@ -19921,6 +19921,7 @@
       "headers": [],
       "generatedRequestName": "SchemasEnableFieldRequest",
       "response": {
+        "description": "Schema field enabled.",
         "schema": {
           "generatedName": "SchemasEnableFieldResponse",
           "schema": "SchemaDto",
@@ -19931,7 +19932,6 @@
           "type": "reference"
         },
         "fullExamples": [],
-        "description": "Schema field enabled.",
         "source": {
           "file": "../openapi.json",
           "type": "openapi"
@@ -20728,6 +20728,7 @@
       "headers": [],
       "generatedRequestName": "SchemasEnableNestedFieldRequest",
       "response": {
+        "description": "Schema field enabled.",
         "schema": {
           "generatedName": "SchemasEnableNestedFieldResponse",
           "schema": "SchemaDto",
@@ -20738,7 +20739,6 @@
           "type": "reference"
         },
         "fullExamples": [],
-        "description": "Schema field enabled.",
         "source": {
           "file": "../openapi.json",
           "type": "openapi"
@@ -21529,6 +21529,7 @@
       "headers": [],
       "generatedRequestName": "SchemasDisableFieldRequest",
       "response": {
+        "description": "Schema field disabled.",
         "schema": {
           "generatedName": "SchemasDisableFieldResponse",
           "schema": "SchemaDto",
@@ -21539,7 +21540,6 @@
           "type": "reference"
         },
         "fullExamples": [],
-        "description": "Schema field disabled.",
         "source": {
           "file": "../openapi.json",
           "type": "openapi"
@@ -22336,6 +22336,7 @@
       "headers": [],
       "generatedRequestName": "SchemasDisableNestedFieldRequest",
       "response": {
+        "description": "Schema field disabled.",
         "schema": {
           "generatedName": "SchemasDisableNestedFieldResponse",
           "schema": "SchemaDto",
@@ -22346,7 +22347,6 @@
           "type": "reference"
         },
         "fullExamples": [],
-        "description": "Schema field disabled.",
         "source": {
           "file": "../openapi.json",
           "type": "openapi"
@@ -23105,6 +23105,7 @@
       "headers": [],
       "generatedRequestName": "SchemasGetSchemasRequest",
       "response": {
+        "description": "Schemas returned.",
         "schema": {
           "generatedName": "SchemasGetSchemasResponse",
           "schema": "SchemasDto",
@@ -23115,7 +23116,6 @@
           "type": "reference"
         },
         "fullExamples": [],
-        "description": "Schemas returned.",
         "source": {
           "file": "../openapi.json",
           "type": "openapi"
@@ -23639,6 +23639,7 @@
         "type": "json"
       },
       "response": {
+        "description": "Schema created.",
         "schema": {
           "generatedName": "SchemasPostSchemaResponse",
           "schema": "SchemaDto",
@@ -23649,7 +23650,6 @@
           "type": "reference"
         },
         "fullExamples": [],
-        "description": "Schema created.",
         "source": {
           "file": "../openapi.json",
           "type": "openapi"
@@ -24451,6 +24451,7 @@
       "headers": [],
       "generatedRequestName": "SchemasGetSchemaRequest",
       "response": {
+        "description": "Schema found.",
         "schema": {
           "generatedName": "SchemasGetSchemaResponse",
           "schema": "SchemaDto",
@@ -24461,7 +24462,6 @@
           "type": "reference"
         },
         "fullExamples": [],
-        "description": "Schema found.",
         "source": {
           "file": "../openapi.json",
           "type": "openapi"
@@ -25194,6 +25194,7 @@
         "type": "json"
       },
       "response": {
+        "description": "Schema updated.",
         "schema": {
           "generatedName": "SchemasPutSchemaResponse",
           "schema": "SchemaDto",
@@ -25204,7 +25205,6 @@
           "type": "reference"
         },
         "fullExamples": [],
-        "description": "Schema updated.",
         "source": {
           "file": "../openapi.json",
           "type": "openapi"
@@ -26180,6 +26180,7 @@
         "type": "json"
       },
       "response": {
+        "description": "Schema updated.",
         "schema": {
           "generatedName": "SchemasPutSchemaSyncResponse",
           "schema": "SchemaDto",
@@ -26190,7 +26191,6 @@
           "type": "reference"
         },
         "fullExamples": [],
-        "description": "Schema updated.",
         "source": {
           "file": "../openapi.json",
           "type": "openapi"
@@ -26989,6 +26989,7 @@
         "type": "json"
       },
       "response": {
+        "description": "Schema updated.",
         "schema": {
           "generatedName": "SchemasPutCategoryResponse",
           "schema": "SchemaDto",
@@ -26999,7 +27000,6 @@
           "type": "reference"
         },
         "fullExamples": [],
-        "description": "Schema updated.",
         "source": {
           "file": "../openapi.json",
           "type": "openapi"
@@ -27776,6 +27776,7 @@
         "type": "json"
       },
       "response": {
+        "description": "Schema updated.",
         "schema": {
           "generatedName": "SchemasPutPreviewUrlsResponse",
           "schema": "SchemaDto",
@@ -27786,7 +27787,6 @@
           "type": "reference"
         },
         "fullExamples": [],
-        "description": "Schema updated.",
         "source": {
           "file": "../openapi.json",
           "type": "openapi"
@@ -28577,6 +28577,7 @@
         "type": "json"
       },
       "response": {
+        "description": "Schema updated.",
         "schema": {
           "generatedName": "SchemasPutScriptsResponse",
           "schema": "SchemaDto",
@@ -28587,7 +28588,6 @@
           "type": "reference"
         },
         "fullExamples": [],
-        "description": "Schema updated.",
         "source": {
           "file": "../openapi.json",
           "type": "openapi"
@@ -29364,6 +29364,7 @@
         "type": "json"
       },
       "response": {
+        "description": "Schema updated.",
         "schema": {
           "generatedName": "SchemasPutRulesResponse",
           "schema": "SchemaDto",
@@ -29374,7 +29375,6 @@
           "type": "reference"
         },
         "fullExamples": [],
-        "description": "Schema updated.",
         "source": {
           "file": "../openapi.json",
           "type": "openapi"
@@ -30132,6 +30132,7 @@
       "headers": [],
       "generatedRequestName": "SchemasPublishSchemaRequest",
       "response": {
+        "description": "Schema published.",
         "schema": {
           "generatedName": "SchemasPublishSchemaResponse",
           "schema": "SchemaDto",
@@ -30142,7 +30143,6 @@
           "type": "reference"
         },
         "fullExamples": [],
-        "description": "Schema published.",
         "source": {
           "file": "../openapi.json",
           "type": "openapi"
@@ -30896,6 +30896,7 @@
       "headers": [],
       "generatedRequestName": "SchemasUnpublishSchemaRequest",
       "response": {
+        "description": "Schema unpublished.",
         "schema": {
           "generatedName": "SchemasUnpublishSchemaResponse",
           "schema": "SchemaDto",
@@ -30906,7 +30907,6 @@
           "type": "reference"
         },
         "fullExamples": [],
-        "description": "Schema unpublished.",
         "source": {
           "file": "../openapi.json",
           "type": "openapi"
@@ -31626,13 +31626,15 @@
       "headers": [],
       "generatedRequestName": "RulesGetActionsRequest",
       "response": {
+        "description": "Rule actions returned.",
         "schema": {
-          "generatedName": "RulesGetActionsResponse",
           "key": {
-            "generatedName": "RulesGetActionsResponseKey",
             "schema": {
               "type": "string"
-            }
+            },
+            "generatedName": "RulesGetActionsResponseKey",
+            "groupName": [],
+            "type": "primitive"
           },
           "value": {
             "generatedName": "RulesGetActionsResponseValue",
@@ -31643,11 +31645,11 @@
             },
             "type": "reference"
           },
+          "generatedName": "RulesGetActionsResponse",
           "groupName": [],
           "type": "map"
         },
         "fullExamples": [],
-        "description": "Rule actions returned.",
         "source": {
           "file": "../openapi.json",
           "type": "openapi"
@@ -31859,6 +31861,7 @@
       "headers": [],
       "generatedRequestName": "RulesGetRulesRequest",
       "response": {
+        "description": "Rules returned.",
         "schema": {
           "generatedName": "RulesGetRulesResponse",
           "schema": "RulesDto",
@@ -31869,7 +31872,6 @@
           "type": "reference"
         },
         "fullExamples": [],
-        "description": "Rules returned.",
         "source": {
           "file": "../openapi.json",
           "type": "openapi"
@@ -32249,6 +32251,7 @@
         "type": "json"
       },
       "response": {
+        "description": "Rule created.",
         "schema": {
           "generatedName": "RulesPostRuleResponse",
           "schema": "RuleDto",
@@ -32259,7 +32262,6 @@
           "type": "reference"
         },
         "fullExamples": [],
-        "description": "Rule created.",
         "source": {
           "file": "../openapi.json",
           "type": "openapi"
@@ -32878,6 +32880,7 @@
         "type": "json"
       },
       "response": {
+        "description": "Rule updated.",
         "schema": {
           "generatedName": "RulesPutRuleResponse",
           "schema": "RuleDto",
@@ -32888,7 +32891,6 @@
           "type": "reference"
         },
         "fullExamples": [],
-        "description": "Rule updated.",
         "source": {
           "file": "../openapi.json",
           "type": "openapi"
@@ -33470,6 +33472,7 @@
       "headers": [],
       "generatedRequestName": "RulesEnableRuleRequest",
       "response": {
+        "description": "Rule enabled.",
         "schema": {
           "generatedName": "RulesEnableRuleResponse",
           "schema": "RuleDto",
@@ -33480,7 +33483,6 @@
           "type": "reference"
         },
         "fullExamples": [],
-        "description": "Rule enabled.",
         "source": {
           "file": "../openapi.json",
           "type": "openapi"
@@ -33867,6 +33869,7 @@
       "headers": [],
       "generatedRequestName": "RulesDisableRuleRequest",
       "response": {
+        "description": "Rule disabled.",
         "schema": {
           "generatedName": "RulesDisableRuleResponse",
           "schema": "RuleDto",
@@ -33877,7 +33880,6 @@
           "type": "reference"
         },
         "fullExamples": [],
-        "description": "Rule disabled.",
         "source": {
           "file": "../openapi.json",
           "type": "openapi"
@@ -34850,6 +34852,7 @@
         "type": "json"
       },
       "response": {
+        "description": "Rule simulated.",
         "schema": {
           "generatedName": "RulesSimulatePostResponse",
           "schema": "SimulatedRuleEventsDto",
@@ -34860,7 +34863,6 @@
           "type": "reference"
         },
         "fullExamples": [],
-        "description": "Rule simulated.",
         "source": {
           "file": "../openapi.json",
           "type": "openapi"
@@ -35269,6 +35271,7 @@
       "headers": [],
       "generatedRequestName": "RulesSimulateGetRequest",
       "response": {
+        "description": "Rule simulated.",
         "schema": {
           "generatedName": "RulesSimulateGetResponse",
           "schema": "SimulatedRuleEventsDto",
@@ -35279,7 +35282,6 @@
           "type": "reference"
         },
         "fullExamples": [],
-        "description": "Rule simulated.",
         "source": {
           "file": "../openapi.json",
           "type": "openapi"
@@ -35638,6 +35640,7 @@
       "headers": [],
       "generatedRequestName": "RulesGetEventsRequest",
       "response": {
+        "description": "Rule events returned.",
         "schema": {
           "generatedName": "RulesGetEventsResponse",
           "schema": "RuleEventsDto",
@@ -35648,7 +35651,6 @@
           "type": "reference"
         },
         "fullExamples": [],
-        "description": "Rule events returned.",
         "source": {
           "file": "../openapi.json",
           "type": "openapi"
@@ -36479,21 +36481,21 @@
       "headers": [],
       "generatedRequestName": "RulesGetEventTypesRequest",
       "response": {
+        "description": "Rule events returned.",
         "schema": {
-          "generatedName": "RulesGetEventTypesResponse",
           "value": {
-            "generatedName": "RulesGetEventTypesResponseItem",
             "schema": {
               "type": "string"
             },
+            "generatedName": "RulesGetEventTypesResponseItem",
             "groupName": [],
             "type": "primitive"
           },
+          "generatedName": "RulesGetEventTypesResponse",
           "groupName": [],
           "type": "array"
         },
         "fullExamples": [],
-        "description": "Rule events returned.",
         "source": {
           "file": "../openapi.json",
           "type": "openapi"
@@ -36612,13 +36614,12 @@
       "headers": [],
       "generatedRequestName": "RulesGetEventSchemaRequest",
       "response": {
+        "description": "Rule event type found.",
         "schema": {
           "generatedName": "RulesGetEventSchemaResponse",
-          "groupName": [],
           "type": "unknown"
         },
         "fullExamples": [],
-        "description": "Rule event type found.",
         "source": {
           "file": "../openapi.json",
           "type": "openapi"
@@ -36767,6 +36768,7 @@
       "headers": [],
       "generatedRequestName": "PlansGetPlansRequest",
       "response": {
+        "description": "App plan information returned.",
         "schema": {
           "generatedName": "PlansGetPlansResponse",
           "schema": "PlansDto",
@@ -36777,7 +36779,6 @@
           "type": "reference"
         },
         "fullExamples": [],
-        "description": "App plan information returned.",
         "source": {
           "file": "../openapi.json",
           "type": "openapi"
@@ -37076,6 +37077,7 @@
         "type": "json"
       },
       "response": {
+        "description": "Plan changed or redirect url returned.",
         "schema": {
           "generatedName": "PlansPutPlanResponse",
           "schema": "PlanChangedDto",
@@ -37086,7 +37088,6 @@
           "type": "reference"
         },
         "fullExamples": [],
-        "description": "Plan changed or redirect url returned.",
         "source": {
           "file": "../openapi.json",
           "type": "openapi"
@@ -37286,6 +37287,7 @@
       "headers": [],
       "generatedRequestName": "PlansGetTeamPlansRequest",
       "response": {
+        "description": "Team plan information returned.",
         "schema": {
           "generatedName": "PlansGetTeamPlansResponse",
           "schema": "PlansDto",
@@ -37296,7 +37298,6 @@
           "type": "reference"
         },
         "fullExamples": [],
-        "description": "Team plan information returned.",
         "source": {
           "file": "../openapi.json",
           "type": "openapi"
@@ -37594,6 +37595,7 @@
         "type": "json"
       },
       "response": {
+        "description": "Plan changed or redirect url returned.",
         "schema": {
           "generatedName": "PlansPutTeamPlanResponse",
           "schema": "PlanChangedDto",
@@ -37604,7 +37606,6 @@
           "type": "reference"
         },
         "fullExamples": [],
-        "description": "Plan changed or redirect url returned.",
         "source": {
           "file": "../openapi.json",
           "type": "openapi"
@@ -37787,6 +37788,7 @@
       "headers": [],
       "generatedRequestName": "PingGetInfoRequest",
       "response": {
+        "description": "Infos returned.",
         "schema": {
           "generatedName": "PingGetInfoResponse",
           "schema": "ExposedValues",
@@ -37797,7 +37799,6 @@
           "type": "reference"
         },
         "fullExamples": [],
-        "description": "Infos returned.",
         "source": {
           "file": "../openapi.json",
           "type": "openapi"
@@ -38121,6 +38122,7 @@
       "headers": [],
       "generatedRequestName": "NewsGetNewsRequest",
       "response": {
+        "description": "Latest features returned.",
         "schema": {
           "generatedName": "NewsGetNewsResponse",
           "schema": "FeaturesDto",
@@ -38131,7 +38133,6 @@
           "type": "reference"
         },
         "fullExamples": [],
-        "description": "Latest features returned.",
         "source": {
           "file": "../openapi.json",
           "type": "openapi"
@@ -38272,8 +38273,8 @@
       "headers": [],
       "generatedRequestName": "LanguagesGetLanguagesRequest",
       "response": {
+        "description": "Supported language codes returned.",
         "schema": {
-          "generatedName": "LanguagesGetLanguagesResponse",
           "value": {
             "generatedName": "LanguagesGetLanguagesResponseItem",
             "schema": "LanguageDto",
@@ -38283,11 +38284,11 @@
             },
             "type": "reference"
           },
+          "generatedName": "LanguagesGetLanguagesResponse",
           "groupName": [],
           "type": "array"
         },
         "fullExamples": [],
-        "description": "Supported language codes returned.",
         "source": {
           "file": "../openapi.json",
           "type": "openapi"
@@ -38453,8 +38454,8 @@
       "headers": [],
       "generatedRequestName": "HistoryGetAppHistoryRequest",
       "response": {
+        "description": "Events returned.",
         "schema": {
-          "generatedName": "HistoryGetAppHistoryResponse",
           "value": {
             "generatedName": "HistoryGetAppHistoryResponseItem",
             "schema": "HistoryEventDto",
@@ -38464,11 +38465,11 @@
             },
             "type": "reference"
           },
+          "generatedName": "HistoryGetAppHistoryResponse",
           "groupName": [],
           "type": "array"
         },
         "fullExamples": [],
-        "description": "Events returned.",
         "source": {
           "file": "../openapi.json",
           "type": "openapi"
@@ -38689,8 +38690,8 @@
       "headers": [],
       "generatedRequestName": "HistoryGetTeamHistoryRequest",
       "response": {
+        "description": "Events returned.",
         "schema": {
-          "generatedName": "HistoryGetTeamHistoryResponse",
           "value": {
             "generatedName": "HistoryGetTeamHistoryResponseItem",
             "schema": "HistoryEventDto",
@@ -38700,11 +38701,11 @@
             },
             "type": "reference"
           },
+          "generatedName": "HistoryGetTeamHistoryResponse",
           "groupName": [],
           "type": "array"
         },
         "fullExamples": [],
-        "description": "Events returned.",
         "source": {
           "file": "../openapi.json",
           "type": "openapi"
@@ -38886,6 +38887,7 @@
       "headers": [],
       "generatedRequestName": "EventConsumersGetEventConsumersRequest",
       "response": {
+        "description": "Event consumers returned.",
         "schema": {
           "generatedName": "EventConsumersGetEventConsumersResponse",
           "schema": "EventConsumersDto",
@@ -38896,7 +38898,6 @@
           "type": "reference"
         },
         "fullExamples": [],
-        "description": "Event consumers returned.",
         "source": {
           "file": "../openapi.json",
           "type": "openapi"
@@ -39133,6 +39134,7 @@
       "headers": [],
       "generatedRequestName": "EventConsumersStartEventConsumerRequest",
       "response": {
+        "description": "Event consumer started asynchronously.",
         "schema": {
           "generatedName": "EventConsumersStartEventConsumerResponse",
           "schema": "EventConsumerDto",
@@ -39143,7 +39145,6 @@
           "type": "reference"
         },
         "fullExamples": [],
-        "description": "Event consumer started asynchronously.",
         "source": {
           "file": "../openapi.json",
           "type": "openapi"
@@ -39403,6 +39404,7 @@
       "headers": [],
       "generatedRequestName": "EventConsumersStopEventConsumerRequest",
       "response": {
+        "description": "Event consumer stopped asynchronously.",
         "schema": {
           "generatedName": "EventConsumersStopEventConsumerResponse",
           "schema": "EventConsumerDto",
@@ -39413,7 +39415,6 @@
           "type": "reference"
         },
         "fullExamples": [],
-        "description": "Event consumer stopped asynchronously.",
         "source": {
           "file": "../openapi.json",
           "type": "openapi"
@@ -39673,6 +39674,7 @@
       "headers": [],
       "generatedRequestName": "EventConsumersResetEventConsumerRequest",
       "response": {
+        "description": "Event consumer resetted asynchronously.",
         "schema": {
           "generatedName": "EventConsumersResetEventConsumerResponse",
           "schema": "EventConsumerDto",
@@ -39683,7 +39685,6 @@
           "type": "reference"
         },
         "fullExamples": [],
-        "description": "Event consumer resetted asynchronously.",
         "source": {
           "file": "../openapi.json",
           "type": "openapi"
@@ -40251,6 +40252,7 @@
       "headers": [],
       "generatedRequestName": "ContentsGetContentsRequest",
       "response": {
+        "description": "Contents returned.",
         "schema": {
           "generatedName": "ContentsGetContentsResponse",
           "schema": "ContentsDto",
@@ -40261,7 +40263,6 @@
           "type": "reference"
         },
         "fullExamples": [],
-        "description": "Contents returned.",
         "source": {
           "file": "../openapi.json",
           "type": "openapi"
@@ -40968,6 +40969,7 @@
         "type": "json"
       },
       "response": {
+        "description": "Content created.",
         "schema": {
           "generatedName": "ContentsPostContentResponse",
           "schema": "ContentsDto",
@@ -40978,7 +40980,6 @@
           "type": "reference"
         },
         "fullExamples": [],
-        "description": "Content created.",
         "source": {
           "file": "../openapi.json",
           "type": "openapi"
@@ -41705,6 +41706,7 @@
         "type": "json"
       },
       "response": {
+        "description": "Contents returned.",
         "schema": {
           "generatedName": "ContentsGetContentsPostResponse",
           "schema": "ContentsDto",
@@ -41715,7 +41717,6 @@
           "type": "reference"
         },
         "fullExamples": [],
-        "description": "Contents returned.",
         "source": {
           "file": "../openapi.json",
           "type": "openapi"
@@ -42401,6 +42402,7 @@
       "headers": [],
       "generatedRequestName": "ContentsGetContentRequest",
       "response": {
+        "description": "Content returned.",
         "schema": {
           "generatedName": "ContentsGetContentResponse",
           "schema": "ContentDto",
@@ -42411,7 +42413,6 @@
           "type": "reference"
         },
         "fullExamples": [],
-        "description": "Content returned.",
         "source": {
           "file": "../openapi.json",
           "type": "openapi"
@@ -43189,6 +43190,7 @@
         "type": "json"
       },
       "response": {
+        "description": "Content created or updated.",
         "schema": {
           "generatedName": "ContentsPostUpsertContentResponse",
           "schema": "ContentsDto",
@@ -43199,7 +43201,6 @@
           "type": "reference"
         },
         "fullExamples": [],
-        "description": "Content created or updated.",
         "source": {
           "file": "../openapi.json",
           "type": "openapi"
@@ -43952,6 +43953,7 @@
         "type": "json"
       },
       "response": {
+        "description": "Content updated.",
         "schema": {
           "generatedName": "ContentsPutContentResponse",
           "schema": "ContentsDto",
@@ -43962,7 +43964,6 @@
           "type": "reference"
         },
         "fullExamples": [],
-        "description": "Content updated.",
         "source": {
           "file": "../openapi.json",
           "type": "openapi"
@@ -44966,6 +44967,7 @@
         "type": "json"
       },
       "response": {
+        "description": "Content patched.",
         "schema": {
           "generatedName": "ContentsPatchContentResponse",
           "schema": "ContentsDto",
@@ -44976,7 +44978,6 @@
           "type": "reference"
         },
         "fullExamples": [],
-        "description": "Content patched.",
         "source": {
           "file": "../openapi.json",
           "type": "openapi"
@@ -45917,6 +45918,7 @@
       "headers": [],
       "generatedRequestName": "ContentsGetReferencesRequest",
       "response": {
+        "description": "Contents returned.",
         "schema": {
           "generatedName": "ContentsGetReferencesResponse",
           "schema": "ContentsDto",
@@ -45927,7 +45929,6 @@
           "type": "reference"
         },
         "fullExamples": [],
-        "description": "Contents returned.",
         "source": {
           "file": "../openapi.json",
           "type": "openapi"
@@ -46589,6 +46590,7 @@
       "headers": [],
       "generatedRequestName": "ContentsGetReferencingRequest",
       "response": {
+        "description": "Content returned.",
         "schema": {
           "generatedName": "ContentsGetReferencingResponse",
           "schema": "ContentsDto",
@@ -46599,7 +46601,6 @@
           "type": "reference"
         },
         "fullExamples": [],
-        "description": "Content returned.",
         "source": {
           "file": "../openapi.json",
           "type": "openapi"
@@ -47407,8 +47408,8 @@
         "type": "json"
       },
       "response": {
+        "description": "Contents created.",
         "schema": {
-          "generatedName": "ContentsPostContentsResponse",
           "value": {
             "generatedName": "ContentsPostContentsResponseItem",
             "schema": "BulkResultDto",
@@ -47418,11 +47419,11 @@
             },
             "type": "reference"
           },
+          "generatedName": "ContentsPostContentsResponse",
           "groupName": [],
           "type": "array"
         },
         "fullExamples": [],
-        "description": "Contents created.",
         "source": {
           "file": "../openapi.json",
           "type": "openapi"
@@ -47764,8 +47765,8 @@
         "type": "json"
       },
       "response": {
+        "description": "",
         "schema": {
-          "generatedName": "ContentsBulkUpdateContentsResponse",
           "value": {
             "generatedName": "ContentsBulkUpdateContentsResponseItem",
             "schema": "BulkResultDto",
@@ -47775,11 +47776,11 @@
             },
             "type": "reference"
           },
+          "generatedName": "ContentsBulkUpdateContentsResponse",
           "groupName": [],
           "type": "array"
         },
         "fullExamples": [],
-        "description": "",
         "source": {
           "file": "../openapi.json",
           "type": "openapi"
@@ -48108,6 +48109,7 @@
         "type": "json"
       },
       "response": {
+        "description": "Content status changed.",
         "schema": {
           "generatedName": "ContentsPutContentStatusResponse",
           "schema": "ContentsDto",
@@ -48118,7 +48120,6 @@
           "type": "reference"
         },
         "fullExamples": [],
-        "description": "Content status changed.",
         "source": {
           "file": "../openapi.json",
           "type": "openapi"
@@ -48801,6 +48802,7 @@
       "headers": [],
       "generatedRequestName": "ContentsDeleteContentStatusRequest",
       "response": {
+        "description": "Content status change cancelled.",
         "schema": {
           "generatedName": "ContentsDeleteContentStatusResponse",
           "schema": "ContentsDto",
@@ -48811,7 +48813,6 @@
           "type": "reference"
         },
         "fullExamples": [],
-        "description": "Content status change cancelled.",
         "source": {
           "file": "../openapi.json",
           "type": "openapi"
@@ -49482,6 +49483,7 @@
       "headers": [],
       "generatedRequestName": "ContentsCreateDraftRequest",
       "response": {
+        "description": "Content draft created.",
         "schema": {
           "generatedName": "ContentsCreateDraftResponse",
           "schema": "ContentsDto",
@@ -49492,7 +49494,6 @@
           "type": "reference"
         },
         "fullExamples": [],
-        "description": "Content draft created.",
         "source": {
           "file": "../openapi.json",
           "type": "openapi"
@@ -50163,6 +50164,7 @@
       "headers": [],
       "generatedRequestName": "ContentsDeleteVersionRequest",
       "response": {
+        "description": "Content draft deleted.",
         "schema": {
           "generatedName": "ContentsDeleteVersionResponse",
           "schema": "ContentsDto",
@@ -50173,7 +50175,6 @@
           "type": "reference"
         },
         "fullExamples": [],
-        "description": "Content draft deleted.",
         "source": {
           "file": "../openapi.json",
           "type": "openapi"
@@ -50833,21 +50834,21 @@
       "headers": [],
       "generatedRequestName": "CommentsGetWatchingUsersRequest",
       "response": {
+        "description": "Watching users returned.",
         "schema": {
-          "generatedName": "CommentsGetWatchingUsersResponse",
           "value": {
-            "generatedName": "CommentsGetWatchingUsersResponseItem",
             "schema": {
               "type": "string"
             },
+            "generatedName": "CommentsGetWatchingUsersResponseItem",
             "groupName": [],
             "type": "primitive"
           },
+          "generatedName": "CommentsGetWatchingUsersResponse",
           "groupName": [],
           "type": "array"
         },
         "fullExamples": [],
-        "description": "Watching users returned.",
         "source": {
           "file": "../openapi.json",
           "type": "openapi"
@@ -51043,6 +51044,7 @@
       "headers": [],
       "generatedRequestName": "CommentsGetCommentsRequest",
       "response": {
+        "description": "Comments returned.",
         "schema": {
           "generatedName": "CommentsGetCommentsResponse",
           "schema": "CommentsDto",
@@ -51053,7 +51055,6 @@
           "type": "reference"
         },
         "fullExamples": [],
-        "description": "Comments returned.",
         "source": {
           "file": "../openapi.json",
           "type": "openapi"
@@ -51361,6 +51362,7 @@
         "type": "json"
       },
       "response": {
+        "description": "Comment created.",
         "schema": {
           "generatedName": "CommentsPostCommentResponse",
           "schema": "CommentDto",
@@ -51371,7 +51373,6 @@
           "type": "reference"
         },
         "fullExamples": [],
-        "description": "Comment created.",
         "source": {
           "file": "../openapi.json",
           "type": "openapi"
@@ -52097,6 +52098,7 @@
       "headers": [],
       "generatedRequestName": "NotificationsGetNotificationsRequest",
       "response": {
+        "description": "All comments returned.",
         "schema": {
           "generatedName": "NotificationsGetNotificationsResponse",
           "schema": "CommentsDto",
@@ -52107,7 +52109,6 @@
           "type": "reference"
         },
         "fullExamples": [],
-        "description": "All comments returned.",
         "source": {
           "file": "../openapi.json",
           "type": "openapi"
@@ -53012,6 +53013,7 @@
       "headers": [],
       "generatedRequestName": "BackupsGetBackupsRequest",
       "response": {
+        "description": "Backups returned.",
         "schema": {
           "generatedName": "BackupsGetBackupsResponse",
           "schema": "BackupJobsDto",
@@ -53022,7 +53024,6 @@
           "type": "reference"
         },
         "fullExamples": [],
-        "description": "Backups returned.",
         "source": {
           "file": "../openapi.json",
           "type": "openapi"
@@ -53427,6 +53428,7 @@
       "headers": [],
       "generatedRequestName": "BackupsGetRestoreJobRequest",
       "response": {
+        "description": "Status returned.",
         "schema": {
           "generatedName": "BackupsGetRestoreJobResponse",
           "schema": "RestoreJobDto",
@@ -53437,7 +53439,6 @@
           "type": "reference"
         },
         "fullExamples": [],
-        "description": "Status returned.",
         "source": {
           "file": "../openapi.json",
           "type": "openapi"
@@ -54644,6 +54645,7 @@
       "headers": [],
       "generatedRequestName": "AssetsGetAssetFoldersRequest",
       "response": {
+        "description": "Asset folders returned.",
         "schema": {
           "generatedName": "AssetsGetAssetFoldersResponse",
           "schema": "AssetFoldersDto",
@@ -54654,7 +54656,6 @@
           "type": "reference"
         },
         "fullExamples": [],
-        "description": "Asset folders returned.",
         "source": {
           "file": "../openapi.json",
           "type": "openapi"
@@ -55014,6 +55015,7 @@
         "type": "json"
       },
       "response": {
+        "description": "Asset folder created.",
         "schema": {
           "generatedName": "AssetsPostAssetFolderResponse",
           "schema": "AssetFolderDto",
@@ -55024,7 +55026,6 @@
           "type": "reference"
         },
         "fullExamples": [],
-        "description": "Asset folder created.",
         "source": {
           "file": "../openapi.json",
           "type": "openapi"
@@ -55318,6 +55319,7 @@
         "type": "json"
       },
       "response": {
+        "description": "Asset folder updated.",
         "schema": {
           "generatedName": "AssetsPutAssetFolderResponse",
           "schema": "AssetFolderDto",
@@ -55328,7 +55330,6 @@
           "type": "reference"
         },
         "fullExamples": [],
-        "description": "Asset folder updated.",
         "source": {
           "file": "../openapi.json",
           "type": "openapi"
@@ -55823,6 +55824,7 @@
         "type": "json"
       },
       "response": {
+        "description": "Asset folder moved.",
         "schema": {
           "generatedName": "AssetsPutAssetFolderParentResponse",
           "schema": "AssetFolderDto",
@@ -55833,7 +55835,6 @@
           "type": "reference"
         },
         "fullExamples": [],
-        "description": "Asset folder moved.",
         "source": {
           "file": "../openapi.json",
           "type": "openapi"
@@ -56094,27 +56095,29 @@
       "headers": [],
       "generatedRequestName": "AssetsGetTagsRequest",
       "response": {
+        "description": "Assets tags returned.",
         "schema": {
-          "generatedName": "AssetsGetTagsResponse",
           "key": {
-            "generatedName": "AssetsGetTagsResponseKey",
             "schema": {
               "type": "string"
-            }
-          },
-          "value": {
-            "generatedName": "AssetsGetTagsResponseValue",
-            "schema": {
-              "type": "int"
             },
+            "generatedName": "AssetsGetTagsResponseKey",
             "groupName": [],
             "type": "primitive"
           },
+          "value": {
+            "schema": {
+              "type": "int"
+            },
+            "generatedName": "AssetsGetTagsResponseValue",
+            "groupName": [],
+            "type": "primitive"
+          },
+          "generatedName": "AssetsGetTagsResponse",
           "groupName": [],
           "type": "map"
         },
         "fullExamples": [],
-        "description": "Assets tags returned.",
         "source": {
           "file": "../openapi.json",
           "type": "openapi"
@@ -56305,27 +56308,29 @@
         "type": "json"
       },
       "response": {
+        "description": "Asset tag renamed and new tags returned.",
         "schema": {
-          "generatedName": "AssetsPutTagResponse",
           "key": {
-            "generatedName": "AssetsPutTagResponseKey",
             "schema": {
               "type": "string"
-            }
-          },
-          "value": {
-            "generatedName": "AssetsPutTagResponseValue",
-            "schema": {
-              "type": "int"
             },
+            "generatedName": "AssetsPutTagResponseKey",
             "groupName": [],
             "type": "primitive"
           },
+          "value": {
+            "schema": {
+              "type": "int"
+            },
+            "generatedName": "AssetsPutTagResponseValue",
+            "groupName": [],
+            "type": "primitive"
+          },
+          "generatedName": "AssetsPutTagResponse",
           "groupName": [],
           "type": "map"
         },
         "fullExamples": [],
-        "description": "Asset tag renamed and new tags returned.",
         "source": {
           "file": "../openapi.json",
           "type": "openapi"
@@ -56690,6 +56695,7 @@
       "headers": [],
       "generatedRequestName": "AssetsGetAssetsRequest",
       "response": {
+        "description": "Assets returned.",
         "schema": {
           "generatedName": "AssetsGetAssetsResponse",
           "schema": "AssetsDto",
@@ -56700,7 +56706,6 @@
           "type": "reference"
         },
         "fullExamples": [],
-        "description": "Assets returned.",
         "source": {
           "file": "../openapi.json",
           "type": "openapi"
@@ -57255,6 +57260,7 @@
         "type": "multipart"
       },
       "response": {
+        "description": "Asset created.",
         "schema": {
           "generatedName": "AssetsPostAssetResponse",
           "schema": "AssetDto",
@@ -57265,7 +57271,6 @@
           "type": "reference"
         },
         "fullExamples": [],
-        "description": "Asset created.",
         "source": {
           "file": "../openapi.json",
           "type": "openapi"
@@ -57754,6 +57759,7 @@
         "type": "json"
       },
       "response": {
+        "description": "Assets returned.",
         "schema": {
           "generatedName": "AssetsGetAssetsPostResponse",
           "schema": "AssetsDto",
@@ -57764,7 +57770,6 @@
           "type": "reference"
         },
         "fullExamples": [],
-        "description": "Assets returned.",
         "source": {
           "file": "../openapi.json",
           "type": "openapi"
@@ -58226,6 +58231,7 @@
       "headers": [],
       "generatedRequestName": "AssetsGetAssetRequest",
       "response": {
+        "description": "Asset found.",
         "schema": {
           "generatedName": "AssetsGetAssetResponse",
           "schema": "AssetDto",
@@ -58236,7 +58242,6 @@
           "type": "reference"
         },
         "fullExamples": [],
-        "description": "Asset found.",
         "source": {
           "file": "../openapi.json",
           "type": "openapi"
@@ -58677,6 +58682,7 @@
         "type": "multipart"
       },
       "response": {
+        "description": "Asset created or updated.",
         "schema": {
           "generatedName": "AssetsPostUpsertAssetResponse",
           "schema": "AssetDto",
@@ -58687,7 +58693,6 @@
           "type": "reference"
         },
         "fullExamples": [],
-        "description": "Asset created or updated.",
         "source": {
           "file": "../openapi.json",
           "type": "openapi"
@@ -59192,6 +59197,7 @@
         "type": "json"
       },
       "response": {
+        "description": "Asset updated.",
         "schema": {
           "generatedName": "AssetsPutAssetResponse",
           "schema": "AssetDto",
@@ -59202,7 +59208,6 @@
           "type": "reference"
         },
         "fullExamples": [],
-        "description": "Asset updated.",
         "source": {
           "file": "../openapi.json",
           "type": "openapi"
@@ -59884,8 +59889,8 @@
         "type": "json"
       },
       "response": {
+        "description": "Assets created, update or delete.",
         "schema": {
-          "generatedName": "AssetsBulkUpdateAssetsResponse",
           "value": {
             "generatedName": "AssetsBulkUpdateAssetsResponseItem",
             "schema": "BulkResultDto",
@@ -59895,11 +59900,11 @@
             },
             "type": "reference"
           },
+          "generatedName": "AssetsBulkUpdateAssetsResponse",
           "groupName": [],
           "type": "array"
         },
         "fullExamples": [],
-        "description": "Assets created, update or delete.",
         "source": {
           "file": "../openapi.json",
           "type": "openapi"
@@ -60190,6 +60195,7 @@
         "type": "multipart"
       },
       "response": {
+        "description": "Asset updated.",
         "schema": {
           "generatedName": "AssetsPutAssetContentResponse",
           "schema": "AssetDto",
@@ -60200,7 +60206,6 @@
           "type": "reference"
         },
         "fullExamples": [],
-        "description": "Asset updated.",
         "source": {
           "file": "../openapi.json",
           "type": "openapi"
@@ -60684,6 +60689,7 @@
         "type": "json"
       },
       "response": {
+        "description": "Asset moved.",
         "schema": {
           "generatedName": "AssetsPutAssetParentResponse",
           "schema": "AssetDto",
@@ -60694,7 +60700,6 @@
           "type": "reference"
         },
         "fullExamples": [],
-        "description": "Asset moved.",
         "source": {
           "file": "../openapi.json",
           "type": "openapi"
@@ -61102,6 +61107,7 @@
       "headers": [],
       "generatedRequestName": "AppsGetAssetScriptsRequest",
       "response": {
+        "description": "Asset scripts returned.",
         "schema": {
           "generatedName": "AppsGetAssetScriptsResponse",
           "schema": "AssetScriptsDto",
@@ -61112,7 +61118,6 @@
           "type": "reference"
         },
         "fullExamples": [],
-        "description": "Asset scripts returned.",
         "source": {
           "file": "../openapi.json",
           "type": "openapi"
@@ -61366,6 +61371,7 @@
         "type": "json"
       },
       "response": {
+        "description": "Asset scripts updated.",
         "schema": {
           "generatedName": "AppsPutAssetScriptsResponse",
           "schema": "AssetScriptsDto",
@@ -61376,7 +61382,6 @@
           "type": "reference"
         },
         "fullExamples": [],
-        "description": "Asset scripts updated.",
         "source": {
           "file": "../openapi.json",
           "type": "openapi"
@@ -61655,6 +61660,7 @@
       "headers": [],
       "generatedRequestName": "AppsGetClientsRequest",
       "response": {
+        "description": "Clients returned.",
         "schema": {
           "generatedName": "AppsGetClientsResponse",
           "schema": "ClientsDto",
@@ -61665,7 +61671,6 @@
           "type": "reference"
         },
         "fullExamples": [],
-        "description": "Clients returned.",
         "source": {
           "file": "../openapi.json",
           "type": "openapi"
@@ -61953,6 +61958,7 @@
         "type": "json"
       },
       "response": {
+        "description": "Client created.",
         "schema": {
           "generatedName": "AppsPostClientResponse",
           "schema": "ClientsDto",
@@ -61963,7 +61969,6 @@
           "type": "reference"
         },
         "fullExamples": [],
-        "description": "Client created.",
         "source": {
           "file": "../openapi.json",
           "type": "openapi"
@@ -62319,6 +62324,7 @@
         "type": "json"
       },
       "response": {
+        "description": "Client updated.",
         "schema": {
           "generatedName": "AppsPutClientResponse",
           "schema": "ClientsDto",
@@ -62329,7 +62335,6 @@
           "type": "reference"
         },
         "fullExamples": [],
-        "description": "Client updated.",
         "source": {
           "file": "../openapi.json",
           "type": "openapi"
@@ -62668,6 +62673,7 @@
       "headers": [],
       "generatedRequestName": "AppsDeleteClientRequest",
       "response": {
+        "description": "Client deleted.",
         "schema": {
           "generatedName": "AppsDeleteClientResponse",
           "schema": "ClientsDto",
@@ -62678,7 +62684,6 @@
           "type": "reference"
         },
         "fullExamples": [],
-        "description": "Client deleted.",
         "source": {
           "file": "../openapi.json",
           "type": "openapi"
@@ -62997,6 +63002,7 @@
       "headers": [],
       "generatedRequestName": "AppsGetContributorsRequest",
       "response": {
+        "description": "Contributors returned.",
         "schema": {
           "generatedName": "AppsGetContributorsResponse",
           "schema": "ContributorsDto",
@@ -63007,7 +63013,6 @@
           "type": "reference"
         },
         "fullExamples": [],
-        "description": "Contributors returned.",
         "source": {
           "file": "../openapi.json",
           "type": "openapi"
@@ -63292,6 +63297,7 @@
         "type": "json"
       },
       "response": {
+        "description": "Contributor assigned to app.",
         "schema": {
           "generatedName": "AppsPostContributorResponse",
           "schema": "ContributorsDto",
@@ -63302,7 +63308,6 @@
           "type": "reference"
         },
         "fullExamples": [],
-        "description": "Contributor assigned to app.",
         "source": {
           "file": "../openapi.json",
           "type": "openapi"
@@ -63620,6 +63625,7 @@
       "headers": [],
       "generatedRequestName": "AppsDeleteMyselfRequest",
       "response": {
+        "description": "Contributor removed.",
         "schema": {
           "generatedName": "AppsDeleteMyselfResponse",
           "schema": "ContributorsDto",
@@ -63630,7 +63636,6 @@
           "type": "reference"
         },
         "fullExamples": [],
-        "description": "Contributor removed.",
         "source": {
           "file": "../openapi.json",
           "type": "openapi"
@@ -63950,6 +63955,7 @@
       "headers": [],
       "generatedRequestName": "AppsDeleteContributorRequest",
       "response": {
+        "description": "Contributor removed.",
         "schema": {
           "generatedName": "AppsDeleteContributorResponse",
           "schema": "ContributorsDto",
@@ -63960,7 +63966,6 @@
           "type": "reference"
         },
         "fullExamples": [],
-        "description": "Contributor removed.",
         "source": {
           "file": "../openapi.json",
           "type": "openapi"
@@ -64403,6 +64408,7 @@
         "type": "multipart"
       },
       "response": {
+        "description": "App image uploaded.",
         "schema": {
           "generatedName": "AppsUploadImageResponse",
           "schema": "AppDto",
@@ -64413,7 +64419,6 @@
           "type": "reference"
         },
         "fullExamples": [],
-        "description": "App image uploaded.",
         "source": {
           "file": "../openapi.json",
           "type": "openapi"
@@ -64746,6 +64751,7 @@
       "headers": [],
       "generatedRequestName": "AppsDeleteImageRequest",
       "response": {
+        "description": "App image removed.",
         "schema": {
           "generatedName": "AppsDeleteImageResponse",
           "schema": "AppDto",
@@ -64756,7 +64762,6 @@
           "type": "reference"
         },
         "fullExamples": [],
-        "description": "App image removed.",
         "source": {
           "file": "../openapi.json",
           "type": "openapi"
@@ -65085,6 +65090,7 @@
       "headers": [],
       "generatedRequestName": "AppsGetLanguagesRequest",
       "response": {
+        "description": "Languages returned.",
         "schema": {
           "generatedName": "AppsGetLanguagesResponse",
           "schema": "AppLanguagesDto",
@@ -65095,7 +65101,6 @@
           "type": "reference"
         },
         "fullExamples": [],
-        "description": "Languages returned.",
         "source": {
           "file": "../openapi.json",
           "type": "openapi"
@@ -65373,6 +65378,7 @@
         "type": "json"
       },
       "response": {
+        "description": "Language created.",
         "schema": {
           "generatedName": "AppsPostLanguageResponse",
           "schema": "AppLanguagesDto",
@@ -65383,7 +65389,6 @@
           "type": "reference"
         },
         "fullExamples": [],
-        "description": "Language created.",
         "source": {
           "file": "../openapi.json",
           "type": "openapi"
@@ -65729,6 +65734,7 @@
         "type": "json"
       },
       "response": {
+        "description": "Language updated.",
         "schema": {
           "generatedName": "AppsPutLanguageResponse",
           "schema": "AppLanguagesDto",
@@ -65739,7 +65745,6 @@
           "type": "reference"
         },
         "fullExamples": [],
-        "description": "Language updated.",
         "source": {
           "file": "../openapi.json",
           "type": "openapi"
@@ -66068,6 +66073,7 @@
       "headers": [],
       "generatedRequestName": "AppsDeleteLanguageRequest",
       "response": {
+        "description": "Language deleted.",
         "schema": {
           "generatedName": "AppsDeleteLanguageResponse",
           "schema": "AppLanguagesDto",
@@ -66078,7 +66084,6 @@
           "type": "reference"
         },
         "fullExamples": [],
-        "description": "Language deleted.",
         "source": {
           "file": "../openapi.json",
           "type": "openapi"
@@ -66387,6 +66392,7 @@
       "headers": [],
       "generatedRequestName": "AppsGetRolesRequest",
       "response": {
+        "description": "Roles returned.",
         "schema": {
           "generatedName": "AppsGetRolesResponse",
           "schema": "RolesDto",
@@ -66397,7 +66403,6 @@
           "type": "reference"
         },
         "fullExamples": [],
-        "description": "Roles returned.",
         "source": {
           "file": "../openapi.json",
           "type": "openapi"
@@ -66696,6 +66701,7 @@
         "type": "json"
       },
       "response": {
+        "description": "Role created.",
         "schema": {
           "generatedName": "AppsPostRoleResponse",
           "schema": "RolesDto",
@@ -66706,7 +66712,6 @@
           "type": "reference"
         },
         "fullExamples": [],
-        "description": "Role created.",
         "source": {
           "file": "../openapi.json",
           "type": "openapi"
@@ -67038,21 +67043,21 @@
       "headers": [],
       "generatedRequestName": "AppsGetPermissionsRequest",
       "response": {
+        "description": "App permissions returned.",
         "schema": {
-          "generatedName": "AppsGetPermissionsResponse",
           "value": {
-            "generatedName": "AppsGetPermissionsResponseItem",
             "schema": {
               "type": "string"
             },
+            "generatedName": "AppsGetPermissionsResponseItem",
             "groupName": [],
             "type": "primitive"
           },
+          "generatedName": "AppsGetPermissionsResponse",
           "groupName": [],
           "type": "array"
         },
         "fullExamples": [],
-        "description": "App permissions returned.",
         "source": {
           "file": "../openapi.json",
           "type": "openapi"
@@ -67236,6 +67241,7 @@
         "type": "json"
       },
       "response": {
+        "description": "Role updated.",
         "schema": {
           "generatedName": "AppsPutRoleResponse",
           "schema": "RolesDto",
@@ -67246,7 +67252,6 @@
           "type": "reference"
         },
         "fullExamples": [],
-        "description": "Role updated.",
         "source": {
           "file": "../openapi.json",
           "type": "openapi"
@@ -67609,6 +67614,7 @@
       "headers": [],
       "generatedRequestName": "AppsDeleteRoleRequest",
       "response": {
+        "description": "Role deleted.",
         "schema": {
           "generatedName": "AppsDeleteRoleResponse",
           "schema": "RolesDto",
@@ -67619,7 +67625,6 @@
           "type": "reference"
         },
         "fullExamples": [],
-        "description": "Role deleted.",
         "source": {
           "file": "../openapi.json",
           "type": "openapi"
@@ -67931,8 +67936,8 @@
       "headers": [],
       "generatedRequestName": "AppsGetAppsRequest",
       "response": {
+        "description": "Apps returned.",
         "schema": {
-          "generatedName": "AppsGetAppsResponse",
           "value": {
             "generatedName": "AppsGetAppsResponseItem",
             "schema": "AppDto",
@@ -67942,11 +67947,11 @@
             },
             "type": "reference"
           },
+          "generatedName": "AppsGetAppsResponse",
           "groupName": [],
           "type": "array"
         },
         "fullExamples": [],
-        "description": "Apps returned.",
         "source": {
           "file": "../openapi.json",
           "type": "openapi"
@@ -68210,6 +68215,7 @@
         "type": "json"
       },
       "response": {
+        "description": "App created.",
         "schema": {
           "generatedName": "AppsPostAppResponse",
           "schema": "AppDto",
@@ -68220,7 +68226,6 @@
           "type": "reference"
         },
         "fullExamples": [],
-        "description": "App created.",
         "source": {
           "file": "../openapi.json",
           "type": "openapi"
@@ -68576,8 +68581,8 @@
       "headers": [],
       "generatedRequestName": "AppsGetTeamAppsRequest",
       "response": {
+        "description": "Apps returned.",
         "schema": {
-          "generatedName": "AppsGetTeamAppsResponse",
           "value": {
             "generatedName": "AppsGetTeamAppsResponseItem",
             "schema": "AppDto",
@@ -68587,11 +68592,11 @@
             },
             "type": "reference"
           },
+          "generatedName": "AppsGetTeamAppsResponse",
           "groupName": [],
           "type": "array"
         },
         "fullExamples": [],
-        "description": "Apps returned.",
         "source": {
           "file": "../openapi.json",
           "type": "openapi"
@@ -68865,6 +68870,7 @@
       "headers": [],
       "generatedRequestName": "AppsGetAppRequest",
       "response": {
+        "description": "Apps returned.",
         "schema": {
           "generatedName": "AppsGetAppResponse",
           "schema": "AppDto",
@@ -68875,7 +68881,6 @@
           "type": "reference"
         },
         "fullExamples": [],
-        "description": "Apps returned.",
         "source": {
           "file": "../openapi.json",
           "type": "openapi"
@@ -69181,6 +69186,7 @@
         "type": "json"
       },
       "response": {
+        "description": "App updated.",
         "schema": {
           "generatedName": "AppsPutAppResponse",
           "schema": "AppDto",
@@ -69191,7 +69197,6 @@
           "type": "reference"
         },
         "fullExamples": [],
-        "description": "App updated.",
         "source": {
           "file": "../openapi.json",
           "type": "openapi"
@@ -69708,6 +69713,7 @@
         "type": "json"
       },
       "response": {
+        "description": "App transferred.",
         "schema": {
           "generatedName": "AppsPutAppTeamResponse",
           "schema": "AppDto",
@@ -69718,7 +69724,6 @@
           "type": "reference"
         },
         "fullExamples": [],
-        "description": "App transferred.",
         "source": {
           "file": "../openapi.json",
           "type": "openapi"
@@ -70051,6 +70056,7 @@
       "headers": [],
       "generatedRequestName": "AppsGetSettingsRequest",
       "response": {
+        "description": "App settings returned.",
         "schema": {
           "generatedName": "AppsGetSettingsResponse",
           "schema": "AppSettingsDto",
@@ -70061,7 +70067,6 @@
           "type": "reference"
         },
         "fullExamples": [],
-        "description": "App settings returned.",
         "source": {
           "file": "../openapi.json",
           "type": "openapi"
@@ -70333,6 +70338,7 @@
         "type": "json"
       },
       "response": {
+        "description": "App updated.",
         "schema": {
           "generatedName": "AppsPutSettingsResponse",
           "schema": "AppSettingsDto",
@@ -70343,7 +70349,6 @@
           "type": "reference"
         },
         "fullExamples": [],
-        "description": "App updated.",
         "source": {
           "file": "../openapi.json",
           "type": "openapi"
@@ -70691,6 +70696,7 @@
       "headers": [],
       "generatedRequestName": "AppsGetWorkflowsRequest",
       "response": {
+        "description": "Workflows returned.",
         "schema": {
           "generatedName": "AppsGetWorkflowsResponse",
           "schema": "WorkflowsDto",
@@ -70701,7 +70707,6 @@
           "type": "reference"
         },
         "fullExamples": [],
-        "description": "Workflows returned.",
         "source": {
           "file": "../openapi.json",
           "type": "openapi"
@@ -70999,6 +71004,7 @@
         "type": "json"
       },
       "response": {
+        "description": "Workflow created.",
         "schema": {
           "generatedName": "AppsPostWorkflowResponse",
           "schema": "WorkflowsDto",
@@ -71009,7 +71015,6 @@
           "type": "reference"
         },
         "fullExamples": [],
-        "description": "Workflow created.",
         "source": {
           "file": "../openapi.json",
           "type": "openapi"
@@ -71375,6 +71380,7 @@
         "type": "json"
       },
       "response": {
+        "description": "Workflow updated.",
         "schema": {
           "generatedName": "AppsPutWorkflowResponse",
           "schema": "WorkflowsDto",
@@ -71385,7 +71391,6 @@
           "type": "reference"
         },
         "fullExamples": [],
-        "description": "Workflow updated.",
         "source": {
           "file": "../openapi.json",
           "type": "openapi"
@@ -71757,6 +71762,7 @@
       "headers": [],
       "generatedRequestName": "AppsDeleteWorkflowRequest",
       "response": {
+        "description": "Workflow deleted.",
         "schema": {
           "generatedName": "AppsDeleteWorkflowResponse",
           "schema": "WorkflowsDto",
@@ -71767,7 +71773,6 @@
           "type": "reference"
         },
         "fullExamples": [],
-        "description": "Workflow deleted.",
         "source": {
           "file": "../openapi.json",
           "type": "openapi"

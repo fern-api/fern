@@ -163,94 +163,94 @@
       "headers": [],
       "generatedRequestName": "GetTestRequest",
       "response": {
+        "description": "Successful response",
         "schema": {
+          "allOf": [],
           "properties": [
             {
+              "conflict": {},
+              "generatedName": "getTestResponseBoolField1",
               "key": "boolField1",
               "schema": {
                 "generatedName": "GetTestResponseBoolField1",
                 "value": {
-                  "generatedName": "GetTestResponseBoolField1",
                   "schema": {
                     "default": true,
                     "type": "boolean"
                   },
+                  "generatedName": "GetTestResponseBoolField1",
                   "groupName": [],
                   "type": "primitive"
                 },
                 "groupName": [],
                 "type": "optional"
               },
-              "audiences": [],
-              "conflict": {},
-              "generatedName": "getTestResponseBoolField1"
+              "audiences": []
             },
             {
+              "conflict": {},
+              "generatedName": "getTestResponseBoolField2",
               "key": "boolField2",
               "schema": {
                 "generatedName": "GetTestResponseBoolField2",
                 "value": {
-                  "generatedName": "GetTestResponseBoolField2",
                   "schema": {
                     "default": true,
                     "type": "boolean"
                   },
+                  "generatedName": "GetTestResponseBoolField2",
                   "groupName": [],
                   "type": "primitive"
                 },
                 "groupName": [],
                 "type": "optional"
               },
-              "audiences": [],
-              "conflict": {},
-              "generatedName": "getTestResponseBoolField2"
+              "audiences": []
             },
             {
+              "conflict": {},
+              "generatedName": "getTestResponseStringField",
               "key": "stringField",
               "schema": {
                 "generatedName": "GetTestResponseStringField",
                 "value": {
-                  "generatedName": "GetTestResponseStringField",
                   "schema": {
                     "default": "defaultValue",
                     "type": "string"
                   },
+                  "generatedName": "GetTestResponseStringField",
                   "groupName": [],
                   "type": "primitive"
                 },
                 "groupName": [],
                 "type": "optional"
               },
-              "audiences": [],
-              "conflict": {},
-              "generatedName": "getTestResponseStringField"
+              "audiences": []
             },
             {
+              "conflict": {},
+              "generatedName": "getTestResponseNumberField",
               "key": "numberField",
               "schema": {
                 "generatedName": "GetTestResponseNumberField",
                 "value": {
-                  "generatedName": "GetTestResponseNumberField",
                   "schema": {
                     "default": 3.14,
                     "type": "double"
                   },
+                  "generatedName": "GetTestResponseNumberField",
                   "groupName": [],
                   "type": "primitive"
                 },
                 "groupName": [],
                 "type": "optional"
               },
-              "audiences": [],
-              "conflict": {},
-              "generatedName": "getTestResponseNumberField"
+              "audiences": []
             }
           ],
-          "generatedName": "GetTestResponse",
-          "allOf": [],
           "allOfPropertyConflicts": [],
+          "generatedName": "GetTestResponse",
           "groupName": [],
-          "fullExamples": [],
           "additionalProperties": false,
           "source": {
             "file": "../openapi.yml",
@@ -259,7 +259,6 @@
           "type": "object"
         },
         "fullExamples": [],
-        "description": "Successful response",
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"

@@ -85,6 +85,7 @@
       "headers": [],
       "generatedRequestName": "GetTransactionV3TransactionsIdGetRequest",
       "response": {
+        "description": "Successful Response",
         "schema": {
           "generatedName": "GetTransactionV3TransactionsIdGetResponse",
           "schema": "Transaction",
@@ -95,7 +96,6 @@
           "type": "reference"
         },
         "fullExamples": [],
-        "description": "Successful Response",
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -751,6 +751,7 @@
       "headers": [],
       "generatedRequestName": "ListTransactionsV3TransactionsGetRequest",
       "response": {
+        "description": "Successful Response",
         "schema": {
           "generatedName": "ListTransactionsV3TransactionsGetResponse",
           "schema": "PagedResponse_Transaction",
@@ -761,7 +762,6 @@
           "type": "reference"
         },
         "fullExamples": [],
-        "description": "Successful Response",
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -1222,6 +1222,7 @@
         "type": "json"
       },
       "response": {
+        "description": "Enriched transactions.",
         "schema": {
           "generatedName": "PostTransactionsV3TransactionsPostResponse",
           "schema": "SyncEnrichmentOutput",
@@ -1232,7 +1233,6 @@
           "type": "reference"
         },
         "fullExamples": [],
-        "description": "Enriched transactions.",
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -1659,6 +1659,7 @@
         "type": "json"
       },
       "response": {
+        "description": "Successful Response",
         "schema": {
           "generatedName": "SetTransactionAhV3TransactionsIdAssignPostResponse",
           "schema": "Transaction",
@@ -1669,7 +1670,6 @@
           "type": "reference"
         },
         "fullExamples": [],
-        "description": "Successful Response",
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -2220,6 +2220,7 @@
       "headers": [],
       "generatedRequestName": "GetBatchesV3BatchesGetRequest",
       "response": {
+        "description": "Successful Response",
         "schema": {
           "generatedName": "GetBatchesV3BatchesGetResponse",
           "schema": "PagedResponse_Batch",
@@ -2230,7 +2231,6 @@
           "type": "reference"
         },
         "fullExamples": [],
-        "description": "Successful Response",
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -2445,6 +2445,7 @@
         "type": "json"
       },
       "response": {
+        "description": "Successful Response",
         "schema": {
           "generatedName": "PostBatchV3BatchesPostResponse",
           "schema": "Batch",
@@ -2455,7 +2456,6 @@
           "type": "reference"
         },
         "fullExamples": [],
-        "description": "Successful Response",
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -2671,6 +2671,7 @@
       "headers": [],
       "generatedRequestName": "GetSingleBatchV3BatchesIdGetRequest",
       "response": {
+        "description": "Successful Response",
         "schema": {
           "generatedName": "GetSingleBatchV3BatchesIdGetResponse",
           "schema": "Batch",
@@ -2681,7 +2682,6 @@
           "type": "reference"
         },
         "fullExamples": [],
-        "description": "Successful Response",
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -2852,6 +2852,7 @@
       "headers": [],
       "generatedRequestName": "GetBatchResultsV3BatchesIdResultsGetRequest",
       "response": {
+        "description": "Returned batch of transaction enrichment results.",
         "schema": {
           "generatedName": "GetBatchResultsV3BatchesIdResultsGetResponse",
           "schema": "BatchResult",
@@ -2862,7 +2863,6 @@
           "type": "reference"
         },
         "fullExamples": [],
-        "description": "Returned batch of transaction enrichment results.",
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -3362,6 +3362,7 @@
       "headers": [],
       "generatedRequestName": "GetBankStatementsV3BankStatementsGetRequest",
       "response": {
+        "description": "Successful Response",
         "schema": {
           "generatedName": "GetBankStatementsV3BankStatementsGetResponse",
           "schema": "PagedResponse_BankStatement",
@@ -3372,7 +3373,6 @@
           "type": "reference"
         },
         "fullExamples": [],
-        "description": "Successful Response",
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -3608,6 +3608,7 @@
         "type": "multipart"
       },
       "response": {
+        "description": "Successful Response",
         "schema": {
           "generatedName": "PostBankStatementV3BankStatementsPostResponse",
           "schema": "BankStatement",
@@ -3618,7 +3619,6 @@
           "type": "reference"
         },
         "fullExamples": [],
-        "description": "Successful Response",
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -3792,6 +3792,7 @@
       "headers": [],
       "generatedRequestName": "GetBankStatementV3BankStatementsIdGetRequest",
       "response": {
+        "description": "Successful Response",
         "schema": {
           "generatedName": "GetBankStatementV3BankStatementsIdGetResponse",
           "schema": "BankStatement",
@@ -3802,7 +3803,6 @@
           "type": "reference"
         },
         "fullExamples": [],
-        "description": "Successful Response",
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -4096,6 +4096,7 @@
       "headers": [],
       "generatedRequestName": "GetBankStatementStatementInfoV3BankStatementsIdOverviewPostRequest",
       "response": {
+        "description": "Successful Response",
         "schema": {
           "generatedName": "GetBankStatementStatementInfoV3BankStatementsIdOverviewPostResponse",
           "schema": "StatementInfo",
@@ -4106,7 +4107,6 @@
           "type": "reference"
         },
         "fullExamples": [],
-        "description": "Successful Response",
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -4361,6 +4361,7 @@
       "headers": [],
       "generatedRequestName": "GetBankStatementResultV3BankStatementsIdResultsGetRequest",
       "response": {
+        "description": "Successful Response",
         "schema": {
           "generatedName": "GetBankStatementResultV3BankStatementsIdResultsGetResponse",
           "schema": "BankStatementResults",
@@ -4371,7 +4372,6 @@
           "type": "reference"
         },
         "fullExamples": [],
-        "description": "Successful Response",
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -4623,6 +4623,7 @@
       "headers": [],
       "generatedRequestName": "GetAccountHolderV3AccountHoldersIdGetRequest",
       "response": {
+        "description": "Successful Response",
         "schema": {
           "generatedName": "GetAccountHolderV3AccountHoldersIdGetResponse",
           "schema": "AccountHolderExternal",
@@ -4633,7 +4634,6 @@
           "type": "reference"
         },
         "fullExamples": [],
-        "description": "Successful Response",
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -4996,6 +4996,7 @@
       "headers": [],
       "generatedRequestName": "GetAccountHoldersV3AccountHoldersGetRequest",
       "response": {
+        "description": "Successful Response",
         "schema": {
           "generatedName": "GetAccountHoldersV3AccountHoldersGetResponse",
           "schema": "PagedResponse_AccountHolderExternal",
@@ -5006,7 +5007,6 @@
           "type": "reference"
         },
         "fullExamples": [],
-        "description": "Successful Response",
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -5199,6 +5199,7 @@
         "type": "json"
       },
       "response": {
+        "description": "Successful Response",
         "schema": {
           "generatedName": "CreateAccountHolderV3AccountHoldersPostResponse",
           "schema": "AccountHolderExternal",
@@ -5209,7 +5210,6 @@
           "type": "reference"
         },
         "fullExamples": [],
-        "description": "Successful Response",
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -5371,9 +5371,8 @@
       "headers": [],
       "generatedRequestName": "GetAccountHolderRecurringPaymentsV3AccountHoldersIdRecurringGroupsPostRequest",
       "response": {
+        "description": "Successful Response",
         "schema": {
-          "generatedName": "GetAccountHolderRecurringPaymentsV3AccountHoldersIdRecurringGroupsPostResponse",
-          "title": "Response Get Account Holder Recurring Payments V3 Account Holders  Id  Recurring Groups Post",
           "value": {
             "generatedName": "GetAccountHolderRecurringPaymentsV3AccountHoldersIdRecurringGroupsPostResponseItem",
             "schema": "RecurrenceGroup",
@@ -5383,11 +5382,12 @@
             },
             "type": "reference"
           },
+          "generatedName": "GetAccountHolderRecurringPaymentsV3AccountHoldersIdRecurringGroupsPostResponse",
+          "title": "Response Get Account Holder Recurring Payments V3 Account Holders  Id  Recurring Groups Post",
           "groupName": [],
           "type": "array"
         },
         "fullExamples": [],
-        "description": "Successful Response",
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -5644,6 +5644,7 @@
       "headers": [],
       "generatedRequestName": "GetWebhooksV3WebhooksGetRequest",
       "response": {
+        "description": "Successful Response",
         "schema": {
           "generatedName": "GetWebhooksV3WebhooksGetResponse",
           "schema": "PagedResponse_Webhook",
@@ -5654,7 +5655,6 @@
           "type": "reference"
         },
         "fullExamples": [],
-        "description": "Successful Response",
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -5830,6 +5830,7 @@
         "type": "json"
       },
       "response": {
+        "description": "Successful Response",
         "schema": {
           "generatedName": "PostWebhookV3WebhooksPostResponse",
           "schema": "Webhook",
@@ -5840,7 +5841,6 @@
           "type": "reference"
         },
         "fullExamples": [],
-        "description": "Successful Response",
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -6019,6 +6019,7 @@
       "headers": [],
       "generatedRequestName": "GetWebhookV3WebhooksIdGetRequest",
       "response": {
+        "description": "Successful Response",
         "schema": {
           "generatedName": "GetWebhookV3WebhooksIdGetResponse",
           "schema": "Webhook",
@@ -6029,7 +6030,6 @@
           "type": "reference"
         },
         "fullExamples": [],
-        "description": "Successful Response",
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -6333,6 +6333,7 @@
         "type": "json"
       },
       "response": {
+        "description": "Successful Response",
         "schema": {
           "generatedName": "PatchWebhookV3WebhooksIdPatchResponse",
           "schema": "Webhook",
@@ -6343,7 +6344,6 @@
           "type": "reference"
         },
         "fullExamples": [],
-        "description": "Successful Response",
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -6499,6 +6499,7 @@
       "headers": [],
       "generatedRequestName": "FilterGetV3RulesGetRequest",
       "response": {
+        "description": "Successful Response",
         "schema": {
           "generatedName": "FilterGetV3RulesGetResponse",
           "schema": "personalization",
@@ -6509,7 +6510,6 @@
           "type": "reference"
         },
         "fullExamples": [],
-        "description": "Successful Response",
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -6635,13 +6635,12 @@
         "type": "json"
       },
       "response": {
+        "description": "Successful Response",
         "schema": {
           "generatedName": "FilterPostV3RulesPostResponse",
-          "groupName": [],
           "type": "unknown"
         },
         "fullExamples": [],
-        "description": "Successful Response",
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -6809,13 +6808,12 @@
         "type": "json"
       },
       "response": {
+        "description": "Successful Response",
         "schema": {
           "generatedName": "FilterAppendV3RulesAppendPostResponse",
-          "groupName": [],
           "type": "unknown"
         },
         "fullExamples": [],
-        "description": "Successful Response",
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -6975,13 +6973,12 @@
       "headers": [],
       "generatedRequestName": "FilterDeleteV3RulesIndexDeleteRequest",
       "response": {
+        "description": "Successful Response",
         "schema": {
           "generatedName": "FilterDeleteV3RulesIndexDeleteResponse",
-          "groupName": [],
           "type": "unknown"
         },
         "fullExamples": [],
-        "description": "Successful Response",
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -7147,13 +7144,12 @@
         "type": "json"
       },
       "response": {
+        "description": "Successful Response",
         "schema": {
           "generatedName": "FilterPatchV3RulesIndexPatchResponse",
-          "groupName": [],
           "type": "unknown"
         },
         "fullExamples": [],
-        "description": "Successful Response",
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -7424,6 +7420,7 @@
       "headers": [],
       "generatedRequestName": "GetReportsV3ReportsGetRequest",
       "response": {
+        "description": "Successful Response",
         "schema": {
           "generatedName": "GetReportsV3ReportsGetResponse",
           "schema": "PagedResponse_Report_",
@@ -7434,7 +7431,6 @@
           "type": "reference"
         },
         "fullExamples": [],
-        "description": "Successful Response",
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -7661,6 +7657,7 @@
         "type": "json"
       },
       "response": {
+        "description": "The newly created report",
         "schema": {
           "generatedName": "PostReportV3ReportsPostResponse",
           "schema": "Report",
@@ -7671,7 +7668,6 @@
           "type": "reference"
         },
         "fullExamples": [],
-        "description": "The newly created report",
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -7863,6 +7859,7 @@
       "headers": [],
       "generatedRequestName": "GetReportV3ReportsIdGetRequest",
       "response": {
+        "description": "Successful Response",
         "schema": {
           "generatedName": "GetReportV3ReportsIdGetResponse",
           "schema": "Report",
@@ -7873,7 +7870,6 @@
           "type": "reference"
         },
         "fullExamples": [],
-        "description": "Successful Response",
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -8159,6 +8155,7 @@
       "headers": [],
       "generatedRequestName": "GetCategorySetV3CategoriesAccountHolderTypeGetRequest",
       "response": {
+        "description": "Category set for the selected type of account holder",
         "schema": {
           "generatedName": "GetCategorySetV3CategoriesAccountHolderTypeGetResponse",
           "schema": "CategorySet",
@@ -8169,7 +8166,6 @@
           "type": "reference"
         },
         "fullExamples": [],
-        "description": "Category set for the selected type of account holder",
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -8476,6 +8472,7 @@
         "type": "json"
       },
       "response": {
+        "description": "Custom categories successfully set.",
         "schema": {
           "generatedName": "CustomCategoriesPostV3CategoriesAccountHolderTypePostResponse",
           "schema": "CustomCategorySet",
@@ -8486,7 +8483,6 @@
           "type": "reference"
         },
         "fullExamples": [],
-        "description": "Custom categories successfully set.",
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -8726,6 +8722,7 @@
       "headers": [],
       "generatedRequestName": "DeleteCustomCategorySetV3CategoriesAccountHolderTypeResetPostRequest",
       "response": {
+        "description": "Successful Response",
         "schema": {
           "generatedName": "DeleteCustomCategorySetV3CategoriesAccountHolderTypeResetPostResponse",
           "schema": "CategorySet",
@@ -8736,7 +8733,6 @@
           "type": "reference"
         },
         "fullExamples": [],
-        "description": "Successful Response",
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -9089,6 +9085,7 @@
       "headers": [],
       "generatedRequestName": "SearchEntityV3EntitiesLookupGetRequest",
       "response": {
+        "description": "Entity",
         "schema": {
           "generatedName": "SearchEntityV3EntitiesLookupGetResponse",
           "schema": "Entity",
@@ -9099,7 +9096,6 @@
           "type": "reference"
         },
         "fullExamples": [],
-        "description": "Entity",
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -9306,6 +9302,7 @@
       "headers": [],
       "generatedRequestName": "GetEntityByIdV3EntitiesIdGetRequest",
       "response": {
+        "description": "Entity",
         "schema": {
           "generatedName": "GetEntityByIdV3EntitiesIdGetResponse",
           "schema": "Entity",
@@ -9316,7 +9313,6 @@
           "type": "reference"
         },
         "fullExamples": [],
-        "description": "Entity",
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"

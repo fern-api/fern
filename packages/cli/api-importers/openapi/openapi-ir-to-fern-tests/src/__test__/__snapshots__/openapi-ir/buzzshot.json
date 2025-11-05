@@ -41,41 +41,45 @@
       "requestNameOverride": "listAccountsRequest",
       "generatedRequestName": "ListAccountsRequest",
       "response": {
+        "description": "",
         "schema": {
+          "allOf": [],
           "properties": [
             {
+              "conflict": {},
+              "generatedName": "listAccountsResponseCount",
               "key": "count",
               "schema": {
                 "generatedName": "ListAccountsResponseCount",
                 "value": {
-                  "generatedName": "ListAccountsResponseCount",
                   "schema": {
                     "example": 123,
                     "type": "int"
                   },
+                  "generatedName": "ListAccountsResponseCount",
                   "groupName": [],
                   "type": "primitive"
                 },
                 "groupName": [],
                 "type": "optional"
               },
-              "audiences": [],
-              "conflict": {},
-              "generatedName": "listAccountsResponseCount"
+              "audiences": []
             },
             {
+              "conflict": {},
+              "generatedName": "listAccountsResponseNext",
               "key": "next",
               "schema": {
                 "generatedName": "ListAccountsResponseNext",
                 "value": {
                   "generatedName": "ListAccountsResponseNext",
                   "value": {
-                    "generatedName": "ListAccountsResponseNext",
                     "schema": {
                       "format": "uri",
                       "example": "http://api.example.org/accounts/?page=4",
                       "type": "string"
                     },
+                    "generatedName": "ListAccountsResponseNext",
                     "groupName": [],
                     "type": "primitive"
                   },
@@ -85,23 +89,23 @@
                 "groupName": [],
                 "type": "optional"
               },
-              "audiences": [],
-              "conflict": {},
-              "generatedName": "listAccountsResponseNext"
+              "audiences": []
             },
             {
+              "conflict": {},
+              "generatedName": "listAccountsResponsePrevious",
               "key": "previous",
               "schema": {
                 "generatedName": "ListAccountsResponsePrevious",
                 "value": {
                   "generatedName": "ListAccountsResponsePrevious",
                   "value": {
-                    "generatedName": "ListAccountsResponsePrevious",
                     "schema": {
                       "format": "uri",
                       "example": "http://api.example.org/accounts/?page=2",
                       "type": "string"
                     },
+                    "generatedName": "ListAccountsResponsePrevious",
                     "groupName": [],
                     "type": "primitive"
                   },
@@ -111,16 +115,15 @@
                 "groupName": [],
                 "type": "optional"
               },
-              "audiences": [],
-              "conflict": {},
-              "generatedName": "listAccountsResponsePrevious"
+              "audiences": []
             },
             {
+              "conflict": {},
+              "generatedName": "listAccountsResponseResults",
               "key": "results",
               "schema": {
                 "generatedName": "ListAccountsResponseResults",
                 "value": {
-                  "generatedName": "ListAccountsResponseResults",
                   "value": {
                     "generatedName": "ListAccountsResponseResultsItem",
                     "schema": "Room",
@@ -130,22 +133,19 @@
                     },
                     "type": "reference"
                   },
+                  "generatedName": "ListAccountsResponseResults",
                   "groupName": [],
                   "type": "array"
                 },
                 "groupName": [],
                 "type": "optional"
               },
-              "audiences": [],
-              "conflict": {},
-              "generatedName": "listAccountsResponseResults"
+              "audiences": []
             }
           ],
-          "generatedName": "ListAccountsResponse",
-          "allOf": [],
           "allOfPropertyConflicts": [],
+          "generatedName": "ListAccountsResponse",
           "groupName": [],
-          "fullExamples": [],
           "additionalProperties": false,
           "source": {
             "file": "../openapi.yml",
@@ -154,7 +154,6 @@
           "type": "object"
         },
         "fullExamples": [],
-        "description": "",
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -282,6 +281,7 @@
       "headers": [],
       "generatedRequestName": "RetrieveAccountRequest",
       "response": {
+        "description": "",
         "schema": {
           "generatedName": "RetrieveAccountResponse",
           "schema": "Room",
@@ -292,7 +292,6 @@
           "type": "reference"
         },
         "fullExamples": [],
-        "description": "",
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -479,41 +478,45 @@
       "requestNameOverride": "listGamesRequest",
       "generatedRequestName": "ListGamesRequest",
       "response": {
+        "description": "",
         "schema": {
+          "allOf": [],
           "properties": [
             {
+              "conflict": {},
+              "generatedName": "listGamesResponseCount",
               "key": "count",
               "schema": {
                 "generatedName": "ListGamesResponseCount",
                 "value": {
-                  "generatedName": "ListGamesResponseCount",
                   "schema": {
                     "example": 123,
                     "type": "int"
                   },
+                  "generatedName": "ListGamesResponseCount",
                   "groupName": [],
                   "type": "primitive"
                 },
                 "groupName": [],
                 "type": "optional"
               },
-              "audiences": [],
-              "conflict": {},
-              "generatedName": "listGamesResponseCount"
+              "audiences": []
             },
             {
+              "conflict": {},
+              "generatedName": "listGamesResponseNext",
               "key": "next",
               "schema": {
                 "generatedName": "ListGamesResponseNext",
                 "value": {
                   "generatedName": "ListGamesResponseNext",
                   "value": {
-                    "generatedName": "ListGamesResponseNext",
                     "schema": {
                       "format": "uri",
                       "example": "http://api.example.org/accounts/?page=4",
                       "type": "string"
                     },
+                    "generatedName": "ListGamesResponseNext",
                     "groupName": [],
                     "type": "primitive"
                   },
@@ -523,23 +526,23 @@
                 "groupName": [],
                 "type": "optional"
               },
-              "audiences": [],
-              "conflict": {},
-              "generatedName": "listGamesResponseNext"
+              "audiences": []
             },
             {
+              "conflict": {},
+              "generatedName": "listGamesResponsePrevious",
               "key": "previous",
               "schema": {
                 "generatedName": "ListGamesResponsePrevious",
                 "value": {
                   "generatedName": "ListGamesResponsePrevious",
                   "value": {
-                    "generatedName": "ListGamesResponsePrevious",
                     "schema": {
                       "format": "uri",
                       "example": "http://api.example.org/accounts/?page=2",
                       "type": "string"
                     },
+                    "generatedName": "ListGamesResponsePrevious",
                     "groupName": [],
                     "type": "primitive"
                   },
@@ -549,16 +552,15 @@
                 "groupName": [],
                 "type": "optional"
               },
-              "audiences": [],
-              "conflict": {},
-              "generatedName": "listGamesResponsePrevious"
+              "audiences": []
             },
             {
+              "conflict": {},
+              "generatedName": "listGamesResponseResults",
               "key": "results",
               "schema": {
                 "generatedName": "ListGamesResponseResults",
                 "value": {
-                  "generatedName": "ListGamesResponseResults",
                   "value": {
                     "generatedName": "ListGamesResponseResultsItem",
                     "schema": "Game",
@@ -568,22 +570,19 @@
                     },
                     "type": "reference"
                   },
+                  "generatedName": "ListGamesResponseResults",
                   "groupName": [],
                   "type": "array"
                 },
                 "groupName": [],
                 "type": "optional"
               },
-              "audiences": [],
-              "conflict": {},
-              "generatedName": "listGamesResponseResults"
+              "audiences": []
             }
           ],
-          "generatedName": "ListGamesResponse",
-          "allOf": [],
           "allOfPropertyConflicts": [],
+          "generatedName": "ListGamesResponse",
           "groupName": [],
-          "fullExamples": [],
           "additionalProperties": false,
           "source": {
             "file": "../openapi.yml",
@@ -592,7 +591,6 @@
           "type": "object"
         },
         "fullExamples": [],
-        "description": "",
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -956,6 +954,7 @@
       "requestNameOverride": "retrieveGameRequest",
       "generatedRequestName": "RetrieveGameRequest",
       "response": {
+        "description": "",
         "schema": {
           "generatedName": "RetrieveGameResponse",
           "schema": "Game",
@@ -966,7 +965,6 @@
           "type": "reference"
         },
         "fullExamples": [],
-        "description": "",
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -1324,41 +1322,45 @@
       "requestNameOverride": "listGroupsRequest",
       "generatedRequestName": "ListGroupsRequest",
       "response": {
+        "description": "",
         "schema": {
+          "allOf": [],
           "properties": [
             {
+              "conflict": {},
+              "generatedName": "listGroupsResponseCount",
               "key": "count",
               "schema": {
                 "generatedName": "ListGroupsResponseCount",
                 "value": {
-                  "generatedName": "ListGroupsResponseCount",
                   "schema": {
                     "example": 123,
                     "type": "int"
                   },
+                  "generatedName": "ListGroupsResponseCount",
                   "groupName": [],
                   "type": "primitive"
                 },
                 "groupName": [],
                 "type": "optional"
               },
-              "audiences": [],
-              "conflict": {},
-              "generatedName": "listGroupsResponseCount"
+              "audiences": []
             },
             {
+              "conflict": {},
+              "generatedName": "listGroupsResponseNext",
               "key": "next",
               "schema": {
                 "generatedName": "ListGroupsResponseNext",
                 "value": {
                   "generatedName": "ListGroupsResponseNext",
                   "value": {
-                    "generatedName": "ListGroupsResponseNext",
                     "schema": {
                       "format": "uri",
                       "example": "http://api.example.org/accounts/?page=4",
                       "type": "string"
                     },
+                    "generatedName": "ListGroupsResponseNext",
                     "groupName": [],
                     "type": "primitive"
                   },
@@ -1368,23 +1370,23 @@
                 "groupName": [],
                 "type": "optional"
               },
-              "audiences": [],
-              "conflict": {},
-              "generatedName": "listGroupsResponseNext"
+              "audiences": []
             },
             {
+              "conflict": {},
+              "generatedName": "listGroupsResponsePrevious",
               "key": "previous",
               "schema": {
                 "generatedName": "ListGroupsResponsePrevious",
                 "value": {
                   "generatedName": "ListGroupsResponsePrevious",
                   "value": {
-                    "generatedName": "ListGroupsResponsePrevious",
                     "schema": {
                       "format": "uri",
                       "example": "http://api.example.org/accounts/?page=2",
                       "type": "string"
                     },
+                    "generatedName": "ListGroupsResponsePrevious",
                     "groupName": [],
                     "type": "primitive"
                   },
@@ -1394,16 +1396,15 @@
                 "groupName": [],
                 "type": "optional"
               },
-              "audiences": [],
-              "conflict": {},
-              "generatedName": "listGroupsResponsePrevious"
+              "audiences": []
             },
             {
+              "conflict": {},
+              "generatedName": "listGroupsResponseResults",
               "key": "results",
               "schema": {
                 "generatedName": "ListGroupsResponseResults",
                 "value": {
-                  "generatedName": "ListGroupsResponseResults",
                   "value": {
                     "generatedName": "ListGroupsResponseResultsItem",
                     "schema": "Group",
@@ -1413,22 +1414,19 @@
                     },
                     "type": "reference"
                   },
+                  "generatedName": "ListGroupsResponseResults",
                   "groupName": [],
                   "type": "array"
                 },
                 "groupName": [],
                 "type": "optional"
               },
-              "audiences": [],
-              "conflict": {},
-              "generatedName": "listGroupsResponseResults"
+              "audiences": []
             }
           ],
-          "generatedName": "ListGroupsResponse",
-          "allOf": [],
           "allOfPropertyConflicts": [],
+          "generatedName": "ListGroupsResponse",
           "groupName": [],
-          "fullExamples": [],
           "additionalProperties": false,
           "source": {
             "file": "../openapi.yml",
@@ -1437,7 +1435,6 @@
           "type": "object"
         },
         "fullExamples": [],
-        "description": "",
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -1807,6 +1804,7 @@
       "requestNameOverride": "retrieveGroupRequest",
       "generatedRequestName": "RetrieveGroupRequest",
       "response": {
+        "description": "",
         "schema": {
           "generatedName": "RetrieveGroupResponse",
           "schema": "Group",
@@ -1817,7 +1815,6 @@
           "type": "reference"
         },
         "fullExamples": [],
-        "description": "",
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -2231,41 +2228,45 @@
       "requestNameOverride": "listPlayersRequest",
       "generatedRequestName": "ListPlayersRequest",
       "response": {
+        "description": "",
         "schema": {
+          "allOf": [],
           "properties": [
             {
+              "conflict": {},
+              "generatedName": "listPlayersResponseCount",
               "key": "count",
               "schema": {
                 "generatedName": "ListPlayersResponseCount",
                 "value": {
-                  "generatedName": "ListPlayersResponseCount",
                   "schema": {
                     "example": 123,
                     "type": "int"
                   },
+                  "generatedName": "ListPlayersResponseCount",
                   "groupName": [],
                   "type": "primitive"
                 },
                 "groupName": [],
                 "type": "optional"
               },
-              "audiences": [],
-              "conflict": {},
-              "generatedName": "listPlayersResponseCount"
+              "audiences": []
             },
             {
+              "conflict": {},
+              "generatedName": "listPlayersResponseNext",
               "key": "next",
               "schema": {
                 "generatedName": "ListPlayersResponseNext",
                 "value": {
                   "generatedName": "ListPlayersResponseNext",
                   "value": {
-                    "generatedName": "ListPlayersResponseNext",
                     "schema": {
                       "format": "uri",
                       "example": "http://api.example.org/accounts/?page=4",
                       "type": "string"
                     },
+                    "generatedName": "ListPlayersResponseNext",
                     "groupName": [],
                     "type": "primitive"
                   },
@@ -2275,23 +2276,23 @@
                 "groupName": [],
                 "type": "optional"
               },
-              "audiences": [],
-              "conflict": {},
-              "generatedName": "listPlayersResponseNext"
+              "audiences": []
             },
             {
+              "conflict": {},
+              "generatedName": "listPlayersResponsePrevious",
               "key": "previous",
               "schema": {
                 "generatedName": "ListPlayersResponsePrevious",
                 "value": {
                   "generatedName": "ListPlayersResponsePrevious",
                   "value": {
-                    "generatedName": "ListPlayersResponsePrevious",
                     "schema": {
                       "format": "uri",
                       "example": "http://api.example.org/accounts/?page=2",
                       "type": "string"
                     },
+                    "generatedName": "ListPlayersResponsePrevious",
                     "groupName": [],
                     "type": "primitive"
                   },
@@ -2301,16 +2302,15 @@
                 "groupName": [],
                 "type": "optional"
               },
-              "audiences": [],
-              "conflict": {},
-              "generatedName": "listPlayersResponsePrevious"
+              "audiences": []
             },
             {
+              "conflict": {},
+              "generatedName": "listPlayersResponseResults",
               "key": "results",
               "schema": {
                 "generatedName": "ListPlayersResponseResults",
                 "value": {
-                  "generatedName": "ListPlayersResponseResults",
                   "value": {
                     "generatedName": "ListPlayersResponseResultsItem",
                     "schema": "Player",
@@ -2320,22 +2320,19 @@
                     },
                     "type": "reference"
                   },
+                  "generatedName": "ListPlayersResponseResults",
                   "groupName": [],
                   "type": "array"
                 },
                 "groupName": [],
                 "type": "optional"
               },
-              "audiences": [],
-              "conflict": {},
-              "generatedName": "listPlayersResponseResults"
+              "audiences": []
             }
           ],
-          "generatedName": "ListPlayersResponse",
-          "allOf": [],
           "allOfPropertyConflicts": [],
+          "generatedName": "ListPlayersResponse",
           "groupName": [],
-          "fullExamples": [],
           "additionalProperties": false,
           "source": {
             "file": "../openapi.yml",
@@ -2344,7 +2341,6 @@
           "type": "object"
         },
         "fullExamples": [],
-        "description": "",
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -2534,6 +2530,7 @@
       "headers": [],
       "generatedRequestName": "RetrievePlayerRequest",
       "response": {
+        "description": "",
         "schema": {
           "generatedName": "RetrievePlayerResponse",
           "schema": "Player",
@@ -2544,7 +2541,6 @@
           "type": "reference"
         },
         "fullExamples": [],
-        "description": "",
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -2734,41 +2730,45 @@
       "requestNameOverride": "listLocationsRequest",
       "generatedRequestName": "ListLocationsRequest",
       "response": {
+        "description": "",
         "schema": {
+          "allOf": [],
           "properties": [
             {
+              "conflict": {},
+              "generatedName": "listLocationsResponseCount",
               "key": "count",
               "schema": {
                 "generatedName": "ListLocationsResponseCount",
                 "value": {
-                  "generatedName": "ListLocationsResponseCount",
                   "schema": {
                     "example": 123,
                     "type": "int"
                   },
+                  "generatedName": "ListLocationsResponseCount",
                   "groupName": [],
                   "type": "primitive"
                 },
                 "groupName": [],
                 "type": "optional"
               },
-              "audiences": [],
-              "conflict": {},
-              "generatedName": "listLocationsResponseCount"
+              "audiences": []
             },
             {
+              "conflict": {},
+              "generatedName": "listLocationsResponseNext",
               "key": "next",
               "schema": {
                 "generatedName": "ListLocationsResponseNext",
                 "value": {
                   "generatedName": "ListLocationsResponseNext",
                   "value": {
-                    "generatedName": "ListLocationsResponseNext",
                     "schema": {
                       "format": "uri",
                       "example": "http://api.example.org/accounts/?page=4",
                       "type": "string"
                     },
+                    "generatedName": "ListLocationsResponseNext",
                     "groupName": [],
                     "type": "primitive"
                   },
@@ -2778,23 +2778,23 @@
                 "groupName": [],
                 "type": "optional"
               },
-              "audiences": [],
-              "conflict": {},
-              "generatedName": "listLocationsResponseNext"
+              "audiences": []
             },
             {
+              "conflict": {},
+              "generatedName": "listLocationsResponsePrevious",
               "key": "previous",
               "schema": {
                 "generatedName": "ListLocationsResponsePrevious",
                 "value": {
                   "generatedName": "ListLocationsResponsePrevious",
                   "value": {
-                    "generatedName": "ListLocationsResponsePrevious",
                     "schema": {
                       "format": "uri",
                       "example": "http://api.example.org/accounts/?page=2",
                       "type": "string"
                     },
+                    "generatedName": "ListLocationsResponsePrevious",
                     "groupName": [],
                     "type": "primitive"
                   },
@@ -2804,16 +2804,15 @@
                 "groupName": [],
                 "type": "optional"
               },
-              "audiences": [],
-              "conflict": {},
-              "generatedName": "listLocationsResponsePrevious"
+              "audiences": []
             },
             {
+              "conflict": {},
+              "generatedName": "listLocationsResponseResults",
               "key": "results",
               "schema": {
                 "generatedName": "ListLocationsResponseResults",
                 "value": {
-                  "generatedName": "ListLocationsResponseResults",
                   "value": {
                     "generatedName": "ListLocationsResponseResultsItem",
                     "schema": "Room",
@@ -2823,22 +2822,19 @@
                     },
                     "type": "reference"
                   },
+                  "generatedName": "ListLocationsResponseResults",
                   "groupName": [],
                   "type": "array"
                 },
                 "groupName": [],
                 "type": "optional"
               },
-              "audiences": [],
-              "conflict": {},
-              "generatedName": "listLocationsResponseResults"
+              "audiences": []
             }
           ],
-          "generatedName": "ListLocationsResponse",
-          "allOf": [],
           "allOfPropertyConflicts": [],
+          "generatedName": "ListLocationsResponse",
           "groupName": [],
-          "fullExamples": [],
           "additionalProperties": false,
           "source": {
             "file": "../openapi.yml",
@@ -2847,7 +2843,6 @@
           "type": "object"
         },
         "fullExamples": [],
-        "description": "",
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -2975,6 +2970,7 @@
       "headers": [],
       "generatedRequestName": "RetrieveLocationRequest",
       "response": {
+        "description": "",
         "schema": {
           "generatedName": "RetrieveLocationResponse",
           "schema": "Room",
@@ -2985,7 +2981,6 @@
           "type": "reference"
         },
         "fullExamples": [],
-        "description": "",
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -3088,41 +3083,45 @@
       "requestNameOverride": "listPhotosRequest",
       "generatedRequestName": "ListPhotosRequest",
       "response": {
+        "description": "",
         "schema": {
+          "allOf": [],
           "properties": [
             {
+              "conflict": {},
+              "generatedName": "listPhotosResponseCount",
               "key": "count",
               "schema": {
                 "generatedName": "ListPhotosResponseCount",
                 "value": {
-                  "generatedName": "ListPhotosResponseCount",
                   "schema": {
                     "example": 123,
                     "type": "int"
                   },
+                  "generatedName": "ListPhotosResponseCount",
                   "groupName": [],
                   "type": "primitive"
                 },
                 "groupName": [],
                 "type": "optional"
               },
-              "audiences": [],
-              "conflict": {},
-              "generatedName": "listPhotosResponseCount"
+              "audiences": []
             },
             {
+              "conflict": {},
+              "generatedName": "listPhotosResponseNext",
               "key": "next",
               "schema": {
                 "generatedName": "ListPhotosResponseNext",
                 "value": {
                   "generatedName": "ListPhotosResponseNext",
                   "value": {
-                    "generatedName": "ListPhotosResponseNext",
                     "schema": {
                       "format": "uri",
                       "example": "http://api.example.org/accounts/?page=4",
                       "type": "string"
                     },
+                    "generatedName": "ListPhotosResponseNext",
                     "groupName": [],
                     "type": "primitive"
                   },
@@ -3132,23 +3131,23 @@
                 "groupName": [],
                 "type": "optional"
               },
-              "audiences": [],
-              "conflict": {},
-              "generatedName": "listPhotosResponseNext"
+              "audiences": []
             },
             {
+              "conflict": {},
+              "generatedName": "listPhotosResponsePrevious",
               "key": "previous",
               "schema": {
                 "generatedName": "ListPhotosResponsePrevious",
                 "value": {
                   "generatedName": "ListPhotosResponsePrevious",
                   "value": {
-                    "generatedName": "ListPhotosResponsePrevious",
                     "schema": {
                       "format": "uri",
                       "example": "http://api.example.org/accounts/?page=2",
                       "type": "string"
                     },
+                    "generatedName": "ListPhotosResponsePrevious",
                     "groupName": [],
                     "type": "primitive"
                   },
@@ -3158,16 +3157,15 @@
                 "groupName": [],
                 "type": "optional"
               },
-              "audiences": [],
-              "conflict": {},
-              "generatedName": "listPhotosResponsePrevious"
+              "audiences": []
             },
             {
+              "conflict": {},
+              "generatedName": "listPhotosResponseResults",
               "key": "results",
               "schema": {
                 "generatedName": "ListPhotosResponseResults",
                 "value": {
-                  "generatedName": "ListPhotosResponseResults",
                   "value": {
                     "generatedName": "ListPhotosResponseResultsItem",
                     "schema": "Photo",
@@ -3177,22 +3175,19 @@
                     },
                     "type": "reference"
                   },
+                  "generatedName": "ListPhotosResponseResults",
                   "groupName": [],
                   "type": "array"
                 },
                 "groupName": [],
                 "type": "optional"
               },
-              "audiences": [],
-              "conflict": {},
-              "generatedName": "listPhotosResponseResults"
+              "audiences": []
             }
           ],
-          "generatedName": "ListPhotosResponse",
-          "allOf": [],
           "allOfPropertyConflicts": [],
+          "generatedName": "ListPhotosResponse",
           "groupName": [],
-          "fullExamples": [],
           "additionalProperties": false,
           "source": {
             "file": "../openapi.yml",
@@ -3201,7 +3196,6 @@
           "type": "object"
         },
         "fullExamples": [],
-        "description": "",
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -3346,6 +3340,7 @@
       "headers": [],
       "generatedRequestName": "RetrievePhotoRequest",
       "response": {
+        "description": "",
         "schema": {
           "generatedName": "RetrievePhotoResponse",
           "schema": "Photo",
@@ -3356,7 +3351,6 @@
           "type": "reference"
         },
         "fullExamples": [],
-        "description": "",
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"

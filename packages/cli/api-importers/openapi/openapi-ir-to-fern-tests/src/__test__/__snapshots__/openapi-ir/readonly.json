@@ -35,6 +35,7 @@
         "type": "json"
       },
       "response": {
+        "description": "User created successfully",
         "schema": {
           "generatedName": "PostUsersResponse",
           "schema": "User",
@@ -45,7 +46,6 @@
           "type": "reference"
         },
         "fullExamples": [],
-        "description": "User created successfully",
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -187,6 +187,7 @@
       "headers": [],
       "generatedRequestName": "GetUsersUserIdRequest",
       "response": {
+        "description": "User retrieved successfully",
         "schema": {
           "generatedName": "GetUsersUserIdResponse",
           "schema": "User",
@@ -197,7 +198,6 @@
           "type": "reference"
         },
         "fullExamples": [],
-        "description": "User retrieved successfully",
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"

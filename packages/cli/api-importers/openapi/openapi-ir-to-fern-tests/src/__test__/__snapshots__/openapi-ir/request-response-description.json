@@ -16,6 +16,7 @@
       "headers": [],
       "generatedRequestName": "GetExampleRequest",
       "response": {
+        "description": "Successful response",
         "schema": {
           "generatedName": "GetExampleResponse",
           "schema": "Schema1",
@@ -27,7 +28,6 @@
           "type": "reference"
         },
         "fullExamples": [],
-        "description": "Successful response",
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"

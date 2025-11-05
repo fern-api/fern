@@ -23,34 +23,34 @@
       "headers": [],
       "generatedRequestName": "UserGetRequest",
       "response": {
+        "description": "Success",
         "schema": {
+          "allOf": [],
           "properties": [
             {
+              "conflict": {},
+              "generatedName": "userGetResponseId",
               "key": "id",
               "schema": {
                 "generatedName": "UserGetResponseId",
                 "value": {
-                  "generatedName": "UserGetResponseId",
                   "schema": {
                     "format": "uuid",
                     "type": "string"
                   },
+                  "generatedName": "UserGetResponseId",
                   "groupName": [],
                   "type": "primitive"
                 },
                 "groupName": [],
                 "type": "optional"
               },
-              "audiences": [],
-              "conflict": {},
-              "generatedName": "userGetResponseId"
+              "audiences": []
             }
           ],
-          "generatedName": "UserGetResponse",
-          "allOf": [],
           "allOfPropertyConflicts": [],
+          "generatedName": "UserGetResponse",
           "groupName": [],
-          "fullExamples": [],
           "additionalProperties": false,
           "source": {
             "file": "../openapi.yml",
@@ -59,7 +59,6 @@
           "type": "object"
         },
         "fullExamples": [],
-        "description": "Success",
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -118,36 +117,35 @@
       "headers": [],
       "generatedRequestName": "UserGetAllRequest",
       "response": {
+        "description": "Success",
         "schema": {
-          "generatedName": "UserGetAllResponse",
           "value": {
+            "allOf": [],
             "properties": [
               {
+                "conflict": {},
+                "generatedName": "userGetAllResponseItemId",
                 "key": "id",
                 "schema": {
                   "generatedName": "UserGetAllResponseItemId",
                   "value": {
-                    "generatedName": "UserGetAllResponseItemId",
                     "schema": {
                       "format": "uuid",
                       "type": "string"
                     },
+                    "generatedName": "UserGetAllResponseItemId",
                     "groupName": [],
                     "type": "primitive"
                   },
                   "groupName": [],
                   "type": "optional"
                 },
-                "audiences": [],
-                "conflict": {},
-                "generatedName": "userGetAllResponseItemId"
+                "audiences": []
               }
             ],
-            "generatedName": "UserGetAllResponseItem",
-            "allOf": [],
             "allOfPropertyConflicts": [],
+            "generatedName": "UserGetAllResponseItem",
             "groupName": [],
-            "fullExamples": [],
             "additionalProperties": false,
             "source": {
               "file": "../openapi.yml",
@@ -155,11 +153,11 @@
             },
             "type": "object"
           },
+          "generatedName": "UserGetAllResponse",
           "groupName": [],
           "type": "array"
         },
         "fullExamples": [],
-        "description": "Success",
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"

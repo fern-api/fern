@@ -55,16 +55,16 @@
       "headers": [],
       "generatedRequestName": "AlphaGetAlphaRequest",
       "response": {
+        "description": "A response",
         "schema": {
-          "generatedName": "AlphaGetAlphaResponse",
           "schema": {
             "type": "string"
           },
+          "generatedName": "AlphaGetAlphaResponse",
           "groupName": [],
           "type": "primitive"
         },
         "fullExamples": [],
-        "description": "A response",
         "source": {
           "file": "../openapi1.yml",
           "type": "openapi"
@@ -117,16 +117,16 @@
       "headers": [],
       "generatedRequestName": "BetaGetBetaRequest",
       "response": {
+        "description": "A response",
         "schema": {
-          "generatedName": "BetaGetBetaResponse",
           "schema": {
             "type": "string"
           },
+          "generatedName": "BetaGetBetaResponse",
           "groupName": [],
           "type": "primitive"
         },
         "fullExamples": [],
-        "description": "A response",
         "source": {
           "file": "../openapi2.yml",
           "type": "openapi"
@@ -179,16 +179,16 @@
       "headers": [],
       "generatedRequestName": "GammaGetGammaRequest",
       "response": {
+        "description": "A response",
         "schema": {
-          "generatedName": "GammaGetGammaResponse",
           "schema": {
             "type": "string"
           },
+          "generatedName": "GammaGetGammaResponse",
           "groupName": [],
           "type": "primitive"
         },
         "fullExamples": [],
-        "description": "A response",
         "source": {
           "file": "../openapi3.yml",
           "type": "openapi"
@@ -241,16 +241,16 @@
       "headers": [],
       "generatedRequestName": "DeltaGetDeltaRequest",
       "response": {
+        "description": "A response",
         "schema": {
-          "generatedName": "DeltaGetDeltaResponse",
           "schema": {
             "type": "string"
           },
+          "generatedName": "DeltaGetDeltaResponse",
           "groupName": [],
           "type": "primitive"
         },
         "fullExamples": [],
-        "description": "A response",
         "source": {
           "file": "../openapi4.yml",
           "type": "openapi"
@@ -303,16 +303,16 @@
       "headers": [],
       "generatedRequestName": "MuGetMuRequest",
       "response": {
+        "description": "A response",
         "schema": {
-          "generatedName": "MuGetMuResponse",
           "schema": {
             "type": "string"
           },
+          "generatedName": "MuGetMuResponse",
           "groupName": [],
           "type": "primitive"
         },
         "fullExamples": [],
-        "description": "A response",
         "source": {
           "file": "../openapi5.yml",
           "type": "openapi"
@@ -365,16 +365,16 @@
       "headers": [],
       "generatedRequestName": "OmegaGetOmegaRequest",
       "response": {
+        "description": "A response",
         "schema": {
-          "generatedName": "OmegaGetOmegaResponse",
           "schema": {
             "type": "string"
           },
+          "generatedName": "OmegaGetOmegaResponse",
           "groupName": [],
           "type": "primitive"
         },
         "fullExamples": [],
-        "description": "A response",
         "source": {
           "file": "../openapi6.yml",
           "type": "openapi"
@@ -427,16 +427,16 @@
       "headers": [],
       "generatedRequestName": "ZetaGetZetaRequest",
       "response": {
+        "description": "A response",
         "schema": {
-          "generatedName": "ZetaGetZetaResponse",
           "schema": {
             "type": "string"
           },
+          "generatedName": "ZetaGetZetaResponse",
           "groupName": [],
           "type": "primitive"
         },
         "fullExamples": [],
-        "description": "A response",
         "source": {
           "file": "../openapi7.yml",
           "type": "openapi"
@@ -489,16 +489,16 @@
       "headers": [],
       "generatedRequestName": "EtaGetEtaRequest",
       "response": {
+        "description": "A response",
         "schema": {
-          "generatedName": "EtaGetEtaResponse",
           "schema": {
             "type": "string"
           },
+          "generatedName": "EtaGetEtaResponse",
           "groupName": [],
           "type": "primitive"
         },
         "fullExamples": [],
-        "description": "A response",
         "source": {
           "file": "../openapi8.yml",
           "type": "openapi"

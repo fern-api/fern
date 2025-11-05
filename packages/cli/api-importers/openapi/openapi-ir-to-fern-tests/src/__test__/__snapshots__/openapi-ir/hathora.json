@@ -25,8 +25,8 @@
       "headers": [],
       "generatedRequestName": "GetAppsRequest",
       "response": {
+        "description": "Ok",
         "schema": {
-          "generatedName": "GetAppsResponse",
           "value": {
             "generatedName": "GetAppsResponseItem",
             "schema": "ApplicationWithDeployment",
@@ -36,11 +36,11 @@
             },
             "type": "reference"
           },
+          "generatedName": "GetAppsResponse",
           "groupName": [],
           "type": "array"
         },
         "fullExamples": [],
-        "description": "Ok",
         "source": {
           "file": "../openapi.json",
           "type": "openapi"
@@ -288,6 +288,7 @@
         "type": "json"
       },
       "response": {
+        "description": "",
         "schema": {
           "generatedName": "CreateAppResponse",
           "schema": "Application",
@@ -298,7 +299,6 @@
           "type": "reference"
         },
         "fullExamples": [],
-        "description": "",
         "source": {
           "file": "../openapi.json",
           "type": "openapi"
@@ -529,6 +529,7 @@
         "type": "json"
       },
       "response": {
+        "description": "Ok",
         "schema": {
           "generatedName": "UpdateAppResponse",
           "schema": "Application",
@@ -539,7 +540,6 @@
           "type": "reference"
         },
         "fullExamples": [],
-        "description": "Ok",
         "source": {
           "file": "../openapi.json",
           "type": "openapi"
@@ -762,6 +762,7 @@
       "headers": [],
       "generatedRequestName": "GetAppInfoRequest",
       "response": {
+        "description": "Ok",
         "schema": {
           "generatedName": "GetAppInfoResponse",
           "schema": "Application",
@@ -772,7 +773,6 @@
           "type": "reference"
         },
         "fullExamples": [],
-        "description": "Ok",
         "source": {
           "file": "../openapi.json",
           "type": "openapi"
@@ -1069,28 +1069,28 @@
       "headers": [],
       "generatedRequestName": "LoginAnonymousRequest",
       "response": {
+        "description": "Ok",
         "schema": {
+          "allOf": [],
           "properties": [
             {
+              "conflict": {},
+              "generatedName": "loginAnonymousResponseToken",
               "key": "token",
               "schema": {
-                "generatedName": "LoginAnonymousResponseToken",
                 "schema": {
                   "type": "string"
                 },
+                "generatedName": "LoginAnonymousResponseToken",
                 "groupName": [],
                 "type": "primitive"
               },
-              "audiences": [],
-              "conflict": {},
-              "generatedName": "loginAnonymousResponseToken"
+              "audiences": []
             }
           ],
-          "generatedName": "LoginAnonymousResponse",
-          "allOf": [],
           "allOfPropertyConflicts": [],
+          "generatedName": "LoginAnonymousResponse",
           "groupName": [],
-          "fullExamples": [],
           "additionalProperties": false,
           "source": {
             "file": "../openapi.json",
@@ -1099,7 +1099,6 @@
           "type": "object"
         },
         "fullExamples": [],
-        "description": "Ok",
         "source": {
           "file": "../openapi.json",
           "type": "openapi"
@@ -1247,28 +1246,28 @@
         "type": "json"
       },
       "response": {
+        "description": "Ok",
         "schema": {
+          "allOf": [],
           "properties": [
             {
+              "conflict": {},
+              "generatedName": "loginNicknameResponseToken",
               "key": "token",
               "schema": {
-                "generatedName": "LoginNicknameResponseToken",
                 "schema": {
                   "type": "string"
                 },
+                "generatedName": "LoginNicknameResponseToken",
                 "groupName": [],
                 "type": "primitive"
               },
-              "audiences": [],
-              "conflict": {},
-              "generatedName": "loginNicknameResponseToken"
+              "audiences": []
             }
           ],
-          "generatedName": "LoginNicknameResponse",
-          "allOf": [],
           "allOfPropertyConflicts": [],
+          "generatedName": "LoginNicknameResponse",
           "groupName": [],
-          "fullExamples": [],
           "additionalProperties": false,
           "source": {
             "file": "../openapi.json",
@@ -1277,7 +1276,6 @@
           "type": "object"
         },
         "fullExamples": [],
-        "description": "Ok",
         "source": {
           "file": "../openapi.json",
           "type": "openapi"
@@ -1437,28 +1435,28 @@
         "type": "json"
       },
       "response": {
+        "description": "Ok",
         "schema": {
+          "allOf": [],
           "properties": [
             {
+              "conflict": {},
+              "generatedName": "loginGoogleResponseToken",
               "key": "token",
               "schema": {
-                "generatedName": "LoginGoogleResponseToken",
                 "schema": {
                   "type": "string"
                 },
+                "generatedName": "LoginGoogleResponseToken",
                 "groupName": [],
                 "type": "primitive"
               },
-              "audiences": [],
-              "conflict": {},
-              "generatedName": "loginGoogleResponseToken"
+              "audiences": []
             }
           ],
-          "generatedName": "LoginGoogleResponse",
-          "allOf": [],
           "allOfPropertyConflicts": [],
+          "generatedName": "LoginGoogleResponse",
           "groupName": [],
-          "fullExamples": [],
           "additionalProperties": false,
           "source": {
             "file": "../openapi.json",
@@ -1467,7 +1465,6 @@
           "type": "object"
         },
         "fullExamples": [],
-        "description": "Ok",
         "source": {
           "file": "../openapi.json",
           "type": "openapi"
@@ -1616,8 +1613,8 @@
       "headers": [],
       "generatedRequestName": "GetBuildsRequest",
       "response": {
+        "description": "Ok",
         "schema": {
-          "generatedName": "GetBuildsResponse",
           "value": {
             "generatedName": "GetBuildsResponseItem",
             "schema": "Build",
@@ -1627,11 +1624,11 @@
             },
             "type": "reference"
           },
+          "generatedName": "GetBuildsResponse",
           "groupName": [],
           "type": "array"
         },
         "fullExamples": [],
-        "description": "Ok",
         "source": {
           "file": "../openapi.json",
           "type": "openapi"
@@ -1840,6 +1837,7 @@
       "headers": [],
       "generatedRequestName": "GetBuildInfoRequest",
       "response": {
+        "description": "Ok",
         "schema": {
           "generatedName": "GetBuildInfoResponse",
           "schema": "Build",
@@ -1850,7 +1848,6 @@
           "type": "reference"
         },
         "fullExamples": [],
-        "description": "Ok",
         "source": {
           "file": "../openapi.json",
           "type": "openapi"
@@ -2048,6 +2045,7 @@
       "headers": [],
       "generatedRequestName": "CreateBuildRequest",
       "response": {
+        "description": "",
         "schema": {
           "generatedName": "CreateBuildResponse",
           "schema": "Build",
@@ -2058,7 +2056,6 @@
           "type": "reference"
         },
         "fullExamples": [],
-        "description": "",
         "source": {
           "file": "../openapi.json",
           "type": "openapi"
@@ -2611,8 +2608,8 @@
       "headers": [],
       "generatedRequestName": "GetDeploymentsRequest",
       "response": {
+        "description": "Ok",
         "schema": {
-          "generatedName": "GetDeploymentsResponse",
           "value": {
             "generatedName": "GetDeploymentsResponseItem",
             "schema": "Deployment",
@@ -2622,11 +2619,11 @@
             },
             "type": "reference"
           },
+          "generatedName": "GetDeploymentsResponse",
           "groupName": [],
           "type": "array"
         },
         "fullExamples": [],
-        "description": "Ok",
         "source": {
           "file": "../openapi.json",
           "type": "openapi"
@@ -2849,6 +2846,7 @@
       "headers": [],
       "generatedRequestName": "GetDeploymentInfoRequest",
       "response": {
+        "description": "Ok",
         "schema": {
           "generatedName": "GetDeploymentInfoResponse",
           "schema": "Deployment",
@@ -2859,7 +2857,6 @@
           "type": "reference"
         },
         "fullExamples": [],
-        "description": "Ok",
         "source": {
           "file": "../openapi.json",
           "type": "openapi"
@@ -3106,6 +3103,7 @@
         "type": "json"
       },
       "response": {
+        "description": "",
         "schema": {
           "generatedName": "CreateDeploymentResponse",
           "schema": "Deployment",
@@ -3116,7 +3114,6 @@
           "type": "reference"
         },
         "fullExamples": [],
-        "description": "",
         "source": {
           "file": "../openapi.json",
           "type": "openapi"
@@ -3416,6 +3413,7 @@
       "headers": [],
       "generatedRequestName": "GetPingServiceEndpointsRequest",
       "response": {
+        "description": "Ok",
         "schema": {
           "generatedName": "GetPingServiceEndpointsResponse",
           "schema": "DiscoveryResponse",
@@ -3426,7 +3424,6 @@
           "type": "reference"
         },
         "fullExamples": [],
-        "description": "Ok",
         "source": {
           "file": "../openapi.json",
           "type": "openapi"
@@ -3571,6 +3568,7 @@
       ],
       "generatedRequestName": "CreatePrivateLobbyDeprecatedRequest",
       "response": {
+        "description": "Ok",
         "schema": {
           "generatedName": "CreatePrivateLobbyDeprecatedResponse",
           "schema": "RoomId",
@@ -3581,7 +3579,6 @@
           "type": "reference"
         },
         "fullExamples": [],
-        "description": "Ok",
         "source": {
           "file": "../openapi.json",
           "type": "openapi"
@@ -3882,6 +3879,7 @@
       ],
       "generatedRequestName": "CreatePublicLobbyDeprecatedRequest",
       "response": {
+        "description": "Ok",
         "schema": {
           "generatedName": "CreatePublicLobbyDeprecatedResponse",
           "schema": "RoomId",
@@ -3892,7 +3890,6 @@
           "type": "reference"
         },
         "fullExamples": [],
-        "description": "Ok",
         "source": {
           "file": "../openapi.json",
           "type": "openapi"
@@ -4193,8 +4190,8 @@
       ],
       "generatedRequestName": "ListActivePublicLobbiesDeprecatedRequest",
       "response": {
+        "description": "Ok",
         "schema": {
-          "generatedName": "ListActivePublicLobbiesDeprecatedResponse",
           "value": {
             "generatedName": "ListActivePublicLobbiesDeprecatedResponseItem",
             "schema": "Lobby",
@@ -4204,11 +4201,11 @@
             },
             "type": "reference"
           },
+          "generatedName": "ListActivePublicLobbiesDeprecatedResponse",
           "groupName": [],
           "type": "array"
         },
         "fullExamples": [],
-        "description": "Ok",
         "source": {
           "file": "../openapi.json",
           "type": "openapi"
@@ -4559,6 +4556,7 @@
         "type": "json"
       },
       "response": {
+        "description": "",
         "schema": {
           "generatedName": "CreatePrivateLobbyResponse",
           "schema": "Lobby",
@@ -4569,7 +4567,6 @@
           "type": "reference"
         },
         "fullExamples": [],
-        "description": "",
         "source": {
           "file": "../openapi.json",
           "type": "openapi"
@@ -5019,6 +5016,7 @@
         "type": "json"
       },
       "response": {
+        "description": "",
         "schema": {
           "generatedName": "CreatePublicLobbyResponse",
           "schema": "Lobby",
@@ -5029,7 +5027,6 @@
           "type": "reference"
         },
         "fullExamples": [],
-        "description": "",
         "source": {
           "file": "../openapi.json",
           "type": "openapi"
@@ -5479,6 +5476,7 @@
         "type": "json"
       },
       "response": {
+        "description": "",
         "schema": {
           "generatedName": "CreateLocalLobbyResponse",
           "schema": "Lobby",
@@ -5489,7 +5487,6 @@
           "type": "reference"
         },
         "fullExamples": [],
-        "description": "",
         "source": {
           "file": "../openapi.json",
           "type": "openapi"
@@ -5971,6 +5968,7 @@
         "type": "json"
       },
       "response": {
+        "description": "",
         "schema": {
           "generatedName": "CreateLobbyResponse",
           "schema": "Lobby",
@@ -5981,7 +5979,6 @@
           "type": "reference"
         },
         "fullExamples": [],
-        "description": "",
         "source": {
           "file": "../openapi.json",
           "type": "openapi"
@@ -6354,8 +6351,8 @@
       "headers": [],
       "generatedRequestName": "ListActivePublicLobbiesRequest",
       "response": {
+        "description": "Ok",
         "schema": {
-          "generatedName": "ListActivePublicLobbiesResponse",
           "value": {
             "generatedName": "ListActivePublicLobbiesResponseItem",
             "schema": "Lobby",
@@ -6365,11 +6362,11 @@
             },
             "type": "reference"
           },
+          "generatedName": "ListActivePublicLobbiesResponse",
           "groupName": [],
           "type": "array"
         },
         "fullExamples": [],
-        "description": "Ok",
         "source": {
           "file": "../openapi.json",
           "type": "openapi"
@@ -6558,6 +6555,7 @@
       "headers": [],
       "generatedRequestName": "GetLobbyInfoRequest",
       "response": {
+        "description": "Ok",
         "schema": {
           "generatedName": "GetLobbyInfoResponse",
           "schema": "Lobby",
@@ -6568,7 +6566,6 @@
           "type": "reference"
         },
         "fullExamples": [],
-        "description": "Ok",
         "source": {
           "file": "../openapi.json",
           "type": "openapi"
@@ -6829,6 +6826,7 @@
         "type": "json"
       },
       "response": {
+        "description": "Ok",
         "schema": {
           "generatedName": "SetLobbyStateResponse",
           "schema": "Lobby",
@@ -6839,7 +6837,6 @@
           "type": "reference"
         },
         "fullExamples": [],
-        "description": "Ok",
         "source": {
           "file": "../openapi.json",
           "type": "openapi"
@@ -7616,6 +7613,7 @@
       "headers": [],
       "generatedRequestName": "GetMetricsRequest",
       "response": {
+        "description": "Ok",
         "schema": {
           "generatedName": "GetMetricsResponse",
           "schema": "MetricsResponse",
@@ -7626,7 +7624,6 @@
           "type": "reference"
         },
         "fullExamples": [],
-        "description": "Ok",
         "source": {
           "file": "../openapi.json",
           "type": "openapi"
@@ -7918,8 +7915,8 @@
       "headers": [],
       "generatedRequestName": "GetRunningProcessesRequest",
       "response": {
+        "description": "Ok",
         "schema": {
-          "generatedName": "GetRunningProcessesResponse",
           "value": {
             "generatedName": "GetRunningProcessesResponseItem",
             "schema": "ProcessWithRooms",
@@ -7929,11 +7926,11 @@
             },
             "type": "reference"
           },
+          "generatedName": "GetRunningProcessesResponse",
           "groupName": [],
           "type": "array"
         },
         "fullExamples": [],
-        "description": "Ok",
         "source": {
           "file": "../openapi.json",
           "type": "openapi"
@@ -8221,8 +8218,8 @@
       "headers": [],
       "generatedRequestName": "GetStoppedProcessesRequest",
       "response": {
+        "description": "Ok",
         "schema": {
-          "generatedName": "GetStoppedProcessesResponse",
           "value": {
             "generatedName": "GetStoppedProcessesResponseItem",
             "schema": "Process",
@@ -8232,11 +8229,11 @@
             },
             "type": "reference"
           },
+          "generatedName": "GetStoppedProcessesResponse",
           "groupName": [],
           "type": "array"
         },
         "fullExamples": [],
-        "description": "Ok",
         "source": {
           "file": "../openapi.json",
           "type": "openapi"
@@ -8481,6 +8478,7 @@
       "headers": [],
       "generatedRequestName": "GetProcessInfoRequest",
       "response": {
+        "description": "Ok",
         "schema": {
           "generatedName": "GetProcessInfoResponse",
           "schema": "Process",
@@ -8491,7 +8489,6 @@
           "type": "reference"
         },
         "fullExamples": [],
-        "description": "Ok",
         "source": {
           "file": "../openapi.json",
           "type": "openapi"
@@ -8758,6 +8755,7 @@
         "type": "json"
       },
       "response": {
+        "description": "",
         "schema": {
           "generatedName": "CreateRoomResponse",
           "schema": "RoomId",
@@ -8768,7 +8766,6 @@
           "type": "reference"
         },
         "fullExamples": [],
-        "description": "",
         "source": {
           "file": "../openapi.json",
           "type": "openapi"
@@ -8929,6 +8926,7 @@
       "headers": [],
       "generatedRequestName": "GetRoomInfoRequest",
       "response": {
+        "description": "Ok",
         "schema": {
           "generatedName": "GetRoomInfoResponse",
           "schema": "Room",
@@ -8939,7 +8937,6 @@
           "type": "reference"
         },
         "fullExamples": [],
-        "description": "Ok",
         "source": {
           "file": "../openapi.json",
           "type": "openapi"
@@ -9161,8 +9158,8 @@
       "headers": [],
       "generatedRequestName": "GetActiveRoomsForProcessRequest",
       "response": {
+        "description": "Ok",
         "schema": {
-          "generatedName": "GetActiveRoomsForProcessResponse",
           "value": {
             "generatedName": "GetActiveRoomsForProcessResponseItem",
             "schema": "RoomWithoutAllocations",
@@ -9172,11 +9169,11 @@
             },
             "type": "reference"
           },
+          "generatedName": "GetActiveRoomsForProcessResponse",
           "groupName": [],
           "type": "array"
         },
         "fullExamples": [],
-        "description": "Ok",
         "source": {
           "file": "../openapi.json",
           "type": "openapi"
@@ -9365,8 +9362,8 @@
       "headers": [],
       "generatedRequestName": "GetInactiveRoomsForProcessRequest",
       "response": {
+        "description": "Ok",
         "schema": {
-          "generatedName": "GetInactiveRoomsForProcessResponse",
           "value": {
             "generatedName": "GetInactiveRoomsForProcessResponseItem",
             "schema": "RoomWithoutAllocations",
@@ -9376,11 +9373,11 @@
             },
             "type": "reference"
           },
+          "generatedName": "GetInactiveRoomsForProcessResponse",
           "groupName": [],
           "type": "array"
         },
         "fullExamples": [],
-        "description": "Ok",
         "source": {
           "file": "../openapi.json",
           "type": "openapi"
@@ -9855,6 +9852,7 @@
       "headers": [],
       "generatedRequestName": "GetConnectionInfoRequest",
       "response": {
+        "description": "Ok",
         "schema": {
           "generatedName": "GetConnectionInfoResponse",
           "schema": "ConnectionInfo",
@@ -9865,7 +9863,6 @@
           "type": "reference"
         },
         "fullExamples": [],
-        "description": "Ok",
         "source": {
           "file": "../openapi.json",
           "type": "openapi"
