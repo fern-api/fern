@@ -52,9 +52,77 @@ export class FilePropertyMapper extends WithGeneration {
                     });
                     break;
                 case "bodyProperty":
-                    // if we don't have a record, we can fake some data for it.
+                    // if we don't have a record, we can try fake some data for it.
                     if (is.Record.missingKey(record, property.name.wireValue)) {
-                        record[property.name.wireValue] = {};
+                        switch (property.typeReference.type) {
+                            case "optional": {
+                                // ignore missing optional values
+                                break;
+                            }
+                            case "primitive": {
+                                // for primitives, we can return a sample value.
+                                switch (property.typeReference.value.toLowerCase()) {
+                                    case "integer": {
+                                        record[property.name.wireValue] = 123;
+                                        break;
+                                    }
+                                    case "string": {
+                                        record[property.name.wireValue] = "[string]";
+                                        break;
+                                    }
+                                    case "boolean": {
+                                        record[property.name.wireValue] = true;
+                                        break;
+                                    }
+                                    case "double": {
+                                        record[property.name.wireValue] = 123.456;
+                                        break;
+                                    }
+                                    case "float": {
+                                        record[property.name.wireValue] = 123.456;
+                                        break;
+                                    }
+                                    case "long": {
+                                        record[property.name.wireValue] = 123456789;
+                                        break;
+                                    }
+                                    case "uint": {
+                                        record[property.name.wireValue] = 123;
+                                        break;
+                                    }
+                                    case "uint64": {
+                                        record[property.name.wireValue] = 12345;
+                                        break;
+                                    }
+                                    case "date": {
+                                        record[property.name.wireValue] = new Date(2021, 1, 1);
+                                        break;
+                                    }
+                                    case "datetime": {
+                                        record[property.name.wireValue] = new Date(2021, 1, 1, 12, 0, 0);
+                                        break;
+                                    }
+                                    case "uuid": {
+                                        record[property.name.wireValue] = "123e4567-e89b-12d3-a456-426614174000";
+                                        break;
+                                    }
+                                    case "base64": {
+                                        record[property.name.wireValue] = "SGVsbG8gd29ybGQh";
+                                        break;
+                                    }
+                                    case "biginteger": {
+                                        record[property.name.wireValue] = "12345678901234567890";
+                                        break;
+                                    }
+                                }
+                                break;
+                            }
+
+                            default: {
+                                // todo: optionally synthesize a value for a other types in the future
+                                break;
+                            }
+                        }
                     }
                     result.bodyPropertyFields.push({
                         name: this.context.getPropertyName(property.name.name),
