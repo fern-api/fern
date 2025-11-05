@@ -83,6 +83,8 @@ jobs:
         run: npm install -g npm@latest
 
       - name: 🧪 Build and test
+        env:
+          GITHUB_TOKEN: ${{ env.GITHUB_TOKEN }}
         run: pnpm turbo compile test --filter=${{ env.PACKAGE_NAME }}
 
       - name: Publish generator-cli
