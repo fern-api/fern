@@ -4,14 +4,33 @@
 package com.seed.websocketBearerAuth.resources.realtime;
 
 import com.seed.websocketBearerAuth.core.ClientOptions;
+import com.seed.websocketBearerAuth.core.RequestOptions;
 import com.seed.websocketBearerAuth.resources.realtime.websocket.RealtimeWebSocketClient;
 import java.util.Optional;
 
 public class RealtimeClient {
     protected final ClientOptions clientOptions;
 
+    private final RawRealtimeClient rawClient;
+
     public RealtimeClient(ClientOptions clientOptions) {
         this.clientOptions = clientOptions;
+        this.rawClient = new RawRealtimeClient(clientOptions);
+    }
+
+    /**
+     * Get responses with HTTP metadata like headers
+     */
+    public RawRealtimeClient withRawResponse() {
+        return this.rawClient;
+    }
+
+    public String health() {
+        return this.rawClient.health().body();
+    }
+
+    public String health(RequestOptions requestOptions) {
+        return this.rawClient.health(requestOptions).body();
     }
 
     /**

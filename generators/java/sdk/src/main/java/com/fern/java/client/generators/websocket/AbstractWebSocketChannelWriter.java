@@ -46,7 +46,6 @@ import java.util.concurrent.ScheduledExecutorService;
 import java.util.function.Consumer;
 import javax.lang.model.element.Modifier;
 import okhttp3.OkHttpClient;
-import okhttp3.WebSocket;
 
 public abstract class AbstractWebSocketChannelWriter {
 
@@ -250,8 +249,12 @@ public abstract class AbstractWebSocketChannelWriter {
                 .addJavadoc("@deprecated Use getReadyState() for accurate connection status\n")
                 .addAnnotation(Deprecated.class)
                 .addComment("Check if WebSocket connection is open based on ready state")
-                .addStatement("return $N == $T.OPEN || $N == $T.CONNECTING",
-                        readyStateField, readyStateClassName, readyStateField, readyStateClassName)
+                .addStatement(
+                        "return $N == $T.OPEN || $N == $T.CONNECTING",
+                        readyStateField,
+                        readyStateClassName,
+                        readyStateField,
+                        readyStateClassName)
                 .build();
     }
 

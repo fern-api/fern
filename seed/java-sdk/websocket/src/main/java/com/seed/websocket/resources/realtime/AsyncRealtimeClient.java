@@ -4,14 +4,34 @@
 package com.seed.websocket.resources.realtime;
 
 import com.seed.websocket.core.ClientOptions;
+import com.seed.websocket.core.RequestOptions;
 import com.seed.websocket.resources.realtime.websocket.RealtimeWebSocketClient;
 import java.util.Optional;
+import java.util.concurrent.CompletableFuture;
 
 public class AsyncRealtimeClient {
     protected final ClientOptions clientOptions;
 
+    private final AsyncRawRealtimeClient rawClient;
+
     public AsyncRealtimeClient(ClientOptions clientOptions) {
         this.clientOptions = clientOptions;
+        this.rawClient = new AsyncRawRealtimeClient(clientOptions);
+    }
+
+    /**
+     * Get responses with HTTP metadata like headers
+     */
+    public AsyncRawRealtimeClient withRawResponse() {
+        return this.rawClient;
+    }
+
+    public CompletableFuture<String> health() {
+        return this.rawClient.health().thenApply(response -> response.body());
+    }
+
+    public CompletableFuture<String> health(RequestOptions requestOptions) {
+        return this.rawClient.health(requestOptions).thenApply(response -> response.body());
     }
 
     /**

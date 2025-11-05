@@ -1,5 +1,14 @@
 # yaml-language-server: $schema=./../../../../../fern.schema.json
 
+service:
+  base-path: /
+  auth: true
+  endpoints:
+    health:
+      method: GET
+      path: /health
+      response: string
+
 channel:
   path: /realtime/{session_id}
   auth: true
