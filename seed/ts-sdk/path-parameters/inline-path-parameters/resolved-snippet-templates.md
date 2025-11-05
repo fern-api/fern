@@ -75,3 +75,12 @@ await client.user.searchUsers("tenant_id", "user_id", {
 ```
 
 
+```typescript
+import { SeedPathParametersClient } from "@fern/path-parameters";
+
+const client = new SeedPathParametersClient({ environment: "YOUR_BASE_URL" });
+await client.user.getUserMetadata("tenant_id", "user_id", 1);
+
+```
+
+

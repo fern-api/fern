@@ -65,9 +65,9 @@ public class SeedNoEnvironmentApiException extends SeedNoEnvironmentException {
         return this.headers;
     }
 
-    @java.lang.Override
+    @Override
     public String toString() {
         return "SeedNoEnvironmentApiException{" + "message: " + getMessage() + ", statusCode: " + statusCode
-                + ", body: " + body + "}";
+                + ", body: " + ObjectMappers.stringify(body) + "}";
     }
 }

@@ -10,6 +10,14 @@
 
 - changelogEntry:
     - summary: |
+        Perform fern docs dev validation in the background instead of foreground
+      type: fix
+  irVersion: 61
+  createdAt: "2025-11-04"
+  version: 0.107.5
+
+- changelogEntry:
+    - summary: |
         Fix the dereferencing of message $refs in the operations section of AsyncAPI specs.
       type: fix
   irVersion: 61

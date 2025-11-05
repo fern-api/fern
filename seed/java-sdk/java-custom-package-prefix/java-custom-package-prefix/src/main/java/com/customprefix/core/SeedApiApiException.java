@@ -65,9 +65,9 @@ public class SeedApiApiException extends SeedApiException {
         return this.headers;
     }
 
-    @java.lang.Override
+    @Override
     public String toString() {
-        return "SeedApiApiException{" + "message: " + getMessage() + ", statusCode: " + statusCode + ", body: " + body
-                + "}";
+        return "SeedApiApiException{" + "message: " + getMessage() + ", statusCode: " + statusCode + ", body: "
+                + ObjectMappers.stringify(body) + "}";
     }
 }

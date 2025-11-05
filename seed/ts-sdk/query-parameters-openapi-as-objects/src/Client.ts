@@ -19,6 +19,7 @@ export class SeedApiClient {
     constructor(_options: SeedApiClient.Options) {
         this._options = {
             ..._options,
+            logging: core.logging.createLogger(_options?.logging),
             headers: mergeHeaders(
                 {
                     "X-Fern-Language": "JavaScript",
@@ -183,6 +184,7 @@ export class SeedApiClient {
             maxRetries: requestOptions?.maxRetries ?? this._options?.maxRetries,
             abortSignal: requestOptions?.abortSignal,
             fetchFn: this._options?.fetch,
+            logging: this._options.logging,
         });
         if (_response.ok) {
             return { data: _response.body as SeedApi.SearchResponse, rawResponse: _response.rawResponse };

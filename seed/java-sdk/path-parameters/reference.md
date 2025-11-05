@@ -419,3 +419,80 @@ client.user().searchUsers(
 </dd>
 </dl>
 </details>
+
+<details><summary><code>client.user.getUserMetadata(tenantId, userId, version) -> User</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Test endpoint with path parameter that has a text prefix (v{version})
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```java
+client.user().getUserMetadata(
+    "tenant_id",
+    "user_id",
+    1,
+    GetUserMetadataRequest
+        .builder()
+        .build()
+);
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**tenantId:** `String` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**userId:** `String` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**version:** `Integer` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>

@@ -65,9 +65,9 @@ public class SeedServerSentEventsApiException extends SeedServerSentEventsExcept
         return this.headers;
     }
 
-    @java.lang.Override
+    @Override
     public String toString() {
         return "SeedServerSentEventsApiException{" + "message: " + getMessage() + ", statusCode: " + statusCode
-                + ", body: " + body + "}";
+                + ", body: " + ObjectMappers.stringify(body) + "}";
     }
 }

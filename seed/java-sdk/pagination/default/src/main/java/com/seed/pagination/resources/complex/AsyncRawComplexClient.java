@@ -50,7 +50,8 @@ public class AsyncRawComplexClient {
         HttpUrl httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
                 .newBuilder()
                 .addPathSegment(index)
-                .addPathSegments("conversations/search")
+                .addPathSegments("conversations")
+                .addPathSegments("search")
                 .build();
         RequestBody body;
         try {

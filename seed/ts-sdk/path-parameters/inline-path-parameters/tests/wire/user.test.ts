@@ -108,4 +108,27 @@ describe("User", () => {
             },
         ]);
     });
+
+    test("getUserMetadata", async () => {
+        const server = mockServerPool.createServer();
+        const client = new SeedPathParametersClient({ tenantId: "tenant_id", environment: server.baseUrl });
+
+        const rawResponseBody = { name: "name", tags: ["tags", "tags"] };
+        server
+            .mockEndpoint()
+            .get("/tenant_id/user/user_id/metadata/v1")
+            .respondWith()
+            .statusCode(200)
+            .jsonBody(rawResponseBody)
+            .build();
+
+        const response = await client.user.getUserMetadata({
+            user_id: "user_id",
+            version: 1,
+        });
+        expect(response).toEqual({
+            name: "name",
+            tags: ["tags", "tags"],
+        });
+    });
 });
