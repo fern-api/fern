@@ -292,7 +292,7 @@ export class HttpEndpointGenerator extends AbstractEndpointGenerator {
                     writer.writeTextStatement(`string? line`);
                     writer.write(`using var reader = `);
                     writer.write(
-                        context.System.IO.StreamReader.instantiate({
+                        context.System.IO.StreamReader.new({
                             arguments_: [
                                 context.csharp.codeblock(
                                     `await ${names.variables.response}.Raw.Content.ReadAsStreamAsync()`
@@ -610,14 +610,14 @@ export class HttpEndpointGenerator extends AbstractEndpointGenerator {
             throw new Error("Request parameter is required for pagination");
         }
 
-        if (requestParameter.type.isOptional()) {
+        if (requestParameter.type.isOptional) {
             writer.writeLine("if (request is not null)");
             writer.pushScope();
         }
 
         writer.writeLine("request = request with { };");
 
-        if (requestParameter.type.isOptional()) {
+        if (requestParameter.type.isOptional) {
             writer.popScope();
         }
 
@@ -821,7 +821,7 @@ export class HttpEndpointGenerator extends AbstractEndpointGenerator {
                                         .filter((each) => each.needsIntialization)
                                         .map((each) => ({
                                             name: each.name,
-                                            value: each.type.getDefaultValue()
+                                            value: each.type.defaultValue
                                         }))
                                 })
                             );

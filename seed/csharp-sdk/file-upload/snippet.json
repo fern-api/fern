@@ -4,6 +4,30 @@
         {
             "example_identifier": null,
             "id": {
+                "path": "/just-file",
+                "method": "POST",
+                "identifier_override": "endpoint_service.justFile"
+            },
+            "snippet": {
+                "type": "csharp",
+                "client": "using SeedFileUpload;\n\nvar client = new SeedFileUploadClient();\nawait client.Service.JustFileAsync(new JustFileRequest());\n"
+            }
+        },
+        {
+            "example_identifier": null,
+            "id": {
+                "path": "/optional-args",
+                "method": "POST",
+                "identifier_override": "endpoint_service.optionalArgs"
+            },
+            "snippet": {
+                "type": "csharp",
+                "client": "using SeedFileUpload;\n\nvar client = new SeedFileUploadClient();\nawait client.Service.OptionalArgsAsync(new OptionalArgsRequest());\n"
+            }
+        },
+        {
+            "example_identifier": null,
+            "id": {
                 "path": "/snippet",
                 "method": "POST",
                 "identifier_override": "endpoint_service.simple"

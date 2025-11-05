@@ -13,7 +13,7 @@ export declare namespace ClassInstantiation {
     interface Args {
         classReference: ClassReference;
         // A map of the field for the class and the value to be assigned to it.
-        arguments_: Arguments;
+        arguments_: Arguments | ClassInstantiation[];
         /**
          * Lets you use constructor (rather than object initializer syntax) even if you pass in named arguments
          * @deprecated Use properties instead
@@ -32,7 +32,7 @@ export declare namespace ClassInstantiation {
 
 export class ClassInstantiation extends AstNode {
     public readonly classReference: ClassReference;
-    public readonly arguments_: Arguments;
+    public readonly arguments_: Arguments | ClassInstantiation[];
     private readonly forceUseConstructor: boolean;
     private readonly properties: ClassInstantiation.Property[];
     public readonly multiline: boolean;

@@ -1,6 +1,6 @@
 import { assertNever } from "@fern-api/core-utils";
 import { CSharpFile, convertExampleTypeReferenceToTypeReference, FileGenerator } from "@fern-api/csharp-base";
-import { ast } from "@fern-api/csharp-codegen";
+import { ast, is } from "@fern-api/csharp-codegen";
 import { join, RelativeFilePath } from "@fern-api/fs-utils";
 
 import { FernIr } from "@fern-fern/ir-sdk";
@@ -147,35 +147,32 @@ export class MockServerTestGenerator extends FileGenerator<CSharpFile, SdkCustom
                                 generics: [responseType],
                                 arguments_: [this.csharp.codeblock("mockResponse")]
                             });
-                            switch (responseType.unwrapIfOptional().type) {
-                                case "object":
-                                case "reference":
-                                case "coreReference":
-                                case "listType":
-                                case "set":
-                                case "map":
-                                case "list":
-                                case "array":
+                            const innerType = responseType.unwrapIfOptional();
+                            if (is.Type.oneOf(innerType) || is.Type.oneOfBase(innerType)) {
+                                writer.writeLine(`Assert.That(
+                                response.Value,
+                                Is.EqualTo(`);
+                                writer.writeNode(deserializeResponseNode);
+                                writer.writeLine(".Value).UsingDefaults()");
+                            } else {
+                                if (
+                                    innerType.isCollection ||
+                                    is.Type.object(innerType) ||
+                                    is.Type.reference(innerType) ||
+                                    is.Type.coreReference(innerType)
+                                ) {
                                     writer.writeLine(`Assert.That(
                                         response,
                                         Is.EqualTo(`);
                                     writer.writeNode(deserializeResponseNode);
                                     writer.writeLine(").UsingDefaults()");
-                                    break;
-                                case "oneOf":
-                                case "oneOfBase":
+                                } else {
                                     writer.writeLine(`Assert.That(
-                                        response.Value,
-                                        Is.EqualTo(`);
-                                    writer.writeNode(deserializeResponseNode);
-                                    writer.writeLine(".Value).UsingDefaults()");
-                                    break;
-                                default:
-                                    writer.writeLine(`Assert.That(
-                                        response,
-                                        Is.EqualTo(`);
+                                  response,
+                                  Is.EqualTo(`);
                                     writer.writeNode(deserializeResponseNode);
                                     writer.writeLine(")");
+                                }
                             }
                             writer.writeTextStatement(")");
                         } else if (responseBodyType === "text") {

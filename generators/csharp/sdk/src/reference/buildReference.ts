@@ -111,7 +111,7 @@ function getEndpointReference({
         description: endpoint.docs,
         snippet: singleEndpointSnippet.endpointCall.trim(),
         parameters: endpointSignatureInfo.baseParameters.map((parameter) => {
-            const required = parameter.type instanceof ast.Type ? !parameter.type.isOptional() : true;
+            const required = parameter.type instanceof ast.Type ? !parameter.type.isOptional : true;
             return {
                 name: parameter.name,
                 type: context.printType(parameter.type),
