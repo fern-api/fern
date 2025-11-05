@@ -136,10 +136,11 @@ export class WireTestGenerator {
             .filter((endpointTestCaseCodeBlock) => endpointTestCaseCodeBlock !== null);
 
         const serviceTestFileContent = go.codeblock((writer) => {
-            for (const [_, importPath] of imports.entries()) {
+            for (const [alias, importPath] of imports.entries()) {
                 // Manually add any imports that were used in the snippet (client/request types)
                 // but that may not be used in the rest of the generated test file and therefore would be missed
-                writer.addImport(importPath);
+                const safeAlias = /^\w+$/.test(alias) ? alias : undefined;
+                writer.addImport(importPath, safeAlias);
             }
             writer.writeNewLineIfLastLineNot();
             writer.newLine();

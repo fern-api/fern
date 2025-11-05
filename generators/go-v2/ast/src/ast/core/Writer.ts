@@ -82,11 +82,19 @@ export class Writer extends AbstractWriter {
      * that should be used to reference the package. If a conflict exists, we try to use
      * path components to create a unique alias, and only fall back to prepending '_'
      * as a last resort.
+     * 
+     * @param importPath The import path to add
+     * @param explicitAlias Optional explicit alias to use for this import
      */
-    public addImport(importPath: string): string {
+    public addImport(importPath: string, explicitAlias?: string): string {
         const maybeAlias = this.imports[importPath];
         if (maybeAlias != null) {
             return maybeAlias;
+        }
+
+        if (explicitAlias != null && explicitAlias.length > 0) {
+            this.imports[importPath] = explicitAlias;
+            return explicitAlias;
         }
 
         // If this is the root import path and we have a configured packageName, use it
