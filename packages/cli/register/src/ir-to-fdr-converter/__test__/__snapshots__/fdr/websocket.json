@@ -191,6 +191,54 @@
     }
   },
   "subpackages": {
+    "subpackage_empty": {
+      "subpackageId": "subpackage_empty",
+      "name": "empty",
+      "endpoints": [],
+      "webhooks": [],
+      "websockets": [],
+      "types": [],
+      "subpackages": [
+        "subpackage_empty/empty-realtime"
+      ]
+    },
+    "subpackage_empty/empty-realtime": {
+      "subpackageId": "subpackage_empty/empty-realtime",
+      "name": "empty-realtime",
+      "endpoints": [],
+      "webhooks": [],
+      "websockets": [
+        {
+          "auth": false,
+          "environments": [],
+          "id": "empty-realtime",
+          "name": "Empty Realtime",
+          "path": {
+            "pathParameters": [],
+            "parts": [
+              {
+                "type": "literal",
+                "value": "/empty/realtime/"
+              }
+            ]
+          },
+          "headers": [],
+          "queryParameters": [],
+          "messages": [],
+          "examples": [
+            {
+              "path": "/empty/realtime/",
+              "pathParameters": {},
+              "queryParameters": {},
+              "headers": {},
+              "messages": []
+            }
+          ]
+        }
+      ],
+      "types": [],
+      "subpackages": []
+    },
     "subpackage_realtime": {
       "subpackageId": "subpackage_realtime",
       "name": "realtime",
@@ -428,6 +476,7 @@
     "websockets": [],
     "types": [],
     "subpackages": [
+      "subpackage_empty",
       "subpackage_realtime"
     ]
   },
