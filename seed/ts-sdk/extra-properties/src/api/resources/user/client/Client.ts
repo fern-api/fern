@@ -4,7 +4,7 @@ import type { BaseClientOptions, BaseRequestOptions } from "../../../../BaseClie
 import { mergeHeaders } from "../../../../core/headers.js";
 import * as core from "../../../../core/index.js";
 import * as errors from "../../../../errors/index.js";
-import type { User as User_SeedExtraProperties } from "../types/User.js";
+import type { User as UserType } from "../types/User.js";
 import type { CreateUserRequest } from "./requests/CreateUserRequest.js";
 
 export declare namespace User {
@@ -34,14 +34,14 @@ export class User {
     public createUser(
         request: CreateUserRequest,
         requestOptions?: User.RequestOptions,
-    ): core.HttpResponsePromise<User_SeedExtraProperties> {
+    ): core.HttpResponsePromise<UserType> {
         return core.HttpResponsePromise.fromPromise(this.__createUser(request, requestOptions));
     }
 
     private async __createUser(
         request: CreateUserRequest,
         requestOptions?: User.RequestOptions,
-    ): Promise<core.WithRawResponse<User_SeedExtraProperties>> {
+    ): Promise<core.WithRawResponse<UserType>> {
         const _headers: core.Fetcher.Args["headers"] = mergeHeaders(this._options?.headers, requestOptions?.headers);
         const _response = await core.fetcher({
             url: core.url.join(
@@ -61,7 +61,7 @@ export class User {
             fetchFn: this._options?.fetch,
         });
         if (_response.ok) {
-            return { data: _response.body as User_SeedExtraProperties, rawResponse: _response.rawResponse };
+            return { data: _response.body as UserType, rawResponse: _response.rawResponse };
         }
 
         if (_response.error.reason === "status-code") {

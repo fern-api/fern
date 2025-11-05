@@ -54,12 +54,12 @@ export class ImportsManager {
         moduleSpecifier,
         name,
         isTypeOnly,
-        aliasSuffix
+        aliasPrefix
     }: {
         moduleSpecifier: ModuleSpecifier;
         name: string;
         isTypeOnly?: boolean;
-        aliasSuffix?: string;
+        aliasPrefix?: string;
     }): string {
         const existingImports = this.imports[moduleSpecifier];
         if (existingImports != null) {
@@ -69,7 +69,7 @@ export class ImportsManager {
             }
         }
 
-        const localName = this.getAvailableLocalName(name, aliasSuffix);
+        const localName = this.getAvailableLocalName(name, { isTypeOnly, aliasPrefix });
         const alias = localName !== name ? localName : undefined;
 
         this.addImport(moduleSpecifier, {
@@ -86,26 +86,43 @@ export class ImportsManager {
     }
 
     /**
-     * Get an available local name, adding a suffix if needed to avoid conflicts.
+     * Get an available local name, adding a prefix or suffix if needed to avoid conflicts.
+     * Priority for type-only imports: preferredName > preferredNameType > aliasPrefix_preferredName > fallbacks
+     * Priority for value imports: preferredName > aliasPrefix_preferredName > preferredNameType > fallbacks
      */
-    private getAvailableLocalName(preferredName: string, aliasSuffix?: string): string {
+    private getAvailableLocalName(
+        preferredName: string,
+        options?: { isTypeOnly?: boolean; aliasPrefix?: string }
+    ): string {
+        const { isTypeOnly, aliasPrefix } = options ?? {};
+
         if (!this.reservedIdentifiers.has(preferredName) && !this.allocatedLocalNames.has(preferredName)) {
             this.allocatedLocalNames.add(preferredName);
             return preferredName;
         }
 
-        if (aliasSuffix != null) {
-            const packageVariant = `${preferredName}_${aliasSuffix}`;
-            if (!this.reservedIdentifiers.has(packageVariant) && !this.allocatedLocalNames.has(packageVariant)) {
-                this.allocatedLocalNames.add(packageVariant);
-                return packageVariant;
+        if (isTypeOnly) {
+            const typeVariant = `${preferredName}Type`;
+            if (!this.reservedIdentifiers.has(typeVariant) && !this.allocatedLocalNames.has(typeVariant)) {
+                this.allocatedLocalNames.add(typeVariant);
+                return typeVariant;
             }
         }
 
-        const typeVariant = `${preferredName}Type`;
-        if (!this.reservedIdentifiers.has(typeVariant) && !this.allocatedLocalNames.has(typeVariant)) {
-            this.allocatedLocalNames.add(typeVariant);
-            return typeVariant;
+        if (aliasPrefix != null) {
+            const prefixedVariant = `${aliasPrefix}_${preferredName}`;
+            if (!this.reservedIdentifiers.has(prefixedVariant) && !this.allocatedLocalNames.has(prefixedVariant)) {
+                this.allocatedLocalNames.add(prefixedVariant);
+                return prefixedVariant;
+            }
+        }
+
+        if (!isTypeOnly) {
+            const typeVariant = `${preferredName}Type`;
+            if (!this.reservedIdentifiers.has(typeVariant) && !this.allocatedLocalNames.has(typeVariant)) {
+                this.allocatedLocalNames.add(typeVariant);
+                return typeVariant;
+            }
         }
 
         const underscoreVariant = `${preferredName}_`;

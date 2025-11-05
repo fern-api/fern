@@ -14,7 +14,7 @@ export function getDirectReferenceToExport({
     referencedIn,
     importAlias,
     subImport = [],
-    aliasSuffix
+    aliasPrefix
 }: {
     exportedName: NamedExport;
     exportedFromPath: ExportedFilePath;
@@ -23,7 +23,7 @@ export function getDirectReferenceToExport({
     referencedIn: SourceFile;
     importAlias: string | undefined;
     subImport?: string[];
-    aliasSuffix?: string;
+    aliasPrefix?: string;
 }): Reference {
     const exportedFilePath = exportsManager.convertExportedFilePathToFilePath(exportedFromPath);
     const referencedInPath = referencedIn.getFilePath();
@@ -61,11 +61,12 @@ export function getDirectReferenceToExport({
             });
             localName = importAlias;
         } else {
+            const isTypeOnly = NamedExport.isTypeExport(exportedName);
             localName = importsManager.ensureNamedImport({
                 moduleSpecifier,
                 name: NamedExport.getName(exportedName),
-                isTypeOnly: NamedExport.isTypeExport(exportedName),
-                aliasSuffix
+                isTypeOnly,
+                aliasPrefix: isTypeOnly ? aliasPrefix : undefined
             });
         }
     };

@@ -4,7 +4,7 @@ import type { BaseClientOptions, BaseRequestOptions } from "../../../../BaseClie
 import { mergeHeaders } from "../../../../core/headers.js";
 import * as core from "../../../../core/index.js";
 import * as errors from "../../../../errors/index.js";
-import type { User as User_SeedPathParameters } from "../types/User.js";
+import type { User as UserType } from "../types/User.js";
 import type { GetUsersRequest } from "./requests/GetUsersRequest.js";
 import type { SearchUsersRequest } from "./requests/SearchUsersRequest.js";
 import type { UpdateUserRequest } from "./requests/UpdateUserRequest.js";
@@ -31,17 +31,14 @@ export class User {
      *         user_id: "user_id"
      *     })
      */
-    public getUser(
-        request: GetUsersRequest,
-        requestOptions?: User.RequestOptions,
-    ): core.HttpResponsePromise<User_SeedPathParameters> {
+    public getUser(request: GetUsersRequest, requestOptions?: User.RequestOptions): core.HttpResponsePromise<UserType> {
         return core.HttpResponsePromise.fromPromise(this.__getUser(request, requestOptions));
     }
 
     private async __getUser(
         request: GetUsersRequest,
         requestOptions?: User.RequestOptions,
-    ): Promise<core.WithRawResponse<User_SeedPathParameters>> {
+    ): Promise<core.WithRawResponse<UserType>> {
         const { user_id: userId } = request;
         const _headers: core.Fetcher.Args["headers"] = mergeHeaders(this._options?.headers, requestOptions?.headers);
         const _response = await core.fetcher({
@@ -59,7 +56,7 @@ export class User {
             fetchFn: this._options?.fetch,
         });
         if (_response.ok) {
-            return { data: _response.body as User_SeedPathParameters, rawResponse: _response.rawResponse };
+            return { data: _response.body as UserType, rawResponse: _response.rawResponse };
         }
 
         if (_response.error.reason === "status-code") {
@@ -90,7 +87,7 @@ export class User {
     }
 
     /**
-     * @param {User_SeedPathParameters} request
+     * @param {UserType} request
      * @param {User.RequestOptions} requestOptions - Request-specific configuration.
      *
      * @example
@@ -99,17 +96,14 @@ export class User {
      *         tags: ["tags", "tags"]
      *     })
      */
-    public createUser(
-        request: User_SeedPathParameters,
-        requestOptions?: User.RequestOptions,
-    ): core.HttpResponsePromise<User_SeedPathParameters> {
+    public createUser(request: UserType, requestOptions?: User.RequestOptions): core.HttpResponsePromise<UserType> {
         return core.HttpResponsePromise.fromPromise(this.__createUser(request, requestOptions));
     }
 
     private async __createUser(
-        request: User_SeedPathParameters,
+        request: UserType,
         requestOptions?: User.RequestOptions,
-    ): Promise<core.WithRawResponse<User_SeedPathParameters>> {
+    ): Promise<core.WithRawResponse<UserType>> {
         const _headers: core.Fetcher.Args["headers"] = mergeHeaders(this._options?.headers, requestOptions?.headers);
         const _response = await core.fetcher({
             url: core.url.join(
@@ -129,7 +123,7 @@ export class User {
             fetchFn: this._options?.fetch,
         });
         if (_response.ok) {
-            return { data: _response.body as User_SeedPathParameters, rawResponse: _response.rawResponse };
+            return { data: _response.body as UserType, rawResponse: _response.rawResponse };
         }
 
         if (_response.error.reason === "status-code") {
@@ -175,14 +169,14 @@ export class User {
     public updateUser(
         request: UpdateUserRequest,
         requestOptions?: User.RequestOptions,
-    ): core.HttpResponsePromise<User_SeedPathParameters> {
+    ): core.HttpResponsePromise<UserType> {
         return core.HttpResponsePromise.fromPromise(this.__updateUser(request, requestOptions));
     }
 
     private async __updateUser(
         request: UpdateUserRequest,
         requestOptions?: User.RequestOptions,
-    ): Promise<core.WithRawResponse<User_SeedPathParameters>> {
+    ): Promise<core.WithRawResponse<UserType>> {
         const { user_id: userId, body: _body } = request;
         const _headers: core.Fetcher.Args["headers"] = mergeHeaders(this._options?.headers, requestOptions?.headers);
         const _response = await core.fetcher({
@@ -203,7 +197,7 @@ export class User {
             fetchFn: this._options?.fetch,
         });
         if (_response.ok) {
-            return { data: _response.body as User_SeedPathParameters, rawResponse: _response.rawResponse };
+            return { data: _response.body as UserType, rawResponse: _response.rawResponse };
         }
 
         if (_response.error.reason === "status-code") {
@@ -246,14 +240,14 @@ export class User {
     public searchUsers(
         request: SearchUsersRequest,
         requestOptions?: User.RequestOptions,
-    ): core.HttpResponsePromise<User_SeedPathParameters[]> {
+    ): core.HttpResponsePromise<UserType[]> {
         return core.HttpResponsePromise.fromPromise(this.__searchUsers(request, requestOptions));
     }
 
     private async __searchUsers(
         request: SearchUsersRequest,
         requestOptions?: User.RequestOptions,
-    ): Promise<core.WithRawResponse<User_SeedPathParameters[]>> {
+    ): Promise<core.WithRawResponse<UserType[]>> {
         const { user_id: userId, limit } = request;
         const _queryParams: Record<string, string | string[] | object | object[] | null> = {};
         if (limit != null) {
@@ -276,7 +270,7 @@ export class User {
             fetchFn: this._options?.fetch,
         });
         if (_response.ok) {
-            return { data: _response.body as User_SeedPathParameters[], rawResponse: _response.rawResponse };
+            return { data: _response.body as UserType[], rawResponse: _response.rawResponse };
         }
 
         if (_response.error.reason === "status-code") {

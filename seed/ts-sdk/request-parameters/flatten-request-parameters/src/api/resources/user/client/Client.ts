@@ -6,7 +6,7 @@ import * as core from "../../../../core/index.js";
 import { toJson } from "../../../../core/json.js";
 import * as errors from "../../../../errors/index.js";
 import type { CreateUsernameBodyOptionalProperties } from "../types/CreateUsernameBodyOptionalProperties.js";
-import type { User as User_SeedRequestParameters } from "../types/User.js";
+import type { User as UserType } from "../types/User.js";
 import type { CreateUsernameReferencedRequest } from "./requests/CreateUsernameReferencedRequest.js";
 import type { CreateUsernameRequest } from "./requests/CreateUsernameRequest.js";
 import type { GetUsersRequest } from "./requests/GetUsersRequest.js";
@@ -291,14 +291,14 @@ export class User {
     public getUsername(
         request: GetUsersRequest,
         requestOptions?: User.RequestOptions,
-    ): core.HttpResponsePromise<User_SeedRequestParameters> {
+    ): core.HttpResponsePromise<UserType> {
         return core.HttpResponsePromise.fromPromise(this.__getUsername(request, requestOptions));
     }
 
     private async __getUsername(
         request: GetUsersRequest,
         requestOptions?: User.RequestOptions,
-    ): Promise<core.WithRawResponse<User_SeedRequestParameters>> {
+    ): Promise<core.WithRawResponse<UserType>> {
         const {
             limit,
             id,
@@ -369,7 +369,7 @@ export class User {
             fetchFn: this._options?.fetch,
         });
         if (_response.ok) {
-            return { data: _response.body as User_SeedRequestParameters, rawResponse: _response.rawResponse };
+            return { data: _response.body as UserType, rawResponse: _response.rawResponse };
         }
 
         if (_response.error.reason === "status-code") {
