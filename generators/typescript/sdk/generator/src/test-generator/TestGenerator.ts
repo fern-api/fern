@@ -664,17 +664,25 @@ export function mockAuth(server: MockServer) {
         });
 
         const baseOptions: Record<string, Code> = {};
-        if (this.ir.variables.length > 0) {
-            return; // not supported
-        }
+
+        // Add variables to baseOptions
+        this.ir.variables.forEach((variable) => {
+            const variableName = this.retainOriginalCasing
+                ? variable.name.originalName
+                : variable.name.camelCase.unsafeName;
+            baseOptions[variableName] = code`${literalOf(variableName)}`;
+        });
 
         this.ir.pathParameters.forEach((pathParameter) => {
+            if (pathParameter.variable != null) {
+                return;
+            }
             baseOptions[
                 getParameterNameForRootPathParameter({
                     pathParameter,
                     retainOriginalCasing: this.retainOriginalCasing
                 })
-            ] = code`${literalOf(pathParameter.variable ?? pathParameter.name.camelCase.unsafeName)}`;
+            ] = code`${literalOf(pathParameter.name.camelCase.unsafeName)}`;
         });
         Object.assign(baseOptions, this.getAuthClientOptions(context));
         this.ir.headers.forEach((header) => {
