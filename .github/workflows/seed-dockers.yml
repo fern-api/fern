@@ -36,6 +36,7 @@ jobs:
             docker/seed/Dockerfile.java
             docker/seed/Dockerfile.python
             docker/seed/Dockerfile.csharp
+            docker/seed/Dockerfile.ruby
 
   generate-sha:
     runs-on: ubuntu-latest
