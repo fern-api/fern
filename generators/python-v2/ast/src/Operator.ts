@@ -45,6 +45,26 @@ export class Operator extends AstNode {
                 return "<<";
             case OperatorType.RightShift:
                 return ">>";
+            case OperatorType.Eq:
+                return "==";
+            case OperatorType.NotEq:
+                return "!=";
+            case OperatorType.Lt:
+                return "<";
+            case OperatorType.Gt:
+                return ">";
+            case OperatorType.LtE:
+                return "<=";
+            case OperatorType.GtE:
+                return ">=";
+            case OperatorType.In:
+                return "in";
+            case OperatorType.NotIn:
+                return "not in";
+            case OperatorType.Is:
+                return "is";
+            case OperatorType.IsNot:
+                return "is not";
             default:
                 assertNever(this.operator);
         }

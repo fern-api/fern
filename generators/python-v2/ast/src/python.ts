@@ -1,4 +1,5 @@
 import { AccessAttribute } from "./AccessAttribute";
+import { Assert } from "./Assert";
 import { Assign } from "./Assign";
 import { BaseInvocation } from "./BaseInvocation";
 import { Class } from "./Class";
@@ -7,6 +8,7 @@ import { CodeBlock } from "./CodeBlock";
 import { Comment } from "./Comment";
 import { Decorator } from "./Decorator";
 import { Field } from "./Field";
+import { If } from "./If";
 import { Lambda } from "./Lambda";
 import { LambdaParameter } from "./LambdaParameter";
 import { Method } from "./Method";
@@ -19,6 +21,7 @@ import { Reference } from "./Reference";
 import { StarImport } from "./StarImport";
 
 export { AccessAttribute } from "./AccessAttribute";
+export { Assert } from "./Assert";
 export { Class } from "./Class";
 export { ClassInstantiation } from "./ClassInstantiation";
 export { CodeBlock } from "./CodeBlock";
@@ -26,6 +29,7 @@ export { Comment } from "./Comment";
 export { AstNode } from "./core/AstNode";
 export { Decorator } from "./Decorator";
 export { Field } from "./Field";
+export { If } from "./If";
 export { Lambda } from "./Lambda";
 export { LambdaParameter } from "./LambdaParameter";
 export { Method } from "./Method";
@@ -113,4 +117,12 @@ export function methodArgument(args: MethodArgument.Args): MethodArgument {
 
 export function operator(args: Operator.Args): Operator {
     return new Operator(args);
+}
+
+export function if_(args: If.Args): If {
+    return new If(args);
+}
+
+export function assert_(args: Assert.Args): Assert {
+    return new Assert(args);
 }

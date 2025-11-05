@@ -1446,9 +1446,18 @@ importers:
       '@fern-api/configs':
         specifier: workspace:*
         version: link:../../../packages/configs
+      '@fern-api/fs-utils':
+        specifier: workspace:*
+        version: link:../../../packages/commons/fs-utils
       '@fern-api/logger':
         specifier: workspace:*
         version: link:../../../packages/cli/logger
+      '@fern-api/mock-utils':
+        specifier: workspace:*
+        version: link:../../../packages/commons/mock-utils
+      '@fern-api/python-ast':
+        specifier: workspace:*
+        version: link:../ast
       '@fern-api/python-base':
         specifier: workspace:*
         version: link:../base
