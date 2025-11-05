@@ -45,7 +45,7 @@ export abstract class AbstractDynamicSnippetsGenerator<
                         errors: undefined
                     });
                 }
-                result.update({ context: context as { errors: ErrorReporter }, snippet });
+                result.update({ context: context as unknown as { errors: ErrorReporter }, snippet });
             } catch (error) {
                 if (result.err == null) {
                     result.err = error as Error;
@@ -72,7 +72,7 @@ export abstract class AbstractDynamicSnippetsGenerator<
                         errors: undefined
                     });
                 }
-                result.update({ context: context as { errors: ErrorReporter }, snippet });
+                result.update({ context: context as unknown as { errors: ErrorReporter }, snippet });
             } catch (error) {
                 if (result.err == null) {
                     result.err = error as Error;
