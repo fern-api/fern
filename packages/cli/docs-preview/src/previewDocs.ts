@@ -49,20 +49,31 @@ export async function getPreviewDocsDefinition({
         const allMarkdownFiles = editedAbsoluteFilepaths.every(
             (filepath) => filepath.endsWith(".mdx") || filepath.endsWith(".md")
         );
+        let canEarlyReturn = allMarkdownFiles;
+
         for (const absoluteFilePath of editedAbsoluteFilepaths) {
             const relativePath = relative(docsWorkspace.absoluteFilePath, absoluteFilePath);
-            const markdown = (await readFile(absoluteFilePath)).toString();
+
+            let markdown: string;
+            try {
+                markdown = (await readFile(absoluteFilePath)).toString();
+            } catch {
+                canEarlyReturn = false;
+                continue;
+            }
+
+            const previousValue = previousDocsDefinition.pages[FdrAPI.PageId(relativePath)];
+            if (previousValue == null) {
+                canEarlyReturn = false;
+                continue;
+            }
+
             const processedMarkdown = await replaceReferencedMarkdown({
                 markdown,
                 absolutePathToFernFolder: docsWorkspace.absoluteFilePath,
                 absolutePathToMarkdownFile: absoluteFilePath,
                 context
             });
-
-            const previousValue = previousDocsDefinition.pages[FdrAPI.PageId(relativePath)];
-            if (previousValue == null) {
-                continue;
-            }
 
             const { markdown: markdownWithAbsPaths, filepaths } = parseImagePaths(processedMarkdown, {
                 absolutePathToFernFolder: docsWorkspace.absoluteFilePath,
@@ -117,7 +128,7 @@ export async function getPreviewDocsDefinition({
             };
         }
 
-        if (allMarkdownFiles) {
+        if (canEarlyReturn) {
             return previousDocsDefinition;
         }
     }
