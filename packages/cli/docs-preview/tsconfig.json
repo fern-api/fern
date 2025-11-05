@@ -13,6 +13,9 @@
       "path": "../docs-markdown-utils"
     },
     {
+      "path": "../dynamic-snippets-utils"
+    },
+    {
       "path": "../task-context"
     },
     {

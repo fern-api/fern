@@ -1,0 +1,31 @@
+{
+  "extends": "@fern-api/configs/tsconfig/main.json",
+  "compilerOptions": {
+    "composite": true,
+    "outDir": "lib",
+    "rootDir": "src",
+    "types": ["vitest/globals"],
+    "moduleResolution": "bundler"
+  },
+  "include": ["./src/**/*"],
+  "references": [
+    {
+      "path": "../cli-source-resolver"
+    },
+    {
+      "path": "../configuration"
+    },
+    {
+      "path": "../../commons/core-utils"
+    },
+    {
+      "path": "../generation/ir-generator"
+    },
+    {
+      "path": "../task-context"
+    },
+    {
+      "path": "../workspace/loader"
+    }
+  ]
+}

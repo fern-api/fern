@@ -104,6 +104,9 @@
       "path": "../docs-preview"
     },
     {
+      "path": "../dynamic-snippets-utils"
+    },
+    {
       "path": "../../commons/core-utils"
     },
     {

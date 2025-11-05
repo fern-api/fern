@@ -1,4 +1,5 @@
 import { DocsDefinitionResolver, filterOssWorkspaces } from "@fern-api/docs-resolver";
+import { generateLanguageSpecificDynamicIRs } from "@fern-api/dynamic-snippets-utils";
 import {
     APIV1Read,
     APIV1Write,
@@ -16,15 +17,20 @@ import { IntermediateRepresentation } from "@fern-api/ir-sdk";
 import { Project } from "@fern-api/project-loader";
 import { convertIrToFdrApi } from "@fern-api/register";
 import { TaskContext } from "@fern-api/task-context";
+import { FernWorkspace } from "@fern-api/workspace-loader";
 import { readFile } from "fs/promises";
 import { v4 as uuidv4 } from "uuid";
-
 import {
     parseImagePaths,
     replaceImagePathsAndUrls,
     replaceReferencedCode,
     replaceReferencedMarkdown
 } from "../../docs-markdown-utils/src";
+
+export interface PreviewDocsDefinitionResult {
+    docsDefinition: DocsV1Read.DocsDefinition;
+    dynamicIRsByAPI: Record<string, Record<string, APIV1Write.DynamicIr>>;
+}
 
 export async function getPreviewDocsDefinition({
     domain,
@@ -38,7 +44,7 @@ export async function getPreviewDocsDefinition({
     context: TaskContext;
     previousDocsDefinition?: DocsV1Read.DocsDefinition;
     editedAbsoluteFilepaths?: AbsoluteFilePath[];
-}): Promise<DocsV1Read.DocsDefinition> {
+}): Promise<PreviewDocsDefinitionResult> {
     const docsWorkspace = project.docsWorkspaces;
     const apiWorkspaces = project.apiWorkspaces;
     if (docsWorkspace == null) {
@@ -118,13 +124,17 @@ export async function getPreviewDocsDefinition({
         }
 
         if (allMarkdownFiles) {
-            return previousDocsDefinition;
+            return {
+                docsDefinition: previousDocsDefinition,
+                dynamicIRsByAPI: {}
+            };
         }
     }
 
     const ossWorkspaces = await filterOssWorkspaces(project);
 
-    const apiCollector = new ReferencedAPICollector(context);
+    const useDynamicSnippets = docsWorkspace.config.experimental?.dynamicSnippets;
+    const apiCollector = new ReferencedAPICollector(context, useDynamicSnippets, project.config.organization);
     const apiCollectorV2 = new ReferencedAPICollectorV2(context);
 
     const filesV2: Record<string, DocsV1Read.File_> = {};
@@ -163,14 +173,17 @@ export async function getPreviewDocsDefinition({
     });
 
     return {
-        apis: apiCollector.getAPIsForDefinition(),
-        apisV2: apiCollectorV2.getAPIsForDefinition(),
-        config: readDocsConfig,
-        files: {},
-        filesV2,
-        pages: dbDocsDefinition.pages,
-        jsFiles: dbDocsDefinition.jsFiles,
-        id: undefined
+        docsDefinition: {
+            apis: apiCollector.getAPIsForDefinition(),
+            apisV2: apiCollectorV2.getAPIsForDefinition(),
+            config: readDocsConfig,
+            files: {},
+            filesV2,
+            pages: dbDocsDefinition.pages,
+            jsFiles: dbDocsDefinition.jsFiles,
+            id: undefined
+        },
+        dynamicIRsByAPI: apiCollector.getDynamicIRsByAPI()
     };
 }
 
@@ -178,31 +191,63 @@ type APIDefinitionID = string;
 
 class ReferencedAPICollector {
     private readonly apis: Record<APIDefinitionID, APIV1Read.ApiDefinition> = {};
+    private readonly dynamicIRsByAPI: Record<string, Record<string, APIV1Write.DynamicIr>> = {};
 
-    constructor(private readonly context: TaskContext) {}
+    constructor(
+        private readonly context: TaskContext,
+        private readonly useDynamicSnippets?: boolean,
+        private readonly organization?: string
+    ) {}
 
-    public addReferencedAPI({
+    public async addReferencedAPI({
         ir,
         snippetsConfig,
-        playgroundConfig
+        playgroundConfig,
+        workspace
     }: {
         ir: IntermediateRepresentation;
         snippetsConfig: APIV1Write.SnippetsConfig;
         playgroundConfig?: { oauth?: boolean };
-    }): APIDefinitionID {
+        workspace?: FernWorkspace;
+    }): Promise<APIDefinitionID> {
         try {
             const id = uuidv4();
+
+            let snippetHolder = new SDKSnippetHolder({
+                snippetsConfigWithSdkId: {},
+                snippetsBySdkId: {},
+                snippetTemplatesByEndpoint: {},
+                snippetTemplatesByEndpointId: {},
+                snippetsBySdkIdAndEndpointId: {}
+            });
+
+            if (this.useDynamicSnippets && workspace && this.organization) {
+                try {
+                    const dynamicIRsByLanguage = await generateLanguageSpecificDynamicIRs({
+                        workspace,
+                        organization: this.organization,
+                        context: this.context,
+                        snippetsConfig
+                    });
+
+                    if (dynamicIRsByLanguage) {
+                        this.context.logger.debug(
+                            `Generated dynamic IRs for ${Object.keys(dynamicIRsByLanguage).length} languages`
+                        );
+                        const workspaceName = workspace.workspaceName ?? "default";
+                        this.dynamicIRsByAPI[workspaceName] = dynamicIRsByLanguage;
+                    }
+                } catch (error) {
+                    this.context.logger.debug(
+                        `Failed to generate dynamic IRs: ${error instanceof Error ? error.message : String(error)}`
+                    );
+                }
+            }
 
             const dbApiDefinition = convertAPIDefinitionToDb(
                 convertIrToFdrApi({ ir, snippetsConfig, playgroundConfig, context: this.context }),
                 FdrAPI.ApiDefinitionId(id),
-                new SDKSnippetHolder({
-                    snippetsConfigWithSdkId: {},
-                    snippetsBySdkId: {},
-                    snippetTemplatesByEndpoint: {},
-                    snippetTemplatesByEndpointId: {},
-                    snippetsBySdkIdAndEndpointId: {}
-                })
+                snippetHolder
             );
 
             const readApiDefinition = convertDbAPIDefinitionToRead(dbApiDefinition);
@@ -225,6 +270,10 @@ class ReferencedAPICollector {
 
     public getAPIsForDefinition(): Record<FdrAPI.ApiDefinitionId, APIV1Read.ApiDefinition> {
         return this.apis;
+    }
+
+    public getDynamicIRsByAPI(): Record<string, Record<string, FdrAPI.api.v1.register.DynamicIr>> {
+        return this.dynamicIRsByAPI;
     }
 }
 

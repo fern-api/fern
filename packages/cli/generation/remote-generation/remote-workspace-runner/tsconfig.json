@@ -16,6 +16,9 @@
       "path": "../../../workspace/loader"
     },
     {
+      "path": "../../../dynamic-snippets-utils"
+    },
+    {
       "path": "../../../task-context"
     },
     {
