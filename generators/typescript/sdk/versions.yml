@@ -1,4 +1,12 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 3.28.1
+  changelogEntry:
+    - summary: |
+        Use vitest.config.mts for CommonJS packages to ensure Vitest v3 can load the config as ESM.
+      type: fix
+  createdAt: "2025-11-05"
+  irVersion: 61
+
 - version: 3.28.0
   changelogEntry:
     - summary: |
