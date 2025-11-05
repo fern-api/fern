@@ -44,7 +44,7 @@ export class WireTestDataExtractor {
 
     private extractTestExample(example: ExampleEndpointCall, endpoint: HttpEndpoint): WireTestExample | undefined {
         const requestBody = this.extractRequestBody(example.request, endpoint);
-        
+
         return {
             id: example.id || `${endpoint.id}-example`,
             name: example.name?.originalName,
@@ -109,21 +109,21 @@ export class WireTestDataExtractor {
 
         if (requestBody.type === "reference") {
             const typeReference = requestBody.requestBodyType;
-            
+
             if (typeReference.type === "named") {
                 const typeId = typeReference.typeId;
                 const typeDecl = this.context.ir.types[typeId];
-                
+
                 if (typeDecl && typeDecl.shape.type === "union") {
                     return this.pruneBasePropertiesFromUnion(body, typeDecl);
                 }
             } else if (typeReference.type === "container" && typeReference.container.type === "list") {
                 const listItemType = typeReference.container.list;
-                
+
                 if (listItemType.type === "named") {
                     const typeId = listItemType.typeId;
                     const typeDecl = this.context.ir.types[typeId];
-                    
+
                     if (typeDecl && typeDecl.shape.type === "union") {
                         return this.pruneBasePropertiesFromUnion(body, typeDecl);
                     }
