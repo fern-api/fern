@@ -235,9 +235,9 @@ jobs:
       - name: Determine Parallelization
         id: determine-parallelization
         run: |
-          # Note: these times are the total time of generation and compilation for all seed tests. This is not a 
-          # measurement of throughput because it does not account of concurrency or parallelization. This is not 
-          # a perfect representation, but it gets the job done. 3800 seconds was chosen as it is approximately 
+          # Note: these times are the total time of generation and compilation for all seed tests. This is not a
+          # measurement of throughput because it does not account of concurrency or parallelization. This is not
+          # a perfect representation, but it gets the job done. 3800 seconds was chosen as it is approximately
           # 8 minutes when running with 16 concurrent tests as is our default setting in CI.
           CUTOFF_TIME_FOR_PARALLELIZATION_SECONDS=3800
           TOTAL_TEST_TIME_SECONDS=$(jq '.totalTestTimeSeconds' .github/workflow-resource-files/seed-groups/${{ matrix.sdk-name }}-seed-groups.json)

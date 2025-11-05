@@ -1,6 +1,6 @@
 *
 !pyproject.toml
-!poetry.lock
+!uv.lock
 !./core_utilities/pydantic
 !./core_utilities/shared
 !./src

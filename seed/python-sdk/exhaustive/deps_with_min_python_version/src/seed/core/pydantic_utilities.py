@@ -81,7 +81,7 @@ class UniversalBaseModel(pydantic.BaseModel):
         dealiased_object = convert_and_respect_annotation_metadata(object_=values, annotation=cls, direction="read")
         if IS_PYDANTIC_V2:
             return super().model_construct(_fields_set, **dealiased_object)  # type: ignore[misc]
-        return super().construct(_fields_set, **dealiased_object)
+        return super().construct(_fields_set, **dealiased_object)  # type: ignore[misc]
 
     def json(self, **kwargs: Any) -> str:
         kwargs_with_defaults = {
@@ -91,7 +91,7 @@ class UniversalBaseModel(pydantic.BaseModel):
         }
         if IS_PYDANTIC_V2:
             return super().model_dump_json(**kwargs_with_defaults)  # type: ignore[misc]
-        return super().json(**kwargs_with_defaults)
+        return super().json(**kwargs_with_defaults)  # type: ignore[misc]
 
     def dict(self, **kwargs: Any) -> Dict[str, Any]:
         """

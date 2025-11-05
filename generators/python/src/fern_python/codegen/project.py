@@ -49,6 +49,7 @@ class Project:
         exclude_types_from_init_exports: Optional[bool] = False,
         lazy_imports: bool = True,
         recursion_limit: Optional[int] = None,
+        pydantic_version: Optional[str] = None,
     ) -> None:
         relative_path_to_project = relative_path_to_project.replace(".", "/")
         if flat_layout:
@@ -75,6 +76,7 @@ class Project:
         self._extras: typing.Dict[str, List[str]] = {}
         self._user_defined_toml = user_defined_toml
         self._exclude_types_from_init_exports = exclude_types_from_init_exports
+        self._pydantic_version = pydantic_version
 
     def add_init_exports(self, path: AST.ModulePath, exports: List[ModuleExport]) -> None:
         self._module_manager.register_additional_exports(path, exports)
@@ -190,6 +192,7 @@ class Project:
                 license_=self.license_,
                 extras=self._extras,
                 user_defined_toml=self._user_defined_toml,
+                pydantic_version=self._pydantic_version,
             )
             py_project_toml.write()
 

@@ -80,6 +80,12 @@ class AbstractGenerator(ABC):
         if generator_config.custom_config is not None and "recursion_limit" in generator_config.custom_config:
             recursion_limit = generator_config.custom_config.get("recursion_limit")
 
+        pydantic_version = None
+        if generator_config.custom_config is not None and "pydantic_config" in generator_config.custom_config:
+            pydantic_config = generator_config.custom_config.get("pydantic_config")
+            if isinstance(pydantic_config, dict) and "version" in pydantic_config:
+                pydantic_version = pydantic_config.get("version")
+
         with Project(
             filepath=generator_config.output.path,
             relative_path_to_project=os.path.join(
@@ -102,6 +108,7 @@ class AbstractGenerator(ABC):
             exclude_types_from_init_exports=exclude_types_from_init_exports,
             lazy_imports=self.should_use_lazy_imports(generator_config=generator_config),
             recursion_limit=recursion_limit,
+            pydantic_version=pydantic_version,
         ) as project:
             self.run(
                 generator_exec_wrapper=generator_exec_wrapper,
@@ -142,15 +149,13 @@ class AbstractGenerator(ABC):
 
         if output_mode_union.type == "downloadFiles":
             # since download files does not contain a pyproject.toml
-            # we run ruff using the fern_python poetry.toml (copied into the docker)
+            # we run ruff using the fern_python pyproject.toml (copied into the docker)
             publisher.run_ruff_check_fix("/fern/output", cwd="/")
             publisher.run_ruff_format("/fern/output", cwd="/")
         elif output_mode_union.type == "github":
-            publisher.run_poetry_install()
             publisher.run_ruff_check_fix()
             publisher.run_ruff_format()
         elif output_mode_union.type == "publish":
-            publisher.run_poetry_install()
             publisher.run_ruff_check_fix()
             publisher.run_ruff_format()
             publisher.publish_package(publish_config=output_mode_union)
@@ -228,7 +233,7 @@ class AbstractGenerator(ABC):
                 .ruff_cache/
                 __pycache__/
                 dist/
-                poetry.toml
+                .venv/
                 """
             ),
         )
@@ -291,12 +296,11 @@ jobs:
       - name: Set up python
         uses: actions/setup-python@v4
         with:
-        run: |
-          curl -sSL https://install.python-poetry.org | python - -y --version 1.5.1
-      - name: Install dependencies
-        run: poetry install
+          python-version: 3.8
+      - name: Install uv
+        run: pip install uv==0.8.23
       - name: Compile
-        run: poetry run mypy .
+        run: uv run --frozen mypy .
   test:
     runs-on: ubuntu-latest
     steps:
@@ -306,23 +310,20 @@ jobs:
         uses: actions/setup-python@v4
         with:
           python-version: 3.8
-      - name: Bootstrap poetry
-        run: |
-          curl -sSL https://install.python-poetry.org | python - -y --version 1.5.1
-      - name: Install dependencies
-        run: poetry install
+      - name: Install uv
+        run: pip install uv==0.8.23
 """
         if write_unit_tests:
             workflow_yaml += """
       - name: Install Fern
         run: npm install -g fern-api
       - name: Test
-        run: fern test --command "poetry run pytest -rP ."
+        run: fern test --command "uv run --frozen pytest -rP ."
 """
         else:
             workflow_yaml += """
       - name: Test
-        run: poetry run pytest -rP .
+        run: uv run --frozen pytest -rP .
 """
         if output_mode.publish_info is not None:
             publish_info_union = output_mode.publish_info.get_as_union()
@@ -345,15 +346,12 @@ jobs:
         uses: actions/setup-python@v4
         with:
           python-version: 3.8
-      - name: Bootstrap poetry
-        run: |
-          curl -sSL https://install.python-poetry.org | python - -y --version 1.5.1
-      - name: Install dependencies
-        run: poetry install
+      - name: Install uv
+        run: pip install uv==0.8.23
       - name: Publish to pypi
         run: |
-          poetry config repositories.{AbstractGenerator._REMOTE_PYPI_REPO_NAME} {publish_info_union.registry_url}
-          poetry --no-interaction -v publish --build --repository {AbstractGenerator._REMOTE_PYPI_REPO_NAME} --username "${publish_info_union.username_environment_variable}" --password "${publish_info_union.password_environment_variable}"
+          uv build
+          uv publish --publish-url {publish_info_union.registry_url} --username "${publish_info_union.username_environment_variable}" --password "${publish_info_union.password_environment_variable}"
         env:
           {publish_info_union.username_environment_variable}: ${{{{ secrets.{publish_info_union.username_environment_variable} }}}}
           {publish_info_union.password_environment_variable}: ${{{{ secrets.{publish_info_union.password_environment_variable} }}}}
@@ -375,13 +373,10 @@ jobs:
         uses: actions/setup-python@v4
         with:
           python-version: 3.8
-      - name: Bootstrap poetry
-        run: |
-          curl -sSL https://install.python-poetry.org | python - -y --version 1.5.1
-      - name: Install dependencies
-        run: poetry install
+      - name: Install uv
+        run: pip install uv==0.8.23
       - name: Compile
-        run: poetry run mypy .
+        run: uv run --frozen mypy .
   test:
     runs-on: ubuntu-latest
     steps:
@@ -391,23 +386,20 @@ jobs:
         uses: actions/setup-python@v4
         with:
           python-version: 3.8
-      - name: Bootstrap poetry
-        run: |
-          curl -sSL https://install.python-poetry.org | python - -y --version 1.5.1
-      - name: Install dependencies
-        run: poetry install
+      - name: Install uv
+        run: pip install uv==0.8.23
 """
         if write_unit_tests:
             workflow_yaml += """
       - name: Install Fern
         run: npm install -g fern-api
       - name: Test
-        run: fern test --command "poetry run pytest -rP ."
+        run: fern test --command "uv run --frozen pytest -rP ."
 """
         else:
             workflow_yaml += """
       - name: Test
-        run: poetry run pytest -rP .
+        run: uv run --frozen pytest -rP .
 """
         if output_mode.publish_info is not None:
             publish_info_union = output_mode.publish_info.get_as_union()
@@ -429,13 +421,10 @@ jobs:
         uses: actions/setup-python@v4
         with:
           python-version: 3.8
-      - name: Bootstrap poetry
-        run: |
-          curl -sSL https://install.python-poetry.org | python - -y --version 1.5.1
-      - name: Install dependencies
-        run: poetry install
+      - name: Install uv
+        run: pip install uv==0.8.23
       - name: Build package
-        run: poetry build
+        run: uv build
       - name: Store the distribution packages
         uses: actions/upload-artifact@v4
         with:

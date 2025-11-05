@@ -1,35 +1,32 @@
-[tool.poetry]
+[project]
 name = "fern_python"
 version = "0.0.0"
 description = ""
 authors = []
+requires-python = ">=3.9,<4.0"
+dependencies = [
+    "black>=25.1.0,<26.0.0",
+    "fern-fern-fdr-sdk>=0.98.20,<0.99.0",
+    "fern-fern-generator-cli-sdk>=0.1.1,<0.2.0",
+    "fern-fern-generator-exec-sdk>=0.82.5,<0.83.0",
+    "fern-fern-ir-v60==60.3.1",
+    "isort>=6.0.1,<7.0.0",
+    "ordered-set>=4.1.0,<5.0.0",
+    "pydantic>=2.11.9,<3.0.0",
+    "pyyaml>=6.0.3",
+    "typer[all]>=0.6.1,<0.7.0",
+]
 
-[tool.poetry.dependencies]
-python = "^3.9"
-pydantic = "^2.8.2"
-typer = { extras = ["all"], version = "^0.6.1" }
-fern-fern-generator-exec-sdk = { version = "^0.82.5", source = "fern-prod" }
-ordered-set = "^4.1.0"
-pydantic-core = "^2.18.2"
-fern-fern-fdr-sdk = { version = "^0.98.20", source = "fern-prod" }
-fern-fern-generator-cli-sdk = { version = "^0.1.1", source = "fern-prod" }
-fern_fern_ir_v60 = "60.3.1"
-black = "^25.1.0"
-isort = "^6.0.1"
+[tool.uv.sources]
+fern-fern-generator-exec-sdk = { index = "fern-prod" }
+fern-fern-fdr-sdk = { index = "fern-prod" }
+fern-fern-generator-cli-sdk = { index = "fern-prod" }
+fern-fern-ir-v60 = { index = "fern-prod" }
 
-[tool.poetry.group.dev.dependencies]
-mypy = "==1.13.0"
-pre-commit = "^2.20.0"
-pytest = "^7.4.2"
-pytest-only = "^2.0.0"
-ruff = "==0.11.5"
-snapshottest = "^0.6.0"
-setuptools = "^80.9.0"
-
-[[tool.poetry.source]]
+[[tool.uv.index]]
 name = "fern-prod"
 url = "https://pypi.buildwithfern.com/"
-priority = "supplemental"
+explicit = true
 
 [tool.pytest.ini_options]
 testpaths = ["tests"]
@@ -37,7 +34,7 @@ addopts = "--ignore-glob=tests/**/generated --ignore-glob=tests/**/snapshots"
 
 [tool.ruff]
 line-length = 120
-target-version = "py38"
+target-version = "py39"
 include = ["*.py", "*.pyi"]
 
 [tool.ruff.lint]
@@ -62,5 +59,16 @@ ignore = [
 section-order = ["future", "standard-library", "third-party", "first-party"]
 
 [build-system]
-requires = ["poetry-core>=1.0.0"]
-build-backend = "poetry.core.masonry.api"
+requires = ["uv-build>=0.8.23,<0.9.0"]
+build-backend = "uv_build"
+
+[dependency-groups]
+dev = [
+    "mypy==1.13.0",
+    "pre-commit>=2.20.0,<3.0.0",
+    "pytest>=7.4.2,<8.0.0",
+    "pytest-only>=2.0.0,<3.0.0",
+    "ruff==0.11.5",
+    "setuptools>=80.9.0,<81.0.0",
+    "syrupy>=4.9.1",
+]
