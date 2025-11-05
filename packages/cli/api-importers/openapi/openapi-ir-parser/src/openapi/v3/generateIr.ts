@@ -9,7 +9,6 @@ import {
     ObjectPropertyWithExample,
     ObjectSchema,
     OpenApiIntermediateRepresentation,
-    ResponseWithExample,
     Schema,
     SchemaId,
     SchemaWithExample,
@@ -278,14 +277,10 @@ export function generateIr({
                     : request,
             response:
                 response?.type === "json"
-                    ? ResponseWithExample.json({
-                          schema: response.schema,
-                          responseProperty: response.responseProperty,
-                          fullExamples: response.fullExamples,
-                          description: response.description,
-                          source: response.source,
-                          statusCode: response.statusCode
-                      })
+                    ? {
+                          ...response,
+                          schema: convertSchemaWithExampleToSchema(response.schema)
+                      }
                     : response,
             queryParameters: endpointWithExample.queryParameters.map((queryParameter) => {
                 return {
