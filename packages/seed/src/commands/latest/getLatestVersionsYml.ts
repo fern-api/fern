@@ -2,6 +2,7 @@ import { AbsoluteFilePath, doesPathExist } from "@fern-api/fs-utils";
 import { TaskContext } from "@fern-api/task-context";
 import { readFile } from "fs/promises";
 import yaml from "js-yaml";
+import semver from "semver";
 
 export interface LatestVersionResult {
     version: string;
@@ -32,16 +33,28 @@ export async function getLatestVersionsYml({
         return undefined;
     }
 
-    const currentVersion = currentYaml[0]?.version;
-    if (!currentVersion) {
-        context.failWithoutThrowing("No version found in changelog");
+    // Collect all versions from current file
+    const currentVersions = new Set<string>();
+    for (const entry of currentYaml) {
+        if (entry?.version) {
+            currentVersions.add(entry.version);
+        }
+    }
+
+    if (currentVersions.size === 0) {
+        context.failWithoutThrowing("No versions found in changelog");
         return undefined;
     }
 
-    // If no previous file provided, return current version with hasNewVersion=true
+    // If no previous file provided, return the highest semver version
     if (previousAbsolutePathToChangelog == null) {
+        const latestVersion = getHighestSemverVersion(Array.from(currentVersions));
+        if (latestVersion == null) {
+            context.failWithoutThrowing("No valid semver versions found in changelog");
+            return undefined;
+        }
         return {
-            version: currentVersion,
+            version: latestVersion,
             hasNewVersion: true
         };
     }
@@ -61,17 +74,55 @@ export async function getLatestVersionsYml({
         return undefined;
     }
 
-    const previousVersion = previousYaml[0]?.version;
-    if (!previousVersion) {
-        context.failWithoutThrowing("No version found in previous changelog");
+    // Collect all versions from previous file
+    const previousVersions = new Set<string>();
+    for (const entry of previousYaml) {
+        if (entry?.version) {
+            previousVersions.add(entry.version);
+        }
+    }
+
+    // Get versions not in the previous version file
+    const newVersions = Array.from(currentVersions).filter((version) => !previousVersions.has(version));
+
+    // If no new versions, return the highest version from current file
+    if (newVersions.length === 0) {
+        const latestVersion = getHighestSemverVersion(Array.from(currentVersions));
+        if (latestVersion == null) {
+            context.failWithoutThrowing("No valid semver versions found in changelog");
+            return undefined;
+        }
+        return {
+            version: latestVersion,
+            hasNewVersion: false
+        };
+    }
+
+    // Sort the new versions by semantic version and return the largest
+    const latestNewVersion = getHighestSemverVersion(newVersions);
+    if (latestNewVersion == null) {
+        context.failWithoutThrowing("No valid semver versions found in new versions");
         return undefined;
     }
 
-    // Compare versions
-    const hasNewVersion = currentVersion !== previousVersion;
-
     return {
-        version: currentVersion,
-        hasNewVersion
+        version: latestNewVersion,
+        hasNewVersion: true
     };
+}
+
+/**
+ * Returns the highest semantic version from an array of version strings.
+ * Returns undefined if no valid semver versions are found.
+ */
+function getHighestSemverVersion(versions: string[]): string | undefined {
+    return (
+        versions
+            .map((ver) => semver.parse(ver))
+            .filter((ver): ver is semver.SemVer => ver != null)
+            // Compare semantic versions to get the largest version
+            // We negate the number to get the largest version first
+            .sort((a, b) => -a.compare(b))[0]
+            ?.toString()
+    );
 }
