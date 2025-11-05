@@ -1,34 +1,17 @@
 import { AbsoluteFilePath, doesPathExist } from "@fern-api/fs-utils";
 import { TaskContext } from "@fern-api/task-context";
-import Ajv, { type ValidateFunction } from "ajv";
+import Ajv from "ajv";
 import addFormats from "ajv-formats";
 import chalk from "chalk";
 import { readFile } from "fs/promises";
 import yaml from "js-yaml";
 import path from "path";
-import { validateAngleBracketEscaping } from "./angleBracketValidator";
+import { type ChangelogEntry, validateAngleBracketEscaping } from "./angleBracketValidator";
 import { assertValidSemVerChangeOrThrow, assertValidSemVerOrThrow } from "./semVerUtils";
 
-// Note: If no JSON Schema is found in the file header, validation will fail.
 export interface ValidateVersionsYmlOptions {
     absolutePathToChangelog: AbsoluteFilePath;
     context: TaskContext;
-}
-
-interface ChangelogEntry {
-    summary: string;
-    type: string;
-    fixed?: string[];
-    added?: string[];
-    changed?: string[];
-    removed?: string[];
-}
-
-interface VersionEntry {
-    version: string;
-    changelogEntry: ChangelogEntry[];
-    createdAt?: string;
-    [key: string]: unknown;
 }
 
 /**
@@ -122,7 +105,7 @@ export async function validateVersionsYml({
     });
     addFormats(ajv);
 
-    const jsonSchemaValidator = ajv.compile<VersionEntry[]>(jsonSchema);
+    const jsonSchemaValidator = ajv.compile<ChangelogEntry[]>(jsonSchema);
     context.logger.debug(chalk.green("JSON Schema loaded and compiled successfully"));
 
     // Parse YAML content
@@ -155,15 +138,19 @@ export async function validateVersionsYml({
     }
 
     context.logger.debug(chalk.green("JSON Schema validation passed"));
-    // After successful validation, parsedYaml is guaranteed to be VersionEntry[]
-    const typedChangelogs = parsedYaml as VersionEntry[];
+    // After successful validation, parsedYaml is guaranteed to be ChangelogEntry[]
+    const typedChangelogs = parsedYaml as ChangelogEntry[];
 
     let hasErrors = false;
 
     // Validate each entry
     for (const entry of typedChangelogs) {
-        // No need to check version field - schema validation already ensured it exists
-        // But we still validate it for clarity
+        // Schema validation should have ensured version exists
+        if (!entry.version) {
+            hasErrors = true;
+            context.logger.error("Entry missing version field");
+            continue;
+        }
 
         // Validate angle bracket escaping
         const angleBracketErrors = validateAngleBracketEscaping(entry);
