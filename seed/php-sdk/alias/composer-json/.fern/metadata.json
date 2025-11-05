@@ -1,0 +1,35 @@
+{
+  "cliVersion": "DUMMY",
+  "generatorName": "fernapi/fern-php-sdk",
+  "generatorVersion": "latest",
+  "generatorConfig": {
+    "composerJson": {
+      "name": "fern/empty",
+      "version": "1.0.0",
+      "description": "My Empty PHP Library",
+      "keywords": [
+        "empty"
+      ],
+      "license": [
+        "LGPL-2.1-only",
+        "GPL-3.0-or-later"
+      ],
+      "require": {
+        "guzzlehttp/guzzle": "7.9.2",
+        "guzzlehttp/promises": "2.0.4"
+      },
+      "require-dev": {
+        "phpunit/phpunit": "12.0.2",
+        "phpunit/php-timer": "8.0.0"
+      },
+      "scripts": {
+        "build": [
+          "@php -l src",
+          "@php -l tests"
+        ],
+        "analyze": "echo skip",
+        "hello": "echo hello"
+      }
+    }
+  }
+}

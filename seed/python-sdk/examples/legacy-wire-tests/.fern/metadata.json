@@ -1,0 +1,9 @@
+{
+  "cliVersion": "DUMMY",
+  "generatorName": "fernapi/fern-python-sdk",
+  "generatorVersion": "latest",
+  "generatorConfig": {
+    "include_legacy_wire_tests": true,
+    "use_inheritance_for_extended_models": false
+  }
+}
