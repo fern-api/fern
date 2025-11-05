@@ -1,5 +1,5 @@
 import { wrapWithHttps } from "@fern-api/docs-resolver";
-import { DocsV1Read, DocsV2Read, FernNavigation } from "@fern-api/fdr-sdk";
+import { APIV1Write, DocsV1Read, DocsV2Read, FernNavigation } from "@fern-api/fdr-sdk";
 import { AbsoluteFilePath, dirname, doesPathExist, listFiles, RelativeFilePath, resolve } from "@fern-api/fs-utils";
 import { runExeca } from "@fern-api/logging-execa";
 import { Project } from "@fern-api/project-loader";
@@ -525,6 +525,7 @@ export async function runAppPreviewServer({
 
     let project = initialProject;
     let docsDefinition: DocsV1Read.DocsDefinition | undefined;
+    let dynamicIRsByAPI: Record<string, Record<string, APIV1Write.DynamicIr>> = {};
 
     // Initialize the snippet dependency tracker
     const snippetTracker = new SnippetDependencyTracker(context);
@@ -546,7 +547,7 @@ export async function runAppPreviewServer({
             context.logger.info("Validating docs...");
             await validateProject(project);
 
-            const newDocsDefinition = await getPreviewDocsDefinition({
+            const result = await getPreviewDocsDefinition({
                 domain: `${instance.host}${instance.pathname}`,
                 project,
                 context,
@@ -554,7 +555,7 @@ export async function runAppPreviewServer({
                 editedAbsoluteFilepaths
             });
             context.logger.info(`Reload completed in ${Date.now() - startTime}ms`);
-            return newDocsDefinition;
+            return result;
         } catch (err) {
             if (docsDefinition == null) {
                 context.logger.error("Failed to read docs configuration. Rendering blank page.");
@@ -567,11 +568,13 @@ export async function runAppPreviewServer({
                     context.logger.debug(`Stack Trace:\n${err.stack}`);
                 }
             }
-            return docsDefinition;
+            return { docsDefinition, dynamicIRsByAPI: {} };
         }
     };
 
-    docsDefinition = await reloadDocsDefinition();
+    const initialResult = await reloadDocsDefinition();
+    docsDefinition = initialResult.docsDefinition;
+    dynamicIRsByAPI = initialResult.dynamicIRsByAPI;
 
     const additionalFilepaths = project.apiWorkspaces.flatMap((workspace) => workspace.getAbsoluteFilePaths());
 
@@ -617,9 +620,10 @@ export async function runAppPreviewServer({
                     type: "startReload"
                 });
 
-                const reloadedDocsDefinition = await reloadDocsDefinition(filesToReload);
-                if (reloadedDocsDefinition != null) {
-                    docsDefinition = reloadedDocsDefinition;
+                const reloadedResult = await reloadDocsDefinition(filesToReload);
+                if (reloadedResult != null) {
+                    docsDefinition = reloadedResult.docsDefinition;
+                    dynamicIRsByAPI = reloadedResult.dynamicIRsByAPI;
                 }
 
                 editedAbsoluteFilepaths.length = 0;
@@ -652,6 +656,31 @@ export async function runAppPreviewServer({
             context.logger.error("Stack trace:", (error as Error).stack ?? "");
             context.logger.error("Error loading docs", (error as Error).message);
             res.status(500).send();
+        }
+    });
+
+    app.get("/dynamic-ir/:orgId/:apiName/:language", (req, res) => {
+        try {
+            const { orgId, apiName, language } = req.params;
+            context.logger.debug(`Fetching dynamic IR for ${orgId}:${apiName}:${language}`);
+
+            const apiDynamicIRs = dynamicIRsByAPI[apiName];
+            if (!apiDynamicIRs) {
+                context.logger.debug(`No dynamic IRs found for API: ${apiName}`);
+                return res.status(404).send({ error: `API not found: ${apiName}` });
+            }
+
+            const dynamicIR = apiDynamicIRs[language];
+            if (!dynamicIR) {
+                context.logger.debug(`No dynamic IR found for language: ${language}`);
+                return res.status(404).send({ error: `Language not found: ${language}` });
+            }
+
+            context.logger.debug(`Successfully serving dynamic IR for ${orgId}:${apiName}:${language}`);
+            return res.json(dynamicIR);
+        } catch (error) {
+            context.logger.error("Error serving dynamic IR:", (error as Error).message);
+            return res.status(500).send({ error: "Internal server error" });
         }
     });
 

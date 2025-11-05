@@ -27,6 +27,11 @@ import {
     replaceReferencedMarkdown
 } from "../../docs-markdown-utils/src";
 
+export interface PreviewDocsDefinitionResult {
+    docsDefinition: DocsV1Read.DocsDefinition;
+    dynamicIRsByAPI: Record<string, Record<string, APIV1Write.DynamicIr>>;
+}
+
 export async function getPreviewDocsDefinition({
     domain,
     project,
@@ -39,7 +44,7 @@ export async function getPreviewDocsDefinition({
     context: TaskContext;
     previousDocsDefinition?: DocsV1Read.DocsDefinition;
     editedAbsoluteFilepaths?: AbsoluteFilePath[];
-}): Promise<DocsV1Read.DocsDefinition> {
+}): Promise<PreviewDocsDefinitionResult> {
     const docsWorkspace = project.docsWorkspaces;
     const apiWorkspaces = project.apiWorkspaces;
     if (docsWorkspace == null) {
@@ -119,7 +124,10 @@ export async function getPreviewDocsDefinition({
         }
 
         if (allMarkdownFiles) {
-            return previousDocsDefinition;
+            return {
+                docsDefinition: previousDocsDefinition,
+                dynamicIRsByAPI: {}
+            };
         }
     }
 
@@ -165,14 +173,17 @@ export async function getPreviewDocsDefinition({
     });
 
     return {
-        apis: apiCollector.getAPIsForDefinition(),
-        apisV2: apiCollectorV2.getAPIsForDefinition(),
-        config: readDocsConfig,
-        files: {},
-        filesV2,
-        pages: dbDocsDefinition.pages,
-        jsFiles: dbDocsDefinition.jsFiles,
-        id: undefined
+        docsDefinition: {
+            apis: apiCollector.getAPIsForDefinition(),
+            apisV2: apiCollectorV2.getAPIsForDefinition(),
+            config: readDocsConfig,
+            files: {},
+            filesV2,
+            pages: dbDocsDefinition.pages,
+            jsFiles: dbDocsDefinition.jsFiles,
+            id: undefined
+        },
+        dynamicIRsByAPI: apiCollector.getDynamicIRsByAPI()
     };
 }
 
@@ -180,6 +191,7 @@ type APIDefinitionID = string;
 
 class ReferencedAPICollector {
     private readonly apis: Record<APIDefinitionID, APIV1Read.ApiDefinition> = {};
+    private readonly dynamicIRsByAPI: Record<string, Record<string, APIV1Write.DynamicIr>> = {};
 
     constructor(
         private readonly context: TaskContext,
@@ -222,6 +234,7 @@ class ReferencedAPICollector {
                         this.context.logger.debug(
                             `Generated dynamic IRs for ${Object.keys(dynamicIRsByLanguage).length} languages`
                         );
+                        this.dynamicIRsByAPI[workspace.name] = dynamicIRsByLanguage;
                     }
                 } catch (error) {
                     this.context.logger.debug(
@@ -256,6 +269,10 @@ class ReferencedAPICollector {
 
     public getAPIsForDefinition(): Record<FdrAPI.ApiDefinitionId, APIV1Read.ApiDefinition> {
         return this.apis;
+    }
+
+    public getDynamicIRsByAPI(): Record<string, Record<string, FdrAPI.api.v1.register.DynamicIr>> {
+        return this.dynamicIRsByAPI;
     }
 }
 

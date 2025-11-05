@@ -132,7 +132,7 @@ export async function runPreviewServer({
             project = await reloadProject();
             context.logger.info("Validating docs...");
             await validateProject(project);
-            const newDocsDefinition = await getPreviewDocsDefinition({
+            const result = await getPreviewDocsDefinition({
                 domain: `${instance.host}${instance.pathname}`,
                 project,
                 context,
@@ -140,7 +140,7 @@ export async function runPreviewServer({
                 editedAbsoluteFilepaths
             });
             context.logger.info(`Reload completed in ${Date.now() - startTime}ms`);
-            return newDocsDefinition;
+            return result;
         } catch (err) {
             if (docsDefinition == null) {
                 context.logger.error("Failed to read docs configuration. Rendering blank page.");
@@ -153,12 +153,13 @@ export async function runPreviewServer({
                     context.logger.debug(`Stack Trace:\n${err.stack}`);
                 }
             }
-            return docsDefinition;
+            return { docsDefinition, dynamicIRsByAPI: {} };
         }
     };
 
     // initialize docs definition
-    docsDefinition = await reloadDocsDefinition();
+    const initialResult = await reloadDocsDefinition();
+    docsDefinition = initialResult.docsDefinition;
 
     const additionalFilepaths = project.apiWorkspaces.flatMap((workspace) => workspace.getAbsoluteFilePaths());
     const bundleRoot = bundlePath ? AbsoluteFilePath.of(path.resolve(bundlePath)) : getPathToBundleFolder({});
@@ -197,9 +198,9 @@ export async function runPreviewServer({
                     type: "startReload"
                 });
 
-                const reloadedDocsDefinition = await reloadDocsDefinition(editedAbsoluteFilepaths);
-                if (reloadedDocsDefinition != null) {
-                    docsDefinition = reloadedDocsDefinition;
+                const reloadedResult = await reloadDocsDefinition(editedAbsoluteFilepaths);
+                if (reloadedResult != null) {
+                    docsDefinition = reloadedResult.docsDefinition;
                 }
 
                 editedAbsoluteFilepaths.length = 0;
