@@ -1,187 +1,278 @@
 import { toQueryString } from "../../../src/core/url/index";
 
 describe("Test qs toQueryString", () => {
+    interface BasicTestCase {
+        description: string;
+        input: any;
+        expected: string;
+    }
+
     describe("Basic functionality", () => {
-        it("should return empty string for null/undefined", () => {
-            expect(toQueryString(null)).toBe("");
-            expect(toQueryString(undefined)).toBe("");
-        });
+        const basicTests: BasicTestCase[] = [
+            { description: "should return empty string for null", input: null, expected: "" },
+            { description: "should return empty string for undefined", input: undefined, expected: "" },
+            { description: "should return empty string for string primitive", input: "hello", expected: "" },
+            { description: "should return empty string for number primitive", input: 42, expected: "" },
+            { description: "should return empty string for true boolean", input: true, expected: "" },
+            { description: "should return empty string for false boolean", input: false, expected: "" },
+            { description: "should handle empty objects", input: {}, expected: "" },
+            {
+                description: "should handle simple key-value pairs",
+                input: { name: "John", age: 30 },
+                expected: "name=John&age=30",
+            },
+        ];
 
-        it("should return empty string for primitive values", () => {
-            expect(toQueryString("hello")).toBe("");
-            expect(toQueryString(42)).toBe("");
-            expect(toQueryString(true)).toBe("");
-            expect(toQueryString(false)).toBe("");
-        });
-
-        it("should handle empty objects", () => {
-            expect(toQueryString({})).toBe("");
-        });
-
-        it("should handle simple key-value pairs", () => {
-            const obj = { name: "John", age: 30 };
-            expect(toQueryString(obj)).toBe("name=John&age=30");
+        basicTests.forEach(({ description, input, expected }) => {
+            it(description, () => {
+                expect(toQueryString(input)).toBe(expected);
+            });
         });
     });
 
     describe("Array handling", () => {
-        it("should handle arrays with indices format (default)", () => {
-            const obj = { items: ["a", "b", "c"] };
-            expect(toQueryString(obj)).toBe("items%5B0%5D=a&items%5B1%5D=b&items%5B2%5D=c");
-        });
+        interface ArrayTestCase {
+            description: string;
+            input: any;
+            options?: { arrayFormat?: "repeat" | "indices" };
+            expected: string;
+        }
 
-        it("should handle arrays with repeat format", () => {
-            const obj = { items: ["a", "b", "c"] };
-            expect(toQueryString(obj, { arrayFormat: "repeat" })).toBe("items=a&items=b&items=c");
-        });
+        const arrayTests: ArrayTestCase[] = [
+            {
+                description: "should handle arrays with indices format (default)",
+                input: { items: ["a", "b", "c"] },
+                expected: "items%5B0%5D=a&items%5B1%5D=b&items%5B2%5D=c",
+            },
+            {
+                description: "should handle arrays with repeat format",
+                input: { items: ["a", "b", "c"] },
+                options: { arrayFormat: "repeat" },
+                expected: "items=a&items=b&items=c",
+            },
+            {
+                description: "should handle empty arrays",
+                input: { items: [] },
+                expected: "",
+            },
+            {
+                description: "should handle arrays with mixed types",
+                input: { mixed: ["string", 42, true, false] },
+                expected: "mixed%5B0%5D=string&mixed%5B1%5D=42&mixed%5B2%5D=true&mixed%5B3%5D=false",
+            },
+            {
+                description: "should handle arrays with objects",
+                input: { users: [{ name: "John" }, { name: "Jane" }] },
+                expected: "users%5B0%5D%5Bname%5D=John&users%5B1%5D%5Bname%5D=Jane",
+            },
+            {
+                description: "should handle arrays with objects in repeat format",
+                input: { users: [{ name: "John" }, { name: "Jane" }] },
+                options: { arrayFormat: "repeat" },
+                expected: "users%5Bname%5D=John&users%5Bname%5D=Jane",
+            },
+        ];
 
-        it("should handle empty arrays", () => {
-            const obj = { items: [] };
-            expect(toQueryString(obj)).toBe("");
-        });
-
-        it("should handle arrays with mixed types", () => {
-            const obj = { mixed: ["string", 42, true, false] };
-            expect(toQueryString(obj)).toBe("mixed%5B0%5D=string&mixed%5B1%5D=42&mixed%5B2%5D=true&mixed%5B3%5D=false");
-        });
-
-        it("should handle arrays with objects", () => {
-            const obj = { users: [{ name: "John" }, { name: "Jane" }] };
-            expect(toQueryString(obj)).toBe("users%5B0%5D%5Bname%5D=John&users%5B1%5D%5Bname%5D=Jane");
-        });
-
-        it("should handle arrays with objects in repeat format", () => {
-            const obj = { users: [{ name: "John" }, { name: "Jane" }] };
-            expect(toQueryString(obj, { arrayFormat: "repeat" })).toBe("users%5Bname%5D=John&users%5Bname%5D=Jane");
+        arrayTests.forEach(({ description, input, options, expected }) => {
+            it(description, () => {
+                expect(toQueryString(input, options)).toBe(expected);
+            });
         });
     });
 
     describe("Nested objects", () => {
-        it("should handle nested objects", () => {
-            const obj = { user: { name: "John", age: 30 } };
-            expect(toQueryString(obj)).toBe("user%5Bname%5D=John&user%5Bage%5D=30");
-        });
+        const nestedTests: BasicTestCase[] = [
+            {
+                description: "should handle nested objects",
+                input: { user: { name: "John", age: 30 } },
+                expected: "user%5Bname%5D=John&user%5Bage%5D=30",
+            },
+            {
+                description: "should handle deeply nested objects",
+                input: { user: { profile: { name: "John", settings: { theme: "dark" } } } },
+                expected: "user%5Bprofile%5D%5Bname%5D=John&user%5Bprofile%5D%5Bsettings%5D%5Btheme%5D=dark",
+            },
+            {
+                description: "should handle empty nested objects",
+                input: { user: {} },
+                expected: "",
+            },
+        ];
 
-        it("should handle deeply nested objects", () => {
-            const obj = { user: { profile: { name: "John", settings: { theme: "dark" } } } };
-            expect(toQueryString(obj)).toBe(
-                "user%5Bprofile%5D%5Bname%5D=John&user%5Bprofile%5D%5Bsettings%5D%5Btheme%5D=dark",
-            );
-        });
-
-        it("should handle empty nested objects", () => {
-            const obj = { user: {} };
-            expect(toQueryString(obj)).toBe("");
+        nestedTests.forEach(({ description, input, expected }) => {
+            it(description, () => {
+                expect(toQueryString(input)).toBe(expected);
+            });
         });
     });
 
     describe("Encoding", () => {
-        it("should encode by default", () => {
-            const obj = { name: "John Doe", email: "john@example.com" };
-            expect(toQueryString(obj)).toBe("name=John%20Doe&email=john%40example.com");
-        });
+        interface EncodingTestCase {
+            description: string;
+            input: any;
+            options?: { encode?: boolean };
+            expected: string;
+        }
 
-        it("should not encode when encode is false", () => {
-            const obj = { name: "John Doe", email: "john@example.com" };
-            expect(toQueryString(obj, { encode: false })).toBe("name=John Doe&email=john@example.com");
-        });
+        const encodingTests: EncodingTestCase[] = [
+            {
+                description: "should encode by default",
+                input: { name: "John Doe", email: "john@example.com" },
+                expected: "name=John%20Doe&email=john%40example.com",
+            },
+            {
+                description: "should not encode when encode is false",
+                input: { name: "John Doe", email: "john@example.com" },
+                options: { encode: false },
+                expected: "name=John Doe&email=john@example.com",
+            },
+            {
+                description: "should encode special characters in keys",
+                input: { "user name": "John", "email[primary]": "john@example.com" },
+                expected: "user%20name=John&email%5Bprimary%5D=john%40example.com",
+            },
+            {
+                description: "should not encode special characters in keys when encode is false",
+                input: { "user name": "John", "email[primary]": "john@example.com" },
+                options: { encode: false },
+                expected: "user name=John&email[primary]=john@example.com",
+            },
+        ];
 
-        it("should encode special characters in keys", () => {
-            const obj = { "user name": "John", "email[primary]": "john@example.com" };
-            expect(toQueryString(obj)).toBe("user%20name=John&email%5Bprimary%5D=john%40example.com");
-        });
-
-        it("should not encode special characters in keys when encode is false", () => {
-            const obj = { "user name": "John", "email[primary]": "john@example.com" };
-            expect(toQueryString(obj, { encode: false })).toBe("user name=John&email[primary]=john@example.com");
+        encodingTests.forEach(({ description, input, options, expected }) => {
+            it(description, () => {
+                expect(toQueryString(input, options)).toBe(expected);
+            });
         });
     });
 
     describe("Mixed scenarios", () => {
-        it("should handle complex nested structures", () => {
-            const obj = {
-                filters: {
-                    status: ["active", "pending"],
-                    category: {
-                        type: "electronics",
-                        subcategories: ["phones", "laptops"],
+        interface MixedTestCase {
+            description: string;
+            input: any;
+            options?: { arrayFormat?: "repeat" | "indices" };
+            expected: string;
+        }
+
+        const mixedTests: MixedTestCase[] = [
+            {
+                description: "should handle complex nested structures",
+                input: {
+                    filters: {
+                        status: ["active", "pending"],
+                        category: {
+                            type: "electronics",
+                            subcategories: ["phones", "laptops"],
+                        },
                     },
+                    sort: { field: "name", direction: "asc" },
                 },
-                sort: { field: "name", direction: "asc" },
-            };
-            expect(toQueryString(obj)).toBe(
-                "filters%5Bstatus%5D%5B0%5D=active&filters%5Bstatus%5D%5B1%5D=pending&filters%5Bcategory%5D%5Btype%5D=electronics&filters%5Bcategory%5D%5Bsubcategories%5D%5B0%5D=phones&filters%5Bcategory%5D%5Bsubcategories%5D%5B1%5D=laptops&sort%5Bfield%5D=name&sort%5Bdirection%5D=asc",
-            );
-        });
-
-        it("should handle complex nested structures with repeat format", () => {
-            const obj = {
-                filters: {
-                    status: ["active", "pending"],
-                    category: {
-                        type: "electronics",
-                        subcategories: ["phones", "laptops"],
+                expected:
+                    "filters%5Bstatus%5D%5B0%5D=active&filters%5Bstatus%5D%5B1%5D=pending&filters%5Bcategory%5D%5Btype%5D=electronics&filters%5Bcategory%5D%5Bsubcategories%5D%5B0%5D=phones&filters%5Bcategory%5D%5Bsubcategories%5D%5B1%5D=laptops&sort%5Bfield%5D=name&sort%5Bdirection%5D=asc",
+            },
+            {
+                description: "should handle complex nested structures with repeat format",
+                input: {
+                    filters: {
+                        status: ["active", "pending"],
+                        category: {
+                            type: "electronics",
+                            subcategories: ["phones", "laptops"],
+                        },
                     },
+                    sort: { field: "name", direction: "asc" },
                 },
-                sort: { field: "name", direction: "asc" },
-            };
-            expect(toQueryString(obj, { arrayFormat: "repeat" })).toBe(
-                "filters%5Bstatus%5D=active&filters%5Bstatus%5D=pending&filters%5Bcategory%5D%5Btype%5D=electronics&filters%5Bcategory%5D%5Bsubcategories%5D=phones&filters%5Bcategory%5D%5Bsubcategories%5D=laptops&sort%5Bfield%5D=name&sort%5Bdirection%5D=asc",
-            );
-        });
+                options: { arrayFormat: "repeat" },
+                expected:
+                    "filters%5Bstatus%5D=active&filters%5Bstatus%5D=pending&filters%5Bcategory%5D%5Btype%5D=electronics&filters%5Bcategory%5D%5Bsubcategories%5D=phones&filters%5Bcategory%5D%5Bsubcategories%5D=laptops&sort%5Bfield%5D=name&sort%5Bdirection%5D=asc",
+            },
+            {
+                description: "should handle arrays with null/undefined values",
+                input: { items: ["a", null, "c", undefined, "e"] },
+                expected: "items%5B0%5D=a&items%5B1%5D=&items%5B2%5D=c&items%5B4%5D=e",
+            },
+            {
+                description: "should handle objects with null/undefined values",
+                input: { name: "John", age: null, email: undefined, active: true },
+                expected: "name=John&age=&active=true",
+            },
+        ];
 
-        it("should handle arrays with null/undefined values", () => {
-            const obj = { items: ["a", null, "c", undefined, "e"] };
-            expect(toQueryString(obj)).toBe("items%5B0%5D=a&items%5B1%5D=&items%5B2%5D=c&items%5B4%5D=e");
-        });
-
-        it("should handle objects with null/undefined values", () => {
-            const obj = { name: "John", age: null, email: undefined, active: true };
-            expect(toQueryString(obj)).toBe("name=John&age=&active=true");
+        mixedTests.forEach(({ description, input, options, expected }) => {
+            it(description, () => {
+                expect(toQueryString(input, options)).toBe(expected);
+            });
         });
     });
 
     describe("Edge cases", () => {
-        it("should handle numeric keys", () => {
-            const obj = { "0": "zero", "1": "one" };
-            expect(toQueryString(obj)).toBe("0=zero&1=one");
-        });
+        const edgeCaseTests: BasicTestCase[] = [
+            {
+                description: "should handle numeric keys",
+                input: { "0": "zero", "1": "one" },
+                expected: "0=zero&1=one",
+            },
+            {
+                description: "should handle boolean values in objects",
+                input: { enabled: true, disabled: false },
+                expected: "enabled=true&disabled=false",
+            },
+            {
+                description: "should handle empty strings",
+                input: { name: "", description: "test" },
+                expected: "name=&description=test",
+            },
+            {
+                description: "should handle zero values",
+                input: { count: 0, price: 0.0 },
+                expected: "count=0&price=0",
+            },
+            {
+                description: "should handle arrays with empty strings",
+                input: { items: ["a", "", "c"] },
+                expected: "items%5B0%5D=a&items%5B1%5D=&items%5B2%5D=c",
+            },
+        ];
 
-        it("should handle boolean values in objects", () => {
-            const obj = { enabled: true, disabled: false };
-            expect(toQueryString(obj)).toBe("enabled=true&disabled=false");
-        });
-
-        it("should handle empty strings", () => {
-            const obj = { name: "", description: "test" };
-            expect(toQueryString(obj)).toBe("name=&description=test");
-        });
-
-        it("should handle zero values", () => {
-            const obj = { count: 0, price: 0.0 };
-            expect(toQueryString(obj)).toBe("count=0&price=0");
-        });
-
-        it("should handle arrays with empty strings", () => {
-            const obj = { items: ["a", "", "c"] };
-            expect(toQueryString(obj)).toBe("items%5B0%5D=a&items%5B1%5D=&items%5B2%5D=c");
+        edgeCaseTests.forEach(({ description, input, expected }) => {
+            it(description, () => {
+                expect(toQueryString(input)).toBe(expected);
+            });
         });
     });
 
     describe("Options combinations", () => {
-        it("should respect both arrayFormat and encode options", () => {
-            const obj = { items: ["a & b", "c & d"] };
-            expect(toQueryString(obj, { arrayFormat: "repeat", encode: false })).toBe("items=a & b&items=c & d");
-        });
+        interface OptionsTestCase {
+            description: string;
+            input: any;
+            options?: { arrayFormat?: "repeat" | "indices"; encode?: boolean };
+            expected: string;
+        }
 
-        it("should use default options when none provided", () => {
-            const obj = { items: ["a", "b"] };
-            expect(toQueryString(obj)).toBe("items%5B0%5D=a&items%5B1%5D=b");
-        });
+        const optionsTests: OptionsTestCase[] = [
+            {
+                description: "should respect both arrayFormat and encode options",
+                input: { items: ["a & b", "c & d"] },
+                options: { arrayFormat: "repeat", encode: false },
+                expected: "items=a & b&items=c & d",
+            },
+            {
+                description: "should use default options when none provided",
+                input: { items: ["a", "b"] },
+                expected: "items%5B0%5D=a&items%5B1%5D=b",
+            },
+            {
+                description: "should merge provided options with defaults",
+                input: { items: ["a", "b"], name: "John Doe" },
+                options: { encode: false },
+                expected: "items[0]=a&items[1]=b&name=John Doe",
+            },
+        ];
 
-        it("should merge provided options with defaults", () => {
-            const obj = { items: ["a", "b"], name: "John Doe" };
-            expect(toQueryString(obj, { encode: false })).toBe("items[0]=a&items[1]=b&name=John Doe");
+        optionsTests.forEach(({ description, input, options, expected }) => {
+            it(description, () => {
+                expect(toQueryString(input, options)).toBe(expected);
+            });
         });
     });
 });

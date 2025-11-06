@@ -1,4 +1,15 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 3.28.5
+  changelogEntry:
+    - summary: Fix issue where logs were logged even when the respective log level was disabled.
+      type: fix
+    - summary: Add tests for logging and the fetcher's redaction functionality.
+      type: chore
+    - summary: Improve unit test performance and refactor code to reduce duplication.
+      type: chore
+  createdAt: "2025-11-06"
+  irVersion: 61
+
 - version: 3.28.4
   changelogEntry:
     - summary: Fix a compilation error when a websocket channel has no send or receive messages.
