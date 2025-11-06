@@ -881,9 +881,35 @@ function languageToTitle(language: FernGeneratorCli.LanguageInfo): string {
 }
 
 function featureIDToTitle(featureID: string): string {
-    return featureID
-        .split("_")
-        .map((s) => pascalCase(s))
+    const words = featureID.split("_").map((s) => pascalCase(s));
+
+    const lowercaseWords = new Set([
+        "And",
+        "Or",
+        "Nor",
+        "But",
+        "For",
+        "Yet",
+        "So",
+        "At",
+        "By",
+        "In",
+        "Of",
+        "On",
+        "To",
+        "As"
+    ]);
+
+    return words
+        .map((word, index) => {
+            if (index === 0 || index === words.length - 1) {
+                return word;
+            }
+            if (lowercaseWords.has(word)) {
+                return word.toLowerCase();
+            }
+            return word;
+        })
         .join(" ");
 }
 
