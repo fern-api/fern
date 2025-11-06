@@ -281,8 +281,8 @@ export class SdkGeneratorCli extends AbstractGeneratorCli<SdkCustomConfig> {
             try {
                 // The license file path is relative to the fern config directory
                 // We need to construct the full path to read the license content
-                const licenseFileName = config.license.filename;
-                const licenseFilePath = path.join(rootDirectory, "LICENSE");
+                const licenseFileName = config.license.filename ?? "LICENSE";
+                const licenseFilePath = path.join(rootDirectory, licenseFileName);
 
                 await this.copyLicenseFile(licenseFilePath);
                 logger.debug(`Successfully wrote LICENSE file to ${licenseFilePath}`);
