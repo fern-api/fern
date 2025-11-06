@@ -2,11 +2,17 @@ import { SetRequired } from "@fern-api/core-utils";
 import {
     IntermediateRepresentation,
     NameAndWireValue,
+    PathParameter,
     QueryParameter,
     WebSocketChannel,
     WebSocketChannelId
 } from "@fern-fern/ir-sdk/api";
-import { getPropertyKey, getTextOfTsNode, PackageId } from "@fern-typescript/commons";
+import {
+    getParameterNameForPropertyPathParameterName,
+    getPropertyKey,
+    getTextOfTsNode,
+    PackageId
+} from "@fern-typescript/commons";
 import { ChannelSignature, GeneratedWebsocketImplementation, SdkContext } from "@fern-typescript/contexts";
 import {
     ClassDeclarationStructure,
@@ -156,7 +162,7 @@ export class GeneratedDefaultWebsocketImplementation implements GeneratedWebsock
             properties: [
                 ...(this.channel.pathParameters ?? []).map((pathParameter) => {
                     return {
-                        name: getPropertyKey(pathParameter.name.originalName),
+                        name: getPropertyKey(this.getPropertyNameOfPathParameter(pathParameter).propertyName),
                         type: getTextOfTsNode(context.type.getReferenceToType(pathParameter.valueType).typeNode),
                         hasQuestionToken: false
                     };
@@ -217,17 +223,33 @@ export class GeneratedDefaultWebsocketImplementation implements GeneratedWebsock
 
     private generateConnectMethodStatements(context: SdkContext): ts.Statement[] {
         const bindingElements: ts.BindingElement[] = [];
+        const usedNames = new Set<string>();
+        const pathParameterLocalNames = new Map<string, string>();
+
+        const getNonConflictingName = (name: string) => {
+            while (usedNames.has(name)) {
+                name = `${name}_`;
+            }
+            usedNames.add(name);
+            return name;
+        };
 
         // Add path parameters binding
         for (const pathParameter of [
             ...this.intermediateRepresentation.pathParameters,
             ...this.channel.pathParameters
         ]) {
+            const propertyNames = this.getPropertyNameOfPathParameter(pathParameter);
+            const localVarName = getNonConflictingName(propertyNames.safeName);
+            pathParameterLocalNames.set(pathParameter.name.originalName, localVarName);
+
             bindingElements.push(
                 ts.factory.createBindingElement(
                     undefined,
-                    undefined,
-                    ts.factory.createIdentifier(pathParameter.name.originalName)
+                    localVarName !== propertyNames.propertyName
+                        ? ts.factory.createStringLiteral(propertyNames.propertyName)
+                        : undefined,
+                    ts.factory.createIdentifier(localVarName)
                 )
             );
         }
@@ -411,7 +433,7 @@ export class GeneratedDefaultWebsocketImplementation implements GeneratedWebsock
                             ts.factory.createIdentifier("socket"),
                             undefined,
                             undefined,
-                            this.getReferenceToWebsocket(context)
+                            this.getReferenceToWebsocket(context, pathParameterLocalNames)
                         )
                     ],
                     ts.NodeFlags.Const
@@ -427,7 +449,7 @@ export class GeneratedDefaultWebsocketImplementation implements GeneratedWebsock
         ];
     }
 
-    private getReferenceToWebsocket(context: SdkContext): ts.Expression {
+    private getReferenceToWebsocket(context: SdkContext, pathParameterLocalNames: Map<string, string>): ts.Expression {
         const baseUrl = this.getBaseUrl(this.channel, context);
         const url = buildUrl({
             endpoint: {
@@ -442,7 +464,13 @@ export class GeneratedDefaultWebsocketImplementation implements GeneratedWebsock
             retainOriginalCasing: this.retainOriginalCasing,
             omitUndefined: this.omitUndefined,
             getReferenceToPathParameterVariableFromRequest: (pathParameter) => {
-                return ts.factory.createIdentifier(`args.${pathParameter.name.camelCase.safeName}`);
+                const localVarName = pathParameterLocalNames.get(pathParameter.name.originalName);
+                if (localVarName == null) {
+                    throw new Error(
+                        `Could not find local variable name for path parameter: ${pathParameter.name.originalName}`
+                    );
+                }
+                return ts.factory.createIdentifier(localVarName);
             }
         });
 
@@ -594,6 +622,20 @@ export class GeneratedDefaultWebsocketImplementation implements GeneratedWebsock
             safeName: name.name.camelCase.safeName,
             propertyName:
                 this.includeSerdeLayer && !this.retainOriginalCasing ? name.name.camelCase.unsafeName : name.wireValue
+        };
+    }
+
+    public getPropertyNameOfPathParameter(pathParameter: PathParameter): {
+        safeName: string;
+        propertyName: string;
+    } {
+        return {
+            safeName: pathParameter.name.camelCase.safeName,
+            propertyName: getParameterNameForPropertyPathParameterName({
+                pathParameterName: pathParameter.name,
+                retainOriginalCasing: this.retainOriginalCasing,
+                includeSerdeLayer: this.includeSerdeLayer
+            })
         };
     }
 }

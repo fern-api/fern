@@ -223,6 +223,36 @@ export class ConjureImporter extends APIDefinitionImporter<ConjureImporter.Args>
         return this.fernDefinitionBuilder.build();
     }
 
+    /**
+     * Converts Conjure binary types to Fern string types with format: binary validation.
+     * This follows OpenAPI conventions for binary data representation.
+     */
+    private convertBinaryType(
+        type: string | { type: string; docs?: string }
+    ): string | { type: string; docs?: string; validation?: { format: string } } {
+        if (typeof type === "string") {
+            if (type === "binary") {
+                return {
+                    type: "string",
+                    validation: {
+                        format: "binary"
+                    }
+                };
+            }
+            return type;
+        }
+        if (type.type === "binary") {
+            return {
+                ...type,
+                type: "string",
+                validation: {
+                    format: "binary"
+                }
+            };
+        }
+        return type;
+    }
+
     private importAllTypes({
         conjureFile,
         fernFilePath
@@ -233,19 +263,26 @@ export class ConjureImporter extends APIDefinitionImporter<ConjureImporter.Args>
         for (const [typeName, typeDeclaration] of Object.entries(conjureFile.types?.definitions?.objects ?? {})) {
             visitConjureTypeDeclaration(typeDeclaration, {
                 alias: (value) => {
+                    const convertedAlias =
+                        value.alias === "binary" ? { type: "string", validation: { format: "binary" } } : value.alias;
                     this.fernDefinitionBuilder.addType(fernFilePath, {
                         name: typeName,
-                        schema: {
-                            type: value.alias,
-                            docs: value.docs
-                        }
+                        schema:
+                            typeof convertedAlias === "string"
+                                ? { type: convertedAlias, docs: value.docs }
+                                : { ...convertedAlias, docs: value.docs }
                     });
                 },
                 object: (value) => {
                     this.fernDefinitionBuilder.addType(fernFilePath, {
                         name: typeName,
                         schema: {
-                            properties: value.fields
+                            properties: Object.fromEntries(
+                                Object.entries(value.fields).map(([fieldName, fieldType]) => [
+                                    fieldName,
+                                    this.convertBinaryType(fieldType)
+                                ])
+                            )
                         }
                     });
                 },
@@ -263,11 +300,13 @@ export class ConjureImporter extends APIDefinitionImporter<ConjureImporter.Args>
                         schema: {
                             union: Object.fromEntries(
                                 Object.entries(value.union).map(([key, type]) => {
+                                    const convertedType = this.convertBinaryType(type);
                                     return [
                                         key,
                                         {
-                                            type: typeof type === "string" ? type : type.type,
-                                            docs: typeof type === "string" ? undefined : type.docs,
+                                            type:
+                                                typeof convertedType === "string" ? convertedType : convertedType.type,
+                                            docs: typeof convertedType === "string" ? undefined : convertedType.docs,
                                             key
                                         }
                                     ];

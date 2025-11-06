@@ -1,5 +1,7 @@
 import { docsYml } from "@fern-api/configuration";
 import { AbsoluteFilePath, getDirectoryContents } from "@fern-api/fs-utils";
+import { readFile } from "fs/promises";
+import grayMatter from "gray-matter";
 
 export function nameToSlug({ name }: { name: string }): string {
     return name
@@ -16,12 +18,54 @@ export function nameToTitle({ name }: { name: string }): string {
         .replace(/\b\w/g, (char) => char.toUpperCase());
 }
 
+type ReadFileFn = (path: AbsoluteFilePath, encoding: BufferEncoding) => Promise<string>;
+
+/**
+ * Extracts the position field from markdown frontmatter.
+ * Returns a finite number if position is valid, undefined otherwise.
+ * Accepts numeric values and numeric strings, treating invalid values as undefined.
+ */
+export async function getFrontmatterPosition({
+    absolutePath,
+    readFileFn = (path, encoding) => readFile(path, encoding)
+}: {
+    absolutePath: AbsoluteFilePath;
+    readFileFn?: ReadFileFn;
+}): Promise<number | undefined> {
+    try {
+        const content = await readFileFn(absolutePath, "utf-8");
+        const { data } = grayMatter(content);
+
+        if (data.position == null) {
+            return undefined;
+        }
+
+        const position = typeof data.position === "string" ? parseFloat(data.position) : data.position;
+
+        if (typeof position === "number" && Number.isFinite(position)) {
+            return position;
+        }
+
+        return undefined;
+    } catch {
+        return undefined;
+    }
+}
+
+interface NavigationItemWithMeta {
+    item: docsYml.DocsNavigationItem;
+    title: string;
+    position?: number;
+}
+
 export async function buildNavigationForDirectory({
     directoryPath,
-    getDir = getDirectoryContents
+    getDir = getDirectoryContents,
+    readFileFn = (path, encoding) => readFile(path, encoding)
 }: {
     directoryPath: AbsoluteFilePath;
     getDir?: typeof getDirectoryContents;
+    readFileFn?: ReadFileFn;
 }): Promise<docsYml.DocsNavigationItem[]> {
     const contents = await getDir(directoryPath);
 
@@ -29,6 +73,10 @@ export async function buildNavigationForDirectory({
         (item) => item.type === "file" && (item.name.endsWith(".md") || item.name.endsWith(".mdx"))
     );
     const subdirectories = contents.filter((item) => item.type === "directory");
+
+    const pagePositions = await Promise.all(
+        markdownFiles.map((file) => getFrontmatterPosition({ absolutePath: file.absolutePath, readFileFn }))
+    );
 
     const pages: docsYml.DocsNavigationItem[] = markdownFiles.map((file) => {
         return {
@@ -50,7 +98,8 @@ export async function buildNavigationForDirectory({
         subdirectories.map(async (dir) => {
             const subContents = await buildNavigationForDirectory({
                 directoryPath: dir.absolutePath,
-                getDir
+                getDir,
+                readFileFn
             });
 
             return {
@@ -71,12 +120,40 @@ export async function buildNavigationForDirectory({
         })
     );
 
-    const allItems = [...pages, ...sections];
-    allItems.sort((a, b) => {
-        const aTitle = a.type === "page" || a.type === "section" ? a.title : "";
-        const bTitle = b.type === "page" || b.type === "section" ? b.title : "";
-        return aTitle.localeCompare(bTitle, undefined, { sensitivity: "base" });
+    const itemsWithMeta: NavigationItemWithMeta[] = [
+        ...pages.map((page, index) => ({
+            item: page,
+            title: page.type === "page" ? page.title : "",
+            position: pagePositions[index]
+        })),
+        ...sections.map((section) => ({
+            item: section,
+            title: section.type === "section" ? section.title : "",
+            position: undefined
+        }))
+    ];
+
+    itemsWithMeta.sort((a, b) => {
+        const aHasPosition = typeof a.position === "number";
+        const bHasPosition = typeof b.position === "number";
+
+        if (aHasPosition && !bHasPosition) {
+            return -1;
+        }
+        if (!aHasPosition && bHasPosition) {
+            return 1;
+        }
+
+        if (typeof a.position === "number" && typeof b.position === "number") {
+            const positionDiff = a.position - b.position;
+            if (positionDiff !== 0) {
+                return positionDiff;
+            }
+            return a.title.localeCompare(b.title, undefined, { sensitivity: "base" });
+        }
+
+        return a.title.localeCompare(b.title, undefined, { sensitivity: "base" });
     });
 
-    return allItems;
+    return itemsWithMeta.map((meta) => meta.item);
 }
