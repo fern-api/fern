@@ -313,48 +313,21 @@ function npmPackageInfoFromPublishConfig(
     publishConfig: FernIr.PublishingConfig | undefined,
     isPackagePrivate: boolean
 ): constructNpmPackageArgs {
-    return (
-        publishConfig?._visit({
-            github: (publishConfig) => {
-                return {
-                    ...npmInfoFromPublishTarget(publishConfig.target),
-                    repoUrl: publishConfig.uri,
-                    publishInfo: undefined,
-                    // TODO: add licence config
-                    licenceConfig: undefined,
-                    isPackagePrivate
-                };
-            },
-            direct: (publishConfig) => {
-                return { isPackagePrivate };
-            },
-            filesystem: () => {
-                return { isPackagePrivate };
-            },
-            _other: () => {
-                return { isPackagePrivate };
-            }
-        }) ?? { isPackagePrivate }
-    );
-}
-
-function npmInfoFromPublishTarget(
-    target?: FernIr.PublishTarget
-): { packageName?: string; version?: string } | undefined {
-    return (
-        target?._visit({
-            npm: (value) => {
-                return {
-                    packageName: value.packageName,
-                    version: value.version
-                };
-            },
-            postman: () => undefined,
-            maven: () => undefined,
-            pypi: () => undefined,
-            _other: () => undefined
-        }) ?? undefined
-    );
+    let args = {};
+    if (publishConfig?.type === "github") {
+        if (publishConfig.target?.type === "npm") {
+            args = {
+                packageName: publishConfig.target.packageName,
+                version: publishConfig.target.version,
+                repoUrl: publishConfig.uri,
+                publishInfo: undefined
+            };
+        }
+    }
+    return {
+        ...args,
+        isPackagePrivate
+    };
 }
 
 class GeneratorContextImpl implements GeneratorContext {
