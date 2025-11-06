@@ -4541,6 +4541,13 @@
         "bubble"
       ]
     },
+    "docs.PageActionsThemeConfig": {
+      "type": "string",
+      "enum": [
+        "default",
+        "toolbar"
+      ]
+    },
     "docs.ThemeConfig": {
       "type": "object",
       "properties": {
@@ -4552,6 +4559,16 @@
         },
         "tabs": {
           "$ref": "#/definitions/docs.TabsThemeConfig"
+        },
+        "page-actions": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/docs.PageActionsThemeConfig"
+            },
+            {
+              "type": "null"
+            }
+          ]
         }
       },
       "required": [

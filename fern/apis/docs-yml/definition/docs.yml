@@ -570,7 +570,7 @@ types:
       sidebar: SidebarThemeConfig
       body: BodyThemeConfig
       tabs: TabsThemeConfig
-      page-actions: PageActionsThemeConfig
+      page-actions: optional<PageActionsThemeConfig>
 
   PageActionsThemeConfig:
     enum:
