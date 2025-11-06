@@ -18,8 +18,8 @@ import { TaskContext } from "@fern-api/task-context";
 import { AbstractAPIWorkspace, DocsWorkspace, FernWorkspace } from "@fern-api/workspace-loader";
 import axios from "axios";
 import chalk from "chalk";
-import { readFile } from "fs/promises";
 import { createHash } from "crypto";
+import { readFile } from "fs/promises";
 import { chunk } from "lodash-es";
 import * as mime from "mime-types";
 import terminalLink from "terminal-link";
@@ -82,7 +82,7 @@ export async function publishDocs({
     const basePath = parseBasePath(domain);
     const useDynamicSnippets = docsWorkspace.config.experimental?.dynamicSnippets;
     const disableSnippetGen = preview || useDynamicSnippets;
-    
+
     const resolver = new DocsDefinitionResolver({
         domain,
         docsWorkspace,
@@ -109,8 +109,10 @@ export async function publishDocs({
 
             for (const image of measuredImages.values()) {
                 const filePath = filesMap.get(image.filePath);
-                if (filePath == null) continue;
-                
+                if (filePath == null) {
+                    continue;
+                }
+
                 images.push({
                     filePath: CjsFdrSdk.docs.v1.write.FilePath(
                         convertToFernHostRelativeFilePath(filePath.relativeFilePath)
@@ -122,15 +124,13 @@ export async function publishDocs({
                     fileHash: await calculateFileHash(filePath.absoluteFilePath)
                 });
             }
-    
+
             const nonImageFiles = files.filter(({ absoluteFilePath }) => !measuredImages.has(absoluteFilePath));
             const filepaths: CjsFdrSdk.docs.v2.write.FilePathInput[] = [];
 
             for (const file of nonImageFiles) {
                 filepaths.push({
-                    path: CjsFdrSdk.docs.v1.write.FilePath(
-                        convertToFernHostRelativeFilePath(file.relativeFilePath)
-                    ),
+                    path: CjsFdrSdk.docs.v1.write.FilePath(convertToFernHostRelativeFilePath(file.relativeFilePath)),
                     fileHash: await calculateFileHash(file.absoluteFilePath)
                 });
             }
@@ -155,7 +155,7 @@ export async function publishDocs({
                                 ([filepath]) => !skippedSet.has(filepath as CjsFdrSdk.docs.v1.write.FilePath)
                             )
                         );
-                        
+
                         const uploadCount = Object.keys(urlsToUpload).length;
 
                         if (uploadCount > 0) {
@@ -193,7 +193,7 @@ export async function publishDocs({
                     const skippedCount = startDocsRegisterResponse.body.skippedFiles?.length || 0;
                     if (skippedCount > 0) {
                         context.logger.info(
-                            `✓ Skipped ${skippedCount} unchanged file${skippedCount === 1 ? '' : 's'} (already uploaded)`
+                            `✓ Skipped ${skippedCount} unchanged file${skippedCount === 1 ? "" : "s"} (already uploaded)`
                         );
                     }
 
@@ -206,7 +206,7 @@ export async function publishDocs({
                                 ([filepath]) => !skippedSet.has(filepath as CjsFdrSdk.docs.v1.write.FilePath)
                             )
                         );
-                        
+
                         const uploadCount = Object.keys(urlsToUpload).length;
 
                         if (uploadCount > 0) {

@@ -74,7 +74,7 @@ export async function runRemoteGenerationForDocsWorkspace({
             customDomains.push(...maybeInstance.customDomain);
         }
     }
-    
+
     await context.runInteractiveTask({ name: maybeInstance.url }, async () => {
         await publishDocs({
             docsWorkspace,
