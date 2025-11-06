@@ -1,6 +1,13 @@
 # yaml-language-server: $schema=../../versions-yml.schema.json
 - changelogEntry:
     - summary: |
+        Fix an issue where the `generator-cli github pr ...` and `generator-cli github push` commands would fail when the GitHub repository is empty.
+      type: fix
+  createdAt: "2025-11-06"
+  version: 0.4.2
+
+- changelogEntry:
+    - summary: |
         Use proper title case in README generator. Conjunctions and prepositions are now lowercased when they appear in the middle of titles.
       type: fix
   createdAt: "2025-11-06"
