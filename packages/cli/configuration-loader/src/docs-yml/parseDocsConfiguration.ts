@@ -367,12 +367,18 @@ function convertThemeConfig(
         return undefined;
     }
 
-    return {
+    const result: any = {
         sidebar: theme.sidebar ?? "default",
         tabs: theme.tabs ?? "default",
-        body: theme.body ?? "default",
-        ["page-actions"]: theme["page-actions"] ?? "default"
+        body: theme.body ?? "default"
     };
+
+    const themeAny = theme as any;
+    if (themeAny && themeAny["page-actions"] != null) {
+        result["page-actions"] = themeAny["page-actions"];
+    }
+
+    return result as docsYml.ParsedDocsConfiguration["theme"];
 }
 
 function convertSettingsConfig(
