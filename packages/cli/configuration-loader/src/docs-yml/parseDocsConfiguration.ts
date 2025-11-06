@@ -370,7 +370,8 @@ function convertThemeConfig(
     return {
         sidebar: theme.sidebar ?? "default",
         tabs: theme.tabs ?? "default",
-        body: theme.body ?? "default"
+        body: theme.body ?? "default",
+        ["page-actions"]: theme["page-actions"] ?? "default"
     };
 }
 
