@@ -225,14 +225,28 @@ export class ConjureImporter extends APIDefinitionImporter<ConjureImporter.Args>
 
     private convertBinaryType(
         type: string | { type: string; docs?: string }
-    ): string | { type: string; docs?: string } {
+    ): string | { type: string; docs?: string; validation?: { format: string } } {
         if (typeof type === "string") {
-            return type === "binary" ? "bytes" : type;
+            if (type === "binary") {
+                return {
+                    type: "string",
+                    validation: {
+                        format: "binary"
+                    }
+                };
+            }
+            return type;
         }
-        return {
-            ...type,
-            type: type.type === "binary" ? "bytes" : type.type
-        };
+        if (type.type === "binary") {
+            return {
+                ...type,
+                type: "string",
+                validation: {
+                    format: "binary"
+                }
+            };
+        }
+        return type;
     }
 
     private importAllTypes({
@@ -245,12 +259,14 @@ export class ConjureImporter extends APIDefinitionImporter<ConjureImporter.Args>
         for (const [typeName, typeDeclaration] of Object.entries(conjureFile.types?.definitions?.objects ?? {})) {
             visitConjureTypeDeclaration(typeDeclaration, {
                 alias: (value) => {
+                    const convertedAlias =
+                        value.alias === "binary" ? { type: "string", validation: { format: "binary" } } : value.alias;
                     this.fernDefinitionBuilder.addType(fernFilePath, {
                         name: typeName,
-                        schema: {
-                            type: value.alias === "binary" ? "bytes" : value.alias,
-                            docs: value.docs
-                        }
+                        schema:
+                            typeof convertedAlias === "string"
+                                ? { type: convertedAlias, docs: value.docs }
+                                : { ...convertedAlias, docs: value.docs }
                     });
                 },
                 object: (value) => {
