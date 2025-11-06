@@ -34,13 +34,13 @@
   },
   "dependencies": {
     "octokit": "^4.1.4",
+    "simple-git": "^3.24.0",
     "tmp-promise": "^3.0.3"
   },
   "devDependencies": {
     "@fern-api/configs": "workspace:*",
     "@types/node": "^22.0.0",
     "depcheck": "^1.4.7",
-    "simple-git": "^3.24.0",
     "stylelint": "^16.1.0",
     "typescript": "5.9.3",
     "vitest": "^2.1.9"

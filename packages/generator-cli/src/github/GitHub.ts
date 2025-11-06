@@ -1,5 +1,5 @@
 import { cwd, resolve } from "@fern-api/fs-utils";
-import { cloneRepository } from "@fern-api/github";
+import { cloneRepository, parseRepository } from "@fern-api/github";
 import type { ClonedRepository } from "@fern-api/github/src/ClonedRepository";
 import { Octokit } from "@octokit/rest";
 
@@ -97,10 +97,8 @@ export class GitHub {
                 auth: this.githubConfig.token
             });
             // Use octokit directly to create the pull request
-            const [owner, repo] = this.githubConfig.uri.split("/");
-            if (!owner || !repo) {
-                throw new Error(`Invalid repository URI: ${this.githubConfig.uri}`);
-            }
+            const parsedRepo = parseRepository(this.githubConfig.uri);
+            const { owner, repo } = parsedRepo;
             const head = `${owner}:${prBranch}`;
             try {
                 await octokit.pulls.create({
