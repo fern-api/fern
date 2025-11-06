@@ -148,7 +148,9 @@ export async function runLocalGenerationForWorkspace({
                     );
                 }
                 if (absolutePathToLocalSnippetJSON == null && intermediateRepresentation.selfHosted) {
-                    absolutePathToLocalSnippetJSON = AbsoluteFilePath.of((await getWorkspaceTempDir()).path + "/snippet.json");
+                    absolutePathToLocalSnippetJSON = AbsoluteFilePath.of(
+                        (await getWorkspaceTempDir()).path + "/snippet.json"
+                    );
                 }
 
                 // NOTE(tjb9dc): Important that we get a new temp dir per-generator, as we don't want their local files to collide.
