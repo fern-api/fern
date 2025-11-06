@@ -141,15 +141,15 @@ export async function runLocalGenerationForWorkspace({
                         RelativeFilePath.of(generatorInvocation.language ?? generatorInvocation.name)
                     );
 
-                const absolutePathToLocalSnippetJSON =
-                    generatorInvocation.raw?.snippets?.path != null
-                        ? AbsoluteFilePath.of(
-                              join(
-                                  workspace.absoluteFilePath,
-                                  RelativeFilePath.of(generatorInvocation.raw.snippets.path)
-                              )
-                          )
-                        : undefined;
+                let absolutePathToLocalSnippetJSON: AbsoluteFilePath | undefined = undefined;
+                if (generatorInvocation.raw?.snippets?.path != null) {
+                    absolutePathToLocalSnippetJSON = AbsoluteFilePath.of(
+                        join(workspace.absoluteFilePath, RelativeFilePath.of(generatorInvocation.raw.snippets.path))
+                    );
+                }
+                if (absolutePathToLocalSnippetJSON == null && intermediateRepresentation.selfHosted) {
+                    absolutePathToLocalSnippetJSON = AbsoluteFilePath.of((await getWorkspaceTempDir()).path + "/snippet.json");
+                }
 
                 // NOTE(tjb9dc): Important that we get a new temp dir per-generator, as we don't want their local files to collide.
                 const workspaceTempDir = await getWorkspaceTempDir();
