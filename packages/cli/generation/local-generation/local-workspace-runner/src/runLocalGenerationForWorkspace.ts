@@ -62,6 +62,8 @@ export async function runLocalGenerationForWorkspace({
                 });
 
                 const packageName = getPackageNameFromGeneratorConfig(generatorInvocation);
+                version = version ?? (await computeSemanticVersion({ packageName, generatorInvocation }));
+
                 const intermediateRepresentation = generateIntermediateRepresentation({
                     workspace: fernWorkspace,
                     audiences: generatorGroup.audiences,
