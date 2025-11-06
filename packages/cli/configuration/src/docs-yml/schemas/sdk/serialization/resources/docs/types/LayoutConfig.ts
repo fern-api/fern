@@ -7,6 +7,7 @@ import * as FernDocsConfig from "../../../../api/index";
 import * as core from "../../../../core";
 import { SearchbarPlacement } from "./SearchbarPlacement";
 import { TabsPlacement } from "./TabsPlacement";
+import { ThemeSwitcherPlacement } from "./ThemeSwitcherPlacement";
 import { ContentAlignment } from "./ContentAlignment";
 import { HeaderPosition } from "./HeaderPosition";
 
@@ -18,6 +19,10 @@ export const LayoutConfig: core.serialization.ObjectSchema<serializers.LayoutCon
         headerHeight: core.serialization.property("header-height", core.serialization.string().optional()),
         searchbarPlacement: core.serialization.property("searchbar-placement", SearchbarPlacement.optional()),
         tabsPlacement: core.serialization.property("tabs-placement", TabsPlacement.optional()),
+        themeSwitcherPlacement: core.serialization.property(
+            "theme-switcher-placement",
+            ThemeSwitcherPlacement.optional(),
+        ),
         contentAlignment: core.serialization.property("content-alignment", ContentAlignment.optional()),
         headerPosition: core.serialization.property("header-position", HeaderPosition.optional()),
         disableHeader: core.serialization.property("disable-header", core.serialization.boolean().optional()),
@@ -33,6 +38,7 @@ export declare namespace LayoutConfig {
         "header-height"?: string | null;
         "searchbar-placement"?: SearchbarPlacement.Raw | null;
         "tabs-placement"?: TabsPlacement.Raw | null;
+        "theme-switcher-placement"?: ThemeSwitcherPlacement.Raw | null;
         "content-alignment"?: ContentAlignment.Raw | null;
         "header-position"?: HeaderPosition.Raw | null;
         "disable-header"?: boolean | null;

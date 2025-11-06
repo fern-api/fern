@@ -63,6 +63,14 @@ export interface LayoutConfig {
      */
     tabsPlacement?: FernDocsConfig.TabsPlacement;
     /**
+     * Sets the placement of the color theme switcher button
+     *
+     * @default: `header`
+     *
+     * Note: this setting is ignored when `disable-header` is set to true.
+     */
+    themeSwitcherPlacement?: FernDocsConfig.ThemeSwitcherPlacement;
+    /**
      * Set the alignment of the mardown content.
      *
      * @default: `center`

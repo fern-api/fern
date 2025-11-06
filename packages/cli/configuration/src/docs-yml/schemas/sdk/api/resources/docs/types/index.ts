@@ -49,6 +49,7 @@ export * from "./HttpSnippetsConfig";
 export * from "./HttpSnippetLanguage";
 export * from "./SearchbarPlacement";
 export * from "./TabsPlacement";
+export * from "./ThemeSwitcherPlacement";
 export * from "./ContentAlignment";
 export * from "./HeaderPosition";
 export * from "./AudienceId";
