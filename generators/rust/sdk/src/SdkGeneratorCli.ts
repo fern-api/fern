@@ -1,7 +1,7 @@
 import { GeneratorNotificationService } from "@fern-api/base-generator";
 import { extractErrorMessage } from "@fern-api/core-utils";
 import { RelativeFilePath } from "@fern-api/fs-utils";
-import { AbstractRustGeneratorCli, formatRustCode, RustFile } from "@fern-api/rust-base";
+import { AbstractRustGeneratorCli, formatRustCode, formatRustSnippet, RustFile } from "@fern-api/rust-base";
 import { Module, ModuleDeclaration, UseStatement } from "@fern-api/rust-codegen";
 import {
     DynamicSnippetsGenerator,
@@ -10,7 +10,7 @@ import {
 } from "@fern-api/rust-dynamic-snippets";
 import { generateModels } from "@fern-api/rust-model";
 import { FernGeneratorExec } from "@fern-fern/generator-exec-sdk";
-import { dynamic, HttpEndpoint, HttpRequestBody, HttpService, IntermediateRepresentation } from "@fern-fern/ir-sdk/api";
+import { dynamic, HttpRequestBody, IntermediateRepresentation } from "@fern-fern/ir-sdk/api";
 import { exec } from "child_process";
 import { promisify } from "util";
 import { EnvironmentGenerator } from "./environment/EnvironmentGenerator";
@@ -424,7 +424,6 @@ export class SdkGeneratorCli extends AbstractRustGeneratorCli<SdkCustomConfigSch
         const moduleDoc: string[] = [];
         const apiName = context.ir.apiDisplayName ?? context.ir.apiName?.pascalCase.safeName ?? "API";
         const apiDescription = context.ir.apiDocs;
-        const packageName = context.getCrateName();
 
         // Add main title
         moduleDoc.push(`# ${apiName} SDK`);
@@ -447,7 +446,7 @@ export class SdkGeneratorCli extends AbstractRustGeneratorCli<SdkCustomConfigSch
         // Add getting started section using generated code
         moduleDoc.push("## Getting Started");
         moduleDoc.push("");
-        moduleDoc.push(...this.generateGettingStartedSnippet(context, packageName, clientName));
+        moduleDoc.push(...this.generateGettingStartedSnippet(context));
 
         // Add modules section
         moduleDoc.push("## Modules");
@@ -798,14 +797,10 @@ export class SdkGeneratorCli extends AbstractRustGeneratorCli<SdkCustomConfigSch
     // UTILITY METHODS
     // ===========================
 
-    private generateGettingStartedSnippet(
-        context: SdkGeneratorContext,
-        packageName: string,
-        clientName: string
-    ): string[] {
+    private generateGettingStartedSnippet(context: SdkGeneratorContext): string[] {
         const dynamicIr = context.ir.dynamic;
         if (!dynamicIr) {
-            return this.generateFallbackSnippet(packageName, clientName);
+            return [];
         }
 
         let firstEndpointId: string | undefined;
@@ -820,7 +815,7 @@ export class SdkGeneratorCli extends AbstractRustGeneratorCli<SdkCustomConfigSch
         }
 
         if (!firstEndpointId || !firstExample) {
-            return this.generateFallbackSnippet(packageName, clientName);
+            return [];
         }
 
         try {
@@ -834,65 +829,22 @@ export class SdkGeneratorCli extends AbstractRustGeneratorCli<SdkCustomConfigSch
             const dynEndpoint = convertedIr.endpoints[firstEndpointId];
 
             if (!dynEndpoint) {
-                return this.generateFallbackSnippet(packageName, clientName);
+                return [];
             }
 
-            const code = generator.generateSnippetSync({
+            // Generate components directly
+            const components = generator.buildCodeComponents({
                 endpoint: dynEndpoint,
-                request: snippetRequest
+                snippet: snippetRequest
             });
+            const rawCode = components.join("\n") + "\n";
+            const formattedCode = formatRustSnippet(rawCode);
 
-            const snippet: string[] = [];
-            snippet.push("```rust");
-            snippet.push(...code.trimEnd().split("\n"));
-            snippet.push("```");
-            snippet.push("");
-
-            return snippet;
+            return ["```rust", ...formattedCode.trimEnd().split("\n"), "```", ""];
         } catch (error) {
             context.logger.debug(`Failed to generate snippet using EndpointSnippetGenerator: ${error}`);
-            return this.generateFallbackSnippet(packageName, clientName);
+            return [];
         }
-    }
-
-    private generateFallbackSnippet(packageName: string, clientName: string): string[] {
-        const snippet: string[] = [];
-        snippet.push("```rust");
-        snippet.push(`use ${packageName}::prelude::*;`);
-        snippet.push("");
-        snippet.push(`let client = ${clientName}::new(ClientConfig {`);
-        snippet.push(`    base_url: "https://api.example.com".to_string(),`);
-        snippet.push(`    ..Default::default()`);
-        snippet.push(`}).expect("Failed to build client");`);
-        snippet.push("```");
-        snippet.push("");
-        return snippet;
-    }
-
-    private getFirstAvailableEndpoint(context: SdkGeneratorContext): {
-        endpoint: HttpEndpoint;
-        service: HttpService;
-    } | null {
-        for (const service of Object.values(context.ir.services)) {
-            if (service.endpoints.length > 0) {
-                const firstEndpoint = service.endpoints[0];
-                if (firstEndpoint != null) {
-                    return {
-                        endpoint: firstEndpoint,
-                        service
-                    };
-                }
-            }
-        }
-        return null;
-    }
-
-    private getEndpointMethodPath(endpointInfo: { endpoint: HttpEndpoint; service: HttpService }): string {
-        const servicePath = endpointInfo.service.name.fernFilepath.allParts
-            .map((part) => part.snakeCase.safeName)
-            .join(".");
-        const methodName = endpointInfo.endpoint.name.snakeCase.safeName;
-        return servicePath ? `${servicePath}.${methodName}` : methodName;
     }
 
     private hasTypes(context: SdkGeneratorContext): boolean {
