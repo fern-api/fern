@@ -442,7 +442,7 @@ export class GeneratedDefaultWebsocketImplementation implements GeneratedWebsock
             retainOriginalCasing: this.retainOriginalCasing,
             omitUndefined: this.omitUndefined,
             getReferenceToPathParameterVariableFromRequest: (pathParameter) => {
-                return ts.factory.createIdentifier(`args.${pathParameter.name.camelCase.safeName}`);
+                return ts.factory.createIdentifier(`args.${pathParameter.name.originalName}`);
             }
         });
 
