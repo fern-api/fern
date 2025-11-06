@@ -316,10 +316,14 @@ function npmPackageInfoFromPublishConfig(
     let args = {};
     if (publishConfig?.type === "github") {
         if (publishConfig.target?.type === "npm") {
+            const repoUrl =
+                publishConfig.repo != null && publishConfig.owner != null
+                    ? `https://github.com/${publishConfig.owner}/${publishConfig.repo}`
+                    : publishConfig.uri;
             args = {
                 packageName: publishConfig.target.packageName,
                 version: publishConfig.target.version,
-                repoUrl: publishConfig.uri,
+                repoUrl,
                 publishInfo: undefined
             };
         }
