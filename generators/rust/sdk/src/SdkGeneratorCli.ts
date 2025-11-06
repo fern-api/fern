@@ -6,7 +6,7 @@ import { Module, ModuleDeclaration, UseStatement } from "@fern-api/rust-codegen"
 import { DynamicSnippetsGenerator } from "@fern-api/rust-dynamic-snippets";
 import { generateModels } from "@fern-api/rust-model";
 import { FernGeneratorExec } from "@fern-fern/generator-exec-sdk";
-import { HttpRequestBody, IntermediateRepresentation } from "@fern-fern/ir-sdk/api";
+import { HttpEndpoint, HttpRequestBody, HttpService, IntermediateRepresentation } from "@fern-fern/ir-sdk/api";
 import { exec } from "child_process";
 import { promisify } from "util";
 import { EnvironmentGenerator } from "./environment/EnvironmentGenerator";
@@ -291,6 +291,38 @@ export class SdkGeneratorCli extends AbstractRustGeneratorCli<SdkCustomConfigSch
         const moduleDeclarations: ModuleDeclaration[] = [];
         const useStatements: UseStatement[] = [];
 
+        // Build module documentation
+        const moduleDoc: string[] = [];
+        const apiName = context.ir.apiDisplayName ?? context.ir.apiName?.pascalCase.safeName ?? "API";
+        const apiDescription = context.ir.apiDocs;
+
+        moduleDoc.push(`API client and types for the ${apiName}`);
+        moduleDoc.push("");
+
+        if (apiDescription) {
+            // Add first paragraph of description
+            const paragraphs = apiDescription.split("\n\n");
+            const firstParagraph = paragraphs[0];
+            if (firstParagraph) {
+                const lines = firstParagraph.split("\n");
+                lines.forEach((line) => {
+                    moduleDoc.push(line.trim());
+                });
+            }
+            moduleDoc.push("");
+        } else {
+            moduleDoc.push("This module contains all the API definitions including request/response types");
+            moduleDoc.push("and client implementations for interacting with the API.");
+            moduleDoc.push("");
+        }
+
+        moduleDoc.push("## Modules");
+        moduleDoc.push("");
+        moduleDoc.push("- [`resources`] - Service clients and endpoints");
+        if (hasTypes) {
+            moduleDoc.push("- [`types`] - Request, response, and model types");
+        }
+
         // Add module declarations
         moduleDeclarations.push(new ModuleDeclaration({ name: "resources", isPublic: true }));
         if (hasTypes) {
@@ -309,6 +341,7 @@ export class SdkGeneratorCli extends AbstractRustGeneratorCli<SdkCustomConfigSch
         }
 
         const apiModule = new Module({
+            moduleDoc,
             moduleDeclarations,
             useStatements
         });
@@ -383,6 +416,45 @@ export class SdkGeneratorCli extends AbstractRustGeneratorCli<SdkCustomConfigSch
         const useStatements: UseStatement[] = [];
         const rawDeclarations: string[] = [];
 
+        // Build module documentation
+        const moduleDoc: string[] = [];
+        const apiName = context.ir.apiDisplayName ?? context.ir.apiName?.pascalCase.safeName ?? "API";
+        const apiDescription = context.ir.apiDocs;
+        const packageName = context.getCrateName();
+
+        // Add main title
+        moduleDoc.push(`# ${apiName} SDK`);
+        moduleDoc.push("");
+
+        // Add API description if available (from OpenAPI info.description or Fern API docs)
+        if (apiDescription) {
+            // Split multi-line descriptions and add each line
+            const descLines = apiDescription.split("\n");
+            descLines.forEach((line) => {
+                moduleDoc.push(line.trim());
+            });
+            moduleDoc.push("");
+        } else {
+            // Fallback if no description
+            moduleDoc.push(`The official Rust SDK for the ${apiName}.`);
+            moduleDoc.push("");
+        }
+
+        // Add getting started section using generated code
+        moduleDoc.push("## Getting Started");
+        moduleDoc.push("");
+        moduleDoc.push(...this.generateGettingStartedSnippet(context, packageName, clientName));
+
+        // Add modules section
+        moduleDoc.push("## Modules");
+        moduleDoc.push("");
+        moduleDoc.push("- [`api`] - Core API types and models");
+        moduleDoc.push("- [`client`] - Client implementations");
+        moduleDoc.push("- [`config`] - Configuration options");
+        moduleDoc.push("- [`core`] - Core utilities and infrastructure");
+        moduleDoc.push("- [`error`] - Error types and handling");
+        moduleDoc.push("- [`prelude`] - Common imports for convenience");
+
         // Add module declarations
         moduleDeclarations.push(new ModuleDeclaration({ name: "api", isPublic: true }));
         moduleDeclarations.push(new ModuleDeclaration({ name: "error", isPublic: true }));
@@ -427,6 +499,7 @@ export class SdkGeneratorCli extends AbstractRustGeneratorCli<SdkCustomConfigSch
         useStatements.push(new UseStatement({ path: "client", items: ["*"], isPublic: true }));
 
         return new Module({
+            moduleDoc,
             moduleDeclarations,
             useStatements,
             rawDeclarations
@@ -720,6 +793,98 @@ export class SdkGeneratorCli extends AbstractRustGeneratorCli<SdkCustomConfigSch
     // ===========================
     // UTILITY METHODS
     // ===========================
+
+    private generateGettingStartedSnippet(
+        context: SdkGeneratorContext,
+        packageName: string,
+        clientName: string
+    ): string[] {
+        const snippet: string[] = [];
+        snippet.push("```rust");
+        snippet.push(`use ${packageName}::${clientName};`);
+        snippet.push(`use ${packageName}::config::ClientConfig;`);
+
+        // Add auth imports if needed
+        if (context.ir.auth != null) {
+            const authSchemes = context.ir.auth.schemes;
+            if (authSchemes.some((scheme) => scheme.type === "bearer")) {
+                snippet.push(`use ${packageName}::auth::BearerToken;`);
+            }
+            if (authSchemes.some((scheme) => scheme.type === "basic")) {
+                snippet.push(`use ${packageName}::auth::BasicAuth;`);
+            }
+        }
+
+        snippet.push("");
+
+        // Start client initialization
+        snippet.push(`let client = ${clientName}::new(ClientConfig {`);
+        snippet.push(`    base_url: "https://api.example.com".to_string(),`);
+
+        // Add auth configuration if needed
+        if (context.ir.auth != null) {
+            const authSchemes = context.ir.auth.schemes;
+            for (const scheme of authSchemes) {
+                switch (scheme.type) {
+                    case "bearer":
+                        snippet.push(`    auth: Some(Auth::BearerToken(BearerToken::new("YOUR_API_TOKEN"))),`);
+                        break;
+                    case "basic":
+                        snippet.push(`    auth: Some(Auth::BasicAuth(BasicAuth::new("username", "password"))),`);
+                        break;
+                    case "header":
+                        if (scheme.name != null && scheme.valueType != null) {
+                            const headerName = scheme.name.name.originalName;
+                            snippet.push(`    // Add ${headerName} header for authentication`);
+                        }
+                        break;
+                }
+            }
+        }
+
+        snippet.push(`    ..Default::default()`);
+        snippet.push(`});`);
+
+        // Add a simple usage example if there are endpoints
+        const firstEndpoint = this.getFirstAvailableEndpoint(context);
+        if (firstEndpoint != null) {
+            snippet.push("");
+            snippet.push("// Example usage");
+            const methodPath = this.getEndpointMethodPath(firstEndpoint);
+            snippet.push(`let result = client.${methodPath}().await?;`);
+        }
+
+        snippet.push("```");
+        snippet.push("");
+
+        return snippet;
+    }
+
+    private getFirstAvailableEndpoint(context: SdkGeneratorContext): {
+        endpoint: HttpEndpoint;
+        service: HttpService;
+    } | null {
+        for (const service of Object.values(context.ir.services)) {
+            if (service.endpoints.length > 0) {
+                const firstEndpoint = service.endpoints[0];
+                if (firstEndpoint != null) {
+                    return {
+                        endpoint: firstEndpoint,
+                        service
+                    };
+                }
+            }
+        }
+        return null;
+    }
+
+    private getEndpointMethodPath(endpointInfo: { endpoint: HttpEndpoint; service: HttpService }): string {
+        const servicePath = endpointInfo.service.name.fernFilepath.allParts
+            .map((part) => part.snakeCase.safeName)
+            .join(".");
+        const methodName = endpointInfo.endpoint.name.snakeCase.safeName;
+        return servicePath ? `${servicePath}.${methodName}` : methodName;
+    }
 
     private hasTypes(context: SdkGeneratorContext): boolean {
         // Check for regular IR types
