@@ -913,7 +913,109 @@
         }
     },
     "headers": [],
-    "endpoints": {},
+    "endpoints": {
+        "endpoint_realtime.health": {
+            "auth": {
+                "type": "bearer",
+                "token": {
+                    "originalName": "apiKey",
+                    "camelCase": {
+                        "unsafeName": "apiKey",
+                        "safeName": "apiKey"
+                    },
+                    "snakeCase": {
+                        "unsafeName": "api_key",
+                        "safeName": "api_key"
+                    },
+                    "screamingSnakeCase": {
+                        "unsafeName": "API_KEY",
+                        "safeName": "API_KEY"
+                    },
+                    "pascalCase": {
+                        "unsafeName": "APIKey",
+                        "safeName": "APIKey"
+                    }
+                }
+            },
+            "declaration": {
+                "name": {
+                    "originalName": "health",
+                    "camelCase": {
+                        "unsafeName": "health",
+                        "safeName": "health"
+                    },
+                    "snakeCase": {
+                        "unsafeName": "health",
+                        "safeName": "health"
+                    },
+                    "screamingSnakeCase": {
+                        "unsafeName": "HEALTH",
+                        "safeName": "HEALTH"
+                    },
+                    "pascalCase": {
+                        "unsafeName": "Health",
+                        "safeName": "Health"
+                    }
+                },
+                "fernFilepath": {
+                    "allParts": [
+                        {
+                            "originalName": "realtime",
+                            "camelCase": {
+                                "unsafeName": "realtime",
+                                "safeName": "realtime"
+                            },
+                            "snakeCase": {
+                                "unsafeName": "realtime",
+                                "safeName": "realtime"
+                            },
+                            "screamingSnakeCase": {
+                                "unsafeName": "REALTIME",
+                                "safeName": "REALTIME"
+                            },
+                            "pascalCase": {
+                                "unsafeName": "Realtime",
+                                "safeName": "Realtime"
+                            }
+                        }
+                    ],
+                    "packagePath": [],
+                    "file": {
+                        "originalName": "realtime",
+                        "camelCase": {
+                            "unsafeName": "realtime",
+                            "safeName": "realtime"
+                        },
+                        "snakeCase": {
+                            "unsafeName": "realtime",
+                            "safeName": "realtime"
+                        },
+                        "screamingSnakeCase": {
+                            "unsafeName": "REALTIME",
+                            "safeName": "REALTIME"
+                        },
+                        "pascalCase": {
+                            "unsafeName": "Realtime",
+                            "safeName": "Realtime"
+                        }
+                    }
+                }
+            },
+            "location": {
+                "method": "GET",
+                "path": "/health"
+            },
+            "request": {
+                "type": "body",
+                "pathParameters": [],
+                "body": null
+            },
+            "response": {
+                "type": "json"
+            },
+            "examples": null
+        }
+    },
     "pathParameters": [],
     "environments": null,
     "variables": null,

@@ -74,6 +74,13 @@ public interface JavaSdkCustomConfig extends ICustomConfig {
         return false;
     }
 
+    @Override
+    @Value.Default
+    @JsonProperty("enable-websockets")
+    default Boolean enableWebsockets() {
+        return false;
+    }
+
     static ImmutableJavaSdkCustomConfig.Builder builder() {
         return ImmutableJavaSdkCustomConfig.builder();
     }

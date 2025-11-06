@@ -1,0 +1,18 @@
+{
+    "endpoints": [
+        {
+            "example_identifier": "34d92e75",
+            "id": {
+                "method": "GET",
+                "path": "/health",
+                "identifier_override": "endpoint_realtime.health"
+            },
+            "snippet": {
+                "type": "java",
+                "sync_client": "package com.example.usage;\n\nimport com.seed.websocket.SeedWebsocketClient;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedWebsocketClient client = SeedWebsocketClient\n            .builder()\n            .build();\n\n        client.realtime().health();\n    }\n}\n",
+                "async_client": "package com.example.usage;\n\nimport com.seed.websocket.SeedWebsocketClient;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedWebsocketClient client = SeedWebsocketClient\n            .builder()\n            .build();\n\n        client.realtime().health();\n    }\n}\n"
+            }
+        }
+    ],
+    "types": {}
+}

@@ -261,6 +261,18 @@ fixtures:
     - customConfig:
         collapse-optional-nullable: true
       outputFolder: collapse-optional-nullable
+  websocket:
+    - customConfig:
+        enable-websockets: true
+      outputFolder: default
+  websocket-bearer-auth:
+    - customConfig:
+        enable-websockets: true
+      outputFolder: default
+  websocket-inferred-auth:
+    - customConfig:
+        enable-websockets: true
+      outputFolder: default
 scripts:
   - docker: fernapi/java-seed
     commands:

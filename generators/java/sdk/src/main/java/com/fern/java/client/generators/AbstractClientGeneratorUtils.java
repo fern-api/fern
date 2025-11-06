@@ -202,7 +202,8 @@ public abstract class AbstractClientGeneratorUtils {
         }
 
         // Expose WebSocket channel client if present
-        if (fernPackage.getWebsocket().isPresent()) {
+        if (generatorContext.getCustomConfig().enableWebsockets()
+                && fernPackage.getWebsocket().isPresent()) {
             WebSocketChannelId websocketChannelId = fernPackage.getWebsocket().get();
             com.fern.ir.model.websocket.WebSocketChannel websocketChannel = generatorContext
                     .getIr()
@@ -292,9 +293,10 @@ public abstract class AbstractClientGeneratorUtils {
 
         for (SubpackageId subpackageId : fernPackage.getSubpackages()) {
             Subpackage subpackage = generatorContext.getIr().getSubpackages().get(subpackageId);
-            // Include subpackage if it has endpoints or WebSocket channels
-            if (!subpackage.getHasEndpointsInTree()
-                    && !subpackage.getWebsocket().isPresent()) {
+            // Include subpackage if it has endpoints or WebSocket channels (when enabled)
+            boolean hasWebSocketChannel = generatorContext.getCustomConfig().enableWebsockets()
+                    && subpackage.getWebsocket().isPresent();
+            if (!subpackage.getHasEndpointsInTree() && !hasWebSocketChannel) {
                 continue;
             }
             ClassName subpackageClientImpl = subpackageClientImplName(subpackage);

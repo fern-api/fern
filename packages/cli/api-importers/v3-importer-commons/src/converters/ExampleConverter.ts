@@ -48,14 +48,6 @@ export declare namespace ExampleConverter {
          * treating the example as a number.
          */
         coerced: boolean;
-        /**
-         * Whether the converter used a provided example (this.example was not undefined)
-         * to produce the validExample, as opposed to generating a fallback example.
-         *
-         * This is used by union converters to prefer variants that can use the provided
-         * example over variants that require generating a fallback.
-         */
-        usedProvidedExample: boolean;
         validExample: unknown;
         /**
          * The errors that occurred during conversion.
@@ -107,7 +99,6 @@ export class ExampleConverter extends AbstractConverter<AbstractConverterContext
             return {
                 isValid: true,
                 coerced: false,
-                usedProvidedExample: this.example !== undefined,
                 validExample: typeof this.example !== "undefined" ? this.example : {},
                 errors: []
             };
@@ -119,7 +110,6 @@ export class ExampleConverter extends AbstractConverter<AbstractConverterContext
                 return {
                     isValid: true,
                     coerced: false,
-                    usedProvidedExample: this.example !== undefined,
                     validExample: this.example,
                     errors: []
                 };
@@ -135,7 +125,6 @@ export class ExampleConverter extends AbstractConverter<AbstractConverterContext
             return {
                 isValid: false,
                 coerced: false,
-                usedProvidedExample: false,
                 validExample: null,
                 errors: [
                     {
@@ -149,7 +138,6 @@ export class ExampleConverter extends AbstractConverter<AbstractConverterContext
             return {
                 isValid: false,
                 coerced: false,
-                usedProvidedExample: false,
                 validExample: null,
                 errors: [
                     {
@@ -163,7 +151,6 @@ export class ExampleConverter extends AbstractConverter<AbstractConverterContext
             return {
                 isValid: true,
                 coerced: false,
-                usedProvidedExample: true,
                 validExample: this.example,
                 errors: []
             };
@@ -227,7 +214,6 @@ export class ExampleConverter extends AbstractConverter<AbstractConverterContext
             return {
                 isValid: true,
                 coerced: false,
-                usedProvidedExample: this.example !== undefined,
                 validExample: this.example,
                 errors: []
             };
@@ -236,7 +222,6 @@ export class ExampleConverter extends AbstractConverter<AbstractConverterContext
         return {
             isValid: false,
             coerced: false,
-            usedProvidedExample: false,
             validExample: null,
             errors: [
                 {
@@ -253,14 +238,12 @@ export class ExampleConverter extends AbstractConverter<AbstractConverterContext
             ? {
                   isValid,
                   coerced: false,
-                  usedProvidedExample: true,
                   validExample: this.example,
                   errors: []
               }
             : {
                   isValid: false,
                   coerced: false,
-                  usedProvidedExample: false,
                   validExample: null,
                   errors: [
                       {
@@ -277,7 +260,6 @@ export class ExampleConverter extends AbstractConverter<AbstractConverterContext
             return {
                 isValid,
                 coerced: false,
-                usedProvidedExample: true,
                 validExample: this.example,
                 errors: []
             };
@@ -301,7 +283,6 @@ export class ExampleConverter extends AbstractConverter<AbstractConverterContext
             return {
                 isValid: true,
                 coerced: false,
-                usedProvidedExample: false,
                 validExample: resolvedConst ?? resolvedDefault,
                 errors: []
             };
@@ -310,7 +291,6 @@ export class ExampleConverter extends AbstractConverter<AbstractConverterContext
         return {
             isValid: false,
             coerced: false,
-            usedProvidedExample: false,
             validExample: this.maybeResolveSchemaExample<boolean>(this.schema) ?? this.EXAMPLE_BOOLEAN,
             errors: [
                 {
@@ -327,7 +307,6 @@ export class ExampleConverter extends AbstractConverter<AbstractConverterContext
             return {
                 isValid,
                 coerced: false,
-                usedProvidedExample: true,
                 validExample: this.example,
                 errors: []
             };
@@ -345,7 +324,6 @@ export class ExampleConverter extends AbstractConverter<AbstractConverterContext
             return {
                 isValid: true,
                 coerced: false,
-                usedProvidedExample: false,
                 validExample: resolvedDefault,
                 errors: []
             };
@@ -354,7 +332,6 @@ export class ExampleConverter extends AbstractConverter<AbstractConverterContext
         return {
             isValid,
             coerced: false,
-            usedProvidedExample: false,
             validExample: resolvedSchema.enum?.[0],
             errors: [
                 {
@@ -370,7 +347,6 @@ export class ExampleConverter extends AbstractConverter<AbstractConverterContext
             return {
                 isValid: true,
                 coerced: false,
-                usedProvidedExample: true,
                 validExample: this.example,
                 errors: []
             };
@@ -381,7 +357,6 @@ export class ExampleConverter extends AbstractConverter<AbstractConverterContext
             return {
                 isValid: true,
                 coerced: true,
-                usedProvidedExample: true,
                 validExample: num,
                 errors: []
             };
@@ -401,7 +376,6 @@ export class ExampleConverter extends AbstractConverter<AbstractConverterContext
             return {
                 isValid: true,
                 coerced: false,
-                usedProvidedExample: false,
                 validExample: resolvedDefault,
                 errors: []
             };
@@ -410,7 +384,6 @@ export class ExampleConverter extends AbstractConverter<AbstractConverterContext
         return {
             isValid: false,
             coerced: false,
-            usedProvidedExample: false,
             validExample: this.adjustNumberToConstraints(
                 this.maybeResolveSchemaExample<number>(this.schema) ?? this.EXAMPLE_NUMBER,
                 resolvedSchema
@@ -493,7 +466,6 @@ export class ExampleConverter extends AbstractConverter<AbstractConverterContext
             return {
                 isValid: true,
                 coerced: false,
-                usedProvidedExample: true,
                 validExample: this.example,
                 errors: []
             };
@@ -504,7 +476,6 @@ export class ExampleConverter extends AbstractConverter<AbstractConverterContext
             return {
                 isValid: true,
                 coerced: true,
-                usedProvidedExample: true,
                 validExample: stringValue,
                 errors: []
             };
@@ -522,7 +493,6 @@ export class ExampleConverter extends AbstractConverter<AbstractConverterContext
             return {
                 isValid: true,
                 coerced: false,
-                usedProvidedExample: false,
                 validExample: resolvedDefault,
                 errors: []
             };
@@ -547,7 +517,6 @@ export class ExampleConverter extends AbstractConverter<AbstractConverterContext
         return {
             isValid: false,
             coerced: false,
-            usedProvidedExample: false,
             validExample: this.maybeResolveSchemaExample<string>(this.schema) ?? dateFallbackExample,
             errors: [
                 {
@@ -563,7 +532,6 @@ export class ExampleConverter extends AbstractConverter<AbstractConverterContext
             return {
                 isValid: true,
                 coerced: false,
-                usedProvidedExample: true,
                 validExample: this.example,
                 errors: []
             };
@@ -575,7 +543,6 @@ export class ExampleConverter extends AbstractConverter<AbstractConverterContext
                 return {
                     isValid: true,
                     coerced: true,
-                    usedProvidedExample: true,
                     validExample: num,
                     errors: []
                 };
@@ -593,7 +560,6 @@ export class ExampleConverter extends AbstractConverter<AbstractConverterContext
             return {
                 isValid: true,
                 coerced: false,
-                usedProvidedExample: false,
                 validExample: resolvedDefault,
                 errors: []
             };
@@ -602,7 +568,6 @@ export class ExampleConverter extends AbstractConverter<AbstractConverterContext
         return {
             isValid: false,
             coerced: false,
-            usedProvidedExample: false,
             validExample: this.maybeResolveSchemaExample<number>(this.schema) ?? this.EXAMPLE_INTEGER,
             errors: [
                 {
@@ -615,7 +580,7 @@ export class ExampleConverter extends AbstractConverter<AbstractConverterContext
 
     private convertArray({ resolvedSchema }: { resolvedSchema: OpenAPIV3_1.SchemaObject }): ExampleConverter.Output {
         if (resolvedSchema.type != "array") {
-            return { isValid: false, coerced: false, usedProvidedExample: false, validExample: null, errors: [] };
+            return { isValid: false, coerced: false, validExample: null, errors: [] };
         }
         if (resolvedSchema.items == null) {
             resolvedSchema.items = { type: "string" };
@@ -638,12 +603,10 @@ export class ExampleConverter extends AbstractConverter<AbstractConverterContext
         });
 
         const isValid = results.every((result) => result?.isValid ?? false) && !usedFallbackExample;
-        const usedProvidedExample = !usedFallbackExample && results.some((result) => result.usedProvidedExample);
 
         return {
             isValid,
             coerced: false,
-            usedProvidedExample,
             validExample: results.map((result) => result.validExample),
             errors: isValid ? [] : results.flatMap((result) => result.errors)
         };
@@ -651,13 +614,7 @@ export class ExampleConverter extends AbstractConverter<AbstractConverterContext
 
     private convertObject({ resolvedSchema }: { resolvedSchema: OpenAPIV3_1.SchemaObject }): ExampleConverter.Output {
         if (resolvedSchema.type == "object" && resolvedSchema.properties == null && resolvedSchema.allOf == null) {
-            return {
-                isValid: true,
-                coerced: false,
-                usedProvidedExample: this.example !== undefined,
-                validExample: this.example ?? {},
-                errors: []
-            };
+            return { isValid: true, coerced: false, validExample: this.example ?? {}, errors: [] };
         }
 
         const exampleObj =
@@ -665,16 +622,7 @@ export class ExampleConverter extends AbstractConverter<AbstractConverterContext
 
         const resultsByKey = Object.entries(resolvedSchema.properties ?? {}).map(([key, property]) => {
             if (typeof property !== "object") {
-                return {
-                    key,
-                    result: {
-                        isValid: true,
-                        coerced: false,
-                        usedProvidedExample: false,
-                        validExample: undefined,
-                        errors: []
-                    }
-                };
+                return { key, result: { isValid: true, coerced: false, validExample: undefined, errors: [] } };
             }
 
             if (this.isDeprecatedProperty(property)) {
@@ -682,13 +630,7 @@ export class ExampleConverter extends AbstractConverter<AbstractConverterContext
                 if (isOptionalProperty) {
                     return {
                         key,
-                        result: {
-                            isValid: true,
-                            coerced: false,
-                            usedProvidedExample: false,
-                            validExample: undefined,
-                            errors: []
-                        }
+                        result: { isValid: true, coerced: false, validExample: undefined, errors: [] }
                     };
                 }
             }
@@ -699,45 +641,18 @@ export class ExampleConverter extends AbstractConverter<AbstractConverterContext
                 "writeOnly" in property &&
                 property.writeOnly === true
             ) {
-                return {
-                    key,
-                    result: {
-                        isValid: true,
-                        coerced: false,
-                        usedProvidedExample: false,
-                        validExample: undefined,
-                        errors: []
-                    }
-                };
+                return { key, result: { isValid: true, coerced: false, validExample: undefined, errors: [] } };
             }
             // TODO: Do we want to collect an error when the request / response example does not respect the readOnly / writeOnly property?
             if ("readOnly" in property && property.readOnly === true && this.exampleGenerationStrategy === "request") {
-                return {
-                    key,
-                    result: {
-                        isValid: true,
-                        coerced: false,
-                        usedProvidedExample: false,
-                        validExample: undefined,
-                        errors: []
-                    }
-                };
+                return { key, result: { isValid: true, coerced: false, validExample: undefined, errors: [] } };
             }
             if (
                 "writeOnly" in property &&
                 property.writeOnly === true &&
                 this.exampleGenerationStrategy === "response"
             ) {
-                return {
-                    key,
-                    result: {
-                        isValid: true,
-                        coerced: false,
-                        usedProvidedExample: false,
-                        validExample: undefined,
-                        errors: []
-                    }
-                };
+                return { key, result: { isValid: true, coerced: false, validExample: undefined, errors: [] } };
             }
             const propertyIsOmittedFromExample =
                 !(key in exampleObj) ||
@@ -760,16 +675,7 @@ export class ExampleConverter extends AbstractConverter<AbstractConverterContext
                     });
                     return { key, result: exampleConverter.convert() };
                 }
-                return {
-                    key,
-                    result: {
-                        isValid: true,
-                        coerced: false,
-                        usedProvidedExample: false,
-                        validExample: undefined,
-                        errors: []
-                    }
-                };
+                return { key, result: { isValid: true, coerced: false, validExample: undefined, errors: [] } };
             } else {
                 const propExampleFromParent = exampleObj[key];
                 const propertyExample = propExampleFromParent ?? this.maybeResolveSchemaExample(property);
@@ -804,11 +710,6 @@ export class ExampleConverter extends AbstractConverter<AbstractConverterContext
 
         const isValid =
             resultsByKey.every((entry) => entry.result.isValid) && allOfResults.every((result) => result.isValid);
-
-        const usedProvidedExample =
-            this.example !== undefined &&
-            (resultsByKey.some(({ result }) => result.usedProvidedExample) ||
-                allOfResults.some((result) => result.usedProvidedExample));
 
         let example = Object.fromEntries(
             resultsByKey
@@ -884,7 +785,6 @@ export class ExampleConverter extends AbstractConverter<AbstractConverterContext
         return {
             isValid,
             coerced: false,
-            usedProvidedExample,
             validExample: example,
             errors: [
                 ...resultsByKey.flatMap(({ result }) => result.errors),
@@ -899,7 +799,7 @@ export class ExampleConverter extends AbstractConverter<AbstractConverterContext
         resolvedSchema: OpenAPIV3_1.SchemaObject;
     }): ExampleConverter.Output {
         if (!Array.isArray(resolvedSchema.type)) {
-            return { isValid: false, coerced: false, usedProvidedExample: false, validExample: null, errors: [] };
+            return { isValid: false, coerced: false, validExample: null, errors: [] };
         }
         if (resolvedSchema.type.length === 1) {
             const exampleConverter = new ExampleConverter({
@@ -932,12 +832,10 @@ export class ExampleConverter extends AbstractConverter<AbstractConverterContext
 
         const validExample = results.find((result) => result.isValid)?.validExample;
         const example = validExample ?? results[0]?.validExample ?? null;
-        const usedProvidedExample = results.some((result) => result.usedProvidedExample);
 
         return {
             isValid,
             coerced: false,
-            usedProvidedExample,
             validExample: example,
             errors: isValid ? [] : results.flatMap((result) => result?.errors ?? [])
         };
@@ -953,14 +851,13 @@ export class ExampleConverter extends AbstractConverter<AbstractConverterContext
         const unionSchemas = unionType === "oneOf" ? resolvedSchema.oneOf : resolvedSchema.anyOf;
 
         if (!(unionType in resolvedSchema) || unionSchemas == null) {
-            return { isValid: false, coerced: false, usedProvidedExample: false, validExample: null, errors: [] };
+            return { isValid: false, coerced: false, validExample: null, errors: [] };
         }
 
         const containerExample = this.example ?? this.maybeResolveSchemaExample(resolvedSchema);
 
         const results: ExampleConverter.Output[] = [];
         let firstValidResult: ExampleConverter.Output | null = null;
-        let firstValidWithProvidedExample: ExampleConverter.Output | null = null;
 
         for (let index = 0; index < unionSchemas.length; index++) {
             const subSchema = unionSchemas[index];
@@ -987,22 +884,11 @@ export class ExampleConverter extends AbstractConverter<AbstractConverterContext
 
             const result = exampleConverter.convert();
 
-            if (result.isValid && !result.coerced && result.usedProvidedExample) {
-                return {
-                    isValid: true,
-                    coerced: false,
-                    usedProvidedExample: true,
-                    validExample: result.validExample,
-                    errors: []
-                };
-            }
-
-            // If valid and non-coerced (but didn't use provided example), return immediately
+            // If valid and non-coerced, return immediately
             if (result.isValid && !result.coerced) {
                 return {
                     isValid: true,
                     coerced: false,
-                    usedProvidedExample: result.usedProvidedExample,
                     validExample: result.validExample,
                     errors: []
                 };
@@ -1010,26 +896,19 @@ export class ExampleConverter extends AbstractConverter<AbstractConverterContext
 
             results.push(result);
 
-            // Track first valid result that used provided example
-            if (result.isValid && result.usedProvidedExample && firstValidWithProvidedExample === null) {
-                firstValidWithProvidedExample = result;
-            }
-
             // Track first valid result (even if coerced) as fallback
             if (result.isValid && firstValidResult === null) {
                 firstValidResult = result;
             }
         }
 
-        const selectedResult = firstValidWithProvidedExample ?? firstValidResult;
-        const isValid = selectedResult !== null;
-        const validExample = selectedResult?.validExample ?? results[0]?.validExample;
-        const usedProvidedExample = selectedResult?.usedProvidedExample ?? false;
+        // No non-coerced valid result found, use fallback
+        const isValid = firstValidResult !== null;
+        const validExample = firstValidResult?.validExample ?? results[0]?.validExample;
 
         return {
             isValid,
             coerced: false,
-            usedProvidedExample,
             validExample,
             errors: isValid ? [] : results.flatMap((result) => result.errors)
         };

@@ -1,3 +1,30 @@
+- version: 3.14.0
+  changelogEntry:
+    - summary: |
+        Add WebSocket support for real-time bidirectional communication (opt-in via `enable-websockets: true`).
+        Generates strongly-typed WebSocket clients with automatic reconnection, exponential backoff retry strategy,
+        and message queuing during disconnection. Supports bearer token, basic auth, and custom header authentication.
+        WebSocket clients are thread-safe with connection lifecycle callbacks (onConnected, onDisconnected, onError)
+        and allow custom transport factories for testing and enterprise integration.
+
+        Enable in generators.yml:
+        ```yaml
+        config:
+          enable-websockets: true
+        ```
+
+        Generated usage:
+        ```java
+        var ws = client.realtime();
+        ws.connect().join();
+        ws.onReceive(message -> System.out.println("Received: " + message));
+        ws.sendSend(...);
+        ws.disconnect();
+        ```
+      type: feat
+  createdAt: "2025-11-06"
+  irVersion: 61
+
 - version: 3.13.0
   changelogEntry:
     - summary: |

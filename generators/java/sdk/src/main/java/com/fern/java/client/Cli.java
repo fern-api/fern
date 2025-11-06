@@ -451,7 +451,8 @@ public final class Cli extends AbstractGeneratorCli<JavaSdkCustomConfig, JavaSdk
             }
 
             // Generate WebSocket channel if present in this subpackage
-            if (subpackage.getWebsocket().isPresent()
+            if (context.getCustomConfig().enableWebsockets()
+                    && subpackage.getWebsocket().isPresent()
                     && ir.getWebsocketChannels().isPresent()) {
                 WebSocketChannel websocketChannel = ir.getWebsocketChannels()
                         .get()
@@ -489,7 +490,8 @@ public final class Cli extends AbstractGeneratorCli<JavaSdkCustomConfig, JavaSdk
         });
 
         // Root-level WebSocket channel clients (those not in a subpackage)
-        if (ir.getRootPackage().getWebsocket().isPresent()
+        if (context.getCustomConfig().enableWebsockets()
+                && ir.getRootPackage().getWebsocket().isPresent()
                 && ir.getWebsocketChannels().isPresent()) {
             WebSocketChannel websocketChannel = ir.getWebsocketChannels()
                     .get()

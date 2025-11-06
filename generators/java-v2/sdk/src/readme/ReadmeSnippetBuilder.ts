@@ -3,7 +3,7 @@ import { java } from "@fern-api/java-ast";
 
 import { FernGeneratorCli } from "@fern-fern/generator-cli-sdk";
 import { FernGeneratorExec } from "@fern-fern/generator-exec-sdk";
-import { EndpointId, FeatureId, FernFilepath, HttpEndpoint } from "@fern-fern/ir-sdk/api";
+import { EndpointId, FeatureId, FernFilepath, HttpEndpoint, WebSocketChannel } from "@fern-fern/ir-sdk/api";
 
 import { SdkGeneratorContext } from "../SdkGeneratorContext";
 
@@ -84,10 +84,14 @@ export class ReadmeSnippetBuilder extends AbstractReadmeSnippetBuilder {
             [FernGeneratorCli.StructuredFeatureId.Timeouts]: { renderer: this.renderTimeoutsSnippet.bind(this) },
             [ReadmeSnippetBuilder.CUSTOM_HEADERS_FEATURE_ID]: { renderer: this.renderCustomHeadersSnippet.bind(this) },
             [ReadmeSnippetBuilder.RAW_RESPONSE_FEATURE_ID]: { renderer: this.renderRawResponseSnippet.bind(this) },
-            [ReadmeSnippetBuilder.WEBSOCKET_FEATURE_ID]: {
-                renderer: this.renderWebSocketSnippet.bind(this),
-                predicate: (_endpoint: EndpointWithFilepath) => this.hasWebSocketChannels()
-            },
+            ...(this.isWebSocketEnabled() && this.hasWebSocketChannels()
+                ? {
+                      [ReadmeSnippetBuilder.WEBSOCKET_FEATURE_ID]: {
+                          renderer: this.renderWebSocketSnippet.bind(this),
+                          predicate: (_endpoint: EndpointWithFilepath) => true
+                      }
+                  }
+                : undefined),
             ...(this.isPaginationEnabled
                 ? {
                       [FernGeneratorCli.StructuredFeatureId.Pagination]: {
@@ -110,7 +114,7 @@ export class ReadmeSnippetBuilder extends AbstractReadmeSnippetBuilder {
 
         for (const [featureId, { renderer, predicate }] of Object.entries(templatedSnippetsConfig)) {
             // Special case for WebSocket feature: render even without HTTP endpoints
-            if (featureId === ReadmeSnippetBuilder.WEBSOCKET_FEATURE_ID && this.hasWebSocketChannels()) {
+            if (featureId === ReadmeSnippetBuilder.WEBSOCKET_FEATURE_ID) {
                 const snippet = this.renderWebSocketSnippet({} as EndpointWithFilepath);
                 if (snippet) {
                     snippetsByFeatureId[featureId] = [snippet];
@@ -815,19 +819,24 @@ UpdateRequest request = UpdateRequest.builder()
         return str.charAt(0).toUpperCase() + str.slice(1);
     }
 
+    private isWebSocketEnabled(): boolean {
+        return this.context.customConfig["enable-websockets"] === true;
+    }
+
     private hasWebSocketChannels(): boolean {
         return this.context.ir.websocketChannels != null && Object.keys(this.context.ir.websocketChannels).length > 0;
     }
 
     private renderWebSocketSnippet(_endpoint: EndpointWithFilepath): string {
         // Find first WebSocket channel by checking subpackages and root package
-        let channel: any = null;
-        let fernFilepath: any = null;
+        let channel: WebSocketChannel | null = null;
+        let fernFilepath: FernFilepath | null = null;
 
         // Check root package first
         if (this.context.ir.rootPackage.websocket != null && this.context.ir.websocketChannels != null) {
-            channel = this.context.ir.websocketChannels[this.context.ir.rootPackage.websocket];
-            if (channel) {
+            const foundChannel = this.context.ir.websocketChannels[this.context.ir.rootPackage.websocket];
+            if (foundChannel) {
+                channel = foundChannel;
                 fernFilepath = this.context.ir.rootPackage.fernFilepath;
             }
         }
@@ -836,8 +845,9 @@ UpdateRequest request = UpdateRequest.builder()
         if (!channel && this.context.ir.subpackages) {
             for (const subpackage of Object.values(this.context.ir.subpackages)) {
                 if (subpackage.websocket != null && this.context.ir.websocketChannels != null) {
-                    channel = this.context.ir.websocketChannels[subpackage.websocket];
-                    if (channel) {
+                    const foundChannel = this.context.ir.websocketChannels[subpackage.websocket];
+                    if (foundChannel) {
+                        channel = foundChannel;
                         fernFilepath = subpackage.fernFilepath;
                         break;
                     }
@@ -924,7 +934,7 @@ UpdateRequest request = UpdateRequest.builder()
             if (exampleMessages) {
                 for (const message of exampleMessages) {
                     const messageId = message.type;
-                    const messageDefinition = channel.messages.find((m: any) => m.type === messageId);
+                    const messageDefinition = channel.messages.find((m) => m.type === messageId);
                     if (messageDefinition) {
                         if (messageDefinition.origin === "client" && !firstSendMessageName) {
                             firstSendMessageName = this.capitalizeFirstLetter(
@@ -936,7 +946,9 @@ UpdateRequest request = UpdateRequest.builder()
                             );
                         }
                     }
-                    if (firstSendMessageName && firstReceiveMessageName) break;
+                    if (firstSendMessageName && firstReceiveMessageName) {
+                        break;
+                    }
                 }
             }
         }
@@ -949,7 +961,9 @@ UpdateRequest request = UpdateRequest.builder()
                 } else if (message.origin === "server" && !firstReceiveMessageName) {
                     firstReceiveMessageName = this.capitalizeFirstLetter(message.displayName || message.type);
                 }
-                if (firstSendMessageName && firstReceiveMessageName) break;
+                if (firstSendMessageName && firstReceiveMessageName) {
+                    break;
+                }
             }
         }
 

@@ -101,6 +101,12 @@ public interface ICustomConfig {
         return false;
     }
 
+    @Value.Default
+    @JsonProperty("enable-websockets")
+    default Boolean enableWebsockets() {
+        return false;
+    }
+
     @JsonProperty("package-prefix")
     Optional<String> packagePrefix();
 

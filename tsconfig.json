@@ -290,9 +290,6 @@
       "path": "./packages/commons/core-utils"
     },
     {
-      "path": "./packages/commons/github"
-    },
-    {
       "path": "./generators/csharp/formatter"
     },
     {
@@ -486,9 +483,6 @@
     },
     {
       "path": "./packages/core"
-    },
-    {
-      "path": "./packages/generator-cli"
     },
     {
       "path": "./packages/seed"

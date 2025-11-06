@@ -98,7 +98,10 @@ function getCustomSections(context: SdkGeneratorContext): FernGeneratorCli.Custo
 
     let sections: FernGeneratorCli.CustomSection[] = [];
     for (const section of irCustomSections ?? []) {
-        if (section.language === "java" && !customConfigSections?.some((s) => s.title === section.title)) {
+        if (
+            section.language === "java" &&
+            !customConfigSections?.some((s: { title: string }) => s.title === section.title)
+        ) {
             sections.push({
                 name: section.title,
                 language: FernGeneratorCli.Language.Java,
