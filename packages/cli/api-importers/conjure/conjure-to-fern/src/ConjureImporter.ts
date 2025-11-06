@@ -223,6 +223,10 @@ export class ConjureImporter extends APIDefinitionImporter<ConjureImporter.Args>
         return this.fernDefinitionBuilder.build();
     }
 
+    /**
+     * Converts Conjure binary types to Fern string types with format: binary validation.
+     * This follows OpenAPI conventions for binary data representation.
+     */
     private convertBinaryType(
         type: string | { type: string; docs?: string }
     ): string | { type: string; docs?: string; validation?: { format: string } } {
