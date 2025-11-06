@@ -5034,6 +5034,9 @@ importers:
       '@fern-api/fs-utils':
         specifier: workspace:*
         version: link:../../commons/fs-utils
+      '@fern-api/github':
+        specifier: workspace:*
+        version: link:../../commons/github
       '@fern-api/task-context':
         specifier: workspace:*
         version: link:../task-context

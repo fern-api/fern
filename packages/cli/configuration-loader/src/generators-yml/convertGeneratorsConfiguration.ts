@@ -2,6 +2,7 @@ import { generatorsYml } from "@fern-api/configuration";
 import { assertNever } from "@fern-api/core-utils";
 import { visitRawApiAuth } from "@fern-api/fern-definition-schema";
 import { AbsoluteFilePath, dirname, join, RelativeFilePath, resolve } from "@fern-api/fs-utils";
+import { parseRepository } from "@fern-api/github";
 import { TaskContext } from "@fern-api/task-context";
 import { FernFiddle } from "@fern-fern/fiddle-sdk";
 import { GithubPullRequestReviewer, OutputMetadata, PublishingMetadata, PypiMetadata } from "@fern-fern/fiddle-sdk/api";
@@ -617,12 +618,8 @@ async function convertOutputMode({
 }): Promise<FernFiddle.OutputMode> {
     const downloadSnippets = generator.snippets != null && generator.snippets.path !== "";
     if (generator.github) {
-        const repoString = isGithubSelfhosted(generator.github)
-            ? generator.github.uri
-            : generator.github.repository;
-        const indexOfFirstSlash = repoString.indexOf("/");
-        const owner = repoString.slice(0, indexOfFirstSlash);
-        const repo = repoString.slice(indexOfFirstSlash + 1);
+        const repoString = isGithubSelfhosted(generator.github) ? generator.github.uri : generator.github.repository;
+        const { owner, repo } = parseRepository(repoString);
         const publishInfo =
             generator.output != null
                 ? getGithubPublishInfo(generator.output, maybeGroupLevelMetadata, maybeTopLevelMetadata)

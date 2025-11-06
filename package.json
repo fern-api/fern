@@ -14,7 +14,6 @@
     "bootstrap": "./scripts/bootstrap.sh",
     "clean": "turbo clean",
     "compile": "turbo compile",
-    "compile:cli": "turbo compile --filter=@fern-api/cli",
     "compile:debug": "turbo compile:debug",
     "compile:win": "pnpm -r compile",
     "test": "turbo test --filter=!@fern-api/ete-tests",

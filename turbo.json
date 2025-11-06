@@ -17,12 +17,12 @@
     },
     "compile": {
       "dependsOn": ["^compile"],
-      "outputs": ["lib/**/*.js", "lib/**/*.d.ts"],
+      "outputs": ["lib/**"],
       "inputs": ["src/**", "tests/**", "package.json", "tsconfig.json"]
     },
     "compile:debug": {
       "dependsOn": ["^compile:debug"],
-      "outputs": ["lib/**/*.js", "lib/**/*.d.ts"],
+      "outputs": ["lib/**"],
       "inputs": ["src/**", "tests/**", "package.json", "tsconfig.json"]
     },
     "depcheck": {
