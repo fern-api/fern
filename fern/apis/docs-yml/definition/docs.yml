@@ -513,6 +513,15 @@ types:
 
           Note: this setting is ignored when `disable-header` is set to true.
 
+      theme-switcher-placement:
+        type: optional<ThemeSwitcherPlacement>
+        docs: |
+          Sets the placement of the color theme switcher button
+
+          @default: `header`
+
+          Note: this setting is ignored when `disable-header` is set to true.
+
       content-alignment:
         type: optional<ContentAlignment>
         docs: |
@@ -619,6 +628,12 @@ types:
     enum:
       - header
       - sidebar
+
+  ThemeSwitcherPlacement:
+    enum:
+      - header
+      - sidebar
+      - hidden
 
   ContentAlignment:
     enum:
