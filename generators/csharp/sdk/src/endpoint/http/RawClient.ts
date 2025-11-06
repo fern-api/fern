@@ -252,64 +252,21 @@ export class RawClient extends WithGeneration {
         csharpType: ast.Type;
         encoding?: FernIr.FileUploadBodyPropertyEncoding;
     }): string {
-        csharpType = csharpType.underlyingTypeIfOptional() ?? csharpType;
-        const isCollection = csharpType.isCollection();
         if (encoding != null) {
             switch (encoding) {
                 case "exploded":
-                    return isCollection ? "AddExplodedFormEncodedParts" : "AddExplodedFormEncodedPart";
+                    return csharpType.unwrapIfOptional().isCollection
+                        ? "AddExplodedFormEncodedParts"
+                        : "AddExplodedFormEncodedPart";
                 case "form":
-                    return isCollection ? "AddFormEncodedParts" : "AddFormEncodedPart";
+                    return csharpType.unwrapIfOptional().isCollection ? "AddFormEncodedParts" : "AddFormEncodedPart";
                 case "json":
-                    return isCollection ? "AddJsonParts" : "AddJsonPart";
+                    return csharpType.unwrapIfOptional().isCollection ? "AddJsonParts" : "AddJsonPart";
                 default:
                     assertNever(encoding);
             }
         } else {
-            csharpType = csharpType.getCollectionItemType() ?? csharpType;
-            csharpType = csharpType.underlyingTypeIfOptional() ?? csharpType;
-            switch (csharpType.type) {
-                case "fileParam":
-                    return isCollection ? "AddFileParameterParts" : "AddFileParameterPart";
-                case "oneOf":
-                case "oneOfBase":
-                    // TODO: handle this in @ .NET runtime to detect whether struct/string/enum/string enum which should become string part,
-                    // or anything else which should become json part.
-                    return isCollection ? "AddJsonParts" : "AddJsonPart";
-                case "int":
-                case "long":
-                case "uint":
-                case "ulong":
-                case "boolean":
-                case "bool":
-                case "float":
-                case "double":
-                case "dateOnly":
-                case "dateTime":
-                case "stringEnum":
-                case "string":
-                case "uuid":
-                    return isCollection ? "AddStringParts" : "AddStringPart";
-                case "object":
-                case "listType":
-                case "list":
-                case "set":
-                case "map":
-                case "array":
-                case "idictionary":
-                case "reference":
-                case "coreReference":
-                case "keyValuePair":
-                    return isCollection ? "AddJsonParts" : "AddJsonPart";
-                case "optional":
-                case "systemType":
-                case "action":
-                case "func":
-                case "byte[]":
-                    throw new Error(`Internal error; cannot add ${csharpType.type} to multipart form`);
-                default:
-                    throw new Error(`Internal error; unknown type ${csharpType.type}`);
-            }
+            return csharpType.multipartMethodName;
         }
     }
 

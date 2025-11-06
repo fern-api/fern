@@ -102,6 +102,7 @@ fixtures:
     - outputFolder: with-wiremock-tests
       customConfig:
         enableWireTests: true
+        packageName: testPackageName
     - outputFolder: no-custom-config
       customConfig: null
     - outputFolder: package-path

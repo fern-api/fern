@@ -1,5 +1,4 @@
 import { UnnamedArgument } from "@fern-api/browser-compatible-base-generator";
-import { assertNever } from "@fern-api/core-utils";
 import { type Generation } from "../../context/generation-info";
 import { AstNode } from "../core/AstNode";
 import { Writer } from "../core/Writer";
@@ -43,35 +42,23 @@ export class Dictionary extends AstNode {
     }
 
     public write(writer: Writer): void {
-        writer.write("new ", this.System.Collections.Generic.Dictionary(this.keyType, this.valueType));
-
         if (this.values == null) {
-            writer.write("()");
+            writer.write(this.System.Collections.Generic.Dictionary(this.keyType, this.valueType).new());
             return;
         }
-
-        switch (this.values.type) {
-            case "argument": {
-                writer.write("(");
-                this.values.argument.write(writer);
-                writer.write(")");
-                break;
-            }
-            case "entries": {
-                writer.writeLine("()");
-                writer.pushScope();
-                for (const { key, value } of this.values.entries) {
-                    writer.write("{ ");
-                    key.write(writer);
-                    writer.write(", ");
-                    value.write(writer);
-                    writer.writeLine(" },");
-                }
-                writer.popScope(false);
-                break;
-            }
-            default:
-                assertNever(this.values);
+        if (this.values.type === "argument") {
+            writer.write(
+                this.System.Collections.Generic.Dictionary(this.keyType, this.valueType).new({
+                    arguments_: [this.values.argument]
+                })
+            );
+            return;
         }
+        writer.write(this.System.Collections.Generic.Dictionary(this.keyType, this.valueType).new());
+        writer.pushScope();
+        for (const { key, value } of this.values.entries) {
+            writer.writeLine("{ ", key, ", ", value, " },");
+        }
+        writer.popScope();
     }
 }

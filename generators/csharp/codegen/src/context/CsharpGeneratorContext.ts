@@ -147,7 +147,7 @@ export abstract class CsharpGeneratorContext<
                 access: ast.Access.Public,
                 get: true,
                 init: true,
-                useRequired: useRequired && type.isReferenceType() && !type.isOptional(),
+                useRequired: useRequired && type.isReferenceType && !type.isOptional,
                 type,
                 summary: header.docs
             });
@@ -158,9 +158,9 @@ export abstract class CsharpGeneratorContext<
         for (const header of this.getIdempotencyHeaders()) {
             const type = this.csharpTypeMapper.convert({ reference: header.valueType });
 
-            if (type.isReferenceType() && !type.isOptional()) {
+            if (type.isReferenceType && !type.isOptional) {
                 const name = header.name.name.pascalCase.safeName;
-                writer.write(name, " = ", type.getDefaultValue(), ",");
+                writer.write(name, " = ", type.defaultValue, ",");
                 writer.writeLine();
             }
         }
