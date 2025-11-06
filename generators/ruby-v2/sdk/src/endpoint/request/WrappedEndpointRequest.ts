@@ -58,7 +58,14 @@ export class WrappedEndpointRequest extends EndpointRequest {
                 writer.newLine();
                 writer.write(`${QUERY_PARAM_NAMES_VN} = `);
                 writer.writeLine(`${toRubySymbolArray(this.getQueryParameterNames())}`);
-                writer.writeLine(`${queryParameterBagName} = params.slice(*${QUERY_PARAM_NAMES_VN})`);
+                writer.writeLine(`${queryParameterBagName} = {}`);
+                for (const queryParam of this.endpoint.queryParameters) {
+                    const snakeCaseName = queryParam.name.name.snakeCase.safeName;
+                    const wireValue = queryParam.name.wireValue;
+                    writer.writeLine(
+                        `${queryParameterBagName}["${wireValue}"] = params[:${snakeCaseName}] if params.key?(:${snakeCaseName})`
+                    );
+                }
                 writer.writeLine(`params = params.except(*${QUERY_PARAM_NAMES_VN})`);
             }),
             queryParameterBagReference: queryParameterBagName
@@ -73,19 +80,75 @@ export class WrappedEndpointRequest extends EndpointRequest {
         if (this.endpoint.requestBody == null) {
             return undefined;
         }
-        if (this.hasPathParameters()) {
+
+        const bodyParamsVar = this.hasPathParameters() ? BODY_BAG_NAME : "params";
+
+        if (
+            this.endpoint.requestBody.type === "reference" &&
+            this.endpoint.requestBody.requestBodyType.type === "named"
+        ) {
+            const bodyTypeReference = this.context.getReferenceToTypeId(
+                this.endpoint.requestBody.requestBodyType.typeId
+            );
+
+            if (this.hasPathParameters()) {
+                return {
+                    code: ruby.codeblock((writer) => {
+                        writer.writeLine(`${PATH_PARAM_NAMES_VN} = ${toRubySymbolArray(this.getPathParameterNames())}`);
+                        writer.writeLine(`${BODY_BAG_NAME} = params.except(*${PATH_PARAM_NAMES_VN})`);
+                    }),
+                    requestBodyReference: ruby.codeblock((writer) => {
+                        writer.writeNode(bodyTypeReference);
+                        writer.write(`.new(${bodyParamsVar}).to_h`);
+                    })
+                };
+            }
             return {
-                code: ruby.codeblock((writer) => {
-                    writer.writeLine(`${PATH_PARAM_NAMES_VN} = ${toExplicitArray(this.getPathParameterNames())}`);
-                }),
                 requestBodyReference: ruby.codeblock((writer) => {
-                    writer.write(`params.except(*${PATH_PARAM_NAMES_VN})`);
+                    writer.writeNode(bodyTypeReference);
+                    writer.write(`.new(${bodyParamsVar}).to_h`);
                 })
             };
         }
+
+        if (this.endpoint.requestBody.type === "inlinedRequestBody") {
+            const wrapperReference = this.context.getRequestWrapperReference(this.serviceId, this.wrapper.wrapperName);
+            const bodyPropertyNames = [
+                ...this.endpoint.requestBody.properties,
+                ...(this.endpoint.requestBody.extendedProperties ?? [])
+            ].map((prop) => prop.name.name.snakeCase.safeName);
+
+            const BODY_PROP_NAMES_VN = "_body_prop_names";
+
+            if (this.hasPathParameters()) {
+                return {
+                    code: ruby.codeblock((writer) => {
+                        writer.writeLine(`${PATH_PARAM_NAMES_VN} = ${toRubySymbolArray(this.getPathParameterNames())}`);
+                        writer.writeLine(`${BODY_BAG_NAME} = params.except(*${PATH_PARAM_NAMES_VN})`);
+                        writer.writeLine(`${BODY_PROP_NAMES_VN} = ${toRubySymbolArray(bodyPropertyNames)}`);
+                        writer.writeLine(`_body_bag = ${BODY_BAG_NAME}.slice(*${BODY_PROP_NAMES_VN})`);
+                    }),
+                    requestBodyReference: ruby.codeblock((writer) => {
+                        writer.writeNode(wrapperReference);
+                        writer.write(`.new(_body_bag).to_h`);
+                    })
+                };
+            }
+            return {
+                code: ruby.codeblock((writer) => {
+                    writer.writeLine(`${BODY_PROP_NAMES_VN} = ${toRubySymbolArray(bodyPropertyNames)}`);
+                    writer.writeLine(`_body_bag = params.slice(*${BODY_PROP_NAMES_VN})`);
+                }),
+                requestBodyReference: ruby.codeblock((writer) => {
+                    writer.writeNode(wrapperReference);
+                    writer.write(`.new(_body_bag).to_h`);
+                })
+            };
+        }
+
         return {
             requestBodyReference: ruby.codeblock((writer) => {
-                writer.write("params");
+                writer.write(bodyParamsVar);
             })
         };
     }
@@ -95,11 +158,11 @@ export class WrappedEndpointRequest extends EndpointRequest {
     }
 
     private getPathParameterNames(): string[] {
-        return this.endpoint.allPathParameters.map((pathParameter) => pathParameter.name.originalName);
+        return this.endpoint.allPathParameters.map((pathParameter) => pathParameter.name.snakeCase.safeName);
     }
 
     private getQueryParameterNames(): string[] {
-        return this.endpoint.queryParameters.map((queryParameter) => queryParameter.name.name.originalName);
+        return this.endpoint.queryParameters.map((queryParameter) => queryParameter.name.name.snakeCase.safeName);
     }
 
     private hasPathParameters(): boolean {

@@ -35,6 +35,8 @@ scripts:
 
 fixtures:
   examples:
+    - outputFolder: remove-payabli 
+      customConfig: null
     - outputFolder: no-custom-config
       customConfig: null
     - outputFolder: readme-config
