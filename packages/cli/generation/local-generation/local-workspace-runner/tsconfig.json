@@ -81,6 +81,9 @@
     },
     {
       "path": "../../../../../generators/rust/dynamic-snippets"
+    },
+    {
+      "path": "../../remote-generation/remote-workspace-runner"
     }
   ]
 }

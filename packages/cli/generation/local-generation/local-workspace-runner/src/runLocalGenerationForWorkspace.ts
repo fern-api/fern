@@ -1,3 +1,4 @@
+import { computeSemanticVersion } from "@fern-api/api-workspace-commons";
 import { FernToken, getAccessToken } from "@fern-api/auth";
 import { SourceResolverImpl } from "@fern-api/cli-source-resolver";
 import { fernConfigJson, GeneratorInvocation, generatorsYml } from "@fern-api/configuration";
@@ -6,6 +7,7 @@ import { ContainerRunner, replaceEnvVariables } from "@fern-api/core-utils";
 import { AbsoluteFilePath, join, RelativeFilePath } from "@fern-api/fs-utils";
 import { generateIntermediateRepresentation } from "@fern-api/ir-generator";
 import { FernIr, PublishTarget } from "@fern-api/ir-sdk";
+import { getDynamicGeneratorConfig } from "@fern-api/remote-workspace-runner";
 import { TaskContext } from "@fern-api/task-context";
 import { FernVenusApi } from "@fern-api/venus-api-sdk";
 import {
@@ -53,6 +55,15 @@ export async function runLocalGenerationForWorkspace({
                     getBaseOpenAPIWorkspaceSettingsFromGeneratorInvocation(generatorInvocation)
                 );
 
+                const dynamicGeneratorConfig = getDynamicGeneratorConfig({
+                    apiName: fernWorkspace.definition.rootApiFile.contents.name,
+                    organization: projectConfig.organization,
+                    generatorInvocation: generatorInvocation
+                });
+
+                const packageName = getPackageNameFromGeneratorConfig(generatorInvocation);
+                version = version ?? (await computeSemanticVersion({ packageName, generatorInvocation }));
+
                 const intermediateRepresentation = generateIntermediateRepresentation({
                     workspace: fernWorkspace,
                     audiences: generatorGroup.audiences,
@@ -64,10 +75,11 @@ export async function runLocalGenerationForWorkspace({
                         disabled: generatorInvocation.disableExamples
                     },
                     readme: generatorInvocation.readme,
-                    version: version,
-                    packageName: generatorsYml.getPackageName({ generatorInvocation }),
+                    version: version ?? (await computeSemanticVersion({ packageName, generatorInvocation })),
+                    packageName,
                     context,
                     sourceResolver: new SourceResolverImpl(context, fernWorkspace),
+                    dynamicGeneratorConfig,
                     generationMetadata: {
                         cliVersion: workspace.cliVersion,
                         generatorName: generatorInvocation.name,
@@ -110,10 +122,6 @@ export async function runLocalGenerationForWorkspace({
                 }
 
                 // Set the publish config on the intermediateRepresentation if available
-
-                // grabs generator.yml > config > package_name
-                const packageName = getPackageNameFromGeneratorConfig(generatorInvocation);
-
                 const publishConfig = getPublishConfig({
                     generatorInvocation,
                     org: organization.ok ? organization.body : undefined,
@@ -133,15 +141,17 @@ export async function runLocalGenerationForWorkspace({
                         RelativeFilePath.of(generatorInvocation.language ?? generatorInvocation.name)
                     );
 
-                const absolutePathToLocalSnippetJSON =
-                    generatorInvocation.raw?.snippets?.path != null
-                        ? AbsoluteFilePath.of(
-                              join(
-                                  workspace.absoluteFilePath,
-                                  RelativeFilePath.of(generatorInvocation.raw.snippets.path)
-                              )
-                          )
-                        : undefined;
+                let absolutePathToLocalSnippetJSON: AbsoluteFilePath | undefined = undefined;
+                if (generatorInvocation.raw?.snippets?.path != null) {
+                    absolutePathToLocalSnippetJSON = AbsoluteFilePath.of(
+                        join(workspace.absoluteFilePath, RelativeFilePath.of(generatorInvocation.raw.snippets.path))
+                    );
+                }
+                if (absolutePathToLocalSnippetJSON == null && intermediateRepresentation.selfHosted) {
+                    absolutePathToLocalSnippetJSON = AbsoluteFilePath.of(
+                        (await getWorkspaceTempDir()).path + "/snippet.json"
+                    );
+                }
 
                 // NOTE(tjb9dc): Important that we get a new temp dir per-generator, as we don't want their local files to collide.
                 const workspaceTempDir = await getWorkspaceTempDir();
@@ -182,9 +192,23 @@ export async function runLocalGenerationForWorkspace({
 }
 
 function getPackageNameFromGeneratorConfig(generatorInvocation: GeneratorInvocation): string | undefined {
-    return typeof generatorInvocation.raw?.config === "object" && generatorInvocation.raw?.config !== null
-        ? (generatorInvocation.raw.config as { package_name?: string }).package_name
-        : undefined;
+    // Check config.package_name first
+    if (typeof generatorInvocation.raw?.config === "object" && generatorInvocation.raw?.config !== null) {
+        const packageName = (generatorInvocation.raw.config as { package_name?: string }).package_name;
+        if (packageName != null) {
+            return packageName;
+        }
+    }
+
+    // Check output.package-name for npm/PyPI/etc.
+    if (typeof generatorInvocation.raw?.output === "object" && generatorInvocation.raw?.output !== null) {
+        const packageName = (generatorInvocation.raw.output as { ["package-name"]?: string })["package-name"];
+        if (packageName != null) {
+            return packageName;
+        }
+    }
+
+    return undefined;
 }
 
 export async function getWorkspaceTempDir(): Promise<tmp.DirectoryResult> {
