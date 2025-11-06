@@ -61,16 +61,7 @@ export async function runLocalGenerationForWorkspace({
                     generatorInvocation: generatorInvocation
                 });
 
-                // grabs generator.yml > config > package_name
                 const packageName = getPackageNameFromGeneratorConfig(generatorInvocation);
-                // const packageName = generatorsYml.getPackageName({ generatorInvocation });
-                // Log params to this function
-                context.logger.debug("runLocalGenerationForWorkspace packageName", packageName || "undefined");
-                context.logger.debug(
-                    "runLocalGenerationForWorkspace generatorInvocation",
-                    JSON.stringify(generatorInvocation)
-                );
-
                 const intermediateRepresentation = generateIntermediateRepresentation({
                     workspace: fernWorkspace,
                     audiences: generatorGroup.audiences,
@@ -197,9 +188,23 @@ export async function runLocalGenerationForWorkspace({
 }
 
 function getPackageNameFromGeneratorConfig(generatorInvocation: GeneratorInvocation): string | undefined {
-    return typeof generatorInvocation.raw?.config === "object" && generatorInvocation.raw?.config !== null
-        ? (generatorInvocation.raw.config as { package_name?: string }).package_name
-        : undefined;
+    // Check config.package_name first
+    if (typeof generatorInvocation.raw?.config === "object" && generatorInvocation.raw?.config !== null) {
+        const packageName = (generatorInvocation.raw.config as { package_name?: string }).package_name;
+        if (packageName != null) {
+            return packageName;
+        }
+    }
+
+    // Check output.package-name for npm/PyPI/etc.
+    if (typeof generatorInvocation.raw?.output === "object" && generatorInvocation.raw?.output !== null) {
+        const packageName = (generatorInvocation.raw.output as { ["package-name"]?: string })["package-name"];
+        if (packageName != null) {
+            return packageName;
+        }
+    }
+
+    return undefined;
 }
 
 export async function getWorkspaceTempDir(): Promise<tmp.DirectoryResult> {
