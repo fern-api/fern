@@ -19,7 +19,9 @@
   "module": "src/index.ts",
   "source": "src/index.ts",
   "types": "lib/index.d.ts",
-  "files": ["lib"],
+  "files": [
+    "lib"
+  ],
   "scripts": {
     "clean": "rm -rf ./lib ./dist && tsc --build --clean",
     "compile": "tsc --build",
@@ -41,6 +43,7 @@
     "@fern-api/configs": "workspace:*",
     "@types/node": "^22.0.0",
     "depcheck": "^1.4.7",
+    "simple-git": "^3.24.0",
     "stylelint": "^16.1.0",
     "typescript": "5.9.3",
     "vitest": "^2.1.9"
