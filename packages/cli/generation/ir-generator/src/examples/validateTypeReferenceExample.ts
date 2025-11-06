@@ -54,7 +54,8 @@ export function validateTypeReferenceExample({
         return [
             {
                 message: "Example is too deeply nested. This may indicate a circular reference.",
-                severity: "warning"
+                severity: "warning",
+                code: "EXAMPLE_TOO_DEEP"
             }
         ];
     }

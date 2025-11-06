@@ -214,9 +214,11 @@ export function convertTypeExample({
             });
         },
         undiscriminatedUnion: (undiscriminatedUnion) => {
-            const hasFatalViolations = (violations: ExampleViolation[]): boolean => {
-                return violations.some((v) => v.severity === "fatal" || v.severity === undefined);
+            const isOnlyTooDeep = (violations: ExampleViolation[]): boolean => {
+                return violations.length > 0 && violations.every((v) => v.code === "EXAMPLE_TOO_DEEP");
             };
+
+            let allVariantsAreTooDeep = true;
 
             for (const [index, variant] of undiscriminatedUnion.union.entries()) {
                 const violationsForMember = validateTypeReferenceExample({
@@ -229,7 +231,8 @@ export function convertTypeExample({
                     breadcrumbs: [],
                     depth: 0
                 });
-                if (violationsForMember.length === 0 || !hasFatalViolations(violationsForMember)) {
+
+                if (violationsForMember.length === 0) {
                     return ExampleTypeShape.undiscriminatedUnion({
                         index,
                         singleUnionType: convertTypeReferenceExample({
@@ -243,7 +246,18 @@ export function convertTypeExample({
                         })
                     });
                 }
+
+                if (!isOnlyTooDeep(violationsForMember)) {
+                    allVariantsAreTooDeep = false;
+                }
             }
+
+            if (allVariantsAreTooDeep) {
+                throw new Error(
+                    `Example is too deeply nested for all union variants. This may indicate a circular reference.`
+                );
+            }
+
             const variantOptions = undiscriminatedUnion.union.map((variant) => {
                 return typeof variant === "string" ? variant : variant.type;
             });
