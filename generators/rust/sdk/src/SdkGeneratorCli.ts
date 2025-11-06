@@ -801,49 +801,38 @@ export class SdkGeneratorCli extends AbstractRustGeneratorCli<SdkCustomConfigSch
     ): string[] {
         const snippet: string[] = [];
         snippet.push("```rust");
-        snippet.push(`use ${packageName}::${clientName};`);
-        snippet.push(`use ${packageName}::config::ClientConfig;`);
 
-        // Add auth imports if needed
-        if (context.ir.auth != null) {
-            const authSchemes = context.ir.auth.schemes;
-            if (authSchemes.some((scheme) => scheme.type === "bearer")) {
-                snippet.push(`use ${packageName}::auth::BearerToken;`);
-            }
-            if (authSchemes.some((scheme) => scheme.type === "basic")) {
-                snippet.push(`use ${packageName}::auth::BasicAuth;`);
-            }
-        }
-
+        snippet.push(`use ${packageName}::prelude::*;`);
         snippet.push("");
 
-        // Start client initialization
-        snippet.push(`let client = ${clientName}::new(ClientConfig {`);
-        snippet.push(`    base_url: "https://api.example.com".to_string(),`);
+        const configFields: string[] = [];
 
-        // Add auth configuration if needed
+        configFields.push(`    base_url: "https://api.example.com".to_string(),`);
+
+        // Add auth fields based on auth schemes (using actual field names from ClientConfig)
         if (context.ir.auth != null) {
             const authSchemes = context.ir.auth.schemes;
             for (const scheme of authSchemes) {
                 switch (scheme.type) {
                     case "bearer":
-                        snippet.push(`    auth: Some(Auth::BearerToken(BearerToken::new("YOUR_API_TOKEN"))),`);
+                        configFields.push(`    token: Some("YOUR_API_TOKEN".to_string()),`);
                         break;
                     case "basic":
-                        snippet.push(`    auth: Some(Auth::BasicAuth(BasicAuth::new("username", "password"))),`);
+                        configFields.push(`    username: Some("username".to_string()),`);
+                        configFields.push(`    password: Some("password".to_string()),`);
                         break;
                     case "header":
-                        if (scheme.name != null && scheme.valueType != null) {
-                            const headerName = scheme.name.name.originalName;
-                            snippet.push(`    // Add ${headerName} header for authentication`);
-                        }
+                        configFields.push(`    api_key: Some("YOUR_API_KEY".to_string()),`);
                         break;
                 }
             }
         }
 
+        // Build client initialization
+        snippet.push(`let client = ${clientName}::new(ClientConfig {`);
+        configFields.forEach((field) => snippet.push(field));
         snippet.push(`    ..Default::default()`);
-        snippet.push(`});`);
+        snippet.push(`}).expect("Failed to build client");`);
 
         // Add a simple usage example if there are endpoints
         const firstEndpoint = this.getFirstAvailableEndpoint(context);
