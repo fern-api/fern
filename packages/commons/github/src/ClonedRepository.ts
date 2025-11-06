@@ -86,6 +86,30 @@ export class ClonedRepository {
         await this.git.push();
     }
 
+    public async isRemoteEmpty(): Promise<boolean> {
+        await this.git.cwd(this.clonePath);
+        try {
+            const result = await this.git.raw(["ls-remote", "--heads", "origin"]);
+            return result.trim().length === 0;
+        } catch (_error) {
+            return true;
+        }
+    }
+
+    public async checkoutOrCreateLocal(branch: string): Promise<void> {
+        await this.git.cwd(this.clonePath);
+        try {
+            await this.git.checkout(branch);
+        } catch (_error) {
+            await this.git.checkoutLocalBranch(branch);
+        }
+    }
+
+    public async pushUpstream(branch: string): Promise<void> {
+        await this.git.cwd(this.clonePath);
+        await this.git.push("origin", branch, { "--set-upstream": null });
+    }
+
     public async overwriteLocalContents(sourceDirectoryPath: string): Promise<void> {
         const [sourceContents, destContents] = await Promise.all([
             readdir(sourceDirectoryPath),
