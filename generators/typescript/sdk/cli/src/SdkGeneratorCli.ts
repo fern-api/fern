@@ -13,6 +13,7 @@ import {
 } from "@fern-typescript/commons";
 import { GeneratorContext } from "@fern-typescript/contexts";
 import { SdkGenerator } from "@fern-typescript/sdk-generator";
+import { copyFile } from "fs/promises";
 import path from "path";
 
 import { SdkCustomConfig } from "./custom-config/SdkCustomConfig";
@@ -294,17 +295,11 @@ export class SdkGeneratorCli extends AbstractGeneratorCli<SdkCustomConfig> {
     }
 
     private async copyLicenseFile(destinationPath: string): Promise<void> {
-        const fs = await import("fs");
-        const { pipeline } = await import("stream/promises");
-
         // In Docker execution environment, the license file is mounted at /tmp/LICENSE
         const dockerLicensePath = "/tmp/LICENSE";
 
         try {
-            const readStream = fs.createReadStream(dockerLicensePath, { encoding: "utf-8" });
-            const writeStream = fs.createWriteStream(destinationPath, { encoding: "utf-8" });
-
-            await pipeline(readStream, writeStream);
+            await copyFile(dockerLicensePath, destinationPath);
         } catch (error) {
             throw new Error(
                 `Could not copy license file from ${dockerLicensePath}: ${error instanceof Error ? error.message : String(error)}`
