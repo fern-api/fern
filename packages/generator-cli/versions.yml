@@ -1,6 +1,13 @@
 # yaml-language-server: $schema=../../versions-yml.schema.json
 - changelogEntry:
     - summary: |
+        Use proper title case in README generator. Conjunctions and prepositions are now lowercased when they appear in the middle of titles.
+      type: fix
+  createdAt: "2025-11-06"
+  version: 0.4.1
+
+- changelogEntry:
+    - summary: |
         Move generator-cli source code from fern-platform to fern repository.
       type: chore
   createdAt: "2025-11-04"
