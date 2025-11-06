@@ -1,6 +1,14 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
 - changelogEntry:
     - summary: |
+        Add support for binary primitive type in Conjure parser. Binary types are now converted to string with format: binary in Fern definitions, resolving "Cannot find declaration of type: binary" errors when importing Conjure files.
+      type: feat
+  irVersion: 61
+  createdAt: "2025-11-06"
+  version: 0.108.0
+
+- changelogEntry:
+    - summary: |
         Update migration logic to support new generator versions with ir v61.
       type: chore
   irVersion: 61
