@@ -84,8 +84,12 @@ module Seed
       # @return [Array[Seed::NullableOptional::Types::UserResponse]]
       def list_users(request_options: {}, **params)
         params = Seed::Internal::Types::Utils.symbolize_keys(params)
-        _query_param_names = %i[limit offset includeDeleted sortBy]
-        _query = params.slice(*_query_param_names)
+        _query_param_names = %i[limit offset include_deleted sort_by]
+        _query = {}
+        _query["limit"] = params[:limit] if params.key?(:limit)
+        _query["offset"] = params[:offset] if params.key?(:offset)
+        _query["includeDeleted"] = params[:include_deleted] if params.key?(:include_deleted)
+        _query["sortBy"] = params[:sort_by] if params.key?(:sort_by)
         params.except(*_query_param_names)
 
         _request = Seed::Internal::JSON::Request.new(
@@ -111,8 +115,12 @@ module Seed
       # @return [Array[Seed::NullableOptional::Types::UserResponse]]
       def search_users(request_options: {}, **params)
         params = Seed::Internal::Types::Utils.symbolize_keys(params)
-        _query_param_names = %i[query department role isActive]
-        _query = params.slice(*_query_param_names)
+        _query_param_names = %i[query department role is_active]
+        _query = {}
+        _query["query"] = params[:query] if params.key?(:query)
+        _query["department"] = params[:department] if params.key?(:department)
+        _query["role"] = params[:role] if params.key?(:role)
+        _query["isActive"] = params[:is_active] if params.key?(:is_active)
         params.except(*_query_param_names)
 
         _request = Seed::Internal::JSON::Request.new(
@@ -184,13 +192,16 @@ module Seed
       #
       # @return [Seed::NullableOptional::Types::ComplexProfile]
       def update_complex_profile(request_options: {}, **params)
-        _path_param_names = ["profileId"]
+        _path_param_names = %i[profile_id]
+        _body = params.except(*_path_param_names)
+        _body_prop_names = %i[nullable_role nullable_status nullable_notification nullable_search_result nullable_array]
+        _body_bag = _body.slice(*_body_prop_names)
 
         _request = Seed::Internal::JSON::Request.new(
           base_url: request_options[:base_url],
           method: "PATCH",
           path: "/api/profiles/complex/#{params[:profileId]}",
-          body: params.except(*_path_param_names)
+          body: Seed::NullableOptional::Types::UpdateComplexProfileRequest.new(_body_bag).to_h
         )
         begin
           _response = @client.send(_request)
@@ -235,8 +246,11 @@ module Seed
       # @return [Array[Seed::NullableOptional::Types::UserResponse]]
       def filter_by_role(request_options: {}, **params)
         params = Seed::Internal::Types::Utils.symbolize_keys(params)
-        _query_param_names = %i[role status secondaryRole]
-        _query = params.slice(*_query_param_names)
+        _query_param_names = %i[role status secondary_role]
+        _query = {}
+        _query["role"] = params[:role] if params.key?(:role)
+        _query["status"] = params[:status] if params.key?(:status)
+        _query["secondaryRole"] = params[:secondary_role] if params.key?(:secondary_role)
         params.except(*_query_param_names)
 
         _request = Seed::Internal::JSON::Request.new(
@@ -282,13 +296,16 @@ module Seed
       #
       # @return [Array[String]]
       def update_tags(request_options: {}, **params)
-        _path_param_names = ["userId"]
+        _path_param_names = %i[user_id]
+        _body = params.except(*_path_param_names)
+        _body_prop_names = %i[tags categories labels]
+        _body_bag = _body.slice(*_body_prop_names)
 
         _request = Seed::Internal::JSON::Request.new(
           base_url: request_options[:base_url],
           method: "PUT",
           path: "/api/users/#{params[:userId]}/tags",
-          body: params.except(*_path_param_names)
+          body: Seed::NullableOptional::Types::UpdateTagsRequest.new(_body_bag).to_h
         )
         begin
           _response = @client.send(_request)
@@ -306,11 +323,14 @@ module Seed
       #
       # @return [Array[Seed::NullableOptional::Types::SearchResult] | nil]
       def get_search_results(request_options: {}, **params)
+        _body_prop_names = %i[query filters include_types]
+        _body_bag = params.slice(*_body_prop_names)
+
         _request = Seed::Internal::JSON::Request.new(
           base_url: request_options[:base_url],
           method: "POST",
           path: "/api/search",
-          body: params
+          body: Seed::NullableOptional::Types::SearchRequest.new(_body_bag).to_h
         )
         begin
           _response = @client.send(_request)
