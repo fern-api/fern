@@ -1,88 +1,223 @@
 import { join } from "../../../src/core/url/index";
 
 describe("join", () => {
+    interface TestCase {
+        description: string;
+        base: string;
+        segments: string[];
+        expected: string;
+    }
+
     describe("basic functionality", () => {
-        it("should return empty string for empty base", () => {
-            expect(join("")).toBe("");
-            expect(join("", "path")).toBe("");
-        });
+        const basicTests: TestCase[] = [
+            { description: "should return empty string for empty base", base: "", segments: [], expected: "" },
+            {
+                description: "should return empty string for empty base with path",
+                base: "",
+                segments: ["path"],
+                expected: "",
+            },
+            {
+                description: "should handle single segment",
+                base: "base",
+                segments: ["segment"],
+                expected: "base/segment",
+            },
+            {
+                description: "should handle single segment with trailing slash on base",
+                base: "base/",
+                segments: ["segment"],
+                expected: "base/segment",
+            },
+            {
+                description: "should handle single segment with leading slash",
+                base: "base",
+                segments: ["/segment"],
+                expected: "base/segment",
+            },
+            {
+                description: "should handle single segment with both slashes",
+                base: "base/",
+                segments: ["/segment"],
+                expected: "base/segment",
+            },
+            {
+                description: "should handle multiple segments",
+                base: "base",
+                segments: ["path1", "path2", "path3"],
+                expected: "base/path1/path2/path3",
+            },
+            {
+                description: "should handle multiple segments with slashes",
+                base: "base/",
+                segments: ["/path1/", "/path2/", "/path3/"],
+                expected: "base/path1/path2/path3/",
+            },
+        ];
 
-        it("should handle single segment", () => {
-            expect(join("base", "segment")).toBe("base/segment");
-            expect(join("base/", "segment")).toBe("base/segment");
-            expect(join("base", "/segment")).toBe("base/segment");
-            expect(join("base/", "/segment")).toBe("base/segment");
-        });
-
-        it("should handle multiple segments", () => {
-            expect(join("base", "path1", "path2", "path3")).toBe("base/path1/path2/path3");
-            expect(join("base/", "/path1/", "/path2/", "/path3/")).toBe("base/path1/path2/path3/");
+        basicTests.forEach(({ description, base, segments, expected }) => {
+            it(description, () => {
+                expect(join(base, ...segments)).toBe(expected);
+            });
         });
     });
 
     describe("URL handling", () => {
-        it("should handle absolute URLs", () => {
-            expect(join("https://example.com", "api", "v1")).toBe("https://example.com/api/v1");
-            expect(join("https://example.com/", "/api/", "/v1/")).toBe("https://example.com/api/v1/");
-            expect(join("https://example.com/base", "api", "v1")).toBe("https://example.com/base/api/v1");
-        });
+        const urlTests: TestCase[] = [
+            {
+                description: "should handle absolute URLs",
+                base: "https://example.com",
+                segments: ["api", "v1"],
+                expected: "https://example.com/api/v1",
+            },
+            {
+                description: "should handle absolute URLs with slashes",
+                base: "https://example.com/",
+                segments: ["/api/", "/v1/"],
+                expected: "https://example.com/api/v1/",
+            },
+            {
+                description: "should handle absolute URLs with base path",
+                base: "https://example.com/base",
+                segments: ["api", "v1"],
+                expected: "https://example.com/base/api/v1",
+            },
+            {
+                description: "should preserve URL query parameters",
+                base: "https://example.com?query=1",
+                segments: ["api"],
+                expected: "https://example.com/api?query=1",
+            },
+            {
+                description: "should preserve URL fragments",
+                base: "https://example.com#fragment",
+                segments: ["api"],
+                expected: "https://example.com/api#fragment",
+            },
+            {
+                description: "should preserve URL query and fragments",
+                base: "https://example.com?query=1#fragment",
+                segments: ["api"],
+                expected: "https://example.com/api?query=1#fragment",
+            },
+            {
+                description: "should handle http protocol",
+                base: "http://example.com",
+                segments: ["api"],
+                expected: "http://example.com/api",
+            },
+            {
+                description: "should handle ftp protocol",
+                base: "ftp://example.com",
+                segments: ["files"],
+                expected: "ftp://example.com/files",
+            },
+            {
+                description: "should handle ws protocol",
+                base: "ws://example.com",
+                segments: ["socket"],
+                expected: "ws://example.com/socket",
+            },
+            {
+                description: "should fallback to path joining for malformed URLs",
+                base: "not-a-url://",
+                segments: ["path"],
+                expected: "not-a-url:///path",
+            },
+        ];
 
-        it("should preserve URL query parameters and fragments", () => {
-            expect(join("https://example.com?query=1", "api")).toBe("https://example.com/api?query=1");
-            expect(join("https://example.com#fragment", "api")).toBe("https://example.com/api#fragment");
-            expect(join("https://example.com?query=1#fragment", "api")).toBe(
-                "https://example.com/api?query=1#fragment",
-            );
-        });
-
-        it("should handle different protocols", () => {
-            expect(join("http://example.com", "api")).toBe("http://example.com/api");
-            expect(join("ftp://example.com", "files")).toBe("ftp://example.com/files");
-            expect(join("ws://example.com", "socket")).toBe("ws://example.com/socket");
-        });
-
-        it("should fallback to path joining for malformed URLs", () => {
-            expect(join("not-a-url://", "path")).toBe("not-a-url:///path");
+        urlTests.forEach(({ description, base, segments, expected }) => {
+            it(description, () => {
+                expect(join(base, ...segments)).toBe(expected);
+            });
         });
     });
 
     describe("edge cases", () => {
-        it("should handle empty segments", () => {
-            expect(join("base", "", "path")).toBe("base/path");
-            expect(join("base", null as any, "path")).toBe("base/path");
-            expect(join("base", undefined as any, "path")).toBe("base/path");
-        });
+        const edgeCaseTests: TestCase[] = [
+            {
+                description: "should handle empty segments",
+                base: "base",
+                segments: ["", "path"],
+                expected: "base/path",
+            },
+            {
+                description: "should handle null segments",
+                base: "base",
+                segments: [null as any, "path"],
+                expected: "base/path",
+            },
+            {
+                description: "should handle undefined segments",
+                base: "base",
+                segments: [undefined as any, "path"],
+                expected: "base/path",
+            },
+            {
+                description: "should handle segments with only single slash",
+                base: "base",
+                segments: ["/", "path"],
+                expected: "base/path",
+            },
+            {
+                description: "should handle segments with only double slash",
+                base: "base",
+                segments: ["//", "path"],
+                expected: "base/path",
+            },
+            {
+                description: "should handle base paths with trailing slashes",
+                base: "base/",
+                segments: ["path"],
+                expected: "base/path",
+            },
+            {
+                description: "should handle complex nested paths",
+                base: "api/v1/",
+                segments: ["/users/", "/123/", "/profile"],
+                expected: "api/v1/users/123/profile",
+            },
+        ];
 
-        it("should handle segments with only slashes", () => {
-            expect(join("base", "/", "path")).toBe("base/path");
-            expect(join("base", "//", "path")).toBe("base/path");
-        });
-
-        it("should handle base paths with trailing slashes", () => {
-            expect(join("base/", "path")).toBe("base/path");
-        });
-
-        it("should handle complex nested paths", () => {
-            expect(join("api/v1/", "/users/", "/123/", "/profile")).toBe("api/v1/users/123/profile");
+        edgeCaseTests.forEach(({ description, base, segments, expected }) => {
+            it(description, () => {
+                expect(join(base, ...segments)).toBe(expected);
+            });
         });
     });
 
     describe("real-world scenarios", () => {
-        it("should handle API endpoint construction", () => {
-            const baseUrl = "https://api.example.com/v1";
-            expect(join(baseUrl, "users", "123", "posts")).toBe("https://api.example.com/v1/users/123/posts");
-        });
+        const realWorldTests: TestCase[] = [
+            {
+                description: "should handle API endpoint construction",
+                base: "https://api.example.com/v1",
+                segments: ["users", "123", "posts"],
+                expected: "https://api.example.com/v1/users/123/posts",
+            },
+            {
+                description: "should handle file path construction",
+                base: "/var/www",
+                segments: ["html", "assets", "images"],
+                expected: "/var/www/html/assets/images",
+            },
+            {
+                description: "should handle relative path construction",
+                base: "../parent",
+                segments: ["child", "grandchild"],
+                expected: "../parent/child/grandchild",
+            },
+            {
+                description: "should handle Windows-style paths",
+                base: "C:\\Users",
+                segments: ["Documents", "file.txt"],
+                expected: "C:\\Users/Documents/file.txt",
+            },
+        ];
 
-        it("should handle file path construction", () => {
-            expect(join("/var/www", "html", "assets", "images")).toBe("/var/www/html/assets/images");
-        });
-
-        it("should handle relative path construction", () => {
-            expect(join("../parent", "child", "grandchild")).toBe("../parent/child/grandchild");
-        });
-
-        it("should handle Windows-style paths", () => {
-            expect(join("C:\\Users", "Documents", "file.txt")).toBe("C:\\Users/Documents/file.txt");
+        realWorldTests.forEach(({ description, base, segments, expected }) => {
+            it(description, () => {
+                expect(join(base, ...segments)).toBe(expected);
+            });
         });
     });
 
@@ -90,7 +225,7 @@ describe("join", () => {
         it("should handle many segments efficiently", () => {
             const segments = Array(100).fill("segment");
             const result = join("base", ...segments);
-            expect(result).toBe("base/" + segments.join("/"));
+            expect(result).toBe(`base/${segments.join("/")}`);
         });
 
         it("should handle long URLs", () => {
@@ -100,21 +235,50 @@ describe("join", () => {
     });
 
     describe("trailing slash preservation", () => {
-        it("should preserve trailing slash on final result when base has trailing slash and no segments", () => {
-            expect(join("https://api.example.com/")).toBe("https://api.example.com/");
-            expect(join("https://api.example.com/v1/")).toBe("https://api.example.com/v1/");
-        });
+        const trailingSlashTests: TestCase[] = [
+            {
+                description:
+                    "should preserve trailing slash on final result when base has trailing slash and no segments",
+                base: "https://api.example.com/",
+                segments: [],
+                expected: "https://api.example.com/",
+            },
+            {
+                description: "should preserve trailing slash on v1 path",
+                base: "https://api.example.com/v1/",
+                segments: [],
+                expected: "https://api.example.com/v1/",
+            },
+            {
+                description: "should preserve trailing slash when last segment has trailing slash",
+                base: "https://api.example.com",
+                segments: ["users/"],
+                expected: "https://api.example.com/users/",
+            },
+            {
+                description: "should preserve trailing slash with relative path",
+                base: "api/v1",
+                segments: ["users/"],
+                expected: "api/v1/users/",
+            },
+            {
+                description: "should preserve trailing slash with multiple segments",
+                base: "https://api.example.com",
+                segments: ["v1", "collections/"],
+                expected: "https://api.example.com/v1/collections/",
+            },
+            {
+                description: "should preserve trailing slash with base path",
+                base: "base",
+                segments: ["path1", "path2/"],
+                expected: "base/path1/path2/",
+            },
+        ];
 
-        it("should preserve trailing slash when last segment has trailing slash", () => {
-            expect(join("https://api.example.com", "users/")).toBe("https://api.example.com/users/");
-            expect(join("api/v1", "users/")).toBe("api/v1/users/");
-        });
-
-        it("should preserve trailing slash with multiple segments where last has trailing slash", () => {
-            expect(join("https://api.example.com", "v1", "collections/")).toBe(
-                "https://api.example.com/v1/collections/",
-            );
-            expect(join("base", "path1", "path2/")).toBe("base/path1/path2/");
+        trailingSlashTests.forEach(({ description, base, segments, expected }) => {
+            it(description, () => {
+                expect(join(base, ...segments)).toBe(expected);
+            });
         });
     });
 });

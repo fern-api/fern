@@ -13,14 +13,12 @@ exports.makeRequest = void 0;
 const signals_js_1 = require("./signals.js");
 const makeRequest = (fetchFn, url, method, headers, requestBody, timeoutMs, abortSignal, withCredentials, duplex) => __awaiter(void 0, void 0, void 0, function* () {
     const signals = [];
-    // Add timeout signal
     let timeoutAbortId;
     if (timeoutMs != null) {
         const { signal, abortId } = (0, signals_js_1.getTimeoutSignal)(timeoutMs);
         timeoutAbortId = abortId;
         signals.push(signal);
     }
-    // Add arbitrary signal
     if (abortSignal != null) {
         signals.push(abortSignal);
     }

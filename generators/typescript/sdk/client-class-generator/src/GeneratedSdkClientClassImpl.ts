@@ -1274,6 +1274,12 @@ export class GeneratedSdkClientClassImpl implements GeneratedSdkClientClass {
                     header: context.ir.sdkConfig.platformHeaders.userAgent.header,
                     value: ts.factory.createStringLiteral(context.ir.sdkConfig.platformHeaders.userAgent.value)
                 });
+            } else if (this.npmPackage != null) {
+                // Fallback: generate User-Agent header from npm package info
+                headers.push({
+                    header: "User-Agent",
+                    value: ts.factory.createStringLiteral(`${this.npmPackage.packageName}/${this.npmPackage.version}`)
+                });
             }
 
             const generatedVersion = context.versionContext.getGeneratedVersion();

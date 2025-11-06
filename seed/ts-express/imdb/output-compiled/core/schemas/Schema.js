@@ -14,6 +14,7 @@ exports.SchemaType = {
     NUMBER: "number",
     STRING: "string",
     UNKNOWN: "unknown",
+    NEVER: "never",
     RECORD: "record",
     SET: "set",
     UNION: "union",

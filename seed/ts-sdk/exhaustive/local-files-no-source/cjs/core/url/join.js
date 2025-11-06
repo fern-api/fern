@@ -14,7 +14,6 @@ function join(base, ...segments) {
             url = new URL(base);
         }
         catch (_a) {
-            // Fallback to path joining if URL is malformed
             return joinPath(base, ...segments);
         }
         const lastSegment = segments[segments.length - 1];
