@@ -137,7 +137,7 @@ export function getExamples(
     if (examples != null && Object.keys(examples).length > 0) {
         fullExamples.push(
             ...Object.entries(examples).map(([name, value]) => {
-                return { name: value.summary ?? name, value: value.value, description: value.description };
+                return { name, value: value.value, description: value.description ?? value.summary };
             })
         );
     }
@@ -148,9 +148,9 @@ export function getExamples(
                     ? context.resolveExampleReference(example)
                     : example;
                 return {
-                    name: resolvedExample.summary ?? name,
+                    name,
                     value: resolvedExample.value,
-                    description: resolvedExample.description
+                    description: resolvedExample.description ?? resolvedExample.summary
                 };
             })
         );
