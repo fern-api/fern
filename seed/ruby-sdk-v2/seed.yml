@@ -1,4 +1,4 @@
-irVersion: v61
+irVersion: v59
 displayName: Ruby SDK
 language: ruby
 generatorType: SDK
@@ -35,8 +35,6 @@ scripts:
 
 fixtures:
   examples:
-    - outputFolder: remove-payabli 
-      customConfig: null
     - outputFolder: no-custom-config
       customConfig: null
     - outputFolder: readme-config
