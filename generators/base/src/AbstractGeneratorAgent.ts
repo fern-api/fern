@@ -136,14 +136,17 @@ export abstract class AbstractGeneratorAgent<GeneratorContext extends AbstractGe
             });
         }
 
-        const githubConfig = this.getGitHubConfig({ context });
-        if (githubConfig.uri != null && githubConfig.token != null) {
-            return FernGeneratorCli.Remote.github({
-                repoUrl: this.normalizeRepoUrl(githubConfig.uri),
-                installationToken: githubConfig.token
-            });
+        try {
+            const githubConfig = this.getGitHubConfig({ context });
+            if (githubConfig.uri != null && githubConfig.token != null) {
+                return FernGeneratorCli.Remote.github({
+                    repoUrl: this.normalizeRepoUrl(githubConfig.uri),
+                    installationToken: githubConfig.token
+                });
+            }
+        } catch (error) {
+            return undefined;
         }
-
         return undefined;
     }
 
