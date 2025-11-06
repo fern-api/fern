@@ -75,8 +75,6 @@ jobs:
 
       - name: Install
         uses: ./.github/actions/install
-        with:
-          registry-url: "https://registry.npmjs.org"
 
       - name: Update npm
         run: npm install -g npm@latest
@@ -88,9 +86,9 @@ jobs:
 
       - name: Publish generator-cli
         env:
-          NODE_AUTH_TOKEN: ${{ env.NPM_TOKEN }}
           NEW_VERSION: ${{ needs.check-version.outputs.version }}
         run: |
+          echo "//registry.npmjs.org/:_authToken=${NPM_TOKEN}" > ~/.npmrc
           cd packages/generator-cli
           mv package.json package.json.tmp
           version_replace="s/0.0.0/${NEW_VERSION}/"
