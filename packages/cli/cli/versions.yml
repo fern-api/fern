@@ -1,6 +1,14 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
 - changelogEntry:
     - summary: |
+        Add support for binary primitive type in Conjure parser. Binary types are now converted to string with format: binary in Fern definitions, resolving "Cannot find declaration of type: binary" errors when importing Conjure files.
+      type: feat
+  irVersion: 61
+  createdAt: "2025-11-06"
+  version: 0.109.0
+
+- changelogEntry:
+    - summary: |
         Add position-based sorting for folder navigation in docs.yml. Pages can now control their order using a `position` field in frontmatter. Pages with position values sort first (ascending), then pages without position sort alphabetically.
 
         Example:

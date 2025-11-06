@@ -186,3 +186,11 @@ types:
 
       UserId:
         alias: string
+      BinaryData:
+        fields:
+          data:
+            type: binary
+            docs: Raw binary data
+          metadata: string
+      BinaryAlias:
+        alias: binary
