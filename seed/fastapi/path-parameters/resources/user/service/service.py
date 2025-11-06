@@ -34,6 +34,13 @@ class AbstractUserService(AbstractFernService):
     @abc.abstractmethod
     def search_users(self, *, user_id: str, limit: typing.Optional[int] = None) -> typing.Sequence[User]: ...
 
+    @abc.abstractmethod
+    def get_user_metadata(self, *, user_id: str, version: int) -> User:
+        """
+        Test endpoint with path parameter that has a text prefix (v{version})
+        """
+        ...
+
     """
     Below are internal methods used by Fern to register your implementation.
     You can ignore them.
@@ -45,6 +52,7 @@ class AbstractUserService(AbstractFernService):
         cls.__init_create_user(router=router)
         cls.__init_update_user(router=router)
         cls.__init_search_users(router=router)
+        cls.__init_get_user_metadata(router=router)
 
     @classmethod
     def __init_get_user(cls, router: fastapi.APIRouter) -> None:
@@ -192,4 +200,42 @@ class AbstractUserService(AbstractFernService):
             response_model=typing.Sequence[User],
             description=AbstractUserService.search_users.__doc__,
             **get_route_args(cls.search_users, default_tag="user"),
+        )(wrapper)
+
+    @classmethod
+    def __init_get_user_metadata(cls, router: fastapi.APIRouter) -> None:
+        endpoint_function = inspect.signature(cls.get_user_metadata)
+        new_parameters: typing.List[inspect.Parameter] = []
+        for index, (parameter_name, parameter) in enumerate(endpoint_function.parameters.items()):
+            if index == 0:
+                new_parameters.append(parameter.replace(default=fastapi.Depends(cls)))
+            elif parameter_name == "user_id":
+                new_parameters.append(parameter.replace(default=fastapi.Path(...)))
+            elif parameter_name == "version":
+                new_parameters.append(parameter.replace(default=fastapi.Path(...)))
+            else:
+                new_parameters.append(parameter)
+        setattr(cls.get_user_metadata, "__signature__", endpoint_function.replace(parameters=new_parameters))
+
+        @functools.wraps(cls.get_user_metadata)
+        def wrapper(*args: typing.Any, **kwargs: typing.Any) -> User:
+            try:
+                return cls.get_user_metadata(*args, **kwargs)
+            except FernHTTPException as e:
+                logging.getLogger(f"{cls.__module__}.{cls.__name__}").warn(
+                    f"Endpoint 'get_user_metadata' unexpectedly threw {e.__class__.__name__}. "
+                    + f"If this was intentional, please add {e.__class__.__name__} to "
+                    + "the endpoint's errors list in your Fern Definition."
+                )
+                raise e
+
+        # this is necessary for FastAPI to find forward-ref'ed type hints.
+        # https://github.com/tiangolo/fastapi/pull/5077
+        wrapper.__globals__.update(cls.get_user_metadata.__globals__)
+
+        router.get(
+            path="/{tenant_id}/user/{user_id}/metadata/v{version}",
+            response_model=User,
+            description=AbstractUserService.get_user_metadata.__doc__,
+            **get_route_args(cls.get_user_metadata, default_tag="user"),
         )(wrapper)

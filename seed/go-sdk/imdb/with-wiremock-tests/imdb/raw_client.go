@@ -4,7 +4,7 @@ package imdb
 
 import (
 	context "context"
-	fern "github.com/imdb/fern"
+	testPackageName "github.com/imdb/fern"
 	core "github.com/imdb/fern/core"
 	internal "github.com/imdb/fern/internal"
 	option "github.com/imdb/fern/option"
@@ -32,9 +32,9 @@ func NewRawClient(options *core.RequestOptions) *RawClient {
 
 func (r *RawClient) CreateMovie(
 	ctx context.Context,
-	request *fern.CreateMovieRequest,
+	request *testPackageName.CreateMovieRequest,
 	opts ...option.RequestOption,
-) (*core.Response[fern.MovieId], error) {
+) (*core.Response[testPackageName.MovieId], error) {
 	options := core.NewRequestOptions(opts...)
 	baseURL := internal.ResolveBaseURL(
 		options.BaseURL,
@@ -46,7 +46,7 @@ func (r *RawClient) CreateMovie(
 		r.options.ToHeader(),
 		options.ToHeader(),
 	)
-	var response fern.MovieId
+	var response testPackageName.MovieId
 	raw, err := r.caller.Call(
 		ctx,
 		&internal.CallParams{
@@ -64,7 +64,7 @@ func (r *RawClient) CreateMovie(
 	if err != nil {
 		return nil, err
 	}
-	return &core.Response[fern.MovieId]{
+	return &core.Response[testPackageName.MovieId]{
 		StatusCode: raw.StatusCode,
 		Header:     raw.Header,
 		Body:       response,
@@ -73,9 +73,9 @@ func (r *RawClient) CreateMovie(
 
 func (r *RawClient) GetMovie(
 	ctx context.Context,
-	movieId fern.MovieId,
+	movieId testPackageName.MovieId,
 	opts ...option.RequestOption,
-) (*core.Response[*fern.Movie], error) {
+) (*core.Response[*testPackageName.Movie], error) {
 	options := core.NewRequestOptions(opts...)
 	baseURL := internal.ResolveBaseURL(
 		options.BaseURL,
@@ -90,7 +90,7 @@ func (r *RawClient) GetMovie(
 		r.options.ToHeader(),
 		options.ToHeader(),
 	)
-	var response *fern.Movie
+	var response *testPackageName.Movie
 	raw, err := r.caller.Call(
 		ctx,
 		&internal.CallParams{
@@ -102,13 +102,13 @@ func (r *RawClient) GetMovie(
 			QueryParameters: options.QueryParameters,
 			Client:          options.HTTPClient,
 			Response:        &response,
-			ErrorDecoder:    internal.NewErrorDecoder(fern.ErrorCodes),
+			ErrorDecoder:    internal.NewErrorDecoder(testPackageName.ErrorCodes),
 		},
 	)
 	if err != nil {
 		return nil, err
 	}
-	return &core.Response[*fern.Movie]{
+	return &core.Response[*testPackageName.Movie]{
 		StatusCode: raw.StatusCode,
 		Header:     raw.Header,
 		Body:       response,

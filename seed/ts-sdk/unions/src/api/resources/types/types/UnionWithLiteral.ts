@@ -6,6 +6,7 @@ import type * as SeedUnions from "../../../index.js";
  * @example
  *     {
  *         type: "fern",
+ *         base: "base",
  *         value: "fern"
  *     }
  */

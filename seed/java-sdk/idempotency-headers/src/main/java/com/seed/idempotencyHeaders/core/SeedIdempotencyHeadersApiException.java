@@ -65,9 +65,9 @@ public class SeedIdempotencyHeadersApiException extends SeedIdempotencyHeadersEx
         return this.headers;
     }
 
-    @java.lang.Override
+    @Override
     public String toString() {
         return "SeedIdempotencyHeadersApiException{" + "message: " + getMessage() + ", statusCode: " + statusCode
-                + ", body: " + body + "}";
+                + ", body: " + ObjectMappers.stringify(body) + "}";
     }
 }

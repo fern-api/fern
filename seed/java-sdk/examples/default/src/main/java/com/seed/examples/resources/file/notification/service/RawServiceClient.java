@@ -47,16 +47,14 @@ public class RawServiceClient {
         }
         try (Response response = client.newCall(okhttpRequest).execute()) {
             ResponseBody responseBody = response.body();
+            String responseBodyString = responseBody != null ? responseBody.string() : "{}";
             if (response.isSuccessful()) {
                 return new SeedExamplesHttpResponse<>(
-                        ObjectMappers.JSON_MAPPER.readValue(responseBody.string(), Exception.class), response);
+                        ObjectMappers.JSON_MAPPER.readValue(responseBodyString, Exception.class), response);
             }
-            String responseBodyString = responseBody != null ? responseBody.string() : "{}";
+            Object errorBody = ObjectMappers.parseErrorBody(responseBodyString);
             throw new SeedExamplesApiException(
-                    "Error with status code " + response.code(),
-                    response.code(),
-                    ObjectMappers.JSON_MAPPER.readValue(responseBodyString, Object.class),
-                    response);
+                    "Error with status code " + response.code(), response.code(), errorBody, response);
         } catch (IOException e) {
             throw new SeedExamplesException("Network error executing HTTP request", e);
         }

@@ -42,6 +42,7 @@
         "test:unit": "jest --selectProjects unit",
         "test:wire": "jest --selectProjects wire"
     },
+    "dependencies": {},
     "devDependencies": {
         "webpack": "^5.97.1",
         "ts-loader": "^9.5.1",

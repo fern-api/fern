@@ -8,7 +8,7 @@ public partial class SeedHttpHeadClient
 
     public SeedHttpHeadClient(ClientOptions? clientOptions = null)
     {
-        var defaultHeaders = new Headers(
+        var defaultHeaders = new SeedHttpHead.Core.Headers(
             new Dictionary<string, string>()
             {
                 { "X-Fern-Language", "C#" },

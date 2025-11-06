@@ -58,19 +58,17 @@ public class AsyncRawSeedUndiscriminatedUnionWithResponsePropertyClient {
             @Override
             public void onResponse(@NotNull Call call, @NotNull Response response) throws IOException {
                 try (ResponseBody responseBody = response.body()) {
+                    String responseBodyString = responseBody != null ? responseBody.string() : "{}";
                     if (response.isSuccessful()) {
                         UnionResponse parsedResponse =
-                                ObjectMappers.JSON_MAPPER.readValue(responseBody.string(), UnionResponse.class);
+                                ObjectMappers.JSON_MAPPER.readValue(responseBodyString, UnionResponse.class);
                         future.complete(new SeedUndiscriminatedUnionWithResponsePropertyHttpResponse<>(
                                 parsedResponse.getData(), response));
                         return;
                     }
-                    String responseBodyString = responseBody != null ? responseBody.string() : "{}";
+                    Object errorBody = ObjectMappers.parseErrorBody(responseBodyString);
                     future.completeExceptionally(new SeedUndiscriminatedUnionWithResponsePropertyApiException(
-                            "Error with status code " + response.code(),
-                            response.code(),
-                            ObjectMappers.JSON_MAPPER.readValue(responseBodyString, Object.class),
-                            response));
+                            "Error with status code " + response.code(), response.code(), errorBody, response));
                     return;
                 } catch (IOException e) {
                     future.completeExceptionally(new SeedUndiscriminatedUnionWithResponsePropertyException(
@@ -113,19 +111,17 @@ public class AsyncRawSeedUndiscriminatedUnionWithResponsePropertyClient {
             @Override
             public void onResponse(@NotNull Call call, @NotNull Response response) throws IOException {
                 try (ResponseBody responseBody = response.body()) {
+                    String responseBodyString = responseBody != null ? responseBody.string() : "{}";
                     if (response.isSuccessful()) {
                         UnionListResponse parsedResponse =
-                                ObjectMappers.JSON_MAPPER.readValue(responseBody.string(), UnionListResponse.class);
+                                ObjectMappers.JSON_MAPPER.readValue(responseBodyString, UnionListResponse.class);
                         future.complete(new SeedUndiscriminatedUnionWithResponsePropertyHttpResponse<>(
                                 parsedResponse.getData(), response));
                         return;
                     }
-                    String responseBodyString = responseBody != null ? responseBody.string() : "{}";
+                    Object errorBody = ObjectMappers.parseErrorBody(responseBodyString);
                     future.completeExceptionally(new SeedUndiscriminatedUnionWithResponsePropertyApiException(
-                            "Error with status code " + response.code(),
-                            response.code(),
-                            ObjectMappers.JSON_MAPPER.readValue(responseBodyString, Object.class),
-                            response));
+                            "Error with status code " + response.code(), response.code(), errorBody, response));
                     return;
                 } catch (IOException e) {
                     future.completeExceptionally(new SeedUndiscriminatedUnionWithResponsePropertyException(

@@ -308,10 +308,16 @@ fixtures:
     - outputFolder: use-prettier
       customConfig:
         formatter: prettier
+    - outputFolder: use-oxfmt
+      customConfig:
+        formatter: oxfmt
     - outputFolder: use-prettier-no-linter
       customConfig:
         formatter: prettier
         linter: none
+    - outputFolder: use-oxlint
+      customConfig:
+        linter: oxlint
     - outputFolder: no-linter
       customConfig:
         linter: none
@@ -371,6 +377,15 @@ fixtures:
     - outputFolder: allow-custom-fetcher
       customConfig:
         allowCustomFetcher: true
+  enum:
+    - outputFolder: no-custom-config
+      customConfig: null
+    - outputFolder: forward-compatible-enums
+      customConfig:
+        enableForwardCompatibleEnums: true
+    - outputFolder: serde
+      customConfig:
+        noSerdeLayer: false
 scripts:
   - docker: fernapi/ts-seed
     commands:
@@ -410,18 +425,14 @@ scripts:
           if grep -q '"test":' package.json; then corepack yarn test; fi
         fi
 allowedFailures:
-  - bytes-download
   - circular-references
-  - enum
+  - enum:no-custom-config
+  - enum:forward-compatible-enums
+  - enum:serde
   - error-property:no-custom-config
   - error-property:union-utils
   - errors
-  - examples:examples-with-api-reference
-  - examples:retain-original-casing
-  - mixed-case:no-custom-config
-  - mixed-case:retain-original-casing
   - oauth-client-credentials-custom
   - package-yml
   - trace:no-custom-config
   - trace:serde
-  - unions

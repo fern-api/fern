@@ -1,6 +1,19 @@
 {
     "endpoints": [
         {
+            "example_identifier": "d06dc41",
+            "id": {
+                "method": "POST",
+                "path": "/{endpointParam}",
+                "identifier_override": "endpoint_service.post"
+            },
+            "snippet": {
+                "type": "java",
+                "sync_client": "package com.example.usage;\n\nimport com.seed.variables.SeedVariablesClient;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedVariablesClient client = SeedVariablesClient\n            .builder()\n            .rootVariable(\"YOUR_ROOT_VARIABLE\")\n            .build();\n\n        client.service().post();\n    }\n}\n",
+                "async_client": "package com.example.usage;\n\nimport com.seed.variables.SeedVariablesClient;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedVariablesClient client = SeedVariablesClient\n            .builder()\n            .rootVariable(\"YOUR_ROOT_VARIABLE\")\n            .build();\n\n        client.service().post();\n    }\n}\n"
+            }
+        },
+        {
             "example_identifier": "e249ce9a",
             "id": {
                 "method": "POST",

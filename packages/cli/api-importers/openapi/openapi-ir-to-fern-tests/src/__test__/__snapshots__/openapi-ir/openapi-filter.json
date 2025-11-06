@@ -699,6 +699,13 @@
                                 "type": "int"
                               },
                               "type": "primitive"
+                            },
+                            "count": {
+                              "value": {
+                                "value": 3,
+                                "type": "int"
+                              },
+                              "type": "primitive"
                             }
                           },
                           "type": "object"
@@ -958,6 +965,13 @@
                             "updated_at": {
                               "value": {
                                 "value": 1394622004,
+                                "type": "int"
+                              },
+                              "type": "primitive"
+                            },
+                            "count": {
+                              "value": {
+                                "value": 3,
                                 "type": "int"
                               },
                               "type": "primitive"

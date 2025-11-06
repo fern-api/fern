@@ -44,27 +44,27 @@ export class WellKnownProtoStructGenerator extends FileGenerator<
             access: ast.Access.Public,
             sealed: true,
             parentClassReference: this.csharp.Type.map(
-                this.csharp.Type.string(),
+                this.csharp.Type.string,
                 this.csharp.Type.optional(this.csharp.Type.reference(this.protoValueClassReference))
             ),
             summary: this.typeDeclaration.docs,
-            annotations: [this.context.getSerializableAttribute()]
+            annotations: [this.extern.System.Serializable]
         });
 
         class_.addConstructor(this.getDefaultConstructor());
         class_.addConstructor(this.getKeyValuePairConstructor());
 
-        class_.addMethod(this.context.getToStringMethod());
-        class_.addMethod(this.getToProtoMethod());
-        class_.addMethod(this.getFromProtoMethod());
+        this.context.getToStringMethod(class_);
+        this.getToProtoMethod(class_);
+        this.getFromProtoMethod(class_);
 
         return new CSharpFile({
             clazz: class_,
             directory: this.context.getDirectoryForTypeId(this.typeDeclaration.name.typeId),
             allNamespaceSegments: this.context.getAllNamespaceSegments(),
             allTypeClassReferences: this.context.getAllTypeClassReferences(),
-            namespace: this.context.getNamespace(),
-            customConfig: this.context.customConfig
+            namespace: this.namespaces.root,
+            generation: this.generation
         });
     }
 
@@ -83,7 +83,7 @@ export class WellKnownProtoStructGenerator extends FileGenerator<
                     name: "value",
                     type: this.csharp.Type.list(
                         this.csharp.Type.keyValuePair(
-                            this.csharp.Type.string(),
+                            this.csharp.Type.string,
                             this.csharp.Type.optional(this.csharp.Type.reference(this.protoValueClassReference))
                         )
                     )
@@ -106,18 +106,18 @@ export class WellKnownProtoStructGenerator extends FileGenerator<
         };
     }
 
-    private getToProtoMethod(): ast.Method {
-        return this.csharp.method({
+    private getToProtoMethod(class_: ast.Class): ast.Method {
+        return class_.addMethod({
             name: "ToProto",
             access: ast.Access.Internal,
             isAsync: false,
             parameters: [],
-            return_: this.csharp.Type.reference(this.csharp.Google.Protobuf.WellKnownTypes.Struct),
+            return_: this.csharp.Type.reference(this.extern.Google.Protobuf.WellKnownTypes.Struct),
             body: this.csharp.codeblock((writer) => {
                 writer.write("var result = ");
                 writer.writeNodeStatement(
                     this.csharp.instantiateClass({
-                        classReference: this.csharp.Google.Protobuf.WellKnownTypes.Struct,
+                        classReference: this.extern.Google.Protobuf.WellKnownTypes.Struct,
                         arguments_: []
                     })
                 );
@@ -136,8 +136,8 @@ export class WellKnownProtoStructGenerator extends FileGenerator<
         });
     }
 
-    private getFromProtoMethod(): ast.Method {
-        return this.csharp.method({
+    private getFromProtoMethod(class_: ast.Class): ast.Method {
+        return class_.addMethod({
             name: "FromProto",
             access: ast.Access.Internal,
             type: ast.MethodType.STATIC,
@@ -145,7 +145,7 @@ export class WellKnownProtoStructGenerator extends FileGenerator<
             parameters: [
                 this.csharp.parameter({
                     name: "value",
-                    type: this.csharp.Type.reference(this.csharp.Google.Protobuf.WellKnownTypes.Struct)
+                    type: this.csharp.Type.reference(this.extern.Google.Protobuf.WellKnownTypes.Struct)
                 })
             ],
             return_: this.csharp.Type.reference(this.classReference),
@@ -177,9 +177,6 @@ export class WellKnownProtoStructGenerator extends FileGenerator<
     }
 
     protected getFilepath(): RelativeFilePath {
-        return join(
-            this.context.project.filepaths.getSourceFileDirectory(),
-            RelativeFilePath.of(this.classReference.name + ".cs")
-        );
+        return join(this.constants.folders.sourceFiles, RelativeFilePath.of(`${this.classReference.name}.cs`));
     }
 }

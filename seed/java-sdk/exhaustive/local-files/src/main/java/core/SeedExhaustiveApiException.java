@@ -5,6 +5,7 @@
 package com.fern.sdk.core;
 
 import java.lang.Object;
+import java.lang.Override;
 import java.lang.String;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -69,8 +70,8 @@ public class SeedExhaustiveApiException extends SeedExhaustiveException {
     return this.headers;
   }
 
-  @java.lang.Override
+  @Override
   public String toString() {
-    return "SeedExhaustiveApiException{" + "message: " + getMessage() + ", statusCode: " + statusCode + ", body: " + body + "}";
+    return "SeedExhaustiveApiException{" + "message: " + getMessage() + ", statusCode: " + statusCode + ", body: " + ObjectMappers.stringify(body) + "}";
   }
 }

@@ -286,6 +286,16 @@ export class BaseClientContextImpl implements BaseClientContext {
             docs: ["The default number of times to retry the request. Defaults to 2."]
         });
 
+        properties.push({
+            kind: StructureKind.PropertySignature,
+            name: "fetch",
+            type: "typeof fetch",
+            hasQuestionToken: true,
+            docs: [
+                "Provide a custom fetch implementation. Useful for platforms that don't have a built-in fetch or need a custom implementation."
+            ]
+        });
+
         if (this.allowCustomFetcher) {
             properties.push({
                 kind: StructureKind.PropertySignature,
@@ -294,6 +304,19 @@ export class BaseClientContextImpl implements BaseClientContext {
                 hasQuestionToken: true
             });
         }
+
+        properties.push({
+            kind: StructureKind.PropertySignature,
+            name: "logging",
+            type: getTextOfTsNode(
+                ts.factory.createUnionTypeNode([
+                    context.coreUtilities.logging.LogConfig._getReferenceToType(),
+                    context.coreUtilities.logging.Logger._getReferenceToType()
+                ])
+            ),
+            hasQuestionToken: true,
+            docs: ["Configure logging for the client."]
+        });
 
         return {
             kind: StructureKind.Interface,

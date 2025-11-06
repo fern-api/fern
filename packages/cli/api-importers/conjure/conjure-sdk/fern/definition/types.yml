@@ -75,3 +75,4 @@ types:
       - integer
       - double
       - boolean
+      - binary

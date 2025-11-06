@@ -1,5 +1,5 @@
 displayName: Swift SDK
-irVersion: v59
+irVersion: v61
 image: fernapi/fern-swift-sdk
 changelogLocation: ../../generators/swift/sdk/versions.yml
 
@@ -106,7 +106,6 @@ fixtures:
       outputFolder: with-custom-config
 
 allowedFailures:
-  - any-auth
   - api-wide-base-path
   - audiences
   - auth-environment-variables
@@ -123,7 +122,6 @@ allowedFailures:
   - extra-properties
   - file-upload-openapi
   - idempotency-headers
-  - imdb
   - inferred-auth-explicit
   - inferred-auth-implicit
   - inferred-auth-implicit-no-expiry
@@ -157,3 +155,6 @@ allowedFailures:
   - unions
   - variables
   - websocket-inferred-auth
+  # Intermediate failures
+  - any-auth
+  - imdb

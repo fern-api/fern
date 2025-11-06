@@ -89,7 +89,7 @@ function getEndpointReference({
         title: {
             snippetParts: [
                 {
-                    text: context.getAccessFromRootClient(service.name.fernFilepath) + "."
+                    text: `${context.getAccessFromRootClient(service.name.fernFilepath)}.`
                 },
                 {
                     text: context.getEndpointMethodName(endpoint),
@@ -111,7 +111,7 @@ function getEndpointReference({
         description: endpoint.docs,
         snippet: singleEndpointSnippet.endpointCall.trim(),
         parameters: endpointSignatureInfo.baseParameters.map((parameter) => {
-            const required = parameter.type instanceof ast.Type ? !parameter.type.isOptional() : true;
+            const required = parameter.type instanceof ast.Type ? !parameter.type.isOptional : true;
             return {
                 name: parameter.name,
                 type: context.printType(parameter.type),
@@ -132,15 +132,15 @@ function getReferenceEndpointInvocationParameters({
     let result = "";
     endpointSignatureInfo.pathParameters.forEach((pathParameter, index) => {
         if (index > 0) {
-            result += ", ";
+            result = `${result}, `;
         }
-        result += pathParameter.name;
+        result = `${result}${pathParameter.name}`;
     });
     if (endpointSignatureInfo.requestParameter != null) {
         if (result.length > 0) {
-            result += ", ";
+            result = `${result}, `;
         }
-        result += `${context.printType(endpointSignatureInfo.requestParameter.type)} { ... }`;
+        result = `${result}${context.printType(endpointSignatureInfo.requestParameter.type)} { ... }`;
     }
     return `(${result})`;
 }
@@ -157,16 +157,13 @@ function getServiceFilepath({
     const subpackage = context.getSubpackageForServiceId(serviceId);
     const clientClassReference = subpackage
         ? context.getSubpackageClassReference(subpackage)
-        : context.getRootClientClassReferenceForSnippets();
+        : context.types.RootClientForSnippets;
 
-    return (
-        "/" +
-        path.join(
-            context.project.getProjectDirectory(),
-            context.getDirectoryForFernFilepath(service.name.fernFilepath),
-            `${clientClassReference.name}.cs`
-        )
-    );
+    return `/${path.join(
+        context.constants.folders.project,
+        context.getDirectoryForFernFilepath(service.name.fernFilepath),
+        `${clientClassReference.name}.cs`
+    )}`;
 }
 
 function isRootServiceId({ context, serviceId }: { context: SdkGeneratorContext; serviceId: ServiceId }): boolean {

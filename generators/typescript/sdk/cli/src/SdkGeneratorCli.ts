@@ -13,6 +13,8 @@ import {
 } from "@fern-typescript/commons";
 import { GeneratorContext } from "@fern-typescript/contexts";
 import { SdkGenerator } from "@fern-typescript/sdk-generator";
+import { copyFile } from "fs/promises";
+import path from "path";
 
 import { SdkCustomConfig } from "./custom-config/SdkCustomConfig";
 import { SdkCustomConfigSchema } from "./custom-config/schema/SdkCustomConfigSchema";
@@ -47,6 +49,7 @@ export class SdkGeneratorCli extends AbstractGeneratorCli<SdkCustomConfig> {
             shouldGenerateWebsocketClients: parsed?.shouldGenerateWebsocketClients ?? false,
             includeUtilsOnUnionMembers: !noSerdeLayer && (parsed?.includeUtilsOnUnionMembers ?? false),
             includeOtherInUnionTypes: parsed?.includeOtherInUnionTypes ?? false,
+            enableForwardCompatibleEnums: parsed?.enableForwardCompatibleEnums ?? false,
             requireDefaultEnvironment: parsed?.requireDefaultEnvironment ?? false,
             defaultTimeoutInSeconds: parsed?.defaultTimeoutInSeconds ?? parsed?.timeoutInSeconds,
             skipResponseValidation: noSerdeLayer || (parsed?.skipResponseValidation ?? true),
@@ -125,6 +128,16 @@ export class SdkGeneratorCli extends AbstractGeneratorCli<SdkCustomConfig> {
             }
         }
 
+        if (config.formatter === "oxfmt") {
+            logger.warn("Warning: oxfmt is currently in beta. Use with caution.");
+        }
+
+        if (config.linter === "oxlint") {
+            logger.warn(
+                "Warning: oxlint is currently in beta. Use with caution. Type-aware linting is supported via the --type-aware flag."
+            );
+        }
+
         return config;
     }
 
@@ -183,6 +196,7 @@ export class SdkGeneratorCli extends AbstractGeneratorCli<SdkCustomConfig> {
                 shouldGenerateWebsocketClients: customConfig.shouldGenerateWebsocketClients,
                 includeUtilsOnUnionMembers: customConfig.includeUtilsOnUnionMembers,
                 includeOtherInUnionTypes: customConfig.includeOtherInUnionTypes,
+                enableForwardCompatibleEnums: customConfig.enableForwardCompatibleEnums,
                 requireDefaultEnvironment: customConfig.requireDefaultEnvironment,
                 defaultTimeoutInSeconds: customConfig.defaultTimeoutInSeconds,
                 skipResponseValidation: customConfig.skipResponseValidation,
@@ -239,6 +253,7 @@ export class SdkGeneratorCli extends AbstractGeneratorCli<SdkCustomConfig> {
             pathToSrc: persistedTypescriptProject.getSrcDirectory()
         });
         await writeTemplateFiles(rootDirectory, this.getTemplateVariables(customConfig));
+        await this.writeLicenseFile(config, rootDirectory, generatorContext.logger);
         await this.postProcess(persistedTypescriptProject, customConfig);
 
         return persistedTypescriptProject;
@@ -251,6 +266,45 @@ export class SdkGeneratorCli extends AbstractGeneratorCli<SdkCustomConfig> {
             formDataSupport: customConfig.formDataSupport,
             fetchSupport: customConfig.fetchSupport
         };
+    }
+
+    private async writeLicenseFile(
+        config: FernGeneratorExec.GeneratorConfig,
+        rootDirectory: AbsoluteFilePath,
+        logger: Logger
+    ): Promise<void> {
+        if (config.license?.type === "custom") {
+            // For custom licenses, we need to get the license content from the source file
+            // The CLI should have read the license file content and made it available
+            // For now, we'll read the license file from the original location
+
+            try {
+                // The license file path is relative to the fern config directory
+                // We need to construct the full path to read the license content
+                const licenseFileName = config.license.filename ?? "LICENSE";
+                const licenseFilePath = path.join(rootDirectory, licenseFileName);
+
+                await this.copyLicenseFile(licenseFilePath);
+                logger.debug(`Successfully wrote LICENSE file to ${licenseFilePath}`);
+            } catch (error) {
+                // If we can't read the license file, we'll skip writing it
+                // This maintains backwards compatibility
+                logger.warn(`Failed to write LICENSE file: ${error instanceof Error ? error.message : String(error)}`);
+            }
+        }
+    }
+
+    private async copyLicenseFile(destinationPath: string): Promise<void> {
+        // In Docker execution environment, the license file is mounted at /tmp/LICENSE
+        const dockerLicensePath = "/tmp/LICENSE";
+
+        try {
+            await copyFile(dockerLicensePath, destinationPath);
+        } catch (error) {
+            throw new Error(
+                `Could not copy license file from ${dockerLicensePath}: ${error instanceof Error ? error.message : String(error)}`
+            );
+        }
     }
 
     private async postProcess(

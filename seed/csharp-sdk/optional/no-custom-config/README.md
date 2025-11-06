@@ -25,6 +25,7 @@ Instantiate and use the client with the following:
 
 ```csharp
 using SeedObjectsWithImports;
+using System.Collections.Generic;
 
 var client = new SeedObjectsWithImportsClient();
 await client.Optional.SendOptionalBodyAsync(

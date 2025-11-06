@@ -33,7 +33,7 @@
   },
   "dependencies": {
     "@fern-api/docs-resolver": "workspace:*",
-    "@fern-api/fdr-sdk": "0.139.37-f5b57f86e",
+    "@fern-api/fdr-sdk": "0.139.43-309880147",
     "@fern-api/fs-utils": "workspace:*",
     "@fern-api/ir-sdk": "workspace:*",
     "@fern-api/logger": "workspace:*",
@@ -45,6 +45,7 @@
     "cors": "^2.8.5",
     "decompress": "^4.2.1",
     "express": "^4.21.2",
+    "gray-matter": "^4.0.3",
     "tmp-promise": "^3.0.3",
     "uuid": "^9.0.1",
     "watcher": "^2.3.1",

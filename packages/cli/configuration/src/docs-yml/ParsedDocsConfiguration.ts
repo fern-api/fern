@@ -1,6 +1,5 @@
+import { FdrAPI as CjsFdrSdk } from "@fern-api/fdr-sdk";
 import { AbsoluteFilePath, RelativeFilePath } from "@fern-api/path-utils";
-
-import { FernRegistry as CjsFdrSdk } from "@fern-fern/fdr-cjs-sdk";
 
 import { Audiences } from "../commons";
 import {
@@ -171,14 +170,28 @@ export interface VersionInfo
     slug: string | undefined;
 }
 
-export interface ProductInfo
+export type ProductInfo = InternalProduct | ExternalProduct;
+
+export interface InternalProduct
     extends CjsFdrSdk.navigation.v1.WithPermissions,
         CjsFdrSdk.navigation.latest.WithFeatureFlags {
+    type: "internal";
     landingPage: DocsNavigationItem.Page | undefined;
     subtitle: string | undefined;
     product: string;
     navigation: UnversionedNavigationConfiguration | VersionedDocsNavigation;
     slug: string | undefined;
+    icon: string | AbsoluteFilePath;
+    image: AbsoluteFilePath | undefined;
+}
+
+export interface ExternalProduct
+    extends CjsFdrSdk.navigation.v1.WithPermissions,
+        CjsFdrSdk.navigation.latest.WithFeatureFlags {
+    type: "external";
+    subtitle: string | undefined;
+    product: string;
+    href: string | undefined;
     icon: string | AbsoluteFilePath;
     image: AbsoluteFilePath | undefined;
 }
@@ -294,6 +307,7 @@ export declare namespace DocsNavigationItem {
         snippetsConfiguration: SnippetsConfiguration | undefined;
         overviewAbsolutePath: AbsoluteFilePath | undefined;
         navigation: ParsedApiReferenceLayoutItem[];
+        collapsed: boolean | undefined;
         hidden: boolean | undefined;
         slug: string | undefined;
         skipUrlSlug: boolean | undefined;

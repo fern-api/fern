@@ -1,8 +1,7 @@
 import { assertNever } from "@fern-api/core-utils";
 import { CSharpFile, FileGenerator } from "@fern-api/csharp-base";
-import { ast, escapeForCSharpString } from "@fern-api/csharp-codegen";
+import { ast, escapeForCSharpString, is } from "@fern-api/csharp-codegen";
 import { join, RelativeFilePath } from "@fern-api/fs-utils";
-
 import { FernIr } from "@fern-fern/ir-sdk";
 import { ExampleUnionType, TypeDeclaration, UnionTypeDeclaration } from "@fern-fern/ir-sdk/api";
 import { generateFields } from "../generateFields";
@@ -17,8 +16,6 @@ export class UnionGenerator extends FileGenerator<CSharpFile, ModelCustomConfigS
     private readonly typeDeclaration: TypeDeclaration;
     private readonly classReference: ast.ClassReference;
     private readonly exampleGenerator: ExampleGenerator;
-    private readonly discriminantPropertyName: string;
-    private readonly valuePropertyName: string = "Value";
     private readonly unionMemberTypeMap: Map<FernIr.SingleUnionType, ast.Type>;
 
     constructor(
@@ -27,21 +24,10 @@ export class UnionGenerator extends FileGenerator<CSharpFile, ModelCustomConfigS
         private readonly unionDeclaration: UnionTypeDeclaration
     ) {
         super(context);
-        this.discriminantPropertyName = unionDeclaration.discriminant.name.pascalCase.safeName;
         const basePropNames = unionDeclaration.baseProperties.map((p) => p.name.name.pascalCase.safeName);
 
-        if (basePropNames.includes(this.valuePropertyName)) {
-            this.valuePropertyName = `${this.valuePropertyName}_`;
-        }
         this.typeDeclaration = typeDeclaration;
-        this.classReference = this.context.csharpTypeMapper.convertToClassReference(this.typeDeclaration.name);
-
-        if (
-            basePropNames.includes(this.discriminantPropertyName) ||
-            this.classReference.name === this.discriminantPropertyName
-        ) {
-            this.discriminantPropertyName = `${this.discriminantPropertyName}_`;
-        }
+        this.classReference = this.context.csharpTypeMapper.convertToClassReference(this.typeDeclaration);
 
         this.exampleGenerator = new ExampleGenerator(context);
         this.unionMemberTypeMap = new Map(
@@ -51,10 +37,10 @@ export class UnionGenerator extends FileGenerator<CSharpFile, ModelCustomConfigS
 
     public doGenerate(): CSharpFile {
         const class_ = this.csharp.class_({
-            ...this.classReference,
+            reference: this.classReference,
             annotations: [
                 this.csharp.annotation({
-                    reference: this.context.getJsonConverterAttributeReference(),
+                    reference: this.extern.System.Text.Json.Serialization.JsonConverter(),
                     argument: this.csharp.codeblock((writer) => {
                         writer.write("typeof(");
                         writer.writeNode(this.classReference);
@@ -62,53 +48,42 @@ export class UnionGenerator extends FileGenerator<CSharpFile, ModelCustomConfigS
                         writer.write(")");
                     })
                 }),
-                this.context.getSerializableAttribute()
+                this.extern.System.Serializable
             ],
             summary: this.typeDeclaration.docs,
             access: ast.Access.Public,
             type: ast.Class.ClassType.Record
         });
 
-        this.discriminantPropertyName;
+        const discriminant = class_.addField({
+            origin: this.unionDeclaration.discriminant,
+            enclosingType: class_,
+            summary: "Discriminant value",
+            jsonPropertyName: this.unionDeclaration.discriminant.name.originalName,
+            access: ast.Access.Public,
+            type: this.csharp.Type.string,
+            get: "public",
+            set: "internal"
+        });
 
-        class_.addField(
-            this.csharp.field({
-                summary: "Discriminant value",
-                jsonPropertyName: this.unionDeclaration.discriminant.name.originalName,
-                access: ast.Access.Public,
-                type: this.csharp.Type.string(),
-                name: this.discriminantPropertyName,
-                get: "public",
-                set: "internal"
-            })
-        );
+        const value = class_.addField({
+            enclosingType: class_,
+            summary: "Discriminated union value",
+            access: ast.Access.Public,
+            type: this.csharp.Type.object.toOptionalIfNotAlready(),
+            origin: class_.explicit("Value"),
+            get: "public",
+            set: "internal"
+        });
 
-        class_.addField(
-            this.csharp.field({
-                summary: "Discriminated union value",
-                access: ast.Access.Public,
-                type: this.csharp.Type.object().toOptionalIfNotAlready(),
-                name: this.valuePropertyName,
-                get: "public",
-                set: "internal"
-            })
-        );
+        let baseProperties: ast.Field[] = [];
 
-        const baseProperties =
-            this.unionDeclaration.baseProperties.length > 0
-                ? generateFields({
-                      properties: this.unionDeclaration.baseProperties,
-                      className: this.classReference.name,
-                      context: this.context
-                  })
-                : [];
-        if (baseProperties.length > 0) {
-            const baseProperties = generateFields({
+        if (this.unionDeclaration.baseProperties.length > 0) {
+            baseProperties = generateFields(class_, {
                 properties: this.unionDeclaration.baseProperties,
                 className: this.classReference.name,
                 context: this.context
             });
-            class_.addFields(baseProperties);
 
             const basePropertiesClass = this.csharp.class_({
                 summary: "Base properties for the discriminated union",
@@ -117,9 +92,14 @@ export class UnionGenerator extends FileGenerator<CSharpFile, ModelCustomConfigS
                 type: ast.Class.ClassType.Record,
                 enclosingType: class_.reference,
                 namespace: this.classReference.namespace,
-                annotations: [this.context.getSerializableAttribute()]
+                annotations: [this.extern.System.Serializable]
             });
-            basePropertiesClass.addFields(baseProperties);
+            generateFields(basePropertiesClass, {
+                properties: this.unionDeclaration.baseProperties,
+                className: this.classReference.name,
+                context: this.context
+            });
+
             class_.addNestedClass(basePropertiesClass);
         }
 
@@ -128,21 +108,23 @@ export class UnionGenerator extends FileGenerator<CSharpFile, ModelCustomConfigS
             parameters: [
                 this.csharp.parameter({
                     name: "type",
-                    type: this.csharp.Type.string()
+                    type: this.csharp.Type.string
                 }),
                 this.csharp.parameter({
                     name: "value",
-                    type: this.csharp.Type.object().toOptionalIfNotAlready()
+                    type: this.csharp.Type.object.toOptionalIfNotAlready()
                 })
             ],
             body: this.csharp.codeblock((writer) => {
-                writer.writeTextStatement(`${this.discriminantPropertyName} = type`);
-                writer.writeTextStatement(`${this.valuePropertyName} = value`);
+                writer.writeTextStatement(`${discriminant.name} = type`);
+                writer.writeTextStatement(`${value.name} = value`);
             })
         });
         class_.addConstructors(
             this.unionDeclaration.types.map((type) => {
-                const innerClassType = this.getUnionTypeClassReferenceType(type);
+                const innerClassType = this.getUnionTypeClassReferenceByTypeName(
+                    type.discriminantValue.name.pascalCase.safeName
+                );
                 const ctor: ast.Class.Constructor = {
                     doc: {
                         summary: (writer) => {
@@ -159,9 +141,7 @@ export class UnionGenerator extends FileGenerator<CSharpFile, ModelCustomConfigS
                         })
                     ],
                     body: this.csharp.codeblock((writer) => {
-                        writer.writeTextStatement(
-                            `${this.discriminantPropertyName} = "${type.discriminantValue.wireValue}"`
-                        );
+                        writer.writeTextStatement(`${discriminant.name} = "${type.discriminantValue.wireValue}"`);
                         writer.writeTextStatement("Value = value.Value");
                     })
                 };
@@ -170,225 +150,205 @@ export class UnionGenerator extends FileGenerator<CSharpFile, ModelCustomConfigS
         );
 
         // add IsFoo properties
-        class_.addFields(
-            this.unionDeclaration.types.map((type) => {
-                return this.csharp.field({
-                    doc: {
-                        summary: (writer) =>
-                            writer.write(
-                                `Returns true if <see cref="${this.discriminantPropertyName}"/> is "${type.discriminantValue.wireValue}"`
-                            )
-                    },
-                    access: ast.Access.Public,
-                    type: this.csharp.Type.boolean(),
-                    name: `Is${type.discriminantValue.name.pascalCase.unsafeName}`,
-                    get: true,
-                    initializer: this.csharp.codeblock(
-                        `${this.discriminantPropertyName} == "${type.discriminantValue.wireValue}"`
-                    )
-                });
-            })
-        );
+
+        for (const type of this.unionDeclaration.types) {
+            class_.addField({
+                enclosingType: class_,
+                doc: {
+                    summary: (writer) =>
+                        writer.write(
+                            `Returns true if <see cref="${discriminant.name}"/> is "${type.discriminantValue.wireValue}"`
+                        )
+                },
+                access: ast.Access.Public,
+                type: this.csharp.Type.boolean,
+                origin: class_.explicit(`Is${type.discriminantValue.name.pascalCase.unsafeName}`),
+                get: true,
+                initializer: this.csharp.codeblock(`${discriminant.name} == "${type.discriminantValue.wireValue}"`)
+            });
+        }
 
         // add AsFoo methods
-        class_.addMethods(
-            this.unionDeclaration.types.map((type) => {
-                const memberType = this.getCsharpType(type);
-                return this.csharp.method({
-                    doc: {
-                        summary: (writer) => {
-                            writer.write('Returns the value as a <see cref="');
-                            writer.writeNode(memberType);
-                            writer.write(
-                                `"/> if <see cref="${this.discriminantPropertyName}"/> is '${escapeForCSharpString(type.discriminantValue.wireValue)}', otherwise throws an exception.`
-                            );
-                        },
-                        exceptions: new Map([
-                            [
-                                "Exception",
-                                (writer) => {
-                                    writer.write(
-                                        `Thrown when <see cref="${this.discriminantPropertyName}"/> is not '${escapeForCSharpString(type.discriminantValue.wireValue)}'.`
-                                    );
-                                }
-                            ]
-                        ])
-                    },
-                    access: ast.Access.Public,
-                    return_: memberType,
-                    name: `As${type.discriminantValue.name.pascalCase.unsafeName}`,
-                    bodyType: ast.Method.BodyType.Expression,
-                    body: this.csharp.codeblock((writer) => {
-                        writer.write(`Is${type.discriminantValue.name.pascalCase.unsafeName} ? `);
-                        if (!this.csharp.is.Type.object(memberType.unwrapIfOptional())) {
-                            writer.write("(", memberType, ")");
-                        }
-                        writer.write(`${this.valuePropertyName}! : throw new `);
-                        writer.writeNode(this.csharp.System.Exception.asFullyQualified());
-                        writer.write('("');
-                        writer.writeNode(this.classReference);
+
+        this.unionDeclaration.types.forEach((type) => {
+            const memberType = this.getCsharpType(type);
+            return class_.addMethod({
+                doc: {
+                    summary: (writer) => {
+                        writer.write('Returns the value as a <see cref="');
+                        writer.writeNode(memberType);
                         writer.write(
-                            `.${this.discriminantPropertyName} is not '${escapeForCSharpString(type.discriminantValue.wireValue)}'")`
+                            `"/> if <see cref="${discriminant.name}"/> is '${escapeForCSharpString(type.discriminantValue.wireValue)}', otherwise throws an exception.`
                         );
-                    }),
-                    parameters: []
-                });
-            })
-        );
-
-        const tTypeParameter = this.csharp.typeParameter("T");
-        class_.addMethod(
-            this.csharp.method({
+                    },
+                    exceptions: new Map([
+                        [
+                            "Exception",
+                            (writer) => {
+                                writer.write(
+                                    `Thrown when <see cref="${discriminant.name}"/> is not '${escapeForCSharpString(type.discriminantValue.wireValue)}'.`
+                                );
+                            }
+                        ]
+                    ])
+                },
                 access: ast.Access.Public,
-                name: "Match",
-                return_: tTypeParameter,
-                typeParameters: [tTypeParameter],
-                parameters: [
-                    ...this.unionDeclaration.types.map((type) => {
-                        const memberType = this.getCsharpType(type);
-                        return this.csharp.parameter({
-                            name: `on${type.discriminantValue.name.pascalCase.unsafeName}`,
-                            type: this.csharp.Type.func({
-                                typeParameters: [memberType],
-                                returnType: tTypeParameter
-                            })
-                        });
-                    }),
-                    this.csharp.parameter({
-                        name: "onUnknown_",
-                        type: this.csharp.Type.func({
-                            typeParameters: [
-                                this.csharp.Type.string(),
-                                this.csharp.Type.object().toOptionalIfNotAlready()
-                            ],
-                            returnType: tTypeParameter
-                        })
-                    })
-                ],
-                body: this.csharp.codeblock((writer) => {
-                    writer.writeLine(`return ${this.discriminantPropertyName} switch`);
-                    writer.pushScope();
-                    this.unionDeclaration.types.forEach((type) => {
-                        writer.writeNode(this.csharp.string_({ string: type.discriminantValue.wireValue }));
-                        writer.write(" => ");
-                        writer.writeLine(
-                            `on${type.discriminantValue.name.pascalCase.unsafeName}(As${type.discriminantValue.name.pascalCase.unsafeName}()),`
-                        );
-                    });
-                    writer.writeLine(`_ => onUnknown_(${this.discriminantPropertyName}, ${this.valuePropertyName})`);
-                    writer.dedent();
-                    writer.writeTextStatement("}");
-                })
-            })
-        );
-
-        class_.addMethod(
-            this.csharp.method({
-                access: ast.Access.Public,
-                name: "Visit",
-                parameters: [
-                    ...this.unionDeclaration.types.map((type) => {
-                        const memberType = this.getCsharpType(type);
-                        return this.csharp.parameter({
-                            name: `on${type.discriminantValue.name.pascalCase.unsafeName}`,
-                            type: this.csharp.Type.action({
-                                typeParameters: [memberType]
-                            })
-                        });
-                    }),
-                    this.csharp.parameter({
-                        name: "onUnknown_",
-                        type: this.csharp.Type.action({
-                            typeParameters: [
-                                this.csharp.Type.string(),
-                                this.csharp.Type.object().toOptionalIfNotAlready()
-                            ]
-                        })
-                    })
-                ],
-                body: this.csharp.codeblock((writer) => {
-                    writer.writeLine(`switch (${this.discriminantPropertyName})`);
-                    writer.pushScope();
-                    this.unionDeclaration.types.forEach((type) => {
-                        writer.writeLine(`case "${type.discriminantValue.wireValue}":`);
-                        writer.indent();
-                        writer.writeTextStatement(
-                            `on${type.discriminantValue.name.pascalCase.unsafeName}(As${type.discriminantValue.name.pascalCase.unsafeName}())`
-                        );
-                        writer.writeTextStatement("break");
-                        writer.dedent();
-                    });
-                    writer.writeLine("default:");
-                    writer.indent();
-                    writer.writeTextStatement(
-                        `onUnknown_(${this.discriminantPropertyName}, ${this.valuePropertyName})`
-                    );
-                    writer.writeTextStatement("break");
-                    writer.popScope();
-                })
-            })
-        );
-
-        class_.addMethod(
-            this.csharp.method({
-                access: ast.Access.Public,
-                override: true,
-                return_: this.csharp.Type.string(),
-                name: "ToString",
-                parameters: [],
+                return_: memberType,
+                name: `As${type.discriminantValue.name.pascalCase.unsafeName}`,
                 bodyType: ast.Method.BodyType.Expression,
                 body: this.csharp.codeblock((writer) => {
-                    writer.writeNode(
-                        this.csharp.invokeMethod({
-                            on: this.context.getJsonUtilsClassReference(),
-                            method: "Serialize",
-                            arguments_: [this.csharp.codeblock("this")]
-                        })
+                    writer.write(`Is${type.discriminantValue.name.pascalCase.unsafeName} ? `);
+                    if (!is.Type.object(memberType.unwrapIfOptional())) {
+                        writer.write("(", memberType, ")");
+                    }
+                    writer.write(`${value.name}! : throw new `);
+                    writer.writeNode(this.extern.System.Exception.asFullyQualified());
+                    writer.write('("');
+                    writer.writeNode(this.classReference);
+                    writer.write(
+                        `.${discriminant.name} is not '${escapeForCSharpString(type.discriminantValue.wireValue)}'")`
                     );
+                }),
+                parameters: []
+            });
+        });
+
+        const tTypeParameter = this.csharp.typeParameter("T");
+        class_.addMethod({
+            access: ast.Access.Public,
+            name: "Match",
+            return_: tTypeParameter,
+            typeParameters: [tTypeParameter],
+            parameters: [
+                ...this.unionDeclaration.types.map((type) => {
+                    const memberType = this.getCsharpType(type);
+                    return this.csharp.parameter({
+                        name: `on${type.discriminantValue.name.pascalCase.unsafeName}`,
+                        type: this.csharp.Type.func({
+                            typeParameters: [memberType],
+                            returnType: tTypeParameter
+                        })
+                    });
+                }),
+                this.csharp.parameter({
+                    name: "onUnknown_",
+                    type: this.csharp.Type.func({
+                        typeParameters: [this.csharp.Type.string, this.csharp.Type.object.toOptionalIfNotAlready()],
+                        returnType: tTypeParameter
+                    })
                 })
+            ],
+            body: this.csharp.codeblock((writer) => {
+                writer.writeLine(`return ${discriminant.name} switch`);
+                writer.pushScope();
+                this.unionDeclaration.types.forEach((type) => {
+                    writer.writeNode(this.csharp.string_({ string: type.discriminantValue.wireValue }));
+                    writer.write(" => ");
+                    writer.writeLine(
+                        `on${type.discriminantValue.name.pascalCase.unsafeName}(As${type.discriminantValue.name.pascalCase.unsafeName}()),`
+                    );
+                });
+                writer.writeLine(`_ => onUnknown_(${discriminant.name}, ${value.name})`);
+                writer.dedent();
+                writer.writeTextStatement("}");
             })
-        );
+        });
+
+        class_.addMethod({
+            access: ast.Access.Public,
+            name: "Visit",
+            parameters: [
+                ...this.unionDeclaration.types.map((type) => {
+                    const memberType = this.getCsharpType(type);
+                    return this.csharp.parameter({
+                        name: `on${type.discriminantValue.name.pascalCase.unsafeName}`,
+                        type: this.csharp.Type.action({
+                            typeParameters: [memberType]
+                        })
+                    });
+                }),
+                this.csharp.parameter({
+                    name: "onUnknown_",
+                    type: this.csharp.Type.action({
+                        typeParameters: [this.csharp.Type.string, this.csharp.Type.object.toOptionalIfNotAlready()]
+                    })
+                })
+            ],
+            body: this.csharp.codeblock((writer) => {
+                writer.writeLine(`switch (${discriminant.name})`);
+                writer.pushScope();
+                this.unionDeclaration.types.forEach((type) => {
+                    writer.writeLine(`case "${type.discriminantValue.wireValue}":`);
+                    writer.indent();
+                    writer.writeTextStatement(
+                        `on${type.discriminantValue.name.pascalCase.unsafeName}(As${type.discriminantValue.name.pascalCase.unsafeName}())`
+                    );
+                    writer.writeTextStatement("break");
+                    writer.dedent();
+                });
+                writer.writeLine("default:");
+                writer.indent();
+                writer.writeTextStatement(`onUnknown_(${discriminant.name}, ${value.name})`);
+                writer.writeTextStatement("break");
+                writer.popScope();
+            })
+        });
+
+        class_.addMethod({
+            access: ast.Access.Public,
+            override: true,
+            return_: this.csharp.Type.string,
+            name: "ToString",
+            parameters: [],
+            bodyType: ast.Method.BodyType.Expression,
+            body: this.csharp.codeblock((writer) => {
+                writer.writeNode(
+                    this.csharp.invokeMethod({
+                        on: this.types.JsonUtils,
+                        method: "Serialize",
+                        arguments_: [this.csharp.codeblock("this")]
+                    })
+                );
+            })
+        });
 
         // add TryAsFoo methods
-        class_.addMethods(
-            this.unionDeclaration.types.map((type) => {
-                const memberType = this.getCsharpType(type);
-                return this.csharp.method({
-                    doc: {
-                        summary: (writer) => {
-                            writer.write('Attempts to cast the value to a <see cref="');
-                            writer.writeNode(memberType);
-                            writer.write('"/> and returns true if successful.');
-                        }
-                    },
-                    access: ast.Access.Public,
-                    return_: this.csharp.Type.boolean(),
-                    name: `TryAs${type.discriminantValue.name.pascalCase.unsafeName}`,
-                    body: this.csharp.codeblock((writer) => {
-                        writer.writeLine(
-                            `if(${this.discriminantPropertyName} == "${type.discriminantValue.wireValue}")`
-                        );
-                        writer.pushScope();
-                        writer.write("value = ");
-                        if (!this.csharp.is.Type.object(memberType.unwrapIfOptional())) {
-                            writer.write("(", memberType, ")");
-                        }
-                        writer.writeTextStatement(`${this.valuePropertyName}!`);
-                        writer.writeTextStatement("return true");
-                        writer.popScope();
-                        writer.writeTextStatement("value = null");
-                        writer.writeTextStatement("return false");
-                    }),
-                    parameters: [
-                        this.csharp.parameter({
-                            name: "value",
-                            type: memberType.toOptionalIfNotAlready(),
-                            out: true
-                        })
-                    ]
-                });
-            })
-        );
+
+        this.unionDeclaration.types.forEach((type) => {
+            const memberType = this.getCsharpType(type);
+            return class_.addMethod({
+                doc: {
+                    summary: (writer) => {
+                        writer.write('Attempts to cast the value to a <see cref="');
+                        writer.writeNode(memberType);
+                        writer.write('"/> and returns true if successful.');
+                    }
+                },
+                access: ast.Access.Public,
+                return_: this.csharp.Type.boolean,
+                name: `TryAs${type.discriminantValue.name.pascalCase.unsafeName}`,
+                body: this.csharp.codeblock((writer) => {
+                    writer.writeLine(`if(${discriminant.name} == "${type.discriminantValue.wireValue}")`);
+                    writer.pushScope();
+                    writer.write("value = ");
+                    if (!is.Type.object(memberType.unwrapIfOptional())) {
+                        writer.write("(", memberType, ")");
+                    }
+                    writer.writeTextStatement(`${value.name}!`);
+                    writer.writeTextStatement("return true");
+                    writer.popScope();
+                    writer.writeTextStatement("value = null");
+                    writer.writeTextStatement("return false");
+                }),
+                parameters: [
+                    this.csharp.parameter({
+                        name: "value",
+                        type: memberType.toOptionalIfNotAlready(),
+                        out: true
+                    })
+                ]
+            });
+        });
 
         // add implicit conversion operators
         if (!baseProperties.some((p) => p.isRequired)) {
@@ -396,7 +356,7 @@ export class UnionGenerator extends FileGenerator<CSharpFile, ModelCustomConfigS
                 this.unionDeclaration.types
                     .map((type) => {
                         const memberType = this.getCsharpType(type);
-                        if (this.csharp.is.Type.object(memberType.unwrapIfOptional())) {
+                        if (is.Type.object(memberType.unwrapIfOptional())) {
                             // we can't have an implicit cast from object
                             return undefined;
                         }
@@ -404,7 +364,9 @@ export class UnionGenerator extends FileGenerator<CSharpFile, ModelCustomConfigS
                             type: ast.Class.CastOperator.Type.Implicit,
                             parameter: this.csharp.parameter({
                                 name: "value",
-                                type: this.getUnionTypeClassReferenceType(type)
+                                type: this.getUnionTypeClassReferenceByTypeName(
+                                    type.discriminantValue.name.pascalCase.safeName
+                                )
                             }),
                             useExpressionBody: true,
                             body: this.csharp.codeblock("new (value)")
@@ -420,25 +382,25 @@ export class UnionGenerator extends FileGenerator<CSharpFile, ModelCustomConfigS
                 const isNoProperties = type.shape.propertiesType === "noProperties";
                 const memberType = this.getCsharpType(type);
                 const unionTypeClass = this.csharp.class_({
+                    origin: this.model.explicit(type.discriminantValue, "Inner"),
+                    reference: this.getUnionTypeClassReferenceByTypeName(
+                        type.discriminantValue.name.pascalCase.safeName
+                    ),
                     summary: `Discriminated union type for ${type.discriminantValue.name.originalName}`,
-                    name: this.getUnionTypeClassName(type),
-                    namespace: this.classReference.namespace,
                     access: ast.Access.Public,
-                    enclosingType: this.classReference,
-                    type: memberType.isReferenceType() ? ast.Class.ClassType.Record : ast.Class.ClassType.Struct,
-                    annotations: [this.context.getSerializableAttribute()]
+                    type: memberType.isReferenceType ? ast.Class.ClassType.Record : ast.Class.ClassType.Struct,
+                    annotations: [this.extern.System.Serializable]
                 });
                 if (isNoProperties) {
-                    unionTypeClass.addField(
-                        this.csharp.field({
-                            access: ast.Access.Internal,
-                            type: memberType,
-                            name: "Value",
-                            get: true,
-                            set: false,
-                            initializer: this.csharp.codeblock("new {}")
-                        })
-                    );
+                    unionTypeClass.addField({
+                        origin: unionTypeClass.explicit("Value"),
+                        enclosingType: unionTypeClass,
+                        access: ast.Access.Internal,
+                        type: memberType,
+                        get: true,
+                        set: false,
+                        initializer: this.csharp.codeblock("new {}")
+                    });
                 } else {
                     unionTypeClass.addConstructor({
                         access: ast.Access.Public,
@@ -450,36 +412,33 @@ export class UnionGenerator extends FileGenerator<CSharpFile, ModelCustomConfigS
                         ],
                         body: this.csharp.codeblock("Value = value;\n")
                     });
-                    unionTypeClass.addField(
-                        this.csharp.field({
-                            access: ast.Access.Internal,
-                            type: memberType,
-                            name: "Value",
-                            get: true,
-                            set: true
-                        })
-                    );
+                    unionTypeClass.addField({
+                        origin: unionTypeClass.explicit("Value"),
+                        enclosingType: unionTypeClass,
+                        access: ast.Access.Internal,
+                        type: memberType,
+                        get: true,
+                        set: true
+                    });
                 }
-                unionTypeClass.addMethod(
-                    this.csharp.method({
-                        access: ast.Access.Public,
-                        override: true,
-                        return_: this.csharp.Type.string(),
-                        name: "ToString",
-                        parameters: [],
-                        bodyType: ast.Method.BodyType.Expression,
-                        body: this.csharp.codeblock(
-                            memberType.isOptional()
-                                ? 'Value?.ToString() ?? "null"'
-                                : this.csharp.is.Type.string(memberType)
-                                  ? "Value"
-                                  : 'Value.ToString() ?? "null"'
-                        )
-                    })
-                );
+                unionTypeClass.addMethod({
+                    access: ast.Access.Public,
+                    override: true,
+                    return_: this.csharp.Type.string,
+                    name: "ToString",
+                    parameters: [],
+                    bodyType: ast.Method.BodyType.Expression,
+                    body: this.csharp.codeblock(
+                        memberType.isOptional
+                            ? 'Value?.ToString() ?? "null"'
+                            : is.Type.string(memberType)
+                              ? "Value"
+                              : 'Value.ToString() ?? "null"'
+                    )
+                });
                 // we can't have an implicit cast from object or (IEnumerable<T>)
                 const underlyingType = memberType.unwrapIfOptional();
-                if (!this.csharp.is.Type.object(underlyingType) && !this.csharp.is.Type.list(underlyingType)) {
+                if (!is.Type.object(underlyingType) && !is.Type.list(underlyingType)) {
                     unionTypeClass.addOperator({
                         type: ast.Class.CastOperator.Type.Implicit,
                         parameter: this.csharp.parameter({
@@ -494,301 +453,272 @@ export class UnionGenerator extends FileGenerator<CSharpFile, ModelCustomConfigS
             })
         );
 
-        class_.addNestedClass(this.generateJsonConverter(baseProperties));
+        this.generateJsonConverter(class_, baseProperties, discriminant, value);
 
         return new CSharpFile({
             clazz: class_,
             directory: this.context.getDirectoryForTypeId(this.typeDeclaration.name.typeId),
             allNamespaceSegments: this.context.getAllNamespaceSegments(),
             allTypeClassReferences: this.context.getAllTypeClassReferences(),
-            namespace: this.context.getNamespace(),
-            customConfig: this.context.customConfig,
+            namespace: this.namespaces.root,
+            generation: this.generation,
             fileHeader: `// ReSharper disable NullableWarningSuppressionIsUsed
 // ReSharper disable InconsistentNaming`
         });
     }
-
-    private getUnionTypeClassReferenceType(type: FernIr.SingleUnionType): ast.Type {
-        return this.csharp.Type.reference(this.getUnionTypeClassReference(type));
-    }
-
-    private getUnionTypeClassReferenceTypeByTypeName(typeName: string): ast.Type {
-        return this.csharp.Type.reference(this.getUnionTypeClassReferenceByTypeName(typeName));
-    }
-
-    private getUnionTypeClassReference(type: FernIr.SingleUnionType): ast.ClassReference {
+    getUnionType(type: FernIr.NameAndWireValue) {
         return this.csharp.classReference({
-            namespace: this.classReference.namespace,
-            name: this.getUnionTypeClassName(type),
+            origin: type,
             enclosingType: this.classReference
         });
     }
 
     private getUnionTypeClassReferenceByTypeName(type: string): ast.ClassReference {
+        const name = ["Value", "Type"].includes(type) ? `${type}Inner` : type;
         return this.csharp.classReference({
-            namespace: this.classReference.namespace,
-            name: `${this.classReference.name}.${this.getUnionTypeClassNameByTypeName(type)}`
+            enclosingType: this.classReference,
+            name
         });
     }
 
-    private getUnionTypeClassName(type: FernIr.SingleUnionType): string {
-        return this.getUnionTypeClassNameByTypeName(type.discriminantValue.name.pascalCase.safeName);
-    }
-
-    private getUnionTypeClassNameByTypeName(typeName: string): string {
-        if (["Value", "Type"].includes(typeName)) {
-            return `${typeName}Inner`;
-        }
-        return typeName;
-    }
-
-    private generateJsonConverter(baseProperties: ast.Field[]): ast.Class {
+    private generateJsonConverter(
+        enclosingClass: ast.Class,
+        baseProperties: ast.Field[],
+        discriminant: ast.Field,
+        value: ast.Field
+    ): ast.Class {
         const unionReference = this.csharp.Type.reference(this.classReference);
         const class_ = this.csharp.class_({
-            name: "JsonConverter",
+            origin: enclosingClass.explicit("JsonConverter"),
             access: ast.Access.Internal,
             namespace: this.classReference.namespace,
             enclosingType: this.classReference,
             sealed: true,
-            parentClassReference: this.context.getJsonConverterClassReference(unionReference),
-            annotations: [this.context.getSerializableAttribute()]
+            parentClassReference: this.extern.System.Text.Json.Serialization.JsonConverter(unionReference),
+            annotations: [this.extern.System.Serializable]
         });
 
-        class_.addMethod(
-            this.csharp.method({
-                access: ast.Access.Public,
-                override: true,
-                return_: this.csharp.Type.boolean(),
-                name: "CanConvert",
-                parameters: [
-                    this.csharp.parameter({
-                        name: "typeToConvert",
-                        type: this.csharp.Type.csharpType()
-                    })
-                ],
-                bodyType: ast.Method.BodyType.Expression,
-                body: this.csharp.codeblock((writer) => {
-                    writer.write("typeof(");
-                    writer.writeNode(this.classReference);
-                    writer.write(").IsAssignableFrom(typeToConvert)");
+        class_.addMethod({
+            access: ast.Access.Public,
+            override: true,
+            return_: this.csharp.Type.boolean,
+            name: "CanConvert",
+            parameters: [
+                this.csharp.parameter({
+                    name: "typeToConvert",
+                    type: this.csharp.Type.systemType
                 })
+            ],
+            bodyType: ast.Method.BodyType.Expression,
+            body: this.csharp.codeblock((writer) => {
+                writer.write("typeof(");
+                writer.writeNode(this.classReference);
+                writer.write(").IsAssignableFrom(typeToConvert)");
             })
-        );
+        });
 
-        class_.addMethod(
-            this.csharp.method({
-                access: ast.Access.Public,
-                override: true,
-                return_: unionReference,
-                name: "Read",
-                parameters: [
-                    this.csharp.parameter({
-                        ref: true,
-                        name: "reader",
-                        type: this.csharp.Type.reference(this.csharp.System.Text.Json.Utf8JsonReader)
-                    }),
-                    this.csharp.parameter({
-                        name: "typeToConvert",
-                        type: this.csharp.Type.csharpType()
-                    }),
-                    this.csharp.parameter({
-                        name: "options",
-                        type: this.csharp.Type.reference(this.csharp.System.Text.Json.JsonSerializerOptions)
-                    })
-                ],
-                body: this.csharp.codeblock((writer) => {
-                    const discriminatorPropName = this.unionDeclaration.discriminant.wireValue;
-                    writer.writeTextStatement("var json = JsonElement.ParseValue(ref reader)");
-                    writer.writeLine(
-                        `if (!json.TryGetProperty("${discriminatorPropName}", out var discriminatorElement))`
-                    );
-                    writer.pushScope();
-                    writer.writeTextStatement(
-                        `throw new JsonException("Missing discriminator property '${discriminatorPropName}'")`
-                    );
-                    writer.popScope();
-                    writer.writeLine("if (discriminatorElement.ValueKind != JsonValueKind.String)");
-                    writer.pushScope();
-                    writer.writeLine("if (discriminatorElement.ValueKind == JsonValueKind.Null)");
-                    writer.pushScope();
-                    writer.writeTextStatement(
-                        `throw new JsonException("Discriminator property '${discriminatorPropName}' is null")`
-                    );
-                    writer.popScope();
-                    writer.writeLine();
-                    writer.writeTextStatement(
-                        `throw new JsonException($"Discriminator property '${discriminatorPropName}' is not a string, instead is {discriminatorElement.ToString()}")`
-                    );
-                    writer.popScope();
-                    writer.writeLine();
-                    writer.writeLine("var discriminator = discriminatorElement.GetString() ?? ");
-                    writer.writeTextStatement(
-                        `throw new JsonException("Discriminator property '${discriminatorPropName}' is null")`
-                    );
-                    writer.writeLine();
-
-                    writer.writeLine("var value = discriminator switch");
-                    writer.pushScope();
-
-                    this.unionDeclaration.types.forEach((type) => {
-                        const csharpType = this.getCsharpType(type);
-                        const csharp = this.csharp;
-                        function generateSerializeUnionMember(): void {
-                            writer.writeNode(csharp.string_({ string: type.discriminantValue.wireValue }));
-                            writer.write(" => ");
-                            switch (type.shape.propertiesType) {
-                                case "samePropertiesAsObject":
-                                    writer.write("json");
-                                    break;
-                                case "singleProperty":
-                                    writer.write(`json.GetProperty("${type.shape.name.wireValue}")`);
-                                    break;
-                                case "noProperties":
-                                    throw new Error(
-                                        "Internal Error; noProperties should not be used for deserialization"
-                                    );
-                                default:
-                                    assertNever(type.shape);
-                            }
-                            if (csharpType.isReferenceType() === false) {
-                                // non-reference types can be always be deserialized directly as is
-                                writer.write(".Deserialize<", csharpType, ">(options)");
-                            } else {
-                                // reference types need to always be deserialized to an optional type
-                                // and if it is not optional, then we can tack on the throw condition
-                                // (this ensures that the code is valid regardless if it is a record struct or class types)
-                                writer.write(".Deserialize<", csharpType.toOptionalIfNotAlready(), ">(options)");
-
-                                if (!csharpType.isOptional()) {
-                                    writer.write(
-                                        ' ?? throw new JsonException("Failed to deserialize ',
-                                        csharpType,
-                                        '")'
-                                    );
-                                }
-                            }
-                            writer.writeLine(",");
-                        }
-
-                        switch (type.shape.propertiesType) {
-                            case "noProperties":
-                                writer.writeNode(csharp.string_({ string: type.discriminantValue.wireValue }));
-                                writer.writeLine(" => new {},");
-                                break;
-                            case "samePropertiesAsObject":
-                                generateSerializeUnionMember();
-                                break;
-                            case "singleProperty":
-                                generateSerializeUnionMember();
-                                break;
-                            default:
-                                assertNever(type.shape);
-                        }
-                    });
-                    writer.writeLine("_ => json.Deserialize<object?>(options)");
-                    writer.dedent();
-                    writer.writeTextStatement("}");
-
-                    if (baseProperties.length > 0) {
-                        writer.write("var baseProperties = json.Deserialize<");
-                        writer.writeNode(this.classReference);
-                        writer.write('.BaseProperties>(options) ?? throw new JsonException("Failed to deserialize ');
-                        writer.writeNode(this.classReference);
-                        writer.writeLine('.BaseProperties");');
-                    }
-                    writer.write("return new ");
-                    writer.writeNode(unionReference);
-                    writer.writeLine("(discriminator, value)");
-                    if (baseProperties.length > 0) {
-                        writer.pushScope();
-                        baseProperties.forEach((property) => {
-                            writer.writeLine(`${property.name} = baseProperties.${property.name},`);
-                        });
-                        writer.popScope();
-                    }
-                    writer.writeSemicolonIfLastCharacterIsNot();
-                    writer.writeLine();
+        class_.addMethod({
+            access: ast.Access.Public,
+            override: true,
+            return_: unionReference,
+            name: "Read",
+            parameters: [
+                this.csharp.parameter({
+                    ref: true,
+                    name: "reader",
+                    type: this.csharp.Type.reference(this.extern.System.Text.Json.Utf8JsonReader)
+                }),
+                this.csharp.parameter({
+                    name: "typeToConvert",
+                    type: this.csharp.Type.systemType
+                }),
+                this.csharp.parameter({
+                    name: "options",
+                    type: this.csharp.Type.reference(this.extern.System.Text.Json.JsonSerializerOptions)
                 })
-            })
-        );
+            ],
+            body: this.csharp.codeblock((writer) => {
+                const discriminatorPropName = this.unionDeclaration.discriminant.wireValue;
+                writer.writeTextStatement("var json = JsonElement.ParseValue(ref reader)");
+                writer.writeLine(`if (!json.TryGetProperty("${discriminatorPropName}", out var discriminatorElement))`);
+                writer.pushScope();
+                writer.writeTextStatement(
+                    `throw new JsonException("Missing discriminator property '${discriminatorPropName}'")`
+                );
+                writer.popScope();
+                writer.writeLine("if (discriminatorElement.ValueKind != JsonValueKind.String)");
+                writer.pushScope();
+                writer.writeLine("if (discriminatorElement.ValueKind == JsonValueKind.Null)");
+                writer.pushScope();
+                writer.writeTextStatement(
+                    `throw new JsonException("Discriminator property '${discriminatorPropName}' is null")`
+                );
+                writer.popScope();
+                writer.writeLine();
+                writer.writeTextStatement(
+                    `throw new JsonException($"Discriminator property '${discriminatorPropName}' is not a string, instead is {discriminatorElement.ToString()}")`
+                );
+                writer.popScope();
+                writer.writeLine();
+                writer.writeLine("var discriminator = discriminatorElement.GetString() ?? ");
+                writer.writeTextStatement(
+                    `throw new JsonException("Discriminator property '${discriminatorPropName}' is null")`
+                );
+                writer.writeLine();
 
-        class_.addMethod(
-            this.csharp.method({
-                access: ast.Access.Public,
-                override: true,
-                name: "Write",
-                parameters: [
-                    this.csharp.parameter({
-                        name: "writer",
-                        type: this.csharp.Type.reference(this.csharp.System.Text.Json.Utf8JsonWriter)
-                    }),
-                    this.csharp.parameter({
-                        name: "value",
-                        type: unionReference
-                    }),
-                    this.csharp.parameter({
-                        name: "options",
-                        type: this.csharp.Type.reference(this.csharp.System.Text.Json.JsonSerializerOptions)
-                    })
-                ],
-                body: this.csharp.codeblock((writer) => {
-                    const jsonObjReference = this.context.getJsonObjClassReference();
-                    writer.writeNode(this.context.getJsonNodeClassReference());
-                    writer.writeLine(` json = value.${this.discriminantPropertyName} switch`);
-                    writer.pushScope();
-                    this.unionDeclaration.types.forEach((type) => {
-                        writer.writeNode(this.csharp.string_({ string: type.discriminantValue.wireValue }));
+                writer.writeLine("var value = discriminator switch");
+                writer.pushScope();
+
+                this.unionDeclaration.types.forEach((type) => {
+                    const csharpType = this.getCsharpType(type);
+                    const csharp = this.csharp;
+                    function generateSerializeUnionMember(): void {
+                        writer.writeNode(csharp.string_({ string: type.discriminantValue.wireValue }));
                         writer.write(" => ");
                         switch (type.shape.propertiesType) {
                             case "samePropertiesAsObject":
-                                writer.write("JsonSerializer.SerializeToNode(value.Value, options),");
+                                writer.write("json");
                                 break;
                             case "singleProperty":
-                                writer.write("new ");
-                                writer.writeNode(jsonObjReference);
-                                writer.writeLine();
-                                writer.pushScope();
-                                writer.writeLine(
-                                    `["${type.shape.name.wireValue}"] = JsonSerializer.SerializeToNode(value.${this.valuePropertyName}, options)`
-                                );
-                                writer.dedent();
-                                writer.writeLine("},");
+                                writer.write(`json.GetProperty("${type.shape.name.wireValue}")`);
                                 break;
                             case "noProperties":
-                                writer.writeLine("null,");
-                                break;
+                                throw new Error("Internal Error; noProperties should not be used for deserialization");
+                            default:
+                                assertNever(type.shape);
                         }
-                    });
-                    writer.write("_ => JsonSerializer.SerializeToNode(value.Value, options)");
-                    writer.popScope();
-                    writer.write(" ?? new ");
-                    writer.writeNode(jsonObjReference);
-                    writer.writeTextStatement("()");
-                    writer.writeTextStatement(
-                        `json["${this.unionDeclaration.discriminant.wireValue}"] = value.${this.discriminantPropertyName}`
-                    );
-                    if (baseProperties.length > 0) {
-                        writer.write("var basePropertiesJson = JsonSerializer.SerializeToNode(new ");
-                        writer.writeNode(this.classReference);
-                        writer.writeLine(".BaseProperties");
-                        writer.pushScope();
-                        baseProperties.forEach((property) => {
-                            writer.writeLine(`${property.name} = value.${property.name},`);
-                        });
-                        writer.popScope();
-                        writer.write(', options) ?? throw new JsonException("Failed to serialize ');
-                        writer.writeNode(this.classReference);
-                        writer.writeLine('.BaseProperties");');
-                        writer.writeLine("foreach (var property in basePropertiesJson.AsObject())");
-                        writer.pushScope();
-                        writer.writeLine("json[property.Key] = property.Value;");
-                        writer.popScope();
-                    }
-                    writer.writeTextStatement("json.WriteTo(writer, options)");
-                })
-            })
-        );
+                        if (csharpType.isReferenceType === false) {
+                            // non-reference types can be always be deserialized directly as is
+                            writer.write(".Deserialize<", csharpType, ">(options)");
+                        } else {
+                            // reference types need to always be deserialized to an optional type
+                            // and if it is not optional, then we can tack on the throw condition
+                            // (this ensures that the code is valid regardless if it is a record struct or class types)
+                            writer.write(".Deserialize<", csharpType.toOptionalIfNotAlready(), ">(options)");
 
+                            if (!csharpType.isOptional) {
+                                writer.write(' ?? throw new JsonException("Failed to deserialize ', csharpType, '")');
+                            }
+                        }
+                        writer.writeLine(",");
+                    }
+
+                    switch (type.shape.propertiesType) {
+                        case "noProperties":
+                            writer.writeNode(csharp.string_({ string: type.discriminantValue.wireValue }));
+                            writer.writeLine(" => new {},");
+                            break;
+                        case "samePropertiesAsObject":
+                            generateSerializeUnionMember();
+                            break;
+                        case "singleProperty":
+                            generateSerializeUnionMember();
+                            break;
+                        default:
+                            assertNever(type.shape);
+                    }
+                });
+                writer.writeLine("_ => json.Deserialize<object?>(options)");
+                writer.dedent();
+                writer.writeTextStatement("}");
+
+                if (baseProperties.length > 0) {
+                    writer.write("var baseProperties = json.Deserialize<");
+                    writer.writeNode(this.classReference);
+                    writer.write('.BaseProperties>(options) ?? throw new JsonException("Failed to deserialize ');
+                    writer.writeNode(this.classReference);
+                    writer.writeLine('.BaseProperties");');
+                }
+                writer.write("return new ");
+                writer.writeNode(unionReference);
+                writer.writeLine("(discriminator, value)");
+                if (baseProperties.length > 0) {
+                    writer.pushScope();
+                    baseProperties.forEach((property) => {
+                        writer.writeLine(`${property.name} = baseProperties.${property.name},`);
+                    });
+                    writer.popScope();
+                }
+                writer.writeSemicolonIfLastCharacterIsNot();
+                writer.writeLine();
+            })
+        });
+
+        class_.addMethod({
+            access: ast.Access.Public,
+            override: true,
+            name: "Write",
+            parameters: [
+                this.csharp.parameter({
+                    name: "writer",
+                    type: this.csharp.Type.reference(this.extern.System.Text.Json.Utf8JsonWriter)
+                }),
+                this.csharp.parameter({
+                    name: "value",
+                    type: unionReference
+                }),
+                this.csharp.parameter({
+                    name: "options",
+                    type: this.csharp.Type.reference(this.extern.System.Text.Json.JsonSerializerOptions)
+                })
+            ],
+            body: this.csharp.codeblock((writer) => {
+                const jsonObjReference = this.extern.System.Text.Json.Nodes.JsonObject;
+                writer.writeNode(this.extern.System.Text.Json.Nodes.JsonNode);
+                writer.writeLine(` json = value.${discriminant.name} switch`);
+                writer.pushScope();
+                this.unionDeclaration.types.forEach((type) => {
+                    writer.writeNode(this.csharp.string_({ string: type.discriminantValue.wireValue }));
+                    writer.write(" => ");
+                    switch (type.shape.propertiesType) {
+                        case "samePropertiesAsObject":
+                            writer.write("JsonSerializer.SerializeToNode(value.Value, options),");
+                            break;
+                        case "singleProperty":
+                            writer.write("new ");
+                            writer.writeNode(jsonObjReference);
+                            writer.writeLine();
+                            writer.pushScope();
+                            writer.writeLine(
+                                `["${type.shape.name.wireValue}"] = JsonSerializer.SerializeToNode(value.${value.name}, options)`
+                            );
+                            writer.dedent();
+                            writer.writeLine("},");
+                            break;
+                        case "noProperties":
+                            writer.writeLine("null,");
+                            break;
+                    }
+                });
+                writer.write("_ => JsonSerializer.SerializeToNode(value.Value, options)");
+                writer.popScope();
+                writer.write(" ?? new ");
+                writer.writeNode(jsonObjReference);
+                writer.writeTextStatement("()");
+                writer.writeTextStatement(
+                    `json["${this.unionDeclaration.discriminant.wireValue}"] = value.${discriminant.name}`
+                );
+                if (baseProperties.length > 0) {
+                    writer.write("var basePropertiesJson = JsonSerializer.SerializeToNode(new ");
+                    writer.writeNode(this.classReference);
+                    writer.writeLine(".BaseProperties");
+                    writer.pushScope();
+                    baseProperties.forEach((property) => {
+                        writer.writeLine(`${property.name} = value.${property.name},`);
+                    });
+                    writer.popScope();
+                    writer.write(', options) ?? throw new JsonException("Failed to serialize ');
+                    writer.writeNode(this.classReference);
+                    writer.writeLine('.BaseProperties");');
+                    writer.writeLine("foreach (var property in basePropertiesJson.AsObject())");
+                    writer.pushScope();
+                    writer.writeLine("json[property.Key] = property.Value;");
+                    writer.popScope();
+                }
+                writer.writeTextStatement("json.WriteTo(writer, options)");
+            })
+        });
+        enclosingClass.addNestedClass(class_);
         return class_;
     }
 
@@ -806,7 +736,7 @@ export class UnionGenerator extends FileGenerator<CSharpFile, ModelCustomConfigS
     ): [FernIr.SingleUnionType, ast.Type] {
         switch (type.shape.propertiesType) {
             case "noProperties":
-                return [type, this.csharp.Type.object()];
+                return [type, this.csharp.Type.object];
             case "samePropertiesAsObject":
                 return [
                     type,
@@ -834,6 +764,7 @@ export class UnionGenerator extends FileGenerator<CSharpFile, ModelCustomConfigS
         exampleUnion: ExampleUnionType;
         innerValue: ast.AstNode;
     }): ast.AstNode {
+        // todo - this should really be dereferencing the type and looking it up...
         return this.csharp.instantiateClass({
             classReference: this.getUnionTypeClassReferenceByTypeName(
                 exampleUnion.singleUnionType.wireDiscriminantValue.name.pascalCase.safeName
@@ -851,7 +782,7 @@ export class UnionGenerator extends FileGenerator<CSharpFile, ModelCustomConfigS
     }): ast.AstNode {
         switch (unionType.shape.type) {
             case "samePropertiesAsObject": {
-                const typeDeclaration = this.context.getTypeDeclarationOrThrow(unionType.shape.typeId);
+                const typeDeclaration = this.model.dereferenceType(unionType.shape.typeId).typeDeclaration;
                 const objectGenerator = new ObjectGenerator(
                     this.context,
                     typeDeclaration,
@@ -902,9 +833,6 @@ export class UnionGenerator extends FileGenerator<CSharpFile, ModelCustomConfigS
     }
 
     protected getFilepath(): RelativeFilePath {
-        return join(
-            this.context.project.filepaths.getSourceFileDirectory(),
-            RelativeFilePath.of(this.classReference.name + ".cs")
-        );
+        return join(this.constants.folders.sourceFiles, RelativeFilePath.of(`${this.classReference.name}.cs`));
     }
 }

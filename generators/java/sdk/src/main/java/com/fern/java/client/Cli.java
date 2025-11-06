@@ -14,6 +14,7 @@ import com.fern.ir.model.publish.DirectPublish;
 import com.fern.ir.model.publish.Filesystem;
 import com.fern.ir.model.publish.GithubPublish;
 import com.fern.ir.model.publish.PublishingConfig.Visitor;
+import com.fern.ir.model.websocket.WebSocketChannel;
 import com.fern.java.AbstractGeneratorCli;
 import com.fern.java.AbstractPoetClassNameFactory;
 import com.fern.java.DefaultGeneratorExecClient;
@@ -44,6 +45,8 @@ import com.fern.java.client.generators.SuppliersGenerator;
 import com.fern.java.client.generators.SyncRootClientGenerator;
 import com.fern.java.client.generators.SyncSubpackageClientGenerator;
 import com.fern.java.client.generators.TestGenerator;
+import com.fern.java.client.generators.websocket.AsyncWebSocketChannelWriter;
+import com.fern.java.client.generators.websocket.SyncWebSocketChannelWriter;
 import com.fern.java.generators.DateTimeDeserializerGenerator;
 import com.fern.java.generators.EnumGenerator;
 import com.fern.java.generators.NullableGenerator;
@@ -66,12 +69,14 @@ import com.fern.java.output.gradle.GradleDependency;
 import com.fern.java.output.gradle.GradleDependencyType;
 import com.fern.java.output.gradle.ParsedGradleDependency;
 import com.palantir.common.streams.KeyedStream;
+import com.squareup.javapoet.FieldSpec;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 import java.util.Set;
+import javax.lang.model.element.Modifier;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -144,6 +149,7 @@ public final class Cli extends AbstractGeneratorCli<JavaSdkCustomConfig, JavaSdk
                 .useDefaultRequestParameterValues(customConfig.useDefaultRequestParameterValues())
                 .enableWireTests(customConfig.enableWireTests())
                 .useNullableAnnotation(customConfig.useNullableAnnotation())
+                .collapseOptionalNullable(customConfig.collapseOptionalNullable())
                 .build();
 
         Boolean generateFullProject = ir.getPublishConfig()
@@ -383,43 +389,117 @@ public final class Cli extends AbstractGeneratorCli<JavaSdkCustomConfig, JavaSdk
 
         generatedOAuthTokenSupplier.ifPresent(this::addGeneratedFile);
 
-        // subpackage clients
+        // subpackage clients and their WebSocket channels
         ir.getSubpackages().values().forEach(subpackage -> {
-            if (!subpackage.getHasEndpointsInTree()) {
-                return;
-            }
-            AbstractSubpackageClientGenerator syncServiceClientGenerator = new SyncSubpackageClientGenerator(
-                    subpackage,
-                    context,
-                    objectMapper,
-                    context,
-                    generatedClientOptions,
-                    generatedSuppliersFile,
-                    generatedEnvironmentsClass,
-                    generatedRequestOptions,
-                    generatedTypes.getInterfaces(),
-                    generatedErrors);
-            GeneratedClient syncGeneratedClient = syncServiceClientGenerator.generateFile();
-            this.addGeneratedFile(syncGeneratedClient);
-            syncGeneratedClient.rawClient().ifPresent(this::addGeneratedFile);
-            syncGeneratedClient.wrappedRequests().forEach(this::addGeneratedFile);
+            // Generate subpackage clients if there are endpoints or WebSocket channels
+            if (subpackage.getHasEndpointsInTree() || subpackage.getWebsocket().isPresent()) {
+                AbstractSubpackageClientGenerator syncServiceClientGenerator = new SyncSubpackageClientGenerator(
+                        subpackage,
+                        context,
+                        objectMapper,
+                        context,
+                        generatedClientOptions,
+                        generatedSuppliersFile,
+                        generatedEnvironmentsClass,
+                        generatedRequestOptions,
+                        generatedTypes.getInterfaces(),
+                        generatedErrors);
+                GeneratedClient syncGeneratedClient = syncServiceClientGenerator.generateFile();
+                this.addGeneratedFile(syncGeneratedClient);
+                syncGeneratedClient.rawClient().ifPresent(this::addGeneratedFile);
+                syncGeneratedClient.wrappedRequests().forEach(this::addGeneratedFile);
 
-            AbstractSubpackageClientGenerator asyncServiceClientGenerator = new AsyncSubpackageClientGenerator(
-                    subpackage,
-                    context,
-                    objectMapper,
-                    context,
-                    generatedClientOptions,
-                    generatedSuppliersFile,
-                    generatedEnvironmentsClass,
-                    generatedRequestOptions,
-                    generatedTypes.getInterfaces(),
-                    generatedErrors);
-            GeneratedClient asyncGeneratedClient = asyncServiceClientGenerator.generateFile();
-            this.addGeneratedFile(asyncGeneratedClient);
-            asyncGeneratedClient.rawClient().ifPresent(this::addGeneratedFile);
-            asyncGeneratedClient.wrappedRequests().forEach(this::addGeneratedFile);
+                AbstractSubpackageClientGenerator asyncServiceClientGenerator = new AsyncSubpackageClientGenerator(
+                        subpackage,
+                        context,
+                        objectMapper,
+                        context,
+                        generatedClientOptions,
+                        generatedSuppliersFile,
+                        generatedEnvironmentsClass,
+                        generatedRequestOptions,
+                        generatedTypes.getInterfaces(),
+                        generatedErrors);
+                GeneratedClient asyncGeneratedClient = asyncServiceClientGenerator.generateFile();
+                this.addGeneratedFile(asyncGeneratedClient);
+                asyncGeneratedClient.rawClient().ifPresent(this::addGeneratedFile);
+                asyncGeneratedClient.wrappedRequests().forEach(this::addGeneratedFile);
+            }
+
+            // Generate WebSocket channel if present in this subpackage
+            if (subpackage.getWebsocket().isPresent()
+                    && ir.getWebsocketChannels().isPresent()) {
+                WebSocketChannel websocketChannel = ir.getWebsocketChannels()
+                        .get()
+                        .get(subpackage.getWebsocket().get());
+                if (websocketChannel != null) {
+                    // Generate sync WebSocket client
+                    SyncWebSocketChannelWriter syncWebSocketWriter = new SyncWebSocketChannelWriter(
+                            websocketChannel,
+                            context,
+                            generatedClientOptions,
+                            generatedEnvironmentsClass,
+                            objectMapper,
+                            FieldSpec.builder(generatedClientOptions.getClassName(), "clientOptions")
+                                    .addModifiers(Modifier.PROTECTED, Modifier.FINAL)
+                                    .build(),
+                            Optional.of(subpackage));
+                    GeneratedJavaFile syncWebSocketClient = syncWebSocketWriter.generateFile();
+                    this.addGeneratedFile(syncWebSocketClient);
+
+                    // Generate async WebSocket client
+                    AsyncWebSocketChannelWriter asyncWebSocketWriter = new AsyncWebSocketChannelWriter(
+                            websocketChannel,
+                            context,
+                            generatedClientOptions,
+                            generatedEnvironmentsClass,
+                            objectMapper,
+                            FieldSpec.builder(generatedClientOptions.getClassName(), "clientOptions")
+                                    .addModifiers(Modifier.PROTECTED, Modifier.FINAL)
+                                    .build(),
+                            Optional.of(subpackage));
+                    GeneratedJavaFile asyncWebSocketClient = asyncWebSocketWriter.generateFile();
+                    this.addGeneratedFile(asyncWebSocketClient);
+                }
+            }
         });
+
+        // Root-level WebSocket channel clients (those not in a subpackage)
+        if (ir.getRootPackage().getWebsocket().isPresent()
+                && ir.getWebsocketChannels().isPresent()) {
+            WebSocketChannel websocketChannel = ir.getWebsocketChannels()
+                    .get()
+                    .get(ir.getRootPackage().getWebsocket().get());
+            if (websocketChannel != null) {
+                // Generate sync WebSocket client
+                SyncWebSocketChannelWriter syncWebSocketWriter = new SyncWebSocketChannelWriter(
+                        websocketChannel,
+                        context,
+                        generatedClientOptions,
+                        generatedEnvironmentsClass,
+                        objectMapper,
+                        FieldSpec.builder(generatedClientOptions.getClassName(), "clientOptions")
+                                .addModifiers(Modifier.PROTECTED, Modifier.FINAL)
+                                .build(),
+                        Optional.empty()); // Root-level, no subpackage
+                GeneratedJavaFile syncWebSocketClient = syncWebSocketWriter.generateFile();
+                this.addGeneratedFile(syncWebSocketClient);
+
+                // Generate async WebSocket client
+                AsyncWebSocketChannelWriter asyncWebSocketWriter = new AsyncWebSocketChannelWriter(
+                        websocketChannel,
+                        context,
+                        generatedClientOptions,
+                        generatedEnvironmentsClass,
+                        objectMapper,
+                        FieldSpec.builder(generatedClientOptions.getClassName(), "clientOptions")
+                                .addModifiers(Modifier.PROTECTED, Modifier.FINAL)
+                                .build(),
+                        Optional.empty()); // Root-level, no subpackage
+                GeneratedJavaFile asyncWebSocketClient = asyncWebSocketWriter.generateFile();
+                this.addGeneratedFile(asyncWebSocketClient);
+            }
+        }
 
         // root clients
         AbstractRootClientGenerator syncRootClientGenerator = new SyncRootClientGenerator(
@@ -489,8 +569,7 @@ public final class Cli extends AbstractGeneratorCli<JavaSdkCustomConfig, JavaSdk
         if (generatorConfig.getCustomConfig().isPresent()) {
             JsonNode node = ObjectMappers.JSON_MAPPER.valueToTree(
                     generatorConfig.getCustomConfig().get());
-            JavaSdkCustomConfig config = ObjectMappers.JSON_MAPPER.convertValue(node, JavaSdkCustomConfig.class);
-            return config;
+            return ObjectMappers.JSON_MAPPER.convertValue(node, JavaSdkCustomConfig.class);
         }
         return JavaSdkCustomConfig.builder().build();
     }

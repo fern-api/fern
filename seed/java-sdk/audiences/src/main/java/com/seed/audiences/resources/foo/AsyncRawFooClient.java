@@ -14,6 +14,8 @@ import com.seed.audiences.core.SeedAudiencesHttpResponse;
 import com.seed.audiences.resources.foo.requests.FindRequest;
 import com.seed.audiences.resources.foo.types.ImportingType;
 import java.io.IOException;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.concurrent.CompletableFuture;
 import okhttp3.Call;
 import okhttp3.Callback;
@@ -46,10 +48,13 @@ public class AsyncRawFooClient {
             QueryStringMapper.addQueryParameter(
                     httpUrl, "optionalString", request.getOptionalString().get(), false);
         }
+        Map<String, Object> properties = new HashMap<>();
+        properties.put("publicProperty", request.getPublicProperty());
+        properties.put("privateProperty", request.getPrivateProperty());
         RequestBody body;
         try {
             body = RequestBody.create(
-                    ObjectMappers.JSON_MAPPER.writeValueAsBytes(request), MediaTypes.APPLICATION_JSON);
+                    ObjectMappers.JSON_MAPPER.writeValueAsBytes(properties), MediaTypes.APPLICATION_JSON);
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
@@ -69,18 +74,16 @@ public class AsyncRawFooClient {
             @Override
             public void onResponse(@NotNull Call call, @NotNull Response response) throws IOException {
                 try (ResponseBody responseBody = response.body()) {
+                    String responseBodyString = responseBody != null ? responseBody.string() : "{}";
                     if (response.isSuccessful()) {
                         future.complete(new SeedAudiencesHttpResponse<>(
-                                ObjectMappers.JSON_MAPPER.readValue(responseBody.string(), ImportingType.class),
+                                ObjectMappers.JSON_MAPPER.readValue(responseBodyString, ImportingType.class),
                                 response));
                         return;
                     }
-                    String responseBodyString = responseBody != null ? responseBody.string() : "{}";
+                    Object errorBody = ObjectMappers.parseErrorBody(responseBodyString);
                     future.completeExceptionally(new SeedAudiencesApiException(
-                            "Error with status code " + response.code(),
-                            response.code(),
-                            ObjectMappers.JSON_MAPPER.readValue(responseBodyString, Object.class),
-                            response));
+                            "Error with status code " + response.code(), response.code(), errorBody, response));
                     return;
                 } catch (IOException e) {
                     future.completeExceptionally(new SeedAudiencesException("Network error executing HTTP request", e));

@@ -10,11 +10,11 @@ import { ExpressCustomConfig } from "./custom-config/ExpressCustomConfig";
 import { ExpressCustomConfigSchema } from "./custom-config/schema/ExpressCustomConfigSchema";
 
 export class ExpressGeneratorCli extends AbstractGeneratorCli<ExpressCustomConfig> {
-    protected parseCustomConfig(customConfig: unknown, _logger: Logger): ExpressCustomConfig {
+    protected parseCustomConfig(customConfig: unknown, logger: Logger): ExpressCustomConfig {
         const parsed = customConfig != null ? ExpressCustomConfigSchema.parse(customConfig) : undefined;
         const noSerdeLayer = parsed?.noSerdeLayer ?? false;
         const enableInlineTypes = false; // hardcode, not supported in Express
-        return {
+        const config = {
             useBrandedStringAliases: parsed?.useBrandedStringAliases ?? false,
             areImplementationsOptional: parsed?.optionalImplementations ?? false,
             doNotHandleUnrecognizedErrors: parsed?.doNotHandleUnrecognizedErrors ?? false,
@@ -35,8 +35,17 @@ export class ExpressGeneratorCli extends AbstractGeneratorCli<ExpressCustomConfi
             packagePath: parsed?.packagePath ?? undefined,
             packageManager: parsed?.packageManager ?? "pnpm",
             linter: parsed?.linter ?? "biome",
-            formatter: parsed?.formatter ?? "biome"
+            formatter: parsed?.formatter ?? "biome",
+            enableForwardCompatibleEnums: parsed?.enableForwardCompatibleEnums ?? false
         };
+
+        if (config.linter === "oxlint") {
+            logger.warn(
+                "Warning: oxlint is currently in beta. Use with caution. Type-aware linting is supported via the --type-aware flag."
+            );
+        }
+
+        return config;
     }
 
     protected async generateTypescriptProject({
@@ -78,7 +87,8 @@ export class ExpressGeneratorCli extends AbstractGeneratorCli<ExpressCustomConfi
                 packagePath: customConfig.packagePath,
                 packageManager: customConfig.packageManager,
                 formatter: customConfig.formatter,
-                linter: customConfig.linter
+                linter: customConfig.linter,
+                enableForwardCompatibleEnums: customConfig.enableForwardCompatibleEnums
             }
         });
 

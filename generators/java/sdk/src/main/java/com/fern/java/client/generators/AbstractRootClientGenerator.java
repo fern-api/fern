@@ -29,6 +29,7 @@ import com.fern.ir.model.auth.OAuthScheme;
 import com.fern.ir.model.commons.EndpointReference;
 import com.fern.ir.model.commons.ErrorId;
 import com.fern.ir.model.commons.TypeId;
+import com.fern.ir.model.commons.WebSocketChannelId;
 import com.fern.ir.model.ir.Subpackage;
 import com.fern.ir.model.types.Literal;
 import com.fern.java.AbstractGeneratorContext;
@@ -49,6 +50,7 @@ import com.squareup.javapoet.JavaFile;
 import com.squareup.javapoet.MethodSpec;
 import com.squareup.javapoet.ParameterSpec;
 import com.squareup.javapoet.ParameterizedTypeName;
+import com.squareup.javapoet.TypeName;
 import com.squareup.javapoet.TypeSpec;
 import com.squareup.javapoet.TypeVariableName;
 import java.util.Base64;
@@ -112,10 +114,96 @@ public abstract class AbstractRootClientGenerator extends AbstractFileGenerator 
 
     protected abstract ClassName builderName();
 
+    private void addWebSocketFactoryMethod(
+            TypeSpec.Builder clientBuilder, com.fern.ir.model.websocket.WebSocketChannel websocketChannel) {
+        // Get the WebSocket client class name (root level, no subpackage)
+        ClassName webSocketClientClassName = clientGeneratorContext
+                .getPoetClassNameFactory()
+                .getWebSocketClientClassName(websocketChannel, Optional.empty());
+
+        // Create a factory method for the WebSocket client
+        MethodSpec.Builder webSocketFactoryMethod = MethodSpec.methodBuilder(
+                        websocketChannel.getName().get().getCamelCase().getSafeName() + "WebSocket")
+                .addModifiers(Modifier.PUBLIC)
+                .returns(webSocketClientClassName)
+                .addJavadoc(
+                        "Creates a new WebSocket client for the $L channel.\n",
+                        websocketChannel.getName().get().getCamelCase().getSafeName());
+
+        // Add path parameters
+        for (com.fern.ir.model.http.PathParameter pathParam : websocketChannel.getPathParameters()) {
+            TypeName paramType =
+                    clientGeneratorContext.getPoetTypeNameMapper().convertToTypeName(true, pathParam.getValueType());
+            webSocketFactoryMethod.addParameter(
+                    paramType, pathParam.getName().getCamelCase().getSafeName());
+            webSocketFactoryMethod.addJavadoc(
+                    "@param $L $L\n",
+                    pathParam.getName().getCamelCase().getSafeName(),
+                    pathParam
+                            .getDocs()
+                            .orElse("the " + pathParam.getName().getCamelCase().getSafeName() + " path parameter"));
+        }
+
+        // Add query parameters
+        for (com.fern.ir.model.http.QueryParameter queryParam : websocketChannel.getQueryParameters()) {
+            TypeName paramType =
+                    clientGeneratorContext.getPoetTypeNameMapper().convertToTypeName(true, queryParam.getValueType());
+            String paramName = queryParam.getName().getName().getCamelCase().getSafeName();
+
+            // Check if already optional
+            if (!queryParam.getValueType().getContainer().isPresent()
+                    || !queryParam.getValueType().getContainer().get().isOptional()) {
+                paramType = ParameterizedTypeName.get(ClassName.get(Optional.class), paramType);
+            }
+
+            webSocketFactoryMethod.addParameter(paramType, paramName);
+            webSocketFactoryMethod.addJavadoc(
+                    "@param $L $L\n",
+                    paramName,
+                    queryParam.getDocs().orElse("Optional " + paramName + " query parameter"));
+        }
+
+        // Build the return statement with all parameters
+        StringBuilder returnStatement = new StringBuilder("return new $T(this.clientOptions");
+        for (com.fern.ir.model.http.PathParameter pathParam : websocketChannel.getPathParameters()) {
+            returnStatement
+                    .append(", ")
+                    .append(pathParam.getName().getCamelCase().getSafeName());
+        }
+        for (com.fern.ir.model.http.QueryParameter queryParam : websocketChannel.getQueryParameters()) {
+            returnStatement
+                    .append(", ")
+                    .append(queryParam.getName().getName().getCamelCase().getSafeName());
+        }
+        returnStatement.append(")");
+
+        webSocketFactoryMethod.addStatement(returnStatement.toString(), webSocketClientClassName);
+
+        clientBuilder.addMethod(webSocketFactoryMethod.build());
+    }
+
     @Override
     public GeneratedRootClient generateFile() {
         AbstractClientGeneratorUtils clientGeneratorUtils = clientGeneratorUtils();
         Result result = clientGeneratorUtils.buildClients();
+
+        // Add WebSocket channel factory methods to the root client
+        // Only add WebSocket channels that belong to the root package, not subpackages
+        if (clientGeneratorContext.getIr().getRootPackage().getWebsocket().isPresent()) {
+            WebSocketChannelId channelId = clientGeneratorContext
+                    .getIr()
+                    .getRootPackage()
+                    .getWebsocket()
+                    .get();
+            com.fern.ir.model.websocket.WebSocketChannel websocketChannel = clientGeneratorContext
+                    .getIr()
+                    .getWebsocketChannels()
+                    .map(channels -> channels.get(channelId))
+                    .orElse(null);
+            if (websocketChannel != null) {
+                addWebSocketFactoryMethod(result.getClientImpl(), websocketChannel);
+            }
+        }
 
         TypeSpec builderTypeSpec = getClientBuilder();
 
@@ -385,6 +473,35 @@ public abstract class AbstractRootClientGenerator extends AbstractFileGenerator 
                 })
                 .forEach(clientBuilder::addMethod);
 
+        generatorContext.getIr().getPathParameters().forEach(pathParameter -> {
+            String pathParamName = pathParameter.getName().getCamelCase().getSafeName();
+            clientBuilder.addField(FieldSpec.builder(
+                            generatorContext
+                                    .getPoetTypeNameMapper()
+                                    .convertToTypeName(true, pathParameter.getValueType()),
+                            pathParamName)
+                    .addModifiers(Modifier.PRIVATE)
+                    .build());
+        });
+
+        generatorContext.getIr().getPathParameters().stream()
+                .map(pathParameter -> {
+                    String pathParamName =
+                            pathParameter.getName().getCamelCase().getSafeName();
+                    return MethodSpec.methodBuilder(pathParamName)
+                            .addModifiers(Modifier.PUBLIC)
+                            .returns(isExtensible ? TypeVariableName.get("T") : builderName)
+                            .addParameter(
+                                    generatorContext
+                                            .getPoetTypeNameMapper()
+                                            .convertToTypeName(true, pathParameter.getValueType()),
+                                    pathParamName)
+                            .addStatement("this.$L = $L", pathParamName, pathParamName)
+                            .addStatement(isExtensible ? "return self()" : "return this")
+                            .build();
+                })
+                .forEach(clientBuilder::addMethod);
+
         MethodSpec.Builder buildClientOptionsMethodBuilder = MethodSpec.methodBuilder("buildClientOptions")
                 .addModifiers(Modifier.PROTECTED)
                 .returns(generatedClientOptions.getClassName())
@@ -405,6 +522,11 @@ public abstract class AbstractRootClientGenerator extends AbstractFileGenerator 
 
         if (hasVariables) {
             buildClientOptionsMethodBuilder.addStatement("setVariables(builder)");
+        }
+
+        boolean hasApiPathParams = !generatorContext.getIr().getPathParameters().isEmpty();
+        if (hasApiPathParams) {
+            buildClientOptionsMethodBuilder.addStatement("setApiPathParameters(builder)");
         }
 
         buildClientOptionsMethodBuilder
@@ -462,6 +584,33 @@ public abstract class AbstractRootClientGenerator extends AbstractFileGenerator 
             });
 
             clientBuilder.addMethod(setVariablesMethodBuilder.build());
+        }
+
+        if (hasApiPathParams) {
+            MethodSpec.Builder setApiPathParametersMethodBuilder = MethodSpec.methodBuilder("setApiPathParameters")
+                    .addModifiers(Modifier.PROTECTED)
+                    .addParameter(generatedClientOptions.builderClassName(), "builder")
+                    .addJavadoc(
+                            "Override this method to configure API-level path parameters defined in the specification.\n"
+                                    + "Available path parameters: "
+                                    + generatorContext.getIr().getPathParameters().stream()
+                                            .map(p -> p.getName().getCamelCase().getSafeName())
+                                            .collect(java.util.stream.Collectors.joining(", "))
+                                    + "\n\n"
+                                    + "@param builder The ClientOptions.Builder to configure");
+
+            generatorContext.getIr().getPathParameters().forEach(pathParameter -> {
+                String pathParamName = pathParameter.getName().getCamelCase().getSafeName();
+                String originalName = pathParameter.getName().getOriginalName();
+                MethodSpec pathParamMethod =
+                        generatedClientOptions.apiPathParamGetters().get(originalName);
+                setApiPathParametersMethodBuilder
+                        .beginControlFlow("if (this.$L != null)", pathParamName)
+                        .addStatement("builder.$N(this.$L)", pathParamMethod, pathParamName)
+                        .endControlFlow();
+            });
+
+            clientBuilder.addMethod(setApiPathParametersMethodBuilder.build());
         }
 
         MethodSpec setTimeoutsMethod = MethodSpec.methodBuilder("setTimeouts")

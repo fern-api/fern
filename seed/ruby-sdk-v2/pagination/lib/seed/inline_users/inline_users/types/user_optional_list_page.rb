@@ -8,7 +8,7 @@ module Seed
           field :data, lambda {
             Seed::InlineUsers::InlineUsers::Types::UserOptionalListContainer
           }, optional: false, nullable: false
-          field :next_, -> { String }, optional: true, nullable: false
+          field :next_, -> { String }, optional: true, nullable: false, api_name: "next"
         end
       end
     end

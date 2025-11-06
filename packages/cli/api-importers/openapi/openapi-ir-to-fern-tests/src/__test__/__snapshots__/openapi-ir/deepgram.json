@@ -7518,6 +7518,25 @@
                               },
                               "type": "primitive"
                             },
+                            "languages": {
+                              "value": [
+                                {
+                                  "value": {
+                                    "value": "en",
+                                    "type": "string"
+                                  },
+                                  "type": "primitive"
+                                },
+                                {
+                                  "value": {
+                                    "value": "en-us",
+                                    "type": "string"
+                                  },
+                                  "type": "primitive"
+                                }
+                              ],
+                              "type": "array"
+                            },
                             "version": {
                               "value": {
                                 "value": "2021-11-10.1",
@@ -7588,6 +7607,25 @@
                                 "type": "string"
                               },
                               "type": "primitive"
+                            },
+                            "languages": {
+                              "value": [
+                                {
+                                  "value": {
+                                    "value": "en",
+                                    "type": "string"
+                                  },
+                                  "type": "primitive"
+                                },
+                                {
+                                  "value": {
+                                    "value": "en-us",
+                                    "type": "string"
+                                  },
+                                  "type": "primitive"
+                                }
+                              ],
+                              "type": "array"
                             },
                             "version": {
                               "value": {
@@ -9476,6 +9514,18 @@
                                 "type": "string"
                               },
                               "type": "primitive"
+                            },
+                            "scopes": {
+                              "value": [
+                                {
+                                  "value": {
+                                    "value": "admin",
+                                    "type": "string"
+                                  },
+                                  "type": "primitive"
+                                }
+                              ],
+                              "type": "array"
                             },
                             "created": {
                               "value": {
@@ -18135,6 +18185,55 @@
                                 "type": "string"
                               },
                               "type": "primitive"
+                            },
+                            "accessor": {
+                              "value": {
+                                "value": "123456789012345678901234",
+                                "type": "string"
+                              },
+                              "type": "primitive"
+                            },
+                            "endpoint": {
+                              "value": {
+                                "value": "listen",
+                                "type": "string"
+                              },
+                              "type": "primitive"
+                            },
+                            "feature_set": {
+                              "value": {
+                                "value": "punctuate",
+                                "type": "string"
+                              },
+                              "type": "primitive"
+                            },
+                            "models": {
+                              "value": {
+                                "value": "Nova-2",
+                                "type": "string"
+                              },
+                              "type": "primitive"
+                            },
+                            "method": {
+                              "value": {
+                                "value": "async",
+                                "type": "string"
+                              },
+                              "type": "primitive"
+                            },
+                            "tags": {
+                              "value": {
+                                "value": "tag1",
+                                "type": "string"
+                              },
+                              "type": "primitive"
+                            },
+                            "deployment": {
+                              "value": {
+                                "value": "self-hosted",
+                                "type": "string"
+                              },
+                              "type": "primitive"
                             }
                           },
                           "type": "object"
@@ -19566,6 +19665,18 @@
                                 "type": "string"
                               },
                               "type": "primitive"
+                            },
+                            "tags": {
+                              "value": [
+                                {
+                                  "value": {
+                                    "value": "masculine",
+                                    "type": "string"
+                                  },
+                                  "type": "primitive"
+                                }
+                              ],
+                              "type": "array"
                             }
                           },
                           "type": "object"

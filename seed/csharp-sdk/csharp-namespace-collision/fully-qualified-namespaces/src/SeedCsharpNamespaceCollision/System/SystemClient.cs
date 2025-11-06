@@ -1,6 +1,4 @@
-using System.Net.Http;
 using System.Text.Json;
-using System.Threading;
 using SeedCsharpNamespaceCollision.Core;
 
 namespace SeedCsharpNamespaceCollision.System;
@@ -27,7 +25,7 @@ public partial class SystemClient
     ///     }
     /// );
     /// </code></example>
-    public async global::System.Threading.Tasks.Task<User> CreateUserAsync(
+    public async Task<User> CreateUserAsync(
         User request,
         RequestOptions? options = null,
         CancellationToken cancellationToken = default
@@ -89,7 +87,7 @@ public partial class SystemClient
     ///     }
     /// );
     /// </code></example>
-    public async global::System.Threading.Tasks.Task<Task> CreateTaskAsync(
+    public async Task<Task> CreateTaskAsync(
         Task request,
         RequestOptions? options = null,
         CancellationToken cancellationToken = default

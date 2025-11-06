@@ -8,7 +8,7 @@ import { mergeHeaders } from "./core/headers.mjs";
 import * as core from "./core/index.mjs";
 export class SeedExhaustiveClient {
     constructor(_options) {
-        this._options = Object.assign(Object.assign({}, _options), { headers: mergeHeaders({
+        this._options = Object.assign(Object.assign({}, _options), { logging: core.logging.createLogger(_options === null || _options === void 0 ? void 0 : _options.logging), headers: mergeHeaders({
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,

@@ -1,5 +1,4 @@
 using SeedExtraProperties;
-using System.Threading.Tasks;
 
 namespace Usage;
 

@@ -1,6 +1,6 @@
 # Reference
 ## Union
-<details><summary><code>client.Union.<a href="/src/SeedUndiscriminatedUnions/Union/UnionClient.cs">GetAsync</a>(OneOf.OneOf<string, IEnumerable<string>, int, IEnumerable<int>, IEnumerable<IEnumerable<int>>, HashSet<string>> { ... }) -> OneOf.OneOf<string, IEnumerable<string>, int, IEnumerable<int>, IEnumerable<IEnumerable<int>>, HashSet<string>></code></summary>
+<details><summary><code>client.Union.<a href="/src/SeedUndiscriminatedUnions/Union/UnionClient.cs">GetAsync</a>(OneOf<string, IEnumerable<string>, int, IEnumerable<int>, IEnumerable<IEnumerable<int>>, HashSet<string>> { ... }) -> OneOf<string, IEnumerable<string>, int, IEnumerable<int>, IEnumerable<IEnumerable<int>>, HashSet<string>></code></summary>
 <dl>
 <dd>
 
@@ -28,7 +28,7 @@ await client.Union.GetAsync("string");
 <dl>
 <dd>
 
-**request:** `OneOf.OneOf<string, IEnumerable<string>, int, IEnumerable<int>, IEnumerable<IEnumerable<int>>, HashSet<string>>` 
+**request:** `OneOf<string, IEnumerable<string>, int, IEnumerable<int>, IEnumerable<IEnumerable<int>>, HashSet<string>>` 
     
 </dd>
 </dl>
@@ -40,7 +40,7 @@ await client.Union.GetAsync("string");
 </dl>
 </details>
 
-<details><summary><code>client.Union.<a href="/src/SeedUndiscriminatedUnions/Union/UnionClient.cs">GetMetadataAsync</a>() -> Dictionary<OneOf.OneOf<KeyType, string>, string></code></summary>
+<details><summary><code>client.Union.<a href="/src/SeedUndiscriminatedUnions/Union/UnionClient.cs">GetMetadataAsync</a>() -> Dictionary<OneOf<KeyType, string>, string></code></summary>
 <dl>
 <dd>
 
@@ -65,7 +65,7 @@ await client.Union.GetMetadataAsync();
 </dl>
 </details>
 
-<details><summary><code>client.Union.<a href="/src/SeedUndiscriminatedUnions/Union/UnionClient.cs">UpdateMetadataAsync</a>(OneOf.OneOf<Dictionary<string, object?>?, NamedMetadata> { ... }) -> bool</code></summary>
+<details><summary><code>client.Union.<a href="/src/SeedUndiscriminatedUnions/Union/UnionClient.cs">UpdateMetadataAsync</a>(OneOf<Dictionary<string, object?>?, NamedMetadata> { ... }) -> bool</code></summary>
 <dl>
 <dd>
 
@@ -101,7 +101,7 @@ await client.Union.UpdateMetadataAsync(
 <dl>
 <dd>
 
-**request:** `OneOf.OneOf<Dictionary<string, object?>?, NamedMetadata>` 
+**request:** `OneOf<Dictionary<string, object?>?, NamedMetadata>` 
     
 </dd>
 </dl>
@@ -164,7 +164,7 @@ await client.Union.CallAsync(
 </dl>
 </details>
 
-<details><summary><code>client.Union.<a href="/src/SeedUndiscriminatedUnions/Union/UnionClient.cs">DuplicateTypesUnionAsync</a>(OneOf.OneOf<string, IEnumerable<string>, int, HashSet<string>> { ... }) -> OneOf.OneOf<string, IEnumerable<string>, int, HashSet<string>></code></summary>
+<details><summary><code>client.Union.<a href="/src/SeedUndiscriminatedUnions/Union/UnionClient.cs">DuplicateTypesUnionAsync</a>(OneOf<string, IEnumerable<string>, int, HashSet<string>> { ... }) -> OneOf<string, IEnumerable<string>, int, HashSet<string>></code></summary>
 <dl>
 <dd>
 
@@ -192,7 +192,7 @@ await client.Union.DuplicateTypesUnionAsync("string");
 <dl>
 <dd>
 
-**request:** `OneOf.OneOf<string, IEnumerable<string>, int, HashSet<string>>` 
+**request:** `OneOf<string, IEnumerable<string>, int, HashSet<string>>` 
     
 </dd>
 </dl>
@@ -204,7 +204,7 @@ await client.Union.DuplicateTypesUnionAsync("string");
 </dl>
 </details>
 
-<details><summary><code>client.Union.<a href="/src/SeedUndiscriminatedUnions/Union/UnionClient.cs">NestedUnionsAsync</a>(OneOf.OneOf<string, IEnumerable<string>, OneOf.OneOf<int, HashSet<string>, IEnumerable<string>, OneOf.OneOf<bool, HashSet<string>, IEnumerable<string>>>> { ... }) -> string</code></summary>
+<details><summary><code>client.Union.<a href="/src/SeedUndiscriminatedUnions/Union/UnionClient.cs">NestedUnionsAsync</a>(OneOf<string, IEnumerable<string>, OneOf<int, HashSet<string>, IEnumerable<string>, OneOf<bool, HashSet<string>, IEnumerable<string>>>> { ... }) -> string</code></summary>
 <dl>
 <dd>
 
@@ -232,7 +232,7 @@ await client.Union.NestedUnionsAsync("string");
 <dl>
 <dd>
 
-**request:** `OneOf.OneOf<string, IEnumerable<string>, OneOf.OneOf<int, HashSet<string>, IEnumerable<string>, OneOf.OneOf<bool, HashSet<string>, IEnumerable<string>>>>` 
+**request:** `OneOf<string, IEnumerable<string>, OneOf<int, HashSet<string>, IEnumerable<string>, OneOf<bool, HashSet<string>, IEnumerable<string>>>>` 
     
 </dd>
 </dl>

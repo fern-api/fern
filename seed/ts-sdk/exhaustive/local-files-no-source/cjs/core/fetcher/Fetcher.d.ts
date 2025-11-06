@@ -1,3 +1,4 @@
+import { type LogConfig, type Logger } from "../logging/logger.js";
 import type { APIResponse } from "./APIResponse.js";
 import type { EndpointMetadata } from "./EndpointMetadata.js";
 import { EndpointSupplier } from "./EndpointSupplier.js";
@@ -14,10 +15,12 @@ export declare namespace Fetcher {
         maxRetries?: number;
         withCredentials?: boolean;
         abortSignal?: AbortSignal;
-        requestType?: "json" | "file" | "bytes";
+        requestType?: "json" | "file" | "bytes" | "form" | "other";
         responseType?: "json" | "blob" | "sse" | "streaming" | "text" | "arrayBuffer" | "binary-response";
         duplex?: "half";
         endpointMetadata?: EndpointMetadata;
+        fetchFn?: typeof fetch;
+        logging?: LogConfig | Logger;
     }
     type Error = FailedStatusCodeError | NonJsonError | TimeoutError | UnknownError;
     interface FailedStatusCodeError {

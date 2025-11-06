@@ -32,6 +32,7 @@ export declare namespace TypeGenerator {
         useBrandedStringAliases: boolean;
         includeUtilsOnUnionMembers: boolean;
         includeOtherInUnionTypes: boolean;
+        enableForwardCompatibleEnums: boolean;
         includeSerdeLayer: boolean;
         noOptionalProperties: boolean;
         retainOriginalCasing: boolean;
@@ -58,6 +59,7 @@ export class TypeGenerator<Context extends BaseContext = BaseContext> {
     private readonly useBrandedStringAliases: boolean;
     private readonly includeUtilsOnUnionMembers: boolean;
     private readonly includeOtherInUnionTypes: boolean;
+    private readonly enableForwardCompatibleEnums: boolean;
     private readonly includeSerdeLayer: boolean;
     private readonly noOptionalProperties: boolean;
     private readonly retainOriginalCasing: boolean;
@@ -68,6 +70,7 @@ export class TypeGenerator<Context extends BaseContext = BaseContext> {
         useBrandedStringAliases,
         includeUtilsOnUnionMembers,
         includeOtherInUnionTypes,
+        enableForwardCompatibleEnums,
         includeSerdeLayer,
         noOptionalProperties,
         retainOriginalCasing,
@@ -77,6 +80,7 @@ export class TypeGenerator<Context extends BaseContext = BaseContext> {
         this.useBrandedStringAliases = useBrandedStringAliases;
         this.includeUtilsOnUnionMembers = includeUtilsOnUnionMembers;
         this.includeOtherInUnionTypes = includeOtherInUnionTypes;
+        this.enableForwardCompatibleEnums = enableForwardCompatibleEnums;
         this.includeSerdeLayer = includeSerdeLayer;
         this.noOptionalProperties = noOptionalProperties;
         this.retainOriginalCasing = retainOriginalCasing;
@@ -243,6 +247,7 @@ export class TypeGenerator<Context extends BaseContext = BaseContext> {
             includeSerdeLayer: this.includeSerdeLayer,
             noOptionalProperties: this.noOptionalProperties,
             includeEnumUtils: this.includeUtilsOnUnionMembers,
+            enableForwardCompatibleEnums: this.enableForwardCompatibleEnums,
             retainOriginalCasing: this.retainOriginalCasing,
             enableInlineTypes: this.enableInlineTypes,
             generateReadWriteOnlyTypes: this.generateReadWriteOnlyTypes

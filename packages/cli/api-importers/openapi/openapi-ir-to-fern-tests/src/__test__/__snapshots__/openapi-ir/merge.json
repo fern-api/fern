@@ -4429,6 +4429,13 @@
                                   },
                                   "type": "primitive"
                                 },
+                                "remote_id": {
+                                  "value": {
+                                    "value": "52802",
+                                    "type": "string"
+                                  },
+                                  "type": "primitive"
+                                },
                                 "employee_payroll_run": {
                                   "value": {
                                     "value": "35347df1-95e7-46e2-93cc-66f1191edca5",
@@ -4453,6 +4460,65 @@
                                     "type": "datetime"
                                   },
                                   "type": "primitive"
+                                },
+                                "field_mappings": {
+                                  "value": [
+                                    {
+                                      "key": {
+                                        "value": "organization_defined_targets",
+                                        "type": "string"
+                                      },
+                                      "value": {
+                                        "value": {
+                                          "value": [
+                                            {
+                                              "key": {
+                                                "value": "custom_key",
+                                                "type": "string"
+                                              },
+                                              "value": {
+                                                "value": {
+                                                  "value": "custom_value",
+                                                  "type": "string"
+                                                },
+                                                "type": "primitive"
+                                              }
+                                            }
+                                          ],
+                                          "type": "map"
+                                        },
+                                        "type": "unknown"
+                                      }
+                                    },
+                                    {
+                                      "key": {
+                                        "value": "linked_account_defined_targets",
+                                        "type": "string"
+                                      },
+                                      "value": {
+                                        "value": {
+                                          "value": [
+                                            {
+                                              "key": {
+                                                "value": "custom_key",
+                                                "type": "string"
+                                              },
+                                              "value": {
+                                                "value": {
+                                                  "value": "custom_value",
+                                                  "type": "string"
+                                                },
+                                                "type": "primitive"
+                                              }
+                                            }
+                                          ],
+                                          "type": "map"
+                                        },
+                                        "type": "unknown"
+                                      }
+                                    }
+                                  ],
+                                  "type": "map"
                                 }
                               },
                               "type": "object"
@@ -4462,6 +4528,13 @@
                                 "id": {
                                   "value": {
                                     "value": "babbced6-3a81-4775-8da2-490dc6385259",
+                                    "type": "string"
+                                  },
+                                  "type": "primitive"
+                                },
+                                "remote_id": {
+                                  "value": {
+                                    "value": "52802",
                                     "type": "string"
                                   },
                                   "type": "primitive"
@@ -4490,6 +4563,65 @@
                                     "type": "datetime"
                                   },
                                   "type": "primitive"
+                                },
+                                "field_mappings": {
+                                  "value": [
+                                    {
+                                      "key": {
+                                        "value": "organization_defined_targets",
+                                        "type": "string"
+                                      },
+                                      "value": {
+                                        "value": {
+                                          "value": [
+                                            {
+                                              "key": {
+                                                "value": "custom_key",
+                                                "type": "string"
+                                              },
+                                              "value": {
+                                                "value": {
+                                                  "value": "custom_value",
+                                                  "type": "string"
+                                                },
+                                                "type": "primitive"
+                                              }
+                                            }
+                                          ],
+                                          "type": "map"
+                                        },
+                                        "type": "unknown"
+                                      }
+                                    },
+                                    {
+                                      "key": {
+                                        "value": "linked_account_defined_targets",
+                                        "type": "string"
+                                      },
+                                      "value": {
+                                        "value": {
+                                          "value": [
+                                            {
+                                              "key": {
+                                                "value": "custom_key",
+                                                "type": "string"
+                                              },
+                                              "value": {
+                                                "value": {
+                                                  "value": "custom_value",
+                                                  "type": "string"
+                                                },
+                                                "type": "primitive"
+                                              }
+                                            }
+                                          ],
+                                          "type": "map"
+                                        },
+                                        "type": "unknown"
+                                      }
+                                    }
+                                  ],
+                                  "type": "map"
                                 }
                               },
                               "type": "object"
@@ -4504,6 +4636,13 @@
                                 "id": {
                                   "value": {
                                     "value": "5fd439fc-1b64-4755-b275-64918936c365",
+                                    "type": "string"
+                                  },
+                                  "type": "primitive"
+                                },
+                                "remote_id": {
+                                  "value": {
+                                    "value": "93478612",
                                     "type": "string"
                                   },
                                   "type": "primitive"
@@ -4542,6 +4681,103 @@
                                     "type": "datetime"
                                   },
                                   "type": "primitive"
+                                },
+                                "field_mappings": {
+                                  "value": [
+                                    {
+                                      "key": {
+                                        "value": "organization_defined_targets",
+                                        "type": "string"
+                                      },
+                                      "value": {
+                                        "value": {
+                                          "value": [
+                                            {
+                                              "key": {
+                                                "value": "custom_key",
+                                                "type": "string"
+                                              },
+                                              "value": {
+                                                "value": {
+                                                  "value": "custom_value",
+                                                  "type": "string"
+                                                },
+                                                "type": "primitive"
+                                              }
+                                            }
+                                          ],
+                                          "type": "map"
+                                        },
+                                        "type": "unknown"
+                                      }
+                                    },
+                                    {
+                                      "key": {
+                                        "value": "linked_account_defined_targets",
+                                        "type": "string"
+                                      },
+                                      "value": {
+                                        "value": {
+                                          "value": [
+                                            {
+                                              "key": {
+                                                "value": "custom_key",
+                                                "type": "string"
+                                              },
+                                              "value": {
+                                                "value": {
+                                                  "value": "custom_value",
+                                                  "type": "string"
+                                                },
+                                                "type": "primitive"
+                                              }
+                                            }
+                                          ],
+                                          "type": "map"
+                                        },
+                                        "type": "unknown"
+                                      }
+                                    }
+                                  ],
+                                  "type": "map"
+                                },
+                                "remote_data": {
+                                  "value": [
+                                    {
+                                      "properties": {
+                                        "path": {
+                                          "value": {
+                                            "value": "/payroll-deduction",
+                                            "type": "string"
+                                          },
+                                          "type": "primitive"
+                                        },
+                                        "data": {
+                                          "value": [
+                                            {
+                                              "key": {
+                                                "value": "0",
+                                                "type": "string"
+                                              },
+                                              "value": {
+                                                "value": {
+                                                  "value": {
+                                                    "value": "Varies by platform",
+                                                    "type": "string"
+                                                  },
+                                                  "type": "primitive"
+                                                },
+                                                "type": "unknown"
+                                              }
+                                            }
+                                          ],
+                                          "type": "map"
+                                        }
+                                      },
+                                      "type": "object"
+                                    }
+                                  ],
+                                  "type": "array"
                                 }
                               },
                               "type": "object"
@@ -4556,6 +4792,13 @@
                                 "id": {
                                   "value": {
                                     "value": "e3a825fd-c38d-4095-a717-df98c4cb9ebc",
+                                    "type": "string"
+                                  },
+                                  "type": "primitive"
+                                },
+                                "remote_id": {
+                                  "value": {
+                                    "value": "26806834",
                                     "type": "string"
                                   },
                                   "type": "primitive"
@@ -4594,6 +4837,65 @@
                                     "type": "datetime"
                                   },
                                   "type": "primitive"
+                                },
+                                "field_mappings": {
+                                  "value": [
+                                    {
+                                      "key": {
+                                        "value": "organization_defined_targets",
+                                        "type": "string"
+                                      },
+                                      "value": {
+                                        "value": {
+                                          "value": [
+                                            {
+                                              "key": {
+                                                "value": "custom_key",
+                                                "type": "string"
+                                              },
+                                              "value": {
+                                                "value": {
+                                                  "value": "custom_value",
+                                                  "type": "string"
+                                                },
+                                                "type": "primitive"
+                                              }
+                                            }
+                                          ],
+                                          "type": "map"
+                                        },
+                                        "type": "unknown"
+                                      }
+                                    },
+                                    {
+                                      "key": {
+                                        "value": "linked_account_defined_targets",
+                                        "type": "string"
+                                      },
+                                      "value": {
+                                        "value": {
+                                          "value": [
+                                            {
+                                              "key": {
+                                                "value": "custom_key",
+                                                "type": "string"
+                                              },
+                                              "value": {
+                                                "value": {
+                                                  "value": "custom_value",
+                                                  "type": "string"
+                                                },
+                                                "type": "primitive"
+                                              }
+                                            }
+                                          ],
+                                          "type": "map"
+                                        },
+                                        "type": "unknown"
+                                      }
+                                    }
+                                  ],
+                                  "type": "map"
                                 }
                               },
                               "type": "object"
@@ -16769,22 +17071,85 @@
                   "type": "primitive"
                 },
                 "response": {
-                  "value": [
-                    {
-                      "key": {
-                        "value": "key",
-                        "type": "string"
-                      },
-                      "value": {
-                        "value": {
-                          "value": "value",
+                  "value": {
+                    "value": [
+                      {
+                        "key": {
+                          "value": "scooters",
                           "type": "string"
                         },
-                        "type": "primitive"
+                        "value": {
+                          "value": [
+                            {
+                              "value": [
+                                {
+                                  "key": {
+                                    "value": "company",
+                                    "type": "string"
+                                  },
+                                  "value": {
+                                    "value": {
+                                      "value": "Lime",
+                                      "type": "string"
+                                    },
+                                    "type": "primitive"
+                                  }
+                                },
+                                {
+                                  "key": {
+                                    "value": "model",
+                                    "type": "string"
+                                  },
+                                  "value": {
+                                    "value": {
+                                      "value": "Gen 2.5",
+                                      "type": "string"
+                                    },
+                                    "type": "primitive"
+                                  }
+                                }
+                              ],
+                              "type": "map"
+                            },
+                            {
+                              "value": [
+                                {
+                                  "key": {
+                                    "value": "company",
+                                    "type": "string"
+                                  },
+                                  "value": {
+                                    "value": {
+                                      "value": "Bird",
+                                      "type": "string"
+                                    },
+                                    "type": "primitive"
+                                  }
+                                },
+                                {
+                                  "key": {
+                                    "value": "model",
+                                    "type": "string"
+                                  },
+                                  "value": {
+                                    "value": {
+                                      "value": "Bird Zero",
+                                      "type": "string"
+                                    },
+                                    "type": "primitive"
+                                  }
+                                }
+                              ],
+                              "type": "map"
+                            }
+                          ],
+                          "type": "array"
+                        }
                       }
-                    }
-                  ],
-                  "type": "map"
+                    ],
+                    "type": "map"
+                  },
+                  "type": "unknown"
                 },
                 "response_headers": {
                   "value": [

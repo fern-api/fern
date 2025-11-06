@@ -1,5 +1,5 @@
 using SeedFileUpload;
-using System.Threading.Tasks;
+using System.Text;
 
 namespace Usage;
 
@@ -13,7 +13,11 @@ public class Example1
         );
 
         await client.Service.OptionalArgsAsync(
-            new OptionalArgsRequest()
+            new OptionalArgsRequest {
+                ImageFile = new FileParameter(){
+                    Stream = new MemoryStream(Encoding.UTF8.GetBytes("[bytes]"))
+                }
+            }
         );
     }
 

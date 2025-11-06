@@ -608,15 +608,35 @@ class EndpointFunctionGenerator:
                             )
                         )
 
+            # Get the request_options variable name from the last parameter if it exists
+            request_options_variable_name = EndpointFunctionGenerator.REQUEST_OPTIONS_VARIABLE
+            if named_parameters and len(named_parameters) > 0:
+                last_param = named_parameters[-1]
+                request_options_variable_name = last_param.name
+
+            if endpoint.retries is not None:
+                if isinstance(endpoint.retries, ir_types.RetriesDisabledSchema) and endpoint.retries.disabled:
+                    overridden_request_options_var = "_request_options_with_retries_disabled"
+
+                    def write_override_logic(writer: AST.NodeWriter) -> None:
+                        writer.write(
+                            f'{{**{request_options_variable_name}, "max_retries": 0}} if {request_options_variable_name} is not None else {{"max_retries": 0}}'
+                        )
+
+                    writer.write_node(
+                        AST.VariableDeclaration(
+                            name=overridden_request_options_var,
+                            type_hint=AST.TypeHint.optional(
+                                AST.TypeHint(self._context.core_utilities.get_reference_to_request_options())
+                            ),
+                            initializer=AST.Expression(AST.CodeWriter(write_override_logic)),
+                        )
+                    )
+                    request_options_variable_name = overridden_request_options_var
+
             def get_httpx_request(
                 is_streaming: bool, response_code_writer: EndpointResponseCodeWriter
             ) -> AST.Expression:
-                # Get the request_options variable name from the last parameter if it exists
-                request_options_variable_name = EndpointFunctionGenerator.REQUEST_OPTIONS_VARIABLE
-                if named_parameters and len(named_parameters) > 0:
-                    last_param = named_parameters[-1]
-                    request_options_variable_name = last_param.name
-
                 return HttpX.make_request(
                     stream_response_type=(self._get_stream_func_return_type() if is_streaming else None),
                     is_async=is_async,

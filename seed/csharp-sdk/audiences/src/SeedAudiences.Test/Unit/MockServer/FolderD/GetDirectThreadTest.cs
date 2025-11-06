@@ -1,4 +1,3 @@
-using System.Threading.Tasks;
 using NUnit.Framework;
 using SeedAudiences.Core;
 using SeedAudiences.Test.Unit.MockServer;

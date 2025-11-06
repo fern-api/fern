@@ -20917,18 +20917,28 @@ errors:
                       "data": {
                         "rows": [
                           {
+                            "amount": 1000,
                             "contract": {
                               "contract_type": "pay_as_you_go_time_based",
                               "id": "rhCTiRd9Mad41RwjsFWw-",
                               "name": "Lisandro Shanahan-Dynamic Web Specialist",
                             },
-                            "created_at": null,
+                            "created_at": "2022-05-24T09:38:46Z",
                             "currency": "USD",
+                            "fee": 10,
                             "id": 5586317,
                             "invoice_id": "rhCTiRd9Mad41RwjsFWw-",
+                            "is_offcycle": true,
+                            "is_overdue": true,
+                            "label": "INVOICE-2022-11",
+                            "money_received_at": "2022-05-24T09:38:46Z",
+                            "paid_at": "2022-05-24T09:38:46Z",
                             "payment_currency": "USD",
+                            "payment_processed_at": "2022-05-24T09:38:46Z",
                             "status": "pending",
                             "total": 1000,
+                            "vat_percentage": 21,
+                            "vat_total": 210,
                           },
                         ],
                         "total": 1.1,
@@ -21006,10 +21016,10 @@ errors:
                       "data": {
                         "rows": [
                           {
-                            "created_at": null,
+                            "created_at": "2022-05-24T09:38:46Z",
                             "id": 12345,
                             "label": "label",
-                            "paid_at": null,
+                            "paid_at": "2022-05-24T09:38:46Z",
                             "payment_currency": "USD",
                             "payment_method": {
                               "type": "stripe_bacs_debit",
@@ -21137,8 +21147,18 @@ service:
                       id: rhCTiRd9Mad41RwjsFWw-
                       name: Lisandro Shanahan-Dynamic Web Specialist
                       contract_type: pay_as_you_go_time_based
-                    created_at: null
+                    created_at: '2022-05-24T09:38:46Z'
                     total: 1000
+                    label: INVOICE-2022-11
+                    paid_at: '2022-05-24T09:38:46Z'
+                    money_received_at: '2022-05-24T09:38:46Z'
+                    payment_processed_at: '2022-05-24T09:38:46Z'
+                    fee: 10
+                    amount: 1000
+                    vat_total: 210
+                    vat_percentage: 21
+                    is_overdue: true
+                    is_offcycle: true
                 total: 1.1
       audiences:
         - external
@@ -21278,8 +21298,8 @@ service:
                     status: paid
                     payment_currency: USD
                     label: label
-                    paid_at: null
-                    created_at: null
+                    paid_at: '2022-05-24T09:38:46Z'
+                    created_at: '2022-05-24T09:38:46Z'
                     total: 1015
                     workers:
                       - name: Jane Doe
@@ -21647,10 +21667,10 @@ service:
                           "last_name": "last_name",
                           "payments": [
                             {
-                              "created_at": null,
+                              "created_at": "2022-05-24T09:38:46Z",
                               "id": 12345,
                               "label": "label",
-                              "paid_at": null,
+                              "paid_at": "2022-05-24T09:38:46Z",
                               "payment_currency": "USD",
                               "payment_method": {
                                 "type": "stripe_bacs_debit",
@@ -21787,8 +21807,8 @@ service:
                       status: paid
                       payment_currency: USD
                       label: label
-                      paid_at: null
-                      created_at: null
+                      paid_at: '2022-05-24T09:38:46Z'
+                      created_at: '2022-05-24T09:38:46Z'
                       total: 1015
                       workers:
                         - name: Jane Doe
@@ -24684,9 +24704,9 @@ docs: The Contracts resource lets you create, amend and, retrieve Deel contracts
                           "is_shielded": true,
                           "notice_period": 15,
                           "signatures": {
-                            "client_signed_at": null,
+                            "client_signed_at": "2022-05-24T09:38:46Z",
                             "worker_signature": "Jane Doe",
-                            "worker_signed_at": null,
+                            "worker_signed_at": "2022-05-24T09:38:46Z",
                           },
                           "status": "new",
                           "termination_date": "2022-05-24T09:38:46Z",
@@ -25238,9 +25258,9 @@ service:
                     email: null
                   invitations: {}
                   signatures:
-                    client_signed_at: null
+                    client_signed_at: '2022-05-24T09:38:46Z'
                     worker_signature: Jane Doe
-                    worker_signed_at: null
+                    worker_signed_at: '2022-05-24T09:38:46Z'
                   is_shielded: true
                   is_archived: true
                   created_at: '2022-05-24T09:38:46Z'
@@ -26820,8 +26840,8 @@ docs: API end-points related to HRIS data.
                           "description": "description",
                           "id": "id",
                           "payment_cycle": {
-                            "end_date": null,
-                            "start_date": null,
+                            "end_date": "2022-05-24T09:38:46Z",
+                            "start_date": "2022-05-24T09:38:46Z",
                           },
                           "public_id": "00000000-0000-0000-0000-000000000000",
                           "quantity": 1,
@@ -26984,8 +27004,8 @@ docs: API end-points related to HRIS data.
                           "description": "description",
                           "id": "id",
                           "payment_cycle": {
-                            "end_date": null,
-                            "start_date": null,
+                            "end_date": "2022-05-24T09:38:46Z",
+                            "start_date": "2022-05-24T09:38:46Z",
                           },
                           "public_id": "00000000-0000-0000-0000-000000000000",
                           "quantity": 1,
@@ -27298,8 +27318,8 @@ service:
                     title: title
                     type: ongoing_time_based
                   payment_cycle:
-                    start_date: null
-                    end_date: null
+                    start_date: '2022-05-24T09:38:46Z'
+                    end_date: '2022-05-24T09:38:46Z'
                   reported_by:
                     id: 123456
                     full_name: John Smith
@@ -27430,8 +27450,8 @@ service:
                     title: title
                     type: ongoing_time_based
                   payment_cycle:
-                    start_date: null
-                    end_date: null
+                    start_date: '2022-05-24T09:38:46Z'
+                    end_date: '2022-05-24T09:38:46Z'
                   reported_by:
                     id: 123456
                     full_name: John Smith
@@ -30511,7 +30531,12 @@ docs: End-points to manage tasks for a given contract
                           {
                             "days_used_end_year": "2.00",
                             "days_used_start_year": "2.00",
-                            "requested_at": null,
+                            "denial_reason": "No time off available",
+                            "other_timeoff_name": "This is time off for a doctor's appointment",
+                            "reason": "I have a doctors appointment",
+                            "requested_at": "2022-05-24T09:38:46Z",
+                            "reviewed_at": "2022-05-24T09:38:46Z",
+                            "single_date": "2022-05-24T09:38:46Z",
                             "status": "REQUESTED",
                             "total_days_used": "4.00",
                             "type": "VACATION",
@@ -30714,7 +30739,12 @@ docs: End-points to manage tasks for a given contract
                           {
                             "days_used_end_year": "2.00",
                             "days_used_start_year": "2.00",
-                            "requested_at": null,
+                            "denial_reason": "No time off available",
+                            "other_timeoff_name": "This is time off for a doctor's appointment",
+                            "reason": "I have a doctors appointment",
+                            "requested_at": "2022-05-24T09:38:46Z",
+                            "reviewed_at": "2022-05-24T09:38:46Z",
+                            "single_date": "2022-05-24T09:38:46Z",
                             "status": "REQUESTED",
                             "total_days_used": "4.00",
                             "type": "VACATION",
@@ -30850,15 +30880,22 @@ docs: End-points to manage tasks for a given contract
                                 "requests": [
                                   {
                                     "contract_id": "abc123",
-                                    "created_at": null,
+                                    "created_at": "2022-05-24T09:38:46Z",
                                     "days_used_end_year": "2.00",
                                     "days_used_start_year": "2.00",
+                                    "denial_reason": "No time off available",
+                                    "end_date": "2022-05-24T09:38:46Z",
                                     "id": 6938,
-                                    "requested_at": null,
-                                    "start_date": null,
+                                    "other_timeoff_name": "This is time off for a doctor's appointment",
+                                    "reason": "I have a doctors appointment",
+                                    "requested_at": "2022-05-24T09:38:46Z",
+                                    "reviewed_at": "2022-05-24T09:38:46Z",
+                                    "single_date": "2022-05-24T09:38:46Z",
+                                    "start_date": "2022-05-24T09:38:46Z",
                                     "status": "REQUESTED",
                                     "total_days_used": "4.00",
                                     "type": "VACATION",
+                                    "updated_at": "2022-05-24T09:38:46Z",
                                   },
                                 ],
                                 "year": 2022,
@@ -30869,15 +30906,22 @@ docs: End-points to manage tasks for a given contract
                                 "requests": [
                                   {
                                     "contract_id": "abc123",
-                                    "created_at": null,
+                                    "created_at": "2022-05-24T09:38:46Z",
                                     "days_used_end_year": "2.00",
                                     "days_used_start_year": "2.00",
+                                    "denial_reason": "No time off available",
+                                    "end_date": "2022-05-24T09:38:46Z",
                                     "id": 6938,
-                                    "requested_at": null,
-                                    "start_date": null,
+                                    "other_timeoff_name": "This is time off for a doctor's appointment",
+                                    "reason": "I have a doctors appointment",
+                                    "requested_at": "2022-05-24T09:38:46Z",
+                                    "reviewed_at": "2022-05-24T09:38:46Z",
+                                    "single_date": "2022-05-24T09:38:46Z",
+                                    "start_date": "2022-05-24T09:38:46Z",
                                     "status": "REQUESTED",
                                     "total_days_used": "4.00",
                                     "type": "VACATION",
+                                    "updated_at": "2022-05-24T09:38:46Z",
                                   },
                                 ],
                                 "year": 2022,
@@ -30889,15 +30933,22 @@ docs: End-points to manage tasks for a given contract
                                 "requests": [
                                   {
                                     "contract_id": "abc123",
-                                    "created_at": null,
+                                    "created_at": "2022-05-24T09:38:46Z",
                                     "days_used_end_year": "2.00",
                                     "days_used_start_year": "2.00",
+                                    "denial_reason": "No time off available",
+                                    "end_date": "2022-05-24T09:38:46Z",
                                     "id": 6938,
-                                    "requested_at": null,
-                                    "start_date": null,
+                                    "other_timeoff_name": "This is time off for a doctor's appointment",
+                                    "reason": "I have a doctors appointment",
+                                    "requested_at": "2022-05-24T09:38:46Z",
+                                    "reviewed_at": "2022-05-24T09:38:46Z",
+                                    "single_date": "2022-05-24T09:38:46Z",
+                                    "start_date": "2022-05-24T09:38:46Z",
                                     "status": "REQUESTED",
                                     "total_days_used": "4.00",
                                     "type": "VACATION",
+                                    "updated_at": "2022-05-24T09:38:46Z",
                                   },
                                 ],
                                 "year": 2022,
@@ -31033,7 +31084,12 @@ docs: End-points to manage tasks for a given contract
                             {
                               "days_used_end_year": "2.00",
                               "days_used_start_year": "2.00",
-                              "requested_at": null,
+                              "denial_reason": "No time off available",
+                              "other_timeoff_name": "This is time off for a doctor's appointment",
+                              "reason": "I have a doctors appointment",
+                              "requested_at": "2022-05-24T09:38:46Z",
+                              "reviewed_at": "2022-05-24T09:38:46Z",
+                              "single_date": "2022-05-24T09:38:46Z",
                               "status": "REQUESTED",
                               "total_days_used": "4.00",
                               "type": "VACATION",
@@ -31046,7 +31102,12 @@ docs: End-points to manage tasks for a given contract
                           "change_request": {
                             "days_used_end_year": "2.00",
                             "days_used_start_year": "2.00",
-                            "requested_at": null,
+                            "denial_reason": "No time off available",
+                            "other_timeoff_name": "This is time off for a doctor's appointment",
+                            "reason": "I have a doctors appointment",
+                            "requested_at": "2022-05-24T09:38:46Z",
+                            "reviewed_at": "2022-05-24T09:38:46Z",
+                            "single_date": "2022-05-24T09:38:46Z",
                             "status": "REQUESTED",
                             "total_days_used": "4.00",
                             "type": "VACATION",
@@ -31258,19 +31319,29 @@ service:
                   can_request_changes: true
                   is_updated: true
                   change_request:
+                    reason: I have a doctors appointment
                     type: VACATION
-                    requested_at: null
+                    requested_at: '2022-05-24T09:38:46Z'
+                    reviewed_at: '2022-05-24T09:38:46Z'
+                    denial_reason: No time off available
                     status: REQUESTED
+                    other_timeoff_name: This is time off for a doctor's appointment
                     days_used_start_year: '2.00'
                     days_used_end_year: '2.00'
                     total_days_used: '4.00'
+                    single_date: '2022-05-24T09:38:46Z'
                   applied_changes:
-                    - type: VACATION
-                      requested_at: null
+                    - reason: I have a doctors appointment
+                      type: VACATION
+                      requested_at: '2022-05-24T09:38:46Z'
+                      reviewed_at: '2022-05-24T09:38:46Z'
+                      denial_reason: No time off available
                       status: REQUESTED
+                      other_timeoff_name: This is time off for a doctor's appointment
                       days_used_start_year: '2.00'
                       days_used_end_year: '2.00'
                       total_days_used: '4.00'
+                      single_date: '2022-05-24T09:38:46Z'
       audiences:
         - external
     createEorTimeOffs:
@@ -31374,12 +31445,17 @@ service:
                   attachments:
                     - {}
                 applied_changes:
-                  - type: VACATION
-                    requested_at: null
+                  - reason: I have a doctors appointment
+                    type: VACATION
+                    requested_at: '2022-05-24T09:38:46Z'
+                    reviewed_at: '2022-05-24T09:38:46Z'
+                    denial_reason: No time off available
                     status: REQUESTED
+                    other_timeoff_name: This is time off for a doctor's appointment
                     days_used_start_year: '2.00'
                     days_used_end_year: '2.00'
                     total_days_used: '4.00'
+                    single_date: '2022-05-24T09:38:46Z'
       audiences:
         - external
     editEorTimeOffs:
@@ -31487,12 +31563,17 @@ service:
                   attachments:
                     - {}
                 applied_changes:
-                  - type: VACATION
-                    requested_at: null
+                  - reason: I have a doctors appointment
+                    type: VACATION
+                    requested_at: '2022-05-24T09:38:46Z'
+                    reviewed_at: '2022-05-24T09:38:46Z'
+                    denial_reason: No time off available
                     status: REQUESTED
+                    other_timeoff_name: This is time off for a doctor's appointment
                     days_used_start_year: '2.00'
                     days_used_end_year: '2.00'
                     total_days_used: '4.00'
+                    single_date: '2022-05-24T09:38:46Z'
       audiences:
         - external
     deleteEorTimeOffs:
@@ -31610,42 +31691,63 @@ service:
                     vacations:
                       - year: 2022
                         requests:
-                          - type: VACATION
-                            requested_at: null
+                          - reason: I have a doctors appointment
+                            type: VACATION
+                            requested_at: '2022-05-24T09:38:46Z'
+                            reviewed_at: '2022-05-24T09:38:46Z'
+                            denial_reason: No time off available
                             status: REQUESTED
+                            other_timeoff_name: This is time off for a doctor's appointment
                             days_used_start_year: '2.00'
                             days_used_end_year: '2.00'
                             total_days_used: '4.00'
+                            single_date: '2022-05-24T09:38:46Z'
                             id: 6938
                             contract_id: abc123
-                            created_at: null
-                            start_date: null
+                            created_at: '2022-05-24T09:38:46Z'
+                            updated_at: '2022-05-24T09:38:46Z'
+                            start_date: '2022-05-24T09:38:46Z'
+                            end_date: '2022-05-24T09:38:46Z'
                     sick_leaves:
                       - year: 2022
                         requests:
-                          - type: VACATION
-                            requested_at: null
+                          - reason: I have a doctors appointment
+                            type: VACATION
+                            requested_at: '2022-05-24T09:38:46Z'
+                            reviewed_at: '2022-05-24T09:38:46Z'
+                            denial_reason: No time off available
                             status: REQUESTED
+                            other_timeoff_name: This is time off for a doctor's appointment
                             days_used_start_year: '2.00'
                             days_used_end_year: '2.00'
                             total_days_used: '4.00'
+                            single_date: '2022-05-24T09:38:46Z'
                             id: 6938
                             contract_id: abc123
-                            created_at: null
-                            start_date: null
+                            created_at: '2022-05-24T09:38:46Z'
+                            updated_at: '2022-05-24T09:38:46Z'
+                            start_date: '2022-05-24T09:38:46Z'
+                            end_date: '2022-05-24T09:38:46Z'
                     others:
                       - year: 2022
                         requests:
-                          - type: VACATION
-                            requested_at: null
+                          - reason: I have a doctors appointment
+                            type: VACATION
+                            requested_at: '2022-05-24T09:38:46Z'
+                            reviewed_at: '2022-05-24T09:38:46Z'
+                            denial_reason: No time off available
                             status: REQUESTED
+                            other_timeoff_name: This is time off for a doctor's appointment
                             days_used_start_year: '2.00'
                             days_used_end_year: '2.00'
                             total_days_used: '4.00'
+                            single_date: '2022-05-24T09:38:46Z'
                             id: 6938
                             contract_id: abc123
-                            created_at: null
-                            start_date: null
+                            created_at: '2022-05-24T09:38:46Z'
+                            updated_at: '2022-05-24T09:38:46Z'
+                            start_date: '2022-05-24T09:38:46Z'
+                            end_date: '2022-05-24T09:38:46Z'
                     time_zones: time_zones
                 total_requests: 1.1
       audiences:
@@ -32156,6 +32258,10 @@ docs: Manage time off requests.
                           "date_submitted": "2022-05-24T09:38:46Z",
                           "description": "description",
                           "id": "id",
+                          "payment_cycle": {
+                            "end_date": "2022-05-24T09:38:46Z",
+                            "start_date": "2022-05-24T09:38:46Z",
+                          },
                           "public_id": "00000000-0000-0000-0000-000000000000",
                           "quantity": 1,
                           "reported_by": {
@@ -32297,6 +32403,10 @@ docs: Manage time off requests.
                           "date_submitted": "2022-05-24T09:38:46Z",
                           "description": "description",
                           "id": "id",
+                          "payment_cycle": {
+                            "end_date": "2022-05-24T09:38:46Z",
+                            "start_date": "2022-05-24T09:38:46Z",
+                          },
                           "public_id": "00000000-0000-0000-0000-000000000000",
                           "quantity": 1,
                           "reported_by": {
@@ -32575,6 +32685,9 @@ service:
                     id: id
                     title: title
                     type: ongoing_time_based
+                  payment_cycle:
+                    start_date: '2022-05-24T09:38:46Z'
+                    end_date: '2022-05-24T09:38:46Z'
                   reported_by:
                     id: 123456
                     full_name: John Smith
@@ -32688,6 +32801,9 @@ service:
                     id: id
                     title: title
                     type: ongoing_time_based
+                  payment_cycle:
+                    start_date: '2022-05-24T09:38:46Z'
+                    end_date: '2022-05-24T09:38:46Z'
                   reported_by:
                     id: 123456
                     full_name: John Smith

@@ -1,5 +1,4 @@
 using SeedPagination;
-using System.Threading.Tasks;
 
 namespace Usage;
 
@@ -13,8 +12,8 @@ public class Example4
             }
         );
 
-        await client.InlineUsers.InlineUsers.ListWithCursorPaginationAsync(
-            new SeedPagination.InlineUsers.ListUsersCursorPaginationRequest {
+        await client.InlineUsers.InlineUsers.ListWithOffsetPaginationAsync(
+            new SeedPagination.InlineUsers.ListUsersOffsetPaginationRequest {
                 Page = 1,
                 PerPage = 1,
                 Order = SeedPagination.InlineUsers.Order.Asc,

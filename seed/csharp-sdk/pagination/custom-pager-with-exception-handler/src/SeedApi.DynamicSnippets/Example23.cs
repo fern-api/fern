@@ -1,5 +1,4 @@
 using SeedPagination;
-using System.Threading.Tasks;
 
 namespace Usage;
 
@@ -13,8 +12,8 @@ public class Example23
             }
         );
 
-        await client.Users.ListWithCursorPaginationAsync(
-            new SeedPagination.ListUsersCursorPaginationRequest {
+        await client.Users.ListUsernamesAsync(
+            new SeedPagination.ListUsernamesRequest {
                 StartingAfter = "starting_after"
             }
         );

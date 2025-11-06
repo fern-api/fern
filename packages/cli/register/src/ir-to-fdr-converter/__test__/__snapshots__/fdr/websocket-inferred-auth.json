@@ -547,7 +547,7 @@
           "path": {
             "pathParameters": [
               {
-                "key": "id",
+                "key": "session_id",
                 "type": {
                   "type": "primitive",
                   "value": {
@@ -563,7 +563,7 @@
               },
               {
                 "type": "pathParameter",
-                "value": "id"
+                "value": "session_id"
               },
               {
                 "type": "literal",
@@ -689,7 +689,7 @@
               "name": "Default example",
               "path": "/realtime/doc_123",
               "pathParameters": {
-                "id": "doc_123"
+                "session_id": "doc_123"
               },
               "queryParameters": {},
               "headers": {},
@@ -726,9 +726,9 @@
               ]
             },
             {
-              "path": "/realtime/id",
+              "path": "/realtime/session_id",
               "pathParameters": {
-                "id": "id"
+                "session_id": "session_id"
               },
               "queryParameters": {},
               "headers": {},

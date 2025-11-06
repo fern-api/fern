@@ -3,6 +3,7 @@ import { SourceResolverImpl } from "@fern-api/cli-source-resolver";
 import { Audiences, fernConfigJson, generatorsYml } from "@fern-api/configuration";
 import { createFdrService, createVenusService } from "@fern-api/core";
 import { replaceEnvVariables } from "@fern-api/core-utils";
+import { FdrAPI, FdrClient } from "@fern-api/fdr-sdk";
 import { AbsoluteFilePath } from "@fern-api/fs-utils";
 import { generateIntermediateRepresentation } from "@fern-api/ir-generator";
 import { FernIr } from "@fern-api/ir-sdk";
@@ -10,8 +11,6 @@ import { convertIrToFdrApi } from "@fern-api/register";
 import { InteractiveTaskContext } from "@fern-api/task-context";
 import { FernVenusApi } from "@fern-api/venus-api-sdk";
 import { FernWorkspace, IdentifiableSource } from "@fern-api/workspace-loader";
-
-import { FernRegistry as FdrAPI, FernRegistryClient as FdrClient } from "@fern-fern/fdr-cjs-sdk";
 import { FernFiddle } from "@fern-fern/fiddle-sdk";
 import { createAndStartJob } from "./createAndStartJob";
 import { getDynamicGeneratorConfig } from "./getDynamicGeneratorConfig";
@@ -86,7 +85,13 @@ export async function runRemoteGenerationForGenerator({
         version: version ?? (await computeSemanticVersion({ fdr, packageName, generatorInvocation })),
         context: interactiveTaskContext,
         sourceResolver: new SourceResolverImpl(interactiveTaskContext, workspace),
-        dynamicGeneratorConfig
+        dynamicGeneratorConfig,
+        generationMetadata: {
+            cliVersion: workspace.cliVersion,
+            generatorName: generatorInvocation.name,
+            generatorVersion: generatorInvocation.version,
+            generatorConfig: generatorInvocation.config
+        }
     });
 
     const venus = createVenusService({ token: token.value });
@@ -100,13 +105,6 @@ export async function runRemoteGenerationForGenerator({
             ir.readmeConfig.whiteLabel = true;
         }
     }
-
-    ir.generationMetadata = {
-        cliVersion: workspace.cliVersion,
-        generatorName: generatorInvocation.name,
-        generatorVersion: generatorInvocation.version,
-        generatorConfig: generatorInvocation.config
-    };
 
     const sources = workspace.getSources();
     const apiDefinition = convertIrToFdrApi({

@@ -1,6 +1,3 @@
-using System.Net.Http;
-using System.Threading;
-using System.Threading.Tasks;
 using SeedBytesUpload.Core;
 
 namespace SeedBytesUpload;
@@ -14,6 +11,9 @@ public partial class ServiceClient
         _client = client;
     }
 
+    /// <example><code>
+    /// await client.Service.UploadAsync(new MemoryStream(Encoding.UTF8.GetBytes("[bytes]")));
+    /// </code></example>
     public async Task UploadAsync(
         Stream request,
         RequestOptions? options = null,

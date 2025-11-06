@@ -4,18 +4,18 @@ import { docsYml } from "@fern-api/configuration";
 import { createFdrService } from "@fern-api/core";
 import { MediaType } from "@fern-api/core-utils";
 import { DocsDefinitionResolver, UploadedFile, wrapWithHttps } from "@fern-api/docs-resolver";
+import { APIV1Write, FdrAPI as CjsFdrSdk, DocsV1Write, DocsV2Write, FdrClient } from "@fern-api/fdr-sdk";
+
+type DynamicIr = APIV1Write.DynamicIr;
+type DynamicIrUpload = APIV1Write.DynamicIrUpload;
+type SnippetsConfig = APIV1Write.SnippetsConfig;
+type DocsDefinition = DocsV1Write.DocsDefinition;
+
 import { AbsoluteFilePath, convertToFernHostRelativeFilePath, RelativeFilePath, resolve } from "@fern-api/fs-utils";
 import { convertIrToDynamicSnippetsIr, generateIntermediateRepresentation } from "@fern-api/ir-generator";
 import { convertIrToFdrApi } from "@fern-api/register";
 import { TaskContext } from "@fern-api/task-context";
 import { AbstractAPIWorkspace, DocsWorkspace, FernWorkspace } from "@fern-api/workspace-loader";
-import { FernRegistry as CjsFdrSdk, FernRegistryClient } from "@fern-fern/fdr-cjs-sdk";
-import {
-    DynamicIr,
-    DynamicIrUpload,
-    SnippetsConfig
-} from "@fern-fern/fdr-cjs-sdk/api/resources/api/resources/v1/resources/register";
-import { DocsDefinition } from "@fern-fern/fdr-cjs-sdk/api/resources/docs/resources/v1/resources/write/types/DocsDefinition";
 import axios from "axios";
 import chalk from "chalk";
 import { readFile } from "fs/promises";
@@ -75,9 +75,7 @@ export async function publishDocs({
     targetAudiences?: string[];
 }): Promise<void> {
     const fdr = createFdrService({ token: token.value });
-    const authConfig: CjsFdrSdk.docs.v2.write.AuthConfig = isPrivate
-        ? { type: "private", authType: "sso" }
-        : { type: "public" };
+    const authConfig: DocsV2Write.AuthConfig = isPrivate ? { type: "private", authType: "sso" } : { type: "public" };
 
     let docsRegistrationId: string | undefined;
     let urlToOutput = customDomains[0] ?? domain;
@@ -107,7 +105,7 @@ export async function publishDocs({
 
             const measuredImages = await measureImageSizes(imagesToMeasure, MEASURE_IMAGE_BATCH_SIZE, context);
 
-            const images: CjsFdrSdk.docs.v2.write.ImageFilePath[] = [];
+            const images: DocsV2Write.ImageFilePath[] = [];
 
             for (const image of measuredImages.values()) {
                 const filePath = filesMap.get(image.filePath);
@@ -303,7 +301,7 @@ export async function publishDocs({
 
     context.logger.debug("Publishing docs...");
     const registerDocsResponse = await fdr.docs.v2.write.finishDocsRegister(
-        CjsFdrSdk.docs.v1.write.DocsRegistrationId(docsRegistrationId),
+        DocsV1Write.DocsRegistrationId(docsRegistrationId),
         {
             docsDefinition,
             excludeApis: false
@@ -343,7 +341,7 @@ export async function publishDocs({
 }
 
 async function uploadFiles(
-    filesToUpload: Record<string, CjsFdrSdk.docs.v1.write.FileS3UploadUrl>,
+    filesToUpload: Record<string, DocsV1Write.FileS3UploadUrl>,
     docsWorkspacePath: AbsoluteFilePath,
     context: TaskContext,
     batchSize: number
@@ -382,7 +380,7 @@ async function uploadFiles(
 }
 
 function convertToFilePathPairs(
-    uploadUrls: Record<string, CjsFdrSdk.docs.v1.write.FileS3UploadUrl>,
+    uploadUrls: Record<string, DocsV1Write.FileS3UploadUrl>,
     docsWorkspacePath: AbsoluteFilePath
 ): UploadedFile[] {
     const toRet: UploadedFile[] = [];
@@ -399,7 +397,7 @@ function convertToFilePathPairs(
 }
 
 async function startDocsRegisterFailed(
-    error: CjsFdrSdk.docs.v2.write.startDocsPreviewRegister.Error | CjsFdrSdk.docs.v2.write.startDocsRegister.Error,
+    error: DocsV2Write.startDocsPreviewRegister.Error | DocsV2Write.startDocsRegister.Error,
     context: TaskContext
 ): Promise<never> {
     await context.instrumentPostHogEvent({
@@ -642,7 +640,7 @@ async function updateAiChatFromDocsDefinition({
     token: FernToken;
     url: string;
     context: TaskContext;
-    fdr: FernRegistryClient;
+    fdr: FdrClient;
     isPreview: boolean;
     domain: string;
     customDomains: string[];

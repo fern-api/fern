@@ -305,7 +305,7 @@ export async function runAppPreviewServer({
         NEXT_DISABLE_CACHE: "1",
         NODE_ENV: "production",
         NODE_PATH: bundleRoot,
-        NODE_OPTIONS: "--max-old-space-size=2048 --enable-source-maps"
+        NODE_OPTIONS: "--max-old-space-size=8096 --enable-source-maps"
     };
 
     const serverProcess = runExeca(context.logger, "node", [serverPath], {
@@ -543,8 +543,18 @@ export async function runAppPreviewServer({
             // Rebuild dependency map after reloading project
             await snippetTracker.buildDependencyMap(project);
 
-            context.logger.info("Validating docs...");
-            await validateProject(project);
+            // Start validation in background - don't block the reload
+            const validationStartTime = Date.now();
+            void validateProject(project).catch((err) => {
+                const validationTime = Date.now() - validationStartTime;
+                context.logger.error(
+                    `Validation failed (took ${validationTime}ms): ${err instanceof Error ? err.message : String(err)}`
+                );
+                // Still log validation errors to help developers
+                if (err instanceof Error && err.stack) {
+                    context.logger.debug(`Validation error stack: ${err.stack}`);
+                }
+            });
 
             const newDocsDefinition = await getPreviewDocsDefinition({
                 domain: `${instance.host}${instance.pathname}`,

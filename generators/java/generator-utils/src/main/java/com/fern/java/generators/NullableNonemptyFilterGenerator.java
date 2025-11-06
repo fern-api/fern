@@ -32,17 +32,7 @@ public class NullableNonemptyFilterGenerator extends AbstractFileGenerator {
         List<CodeBlock> resultingOrStatement = new ArrayList<>();
         List<MethodSpec> additionalMethods = new ArrayList<>();
 
-        MethodSpec isOptionalEmptySpec = MethodSpec.methodBuilder("isOptionalEmpty")
-                .addParameter(PARAMETER_SPEC)
-                .addModifiers(Modifier.PRIVATE)
-                .returns(TypeName.BOOLEAN)
-                .addStatement(
-                        "return $L instanceof $T && !(($T<?>) $L).isPresent()",
-                        PARAMETER_SPEC.name,
-                        Optional.class,
-                        Optional.class,
-                        PARAMETER_SPEC.name)
-                .build();
+        MethodSpec isOptionalEmptySpec = buildIsOptionalEmptyMethod();
 
         methodBody.addStatement(
                 "boolean $L = $L($L)", IS_OPTIONAL_EMPTY, isOptionalEmptySpec.name, PARAMETER_SPEC.name);
@@ -106,6 +96,31 @@ public class NullableNonemptyFilterGenerator extends AbstractFileGenerator {
                 wrappedAliasClassName,
                 PARAMETER_SPEC.name);
         resultingOrStatement.add(CodeBlock.of(IS_ALIAS_OF_OPTIONAL_EMPTY));
+    }
+
+    private MethodSpec buildIsOptionalEmptyMethod() {
+        MethodSpec.Builder methodBuilder = MethodSpec.methodBuilder("isOptionalEmpty")
+                .addParameter(PARAMETER_SPEC)
+                .addModifiers(Modifier.PRIVATE)
+                .returns(TypeName.BOOLEAN);
+
+        // Check if o is Optional and empty
+        methodBuilder.beginControlFlow("if ($L instanceof $T)", PARAMETER_SPEC.name, Optional.class);
+        methodBuilder.addStatement("return !(($T<?>) $L).isPresent()", Optional.class, PARAMETER_SPEC.name);
+        methodBuilder.endControlFlow();
+
+        // Check if o is OptionalNullable and absent (when collapseOptionalNullable is enabled)
+        if (generatorContext.getCustomConfig().collapseOptionalNullable()) {
+            ClassName optionalNullableClassName =
+                    generatorContext.getPoetClassNameFactory().getOptionalNullableClassName();
+            methodBuilder.beginControlFlow("if ($L instanceof $T)", PARAMETER_SPEC.name, optionalNullableClassName);
+            methodBuilder.addStatement(
+                    "return (($T<?>) $L).isAbsent()", optionalNullableClassName, PARAMETER_SPEC.name);
+            methodBuilder.endControlFlow();
+        }
+
+        methodBuilder.addStatement("return false");
+        return methodBuilder.build();
     }
 
     private void addReturn(CodeBlock.Builder methodBody, List<CodeBlock> resultingOrStatement) {
