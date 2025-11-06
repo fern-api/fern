@@ -187,7 +187,7 @@ export class TestGenerator {
 
     private async addVitestConfigs(): Promise<void> {
         const vitestConfig = this.rootDirectory.createSourceFile(
-            "vitest.config.ts",
+            "vitest.config.mts",
             code`
             import { defineConfig } from "vitest/config";
             export default defineConfig({
