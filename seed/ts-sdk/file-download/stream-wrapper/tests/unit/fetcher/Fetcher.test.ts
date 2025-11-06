@@ -11,6 +11,7 @@ describe("Test fetcherImpl", () => {
             body: { data: "test" },
             contentType: "application/json",
             requestType: "json",
+            maxRetries: 0,
             responseType: "json",
         };
 
@@ -45,6 +46,7 @@ describe("Test fetcherImpl", () => {
             headers: { "X-Test": "x-test-header" },
             contentType: "application/octet-stream",
             requestType: "bytes",
+            maxRetries: 0,
             responseType: "json",
             body: fs.createReadStream(join(__dirname, "test-file.txt")),
         };
