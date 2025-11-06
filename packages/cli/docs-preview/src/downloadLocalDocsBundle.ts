@@ -1,11 +1,12 @@
 import { AbsoluteFilePath, doesPathExist, join, RelativeFilePath } from "@fern-api/fs-utils";
 import { Logger } from "@fern-api/logger";
-import { loggingExeca } from "@fern-api/logging-execa";
 import decompress from "decompress";
 import { mkdir, readFile, rm, writeFile } from "fs/promises";
 import { homedir } from "os";
 import tmp from "tmp-promise";
 import xml2js from "xml2js";
+import { performAppInstallation } from "./appInstallation";
+import { MANIFEST_FILENAME, performIncrementalSync } from "./incrementalSync";
 
 const PLATFORM_IS_WINDOWS = process.platform === "win32";
 const ETAG_FILENAME = "etag";
@@ -21,7 +22,6 @@ const INSTRUMENTATION_PATH = "packages/fern-docs/bundle/.next/server/instrumenta
 const NPMRC_NAME = ".npmrc";
 const PNPMFILE_CJS_NAME = ".pnpmfile.cjs";
 const PNPM_WORKSPACE_YAML_NAME = "pnpm-workspace.yaml";
-const COREPACK_MISSING_KEYID_ERROR_MESSAGE = 'Cannot find matching keyid: {"signatures":';
 
 export function getLocalStorageFolder(): AbsoluteFilePath {
     return join(AbsoluteFilePath.of(homedir()), RelativeFilePath.of(LOCAL_STORAGE_FOLDER));
@@ -66,6 +66,11 @@ export function getPathToEtagFile({ app = false }: { app?: boolean }): AbsoluteF
     return join(getPathToPreviewFolder({ app }), RelativeFilePath.of(ETAG_FILENAME));
 }
 
+// Get path to local manifest file
+function getPathToLocalManifest({ app = false }: { app?: boolean }): AbsoluteFilePath {
+    return join(getPathToPreviewFolder({ app }), RelativeFilePath.of(MANIFEST_FILENAME));
+}
+
 export declare namespace DownloadLocalBundle {
     type Result = SuccessResult | FailureResult;
 
@@ -77,27 +82,6 @@ export declare namespace DownloadLocalBundle {
         type: "failure";
     }
 }
-
-const PNPMFILE_CJS_CONTENTS = `module.exports = {
-    hooks: {
-        readPackage(pkg) {
-            // Remove all workspace:* dependencies
-            if (pkg.dependencies) {
-                Object.keys(pkg.dependencies).forEach(dep => {
-                    if (pkg.dependencies[dep] === 'workspace:*') {
-                        delete pkg.dependencies[dep]; } });
-                    }
-            if (pkg.devDependencies) {
-                Object.keys(pkg.devDependencies).forEach(dep => {
-                    if (pkg.devDependencies[dep] === 'workspace:*') {
-                        delete pkg.devDependencies[dep]; } });
-            } return pkg;
-        }
-    }
-};
-`;
-
-const NPMRC_CONTENTS = "@fern-fern:registry=https://npm.buildwithfern.com\n";
 
 export async function downloadBundle({
     bucketUrl,
@@ -113,6 +97,50 @@ export async function downloadBundle({
     tryTar?: boolean;
 }): Promise<DownloadLocalBundle.Result> {
     logger.debug("Setting up docs preview bundle...");
+
+    // First, try incremental sync using the manifest-based system
+    const manifestPath = getPathToLocalManifest({ app });
+    const bundleFolderPath = getPathToBundleFolder({ app });
+    const incrementalResult = await performIncrementalSync(
+        bucketUrl,
+        manifestPath,
+        bundleFolderPath,
+        logger,
+        preferCached
+    );
+
+    if (incrementalResult.success) {
+        logger.debug("Successfully used incremental sync");
+
+        // If this is an app bundle, we still need to run the installation steps
+        if (app) {
+            const absolutePathToBundleFolder = getPathToBundleFolder({ app });
+            const absPathToStandalone = getPathToStandaloneFolder({ app });
+            const absPathToInstrumentationJs = getPathToInstrumentationJs({ app });
+            const pnpmWorkspacePath = getPathToPnpmWorkspaceYaml({ app });
+            const pnpmfilePath = getPathToPnpmfileCjs({ app });
+            const npmrcPath = getPathToNpmrc({ app });
+
+            const installResult = await performAppInstallation(
+                logger,
+                absolutePathToBundleFolder,
+                absPathToStandalone,
+                absPathToInstrumentationJs,
+                pnpmWorkspacePath,
+                pnpmfilePath,
+                npmrcPath
+            );
+            if (installResult.type === "failure") {
+                return { type: "failure" };
+            }
+        }
+
+        return { type: "success" };
+    }
+
+    // If incremental sync failed, fall back to traditional download
+    logger.debug("Falling back to traditional zip/tar download");
+
     const response = await fetch(bucketUrl);
     if (!response.ok) {
         return {
@@ -194,134 +222,26 @@ export async function downloadBundle({
         await writeFile(eTagFilepath, eTag);
         logger.debug(`Downloaded bundle to ${absolutePathToBundleFolder}`);
 
+        // Perform app installation if needed
         if (app) {
-            // check if pnpm exists
-            logger.debug("Checking if pnpm is installed");
-            try {
-                await loggingExeca(logger, PLATFORM_IS_WINDOWS ? "where" : "which", ["pnpm"], {
-                    cwd: absolutePathToBundleFolder,
-                    doNotPipeOutput: true
-                });
-            } catch (error) {
-                logger.debug("pnpm not found, installing pnpm");
-                await loggingExeca(logger, "npm", ["install", "-g", "pnpm"], {
-                    doNotPipeOutput: true
-                });
-            }
+            const absolutePathToBundleFolder = getPathToBundleFolder({ app });
+            const absPathToStandalone = getPathToStandaloneFolder({ app });
+            const absPathToInstrumentationJs = getPathToInstrumentationJs({ app });
+            const pnpmWorkspacePath = getPathToPnpmWorkspaceYaml({ app });
+            const pnpmfilePath = getPathToPnpmfileCjs({ app });
+            const npmrcPath = getPathToNpmrc({ app });
 
-            // if pnpm still hasn't been installed, user should install themselves
-            try {
-                await loggingExeca(logger, PLATFORM_IS_WINDOWS ? "where" : "which", ["pnpm"], {
-                    cwd: absolutePathToBundleFolder,
-                    doNotPipeOutput: true
-                });
-            } catch (error) {
-                throw new Error(
-                    "Requires [pnpm] to run local development. Please run: npm install -g pnpm, and then: fern docs dev"
-                );
-            }
-
-            try {
-                // install esbuild
-                logger.debug("Installing esbuild");
-                await loggingExeca(logger, "pnpm", ["i", "esbuild"], {
-                    cwd: absolutePathToBundleFolder,
-                    doNotPipeOutput: true
-                });
-            } catch (error) {
-                if (error instanceof Error) {
-                    // If error message contains "Cannot find matching keyid:", try to upgrade corepack
-                    if (
-                        typeof error?.message === "string" &&
-                        error.message.includes(COREPACK_MISSING_KEYID_ERROR_MESSAGE)
-                    ) {
-                        logger.debug("Detected corepack missing keyid error. Attempting to upgrade corepack");
-                        try {
-                            await loggingExeca(logger, "npm", ["install", "-g", "corepack@latest"], {
-                                doNotPipeOutput: true
-                            });
-                        } catch (corepackError) {
-                            throw contactFernSupportError(`Failed to update corepack due to error: ${corepackError}`);
-                        }
-                        try {
-                            // Try installing esbuild again after upgrading corepack
-                            logger.debug("Installing esbuild after upgrading corepack");
-                            await loggingExeca(logger, "pnpm", ["i", "esbuild"], {
-                                cwd: absolutePathToBundleFolder,
-                                doNotPipeOutput: true
-                            });
-                        } catch (installError) {
-                            throw contactFernSupportError(
-                                `Failed to install required package after updating corepack due to error: ${installError}`
-                            );
-                        }
-                    } else {
-                        throw contactFernSupportError(`Failed to install required package due to error: ${error}.`);
-                    }
-                } else {
-                    throw contactFernSupportError(`Failed to install required package due to error: ${error}.`);
-                }
-            }
-
-            try {
-                // resolve imports
-                logger.debug("Resolve esbuild imports");
-                await loggingExeca(logger, "node", ["install-esbuild.js"], {
-                    cwd: absolutePathToBundleFolder,
-                    doNotPipeOutput: true
-                });
-            } catch (error) {
-                throw contactFernSupportError(`Failed to resolve imports due to error: ${error}`);
-            }
-
-            if (PLATFORM_IS_WINDOWS) {
-                const absPathToStandalone = getPathToStandaloneFolder({ app });
-                const absPathToInstrumentationJs = getPathToInstrumentationJs({ app });
-                const pnpmWorkspacePath = getPathToPnpmWorkspaceYaml({ app });
-                const pnpmfilePath = getPathToPnpmfileCjs({ app });
-                const npmrcPath = getPathToNpmrc({ app });
-
-                // Check all paths in parallel
-                const [pnpmWorkspaceExists, pnpmfileExists, npmrcExists, instrumentationJsExists] = await Promise.all([
-                    doesPathExist(pnpmWorkspacePath),
-                    doesPathExist(pnpmfilePath),
-                    doesPathExist(npmrcPath),
-                    doesPathExist(absPathToInstrumentationJs)
-                ]);
-
-                // Warn if pnpm-workspace.yaml does not exist
-                if (!pnpmWorkspaceExists) {
-                    logger.warn(
-                        `Expected pnpm-workspace.yaml at ${pnpmWorkspacePath} but it does not exist. If you are experiencing issues, please contact support@buildwithfern.com.`
-                    );
-                }
-
-                // Write pnpmfile.cjs if it does not exist
-                if (!pnpmfileExists) {
-                    logger.debug(`Writing pnpmfile.cjs at ${pnpmfilePath}`);
-                    await writeFile(pnpmfilePath, PNPMFILE_CJS_CONTENTS);
-                }
-                // Write .npmrc if it does not exist
-                if (!npmrcExists) {
-                    logger.debug(`Writing .npmrc at ${npmrcPath}`);
-                    await writeFile(npmrcPath, NPMRC_CONTENTS);
-                }
-                // Remove instrumentation.js if it exists
-                if (instrumentationJsExists) {
-                    logger.debug(`Removing instrumentation.js at ${absPathToInstrumentationJs}`);
-                    await rm(absPathToInstrumentationJs);
-                }
-
-                try {
-                    // pnpm install within standalone
-                    logger.debug("Running pnpm install within standalone");
-                    await loggingExeca(logger, "pnpm", ["install"], {
-                        cwd: absPathToStandalone,
-                        doNotPipeOutput: true
-                    });
-                } catch (error) {
-                    throw contactFernSupportError(`Failed to install required package due to error: ${error}`);
-                }
+            const installResult = await performAppInstallation(
+                logger,
+                absolutePathToBundleFolder,
+                absPathToStandalone,
+                absPathToInstrumentationJs,
+                pnpmWorkspacePath,
+                pnpmfilePath,
+                npmrcPath
+            );
+            if (installResult.type === "failure") {
+                throw new Error("App installation failed");
             }
         }
 
