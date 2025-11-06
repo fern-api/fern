@@ -13,7 +13,6 @@ import {
 } from "@fern-typescript/commons";
 import { GeneratorContext } from "@fern-typescript/contexts";
 import { SdkGenerator } from "@fern-typescript/sdk-generator";
-import fs from "fs/promises";
 import path from "path";
 
 import { SdkCustomConfig } from "./custom-config/SdkCustomConfig";
