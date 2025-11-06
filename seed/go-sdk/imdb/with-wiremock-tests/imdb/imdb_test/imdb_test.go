@@ -6,7 +6,7 @@ import (
 	bytes "bytes"
 	context "context"
 	json "encoding/json"
-	fern "github.com/imdb/fern"
+	testPackageName "github.com/imdb/fern"
 	client "github.com/imdb/fern/client"
 	option "github.com/imdb/fern/option"
 	require "github.com/stretchr/testify/require"
@@ -71,7 +71,7 @@ func TestImdbCreateMovieWithWireMock(
 			WireMockBaseURL,
 		),
 	)
-	request := &fern.CreateMovieRequest{
+	request := &testPackageName.CreateMovieRequest{
 		Title:  "title",
 		Rating: 1.1,
 	}

@@ -102,22 +102,22 @@ public class Example19
                             Nodes = new List<Node>(){
                                 new Node {
                                     Name = "name",
-                                    Nodes = new List<Node>(){},
-                                    Trees = new List<Tree>(){}
+                                    Nodes = new List<Node>(),
+                                    Trees = new List<Tree>()
                                 },
                                 new Node {
                                     Name = "name",
-                                    Nodes = new List<Node>(){},
-                                    Trees = new List<Tree>(){}
+                                    Nodes = new List<Node>(),
+                                    Trees = new List<Tree>()
                                 },
                             }
                             ,
                             Trees = new List<Tree>(){
                                 new Tree {
-                                    Nodes = new List<Node>(){}
+                                    Nodes = new List<Node>()
                                 },
                                 new Tree {
-                                    Nodes = new List<Node>(){}
+                                    Nodes = new List<Node>()
                                 },
                             }
 
@@ -127,22 +127,22 @@ public class Example19
                             Nodes = new List<Node>(){
                                 new Node {
                                     Name = "name",
-                                    Nodes = new List<Node>(){},
-                                    Trees = new List<Tree>(){}
+                                    Nodes = new List<Node>(),
+                                    Trees = new List<Tree>()
                                 },
                                 new Node {
                                     Name = "name",
-                                    Nodes = new List<Node>(){},
-                                    Trees = new List<Tree>(){}
+                                    Nodes = new List<Node>(),
+                                    Trees = new List<Tree>()
                                 },
                             }
                             ,
                             Trees = new List<Tree>(){
                                 new Tree {
-                                    Nodes = new List<Node>(){}
+                                    Nodes = new List<Node>()
                                 },
                                 new Tree {
-                                    Nodes = new List<Node>(){}
+                                    Nodes = new List<Node>()
                                 },
                             }
 
@@ -154,13 +154,13 @@ public class Example19
                             Nodes = new List<Node>(){
                                 new Node {
                                     Name = "name",
-                                    Nodes = new List<Node>(){},
-                                    Trees = new List<Tree>(){}
+                                    Nodes = new List<Node>(),
+                                    Trees = new List<Tree>()
                                 },
                                 new Node {
                                     Name = "name",
-                                    Nodes = new List<Node>(){},
-                                    Trees = new List<Tree>(){}
+                                    Nodes = new List<Node>(),
+                                    Trees = new List<Tree>()
                                 },
                             }
 
@@ -169,13 +169,13 @@ public class Example19
                             Nodes = new List<Node>(){
                                 new Node {
                                     Name = "name",
-                                    Nodes = new List<Node>(){},
-                                    Trees = new List<Tree>(){}
+                                    Nodes = new List<Node>(),
+                                    Trees = new List<Tree>()
                                 },
                                 new Node {
                                     Name = "name",
-                                    Nodes = new List<Node>(){},
-                                    Trees = new List<Tree>(){}
+                                    Nodes = new List<Node>(),
+                                    Trees = new List<Tree>()
                                 },
                             }
 
@@ -213,13 +213,13 @@ public class Example19
                             Directories = new List<SeedExamples.Directory>(){
                                 new SeedExamples.Directory {
                                     Name = "name",
-                                    Files = new List<SeedExamples.File>(){},
-                                    Directories = new List<SeedExamples.Directory>(){}
+                                    Files = new List<SeedExamples.File>(),
+                                    Directories = new List<SeedExamples.Directory>()
                                 },
                                 new SeedExamples.Directory {
                                     Name = "name",
-                                    Files = new List<SeedExamples.File>(){},
-                                    Directories = new List<SeedExamples.Directory>(){}
+                                    Files = new List<SeedExamples.File>(),
+                                    Directories = new List<SeedExamples.Directory>()
                                 },
                             }
 
@@ -240,13 +240,13 @@ public class Example19
                             Directories = new List<SeedExamples.Directory>(){
                                 new SeedExamples.Directory {
                                     Name = "name",
-                                    Files = new List<SeedExamples.File>(){},
-                                    Directories = new List<SeedExamples.Directory>(){}
+                                    Files = new List<SeedExamples.File>(),
+                                    Directories = new List<SeedExamples.Directory>()
                                 },
                                 new SeedExamples.Directory {
                                     Name = "name",
-                                    Files = new List<SeedExamples.File>(){},
-                                    Directories = new List<SeedExamples.Directory>(){}
+                                    Files = new List<SeedExamples.File>(),
+                                    Directories = new List<SeedExamples.Directory>()
                                 },
                             }
 

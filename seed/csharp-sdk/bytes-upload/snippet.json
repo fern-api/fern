@@ -1,4 +1,17 @@
 {
     "types": {},
-    "endpoints": []
+    "endpoints": [
+        {
+            "example_identifier": null,
+            "id": {
+                "path": "/upload-content",
+                "method": "POST",
+                "identifier_override": "endpoint_service.upload"
+            },
+            "snippet": {
+                "type": "csharp",
+                "client": "using SeedBytesUpload;\nusing System.IO;\nusing System.Text;\n\nvar client = new SeedBytesUploadClient();\nawait client.Service.UploadAsync(new MemoryStream(Encoding.UTF8.GetBytes(\"[bytes]\")));\n"
+            }
+        }
+    ]
 }

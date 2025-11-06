@@ -214,7 +214,7 @@ export class RootClientGenerator extends FileGenerator<CSharpFile, SdkCustomConf
                     value: this.csharp.codeblock(
                         param.header.prefix != null
                             ? `$"${param.header.prefix} {${param.isOptional ? `${param.name} ?? ""` : param.name}}"`
-                            : param.isOptional || param.type.isOptional()
+                            : param.isOptional || param.type.isOptional
                               ? `${param.name} ?? ""`
                               : param.name
                     )
@@ -322,7 +322,12 @@ export class RootClientGenerator extends FileGenerator<CSharpFile, SdkCustomConf
                     const authClientClassReference = this.context.getSubpackageClassReferenceForServiceIdOrThrow(
                         this.oauth.configuration.tokenEndpoint.endpointReference.serviceId
                     );
-                    const arguments_ = [this.csharp.codeblock("new RawClient(clientOptions.Clone())")];
+
+                    const arguments_ = [
+                        this.generation.types.RawClient.new({
+                            arguments_: [this.csharp.codeblock("clientOptions.Clone()")]
+                        })
+                    ];
                     writer.write("var tokenProvider = new OAuthTokenProvider(clientId, clientSecret, ");
                     writer.writeNode(
                         this.csharp.instantiateClass({

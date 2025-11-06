@@ -201,15 +201,12 @@ export abstract class AbstractEndpointGenerator extends WithGeneration {
             throw new Error(`Unexpected no service with id ${serviceId}`);
         }
         const serviceFilePath = service.name.fernFilepath;
-        const requestBodyType = endpoint.requestBody?.type;
-        // TODO: implement these
-        if (requestBodyType === "fileUpload" || requestBodyType === "bytes") {
-            this.context.logger.warn(
-                "file upload or bytes request body is not supported for generating an endpoint snippet"
-            );
-            return undefined;
-        }
-        const args = this.getNonEndpointArguments({ endpoint, example, parseDatetimes });
+
+        const args = this.getNonEndpointArguments({
+            endpoint,
+            example,
+            parseDatetimes
+        });
         const endpointRequestSnippet = this.getEndpointRequestSnippet(example, endpoint, serviceId, parseDatetimes);
         if (endpointRequestSnippet != null) {
             args.push(endpointRequestSnippet);
@@ -239,7 +236,7 @@ export abstract class AbstractEndpointGenerator extends WithGeneration {
         endpoint: HttpEndpoint,
         serviceId: ServiceId,
         parseDatetimes: boolean
-    ): ast.CodeBlock | undefined {
+    ): ast.CodeBlock | ast.ClassInstantiation | undefined {
         switch (endpoint.sdkRequest?.shape.type) {
             case "wrapper":
                 return new WrappedRequestGenerator({
@@ -249,8 +246,20 @@ export abstract class AbstractEndpointGenerator extends WithGeneration {
                     endpoint
                 }).doGenerateSnippet({ example: exampleEndpointCall, parseDatetimes });
             case "justRequestBody": {
+                if (endpoint.requestBody?.type === "bytes") {
+                    return this.extern.System.IO.MemoryStream.new({
+                        arguments_: [
+                            this.csharp.invokeMethod({
+                                on: this.extern.System.Text.Encoding_UTF8,
+                                method: "GetBytes",
+                                arguments_: [this.csharp.TypeLiteral.string("[bytes]")]
+                            })
+                        ]
+                    });
+                }
                 if (exampleEndpointCall.request == null) {
-                    throw new Error("Unexpected no example request for just request body");
+                    // skip - no example request for just request body
+                    return undefined;
                 }
                 return this.getJustRequestBodySnippet(exampleEndpointCall.request, parseDatetimes);
             }
@@ -292,7 +301,7 @@ export abstract class AbstractEndpointGenerator extends WithGeneration {
         endpoint: HttpEndpoint;
         example: ExampleEndpointCall;
         parseDatetimes: boolean;
-    }): ast.CodeBlock[] {
+    }): (ast.CodeBlock | ast.ClassInstantiation)[] {
         if (!this.includePathParametersInEndpointSignature({ endpoint })) {
             return [];
         }

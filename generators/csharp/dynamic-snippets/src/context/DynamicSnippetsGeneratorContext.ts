@@ -113,8 +113,7 @@ export class DynamicSnippetsGeneratorContext extends AbstractDynamicSnippetsGene
     }
 
     public getMemoryStreamForString(str: string): ast.ClassInstantiation {
-        return this.csharp.instantiateClass({
-            classReference: this.extern.System.IO.MemoryStream,
+        return this.extern.System.IO.MemoryStream.new({
             arguments_: [
                 this.csharp.invokeMethod({
                     on: this.extern.System.Text.Encoding_UTF8,
