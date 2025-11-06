@@ -282,10 +282,9 @@ export class SdkGeneratorCli extends AbstractGeneratorCli<SdkCustomConfig> {
                 // The license file path is relative to the fern config directory
                 // We need to construct the full path to read the license content
                 const licenseFileName = config.license.filename;
-                const licenseContent = await this.readLicenseFileContent(licenseFileName);
-
                 const licenseFilePath = path.join(rootDirectory, "LICENSE");
-                await fs.writeFile(licenseFilePath, licenseContent, "utf-8");
+
+                await this.copyLicenseFile(licenseFilePath);
                 logger.debug(`Successfully wrote LICENSE file to ${licenseFilePath}`);
             } catch (error) {
                 // If we can't read the license file, we'll skip writing it
@@ -295,17 +294,21 @@ export class SdkGeneratorCli extends AbstractGeneratorCli<SdkCustomConfig> {
         }
     }
 
-    private async readLicenseFileContent(licenseFileName: string): Promise<string> {
-        const fs = await import("fs/promises");
+    private async copyLicenseFile(destinationPath: string): Promise<void> {
+        const fs = await import("fs");
+        const { pipeline } = await import("stream/promises");
 
         // In Docker execution environment, the license file is mounted at /tmp/LICENSE
         const dockerLicensePath = "/tmp/LICENSE";
 
         try {
-            return await fs.readFile(dockerLicensePath, "utf-8");
+            const readStream = fs.createReadStream(dockerLicensePath, { encoding: "utf-8" });
+            const writeStream = fs.createWriteStream(destinationPath, { encoding: "utf-8" });
+
+            await pipeline(readStream, writeStream);
         } catch (error) {
             throw new Error(
-                `Could not read license file from ${dockerLicensePath}: ${error instanceof Error ? error.message : String(error)}`
+                `Could not copy license file from ${dockerLicensePath}: ${error instanceof Error ? error.message : String(error)}`
             );
         }
     }
