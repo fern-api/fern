@@ -1,4 +1,16 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 3.28.2
+  changelogEntry:
+    - summary: |
+        Fix inconsistent path parameter casing in the WebSocket connect options.
+        The casing now follows the same rules as other HTTP path parameters:
+        - `retainOriginalCasing: true`: use the original casing from the OpenAPI spec, regardless of the `noSerdeLayer` setting.
+        - `noSerdeLayer: true`: use the original casing from the OpenAPI spec.
+        - `noSerdeLayer: false`: use camelCase for path parameters.
+      type: fix
+  createdAt: "2025-11-06"
+  irVersion: 61
+
 - version: 3.28.1
   changelogEntry:
     - summary: |
