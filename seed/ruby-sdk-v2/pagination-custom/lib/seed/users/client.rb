@@ -12,7 +12,8 @@ module Seed
       def list_usernames_custom(request_options: {}, **params)
         params = Seed::Internal::Types::Utils.symbolize_keys(params)
         _query_param_names = %i[starting_after]
-        _query = params.slice(*_query_param_names)
+        _query = {}
+        _query["starting_after"] = params[:starting_after] if params.key?(:starting_after)
         params.except(*_query_param_names)
 
         _request = Seed::Internal::JSON::Request.new(

@@ -10,11 +10,14 @@ module Seed
 
       # @return [untyped]
       def stream(request_options: {}, **params)
+        _body_prop_names = %i[query]
+        _body_bag = params.slice(*_body_prop_names)
+
         _request = Seed::Internal::JSON::Request.new(
           base_url: request_options[:base_url],
           method: "POST",
           path: "stream",
-          body: params
+          body: Seed::Completions::Types::StreamCompletionRequest.new(_body_bag).to_h
         )
         begin
           _response = @client.send(_request)
