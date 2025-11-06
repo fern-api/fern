@@ -7594,6 +7594,9 @@ importers:
       octokit:
         specifier: ^4.1.4
         version: 4.1.4
+      simple-git:
+        specifier: ^3.24.0
+        version: 3.30.0
       tmp-promise:
         specifier: ^3.0.3
         version: 3.0.3
@@ -7607,9 +7610,6 @@ importers:
       depcheck:
         specifier: ^1.4.7
         version: 1.4.7
-      simple-git:
-        specifier: ^3.24.0
-        version: 3.30.0
       stylelint:
         specifier: ^16.1.0
         version: 16.25.0(typescript@5.9.3)
