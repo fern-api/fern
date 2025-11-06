@@ -1,6 +1,25 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
 - changelogEntry:
     - summary: |
+        Add position-based sorting for folder navigation in docs.yml. Pages can now control their order using a `position` field in frontmatter. Pages with position values sort first (ascending), then pages without position sort alphabetically.
+
+        Example:
+        ```markdown
+        ---
+        position: 1
+        ---
+        # Getting Started
+        ```
+      type: feat
+    - summary: |
+        Fix hot-reload in `fern docs dev` to detect frontmatter position changes. Previously, changing position values required restarting the dev server. Now position changes, file additions, and file deletions trigger automatic navigation rebuilds.
+      type: fix
+  irVersion: 61
+  createdAt: "2025-11-05"
+  version: 0.108.0
+
+- changelogEntry:
+    - summary: |
         Fix AsyncAPI v3 message parsing where channel messages were not being included in generated WebSocket clients. Messages defined in AsyncAPI v3 specs are now correctly resolved and included in the SDK.
       type: fix
   irVersion: 61
