@@ -10,6 +10,13 @@
   createdAt: "2025-11-06"
   irVersion: 61
 
+- version: 3.28.4
+  changelogEntry:
+    - summary: Fix a compilation error when a websocket channel has no send or receive messages.
+      type: fix
+  createdAt: "2025-11-06"
+  irVersion: 61
+
 - version: 3.28.3
   changelogEntry:
     - summary: |
