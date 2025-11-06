@@ -86,7 +86,7 @@ export abstract class AbstractGeneratorCli<CustomConfig> {
 
             const npmPackage = ir.selfHosted
                 ? constructNpmPackageFromArgs(
-                      npmPackageInfoFromPublishConfig(ir.publishConfig, this.isPackagePrivate(customConfig))
+                      npmPackageInfoFromPublishConfig(config, ir.publishConfig, this.isPackagePrivate(customConfig))
                   )
                 : constructNpmPackage({
                       generatorConfig: config,
@@ -310,6 +310,7 @@ export abstract class AbstractGeneratorCli<CustomConfig> {
 }
 
 function npmPackageInfoFromPublishConfig(
+    config: FernGeneratorExec.GeneratorConfig,
     publishConfig: FernIr.PublishingConfig | undefined,
     isPackagePrivate: boolean
 ): constructNpmPackageArgs {
@@ -324,7 +325,8 @@ function npmPackageInfoFromPublishConfig(
                 packageName: publishConfig.target.packageName,
                 version: publishConfig.target.version,
                 repoUrl,
-                publishInfo: undefined
+                publishInfo: undefined,
+                licenseConfig: config.license
             };
         }
     }
