@@ -1,4 +1,4 @@
-irVersion: v59
+irVersion: v61
 displayName: Ruby SDK
 language: ruby
 generatorType: SDK
