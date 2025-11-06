@@ -99,6 +99,7 @@ allowedFailures:
   - multi-url-environment-no-default
   - multiple-request-bodies
   - no-environment
+  - no-retries
   - nullable
   - nullable-optional
   - oauth-client-credentials

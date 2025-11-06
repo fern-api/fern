@@ -1,11 +1,19 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
-- version: 3.28.1
+- version: 3.28.2
   changelogEntry:
     - summary: |
         Fix local GitHub generation to match remote generation.
       type: fix
-  irVersion: 61
   createdAt: "2025-11-06"
+  irVersion: 61
+
+- version: 3.28.1
+  changelogEntry:
+    - summary: |
+        Always use vitest.config.mts for consistency across all generated SDKs. This ensures Vitest v3 can load the config as ESM in both CommonJS and ESM packages.
+      type: fix
+  createdAt: "2025-11-05"
+  irVersion: 61
 
 - version: 3.28.0
   changelogEntry:
