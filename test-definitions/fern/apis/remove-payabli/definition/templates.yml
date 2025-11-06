@@ -1,0 +1,265 @@
+imports:
+  root: __package__.yml
+service:
+  auth: false
+  base-path: ''
+  endpoints:
+ 
+    DeleteTemplate:
+      auth: true
+      display-name: Delete boarding template
+      docs: 'Deletes a template by ID. '
+      examples:
+        - name: General success response example for template operations.
+          path-parameters:
+            templateId: 80
+          response:
+            body:
+              isSuccess: true
+              responseCode: 1
+              responseData: 3625
+              responseText: Success
+      method: DELETE
+      path: /Templates/{templateId}
+      path-parameters:
+        templateId:
+          docs: >-
+            The boarding template ID. Can be found at the end of the boarding
+            template URL in PartnerHub. Example:
+            `https://partner-sandbox.payabli.com/myorganization/boarding/edittemplate/80`.
+            Here, the template ID is `80`.
+          type: double
+      response:
+        docs: Success
+        status-code: 200
+        type: root.PayabliApiResponseTemplateId
+      
+    getlinkTemplate:
+      auth: true
+      display-name: Generate boarding link from template
+      docs: Generates a boarding link from a boarding template.
+      examples:
+        - path-parameters:
+            ignoreEmpty: true
+            templateId: 80
+          response:
+            body:
+              responseData: '34'
+              responseText: Success
+      method: GET
+      path: /Templates/getlink/{templateId}/{ignoreEmpty}
+      path-parameters:
+        ignoreEmpty:
+          docs: >-
+            Ignore read-only and empty fields Default is `false`. If `ignoreEmpty`
+            = `false` and any field is empty, then the request returns a failure
+            response. If `ignoreEmpty` = `true`, the request returns the boarding
+            link name regardless of whether fields are empty.
+          type: boolean
+        templateId:
+          docs: >-
+            The boarding template ID. Can be found at the end of the boarding
+            template URL in PartnerHub. Example:
+            `https://partner-sandbox.payabli.com/myorganization/boarding/edittemplate/80`.
+            Here, the template ID is `80`.
+          type: double
+      response:
+        docs: Success.
+        status-code: 200
+        type: root.BoardingLinkApiResponse
+      
+    getTemplate:
+      auth: true
+      display-name: Get boarding template by ID
+      docs: Retrieves a boarding template's details by ID.
+      examples:
+        - path-parameters:
+            templateId: 80
+          response:
+            body:
+              addPrice: true
+              boardingLinks:
+                - acceptOauth: false
+                  acceptRegister: false
+                  entryAttributes: entryAttributes
+                  id: 91
+                  lastUpdated: '2022-07-01T15:00:01Z'
+                  orgParentName: PropertyManager Pro
+                  referenceName: payabli-00710
+                  referenceTemplateId: 1830
+                  templateCode: templateCode
+                  templateName: SMB
+              createdAt: '2022-07-01T15:00:01Z'
+              idTemplate: 1000000
+              isRoot: false
+              orgParentName: PropertyManager Pro
+              recipientEmailNotification: true
+              resumable: false
+              templateCode: templateCode
+              templateContent:
+                businessData:
+                  visible: true
+                documentsData:
+                  minimumDocuments: 1
+                  subFooter: subFooter
+                  subHeader: subHeader
+                  uploadDocuments: true
+                  visible: true
+                ownershipData:
+                  multipleContacts: true
+                  multipleOwners: true
+                  subFooter: subFooter
+                  subHeader: subHeader
+                  visible: true
+                processingData:
+                  subFooter: subFooter
+                  subHeader: subHeader
+                  visible: true
+                salesData:
+                  salesCode: salesCode
+                  salesCRM: salesCRM
+                servicesData:
+                  subFooter: subFooter
+                  subHeader: subHeader
+                  visible: true
+                underwritingData:
+                  method: automatic
+                  policyId: J-itEyD6A7y5S5yYFjxOrb
+              templateDescription: templateDescription
+              templateTitle: templateTitle
+              usedBy: 1
+      method: GET
+      path: /Templates/get/{templateId}
+      path-parameters:
+        templateId:
+          docs: >-
+            The boarding template ID. Can be found at the end of the boarding
+            template URL in PartnerHub. Example:
+            `https://partner-sandbox.payabli.com/myorganization/boarding/edittemplate/80`.
+            Here, the template ID is `80`.
+          type: double
+      response:
+        docs: Success
+        status-code: 200
+        type: root.TemplateQueryRecord
+      
+    ListTemplates:
+      auth: true
+      display-name: Get list of boarding templates for organization
+      docs: >-
+        Retrieves a list of boarding templates for an organization. Use filters
+        to limit results. You can't make a request that includes filters from
+        the API console in the documentation. The response won't be filtered.
+        Instead, copy the request, remove `parameters=` and run the request in a
+        different client.
+      examples:
+        - path-parameters:
+            orgId: 123
+          query-parameters:
+            fromRecord: 251
+            limitRecord: 0
+            sortBy: desc(field_name)
+          response:
+            body:
+              records:
+                - addPrice: true
+                  boardingLinks:
+                    - id: 91
+                  createdAt: '2022-07-01T15:00:01Z'
+                  idTemplate: 1000000
+                  isRoot: false
+                  orgParentName: PropertyManager Pro
+                  recipientEmailNotification: true
+                  resumable: false
+                  templateCode: templateCode
+                  templateDescription: templateDescription
+                  templateTitle: templateTitle
+                  usedBy: 1
+              summary:
+                pageIdentifier: 'null'
+                pageSize: 20
+                totalAmount: 77.22
+                totalNetAmount: 77.22
+                totalPages: 2
+                totalRecords: 2
+      method: GET
+      path: /Query/templates/{orgId}
+      path-parameters:
+        orgId:
+          docs: The numeric identifier for organization, assigned by Payabli.
+          type: integer
+      request:
+        name: ListTemplatesRequest
+        query-parameters:
+          fromRecord:
+            default: 0
+            docs: >-
+              The number of records to skip before starting to collect the
+              result set.
+            type: optional<integer>
+          limitRecord:
+            default: 20
+            docs: >-
+              Max number of records to return for the query. Use `0` or negative
+              value to return all records.
+            type: optional<integer>
+          parameters:
+            docs: |
+
+              Collection of field names, conditions, and values used to filter the query.
+
+              <Info>
+                **You must remove `parameters=` from the request before you send it, otherwise Payabli will ignore the filters.**
+
+                Because of a technical limitation, you can't make a request that includes filters from the API console on this page. The response won't be filtered. Instead, copy the request, remove `parameters=` and run the request in a different client.
+
+                For example:
+
+                --url https://api-sandbox.payabli.com/api/Query/transactions/org/236?parameters=totalAmount(gt)=1000&limitRecord=20
+
+                should become:
+
+                --url https://api-sandbox.payabli.com/api/Query/transactions/org/236?totalAmount(gt)=1000&limitRecord=20
+              </Info>
+          
+
+              See [Filters and Conditions Reference](/developers/developer-guides/pay-ops-reporting-engine-overview#filters-and-conditions-reference) for help.
+
+              List of field names accepted:
+              - `createdAt` (gt, ge, lt, le, eq, ne)
+              - `title` (ct, nct)
+              - `description` (ct, nct)
+              - `code` (ct, nct)
+              - `orgParentname` (ct, nct)
+
+              List of comparison accepted - enclosed between parentheses:
+              - eq or empty => equal
+              - gt => greater than
+              - ge => greater or equal
+              - lt => less than
+              - le => less or equal
+              - ne => not equal
+              - ct => contains
+              - nct => not contains
+              - in => inside array
+              - nin => not inside array
+
+              List of parameters accepted:
+              - limitRecord : max number of records for query (default="20", "0" or negative value for all)
+              - fromRecord : initial record in query
+
+              Example: title(ct)=hoa return all records with title containing "hoa"
+
+            type: optional<map<string, optional<string>>>
+          sortBy:
+            docs: >-
+              The field name to use for sorting results. Use `desc(field_name)`
+              to sort descending by `field_name`, and use `asc(field_name)` to
+              sort ascending by `field_name`.
+            type: optional<string>
+      response:
+        docs: Success
+        status-code: 200
+        type: root.TemplateQueryResponse
+        
+

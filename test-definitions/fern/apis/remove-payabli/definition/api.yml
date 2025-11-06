@@ -1,0 +1,31 @@
+auth: ApiKeyAuth
+auth-schemes:
+  ApiKeyAuth:
+    header: requestToken
+    name: apiKey
+    type: string
+default-environment: Sandbox
+display-name: Payabli API
+environments:
+  Sandbox: https://api-sandbox.payabli.com/api
+  Production: https://api.payabli.com/api
+error-discrimination:
+  strategy: status-code
+name: api
+docs: |
+
+  ## Payabli API
+  
+  The Payabli API is a RESTful API that allows you to interact with the Payabli platform.
+  It provides endpoints for managing your Payabli account, including creating and managing transactions, customers, and more.
+
+  See the [API overview](https://docs.payabli.com/developers/api-reference/api-overview) for information on authentication, error handling, idempotency, rate limits, and more.
+
+imports:
+  root: __package__.yml
+
+errors: 
+  - root.BadRequestError
+  - root.UnauthorizedError
+  - root.InternalServerError
+  - root.ServiceUnavailableError

@@ -1,0 +1,1142 @@
+imports:
+  root: __package__.yml
+types:
+
+  InvoicePaidAmount:
+    docs: Amount partially paid to the invoice.
+    type: double
+
+  InvoiceId:
+    docs: Identifier of invoice.
+    type: long
+
+  InvoiceDataRequest:
+    properties:
+      customerData:
+        docs: >-
+          Object describing the customer/payor. Required for POST requests.
+          Which fields are required depends on the paypoint's custom identifier
+          settings. 
+        type: optional<root.PayorDataRequest>
+      invoiceData:
+        docs: Object describing the invoice. Required for POST requests.
+        type: optional<root.BillData>
+      scheduledOptions:
+        docs: Object with options for scheduled invoices.
+        type: optional<root.BillOptions>
+
+  GetInvoiceRecord:
+    properties:
+      invoiceId: InvoiceId
+      customerId: root.CustomerId
+      paypointId: root.PaypointId
+      invoiceNumber: root.InvoiceNumber
+      invoiceDate: root.Datenullable
+      invoiceDueDate: root.Datenullable
+      invoiceSentDate: root.DatetimeNullable
+      invoiceEndDate: root.Datenullable
+      lastPaymentDate: root.DatetimeNullable
+      createdAt: root.CreatedAt
+      invoiceStatus: root.Invoicestatus
+      invoiceType: root.InvoiceType
+      frequency: root.Frequency
+      paymentTerms: root.Terms
+      termsConditions: nullable<root.TermsConditions>
+      notes: 
+        type: nullable<string>
+      tax: root.Tax
+      discount: root.Discount
+      invoiceAmount: root.InvoiceAmount
+      invoicePaidAmount: InvoicePaidAmount
+      freightAmount: root.FreightAmount
+      dutyAmount: root.DutyAmount
+      purchaseOrder: root.PurchaseOrder
+      firstName:
+        docs: First name of the recipient of the invoice.
+        type: optional<string>
+      lastName:
+        docs: Last name of the recipient of the invoice.
+        type: optional<string>
+      company: 
+        docs: Company name of the recipient of the invoice.
+        type: optional<string>
+      shippingAddress1: root.Shippingaddress
+      shippingAddress2: root.Shippingaddressadditional
+      shippingCity: root.Shippingcity
+      shippingState: root.Shippingstate
+      shippingZip: root.Shippingzip
+      shippingFromZip: root.ShippingFromZip
+      shippingCountry: root.Shippingcountry
+      shippingEmail: root.Email
+      shippingPhone: string
+      summaryCommodityCode: root.SummaryCommodityCode
+      items: list<root.BillItem>
+      Customer: root.PayorDataResponse
+      paylinkId: root.PaylinkId
+      billEvents: root.BillEvents
+      scheduledOptions: root.BillOptions
+      PaypointLegalname: string
+      PaypointDbaname: root.Dbaname
+      PaypointEntryname: root.Entrypointfield
+      ParentOrgName: root.OrgParentName
+      AdditionalData: optional<root.AdditionalDataString>
+      DocumentsRef: root.DocumentsRef
+      externalPaypointID: optional<root.ExternalPaypointId>
+
+  QueryInvoiceResponse:
+    properties:
+      Records: list<QueryInvoiceResponseRecordsItem>
+      Summary: root.QuerySummary
+
+  QueryInvoiceResponseRecordsItem:
+    inline: true
+    properties:
+      invoiceId: InvoiceId
+      customerId: root.CustomerId
+      paypointId: root.PaypointId
+      invoiceNumber: root.InvoiceNumber
+      invoiceDate:
+        docs: |
+          Invoice date in any of the accepted formats: YYYY-MM-DD, MM/DD/YYYY.
+        type: root.Datenullable
+      invoiceDueDate:
+        docs: |
+          Invoice due date in any of the accepted formats: YYYY-MM-DD, MM/DD/YYYY.
+        type: root.Datenullable
+      invoiceSentDate:
+        docs: |
+          Invoice sent date in any of the accepted formats: YYYY-MM-DD, MM/DD/YYYY.
+        type: root.Datenullable
+      invoiceEndDate:
+        docs: The end date for a scheduled invoice cycle (`invoiceType` = 1).
+        type: root.Datenullable
+      lastPaymentDate:
+        docs: Timestamp of last payment.
+        type: optional<root.DatetimeNullable>
+      createdAt: root.CreatedAt
+      invoiceStatus: root.Invoicestatus
+      invoiceType: root.InvoiceType
+      frequency:
+        docs: Frequency of scheduled invoice.
+        type: root.Frequency
+      paymentTerms: root.Terms
+      termsConditions: nullable<root.TermsConditions>
+      notes:
+        docs: Invoice notes.
+        type: nullable<string>
+      tax: root.Tax
+      discount: root.Discount
+      invoiceAmount: root.InvoiceAmount
+      invoicePaidAmount: InvoicePaidAmount
+      freightAmount: root.FreightAmount
+      dutyAmount: root.DutyAmount
+      purchaseOrder: nullable<root.PurchaseOrder>
+      firstName:
+        docs: First name of the recipient of the invoice.
+        type: string
+      lastName:
+        docs: Last name of the recipient of the invoice.
+        type: string
+      company:
+        docs: Company name of the recipient of the invoice.
+        type: nullable<string>
+      shippingAddress1: root.Shippingaddress
+      shippingAddress2: root.Shippingaddressadditional
+      shippingCity: root.Shippingcity
+      shippingState: root.Shippingstate
+      shippingZip: root.Shippingzip
+      shippingFromZip: root.ShippingFromZip
+      shippingCountry: root.Shippingcountry
+      shippingEmail:
+        docs: Shipping recipient's contact email address.
+        type: root.Email
+      shippingPhone:
+        docs: Recipient phone number.
+        type: string
+      summaryCommodityCode: nullable<root.SummaryCommodityCode>
+      items:
+        docs: Array of line items included in the invoice.
+        type: list<root.BillItem>
+      Customer: root.PayorDataResponse
+      paylinkId: string
+      billEvents: root.BillEvents
+      scheduledOptions:
+        docs: Object with options for scheduled invoices.
+        type: nullable<root.BillOptions>
+      PaypointLegalname:
+        docs: Paypoint's legal name.
+        type: root.Legalname
+      PaypointDbaname:
+        docs: Paypoint's DBA name.
+        type: root.Dbaname
+      PaypointEntryname:
+        docs: Paypoint's entryname.
+        type: root.Entrypointfield
+      ParentOrgId: root.Orgid
+      ParentOrgName: root.OrgParentName
+      AdditionalData:
+        docs: Custom list of key:value pairs. This field is used to store any data related to the invoice or for your system.
+        type: nullable<map<string, unknown>>
+      DocumentsRef:
+        docs: Object containing attachments associated to the invoice.
+        type: nullable<root.DocumentsRef>
+      externalPaypointID: root.ExternalPaypointId
+      pageIdentifier: nullable<root.PageIdentifier>
+
+  InvoiceResponseWithoutData:
+    docs: Response schema for invoice operations.
+    properties:
+      isSuccess: root.IsSuccess
+      responseCode: root.Responsecode
+      responseData:
+        docs: >-
+          If `isSuccess` = true, this contains the identifier of the invoice. If
+          `isSuccess` = false, this contains the reason for the failure.
+        type: root.Responsedatanonobject
+      responseText: root.ResponseText
+      pageidentifier: nullable<root.PageIdentifier>
+      roomId: root.RoomIdNotInUse
+
+  SendInvoiceResponse:
+    properties:
+      isSuccess: root.IsSuccess
+      responseText: root.ResponseText
+
+  InvoiceNumberResponse:
+    docs: >-
+      Response schema for operations for sending invoices or getting next
+      invoice number.
+    properties:
+      isSuccess: root.IsSuccess
+      responseText: root.ResponseText
+      responseData:
+        docs: |
+          If `isSuccess` = true, this contains the next available invoice number in the format defined by paypoint settings. If `isSuccess` = false, this contains the reason for the error.
+        type: string
+
+ # AttachedFileResponse: # commented out because waiting on Fern to add support for file types being used not inline
+#    union:
+#      binary: file
+#      fileContent: root.FileContent
+        
+
+service:
+  auth: false
+  base-path: ''
+  endpoints:
+    AddInvoice:
+      auth: true
+      display-name: Add invoice
+      docs: Creates an invoice in an entrypoint.
+      examples:
+        - name: AddInvoice
+          path-parameters:
+            entry: 8cfec329267
+          request:
+            customerData:
+              firstName: "Tamara"
+              lastName: "Bagratoni"
+              customerNumber: "3"
+            invoiceData:
+              items:
+                - itemProductName: "Adventure Consult"
+                  itemDescription: "Consultation for Georgian tours"
+                  itemCost: 100
+                  itemQty: 1
+                  itemMode: 1
+                - itemProductName: "Deposit "
+                  itemDescription: "Deposit for trip planning"
+                  itemCost: 882.37
+                  itemQty: 1
+              invoiceDate: "2025-10-19"
+              invoiceType: 0
+              invoiceStatus: 1
+              frequency: "one-time"
+              invoiceAmount: 982.37
+              discount: 10
+              invoiceNumber: "INV-3"
+          response:
+            body:
+              isSuccess: true
+              responseCode: 1
+              responseData: 3625
+              responseText: Success
+              pageidentifier: null
+              roomId: 0
+      method: POST
+      path: /Invoice/{entry}
+      path-parameters:
+        entry:
+          docs: >-
+            The paypoint's entrypoint identifier. [Learn
+            more](/api-reference/api-overview#entrypoint-vs-entry)
+          type: string
+      request:
+        body: InvoiceDataRequest
+        content-type: application/json
+        headers:
+          idempotencyKey: optional<root.IdempotencyKey>
+        name: AddInvoiceRequest
+        query-parameters:
+          forceCustomerCreation: optional<root.ForceCustomerCreation>
+      response:
+        docs: Success
+        status-code: 200
+        type: InvoiceResponseWithoutData
+      
+    deleteAttachedFromInvoice:
+      auth: true
+      display-name: Delete attached file from invoice
+      docs: Deletes an invoice that's attached to a file.
+      examples:
+        - name: DeleteAttachedFromInvoice
+          path-parameters:
+            filename: 0_Bill.pdf
+            idInvoice: 23548884
+          response:
+            body:
+              isSuccess: true
+              responseCode: 1
+              responseData: 3625
+              responseText: Success
+              pageidentifier: null
+              roomId: 0
+      method: DELETE
+      path: /Invoice/attachedFileFromInvoice/{idInvoice}/{filename}
+      path-parameters:
+        filename:
+          docs: >
+            The filename in Payabli. Filename is `zipName` in response to a
+            request to `/api/Invoice/{idInvoice}`. Here, the filename is
+            `0_Bill.pdf``. 
+
+            "DocumentsRef": {
+              "zipfile": "inva_269.zip",
+              "filelist": [
+                {
+                  "originalName": "Bill.pdf",
+                  "zipName": "0_Bill.pdf",
+                  "descriptor": null
+                }
+              ]
+            }
+          type: string
+        idInvoice:
+          docs: Invoice ID
+          type: integer
+      response:
+        docs: Success
+        status-code: 200
+        type: InvoiceResponseWithoutData
+      
+    DeleteInvoice:
+      auth: true
+      display-name: Delete invoice
+      docs: Deletes a single invoice from an entrypoint.
+
+      examples:
+        - name: DeleteInvoice
+          path-parameters:
+            idInvoice: 23548884
+          response:
+            body:
+              isSuccess: true
+              responseCode: 1
+              responseData: 3625
+              responseText: Success
+              pageidentifier: null
+              roomId: 0
+      method: DELETE
+      path: /Invoice/{idInvoice}
+      path-parameters:
+        idInvoice:
+          docs: Invoice ID
+          type: integer
+      response:
+        docs: Success
+        status-code: 200
+        type: InvoiceResponseWithoutData
+      
+    EditInvoice:
+      auth: true
+      display-name: Update invoice
+      docs: 'Updates details for a single invoice in an entrypoint.'
+      examples:
+        - name: UpdateInvoice
+          path-parameters:
+            idInvoice: 332
+          request:
+            invoiceData:
+              items:
+                - itemProductName: "Deposit"
+                  itemDescription: "Deposit for trip planning"
+                  itemCost: 882.37
+                  itemQty: 1
+              invoiceDate: "2025-10-19"
+              invoiceAmount: 982.37
+              invoiceNumber: "INV-6"
+          response:
+            body:
+              isSuccess: true
+              responseCode: 1
+              responseData: 332
+              responseText: Success
+              pageidentifier: null
+              roomId: 0
+      method: PUT
+      path: /Invoice/{idInvoice}
+      path-parameters:
+        idInvoice:
+          docs: Invoice ID
+          type: integer
+      request:
+        body: InvoiceDataRequest
+        content-type: application/json
+        name: EditInvoiceRequest
+        query-parameters:
+          forceCustomerCreation:
+            default: false
+            docs: >-
+              When `true`, the request creates a new customer record, regardless
+              of whether customer identifiers match an existing customer.
+            type: optional<boolean>
+      response:
+        docs: Success
+        status-code: 200
+        type: InvoiceResponseWithoutData
+      
+    GetAttachedFileFromInvoice:
+      auth: true
+      display-name: Get attached file from an invoice
+      docs: Retrieves a file attached to an invoice.
+      method: GET
+      path: /Invoice/attachedFileFromInvoice/{idInvoice}/{filename}
+      path-parameters:
+        filename:
+          docs: >
+            The filename in Payabli. Filename is `zipName` in the response to a
+            request to `/api/Invoice/{idInvoice}`. Here, the filename is
+            `0_Bill.pdf``. 
+
+            ```
+              "DocumentsRef": {
+                "zipfile": "inva_269.zip",
+                "filelist": [
+                  {
+                    "originalName": "Bill.pdf",
+                    "zipName": "0_Bill.pdf",
+                    "descriptor": null
+                  }
+                ]
+              }
+              ```
+          type: string
+        idInvoice:
+          docs: Invoice ID
+          type: integer
+      request:
+        name: GetAttachedFileFromInvoiceRequest
+        query-parameters:
+          returnObject:
+            default: false
+            docs: >-
+              When `true`, the request returns the file content as a
+              Base64-encoded string.
+            type: optional<boolean>
+      response:
+        docs: A successful response returns a binary file when `returnObject` is `false`. When `returnObject` is `true`, the response contains the file content as a Base64-encoded string in an object. Due to technical limitations, only the object response is documented here.
+        status-code: 200
+        type: root.FileContent
+      
+    GetInvoice:
+      auth: true
+      display-name: Get invoice
+      docs: Retrieves a single invoice by ID.
+      examples:
+        - name: GetDetails
+          path-parameters:
+            idInvoice: 23548884
+          response:
+            body:
+              AdditionalData: null
+              billEvents:
+                - description: TransferCreated
+                  eventTime: '2023-07-05T22:31:06Z'
+                  extraData:
+                    key: value
+                  refData: refData
+                  source: api
+              company: Acme Inc
+              createdAt: '2022-07-01T15:00:01Z'
+              Customer:
+                AdditionalData: null
+                BillingAddress1: 1111 West 1st Street
+                BillingAddress2: Suite 200
+                BillingCity: Miami
+                BillingCountry: US
+                BillingEmail: example@email.com
+                BillingPhone: '5555555555'
+                BillingState: FL
+                BillingZip: '45567'
+                CompanyName: Sunshine LLC
+                customerId: 4440
+                CustomerNumber: 3456-7645A
+                customerStatus: 1
+                FirstName: John
+                Identifiers:
+                  - \"firstname\"
+                  - \"lastname\"
+                  - \"email\"
+                  - \"customId\"
+                LastName: Doe
+                ShippingAddress1: 123 Walnut St
+                ShippingAddress2: STE 900
+                ShippingCity: Johnson City
+                ShippingCountry: US
+                ShippingState: TN
+                ShippingZip: '37619'
+              customerId: 4440
+              discount: 10
+              DocumentsRef:
+                filelist:
+                  - {}
+                zipfile: zx45.zip
+              dutyAmount: 0
+              firstName: firstName
+              freightAmount: 10
+              frequency: "one-time"
+              invoiceAmount: 105
+              invoiceDate: '2025-07-01'
+              invoiceDueDate: '2025-07-01'
+              invoiceEndDate: '2025-07-01'
+              invoiceId: 236
+              invoiceNumber: INV-2345
+              invoicePaidAmount: 0
+              invoiceSentDate: '2025-10-19T00:00:00Z'
+              invoiceStatus: 1
+              invoiceType: 0
+              items:
+                - itemCommodityCode: '010'
+                  itemCost: 5
+                  itemDescription: Deposit for materials.
+                  itemMode: 0
+                  itemProductCode: M-DEPOSIT
+                  itemProductName: Materials deposit
+                  itemQty: 1
+                  itemTaxAmount: 7
+                  itemTaxRate: 0.075
+                  itemTotalAmount: 1.1
+                  itemUnitOfMeasure: SqFt
+              lastName: lastName
+              lastPaymentDate: '2025-10-19T00:00:00Z'
+              notes: null
+              ParentOrgName: parentOrgName
+              paylinkId: paylinkId
+              paymentTerms: NET30
+              PaypointDbaname: Sinks Inc
+              PaypointEntryname: 5789a30009s
+              paypointId: 56
+              PaypointLegalname: Sinks and Faucets LLC
+              purchaseOrder: PO-345
+              scheduledOptions:
+                includePaylink: true
+                includePdf: true
+              shippingAddress1: 123 Walnut St
+              shippingAddress2: STE 900
+              shippingCity: Johnson City
+              shippingCountry: US
+              shippingEmail: example@email.com
+              shippingFromZip: '30040'
+              shippingPhone: shippingPhone
+              shippingState: TN
+              shippingZip: '37619'
+              summaryCommodityCode: '501718'
+              tax: 2.05
+              termsConditions: termsConditions
+      method: GET
+      path: /Invoice/{idInvoice}
+      path-parameters:
+        idInvoice:
+          docs: Invoice ID
+          type: integer
+      response:
+        docs: Success. Fields marked optional may return `null` if not set.
+        status-code: 200
+        type: GetInvoiceRecord
+      
+    GetInvoiceNumber:
+      auth: true
+      display-name: Get next InvoiceNumber for entrypoint
+      docs: Retrieves the next available invoice number for a paypoint.
+      examples:
+        - name: GetNextInvoiceNumber
+          path-parameters:
+            entry: 8cfec329267
+          response:
+            body:
+              isSuccess: true
+              responseData: MyInvoice-114434565s32440
+              responseText: Success
+      method: GET
+      path: /Invoice/getNumber/{entry}
+      path-parameters:
+        entry:
+          docs: >-
+            The paypoint's entrypoint identifier. [Learn
+            more](/api-reference/api-overview#entrypoint-vs-entry)
+          type: string
+      response:
+        docs: Success
+        status-code: 200
+        type: InvoiceNumberResponse
+      
+    ListInvoices:
+      auth: true
+      display-name: Get list of invoices for an entrypoint
+      docs: >-
+        Returns a list of invoices for an entrypoint. Use filters to limit
+        results. Include the `exportFormat` query parameter to return the results as a file instead of a JSON response.
+      examples:
+        - name: InvoiceQueryResponse
+          path-parameters:
+            entry: 8cfec329267
+          query-parameters:
+            fromRecord: 251
+            limitRecord: 0
+            sortBy: desc(field_name)
+          response:
+            body:
+              Records:
+                - invoiceId: 3674
+                  customerId: 1323
+                  paypointId: 10
+                  invoiceNumber: QA-1709680125
+                  invoiceDate: '2025-03-05'
+                  invoiceDueDate: '2025-03-05'
+                  # invoiceSentDate: null
+                  # invoiceEndDate: null
+                  lastPaymentDate: null
+                  createdAt: '2024-03-05T18:08:45Z'
+                  invoiceStatus: 1
+                  invoiceType: 0
+                  frequency: one-time
+                  paymentTerms: N30
+                  termsConditions: null
+                  notes: null
+                  tax: 0
+                  discount: 0
+                  invoiceAmount: 50
+                  invoicePaidAmount: 0
+                  freightAmount: 0
+                  dutyAmount: 0
+                  purchaseOrder: null
+                  firstName: Amirah
+                  lastName: Tan
+                  company: null
+                  shippingAddress1: 1234 Rainier Ave
+                  shippingAddress2: Apt 567
+                  shippingCity: Seattle
+                  shippingState: WA
+                  shippingZip: '98101'
+                  shippingFromZip: ''
+                  shippingCountry: US
+                  shippingEmail: amirah.tan@example.com
+                  shippingPhone: ''
+                  summaryCommodityCode: null
+                  items:
+                    - itemCost: 50
+                      itemDescription: service
+                      itemProductName: Internet
+                      itemQty: 1
+                  Customer:
+                    AdditionalData:
+                      key1:
+                        key: value
+                      key2:
+                        key: value
+                      key3:
+                        key: value
+                    BillingPhone: '1234567890'
+                    customerId: 1323
+                  paylinkId: 3674-cf15b881-f276-4b69-bdc8-841b2d123XXXXXX
+                  billEvents:
+                    - description: Invoice created
+                      eventTime: '2024-03-05T23:08:45Z'
+                      refData: 00-802fa578504a7af6f3dd890a3802f7ef-61b4bedXXXX1234
+                  scheduledOptions: null
+                  PaypointLegalname: Emerald City LLC
+                  PaypointDbaname: Emerald City Trading
+                  PaypointEntryname: 47a30009s
+                  ParentOrgId: 123
+                  ParentOrgName: Emerald Enterprises
+                  AdditionalData: null
+                  DocumentsRef: null
+                  externalPaypointID: seattletrade01-10
+                  pageIdentifier: null
+              Summary:
+                pageIdentifier: 'null'
+                pageSize: 20
+                totalAmount: 77.22
+                totalNetAmount: 77.22
+                totalPages: 2
+                totalRecords: 2
+        
+      method: GET
+      path: /Query/invoices/{entry}
+      path-parameters:
+        entry:
+          docs: >-
+            The paypoint's entrypoint identifier. [Learn
+            more](/api-reference/api-overview#entrypoint-vs-entry)
+          type: string
+      request:
+        name: ListInvoicesRequest
+        query-parameters:
+          exportFormat: optional<root.ExportFormat>
+          fromRecord:
+            default: 0
+            docs: >-
+              The number of records to skip before starting to collect the
+              result set.
+            type: optional<integer>
+          limitRecord:
+            default: 20
+            docs: >-
+              Max number of records to return for the query. Use `0` or negative
+              value to return all records.
+            type: optional<integer>
+          parameters:
+            docs: >
+              Collection of field names, conditions, and values used to filter
+              the query
+
+
+              See [Filters and Conditions
+              Reference](/developers/developer-guides/pay-ops-reporting-engine-overview#filters-and-conditions-reference)
+              for help.
+
+
+              List of field names accepted:
+
+
+              - `invoiceDate` (gt, ge, lt, le, eq, ne)
+
+              - `dueDate` (gt, ge, lt, le, eq, ne)
+
+              - `sentDate` (gt, ge, lt, le, eq, ne)
+
+              - `frequency` (in, nin,ne, eq)
+
+              - `invoiceType` (eq, ne)
+
+              - `payTerms` (in, nin, eq, ne)
+
+              - `paypointId` (ne, eq)
+
+              - `totalAmount` (gt, ge, lt, le, eq, ne)
+
+              - `paidAmount` (gt, ge, lt, le, eq, ne)
+
+              - `status` (in, nin, eq, ne)
+
+              - `invoiceNumber` (ct, nct, eq, ne)
+
+              - `purchaseOrder` (ct, nct, eq, ne)
+
+              - `itemProductCode` (ct, nct)
+
+              - `itemDescription` (ct, nct)
+
+              - `customerFirstname` (ct, nct, eq, ne)
+
+              - `customerLastname` (ct, nct, eq, ne)
+
+              - `customerName` (ct, nct)
+
+              - `customerId` (eq, ne)
+
+              - `customerNumber` (ct, nct, eq, ne)
+
+              - `customerCompanyname` (ct, nct, eq, ne)
+
+              - `customerAddress` (ct, nct, eq, ne)
+
+              - `customerCity` (ct, nct, eq, ne)
+
+              - `customerZip` (ct, nct, eq, ne)
+
+              - `customerState` (ct, nct, eq, ne)
+
+              - `customerCountry` (ct, nct, eq, ne)
+
+              - `customerPhone` (ct, nct, eq, ne)
+
+              - `customerEmail` (ct, nct, eq, ne)
+
+              - `customerShippingAddress` (ct, nct, eq, ne)
+
+              - `customerShippingCity` (ct, nct, eq, ne)
+
+              - `customerShippingZip` (ct, nct, eq, ne)
+
+              - `customerShippingState` (ct, nct, eq, ne)
+
+              - `customerShippingCountry` (ct, nct, eq, ne)
+
+              - `orgId` (eq)
+
+              - `paylinkId` (ne, eq)
+
+              - `paypointLegal` (ne, eq, ct, nct)
+
+              - `paypointDba` (ne, eq, ct, nct)
+
+              - `orgName` (ne, eq, ct, nct)
+
+              - `additional-xxx` (ne, eq, ct, nct) where xxx is the additional
+              field name
+
+
+              List of comparison accepted - enclosed between parentheses:
+                
+              - eq or empty => equal
+
+              - gt => greater than
+
+              - ge => greater or equal
+
+              - lt => less than
+
+              - le => less or equal
+
+              - ne => not equal
+
+              - ct => contains
+
+              - nct => not contains
+
+              - in => inside array
+
+              - nin => not inside array
+
+
+              List of parameters accepted:
+
+              - limitRecord : max number of records for query (default="20", "0"
+              or negative value for all)
+
+              - fromRecord : initial record in query
+
+
+              Example: totalAmount(gt)=20 return all records with totalAmount
+              greater than 20.00
+            type: optional<map<string, optional<string>>>
+          sortBy:
+            docs: >-
+              The field name to use for sorting results. Use `desc(field_name)`
+              to sort descending by `field_name`, and use `asc(field_name)` to
+              sort ascending by `field_name`.
+            type: optional<string>
+      response:
+        docs: Success. Fields marked optional may return `null` if not set.
+        status-code: 200
+        type: QueryInvoiceResponse
+      
+    ListInvoicesOrg:
+      auth: true
+      display-name: Get list of invoices for an organization
+      docs: Returns a list of invoices for an org. Use filters to limit results. Include the `exportFormat` query parameter to return the results as a file instead of a JSON response.
+      examples:
+        - name: Example response for invoice queries.
+          path-parameters:
+            orgId: 123
+          query-parameters:
+            fromRecord: 251
+            limitRecord: 0
+            sortBy: desc(field_name)
+          response:
+            body:
+              Records:
+                - billEvents:
+                    - description: Invoice created
+                      eventTime: '2024-03-05T23:08:45Z'
+                      refData: 00-802fa578504a7af6f3dd890a3802f7ef-61b4bedXXXX1234
+                  createdAt: '2024-03-05T18:08:45Z'
+                  Customer:
+                    AdditionalData:
+                      key1:
+                        key: value
+                      key2:
+                        key: value
+                      key3:
+                        key: value
+                    BillingPhone: '1234567890'
+                    customerId: 1323
+                  customerId: 1323
+                  discount: 0
+                  dutyAmount: 0
+                  externalPaypointID: seattletrade01-10
+                  firstName: Amirah
+                  freightAmount: 0
+                  frequency: one-time
+                  termsConditions: null
+                  notes: null
+                  invoiceAmount: 50
+                  invoiceDate: '2025-03-05'
+                  invoiceDueDate: '2025-03-05'
+                  invoiceId: 3674
+                  invoiceNumber: QA-1709680125
+                  invoicePaidAmount: 0
+                  invoiceStatus: 1
+                  invoiceType: 0
+                  items:
+                    - itemCost: 50
+                      itemDescription: service
+                      itemProductName: Internet
+                      itemQty: 1
+                  lastName: Tan
+                  ParentOrgName: Emerald Enterprises
+                  ParentOrgId: 123
+                  paylinkId: 3674-cf15b881-f276-4b69-bdc8-841b2d123XXXXXX
+                  paymentTerms: N30
+                  PaypointDbaname: Emerald City Trading
+                  PaypointEntryname: 47a30009s
+                  paypointId: 10
+                  PaypointLegalname: Emerald City LLC
+                  shippingAddress1: 1234 Rainier Ave
+                  shippingAddress2: Apt 567
+                  shippingCity: Seattle
+                  shippingCountry: US
+                  shippingEmail: amirah.tan@example.com
+                  shippingFromZip: ''
+                  shippingPhone: ''
+                  shippingState: WA
+                  shippingZip: '98101'
+                  tax: 0
+              Summary:
+                pageIdentifier: 'null'
+                pageSize: 20
+                totalAmount: 77.22
+                totalNetAmount: 77.22
+                totalPages: 2
+                totalRecords: 2
+      method: GET
+      path: /Query/invoices/org/{orgId}
+      path-parameters:
+        orgId:
+          docs: The numeric identifier for organization, assigned by Payabli.
+          type: integer
+      request:
+        name: ListInvoicesOrgRequest
+        query-parameters:
+          exportFormat: optional<root.ExportFormat>
+          fromRecord:
+            default: 0
+            docs: >-
+              The number of records to skip before starting to collect the
+              result set.
+            type: optional<integer>
+          limitRecord:
+            default: 20
+            docs: >-
+              Max number of records to return for the query. Use `0` or negative
+              value to return all records.
+            type: optional<integer>
+          parameters:
+            docs: >
+              Collection of field names, conditions, and values used to filter
+              the query
+
+
+              See [Filters and Conditions
+              Reference](/developers/developer-guides/pay-ops-reporting-engine-overview#filters-and-conditions-reference)
+              for help.
+
+
+              List of field names accepted:
+
+
+              - `invoiceDate` (gt, ge, lt, le, eq, ne)
+
+              - `dueDate` (gt, ge, lt, le, eq, ne)
+
+              - `sentDate` (gt, ge, lt, le, eq, ne)
+
+              - `frequency` (in, nin,ne, eq)
+
+              - `invoiceType` (eq, ne)
+
+              - `payTerms` (in, nin, eq, ne)
+
+              - `paypointId` (ne, eq)
+
+              - `totalAmount` (gt, ge, lt, le, eq, ne)
+
+              - `paidAmount` (gt, ge, lt, le, eq, ne)
+
+              - `status` (in, nin, eq, ne)
+
+              - `invoiceNumber` (ct, nct, eq, ne)
+
+              - `purchaseOrder` (ct, nct, eq, ne)
+
+              - `itemProductCode` (ct, nct)
+
+              - `itemDescription` (ct, nct)
+
+              - `customerFirstname` (ct, nct, eq, ne)
+
+              - `customerLastname` (ct, nct, eq, ne)
+
+              - `customerName` (ct, nct)
+
+              - `customerId` (eq, ne)
+
+              - `customerNumber` (ct, nct, eq, ne)
+
+              - `customerCompanyname` (ct, nct, eq, ne)
+
+              - `customerAddress` (ct, nct, eq, ne)
+
+              - `customerCity` (ct, nct, eq, ne)
+
+              - `customerZip` (ct, nct, eq, ne)
+
+              - `customerState` (ct, nct, eq, ne)
+
+              - `customerCountry` (ct, nct, eq, ne)
+
+              - `customerPhone` (ct, nct, eq, ne)
+
+              - `customerEmail` (ct, nct, eq, ne)
+
+              - `customerShippingAddress` (ct, nct, eq, ne)
+
+              - `customerShippingCity` (ct, nct, eq, ne)
+
+              - `customerShippingZip` (ct, nct, eq, ne)
+
+              - `customerShippingState` (ct, nct, eq, ne)
+
+              - `customerShippingCountry` (ct, nct, eq, ne)
+
+              - `orgId` (eq)
+
+              - `paylinkId` (ne, eq)
+
+              - `paypointLegal` (ne, eq, ct, nct)
+
+              - `paypointDba` (ne, eq, ct, nct)
+
+              - `orgName` (ne, eq, ct, nct)
+
+              - `additional-xxx` (ne, eq, ct, nct) where xxx is the additional
+              field name
+
+
+              List of comparison accepted - enclosed between parentheses:
+
+
+              - eq or empty => equal
+
+              - gt => greater than
+
+              - ge => greater or equal
+
+              - lt => less than
+
+              - le => less or equal
+
+              - ne => not equal
+
+              - ct => contains
+
+              - nct => not contains
+
+              - in => inside array
+
+              - nin => not inside array
+
+
+              List of parameters accepted:
+
+              - limitRecord : max number of records for query (default="20", "0"
+              or negative value for all)
+
+              - fromRecord : initial record in query
+
+
+              Example: totalAmount(gt)=20 return all records with totalAmount
+              greater than 20.00
+            type: optional<map<string, optional<string>>>
+          sortBy:
+            docs: >-
+              The field name to use for sorting results. Use `desc(field_name)`
+              to sort descending by `field_name`, and use `asc(field_name)` to
+              sort ascending by `field_name`.
+            type: optional<string>
+      response:
+        docs: Success. Fields marked optional may return `null` if not set.
+        status-code: 200
+        type: QueryInvoiceResponse
+      
+    SendInvoice:
+      auth: true
+      display-name: Send invoice via email
+      docs: Sends an invoice from an entrypoint via email.
+      examples:
+        - name: SendInvoice
+          path-parameters:
+            idInvoice: 23548884
+          query-parameters:
+            attachfile: true
+            mail2: tamara@example.com
+          response:
+            body:
+              isSuccess: true
+              responseText: Success
+      method: GET
+      path: /Invoice/send/{idInvoice}
+      path-parameters:
+        idInvoice:
+          docs: Invoice ID
+          type: integer
+      request:
+        name: SendInvoiceRequest
+        query-parameters:
+          attachfile:
+            default: false
+            docs: When `true`, attaches a PDF version of invoice to the email.
+            type: optional<boolean>
+          mail2:
+            docs: >-
+              Email address where the invoice will be sent to. If this parameter
+              isn't included, Payabli uses the email address on file for the
+              customer owner of the invoice.
+            type: optional<string>
+      response:
+        docs: Success
+        status-code: 200
+        type: SendInvoiceResponse
+      
+    GetInvoicePDF:
+      auth: true
+      display-name: Export Invoice PDF
+      docs: Export a single invoice in PDF format.
+      examples:
+        - path-parameters:
+            idInvoice: 23548884
+          response:
+            body:
+              key: value
+      method: GET
+      path: /Export/invoicePdf/{idInvoice}
+      path-parameters:
+        idInvoice:
+          docs: Invoice ID
+          type: integer
+      response:
+        docs: Success
+        status-code: 200
+        type: root.File
+    

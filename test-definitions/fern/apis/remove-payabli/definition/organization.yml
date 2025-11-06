@@ -1,0 +1,547 @@
+imports:
+  root: __package__.yml
+types:
+  AddOrganizationResponse:
+    properties:
+      isSuccess: optional<root.IsSuccess>
+      responseData:
+        docs: Returns the organization ID.
+        type: optional<root.Responsedatanonobject>
+      responseText: root.ResponseText
+
+  DeleteOrganizationResponse:
+    properties:
+      isSuccess: optional<root.IsSuccess>
+      responseData:
+        docs: Returns the organization ID.
+        type: optional<root.Responsedatanonobject>
+      responseText: root.ResponseText
+
+  EditOrganizationResponse:
+    properties:
+      isSuccess: optional<root.IsSuccess>
+      pageIdentifier: optional<root.PageIdentifier>
+      responseCode: root.Responsecode
+      responseData:
+        docs: Returns the organization ID.
+        type: optional<root.Responsedatanonobject>
+      responseText: root.ResponseText
+
+service:
+  auth: false
+  base-path: ''
+  endpoints:
+    AddOrganization:
+      auth: true
+      display-name: Add organization
+      docs: >-
+        Creates an organization under a parent organization. This is also
+        referred to as a suborganization.
+      examples:
+        - headers:
+            idempotencyKey: 6B29FC40-CA47-1067-B31D-00DD010662DA
+          name: General success response for certain organization operations
+          request:
+            billingInfo:
+              achAccount: '123123123'
+              achRouting: '123123123'
+              billingAddress: 123 Walnut Street
+              billingCity: Johnson City
+              billingCountry: US
+              billingState: TN
+              billingZip: '37615'
+            contacts:
+              - contactEmail: herman@hermanscoatings.com
+                contactName: Herman Martinez
+                contactPhone: '3055550000'
+                contactTitle: Owner
+            hasBilling: true
+            hasResidual: true
+            orgAddress: 123 Walnut Street
+            orgCity: Johnson City
+            orgCountry: US
+            orgEntryName: pilgrim-planner
+            orgId: '123'
+            orgLogo:
+              fContent: TXkgdGVzdCBmaWxlHJ==...
+              filename: my-doc.pdf
+              ftype: pdf
+              furl: https://mysite.com/my-doc.pdf
+            orgName: Pilgrim Planner
+            orgParentId: 236
+            orgState: TN
+            orgTimezone: -5
+            orgType: 0
+            orgWebsite: www.pilgrimageplanner.com
+            orgZip: '37615'
+            replyToEmail: email@example.com
+          response:
+            body:
+              isSuccess: true
+              responseData: 245
+              responseText: Success
+      method: POST
+      path: /Organization
+      request:
+        body:
+          properties:
+            services: optional<list<root.ServiceCost>>
+            billingInfo: optional<root.Instrument>
+            contacts: optional<root.ContactsField>
+            hasBilling: optional<boolean>
+            hasResidual: optional<boolean>
+            orgAddress: optional<root.Orgaddress>
+            orgCity: optional<root.Orgcity>
+            orgCountry: optional<root.Orgcountry>
+            orgEntryName: optional<root.Orgentryname>
+            orgId: optional<root.Orgidstring>
+            orgLogo: optional<root.FileContent>
+            orgName: root.Orgname
+            orgParentId: optional<root.OrgParentId>
+            orgState: optional<root.Orgstate>
+            orgTimezone: optional<root.Orgtimezone>
+            orgType: root.Orgtype
+            orgWebsite: optional<root.Orgwebsite>
+            orgZip: optional<root.Orgzip>
+            replyToEmail: root.ReplyToEmail
+        content-type: application/json
+        headers:
+          idempotencyKey: optional<root.IdempotencyKey>
+        name: AddOrganizationRequest
+      response:
+        docs: Success.
+        status-code: 200
+        type: AddOrganizationResponse
+      
+    DeleteOrganization:
+      auth: true
+      display-name: Delete organization
+      docs: 'Delete an organization by ID. '
+
+      examples:
+        - name: General success response for certain organization operations
+          path-parameters:
+            orgId: 123
+          response:
+            body:
+              isSuccess: true
+              responseData: 245
+              responseText: Success
+      method: DELETE
+      path: /Organization/{orgId}
+      path-parameters:
+        orgId:
+          docs: The numeric identifier for organization, assigned by Payabli.
+          type: integer
+      response:
+        docs: Success
+        status-code: 200
+        type: DeleteOrganizationResponse
+      
+    EditOrganization:
+      auth: true
+      display-name: Update organization
+      docs: Updates an organization's details by ID.
+
+      examples:
+        - name: Example1
+          path-parameters:
+            orgId: 123
+          request:
+            contacts:
+              - contactEmail: herman@hermanscoatings.com
+                contactName: Herman Martinez
+                contactPhone: '3055550000'
+                contactTitle: Owner
+            orgAddress: 123 Walnut Street
+            orgCity: Johnson City
+            orgCountry: US
+            orgEntryName: pilgrim-planner
+            orgId: '123'
+            orgName: Pilgrim Planner
+            orgState: TN
+            orgTimezone: -5
+            orgType: 0
+            orgWebsite: www.pilgrimageplanner.com
+            orgZip: '37615'
+          response:
+            body:
+              isSuccess: true
+              responseCode: 1
+              responseData: 2442
+              responseText: Success
+      method: PUT
+      path: /Organization/{orgId}
+      path-parameters:
+        orgId:
+          docs: The numeric identifier for organization, assigned by Payabli.
+          type: integer
+      request:
+        body:
+          properties:
+            services: optional<list<root.ServiceCost>>
+            billingInfo: optional<root.Instrument>
+            contacts: optional<root.ContactsField>
+            hasBilling: optional<boolean>
+            hasResidual: optional<boolean>
+            orgAddress: optional<root.Orgaddress>
+            orgCity: optional<root.Orgcity>
+            orgCountry: optional<root.Orgcountry>
+            orgEntryName: optional<root.Orgentryname>
+            orgId:
+              name: organizationDataOrgId
+              type: optional<root.Orgidstring>
+            orgLogo: optional<root.FileContent>
+            orgName: optional<root.Orgname>
+            orgParentId: optional<root.OrgParentId>
+            orgState: optional<root.Orgstate>
+            orgTimezone: optional<root.Orgtimezone>
+            orgType: optional<root.Orgtype>
+            orgWebsite: optional<root.Orgwebsite>
+            orgZip: optional<root.Orgzip>
+            replyToEmail: optional<root.ReplyToEmail>
+        content-type: application/json
+        name: OrganizationData
+      response:
+        docs: Success
+        status-code: 200
+        type: EditOrganizationResponse
+      
+    GetBasicOrganization:
+      auth: true
+      display-name: Get basic organization details by entry name
+      docs: >-
+        Gets an organization's basic information by entry name (entrypoint
+        identifier).
+      examples:
+        - path-parameters:
+            entry: 8cfec329267
+          response:
+            body:
+              services:
+                - description: description
+                  enabled: true
+                  monthlyCost: 1.1
+                  name: name
+                  reseller: true
+                  setupCost: 1.1
+                  txCost: 1.1
+                  txPercentCost: 1.1
+              billingInfo:
+                achAccount: '123123123'
+                achRouting: '123123123'
+                billingAddress: 123 Walnut Street
+                billingCity: Johnson City
+                billingCountry: US
+                billingState: TN
+                billingZip: '37615'
+              contacts:
+                - contactEmail: example@email.com
+                  contactName: Herman Martinez
+                  contactPhone: '3055550000'
+                  contactTitle: Owner
+              createdAt: '2022-07-01T15:00:01Z'
+              hasBilling: true
+              hasResidual: true
+              idOrg: 123
+              isRoot: false
+              orgAddress: 123 Walnut Street
+              orgCity: Johnson City
+              orgCountry: US
+              orgEntryName: pilgrim-planner
+              orgId: "I-123"
+              orgLogo:
+                fContent: TXkgdGVzdCBmaWxlHJ==...
+                filename: my-doc.pdf
+                ftype: pdf
+                furl: https://mysite.com/my-doc.pdf
+              orgName: Pilgrim Planner
+              orgParentId: 236
+              orgParentName: PropertyManager Pro
+              orgState: TN
+              orgTimezone: -5
+              orgType: 0
+              orgWebsite: www.pilgrimageplanner.com
+              orgZip: orgZip
+              recipientEmailNotification: true
+              replyToEmail: example@email.com
+              resumable: false
+              summary:
+                amountSubs: 1.1
+                amountTx: 1.1
+                childOrgs: 1
+                childPaypoints: 1
+                countSubs: 1
+                countTx: 1
+              users:
+                - Access:
+                    - roleValue: true
+                  AdditionalData: AdditionalData
+                  createdAt: '2022-07-01T15:00:01Z'
+                  Email: example@email.com
+                  language: en
+                  lastAccess: '2022-07-01T15:00:01Z'
+                  Name: Sean Smith
+                  Phone: '5555555555'
+                  Scope:
+                    - orgType: 0
+                  snData: snData
+                  snIdentifier: snIdentifier
+                  snProvider: google
+                  timeZone: -5
+                  userId: 1000000
+                  UsrMFA: false
+                  UsrMFAMode: 0
+                  UsrStatus: 1
+      method: GET
+      path: /Organization/basic/{entry}
+      path-parameters:
+        entry:
+          docs: >-
+            The paypoint's entrypoint identifier. [Learn
+            more](/api-reference/api-overview#entrypoint-vs-entry)
+          type: string
+      response:
+        docs: Success
+        status-code: 200
+        type: root.OrganizationQueryRecord
+      
+    GetBasicOrganizationById:
+      auth: true
+      display-name: Get basic organization details by ID
+      docs: Gets an organizations basic details by org ID.
+
+      examples:
+        - path-parameters:
+            orgId: 123
+          response:
+            body:
+              services:
+                - description: description
+                  enabled: true
+                  monthlyCost: 1.1
+                  name: name
+                  reseller: true
+                  setupCost: 1.1
+                  txCost: 1.1
+                  txPercentCost: 1.1
+              billingInfo:
+                achAccount: '123123123'
+                achRouting: '123123123'
+                billingAddress: 123 Walnut Street
+                billingCity: Johnson City
+                billingCountry: US
+                billingState: TN
+                billingZip: '37615'
+              contacts:
+                - contactEmail: example@email.com
+                  contactName: Herman Martinez
+                  contactPhone: '3055550000'
+                  contactTitle: Owner
+              createdAt: '2022-07-01T15:00:01Z'
+              hasBilling: true
+              hasResidual: true
+              idOrg: 123
+              isRoot: false
+              orgAddress: 123 Walnut Street
+              orgCity: Johnson City
+              orgCountry: US
+              orgEntryName: pilgrim-planner
+              orgId: "I-123"
+              orgLogo:
+                fContent: TXkgdGVzdCBmaWxlHJ==...
+                filename: my-doc.pdf
+                ftype: pdf
+                furl: https://mysite.com/my-doc.pdf
+              orgName: Pilgrim Planner
+              orgParentId: 236
+              orgParentName: PropertyManager Pro
+              orgState: TN
+              orgTimezone: -5
+              orgType: 0
+              orgWebsite: www.pilgrimageplanner.com
+              orgZip: orgZip
+              recipientEmailNotification: true
+              replyToEmail: example@email.com
+              resumable: false
+              summary:
+                amountSubs: 1.1
+                amountTx: 1.1
+                childOrgs: 1
+                childPaypoints: 1
+                countSubs: 1
+                countTx: 1
+              users:
+                - Access:
+                    - roleValue: true
+                  AdditionalData: AdditionalData
+                  createdAt: '2022-07-01T15:00:01Z'
+                  Email: example@email.com
+                  language: en
+                  lastAccess: '2022-07-01T15:00:01Z'
+                  Name: Sean Smith
+                  Phone: '5555555555'
+                  Scope:
+                    - orgType: 0
+                  snData: snData
+                  snIdentifier: snIdentifier
+                  snProvider: google
+                  timeZone: -5
+                  userId: 1000000
+                  UsrMFA: false
+                  UsrMFAMode: 0
+                  UsrStatus: 1
+      method: GET
+      path: /Organization/basicById/{orgId}
+      path-parameters:
+        orgId:
+          docs: The numeric identifier for organization, assigned by Payabli.
+          type: integer
+      response:
+        docs: Success
+        status-code: 200
+        type: root.OrganizationQueryRecord
+      
+    GetOrganization:
+      auth: true
+      display-name: Get organization
+      docs: 'Retrieves details for an organization by ID. '
+
+      examples:
+        - path-parameters:
+            orgId: 123
+          response:
+            body:
+              services:
+                - description: description
+                  enabled: true
+                  monthlyCost: 1.1
+                  name: name
+                  reseller: true
+                  setupCost: 1.1
+                  txCost: 1.1
+                  txPercentCost: 1.1
+              billingInfo:
+                achAccount: '123123123'
+                achRouting: '123123123'
+                billingAddress: 123 Walnut Street
+                billingCity: Johnson City
+                billingCountry: US
+                billingState: TN
+                billingZip: '37615'
+              contacts:
+                - contactEmail: example@email.com
+                  contactName: Herman Martinez
+                  contactPhone: '3055550000'
+                  contactTitle: Owner
+              createdAt: '2022-07-01T15:00:01Z'
+              hasBilling: true
+              hasResidual: true
+              idOrg: 123
+              isRoot: false
+              orgAddress: 123 Walnut Street
+              orgCity: Johnson City
+              orgCountry: US
+              orgEntryName: pilgrim-planner
+              orgId: "I-123"
+              orgLogo:
+                fContent: TXkgdGVzdCBmaWxlHJ==...
+                filename: my-doc.pdf
+                ftype: pdf
+                furl: https://mysite.com/my-doc.pdf
+              orgName: Pilgrim Planner
+              orgParentId: 236
+              orgParentName: PropertyManager Pro
+              orgState: TN
+              orgTimezone: -5
+              orgType: 0
+              orgWebsite: www.pilgrimageplanner.com
+              orgZip: orgZip
+              recipientEmailNotification: true
+              replyToEmail: example@email.com
+              resumable: false
+              summary:
+                amountSubs: 1.1
+                amountTx: 1.1
+                childOrgs: 1
+                childPaypoints: 1
+                countSubs: 1
+                countTx: 1
+              users:
+                - Access:
+                    - roleValue: true
+                  AdditionalData: AdditionalData
+                  createdAt: '2022-07-01T15:00:01Z'
+                  Email: example@email.com
+                  language: en
+                  lastAccess: '2022-07-01T15:00:01Z'
+                  Name: Sean Smith
+                  Phone: '5555555555'
+                  Scope:
+                    - orgType: 0
+                  snData: snData
+                  snIdentifier: snIdentifier
+                  snProvider: google
+                  timeZone: -5
+                  userId: 1000000
+                  UsrMFA: false
+                  UsrMFAMode: 0
+                  UsrStatus: 1
+      method: GET
+      path: /Organization/read/{orgId}
+      path-parameters:
+        orgId:
+          docs: The numeric identifier for organization, assigned by Payabli.
+          type: integer
+      response:
+        docs: Success
+        status-code: 200
+        type: root.OrganizationQueryRecord
+      
+    GetSettingsOrganization:
+      auth: true
+      display-name: Get organization settings
+      docs: |
+        Retrieves an organization's settings.
+      examples:
+        - path-parameters:
+            orgId: 123
+          name: GetSettings
+          response:
+            body:
+              customFields:
+                - key: key
+                  readOnly: false
+                  value: value
+              forInvoices:
+                - key: key
+                  readOnly: false
+                  value: value
+              forPayOuts:
+                - key: key
+                  readOnly: false
+                  value: value
+              forWallets:
+                - key: isGooglePayEnabled
+                  readOnly: false
+                  value: "true"
+              general:
+                - key: key
+                  readOnly: false
+                  value: value
+              identifiers:
+                - key: key
+                  readOnly: false
+                  value: value
+      method: GET
+      path: /Organization/settings/{orgId}
+      path-parameters:
+        orgId:
+          docs: The numeric identifier for organization, assigned by Payabli.
+          type: integer
+      response:
+        docs: Success
+        status-code: 200
+        type: root.SettingsQueryRecord
+      
+

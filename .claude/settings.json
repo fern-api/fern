@@ -1,4 +1,10 @@
 {
+  "env": {
+    "FERN_TOKEN": "${FERN_TOKEN}",
+    "NODE_ENV": "development",
+    "PNPM_VERSION": "9.4.0"
+  },
+  "includeCoAuthoredBy": true,
   "permissions": {
     "allow": [
       "WebFetch(domain:docs.claude.com)",
@@ -26,16 +32,14 @@
       "Read(**/build)",
       "Read(**/lib)",
       "Read(**/dist)",
-      "Edit(**/build)",
-      "Edit(**/lib)",
       "Edit(**/dist)",
-      "Edit(**/generated)",
       "Edit(./packages/ir-sdk/src)",
       "Edit(./packages/ir-sdk/src/sdk)",
       "Edit(./generators/go/internal/fern/ir)",
       "Bash(git push:*)"
     ]
   },
+  "model": "claude-sonnet-4-20250514",
   "hooks": {
     "PostToolUse": [
       {
@@ -52,12 +56,5 @@
         ]
       }
     ]
-  },
-  "env": {
-    "FERN_TOKEN": "${FERN_TOKEN}",
-    "NODE_ENV": "development",
-    "PNPM_VERSION": "9.4.0"
-  },
-  "includeCoAuthoredBy": true,
-  "model": "claude-sonnet-4-20250514"
+  }
 }

@@ -1,0 +1,181 @@
+imports:
+  root: __package__.yml
+
+service:
+  auth: false
+  base-path: ''
+  endpoints:
+    ConfigureApplePayOrganization:
+      auth: true
+      display-name: Configure Apple Pay for an organization
+      docs: Configure and activate Apple Pay for a Payabli organization
+      examples:
+        - request:
+            cascade: true
+            isEnabled: true
+            orgId: 901
+          response:
+            body:
+              isSuccess: true
+              pageIdentifier: 'null'
+              responseCode: 1
+              responseData:
+                createdAt: '2022-07-01T15:00:01Z'
+                id: id
+                jobId: '445865'
+                jobStatus: completed
+                organizationId: 901
+                type: type
+                updatedAt: '2022-07-01T15:00:01Z'
+                updates:
+                  cascade: true
+                  isEnabled: true
+              responseText: Success
+      method: POST
+      path: /Wallet/applepay/configure-organization
+      request:
+        body:
+          properties:
+            cascade: optional<root.Cascade>
+            isEnabled: optional<root.IsEnabled>
+            orgId: optional<root.OrganizationId>
+        content-type: application/json
+        name: ConfigureOrganizationRequestApplePay
+      response:
+        docs: Success
+        status-code: 200
+        type: root.ConfigureApplePayOrganizationApiResponse
+      
+    ConfigureApplePayPaypoint:
+      auth: true
+      display-name: Configure Apple Pay for a paypoint
+      docs: Configure and activate Apple Pay for a Payabli paypoint
+      examples:
+        - name: Paypoint
+          request:
+            entry: 8cfec329267
+            isEnabled: true
+          response:
+            body:
+              isSuccess: true
+              pageIdentifier: 'null'
+              responseCode: 1
+              responseData:
+                entry: 8cfec329267
+                isEnabled: true
+                walletType: applepay
+                walletData:
+                  entry: 8cfec329267
+                  applePayMerchantId: applePayMerchantId
+                  domainNames:
+                    - subdomain.domain.com
+                  paypointName: Alaskan Domes
+                  paypointUrl: null
+                  markedForDeletionAt: '2022-07-01T15:00:01Z'
+                  createdAt: '2022-07-01T15:00:01Z'
+                  updatedAt: '2022-07-01T15:00:01Z'
+                  id: id
+                  type: ApplePayRegistration
+              responseText: Success
+              roomId: null
+      method: POST
+      path: /Wallet/applepay/configure-paypoint
+      request:
+        body:
+          properties:
+            entry: optional<root.Entry>
+            isEnabled:
+              docs: When `true`, Apple Pay is enabled.
+              type: optional<root.IsEnabled>
+        content-type: application/json
+        name: ConfigurePaypointRequestApplePay
+      response:
+        docs: Success
+        status-code: 200
+        type: root.ConfigureApplePaypointApiResponse
+      
+
+    ConfigureGooglePayOrganization:
+      auth: true
+      display-name: Configure Google Pay for an organization
+      docs: Configure and activate Google Pay for a Payabli organization
+      examples:
+        - name: ConfigureOrganization
+          request:
+            cascade: true
+            isEnabled: true
+            orgId: 901
+          response:
+            body:
+              isSuccess: true
+              pageIdentifier: 'null'
+              responseCode: 1
+              responseData:
+                createdAt: '2022-07-01T15:00:01Z'
+                id: id
+                jobId: '445865'
+                jobStatus: completed
+                organizationId: 901
+                type: type
+                updatedAt: '2022-07-01T15:00:01Z'
+                updates:
+                  cascade: true
+                  isEnabled: true
+              responseText: Success
+      method: POST
+      path: /Wallet/googlepay/configure-organization
+      request:
+        body:
+          properties:
+            cascade: optional<root.Cascade>
+            isEnabled: optional<root.IsEnabled>
+            orgId: optional<root.OrganizationId>
+        content-type: application/json
+        name: ConfigureOrganizationRequestGooglePay
+      response:
+        docs: Success
+        status-code: 200
+        type: root.ConfigureApplePayOrganizationApiResponse
+      
+    ConfigureGooglePayPaypoint:
+      auth: true
+      display-name: Configure Google Pay for a paypoint
+      docs: Configure and activate Google Pay for a Payabli paypoint
+
+      examples:
+        - name: ConfigurePaypoint
+          request:
+            entry: 8cfec329267
+            isEnabled: true
+          response:
+            body:
+              isSuccess: true
+              pageIdentifier: 'null'
+              responseCode: 1
+              responseData:
+                entry: 8cfec329267
+                isEnabled: true
+                walletType: googlepay
+                walletData:
+                  gatewayMerchantId: 123ID
+                  gatewayId: 123ID
+ 
+              responseText: Success
+              roomId: null
+      method: POST
+      path: /Wallet/googlepay/configure-paypoint
+      request:
+        body:
+          properties:
+            entry: optional<root.Entry>
+            isEnabled:
+              docs: When `true`, Google Pay is enabled.
+              type: optional<root.IsEnabled>
+        content-type: application/json
+        name: ConfigurePaypointRequestGooglePay
+      response:
+        docs: Success
+        status-code: 200
+        type: root.ConfigureGooglePaypointApiResponse
+      
+

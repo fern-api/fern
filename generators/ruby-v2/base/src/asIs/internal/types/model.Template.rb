@@ -141,6 +141,7 @@ module <%= gem_namespace %>
           values = Utils.symbolize_keys(values.dup)
 
           self.class.fields.each do |field_name, field|
+            # Try deleting by api_name (symbolized or string) and by field_name (the Ruby attribute name)
             value = values.delete(field.api_name.to_sym) || values.delete(field.api_name) || values.delete(field_name)
 
             field_value = value || (if field.literal?

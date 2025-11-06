@@ -1,0 +1,616 @@
+imports:
+  root: __package__.yml
+types:
+
+  Temporary:
+    docs: >-
+      Creates a temporary, one-time-use token for the payment method
+      that expires in 12 hours. Defaults to `false`.
+    type: optional<boolean>
+
+  CreateAnonymous:
+    docs: >-
+      When `true`, creates a saved method with no associated customer
+      information. The token will be associated with customer
+      information the first time it's used to make a payment. Defaults
+      to `false`.
+    type: optional<boolean>
+
+  AddMethodResponse:
+    extends:
+      - root.PayabliApiResponseGeneric2Part
+    properties:
+      responseData: optional<AddMethodResponseResponseData>
+
+  AddMethodResponseResponseData:
+    inline: true
+    properties:
+      referenceId:
+        docs: >-
+          Stored method identifier in Payabli platform. This ID is used to
+          manage the stored method.
+        type: optional<root.MethodReferenceId>
+      resultCode: optional<root.ResultCode>
+      resultText: optional<root.Resulttext>
+      customerId:
+        docs: >
+          Internal unique ID of customer owner of the stored method.  
+
+
+          Returns `0` if the method wasn't assigned to an existing customer or
+          no customer was created."
+        type: optional<root.CustomerId>
+      methodReferenceId: optional<root.MethodReferenceId>
+
+  GetMethodResponse:
+    properties:
+      isSuccess: optional<root.IsSuccess>
+      responseData: optional<GetMethodResponseResponseData>
+      responseText: root.ResponseText
+
+  GetMethodResponseResponseData:
+    inline: true
+    properties:
+      aba:
+        docs: Bank routing number
+        type: optional<string>
+      achHolderType: optional<root.AchHolderType>
+      achSecCode: optional<root.AchSecCode>
+      bin:
+        docs: The bank identification number (BIN)
+        type: optional<string>
+      binData: optional<root.BinData>
+      customers: optional<list<GetMethodResponseResponseDataCustomersItem>>
+      descriptor: optional<root.Descriptor>
+      expDate:
+        docs: Expiration date for card in stored method in format MM/YY
+        type: optional<string>
+      holderName:
+        docs: Account holder name in stored method
+        type: optional<root.Holdername>
+      idPmethod:
+        docs: The stored payment method's identifier in Payabli
+        type: optional<string>
+      lastUpdated:
+        docs: Timestamp for last update of stored method, in UTC
+        type: optional<root.LastModified>
+      maskedAccount: optional<root.Maskedaccount>
+      method:
+        docs: |
+          The saved method's type: `card` or `ach`. 
+        type: optional<string>
+      methodType:
+        docs: The payment method's token type
+        type: optional<string>
+      postalCode:
+        docs: The payment method postal code
+        type: optional<string>
+
+  GetMethodResponseResponseDataCustomersItem:
+    extends:
+      - root.PayorDataRequest
+    inline: true
+    properties:
+      balance:
+        docs: Customer's current balance
+        type: optional<float>
+      created:
+        docs: Creation timestamp
+        type: optional<datetime>
+      customerConsent:
+        docs: Customer consent information
+        type: optional<map<string, unknown>>
+      customerStatus:
+        docs: Status code for the customer
+        type: optional<integer>
+      customerSummary: optional<root.CustomerSummaryRecord>
+      customerUsername:
+        docs: Username of the customer
+        type: optional<string>
+      externalPaypointID: optional<root.ExternalPaypointId>
+      lastUpdated:
+        docs: Last update timestamp
+        type: optional<datetime>
+      mfa:
+        docs: Multi-factor authentication status
+        type: optional<boolean>
+      mfaMode:
+        docs: MFA mode setting
+        type: optional<integer>
+      pageindentifier: optional<root.PageIdentifier>
+      parentOrgId:
+        docs: Parent organization ID
+        type: optional<integer>
+      parentOrgName: optional<root.OrgParentName>
+      paypointDbaname: optional<root.Dbaname>
+      paypointEntryname:
+        docs: The paypoint entryname the customer is associated with
+        type: optional<string>
+      paypointLegalname: optional<root.Legalname>
+      snData:
+        docs: Social network data
+        type: optional<map<string, unknown>>
+      snIdentifier:
+        docs: Social network identifier
+        type: optional<string>
+      snProvider:
+        docs: Social network provider
+        type: optional<string>
+      storedMethods:
+        docs: List of payment methods associated to the customer
+        type: optional<list<root.MethodQueryRecords>>
+      subscriptions:
+        docs: List of subscriptions associated to the customer
+        type: optional<list<root.SubscriptionQueryRecords>>
+      timeZone:
+        docs: Customer's timezone
+        type: optional<integer>
+
+  RequestTokenStorage:
+    properties:
+      customerData:
+        docs: >-
+          Object describing the Customer/Payor owner of payment method. Required
+          for POST requests. Which fields are required depends on the paypoint's
+          custom identifier settings. 
+        type: optional<root.PayorDataRequest>
+      entryPoint:
+        docs: Entrypoint identifier. Required for POST requests.
+        type: optional<root.Entrypointfield>
+      fallbackAuth:
+        default: false
+        docs: >-
+          When `true`, if tokenization fails, Payabli will attempt an
+          authorization transaction to request a permanent token for the card.
+          If the authorization is successful, the card will be tokenized and the
+          authorization will be voided automatically.
+        type: optional<boolean>
+      fallbackAuthAmount:
+        default: 100
+        docs: The amount for the `fallbackAuth` transaction. Defaults to one dollar (`100`).
+        type: optional<integer>
+      methodDescription:
+        docs: Custom description for stored payment method.
+        type: optional<string>
+      paymentMethod:
+        docs: Information about the payment method for the transaction.
+        type: optional<RequestTokenStoragePaymentMethod>
+      source:
+        docs: Custom identifier to indicate the source for the request
+        type: optional<root.Source>
+      subdomain: optional<root.Subdomain>
+
+  RequestTokenStoragePaymentMethod:
+    docs: Information about the payment method for the transaction.
+    discriminated: false
+    union:
+      - type: TokenizeCard
+        display-name: Card
+        docs: >-
+          Tokenize a card payment method.
+      - type: TokenizeACH
+        display-name: ACH
+        docs: >-
+          Tokenize an ACH payment method.
+      - type: ConvertToken
+        display-name: Convert Token
+        docs: >-
+          Converts a temporary token to a permanent token. 
+  
+  TokenizeCard:
+    properties:
+      method:
+        type: string
+        docs: |
+          The type of payment method to tokenize. For cards, this is always `card`.
+      cardcvv: optional<root.Cardcvv>
+      cardexp: root.Cardexp
+      cardHolder: root.Cardholder
+      cardnumber: root.Cardnumber
+      cardzip: optional<root.Cardzip>
+
+  TokenizeACH:
+    properties:
+      method:
+        type: string
+        docs: |
+          The type of payment method to tokenize. For ACH, this is always `ach`.
+      achAccount: root.Achaccount
+      achAccountType: root.Achaccounttype
+      achCode: optional<root.AchSecCode>
+      achHolder: root.AchHolder
+      achHolderType: optional<root.AchHolderType>
+      achRouting: root.Achrouting
+      device: optional<root.Device>
+
+  ConvertToken:
+    docs: >-
+      Object containing the information needed to convert a temporary token to
+      a permanent token.
+    properties:
+      method:
+        type: string
+        docs: |
+          The type of payment method to tokenize. When converting a temp token to a permanent token, this should match the `method` set for the temporary token, either `ach` or `card`.
+      tokenId:
+        docs: A temporary stored token ID to be converted to permanent.
+        type: string
+
+
+service:
+  auth: false
+  base-path: ''
+  endpoints:
+    AddMethod:
+      auth: true
+      display-name: Save a payment method (tokenize)
+      docs: >-
+        Saves a payment method for reuse. This call exchanges sensitive payment
+        information for a token that can be used to process future transactions.
+        The `ReferenceId` value in the response is the `storedMethodId` to use
+        with transactions.
+      examples:
+        - name: TokenizeCard
+          request:
+            customerData:
+              customerId: 4440
+            entryPoint: f743aed24a
+            fallbackAuth: true
+            paymentMethod:
+              cardcvv: '123'
+              cardexp: 02/25
+              cardHolder: John Doe
+              cardnumber: '4111111111111111'
+              cardzip: '12345'
+              method: card
+          response:
+            body:
+              isSuccess: true
+              responseData:
+                customerId: 4400
+                methodReferenceId: 1ec55af9-7b5a-4ff0-81ed-c12d2f95e135-4440
+                referenceId: 1ec55af9-7b5a-4ff0-81ed-c12d2f95e135-4440
+                resultCode: 1
+                resultText: Approved
+              responseText: Success
+        - name: TokenizeCardAnonymous
+          query-parameters:
+            createAnonymous: true
+          request:
+            entryPoint: f743aed24a
+            fallbackAuth: true
+            paymentMethod:
+              cardcvv: '123'
+              cardexp: 02/25
+              cardHolder: John Doe
+              cardnumber: '4111111111111111'
+              cardzip: '12345'
+              method: card
+          response:
+            body:
+              isSuccess: true
+              responseData:
+                customerId: null
+                methodReferenceId: 1ec55af9-7b5a-4ff0-81ed-c12d2f95e135-4440
+                referenceId: 1ec55af9-7b5a-4ff0-81ed-c12d2f95e135-4440
+                resultCode: 1
+                resultText: Approved
+              responseText: Success
+        - name: TemptoPermanent
+          request:
+            customerData:
+              customerId: 4440
+            entryPoint: f743aed24a
+            fallbackAuth: true
+            methodDescription: Main card
+            paymentMethod:
+              method: card
+              tokenId: c9700e93-b2ed-4b75-b1e4-ca4fb04fbe45-224
+          response:
+            body:
+              isSuccess: true
+              responseData:
+                customerId: 4440
+                methodReferenceId: 1ec55af9-7b5a-4ff0-81ed-c12d2f95e135-4440
+                referenceId: 1ec55af9-7b5a-4ff0-81ed-c12d2f95e135-4440
+                resultCode: 1
+                resultText: Approved
+              responseText: Success
+        - name: TokenizeACH
+          query-parameters:
+            achValidation: true
+          request:
+            customerData:
+              customerId: 4440
+            entryPoint: f743aed24a
+            paymentMethod:
+              achAccount: '1111111111111'
+              achAccountType: Checking
+              achCode: WEB
+              achHolder: John Doe
+              achHolderType: personal
+              achRouting: '123456780'
+              method: ach
+          response:
+            body:
+              isSuccess: true
+              responseData:
+                customerId: 4440
+                methodReferenceId: 1ec55af9-7b5a-4ff0-81ed-c12d2f95e135-4440
+                referenceId: 1ec55af9-7b5a-4ff0-81ed-c12d2f95e135-4440
+                resultCode: 1
+                resultText: Approved
+              responseText: Success
+      method: POST
+      path: /TokenStorage/add
+      request:
+        body: RequestTokenStorage
+        content-type: application/json
+        headers:
+          idempotencyKey: optional<root.IdempotencyKey>
+        name: AddMethodRequest
+        query-parameters:
+          achValidation: optional<root.AchValidation>
+          createAnonymous: CreateAnonymous
+          forceCustomerCreation: optional<root.ForceCustomerCreation>
+          temporary: Temporary
+      response:
+        docs: Success
+        status-code: 200
+        type: AddMethodResponse
+      
+    GetMethod:
+      auth: true
+      display-name: Get payment method
+      docs: Retrieves details for a saved payment method.
+      examples:
+        - name: Example tokenstorage GET with card payment method
+          path-parameters:
+            methodId: 32-8877drt00045632-678
+          query-parameters:
+            cardExpirationFormat: 1
+            includeTemporary: false
+          response:
+            body:
+              isSuccess: true
+              responseData:
+                aba: ''
+                achHolderType: personal
+                achSecCode: achSecCode
+                bin: '401288'
+                binData: $root.BinData.ExampleBinData
+                customers:
+                  - additionalData:
+                      key1:
+                        key: value
+                      key2:
+                        key: value
+                      key3:
+                        key: value
+                    balance: 250
+                    billingPhone: '1234567890'
+                    company: Bluesky Tech Inc
+                    created: '2023-06-01T14:30:00Z'
+                    customerId: 1456
+                    customerNumber: CS789
+                    customerStatus: 1
+                    customerUsername: Marcus
+                    identifierFields:
+                      - firstname
+                      - email
+                    lastUpdated: '2024-12-15T09:45:32Z'
+                    mfa: true
+                    mfaMode: 1
+                    parentOrgId: 5
+                    parentOrgName: TechCorp
+                    paypointDbaname: Bluesky Tech
+                    paypointEntryname: 45782932fcc
+                    paypointLegalname: Bluesky Technologies LLC
+                    shippingAddress1: Suite 500
+                    shippingCity: San Francisco
+                    shippingCountry: US
+                    shippingState: CA
+                    shippingZip: '94105'
+                    timeZone: -8
+                descriptor: visa
+                expDate: '0926'
+                holderName: Marcus Chen
+                idPmethod: 81f7fde1-dd8b-4892-b2e1-cd60dd91f6b4-XXXC
+                lastUpdated: '2025-01-15T16:30:22Z'
+                maskedAccount: 4XXXXXXX2345
+                method: card
+                methodType: Single Merchant
+                postalCode: '94105'
+              responseText: Success
+        - name: Example tokenstorage GET with ACH payment method
+          path-parameters:
+            methodId: 32-8877drt00045632-678
+          query-parameters:
+            cardExpirationFormat: 1
+            includeTemporary: false
+          response:
+            body:
+              isSuccess: true
+              responseData:
+                aba: '021000021'
+                achHolderType: personal
+                achSecCode: PPD
+                bin: ''
+                customers:
+                  - additionalData:
+                      key1:
+                        key: value
+                      key2:
+                        key: value
+                      key3:
+                        key: value
+                    balance: 250
+                    billingPhone: '1234567890'
+                    company: Bluesky Tech Inc
+                    created: '2023-06-01T14:30:00Z'
+                    customerId: 1456
+                    customerNumber: CS789
+                    customerStatus: 1
+                    customerUsername: Marcus
+                    identifierFields:
+                      - firstname
+                      - email
+                    lastUpdated: '2024-12-15T09:45:32Z'
+                    mfa: true
+                    mfaMode: 1
+                    parentOrgId: 5
+                    parentOrgName: TechCorp
+                    paypointDbaname: Bluesky Tech
+                    paypointEntryname: 45782932fcc
+                    paypointLegalname: Bluesky Technologies LLC
+                    shippingAddress1: Suite 500
+                    shippingCity: San Francisco
+                    shippingCountry: US
+                    shippingState: CA
+                    shippingZip: '94105'
+                    snIdentifier: 'null'
+                    snProvider: google
+                    timeZone: -8
+                descriptor: Checking
+                expDate: ''
+                holderName: Marcus Chen
+                idPmethod: 81f7fde1-dd8b-4892-b2e1-cd60dd91f6b4-XXXX
+                lastUpdated: '2025-01-15T16:30:22Z'
+                maskedAccount: 8XXXXXX8654
+                method: ach
+                methodType: Single Merchant
+                postalCode: ''
+              responseText: Success
+      method: GET
+      path: /TokenStorage/{methodId}
+      path-parameters:
+        methodId:
+          docs: The saved payment method ID.
+          type: string
+      request:
+        name: GetMethodRequest
+        query-parameters:
+          cardExpirationFormat:
+            default: 0
+            docs: >
+              Format for card expiration dates in the response. 
+
+
+              Accepted values:
+                
+              - 0: default, no formatting. Expiration dates are returned in the
+              format they're saved in.
+
+
+              - 1: MMYY
+               
+              - 2: MM/YY
+            type: optional<integer>
+          includeTemporary:
+            default: false
+            docs: >
+              When `true`, the request will include temporary tokens in the
+              search and return details for a matching temporary token. The
+              default behavior searches only for permanent tokens.
+            type: optional<boolean>
+      response:
+        docs: Success
+        status-code: 200
+        type: GetMethodResponse
+      
+    RemoveMethod:
+      auth: true
+      display-name: Remove a payment method
+      docs: Deletes a saved payment method.
+
+      examples:
+        - name: Example1
+          path-parameters:
+            methodId: 32-8877drt00045632-678
+          response:
+            body:
+              isSuccess: true
+              responseData:
+                referenceId: 32-8877drt65345632-678
+                resultCode: 1
+                resultText: Removed
+              responseText: Success
+      method: DELETE
+      path: /TokenStorage/{methodId}
+      path-parameters:
+        methodId:
+          docs: The saved payment method ID.
+          type: string
+      response:
+        docs: Success
+        status-code: 200
+        type: root.PayabliApiResponsePaymethodDelete
+      
+    UpdateMethod:
+      auth: true
+      display-name: Update a payment method
+      docs: Updates a saved payment method.
+
+      examples:
+        - name: UpdateCardMethod
+          path-parameters:
+            methodId: 32-8877drt00045632-678
+          request:
+            customerData:
+              customerId: 4440
+            entryPoint: f743aed24a
+            fallbackAuth: true
+            paymentMethod:
+              cardcvv: '123'
+              cardexp: 02/25
+              cardHolder: John Doe
+              cardnumber: '4111111111111111'
+              cardzip: '12345'
+              method: card
+          response:
+            body:
+              isSuccess: true
+              responseData:
+                referenceId: 1b502b79-e319-4159-8c29-a9f8d9f105c8-1323
+                resultCode: 1
+                resultText: Updated
+              responseText: Success
+        - name: UpdateACHMethod
+          path-parameters:
+            methodId: 32-8877drt00045632-678
+          request:
+            customerData:
+              customerId: 4440
+            entryPoint: f743aed24a
+            paymentMethod:
+              achAccount: '1111111111111'
+              achAccountType: Checking
+              achCode: WEB
+              achHolder: John Doe
+              achHolderType: personal
+              achRouting: '123456780'
+              method: ach
+          response:
+            body:
+              isSuccess: true
+              responseData:
+                referenceId: 1b502b79-e319-4159-8c29-a9f8d9f105c8-1323
+                resultCode: 1
+                resultText: Updated
+              responseText: Success
+      method: PUT
+      path: /TokenStorage/{methodId}
+      path-parameters:
+        methodId:
+          docs: The saved payment method ID.
+          type: string
+      request:
+        body: RequestTokenStorage
+        content-type: application/json
+        name: UpdateMethodRequest
+        query-parameters:
+          achValidation: optional<root.AchValidation>
+      response:
+        docs: Success
+        status-code: 200
+        type: root.PayabliApiResponsePaymethodDelete

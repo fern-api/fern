@@ -1,0 +1,611 @@
+imports:
+  root: __package__.yml
+
+types:
+
+# General types
+
+  limitRecord:
+    docs: >-
+      Max number of records to return for the query. Use `0` or negative
+      value to return all records. Defaults to 20.
+    type: optional<integer>
+
+  ListOrganizationsResponse:
+    properties:
+      Records: list<root.OrganizationQueryRecord>
+      Summary: root.QuerySummary
+
+# Transfer Query Responses     
+  QueryTransferSummary:
+    properties:
+      achReturns:
+        docs: ACH returns deducted from the batch.
+        type: nullable<double>
+      adjustments:
+        docs: Corrections applied to Billing & Fees charges.
+        type: nullable<double>
+      billingFees:
+        docs: Charges applied for transactions and services.
+        type: nullable<double>
+      chargebacks:
+        docs: Chargebacks deducted from batch.
+        type: nullable<double>
+      grossTransferAmount:
+        docs: The gross batch amount before deductions.
+        type: nullable<double>
+      releaseAmount:
+        docs: Previously held funds that have been released after a risk review.
+        type: nullable<double>
+      thirdPartyPaid:
+        docs: >-
+          Payments captured in the batch cycle that are deposited separately. For example, 
+          checks or cash payments recorded in the batch but not deposited via Payabli, 
+          or card brands making a direct transfer in certain situations.
+        type: nullable<double>
+      totalNetAmountTransfer:
+        docs: The gross batch amount minus service fees.
+        type: nullable<double>
+      splitAmount:
+        docs: The sum of each splitFundingAmount of each record in the transfer.
+        type: nullable<double>
+      serviceFees:
+        docs: >-
+          Service fees are any pass-through fees charged to the customer at the time of payment. 
+          These aren't transferred to the merchant when the batch is transferred and funded.
+        type: nullable<double>
+      netBatchAmount: 
+        docs: |
+          The net batch amount is the gross batch amount minus any returns, refunds, 
+          billing and fees items, chargebacks, adjustments, and third party payments.
+        type: nullable<double>
+      transferAmount:
+        docs: >-
+          The transfer amount is the net batch amount plus or minus any returns, refunds, 
+          billing and fees items, chargebacks, adjustments, and third party payments. 
+          This is the amount from the batch that is transferred to the merchant bank account.
+        type: nullable<double>
+      refunds:
+        docs: Refunds deducted from batch.
+        type: nullable<double>
+      heldAmount:
+        docs: Funds being held for fraud or risk concerns.
+        type: nullable<double>
+      totalRecords:
+        docs: Number of records in the response.
+        type: nullable<root.Totalrecords>
+      totalAmount:
+        docs: The total sum of the transfers in the response.
+        type: nullable<double>
+      totalNetAmount:
+        docs: The total sum of the transfers in the response.
+        type: nullable<double>
+      totalPages:
+        docs: Number of pages in the response.
+        type: nullable<root.Totalpages>
+      pageSize:
+        docs: Number of records per page.
+        type: nullable<root.Pagesize>
+      pageidentifier:
+        docs: Auxiliary validation used internally by payment pages and components.
+        type: nullable<root.PageIdentifier>
+
+  QueryTransferResponse:
+    properties:
+      Summary:
+        docs: Summary information about the transfers.
+        type: QueryTransferSummary
+      Records:
+        docs: List of transfer transaction records.
+        type: list<root.TransactionQueryRecords>
+  
+  QueryTransferDetailResponse:
+    properties:
+      Records:
+        docs: List of transfer detail records
+        type: list<TransferDetailRecord>
+      Summary:
+        docs: Summary of the transfer details query
+        type: QueryTransferSummary
+
+  TransferDetailRecord:
+    inline: true
+    properties:
+      transferDetailId:
+        docs: Unique identifier for the transfer detail record
+        type: nullable<integer>
+      transferId:
+        docs: The ID of the transfer this detail belongs to
+        type: nullable<integer>
+      transactionId:
+        docs: The transaction ID in Payabli's system
+        type: nullable<string>
+      transactionNumber:
+        docs: External transaction reference number
+        type: nullable<string>
+      type:
+        docs: The transaction type (credit or debit)
+        type: nullable<string>
+      category:
+        docs: >
+          A field used to categorize the transaction details.
+          Values include: auth, decline, refund, adj, cb, split
+        type: nullable<string>
+      grossAmount:
+        docs: The gross amount of the transaction
+        type: nullable<double>
+      chargeBackAmount:
+        docs: Chargeback amount deducted from transaction
+        type: nullable<double>
+      returnedAmount:
+        docs: ACH return amount deducted from transaction
+        type: nullable<double>
+      refundAmount:
+        docs: Refund amount deducted from transaction
+        type: nullable<double>
+      holdAmount:
+        docs: Amount being held for fraud or risk concerns
+        type: nullable<double>
+      releasedAmount:
+        docs: Previously held funds that have been released after a risk review
+        type: nullable<double>
+      billingFeesAmount:
+        docs: Charges applied for transactions and services
+        type: nullable<double>
+      thirdPartyPaidAmount:
+        docs: >
+          Payments captured in the batch cycle that are deposited separately. For example, 
+          checks or cash payments recorded in the batch but not deposited via Payabli, 
+          or card brands making a direct transfer in certain situations.
+        type: nullable<double>
+      adjustmentsAmount:
+        docs: Corrections applied to Billing & Fees charges
+        type: nullable<double>
+      netTransferAmount:
+        docs: The net amount after all deductions
+        type: nullable<double>
+      splitFundingAmount:
+        docs: Total amount directed to split funding destinations
+        type: nullable<double>
+      billingFeesDetails: nullable<list<root.BillingFeeDetail>>
+      ParentOrgName: nullable<root.OrgParentName>
+      PaypointDbaname: nullable<root.Dbaname>
+      PaypointLegalname: nullable<root.Legalname>
+      PaypointEntryname:
+        docs: The paypoint's entryname
+        type: nullable<string>
+      PaymentTransId:
+        docs: The transaction ID for the payment
+        type: nullable<string>
+      ConnectorName:
+        docs: The payment connector used to process the transaction
+        type: nullable<string>
+      ExternalProcessorInformation: nullable<root.ExternalProcessorInformation>
+      GatewayTransId:
+        docs: Internal identifier used for processing
+        type: nullable<string>
+      OrderId: nullable<root.OrderId>
+      Method:
+        docs: 'Payment method used: card, ach, or wallet'
+        type: nullable<string>
+      BatchNumber: nullable<root.BatchNumber>
+      BatchAmount:
+        docs: The amount of the batch
+        type: nullable<double>
+      PayorId:
+        docs: Unique ID for customer linked to the transaction
+        type: nullable<root.PayorId>
+      PaymentData: nullable<root.QueryPaymentData>
+      TransStatus:
+        docs: |
+          Status of transaction. See [the
+          docs](/developers/references/money-in-statuses#money-in-transaction-status) for a
+          full reference.
+        type: nullable<integer>
+      PaypointId: nullable<root.PaypointId>
+      TotalAmount:
+        docs: Transaction total amount (including service fee or sub-charge)
+        type: nullable<double>
+      NetAmount:
+        docs: Net amount paid
+        type: nullable<root.Netamountnullable>
+      FeeAmount: nullable<root.FeeAmount>
+      SettlementStatus:
+        docs: >-
+          Settlement status for transaction. See [the
+          docs](/developers/references/money-in-statuses#payment-funding-status) for a full
+          reference.
+        type: nullable<integer>
+      Operation: nullable<root.Operation>
+      ResponseData: nullable<root.QueryResponseData>
+      Source: nullable<root.Source>
+      ScheduleReference:
+        docs: Reference to the subscription or schedule that originated the transaction
+        type: nullable<integer>
+      OrgId: nullable<root.Orgid>
+      RefundId: nullable<root.RefundId>
+      ReturnedId: nullable<root.ReturnedId>
+      ChargebackId: nullable<root.ChargebackId>
+      RetrievalId: nullable<root.RetrievalId>
+      TransAdditionalData:
+        docs: Additional transaction data
+        type: nullable<unknown>
+      invoiceData:
+        docs: Associated invoice data
+        type: nullable<root.BillData>
+      EntrypageId: nullable<root.EntrypageId>
+      externalPaypointID: nullable<root.ExternalPaypointId>
+      IsValidatedACH:
+        docs: Indicates whether the ACH account has been validated
+        type: nullable<boolean>
+      TransactionTime:
+        docs: Transaction date and time, in UTC
+        type: nullable<root.DatetimeNullable>
+      Customer: nullable<root.QueryTransactionPayorData>
+      splitFundingInstructions: nullable<root.SplitFunding>
+      CfeeTransactions: nullable<list<root.QueryCFeeTransaction>>
+      TransactionEvents: nullable<list<root.QueryTransactionEvents>>
+      PendingFeeAmount: nullable<root.PendingFeeAmount>
+      RiskFlagged: nullable<root.RiskFlagged>
+      RiskFlaggedOn: nullable<root.RiskFlaggedOn>
+      RiskStatus: nullable<root.RiskStatus>
+      RiskReason: nullable<root.RiskReason>
+      RiskAction: nullable<root.RiskAction>
+      RiskActionCode: nullable<root.RiskActionCode>
+      DeviceId: nullable<root.DeviceId>
+      AchSecCode: nullable<root.AchSecCode>
+      AchHolderType: nullable<root.AchHolderType>
+      IpAddress: nullable<root.IpAddress>
+      IsSameDayACH:
+        docs: Indicates if this was a same-day ACH transaction.
+        availability: in-development
+        type: nullable<boolean>
+      WalletType:
+        docs: Type of wallet used for the transaction (if applicable)
+        type: nullable<string>
+  
+# Batch Detail Query Response types
+  QueryBatchesDetailResponse:
+    docs: Response body for queries about batch details.
+    properties:
+      Records: list<BatchDetailResponseRecord>
+      Summary: BatchDetailResponseSummary
+
+  BatchDetailResponseRecord:
+    inline: true
+    properties:
+      Id: integer
+      Method: string
+      WalletType: nullable<string>
+      SettledAmount: double
+      Type: string
+      BatchNumber: root.BatchNumber
+      BatchAmount: double
+      PaymentTransId: string
+      PaymentTransStatus: integer
+      ScheduleReference: integer
+      GatewayTransId: string
+      OrderId: root.OrderId
+      TransMethod: string
+      PaymentData: nullable<root.QueryPaymentData>
+      NetAmount: root.Netamountnullable
+      Operation: root.Operation
+      Category: root.Category
+      Source: nullable<root.Source>
+      Status: integer
+      TransactionTime: root.TransactionTime
+      Customer: nullable<root.QueryTransactionPayorData>
+      SettlementDate: datetime
+      PaymentSettlementStatus: integer
+      BatchStatus: integer
+      DepositDate: root.DepositDate
+      ExpectedDepositDate: root.ExpectedDepositDate
+      MaskedAccount: root.Maskedaccount
+      CreatedAt: root.CreatedAt
+      PaypointLegalname: root.Legalname
+      ResponseData: nullable<root.QueryResponseData>
+      PaypointDbaname: root.Dbaname
+      ParentOrgName: root.OrgParentName
+      ParentOrgId: integer
+      PaypointEntryname: root.Entrypointfield
+      DeviceId: nullable<root.Device>
+      RetrievalId: root.RetrievalId
+      ChargebackId: root.ChargebackId
+      AchHolderType: root.AchHolderType
+      AchSecCode: root.AchSecCode
+      ConnectorName: string
+      EntrypageId: root.EntrypageId
+      FeeAmount: root.FeeAmount
+      OrgId: root.Orgid
+      PayorId: root.PayorId
+      PaypointId: root.PaypointId
+      PendingFeeAmount: root.PendingFeeAmount
+      RefundId: root.RefundId
+      ReturnedId: root.ReturnedId
+      splitFundingInstructions: root.SplitFunding
+      TotalAmount: double
+      CfeeTransactions: list<root.QueryCFeeTransaction>
+      invoiceData: nullable<root.BillData>
+      TransactionEvents: list<root.QueryTransactionEvents>
+      externalPaypointID: root.ExternalPaypointId
+      isHold: integer
+
+  BatchDetailResponseSummary:
+    inline: true
+    properties:
+      serviceFees: double
+      transferAmount: double  
+      refunds: double
+      heldAmount: double
+      totalRecords: root.Totalrecords
+      totalAmount: double
+      totalNetAmount: double
+      totalPages: root.Totalpages
+      pageSize: root.Pagesize
+      pageidentifier: nullable<root.PageIdentifier>
+
+# Batch Query Response types
+
+  QueryBatchesResponse:
+    docs: Response body for queries about batches.
+    properties:
+      Records: list<QueryBatchesResponseRecordsItem>
+      Summary: root.BatchSummary
+    examples: 
+      - name: ExampleBatchQueryResponse
+        value: 
+          Summary:
+            pageidentifier: null
+            pageSize: 20
+            totalAmount: 54049.71
+            totalNetAmount: 0
+            totalPages: 3
+            totalRecords: 3
+          Records:
+            - IdBatch: 1049
+              BatchNumber: batch_2857_combined_08-26-2025_001
+              TransferIdentifier: null
+              EventsData:
+                - description: Created
+                  eventTime: '2025-08-25T03:19:27.6190027-04:00'
+                  refData: null
+                  extraData: null
+                  source: api
+              ConnectorName: GP
+              BatchDate: '2025-08-25T20:00:00'
+              BatchAmount: 0
+              BatchFeesAmount: 0
+              BatchAuthAmount: 0
+              BatchReleasedAmount: 0
+              BatchHoldAmount: 0
+              BatchReturnedAmount: 0
+              BatchRefundAmount: 0
+              BatchSplitAmount: 0
+              BatchStatus: 2
+              BatchRecords: 2
+              PaypointId: 187
+              PaypointName: Gruzya Adventure Outfitters, LLC
+              PaypointDba: Gruzya Adventure Outfitters
+              ParentOrgName: Pilgrim Planner
+              ParentOrgId: 105
+              externalPaypointID: null
+              EntryName: 47f4f8c7e1
+              BankName: null
+              BatchType: 0
+              Method: combined
+              ExpectedDepositDate: '2025-08-26T00:00:00Z'
+              DepositDate: null
+              TransferDate: '2025-08-26T00:00:00Z'
+              Transfer: null
+            - IdBatch: 1043
+              BatchNumber: BT-2023041817-187
+              TransferIdentifier: null
+              EventsData: null
+              ConnectorName: null
+              BatchDate: '2023-04-18T17:01:03Z'
+              BatchAmount: 219.02
+              BatchFeesAmount: 0
+              BatchAuthAmount: 0
+              BatchReleasedAmount: 0
+              BatchHoldAmount: 0
+              BatchReturnedAmount: 0
+              BatchRefundAmount: 0
+              BatchSplitAmount: 0
+              BatchStatus: 2
+              BatchRecords: 1
+              PaypointId: 187
+              PaypointName: Gruzya Adventure Outfitters, LLC
+              PaypointDba: Gruzya Adventure Outfitters
+              ParentOrgName: Pilgrim Planner
+              ParentOrgId: 105
+              externalPaypointID: null
+              EntryName: d193cf9a46
+              BankName: null
+              BatchType: 0
+              Method: card
+              ExpectedDepositDate: '2023-04-19T00:00:00Z'
+              DepositDate: null
+              TransferDate: '2025-09-02T00:00:00Z'
+              Transfer: null
+            - IdBatch: 1012
+              BatchNumber: BT-2023041421-187
+              TransferIdentifier: 'ec310c3d-d4bf-4670-9524-00fcc4ab6a2a'
+              EventsData:
+                - description: Created
+                  eventTime: '2023-04-14T21:01:03Z'
+                  refData: null
+                  extraData: null
+                  source: api
+                - description: Closed
+                  eventTime: '2023-04-15T03:05:10Z'
+                  refData: 'batchId: 1012'
+                  extraData: null
+                  source: worker
+              ConnectorName: 'GP'
+              BatchDate: '2023-04-14T21:01:03Z'
+              BatchAmount: 1080.44
+              BatchFeesAmount: 0
+              BatchAuthAmount: 1080.44
+              BatchReleasedAmount: 0
+              BatchHoldAmount: 0
+              BatchReturnedAmount: 0
+              BatchRefundAmount: 0
+              BatchSplitAmount: 0
+              BatchStatus: 2
+              BatchRecords: 4
+              PaypointId: 187
+              PaypointName: Gruzya Adventure Outfitters, LLC
+              PaypointDba: Gruzya Adventure Outfitters
+              ParentOrgName: Pilgrim Planner
+              ParentOrgId: 105
+              externalPaypointID: null
+              EntryName: d193cf9a46
+              BankName: null
+              BatchType: 0
+              Method: card
+              ExpectedDepositDate: '2023-04-15T00:00:00Z'
+              DepositDate: null
+              TransferDate: '2025-09-02T00:00:00Z'
+              Transfer:
+                TransferId: 5998
+                TransferDate: '2025-09-02T00:00:00Z'
+                Processor: gp
+                TransferStatus: 1
+                GrossAmount: 1080.44
+                ChargeBackAmount: 0
+                ReturnedAmount: 0
+                RefundAmount: 0
+                HoldAmount: 0
+                ReleasedAmount: 0
+                BillingFeesAmount: 0
+                ThirdPartyPaidAmount: 0
+                AdjustmentsAmount: 0
+                NetFundedAmount: 1080.44
+
+  QueryBatchesResponseRecordsItem:
+    inline: true
+    properties:
+      IdBatch:
+        docs: The batch ID.
+        type: nullable<integer>
+      BatchNumber: nullable<root.BatchNumber>
+      TransferIdentifier: nullable<root.TransferIdentifier>
+      EventsData:
+        docs: Events associated with the batch.
+        type: nullable<list<root.GeneralEvents>>
+      ConnectorName:
+        docs: ''
+        type: nullable<string>
+      BatchDate:
+        docs: The batch date.
+        type: nullable<datetime>
+      BatchAmount:
+        docs: The amount of the batch.
+        type: nullable<double>
+      BatchFeesAmount:
+        docs: The total of fees in the batch.
+        type: nullable<double>
+      BatchAuthAmount:
+        docs: ''
+        type: nullable<double>
+      BatchReleasedAmount:
+        docs: Previously held funds that have been released after a risk review.
+        type: nullable<double>
+      BatchHoldAmount:
+        docs: >-
+          The total amount of the batch that's being held for fraud or risk
+          concerns.
+        type: nullable<double>
+      BatchReturnedAmount:
+        docs: Total amount of ACH returns deducted from batch.
+        type: nullable<double>
+      BatchRefundAmount:
+        docs: The total amount of refunds deducted from batch.
+        type: nullable<double>
+      BatchSplitAmount:
+        docs: >-
+          Total of split transactions that included split funding instructions
+          at the time of authorization.
+        type: nullable<double>
+      BatchStatus:
+        docs: >-
+          The batch status. See [Batch
+          Status](/developers/references/money-in-statuses#batch-status) for more.
+        type: integer
+      BatchRecords:
+        docs: The number of records in the batch.
+        type: integer
+      PaypointId: nullable<root.PaypointId>
+      PaypointName: nullable<root.PaypointName>
+      PaypointDba:  nullable<root.Dbaname>
+      ParentOrgName:
+        docs: The entrypoint's parent org.
+        type: root.OrgParentName
+      ParentOrgId:
+        docs: The parent organization ID.
+        type: integer
+      externalPaypointID: nullable<root.ExternalPaypointId>
+      EntryName: root.Entrypointfield
+      BankName:
+        docs: The bank name.
+        type: nullable<string>
+      BatchType:
+        docs: The batch type.
+        type: nullable<integer>
+      Method:
+        docs: The payment method used.
+        type: nullable<string>
+      ExpectedDepositDate: nullable<root.ExpectedDepositDate>
+      DepositDate: nullable<root.DepositDate>
+      TransferDate:
+        docs: The batch transfer date.
+        type: nullable<datetime>
+      Transfer:
+        docs: Transfer details for the batch.
+        type: nullable<QueryBatchesTransfer>
+
+  QueryBatchesTransfer:
+    docs: Transfer details within a batch response.
+    properties:
+      TransferId:
+        docs: The transfer ID.
+        type: nullable<integer>
+      TransferDate:
+        docs: The transfer date.
+        type: nullable<datetime>
+      Processor:
+        docs: The processor used for the transfer.
+        type: nullable<string>
+      TransferStatus:
+        docs: The transfer status.
+        type: nullable<integer>
+      GrossAmount:
+        docs: The gross amount of the transfer.
+        type: nullable<double>
+      ChargeBackAmount:
+        docs: The chargeback amount.
+        type: nullable<double>
+      ReturnedAmount:
+        docs: The returned amount.
+        type: nullable<double>
+      RefundAmount:
+        docs: The refund amount.
+        type: nullable<double>
+      HoldAmount:
+        docs: The amount being held.
+        type: nullable<double>
+      ReleasedAmount:
+        docs: The amount that has been released.
+        type: nullable<double>
+      BillingFeesAmount:
+        docs: The billing fees amount.
+        type: nullable<double>
+      ThirdPartyPaidAmount:
+        docs: The third party paid amount.
+        type: nullable<double>
+      AdjustmentsAmount:
+        docs: The adjustments amount.
+        type: nullable<double>
+      NetFundedAmount:
+        docs: The net funded amount.
+        type: nullable<double>

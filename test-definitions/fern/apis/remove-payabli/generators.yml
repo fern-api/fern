@@ -1,0 +1,110 @@
+# yaml-language-server: $schema=https://schema.buildwithfern.dev/generators-yml.json
+metadata:
+  description: "Official Payabli SDK"
+  authors:
+    - name: "Payabli Docs Team"
+      email: "docs@payabli.com"
+
+readme:  
+  apiReferenceLink: "https://docs.payabli.com"
+  defaultEndpoint: POST /MoneyIn/getpaid
+  features:
+    tokenize-payment-methods: 
+    - "POST /TokenStorage/add" 
+  
+groups:
+  sdk-node:
+    generators:
+      - name: fernapi/fern-typescript-node-sdk
+        version: 2.11.1
+        output:
+          location: npm
+          url: https://github.com/orgs/payabli/packages
+          package-name: '@payabli/sdk-node'
+          token: ${NPM_TOKEN}
+        config:
+          namespaceExport: Payabli
+          noSerdeLayer: true
+        github:
+          repository: payabli/sdk-node
+  sdk-python:
+    generators:
+      - name: fernapi/fern-python-sdk
+        version: 4.28.4
+        output:
+          location: pypi
+          package-name: payabli
+          token: ${SDK_PYPI_API_KEY}
+        config:
+          client_class_name: payabli
+          # pyproject_toml: |
+          #   [project]
+          #   name = "payabli"
+          #   description = "Official Payabli SDK for Python"
+        github:
+          repository: payabli/sdk-python
+  sdk-csharp:
+    generators:
+      - name: fernapi/fern-csharp-sdk
+        version: 2.1.15
+        output:
+          location: nuget
+          package-name: Payabli.SDK
+          api-key: ${SDK_NUGET_API_KEY}
+        github:
+          repository: payabli/sdk-csharp
+  sdk-java:
+    generators:
+      - name: fernapi/fern-java-sdk
+        version: 3.5.3
+        output:
+          location: maven
+          coordinate: io.github.payabli:sdk-java
+          username: ${SDK_MAVEN_USERNAME}
+          password: ${SDK_MAVEN_PASSWORD}
+          signature:
+            keyId: ${SDK_MAVEN_GPG_SECRET_KEY_ID}
+            password: ${SDK_MAVEN_GPG_PASSWORD}
+            secretKey: ${SDK_MAVEN_GPG_SECRET_KEY}
+        config:
+          publish-to: central
+          package-prefix: io.github.payabli.api
+        github:
+          repository: payabli/sdk-java
+        metadata:
+          author: "Payabli Docs Team"
+          email: "docs@payabli.com"
+          package-description: "Official Payabli SDK for Java"
+          reference-url: "https://docs.payabli.com/developers/developer-guides/sdk-java-guide"
+  sdk-go:
+    generators:
+      - name: fernapi/fern-go-sdk
+        version: 1.11.3
+        config:
+          packageName: "payabli"
+          module:
+            path: "github.com/payabli/sdk-go"
+        # output:
+        #   location: local-file-system
+        #   path: ../sdks/go
+        github:
+          repository: payabli/sdk-go
+  ruby-sdk-v2:
+    generators:
+      - name: fernapi/fern-ruby-sdk-v2
+        ir-version: "59"
+        version: latest
+        output:
+          location: local-file-system
+          path: ../sdks/ruby
+        # github:
+        #   repository: payabli/sdk-ruby
+  sdk-php:
+    generators:
+      - name: fernapi/fern-php-sdk
+        version: 1.16.9
+        # output:
+        #   location: local-file-system
+        #   path: ../sdks/php/sdk
+        github:
+          repository: payabli/sdk-php

@@ -1,0 +1,143 @@
+imports:
+  root: __package__.yml
+
+service:
+  auth: false
+  base-path: ''
+  endpoints:
+    ImportBills:
+      auth: true
+      display-name: Import list of bills
+      docs: >-
+        Import a list of bills from a CSV file. See the [Import
+        Guide](/developers/developer-guides/bills-add#import-bills) for more help and an example
+        file.
+      examples:
+        - path-parameters:
+            entry: 8cfec329267
+          name: ImportBills
+          request: {}
+          response:
+            body:
+              isSuccess: true
+              pageIdentifier: 'null'
+              responseCode: 1
+              responseData:
+                added: 26
+                errors:
+                  - errors
+                  - errors
+                rejected: 2
+              responseText: Success
+      method: POST
+      path: /Import/billsForm/{entry}
+      path-parameters:
+        entry:
+          docs: >-
+            The paypoint's entrypoint identifier. [Learn
+            more](/api-reference/api-overview#entrypoint-vs-entry)
+          type: string
+      request:
+        body:
+          properties:
+            file: 
+              docs: >-
+                The file to be imported. The file must be a CSV file with the
+                correct format. See the [Import Guide](/developers/developer-guides/bills-add#import-bills)
+                for more help and example files.
+              type: file
+        content-type: multipart/form-data
+        name: ImportBillsRequest
+      response:
+        docs: Success
+        status-code: 200
+        type: root.PayabliApiResponseImport
+      
+    ImportCustomer:
+      auth: true
+      display-name: Import list of customers
+      docs: >-
+        Import a list of customers from a CSV file. See the [Import
+        Guide](/developers/developer-guides/entities-customers#import-customers) for more help and example
+        files.
+      examples:
+        - path-parameters:
+            entry: 8cfec329267
+          name: ImportCustomer
+          request: {}
+          response:
+            body:
+              isSuccess: true
+              pageIdentifier: 'null'
+              responseCode: 1
+              responseData:
+                added: 26
+                errors:
+                  - errors
+                  - errors
+                rejected: 2
+              responseText: Success
+      method: POST
+      path: /Import/customersForm/{entry}
+      path-parameters:
+        entry: root.Entrypointfield
+      request:
+        body:
+          properties:
+            file: file
+        content-type: multipart/form-data
+        name: ImportCustomerRequest
+        query-parameters:
+          replaceExisting:
+            default: 0
+            docs: >-
+              Flag indicating to replace existing customer with a new record.
+              Possible values: 0 (do not replace), 1 (replace). Default is 0
+            type: optional<integer>
+            validation:
+              max: 1
+      response:
+        docs: Success
+        status-code: 200
+        type: root.PayabliApiResponseImport
+      
+    ImportVendor:
+      auth: true
+      display-name: Import list of vendors
+      docs: >-
+        Import a list of vendors from a CSV file. See the [Import
+        Guide](/developers/developer-guides/entities-vendors#import-vendors) for more help and example
+        files.
+      examples:
+        - path-parameters:
+            entry: 8cfec329267
+          name: ImportVendor
+          request: {}
+          response:
+            body:
+              isSuccess: true
+              pageIdentifier: 'null'
+              responseCode: 1
+              responseData:
+                added: 26
+                errors:
+                  - errors
+                  - errors
+                rejected: 2
+              responseText: Success
+      method: POST
+      path: /Import/vendorsForm/{entry}
+      path-parameters:
+        entry: root.Entrypointfield
+      request:
+        body:
+          properties:
+            file: file
+        content-type: multipart/form-data
+        name: ImportVendorRequest
+      response:
+        docs: Success
+        status-code: 200
+        type: root.PayabliApiResponseImport
+      
+

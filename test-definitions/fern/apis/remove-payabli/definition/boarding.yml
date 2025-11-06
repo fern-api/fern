@@ -1,0 +1,1655 @@
+imports:
+  root: __package__.yml
+types:
+    
+  AddApplicationRequest:
+    discriminated: false
+
+    union:
+      - type: root.ApplicationDataPayIn
+        display-name: Pay In
+        docs: Fields for Pay In processing applications
+      - type: root.ApplicationDataManaged
+        display-name: Managed Payout
+        docs: Fields for Managed Payout processing applications
+      - type: root.ApplicationDataOdp
+        display-name: On-Demand Payout
+        docs: Fields for On-Demand Payout processing applications
+      - type: root.ApplicationData
+        display-name: All Fields
+        docs: All fields for boarding applications
+service:
+  auth: false
+  base-path: ''
+  endpoints:
+    AddApplication:
+      auth: true
+      display-name: Create boarding application
+      docs: >-
+        Creates a boarding application in an organization. This endpoint
+        requires an application API token.
+      examples:
+        - name: PayIn
+          docs: >-
+            Example of a boarding application for Pay In processing.
+          request:
+            services:
+              ach: {}
+              card:
+                acceptAmex: true
+                acceptDiscover: true
+                acceptMastercard: true
+                acceptVisa: true
+            annualRevenue: 1000
+            averageBillSize: '500'
+            averageMonthlyBill: '5650'
+            avgmonthly: 1000
+            baddress: 123 Walnut Street
+            baddress1: Suite 103
+            bankData: {}
+            bcity: New Vegas
+            bcountry: US
+            binperson: 60
+            binphone: 20
+            binweb: 20
+            bstate: FL
+            bsummary: Brick and mortar store that sells office supplies
+            btype: Limited Liability Company
+            bzip: '33000'
+            contacts:
+              - contactEmail: herman@hermanscoatings.com
+                contactName: Herman Martinez
+                contactPhone: '3055550000'
+                contactTitle: Owner
+            creditLimit: creditLimit
+            dbaName: Sunshine Gutters
+            ein: '123456789'
+            faxnumber: '1234567890'
+            highticketamt: 1000
+            legalName: Sunshine Services, LLC
+            license: 2222222FFG
+            licstate: CA
+            maddress: 123 Walnut Street
+            maddress1: STE 900
+            mcc: '7777'
+            mcity: Johnson City
+            mcountry: US
+            mstate: TN
+            mzip: '37615'
+            orgId: 123
+            ownership:
+              - oaddress: 33 North St
+                ocity: Any City
+                ocountry: US
+                odriverstate: CA
+                ostate: CA
+                ownerdob: 01/01/1990
+                ownerdriver: CA6677778
+                owneremail: test@email.com
+                ownername: John Smith
+                ownerpercent: 100
+                ownerphone1: '555888111'
+                ownerphone2: '555888111'
+                ownerssn: '123456789'
+                ownertitle: CEO
+                ozip: '55555'
+            phonenumber: '1234567890'
+            processingRegion: US
+            recipientEmail: josephray@example.com
+            recipientEmailNotification: true
+            resumable: true
+            signer: $root.SignerData.SignerDataExample
+            startdate: 01/01/1990
+            taxFillName: Sunshine LLC
+            templateId: 22
+            ticketamt: 1000
+            website: www.example.com
+            whenCharged: When Service Provided
+            whenDelivered: Over 30 Days
+            whenProvided: 30 Days or Less
+            whenRefunded: 30 Days or Less
+          response:
+            body:
+              isSuccess: true
+              responseCode: 1
+              responseData: 3625
+              responseText: Success
+        - name: ManagedPayout
+          docs: >-
+            Example of a boarding application for managed payout (Pay Out)
+            processing.
+          request:
+            annualRevenue: 750000
+            baddress: 789 Industrial Parkway
+            baddress1: Unit 12
+            bankData:
+              - accountNumber: 1XXXXXX3100
+                bankAccountFunction: 1
+                bankAccountHolderName: Herman's Coatings LLC
+                bankAccountHolderType: Business
+                bankName: First Miami Bank
+                nickname: Withdrawal Account
+                routingAccount: '123123123'
+                typeAccount: Checking
+                accountId: 123-456
+              - accountNumber: 1XXXXXX3200
+                bankAccountFunction: 0
+                bankAccountHolderName: Herman's Coatings LLC
+                bankAccountHolderType: Business
+                bankName: First Miami Bank
+                nickname: Deposit Account
+                routingAccount: '123123123'
+                typeAccount: Checking
+                accountId: 123-789
+              - accountNumber: 1XXXXXX3123
+                bankAccountFunction: 3
+                bankAccountHolderName: Herman's Coatings LLC
+                bankAccountHolderType: Business
+                bankName: First Miami Bank
+                nickname: Remittance Account
+                routingAccount: '123123123'
+                typeAccount: Checking
+                accountId: 123-100
+            bcity: Miami
+            bcountry: US
+            bstate: FL
+            bsummary: >-
+              Commercial and industrial coating services, including protective
+              and decorative coatings
+            btype: Limited Liability Company
+            bzip: '33101'
+            contacts:
+              - contactEmail: herman@hermanscoatings.com
+                contactName: Herman Martinez
+                contactPhone: '3055550000'
+                contactTitle: Owner
+            dbaname: Herman's Coatings
+            ein: '123456789'
+            faxnumber: '3055550001'
+            legalname: Herman's Coatings LLC
+            license: FL123456
+            licstate: FL
+            maddress: 789 Industrial Parkway
+            maddress1: Unit 12
+            mcc: '1799'
+            mcity: Miami
+            mcountry: US
+            mstate: FL
+            mzip: '33101'
+            orgId: 123
+            ownership:
+              - oaddress: 123 Palm Avenue
+                ocity: Miami
+                ocountry: US
+                odriverstate: FL
+                ostate: FL
+                ownerdob: 05/15/1980
+                ownerdriver: FL789456
+                owneremail: herman@hermanscoatings.com
+                ownername: Herman Martinez
+                ownerpercent: 100
+                ownerphone1: '3055550000'
+                ownerphone2: '3055550002'
+                ownerssn: '123456789'
+                ownertitle: Owner
+                ozip: '33102'
+            phonenumber: '3055550000'
+            recipientEmail: herman@hermanscoatings.com
+            recipientEmailNotification: true
+            resumable: true
+            signer: $root.SignerData.SignerDataExample
+            startdate: 01/01/2015
+            taxfillname: Herman's Coatings LLC
+            templateId: 22
+            website: www.hermanscoatings.com
+          response:
+            body:
+              isSuccess: true
+              responseCode: 1
+              responseData: 3625
+              responseText: Success
+        - name: OnDemandPayout
+          docs: >-
+            Example of a boarding application for on-demand payouts (Pay Out).
+          request:
+            services:
+              ach:
+                acceptCCD: true
+                acceptPPD: true
+                acceptWeb: true
+              card:
+                acceptAmex: true
+                acceptDiscover: true
+                acceptMastercard: true
+                acceptVisa: true
+              odp:
+                allowAch: true
+                allowChecks: true
+                allowVCard: true
+                processing_region: US
+                processor: tsys
+                issuerNetworkSettingsId: '12345678901234'
+            annualRevenue: 750000
+            baddress: 789 Industrial Parkway
+            baddress1: Unit 12
+            bankData:
+              - accountNumber: 1XXXXXX3100
+                bankAccountFunction: 1
+                bankAccountHolderName: Herman's Coatings LLC
+                bankAccountHolderType: Business
+                bankName: First Miami Bank
+                nickname: Withdrawal Account
+                routingAccount: '123123123'
+                typeAccount: Checking
+                accountId: 333-789
+              - accountNumber: 1XXXXXX3200
+                bankAccountFunction: 0
+                bankAccountHolderName: Herman's Coatings LLC
+                bankAccountHolderType: Business
+                bankName: First Miami Bank
+                nickname: Deposit Account
+                routingAccount: '123123123'
+                typeAccount: Checking
+                accountId: 333-234
+              - accountNumber: 1XXXXXX3123
+                bankAccountFunction: 3
+                bankAccountHolderName: Herman's Coatings LLC
+                bankAccountHolderType: Business
+                bankName: First Miami Bank
+                nickname: Remittance Account
+                routingAccount: '123123123'
+                typeAccount: Checking
+                accountId: 333-567
+            bcity: Miami
+            bcountry: US
+            bstate: FL
+            bsummary: >-
+              Commercial and industrial coating services, including protective
+              and decorative coatings
+            btype: Limited Liability Company
+            bzip: '33101'
+            contacts:
+              - contactEmail: herman@hermanscoatings.com
+                contactName: Herman Martinez
+                contactPhone: '3055550000'
+                contactTitle: Owner
+            dbaname: Herman's Coatings
+            ein: '123456789'
+            faxnumber: '3055550001'
+            highticketamt: 15000
+            legalname: Herman's Coatings LLC
+            license: FL123456
+            licstate: FL
+            maddress: 789 Industrial Parkway
+            maddress1: Unit 12
+            mcc: '1799'
+            mcity: Miami
+            mcountry: US
+            mstate: FL
+            mzip: '33101'
+            orgId: 123
+            ownership:
+              - oaddress: 123 Palm Avenue
+                ocity: Miami
+                ocountry: US
+                odriverstate: FL
+                ostate: FL
+                ownerdob: 05/15/1980
+                ownerdriver: FL789456
+                owneremail: herman@hermanscoatings.com
+                ownername: Herman Martinez
+                ownerpercent: 100
+                ownerphone1: '3055550000'
+                ownerphone2: '3055550002'
+                ownerssn: '123456789'
+                ownertitle: Owner
+                ozip: '33102'
+            payoutAverageMonthlyVolume: 50000
+            payoutAverageTicketAmount: 3500
+            payoutCreditLimit: 25000
+            payoutHighTicketAmount: 15000
+            phonenumber: '3055550000'
+            recipientEmail: herman@hermanscoatings.com
+            recipientEmailNotification: true
+            resumable: true
+            signer: $root.SignerData.SignerDataExample
+            startdate: 01/01/2015
+            taxfillname: Herman's Coatings LLC
+            templateId: 22
+            website: www.hermanscoatings.com
+          response:
+            body:
+              isSuccess: true
+              responseCode: 1
+              responseData: 3625
+              responseText: Success
+        - name: AllFields
+          docs: >-
+            Example of a boarding application with all fields. 
+          request:
+            services:
+              ach:
+                acceptCCD: true
+                acceptPPD: true
+                acceptWeb: true
+              card:
+                acceptAmex: true
+                acceptDiscover: true
+                acceptMastercard: true
+                acceptVisa: true
+              odp:
+                allowAch: false
+                allowChecks: false
+                allowVCard: false
+            annualRevenue: 750000
+            attachments:
+              - {}
+              - {}
+            baddress: 789 Industrial Parkway
+            baddress1: Unit 12
+            bankData:
+              - accountNumber: 1XXXXXX3100
+                bankAccountFunction: 1
+                bankAccountHolderName: Herman's Coatings LLC
+                bankAccountHolderType: Business
+                bankName: First Miami Bank
+                id: 123
+                nickname: Withdrawal Account
+                routingAccount: '123123123'
+                typeAccount: Checking
+                accountId: 123-789
+              - accountNumber: 1XXXXXX3200
+                bankAccountFunction: 0
+                bankAccountHolderName: Herman's Coatings LLC
+                bankAccountHolderType: Business
+                bankName: First Miami Bank
+                id: 456
+                nickname: Deposit Account
+                routingAccount: '123123123'
+                typeAccount: Checking
+                accountId: 123-456
+              - accountNumber: 1XXXXXX3123
+                bankAccountFunction: 3
+                bankAccountHolderName: Herman's Coatings LLC
+                bankAccountHolderType: Business
+                bankName: First Miami Bank
+                id: 987
+                nickname: Remittance Account
+                routingAccount: '123123123'
+                typeAccount: Checking
+                accountId: 123-100
+            bcity: Miami
+            bcountry: US
+            boardingLinkId: bl_123456
+            bstate: FL
+            bsummary: >-
+              Commercial and industrial coating services, including protective
+              and decorative coatings
+            btype: Limited Liability Company
+            bzip: '33101'
+            contacts:
+              - contactEmail: herman@hermanscoatings.com
+                contactName: Herman Martinez
+                contactPhone: '3055550000'
+                contactTitle: Owner
+            dbaname: Herman's Coatings
+            ein: '123456789'
+            faxnumber: '3055550001'
+            highticketamt: 15000
+            legalname: Herman's Coatings LLC
+            license: FL123456
+            licstate: FL
+            maddress: 789 Industrial Parkway
+            maddress1: Unit 12
+            mcc: '1799'
+            mcity: Miami
+            mcountry: US
+            mstate: FL
+            mzip: '33101'
+            orgId: 123
+            ownership:
+              - oaddress: 123 Palm Avenue
+                ocity: Miami
+                ocountry: US
+                odriverstate: FL
+                ostate: FL
+                ownerdob: 05/15/1980
+                ownerdriver: FL789456
+                owneremail: herman@hermanscoatings.com
+                ownername: Herman Martinez
+                ownerpercent: 100
+                ownerphone1: '3055550000'
+                ownerphone2: '3055550002'
+                ownerssn: '123456789'
+                ownertitle: Owner
+                ozip: '33102'
+            payoutAverageMonthlyVolume: 50000
+            payoutAverageTicketAmount: 500
+            payoutCreditLimit: 25000
+            payoutHighTicketAmount: 15000
+            phonenumber: '3055550000'
+            recipientEmail: herman@hermanscoatings.com
+            recipientEmailNotification: true
+            resumable: true
+            signer: $root.SignerData.SignerDataExample
+            startdate: 01/01/2015
+            taxfillname: Herman's Coatings LLC
+            templateId: 22
+            website: www.hermanscoatings.com
+          response:
+            body:
+              isSuccess: true
+              responseCode: 1
+              responseData: 3625
+              responseText: Success
+      method: POST
+      path: /Boarding/app
+      request:
+        body: AddApplicationRequest
+        content-type: application/json
+      response:
+        docs: Success
+        status-code: 200
+        type: root.PayabliApiResponse00Responsedatanonobject
+      
+    DeleteApplication:
+      auth: true
+      display-name: Delete boarding application
+      docs: Deletes a boarding application by ID.
+      examples:
+        - name: General success response example for some boarding operations.
+          path-parameters:
+            appId: 352
+          response:
+            body:
+              isSuccess: true
+              responseCode: 1
+              responseData: 3625
+              responseText: Success
+      method: DELETE
+      path: /Boarding/app/{appId}
+      path-parameters:
+        appId:
+          docs: 'Boarding application ID. '
+          type: integer
+      response:
+        docs: Success
+        status-code: 200
+        type: root.PayabliApiResponse00Responsedatanonobject
+      
+    GetApplication:
+      auth: true
+      display-name: Get boarding application by ID
+      docs: 'Retrieves the details for a boarding application by ID. '
+      examples:
+        - name: General success response example for boarding app get.
+          path-parameters:
+            appId: 352
+          response:
+            body:
+              annualRevenue: 1000
+              averageMonthlyVolume: 1000
+              averageTicketAmount: 1000
+              bAddress1: 123 Walnut Street
+              bAddress2: Suite 103
+              bankData:
+                - accountNumber: '123123123'
+                  bankAccountFunction: 1
+                  bankAccountHolderName: Gruzya Adventure Outfitters LLC
+                  bankAccountHolderType: Business
+                  bankName: Test Bank
+                  id: 123
+                  nickname: Withdrawal Account
+                  routingAccount: '123123123'
+                  typeAccount: Checking
+                  accountId: 123-456
+              bCity: New Vegas
+              bCountry: US
+              bFax: '5551234567'
+              binPerson: 60
+              binPhone: 20
+              binWeb: 20
+              boardingLinkId: 91
+              boardingStatus: 123
+              boardingSubStatus: 123
+              bPhone: '5551234567'
+              bStartdate: 01/01/1990
+              bState: FL
+              bSummary: Brick and mortar store that sells office supplies
+              builderData:
+                services:
+                  ach:
+                    acceptance:
+                      ccd:
+                        ro: false
+                        value: <string>
+                      ppd:
+                        ro: false
+                        value: <string>
+                      web:
+                        ro: false
+                        value: <string>
+                    fees:
+                      body:
+                        - columns:
+                            - value: <string>
+                      header:
+                        columns:
+                          - value: <string>
+                    price:
+                      body:
+                        - columns:
+                            - value: <string>
+                      header:
+                        columns:
+                          - value: <string>
+                  card:
+                    acceptance:
+                      amex:
+                        ro: false
+                        value: <string>
+                      discover:
+                        ro: false
+                        value: <string>
+                      mastercard:
+                        ro: false
+                        value: <string>
+                      visa:
+                        ro: false
+                        value: <string>
+                    fees:
+                      body:
+                        - columns:
+                            - value: <string>
+                      header:
+                        columns:
+                          - value: <string>
+                    price:
+                      body:
+                        - columns:
+                            - value: <string>
+                      header:
+                        columns:
+                          - value: <string>
+                attributes:
+                  minimumDocuments: 1
+                  multipleContacts: true
+                  multipleOwners: true
+                banking:
+                  depositAccount:
+                    accountNumber:
+                      ro: false
+                      value: <string>
+                    bankName:
+                      ro: false
+                      value: <string>
+                    routingAccount:
+                      ro: false
+                      value: <string>
+                    typeAccount:
+                      ro: false
+                      value: <string>
+                  withdrawalAccount:
+                    accountNumber:
+                      ro: false
+                      value: <string>
+                    bankName:
+                      ro: false
+                      value: <string>
+                    routingAccount:
+                      ro: false
+                      value: <string>
+                    typeAccount:
+                      ro: false
+                      value: <string>
+                business:
+                  address:
+                    baddress:
+                      ro: false
+                      validator: alphanumeric
+                      value: <string>
+                    baddress1:
+                      ro: false
+                      validator: alphanumeric
+                      value: <string>
+                    bcity:
+                      ro: false
+                      validator: alphanumeric
+                      value: <string>
+                    bcountry:
+                      ro: false
+                      value: <string>
+                    bstate:
+                      ro: false
+                      value: <string>
+                    bzip:
+                      ro: false
+                      validator: zipcode
+                      value: <string>
+                    maddress:
+                      ro: false
+                      validator: alphanumeric
+                      value: <string>
+                    maddress1:
+                      ro: false
+                      validator: alphanumeric
+                      value: <string>
+                    mcity:
+                      ro: false
+                      validator: alphanumeric
+                      value: <string>
+                    mcountry:
+                      ro: false
+                      value: <string>
+                    mstate:
+                      ro: false
+                      value: <string>
+                    mzip:
+                      ro: false
+                      validator: zipcode
+                      value: <string>
+                  details:
+                    btype:
+                      ro: false
+                      value: <string>
+                    dbaname:
+                      ro: false
+                      validator: alphanumeric
+                      value: <string>
+                    ein:
+                      ro: false
+                      validator: routing
+                      value: <string>
+                    faxnumber:
+                      ro: false
+                      validator: phone
+                      value: <string>
+                    legalname:
+                      ro: false
+                      validator: alphanumeric
+                      value: <string>
+                    license:
+                      ro: false
+                      validator: alphanumeric
+                      value: <string>
+                    licstate:
+                      ro: false
+                      value: <string>
+                    phonenumber:
+                      ro: false
+                      validator: phone
+                      value: <string>
+                    startdate:
+                      ro: false
+                      value: '2021-12-13T05:00:00.000Z'
+                    taxfillname:
+                      ro: false
+                      validator: alphanumeric
+                      value: <string>
+                    website:
+                      ro: false
+                      validator: url
+                      value: <string>
+                owners:
+                  contact_list:
+                    contactEmail:
+                      ro: false
+                      validator: email
+                      value: <string>
+                    contactName:
+                      ro: false
+                      validator: alphanumeric
+                      value: <string>
+                    contactPhone:
+                      ro: false
+                      validator: phone
+                      value: <string>
+                    contactTitle:
+                      ro: false
+                      validator: alpha
+                      value: <string>
+                  own_list:
+                    oaddress:
+                      ro: false
+                      validator: alphanumeric
+                      value: <string>
+                    ocity:
+                      ro: false
+                      validator: alphanumeric
+                      value: <string>
+                    ocountry:
+                      ro: false
+                      value: <string>
+                    odriverstate:
+                      ro: false
+                      value: <string>
+                    ostate:
+                      ro: false
+                      value: <string>
+                    ownerdob:
+                      ro: false
+                      value: '2003-06-05T04:00:00.000Z'
+                    ownerdriver:
+                      ro: false
+                      validator: alphanumeric
+                      value: <string>
+                    owneremail:
+                      ro: false
+                      validator: email
+                      value: <string>
+                    ownername:
+                      ro: false
+                      validator: alphanumeric
+                      value: <string>
+                    ownerpercent:
+                      ro: false
+                      validator: number
+                      value: <string>
+                    ownerphone1:
+                      ro: false
+                      validator: phone
+                      value: <string>
+                    ownerphone2:
+                      ro: false
+                      validator: phone
+                      value: <string>
+                    ownerssn:
+                      ro: false
+                      validator: routing
+                      value: <string>
+                    ownertitle:
+                      ro: false
+                      validator: alpha
+                      value: <string>
+                    ozip:
+                      ro: false
+                      validator: zipcode
+                      value: <string>
+                processing:
+                  avgmonthly:
+                    ro: false
+                    validator: numbers
+                    value: <string>
+                  binperson:
+                    ro: false
+                    value: <string>
+                  binphone:
+                    ro: false
+                    value: <string>
+                  binweb:
+                    ro: false
+                    value: <string>
+                  bsummary:
+                    ro: false
+                    validator: text
+                    value: <string>
+                  highticketamt:
+                    ro: false
+                    validator: numbers
+                    value: <string>
+                  mcc:
+                    ro: false
+                    value: <string>
+                  ticketamt:
+                    ro: false
+                    validator: numbers
+                    value: <string>
+                  whenCharged:
+                    ro: false
+                    value: <string>
+                  whenDelivered:
+                    ro: false
+                    value: <string>
+                  whenProvided:
+                    ro: false
+                    value: <string>
+                  whenRefunded:
+                    ro: false
+                    value: <string>
+              bZip: '33000'
+              contactData:
+                - contactEmail: herman@hermanscoatings.com
+                  contactName: Herman Martinez
+                  contactPhone: '3055550000'
+                  contactTitle: Owner
+                  additionalData: null
+              createdAt: '2022-07-01T15:00:01Z'
+              dbaName: Sunshine Gutters
+              documentsRef:
+                filelist:
+                  - originalName: <string>
+                    zipName: <string>
+                zipfile: zx45.zip
+              ein: XXXX6789
+              externalPaypointId: Paypoint-100
+              generalEvents:
+                - description: Created
+                  eventTime: '2022-06-17T16:35:21Z'
+                - description: Updated Status
+                  eventTime: '2022-06-17T16:35:22Z'
+                  refData: '1'
+              highTicketAmount: 1000
+              idApplication: 325
+              lastModified: '2022-07-01T15:00:01Z'
+              legalName: Sunshine Services, LLC
+              license: 2222222FFG
+              licenseState: CA
+              logo:
+                fContent: TXkgdGVzdCBmaWxlHJ==...
+                filename: my-doc.pdf
+                ftype: pdf
+                furl: https://mysite.com/my-doc.pdf
+              mAddress1: 123 Walnut Street
+              mAddress2: STE 900
+              mccid: <string>
+              mCity: TN
+              mCountry: US
+              messages:
+                - content: Requested business license and bank statements.
+                  createdAt: '2023-10-30T19:37:20Z'
+                  currentApplicationStatus: 3
+                  currentApplicationSubStatus: 2
+                  id: 261
+                  messageType: 1
+                  originalApplicationStatus: -99
+                  originalApplicationSubStatus: 0
+                  roomId: 6
+                  userId: 104
+                  userName: admin
+                - content: TIN Failed, Need to reach out to merchant
+                  createdAt: '2023-10-25T18:41:55Z'
+                  currentApplicationStatus: 3
+                  currentApplicationSubStatus: 3
+                  id: 231
+                  messageType: 1
+                  originalApplicationStatus: -99
+                  originalApplicationSubStatus: 0
+                  roomId: 6
+                  userId: 104
+                  userName: admin
+                - content: Application approved, finalizing agreement.
+                  createdAt: '2023-09-09T00:00:00Z'
+                  currentApplicationStatus: 7
+                  currentApplicationSubStatus: 5
+                  id: 3
+                  messageType: 1
+                  originalApplicationStatus: -99
+                  originalApplicationSubStatus: 0
+                  roomId: 6
+                  userId: 5
+                  userName: admin
+              mState: TN
+              mZip: '37615'
+              orgId: 123
+              orgParentName: PropertyManager Pro
+              ownerData:
+                - oaddress: 33 North St
+                  ocity: Any City
+                  ocountry: US
+                  odriverstate: CA
+                  ostate: CA
+                  ownerdob: 01/01/1990
+                  ownerdriver: CA6677778
+                  owneremail: test@email.com
+                  ownername: John Smith
+                  ownerpercent: 25
+                  ownerphone1: '555888111'
+                  ownerphone2: '555888111'
+                  ownerssn: '123456789'
+                  ownertitle: CEO
+                  ozip: '55555'
+                  additionalData: null
+              ownType: Limited Liability Company
+              pageidentifier: <string>
+              recipientEmailNotification: true
+              resumable: true
+              salesCode: <string>
+              serviceData:
+                ach:
+                  acceptCCD: true
+                  acceptPPD: true
+                  acceptWeb: true
+                card:
+                  acceptAmex: true
+                  acceptDiscover: true
+                  acceptMastercard: true
+                  acceptVisa: true
+                odp:
+                  allowAch: true
+                  allowChecks: true
+                  allowVCard: true
+                  processing_region: US
+                  processor: tysys
+                  issuerNetworkSettingsId: '12345678901234'
+              signer: $root.SignerData.SignerDataExample
+              taxfillname: Sunshine LLC
+              templateId: 22
+              websiteAddress: www.example.com
+              whencharged: When Service Provided
+              whendelivered: Over 30 Days
+              whenProvided: 30 Days or Less
+              whenrefund: Exchange Only
+      method: GET
+      path: /Boarding/read/{appId}
+      path-parameters:
+        appId:
+          docs: Boarding application ID.
+          type: integer
+      response:
+        docs: Success
+        status-code: 200
+        type: root.ApplicationDetailsRecord
+      
+    GetApplicationByAuth:
+      auth: true
+      display-name: Get boarding application by auth
+      docs: >-
+        Gets a boarding application by authentication information. This endpoint
+        requires an `application` API token. 
+      examples:
+        - name: Example
+          path-parameters:
+            xId: 17E
+          request:
+            email: admin@email.com
+            referenceId: n6UCd1f1ygG7
+          response:
+            body:
+              annualRevenue: 1000
+              averageMonthlyVolume: 1000
+              averageTicketAmount: 1000
+              bAddress1: 123 Walnut Street
+              bAddress2: Suite 103
+              bankData:
+                - accountNumber: 1XXXXXX3123
+                  bankAccountFunction: 0
+                  bankAccountHolderName: Gruzya Adventure Outfitters LLC
+                  bankAccountHolderType: Personal
+                  bankName: Country Bank
+                  id: 1
+                  nickname: Business Checking 1234
+                  routingAccount: '123123123'
+                  typeAccount: Checking
+                  accountId: 123-456
+              bCity: New Vegas
+              bCountry: US
+              bFax: '5551234567'
+              binPerson: 60
+              binPhone: 20
+              binWeb: 20
+              boardingLinkId: 91
+              boardingStatus: 1
+              boardingSubStatus: 1
+              bPhone: '5551234567'
+              bStartdate: 01/01/1990
+              bState: FL
+              bSummary: Brick and mortar store that sells office supplies
+              builderData:
+                attributes:
+                  minimumDocuments: 1
+                  multipleContacts: true
+                  multipleOwners: true
+              bZip: '33000'
+              contactData:
+                - contactEmail: example@email.com
+                  contactName: Herman Martinez
+                  contactPhone: '3055550000'
+                  contactTitle: Owner
+              createdAt: '2022-07-01T15:00:01Z'
+              dbaName: Sunshine Gutters
+              documentsRef:
+                filelist:
+                  - {}
+                zipfile: zx45.zip
+              ein: '123456789'
+              externalPaypointId: Paypoint-100
+              generalEvents:
+                - description: TransferCreated
+                  eventTime: '2023-07-05T22:31:06Z'
+                  extraData:
+                    key: value
+                  refData: refData
+                  source: api
+              highTicketAmount: 1000
+              idApplication: 352
+              lastModified: '2022-07-01T15:00:01Z'
+              legalName: Sunshine Services, LLC
+              license: 2222222FFG
+              licenseState: CA
+              logo:
+                fContent: TXkgdGVzdCBmaWxlHJ==...
+                filename: my-doc.pdf
+                ftype: pdf
+                furl: https://mysite.com/my-doc.pdf
+              mAddress1: 123 Walnut Street
+              mAddress2: STE 900
+              mccid: mccid
+              mCity: TN
+              mCountry: US
+              mState: TN
+              mZip: '37615'
+              orgId: 123
+              orgParentName: PropertyManager Pro
+              ownerData:
+                - oaddress: 33 North St
+                  ocity: Any City
+                  ocountry: US
+                  odriverstate: CA
+                  ostate: CA
+                  ownerdob: 01/01/1990
+                  ownerdriver: CA6677778
+                  owneremail: example@email.com
+                  ownername: John Smith
+                  ownerpercent: 25
+                  ownerphone1: '555888111'
+                  ownerphone2: '555888111'
+                  ownerssn: '123456789'
+                  ownertitle: CEO
+                  ozip: '55555'
+              ownType: Limited Liability Company
+              pageidentifier: 'null'
+              recipientEmailNotification: true
+              resumable: false
+              salesCode: salesCode
+              serviceData:
+                ach:
+                  acceptCCD: false
+                  acceptPPD: false
+                  acceptWeb: true
+                card:
+                  acceptAmex: true
+                  acceptDiscover: false
+                  acceptMastercard: true
+                  acceptVisa: true
+                odp:
+                  allowAch: true
+                  allowChecks: true
+                  allowVCard: true
+                  processing_region: US
+                  processor: tysys
+                  issuerNetworkSettingsId: "12345678901234"
+              signer:
+                acceptance: false
+                address: 33 North St
+                address1: STE 900
+                city: Bristol
+                country: US
+                dob: 01/01/1990
+                email: example@email.com
+                name: John Smith
+                phone: '555888111'
+                signedDocumentReference: signedDocumentReference
+                signerUuid: 54455d5d-34ff-416c-91e0-5bc87199999
+                ssn: '123456789'
+                state: TN
+                zip: '55555'
+              taxfillname: Sunshine LLC
+              templateId: 22
+              websiteAddress: www.example.com
+              whencharged: When Service Provided
+              whendelivered: 0-7 Days
+              whenProvided: 30 Days or Less
+              whenrefund: Exchange Only
+      method: POST
+      path: /Boarding/read/{xId}
+      path-parameters:
+        xId:
+          docs: >-
+            The application ID in Hex format. Find this at the end of the
+            boarding link URL returned in a call to
+            api/Boarding/applink/{appId}/{mail2}. For example in: 
+            `https://boarding-sandbox.payabli.com/boarding/externalapp/load/17E`,
+            the xId is `17E`. 
+          type: string
+      request:
+        body:
+          properties:
+            email:
+              docs: The email address the applicant used to save the application.
+              type: optional<root.Email>
+            referenceId:
+              docs: >-
+                The referenceId is sent to the applicant via email when they
+                save the application.
+              type: optional<string>
+        content-type: application/json
+        name: RequestAppByAuth
+      response:
+        docs: Success
+        status-code: 200
+        type: root.ApplicationQueryRecord
+      
+    GetByIdLinkApplication:
+      auth: true
+      display-name: Get boarding link by ID
+      docs: 'Retrieves details for a boarding link, by ID. '
+      examples:
+        - path-parameters:
+            boardingLinkId: 91
+          response:
+            body:
+              acceptOauth: false
+              acceptRegister: false
+              builderData:
+                attributes:
+                  minimumDocuments: 1
+                  multipleContacts: true
+                  multipleOwners: true
+              entryAttributes: entryAttributes
+              id: 1000000
+              logo:
+                fContent: TXkgdGVzdCBmaWxlHJ==...
+                filename: my-doc.pdf
+                ftype: pdf
+                furl: https://mysite.com/my-doc.pdf
+              orgId: 123
+              'pageIdentifier:': 'null'
+              recipientEmailNotification: true
+              referenceName: payabli-00710
+              referenceTemplateId: 1830
+              resumable: false
+      method: GET
+      path: /Boarding/linkbyId/{boardingLinkId}
+      path-parameters:
+        boardingLinkId:
+          docs: >-
+            The boarding link ID. You can find this at the end of the boarding link
+            reference name. For example
+            `https://boarding.payabli.com/boarding/app/myorgaccountname-00091`.
+            The ID is `91`.
+          type: integer
+      response:
+        docs: Success
+        status-code: 200
+        type: root.BoardingLinkQueryRecord
+      
+    GetByTemplateIdLinkApplication:
+      auth: true
+      display-name: Get boarding link by template ID
+      docs: >-
+        Get details for a boarding link using the boarding template ID. This
+        endpoint requires an application API token.
+      examples:
+        - path-parameters:
+            templateId: 80
+          response:
+            body:
+              acceptOauth: false
+              acceptRegister: false
+              builderData:
+                attributes:
+                  minimumDocuments: 1
+                  multipleContacts: true
+                  multipleOwners: true
+              entryAttributes: entryAttributes
+              id: 1000000
+              logo:
+                fContent: TXkgdGVzdCBmaWxlHJ==...
+                filename: my-doc.pdf
+                ftype: pdf
+                furl: https://mysite.com/my-doc.pdf
+              orgId: 123
+              'pageIdentifier:': 'null'
+              recipientEmailNotification: true
+              referenceName: payabli-00710
+              referenceTemplateId: 1830
+              resumable: false
+      method: GET
+      path: /Boarding/linkbyTemplate/{templateId}
+      path-parameters:
+        templateId:
+          docs: >-
+            The boarding template ID. You can find this at the end of the boarding template URL in PartnerHub. Example:
+            `https://partner-sandbox.payabli.com/myorganization/boarding/edittemplate/80`.
+            Here, the template ID is `80`.
+          type: double
+      response:
+        docs: Success
+        status-code: 200
+        type: root.BoardingLinkQueryRecord
+      
+    getExternalApplication:
+      auth: true
+      display-name: Get link or email a link for a boarding application
+      docs: >
+        Retrieves a link and the verification code used to log into an existing
+        boarding application. You can also use this endpoint to send a link and
+        referenceId for an existing boarding application to an email address.
+        The recipient can use the referenceId and email address to access and
+        edit the application.
+      examples:
+        - name: Example Response
+          path-parameters:
+            appId: 352
+            mail2: mail2
+          response:
+            body:
+              isSuccess: true
+              responseCode: 1
+              responseData:
+                appLink: >-
+                  https://boarding-sandbox.payabli.com/boarding/externalapp/load/17E
+                referenceId: n6UCd1f1ygG7
+              responseText: Success
+      method: PUT
+      path: /Boarding/applink/{appId}/{mail2}
+      path-parameters:
+        appId:
+          docs: 'Boarding application ID. '
+          type: integer
+        mail2:
+          docs: >-
+            Email address used to access the application. If `sendEmail`
+            parameter is true, a link to the application is sent to this email
+            address.
+          type: string
+      request:
+        name: GetExternalApplicationRequest
+        query-parameters:
+          sendEmail:
+            docs: >-
+              If `true`, sends an email that includes the link to the
+              application to the `mail2` address. Defaults to `false`.
+            type: optional<boolean>
+      response:
+        docs: Success
+        status-code: 200
+        type: root.PayabliApiResponse00
+      
+    GetLinkApplication:
+      auth: true
+      display-name: Get boarding Link by reference
+      docs: >-
+        Retrieves the details for a boarding link, by reference name. This
+        endpoint requires an application API token.
+      examples:
+        - path-parameters:
+            boardingLinkReference: myorgaccountname-00091
+          response:
+            body:
+              acceptOauth: false
+              acceptRegister: false
+              builderData:
+                attributes:
+                  minimumDocuments: 1
+                  multipleContacts: true
+                  multipleOwners: true
+              entryAttributes: entryAttributes
+              id: 1000000
+              logo:
+                fContent: TXkgdGVzdCBmaWxlHJ==...
+                filename: my-doc.pdf
+                ftype: pdf
+                furl: https://mysite.com/my-doc.pdf
+              orgId: 123
+              'pageIdentifier:': 'null'
+              recipientEmailNotification: true
+              referenceName: payabli-00710
+              referenceTemplateId: 1830
+              resumable: false
+      method: GET
+      path: /Boarding/link/{boardingLinkReference}
+      path-parameters:
+        boardingLinkReference:
+          docs: >-
+            The boarding link reference name. You can find this at the end of
+            the boarding link URL. For example
+            `https://boarding.payabli.com/boarding/app/myorgaccountname-00091`
+          type: string
+      response:
+        docs: Success
+        status-code: 200
+        type: root.BoardingLinkQueryRecord
+      
+    ListApplications:
+      auth: true
+      display-name: Get list of applications for an organization
+      docs: >-
+        Returns a list of boarding applications for an organization. Use filters
+        to limit results. Include the `exportFormat` query parameter to return the results as a file instead of a JSON response.
+      examples:
+        - path-parameters:
+            orgId: 123
+          query-parameters:
+            fromRecord: 251
+            limitRecord: 0
+            sortBy: desc(field_name)
+          response:
+            body:
+              Records:
+                - annualRevenue: 1000
+                  averageMonthlyVolume: 1000
+                  averageTicketAmount: 1000
+                  bAddress1: 123 Walnut Street
+                  bAddress2: Suite 103
+                  bankData:
+                    - bankAccountFunction: 0
+                      bankAccountHolderName: Gruzya Adventure Outfitters LLC
+                      nickname: Business Checking 1234
+                  bCity: New Vegas
+                  bCountry: US
+                  bFax: '5551234567'
+                  binPerson: 60
+                  binPhone: 20
+                  binWeb: 20
+                  boardingLinkId: 91
+                  boardingStatus: 1
+                  boardingSubStatus: 1
+                  bPhone: '5551234567'
+                  bStartdate: 01/01/1990
+                  bState: FL
+                  bSummary: Brick and mortar store that sells office supplies
+                  bZip: '33000'
+                  contactData:
+                    - {}
+                  createdAt: '2022-07-01T15:00:01Z'
+                  dbaName: Sunshine Gutters
+                  ein: '123456789'
+                  externalPaypointId: Paypoint-100
+                  generalEvents:
+                    - description: TransferCreated
+                      eventTime: '2023-07-05T22:31:06Z'
+                  highTicketAmount: 1000
+                  idApplication: 352
+                  lastModified: '2022-07-01T15:00:01Z'
+                  legalName: Sunshine Services, LLC
+                  license: 2222222FFG
+                  licenseState: CA
+                  mAddress1: 123 Walnut Street
+                  mAddress2: STE 900
+                  mccid: mccid
+                  mCity: TN
+                  mCountry: US
+                  mState: TN
+                  mZip: '37615'
+                  orgId: 123
+                  orgParentName: PropertyManager Pro
+                  ownerData:
+                    - {}
+                  ownType: Limited Liability Company
+                  pageidentifier: 'null'
+                  recipientEmailNotification: true
+                  resumable: false
+                  salesCode: salesCode
+                  taxfillname: Sunshine LLC
+                  templateId: 22
+                  websiteAddress: www.example.com
+                  whencharged: When Service Provided
+                  whendelivered: 0-7 Days
+                  whenProvided: 30 Days or Less
+                  whenrefund: Exchange Only
+              Summary:
+                pageIdentifier: 'null'
+                pageSize: 20
+                totalAmount: 77.22
+                totalNetAmount: 77.22
+                totalPages: 2
+                totalRecords: 2
+      method: GET
+      path: /Query/boarding/{orgId}
+      path-parameters:
+        orgId:
+          docs: The numeric identifier for organization, assigned by Payabli.
+          type: integer
+      request:
+        name: ListApplicationsRequest
+        query-parameters:
+          exportFormat: optional<root.ExportFormat>
+          fromRecord:
+            default: 0
+            docs: >-
+              The number of records to skip before starting to collect the
+              result set.
+            type: optional<integer>
+          limitRecord:
+            default: 20
+            docs: >-
+              Max number of records to return for the query. Use `0` or negative
+              value to return all records.
+            type: optional<integer>
+          parameters:
+            docs: >
+              Collection of field names, conditions, and values used to filter
+              the query 
+
+
+              See [Filters and Conditions
+              Reference](/developers/developer-guides/pay-ops-reporting-engine-overview#filters-and-conditions-reference)
+              for help.
+
+
+              List of field names accepted:
+
+              - `createdAt` (gt, ge, lt, le, eq, ne)
+
+              - `startDate` (gt, ge, lt, le, eq, ne)
+
+              - `dbaname` (ct, nct)
+
+              - `legalname` (ct, nct)
+
+              - `ein` (ct, nct)
+
+              - `address` (ct, nct)
+
+              - `city` (ct, nct)
+
+              - `state` (ct, nct)
+
+              - `phone` (ct, nct)
+
+              - `mcc` (ct, nct)
+
+              - `owntype` (ct, nct)
+
+              - `ownerName` (ct, nct)
+
+              - `contactName` (ct, nct)
+
+              - `status` (in, nin, eq,ne)
+
+              - `orgParentname` (ct, nct)
+
+              - `externalpaypointID` (ct, nct, eq, ne)
+
+              - `repCode` (ct, nct, eq, ne)
+
+              - `repName` (ct, nct, eq, ne)
+
+              - `repOffice` (ct, nct, eq, ne)
+
+              List of comparison accepted - enclosed between parentheses:
+
+              - eq or empty => equal
+
+              - gt => greater than
+
+              - ge => greater or equal
+
+              - lt => less than
+
+              - le => less or equal
+
+              - ne => not equal
+
+              - ct => contains
+
+              - nct => not contains
+
+              - in => inside array
+
+              - nin => not inside array
+            type: optional<map<string, optional<string>>>
+          sortBy:
+            docs: >-
+              The field name to use for sorting results. Use `desc(field_name)`
+              to sort descending by `field_name`, and use `asc(field_name)` to
+              sort ascending by `field_name`.
+            type: optional<string>
+      response:
+        docs: Success
+        status-code: 200
+        type: root.QueryBoardingAppsListResponse
+      
+    ListBoardingLinks:
+      auth: true
+      display-name: Get list of boarding links for organization
+      docs: >-
+        Return a list of boarding links for an organization. Use filters to
+        limit results.
+      examples:
+        - path-parameters:
+            orgId: 123
+          query-parameters:
+            fromRecord: 251
+            limitRecord: 0
+            sortBy: desc(field_name)
+          response:
+            body:
+              Records:
+                - AcceptOauth: false
+                  AcceptRegister: false
+                  EntryAttributes: EntryAttributes
+                  Id: 1
+                  LastUpdated: '2022-07-01T15:00:01Z'
+                  OrgParentName: PropertyManager Pro
+                  ReferenceName: payabli-00710
+                  ReferenceTemplateId: 1830
+                  TemplateCode: TemplateCode
+                  TemplateName: SMB
+              Summary:
+                pageIdentifier: 'null'
+                pageSize: 20
+                totalAmount: 77.22
+                totalNetAmount: 77.22
+                totalPages: 2
+                totalRecords: 2
+      method: GET
+      path: /Query/boardinglinks/{orgId}
+      path-parameters:
+        orgId:
+          docs: The numeric identifier for organization, assigned by Payabli.
+          type: integer
+      request:
+        name: ListBoardingLinksRequest
+        query-parameters:
+          fromRecord:
+            default: 0
+            docs: >-
+              The number of records to skip before starting to collect the
+              result set.
+            type: optional<integer>
+          limitRecord:
+            default: 20
+            docs: >-
+              Max number of records to return for the query. Use `0` or negative
+              value to return all records.
+            type: optional<integer>
+          parameters:
+            docs: >
+              Collection of field names, conditions, and values used to filter
+              the query 
+
+
+              See [Filters and Conditions
+              Reference](/developers/developer-guides/pay-ops-reporting-engine-overview#filters-and-conditions-reference)
+              for help.
+
+
+              List of field names accepted:
+
+              - `lastUpdated` (gt, ge, lt, le, eq, ne)
+
+              - `templateName` (ct, nct)
+
+              - `referenceName` (ct, nct)
+
+              - `acceptRegister` (eq, ne)
+
+              - `acceptAuth` (eq, ne)
+
+              - `templateCode` (ct, nct)
+
+              - `templateId` (eq, ne)
+
+              - `orgParentname` (ct, nct)
+
+
+              List of comparison accepted - enclosed between parentheses:
+
+              - eq or empty => equal
+
+              - gt => greater than
+
+              - ge => greater or equal
+
+              - lt => less than 
+
+              - le => less or equal
+
+              - ne => not equal
+
+              - ct => contains
+
+              - nct => not contains
+
+              - in => inside array
+
+              - nin => not inside array
+
+
+              List of parameters accepted:
+
+              - limitRecord : max number of records for query (default="20", "0"
+              or negative value for all)
+
+              - fromRecord : initial record in query
+
+
+              Example: templateName(ct)=hoa return all records with template
+              title containing "hoa"
+            type: optional<map<string, optional<string>>>
+          sortBy:
+            docs: >-
+              The field name to use for sorting results. Use `desc(field_name)`
+              to sort descending by `field_name`, and use `asc(field_name)` to
+              sort ascending by `field_name`.
+            type: optional<string>
+      response:
+        docs: Success
+        status-code: 200
+        type: root.QueryBoardingLinksResponse
+      
+    UpdateApplication:
+      auth: true
+      display-name: Update boarding application
+      docs: >-
+        Updates a boarding application by ID. This endpoint requires an
+        application API token.
+      examples:
+        - name: General success response example for some boarding operations.
+          path-parameters:
+            appId: 352
+          request: {}
+          response:
+            body:
+              isSuccess: true
+              responseCode: 1
+              responseData: 3625
+              responseText: Success
+      method: PUT
+      path: /Boarding/app/{appId}
+      path-parameters:
+        appId:
+          docs: 'Boarding application ID. '
+          type: integer
+      request:
+        body:
+          type: root.ApplicationData
+        content-type: application/json
+      response:
+        docs: Success
+        status-code: 200
+        type: root.PayabliApiResponse00Responsedatanonobject
+      
+

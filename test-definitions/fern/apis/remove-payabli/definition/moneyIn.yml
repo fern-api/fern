@@ -1,0 +1,1640 @@
+# yaml-language-server: $schema=https://raw.githubusercontent.com/fern-api/fern/main/fern.schema.json
+
+imports:
+  root: __package__.yml
+
+errors:
+  InvalidTransStatusError:
+    status-code: 400
+    type: InvalidTransStatusErrorType
+
+  CaptureError:
+    status-code: 400
+    type: root.PayabliApiResponseError400
+    docs: |
+      Validation errors for capture requests. Possible response codes include: 3014, 3015, 3016.
+    examples:
+      - name: InvalidAmountExample
+        value:
+          isSuccess: false
+          responseCode: 3014
+          responseData:
+            explanation: "Amount value is not as same as the authorized amount"
+            todoAction: "Please make sure that the amount in the request matches the authorized amount"
+          responseText: "Error"
+      - name: InvalidTotalAmountTooLowExample
+        value:
+          isSuccess: false
+          responseCode: 3016
+          responseData:
+            explanation: "Total Amount value is less than the allowed value"
+            todoAction: "Please make sure that the total amount in the request is greater than 85% of the authorized amount"
+          responseText: "Error"
+      - name: InvalidTotalAmountZeroExample
+        value:
+          isSuccess: false
+          responseCode: 3015
+          responseData:
+            explanation: "Total Amount value is zero"
+            todoAction: "Please make sure that the total amount in the request is greater than zero"
+          responseText: "Error"
+
+types:
+
+  # Error Types
+
+  InvalidTransStatusErrorType:
+    properties:
+      responseText:
+        type: string
+        docs: Error message describing the reason for the decline
+
+  ReceiptResponse:
+    docs: Response for SendReceipt endpoint.
+    properties:
+      isSuccess: optional<root.IsSuccess>
+      pageIdentifier: optional<root.PageIdentifier>
+      responseText: root.ResponseText
+
+  # Capture-specific response types
+  CaptureResponse:
+    docs: Response for MoneyIn/capture endpoint
+    properties:
+      responseCode: root.Responsecode
+      pageIdentifier: nullable<root.PageIdentifier>
+      roomId: root.RoomIdNotInUse
+      isSuccess: root.IsSuccess
+      responseText: root.ResponseText
+      responseData: CaptureResponseData
+    examples:
+      - name: CaptureResponse
+        value: 
+          responseCode: 1
+          pageIdentifier: null
+          roomId: 0
+          isSuccess: true
+          responseText: Success
+          responseData:
+            authCode: "123456"
+            referenceId: 10-7d9cd67d-2d5d-4cd7-a1b7-72b8b201ec13
+            resultCode: 1
+            resultText: SUCCESS
+            avsResponseText: null
+            cvvResponseText: null
+            customerId: null
+            methodReferenceId: null
+
+  CaptureResponseData:
+    docs: Response data for capture transactions
+    properties:
+      authCode: root.Authcode
+      referenceId: root.Referenceidtrans
+      resultCode: root.ResultCode
+      resultText: root.Resulttext
+      avsResponseText: nullable<root.Avsresponsetext>  # null in actual responses
+      cvvResponseText: nullable<root.Cvvresponsetext>  # null in actual responses
+      customerId: nullable<root.Customeridtrans>  # null in actual responses
+      methodReferenceId: nullable<root.MethodReferenceId>  # null in actual responses
+
+  # Main getpaid response wrapper 
+  PayabliAPIResponseGetPaid:
+    docs: General response for GetPaid endpoint supporting multiple payment methods
+    properties:
+      responseText: root.ResponseText
+      isSuccess: root.IsSuccess
+      pageIdentifier: optional<string>  # null except for temp token responses
+      responseData: GetPaidResponseData
+
+  # Base response data type
+  GetPaidResponseData:
+    docs: Response data for GetPaid transactions
+    properties:
+      transactionDetails:
+        docs: Details of the transaction. Present only if `includeDetails` query parameter is set to `true` in the request.
+        type: optional<TransactionDetailRecord>  
+      authCode: optional<root.Authcode>
+      referenceId: root.Referenceidtrans
+      resultCode: root.ResultCode
+      resultText: root.Resulttext
+      avsResponseText: root.Avsresponsetext
+      cvvResponseText: root.Cvvresponsetext
+      customerId: root.Customeridtrans
+      methodReferenceId: optional<root.MethodReferenceId>  # null in most cases, string when stored method used
+  
+  TransRequestBody:
+    properties:
+      accountId: optional<root.Accountid>
+      customerData:
+        docs: >-
+          Object describing the Customer/Payor. Which fields are required
+          depends on the paypoint's custom identifier settings. 
+        type: optional<root.PayorDataRequest>
+      entryPoint: optional<root.Entrypointfield>
+      invoiceData:
+        docs: Object describing an Invoice linked to the transaction.
+        type: optional<root.BillData>
+      ipaddress: optional<root.IpAddress>
+      orderDescription: optional<root.Orderdescription>
+      orderId: optional<root.OrderId>
+      paymentDetails:
+        docs: Object describing details of the payment. Required.
+        type: root.PaymentDetail
+      paymentMethod:
+        docs: >-
+          Information about the payment method for the transaction.
+          Required and recommended fields for each payment method type are
+          described in each schema below.
+        type: root.PaymentMethod
+      source: optional<root.Source>
+      subdomain: optional<root.Subdomain>
+      subscriptionId: optional<root.Subscriptionid>
+    examples:
+      - name: CardRequest
+        value:
+          customerData:
+            customerId: 4440
+          entryPoint: f743aed24a
+          ipaddress: 255.255.255.255
+          paymentDetails:
+            serviceFee: 0
+            totalAmount: 100
+          paymentMethod:
+            cardcvv: '999'
+            cardexp: 02/27
+            cardHolder: John Cassian
+            cardnumber: '4111111111111111'
+            cardzip: '12345'
+            initiator: payor
+            method: card
+      - name: CADCardRequest
+        value:
+          customerData:
+            customerId: 4440
+          entryPoint: f743aed24a
+          ipaddress: 255.255.255.255
+          paymentDetails:
+            serviceFee: 0
+            totalAmount: 100
+            currency: CAD
+          paymentMethod:
+            cardcvv: '999'
+            cardexp: 02/27
+            cardHolder: John Cassian
+            cardnumber: '4111111111111111'
+            cardzip: '12345'
+            initiator: payor
+            method: card
+      - name: StoredMethodRequest
+        value: 
+          customerData:
+            customerId: 4440
+          entryPoint: f743aed24a
+          ipaddress: 255.255.255.255
+          paymentDetails:
+            serviceFee: 0
+            totalAmount: 100
+          paymentMethod:
+            initiator: payor
+            method: card
+            storedMethodId: 1ec55af9-7b5a-4ff0-81ed-c12d2f95e135-4440
+            storedMethodUsageType: unscheduled
+  
+  AuthResponse:
+    docs: Response for MoneyIn/authorize.
+    properties:
+      responseText: root.ResponseText
+      isSuccess: root.IsSuccess
+      pageIdentifier: optional<root.PageIdentifier>
+      responseData: AuthResponseResponseData
+
+  AuthResponseResponseData:
+    properties:
+      authCode: root.Authcode
+      referenceId: root.Referenceidtrans
+      resultCode: root.ResultCode
+      resultText: root.Resulttext
+      avsResponseText: root.Avsresponsetext
+      cvvResponseText: root.Cvvresponsetext
+      customerId: root.Customeridtrans
+      methodReferenceId: optional<root.MethodReferenceId>
+
+  ReverseResponse:
+    properties:
+      responseCode: root.Responsecode
+      pageIdentifier: optional<root.PageIdentifier>
+      roomId: integer
+      isSuccess: root.IsSuccess
+      responseText: root.ResponseText
+      responseData: ResponseDataRefunds
+
+  RefundResponse:
+    properties:
+      responseText: root.ResponseText
+      isSuccess: root.IsSuccess
+      responseData: ResponseDataRefunds
+      pageidentifier: optional<root.PageIdentifier>
+
+  RefundWithInstructionsResponse:
+    properties:
+      responseText: root.ResponseText
+      isSuccess: root.IsSuccess
+      responseData: ResponseDataRefunds
+      pageidentifier: optional<root.PageIdentifier>
+
+  ResponseDataRefunds:
+    properties:
+      authCode: root.Authcode
+      expectedProcessingDateTime: nullable<root.ExpectedProcessingDateTime>
+      avsResponseText:
+        docs: This field isn't applicable to refund operations.
+        type: optional<root.Avsresponsetext>
+      customerId: nullable<root.CustomerId>
+      cvvResponseText:
+        docs: This field isn't applicable to refund operations.
+        type: nullable<root.Cvvresponsetext>
+      methodReferenceId:
+        docs: This field isn't applicable to refund operations.
+        type: nullable<root.MethodReferenceId>
+      referenceId: root.Referenceidtrans
+      resultCode: root.ResultCode
+      resultText:
+        docs: Text description of the transaction result
+        type: string      
+
+  RequestCreditPaymentMethod:
+    docs: Object describing the ACH payment method to use for transaction.
+    inline: true
+    properties:
+      achAccount: optional<root.Achaccount>
+      achAccountType: optional<root.Achaccounttype>
+      achCode: optional<root.AchSecCode>
+      achHolder:
+        docs: Bank account holder.
+        type: optional<root.AchHolder>
+      achRouting: optional<root.Achrouting>
+      method:
+        docs: Method to use for the transaction. Must be ACH.
+        type: literal<"ach">
+
+  RequestPaymentAuthorizePaymentMethod:
+    discriminated: false
+    docs: Object describing payment method to use for transaction.
+    inline: true
+
+    union:
+      - type: root.PayMethodCredit
+        display-name: Credit card
+        docs: Object describing a credit card payment method
+      - type: root.PayMethodStoredMethod
+        display-name: Stored method
+        docs: Object describing a stored method payment method
+      - type: root.PayMethodCloud
+        display-name: Cloud payment method
+        docs: Object describing a cloud payment method
+
+  VoidResponse:
+    docs: Response for MoneyIn/void endpoint
+    properties:
+      responseCode: root.Responsecode
+      pageIdentifier: optional<root.PageIdentifier>  # null in actual responses
+      roomId: root.RoomIdNotInUse 
+      isSuccess: root.IsSuccess
+      responseText: root.ResponseText
+      responseData: VoidResponseData
+
+  VoidResponseData:
+    docs: Response data for void transactions
+    properties:
+      authCode: root.Authcode
+      referenceId: root.Referenceidtrans
+      resultCode: root.ResultCode
+      resultText: root.Resulttext
+      avsResponseText: optional<root.Avsresponsetext>  # null in actual responses
+      cvvResponseText: optional<root.Cvvresponsetext>  # null in actual responses
+      customerId: optional<root.Customeridtrans>  # null in actual responses
+      methodReferenceId: optional<root.MethodReferenceId>  # null in actual responses
+
+  # Card validation types
+  ValidateResponse:
+    docs: Response for card validation endpoint
+    properties:
+      responseText: root.ResponseText
+      isSuccess: root.IsSuccess
+      responseData: ValidateResponseData
+
+  ValidateResponseData:
+    docs: Response data for card validation
+    properties:
+      authCode: root.Authcode
+      referenceId: root.Referenceidtrans
+      resultCode: root.ResultCode
+      resultText: root.Resulttext
+      avsResponseText: root.Avsresponsetext
+      cvvResponseText: root.Cvvresponsetext
+      customerId: root.Customeridtrans
+      methodReferenceId: optional<root.MethodReferenceId>  # null in validation responses
+
+  RequestPaymentValidatePaymentMethod:
+    docs: Object describing payment method to use for validation.
+    inline: true
+    properties:
+      method: RequestPaymentValidatePaymentMethodMethod
+      cardnumber: root.Cardnumber
+      cardexp: root.Cardexp
+      cardzip: root.Cardzip
+      cardHolder: root.Cardholder
+
+  RequestPaymentValidatePaymentMethodMethod:
+    docs: The card validation method.
+    enum:
+      - card
+      - cloud
+    inline: true
+
+  CaptureRequest:
+    properties:
+      paymentDetails: CapturePaymentDetails
+
+  CapturePaymentDetails:
+    properties:
+      totalAmount: 
+        type: double
+        docs: |-
+          Total amount to be captured, including the `serviceFee` amount. The amount can't be greater the original
+          total amount of the transaction, and can't be more than 15% lower than the original amount.
+      serviceFee: 
+        type: optional<double>
+        docs: |-
+          Service fee to capture for the transaction.
+
+# Transaction Query Record that is returned in exended response. Couldn't confirm that this is the same as root.TransactionQueryRecords so this is the set for getpaid for now: 
+
+  TransactionDetailRecord:
+    docs: >-
+      Complete transaction details including payment information, customer data,
+      and processing metadata. This is returned when includeDetails=true.
+    properties:
+      parentOrgName: root.OrgParentName
+      paypointDbaname: root.Dbaname
+      paypointLegalname: root.Legalname
+      paypointEntryname: root.Entrypointfield
+      paymentTransId: string
+      connectorName: string
+      externalProcessorInformation: root.ExternalProcessorInformation
+      gatewayTransId: string
+      orderId: nullable<root.OrderId>
+      method: TransactionDetailRecordMethod
+      batchNumber: root.BatchNumber
+      batchAmount: double
+      payorId: root.PayorId
+      paymentData: TransactionDetailPaymentData
+      transStatus: root.TransStatus
+      paypointId: root.PaypointId
+      totalAmount: double
+      netAmount: double
+      feeAmount: root.FeeAmount
+      settlementStatus: root.SettlementStatus
+      operation: root.Operation
+      responseData: TransactionDetailResponseData
+      source: root.Source
+      scheduleReference: long
+      orgId: root.Orgid
+      refundId: root.RefundId
+      returnedId: root.ReturnedId
+      chargebackId: root.ChargebackId
+      retrievalId: root.RetrievalId
+      transAdditionalData: nullable<unknown>
+      invoiceData: TransactionDetailInvoiceData
+      entrypageId: root.EntrypageId
+      externalPaypointID: root.ExternalPaypointId
+      isValidatedACH: boolean
+      transactionTime: string
+      customer: TransactionDetailCustomer
+      splitFundingInstructions: nullable<root.SplitFunding>
+      cfeeTransactions: list<root.QueryCFeeTransaction>
+      transactionEvents: list<TransactionDetailEvent>
+      pendingFeeAmount: root.PendingFeeAmount
+      riskFlagged: root.RiskFlagged
+      riskFlaggedOn: root.RiskFlaggedOn
+      riskStatus: root.RiskStatus
+      riskReason: root.RiskReason
+      riskAction: root.RiskAction
+      riskActionCode: root.RiskActionCode
+      deviceId: root.Device
+      achSecCode: root.AchSecCode
+      achHolderType: root.AchHolderType
+      ipAddress: root.IpAddress
+      isSameDayACH: boolean
+      walletType: nullable<string>
+
+  TransactionDetailRecordMethod:
+    docs: Payment method used for the transaction
+    enum:
+      - ach
+      - card
+
+  TransactionDetailPaymentData:
+    docs: Payment method and transaction details
+    properties:
+      maskedAccount: root.Maskedaccount
+      accountType: root.Accounttype
+      accountExp: nullable<root.Accountexp>
+      holderName: root.Holdername
+      storedId: nullable<root.Storedmethodid>
+      initiator: nullable<root.Initiator>
+      storedMethodUsageType: nullable<root.StoredMethodUsageType>
+      sequence: nullable<root.Sequence>
+      orderDescription: root.Orderdescription
+      accountId: nullable<root.Accountid>
+      signatureData: nullable<root.Signaturedata>
+      binData: nullable<root.BinData>
+      paymentDetails: TransactionDetailPaymentDetails
+
+  TransactionDetailPaymentDetails:
+    docs: Detailed breakdown of payment amounts and identifiers
+    properties:
+      totalAmount: double
+      serviceFee: double
+      checkNumber: nullable<string>
+      checkImage: nullable<unknown>
+      checkUniqueId: string
+      currency: string
+      orderDescription: nullable<root.Orderdescription>
+      orderId: nullable<root.OrderId>
+      orderIdAlternative: nullable<string>
+      paymentDescription: nullable<string>
+      groupNumber: nullable<string>
+      source: nullable<root.Source>
+      payabliTransId: nullable<string>
+      unbundled: nullable<unknown>
+      categories: list<unknown>
+      splitFunding: list<unknown>
+
+  TransactionDetailResponseData:
+    docs: Response data from payment processor
+    properties:
+      response: nullable<string>
+      responsetext: root.Resulttext
+      authcode: nullable<root.Authcode>
+      transactionid: string
+      avsresponse: nullable<string>
+      avsresponse_text: nullable<root.Avsresponsetext>
+      cvvresponse: nullable<string>
+      cvvresponse_text: nullable<root.Cvvresponsetext>
+      orderid: nullable<root.OrderId>
+      type: nullable<string>
+      response_code: string
+      response_code_text: string
+      customer_vault_id: nullable<string>
+      emv_auth_response_data: nullable<string>
+
+  TransactionDetailInvoiceData:
+    docs: Invoice information if transaction is associated with an invoice
+    properties:
+      invoiceNumber: nullable<root.InvoiceNumber>
+      invoiceDate: nullable<root.Datenullable>
+      invoiceDueDate: nullable<root.Datenullable>
+      invoiceEndDate: nullable<root.Datenullable>
+      invoiceStatus: nullable<root.Invoicestatus>
+      invoiceType: nullable<root.InvoiceType>
+      frequency: nullable<root.Frequency>
+      paymentTerms: nullable<string>
+      termsConditions: nullable<root.TermsConditions>
+      notes: nullable<string>
+      tax: nullable<root.Tax>
+      discount: nullable<root.Discount>
+      invoiceAmount: nullable<root.InvoiceAmount>
+      freightAmount: nullable<root.FreightAmount>
+      dutyAmount: nullable<root.DutyAmount>
+      purchaseOrder: nullable<root.PurchaseOrder>
+      firstName: nullable<string>
+      lastName: nullable<string>
+      company: nullable<string>
+      shippingAddress1: nullable<root.Shippingaddress>
+      shippingAddress2: nullable<root.Shippingaddressadditional>
+      shippingCity: nullable<root.Shippingcity>
+      shippingState: nullable<root.Shippingstate>
+      shippingZip: nullable<root.Shippingzip>
+      shippingCountry: nullable<root.Shippingcountry>
+      shippingEmail: nullable<root.Email>
+      shippingPhone: nullable<string>
+      shippingFromZip: nullable<root.ShippingFromZip>
+      summaryCommodityCode: nullable<root.SummaryCommodityCode>
+      items: nullable<list<root.BillItem>>
+      attachments: nullable<root.Attachments>
+      additionalData: nullable<root.AdditionalDataString>
+
+  TransactionDetailCustomer:
+    docs: Customer information associated with the transaction
+    properties:
+      identifiers: nullable<root.Identifierfields>
+      firstName: string
+      lastName: string
+      companyName: string
+      billingAddress1: root.BillingAddressNullable
+      billingAddress2: root.BillingAddressAddtlNullable
+      billingCity: root.BillingCityNullable
+      billingState: root.BillingStateNullable
+      billingZip: root.BillingZip
+      billingCountry: root.BillingCountryNullable
+      billingPhone: root.PhoneNumber
+      billingEmail: root.Email
+      customerNumber: root.CustomerNumberNullable
+      shippingAddress1: root.Shippingaddress
+      shippingAddress2: root.Shippingaddressadditional
+      shippingCity: root.Shippingcity
+      shippingState: root.Shippingstate
+      shippingZip: root.Shippingzip
+      shippingCountry: root.Shippingcountry
+      customerId: root.CustomerId
+      customerStatus: root.CustomerStatus
+      additionalData: nullable<root.AdditionalDataString>
+
+  TransactionDetailEvent:
+    docs: Event associated with transaction processing
+    properties:
+      transEvent: string
+      eventData: string
+      eventTime: string
+
+service:
+  auth: true
+  base-path: ''
+  endpoints:
+    Authorize:
+      auth: true
+      display-name: Authorize card transaction
+      docs: >
+        Authorize a card transaction. This returns an authorization code and
+        reserves funds for the merchant. Authorized transactions aren't flagged
+        for settlement until
+        [captured](/api-reference/moneyin/capture-an-authorized-transaction).
+
+
+        **Note**: Only card transactions can be authorized. This endpoint can't
+        be used for ACH transactions.
+
+      examples:
+        - name: AuthorizeTransaction
+          request: $TransRequestBody.CardRequest
+          response:
+            body:
+              responseText: Success
+              isSuccess: true
+              pageIdentifier: null
+              responseData:
+                authCode: '123456'
+                referenceId: 10-7d9cd67d-2d5d-4cd7-a1b7-72b8b201ec13
+                resultCode: 1
+                resultText: Authorized
+                avsResponseText: No address or ZIP match only
+                cvvResponseText: CVV2/CVC2 no match
+                customerId: 4440
+                methodReferenceId: null
+
+      method: POST
+      path: /MoneyIn/authorize
+      request:
+        body: TransRequestBody
+        content-type: application/json
+        headers:
+          idempotencyKey: optional<root.IdempotencyKey>
+        name: RequestPaymentAuthorize
+        query-parameters:
+          forceCustomerCreation: optional<root.ForceCustomerCreation>
+      response:
+        docs: Ok
+        status-code: 200
+        type: AuthResponse
+
+    Capture:
+      auth: true
+      availability: deprecated
+      display-name: Capture an authorized transaction
+      docs: >-
+        <Warning>
+          This endpoint is deprecated and will be sunset on November 24, 2025. Migrate to [POST `/capture/{transId}`](/api-reference/moneyin/capture-an-authorized-transaction)`.
+        </Warning>
+          
+          Capture an [authorized
+        transaction](/api-reference/moneyin/authorize-a-transaction) to complete
+        the transaction and move funds from the customer to merchant account.
+      examples:
+        - name: FullCapture
+          path-parameters:
+            transId: 10-7d9cd67d-2d5d-4cd7-a1b7-72b8b201ec13
+            amount: 0
+          response:
+            body:
+              responseCode: 1
+              pageIdentifier: null
+              roomId: 0
+              isSuccess: true
+              responseText: Success
+              responseData:
+                authCode: "123456"
+                referenceId: 10-7d9cd67d-2d5d-4cd7-a1b7-72b8b201ec13
+                resultCode: 1
+                resultText: SUCCESS
+                avsResponseText: null
+                cvvResponseText: null
+                customerId: null
+                methodReferenceId: null
+
+      method: GET
+      path: /MoneyIn/capture/{transId}/{amount}
+      path-parameters:
+        amount:
+          docs: >-
+            Amount to be captured. The amount can't be greater the original
+            total amount of the transaction. `0` captures the total amount
+            authorized in the transaction. Partial captures aren't supported.
+          type: double
+        transId:
+          docs: ReferenceId for the transaction (PaymentId).
+          type: string
+      response:
+        docs: Ok
+        status-code: 200
+        type: CaptureResponse
+    
+    CaptureAuth:
+        docs: |
+          Capture an [authorized transaction](/api-reference/moneyin/authorize-a-transaction) to complete the transaction and move funds from the customer to merchant account. 
+          
+          You can use this endpoint to capture both full and partial amounts of the original authorized transaction. See [Capture an authorized transaction](/developers/developer-guides/pay-in-auth-and-capture) for more information about this endpoint.
+        method: POST
+        path:  /MoneyIn/capture/{transId}
+        path-parameters:
+          transId:
+            docs: ReferenceId for the transaction (PaymentId).
+            type: string
+        request:
+          body: CaptureRequest
+        examples: 
+          - name: CaptureFullAmountwithFee
+            path-parameters:
+              transId: 10-7d9cd67d-2d5d-4cd7-a1b7-72b8b201ec13
+            request:
+              paymentDetails:
+                totalAmount: 105.00
+                serviceFee: 5
+            response:
+              body: $CaptureResponse.CaptureResponse
+          - name: CapturePartialAmountwithFee
+            path-parameters:
+              transId: 10-7d9cd67d-2d5d-4cd7-a1b7-72b8b201ec13
+            request:
+              paymentDetails:
+                totalAmount: 89.00
+                serviceFee: 4
+            response:
+              body: $CaptureResponse.CaptureResponse
+          - name: CaptureNoFee
+            path-parameters:
+              transId: 10-7d9cd67d-2d5d-4cd7-a1b7-72b8b201ec13
+            request:
+              paymentDetails:
+                totalAmount: 100.00
+            response:
+              body: $CaptureResponse.CaptureResponse
+        response:
+          docs: Ok
+          status-code: 200
+          type: CaptureResponse
+        # errors:
+        #   - CaptureError
+
+      
+    Credit:
+      auth: true
+      display-name: Make an ACH credit transaction
+      docs: >-
+        Make a temporary microdeposit in a customer account to verify the
+        customer's ownership and access to the target account. Reverse the
+        microdeposit with `reverseCredit`.
+
+
+        This feature must be enabled by Payabli on a per-merchant basis. Contact
+        support for help. 
+
+      examples:
+        - headers:
+            idempotencyKey: 6B29FC40-CA47-1067-B31D-00DD010662DA
+          name: MinimumFields
+          request:
+            customerData:
+              billingAddress1: 5127 Linkwood ave
+              customerNumber: '100'
+            entrypoint: my-entrypoint
+            paymentDetails:
+              serviceFee: 0
+              totalAmount: 1
+            paymentMethod:
+              achAccount: '88354454'
+              achAccountType: Checking
+              achHolder: John Smith
+              achRouting: '021000021'
+              method: ach
+          response:
+            body:
+              isSuccess: true
+              pageIdentifier: 'null'
+              responseData:
+                AuthCode: AuthCode
+                CustomerId: 4440
+                methodReferenceId: null
+                ReferenceId: 45-erre-324
+                ResultCode: 1
+                ResultText: Approved
+              responseText: Success
+        - headers:
+            idempotencyKey: 6B29FC40-CA47-1067-B31D-00DD010662DA
+          name: ComplexFields
+          request:
+            customerData:
+              billingAddress1: 125 Main Street
+              billingCity: Kingsport
+              billingEmail: johnnyp@email.com
+              company: Acme, Inc
+              customerNumber: '100'
+              firstName: Johnny
+              lastName: Poulsbo
+            entrypoint: my-entrypoint
+            paymentDetails:
+              serviceFee: 0
+              totalAmount: 1
+            paymentMethod:
+              achAccount: '88354554'
+              achAccountType: Checking
+              achHolder: John Poulsbo
+              achRouting: '029000021'
+              method: ach
+          response:
+            body:
+              isSuccess: true
+              pageIdentifier: 'null'
+              responseData:
+                AuthCode: AuthCode
+                CustomerId: 4440
+                methodReferenceId: null
+                ReferenceId: 45-erre-324
+                ResultCode: 1
+                ResultText: Approved
+              responseText: Success
+      method: POST
+      path: /MoneyIn/makecredit
+      request:
+        body:
+          properties:
+            accountId: optional<root.Accountid>
+            customerData:
+              docs: Object describing the customer/payor.
+              type: root.PayorDataRequest
+            entrypoint: optional<root.Entrypointfield>
+            orderDescription: optional<root.Orderdescription>
+            orderId: optional<root.OrderId>
+            paymentDetails: root.PaymentDetailCredit
+            paymentMethod:
+              docs: Object describing the ACH payment method to use for transaction.
+              type: RequestCreditPaymentMethod
+            source: optional<root.Source>
+            subdomain: optional<root.Subdomain>
+        content-type: application/json
+        headers:
+          idempotencyKey: optional<root.IdempotencyKey>
+        name: RequestCredit
+        query-parameters:
+          forceCustomerCreation: optional<root.ForceCustomerCreation>
+      response:
+        docs: >-
+          Success. The `referenceId` returned in a successful response is the
+          `transId` value you need to reverse the microdeposit. 
+
+
+          A "Missing Gateway Data" message can indicate that the entrypoint
+          targeted in the request isn't set up for ACH payments. 
+        status-code: 200
+        type: root.PayabliApiResponse0
+      
+    Details:
+      auth: true
+      display-name: Get details for a processed transaction
+      docs: Retrieve a processed transaction's details.
+      examples:
+        - name: Example Response
+          path-parameters:
+            transId: 45-as456777hhhhhhhhhh77777777-324
+          response:
+            body:
+              BatchAmount: 10050.75
+              BatchNumber: BN987654321
+              CfeeTransactions:
+                - cFeeTransid: cFeeTransid
+                  feeAmount: 1.1
+                  operation: operation
+                  refundId: 4440
+                  responseData:
+                    key: value
+                  settlementStatus: 1
+                  transactionTime: '2024-01-15T09:30:00Z'
+                  transStatus: 1
+              Customer:
+                AdditionalData: 
+                  key1: value1
+                  key2: value2
+                  key3: value3
+                BillingAddress1: 123 Willow Lane
+                BillingAddress2: Unit 101
+                BillingCity: Greenfield
+                BillingCountry: USA
+                BillingEmail: elizabeta.marion@email.com
+                BillingPhone: 831-555-0123
+                BillingState: CA
+                BillingZip: '93927'
+                customerId: 4440
+                CustomerNumber: CUST12345
+                customerStatus: 1
+                FirstName: Elizabeta
+                Identifiers:
+                  - \"firstname\"
+                  - \"lastname\"
+                  - \"email\"
+                  - \"customId\"
+                LastName: Marion
+                ShippingAddress1: 123 Willow Lane
+                ShippingAddress2: Unit 101
+                ShippingCity: Greenfield
+                ShippingCountry: USA
+                ShippingState: CA
+                ShippingZip: '93927'
+              EntrypageId: 0
+              ExternalProcessorInformation: '[MER_xxxxxxxxxxxxxx]/[NNNNNNNNN]'
+              FeeAmount: 5
+              GatewayTransId: GT12345678
+              InvoiceData:
+                AdditionalData: AdditionalData
+                company: Wind in the Willows Neighborhood Association, LLC
+                discount: 0
+                dutyAmount: 0
+                firstName: Elizabeta
+                freightAmount: 0
+                frequency: one-time
+                invoiceAmount: 1000.5
+                invoiceDate: '2025-02-15'
+                invoiceDueDate: '2025-03-15'
+                invoiceEndDate: '2025-04-15'
+                invoiceNumber: INV-20242401
+                invoiceStatus: 1
+                invoiceType: 1
+                items:
+                  - itemCategories:
+                      - HOA Dues
+                      - Annual Service
+                    itemCommodityCode: '200300'
+                    itemCost: 1000.5
+                    itemDescription: Annual dues for Wind in the Willows HOA.
+                    itemMode: 1
+                    itemProductCode: HOADUES2024
+                    itemProductName: HOA Annual Dues
+                    itemQty: 1
+                    itemTaxAmount: 0
+                    itemTaxRate: 0
+                    itemTotalAmount: 1000.5
+                    itemUnitOfMeasure: service
+                lastName: Marion
+                notes: Annual HOA dues for Wind in the Willows Neighborhood.
+                paymentTerms: NET30
+                purchaseOrder: PO-4321ABC
+                shippingAddress1: 123 Willow Lane
+                shippingAddress2: Unit 101
+                shippingCity: Greenfield
+                shippingCountry: USA
+                shippingEmail: elizabeta.marion@email.com
+                shippingFromZip: '93926'
+                shippingPhone: 831-555-0123
+                shippingState: CA
+                shippingZip: '93927'
+                summaryCommodityCode: HOA2024
+                tax: 0
+                termsConditions: Full payment of HOA dues required within 30 days.
+              Method: online
+              NetAmount: 995.5
+              Operation: Sale
+              OrderId: DUES-123
+              OrgId: 500
+              ParentOrgName: HOAManager Pro
+              PaymentData:
+                AccountExp: 11/29
+                AccountType: visa
+                AccountZip: '90210'
+                binData: $root.BinData.ExampleBinData
+                HolderName: Elizabeta Marion
+                Initiator: merchant
+                MaskedAccount: 5xxxxxxxxxxx4321
+                orderDescription: Annual HOA Dues for Wind in the Willows
+                paymentDetails:
+                  categories:
+                    - amount: 1000
+                      label: Deposit
+                    - amount: 1000
+                      label: Deposit
+                  currency: USD
+                  serviceFee: 5
+                  splitFunding:
+                    - {}
+                  totalAmount: 1000.5
+                Sequence: first
+                SignatureData: image/png;base64,
+                StoredMethodUsageType: unscheduled
+              PaymentTransId: 12345-67890abcd
+              PayorId: 98765
+              PaypointDbaname: Wind in the Willows
+              PaypointEntryname: 72aeon12
+              PaypointId: 12345
+              PaypointLegalname: Wind in the Willows Neighborhood Association, LLC
+              PendingFeeAmount: 0
+              RefundId: 0
+              ResponseData:
+                authcode: '123456'
+                avsresponse: ''
+                avsresponse_text: ''
+                cvvresponse: ''
+                cvvresponse_text: ''
+                orderid: DUES-123
+                response_code: '200'
+                response_code_text: Transaction processed successfully.
+                responsetext: Completed
+                transactionid: TX987654321
+              ReturnedId: 0
+              ScheduleReference: 0
+              SettlementStatus: 1
+              Source: web
+              TotalAmount: 1000.5
+              TransactionEvents:
+                - EventTime: '2024-01-23T00:46:05Z'
+                  TransEvent: Created
+                - EventData: >-
+                    response=1&responsetext=Approved&authcode=123456&transactionid=9144440&avsresponse=&cvvresponse=&orderid=434-38aXXXX8ae4cd496db737200000000&type=sale&response_code=100&verification_method=&emv_application_id=A0000000031000&emv_application_label=VISA&emv_application_preferred_name=&emv_application_pan_sequence_number=00&transaction_status_information=&masked_merchant_number=xxxxxxxx9100&masked_terminal_number=xx01
+                  EventTime: '2024-01-23T00:46:17Z'
+                  TransEvent: Approved
+                - EventData:
+                    action_type: settle
+                    amount: 1000.5
+                    api_method: ''
+                    batch_id: '68031555'
+                    date: '20240123013414'
+                    device_license_number: ''
+                    device_nickname: ''
+                    ip_address: 100.100.100.100
+                    processor_batch_id: '680317555'
+                    processor_response_code: ''
+                    processor_response_text: ''
+                    requested_amountSpecified: false
+                    response_code: '100'
+                    response_text: SUCCESS
+                    source: internal
+                    success: 1
+                    username: ' '
+                  EventTime: '2024-01-23T01:34:14Z'
+                  TransEvent: Settled
+              TransactionTime: '2024-02-15T10:30:00Z'
+              TransStatus: 2
+      method: GET
+      path: /MoneyIn/details/{transId}
+      path-parameters:
+        transId:
+          docs: ReferenceId for the transaction (PaymentId).
+          type: string
+      response:
+        docs: Success
+        status-code: 200
+        type: root.TransactionQueryRecordsCustomer
+      
+    getpaid:
+      auth: true
+      display-name: Make a transaction
+      docs: >-
+        Make a single transaction. This method authorizes and captures a payment
+        in one step.
+
+      examples:
+        - name: Card
+          request: $TransRequestBody.CardRequest
+          response:
+            body:
+              responseText: "Success"
+              isSuccess: true
+              pageIdentifier: null
+              responseData:
+                authCode: "VTLMC1"
+                referenceId: "575-c490247af7ed403d86ba583507be61b0"
+                resultCode: 1
+                resultText: "Approved"
+                avsResponseText: "Exact match, Street address and 5-digit ZIP code both match"
+                cvvResponseText: "Not processed. Indicates that the expiration date was not provided with the request, or that the card does not have a valid CVV2 code. If the expiration date was not included with the request, resubmit the request with the expiration date."
+                customerId: 41892
+                methodReferenceId: null
+
+        - name: StoredMethod
+          request: $TransRequestBody.StoredMethodRequest
+          response:
+            body:
+              responseText: "Success"
+              isSuccess: true
+              pageIdentifier: null
+              responseData:
+                authCode: "AuthCode"
+                referenceId: "45-erre-324"
+                resultCode: 1
+                resultText: "Approved"
+                avsResponseText: "No address or ZIP match only"
+                cvvResponseText: "CVV2/CVC2 no match"
+                customerId: 4440
+                methodReferenceId: "1ed73d3c67-4076-8f8c-9f26317762ef"
+
+        - name: Cloud
+          request:
+            customerData:
+              customerId: 4440
+            entryPoint: f743aed24a
+            ipaddress: 255.255.255.255
+            paymentDetails:
+              serviceFee: 0
+              totalAmount: 100
+            paymentMethod:
+              device: 6c361c7d-674c-44cc-b790-382b75d1xxx
+              method: cloud
+              saveIfSuccess: true
+          response:
+            body:
+              responseText: "Success"
+              isSuccess: true
+              pageIdentifier: null
+              responseData:
+                authCode: "AuthCode"
+                referenceId: "45-erre-324"
+                resultCode: 1
+                resultText: "Approved"
+                avsResponseText: "No address or ZIP match only"
+                cvvResponseText: "CVV2/CVC2 no match"
+                customerId: 4440
+                methodReferenceId: null
+
+        - name: ACH
+          request:
+            customerData:
+              customerId: 4440
+            entryPoint: f743aed24a
+            ipaddress: 255.255.255.255
+            paymentDetails:
+              serviceFee: 0
+              totalAmount: 100
+            paymentMethod:
+              achAccount: '123123123'
+              achAccountType: Checking
+              achCode: WEB
+              achHolder: John Cassian
+              achHolderType: personal
+              achRouting: '123123123'
+              method: ach
+          response:
+            body:
+              responseText: "Success"
+              isSuccess: true
+              pageIdentifier: null
+              responseData:
+                authCode: "123456"
+                referenceId: "132-d9719a411918429cb7ca465927969900"
+                resultCode: 1
+                resultText: "Approved"
+                avsResponseText: ""
+                cvvResponseText: ""
+                customerId: 545
+                methodReferenceId: null
+
+        - name: ComplexCard
+          request:
+            customerData:
+              billingAddress1: 123 Walnut Street
+              billingCity: Johnson City
+              billingCountry: US
+              billingEmail: john@email.com
+              billingPhone: '1234567890'
+              billingState: Johnson City
+              billingZip: '37615'
+              customerNumber: 3456-7645A
+              firstName: John
+              lastName: Cassian
+            entryPoint: f743aed24a
+            ipaddress: 255.255.255.255
+            orderDescription: New customer package
+            orderId: 982-102
+            paymentDetails:
+              serviceFee: 0
+              totalAmount: 1000
+            paymentMethod:
+              cardcvv: '123'
+              cardexp: 02/25
+              cardHolder: John Cassian
+              cardnumber: '4111111111111111'
+              cardzip: '12345'
+              initiator: payor
+              method: card
+              saveIfSuccess: true
+            source: web
+          response:
+            body:
+              responseText: "Success"
+              isSuccess: true
+              pageIdentifier: null
+              responseData:
+                authCode: "AuthCode"
+                referenceId: "45-erre-324"
+                resultCode: 1
+                resultText: "Approved"
+                avsResponseText: "Exact match, Street address and 5-digit ZIP code both match"
+                cvvResponseText: "CVV2/CVC2 match"
+                customerId: 4440
+                methodReferenceId: "1ed73d3c67-4076-8f8c-9f26317762ef"
+
+        - name: CADCard
+          request: $TransRequestBody.CADCardRequest
+          response:
+            body:
+              responseText: "Success"
+              isSuccess: true
+              pageIdentifier: null
+              responseData:
+                authCode: "VTLMC1"
+                referenceId: "575-c490247af7ed403d86ba583507be61b0"
+                resultCode: 1
+                resultText: "Approved"
+                avsResponseText: " "
+                cvvResponseText: "CVV2/CVC2 match"
+                customerId: 41892
+                methodReferenceId: null
+
+        - name: Decline
+          request: $TransRequestBody.CardRequest
+          response:
+            body:
+              responseText: "Declined"
+              isSuccess: false
+              pageIdentifier: null
+              responseData:
+                authCode: null
+                referenceId: "45-erre-324"
+                resultCode: 1
+                resultText: "200: Transaction was declined by processor.. DECLINE"
+                avsResponseText: "No address or ZIP match only"
+                cvvResponseText: "CVV2/CVC2 no match"
+                customerId: 4440
+                methodReferenceId: null
+
+      method: POST
+      path: /MoneyIn/getpaid
+      request:
+        body: TransRequestBody
+        content-type: application/json
+        headers:
+          idempotencyKey: optional<root.IdempotencyKey>
+          validationCode:
+            docs: >-
+              Value obtained from user when an API generated CAPTCHA is used in
+              payment page
+            type: optional<string>
+        name: RequestPayment
+        query-parameters:
+          achValidation: optional<root.AchValidation>
+          forceCustomerCreation: optional<root.ForceCustomerCreation>
+          includeDetails:
+            docs: When `true`, transactionDetails object is returned in the response. See a full example of the `transactionDetails` object in the [Transaction integration guide](/developers/developer-guides/money-in-transaction-add#includedetailstrue-response).
+            type: optional<boolean>
+      response:
+        docs: Ok
+        status-code: 200
+        type: PayabliAPIResponseGetPaid
+      
+    Reverse:
+      auth: true
+      display-name: Reverse a transaction
+      docs: >-
+        A reversal either refunds or voids a transaction independent of the
+        transaction's settlement status. Send a reversal request for a
+        transaction, and Payabli automatically determines whether it's a refund
+        or void. You don't need to know whether the transaction is settled or
+        not.
+
+      examples:
+        - name: Void
+          path-parameters:
+            amount: 0
+            transId: 10-3ffa27df-b171-44e0-b251-e95fbfc7a723
+          response:
+            body:
+              responseCode: 1
+              pageIdentifier: null
+              roomId: 0
+              isSuccess: true
+              responseText: Success
+              responseData:
+                authCode: A0000
+                referenceId: 255-fb61db4171334aa79224b019f090e4c5
+                resultCode: 1
+                resultText: REVERSED
+                avsResponseText: null
+                cvvResponseText: null
+                customerId: null
+                methodReferenceId: null
+        - name: Refund
+          path-parameters:
+            amount: 53.76
+            transId: 10-3ffa27df-b171-44e0-b251-e95fbfc7a723
+          response:
+            body:
+              responseCode: 1
+              pageIdentifier: null
+              roomId: 0
+              isSuccess: true
+              responseText: Success
+              responseData:
+                authCode: A0000
+                referenceId: 255-fb61db4171334aa79224b019f090e4c5
+                resultCode: 10
+                resultText: INITIATED
+                avsResponseText: null
+                cvvResponseText: null
+                customerId: null
+                methodReferenceId: null
+      method: GET
+      path: /MoneyIn/reverse/{transId}/{amount}
+      path-parameters:
+        amount:
+          docs: >
+
+            Amount to reverse from original transaction, minus any service fees
+            charged on the original transaction.
+
+
+            The amount provided can't be greater than the original total amount
+            of the transaction, minus service fees. For example, if a
+            transaction was $90 plus a $10 service fee, you can reverse up to
+            $90. 
+
+
+            An amount equal to zero will refunds the total amount authorized
+            minus any service fee.
+          type: double
+        transId:
+          docs: ReferenceId for the transaction (PaymentId).
+          type: string
+      response:
+        docs: Ok
+        status-code: 200
+        type: ReverseResponse
+
+    Refund:
+      auth: true
+      display-name: Refund a settled transaction
+      docs: >-
+        Refund a transaction that has settled and send money back to the account
+        holder. If a transaction hasn't been settled, void it instead.
+
+      examples:
+        - name: Initiated
+          path-parameters:
+            amount: 0
+            transId: 10-3ffa27df-b171-44e0-b251-e95fbfc7a723
+          response:
+            body:
+              responseText: Success
+              isSuccess: true
+              responseData:
+                authCode: A0000
+                expectedProcessingDateTime: 2025-02-15T10:30:00Z
+                referenceId: 10-3ffa27df-b171-44e0-b251-e95fbfc7a723
+                resultCode: 10
+                resultText: INITIATED
+                avsResponseText: null
+                cvvResponseText: null
+                customerId: null
+                methodReferenceId: null
+              pageidentifier: null
+        - name: Captured
+          path-parameters:
+            amount: 100.99
+            transId: 10-3ffa27df-b171-44e0-b251-e95fbfc7a723
+          response:
+            body:
+              responseText: Success
+              isSuccess: true
+              responseData:
+                authCode: A0000
+                referenceId: 10-3ffa27df-b171-44e0-b251-e95fbfc7a723
+                resultCode: 1
+                resultText: CAPTURED
+                avsResponseText: null
+                cvvResponseText: null
+                customerId: null
+                methodReferenceId: null
+              pageidentifier: null
+      method: GET
+      path: /MoneyIn/refund/{transId}/{amount}
+      path-parameters:
+        amount:
+          docs: >
+
+            Amount to refund from original transaction, minus any service fees
+            charged on the original transaction. 
+
+
+            The amount provided can't be greater than the original total amount
+            of the transaction, minus service fees. For example, if a
+            transaction was \$90 plus a \$10 service fee, you can refund up to
+            \$90.
+
+
+            An amount equal to zero will refund the total amount authorized
+            minus any service fee.
+          type: double
+        transId:
+          docs: ReferenceId for the transaction (PaymentId).
+          type: string
+      response:
+        docs: Ok
+        status-code: 200
+        type: RefundResponse
+        
+    RefundWithInstructions:
+      auth: true
+      display-name: Refund a settled transaction with split instructions
+      docs: Refunds a settled transaction with split instructions.
+
+      examples:
+        - name: FullSplitRefund
+          headers:
+            idempotencyKey: 8A29FC40-CA47-1067-B31D-00DD010662DB
+          path-parameters:
+            transId: 10-3ffa27df-b171-44e0-b251-e95fbfc7a723
+          request:
+            source: api
+            orderDescription: Materials deposit
+            amount: 100
+            refundDetails:
+              splitRefunding:
+                - originationEntryPoint: 7f1a381696
+                  accountId: 187-342
+                  description: Refunding undelivered materials
+                  amount: 60
+                - originationEntryPoint: 7f1a381696
+                  accountId: 187-343
+                  description: Refunding deposit for undelivered materials
+                  amount: 40
+          response:
+            body:
+              responseText: Success
+              isSuccess: true
+              responseData:
+                authCode: ''
+                referenceId: 288-a1192b75-99e9-4d43-8af1-7ae9ab7da4f4
+                resultCode: 1
+                resultText: CAPTURED
+                avsResponseText: null
+                cvvResponseText: null
+                customerId: null
+                methodReferenceId: null
+              pageidentifier: null
+        - name: PartialSplitRefund
+          headers:
+            idempotencyKey: 8A29FC40-CA47-1067-B31D-00DD010662DB
+          path-parameters:
+            transId: 10-3ffa27df-b171-44e0-b251-e95fbfc7a723
+          request:
+            source: api
+            orderDescription: Materials deposit
+            amount: 70
+            refundDetails:
+              splitRefunding:
+                - originationEntryPoint: 7f1a381696
+                  accountId: 187-342
+                  description: Refunding undelivered materials
+                  amount: 40
+                - originationEntryPoint: 7f1a381696
+                  accountId: 187-343
+                  description: Refunding deposit for undelivered materials
+                  amount: 30
+          response:
+            body:
+              responseText: Success
+              isSuccess: true
+              responseData:
+                authCode: ''
+                referenceId: 288-a1192b75-99e9-4d43-8af1-7ae9ab7da4f4
+                resultCode: 1
+                resultText: CAPTURED
+                avsResponseText: null
+                cvvResponseText: null
+                customerId: null
+                methodReferenceId: null
+              pageidentifier: null
+      method: POST
+      path: /MoneyIn/refund/{transId}
+      path-parameters:
+        transId:
+          docs: ReferenceId for the transaction (PaymentId).
+          type: string
+      request:
+        body:
+          properties:
+            amount:
+              docs: >
+
+                Amount to refund from original transaction, minus any service
+                fees charged on the original transaction. 
+
+
+                The amount provided can't be greater than the original total
+                amount of the transaction, minus service fees. For example, if a
+                transaction was $90 plus a $10 service fee, you can refund up to
+                $90. 
+
+
+                An amount equal to zero will refund the total amount authorized
+                minus any service fee.
+              type: optional<double>
+            ipaddress: optional<root.IpAddress>
+            orderDescription: optional<root.Orderdescription>
+            orderId: optional<root.OrderId>
+            refundDetails: optional<root.RefundDetail>
+            source: optional<root.Source>
+        content-type: application/json
+        headers:
+          idempotencyKey: optional<root.IdempotencyKey>
+        name: RequestRefund
+      response:
+        docs: Success
+        status-code: 200
+        type: RefundWithInstructionsResponse   
+
+    ReverseCredit:
+      auth: true
+      display-name: Reverse an ACH credit transaction
+      docs: >-
+        Reverse microdeposits that are used to verify customer account ownership
+        and access. The `transId` value is returned in the success response for
+        the original credit transaction made with `api/MoneyIn/makecredit`.
+
+      examples:
+        - name: Reverse
+          path-parameters:
+            transId: 45-as456777hhhhhhhhhh77777777-324
+          response:
+            body:
+              isSuccess: true
+              responseData:
+                authCode: null
+                avsResponseText: null
+                customerId: 4440
+                cvvResponseText: null
+                referenceId: 148-7e1528b9b7ab56d0bf3b837237b84479
+                resultCode: 1
+                resultText: transaction processed.
+              responseText: Success
+      method: GET
+      path: /MoneyIn/reverseCredit/{transId}
+      path-parameters:
+        transId:
+          docs: ReferenceId for the transaction (PaymentId).
+          type: string
+      response:
+        docs: Success
+        status-code: 200
+        type: root.PayabliApiResponse
+      
+    SendReceipt2Trans:
+      auth: true
+      display-name: Send receipt for transaction
+      docs: Send a payment receipt for a transaction.
+
+      examples:
+        - path-parameters:
+            transId: 45-as456777hhhhhhhhhh77777777-324
+          query-parameters:
+            email: example@email.com
+          response:
+            body:
+              isSuccess: true
+              pageIdentifier: 'null'
+              responseText: Success
+      method: GET
+      path: /MoneyIn/sendreceipt/{transId}
+      path-parameters:
+        transId:
+          docs: ReferenceId for the transaction (PaymentId).
+          type: string
+      request:
+        name: SendReceipt2TransRequest
+        query-parameters:
+          email:
+            docs: >
+              Email address where the payment receipt should be sent. 
+
+
+              If not provided, the email address on file for the user owner of
+              the transaction is used.
+            type: optional<string>
+      response:
+        docs: Success
+        status-code: 200
+        type: ReceiptResponse
+      
+    Validate:
+      auth: true
+      display-name: Validate card
+      docs: >-
+        Validates a card number without running a transaction or authorizing a
+        charge.
+      examples:
+        - name: ValidateCard
+          headers:
+            idempotencyKey: 6B29FC40-CA47-1067-B31D-00DD010662DA
+          request:
+            entryPoint: entry132
+            paymentMethod:
+              method: card
+              cardnumber: '4360000001000005'
+              cardexp: 12/29
+              cardzip: '14602-8328'
+              cardHolder: Dianne Becker-Smith
+          response:
+            body:
+              isSuccess: true
+              responseData:
+                authCode: ''
+                referenceId: ''
+                resultCode: 1
+                resultText: Validated
+                avsResponseText: Zip code provided
+                cvvResponseText: ''
+                customerId: 0
+                methodReferenceId: null
+              responseText: Success
+      method: POST
+      path: /MoneyIn/validate
+      request:
+        body:
+          properties:
+            accountId: optional<root.Accountid>
+            entryPoint: root.Entrypointfield  # Required based on Zod schema
+            orderDescription: optional<root.Orderdescription>
+            orderId: optional<root.OrderId>
+            paymentMethod:
+              docs: Object describing payment method to use for transaction.
+              type: RequestPaymentValidatePaymentMethod
+        content-type: application/json
+        headers:
+          idempotencyKey: optional<root.IdempotencyKey>
+        name: RequestPaymentValidate
+      response:
+        docs: Ok
+        status-code: 200
+        type: ValidateResponse
+          
+    Void:
+      auth: true
+      display-name: Void a transaction
+      docs: >-
+        Cancel a transaction that hasn't been settled yet. Voiding non-captured
+        authorizations prevents future captures. If a transaction has been
+        settled, refund it instead.
+      examples:
+        - name: Void
+          path-parameters:
+            transId: 10-3ffa27df-b171-44e0-b251-e95fbfc7a723
+          response:
+            body:
+              responseCode: 1
+              pageIdentifier: null
+              roomId: 0
+              isSuccess: true
+              responseText: Success
+              responseData:
+                authCode: "123456"
+                referenceId: "132-9eab3dfe958146639944aebcab3e9e28"
+                resultCode: 1
+                resultText: "Transaction Void Successful"
+                avsResponseText: null
+                cvvResponseText: null
+                customerId: null
+                methodReferenceId: null
+      method: GET
+      path: /MoneyIn/void/{transId}
+      path-parameters:
+        transId:
+          docs: ReferenceId for the transaction (PaymentId).
+          type: string
+      response:
+        docs: Ok
+        status-code: 200
+        type: VoidResponse

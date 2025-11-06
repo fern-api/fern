@@ -1,0 +1,376 @@
+imports:
+  root: __package__.yml
+types:
+  AddUserResponse:
+    properties:
+      isSuccess: optional<root.IsSuccess>
+      responseData:
+        docs: The response data.
+        type: optional<string>
+      responseText: root.ResponseText
+
+  AuthResetUserResponse:
+    properties:
+      isSuccess: optional<root.IsSuccess>
+      responseText: root.ResponseText
+
+  ChangePswUserResponse:
+    properties:
+      isSuccess: optional<root.IsSuccess>
+      responseText: root.ResponseText
+
+  DeleteUserResponse:
+    properties:
+      responseText: root.ResponseText
+
+  EditMfaUserResponse:
+    properties:
+      isSuccess: optional<root.IsSuccess>
+      responseText: root.ResponseText
+
+  LogoutUserResponse:
+    properties:
+      isSuccess: optional<root.IsSuccess>
+      responseText: root.ResponseText
+
+service:
+  auth: false
+  base-path: ''
+  endpoints:
+    AddUser:
+      auth: true
+      display-name: Add User to an Organization
+      examples:
+        - request: {}
+          response:
+            body:
+              isSuccess: true
+              responseText: Success
+      method: POST
+      path: /User
+      request:
+        body: root.UserData
+        content-type: application/json
+      response:
+        docs: Success
+        status-code: 200
+        type: AddUserResponse
+      
+    AuthRefreshUser:
+      auth: true
+      display-name: Refresh token for User
+      examples:
+        - response:
+            body:
+              inactiveTokenTime: 31
+              isSuccess: true
+              remaining: 120
+              responseData: u.fPLVSzFv1gZpHl......
+              responseText: Success
+      method: POST
+      path: /User/authrefresh
+      response:
+        docs: Success
+        status-code: 200
+        type: root.PayabliApiResponseUserMfa
+      
+    AuthResetUser:
+      auth: true
+      display-name: Reset password for User
+      examples:
+        - request: {}
+          response:
+            body:
+              isSuccess: true
+              responseText: Success
+      method: POST
+      path: /User/authreset
+      request:
+        body:
+          properties:
+            email:
+              docs: The user's email address.
+              type: optional<root.Email>
+            entry:
+              docs: >-
+                Identifier for entrypoint originating the request (used by
+                front-end apps)
+              type: optional<string>
+            entryType:
+              docs: |
+                Type of entry identifier: 0 - partner, 2 - paypoint. This is used by front-end apps, required if an Entry is indicated.
+              type: optional<integer>
+        content-type: application/json
+        name: UserAuthResetRequest
+      response:
+        docs: Success
+        status-code: 200
+        type: AuthResetUserResponse
+      
+    AuthUser:
+      auth: true
+      display-name: Authenticate User
+      docs: This endpoint requires an application API token.
+      examples:
+        - path-parameters:
+            provider: provider
+          request: {}
+          response:
+            body:
+              isSuccess: true
+              mfa: false
+              mfaMode: email
+              mfaValidationCode: 50-2E-4A-16-93-0E-41-41-07-EE-22-B6-00-99-00-99
+              responseData: g**.com
+              responseText: Success
+      method: POST
+      path: /User/auth/{provider}
+      path-parameters:
+        provider:
+          docs: |
+            Auth provider. This fields is optional and defaults to null for the built-in provider.
+          type: string
+      request:
+        body:
+          properties:
+            email: optional<root.Email>
+            entry:
+              docs: >-
+                Identifier for entry point originating the request (used by
+                front-end apps)
+              type: optional<string>
+            entryType:
+              docs: |
+                Type of entry identifier: 0 - partner, 2 - paypoint. This is used by front-end apps, required if an Entry is indicated.
+              type: optional<integer>
+            psw: optional<string>
+            userId: optional<long>
+            userTokenId: optional<string>
+        content-type: application/json
+        name: UserAuthRequest
+      response:
+        docs: Success
+        status-code: 200
+        type: root.PayabliApiResponseMfaBasic
+      
+    ChangePswUser:
+      auth: true
+      display-name: Update password for User
+      examples:
+        - request: {}
+          response:
+            body:
+              isSuccess: true
+              responseText: Success
+      method: PUT
+      path: /User/authpsw
+      request:
+        body:
+          properties:
+            psw:
+              docs: New User password
+              type: optional<string>
+        content-type: application/json
+        name: UserAuthPswResetRequest
+      response:
+        docs: Success
+        status-code: 200
+        type: ChangePswUserResponse
+      
+    DeleteUser:
+      auth: true
+      display-name: Delete User in an Organization
+      examples:
+        - path-parameters:
+            userId: 1000000
+          response:
+            body:
+              responseText: Success
+      method: DELETE
+      path: /User/{userId}
+      path-parameters:
+        userId:
+          docs: The Payabli-generated `userId` value.
+          type: long
+      response:
+        docs: Success
+        status-code: 200
+        type: DeleteUserResponse
+      
+    EditMfaUser:
+      auth: true
+      display-name: Enable/ disable MFA for User in an Organization
+      examples:
+        - path-parameters:
+            userId: 1000000
+          request: {}
+          response:
+            body:
+              isSuccess: true
+              responseText: Success
+      method: PUT
+      path: /User/mfa/{userId}
+      path-parameters:
+        userId:
+          docs: User Identifier
+          type: long
+      request:
+        body: root.MfaData
+        content-type: application/json
+      response:
+        docs: Success
+        status-code: 200
+        type: EditMfaUserResponse
+      
+    EditUser:
+      auth: true
+      display-name: Modify User in an Organization
+      examples:
+        - path-parameters:
+            userId: 1000000
+          request: {}
+          response:
+            body:
+              isSuccess: true
+              responseText: Success
+      method: PUT
+      path: /User/{userId}
+      path-parameters:
+        userId:
+          docs: User Identifier
+          type: long
+      request:
+        body: root.UserData
+        content-type: application/json
+      response:
+        docs: Success
+        status-code: 200
+        type: root.PayabliApiResponse
+      
+    GetUser:
+      auth: true
+      display-name: Get User in an Organization
+      examples:
+        - path-parameters:
+            userId: 1000000
+          query-parameters:
+            entry: 478ae1234
+          response:
+            body:
+              Access:
+                - roleLabel: customers
+                  roleValue: true
+              AdditionalData: AdditionalData
+              createdAt: '2022-07-01T15:00:01Z'
+              Email: example@email.com
+              language: en
+              lastAccess: '2022-07-01T15:00:01Z'
+              Name: Sean Smith
+              Phone: '5555555555'
+              Scope:
+                - orgEntry: pilgrim-planner
+                  orgId: 123
+                  orgType: 0
+              snData: snData
+              snIdentifier: snIdentifier
+              snProvider: google
+              timeZone: -5
+              userId: 1000000
+              UsrMFA: false
+              UsrMFAMode: 0
+              UsrStatus: 1
+      method: GET
+      path: /User/{userId}
+      path-parameters:
+        userId:
+          docs: The Payabli-generated `userId` value.
+          type: long
+      request:
+        name: GetUserRequest
+        query-parameters:
+          entry:
+            docs: The entrypoint identifier.
+            type: optional<string>
+          level:
+            docs: 'Entry level: 0 - partner, 2 - paypoint'
+            type: optional<integer>
+      response:
+        docs: Success
+        status-code: 200
+        type: root.UserQueryRecord
+      
+    LogoutUser:
+      auth: true
+      display-name: Logout User
+      examples:
+        - response:
+            body:
+              isSuccess: true
+              responseText: Success
+      method: GET
+      path: /User/authlogout
+      response:
+        docs: Success
+        status-code: 200
+        type: LogoutUserResponse
+      
+    ResendMFACode:
+      auth: true
+      display-name: Resend MFA code
+      examples:
+        - path-parameters:
+            Entry: Entry
+            EntryType: 1
+            usrname: usrname
+          response:
+            body:
+              isSuccess: true
+              mfa: false
+              mfaMode: email
+              mfaValidationCode: 50-2E-4A-16-93-0E-41-41-07-EE-22-B6-00-99-00-99
+              responseData: g**.com
+              responseText: Success
+      method: POST
+      path: /User/resendmfa/{usrname}/{Entry}/{EntryType}
+      path-parameters:
+        Entry:
+          docs: ' '
+          type: string
+        EntryType:
+          docs: ' '
+          type: integer
+        usrname:
+          docs: ' '
+          type: string
+      response:
+        docs: Success
+        status-code: 200
+        type: root.PayabliApiResponseMfaBasic
+      
+    ValidateMfaUser:
+      auth: true
+      display-name: Validate MFA for User in an Organization
+      examples:
+        - request: {}
+          response:
+            body:
+              inactiveTokenTime: 31
+              isSuccess: true
+              remaining: 120
+              responseData: u.fPLVSzFv1gZpHl......
+              responseText: Success
+      method: POST
+      path: /User/mfa
+      request:
+        body:
+          properties:
+            mfaCode: optional<string>
+            mfaValidationCode: optional<root.MfaValidationCode>
+        content-type: application/json
+        name: MfaValidationData
+      response:
+        docs: Success
+        status-code: 200
+        type: root.PayabliApiResponseUserMfa
+      
+

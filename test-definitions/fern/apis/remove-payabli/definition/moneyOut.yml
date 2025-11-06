@@ -1,0 +1,701 @@
+imports:
+  root: __package__.yml
+  moneyOutTypes: __moneyOutTypes__.yml
+
+
+
+service:
+  auth: false
+  base-path: ''
+  endpoints:
+    AuthorizeOut:
+      auth: true
+      display-name: Authorize a payout
+      docs: >-
+        Authorizes transaction for payout. Authorized transactions aren't
+        flagged for settlement until captured. Use `referenceId` returned in the
+        response to capture the transaction. 
+      examples:
+        - name: AuthorizePayout
+          docs: A basic payout authorization request
+          request:
+            entryPoint: "48acde49"
+            invoiceData:
+              - billId: 54323
+            orderDescription: "Window Painting"
+            paymentDetails:
+              totalAmount: 47
+            paymentMethod: 
+              method: "managed"
+            vendorData:
+              vendorNumber: "7895433"
+          response:
+            body: $moneyOutTypes.AuthCapturePayoutResponse.Authorized
+        - name: WithImage
+          docs: A payout authorization request with an image attachment
+          request:
+            entryPoint: "48acde49"
+            invoiceData:
+              - billId: 123
+                attachments:
+                  - filename: "bill.pdf"
+                    ftype: "pdf"
+                    furl: "https://example.com/bill.pdf"
+            orderDescription: "Window Painting"
+            paymentDetails:
+              totalAmount: 47
+            paymentMethod: 
+              method: "managed"
+            vendorData:
+              vendorNumber: "7895433"
+          response:
+            body: $moneyOutTypes.AuthCapturePayoutResponse.Authorized
+        - name: StoredACH
+          docs: Example that uses the vendor's stored ACH method
+          request:
+            entryPoint: "48acde49"
+            source: "api"
+            invoiceData:
+              - billId: 54323
+            orderDescription: "Window Painting"
+            paymentMethod:
+              method: "ach"
+              storedMethodId: "4c6a4b78-72de-4bdd-9455-b9d30f991001-XXXX"
+            paymentDetails:
+              totalAmount: 47
+            vendorData:
+              vendorNumber: "7895433"
+          response:
+            body: $moneyOutTypes.AuthCapturePayoutResponse.Authorized
+        - name: AddVendor
+          docs: >-
+            Example showing new vendor creation with billing data. When creating a new vendor,
+            the system first checks billingData. If billingData has valid information,
+            it creates the vendor using this account and also creates the payment method.
+          request:
+            entryPoint: 47ced57b
+            paymentMethod:
+              method: "ach"
+              achHolder: "John Doe"
+              achRouting: "011401533"
+              achAccount: "123456789"
+              achAccountType: "checking"
+              achHolderType: "business"
+            paymentDetails:
+              totalAmount: 978.32
+            vendorData:
+              vendorNumber: "Vendor3800638299609471"
+              name1: "Heritage Pro Company"
+              name2: ""
+              ein: "473771889"
+              phone: "7868342364"
+              email: "contact570@heritagepro.com"
+              address1: "478 Mittie Roads"
+              city: "Jakubowskifield"
+              state: "WI"
+              zip: "45993"
+              country: "US"
+              mcc: "0763"
+              locationCode: "tpa"
+              contacts:
+                - contactName: "Dax"
+                  contactEmail: "Mandy65@heritagepro.com"
+                  contactPhone: "996-325-5420 x31028"
+              vendorStatus: 1
+              remitAddress1: "727 Terrell Streets"
+              remitAddress2: "Apt. 773"
+              remitCity: "South Nicholeside"
+              remitState: "ID"
+              remitZip: "72951-9790"
+              remitCountry: "US"
+            invoiceData:
+              - invoiceNumber: "VI3BvwTG"
+                netAmount: "1"
+                invoiceDate: "2026-09-03"
+                dueDate: "2026-11-04"
+                comments: "Building Repairs - Community event setup (System updates)"
+          response:
+            body:
+              responseCode: 1
+              pageIdentifier: null
+              roomId: 0
+              isSuccess: true
+              responseText: Success
+              responseData:
+                authCode: null
+                referenceId: 129-220
+                resultCode: 1
+                resultText: Authorized
+                avsResponseText: null
+                cvvResponseText: null
+                customerId: 12345
+                methodReferenceId: "12dea40cba9130s93s-12345"
+      method: POST
+      path: /MoneyOut/authorize
+      request:
+        body: moneyOutTypes.AuthorizePayoutBody
+        content-type: application/json
+        headers:
+          idempotencyKey: optional<root.IdempotencyKey>
+        name: moneyOutTypes.RequestOutAuthorize
+        query-parameters:
+          allowDuplicatedBills:
+            default: false
+            docs: >-
+              When `true`, the authorization bypasses the requirement for unique
+              bills, identified by vendor invoice number. This allows you to
+              make more than one payout authorization for a bill, like a split
+              payment.
+            type: optional<boolean>
+          doNotCreateBills:
+            default: false
+            docs: >-
+              When `true`, Payabli won't automatically create a bill for this
+              payout transaction.
+            type: optional<boolean>
+          forceVendorCreation:
+            default: false
+            docs: >-
+              When `true`, the request creates a new vendor record, regardless
+              of whether the vendor already exists.
+            type: optional<boolean>
+      response:
+        docs: Success
+        status-code: 200
+        type: moneyOutTypes.AuthCapturePayoutResponse
+      
+    CancelAllOut:
+      auth: true
+      display-name: Cancel list of payout transactions
+      docs: Cancels an array of payout transactions.
+      examples:
+        - name: CancelAll
+          request:
+            - 2-29
+            - 2-28
+            - 2-27
+          response:
+            body:
+              isSuccess: true
+              pageIdentifier: 'null'
+              responseCode: 1
+              responseData:
+                - CustomerId: 1000000
+                  ReferenceId: 129-230
+                  ResultCode: 1
+                  ResultText: Cancelled
+                - CustomerId: 1000000
+                  ReferenceId: 129-219
+                  ResultCode: 1
+                  ResultText: Cancelled
+              responseText: Success
+      method: POST
+      path: /MoneyOut/cancelAll
+      request:
+        body:
+          docs: Array of identifiers of payout transactions to cancel.
+          type: list<string>
+        content-type: application/json
+      response:
+        docs: Success
+        status-code: 200
+        type: moneyOutTypes.CaptureAllOutResponse
+      
+    CancelOut:
+      auth: true
+      display-name: Cancel a payout transaction
+      docs: Cancel a payout transaction by ID.
+      examples:
+        - name: CancelPayout
+          path-parameters:
+            referenceId: 129-219
+          response:
+            body:
+              isSuccess: true
+              responseText: Success
+              pageIdentifier: null
+              responseData: 
+                ReferenceId: 129-219
+                ResultCode: 1
+                ResultText: Approved
+                CustomerId: 0
+                AuthCode: null
+                cvvResponseText: null
+                avsResponseText: null
+                methodReferenceId: null
+      method: GET
+      path: /MoneyOut/cancel/{referenceId}
+      path-parameters:
+        referenceId:
+          docs: 'The ID for the payout transaction. '
+          type: string
+      response:
+        docs: Success
+        status-code: 200
+        type: root.PayabliApiResponse0000
+      
+    CaptureAllOut:
+      auth: true
+      display-name: Capture a list of authorized payout transactions
+      docs: Captures an array of authorized payout transactions for settlement. The maximum number of transactions that can be captured in a single request is 500.
+      examples:
+        - name: CaptureAll
+          request:
+            - 2-29
+            - 2-28
+            - 2-27
+          response:
+            body:
+              isSuccess: true
+              pageIdentifier: 'null'
+              responseCode: 1
+              responseData:
+                - CustomerId: 1000000
+                  ReferenceId: 129-230
+                  ResultCode: 1
+                  ResultText: Captured
+                - CustomerId: 1000000
+                  ReferenceId: 129-219
+                  ResultCode: 1
+                  ResultText: Captured
+              responseText: Success
+      method: POST
+      path: /MoneyOut/captureAll
+      request:
+        body:
+          docs: 'Array of identifiers of payout transactions to capture.  '
+          type: list<string>
+        content-type: application/json
+        headers:
+          idempotencyKey: optional<root.IdempotencyKey>
+        name: CaptureAllOutRequest
+      response:
+        docs: Success
+        status-code: 200
+        type: moneyOutTypes.CaptureAllOutResponse
+      
+    CaptureOut:
+      auth: true
+      display-name: Capture an authorized payout transaction
+      docs: Captures a single authorized payout transaction by ID.
+      examples:
+        - name: CapturePayout
+          path-parameters:
+            referenceId: 129-219
+          response:
+            body: $moneyOutTypes.AuthCapturePayoutResponse.Authorized
+      method: GET
+      path: /MoneyOut/capture/{referenceId}
+      path-parameters:
+        referenceId:
+          docs: 'The ID for the payout transaction. '
+          type: string
+      request:
+        headers:
+          idempotencyKey: optional<root.IdempotencyKey>
+        name: CaptureOutRequest
+      response:
+        docs: Success
+        status-code: 200
+        type: moneyOutTypes.AuthCapturePayoutResponse
+      
+    PayoutDetails:
+      auth: true
+      display-name: Get details for a processed payout transaction
+      docs: Returns details for a processed money out transaction.
+      examples:
+        - name: AuthorizedTransaction
+          path-parameters:
+            transId: 45-as456777hhhhhhhhhh77777777-324
+          response:
+            body:
+              Bills:
+                - invoiceNumber: "123B"
+                  netAmount: '8800.00'
+              CheckData: null
+              CheckNumber: null
+              Comments: testing
+              CreatedDate: '2022-07-01T15:00:01Z'
+              Events:
+                - EventTime: '2023-04-24T09:17:49Z'
+                  TransEvent: Authorized
+              FeeAmount: 0
+              Gateway: TSYS
+              IdOut: 350
+              LastUpdated: '2023-04-23T17:00:00Z'
+              NetAmount: 8800
+              ParentOrgName: PropertyManager Pro
+              PaymentData:
+                AccountType: ''
+                binData: $root.BinData.ExampleBinData
+                HolderName: ''
+                Initiator: payor
+                MaskedAccount: ''
+                Sequence: subsequent
+                SignatureData: SignatureData
+                StoredMethodUsageType: subscription
+              PaymentGroup: 2345667-ddd-fff
+              PaymentId: "12345678910"
+              PaymentMethod: managed
+              PaymentStatus: Authorized
+              PaypointDbaname: Sunshine Gutters
+              PaypointLegalname: Sunshine Services, LLC
+              Source: api
+              Status: 11
+              StatusText: Captured
+              TotalAmount: 8800
+              Vendor: $root.VendorQueryRecord.VendorQueryRecordExample
+              CreatedAt: null
+              ParentOrgId: null
+              externalPaypointID: null
+              EntryName: null
+              BatchId: null
+              HasVcardTransactions: false
+              IsSameDayACH: false
+              ScheduleId: null
+              SettlementStatus: null
+              RiskFlagged: false
+              RiskFlaggedOn: null
+              RiskStatus: null
+              RiskReason: null
+              RiskAction: null
+              RiskActionCode: null
+     
+        - name: AuthorizeAndCapturedTransaction
+          path-parameters:
+            transId: 45-as456777hhhhhhhhhh77777777-324
+          response:
+            body:
+              Bills:
+                - invoiceNumber: "123B"
+                  netAmount: '8800.00'
+              CheckData: null
+              CheckNumber: null
+              Comments: testing
+              CreatedDate: '2022-07-01T15:00:01Z'
+              Events:
+                - EventTime: '2023-04-24T09:00:33Z'
+                  TransEvent: Authorized
+                - EventData:
+                    custId: PAYABLITST
+                    dateCreated: '2023-04-24T16:14:28Z'
+                    dateModified: '2023-04-24T16:14:28Z'
+                    group:
+                      approved: false
+                      custId: PAYABLITST
+                      dateCreated: '2023-04-24T16:14:28Z'
+                      dateModified: '2023-04-24T16:14:28Z'
+                      id: acd5ddd9-42be-4822-bc02-46e7c560d8a4
+                      links:
+                        - href: >-
+                            https://cert-api.cpayplus.com/payments/groups/acd5ddd9-42be-4822-bc02-46e7c560d8a4
+                          rel: cancel
+                          type: DELETE
+                        - href: >-
+                            https://cert-api.cpayplus.com/payments/groups/acd5ddd9-42be-4822-bc02-46e7c560d8a4/approve
+                          rel: approve
+                          type: POST
+                        - href: >-
+                            https://cert-api.cpayplus.com/payments/groups/acd5ddd9-42be-4822-bc02-46e7c560d8a4
+                          rel: self
+                          type: GET
+                      name: 187-20230424-PAYABLITST
+                      status: Waiting Funds
+                      totalAmount: '8800.00'
+                    id: 1ede3eb2-a564-43b5-b2d2-7195f6d9fded
+                    invoices:
+                      - invoiceNumber: "123B"
+                        netAmount: '8800.00'
+                    links:
+                      - href: >-
+                          https://cert-api.cpayplus.com/payments/1ede3eb2-a564-43b5-b2d2-7195f6d9fded/resendRemit
+                        rel: resendRemit
+                        type: POST
+                      - href: >-
+                          https://cert-api.cpayplus.com/payments/1ede3eb2-a564-43b5-b2d2-7195f6d9fded
+                        rel: cancel
+                        type: DELETE
+                      - href: >-
+                          https://cert-api.cpayplus.com/payments/1ede3eb2-a564-43b5-b2d2-7195f6d9fded
+                        rel: self
+                        type: GET
+                      - href: >-
+                          https://cert-api.cpayplus.com/payments/1ede3eb2-a564-43b5-b2d2-7195f6d9fded/reissue
+                        rel: reissue
+                        type: POST
+                    paymentNumber: 187-349
+                    paymentStatus: Awaiting Funds
+                    paymentType: VCard
+                    remitAddress:
+                      address1: 5724 daughtery downs Loop
+                      address2: ''
+                      city: Lakeland
+                      countryCode: US
+                      state: FL
+                      zip: '33809'
+                    vendor:
+                      address:
+                        address1: 5724 DAUGHTERY DOWNS LOOP
+                        address2: ''
+                        city: LAKELAND
+                        countryCode: US
+                        state: FL
+                        zip: '33809'
+                      contactEmail: paul@payabli.com
+                      custId: PAYABLITST
+                      dateCreated: '2023-04-07T15:10:13Z'
+                      dateModified: '2023-04-17T15:39:33Z'
+                      email: paul@payabli.com
+                      id: d7d92fac-fd8a-4ce9-8f92-62ee979b43fe
+                      links:
+                        - href: >-
+                            https://cert-api.cpayplus.com/payments/d7d92fac-fd8a-4ce9-8f92-62ee979b43fe
+                          rel: self
+                          type: GET
+                      paymentType: VCard
+                      status: Enrolled
+                      statusReason: Customer Enrolled
+                      vendorName1: PAUL'S
+                      vendorNumber: '54321'
+                      vendorPhone: '19706188888'
+                      vendorTaxId: '123456789'
+                  EventTime: '2023-04-24T09:14:28Z'
+                  TransEvent: Captured
+              FeeAmount: 0
+              Gateway: TSYS
+              IdOut: 349
+              LastUpdated: '2023-04-23T17:00:00Z'
+              NetAmount: 8800
+              ParentOrgName: PropertyManager Pro
+              PaymentData:
+                AccountType: ''
+                binData: $root.BinData.ExampleBinData
+                HolderName: ''
+                Initiator: payor
+                MaskedAccount: ''
+                Sequence: subsequent
+                SignatureData: SignatureData
+                StoredMethodUsageType: subscription
+              PaymentGroup: 2345667-ddd-fff
+              PaymentId: "1234567890"
+              PaymentMethod: managed
+              PaymentStatus: Captured
+              PaypointDbaname: Sunshine Gutters
+              PaypointLegalname: Sunshine Services, LLC
+              Source: api
+              Status: 1
+              StatusText: Captured
+              TotalAmount: 8800
+              Vendor: $root.VendorQueryRecord.VendorQueryRecordExample
+              CreatedAt: null
+              ParentOrgId: null
+              externalPaypointID: null
+              EntryName: null
+              BatchId: null
+              HasVcardTransactions: false
+              IsSameDayACH: false
+              ScheduleId: null
+              SettlementStatus: null
+              RiskFlagged: false
+              RiskFlaggedOn: null
+              RiskStatus: null
+              RiskReason: null
+              RiskAction: null
+              RiskActionCode: null
+
+          
+      method: GET
+      path: /MoneyOut/details/{transId}
+      path-parameters:
+        transId:
+          docs: ReferenceId for the transaction (PaymentId).
+          type: string
+      response:
+        docs: Success
+        status-code: 200
+        type: root.BillDetailResponse
+      
+    VCardGet:
+      auth: true
+      display-name: Get a virtual card
+      docs: Retrieves vCard details for a single card in an entrypoint.
+      examples:
+        - name: GetVCard
+          path-parameters:
+            cardToken: '20230403315245421165'
+          response:
+            body:
+              vcardSent: false
+              cardToken: '20231206142225226104'
+              cardNumber: 553232XXXXXX3179
+              cvc: XXX
+              expirationDate: '2025-05-01'
+              status: null
+              amount: 120
+              currentBalance: 120
+              expenseLimit: 20
+              expenseLimitPeriod: null
+              maxNumberOfUses: 1
+              currentNumberOfUses: 0
+              exactAmount: true
+              mcc: null
+              tcc: null
+              misc1: null
+              misc2: null
+              dateCreated: '2023-12-06T20:25:31.077'
+              dateModified: '2023-12-06T00:00:00'
+              associatedVendor:
+                VendorNumber: VENDOR123456
+                Name1: Smith Industries
+                Name2: John Smith
+                EIN: 12-3456789
+                Phone: 555-123-4567
+                Email: contact@smithindustries.com
+                RemitEmail: null
+                Address1: 1234 Main Street
+                Address2: Suite 200
+                City: New York
+                State: NY
+                Zip: '10001'
+                Country: USA
+                Mcc: '5411'
+                LocationCode: null
+                Contacts:
+                  - ContactName: Herman Martinez
+                    ContactEmail: herman@hermanscoatings.com
+                    ContactTitle: Owner
+                    ContactPhone: '3055550000'
+                BillingData:
+                  id: 123
+                  accountId: null
+                  nickname: Checking Account
+                  bankName: Chase Bank
+                  routingAccount: '021000021'
+                  accountNumber: 3XXXXXX8888
+                  typeAccount: Checking
+                  bankAccountHolderName: Gruzya Adventure Outfitters LLC
+                  bankAccountHolderType: Business
+                  bankAccountFunction: 0
+                  verified: true
+                  status: 1
+                  services: []
+                  default: true
+                PaymentMethod: vcard
+                VendorStatus: 1
+                VendorId: 339
+                EnrollmentStatus: null
+                Summary:
+                  ActiveBills: 1
+                  ActiveBillsAmount: 1.1
+                  ApprovedBills: 1
+                  ApprovedBillsAmount: 1.1
+                  DisapprovedBills: 1
+                  DisapprovedBillsAmount: 1.1
+                  InTransitBills: 0
+                  InTransitBillsAmount: 0
+                  OverdueBills: 1
+                  OverdueBillsAmount: 100
+                  PaidBills: 0
+                  PaidBillsAmount: 0
+                  PendingBills: 1
+                  PendingBillsAmount: 100
+                  TotalBills: 1
+                  TotalBillsAmount: 100
+                PaypointLegalname: Athlete Factory LLC
+                PaypointDbaname: Athlete Factory LLC
+                PaypointEntryname: PaypointEntryname
+                ParentOrgName: HOA Manager Pro
+                ParentOrgId: 1232
+                CreatedDate: '2022-07-01T15:00:01Z'
+                LastUpdated: '2022-07-01T15:00:01Z'
+                remitAddress1: 123 Walnut Street
+                remitAddress2: Suite 900
+                remitCity: Miami
+                remitState: FL
+                remitZip: '31113'
+                remitCountry: US
+                payeeName1: null
+                payeeName2: null
+                customField1: customField1
+                customField2: customField2
+                customerVendorAccount: null
+                InternalReferenceId: 27
+                additionalData: null
+                externalPaypointID: null
+                StoredMethods: null
+              associatedCustomer: null
+              ParentOrgName: HOA Manager Pro
+              PaypointDbaname: Athlete Factory LLC
+              PaypointLegalname: Athlete Factory LLC
+              PaypointEntryname: 47acde49
+              externalPaypointID: null
+              paypointId: 12345
+      method: GET
+      path: /MoneyOut/vcard/{cardToken}
+      path-parameters:
+        cardToken:
+          docs: ID for a virtual card.
+          type: string
+      response:
+        docs: Success
+        status-code: 200
+        type: moneyOutTypes.VCardGetResponse
+
+    SendVCardLink:
+      auth: true
+      path: /vcard/send-card-link
+      method: POST
+      display-name: Send virtual card link
+      docs: Sends a virtual card link via email to the vendor associated with the `transId`.
+      request:
+        name: SendVCardLinkRequest
+        body:
+          properties:
+            transId:
+              type: string
+              docs: The transaction ID of the virtual card payout. The ID is returned as `ReferenceId` in the response when you authorize a payout with POST /MoneyOut/authorize.
+      response: moneyOutTypes.OperationResult
+      examples:
+        - name: SendVCardLink
+          request:
+            transId: "01K33Z6YQZ6GD5QVKZ856MJBSC"
+          response:
+            body:
+              message: "Successfully sent email to: vendor@vendor.com"
+              success: true
+
+
+
+    GetCheckImage:
+      auth: true
+      display-name: Get check image
+      docs: |
+        Retrieve the image of a check associated with a processed transaction. 
+        The check image is returned in the response body as a base64-encoded string. 
+        The check image is only available for payouts that have been processed.
+      examples:
+        - name: GetCheckImage
+          path-parameters:
+            assetName: check133832686289732320_01JKBNZ5P32JPTZY8XXXX000000.pdf
+          response:
+            body: 
+              "%PDF-1.7\n%����\n123 0 obj\n<</Linearized 1/L 123456/O 125/E 78901/N 1/T 123450/H [ 800 200]>>\nendobj\n\n124 0 obj\n<</DecodeParms<</Columns 4/Predictor 12>>/Filter/FlateDecode/ID[<AB123C4567EF890123456789ABCDEF01><12345678ABCDEF9876543210FEDCBA98>]/Index[123 100]/Info 122 0 R/Length 128/Prev 123450/Root 125 0 R/Size 223/Type/XRef/W[1 3 1]>>stream\nh�bbd```b``�\n\"x�a7�r�H~�����A�D���2����m�f��L`v6�H����D���J[@����H8�I��)0��q� XD��`��a���P�`�`��\"�A$������r���p�$�Ip������a� �"
+      method: GET
+      path: /MoneyOut/checkimage/{assetName}
+      path-parameters:
+        assetName:
+          type: string
+          docs: |
+            Name of the check asset to retrieve. This is returned as `filename` in the `CheckData` object 
+            in the response when you make a GET request to `/MoneyOut/details/{transId}`.
+            ```
+                "CheckData": {
+                  "ftype": "PDF",
+                  "filename": "check133832686289732320_01JKBNZ5P32JPTZY8XXXX000000.pdf",
+                  "furl": "",
+                  "fContent": ""
+              }
+            ```
+      response:
+        type: string
+        docs: A base64-encoded string of the check image.

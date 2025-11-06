@@ -1,0 +1,908 @@
+imports:
+  root: __package__.yml
+types:
+    
+  EditBillResponse:
+    properties:
+      responseCode: optional<root.Responsecode>
+      pageIdentifier: optional<root.PageIdentifier>
+      roomId: optional<root.RoomIdNotInUse>
+      isSuccess: optional<root.IsSuccess>
+      responseText: root.ResponseText
+      responseData:
+        docs: >
+          If `isSuccess` = true, this contains the bill identifier. If
+          `isSuccess` = false, this contains the reason for the error. 
+        type: optional<integer>
+
+  GetBillResponse:
+    docs: >
+      A successful response returns a bill object with all its details.
+      If the bill isn't found, the response will contain an error message.
+    properties:
+      responseCode: optional<root.Responsecode>
+      pageIdentifier: optional<root.PageIdentifier>
+      roomId: optional<root.RoomIdNotInUse>
+      isSuccess: optional<root.IsSuccess>
+      responseText: root.ResponseText
+      responseData: optional<BillResponseData>
+
+  BillResponseData:
+    properties:
+      IdBill: optional<root.BillId>
+      BillNumber:
+        docs: Unique identifier for the bill.
+        type: optional<string>
+      NetAmount:
+        docs: Net amount owed in bill.
+        type: optional<double>
+      Discount:
+        docs: Bill discount amount.
+        type: optional<double>
+      TotalAmount:
+        docs: Total amount for the bill.
+        type: optional<double>
+      BillDate:
+        docs: |
+          Date of bill. Accepted formats: YYYY-MM-DD, MM/DD/YYYY
+        type: optional<root.Datenullable>
+      DueDate:
+        docs: |
+          Due Date of bill. Accepted formats: YYYY-MM-DD, MM/DD/YYYY
+        type: optional<root.Datenullable>
+      Comments: optional<root.Comments>
+      BatchNumber:
+        docs: The batch number that the bill belongs to.
+        type: optional<string>
+      BillItems:
+        docs: Array of `LineItems` contained in bill.
+        type: optional<root.Billitems>
+      Mode:
+        docs: >-
+          Bill mode: value `0` for single/one-time bills, `1` for scheduled
+          bills.
+        type: optional<integer>
+      PaymentMethod: 
+        docs: Payment method used for the bill.
+        type: optional<string>
+      PaymentId: 
+        docs: Payment ID associated with the bill.
+        type: optional<string>
+      AccountingField1: optional<root.AccountingField>
+      AccountingField2: optional<root.AccountingField>
+      Terms: optional<root.Terms>
+      Source: 
+        docs: The source of the bill, such as "API" or "UI".
+        type: optional<string>
+      AdditionalData: optional<root.AdditionalDataString>
+      Vendor: optional<root.VendorDataResponse>
+      Status: optional<root.Billstatus>
+      CreatedAt: optional<root.CreatedAt>
+      EndDate:
+        docs: End date for scheduled bills. Applied only in `Mode` = 1.
+        type: optional<root.Datenullable>
+      LastUpdated: optional<root.LastModified>
+      Frequency:
+        docs: Frequency for scheduled bills. Applied only in `Mode` = 1.
+        type: optional<root.Frequency>
+      Transaction:
+        docs: MoneyOut transaction associated to the bill
+        type: optional<root.TransactionOutQueryRecord>
+      billEvents: optional<root.BillEvents>
+      billApprovals: optional<root.BillApprovals>
+      PaypointLegalname: optional<root.Legalname>
+      PaypointDbaname: optional<root.Dbaname>
+      ParentOrgId: optional<root.OrgParentId>
+      ParentOrgName: optional<root.OrgParentName>
+      PaypointEntryname: optional<root.Entrypointfield>
+      paylinkId: optional<root.PaylinkId>
+      DocumentsRef:
+        docs: Object with the attached documents.
+        type: optional<root.DocumentsRef>
+      externalPaypointID: optional<root.ExternalPaypointId>
+      LotNumber: 
+        docs: Lot number of the bill.
+        type: optional<string>
+      EntityID: optional<root.EntityId>
+
+
+  ModifyApprovalBillResponse:
+    extends:
+      - root.PayabliApiResponseGeneric2Part
+    properties:
+      responseData:
+        docs: >
+          If `isSuccess` = true, this contains the bill identifier. If
+          `isSuccess` = false, this contains the reason for the error. 
+        type: optional<integer>
+
+  SetApprovedBillResponse:
+    extends:
+      - root.PayabliApiResponseGeneric2Part
+    properties:
+      responseData:
+        docs: >
+          If `isSuccess` = true, this contains the bill identifier. If
+          `isSuccess` = false, this contains the reason for the error. 
+        type: optional<integer>
+  
+  BillOutData:
+    properties:
+      accountingField1: optional<root.AccountingField>
+      accountingField2: optional<root.AccountingField>
+      additionalData: optional<root.AdditionalDataString>
+      attachments: 
+        docs: |
+          An array of bill images. Attachments aren't required, but we strongly recommend including them. Including a bill image can make payouts smoother and prevent delays. You can include either the Base64-encoded file content, or you can include an fURL to a public file. The maximum file size for image uploads is 30 MB.
+        type: optional<root.Attachments>
+      billDate:
+        docs: 'Date of bill. Accepted formats: YYYY-MM-DD, MM/DD/YYYY.'
+        type: optional<root.Datenullable>
+      billItems: optional<root.Billitems>
+      billNumber:
+        docs: Unique identifier for the bill. Required when adding a bill.
+        type: optional<string>
+      comments: optional<root.Comments>
+      discount:  # TODO: NEW FIELD - missing from current schema
+        docs: Discount amount applied to the bill.
+        type: optional<double>
+      dueDate:
+        docs: 'Due date of bill. Accepted formats: YYYY-MM-DD, MM/DD/YYYY.'
+        type: optional<root.Datenullable>
+      endDate:
+        docs: >-
+          End Date for scheduled bills. Applied only in `Mode` = 1. Accepted
+          formats: YYYY-MM-DD, MM/DD/YYYY
+        type: optional<root.Datenullable>
+      frequency:
+        docs: Frequency for scheduled bills. Applied only in `Mode` = 1.
+        type: optional<root.Frequency>
+      lotNumber:
+        docs: Lot number associated with the bill.
+        type: optional<string>
+      mode:
+        docs: 'Bill mode: value `0` for one-time bills, `1` for scheduled bills.'
+        type: optional<integer>
+      netAmount:
+        docs: Net Amount owed in bill. Required when adding a bill.
+        type: optional<double>
+      scheduledOptions:
+        docs: Options for scheduled bills.
+        type: optional<BillOutDataScheduledOptions>
+        availability: in-development
+      status: optional<root.Billstatus>
+      terms: optional<root.Terms>
+      totalAmount:
+        docs: Total amount of the bill.
+        type: optional<double>
+      vendor: 
+        docs: >-
+          The vendor associated with the bill. Although you can create a vendor in a create bill request, Payabli recommends creating a vendor separately and passing a valid `vendorNumber` here. At minimum, the `vendorNumber` is required. 
+        type: optional<root.VendorData>
+
+  BillOutDataScheduledOptions:
+    properties:
+      storedMethodId: 
+        docs: |
+          The ID of the stored payment method to use for the bill.
+        type: optional<string>
+  
+  BillResponse:
+    properties:
+      responseCode: optional<root.Responsecode>
+      pageIdentifier: optional<root.PageIdentifier>
+      roomId: optional<root.RoomIdNotInUse>
+      isSuccess: optional<root.IsSuccess>
+      responseText: root.ResponseText
+      responseData:
+        docs: >
+          If `isSuccess` = true, this contains the bill identifier. If
+          `isSuccess` = false, this contains the reason for the error.  
+        type: optional<root.Responsedatanonobject>
+
+service:
+  auth: false
+  base-path: ''
+  endpoints:
+    AddBill:
+      auth: true
+      display-name: Add bill
+      docs: Creates a bill in an entrypoint.
+      examples:
+        - name: CreateBill
+          path-parameters:
+            entry: 8cfec329267
+          request:
+            billNumber: ABC-123
+            netAmount: 3762.87
+            billDate: '2024-07-01'
+            dueDate: '2024-07-01'
+            comments: Deposit for materials
+            billItems:
+              - itemProductCode: M-DEPOSIT
+                itemProductName: Materials deposit
+                itemDescription: Deposit for materials
+                itemCommodityCode: '010'
+                itemUnitOfMeasure: SqFt
+                itemCost: 5
+                itemQty: 1
+                itemMode: 0
+                itemCategories:
+                  - deposits
+                itemTotalAmount: 123
+                itemTaxAmount: 7
+                itemTaxRate: 0.075
+            mode: 0
+            accountingField1: MyInternalId
+            vendor:
+              vendorNumber: '1234-A'
+            endDate: '2024-07-01'
+            frequency: monthly
+            terms: NET30
+            status: -99
+            attachments:
+              - ftype: pdf
+                filename: my-doc.pdf
+                furl: https://mysite.com/my-doc.pdf
+          response:
+            body:
+              responseCode: 1
+              pageIdentifier: null
+              roomId: 0
+              isSuccess: true
+              responseText: Success
+              responseData: 6101
+      method: POST
+      path: /Bill/single/{entry}
+      path-parameters:
+        entry:
+          docs: >-
+            The paypoint's entrypoint identifier. [Learn
+            more](/api-reference/api-overview#entrypoint-vs-entry)
+          type: string
+      request:
+        body: BillOutData
+        content-type: application/json
+        headers:
+          idempotencyKey: optional<root.IdempotencyKey>
+        name: AddBillRequest
+      response:
+        docs: Success
+        status-code: 200
+        type: BillResponse
+      
+    deleteAttachedFromBill:
+      auth: true
+      display-name: Delete attached file from bill
+      docs: Delete a file attached to a bill.
+      examples:
+        - name: DeleteAttachment
+          path-parameters:
+            filename: 0_Bill.pdf
+            idBill: 285
+          response:
+            body:
+              responseCode: 1
+              pageIdentifier: null
+              roomId: 0
+              isSuccess: true
+              responseText: Success
+              responseData: 6101
+      method: DELETE
+      path: /Bill/attachedFileFromBill/{idBill}/{filename}
+      path-parameters:
+        filename:
+          docs: |
+            The filename in Payabli. Filename is `zipName` in response to a
+            request to `/api/Invoice/{idInvoice}`. Here, the filename is
+            `0_Bill.pdf`. 
+
+            ```json
+              "DocumentsRef": {
+                "zipfile": "inva_269.zip",
+                "filelist": [
+                  {
+                    "originalName": "Bill.pdf",
+                    "zipName": "0_Bill.pdf",
+                    "descriptor": null
+                  }
+                ]
+              }
+              ```
+          type: string
+        idBill:
+          docs: >-
+            Payabli ID for the bill. Get this ID by querying `/api/Query/bills/`
+            for the entrypoint or the organization.
+          type: integer
+      request:
+        name: DeleteAttachedFromBillRequest
+        query-parameters:
+          returnObject:
+            default: false
+            docs: >-
+              When `true`, the request returns the file content as a
+              Base64-encoded string.
+            type: optional<boolean>
+      response:
+        docs: Success
+        status-code: 200
+        type: BillResponse
+      
+    DeleteBill:
+      auth: true
+      display-name: Delete bill
+      docs: Deletes a bill by ID.
+      examples:
+        - name: SuccessResponse
+          path-parameters:
+            idBill: 285
+          response:
+            body:
+              responseCode: 1
+              pageIdentifier: null
+              roomId: 0
+              isSuccess: true
+              responseText: Success
+              responseData: 6101
+      method: DELETE
+      path: /Bill/{idBill}
+      path-parameters:
+        idBill:
+          docs: >-
+            Payabli ID for the bill. Get this ID by querying `/api/Query/bills/`
+            for the entrypoint or the organization.
+          type: integer
+      response:
+        docs: Success
+        status-code: 200
+        type: BillResponse
+      
+    EditBill:
+      auth: true
+      display-name: Update bill
+      docs: Updates a bill by ID.
+      examples:
+        - name: UpdateBill
+          path-parameters:
+            idBill: 285
+          request:
+            netAmount: 3762.87
+            billDate: '2025-07-01'
+          response:
+            body:
+              responseCode: 1
+              pageIdentifier: null
+              roomId: 0
+              isSuccess: true
+              responseText: Success
+              responseData: 6101
+
+      method: PUT
+      path: /Bill/{idBill}
+      path-parameters:
+        idBill:
+          docs: >-
+            Payabli ID for the bill. Get this ID by querying `/api/Query/bills/`
+            for the entrypoint or the organization.
+          type: integer
+      request:
+        body: BillOutData
+        content-type: application/json
+      response:
+        docs: Success
+        status-code: 200
+        type: EditBillResponse
+      
+    getAttachedFromBill:
+      auth: true
+      display-name: Get attached file from bill
+      docs: Retrieves a file attached to a bill, either as a binary file or as a Base64-encoded string.
+      method: GET
+      path: /Bill/attachedFileFromBill/{idBill}/{filename}
+      path-parameters:
+        filename:
+          docs: >
+            The filename in Payabli. Filename is `zipName` in response to a
+            request to `/api/Invoice/{idInvoice}`. Here, the filename is
+            `0_Bill.pdf``. 
+
+            "DocumentsRef": {
+              "zipfile": "inva_269.zip",
+              "filelist": [
+                {
+                  "originalName": "Bill.pdf",
+                  "zipName": "0_Bill.pdf",
+                  "descriptor": null
+                }
+              ]
+            }
+          type: string
+        idBill:
+          docs: >-
+            Payabli ID for the bill. Get this ID by querying `/api/Query/bills/`
+            for the entrypoint or the organization.
+          type: integer
+      examples: 
+        - name: GetAttachedFile
+          path-parameters:
+            filename: 0_Bill.pdf
+            idBill: 285
+          query-parameters:
+            returnObject: true
+          response:
+            body:
+              fContent: TXkgdGVzdCBmaWxlHJ==...
+              filename: my-doc.pdf
+              ftype: pdf
+              furl: https://mysite.com/my-doc.pdf
+      request:
+        name: GetAttachedFromBillRequest
+        query-parameters:
+          returnObject:
+            default: false
+            docs: >-
+              When `true`, the request returns the file content as a
+              Base64-encoded string.
+            type: optional<boolean>
+      response:
+        docs: A successful response returns a binary file when `returnObject` is `false`. When `returnObject` is `true`, the response contains the file content as a Base64-encoded string in an object. Due to technical limitations, only the object response is documented here.
+        status-code: 200
+        type: root.FileContent
+      
+    GetBill:
+      auth: true
+      display-name: Get bill
+      docs: Retrieves a bill by ID from an entrypoint.
+      examples:
+        - name: GetBillbyId
+          path-parameters:
+            idBill: 285
+          response:
+            body:
+              responseCode: 1 
+              pageIdentifier: null
+              roomId: 0
+              isSuccess: true
+              responseText: Success
+              responseData:
+                IdBill: 285
+                BillNumber: ABC-123
+                NetAmount: 100.00
+                Discount: null
+                TotalAmount: 100.00
+                BillDate: '2025-07-01'
+                DueDate: '2025-07-01'
+                Comments: Deposit for materials
+                BatchNumber: null
+                BillItems:
+                  - itemTotalAmount: 123
+                    itemTaxAmount: 7
+                    itemTaxRate: 0.075
+                    itemProductCode: M-DEPOSIT
+                    itemProductName: Materials deposit
+                    itemDescription: Deposit for materials.
+                    itemCommodityCode: '010'
+                    itemUnitOfMeasure: SqFt
+                    itemCost: 5
+                    itemQty: 1
+                    itemMode: 0
+                    itemCategories: null
+                Mode: 0
+                PaymentMethod: null
+                PaymentId: null
+                AccountingField1: MyInternalId
+                AccountingField2: MyInternalId
+                Terms: null
+                Source: null
+                AdditionalData: null
+                Vendor: $root.VendorDataResponse.ExampleVendorDataResponse
+                Status: -99
+                CreatedAt: '2025-07-01T15:00:01Z'
+                EndDate: null
+                LastUpdated: '2025-07-01T15:00:01Z'
+                Frequency: null
+                billEvents:
+                  - description: Created Bill
+                    eventTime: '2025-07-01T15:00:01Z'
+                    refData: REF-12345
+                    extraData: null
+                    source: API
+                billApprovals: null
+                PaypointLegalname: Gruzya Adventure Outfitters LLC 
+                PaypointDbaname: Gruzya Adventure Outfitters
+                ParentOrgId: 1232
+                ParentOrgName: Pilgrim Planner
+                PaypointEntryname: 41035afaa7
+                paylinkId: null
+                DocumentsRef:
+                  zipfile: documents_285.zip
+                  filelist:
+                    - originalName: invoice.pdf
+                      zipName: 0_invoice.pdf
+                      descriptor: Invoice document
+                externalPaypointID: null
+                LotNumber: LOT-285
+                EntityID: null
+
+      method: GET
+      path: /Bill/{idBill}
+      path-parameters:
+        idBill:
+          docs: >-
+            Payabli ID for the bill. Get this ID by querying `/api/Query/bills/`
+            for the entrypoint or the organization.
+          type: integer
+      response:
+        docs: Success
+        status-code: 200
+        type: GetBillResponse
+      
+    ListBills:
+      auth: true
+      display-name: Get list of bills for entrypoint
+      docs: >-
+        Retrieve a list of bills for an entrypoint. Use filters to limit
+        results. Include the `exportFormat` query parameter to return the results as a file instead of a JSON response.
+      examples:
+        - name: ListBillsEntry
+          path-parameters:
+            entry: 8cfec329267
+          query-parameters:
+            fromRecord: 251
+            limitRecord: 0
+            sortBy: desc(field_name)
+          response:
+            body: $root.BillQueryResponse.ListBillsExample
+      method: GET
+      path: /Query/bills/{entry}
+      path-parameters:
+        entry:
+          docs: >-
+            The paypoint's entrypoint identifier. [Learn
+            more](/api-reference/api-overview#entrypoint-vs-entry)
+          type: string
+      request:
+        name: ListBillsRequest
+        query-parameters:
+          exportFormat: optional<root.ExportFormat>
+          fromRecord:
+            default: 0
+            docs: >-
+              The number of records to skip before starting to collect the
+              result set. 
+            type: optional<integer>
+          limitRecord:
+            default: 20
+            docs: >-
+              Max number of records to return for the query. Use `0` or negative
+              value to return all records.
+            type: optional<integer>
+          parameters:
+            docs: >
+              Collection of field names, conditions, and values used to filter
+              the query
+
+              <Info>
+                **You must remove `parameters=` from the request before you send it, otherwise Payabli will ignore the filters.**
+
+                Because of a technical limitation, you can't make a request that includes filters from the API console on this page. The response isn't filtered. Instead, copy the request, remove `parameters=` and run the request in a different client.
+
+                For example:
+
+                --url https://api-sandbox.payabli.com/api/Query/transactions/org/236?parameters=totalAmount(gt)=1000&limitRecord=20
+
+                should become:
+
+                --url https://api-sandbox.payabli.com/api/Query/transactions/org/236?totalAmount(gt)=1000&limitRecord=20
+              </Info>
+
+              See [Filters and Conditions
+              Reference](/developers/developer-guides/pay-ops-reporting-engine-overview#filters-and-conditions-reference)
+              for help.
+
+
+              List of field names accepted:
+
+              - `frequency` (`in`, `nin`, `ne`, `eq`)
+
+              - `method` (`in`, `nin`, `eq`, `ne`)
+
+              - `event` (`in`, `nin`, `eq`, `ne`)
+
+              - `target` (`ct`, `nct`, `eq`, `ne`)
+
+              - `status` (`eq`, `ne`)
+
+              - `approvalUserId` (`eq`, `ne`)
+
+              - `parentOrgId` (`ne`, `eq`, `nin`, `in`)
+
+              - `approvalUserEmail` (`eq`, `ne`)
+
+              - `scheduleId` (`ne`, `eq`)
+
+
+              List of comparison accepted - enclosed between parentheses:
+
+              - `eq` or empty => equal
+
+              - `gt` => greater than
+
+              - `ge` => greater or equal
+
+              - `lt` => less than
+
+              - `le` => less or equal
+
+              - `ne` => not equal
+
+              - `ct` => contains
+
+              - `nct` => not contains
+
+              - `in` => inside array
+
+              - `nin` => not inside array
+
+
+              List of parameters accepted:
+
+              - `limitRecord` : max number of records for query (default="20", "0"
+              or negative value for all)
+
+              - `fromRecord` : initial record in query
+
+              Example: `totalAmount(gt)=20` returns all records with a `totalAmount` that's greater than 20.00
+            type: optional<map<string, optional<string>>>
+          sortBy:
+            docs: >-
+              The field name to use for sorting results. Use `desc(field_name)`
+              to sort descending by `field_name`, and use `asc(field_name)` to
+              sort ascending by `field_name`.
+            type: optional<string>
+      response:
+        docs: Success
+        status-code: 200
+        type: root.BillQueryResponse
+      
+    ListBillsOrg:
+      auth: true
+      display-name: Get list of bills for organization
+      docs: >-
+        Retrieve a list of bills for an organization. Use filters to limit
+        results. Include the `exportFormat` query parameter to return the results as a file instead of a JSON response.
+      examples:
+        - name: ListBillsOrg
+          path-parameters:
+            orgId: 123
+          query-parameters:
+            fromRecord: 251
+            limitRecord: 0
+            sortBy: desc(field_name)
+          response:
+            body: $root.BillQueryResponse.ListBillsExample
+      method: GET
+      path: /Query/bills/org/{orgId}
+      path-parameters:
+        orgId:
+          docs: The numeric identifier for organization, assigned by Payabli.
+          type: integer
+      request:
+        name: ListBillsOrgRequest
+        query-parameters:
+          exportFormat: optional<root.ExportFormat>
+          fromRecord:
+            default: 0
+            docs: >-
+              The number of records to skip before starting to collect the
+              result set.
+            type: optional<integer>
+          limitRecord:
+            default: 20
+            docs: >-
+              Max number of records to return for the query. Use `0` or negative
+              value to return all records.
+            type: optional<integer>
+          parameters:
+            docs: >
+              Collection of field names, conditions, and values used to filter
+              the query
+
+              <Info>
+                **You must remove `parameters=` from the request before you send it, otherwise Payabli will ignore the filters.**
+
+                Because of a technical limitation, you can't make a request that includes filters from the API console on this page. The response isn't filtered. Instead, copy the request, remove `parameters=` and run the request in a different client.
+
+                For example:
+
+                --url https://api-sandbox.payabli.com/api/Query/transactions/org/236?parameters=totalAmount(gt)=1000&limitRecord=20
+
+                should become:
+
+                --url https://api-sandbox.payabli.com/api/Query/transactions/org/236?totalAmount(gt)=1000&limitRecord=20
+              </Info>
+
+              See [Filters and Conditions
+              Reference](/developers/developer-guides/pay-ops-reporting-engine-overview#filters-and-conditions-reference)
+              for help.
+
+
+              List of field names accepted:
+
+              - `frequency` (in, nin, ne, eq)
+
+              - `method` (in, nin, eq, ne)
+
+              - `event` (in, nin, eq, ne)
+
+              - `target` (ct, nct, eq, ne)
+
+              - `status` (eq, ne)
+
+              - `parentOrgId` (ne, eq, nin, in)
+
+              - `approvalUserId` (eq, ne)
+
+              - `approvalUserEmail` (eq, ne)
+
+
+              List of comparison accepted - enclosed between parentheses:
+
+              - eq or empty => equal
+
+              - gt => greater than
+
+              - ge => greater or equal
+
+              - lt => less than
+
+              - le => less or equal
+
+              - ne => not equal
+
+              - ct => contains
+
+              - nct => not contains
+
+              - in => inside array
+
+              - nin => not inside array
+
+
+              List of parameters accepted:
+
+              - limitRecord : max number of records for query (default="20", "0"
+              or negative value for all)
+
+              - fromRecord : initial record in query
+
+
+              Example: totalAmount(gt)=20 return all records with totalAmount
+              greater than 20.00
+            type: optional<map<string, optional<string>>>
+          sortBy:
+            docs: >-
+              The field name to use for sorting results. Use `desc(field_name)`
+              to sort descending by `field_name`, and use `asc(field_name)` to
+              sort ascending by `field_name`.
+            type: optional<string>
+      response:
+        docs: Success
+        status-code: 200
+        type: root.BillQueryResponse
+      
+    ModifyApprovalBill:
+      auth: true
+      display-name: Change bill approvers
+      docs: Modify the list of users the bill is sent to for approval.
+      examples:
+        - path-parameters:
+            idBill: 285
+          request:
+            - string
+          response:
+            body:
+              isSuccess: true
+              responseData: 6101
+              responseText: Success
+      method: PUT
+      path: /Bill/approval/{idBill}
+      path-parameters:
+        idBill:
+          docs: >-
+            Payabli ID for the bill. Get this ID by querying `/api/Query/bills/`
+            for the entrypoint or the organization.
+          type: integer
+      request:
+        body: list<string>
+        content-type: application/json
+      response:
+        docs: Success
+        status-code: 200
+        type: ModifyApprovalBillResponse
+      
+    SendToApprovalBill:
+      auth: true
+      display-name: Send a bill to approval
+      docs: Send a bill to a user or list of users to approve.
+      examples:
+        - name: SendForApproval
+          headers:
+            idempotencyKey: 6B29FC40-CA47-1067-B31D-00DD010662DA
+          path-parameters:
+            idBill: 285
+          request:
+            - string
+          response:
+            body:
+              responseCode: 1
+              pageIdentifier: null
+              roomId: 0
+              isSuccess: true
+              responseText: Success
+              responseData: 6101
+      method: POST
+      path: /Bill/approval/{idBill}
+      path-parameters:
+        idBill:
+          docs: >-
+            Payabli ID for the bill. Get this ID by querying `/api/Query/bills/`
+            for the entrypoint or the organization.
+          type: integer
+      request:
+        body: list<string>
+        content-type: application/json
+        headers:
+          idempotencyKey: optional<root.IdempotencyKey>
+        name: SendToApprovalBillRequest
+        query-parameters:
+          autocreateUser:
+            default: false
+            docs: >-
+              Automatically create the target user for approval if they don't
+              exist.
+            type: optional<boolean>
+      response:
+        docs: Success
+        status-code: 200
+        type: BillResponse
+      
+    SetApprovedBill:
+      auth: true
+      display-name: Approve or disapprove a bill
+      docs: Approve or disapprove a bill by ID.
+      examples:
+        - path-parameters:
+            approved: 'true'
+            idBill: 285
+          response:
+            body:
+              isSuccess: true
+              responseData: 6101
+              responseText: Success
+      method: GET
+      path: /Bill/approval/{idBill}/{approved}
+      path-parameters:
+        approved:
+          docs: >-
+            String representing the approved status. Accepted values: 'true' or
+            'false'.
+          type: string
+        idBill:
+          docs: >-
+            Payabli ID for the bill. Get this ID by querying `/api/Query/bills/`
+            for the entrypoint or the organization.
+          type: integer
+      request:
+        name: SetApprovedBillRequest
+        query-parameters:
+          email:
+            docs: Email or username of user modifying approval status.
+            type: optional<string>
+      response:
+        docs: Success
+        status-code: 200
+        type: SetApprovedBillResponse
+      
+

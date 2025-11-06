@@ -1,0 +1,228 @@
+imports:
+  root: __package__.yml
+  
+service:
+  auth: false
+  base-path: ''
+  endpoints:
+    AddCustomer:
+      auth: true
+      display-name: Add customer
+      docs: >-
+        Creates a customer in an entrypoint. An identifier is required to create
+        customer records. Change your identifier settings in Settings > Custom
+        Fields in PartnerHub. 
+
+        If you don't include an identifier, the record is rejected.
+      examples:
+        - name: CreateCustomer
+          path-parameters:
+            entry: 8cfec329267
+          request:
+            customerNumber: 12356ACB
+            firstname: Irene
+            lastname: Canizales
+            address1: 123 Bishop's Trail
+            city: Mountain City
+            state: TN
+            zip: '37612'
+            country: US
+            email: irene@canizalesconcrete.com
+            identifierFields:
+              - email
+            timeZone: -5
+          response:
+            body:
+              isSuccess: true
+              responseData: $root.CustomerQueryRecords.GetCustomerDataMinimalRecord
+              responseText: Success
+      method: POST
+      path: /Customer/single/{entry}
+      path-parameters:
+        entry: root.Entrypointfield
+      request:
+        body:
+          type: root.CustomerData
+        content-type: application/json
+        headers:
+          idempotencyKey: optional<root.IdempotencyKey>
+        name: AddCustomerRequest
+        query-parameters:
+          forceCustomerCreation:
+            default: false
+            docs: >-
+              When `true`, the request creates a new customer record, regardless
+              of whether customer identifiers match an existing customer.
+            type: optional<boolean>
+          replaceExisting:
+            default: 0
+            docs: |
+              Flag indicating to replace existing customer with a new record. Possible values: 0 (don't replace), 1 (replace). Default is `0`.
+            type: optional<integer>
+      response:
+        docs: Success
+        status-code: 200
+        type: root.PayabliApiResponseCustomerQuery
+      
+    DeleteCustomer:
+      auth: true
+      display-name: Delete customer record
+      docs: Delete a customer record.
+      examples:
+        - name: DeleteCustomer
+          path-parameters:
+            customerId: 998
+          response:
+            body:
+              responseCode: 1
+              isSuccess: true
+              pageIdentifier: 'null'
+              roomId: 0
+              responseData: ' '
+              responseText: Success
+      method: DELETE
+      path: /Customer/{customerId}
+      path-parameters:
+        customerId:
+          docs: >-
+            Payabli-generated customer ID. Maps to "Customer ID" column in
+            PartnerHub. 
+          type: integer
+      response:
+        docs: Success
+        status-code: 200
+        type: root.PayabliApiResponse00Responsedatanonobject
+      
+    GetCustomer:
+      auth: true
+      display-name: Get customer record.
+      docs: Retrieves a customer's record and details.
+      examples:
+        - name: GetCustomer
+          docs: >-
+            Retrieves a customer's record and details. The response includes
+            customer information, stored payment methods, subscriptions, and
+            customer consent status.
+          path-parameters:
+            customerId: 998
+          response:
+            body: $root.CustomerQueryRecords.GetCustomerDataFullRecord     
+      method: GET
+      path: /Customer/{customerId}
+      path-parameters:
+        customerId:
+          docs: >-
+            Payabli-generated customer ID. Maps to "Customer ID" column in
+            PartnerHub. 
+          type: integer
+      response:
+        docs: Success
+        status-code: 200
+        type: root.CustomerQueryRecords
+      
+    LinkCustomerTransaction:
+      auth: true
+      display-name: Link Customer to Transaction
+      docs: Links a customer to a transaction by ID.
+      examples:
+        - name: LinkCustomerTransaction
+          path-parameters:
+            customerId: 998
+            transId: 45-as456777hhhhhhhhhh77777777-324
+          response:
+            body:
+              responseCode: 1
+              pageIdentifier: 'null'
+              roomId: 0
+              isSuccess: true
+              responseText: "Success"
+              responseData: ' '
+
+      method: GET
+      path: /Customer/link/{customerId}/{transId}
+      path-parameters:
+        customerId:
+          docs: >-
+            Payabli-generated customer ID. Maps to "Customer ID" column in
+            PartnerHub. 
+          type: integer
+        transId:
+          docs: ReferenceId for the transaction (PaymentId).
+          type: string
+      response:
+        docs: Success
+        status-code: 200
+        type: root.PayabliApiResponse00Responsedatanonobject
+      
+    RequestConsent:
+      auth: true
+      display-name: Request consent opt-in
+      docs: >-
+        Sends the consent opt-in email to the customer email address in the
+        customer record.
+      examples:
+        - name: Success example
+          path-parameters:
+            customerId: 998
+          response:
+            body:
+              isSuccess: true
+              pageIdentifier: 'null'
+              responseCode: 1
+              responseData: ' '
+              responseText: Success
+      method: POST
+      path: /Customer/{customerId}/consent
+      path-parameters:
+        customerId:
+          docs: >-
+            Payabli-generated customer ID. Maps to "Customer ID" column in
+            PartnerHub. 
+          type: integer
+      response:
+        docs: Success
+        status-code: 200
+        type: root.PayabliApiResponse00Responsedatanonobject
+      
+    UpdateCustomer:
+      auth: true
+      display-name: Update customer record
+      docs: Update a customer record. Include only the fields you want to change.
+      examples:
+        - name: UpdateCustomer
+          docs: >-
+            Example customer record update, including only a few fields.
+          path-parameters:
+            customerId: 998
+          request:
+            firstname: Irene
+            lastname: Canizales
+            address1: 145 Bishop's Trail
+            city: Mountain City
+            state: TN
+            zip: '37612'
+            country: US
+          response:
+            body:
+              isSuccess: true
+              responseCode: 1
+              responseData: ' '
+              responseText: Success
+      method: PUT
+      path: /Customer/{customerId}
+      path-parameters:
+        customerId:
+          docs: >-
+            Payabli-generated customer ID. Maps to "Customer ID" column in
+            PartnerHub. 
+          type: integer
+      request:
+        body:
+          type: root.CustomerData
+        content-type: application/json
+      response:
+        docs: Success
+        status-code: 200
+        type: root.PayabliApiResponse00Responsedatanonobject
+      
+

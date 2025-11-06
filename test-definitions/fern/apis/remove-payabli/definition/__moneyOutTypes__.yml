@@ -1,0 +1,642 @@
+imports:
+  root: __package__.yml
+
+types:
+
+  LotNumber:
+    docs: Lot number associated with the bill.
+    type: string
+
+# Authorize Types
+  AuthorizePayoutBody:
+    properties:
+      entryPoint: root.Entrypointfield
+      source: optional<root.Source>
+      orderId: optional<root.OrderId>
+      orderDescription: optional<root.Orderdescription>
+      paymentMethod: AuthorizePaymentMethod
+      paymentDetails:
+        docs: Object containing payment details.
+        type: RequestOutAuthorizePaymentDetails
+      vendorData:
+        docs: |
+          Object containing vendor data.
+        type: RequestOutAuthorizeVendorData
+      invoiceData:
+        docs: Array of bills associated to the transaction
+        type: list<RequestOutAuthorizeInvoiceData>
+      accountId: optional<root.Accountid>
+      subdomain: optional<root.Subdomain>
+      subscriptionId: optional<root.Subscriptionid>
+
+  AuthorizePaymentMethod:
+    docs: |
+      Payment method object for vendor payouts.
+      - `{ method: "managed" }` - Managed payment method
+      - `{ method: "vcard" }` - Virtual card payment method  
+      - `{ method: "check" }` - Check payment method
+      - `{ method: "ach", achHolder: "...", achRouting: "...", achAccount: "...", achAccountType: "..." }` - ACH payment method with bank details
+      - `{ method: "ach", storedMethodId: "..." }` - ACH payment method using stored method ID
+    properties:
+      method:
+        type: string
+        docs: Payment method type - "managed", "vcard", "check", or "ach"
+      achHolder:
+        type: optional<string>
+        docs: Account holder name for ACH payments. Required when method is "ach" and not using `storedMethodId`.
+        validation:
+          maxLength: 250
+      achRouting:
+        type: optional<string>
+        docs: Bank routing number for ACH payments. Required when method is "ach" and not using `storedMethodId`.
+      achAccount:
+        type: optional<string>
+        docs: Bank account number for ACH payments. Required when method is "ach" and not using `storedMethodId`.
+      achAccountType:
+        type: optional<string>
+        docs: Account type for ACH payments ("checking" or "savings"). Required when method is "ach" and not using `storedMethodId`.
+      achCode:
+        type: optional<root.AchSecCode>
+      achHolderType:
+        type: optional<root.AchHolderType>
+      storedMethodId:
+        type: optional<string>
+        docs: ID of the stored ACH payment method. Only applicable when method is `ach`. Use this to reference a previously saved ACH method instead of providing bank details directly.
+      initiator:
+        type: optional<root.Initiator>
+      storedMethodUsageType:
+        type: optional<root.StoredMethodUsageType>    
+  RequestOutAuthorizeVendorData:
+    docs: Object containing vendor data.
+    inline: true
+    properties:
+      vendorNumber: optional<root.VendorNumber>
+      name1: optional<root.VendorName1>
+      name2: optional<root.VendorName2>
+      ein: optional<root.VendorEin>
+      phone: optional<root.VendorPhone> 
+      email: optional<root.Email>
+      address1: optional<root.AddressNullable>
+      city: optional<string>
+      state: optional<string>
+      zip: optional<string> 
+      country: optional<string> 
+      mcc: optional<root.Mcc>
+      contacts: optional<root.ContactsField>
+      billingData: 
+        availability: deprecated
+        type: optional<RequestOutAuthorizeVendorBillingData>
+      vendorStatus: optional<root.Vendorstatus>
+      remitAddress1: optional<root.Remitaddress1>
+      remitAddress2: optional<root.Remitaddress2>
+      remitCity: optional<root.Remitcity>
+      remitState: optional<root.Remitstate>
+      remitZip: optional<root.Remitzip>
+      remitCountry: optional<root.Remitcountry>
+      customerVendorAccount: optional<string>
+      customField1: optional<string>
+      customField2: optional<string>
+      additionalData: optional<root.AdditionalData>
+      address2: optional<root.AddressAddtlNullable>
+      internalReferenceId: optional<long>
+      locationCode: optional<root.LocationCode>
+      payeeName1: optional<root.PayeeName>
+      payeeName2: optional<root.PayeeName>
+      paymentMethod: optional<root.VendorPaymentMethod>
+      vendorId: optional<root.Vendorid>
+
+  RequestOutAuthorizeVendorBillingData:
+    docs: Object containing vendor's bank information. This object is deprecated for this endpoint. Use the `paymentMethod` object in payout authorize requests instead.
+    inline: true
+    properties:
+      bankName: optional<root.BankName>
+      routingAccount: optional<root.RoutingAccount>
+      accountNumber: optional<root.AccountNumber>
+      typeAccount: optional<root.TypeAccount>
+      bankAccountHolderName: optional<root.BankAccountHolderName>
+
+  RequestOutAuthorizeInvoiceData:
+    inline: true
+    properties:
+      invoiceNumber: optional<root.InvoiceNumber>
+      netAmount: optional<root.NetAmountstring>
+      invoiceDate:
+        docs: 'Invoice date in any of the accepted formats: YYYY-MM-DD, MM/DD/YYYY.'
+        type: optional<root.Datenullable>
+      dueDate:
+        docs: 'Invoice due date in any of the accepted formats: YYYY-MM-DD, MM/DD/YYYY.'
+        type: optional<root.Datenullable>
+      comments: optional<root.Comments>
+      lotNumber: optional<LotNumber>
+      billId: optional<root.BillId>
+      discount: optional<root.Discount>
+      terms: optional<root.Terms>
+      accountingField1: optional<root.AccountingField>
+      accountingField2: optional<root.AccountingField>
+      additionalData: optional<root.AdditionalDataString>
+      attachments: optional<root.Attachments>
+
+
+  AuthCapturePayoutResponse:
+    properties:
+      responseCode: root.Responsecode
+      pageIdentifier: nullable<root.PageIdentifier>
+      roomId: root.RoomIdNotInUse
+      isSuccess: root.IsSuccess
+      responseText: root.ResponseText
+      responseData: AuthCapturePayoutResponseData
+    examples:
+      - name: Authorized
+        value: 
+          responseCode: 1
+          pageIdentifier: null
+          roomId: 0
+          isSuccess: true
+          responseText: Success
+          responseData:
+            authCode: null
+            referenceId: 129-219
+            resultCode: 1
+            resultText: Authorized
+            avsResponseText: null
+            cvvResponseText: null
+            customerId: 0
+            methodReferenceId: null
+      - name: Captured
+        value: 
+          responseCode: 1
+          pageIdentifier: null
+          roomId: 0
+          isSuccess: true
+          responseText: Success
+          responseData:
+            authCode: null
+            referenceId: 129-219
+            resultCode: 1
+            resultText: Captured
+            avsResponseText: null
+            cvvResponseText: null
+            customerId: 0
+            methodReferenceId: null
+
+  AuthCapturePayoutResponseData:
+    inline: true
+    properties:
+      authCode: nullable<root.Authcode>
+      referenceId: root.Referenceidtrans
+      resultCode: root.ResultCode
+      resultText: root.Resulttext
+      avsResponseText: nullable<root.Avsresponsetext>
+      cvvResponseText: nullable<root.Cvvresponsetext>
+      customerId: root.Customeridtrans
+      methodReferenceId: nullable<root.MethodReferenceId>
+
+
+  CaptureAllOutResponse:
+      properties:
+        isSuccess: optional<root.IsSuccess>
+        pageIdentifier: optional<root.PageIdentifier>
+        responseCode: optional<root.Responsecode>
+        responseData:
+          docs: Array of objects describing the transactions.
+          type: optional<list<CaptureAllOutResponseResponseDataItem>>
+        responseText: root.ResponseText
+
+
+  CaptureAllOutResponseResponseDataItem:
+    inline: true
+    properties:
+      CustomerId:
+        docs: >-
+          Internal unique Id of vendor owner of transaction. Returns `0` if the
+          transaction wasn't assigned to an existing vendor or no vendor was
+          created.
+        type: optional<root.Customeridtrans>
+      ReferenceId: optional<root.Referenceidtrans>
+      ResultCode: optional<root.ResultCode>
+      ResultText:
+        docs: |
+          Text describing the result. 
+          If `ResultCode`` = 1, returns 'Authorized'. 
+          If `ResultCode` = 2 or 3, this contains the cause of the decline.
+        type: optional<root.Resulttext>
+
+  RequestOutAuthorizePaymentDetails:
+    docs: Object containing payment details.
+    inline: true
+    properties:
+      checkNumber: optional<root.VendorCheckNumber>
+      currency:
+        docs: >-
+          Currency code ISO-4217. If not code is provided the currency in the
+          paypoint setting is taken. Default is **USD**.
+        type: optional<string>
+      serviceFee:
+        docs: >-
+          Service fee to be deducted from the total amount. This amount must be
+          a number, percentages aren't accepted. If you are using a
+          percentage-based fee schedule, you must calculate the value manually.
+        type: optional<double>
+      totalAmount:
+        docs: |
+          Total amount to be charged. If a service fee is included, then this amount should include the service fee.
+        type: optional<double>
+
+  RequestOutAuthorizeVendorDataOld:
+    docs: Object containing vendor data.
+    inline: true
+    properties:
+      additionalData: optional<root.AdditionalData>
+      address1:
+        docs: Vendor's address
+        type: optional<root.AddressNullable>
+      address2:
+        docs: Additional line for vendor's address.
+        type: optional<root.AddressAddtlNullable>
+      billingData:
+        docs: Object containing vendor's bank information.
+        type: optional<root.BillingData>
+      city:
+        docs: Vendor's city.
+        type: optional<string>
+      contacts:
+        docs: Array of objects describing the vendor's contacts.
+        type: optional<root.ContactsField>
+      country:
+        docs: Vendor's country.
+        type: optional<string>
+      customerVendorAccount:
+        docs: Account number of paypoint in the vendor side.
+        type: optional<string>
+      customField1: optional<string>
+      customField2: optional<string>
+      ein: optional<root.VendorEin>
+      email:
+        docs: Vendor's email address. Required for vCard.
+        type: optional<root.Email>
+      internalReferenceId:
+        docs: Internal identifier for global vendor account.
+        type: optional<long>
+      locationCode: optional<root.LocationCode>
+      mcc: optional<root.Mcc>
+      name1: optional<root.VendorName1>
+      name2: optional<root.VendorName2>
+      payeeName1: optional<root.PayeeName>
+      payeeName2: optional<root.PayeeName>
+      paymentMethod: optional<root.VendorPaymentMethod>
+      phone: optional<root.VendorPhone>
+      remitAddress1: optional<root.Remitaddress1>
+      remitAddress2: optional<root.Remitaddress2>
+      remitCity: optional<root.Remitcity>
+      remitCountry: optional<root.Remitcountry>
+      remitState: optional<root.Remitstate>
+      remitZip: optional<root.Remitzip>
+      state:
+        docs: Vendor's state. Must be a 2 character state code.
+        type: optional<string>
+      vendorId:
+        docs: >-
+          Payabli identifier for vendor record. Required when `vendorNumber`
+          isn't included.
+        type: optional<root.Vendorid>
+      vendorNumber: optional<root.VendorNumber>
+      vendorStatus: optional<root.Vendorstatus>
+      zip:
+        docs: Vendor's postal code.
+        type: optional<string>
+
+  VCardGetResponse:
+    properties:
+      vcardSent:
+        docs: Indicates if the virtual card was sent.
+        type: optional<boolean>
+      cardToken:
+        docs: A unique token identifier for the card.
+        type: optional<string>
+      cardNumber:
+        docs: The masked number of the card.
+        type: optional<string>
+      cvc:
+        docs: Masked Card Verification Code.
+        type: optional<string>
+      expirationDate:
+        docs: The expiration date of the card.
+        type: optional<string>
+      status:
+        docs: The current status of the card.
+        type: optional<string> # Note: Currently null in response
+      amount:
+        docs: The initial amount loaded on the card.
+        type: optional<double>
+      currentBalance:
+        docs: The current balance available on the card.
+        type: optional<double>
+      expenseLimit:
+        docs: The set limit for expenses.
+        type: optional<double>
+      expenseLimitPeriod:
+        docs: The period for the expense limit.
+        type: optional<string> # Note: Currently null in response
+      maxNumberOfUses:
+        docs: Maximum number of uses allowed for the card.
+        type: optional<integer>
+      currentNumberOfUses:
+        docs: The current number of times the card has been used.
+        type: optional<integer>
+      exactAmount:
+        docs: Indicates if only the exact amount is allowed for transactions.
+        type: optional<boolean>
+      mcc:
+        docs: Merchant Category Code, if applicable.
+        type: optional<string> 
+      tcc:
+        docs: Transaction Category Code, if applicable.
+        type: optional<string>
+      misc1:
+        docs: A miscellaneous field for additional information.
+        type: optional<string>
+      misc2:
+        docs: Another miscellaneous field for extra information.
+        type: optional<string>
+      dateCreated:
+        docs: The creation date of the record.
+        type: optional<string>
+      dateModified:
+        docs: The last modified date of the record.
+        type: optional<string>
+      associatedVendor:
+        docs: Information about the associated vendor.
+        type: optional<VCardGetResponseAssociatedVendor>
+      associatedCustomer:
+        docs: Information about the associated customer, if applicable.
+        type: optional<string> # Note: Currently null in response
+      ParentOrgName:
+        docs: Name of the parent organization.
+        type: optional<string>
+      PaypointDbaname:
+        docs: The 'Doing Business As' name of the Paypoint.
+        type: optional<string>
+      PaypointLegalname:
+        docs: The legal name of the Paypoint.
+        type: optional<string>
+      PaypointEntryname:
+        docs: Entry name for the Paypoint, if applicable.
+        type: optional<string>
+      externalPaypointID:
+        type: optional<root.ExternalPaypointId> # Note: Currently null in response
+      paypointId:
+        docs: The unique identifier for the paypoint.
+        type: optional<integer>
+
+  VCardGetResponseAssociatedVendor:
+    docs: Information about the associated vendor.
+    inline: true
+    properties:
+      VendorNumber:
+        docs: Unique code identifying the vendor.
+        type: optional<string>
+      Name1:
+        docs: The primary name associated with the vendor.
+        type: optional<string>
+      Name2:
+        docs: Additional name information for the vendor.
+        type: optional<string>
+      EIN:
+        docs: Employer Identification Number of the vendor.
+        type: optional<string>
+      Phone:
+        docs: Contact phone number of the vendor.
+        type: optional<string>
+      Email:
+        docs: Contact email address of the vendor.
+        type: optional<string>
+      RemitEmail:
+        docs: Email address for remittance.
+        type: optional<string>
+      Address1:
+        docs: Primary address line of the vendor.
+        type: optional<string>
+      Address2:
+        docs: Secondary address line of the vendor.
+        type: optional<string>
+      City:
+        docs: City where the vendor is located.
+        type: optional<string>
+      State:
+        docs: State where the vendor is located.
+        type: optional<string>
+      Zip:
+        docs: ZIP code for the vendor's location.
+        type: optional<string>
+      Country:
+        docs: Country where the vendor is located.
+        type: optional<string>
+      Mcc:
+        docs: Merchant Category Code for the vendor.
+        type: optional<string>
+      LocationCode: optional<root.LocationCode>
+      Contacts:
+        docs: Array of objects describing the vendor's contacts.
+        type: optional<list<VCardGetResponseContact>>
+      BillingData:
+        docs: Billing data for the vendor.
+        type: optional<VCardGetResponseAssociatedVendorBillingData>
+      PaymentMethod:
+        docs: Preferred payment method for vendor.
+        type: optional<string>
+      VendorStatus:
+        docs: Status of the vendor.
+        type: optional<integer>
+      VendorId:
+        docs: Unique identifier for the vendor.
+        type: optional<integer>
+      EnrollmentStatus:
+        docs: Enrollment status of the vendor.
+        type: optional<string>
+      Summary:
+        docs: Summary of vendor's billing and transaction status.
+        type: optional<VCardGetResponseAssociatedVendorSummary>
+      PaypointLegalname:
+        docs: Legal name of the paypoint.
+        type: optional<root.Legalname>
+      PaypointDbaname:
+        docs: DBA name of the paypoint.
+        type: optional<root.Dbaname>
+      PaypointEntryname:
+        docs: Entryname of the paypoint.
+        type: optional<string>
+      ParentOrgName:
+        type: optional<root.OrgParentName>
+      ParentOrgId:
+        docs: ID of the parent organization.
+        type: optional<integer>
+      CreatedDate:
+        docs: Date when the vendor record was created.
+        type: optional<string>
+      LastUpdated:
+        docs: Date when the vendor's information was last updated.
+        type: optional<string>
+      remitAddress1:
+        type: optional<root.Remitaddress1>
+      remitAddress2:
+        type: optional<root.Remitaddress2>
+      remitCity:
+        type: optional<root.Remitcity>
+      remitState:
+        type: optional<root.Remitstate>
+      remitZip:
+        type: optional<root.Remitzip>
+      remitCountry:
+        type: optional<root.Remitcountry>
+      payeeName1:
+        docs: Primary name of the payee.
+        type: optional<string>
+      payeeName2:
+        docs: Secondary name of the payee.
+        type: optional<string>
+      customField1:
+        docs: A custom field for additional data.
+        type: optional<string>
+      customField2:
+        docs: Another custom field for extra data.
+        type: optional<string>
+      customerVendorAccount:
+        docs: Account number of paypoint in the vendor side.
+        type: optional<string>
+      InternalReferenceId:
+        docs: Internal reference ID used within the system.
+        type: optional<integer>
+      additionalData:
+        docs: Field for additional data, if any.
+        type: optional<string> # Note: Currently null in response
+      externalPaypointID:
+        type: optional<root.ExternalPaypointId> # Note: Currently null in response
+      StoredMethods:
+        docs: Stored payment methods for the vendor.
+        type: optional<string> # Note: Currently null in response
+
+  VCardGetResponseContact:
+    docs: Contact information structure.
+    inline: true
+    properties:
+      ContactName:
+        docs: Name of the contact.
+        type: optional<string>
+      ContactEmail:
+        docs: Email of the contact.
+        type: optional<string>
+      ContactTitle:
+        docs: Title of the contact.
+        type: optional<string>
+      ContactPhone:
+        docs: Phone number of the contact.
+        type: optional<string>
+
+  VCardGetResponseAssociatedVendorBillingData:
+    docs: Billing data for the vendor.
+    inline: true
+    properties:
+      id:
+        docs: Unique identifier for billing data.
+        type: optional<integer>
+      accountId:
+        docs: Account identifier.
+        type: optional<string> # Note: Currently null in response
+      nickname:
+        docs: Nickname for the account.
+        type: optional<string>
+      bankName:
+        docs: Name of the bank used for transactions.
+        type: optional<string>
+      routingAccount:
+        docs: Routing number for the bank account.
+        type: optional<string>
+      accountNumber:
+        docs: Masked account number for transactions.
+        type: optional<string>
+      typeAccount:
+        docs: Type of the bank account.
+        type: optional<string>
+      bankAccountHolderName:
+        docs: Name of the bank account holder.
+        type: optional<string>
+      bankAccountHolderType:
+        docs: Type of bank account holder.
+        type: optional<string>
+      bankAccountFunction:
+        docs: Function of the bank account.
+        type: optional<integer>
+      verified:
+        docs: Indicates if the account is verified.
+        type: optional<boolean>
+      status:
+        docs: Status of the billing data.
+        type: optional<integer>
+      services:
+        docs: Services associated with the account.
+        type: optional<list<unknown>>
+      default:
+        docs: Indicates if this is the default billing account.
+        type: optional<boolean>
+
+  VCardGetResponseAssociatedVendorSummary:
+    docs: Summary of vendor's billing and transaction status.
+    inline: true
+    properties:
+      ActiveBills:
+        docs: Number of active bills.
+        type: optional<integer>
+      PendingBills:
+        docs: Number of bills pending approval or payment.
+        type: optional<integer>
+      InTransitBills:
+        docs: Number of bills in transit.
+        type: optional<integer>
+      PaidBills:
+        docs: Number of bills that have been paid.
+        type: optional<integer>
+      OverdueBills:
+        docs: Number of bills that are overdue.
+        type: optional<integer>
+      ApprovedBills:
+        docs: Number of bills that have been approved.
+        type: optional<integer>
+      DisapprovedBills:
+        docs: Number of bills that have been disapproved.
+        type: optional<integer>
+      TotalBills:
+        docs: Total number of bills.
+        type: optional<integer>
+      ActiveBillsAmount:
+        docs: Total amount of active bills.
+        type: optional<double>
+      PendingBillsAmount:
+        docs: Total amount of pending bills.
+        type: optional<double>
+      InTransitBillsAmount:
+        docs: Total amount of bills in transit.
+        type: optional<double>
+      PaidBillsAmount:
+        docs: Total amount of paid bills.
+        type: optional<double>
+      OverdueBillsAmount:
+        docs: Total amount of overdue bills.
+        type: optional<double>
+      ApprovedBillsAmount:
+        docs: Total amount of approved bills.
+        type: optional<double>
+      DisapprovedBillsAmount:
+        docs: Total amount of rejected bills.
+        type: optional<double>
+      TotalBillsAmount:
+        docs: Total amount of all bills.
+        type: optional<double>
+
+  OperationResult:
+    properties:
+      message: 
+        type: optional<string>
+        docs: Message describing the result. If the virtual card link was sent successfully, this contains the email address to which the link was sent.
+      success: 
+        docs: Indicates whether the operation was successful.
+        type: boolean

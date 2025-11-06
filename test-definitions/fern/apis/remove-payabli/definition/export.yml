@@ -1,0 +1,4508 @@
+## The export route is mostly deprecated. The handful of endpoints that aren't deprecated have been moved to their related service files.
+imports:
+  root: __package__.yml
+
+types:
+
+  ExportFormat1:
+    enum:
+      - csv
+      - xlsx
+
+service:
+  auth: false
+  base-path: ''
+  endpoints:
+    ExportApplications:
+      availability: deprecated
+      auth: true
+      display-name: Export list of boarding applications for organization
+      docs: >-
+        Export a list of boarding applications for an organization. Use filters
+        to limit results.
+      examples:
+        - path-parameters:
+            format: csv
+            orgId: 123
+          query-parameters:
+            columnsExport: BatchDate:Batch_Date,PaypointName:Legal_name
+            fromRecord: 251
+            limitRecord: 1000
+          response:
+            body:
+              key: value
+      method: GET
+      path: /Export/boarding/{format}/{orgId}
+      path-parameters:
+        format:
+          docs: 'Format for the export, either XLSX or CSV. '
+          type: ExportFormat1
+        orgId:
+          docs: The numeric identifier for organization, assigned by Payabli.
+          type: integer
+      request:
+        name: ExportApplicationsRequest
+        query-parameters:
+          columnsExport:
+            type: optional<string>
+            validation:
+              pattern: >-
+                ^([a-zA-Z_][a-zA-Z0-9_]*:[a-zA-Z_][a-zA-Z0-9_]*,)*([a-zA-Z_][a-zA-Z0-9_]*:[a-zA-Z_][a-zA-Z0-9_]*)$
+          fromRecord:
+            default: 0
+            docs: >-
+              The number of records to skip before starting to collect the
+              result set.
+            type: optional<integer>
+          limitRecord:
+            default: 25000
+            docs: >-
+              The number of records to return for the query. The maximum is
+              30,000 records. When this parameter isn't sent, the API returns up
+              to 25,000 records.
+            type: optional<integer>
+            validation:
+              max: 30000
+          parameters:
+            docs: >
+              Collection of field names, conditions, and values used to filter
+              the query 
+
+
+              <Info>
+                **You must remove `parameters=` from the request before you send it, otherwise Payabli will ignore the filters.**
+
+                Because of a technical limitation, you can't make a request that includes filters from the API console on this page. The response won't be filtered. Instead, copy the request, remove `parameters=` and run the request in a different client.
+
+                For example:
+
+                --url https://api-sandbox.payabli.com/api/Query/transactions/org/236?parameters=totalAmount(gt)=1000&limitRecord=20
+
+                should become:
+
+                --url https://api-sandbox.payabli.com/api/Query/transactions/org/236?totalAmount(gt)=1000&limitRecord=20
+              </Info>
+
+
+              See [Filters and Conditions
+              Reference](/developers/developer-guides/pay-ops-reporting-engine-overview#filters-and-conditions-reference)
+              for help. 
+
+
+              List of field names accepted:
+
+              - `createdAt` (gt, ge, lt, le, eq, ne)
+
+              - `startDate` (gt, ge, lt, le, eq, ne)
+
+              - `dbaname`  (ct, nct)
+
+              - `legalname`  (ct, nct)
+
+              - `ein`  (ct, nct)
+
+              - `address`  (ct, nct)
+
+              - `city`  (ct, nct)
+
+              - `state`  (ct, nct)
+
+              - `phone`  (ct, nct)
+
+              - `mcc`  (ct, nct)
+
+              - `owntype`  (ct, nct)
+
+              - `ownerName`  (ct, nct)
+
+              - `contactName`  (ct, nct)
+
+              - `status`  (eq, ne)
+
+              - `orgParentname`  (ct, nct)
+
+
+              List of comparison accepted - enclosed between parentheses:
+
+              - eq or empty => equal
+
+              - gt => greater than
+
+              - ge => greater or equal
+
+              - lt => less than
+
+              - le => less or equal
+
+              - ne => not equal
+
+              - ct => contains
+
+              - nct => not contains
+
+              - in => inside array
+
+              - nin => not inside array
+
+
+              List of parameters accepted:
+
+              - `limitRecord` : max number of records for query (default="20", "0"
+              or negative value for all)
+
+              - `fromRecord` : initial record in query
+
+
+              Example: `dbaname(ct)=hoa` returns all records with a `dbaname` containing "hoa"
+            type: optional<map<string, optional<string>>>
+      response:
+        docs: Success
+        status-code: 200
+        type: root.File
+      
+    ExportBatchDetails:
+      availability: deprecated
+      auth: true
+      display-name: Export batch details for a paypoint
+      examples:
+        - path-parameters:
+            entry: 8cfec329267
+            format: csv
+          query-parameters:
+            columnsExport: BatchDate:Batch_Date,PaypointName:Legal_name
+            fromRecord: 251
+            limitRecord: 1000
+          response:
+            body:
+              key: value
+      method: GET
+      path: /Export/batchDetails/{format}/{entry}
+      path-parameters:
+        entry:
+          docs: >-
+            The paypoint's entrypoint identifier. [Learn
+            more](/api-reference/api-overview#entrypoint-vs-entry)
+          type: string
+        format:
+          docs: 'Format for the export, either XLSX or CSV. '
+          type: ExportFormat1
+      request:
+        name: ExportBatchDetailsRequest
+        query-parameters:
+          columnsExport:
+            type: optional<string>
+            validation:
+              pattern: >-
+                ^([a-zA-Z_][a-zA-Z0-9_]*:[a-zA-Z_][a-zA-Z0-9_]*,)*([a-zA-Z_][a-zA-Z0-9_]*:[a-zA-Z_][a-zA-Z0-9_]*)$
+          fromRecord:
+            default: 0
+            docs: >-
+              The number of records to skip before starting to collect the
+              result set.
+            type: optional<integer>
+          limitRecord:
+            default: 25000
+            docs: >-
+              The number of records to return for the query. The maximum is
+              30,000 records. When this parameter isn't sent, the API returns up
+              to 25,000 records.
+            type: optional<integer>
+            validation:
+              max: 30000
+          parameters:
+            docs: >
+              Collection of field names, conditions, and values used to filter
+              the query
+
+
+              <Info>
+                **You must remove `parameters=` from the request before you send it, otherwise Payabli will ignore the filters.**
+
+                Because of a technical limitation, you can't make a request that includes filters from the API console on this page. The response won't be filtered. Instead, copy the request, remove `parameters=` and run the request in a different client.
+
+                For example:
+
+                --url https://api-sandbox.payabli.com/api/Query/transactions/org/236?parameters=totalAmount(gt)=1000&limitRecord=20
+
+                should become:
+
+                --url https://api-sandbox.payabli.com/api/Query/transactions/org/236?totalAmount(gt)=1000&limitRecord=20
+              </Info>
+
+
+              See [Filters and Conditions
+              Reference](/developers/developer-guides/pay-ops-reporting-engine-overview#filters-and-conditions-reference)
+              for help.
+
+
+              **List of field names accepted:**
+
+                - `settlementDate` (gt, ge, lt, le, eq, ne)
+                - `depositDate` (gt, ge, lt, le, eq, ne)
+                - `transId`  (ne, eq, ct, nct)
+                - `gatewayTransId`  (ne, eq, ct, nct)
+                - `method`   (in, nin, eq, ne)
+                - `settledAmount`  (gt, ge, lt, le, eq, ne)
+                - `operation`    (in, nin, eq, ne)
+                - `source`   (in, nin, eq, ne)
+                - `batchNumber`  (ct, nct, eq, ne)
+                - `payaccountLastfour`   (nct, ct)
+                - `payaccountType`   (ne, eq, in, nin)
+                - `customerFirstname`   (ct, nct, eq, ne)
+                - `customerLastname`    (ct, nct, eq, ne)
+                - `customerName`   (ct, nct)
+                - `customerId`  (eq, ne)
+                - `customerNumber`  (ct, nct, eq, ne)
+                - `customerCompanyname`    (ct, nct, eq, ne)
+                - `customerAddress` (ct, nct, eq, ne)
+                - `customerCity`    (ct, nct, eq, ne)
+                - `customerZip` (ct, nct, eq, ne)
+                - `customerState` (ct, nct, eq, ne)
+                - `customerCountry` (ct, nct, eq, ne)
+                - `customerPhone` (ct, nct, eq, ne)
+                - `customerEmail` (ct, nct, eq, ne)
+                - `customerShippingAddress` (ct, nct, eq, ne)
+                - `customerShippingCity`    (ct, nct, eq, ne)
+                - `customerShippingZip` (ct, nct, eq, ne)
+                - `customerShippingState` (ct, nct, eq, ne)
+                - `customerShippingCountry` (ct, nct, eq, ne)
+                - `orgId`  (eq) *mandatory when entry=org*
+                - `isHold` (eq, ne)
+                - `paypointId`  (ne, eq)
+                - `paypointLegal`  (ne, eq, ct, nct)
+                - `paypointDba`  (ne, eq, ct, nct)
+                - `orgName`  (ne, eq, ct, nct)
+                - `batchId` (ct, nct, eq, neq)
+                - `additional-xxx`  (ne, eq, ct, nct) where xxx is the additional field name
+
+              List of parameters accepted:
+
+              - limitRecord: max number of records for query (default="20", "0"
+              or negative value for all)
+
+              - fromRecord: initial record in query
+
+
+              Example: `amount(gt)=20` return all records with amount greater
+              than 20.00
+            type: optional<map<string, optional<string>>>
+      response:
+        docs: Success
+        status-code: 200
+        type: root.File
+      
+    ExportBatchDetailsOrg:
+      auth: true
+      availability: deprecated
+      display-name: Export batch details for an org
+      examples:
+        - path-parameters:
+            format: csv
+            orgId: 123
+          query-parameters:
+            columnsExport: BatchDate:Batch_Date,PaypointName:Legal_name
+            fromRecord: 251
+            limitRecord: 1000
+          response:
+            body:
+              key: value
+      method: GET
+      path: /Export/batchDetails/{format}/org/{orgId}
+      path-parameters:
+        format:
+          docs: 'Format for the export, either XLSX or CSV. '
+          type: ExportFormat1
+        orgId:
+          docs: The numeric identifier for organization, assigned by Payabli.
+          type: integer
+      request:
+        name: ExportBatchDetailsOrgRequest
+        query-parameters:
+          columnsExport:
+            type: optional<string>
+            validation:
+              pattern: >-
+                ^([a-zA-Z_][a-zA-Z0-9_]*:[a-zA-Z_][a-zA-Z0-9_]*,)*([a-zA-Z_][a-zA-Z0-9_]*:[a-zA-Z_][a-zA-Z0-9_]*)$
+          fromRecord:
+            default: 0
+            docs: >-
+              The number of records to skip before starting to collect the
+              result set.
+            type: optional<integer>
+          limitRecord:
+            default: 25000
+            docs: >-
+              The number of records to return for the query. The maximum is
+              30,000 records. When this parameter isn't sent, the API returns up
+              to 25,000 records.
+            type: optional<integer>
+            validation:
+              max: 30000
+          parameters:
+            docs: >
+              Collection of field names, conditions, and values used to filter
+              the query
+
+
+              <Info>
+                **You must remove `parameters=` from the request before you send it, otherwise Payabli will ignore the filters.**
+
+                Because of a technical limitation, you can't make a request that includes filters from the API console on this page. The response won't be filtered. Instead, copy the request, remove `parameters=` and run the request in a different client.
+
+                For example:
+
+                --url https://api-sandbox.payabli.com/api/Query/transactions/org/236?parameters=totalAmount(gt)=1000&limitRecord=20
+
+                should become:
+
+                --url https://api-sandbox.payabli.com/api/Query/transactions/org/236?totalAmount(gt)=1000&limitRecord=20
+              </Info>
+
+
+              See [Filters and Conditions
+              Reference](/developers/developer-guides/pay-ops-reporting-engine-overview#filters-and-conditions-reference)
+              for help.
+
+
+              **List of field names accepted:**
+
+                - `settlementDate` (gt, ge, lt, le, eq, ne)
+                - `depositDate` (gt, ge, lt, le, eq, ne)
+                - `transId`  (ne, eq, ct, nct)
+                - `gatewayTransId`  (ne, eq, ct, nct)
+                - `method`   (in, nin, eq, ne)
+                - `settledAmount`  (gt, ge, lt, le, eq, ne)
+                - `operation`    (in, nin, eq, ne)
+                - `source`   (in, nin, eq, ne)
+                - `batchNumber`  (ct, nct, eq, ne)
+                - `payaccountLastfour`   (nct, ct)
+                - `payaccountType`   (ne, eq, in, nin)
+                - `customerFirstname`   (ct, nct, eq, ne)
+                - `customerLastname`    (ct, nct, eq, ne)
+                - `customerName`   (ct, nct)
+                - `customerId`  (eq, ne)
+                - `customerNumber`  (ct, nct, eq, ne)
+                - `customerCompanyname`    (ct, nct, eq, ne)
+                - `customerAddress` (ct, nct, eq, ne)
+                - `customerCity`    (ct, nct, eq, ne)
+                - `customerZip` (ct, nct, eq, ne)
+                - `customerState` (ct, nct, eq, ne)
+                - `customerCountry` (ct, nct, eq, ne)
+                - `customerPhone` (ct, nct, eq, ne)
+                - `customerEmail` (ct, nct, eq, ne)
+                - `customerShippingAddress` (ct, nct, eq, ne)
+                - `customerShippingCity`    (ct, nct, eq, ne)
+                - `customerShippingZip` (ct, nct, eq, ne)
+                - `customerShippingState` (ct, nct, eq, ne)
+                - `customerShippingCountry` (ct, nct, eq, ne)
+                - `orgId`  (eq) *mandatory when entry=org*
+                - `isHold` (eq, ne)
+                - `paypointId`  (ne, eq)
+                - `paypointLegal`  (ne, eq, ct, nct)
+                - `paypointDba`  (ne, eq, ct, nct)
+                - `orgName`  (ne, eq, ct, nct)
+                - `batchId` (ct, nct, eq, neq)
+                - `additional-xxx`  (ne, eq, ct, nct) where xxx is the additional field name
+
+              List of parameters accepted:
+
+              - limitRecord: max number of records for query (default="20", "0"
+              or negative value for all)
+
+              - fromRecord: initial record in query
+
+
+              Example: `amount(gt)=20` return all records with amount greater
+              than 20.00
+            type: optional<map<string, optional<string>>>
+      response:
+        docs: Success
+        status-code: 200
+        type: root.File
+      
+    ExportBatches:
+      auth: true
+      availability: deprecated
+      display-name: Export list of batches for entrypoint
+      docs: >-
+        Export a list of batches for an entrypoint. Use filters to limit
+        results.
+      examples:
+        - path-parameters:
+            entry: 8cfec329267
+            format: csv
+          query-parameters:
+            columnsExport: BatchDate:Batch_Date,PaypointName:Legal_name
+            fromRecord: 251
+            limitRecord: 1000
+          response:
+            body:
+              key: value
+      method: GET
+      path: /Export/batches/{format}/{entry}
+      path-parameters:
+        entry:
+          docs: >-
+            The paypoint's entrypoint identifier. [Learn
+            more](/api-reference/api-overview#entrypoint-vs-entry)
+          type: string
+        format:
+          docs: 'Format for the export, either XLSX or CSV. '
+          type: ExportFormat1
+      request:
+        name: ExportBatchesRequest
+        query-parameters:
+          columnsExport:
+            type: optional<string>
+            validation:
+              pattern: >-
+                ^([a-zA-Z_][a-zA-Z0-9_]*:[a-zA-Z_][a-zA-Z0-9_]*,)*([a-zA-Z_][a-zA-Z0-9_]*:[a-zA-Z_][a-zA-Z0-9_]*)$
+          fromRecord:
+            default: 0
+            docs: >-
+              The number of records to skip before starting to collect the
+              result set.
+            type: optional<integer>
+          limitRecord:
+            default: 25000
+            docs: >-
+              The number of records to return for the query. The maximum is
+              30,000 records. When this parameter isn't sent, the API returns up
+              to 25,000 records.
+            type: optional<integer>
+            validation:
+              max: 30000
+          parameters:
+            docs: >
+              Collection of field names, conditions, and values used to filter
+              the query
+
+
+              <Info>
+                **You must remove `parameters=` from the request before you send it, otherwise Payabli will ignore the filters.**
+
+                Because of a technical limitation, you can't make a request that includes filters from the API console on this page. The response won't be filtered. Instead, copy the request, remove `parameters=` and run the request in a different client.
+
+                For example:
+
+                --url https://api-sandbox.payabli.com/api/Query/transactions/org/236?parameters=totalAmount(gt)=1000&limitRecord=20
+
+                should become:
+
+                --url https://api-sandbox.payabli.com/api/Query/transactions/org/236?totalAmount(gt)=1000&limitRecord=20
+              </Info>
+
+
+              See [Filters and Conditions
+              Reference](/developers/developer-guides/pay-ops-reporting-engine-overview#filters-and-conditions-reference)
+              for help.
+
+
+              List of field names accepted:
+
+              - `batchDate` (gt, ge, lt, le, eq, ne)
+
+              - `batchNumber` (ne, eq)
+
+              - `connectorName` (ne, eq, ct, nct)
+
+              - `method` (in, nin, eq, ne)
+
+              - `batchAmount` (gt, ge, lt, le, eq, ne)
+
+              - `feeBatchAmount` (gt, ge, lt, le, eq, ne)
+
+              - `netBatchAmount` (gt, ge, lt, le, eq, ne)
+
+              - `releaseAmount` (gt, ge, lt, le, eq, ne)
+
+              - `heldAmount` (gt, ge, lt, le, eq, ne)
+
+              - `status` (in, nin, eq, ne)
+
+              - `paypointLegal` (ne, eq, ct, nct)
+
+              - `paypointDba` (ne, eq, ct, nct)
+
+              - `orgName` (ne, eq, ct, nct)
+
+              - `paypointId` (ne, eq)
+
+              - `externalPaypointID` (ct, nct, eq, ne)
+
+              - `expectedDepositDate` (gt, ge, lt, le, eq, ne)
+
+              - `batchRecords` (gt, ge, lt, le, eq, ne)
+
+              - `transferId` (ne, eq)
+
+              - `transferDate` (gt, ge, lt, le, eq, ne)
+
+              - `grossAmount` (gt, ge, lt, le, eq, ne)
+
+              - `chargeBackAmount` (gt, ge, lt, le, eq, ne)
+
+              - `returnedAmount` (gt, ge, lt, le, eq, ne)
+
+              - `billingFeeAmount` (gt, ge, lt, le, eq, ne)
+
+              - `thirdPartyPaidAmount` (gt, ge, lt, le, eq, ne)
+
+              - `netFundedAmount` (gt, ge, lt, le, eq, ne)
+
+              - `adjustmentAmount` (gt, ge, lt, le, eq, ne)
+
+              - `processor` (ne, eq, ct, nct)
+
+              - `transferStatus` (ne, eq, in, nin)
+
+
+              List of parameters accepted:
+
+              - limitRecord: max number of records for query (default="20", "0"
+              or negative value for all)
+
+              - fromRecord: initial record in query
+
+
+              Example: `batchAmount(gt)=20` returns all records with a `batchAmount`
+              greater than 20.00
+            type: optional<map<string, optional<string>>>
+      response:
+        docs: Success
+        status-code: 200
+        type: root.File
+      
+    ExportBatchesOrg:
+      auth: true
+      availability: deprecated
+      display-name: Export list of batches for organization
+      docs: >-
+        Export a list of batches for an organization. Use filters to limit
+        results.
+      examples:
+        - path-parameters:
+            format: csv
+            orgId: 123
+          query-parameters:
+            columnsExport: BatchDate:Batch_Date,PaypointName:Legal_name
+            fromRecord: 251
+            limitRecord: 1000
+          response:
+            body:
+              key: value
+      method: GET
+      path: /Export/batches/{format}/org/{orgId}
+      path-parameters:
+        format:
+          docs: 'Format for the export, either XLSX or CSV. '
+          type: ExportFormat1
+        orgId:
+          docs: The numeric identifier for organization, assigned by Payabli.
+          type: integer
+      request:
+        name: ExportBatchesOrgRequest
+        query-parameters:
+          columnsExport:
+            type: optional<string>
+            validation:
+              pattern: >-
+                ^([a-zA-Z_][a-zA-Z0-9_]*:[a-zA-Z_][a-zA-Z0-9_]*,)*([a-zA-Z_][a-zA-Z0-9_]*:[a-zA-Z_][a-zA-Z0-9_]*)$
+          fromRecord:
+            default: 0
+            docs: >-
+              The number of records to skip before starting to collect the
+              result set.
+            type: optional<integer>
+          limitRecord:
+            default: 25000
+            docs: >-
+              The number of records to return for the query. The maximum is
+              30,000 records. When this parameter isn't sent, the API returns up
+              to 25,000 records.
+            type: optional<integer>
+            validation:
+              max: 30000
+          parameters:
+            docs: >
+              Collection of field names, conditions, and values used to filter
+              the query
+
+
+              <Info>
+                **You must remove `parameters=` from the request before you send it, otherwise Payabli will ignore the filters.**
+
+                Because of a technical limitation, you can't make a request that includes filters from the API console on this page. The response won't be filtered. Instead, copy the request, remove `parameters=` and run the request in a different client.
+
+                For example:
+
+                --url https://api-sandbox.payabli.com/api/Query/transactions/org/236?parameters=totalAmount(gt)=1000&limitRecord=20
+
+                should become:
+
+                --url https://api-sandbox.payabli.com/api/Query/transactions/org/236?totalAmount(gt)=1000&limitRecord=20
+              </Info>
+
+              See [Filters and Conditions
+              Reference](/developers/developer-guides/pay-ops-reporting-engine-overview#filters-and-conditions-reference)
+              for help.
+
+
+              List of field names accepted:
+
+              - `batchDate` (gt, ge, lt, le, eq, ne)
+
+              - `batchNumber` (ne, eq)
+
+              - `connectorName` (ne, eq, ct, nct)
+
+              - `method` (in, nin, eq, ne)
+
+              - `batchAmount` (gt, ge, lt, le, eq, ne)
+
+              - `feeBatchAmount` (gt, ge, lt, le, eq, ne)
+
+              - `netBatchAmount` (gt, ge, lt, le, eq, ne)
+
+              - `releaseAmount` (gt, ge, lt, le, eq, ne)
+
+              - `heldAmount` (gt, ge, lt, le, eq, ne)
+
+              - `status` (in, nin, eq, ne)
+
+              - `paypointLegal` (ne, eq, ct, nct)
+
+              - `paypointDba` (ne, eq, ct, nct)
+
+              - `orgName` (ne, eq, ct, nct)
+
+              - `paypointId` (ne, eq)
+
+              - `externalPaypointID` (ct, nct, eq, ne)
+
+              - `expectedDepositDate` (gt, ge, lt, le, eq, ne)
+
+              - `batchRecords` (gt, ge, lt, le, eq, ne)
+
+              - `transferId` (ne, eq)
+
+              - `transferDate` (gt, ge, lt, le, eq, ne)
+
+              - `grossAmount` (gt, ge, lt, le, eq, ne)
+
+              - `chargeBackAmount` (gt, ge, lt, le, eq, ne)
+
+              - `returnedAmount` (gt, ge, lt, le, eq, ne)
+
+              - `billingFeeAmount` (gt, ge, lt, le, eq, ne)
+
+              - `thirdPartyPaidAmount` (gt, ge, lt, le, eq, ne)
+
+              - `netFundedAmount` (gt, ge, lt, le, eq, ne)
+
+              - `adjustmentAmount` (gt, ge, lt, le, eq, ne)
+
+              - `processor` (ne, eq, ct, nct)
+
+              - `transferStatus` (ne, eq, in, nin)
+
+
+              List of parameters accepted:
+
+              - `limitRecord`: max number of records for query (default="20", "0"
+              or negative value for all)
+
+              - `fromRecord`: initial record in query
+
+              Example: `batchAmount(gt)=20` returns all records with a `batchAmount` greater than 20.00
+            type: optional<map<string, optional<string>>>
+      response:
+        docs: Success
+        status-code: 200
+        type: root.File
+      
+    ExportBatchesOut:
+      auth: true
+      availability: deprecated
+      display-name: Export list of pay out batches for entrypoint
+      docs: >-
+        Export a list of money out batches for a paypoint. Use filters to limit
+        results.
+      examples:
+        - path-parameters:
+            entry: 8cfec329267
+            format: csv
+          query-parameters:
+            columnsExport: BatchDate:Batch_Date,PaypointName:Legal_name
+            fromRecord: 251
+            limitRecord: 1000
+          response:
+            body:
+              key: value
+      method: GET
+      path: /Export/batchesOut/{format}/{entry}
+      path-parameters:
+        entry:
+          docs: >-
+            The paypoint's entrypoint identifier. [Learn
+            more](/api-reference/api-overview#entrypoint-vs-entry)
+          type: string
+        format:
+          docs: 'Format for the export, either XLSX or CSV. '
+          type: ExportFormat1
+      request:
+        name: ExportBatchesOutRequest
+        query-parameters:
+          columnsExport:
+            type: optional<string>
+            validation:
+              pattern: >-
+                ^([a-zA-Z_][a-zA-Z0-9_]*:[a-zA-Z_][a-zA-Z0-9_]*,)*([a-zA-Z_][a-zA-Z0-9_]*:[a-zA-Z_][a-zA-Z0-9_]*)$
+          fromRecord:
+            default: 0
+            docs: >-
+              The number of records to skip before starting to collect the
+              result set.
+            type: optional<integer>
+          limitRecord:
+            default: 25000
+            docs: >-
+              The number of records to return for the query. The maximum is
+              30,000 records. When this parameter isn't sent, the API returns up
+              to 25,000 records.
+            type: optional<integer>
+            validation:
+              max: 30000
+          parameters:
+            docs: >
+              Collection of field names, conditions, and values used to filter
+              the query
+
+
+              <Info>
+                **You must remove `parameters=` from the request before you send it, otherwise Payabli will ignore the filters.**
+
+                Because of a technical limitation, you can't make a request that includes filters from the API console on this page. The response won't be filtered. Instead, copy the request, remove `parameters=` and run the request in a different client.
+
+                For example:
+
+                --url https://api-sandbox.payabli.com/api/Query/transactions/org/236?parameters=totalAmount(gt)=1000&limitRecord=20
+
+                should become:
+
+                --url https://api-sandbox.payabli.com/api/Query/transactions/org/236?totalAmount(gt)=1000&limitRecord=20
+              </Info>
+
+
+              See [Filters and Conditions
+              Reference](/developers/developer-guides/pay-ops-reporting-engine-overview#filters-and-conditions-reference)
+              for help.
+
+
+              List of field names accepted:
+                - `batchDate` (gt, ge, lt, le, eq, ne)
+                - `batchNumber` (ne, eq)
+                - `batchAmount` (gt, ge, lt, le, eq, ne)
+                - `status` (in, nin, eq, ne)
+                - `paypointLegal` (ne, eq, ct, nct)
+                - `paypointDba` (ne, eq, ct, nct)
+                - `orgName` (ne, eq, ct, nct, nin, in)
+                - `paypointId` (ne, eq)
+                - `externalPaypointID` (ct, nct, eq, ne)
+              List of parameters accepted:
+
+              - limitRecord: max number of records for query (default="20", "0"
+              or negative value for all)
+
+              - fromRecord: initial record in query
+
+
+              Example: `batchAmount(gt)=20` returns all records with a `batchAmount`
+              greater than 20.00"
+            type: optional<map<string, optional<string>>>
+      response:
+        docs: Success
+        status-code: 200
+        type: root.File
+      
+    ExportBatchesOutOrg:
+      auth: true
+      availability: deprecated
+      display-name: Export list of pay out batches for organization
+      docs: >-
+        Export a list of money out batches for an organization. Use filters to
+        limit results.
+      examples:
+        - path-parameters:
+            format: csv
+            orgId: 123
+          query-parameters:
+            columnsExport: BatchDate:Batch_Date,PaypointName:Legal_name
+            fromRecord: 251
+            limitRecord: 1000
+          response:
+            body:
+              key: value
+      method: GET
+      path: /Export/batchesOut/{format}/org/{orgId}
+      path-parameters:
+        format:
+          docs: 'Format for the export, either XLSX or CSV. '
+          type: ExportFormat1
+        orgId:
+          docs: The numeric identifier for organization, assigned by Payabli.
+          type: integer
+      request:
+        name: ExportBatchesOutOrgRequest
+        query-parameters:
+          columnsExport:
+            type: optional<string>
+            validation:
+              pattern: >-
+                ^([a-zA-Z_][a-zA-Z0-9_]*:[a-zA-Z_][a-zA-Z0-9_]*,)*([a-zA-Z_][a-zA-Z0-9_]*:[a-zA-Z_][a-zA-Z0-9_]*)$
+          fromRecord:
+            default: 0
+            docs: >-
+              The number of records to skip before starting to collect the
+              result set.
+            type: optional<integer>
+          limitRecord:
+            default: 25000
+            docs: >-
+              The number of records to return for the query. The maximum is
+              30,000 records. When this parameter isn't sent, the API returns up
+              to 25,000 records.
+            type: optional<integer>
+            validation:
+              max: 30000
+          parameters:
+            docs: >
+              Collection of field names, conditions, and values used to filter
+              the query
+
+
+              <Info>
+                **You must remove `parameters=` from the request before you send it, otherwise Payabli will ignore the filters.**
+
+                Because of a technical limitation, you can't make a request that includes filters from the API console on this page. The response won't be filtered. Instead, copy the request, remove `parameters=` and run the request in a different client.
+
+                For example:
+
+                --url https://api-sandbox.payabli.com/api/Query/transactions/org/236?parameters=totalAmount(gt)=1000&limitRecord=20
+
+                should become:
+
+                --url https://api-sandbox.payabli.com/api/Query/transactions/org/236?totalAmount(gt)=1000&limitRecord=20
+              </Info>
+
+
+              See [Filters and Conditions
+              Reference](/developers/developer-guides/pay-ops-reporting-engine-overview#filters-and-conditions-reference)
+              for help.
+
+
+              List of field names accepted:
+                - `batchDate` (gt, ge, lt, le, eq, ne)
+                - `batchNumber` (ne, eq)
+                - `batchAmount` (gt, ge, lt, le, eq, ne)
+                - `status` (in, nin, eq, ne)
+                - `paypointLegal` (ne, eq, ct, nct)
+                - `paypointDba` (ne, eq, ct, nct)
+                - `orgName` (ne, eq, ct, nct, nin, in)
+                - `paypointId` (ne, eq)
+                - `externalPaypointID` (ct, nct, eq, ne)
+              List of parameters accepted:
+
+              - limitRecord: max number of records for query (default="20", "0"
+              or negative value for all)
+
+              - fromRecord: initial record in query
+
+
+              Example: `batchAmount(gt)=20` returns all records with a `batchAmount`
+              greater than 20.00"
+            type: optional<map<string, optional<string>>>
+      response:
+        docs: Success
+        status-code: 200
+        type: root.File
+      
+    ExportBills:
+      auth: true
+      availability: deprecated
+      display-name: Export list of bills for an entrypoint
+      docs: Export a list of bills for an entrypoint. Use filters to limit results.
+      examples:
+        - path-parameters:
+            entry: 8cfec329267
+            format: csv
+          query-parameters:
+            columnsExport: BatchDate:Batch_Date,PaypointName:Legal_name
+            fromRecord: 251
+            limitRecord: 1000
+          response:
+            body:
+              key: value
+      method: GET
+      path: /Export/bills/{format}/{entry}
+      path-parameters:
+        entry:
+          docs: >-
+            The paypoint's entrypoint identifier. [Learn
+            more](/api-reference/api-overview#entrypoint-vs-entry)
+          type: string
+        format:
+          docs: 'Format for the export, either XLSX or CSV. '
+          type: ExportFormat1
+      request:
+        name: ExportBillsRequest
+        query-parameters:
+          columnsExport:
+            type: optional<string>
+            validation:
+              pattern: >-
+                ^([a-zA-Z_][a-zA-Z0-9_]*:[a-zA-Z_][a-zA-Z0-9_]*,)*([a-zA-Z_][a-zA-Z0-9_]*:[a-zA-Z_][a-zA-Z0-9_]*)$
+          fromRecord:
+            default: 0
+            docs: >-
+              The number of records to skip before starting to collect the
+              result set.
+            type: optional<integer>
+          limitRecord:
+            default: 25000
+            docs: >-
+              The number of records to return for the query. The maximum is
+              30,000 records. When this parameter isn't sent, the API returns up
+              to 25,000 records.
+            type: optional<integer>
+            validation:
+              max: 30000
+          parameters:
+            docs: >
+              Collection of field names, conditions, and values used to filter
+              the query 
+
+
+              <Info>
+                **You must remove `parameters=` from the request before you send it, otherwise Payabli will ignore the filters.**
+
+                Because of a technical limitation, you can't make a request that includes filters from the API console on this page. The response won't be filtered. Instead, copy the request, remove `parameters=` and run the request in a different client.
+
+                For example:
+
+                --url https://api-sandbox.payabli.com/api/Query/transactions/org/236?parameters=totalAmount(gt)=1000&limitRecord=20
+
+                should become:
+
+                --url https://api-sandbox.payabli.com/api/Query/transactions/org/236?totalAmount(gt)=1000&limitRecord=20
+              </Info>
+
+
+              See [Filters and Conditions
+              Reference](/developers/developer-guides/pay-ops-reporting-engine-overview#filters-and-conditions-reference)
+              for help. 
+
+
+              List of field names accepted:
+
+              - `status` (in, nin, eq, ne)
+
+              - `billNumber` (ct, nct, eq, ne)
+
+              - `billDate` (gt, ge, lt, le, eq, ne)
+
+              - `billDueDate` (gt, ge, lt, le, eq, ne)
+
+              - `vendorNumber` (ct, nct, eq, ne)
+
+              - `vendorName` (ct, nct, eq, ne)
+
+              - `ein` (ct, nct, eq, ne)
+
+              - `paymentMethod` (ct, nct, eq, ne)
+
+              - `paymentId` (ct, nct, eq, ne)
+
+              - `paymentgroup` (ct, nct, eq, ne)
+
+              - `totalAmount` (gt, ge, lt, le, eq, ne)
+
+              - `paypointLegal` (ne, eq, ct, nct)
+
+              - `paypointDba` (ne, eq, ct, nct)
+
+              - `orgName` (ne, eq, ct, nct)
+
+
+              List of comparison accepted - enclosed between parentheses:
+
+              - eq or empty => equal
+
+              - gt => greater than
+
+              - ge => greater or equal
+
+              - lt => less than
+
+              - le => less or equal
+
+              - ne => not equal
+
+              - ct => contains
+
+              - nct => not contains
+
+              - in => inside array separated by "|"
+
+              - nin => not inside array separated by "|"
+
+
+              List of parameters accepted:
+
+              - limitRecord : max number of records for query (default="20", "0"
+              or negative value for all)
+
+              - fromRecord : initial record in query
+
+
+              Example: totalAmount(gt)=20  return all records with totalAmount
+              greater than 20.00
+            type: optional<map<string, optional<string>>>
+      response:
+        docs: Success
+        status-code: 200
+        type: root.File
+      
+    ExportBillsOrg:
+      auth: true
+      availability: deprecated
+      display-name: Export list of bills for organization
+      docs: >-
+        Export a list of bills for an organization. Use filters to limit
+        results.
+      examples:
+        - path-parameters:
+            format: csv
+            orgId: 123
+          query-parameters:
+            columnsExport: BatchDate:Batch_Date,PaypointName:Legal_name
+            fromRecord: 251
+            limitRecord: 1000
+          response:
+            body:
+              key: value
+      method: GET
+      path: /Export/bills/{format}/org/{orgId}
+      path-parameters:
+        format:
+          docs: 'Format for the export, either XLSX or CSV. '
+          type: ExportFormat1
+        orgId:
+          docs: The numeric identifier for organization, assigned by Payabli.
+          type: integer
+      request:
+        name: ExportBillsOrgRequest
+        query-parameters:
+          columnsExport:
+            type: optional<string>
+            validation:
+              pattern: >-
+                ^([a-zA-Z_][a-zA-Z0-9_]*:[a-zA-Z_][a-zA-Z0-9_]*,)*([a-zA-Z_][a-zA-Z0-9_]*:[a-zA-Z_][a-zA-Z0-9_]*)$
+          fromRecord:
+            default: 0
+            docs: >-
+              The number of records to skip before starting to collect the
+              result set.
+            type: optional<integer>
+          limitRecord:
+            default: 25000
+            docs: >-
+              The number of records to return for the query. The maximum is
+              30,000 records. When this parameter isn't sent, the API returns up
+              to 25,000 records.
+            type: optional<integer>
+            validation:
+              max: 30000
+          parameters:
+            docs: >
+              Collection of field names, conditions, and values used to filter
+              the query 
+
+
+              <Info>
+                **You must remove `parameters=` from the request before you send it, otherwise Payabli will ignore the filters.**
+
+                Because of a technical limitation, you can't make a request that includes filters from the API console on this page. The response won't be filtered. Instead, copy the request, remove `parameters=` and run the request in a different client.
+
+                For example:
+
+                --url https://api-sandbox.payabli.com/api/Query/transactions/org/236?parameters=totalAmount(gt)=1000&limitRecord=20
+
+                should become:
+
+                --url https://api-sandbox.payabli.com/api/Query/transactions/org/236?totalAmount(gt)=1000&limitRecord=20
+              </Info>
+
+
+              See [Filters and Conditions
+              Reference](/developers/developer-guides/pay-ops-reporting-engine-overview#filters-and-conditions-reference)
+              for help. 
+
+
+              List of field names accepted:
+
+              - `status` (in, nin, eq, ne)
+
+              - `billNumber` (ct, nct, eq, ne)
+
+              - `billDate` (gt, ge, lt, le, eq, ne)
+
+              - `billDueDate` (gt, ge, lt, le, eq, ne)
+
+              - `vendorNumber` (ct, nct, eq, ne)
+
+              - `vendorName` (ct, nct, eq, ne)
+
+              - `ein` (ct, nct, eq, ne)
+
+              - `paymentMethod` (ct, nct, eq, ne)
+
+              - `paymentId` (ct, nct, eq, ne)
+
+              - `paymentgroup` (ct, nct, eq, ne)
+
+              - `totalAmount` (gt, ge, lt, le, eq, ne)
+
+              - `paypointLegal` (ne, eq, ct, nct)
+
+              - `paypointDba` (ne, eq, ct, nct)
+
+              - `orgName` (ne, eq, ct, nct)
+
+
+              List of comparison accepted - enclosed between parentheses:
+
+              - eq or empty => equal
+
+              - gt => greater than
+
+              - ge => greater or equal
+
+              - lt => less than
+
+              - le => less or equal
+
+              - ne => not equal
+
+              - ct => contains
+
+              - nct => not contains
+
+              - in => inside array separated by "|"
+
+              - nin => not inside array separated by "|"
+
+
+              List of parameters accepted:
+
+              - limitRecord : max number of records for query (default="20", "0"
+              or negative value for all)
+
+              - fromRecord : initial record in query
+
+
+              Example: totalAmount(gt)=20  return all records with totalAmount
+              greater than 20.00
+            type: optional<map<string, optional<string>>>
+      response:
+        docs: Success
+        status-code: 200
+        type: root.File
+      
+    ExportChargebacks:
+      auth: true
+      availability: deprecated
+      display-name: Export list of chargebacks and returned transactions for entrypoint
+      docs: >-
+        Export a list of chargebacks and ACH returns for an entrypoint. Use
+        filters to limit results.
+      examples:
+        - path-parameters:
+            entry: 8cfec329267
+            format: csv
+          query-parameters:
+            columnsExport: BatchDate:Batch_Date,PaypointName:Legal_name
+            fromRecord: 251
+            limitRecord: 1000
+          response:
+            body:
+              key: value
+      method: GET
+      path: /Export/chargebacks/{format}/{entry}
+      path-parameters:
+        entry:
+          docs: >-
+            The paypoint's entrypoint identifier. [Learn
+            more](/api-reference/api-overview#entrypoint-vs-entry)
+          type: string
+        format:
+          docs: 'Format for the export, either XLSX or CSV. '
+          type: ExportFormat1
+      request:
+        name: ExportChargebacksRequest
+        query-parameters:
+          columnsExport:
+            type: optional<string>
+            validation:
+              pattern: >-
+                ^([a-zA-Z_][a-zA-Z0-9_]*:[a-zA-Z_][a-zA-Z0-9_]*,)*([a-zA-Z_][a-zA-Z0-9_]*:[a-zA-Z_][a-zA-Z0-9_]*)$
+          fromRecord:
+            default: 0
+            docs: >-
+              The number of records to skip before starting to collect the
+              result set.
+            type: optional<integer>
+          limitRecord:
+            default: 25000
+            docs: >-
+              The number of records to return for the query. The maximum is
+              30,000 records. When this parameter isn't sent, the API returns up
+              to 25,000 records.
+            type: optional<integer>
+            validation:
+              max: 30000
+          parameters:
+            docs: >
+              Collection of field names, conditions, and values used to filter
+              the query 
+
+              
+              <Info>
+                **You must remove `parameters=` from the request before you send it, otherwise Payabli will ignore the filters.**
+
+                Because of a technical limitation, you can't make a request that includes filters from the API console on this page. The response won't be filtered. Instead, copy the request, remove `parameters=` and run the request in a different client.
+
+                For example:
+
+                --url https://api-sandbox.payabli.com/api/Query/transactions/org/236?parameters=totalAmount(gt)=1000&limitRecord=20
+
+                should become:
+
+                --url https://api-sandbox.payabli.com/api/Query/transactions/org/236?totalAmount(gt)=1000&limitRecord=20
+              </Info>
+
+
+              See [Filters and Conditions
+              Reference](/developers/developer-guides/pay-ops-reporting-engine-overview#filters-and-conditions-reference)
+              for help. 
+
+
+              List of field names accepted:
+
+              - `chargebackDate` (gt, ge, lt, le, eq, ne)
+
+              - `transId` (ne, eq, ct, nct)
+
+              - `method` (in, nin, eq, ne)
+
+              - `netAmount` (gt, ge, lt, le, eq, ne)
+
+              - `reasonCode` (in, nin, eq, ne)
+
+              - `reason` (ct, nct, eq, ne)
+
+              - `caseNumber` (ct, nct, eq, ne)
+
+              - `status` (in, nin, eq, ne)
+
+              - `accountType` (in, nin, eq, ne)
+
+              - `payaccountLastfour` (nct, ct)
+
+              - `payaccountType` (ne, eq, in, nin)
+
+              - `customerFirstname` (ct, nct, eq, ne)
+
+              - `customerLastname` (ct, nct, eq, ne)
+
+              - `customerName` (ct, nct)
+
+              - `customerId` (eq, ne)
+
+              - `customerNumber` (ct, nct, eq, ne)
+
+              - `customerCompanyname` (ct, nct, eq, ne)
+
+              - `customerAddress` (ct, nct, eq, ne)
+
+              - `customerCity` (ct, nct, eq, ne)
+
+              - `customerZip` (ct, nct, eq, ne)
+
+              - `customerState` (ct, nct, eq, ne)
+
+              - `customerCountry` (ct, nct, eq, ne)
+
+              - `customerPhone` (ct, nct, eq, ne)
+
+              - `customerEmail` (ct, nct, eq, ne)
+
+              - `customerShippingAddress` (ct, nct, eq, ne)
+
+              - `customerShippingCity` (ct, nct, eq, ne)
+
+              - `customerShippingZip` (ct, nct, eq, ne)
+
+              - `customerShippingState` (ct, nct, eq, ne)
+
+              - `customerShippingCountry` (ct, nct, eq, ne)
+
+              - `orgId` (eq) *mandatory when entry=org*
+
+              - `paypointId` (ne, eq)
+
+              - `paypointLegal` (ne, eq, ct, nct)
+
+              - `paypointDba` (ne, eq, ct, nct)
+
+              - `orgName` (ne, eq, ct, nct)
+
+              - `additional-xxx` (ne, eq, ct, nct) where xxx is the additional
+              field name
+
+
+              List of comparison accepted - enclosed between parentheses:
+
+              - eq or empty => equal
+
+              - gt => greater than
+
+              - ge => greater or equal
+
+              - lt => less than
+
+              - le => less or equal
+
+              - ne => not equal
+
+              - ct => contains
+
+              - nct => not contains
+
+              - in => inside array separated by "|"
+
+              - nin => not inside array separated by "|"
+
+
+              List of parameters accepted:
+
+              - limitRecord : max number of records for query (default="20", "0"
+              or negative value for all)
+
+              - fromRecord : initial record in query
+
+
+              Example: `netAmount(gt)=20` returns all records with a `netAmount`
+              greater than 20.00
+            type: optional<map<string, optional<string>>>
+      response:
+        docs: Success
+        status-code: 200
+        type: root.File
+      
+    ExportChargebacksOrg:
+      auth: true
+      availability: deprecated
+      display-name: Export list of chargebacks and returned transactions for an organization
+      docs: >-
+        Export a list of chargebacks and ACH returns for an organization. Use
+        filters to limit results.
+      examples:
+        - path-parameters:
+            format: csv
+            orgId: 123
+          query-parameters:
+            columnsExport: BatchDate:Batch_Date,PaypointName:Legal_name
+            fromRecord: 251
+            limitRecord: 1000
+          response:
+            body:
+              key: value
+      method: GET
+      path: /Export/chargebacks/{format}/org/{orgId}
+      path-parameters:
+        format:
+          docs: 'Format for the export, either XLSX or CSV. '
+          type: ExportFormat1
+        orgId:
+          docs: The numeric identifier for organization, assigned by Payabli.
+          type: integer
+      request:
+        name: ExportChargebacksOrgRequest
+        query-parameters:
+          columnsExport:
+            type: optional<string>
+            validation:
+              pattern: >-
+                ^([a-zA-Z_][a-zA-Z0-9_]*:[a-zA-Z_][a-zA-Z0-9_]*,)*([a-zA-Z_][a-zA-Z0-9_]*:[a-zA-Z_][a-zA-Z0-9_]*)$
+          fromRecord:
+            default: 0
+            docs: >-
+              The number of records to skip before starting to collect the
+              result set.
+            type: optional<integer>
+          limitRecord:
+            default: 25000
+            docs: >-
+              The number of records to return for the query. The maximum is
+              30,000 records. When this parameter isn't sent, the API returns up
+              to 25,000 records.
+            type: optional<integer>
+            validation:
+              max: 30000
+          parameters:
+            docs: >
+              Collection of field names, conditions, and values used to filter
+              the query 
+
+
+              <Info>
+                **You must remove `parameters=` from the request before you send it, otherwise Payabli will ignore the filters.**
+
+                Because of a technical limitation, you can't make a request that includes filters from the API console on this page. The response won't be filtered. Instead, copy the request, remove `parameters=` and run the request in a different client.
+
+                For example:
+
+                --url https://api-sandbox.payabli.com/api/Query/transactions/org/236?parameters=totalAmount(gt)=1000&limitRecord=20
+
+                should become:
+
+                --url https://api-sandbox.payabli.com/api/Query/transactions/org/236?totalAmount(gt)=1000&limitRecord=20
+              </Info>
+
+
+              See [Filters and Conditions
+              Reference](/developers/developer-guides/pay-ops-reporting-engine-overview#filters-and-conditions-reference)
+              for help. 
+
+
+              List of field names accepted:
+
+              - `chargebackDate` (gt, ge, lt, le, eq, ne)
+
+              - `transId` (ne, eq, ct, nct)
+
+              - `method` (in, nin, eq, ne)
+
+              - `netAmount` (gt, ge, lt, le, eq, ne)
+
+              - `reasonCode` (in, nin, eq, ne)
+
+              - `reason` (ct, nct, eq, ne)
+
+              - `caseNumber` (ct, nct, eq, ne)
+
+              - `status` (in, nin, eq, ne)
+
+              - `accountType` (in, nin, eq, ne)
+
+              - `payaccountLastfour` (nct, ct)
+
+              - `payaccountType` (ne, eq, in, nin)
+
+              - `customerFirstname` (ct, nct, eq, ne)
+
+              - `customerLastname` (ct, nct, eq, ne)
+
+              - `customerName` (ct, nct)
+
+              - `customerId` (eq, ne)
+
+              - `customerNumber` (ct, nct, eq, ne)
+
+              - `customerCompanyname` (ct, nct, eq, ne)
+
+              - `customerAddress` (ct, nct, eq, ne)
+
+              - `customerCity` (ct, nct, eq, ne)
+
+              - `customerZip` (ct, nct, eq, ne)
+
+              - `customerState` (ct, nct, eq, ne)
+
+              - `customerCountry` (ct, nct, eq, ne)
+
+              - `customerPhone` (ct, nct, eq, ne)
+
+              - `customerEmail` (ct, nct, eq, ne)
+
+              - `customerShippingAddress` (ct, nct, eq, ne)
+
+              - `customerShippingCity` (ct, nct, eq, ne)
+
+              - `customerShippingZip` (ct, nct, eq, ne)
+
+              - `customerShippingState` (ct, nct, eq, ne)
+
+              - `customerShippingCountry` (ct, nct, eq, ne)
+
+              - `orgId` (eq) *mandatory when entry=org*
+
+              - `paypointId` (ne, eq)
+
+              - `paypointLegal` (ne, eq, ct, nct)
+
+              - `paypointDba` (ne, eq, ct, nct)
+
+              - `orgName` (ne, eq, ct, nct)
+
+              - `additional-xxx` (ne, eq, ct, nct) where xxx is the additional
+              field name
+
+
+              List of comparison accepted - enclosed between parentheses:
+
+              - eq or empty => equal
+
+              - gt => greater than
+
+              - ge => greater or equal
+
+              - lt => less than
+
+              - le => less or equal
+
+              - ne => not equal
+
+              - ct => contains
+
+              - nct => not contains
+
+              - in => inside array separated by "|"
+
+              - nin => not inside array separated by "|"
+
+
+              List of parameters accepted:
+
+              - limitRecord : max number of records for query (default="20", "0"
+              or negative value for all)
+
+              - fromRecord : initial record in query
+
+
+              Example: `netAmount(gt)=20` returns all records with a `netAmount`
+              greater than 20.00
+            type: optional<map<string, optional<string>>>
+      response:
+        docs: Success
+        status-code: 200
+        type: root.File
+      
+    ExportCustomers:
+      auth: true
+      availability: deprecated
+      display-name: Export list of customers for entrypoint
+      docs: >-
+        Export a list of customers for an entrypoint. Use filters to limit
+        results.
+      examples:
+        - path-parameters:
+            entry: 8cfec329267
+            format: csv
+          query-parameters:
+            columnsExport: BatchDate:Batch_Date,PaypointName:Legal_name
+            fromRecord: 251
+            limitRecord: 1000
+          response:
+            body:
+              key: value
+      method: GET
+      path: /Export/customers/{format}/{entry}
+      path-parameters:
+        entry:
+          docs: >-
+            The paypoint's entrypoint identifier. [Learn
+            more](/api-reference/api-overview#entrypoint-vs-entry)
+          type: string
+        format:
+          docs: 'Format for the export, either XLSX or CSV. '
+          type: ExportFormat1
+      request:
+        name: ExportCustomersRequest
+        query-parameters:
+          columnsExport:
+            type: optional<string>
+            validation:
+              pattern: >-
+                ^([a-zA-Z_][a-zA-Z0-9_]*:[a-zA-Z_][a-zA-Z0-9_]*,)*([a-zA-Z_][a-zA-Z0-9_]*:[a-zA-Z_][a-zA-Z0-9_]*)$
+          fromRecord:
+            default: 0
+            docs: >-
+              The number of records to skip before starting to collect the
+              result set.
+            type: optional<integer>
+          limitRecord:
+            default: 25000
+            docs: >-
+              The number of records to return for the query. The maximum is
+              30,000 records. When this parameter isn't sent, the API returns up
+              to 25,000 records.
+            type: optional<integer>
+            validation:
+              max: 30000
+          parameters:
+            docs: >
+              Collection of field names, conditions, and values used to filter
+              the query.
+
+              
+              <Info>
+                **You must remove `parameters=` from the request before you send it, otherwise Payabli will ignore the filters.**
+
+                Because of a technical limitation, you can't make a request that includes filters from the API console on this page. The response won't be filtered. Instead, copy the request, remove `parameters=` and run the request in a different client.
+
+                For example:
+
+                --url https://api-sandbox.payabli.com/api/Query/transactions/org/236?parameters=totalAmount(gt)=1000&limitRecord=20
+
+                should become:
+
+                --url https://api-sandbox.payabli.com/api/Query/transactions/org/236?totalAmount(gt)=1000&limitRecord=20
+              </Info>
+
+
+              See [Filters and Conditions
+              Reference](/developers/developer-guides/pay-ops-reporting-engine-overview#filters-and-conditions-reference)
+              for help.
+
+
+              **List of field names accepted:**
+
+              - `createdDate` (gt, ge, lt, le, eq, ne)
+
+              - `customernumber` (ne, eq, ct, nct)
+
+              - `firstname` (ne, eq, ct, nct)
+
+              - `lastname` (ne, eq, ct, nct)
+
+              - `name` (ct, nct)
+
+              - `address` (ne, eq, ct, nct)
+
+              - `city` (ne, eq, ct, nct)
+
+              - `country` (ne, eq, ct, nct)
+
+              - `zip` (ne, eq, ct, nct)
+
+              - `state` (ne, eq, ct, nct)
+
+              - `shippingaddress` (ne, eq, ct, nct)
+
+              - `shippingcity` (ne, eq, ct, nct)
+
+              - `shippingcountry` (ne, eq, ct, nct)
+
+              - `shippingzip` (ne, eq, ct, nct)
+
+              - `shippingstate` (ne, eq, ct, nct)
+
+              - `phone` (ne, eq, ct, nct)
+
+              - `email` (ne, eq, ct, nct)
+
+              - `company` (ne, eq, ct, nct)
+
+              - `username` (ne, eq, ct, nct)
+
+              - `balance` (gt, ge, lt, le, eq, ne)
+
+              - `status` (in, nin, eq, ne)
+
+              - `additional-xxx` (ne, eq, ct, nct) where xxx is the additional
+              field name
+
+              - `orgId` (eq) *mandatory when entry=org*
+
+              - `paypointId` (ne, eq)
+
+              - `paypointLegal` (ne, eq, ct, nct)
+
+              - `paypointDba` (ne, eq, ct, nct)
+
+              - `orgName` (ne, eq, ct, nct)
+
+
+              **List of comparison accepted - enclosed between parentheses:**
+
+              - eq or empty => equal
+
+              - gt => greater than
+
+              - ge => greater or equal
+
+              - lt => less than
+
+              - le => less or equal
+
+              - ne => not equal
+
+              - ct => contains
+
+              - nct => not contains
+
+              - in => inside array separated by "|"
+
+              - nin => not inside array separated by "|"
+
+
+              **List of parameters accepted:**
+
+              - limitRecord: max number of records for query (default="20", "0"
+              or negative value for all)
+
+              - fromRecord: initial record in query
+
+
+              **Example:**
+
+              balance(gt)=20 return all records with balance greater than 20.00
+            type: optional<map<string, optional<string>>>
+      response:
+        docs: Success
+        status-code: 200
+        type: root.File
+      
+    ExportCustomersOrg:
+      auth: true
+      availability: deprecated
+      display-name: Export list of customers for organization
+      docs: >-
+        Exports a list of customers for an organization. Use filters to limit
+        results.
+      examples:
+        - path-parameters:
+            format: csv
+            orgId: 123
+          query-parameters:
+            columnsExport: BatchDate:Batch_Date,PaypointName:Legal_name
+            fromRecord: 251
+            limitRecord: 1000
+          response:
+            body:
+              key: value
+      method: GET
+      path: /Export/customers/{format}/org/{orgId}
+      path-parameters:
+        format:
+          docs: 'Format for the export, either XLSX or CSV. '
+          type: ExportFormat1
+        orgId:
+          docs: The numeric identifier for organization, assigned by Payabli.
+          type: integer
+      request:
+        name: ExportCustomersOrgRequest
+        query-parameters:
+          columnsExport:
+            type: optional<string>
+            validation:
+              pattern: >-
+                ^([a-zA-Z_][a-zA-Z0-9_]*:[a-zA-Z_][a-zA-Z0-9_]*,)*([a-zA-Z_][a-zA-Z0-9_]*:[a-zA-Z_][a-zA-Z0-9_]*)$
+          fromRecord:
+            default: 0
+            docs: >-
+              The number of records to skip before starting to collect the
+              result set.
+            type: optional<integer>
+          limitRecord:
+            default: 25000
+            docs: >-
+              The number of records to return for the query. The maximum is
+              30,000 records. When this parameter isn't sent, the API returns up
+              to 25,000 records.
+            type: optional<integer>
+            validation:
+              max: 30000
+          parameters:
+            docs: >
+              Collection of field names, conditions, and values used to filter
+              the query.
+
+              
+              <Info>
+                **You must remove `parameters=` from the request before you send it, otherwise Payabli will ignore the filters.**
+
+                Because of a technical limitation, you can't make a request that includes filters from the API console on this page. The response won't be filtered. Instead, copy the request, remove `parameters=` and run the request in a different client.
+
+                For example:
+
+                --url https://api-sandbox.payabli.com/api/Query/transactions/org/236?parameters=totalAmount(gt)=1000&limitRecord=20
+
+                should become:
+
+                --url https://api-sandbox.payabli.com/api/Query/transactions/org/236?totalAmount(gt)=1000&limitRecord=20
+              </Info>
+
+
+              See [Filters and Conditions
+              Reference](/developers/developer-guides/pay-ops-reporting-engine-overview#filters-and-conditions-reference)
+              for help.
+
+
+              **List of field names accepted:**
+
+              - `createdDate` (gt, ge, lt, le, eq, ne)
+
+              - `customernumber` (ne, eq, ct, nct)
+
+              - `firstname` (ne, eq, ct, nct)
+
+              - `lastname` (ne, eq, ct, nct)
+
+              - `name` (ct, nct)
+
+              - `address` (ne, eq, ct, nct)
+
+              - `city` (ne, eq, ct, nct)
+
+              - `country` (ne, eq, ct, nct)
+
+              - `zip` (ne, eq, ct, nct)
+
+              - `state` (ne, eq, ct, nct)
+
+              - `shippingaddress` (ne, eq, ct, nct)
+
+              - `shippingcity` (ne, eq, ct, nct)
+
+              - `shippingcountry` (ne, eq, ct, nct)
+
+              - `shippingzip` (ne, eq, ct, nct)
+
+              - `shippingstate` (ne, eq, ct, nct)
+
+              - `phone` (ne, eq, ct, nct)
+
+              - `email` (ne, eq, ct, nct)
+
+              - `company` (ne, eq, ct, nct)
+
+              - `username` (ne, eq, ct, nct)
+
+              - `balance` (gt, ge, lt, le, eq, ne)
+
+              - `status` (in, nin, eq, ne)
+
+              - `additional-xxx` (ne, eq, ct, nct) where xxx is the additional
+              field name
+
+              - `orgId` (eq) *mandatory when entry=org*
+
+              - `paypointId` (ne, eq)
+
+              - `paypointLegal` (ne, eq, ct, nct)
+
+              - `paypointDba` (ne, eq, ct, nct)
+
+              - `orgName` (ne, eq, ct, nct)
+
+
+              **List of comparison accepted - enclosed between parentheses:**
+
+              - eq or empty => equal
+
+              - gt => greater than
+
+              - ge => greater or equal
+
+              - lt => less than
+
+              - le => less or equal
+
+              - ne => not equal
+
+              - ct => contains
+
+              - nct => not contains
+
+              - in => inside array separated by "|"
+
+              - nin => not inside array separated by "|"
+
+
+              **List of parameters accepted:**
+
+              - limitRecord: max number of records for query (default="20", "0"
+              or negative value for all)
+
+              - fromRecord: initial record in query
+
+
+              **Example:**
+
+              balance(gt)=20 return all records with balance greater than 20.00
+            type: optional<map<string, optional<string>>>
+      response:
+        docs: Success
+        status-code: 200
+        type: root.File
+      
+    ExportInvoices:
+      auth: true
+      availability: deprecated
+      display-name: Export list of invoices for an entrypoint
+      docs: Export list of invoices for an entrypoint. Use filters to limit results.
+      examples:
+        - path-parameters:
+            entry: 8cfec329267
+            format: csv
+          query-parameters:
+            columnsExport: BatchDate:Batch_Date,PaypointName:Legal_name
+            fromRecord: 251
+            limitRecord: 1000
+          response:
+            body:
+              key: value
+      method: GET
+      path: /Export/invoices/{format}/{entry}
+      path-parameters:
+        entry:
+          docs: >-
+            The paypoint's entrypoint identifier. [Learn
+            more](/api-reference/api-overview#entrypoint-vs-entry)
+          type: string
+        format:
+          docs: 'Format for the export, either XLSX or CSV. '
+          type: ExportFormat1
+      request:
+        name: ExportInvoicesRequest
+        query-parameters:
+          columnsExport:
+            type: optional<string>
+            validation:
+              pattern: >-
+                ^([a-zA-Z_][a-zA-Z0-9_]*:[a-zA-Z_][a-zA-Z0-9_]*,)*([a-zA-Z_][a-zA-Z0-9_]*:[a-zA-Z_][a-zA-Z0-9_]*)$
+          fromRecord:
+            default: 0
+            docs: >-
+              The number of records to skip before starting to collect the
+              result set.
+            type: optional<integer>
+          limitRecord:
+            default: 25000
+            docs: >-
+              The number of records to return for the query. The maximum is
+              30,000 records. When this parameter isn't sent, the API returns up
+              to 25,000 records.
+            type: optional<integer>
+            validation:
+              max: 30000
+          parameters:
+            docs: >
+              Collection of field names, conditions, and values used to filter
+              the query 
+
+
+              <Info>
+                **You must remove `parameters=` from the request before you send it, otherwise Payabli will ignore the filters.**
+
+                Because of a technical limitation, you can't make a request that includes filters from the API console on this page. The response won't be filtered. Instead, copy the request, remove `parameters=` and run the request in a different client.
+
+                For example:
+
+                --url https://api-sandbox.payabli.com/api/Query/transactions/org/236?parameters=totalAmount(gt)=1000&limitRecord=20
+
+                should become:
+
+                --url https://api-sandbox.payabli.com/api/Query/transactions/org/236?totalAmount(gt)=1000&limitRecord=20
+              </Info>
+
+
+              See [Filters and Conditions
+              Reference](/developers/developer-guides/pay-ops-reporting-engine-overview#filters-and-conditions-reference)
+              for help. 
+
+
+              List of field names accepted:
+               - `invoiceDate` (gt, ge, lt, le, eq, ne)
+               - `dueDate` (gt, ge, lt, le, eq, ne)
+               - `sentDate` (gt, ge, lt, le, eq, ne)
+               - `frequency`  (in, nin,ne, eq)
+               - `invoiceType`   (eq, ne)
+               - `payTerms`   (in, nin, eq, ne)
+               - `paypointId`  (ne, eq)
+               - `totalAmount`  (gt, ge, lt, le, eq, ne)
+               - `paidAmount`  (gt, ge, lt, le, eq, ne)
+               - `status`   (in, nin, eq, ne)
+               - `invoiceNumber`   (ct, nct, eq, ne)
+               - `purchaseOrder`   (ct, nct, eq, ne)
+               - `itemProductCode` (ct, nct)
+               - `itemDescription` (ct, nct)
+               - `customerFirstname`   (ct, nct, eq, ne)
+               - `customerLastname`    (ct, nct, eq, ne)
+               - `customerName`   (ct, nct)
+               - `customerId`  (eq, ne)
+               - `customerNumber`  (ct, nct, eq, ne)
+               - `customerCompanyname`    (ct, nct, eq, ne)
+               - `customerAddress` (ct, nct, eq, ne)
+               - `customerCity`    (ct, nct, eq, ne)
+               - `customerZip` (ct, nct, eq, ne)
+               - `customerState` (ct, nct, eq, ne)
+               - `customerCountry` (ct, nct, eq, ne)
+               - `customerPhone` (ct, nct, eq, ne)
+               - `customerEmail` (ct, nct, eq, ne)
+               - `customerShippingAddress` (ct, nct, eq, ne)
+               - `customerShippingCity` (ct, nct, eq, ne)
+               - `customerShippingZip` (ct, nct, eq, ne)
+               - `customerShippingState` (ct, nct, eq, ne)
+               - `customerShippingCountry` (ct, nct, eq, ne)
+               - `orgId`  (eq) 
+               - `paylinkId`  (ne, eq)
+               - `paypointLegal`  (ne, eq, ct, nct)
+               - `paypointDba`  (ne, eq, ct, nct)
+               - `orgName`  (ne, eq, ct, nct)
+               - `additional-xxx`  (ne, eq, ct, nct) where xxx is the additional field name
+
+              List of comparison accepted - enclosed between parentheses:
+               - eq or empty => equal
+               - gt => greater than
+               - ge => greater or equal
+               - lt => less than
+               - le => less or equal
+               - ne => not equal
+               - ct => contains
+               - nct => not contains
+               - in => inside array
+               - nin => not inside array
+               
+              List of parameters accepted:
+               - `limitRecord` : max number of records for query (default="20", "0" or negative value for all)
+               - `fromRecord` : initial record in query
+               
+              Example: `totalAmount(gt)=20` returns all records with `totalAmount` greater than 20.00
+            type: optional<map<string, optional<string>>>
+      response:
+        docs: Success
+        status-code: 200
+        type: root.File
+      
+    ExportInvoicesOrg:
+      auth: true
+      availability: deprecated
+      display-name: Export list of invoices for an organization
+      docs: >-
+        Export a list of invoices for an organization. Use filters to limit
+        results.
+      examples:
+        - path-parameters:
+            format: csv
+            orgId: 123
+          query-parameters:
+            columnsExport: BatchDate:Batch_Date,PaypointName:Legal_name
+            fromRecord: 251
+            limitRecord: 1000
+          response:
+            body:
+              key: value
+      method: GET
+      path: /Export/invoices/{format}/org/{orgId}
+      path-parameters:
+        format:
+          docs: 'Format for the export, either XLSX or CSV. '
+          type: ExportFormat1
+        orgId:
+          docs: The numeric identifier for organization, assigned by Payabli.
+          type: integer
+      request:
+        name: ExportInvoicesOrgRequest
+        query-parameters:
+          columnsExport:
+            type: optional<string>
+            validation:
+              pattern: >-
+                ^([a-zA-Z_][a-zA-Z0-9_]*:[a-zA-Z_][a-zA-Z0-9_]*,)*([a-zA-Z_][a-zA-Z0-9_]*:[a-zA-Z_][a-zA-Z0-9_]*)$
+          fromRecord:
+            default: 0
+            docs: >-
+              The number of records to skip before starting to collect the
+              result set.
+            type: optional<integer>
+          limitRecord:
+            default: 25000
+            docs: >-
+              The number of records to return for the query. The maximum is
+              30,000 records. When this parameter isn't sent, the API returns up
+              to 25,000 records.
+            type: optional<integer>
+            validation:
+              max: 30000
+          parameters:
+            docs: >
+              Collection of field names, conditions, and values used to filter
+              the query 
+
+
+              <Info>
+                **You must remove `parameters=` from the request before you send it, otherwise Payabli will ignore the filters.**
+
+                Because of a technical limitation, you can't make a request that includes filters from the API console on this page. The response won't be filtered. Instead, copy the request, remove `parameters=` and run the request in a different client.
+
+                For example:
+
+                --url https://api-sandbox.payabli.com/api/Query/transactions/org/236?parameters=totalAmount(gt)=1000&limitRecord=20
+
+                should become:
+
+                --url https://api-sandbox.payabli.com/api/Query/transactions/org/236?totalAmount(gt)=1000&limitRecord=20
+              </Info>
+
+
+              See [Filters and Conditions
+              Reference](/developers/developer-guides/pay-ops-reporting-engine-overview#filters-and-conditions-reference)
+              for help. 
+
+
+              List of field names accepted:
+               - `invoiceDate` (gt, ge, lt, le, eq, ne)
+               - `dueDate` (gt, ge, lt, le, eq, ne)
+               - `sentDate` (gt, ge, lt, le, eq, ne)
+               - `frequency` (in, nin,ne, eq)
+               - `invoiceType` (eq, ne)
+               - `payTerms` (in, nin, eq, ne)
+               - `paypointId` (ne, eq)
+               - `totalAmount` (gt, ge, lt, le, eq, ne)
+               - `paidAmount` (gt, ge, lt, le, eq, ne)
+               - `status` (in, nin, eq, ne)
+               - `invoiceNumber` (ct, nct, eq, ne)
+               - `purchaseOrder` (ct, nct, eq, ne)
+               - `itemProductCode` (ct, nct)
+               - `itemDescription` (ct, nct)
+               - `customerFirstname` (ct, nct, eq, ne)
+               - `customerLastname` (ct, nct, eq, ne)
+               - `customerName` (ct, nct)
+               - `customerId` (eq, ne)
+               - `customerNumber` (ct, nct, eq, ne)
+               - `customerCompanyname` (ct, nct, eq, ne)
+               - `customerAddress` (ct, nct, eq, ne)
+               - `customerCity` (ct, nct, eq, ne)
+               - `customerZip` (ct, nct, eq, ne)
+               - `customerState` (ct, nct, eq, ne)
+               - `customerCountry` (ct, nct, eq, ne)
+               - `customerPhone` (ct, nct, eq, ne)
+               - `customerEmail` (ct, nct, eq, ne)
+               - `customerShippingAddress` (ct, nct, eq, ne)
+               - `customerShippingCity` (ct, nct, eq, ne)
+               - `customerShippingZip` (ct, nct, eq, ne)
+               - `customerShippingState` (ct, nct, eq, ne)
+               - `customerShippingCountry` (ct, nct, eq, ne)
+               - `orgId` (eq) 
+               - `paylinkId` (ne, eq)
+               - `paypointLegal` (ne, eq, ct, nct)
+               - `paypointDba` (ne, eq, ct, nct)
+               - `orgName` (ne, eq, ct, nct)
+               - `additional-xxx` (ne, eq, ct, nct) where xxx is the additional field name
+               
+              List of comparison accepted - enclosed between parentheses:
+               - eq or empty => equal
+               - gt => greater than
+               - ge => greater or equal
+               - lt => less than
+               - le => less or equal
+               - ne => not equal
+               - ct => contains
+               - nct => not contains
+               - in => inside array
+               - nin => not inside array
+               
+              List of parameters accepted:
+               - limitRecord : max number of records for query (default="20", "0" or negative value for all)
+               - fromRecord : initial record in query
+               
+              Example: totalAmount(gt)=20  return all records with totalAmount
+              greater than 20.00
+            type: optional<map<string, optional<string>>>
+      response:
+        docs: Success
+        status-code: 200
+        type: root.File
+      
+    ExportOrganizations:
+      auth: true
+      availability: deprecated
+      display-name: Export list of child organization for a parent organization
+      docs: >-
+        Export a list of child organizations (suborganizations) for a parent
+        organization.
+      examples:
+        - path-parameters:
+            format: csv
+            orgId: 123
+          query-parameters:
+            columnsExport: BatchDate:Batch_Date,PaypointName:Legal_name
+            fromRecord: 251
+            limitRecord: 1000
+          response:
+            body:
+              key: value
+      method: GET
+      path: /Export/organizations/{format}/org/{orgId}
+      path-parameters:
+        format:
+          docs: 'Format for the export, either XLSX or CSV. '
+          type: ExportFormat1
+        orgId:
+          docs: The numeric identifier for organization, assigned by Payabli.
+          type: integer
+      request:
+        name: ExportOrganizationsRequest
+        query-parameters:
+          columnsExport:
+            type: optional<string>
+            validation:
+              pattern: >-
+                ^([a-zA-Z_][a-zA-Z0-9_]*:[a-zA-Z_][a-zA-Z0-9_]*,)*([a-zA-Z_][a-zA-Z0-9_]*:[a-zA-Z_][a-zA-Z0-9_]*)$
+          fromRecord:
+            default: 0
+            docs: >-
+              The number of records to skip before starting to collect the
+              result set.
+            type: optional<integer>
+          limitRecord:
+            default: 25000
+            docs: >-
+              The number of records to return for the query. The maximum is
+              30,000 records. When this parameter isn't sent, the API returns up
+              to 25,000 records.
+            type: optional<integer>
+            validation:
+              max: 30000
+          parameters:
+            docs: >
+              Collection of field names, conditions, and values used to filter
+              the query
+
+
+              <Info>
+                **You must remove `parameters=` from the request before you send it, otherwise Payabli will ignore the filters.**
+
+                Because of a technical limitation, you can't make a request that includes filters from the API console on this page. The response won't be filtered. Instead, copy the request, remove `parameters=` and run the request in a different client.
+
+                For example:
+
+                --url https://api-sandbox.payabli.com/api/Query/transactions/org/236?parameters=totalAmount(gt)=1000&limitRecord=20
+
+                should become:
+
+                --url https://api-sandbox.payabli.com/api/Query/transactions/org/236?totalAmount(gt)=1000&limitRecord=20
+              </Info>
+
+
+              See [Filters and Conditions
+              Reference](/developers/developer-guides/pay-ops-reporting-engine-overview#filters-and-conditions-reference)
+              for help. 
+
+
+              List of field names accepted:
+
+              - `name` (ct, nct, eq, ne)
+
+              - `type` (ne, eq)
+
+              - `contactName` (ct, nct, eq, ne)
+
+              - `contactTitle` (ct, nct, eq, ne)
+
+              - `contactEmail` (ct, nct, eq, ne)
+
+              - `contactPhone` (ct, nct, eq, ne)
+
+              - `city` (ct, nct, eq, ne)
+
+              - `state` (in, nin, eq, ne)
+
+              - `address` (ct, nct, eq, ne)
+
+              - `country` (ct, nct, eq, ne)
+
+              - `zip` (ct, nct, eq, ne)
+
+              - `hasBilling` any value greater than zero is taken as TRUE
+              otherwise is FALSE
+
+              - `hasResidual` any value greater than zero is taken as TRUE
+              otherwise is FALSE
+
+
+              List of comparison accepted - enclosed between parentheses:
+
+              - eq or empty => equal
+
+              - gt => greater than
+
+              - ge => greater or equal
+
+              - lt => less than
+
+              - le => less or equal
+
+              - ne => not equal
+
+              - ct => contains
+
+              - nct => not contains
+
+              - in => inside array
+
+              - nin => not inside array
+
+
+              List of parameters accepted:
+
+              - limitRecord : max number of records for query (default="20", "0"
+              or negative value for all)
+
+              - fromRecord : initial record in query
+
+
+              Example: name(ct)=hoa  return all records where name contains
+              "hoa"
+            type: optional<map<string, optional<string>>>
+      response:
+        docs: Success
+        status-code: 200
+        type: root.File
+      
+    ExportPayout:
+      auth: true
+      availability: deprecated
+      display-name: Export list of payouts for an entrypoint
+      docs: >-
+        Export a list of payouts and their statuses for an entrypoint. Use
+        filters to limit results.
+      examples:
+        - path-parameters:
+            entry: 8cfec329267
+            format: csv
+          query-parameters:
+            columnsExport: BatchDate:Batch_Date,PaypointName:Legal_name
+            fromRecord: 251
+            limitRecord: 1000
+          response:
+            body:
+              key: value
+      method: GET
+      path: /Export/payouts/{format}/{entry}
+      path-parameters:
+        entry:
+          docs: >-
+            The paypoint's entrypoint identifier. [Learn
+            more](/api-reference/api-overview#entrypoint-vs-entry)
+          type: string
+        format:
+          docs: 'Format for the export, either XLSX or CSV. '
+          type: ExportFormat1
+      request:
+        name: ExportPayoutRequest
+        query-parameters:
+          columnsExport:
+            type: optional<string>
+            validation:
+              pattern: >-
+                ^([a-zA-Z_][a-zA-Z0-9_]*:[a-zA-Z_][a-zA-Z0-9_]*,)*([a-zA-Z_][a-zA-Z0-9_]*:[a-zA-Z_][a-zA-Z0-9_]*)$
+          fromRecord:
+            default: 0
+            docs: >-
+              The number of records to skip before starting to collect the
+              result set.
+            type: optional<integer>
+          limitRecord:
+            default: 25000
+            docs: >-
+              The number of records to return for the query. The maximum is
+              30,000 records. When this parameter isn't sent, the API returns up
+              to 25,000 records.
+            type: optional<integer>
+            validation:
+              max: 30000
+          parameters:
+            docs: >
+              Collection of field names, conditions, and values used to filter
+              the query.
+
+
+              <Info>
+                **You must remove `parameters=` from the request before you send it, otherwise Payabli will ignore the filters.**
+
+                Because of a technical limitation, you can't make a request that includes filters from the API console on this page. The response won't be filtered. Instead, copy the request, remove `parameters=` and run the request in a different client.
+
+                For example:
+
+                --url https://api-sandbox.payabli.com/api/Query/transactions/org/236?parameters=totalAmount(gt)=1000&limitRecord=20
+
+                should become:
+
+                --url https://api-sandbox.payabli.com/api/Query/transactions/org/236?totalAmount(gt)=1000&limitRecord=20
+              </Info>
+
+
+              See [Filters and Conditions
+              Reference](/developers/developer-guides/pay-ops-reporting-engine-overview#filters-and-conditions-reference)
+              for help.
+
+
+              List of field names accepted:
+
+              - `status` (in, nin, eq, ne)
+
+              - `transactionDate` (gt, ge, lt, le, eq, ne)
+
+              - `billNumber` (ct, nct)
+
+              - `vendorNumber` (ct, nct, eq, ne)
+
+              - `vendorName` (ct, nct, eq, ne)
+
+              - `paymentMethod` (ct, nct, eq, ne)
+
+              - `paymentId` (ct, nct, eq, ne)
+
+              - `paymentgroup` (ct, nct, eq, ne)
+
+              - `totalAmount` (gt, ge, lt, le, eq, ne)
+
+              - `paypointLegal` (ne, eq, ct, nct)
+
+              - `paypointDba` (ne, eq, ct, nct)
+
+              - `orgName` (ne, eq, ct, nct)
+
+
+              List of comparison accepted - enclosed between parentheses:
+
+              - eq or empty => equal
+
+              - gt => greater than
+
+              - ge => greater or equal
+
+              - lt => less than
+
+              - le => less or equal
+
+              - ne => not equal
+
+              - ct => contains
+
+              - nct => not contains
+
+              - in => inside array separated by "|"
+
+              - nin => not inside array separated by "|"
+
+
+              List of parameters accepted:
+
+              - limitRecord: max number of records for query (default="20", "0"
+              or negative value for all)
+
+              - fromRecord: initial record in query
+
+
+              Example: totalAmount(gt)=20 return all records with totalAmount
+              greater than 20.00
+            type: optional<map<string, optional<string>>>
+      response:
+        docs: Success
+        status-code: 200
+        type: root.File
+      
+    ExportPayoutOrg:
+      auth: true
+      availability: deprecated
+      display-name: Export list of payouts for organization
+      docs: >-
+        Export a list of payouts and their details for an organization. Use
+        filters to limit results.
+      examples:
+        - path-parameters:
+            format: csv
+            orgId: 123
+          query-parameters:
+            columnsExport: BatchDate:Batch_Date,PaypointName:Legal_name
+            fromRecord: 251
+            limitRecord: 1000
+          response:
+            body:
+              key: value
+      method: GET
+      path: /Export/payouts/{format}/org/{orgId}
+      path-parameters:
+        format:
+          docs: 'Format for the export, either XLSX or CSV. '
+          type: ExportFormat1
+        orgId:
+          docs: The numeric identifier for organization, assigned by Payabli.
+          type: integer
+      request:
+        name: ExportPayoutOrgRequest
+        query-parameters:
+          columnsExport:
+            type: optional<string>
+            validation:
+              pattern: >-
+                ^([a-zA-Z_][a-zA-Z0-9_]*:[a-zA-Z_][a-zA-Z0-9_]*,)*([a-zA-Z_][a-zA-Z0-9_]*:[a-zA-Z_][a-zA-Z0-9_]*)$
+          fromRecord:
+            default: 0
+            docs: >-
+              The number of records to skip before starting to collect the
+              result set.
+            type: optional<integer>
+          limitRecord:
+            default: 25000
+            docs: >-
+              The number of records to return for the query. The maximum is
+              30,000 records. When this parameter isn't sent, the API returns up
+              to 25,000 records.
+            type: optional<integer>
+            validation:
+              max: 30000
+          parameters:
+            docs: >
+              Collection of field names, conditions, and values used to filter
+              the query.
+
+
+              <Info>
+                **You must remove `parameters=` from the request before you send it, otherwise Payabli will ignore the filters.**
+
+                Because of a technical limitation, you can't make a request that includes filters from the API console on this page. The response won't be filtered. Instead, copy the request, remove `parameters=` and run the request in a different client.
+
+                For example:
+
+                --url https://api-sandbox.payabli.com/api/Query/transactions/org/236?parameters=totalAmount(gt)=1000&limitRecord=20
+
+                should become:
+
+                --url https://api-sandbox.payabli.com/api/Query/transactions/org/236?totalAmount(gt)=1000&limitRecord=20
+              </Info>
+
+
+              See [Filters and Conditions
+              Reference](/developers/developer-guides/pay-ops-reporting-engine-overview#filters-and-conditions-reference)
+              for help.
+
+
+              List of field names accepted:
+
+              - `status` (in, nin, eq, ne)
+
+              - `transactionDate` (gt, ge, lt, le, eq, ne)
+
+              - `billNumber` (ct, nct)
+
+              - `vendorNumber` (ct, nct, eq, ne)
+
+              - `vendorName` (ct, nct, eq, ne)
+
+              - `paymentMethod` (ct, nct, eq, ne)
+
+              - `paymentId` (ct, nct, eq, ne)
+
+              - `paymentgroup` (ct, nct, eq, ne)
+
+              - `totalAmount` (gt, ge, lt, le, eq, ne)
+
+              - `paypointLegal` (ne, eq, ct, nct)
+
+              - `paypointDba` (ne, eq, ct, nct)
+
+              - `orgName` (ne, eq, ct, nct)
+
+
+              List of comparison accepted - enclosed between parentheses:
+
+              - eq or empty => equal
+
+              - gt => greater than
+
+              - ge => greater or equal
+
+              - lt => less than
+
+              - le => less or equal
+
+              - ne => not equal
+
+              - ct => contains
+
+              - nct => not contains
+
+              - in => inside array separated by "|"
+
+              - nin => not inside array separated by "|"
+
+
+              List of parameters accepted:
+
+              - limitRecord: max number of records for query (default="20", "0"
+              or negative value for all)
+
+              - fromRecord: initial record in query
+
+
+              Example: totalAmount(gt)=20 return all records with totalAmount
+              greater than 20.00
+            type: optional<map<string, optional<string>>>
+      response:
+        docs: Success
+        status-code: 200
+        type: root.File
+      
+    ExportPaypoints:
+      auth: true
+      availability: deprecated
+      display-name: Export list of paypoints in an organization
+      docs: >-
+        Export a list of paypoints in an organization. Use filters to limit
+        results.
+      examples:
+        - path-parameters:
+            format: csv
+            orgId: 123
+          query-parameters:
+            columnsExport: BatchDate:Batch_Date,PaypointName:Legal_name
+            fromRecord: 251
+            limitRecord: 1000
+          response:
+            body:
+              key: value
+      method: GET
+      path: /Export/paypoints/{format}/{orgId}
+      path-parameters:
+        format:
+          docs: 'Format for the export, either XLSX or CSV. '
+          type: ExportFormat1
+        orgId:
+          docs: The numeric identifier for organization, assigned by Payabli.
+          type: integer
+      request:
+        name: ExportPaypointsRequest
+        query-parameters:
+          columnsExport:
+            type: optional<string>
+            validation:
+              pattern: >-
+                ^([a-zA-Z_][a-zA-Z0-9_]*:[a-zA-Z_][a-zA-Z0-9_]*,)*([a-zA-Z_][a-zA-Z0-9_]*:[a-zA-Z_][a-zA-Z0-9_]*)$
+          fromRecord:
+            default: 0
+            docs: >-
+              The number of records to skip before starting to collect the
+              result set.
+            type: optional<integer>
+          limitRecord:
+            default: 25000
+            docs: >-
+              The number of records to return for the query. The maximum is
+              30,000 records. When this parameter isn't sent, the API returns up
+              to 25,000 records.
+            type: optional<integer>
+            validation:
+              max: 30000
+          parameters:
+            docs: >
+              Collection of field names, conditions, and values used to filter
+              the query.
+
+
+              <Info>
+                **You must remove `parameters=` from the request before you send it, otherwise Payabli will ignore the filters.**
+
+                Because of a technical limitation, you can't make a request that includes filters from the API console on this page. The response won't be filtered. Instead, copy the request, remove `parameters=` and run the request in a different client.
+
+                For example:
+
+                --url https://api-sandbox.payabli.com/api/Query/transactions/org/236?parameters=totalAmount(gt)=1000&limitRecord=20
+
+                should become:
+
+                --url https://api-sandbox.payabli.com/api/Query/transactions/org/236?totalAmount(gt)=1000&limitRecord=20
+              </Info>
+
+
+              See [Filters and Conditions
+              Reference](/developers/developer-guides/pay-ops-reporting-engine-overview#filters-and-conditions-reference)
+              for help.
+
+
+              List of field names accepted:
+
+              - `createdAt` (gt, ge, lt, le, eq, ne)
+
+              - `startDate` (gt, ge, lt, le, eq, ne)
+
+              - `dbaname` (ct, nct)
+
+              - `legalname` (ct, nct)
+
+              - `ein` (ct, nct)
+
+              - `address` (ct, nct)
+
+              - `city` (ct, nct)
+
+              - `state` (ct, nct)
+
+              - `phone` (ct, nct)
+
+              - `mcc` (ct, nct)
+
+              - `owntype` (ct, nct)
+
+              - `ownerName` (ct, nct)
+
+              - `contactName` (ct, nct)
+
+              - `orgParentname` (ct, nct)
+
+
+              List of comparison accepted - enclosed between parentheses:
+
+              - eq or empty => equal
+
+              - gt => greater than
+
+              - ge => greater or equal
+
+              - lt => less than
+
+              - le => less or equal
+
+              - ne => not equal
+
+              - ct => contains
+
+              - nct => not contains
+
+              - in => inside array
+
+              - nin => not inside array
+
+
+              List of parameters accepted:
+
+              - limitRecord : max number of records for query (default="20", "0"
+              or negative value for all)
+
+              - fromRecord : initial record in query
+
+
+              Example: `dbaname(ct)=hoa` returns all records with `dbaname`
+              containing "hoa"
+            type: optional<map<string, optional<string>>>
+      response:
+        docs: Success
+        status-code: 200
+        type: root.File
+      
+    ExportSettlements:
+      auth: true
+      availability: deprecated
+      display-name: Export list of settled transactions for entrypoint
+      docs: >-
+        Export a list of settled transactions for an entrypoint. Use filters to
+        limit results.
+      examples:
+        - path-parameters:
+            entry: 8cfec329267
+            format: csv
+          query-parameters:
+            columnsExport: BatchDate:Batch_Date,PaypointName:Legal_name
+            fromRecord: 251
+            limitRecord: 1000
+          response:
+            body:
+              key: value
+      method: GET
+      path: /Export/settlements/{format}/{entry}
+      path-parameters:
+        entry:
+          docs: >-
+            The paypoint's entrypoint identifier. [Learn
+            more](/api-reference/api-overview#entrypoint-vs-entry)
+          type: string
+        format:
+          docs: 'Format for the export, either XLSX or CSV. '
+          type: ExportFormat1
+      request:
+        name: ExportSettlementsRequest
+        query-parameters:
+          columnsExport:
+            type: optional<string>
+            validation:
+              pattern: >-
+                ^([a-zA-Z_][a-zA-Z0-9_]*:[a-zA-Z_][a-zA-Z0-9_]*,)*([a-zA-Z_][a-zA-Z0-9_]*:[a-zA-Z_][a-zA-Z0-9_]*)$
+          fromRecord:
+            default: 0
+            docs: >-
+              The number of records to skip before starting to collect the
+              result set.
+            type: optional<integer>
+          limitRecord:
+            default: 25000
+            docs: >-
+              The number of records to return for the query. The maximum is
+              30,000 records. When this parameter isn't sent, the API returns up
+              to 25,000 records.
+            type: optional<integer>
+            validation:
+              max: 30000
+          parameters:
+            docs: >
+              Collection of field names, conditions, and values used to filter
+              the query 
+
+
+              <Info>
+                **You must remove `parameters=` from the request before you send it, otherwise Payabli will ignore the filters.**
+
+                Because of a technical limitation, you can't make a request that includes filters from the API console on this page. The response won't be filtered. Instead, copy the request, remove `parameters=` and run the request in a different client.
+
+                For example:
+
+                --url https://api-sandbox.payabli.com/api/Query/transactions/org/236?parameters=totalAmount(gt)=1000&limitRecord=20
+
+                should become:
+
+                --url https://api-sandbox.payabli.com/api/Query/transactions/org/236?totalAmount(gt)=1000&limitRecord=20
+              </Info>
+
+
+              See [Filters and Conditions
+              Reference](/developers/developer-guides/pay-ops-reporting-engine-overview#filters-and-conditions-reference)
+              for help.
+
+
+              List of field names accepted:
+
+              - `settlementDate` (gt, ge, lt, le, eq, ne)
+
+              - `transId` (ne, eq, ct, nct)
+
+              - `gatewayTransId` (ne, eq, ct, nct)
+
+              - `method` (in, nin, eq, ne)
+
+              - `settledAmount` (gt, ge, lt, le, eq, ne)
+
+              - `operation` (in, nin, eq, ne)
+
+              - `source` (in, nin, eq, ne)
+
+              - `batchNumber` (ct, nct, eq, ne)
+
+              - `payaccountLastfour` (nct, ct)
+
+              - `payaccountType` (ne, eq, in, nin)
+
+              - `customerFirstname` (ct, nct, eq, ne)
+
+              - `customerLastname` (ct, nct, eq, ne)
+
+              - `customerName` (ct, nct)
+
+              - `customerId` (eq, ne)
+
+              - `customerNumber` (ct, nct, eq, ne)
+
+              - `customerCompanyname` (ct, nct, eq, ne)
+
+              - `customerAddress` (ct, nct, eq, ne)
+
+              - `customerCity` (ct, nct, eq, ne)
+
+              - `customerZip` (ct, nct, eq, ne)
+
+              - `customerState` (ct, nct, eq, ne)
+
+              - `customerCountry` (ct, nct, eq, ne)
+
+              - `customerPhone` (ct, nct, eq, ne)
+
+              - `customerEmail` (ct, nct, eq, ne)
+
+              - `customerShippingAddress` (ct, nct, eq, ne)
+
+              - `customerShippingCity` (ct, nct, eq, ne)
+
+              - `customerShippingZip` (ct, nct, eq, ne)
+
+              - `customerShippingState` (ct, nct, eq, ne)
+
+              - `customerShippingCountry` (ct, nct, eq, ne)
+
+              - `orgId` (eq) *mandatory when entry=org*
+
+              - `paypointId` (ne, eq)
+
+              - `paypointLegal` (ne, eq, ct, nct)
+
+              - `paypointDba` (ne, eq, ct, nct)
+
+              - `orgName` (ne, eq, ct, nct)
+
+              - `additional-xxx` (ne, eq, ct, nct) where xxx is the additional
+              field name
+
+
+              List of comparison accepted - enclosed between parentheses:
+
+              - eq or empty => equal
+
+              - gt => greater than
+
+              - ge => greater or equal
+
+              - lt => less than
+
+              - le => less or equal
+
+              - ne => not equal
+
+              - ct => contains
+
+              - nct => not contains
+
+              - in => inside array separated by "|"
+
+              - nin => not inside array separated by "|"
+
+
+              List of parameters accepted:
+
+              - limitRecord: max number of records for query (default="20", "0"
+              or negative value for all)
+
+              - fromRecord: initial record in query
+
+
+              Example: `settledAmount(gt)=20` returns all records with
+              a `settledAmount` greater than 20.00
+            type: optional<map<string, optional<string>>>
+      response:
+        docs: Success
+        status-code: 200
+        type: root.File
+      
+    ExportSettlementsOrg:
+      auth: true
+      availability: deprecated
+      display-name: Export list of settled transactions for organization
+      docs: >-
+        Export a list of settled transactions for an organization. Use filters
+        to limit results.
+      examples:
+        - path-parameters:
+            format: csv
+            orgId: 123
+          query-parameters:
+            columnsExport: BatchDate:Batch_Date,PaypointName:Legal_name
+            fromRecord: 251
+            limitRecord: 1000
+          response:
+            body:
+              key: value
+      method: GET
+      path: /Export/settlements/{format}/org/{orgId}
+      path-parameters:
+        format:
+          docs: 'Format for the export, either XLSX or CSV. '
+          type: ExportFormat1
+        orgId:
+          docs: The numeric identifier for organization, assigned by Payabli.
+          type: integer
+      request:
+        name: ExportSettlementsOrgRequest
+        query-parameters:
+          columnsExport:
+            type: optional<string>
+            validation:
+              pattern: >-
+                ^([a-zA-Z_][a-zA-Z0-9_]*:[a-zA-Z_][a-zA-Z0-9_]*,)*([a-zA-Z_][a-zA-Z0-9_]*:[a-zA-Z_][a-zA-Z0-9_]*)$
+          fromRecord:
+            default: 0
+            docs: >-
+              The number of records to skip before starting to collect the
+              result set.
+            type: optional<integer>
+          limitRecord:
+            default: 25000
+            docs: >-
+              The number of records to return for the query. The maximum is
+              30,000 records. When this parameter isn't sent, the API returns up
+              to 25,000 records.
+            type: optional<integer>
+            validation:
+              max: 30000
+          parameters:
+            docs: >
+              Collection of field names, conditions, and values used to filter
+              the query 
+
+
+              <Info>
+                **You must remove `parameters=` from the request before you send it, otherwise Payabli will ignore the filters.**
+
+                Because of a technical limitation, you can't make a request that includes filters from the API console on this page. The response won't be filtered. Instead, copy the request, remove `parameters=` and run the request in a different client.
+
+                For example:
+
+                --url https://api-sandbox.payabli.com/api/Query/transactions/org/236?parameters=totalAmount(gt)=1000&limitRecord=20
+
+                should become:
+
+                --url https://api-sandbox.payabli.com/api/Query/transactions/org/236?totalAmount(gt)=1000&limitRecord=20
+              </Info>
+
+
+              See [Filters and Conditions
+              Reference](/developers/developer-guides/pay-ops-reporting-engine-overview#filters-and-conditions-reference)
+              for help.
+
+
+              List of field names accepted:
+
+              - `settlementDate` (gt, ge, lt, le, eq, ne)
+
+              - `transId` (ne, eq, ct, nct)
+
+              - `gatewayTransId` (ne, eq, ct, nct)
+
+              - `method` (in, nin, eq, ne)
+
+              - `settledAmount` (gt, ge, lt, le, eq, ne)
+
+              - `operation` (in, nin, eq, ne)
+
+              - `source` (in, nin, eq, ne)
+
+              - `batchNumber` (ct, nct, eq, ne)
+
+              - `payaccountLastfour` (nct, ct)
+
+              - `payaccountType` (ne, eq, in, nin)
+
+              - `customerFirstname` (ct, nct, eq, ne)
+
+              - `customerLastname` (ct, nct, eq, ne)
+
+              - `customerName` (ct, nct)
+
+              - `customerId` (eq, ne)
+
+              - `customerNumber` (ct, nct, eq, ne)
+
+              - `customerCompanyname` (ct, nct, eq, ne)
+
+              - `customerAddress` (ct, nct, eq, ne)
+
+              - `customerCity` (ct, nct, eq, ne)
+
+              - `customerZip` (ct, nct, eq, ne)
+
+              - `customerState` (ct, nct, eq, ne)
+
+              - `customerCountry` (ct, nct, eq, ne)
+
+              - `customerPhone` (ct, nct, eq, ne)
+
+              - `customerEmail` (ct, nct, eq, ne)
+
+              - `customerShippingAddress` (ct, nct, eq, ne)
+
+              - `customerShippingCity` (ct, nct, eq, ne)
+
+              - `customerShippingZip` (ct, nct, eq, ne)
+
+              - `customerShippingState` (ct, nct, eq, ne)
+
+              - `customerShippingCountry` (ct, nct, eq, ne)
+
+              - `orgId` (eq) *mandatory when entry=org*
+
+              - `paypointId` (ne, eq)
+
+              - `paypointLegal` (ne, eq, ct, nct)
+
+              - `paypointDba` (ne, eq, ct, nct)
+
+              - `orgName` (ne, eq, ct, nct)
+
+              - `additional-xxx` (ne, eq, ct, nct) where xxx is the additional
+              field name
+
+
+              List of comparison accepted - enclosed between parentheses:
+
+              - eq or empty => equal
+
+              - gt => greater than
+
+              - ge => greater or equal
+
+              - lt => less than
+
+              - le => less or equal
+
+              - ne => not equal
+
+              - ct => contains
+
+              - nct => not contains
+
+              - in => inside array separated by "|"
+
+              - nin => not inside array separated by "|"
+
+
+              List of parameters accepted:
+
+              - limitRecord: max number of records for query (default="20", "0"
+              or negative value for all)
+
+              - fromRecord: initial record in query
+
+
+              Example: `settledAmount(gt)=20` returns all records with a
+              `settledAmount` greater than 20.00
+            type: optional<map<string, optional<string>>>
+      response:
+        docs: Success
+        status-code: 200
+        type: root.File
+      
+    ExportSubscriptions:
+      auth: true
+      availability: deprecated
+      display-name: Export list of subscriptions for an entrypoint
+      docs: >-
+        Export a list of subscriptions for an entrypoint. Use filters to limit
+        results.
+      examples:
+        - path-parameters:
+            entry: 8cfec329267
+            format: csv
+          query-parameters:
+            columnsExport: BatchDate:Batch_Date,PaypointName:Legal_name
+            fromRecord: 251
+            limitRecord: 1000
+          response:
+            body:
+              key: value
+      method: GET
+      path: /Export/subscriptions/{format}/{entry}
+      path-parameters:
+        entry:
+          docs: >-
+            The paypoint's entrypoint identifier. [Learn
+            more](/api-reference/api-overview#entrypoint-vs-entry)
+          type: string
+        format:
+          docs: 'Format for the export, either XLSX or CSV. '
+          type: ExportFormat1
+      request:
+        name: ExportSubscriptionsRequest
+        query-parameters:
+          columnsExport:
+            type: optional<string>
+            validation:
+              pattern: >-
+                ^([a-zA-Z_][a-zA-Z0-9_]*:[a-zA-Z_][a-zA-Z0-9_]*,)*([a-zA-Z_][a-zA-Z0-9_]*:[a-zA-Z_][a-zA-Z0-9_]*)$
+          fromRecord:
+            default: 0
+            docs: >-
+              The number of records to skip before starting to collect the
+              result set.
+            type: optional<integer>
+          limitRecord:
+            default: 25000
+            docs: >-
+              The number of records to return for the query. The maximum is
+              30,000 records. When this parameter isn't sent, the API returns up
+              to 25,000 records.
+            type: optional<integer>
+            validation:
+              max: 30000
+          parameters:
+            docs: >
+              Collection of field names, conditions, and values used to filter
+              the query
+
+
+              <Info>
+                **You must remove `parameters=` from the request before you send it, otherwise Payabli will ignore the filters.**
+
+                Because of a technical limitation, you can't make a request that includes filters from the API console on this page. The response won't be filtered. Instead, copy the request, remove `parameters=` and run the request in a different client.
+
+                For example:
+
+                --url https://api-sandbox.payabli.com/api/Query/transactions/org/236?parameters=totalAmount(gt)=1000&limitRecord=20
+
+                should become:
+
+                --url https://api-sandbox.payabli.com/api/Query/transactions/org/236?totalAmount(gt)=1000&limitRecord=20
+              </Info>
+
+
+              See [Filters and Conditions
+              Reference](/developers/developer-guides/pay-ops-reporting-engine-overview#filters-and-conditions-reference)
+              for help.
+
+
+              List of field names accepted:
+
+              - `startDate` (gt, ge, lt, le, eq, ne)
+
+              - `endDate` (gt, ge, lt, le, eq, ne)
+
+              - `nextDate` (gt, ge, lt, le, eq, ne)
+
+              - `frequency` (in, nin, ne, eq)
+
+              - `method` (in, nin, eq, ne)
+
+              - `totalAmount` (gt, ge, lt, le, eq, ne)
+
+              - `netAmount` (gt, ge, lt, le, eq, ne)
+
+              - `feeAmount` (gt, ge, lt, le, eq, ne)
+
+              - `status` (in, nin, eq, ne)
+
+              - `untilcancelled` (eq, ne)
+
+              - `payaccountLastfour` (nct, ct)
+
+              - `payaccountType` (ne, eq, in, nin)
+
+              - `customerFirstname` (ct, nct, eq, ne)
+
+              - `customerLastname` (ct, nct, eq, ne)
+
+              - `customerName` (ct, nct)
+
+              - `customerId` (eq, ne)
+
+              - `customerNumber` (ct, nct, eq, ne)
+
+              - `customerCompanyname` (ct, nct, eq, ne)
+
+              - `customerAddress` (ct, nct, eq, ne)
+
+              - `customerCity` (ct, nct, eq, ne)
+
+              - `customerZip` (ct, nct, eq, ne)
+
+              - `customerState` (ct, nct, eq, ne)
+
+              - `customerCountry` (ct, nct, eq, ne)
+
+              - `customerPhone` (ct, nct, eq, ne)
+
+              - `customerEmail` (ct, nct, eq, ne)
+
+              - `customerShippingAddress` (ct, nct, eq, ne)
+
+              - `customerShippingCity` (ct, nct, eq, ne)
+
+              - `customerShippingZip` (ct, nct, eq, ne)
+
+              - `customerShippingState` (ct, nct, eq, ne)
+
+              - `customerShippingCountry` (ct, nct, eq, ne)
+
+              - `orgId` (eq) 
+
+              - `paypointId` (ne, eq)
+
+              - `paypointLegal` (ne, eq, ct, nct)
+
+              - `paypointDba` (ne, eq, ct, nct)
+
+              - `orgName` (ne, eq, ct, nct)
+
+              - `additional-xxx` (ne, eq, ct, nct) where xxx is the additional
+              field name
+
+
+              List of comparison accepted - enclosed between parentheses:
+
+              - eq or empty => equal
+
+              - gt => greater than
+
+              - ge => greater or equal
+
+              - lt => less than
+
+              - le => less or equal
+
+              - ne => not equal
+
+              - ct => contains
+
+              - nct => not contains
+
+              - in => inside array
+
+              - nin => not inside array
+
+
+              List of parameters accepted:
+
+              - limitRecord : max number of records for query (default="20", "0"
+              or negative value for all)
+
+              - fromRecord : initial record in query
+
+
+              Example: `netAmount(gt)=20` returns all records with a `netAmount`
+              greater than 20.00
+            type: optional<map<string, optional<string>>>
+      response:
+        docs: Success
+        status-code: 200
+        type: root.File
+      
+    ExportSubscriptionsOrg:
+      auth: true
+      availability: deprecated
+      display-name: Export list of subscriptions for an organization
+      docs: >-
+        Export a list of subscriptions for an organization. Use filters to limit
+        results.
+      examples:
+        - path-parameters:
+            format: csv
+            orgId: 123
+          query-parameters:
+            columnsExport: BatchDate:Batch_Date,PaypointName:Legal_name
+            fromRecord: 251
+            limitRecord: 1000
+          response:
+            body:
+              key: value
+      method: GET
+      path: /Export/subscriptions/{format}/org/{orgId}
+      path-parameters:
+        format:
+          docs: 'Format for the export, either XLSX or CSV. '
+          type: ExportFormat1
+        orgId:
+          docs: The numeric identifier for organization, assigned by Payabli.
+          type: integer
+      request:
+        name: ExportSubscriptionsOrgRequest
+        query-parameters:
+          columnsExport:
+            type: optional<string>
+            validation:
+              pattern: >-
+                ^([a-zA-Z_][a-zA-Z0-9_]*:[a-zA-Z_][a-zA-Z0-9_]*,)*([a-zA-Z_][a-zA-Z0-9_]*:[a-zA-Z_][a-zA-Z0-9_]*)$
+          fromRecord:
+            default: 0
+            docs: >-
+              The number of records to skip before starting to collect the
+              result set.
+            type: optional<integer>
+          limitRecord:
+            default: 25000
+            docs: >-
+              The number of records to return for the query. The maximum is
+              30,000 records. When this parameter isn't sent, the API returns up
+              to 25,000 records.
+            type: optional<integer>
+            validation:
+              max: 30000
+          parameters:
+            docs: >
+              Collection of field names, conditions, and values used to filter
+              the query
+
+
+              <Info>
+                **You must remove `parameters=` from the request before you send it, otherwise Payabli will ignore the filters.**
+
+                Because of a technical limitation, you can't make a request that includes filters from the API console on this page. The response won't be filtered. Instead, copy the request, remove `parameters=` and run the request in a different client.
+
+                For example:
+
+                --url https://api-sandbox.payabli.com/api/Query/transactions/org/236?parameters=totalAmount(gt)=1000&limitRecord=20
+
+                should become:
+
+                --url https://api-sandbox.payabli.com/api/Query/transactions/org/236?totalAmount(gt)=1000&limitRecord=20
+              </Info>
+
+
+              See [Filters and Conditions
+              Reference](/developers/developer-guides/pay-ops-reporting-engine-overview#filters-and-conditions-reference)
+              for help.
+
+
+              List of field names accepted:
+
+              - `startDate` (gt, ge, lt, le, eq, ne)
+
+              - `endDate` (gt, ge, lt, le, eq, ne)
+
+              - `nextDate` (gt, ge, lt, le, eq, ne)
+
+              - `frequency` (in, nin, ne, eq)
+
+              - `method` (in, nin, eq, ne)
+
+              - `totalAmount` (gt, ge, lt, le, eq, ne)
+
+              - `netAmount` (gt, ge, lt, le, eq, ne)
+
+              - `feeAmount` (gt, ge, lt, le, eq, ne)
+
+              - `status` (in, nin, eq, ne)
+
+              - `untilcancelled` (eq, ne)
+
+              - `payaccountLastfour` (nct, ct)
+
+              - `payaccountType` (ne, eq, in, nin)
+
+              - `customerFirstname` (ct, nct, eq, ne)
+
+              - `customerLastname` (ct, nct, eq, ne)
+
+              - `customerName` (ct, nct)
+
+              - `customerId` (eq, ne)
+
+              - `customerNumber` (ct, nct, eq, ne)
+
+              - `customerCompanyname` (ct, nct, eq, ne)
+
+              - `customerAddress` (ct, nct, eq, ne)
+
+              - `customerCity` (ct, nct, eq, ne)
+
+              - `customerZip` (ct, nct, eq, ne)
+
+              - `customerState` (ct, nct, eq, ne)
+
+              - `customerCountry` (ct, nct, eq, ne)
+
+              - `customerPhone` (ct, nct, eq, ne)
+
+              - `customerEmail` (ct, nct, eq, ne)
+
+              - `customerShippingAddress` (ct, nct, eq, ne)
+
+              - `customerShippingCity` (ct, nct, eq, ne)
+
+              - `customerShippingZip` (ct, nct, eq, ne)
+
+              - `customerShippingState` (ct, nct, eq, ne)
+
+              - `customerShippingCountry` (ct, nct, eq, ne)
+
+              - `orgId` (eq) 
+
+              - `paypointId` (ne, eq)
+
+              - `paypointLegal` (ne, eq, ct, nct)
+
+              - `paypointDba` (ne, eq, ct, nct)
+
+              - `orgName` (ne, eq, ct, nct)
+
+              - `additional-xxx` (ne, eq, ct, nct) where xxx is the additional
+              field name
+
+
+              List of comparison accepted - enclosed between parentheses:
+
+              - eq or empty => equal
+
+              - gt => greater than
+
+              - ge => greater or equal
+
+              - lt => less than
+
+              - le => less or equal
+
+              - ne => not equal
+
+              - ct => contains
+
+              - nct => not contains
+
+              - in => inside array
+
+              - nin => not inside array
+
+
+              List of parameters accepted:
+
+              - limitRecord : max number of records for query (default="20", "0"
+              or negative value for all)
+
+              - fromRecord : initial record in query
+
+
+              Example: `netAmount(gt)=20` returns all records with a `netAmount`
+              greater than 20.00
+            type: optional<map<string, optional<string>>>
+      response:
+        docs: Success
+        status-code: 200
+        type: root.File
+      
+    ExportTransactions:
+      auth: true
+      availability: deprecated
+      display-name: Export list of transactions for entrypoint
+      docs: >-
+        Export a list of transactions for an entrypoint in a file in XLXS or CSV
+        format. Use filters to limit results. If you don't specify a date
+        range in the request, the last two months of data are returned.
+      examples:
+        - path-parameters:
+            entry: 8cfec329267
+            format: csv
+          query-parameters:
+            columnsExport: BatchDate:Batch_Date,PaypointName:Legal_name
+            fromRecord: 251
+            limitRecord: 1000
+          response:
+            body:
+              key: value
+      method: GET
+      path: /Export/transactions/{format}/{entry}
+      path-parameters:
+        entry:
+          docs: >-
+            The paypoint's entrypoint identifier. [Learn
+            more](/api-reference/api-overview#entrypoint-vs-entry)
+          type: string
+        format:
+          docs: 'Format for the export, either XLSX or CSV. '
+          type: ExportFormat1
+      request:
+        name: ExportTransactionsRequest
+        query-parameters:
+          columnsExport:
+            type: optional<string>
+            validation:
+              pattern: >-
+                ^([a-zA-Z_][a-zA-Z0-9_]*:[a-zA-Z_][a-zA-Z0-9_]*,)*([a-zA-Z_][a-zA-Z0-9_]*:[a-zA-Z_][a-zA-Z0-9_]*)$
+          fromRecord:
+            default: 0
+            docs: >-
+              The number of records to skip before starting to collect the
+              result set.
+            type: optional<integer>
+          limitRecord:
+            default: 25000
+            docs: >-
+              The number of records to return for the query. The maximum is
+              30,000 records. When this parameter isn't sent, the API returns up
+              to 25,000 records.
+            type: optional<integer>
+            validation:
+              max: 30000
+          parameters:
+            docs: >
+              Collection of field names, conditions, and values used to filter
+              the query 
+
+              
+              <Info>
+                **You must remove `parameters=` from the request before you send it, otherwise Payabli will ignore the filters.**
+
+                Because of a technical limitation, you can't make a request that includes filters from the API console on this page. The response won't be filtered. Instead, copy the request, remove `parameters=` and run the request in a different client.
+
+                For example:
+
+                --url https://api-sandbox.payabli.com/api/Query/transactions/org/236?parameters=totalAmount(gt)=1000&limitRecord=20
+
+                should become:
+
+                --url https://api-sandbox.payabli.com/api/Query/transactions/org/236?totalAmount(gt)=1000&limitRecord=20
+              </Info>
+
+
+              See [Filters and Conditions
+              Reference](/developers/developer-guides/pay-ops-reporting-engine-overview#filters-and-conditions-reference)
+              for help. 
+
+
+              List of field names accepted:
+
+              - `transactionDate` (gt, ge, lt, le, eq, ne)
+
+              - `transId` (ne, eq, ct, nct)
+
+              - `gatewayTransId` (ne, eq, ct, nct)
+
+              - `orderId` (ne, eq)
+
+              - `idTrans` (ne, eq)
+
+              - `orgId` (ne, eq)
+
+              - `paypointId` (ne, eq)
+
+              - `paypointLegal` (ne, eq, ct, nct)
+
+              - `paypointDba` (ne, eq, ct, nct)
+
+              - `orgName` (ne, eq, ct, nct)
+
+              - `method` (in, nin, eq, ne)
+
+              - `totalAmount` (gt, ge, lt, le, eq, ne)
+
+              - `netAmount` (gt, ge, lt, le, eq, ne)
+
+              - `feeAmount` (gt, ge, lt, le, eq, ne)
+
+              - `operation` (in, nin, eq, ne)
+
+              - `source` (in, nin, eq, ne)
+
+              - `status` (in, nin, eq, ne)
+
+              - `settlementStatus` (in, nin, eq, ne)
+
+              - `batchNumber` (nct, ct)
+
+              - `payaccountLastfour` (nct, ct)
+
+              - `payaccountType` (ne, eq, in, nin)
+
+              - `customerFirstname` (ct, nct, eq, ne)
+
+              - `customerLastname` (ct, nct, eq, ne)
+
+              - `customerName` (ct, nct)
+
+              - `customerId` (eq, ne)
+
+              - `customerNumber` (ct, nct, eq, ne)
+
+              - `customerCompanyname` (ct, nct, eq, ne)
+
+              - `customerAddress` (ct, nct, eq, ne)
+
+              - `customerCity` (ct, nct, eq, ne)
+
+              - `customerZip` (ct, nct, eq, ne)
+
+              - `customerState` (ct, nct, eq, ne)
+
+              - `customerCountry` (ct, nct, eq, ne)
+
+              - `customerPhone` (ct, nct, eq, ne)
+
+              - `customerEmail` (ct, nct, eq, ne)
+
+              - `customerShippingAddress` (ct, nct, eq, ne)
+
+              - `customerShippingCity` (ct, nct, eq, ne)
+
+              - `customerShippingZip` (ct, nct, eq, ne)
+
+              - `customerShippingState` (ct, nct, eq, ne)
+
+              - `customerShippingCountry` (ct, nct, eq, ne)
+
+              - `additional-xxx` (ne, eq, ct, nct) where xxx is the additional
+              field name
+
+
+              List of comparison accepted - enclosed between parentheses:
+
+              - eq or empty => equal
+
+              - gt => greater than
+
+              - ge => greater or equal
+
+              - lt => less than
+
+              - le => less or equal
+
+              - ne => not equal
+
+              - ct => contains
+
+              - nct => not contains
+
+              - in => inside array
+
+              - nin => not inside array
+
+
+              List of parameters accepted:
+
+              - limitRecord : max number of records for query (default="20", "0"
+              or negative value for all)
+
+              - fromRecord : initial record in query
+
+
+              Example: `netAmount(gt)=20` returns all records with a `netAmount`
+              greater than 20.00
+            type: optional<map<string, optional<string>>>
+      response:
+        docs: Success
+        status-code: 200
+        type: root.File
+      
+    ExportTransactionsOrg:
+      auth: true
+      availability: deprecated
+      display-name: Export list of transactions for an org
+      docs: >-
+        Export a list of transactions for an org in a file in XLSX or CSV
+        format. Use filters to limit results. If you don't specify a date
+        range in the request, the last two months of data are returned.
+      examples:
+        - path-parameters:
+            format: csv
+            orgId: 123
+          query-parameters:
+            columnsExport: BatchDate:Batch_Date,PaypointName:Legal_name
+            fromRecord: 251
+            limitRecord: 1000
+          response:
+            body:
+              key: value
+      method: GET
+      path: /Export/transactions/{format}/org/{orgId}
+      path-parameters:
+        format:
+          docs: 'Format for the export, either XLSX or CSV. '
+          type: ExportFormat1
+        orgId:
+          docs: The numeric identifier for organization, assigned by Payabli.
+          type: integer
+      request:
+        name: ExportTransactionsOrgRequest
+        query-parameters:
+          columnsExport:
+            type: optional<string>
+            validation:
+              pattern: >-
+                ^([a-zA-Z_][a-zA-Z0-9_]*:[a-zA-Z_][a-zA-Z0-9_]*,)*([a-zA-Z_][a-zA-Z0-9_]*:[a-zA-Z_][a-zA-Z0-9_]*)$
+          fromRecord:
+            default: 0
+            docs: >-
+              The number of records to skip before starting to collect the
+              result set.
+            type: optional<integer>
+          limitRecord:
+            default: 25000
+            docs: >-
+              The number of records to return for the query. The maximum is
+              30,000 records. When this parameter isn't sent, the API returns up
+              to 25,000 records.
+            type: optional<integer>
+            validation:
+              max: 30000
+          parameters:
+            docs: >
+              Collection of field names, conditions, and values used to filter
+              the query 
+
+
+              <Info>
+                **You must remove `parameters=` from the request before you send it, otherwise Payabli will ignore the filters.**
+
+                Because of a technical limitation, you can't make a request that includes filters from the API console on this page. The response won't be filtered. Instead, copy the request, remove `parameters=` and run the request in a different client.
+
+                For example:
+
+                --url https://api-sandbox.payabli.com/api/Query/transactions/org/236?parameters=totalAmount(gt)=1000&limitRecord=20
+
+                should become:
+
+                --url https://api-sandbox.payabli.com/api/Query/transactions/org/236?totalAmount(gt)=1000&limitRecord=20
+              </Info>
+
+
+              See [Filters and Conditions
+              Reference](/developers/developer-guides/pay-ops-reporting-engine-overview#filters-and-conditions-reference)
+              for help. 
+
+
+              List of field names accepted:
+
+              - `transactionDate` (gt, ge, lt, le, eq, ne)
+
+              - `transId` (ne, eq, ct, nct)
+
+              - `gatewayTransId` (ne, eq, ct, nct)
+
+              - `orderId` (ne, eq)
+
+              - `idTrans` (ne, eq)
+
+              - `orgId` (ne, eq)
+
+              - `paypointId` (ne, eq)
+
+              - `paypointLegal` (ne, eq, ct, nct)
+
+              - `paypointDba` (ne, eq, ct, nct)
+
+              - `orgName` (ne, eq, ct, nct)
+
+              - `method` (in, nin, eq, ne)
+
+              - `totalAmount` (gt, ge, lt, le, eq, ne)
+
+              - `netAmount` (gt, ge, lt, le, eq, ne)
+
+              - `feeAmount` (gt, ge, lt, le, eq, ne)
+
+              - `operation` (in, nin, eq, ne)
+
+              - `source` (in, nin, eq, ne)
+
+              - `status` (in, nin, eq, ne)
+
+              - `settlementStatus` (in, nin, eq, ne)
+
+              - `batchNumber` (nct, ct)
+
+              - `payaccountLastfour` (nct, ct)
+
+              - `payaccountType` (ne, eq, in, nin)
+
+              - `customerFirstname` (ct, nct, eq, ne)
+
+              - `customerLastname` (ct, nct, eq, ne)
+
+              - `customerName` (ct, nct)
+
+              - `customerId` (eq, ne)
+
+              - `customerNumber` (ct, nct, eq, ne)
+
+              - `customerCompanyname` (ct, nct, eq, ne)
+
+              - `customerAddress` (ct, nct, eq, ne)
+
+              - `customerCity` (ct, nct, eq, ne)
+
+              - `customerZip` (ct, nct, eq, ne)
+
+              - `customerState` (ct, nct, eq, ne)
+
+              - `customerCountry` (ct, nct, eq, ne)
+
+              - `customerPhone` (ct, nct, eq, ne)
+
+              - `customerEmail` (ct, nct, eq, ne)
+
+              - `customerShippingAddress` (ct, nct, eq, ne)
+
+              - `customerShippingCity` (ct, nct, eq, ne)
+
+              - `customerShippingZip` (ct, nct, eq, ne)
+
+              - `customerShippingState` (ct, nct, eq, ne)
+
+              - `customerShippingCountry` (ct, nct, eq, ne)
+
+              - `additional-xxx` (ne, eq, ct, nct) where xxx is the additional
+              field name
+
+
+              List of comparison accepted - enclosed between parentheses:
+
+              - eq or empty => equal
+
+              - gt => greater than
+
+              - ge => greater or equal
+
+              - lt => less than
+
+              - le => less or equal
+
+              - ne => not equal
+
+              - ct => contains
+
+              - nct => not contains
+
+              - in => inside array
+
+              - nin => not inside array
+
+
+              List of parameters accepted:
+
+              - limitRecord : max number of records for query (default="20", "0"
+              or negative value for all)
+
+              - fromRecord : initial record in query
+
+
+              Example: `netAmount(gt)=20` returns all records with a `netAmount`
+              greater than 20.00
+            type: optional<map<string, optional<string>>>
+      response:
+        docs: Success
+        status-code: 200
+        type: root.File
+      
+    ExportTransferDetails:
+      auth: true
+      availability: deprecated
+      display-name: Export list of transfer details
+      docs: >-
+        Export a list of transfer details for an entrypoint. Use filters to
+        limit results.
+      examples:
+        - path-parameters:
+            entry: 8cfec329267
+            format: csv
+            transferId: 1000000
+          query-parameters:
+            columnsExport: BatchDate:Batch_Date,PaypointName:Legal_name
+            fromRecord: 251
+            limitRecord: 1000
+            sortBy: desc(field_name)
+          response:
+            body:
+              key: value
+      method: GET
+      path: /Export/transferDetails/{format}/{entry}/{transferId}
+      path-parameters:
+        entry:
+          docs: >-
+            The paypoint's entrypoint identifier. [Learn
+            more](/api-reference/api-overview#entrypoint-vs-entry)
+          type: string
+        format:
+          docs: 'Format for the export, either XLSX or CSV. '
+          type: ExportFormat1
+        transferId:
+          docs: Transfer identifier.
+          type: long
+      request:
+        name: ExportTransferDetailsRequest
+        query-parameters:
+          columnsExport:
+            type: optional<string>
+            validation:
+              pattern: >-
+                ^([a-zA-Z_][a-zA-Z0-9_]*:[a-zA-Z_][a-zA-Z0-9_]*,)*([a-zA-Z_][a-zA-Z0-9_]*:[a-zA-Z_][a-zA-Z0-9_]*)$
+          fromRecord:
+            default: 0
+            docs: >-
+              The number of records to skip before starting to collect the
+              result set.
+            type: optional<integer>
+          limitRecord:
+            default: 25000
+            docs: >-
+              The number of records to return for the query. The maximum is
+              30,000 records. When this parameter isn't sent, the API returns up
+              to 25,000 records.
+            type: optional<integer>
+            validation:
+              max: 30000
+          parameters:
+            docs: >
+              Collection of field names, conditions, and values used to filter
+              the query
+
+
+              <Info>
+                **You must remove `parameters=` from the request before you send it, otherwise Payabli will ignore the filters.**
+
+                Because of a technical limitation, you can't make a request that includes filters from the API console on this page. The response won't be filtered. Instead, copy the request, remove `parameters=` and run the request in a different client.
+
+                For example:
+
+                --url https://api-sandbox.payabli.com/api/Query/transactions/org/236?parameters=totalAmount(gt)=1000&limitRecord=20
+
+                should become:
+
+                --url https://api-sandbox.payabli.com/api/Query/transactions/org/236?totalAmount(gt)=1000&limitRecord=20
+              </Info>
+
+
+              See [Filters and Conditions
+              Reference](/developers/developer-guides/pay-ops-reporting-engine-overview#filters-and-conditions-reference)
+              for help. 
+
+
+              List of field names accepted:
+
+                - `grossAmount` (gt, ge, lt, le, eq, ne)
+
+                - `chargeBackAmount` (gt, ge, lt, le, eq, ne)
+
+                - `returnedAmount` (gt, ge, lt, le, eq, ne)
+
+                - `billingFeeAmount` (gt, ge, lt, le, eq, ne)
+
+                - `thirdPartyPaidAmount` (gt, ge, lt, le, eq, ne)
+
+                - `netFundedAmount` (gt, ge, lt, le, eq, ne)
+
+                - `adjustmentAmount` (gt, ge, lt, le, eq, ne)
+
+                - `transactionId` (eq, ne, in, nin)
+
+                - `category` (eq, ne, ct, nct)
+
+                - `type` (eq, ne, in, nin)
+
+                - `method` (eq, ne, in, nin)
+            type: optional<map<string, optional<string>>>
+          sortBy:
+            docs: >-
+              The field name to use for sorting results. Use `desc(field_name)`
+              to sort descending by `field_name`, and use `asc(field_name)` to
+              sort ascending by `field_name`.
+            type: optional<string>
+      response:
+        docs: Success
+        status-code: 200
+        type: root.File
+      
+    ExportTransfers:
+      auth: true
+      availability: deprecated
+      display-name: Export list of transfers for entrypoint
+      docs: Get a list of transfers for an entrypoint. Use filters to limit results.
+      examples:
+        - path-parameters:
+            entry: 8cfec329267
+          query-parameters:
+            columnsExport: BatchDate:Batch_Date,PaypointName:Legal_name
+            fromRecord: 251
+            limitRecord: 1000
+            sortBy: desc(field_name)
+          response:
+            body:
+              key: value
+      method: GET
+      path: /Export/transfers/{entry}
+      path-parameters:
+        entry:
+          docs: >-
+            The paypoint's entrypoint identifier. [Learn
+            more](/api-reference/api-overview#entrypoint-vs-entry)
+          type: string
+      request:
+        name: ExportTransfersRequest
+        query-parameters:
+          columnsExport:
+            type: optional<string>
+            validation:
+              pattern: >-
+                ^([a-zA-Z_][a-zA-Z0-9_]*:[a-zA-Z_][a-zA-Z0-9_]*,)*([a-zA-Z_][a-zA-Z0-9_]*:[a-zA-Z_][a-zA-Z0-9_]*)$
+          fromRecord:
+            default: 0
+            docs: >-
+              The number of records to skip before starting to collect the
+              result set.
+            type: optional<integer>
+          limitRecord:
+            default: 25000
+            docs: >-
+              The number of records to return for the query. The maximum is
+              30,000 records. When this parameter isn't sent, the API returns up
+              to 25,000 records.
+            type: optional<integer>
+            validation:
+              max: 30000
+          parameters:
+            docs: >
+              Collection of field names, conditions, and values used to filter
+              the query
+
+
+              <Info>
+                **You must remove `parameters=` from the request before you send it, otherwise Payabli will ignore the filters.**
+
+                Because of a technical limitation, you can't make a request that includes filters from the API console on this page. The response won't be filtered. Instead, copy the request, remove `parameters=` and run the request in a different client.
+
+                For example:
+
+                --url https://api-sandbox.payabli.com/api/Query/transactions/org/236?parameters=totalAmount(gt)=1000&limitRecord=20
+
+                should become:
+
+                --url https://api-sandbox.payabli.com/api/Query/transactions/org/236?totalAmount(gt)=1000&limitRecord=20
+              </Info>
+
+
+              See [Filters and Conditions
+              Reference](/developers/developer-guides/pay-ops-reporting-engine-overview#filters-and-conditions-reference)
+              for help. 
+
+
+              List of field names accepted:
+                - `transferDate` (gt, ge, lt, le, eq, ne)
+
+                - `grossAmount` (gt, ge, lt, le, eq, ne)
+
+                - `chargeBackAmount` (gt, ge, lt, le, eq, ne)
+
+                - `returnedAmount` (gt, ge, lt, le, eq, ne)
+
+                - `billingFeeAmount` (gt, ge, lt, le, eq, ne)
+
+                - `thirdPartyPaidAmount` (gt, ge, lt, le, eq, ne)
+
+                - `netFundedAmount` (gt, ge, lt, le, eq, ne)
+
+                - `adjustmentAmount` (gt, ge, lt, le, eq, ne)
+
+                - `processor` (ne, eq, ct, nct)
+
+                - `transferStatus` (ne, eq, in, nin)
+
+                - `batchNumber` (ne, eq, ct, nct)
+
+                - `batchId` (ne, eq, in, nin)
+            type: optional<map<string, optional<string>>>
+          sortBy:
+            docs: >-
+              The field name to use for sorting results. Use `desc(field_name)`
+              to sort descending by `field_name`, and use `asc(field_name)` to
+              sort ascending by `field_name`.
+            type: optional<string>
+      response:
+        docs: Success
+        status-code: 200
+        type: root.File
+      
+    ExportVendors:
+      auth: true
+      availability: deprecated
+      display-name: Export vendors for an entrypoint
+      docs: >-
+        Export a list of vendors for an entrypoint. Use filters to limit
+        results.
+      examples:
+        - path-parameters:
+            entry: 8cfec329267
+            format: csv
+          query-parameters:
+            columnsExport: BatchDate:Batch_Date,PaypointName:Legal_name
+            fromRecord: 251
+            limitRecord: 1000
+          response:
+            body:
+              key: value
+      method: GET
+      path: /Export/vendors/{format}/{entry}
+      path-parameters:
+        entry:
+          docs: >-
+            The paypoint's entrypoint identifier. [Learn
+            more](/api-reference/api-overview#entrypoint-vs-entry)
+          type: string
+        format:
+          docs: 'Format for the export, either XLSX or CSV. '
+          type: ExportFormat1
+      request:
+        name: ExportVendorsRequest
+        query-parameters:
+          columnsExport:
+            type: optional<string>
+            validation:
+              pattern: >-
+                ^([a-zA-Z_][a-zA-Z0-9_]*:[a-zA-Z_][a-zA-Z0-9_]*,)*([a-zA-Z_][a-zA-Z0-9_]*:[a-zA-Z_][a-zA-Z0-9_]*)$
+          fromRecord:
+            default: 0
+            docs: >-
+              The number of records to skip before starting to collect the
+              result set.
+            type: optional<integer>
+          limitRecord:
+            default: 25000
+            docs: >-
+              The number of records to return for the query. The maximum is
+              30,000 records. When this parameter isn't sent, the API returns up
+              to 25,000 records.
+            type: optional<integer>
+            validation:
+              max: 30000
+          parameters:
+            docs: >
+              Collection of field names, conditions, and values used to filter
+              the query.
+
+
+              <Info>
+                **You must remove `parameters=` from the request before you send it, otherwise Payabli will ignore the filters.**
+
+                Because of a technical limitation, you can't make a request that includes filters from the API console on this page. The response won't be filtered. Instead, copy the request, remove `parameters=` and run the request in a different client.
+
+                For example:
+
+                --url https://api-sandbox.payabli.com/api/Query/transactions/org/236?parameters=totalAmount(gt)=1000&limitRecord=20
+
+                should become:
+
+                --url https://api-sandbox.payabli.com/api/Query/transactions/org/236?totalAmount(gt)=1000&limitRecord=20
+              </Info>
+
+
+              See [Filters and Conditions
+              Reference](/developers/developer-guides/pay-ops-reporting-engine-overview#filters-and-conditions-reference)
+              for help.
+
+
+              List of field names accepted:
+
+              - `method` (in, nin, eq, ne)
+
+              - `enrollmentStatus` (in, nin, eq, ne)
+
+              - `status` (in, nin, eq, ne)
+
+              - `vendorNumber` (ct, nct, eq, ne)
+
+              - `name` (ct, nct, eq, ne)
+
+              - `ein` (ct, nct, eq, ne)
+
+              - `phone` (ct, nct, eq, ne)
+
+              - `email` (ct, nct, eq, ne)
+
+              - `address` (ct, nct, eq, ne)
+
+              - `city` (ct, nct, eq, ne)
+
+              - `state` (ct, nct, eq, ne)
+
+              - `country` (ct, nct, eq, ne)
+
+              - `zip` (ct, nct, eq, ne)
+
+              - `mcc` (ct, nct, eq, ne)
+
+              - `locationCode` (ct, nct, eq, ne)
+
+              - `paypointLegal` (ne, eq, ct, nct)
+
+              - `paypointDba` (ne, eq, ct, nct)
+
+              - `orgName` (ne, eq, ct, nct)
+
+
+              List of comparison accepted - enclosed between parentheses:
+
+              - eq or empty => equal
+
+              - gt => greater than
+
+              - ge => greater or equal
+
+              - lt => less than
+
+              - le => less or equal
+
+              - ne => not equal
+
+              - ct => contains
+
+              - nct => not contains
+
+              - in => inside array separated by "|"
+
+              - nin => not inside array separated by "|"
+
+
+              List of parameters accepted:
+
+              - limitRecord : max number of records for query (default="20", "0"
+              or negative value for all)
+
+              - fromRecord : initial record in query
+
+
+              Example: `netAmount(gt)=20` returns all records with a `netAmount`
+              greater than 20.00
+            type: optional<map<string, optional<string>>>
+      response:
+        docs: Success
+        status-code: 200
+        type: root.File
+      
+    ExportVendorsOrg:
+      auth: true
+      availability: deprecated
+      display-name: Export vendors for an organization
+      docs: >-
+        Export a list of vendors for an organization. Use filters to limit
+        results.
+      examples:
+        - path-parameters:
+            format: csv
+            orgId: 123
+          query-parameters:
+            columnsExport: BatchDate:Batch_Date,PaypointName:Legal_name
+            fromRecord: 251
+            limitRecord: 1000
+          response:
+            body:
+              key: value
+      method: GET
+      path: /Export/vendors/{format}/org/{orgId}
+      path-parameters:
+        format:
+          docs: 'Format for the export, either XLSX or CSV. '
+          type: ExportFormat1
+        orgId:
+          docs: The numeric identifier for organization, assigned by Payabli.
+          type: integer
+      request:
+        name: ExportVendorsOrgRequest
+        query-parameters:
+          columnsExport:
+            type: optional<string>
+            validation:
+              pattern: >-
+                ^([a-zA-Z_][a-zA-Z0-9_]*:[a-zA-Z_][a-zA-Z0-9_]*,)*([a-zA-Z_][a-zA-Z0-9_]*:[a-zA-Z_][a-zA-Z0-9_]*)$
+          fromRecord:
+            default: 0
+            docs: >-
+              The number of records to skip before starting to collect the
+              result set.
+            type: optional<integer>
+          limitRecord:
+            default: 25000
+            docs: >-
+              The number of records to return for the query. The maximum is
+              30,000 records. When this parameter isn't sent, the API returns up
+              to 25,000 records.
+            type: optional<integer>
+            validation:
+              max: 30000
+          parameters:
+            docs: >
+              Collection of field names, conditions, and values used to filter
+              the query.
+
+
+              <Info>
+                **You must remove `parameters=` from the request before you send it, otherwise Payabli will ignore the filters.**
+
+                Because of a technical limitation, you can't make a request that includes filters from the API console on this page. The response won't be filtered. Instead, copy the request, remove `parameters=` and run the request in a different client.
+
+                For example:
+
+                --url https://api-sandbox.payabli.com/api/Query/transactions/org/236?parameters=totalAmount(gt)=1000&limitRecord=20
+
+                should become:
+
+                --url https://api-sandbox.payabli.com/api/Query/transactions/org/236?totalAmount(gt)=1000&limitRecord=20
+              </Info>
+
+
+              See [Filters and Conditions
+              Reference](/developers/developer-guides/pay-ops-reporting-engine-overview#filters-and-conditions-reference)
+              for help.
+
+
+              List of field names accepted:
+
+              - `method` (in, nin, eq, ne)
+
+              - `enrollmentStatus` (in, nin, eq, ne)
+
+              - `status` (in, nin, eq, ne)
+
+              - `vendorNumber` (ct, nct, eq, ne)
+
+              - `name` (ct, nct, eq, ne)
+
+              - `ein` (ct, nct, eq, ne)
+
+              - `phone` (ct, nct, eq, ne)
+
+              - `email` (ct, nct, eq, ne)
+
+              - `address` (ct, nct, eq, ne)
+
+              - `city` (ct, nct, eq, ne)
+
+              - `state` (ct, nct, eq, ne)
+
+              - `country` (ct, nct, eq, ne)
+
+              - `zip` (ct, nct, eq, ne)
+
+              - `mcc` (ct, nct, eq, ne)
+
+              - `locationCode` (ct, nct, eq, ne)
+
+              - `paypointLegal` (ne, eq, ct, nct)
+
+              - `paypointDba` (ne, eq, ct, nct)
+
+              - `orgName` (ne, eq, ct, nct)
+
+
+              List of comparison accepted - enclosed between parentheses:
+
+              - eq or empty => equal
+
+              - gt => greater than
+
+              - ge => greater or equal
+
+              - lt => less than
+
+              - le => less or equal
+
+              - ne => not equal
+
+              - ct => contains
+
+              - nct => not contains
+
+              - in => inside array separated by "|"
+
+              - nin => not inside array separated by "|"
+
+
+              List of parameters accepted:
+
+              - limitRecord : max number of records for query (default="20", "0"
+              or negative value for all)
+
+              - fromRecord : initial record in query
+
+
+              Example: `netAmount(gt)=20` returns all records with a `netAmount`
+              greater than 20.00
+            type: optional<map<string, optional<string>>>
+      response:
+        docs: Success
+        status-code: 200
+        type: root.File
+      
+  

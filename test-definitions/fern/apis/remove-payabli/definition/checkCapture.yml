@@ -1,0 +1,170 @@
+imports:
+  root: __package__.yml
+
+types:
+  CheckCaptureRequest:
+    docs: Request model for check capture processing.
+    properties:
+      entryPoint: root.Entry
+      frontImage:
+        docs: >-
+          Base64-encoded image of the front of the check. Must be JPEG or PNG format and less than 1MB.
+          Image must show the entire check clearly with no partial, blurry, or illegible portions.
+        type: string
+      rearImage:
+        docs: >-
+          Base64-encoded image of the back of the check. Must be JPEG or PNG format and less than 1MB.
+          Image must show the entire check clearly with no partial, blurry, or illegible portions.
+        type: string
+      checkAmount:
+        docs: Check amount in cents (maximum 32-bit integer value). For example, $125.50 is represented as 12550.
+        type: integer
+
+  CheckCaptureResponse:
+    docs: Response model for check capture processing.
+    properties:
+      id:
+        docs: Unique ID for the check capture, to be used with the /api/MoneyIn/getpaid endpoint.
+        type: optional<string>
+      success:
+        docs: Indicates whether the check processing was successful.
+        type: boolean
+      processDate:
+        docs: The date and time when the check was processed (ISO 8601 format).
+        type: string
+      ocrMicr:
+        docs: The OCR-extracted MICR (Magnetic Ink Character Recognition) line from the check.
+        type: optional<string>
+      ocrMicrStatus:
+        docs: Status of the MICR extraction process.
+        type: optional<string>
+      ocrMicrConfidence:
+        docs: Confidence score for the MICR extraction (0 to 100).
+        type: optional<string>
+      ocrAccountNumber:
+        docs: The bank account number extracted from the check.
+        type: optional<string>
+      ocrRoutingNumber:
+        docs: The bank routing number extracted from the check.
+        type: optional<string>
+      ocrCheckNumber:
+        docs: The check number extracted from the check.
+        type: optional<string>
+      ocrCheckTranCode:
+        docs: The transaction code extracted from the check.
+        type: optional<string>
+      ocrAmount:
+        docs: The amount extracted via OCR from the check.
+        type: optional<string>
+      ocrAmountStatus:
+        docs: Status of the amount extraction process.
+        type: optional<string>
+      ocrAmountConfidence:
+        docs: Confidence score for the amount extraction (0 to 100).
+        type: optional<string>
+      amountDiscrepancyDetected:
+        docs: >-
+          Flag indicating whether there's a discrepancy between the provided amount
+          and the OCR-detected amount.
+        type: boolean
+      endorsementDetected:
+        docs: Flag indicating whether an endorsement was detected on the check.
+        type: boolean
+      errors:
+        docs: List of error messages that occurred during processing.
+        type: optional<list<string>>
+      messages:
+        docs: List of informational messages about the processing.
+        type: optional<list<string>>
+      carLarMatchConfidence:
+        docs: >-
+          Confidence score for the match between Courtesy Amount Recognition (CAR) and
+          Legal Amount Recognition (LAR).
+        type: optional<string>
+      carLarMatchStatus:
+        docs: Status of the CAR/LAR match.
+        type: optional<string>
+      frontImage:
+        docs: Processed front image of the check (Base64-encoded).
+        type: optional<string>
+      rearImage:
+        docs: Processed rear image of the check (Base64-encoded).
+        type: optional<string>
+      checkType:
+        docs: |
+          Identifier for the type of check.
+          Personal = 1
+          Business = 2
+          Only personal checks are supported for check capture.
+        type: double
+      referenceNumber:
+        docs: Reference number for the transaction.
+        type: optional<string>
+      pageIdentifier: optional<root.PageIdentifier>
+service:
+  auth: true
+  base-path: ''
+  endpoints:
+    CheckProcessing:
+      availability: pre-release
+      display-name: Process Check Capture
+      docs: >-
+        Captures a check for Remote Deposit Capture (RDC) using the provided check images and details.
+        This endpoint handles the OCR extraction of check data including MICR, routing number,
+        account number, and amount. See the [RDC guide](/developers/developer-guides/pay-in-rdc) for more details.
+      method: POST
+      path: /CheckCapture/CheckProcessing
+      request:
+        body:
+          properties:
+            entryPoint: root.Entry
+            frontImage: 
+              docs: >-
+                Base64-encoded front check image. Must be JPEG or PNG format and less than 1MB.
+                Image must show the entire check clearly with no partial, blurry, or illegible portions.
+              type: string
+            rearImage:
+              docs: >-
+                Base64-encoded rear check image. Must be JPEG or PNG format and less than 1MB.
+                Image must show the entire check clearly with no partial, blurry, or illegible portions.
+              type: string
+            checkAmount:
+              docs: Check amount in cents (maximum 32-bit integer value).
+              type: integer
+        content-type: application/json
+        name: CheckCaptureRequestBody
+      response:
+        docs: Success response with check processing results.
+        status-code: 200
+        type: CheckCaptureResponse
+      examples:
+        - name: Capture
+          request:
+            entryPoint: "47abcfea12"
+            frontImage: "/9j/4AAQSkZJRgABAQEASABIAAD..." 
+            rearImage: "/9j/4AAQSkZJRgABAQEASABIAAD..." 
+            checkAmount: 12550
+          response:
+            body:
+              id: "txn_abc123def456"
+              success: true
+              processDate: "2025-04-10T04:17:09.875Z"
+              ocrMicr: "⑆123456789⑆ ⑈123456⑈ 0123"
+              ocrMicrStatus: "SUCCESS"
+              ocrMicrConfidence: "95"
+              ocrAccountNumber: "123456"
+              ocrRoutingNumber: "123456789"
+              ocrCheckNumber: "0123"
+              ocrCheckTranCode: ""
+              ocrAmount: "125.50"
+              ocrAmountStatus: "SUCCESS"
+              ocrAmountConfidence: "98"
+              amountDiscrepancyDetected: false
+              endorsementDetected: true
+              errors: []
+              messages: ["Check processed successfully"]
+              carLarMatchConfidence: "97"
+              carLarMatchStatus: "MATCH"
+              checkType: 1
+              referenceNumber: "REF_XYZ789"
+              pageIdentifier: null

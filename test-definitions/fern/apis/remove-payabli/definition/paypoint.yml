@@ -1,0 +1,676 @@
+imports:
+  root: __package__.yml
+types:
+  GetBasicEntryByIdResponse:
+    properties:
+      isSuccess: root.IsSuccess
+      pageIdentifier: optional<root.PageIdentifier>
+      responseCode: optional<root.Responsecode>
+      responseData: optional<root.PaypointEntryConfig>
+      responseText: root.ResponseText
+
+  GetBasicEntryResponse:
+    properties:
+      isSuccess: root.IsSuccess
+      pageIdentifier: optional<root.PageIdentifier>
+      responseCode: optional<root.Responsecode>
+      responseData: optional<root.PaypointEntryConfig>
+      responseText: root.ResponseText
+
+  GetEntryConfigResponse:
+    properties:
+      isSuccess: root.IsSuccess
+      pageIdentifier: optional<root.PageIdentifier>
+      responseCode: optional<root.Responsecode>
+      responseData: optional<root.PaypointEntryConfig>
+      responseText: root.ResponseText
+
+  
+  PaypointMoveRequest:
+    properties:
+      entryPoint: root.Entrypointfield
+      newParentOrganizationId: 
+        type: integer
+        docs: |
+          The ID for the paypoint's new parent organization.
+      notificationRequest: 
+        type: optional<NotificationRequest>
+        docs: Optional notification request object for a webhook
+
+  NotificationRequest:
+    properties:
+      notificationUrl: 
+        type: string
+        docs: Complete HTTP URL receiving the notification
+      webHeaderParameters: 
+        type: optional<list<WebHeaderParameter>>
+        docs: A dictionary of key-value pairs to be inserted in the header when the notification request is submitted
+
+  WebHeaderParameter:
+    properties:
+      key: string
+      value: string
+
+  MigratePaypointResponse:
+    properties:
+      isSuccess: root.IsSuccess
+      responseCode: optional<root.Responsecode>
+      responseText: root.ResponseText
+
+
+
+service:
+  auth: false
+  base-path: ''
+  endpoints:
+    getBasicEntry:
+      auth: true
+      display-name: Get basic paypoint details
+      docs: Gets the basic details for a paypoint.
+      examples:
+        - name: Example Paypoint Entry response
+          path-parameters:
+            entry: 8cfec329267
+          response:
+            body:
+              isSuccess: true
+              responseCode: 1
+              responseData:
+                EntryName: abc123def
+                EntryPages:
+                  - AdditionalData:
+                      key1:
+                        key: value
+                      key2:
+                        key: value
+                      key3:
+                        key: value
+                IdEntry: 11111
+                Paypoint:
+                  address1: 123 Ocean Drive
+                  address2: Suite 400
+                  bankData:
+                    - bankAccountFunction: 0
+                      bankAccountHolderName: Gruzya Adventure Outfitters LLC
+                      nickname: Business Checking 1234
+                  boardingId: 340
+                  city: Bristol
+                  contacts:
+                    - {}
+                  country: US
+                  credentials:
+                    - {}
+                  dbaName: Sunshine Gutters
+                  externalPaypointID: ''
+                  fax: '5555555555'
+                  idPaypoint: 1000000
+                  legalName: Sunshine Services, LLC
+                  parentOrg:
+                    orgName: Pilgrim Planner
+                    orgStatus: 1
+                    orgType: 0
+                  paypointStatus: 1
+                  phone: '5555555555'
+                  state: GA
+                  summary:
+                    amountSubs: 0
+                    amountTx: 0
+                    countSubs: 0
+                    countTx: 0
+                    customers: 1
+                  timeZone: -5
+                  websiteAddress: www.example.com
+                  zip: '31113'
+              responseText: Success
+      method: GET
+      path: /Paypoint/basic/{entry}
+      path-parameters:
+        entry:
+          docs: >-
+            The paypoint's entrypoint identifier. [Learn
+            more](/api-reference/api-overview#entrypoint-vs-entry)
+          type: string
+      response:
+        docs: Success
+        status-code: 200
+        type: GetBasicEntryResponse
+      
+    getBasicEntryById:
+      auth: true
+      display-name: Get paypoint details by ID
+      docs: 'Retrieves the basic details for a paypoint by ID. '
+      examples:
+        - name: Example Paypoint Entry response
+          path-parameters:
+            IdPaypoint: '198'
+          response:
+            body:
+              isSuccess: true
+              responseCode: 1
+              responseData:
+                EntryName: abc123def
+                EntryPages:
+                  - AdditionalData:
+                      key1:
+                        key: value
+                      key2:
+                        key: value
+                      key3:
+                        key: value
+                IdEntry: 11111
+                Paypoint:
+                  address1: 123 Ocean Drive
+                  address2: Suite 400
+                  bankData:
+                    - bankAccountFunction: 0
+                      bankAccountHolderName: Gruzya Adventure Outfitters LLC
+                      nickname: Business Checking 1234
+                  boardingId: 340
+                  city: Bristol
+                  contacts:
+                    - {}
+                  country: US
+                  credentials:
+                    - {}
+                  dbaName: Sunshine Gutters
+                  externalPaypointID: ''
+                  fax: '5555555555'
+                  idPaypoint: 1000000
+                  legalName: Sunshine Services, LLC
+                  parentOrg:
+                    orgName: Pilgrim Planner
+                    orgStatus: 1
+                    orgType: 0
+                  paypointStatus: 1
+                  phone: '5555555555'
+                  state: GA
+                  summary:
+                    amountSubs: 0
+                    amountTx: 0
+                    countSubs: 0
+                    countTx: 0
+                    customers: 1
+                  timeZone: -5
+                  websiteAddress: www.example.com
+                  zip: '31113'
+              responseText: Success
+      method: GET
+      path: /Paypoint/basicById/{IdPaypoint}
+      path-parameters:
+        IdPaypoint:
+          docs: >-
+            Paypoint ID. You can find this value by querying
+            `/api/Query/paypoints/{orgId}`
+          type: string
+      response:
+        docs: Success
+        status-code: 200
+        type: GetBasicEntryByIdResponse
+      
+    getEntryConfig:
+      auth: true
+      display-name: Get paypoint details
+      docs: Gets the details for a single paypoint.
+      examples:
+        - name: Example Paypoint Entry response
+          path-parameters:
+            entry: 8cfec329267
+          response:
+            body:
+              isSuccess: true
+              responseCode: 1
+              responseData:
+                EntryName: abc123def
+                EntryPages:
+                  - AdditionalData:
+                      key1:
+                        key: value
+                      key2:
+                        key: value
+                      key3:
+                        key: value
+                IdEntry: 11111
+                Paypoint:
+                  address1: 123 Ocean Drive
+                  address2: Suite 400
+                  bankData:
+                    - bankAccountFunction: 0
+                      bankAccountHolderName: Gruzya Adventure Outfitters LLC
+                      nickname: Business Checking 1234
+                  boardingId: 340
+                  city: Bristol
+                  contacts:
+                    - {}
+                  country: US
+                  credentials:
+                    - {}
+                  dbaName: Sunshine Gutters
+                  externalPaypointID: ''
+                  fax: '5555555555'
+                  idPaypoint: 1000000
+                  legalName: Sunshine Services, LLC
+                  parentOrg:
+                    orgName: Pilgrim Planner
+                    orgStatus: 1
+                    orgType: 0
+                  paypointStatus: 1
+                  phone: '5555555555'
+                  state: GA
+                  summary:
+                    amountSubs: 0
+                    amountTx: 0
+                    countSubs: 0
+                    countTx: 0
+                    customers: 1
+                  timeZone: -5
+                  websiteAddress: www.example.com
+                  zip: '31113'
+              responseText: Success
+      method: GET
+      path: /Paypoint/{entry}
+      path-parameters:
+        entry:
+          docs: >-
+            The paypoint's entrypoint identifier. [Learn
+            more](/api-reference/api-overview#entrypoint-vs-entry)
+          type: string
+      request:
+        name: GetEntryConfigRequest
+        query-parameters:
+          entrypages: optional<string>
+      response:
+        docs: Success
+        status-code: 200
+        type: GetEntryConfigResponse
+      
+    getPage:
+      auth: true
+      display-name: Get payment page details
+      docs: 'Gets the details for single payment page for a paypoint. '
+      examples:
+        - path-parameters:
+            entry: 8cfec329267
+            subdomain: pay-your-fees-1
+          response:
+            body:
+              AdditionalData:
+                key1:
+                  key: value
+                key2:
+                  key: value
+                key3:
+                  key: value
+              credentials:
+                - accountId: accountId
+                  cfeeFix: 1.1
+                  cfeeFloat: 1.1
+                  cfeeMax: 1.1
+                  cfeeMin: 1.1
+                  maxticket: 1.1
+                  minticket: 1.1
+                  mode: 1
+                  referenceId: 1000000
+                  service: service
+              lastAccess: '2022-06-30T15:01:00Z'
+              pageContent:
+                amount:
+                  categories:
+                    - {}
+                  enabled: true
+                  order: 1
+                autopay:
+                  enabled: true
+                  frequencySelected: frequencySelected
+                  header: header
+                  order: 1
+                  startDate: 1, 5-10
+                contactUs:
+                  emailLabel: emailLabel
+                  enabled: true
+                  header: header
+                  order: 1
+                  paymentIcons: true
+                  phoneLabel: phoneLabel
+                entry: entry
+                invoices:
+                  enabled: true
+                  invoiceLink:
+                    enabled: true
+                  order: 1
+                  viewInvoiceDetails:
+                    enabled: true
+                logo:
+                  enabled: true
+                  order: 1
+                messageBeforePaying:
+                  enabled: true
+                  label: label
+                  order: 1
+                name: name
+                notes:
+                  enabled: true
+                  header: header
+                  order: 1
+                  placeholder: placeholder
+                  value: value
+                page:
+                  description: description
+                  enabled: true
+                  header: header
+                  order: 1
+                paymentButton:
+                  enabled: true
+                  label: label
+                  order: 1
+                paymentMethods:
+                  allMethodsChecked: true
+                  enabled: true
+                  header: header
+                  methods:
+                    amex: true
+                    applePay: true
+                    discover: false
+                    eCheck: false
+                    mastercard: true
+                    visa: true
+                  order: 1
+                payor:
+                  enabled: true
+                  fields:
+                    - {}
+                  header: header
+                  order: 1
+                review:
+                  enabled: true
+                  header: header
+                  order: 1
+                subdomain: mypage-1
+              pageIdentifier: 'null'
+              pageSettings:
+                color: color
+                customCssUrl: customCssUrl
+                language: language
+                pageLogo:
+                  fContent: TXkgdGVzdCBmaWxlHJ==...
+                  filename: my-doc.pdf
+                  ftype: pdf
+                  furl: https://mysite.com/my-doc.pdf
+                paymentButton:
+                  label: label
+                  size: sm
+                redirectAfterApprove: true
+                redirectAfterApproveUrl: redirectAfterApproveUrl
+              published: 1
+              receiptContent:
+                amount:
+                  enabled: true
+                  order: 1
+                contactUs:
+                  enabled: true
+                  order: 1
+                details:
+                  enabled: true
+                  order: 1
+                logo:
+                  enabled: true
+                  order: 1
+                messageBeforeButton:
+                  enabled: true
+                  label: label
+                  order: 1
+                page:
+                  description: description
+                  enabled: true
+                  header: header
+                  order: 1
+                paymentButton:
+                  enabled: true
+                  label: label
+                  order: 1
+                paymentInformation:
+                  enabled: true
+                  order: 1
+                settings:
+                  enabled: true
+                  fields:
+                    - {}
+                  order: 1
+                  sendAuto: true
+                  sendManual: true
+              subdomain: mypage-1
+              totalAmount: 1.1
+              validationCode: validationCode
+      method: GET
+      path: /Paypoint/{entry}/{subdomain}
+      path-parameters:
+        entry:
+          docs: >-
+            The paypoint's entrypoint identifier. [Learn
+            more](/api-reference/api-overview#entrypoint-vs-entry)
+          type: string
+        subdomain:
+          docs: >-
+            Payment page identifier. The subdomain value is the last portion of
+            the payment page URL. For example,
+            in`https://paypages-sandbox.payabli.com/513823dc10/pay-your-fees-1`,
+            the subdomain is `pay-your-fees-1`.
+          type: string
+      response:
+        docs: Success
+        status-code: 200
+        type: root.PayabliPages
+      
+    removePage:
+      auth: true
+      display-name: Delete a payment page
+      docs: Deletes a payment page in a paypoint.
+      examples:
+        - path-parameters:
+            entry: 8cfec329267
+            subdomain: pay-your-fees-1
+          response:
+            body:
+              isSuccess: true
+              responseText: Success
+      method: DELETE
+      path: /Paypoint/{entry}/{subdomain}
+      path-parameters:
+        entry:
+          docs: >-
+            The paypoint's entrypoint identifier. [Learn
+            more](/api-reference/api-overview#entrypoint-vs-entry)
+          type: string
+        subdomain:
+          docs: >-
+            Payment page identifier. The subdomain value is the last portion of
+            the payment page URL. For example,
+            in`https://paypages-sandbox.payabli.com/513823dc10/pay-your-fees-1`,
+            the subdomain is `pay-your-fees-1`.
+          type: string
+      response:
+        docs: Success
+        status-code: 200
+        type: root.PayabliApiResponseGeneric2Part
+      
+    saveLogo:
+      auth: true
+      display-name: Update paypoint logo
+      docs: 'Updates a paypoint logo. '
+      examples:
+        - path-parameters:
+            entry: 8cfec329267
+          request: {}
+          response:
+            body:
+              isSuccess: true
+              pageIdentifier: 'null'
+              responseCode: 1
+              responseData: responseData
+              responseText: Success
+      method: PUT
+      path: /Paypoint/logo/{entry}
+      path-parameters:
+        entry:
+          docs: >-
+            The paypoint's entrypoint identifier. [Learn
+            more](/api-reference/api-overview#entrypoint-vs-entry)
+          type: string
+      request:
+        body: root.FileContent
+        content-type: application/json
+      response:
+        docs: Success
+        status-code: 200
+        type: root.PayabliApiResponse00Responsedatanonobject
+      
+    settingsPage:
+      auth: true
+      display-name: Get paypoint settings
+      docs: >-
+        Retrieves an paypoint's basic settings like custom fields, identifiers,
+        and invoicing settings.
+      examples:
+        - name: Example settings configuration
+          path-parameters:
+            entry: 8cfec329267
+          response:
+            body:
+              customFields:
+                - key: customerID
+                  readOnly: false
+                  value: ''
+                - key: test
+                  readOnly: false
+                  value: ''
+                - key: newfield
+                  readOnly: false
+                  value: ''
+                - key: testfield
+                  readOnly: false
+                  value: ''
+              forInvoices:
+                - key: brandColor
+                  value: '#0594fad1'
+                - key: requiredInvoiceNumber
+                  value: 'true'
+                - key: invoicePrefix
+                  value: INV-
+                - key: invoiceNumber
+                  value: '1'
+                - key: dueDate
+                  value: NET30
+                - key: dueDateCustom
+                  value: Invalid Date
+                - key: memoNote
+                  value: Thank you for your business!
+                - key: footerNote
+                  value: default footer testing
+                - key: includePaymentLink
+                  value: 'true'
+                - key: paylinkHeader
+                  value: Gruzya Adventure Outfitters
+                - key: paylinkDescription
+                  value: Pay Invoice
+                - key: contactUsText
+                  value: Contact Us
+                - key: contactUsEmail
+                  value: support@gruzyaadventureoutfitters.com
+                - key: contactUsPhone
+                  value: '5551234567'
+                - key: invoiceNumbering
+                  value: autoapply
+                - key: paymentVisa
+                  value: 'true'
+                - key: paymentMastercard
+                  value: 'true'
+                - key: paymentDiscover
+                  value: 'true'
+                - key: paymentAmex
+                  value: 'true'
+                - key: paymentAch
+                  value: 'true'
+                - key: paymentApplePay
+                  value: 'false'
+                - key: paymentGooglePay
+                  value: 'false'
+                - key: requireInvoiceNumber
+                  value: 'false'
+                - key: autoCreateInvoice
+                  value: 'true'
+                - key: ''
+                  value: ''
+              forPayOuts:
+                - key: autoCapture
+                  readOnly: false
+                  value: 'true'
+                - key: autoPay
+                  readOnly: false
+                  value: 'true'
+                - key: autoDownloadCheckImage
+                  readOnly: false
+                  value: 'false'
+              forWallets:
+                - key: isApplePayEnabled
+                  readOnly: false
+                  value: 'false'
+              general:
+                - key: currency
+                  readOnly: true
+                  value: USD
+                - key: disableAutoReceipt
+                  readOnly: true
+                  value: 'true'
+                - key: sendApprovedReceipt
+                  readOnly: false
+                  value: 'true'
+                - key: sendDeclinedReceipt
+                  readOnly: false
+                  value: 'true'
+                - key: ''
+                  readOnly: true
+                  value: ''
+              identifiers:
+                - key: key
+                  readOnly: false
+                  value: value
+      method: GET
+      path: /Paypoint/settings/{entry}
+      path-parameters:
+        entry:
+          docs: >-
+            The paypoint's entrypoint identifier. [Learn
+            more](/api-reference/api-overview#entrypoint-vs-entry)
+          type: string
+      response:
+        docs: Success
+        status-code: 200
+        type: root.SettingsQueryRecord
+      
+    migrate:
+      auth: true
+      display-name: Migrate paypoint
+      docs: Migrates a paypoint to a new parent organization.
+      examples:
+        - name: MigrateWithNotification
+          request:
+            entryPoint: 473abc123def
+            newParentOrganizationId: 123
+            notificationRequest:
+              notificationUrl: https://webhook-test.yoursie.com
+              webHeaderParameters:
+                - key: testheader
+                  value: '1234567890'
+          response:
+            body:
+              isSuccess: true
+              responseCode: 1
+              responseText: Success
+      method: POST
+      path: /Paypoint/migrate
+      request:
+        body: PaypointMoveRequest
+        content-type: application/json
+      response:
+        docs: Success
+        status-code: 200
+        type: MigratePaypointResponse

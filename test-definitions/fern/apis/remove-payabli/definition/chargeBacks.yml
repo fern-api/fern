@@ -1,0 +1,486 @@
+imports:
+  root: __package__.yml
+types:
+  AddResponseResponse:
+    extends:
+      - root.PayabliApiResponseGeneric2Part
+    properties:
+      responseData:
+        docs: >
+          If `isSuccess` = true, this contains the chargeback identifier. If
+          `isSuccess` = false, this contains the reason for the error.  
+        type: optional<integer>
+
+  ChargebackQueryRecords:
+    properties:
+      Id:
+        docs: Identifier of chargeback or return.
+        type: long
+      ChargebackDate:
+        docs: Date of chargeback in format YYYY-MM-DD or MM/DD/YYYY.
+        type: datetime
+      CaseNumber:
+        docs: Number of case assigned to the chargeback.
+        type: string
+      ReasonCode:
+        docs: |
+          R code for returned ACH or custom code identifying the reason.
+        type: string
+      Reason:
+        docs: Text describing the chargeback or ACH return reason.
+        type: string
+      ReferenceNumber:
+        docs: Processor reference number to the chargeback.
+        type: string
+      LastFour:
+        docs: >-
+          Last 4 digits of card or bank account involved in chargeback or
+          return.
+        type: string
+      AccountType:
+        type: root.Accounttype
+      Status:
+        docs: |
+          Status for chargeback or ACH return
+
+          - 0: Open (chargebacks only)
+          - 1: Pending (chargebacks only)
+          - 2: Closed-Won (chargebacks only)
+          - 3: Closed-Lost (chargebacks only)
+          - 4: ACH Return (ACH only)
+          - 5: ACH Dispute, Not Authorized (ACH only)
+        type: integer
+      Method:
+        docs: 'Type of payment vehicle: **ach** or **card**.'
+        type: string
+      CreatedAt:
+        docs: Timestamp when the register was created, in UTC.
+        type: root.CreatedAt
+      ReplyBy: root.Replyby
+      PaymentTransId:
+        docs: ReferenceId of the transaction in Payabli.
+        type: string
+      ScheduleReference:
+        docs: Reference to the subscription originating the transaction.
+        type: optional<long>
+      OrderId: 
+        type: root.OrderId
+      NetAmount:
+        docs: Net amount in chargeback or ACH return.
+        type: root.Netamountnullable
+      TransactionTime: 
+        type: root.TransactionTime
+      Customer: 
+        type: root.QueryTransactionPayorData
+      PaymentData: 
+        type: root.QueryPaymentData
+      PaypointLegalname:
+        docs: The paypoint's legal name.
+        type: root.Legalname
+      PaypointDbaname:
+        docs: The paypoint's DBA name.
+        type: root.Dbaname
+      ParentOrgName: 
+        type: root.OrgParentName
+      ParentOrgId:
+        docs: The ID of the parent organization.
+        type: long
+      PaypointEntryname:
+        docs: The paypoint's entryname.
+        type: root.Entrypointfield
+      Responses:
+        docs: Chargeback response records.
+        type: list<ChargeBackResponse>
+      Transaction: 
+        type: root.TransactionQueryRecords
+      externalPaypointID: 
+        type: optional<root.ExternalPaypointId>
+      pageidentifier: 
+        type: optional<root.PageIdentifier>
+      messages:
+        docs: Messages related to the chargeback.
+        type: list<ChargebackMessage>
+      ServiceGroup:
+        docs: Service group classification.
+        type: string
+      DisputeType:
+        docs: Type of dispute classification.
+        type: string
+      ProcessorName:
+        docs: Name of the payment processor.
+        type: string
+
+  ChargebackMessage:
+    properties:
+      Id:
+        docs: Message identifier.
+        type: integer
+      RoomId:
+        docs: Room identifier for the message.
+        type: integer
+      UserId:
+        docs: User identifier who sent the message.
+        type: integer
+      UserName:
+        docs: Name of the user who sent the message.
+        type: string
+      Content:
+        docs: Content of the message.
+        type: string
+      CreatedAt:
+        docs: Timestamp when the message was created.
+        type: datetime
+      MessageType:
+        docs: Type of message.
+        type: integer
+      MessageProperties:
+        docs: Additional properties of the message.
+        type: optional<map<string, string>>
+    
+  ChargeBackResponse:
+    properties:
+      attachments:
+        docs: Object with attached files to response
+        type: optional<root.BoardingApplicationAttachments>
+      contactEmail:
+        docs: Email of response submitter.
+        type: optional<root.Email>
+      contactName:
+        docs: Name of response submitter
+        type: optional<string>
+      createdAt:
+        docs: Timestamp when response was submitted, in UTC.
+        type: optional<root.CreatedAt>
+      id:
+        docs: Chargeback response identifier
+        type: optional<long>
+      notes:
+        docs: Response notes
+        type: optional<string>
+
+
+service:
+  auth: false
+  base-path: ''
+  endpoints:
+    AddResponse:
+      auth: true
+      display-name: Add response to chargeback or return
+      docs: Add a response to a chargeback or ACH return.
+      examples:
+        - headers:
+            idempotencyKey: 6B29FC40-CA47-1067-B31D-00DD010662DA
+          name: General success response example for chargebacks.
+          path-parameters:
+            Id: 1000000
+          request: {}
+          response:
+            body:
+              isSuccess: true
+              responseData: 126
+              responseText: Success
+      method: POST
+      path: /ChargeBacks/response/{Id}
+      path-parameters:
+        Id:
+          docs: ID of the chargeback or return record.
+          type: long
+      request:
+        body:
+          properties:
+            attachments:
+              docs: Array of attached files to response.
+              type: optional<root.Attachments>
+            contactEmail:
+              docs: Email of response submitter.
+              type: optional<root.Email>
+            contactName:
+              docs: Name of response submitter
+              type: optional<string>
+            notes:
+              docs: Response notes
+              type: optional<string>
+        content-type: application/json
+        headers:
+          idempotencyKey: optional<root.IdempotencyKey>
+        name: ResponseChargeBack
+      response:
+        docs: Success
+        status-code: 200
+        type: AddResponseResponse
+      
+    GetChargeback:
+      auth: true
+      display-name: Get chargeback or ACH return record
+      docs: Retrieves a chargeback record and its details.
+      examples:
+        - name: GetChargeback
+          path-parameters:
+            Id: 1000000
+          response:
+            body:
+              Id: 201
+              ChargebackDate: '2022-06-25T00:00:00Z'
+              CaseNumber: TZ45678
+              ReasonCode: reasonCode
+              Reason: Buyer dispute
+              ReferenceNumber: referenceNumber
+              LastFour: '6789'
+              AccountType: visa
+              Status: 1
+              Method: card
+              CreatedAt: '2022-07-01T15:00:01Z'
+              ReplyBy: '2022-07-15T23:59:59Z'
+              PaymentTransId: 226-fe55ec0348e34702bd91b4be198ce7ec
+              ScheduleReference: 0
+              OrderId: O-5140
+              NetAmount: 3762.87
+              TransactionTime: '2024-01-15T09:30:00Z'
+              Customer:
+                AdditionalData: null
+                BillingAddress1: 1111 West 1st Street
+                BillingAddress2: Suite 200
+                BillingCity: Miami
+                BillingCountry: US
+                BillingEmail: example@email.com
+                BillingPhone: '5555555555'
+                BillingState: FL
+                BillingZip: '45567'
+                CompanyName: Sunshine LLC
+                customerId: 4440
+                CustomerNumber: 3456-7645A
+                customerStatus: 1
+                FirstName: John
+                Identifiers:
+                  - "firstname"
+                  - "lastname"
+                  - "email"
+                  - "customId"
+                LastName: Doe
+                ShippingAddress1: 123 Walnut St
+                ShippingAddress2: STE 900
+                ShippingCity: Johnson City
+                ShippingCountry: US
+                ShippingState: TN
+                ShippingZip: '37619'
+              PaymentData:
+                AccountExp: 11/29
+                accountId: accountId
+                AccountType: visa
+                AccountZip: '90210'
+                binData: $root.BinData.ExampleBinData
+                HolderName: Chad Mercia
+                Initiator: payor
+                MaskedAccount: 4XXXXXXXX1111
+                orderDescription: Depost for materials for 123 Walnut St
+                paymentDetails:
+                  categories:
+                    - amount: 1000
+                      label: Deposit
+                  checkImage:
+                    key: value
+                  checkNumber: '107'
+                  currency: USD
+                  serviceFee: 0
+                  splitFunding:
+                    - {}
+                  totalAmount: 100
+                Sequence: subsequent
+                SignatureData: SignatureData
+                StoredId: 1ec55af9-7b5a-4ff0-81ed-c12d2f95e135-4440
+                StoredMethodUsageType: subscription
+              PaypointLegalname: Sunshine Services, LLC
+              PaypointDbaname: Sunshine Gutters
+              ParentOrgName: PropertyManager Pro
+              ParentOrgId: 123
+              PaypointEntryname: d193cf9a46
+              Responses:
+                - contactEmail: example@email.com
+                  contactName: John Doe
+                  createdAt: '2022-07-01T15:00:01Z'
+                  id: 672
+                  notes: any note here
+              Transaction:
+                AchHolderType: personal
+                AchSecCode: AchSecCode
+                BatchAmount: 30.22
+                BatchNumber: batch_226_ach_12-30-2023
+                CfeeTransactions:
+                  - transactionTime: '2024-01-15T09:30:00Z'
+                ConnectorName: gp
+                Customer:
+                  AdditionalData: AdditionalData
+                  BillingAddress1: 1111 West 1st Street
+                  BillingAddress2: Suite 200
+                  BillingCity: Miami
+                  BillingCountry: US
+                  BillingEmail: example@email.com
+                  BillingPhone: '5555555555'
+                  BillingState: FL
+                  BillingZip: '45567'
+                  CompanyName: Sunshine LLC
+                  customerId: 4440
+                  CustomerNumber: 3456-7645A
+                  customerStatus: 1
+                  FirstName: John
+                  Identifiers:
+                    - "firstname"
+                    - "lastname"
+                    - "email"
+                    - "customId"
+                  LastName: Doe
+                  ShippingAddress1: 123 Walnut St
+                  ShippingAddress2: STE 900
+                  ShippingCity: Johnson City
+                  ShippingCountry: US
+                  ShippingState: TN
+                  ShippingZip: '37619'
+                DeviceId: 6c361c7d-674c-44cc-b790-382b75d1xxx
+                EntrypageId: 0
+                ExternalProcessorInformation: '[MER_xxxxxxxxxxxxxx]/[NNNNNNNNN]'
+                FeeAmount: 1
+                GatewayTransId: TRN_xwCAjQorWAYX1nAhAoHZVfN8iYHbI0
+                InvoiceData:
+                  AdditionalData: AdditionalData
+                  attachments:
+                    - {}
+                  company: ACME, INC
+                  discount: 10
+                  dutyAmount: 0
+                  firstName: Chad
+                  freightAmount: 10
+                  frequency: one-time
+                  invoiceAmount: 105
+                  invoiceDate: '2025-07-01'
+                  invoiceDueDate: '2025-07-01'
+                  invoiceEndDate: '2025-07-01'
+                  invoiceNumber: INV-2345
+                  invoiceStatus: 1
+                  invoiceType: 0
+                  items:
+                    - itemCost: 5
+                      itemProductName: Materials deposit
+                      itemQty: 1
+                  lastName: Mercia
+                  notes: Example notes.
+                  paymentTerms: PIA
+                  purchaseOrder: PO-345
+                  shippingAddress1: 123 Walnut St
+                  shippingAddress2: STE 900
+                  shippingCity: Johnson City
+                  shippingCountry: US
+                  shippingEmail: example@email.com
+                  shippingFromZip: '30040'
+                  shippingPhone: '5555555555'
+                  shippingState: TN
+                  shippingZip: '37619'
+                  summaryCommodityCode: '501718'
+                  tax: 2.05
+                  termsConditions: Must be paid before work scheduled.
+                Method: ach
+                NetAmount: 3762.87
+                Operation: Sale
+                OrderId: O-5140
+                OrgId: 123
+                ParentOrgName: PropertyManager Pro
+                PaymentData:
+                  AccountExp: 11/29
+                  accountId: accountId
+                  AccountType: visa
+                  AccountZip: '90210'
+                  binData: $root.BinData.ExampleBinData
+                  HolderName: Chad Mercia
+                  Initiator: payor
+                  MaskedAccount: 4XXXXXXXX1111
+                  orderDescription: Depost for materials for 123 Walnut St
+                  paymentDetails:
+                    totalAmount: 100
+                  Sequence: subsequent
+                  SignatureData: SignatureData
+                  StoredId: 1ec55af9-7b5a-4ff0-81ed-c12d2f95e135-4440
+                  StoredMethodUsageType: subscription
+                PaymentTransId: 226-fe55ec0348e34702bd91b4be198ce7ec
+                PayorId: 1551
+                PaypointDbaname: Sunshine Gutters
+                PaypointEntryname: d193cf9a46
+                PaypointId: 226
+                PaypointLegalname: Sunshine Services, LLC
+                PendingFeeAmount: 2
+                RefundId: 0
+                ResponseData:
+                  authcode: authcode
+                  avsresponse: avsresponse
+                  avsresponse_text: avsresponse_text
+                  cvvresponse: cvvresponse
+                  cvvresponse_text: cvvresponse_text
+                  emv_auth_response_data: emv_auth_response_data
+                  orderid: O-5140
+                  response: response
+                  response_code: XXX
+                  response_code_text: Transaction was approved.
+                  responsetext: CAPTURED
+                  transactionid: TRN_XXXXXGOa87juzW
+                  type: type
+                ReturnedId: 0
+                ScheduleReference: 0
+                SettlementStatus: 2
+                Source: api
+                splitFundingInstructions:
+                  - {}
+                TotalAmount: 30.22
+                TransactionEvents:
+                  - {}
+                TransactionTime: '2025-10-19T00:00:00Z'
+                TransAdditionalData:
+                  key: value
+                TransStatus: 1
+              externalPaypointID: null
+              pageidentifier: null
+              messages:
+                - Id: 1
+                  RoomId: 100
+                  UserId: 555
+                  UserName: John Admin
+                  Content: Chargeback initiated by customer
+                  CreatedAt: '2022-06-25T10:30:00Z'
+                  MessageType: 1
+                  MessageProperties:
+                    status: initial
+              ServiceGroup: " "
+              DisputeType: chargeback
+              ProcessorName: Global Payments
+      method: GET
+      path: /ChargeBacks/read/{Id}
+      path-parameters:
+        Id:
+          docs: >-
+            ID of the chargeback or return record. This is returned as
+            `chargebackId` in the
+            [RecievedChargeback](/developers/developer-guides/webhook-payloads#receivedChargeback)
+            and
+            [ReceivedAchReturn](/developers/developer-guides/webhook-payloads#receivedachreturn)
+            webhook notifications.
+          type: long
+      response:
+        docs: Success
+        status-code: 200
+        type: ChargebackQueryRecords
+      
+    getChargebackAttachment:
+      auth: true
+      display-name: Get ChargeBack attachment by fileName
+      method: GET
+      path: /ChargeBacks/getChargebackAttachments/{Id}/{fileName}
+      path-parameters:
+        fileName:
+          docs: The chargeback attachment's file name.
+          type: string
+        Id:
+          docs: The ID of chargeback or return record.
+          type: long
+      response:
+        docs: OK
+        status-code: 200
+        type: text
+      
+

@@ -1,0 +1,376 @@
+imports:
+  root: __package__.yml
+
+types: 
+
+  StatBasicQueryRecord:
+    properties:
+      statX:
+        docs: 'Statistical grouping identifier'
+        type: string
+      inTransactions:
+        docs: 'Number of incoming transactions'
+        type: integer
+      inTransactionsVolume:
+        docs: 'Volume of incoming transactions'
+        type: double
+      inWalletTransactions:
+        docs: 'Number of incoming wallet transactions'
+        type: integer
+      inWalletVolume:
+        docs: 'Volume of incoming wallet transactions'
+        type: double
+
+  SubscriptionStatsQueryRecord:
+    properties:
+      interval:
+        docs: 'Time interval identifier'
+        type: string
+      count:
+        docs: 'Number of subscriptions'
+        type: integer
+      volume:
+        docs: 'Subscription volume'
+        type: double
+
+
+  StatisticsVendorQueryRecord:
+    properties:
+      statX:
+        docs: 'Statistical grouping identifier'
+        type: string
+      active:
+        docs: 'Number of active transactions'
+        type: integer
+      activeVolume:
+        docs: 'Volume of active transactions'
+        type: double
+      sentToApproval:
+        docs: 'Number of transactions sent to approval'
+        type: integer
+      sentToApprovalVolume:
+        docs: 'Volume of transactions sent to approval'
+        type: double
+      toApproval:
+        docs: 'Number of transactions to approval'
+        type: integer
+      toApprovalVolume:
+        docs: 'Volume of transactions to approval'
+        type: double
+      approved:
+        docs: 'Number of approved transactions'
+        type: integer
+      approvedVolume:
+        docs: 'Volume of approved transactions'
+        type: double
+      disapproved:
+        docs: 'Number of disapproved transactions'
+        type: integer
+      disapprovedVolume:
+        docs: 'Volume of disapproved transactions'
+        type: double
+      cancelled:
+        docs: 'Number of cancelled transactions'
+        type: integer
+      cancelledVolume:
+        docs: 'Volume of cancelled transactions'
+        type: double
+      inTransit:
+        docs: 'Number of transactions in transit'
+        type: integer
+      inTransitVolume:
+        docs: 'Volume of transactions in transit'
+        type: double
+      paid:
+        docs: 'Number of paid transactions'
+        type: integer
+      paidVolume:
+        docs: 'Volume of paid transactions'
+        type: double
+
+service:
+  auth: false
+  base-path: ''
+  endpoints:
+    BasicStats:
+      auth: true
+      display-name: Get Basic statistics for a paypoint or organization
+      docs: >-
+        Retrieves the basic statistics for an organization or a paypoint, for a
+        given time period, grouped by a particular frequency. 
+      examples:
+        - name: BasicStatsExample
+          path-parameters:
+            entryId: 1000000
+            freq: m
+            level: 1
+            mode: ytd
+          query-parameters:
+            endDate: '2023-05-23'
+            startDate: '2023-03-23'
+          response:
+            body:
+              - statX: "2023-03"
+                inTransactions: 150
+                inTransactionsVolume: 25000.50
+                inWalletTransactions: 10
+                inWalletVolume: 1000.50
+      method: GET
+      path: /Statistic/basic/{mode}/{freq}/{level}/{entryId}
+      path-parameters:
+        entryId:
+          docs: Identifier in Payabli for the entity.
+          type: long
+        freq:
+          docs: |
+            Frequency to group series. Allowed values:
+
+            - `m` - monthly
+            - `w` - weekly
+            - `d` - daily
+            - `h` - hourly
+
+            For example, `w` groups the results by week.
+          type: string
+        level:
+          docs: |
+            The entry level for the request: 
+              - 0 for Organization
+              - 2 for Paypoint
+          type: integer
+        mode:
+          docs: |
+            Mode for the request. Allowed values:
+
+            - `custom` - Allows you to set a custom date range
+            - `ytd` - Year To Date
+            - `mtd` - Month To Date
+            - `wtd` - Week To Date
+            - `today` - All current day
+            - `m12` - Last 12 months
+            - `d30` - Last 30 days
+            - `h24` - Last 24 hours
+            - `lasty` - Last Year
+            - `lastm` - Last Month
+            - `lastw` - Last Week
+            - `yesterday` - Last Day
+              
+          type: string
+      request:
+        name: BasicStatsRequest
+        query-parameters:
+          endDate:
+            docs: |
+              Used with `custom` mode. The end date for the range. 
+              Valid formats:
+                - YYYY-mm-dd
+                - YYYY/mm/dd
+                - mm-dd-YYYY
+                - mm/dd/YYYY
+            type: optional<string>
+          parameters:
+            docs: List of parameters.
+            type: optional<map<string, optional<string>>>
+          startDate:
+            docs: |
+              Used with `custom` mode. The start date for the range. 
+              Valid formats:
+                 - YYYY-mm-dd
+                 - YYYY/mm/dd
+                 -  mm-dd-YYYY
+                 - mm/dd/YYYY
+            type: optional<string>
+      response:
+        docs: Success
+        status-code: 200
+        type: list<StatBasicQueryRecord>
+      
+    CustomerBasicStats:
+      auth: true
+      display-name: Get basic statistics for a customer
+      docs: >-
+        Retrieves the basic statistics for a customer for a specific time
+        period, grouped by a selected frequency. 
+      examples:
+        - name: CustomerBasicStatsExample
+          path-parameters:
+            customerId: 998
+            freq: m
+            mode: ytd
+          response:
+            body:
+              - interval: "2023-03"
+                count: 45
+                volume: 12500.75
+      method: GET
+      path: /Statistic/customerbasic/{mode}/{freq}/{customerId}
+      path-parameters:
+        customerId:
+          docs: >-
+            Payabli-generated customer ID. Maps to "Customer ID" column in
+            PartnerHub. 
+          type: integer
+        freq:
+          docs: |
+            Frequency to group series. Allowed values:
+
+            - `m` - monthly
+            - `w` - weekly
+            - `d` - daily
+            - `h` - hourly
+
+            For example, `w` groups the results by week.
+          type: string
+        mode:
+          docs: |
+            Mode for request. Allowed values:
+
+            - `ytd` - Year To Date
+            - `mtd` - Month To Date
+            - `wtd` - Week To Date
+            - `today` - All current day
+            - `m12` - Last 12 months
+            - `d30` - Last 30 days
+            - `h24` - Last 24 hours
+            - `lasty` - Last Year
+            - `lastm` - Last Month
+            - `lastw` - Last Week
+            - `yesterday` - Last Day
+          type: string
+      request:
+        name: CustomerBasicStatsRequest
+        query-parameters:
+          parameters:
+            docs: List of parameters.
+            type: optional<map<string, optional<string>>>
+      response:
+        docs: Success
+        status-code: 200
+        type: list<SubscriptionStatsQueryRecord>
+      
+    SubStats:
+      auth: true
+      display-name: Get subscription statistics for a paypoint or organization
+      docs: >-
+        Retrieves the subscription statistics for a given interval for a
+        paypoint or organization.
+      examples:
+        - name: SubStatsExample
+          path-parameters:
+            entryId: 1000000
+            interval: "30"
+            level: 1
+          response:
+            body:
+              - statX: "2023-03"
+                inTransactions: 150
+                inTransactionsVolume: 25000.50
+                inWalletTransactions: 10
+                inWalletVolume: 1000.50
+      method: GET
+      path: /Statistic/subscriptions/{interval}/{level}/{entryId}
+      path-parameters:
+        entryId:
+          docs: Identifier in Payabli for the entity.
+          type: long
+        interval:
+          docs: |
+            Interval to get the data. Allowed values:
+
+            - `all` - all intervals
+            - `30` - 1-30 days
+            - `60` - 31-60 days
+            - `90` - 61-90 days
+            - `plus` - +90 days
+          type: string
+        level:
+          docs: |
+            The entry level for the request: 
+              - 0 for Organization
+              - 2 for Paypoint
+          type: integer
+      request:
+        name: SubStatsRequest
+        query-parameters:
+          parameters:
+            docs: List of parameters
+            type: optional<map<string, optional<string>>>
+      response:
+        docs: Success
+        status-code: 200
+        type: list<StatBasicQueryRecord>
+      
+    VendorBasicStats:
+      auth: true
+      display-name: Get basic statistics for a vendor
+      docs: >-
+        Retrieve the basic statistics about a vendor for a given time period,
+        grouped by frequency. 
+      examples:
+        - name: VendorBasicStatsExample
+          path-parameters:
+            freq: m
+            idVendor: 1
+            mode: ytd
+          response:
+            body:
+              - statX: "2023-03"
+                active: 25
+                activeVolume: 5000.25
+                sentToApproval: 10
+                sentToApprovalVolume: 2500.75
+                toApproval: 8
+                toApprovalVolume: 1800.50
+                approved: 20
+                approvedVolume: 4200.00
+                disapproved: 3
+                disapprovedVolume: 600.25
+                cancelled: 2
+                cancelledVolume: 400.00
+                inTransit: 5
+                inTransitVolume: 1250.75
+                paid: 18
+                paidVolume: 3800.50
+      method: GET
+      path: /Statistic/vendorbasic/{mode}/{freq}/{idVendor}
+      path-parameters:
+        freq:
+          docs: |
+            Frequency to group series. Allowed values:
+
+            - `m` - monthly
+            - `w` - weekly
+            - `d` - daily
+            - `h` - hourly
+
+            For example, `w` groups the results by week.
+          type: string
+        idVendor:
+          docs: Vendor ID.
+          type: integer
+        mode:
+          docs: |
+            Mode for request. Allowed values:
+
+            - `ytd` - Year To Date
+            - `mtd` - Month To Date
+            - `wtd` - Week To Date
+            - `today` - All current day
+            - `m12` - Last 12 months
+            - `d30` - Last 30 days
+            - `h24` - Last 24 hours
+            - `lasty` - Last Year
+            - `lastm` - Last Month
+            - `lastw` - Last Week
+            - `yesterday` - Last Day
+          type: string
+      request:
+        name: VendorBasicStatsRequest
+        query-parameters:
+          parameters:
+            docs: List of parameters
+            type: optional<map<string, optional<string>>>
+      response:
+        docs: Success
+        status-code: 200
+        type: list<StatisticsVendorQueryRecord>

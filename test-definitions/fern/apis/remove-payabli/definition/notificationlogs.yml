@@ -1,0 +1,234 @@
+imports:
+  root: __package__.yml
+
+# Notification Logs API Definition
+
+types:
+  NotificationLog:
+    properties:
+      id:
+        docs: The unique identifier for the notification.
+        type: uuid
+      orgId:
+        docs: The ID of the organization that the notification belongs to.
+        type: nullable<long>
+      paypointId:
+        docs: The ID of the paypoint that the notification is related to.
+        type: nullable<long>
+      notificationEvent:
+        docs: The event that triggered the notification.
+        type: nullable<string>
+      target:
+        docs: The target URL for the notification.
+        type: nullable<string>
+      responseStatus:
+        docs: The HTTP response status of the notification.
+        type: nullable<string>
+      success:
+        docs: Indicates whether the notification was successful.
+        type: boolean
+      jobData:
+        docs: Contains the body of the notification.
+        type: nullable<string>
+      createdDate:
+        docs: The date and time when the notification was created.
+        type: datetime
+      successDate:
+        docs: The date and time when the notification was successfully delivered.
+        type: nullable<datetime>
+      lastFailedDate:
+        docs: The date and time when the notification last failed.
+        type: nullable<datetime>
+      isInProgress:
+        docs: Indicates whether the notification is currently in progress.
+        type: boolean
+
+  NotificationLogDetail:
+    extends: NotificationLog
+    properties:
+      webHeaders: optional<list<StringStringKeyValuePair>>
+      responseHeaders: optional<list<KeyValueArray>>
+      responseContent: optional<string>
+
+  StringStringKeyValuePair:
+    properties:
+      key: optional<string>
+      value: optional<string>
+
+  KeyValueArray:
+    properties:
+      key: optional<string>
+      value: optional<list<string>>
+
+  NotificationLogSearchRequest:
+    properties:
+      startDate: 
+        docs: The start date for the search.
+        type: datetime
+      endDate: 
+        docs: The end date for the search.
+        type: datetime
+      notificationEvent: 
+        docs: The type of notification event to filter by.
+        type: optional<string>
+      succeeded: 
+        docs: Indicates whether the notification was successful.
+        type: optional<boolean>
+      orgId: 
+        docs: The ID of the organization to filter by.
+        type: optional<long>
+      paypointId: 
+        docs: The ID of the paypoint to filter by.
+        type: optional<long>
+
+  BulkRetryRequest:
+    type: list<uuid>
+    docs: A list of notification log IDs to retry. The maximum number of IDs that can be retried in a single request is 50.
+
+service:
+  auth: false
+  base-path: /v2
+  endpoints:
+    searchNotificationLogs:
+      auth: true
+      path: /notificationlogs
+      method: POST
+      docs: |
+        Search notification logs with filtering and pagination.
+          - Start date and end date cannot be more than 30 days apart
+          - Either `orgId` or `paypointId` must be provided
+
+        This endpoint requires the `notifications_create` OR `notifications_read` permission.
+      request: 
+        name: SearchNotificationLogsRequest
+        body: NotificationLogSearchRequest
+        query-parameters:
+          PageSize: optional<root.Pagesize>
+          Page: 
+            docs: >-
+              The page number to retrieve. Defaults to 1 if not provided.
+            type: optional<integer>
+      response: list<NotificationLog>
+      examples:
+        - request:
+            startDate: "2024-01-01T00:00:00Z"
+            endDate: "2024-01-31T23:59:59Z"
+            orgId: 12345
+            notificationEvent: "ActivatedMerchant"
+            succeeded: true
+          query-parameters:
+            PageSize: 20
+          response:
+            body:
+              - id: "550e8400-e29b-41d4-a716-446655440000"
+                orgId: 12345
+                paypointId: 67890
+                notificationEvent: "ActivatedMerchant"
+                target: "https://webhook.example.com/payments"
+                responseStatus: "200"
+                success: true
+                jobData: "{\"transactionId\":\"txn_123\"}"
+                createdDate: "2024-01-15T10:30:00Z"
+                successDate: "2024-01-15T10:30:05Z"
+                lastFailedDate: null
+                isInProgress: false
+
+    getNotificationLog:
+      auth: true
+      path: /notificationlogs/{uuid}
+      method: GET
+      docs: |
+        Get detailed information for a specific notification log entry.
+        This endpoint requires the `notifications_create` OR `notifications_read` permission.
+      path-parameters:
+        uuid: 
+          type: uuid
+          docs: The notification log entry.
+      response: NotificationLogDetail
+      examples:
+        - path-parameters:
+            uuid: "550e8400-e29b-41d4-a716-446655440000"
+          response:
+            body:
+              id: "550e8400-e29b-41d4-a716-446655440000"
+              orgId: 12345
+              paypointId: 67890
+              notificationEvent: "ActivatedMerchant"
+              target: "https://webhook.example.com/payments"
+              responseStatus: "200"
+              success: true
+              jobData: "{\"transactionId\":\"txn_123\"}"
+              createdDate: "2024-01-15T10:30:00Z"
+              successDate: "2024-01-15T10:30:05Z"
+              lastFailedDate: null
+              isInProgress: false
+              webHeaders:
+                - key: "Content-Type"
+                  value: "application/json"
+                - key: "User-Agent"
+                  value: "PaymentSystem/1.0"
+              responseHeaders:
+                - key: "Content-Type"
+                  value: ["application/json"]
+                - key: "X-Request-ID"
+                  value: ["req_abc123"]
+              responseContent: "{\"status\":\"received\",\"id\":\"wh_123\"}"
+
+    retryNotificationLog:
+      auth: true
+      path: /notificationlogs/{uuid}/retry
+      method: GET
+      docs: |
+        Retry sending a specific notification.
+        
+        **Permissions:** notifications_create
+      path-parameters:
+        uuid: 
+          type: uuid
+          docs: Unique id
+      response: NotificationLogDetail
+      examples:
+        - path-parameters:
+            uuid: "550e8400-e29b-41d4-a716-446655440000"
+          response:
+            body:
+              id: "550e8400-e29b-41d4-a716-446655440000"
+              orgId: 12345
+              paypointId: 67890
+              notificationEvent: "ActivatedMerchant"
+              target: "https://webhook.example.com/payments"
+              responseStatus: "200"
+              success: true
+              jobData: "{\"transactionId\":\"txn_123\"}"
+              createdDate: "2024-01-15T10:30:00Z"
+              successDate: "2024-01-15T10:30:05Z"
+              lastFailedDate: null
+              isInProgress: false
+              webHeaders:
+                - key: "Content-Type"
+                  value: "application/json"
+              responseHeaders:
+                - key: "Content-Type"
+                  value: ["application/json"]
+              responseContent: "{\"status\":\"received\",\"id\":\"wh_123\"}"
+
+    bulkRetryNotificationLogs:
+      auth: true
+      path: /notificationlogs/retry
+      method: POST
+      docs: |
+        Retry sending multiple notifications (maximum 50 IDs).
+        This is an async process, so use the search endpoint again to check the notification status.
+
+        This endpoint requires the `notifications_create` permission.
+      request: BulkRetryRequest
+      response:
+        docs: A success response indicating the notifications are being retried. This is an async process, so refresh the search to see updated status.
+        status-code: 201
+      examples:
+        - request:
+            - "550e8400-e29b-41d4-a716-446655440000"
+            - "550e8400-e29b-41d4-a716-446655440001"
+            - "550e8400-e29b-41d4-a716-446655440002"
+          response:
+            body: Created

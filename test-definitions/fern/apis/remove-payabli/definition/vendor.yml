@@ -1,0 +1,153 @@
+imports:
+  root: __package__.yml
+service:
+  auth: false
+  base-path: ''
+  endpoints:
+    AddVendor:
+      auth: true
+      display-name: Create vendor
+      docs: Creates a vendor in an entrypoint.
+      examples:
+        - name: CreateVendor
+          path-parameters:
+            entry: 8cfec329267
+          request:
+            vendorNumber: "1234"
+            name1: "Herman's Coatings and Masonry"
+            name2: "<string>"
+            ein: "12-3456789"
+            phone: "5555555555"
+            email: "example@email.com"
+            address1: "123 Ocean Drive"
+            address2: "Suite 400"
+            city: "Miami"
+            state: "FL"
+            zip: "33139"
+            country: "US"
+            mcc: "7777"
+            locationCode: "MIA123"
+            contacts:
+              - contactName: "Herman Martinez"
+                contactEmail: "example@email.com"
+                contactTitle: "Owner"
+                contactPhone: "3055550000"
+            billingData:
+              id: 123
+              bankName: "Country Bank"
+              routingAccount: "123123123"
+              accountNumber: "123123123"
+              typeAccount: "Checking"
+              bankAccountHolderName: "Gruzya Adventure Outfitters LLC"
+              bankAccountHolderType: "Business"
+              bankAccountFunction: 0
+            paymentMethod: "managed"
+            vendorStatus: 1
+            remitAddress1: "123 Walnut Street"
+            remitAddress2: "Suite 900"
+            remitCity: "Miami"
+            remitState: "FL"
+            remitZip: "31113"
+            remitCountry: "US"
+            payeeName1: "<string>"
+            payeeName2: "<string>"
+            customerVendorAccount: "A-37622"
+            internalReferenceId: 123
+          response:
+            body:
+              isSuccess: true
+              responseCode: 1
+              responseData: 3890
+              responseText: Success
+      method: POST
+      path: /Vendor/single/{entry}
+      path-parameters:
+        entry:
+          docs: Entrypoint identifier.
+          type: string
+      request:
+        body: root.VendorData
+        content-type: application/json
+      response:
+        docs: Success
+        status-code: 200
+        type: root.PayabliApiResponseVendors
+      
+    DeleteVendor:
+      auth: true
+      display-name: Delete vendor
+      docs: 'Delete a vendor. '
+      examples:
+        - path-parameters:
+            idVendor: 1
+          response:
+            body:
+              isSuccess: true
+              responseCode: 1
+              responseData: 3890
+              responseText: Success
+      method: DELETE
+      path: /Vendor/{idVendor}
+      path-parameters:
+        idVendor:
+          docs: Vendor ID.
+          type: integer
+      response:
+        docs: Success
+        status-code: 200
+        type: root.PayabliApiResponseVendors
+      
+    EditVendor:
+      auth: true
+      display-name: Update vendor
+      docs: >-
+        Updates a vendor's information. Send only the fields you need to update.
+      examples:
+        - name: Update `name1` field
+          path-parameters:
+            idVendor: 1
+          request:
+            name1: Theodore's Janitorial
+          response:
+            body:
+              isSuccess: true
+              responseCode: 1
+              responseData: 3890
+              responseText: Success
+      method: PUT
+      path: /Vendor/{idVendor}
+      path-parameters:
+        idVendor:
+          docs: Vendor ID.
+          type: integer
+      request:
+        body: root.VendorData
+        content-type: application/json
+      response:
+        docs: Success
+        status-code: 200
+        type: root.PayabliApiResponseVendors
+      
+    GetVendor:
+      auth: true
+      display-name: Get vendor
+      docs: |
+        Retrieves a vendor's details.
+      examples:
+        - name: GetVendor
+          path-parameters:
+            idVendor: 1
+          response: 
+            body: $root.VendorQueryRecord.VendorQueryRecordExample
+      method: GET
+      path: /Vendor/{idVendor}
+      path-parameters:
+        idVendor:
+          docs: Vendor ID.
+          type: integer
+      response:
+        docs: Success
+        status-code: 200
+        type: root.VendorQueryRecord
+      
+

@@ -1,0 +1,455 @@
+imports:
+  root: __package__.yml
+types:
+
+  SetPause:
+    docs: >-
+      Flag indicating if subscription is paused. When a subscription is paused,
+      no payments are processed until the subscription is unpaused, and the next
+      payment date isn't calculated automatically. If you want to skip a
+      payment instead, set the `totalAmount` to 0 in the `paymentDetails`
+      object.
+    type: boolean
+
+  RemoveSubscriptionResponse:
+    docs: Success response
+    properties:
+      isSuccess: optional<root.IsSuccess>
+      responseData:
+        docs: >
+
+          If `isSuccess` = true, this contains the identifier of the
+          subscription.
+
+
+          If `isSuccess` = false, this contains the reason for the failure.
+        type: optional<string>
+      responseText: root.ResponseText
+
+  RequestSchedulePaymentMethod:
+    discriminated: false
+    docs: >-
+      Information about the payment method for the transaction. Required and
+      recommended fields for each payment method type are described in each
+      schema below.
+    inline: true
+
+    union:
+      - type: root.PayMethodCredit
+        display-name: Credit Card
+      - type: root.PayMethodACH
+        display-name: ACH
+      - docs: >-
+          The required and recommended fields for a payment made with a stored
+          payment method.
+        type: RequestSchedulePaymentMethodInitiator
+  RequestSchedulePaymentMethodInitiator:
+    docs: >-
+      The required and recommended fields for a payment made with a stored
+      payment method.
+    inline: true
+    properties:
+      initiator:
+        type: optional<root.Initiator>
+      storedMethodId:
+        docs: Payabli identifier of a tokenized payment method.
+        type: optional<root.Storedmethodid>
+      storedMethodUsageType:
+        type: optional<root.StoredMethodUsageType>
+
+  UpdateSubscriptionResponse:
+    docs: Success response
+    properties:
+      isSuccess: optional<root.IsSuccess>
+      responseData:
+        docs: >
+
+          If `isSuccess` = true, this contains the identifier of the
+          subscription, and sometimes extra information, depending on what was
+          updated.
+
+
+          If `isSuccess` = false, this contains the reason for the failure.
+        type: optional<string>
+      responseText: root.ResponseText
+      customerId: optional<root.CustomerId>
+  
+  SubscriptionRequestBody:
+    properties:
+      customerData:
+        docs: Object describing the customer/payor.
+        type: optional<root.PayorDataRequest>
+      entryPoint: optional<root.Entrypointfield>
+      invoiceData:
+        docs: Object describing an Invoice linked to the subscription.
+        type: optional<root.BillData>
+      paymentDetails:
+        docs: >-
+          Object describing details of the payment. To skip the payment,
+          set the `totalAmount` to 0. Payments will be paused until the
+          amount is updated to a non-zero value. When `totalAmount` is set
+          to 0, the `serviceFee` must also be set to 0.
+        type: optional<root.PaymentDetail>
+      paymentMethod:
+        docs: >-
+          Information about the payment method for the transaction.
+          Required and recommended fields for each payment method type are
+          described in each schema below.
+        type: optional<RequestSchedulePaymentMethod>
+      scheduleDetails:
+        docs: Object describing the schedule for subscription.
+        type: optional<root.ScheduleDetail>
+      setPause: optional<SetPause>
+      source: optional<root.Source>
+      subdomain: optional<root.Subdomain>
+
+  AddSubscriptionResponse:
+    docs: Success response
+    properties:
+      customerId: optional<root.CustomerId>
+      responseText: root.ResponseText
+      isSuccess: optional<root.IsSuccess>
+      responseData: 
+        docs: The identifier of the newly created subscription.
+        type: integer
+    examples: 
+      - name: AddSubscriptionResponse
+        value:
+          responseText: Success
+          isSuccess: true
+          responseData: 396
+          customerId: 4440
+
+
+service:
+  auth: false
+  base-path: ''
+  endpoints:
+    GetSubscription:
+      auth: true
+      display-name: Get a subscription
+      docs: Retrieves a single subscription's details.
+      examples:
+        - path-parameters:
+            subId: 263
+          name: GetSubscription
+          response:
+            body:
+              CreatedAt: '2022-07-01T15:00:01Z'
+              Customer:
+                AdditionalData: AdditionalData
+                BillingAddress1: 1111 West 1st Street
+                BillingAddress2: Suite 200
+                BillingCity: Miami
+                BillingCountry: US
+                BillingEmail: example@email.com
+                BillingPhone: '5555555555'
+                BillingState: FL
+                BillingZip: '45567'
+                CompanyName: Sunshine LLC
+                customerId: 4440
+                CustomerNumber: 3456-7645A
+                customerStatus: 1
+                FirstName: John
+                Identifiers:
+                  - \"firstname\"
+                  - \"lastname\"
+                  - \"email\"
+                  - \"customId\"
+                LastName: Doe
+                ShippingAddress1: 123 Walnut St
+                ShippingAddress2: STE 900
+                ShippingCity: Johnson City
+                ShippingCountry: US
+                ShippingState: TN
+                ShippingZip: '37619'
+              EndDate: '2025-10-19T00:00:00Z'
+              EntrypageId: 0
+              ExternalPaypointID: Paypoint-100
+              FeeAmount: 3
+              Frequency: monthly
+              IdSub: 396
+              InvoiceData:
+                AdditionalData: AdditionalData
+                attachments:
+                  - {}
+                company: ACME, INC
+                discount: 10
+                dutyAmount: 0
+                firstName: Chad
+                freightAmount: 10
+                frequency: one-time
+                invoiceAmount: 105
+                invoiceDate: '2025-07-01'
+                invoiceDueDate: '2025-07-01'
+                invoiceEndDate: '2025-07-01'
+                invoiceNumber: INV-2345
+                invoiceStatus: 1
+                invoiceType: 0
+                items:
+                  - itemCost: 5
+                    itemProductName: Materials deposit
+                    itemQty: 1
+                lastName: Mercia
+                notes: Example notes.
+                paymentTerms: PIA
+                purchaseOrder: PO-345
+                shippingAddress1: 123 Walnut St
+                shippingAddress2: STE 900
+                shippingCity: Johnson City
+                shippingCountry: US
+                shippingEmail: example@email.com
+                shippingFromZip: '30040'
+                shippingPhone: '5555555555'
+                shippingState: TN
+                shippingZip: '37619'
+                summaryCommodityCode: '501718'
+                tax: 2.05
+                termsConditions: Must be paid before work scheduled.
+              LastRun: '2025-10-19T00:00:00Z'
+              LastUpdated: '2022-07-01T15:00:01Z'
+              LeftCycles: 15
+              Method: card
+              NetAmount: 3762.87
+              NextDate: '2025-10-19T00:00:00Z'
+              ParentOrgName: PropertyManager Pro
+              PaymentData:
+                AccountExp: 11/29
+                accountId: accountId
+                AccountType: visa
+                AccountZip: '90210'
+                binData: $root.BinData.ExampleBinData
+                HolderName: Chad Mercia
+                Initiator: payor
+                MaskedAccount: 4XXXXXXXX1111
+                orderDescription: Depost for materials for 123 Walnut St
+                paymentDetails:
+                  categories:
+                    - amount: 1000
+                      label: Deposit
+                  checkImage:
+                    key: value
+                  checkNumber: '107'
+                  currency: USD
+                  serviceFee: 0
+                  splitFunding:
+                    - {}
+                  totalAmount: 100
+                Sequence: subsequent
+                SignatureData: SignatureData
+                StoredId: 1ec55af9-7b5a-4ff0-81ed-c12d2f95e135-4440
+                StoredMethodUsageType: subscription
+              PaypointDbaname: Sunshine Gutters
+              PaypointEntryname: d193cf9a46
+              PaypointId: 255
+              PaypointLegalname: Sunshine Services, LLC
+              PlanId: 0
+              Source: api
+              StartDate: '2025-10-19T00:00:00Z'
+              SubEvents:
+                - description: TransferCreated
+                  eventTime: '2023-07-05T22:31:06Z'
+                  extraData:
+                    key: value
+                  refData: refData
+                  source: api
+              SubStatus: 1
+              TotalAmount: 103
+              TotalCycles: 24
+              UntilCancelled: true
+      method: GET
+      path: /Subscription/{subId}
+      path-parameters:
+        subId:
+          docs: 'The subscription ID. '
+          type: integer
+      response:
+        docs: Success
+        status-code: 200
+        type: root.SubscriptionQueryRecords
+      
+    NewSubscription:
+      auth: true
+      display-name: Create Subscription
+      docs: >-
+        Creates a subscription or scheduled payment to run at a specified time
+        and frequency. 
+
+      examples:
+        - name: CardSubscription
+          request:
+            customerData:
+              customerId: 4440
+            entryPoint: f743aed24a
+            paymentDetails:
+              serviceFee: 0
+              totalAmount: 100
+            paymentMethod:
+              cardcvv: '123'
+              cardexp: 02/25
+              cardHolder: John Cassian
+              cardnumber: '4111111111111111'
+              cardzip: '37615'
+              initiator: payor
+              method: card
+            scheduleDetails:
+              endDate: 03-20-2025
+              frequency: weekly
+              planId: 1
+              startDate: 09-20-2024
+          response:
+            body: $AddSubscriptionResponse.AddSubscriptionResponse
+        - name: ACHSubscription
+          request:
+            customerData:
+              customerId: 4440
+            entryPoint: f743aed24a
+            paymentDetails:
+              serviceFee: 0
+              totalAmount: 100
+            paymentMethod:
+              achAccount: '3453445666'
+              achAccountType: Checking
+              achCode: PPD
+              achHolder: John Cassian
+              achHolderType: personal
+              achRouting: '021000021'
+              method: ach
+            scheduleDetails:
+              endDate: 03-20-2025
+              frequency: weekly
+              planId: 1
+              startDate: 09-20-2024
+          response:
+            body: $AddSubscriptionResponse.AddSubscriptionResponse
+        - name: StoredMethodSubscription
+          request:
+            customerData:
+              customerId: 4440
+            entryPoint: f743aed24a
+            paymentDetails:
+              serviceFee: 0
+              totalAmount: 100
+            paymentMethod:
+              initiator: merchant
+              storedMethodId: 4000e8c6-3add-4200-8ac2-9b8a4f8b1639-1323
+              storedMethodUsageType: recurring
+            scheduleDetails:
+              endDate: 03-20-2025
+              frequency: weekly
+              planId: 1
+              startDate: 09-20-2024
+          response:
+            body: $AddSubscriptionResponse.AddSubscriptionResponse
+      method: POST
+      path: /Subscription/add
+      request:
+        body: SubscriptionRequestBody
+        content-type: application/json
+        headers:
+          idempotencyKey: optional<root.IdempotencyKey>
+        name: RequestSchedule
+        query-parameters:
+          forceCustomerCreation: optional<root.ForceCustomerCreation>
+      response:
+        docs: Success
+        status-code: 200
+        type: AddSubscriptionResponse
+      
+    RemoveSubscription:
+      auth: true
+      display-name: Delete a subscription
+      docs: Deletes a subscription, autopay, or recurring payment and prevents future charges. 
+      examples:
+        - path-parameters:
+            subId: 396
+          name: DeleteSubscription
+          response:
+            body:
+              isSuccess: true
+              responseData: "396"
+              responseText: Success
+      method: DELETE
+      path: /Subscription/{subId}
+      path-parameters:
+        subId:
+          docs: 'The subscription ID. '
+          type: integer
+      response:
+        docs: Success
+        status-code: 200
+        type: RemoveSubscriptionResponse
+      
+    UpdateSubscription:
+      auth: true
+      display-name: Update a subscription
+      docs: Updates a subscription's details.
+      examples:
+        - path-parameters:
+            subId: 231
+          name: PauseSubscription
+          request:
+            setPause: true
+          response:
+            body:
+              responseText: Success
+              isSuccess: true
+              responseData: 396 paused
+              customerId: 4440
+        - path-parameters:
+            subId: 231
+          name: UnpauseSubscription
+          request:
+            setPause: false
+          response:
+            body:
+              responseText: Success
+              isSuccess: true
+              responseData: 396 unpaused
+              customerId: 4440
+        - path-parameters:
+            subId: 231
+          name: UpdateSubscription
+          request:
+            paymentDetails:
+              serviceFee: 0
+              totalAmount: 100
+            scheduleDetails:
+              endDate: 03-20-2025
+              frequency: weekly
+              planId: 1
+              startDate: 09-20-2024
+          response:
+            body:
+              responseText: Success
+              isSuccess: true
+              responseData: 396 updated
+              customerId: 4440
+      method: PUT
+      path: /Subscription/{subId}
+      path-parameters:
+        subId:
+          docs: 'The subscription ID. '
+          type: integer
+      request:
+        body:
+          properties:
+            paymentDetails:
+              docs: >-
+                Object describing details of the payment. To skip the payment,
+                set the `totalAmount` to 0. Payments will be paused until the
+                amount is updated to a non-zero value. When `totalAmount` is set
+                to 0, the `serviceFee` must also be set to 0.
+              type: optional<root.PaymentDetail>
+            scheduleDetails:
+              docs: Object describing the schedule for subscription
+              type: optional<root.ScheduleDetail>
+            setPause: optional<SetPause>
+        content-type: application/json
+        name: RequestUpdateSchedule
+      response:
+        docs: Success
+        status-code: 200
+        type: UpdateSubscriptionResponse
+      
+

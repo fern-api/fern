@@ -1,0 +1,200 @@
+imports:
+  root: __package__.yml
+types:
+  AddDeviceResponse:
+    extends:
+      - root.PayabliApiResponseGeneric2Part
+    properties:
+      pageIdentifier: optional<root.PageIdentifier>
+      responseData:
+        docs: |
+          If `isSuccess` = true, this contains the device identifier.
+          If `isSuccess` = false, this contains the reason for the error.
+        type: optional<string>
+
+  RemoveDeviceResponse:
+    extends:
+      - root.PayabliApiResponseGeneric2Part
+    properties:
+      pageIdentifier: optional<root.PageIdentifier>
+      responseData:
+        docs: |
+          If `isSuccess` = true, this contains the device identifier.
+          If `isSuccess` = false, this contains the reason for the error.
+        type: optional<string>
+
+service:
+  auth: false
+  base-path: ''
+  endpoints:
+    addDevice:
+      auth: true
+      display-name: Register cloud device
+      docs: >-
+        Register a cloud device to an entrypoint. See [Devices
+        Quickstart](/developers/developer-guides/devices-quickstart#devices-quickstart) for a complete guide.
+      examples:
+        - headers:
+          path-parameters:
+            entry: 8cfec329267
+          name: Register
+          request:
+              registrationCode: "YS7DS5"
+              description: "Front Desk POS"
+          response:
+            body:
+              isSuccess: true
+              responseData: "6c361c7d-674c-44cc-b790-382b75d1xxx"
+              responseText: Success
+      method: POST
+      path: /Cloud/register/{entry}
+      path-parameters:
+        entry:
+          docs: >-
+            The paypoint's entrypoint identifier. [Learn
+            more](/api-reference/api-overview#entrypoint-vs-entry)
+          type: string
+      request:
+        body:
+          properties:
+            description:
+              docs: >-
+                Description or name for the device. This can be anything, but
+                Payabli recommends entering the name of the paypoint, or some
+                other easy to identify descriptor. If you have several
+                devices for one paypoint, you can give them descriptions like
+                "Cashier 1" and "Cashier 2", or "Front Desk" and "Back Office"
+              type: optional<string>
+            registrationCode:
+              docs: >
+                The device registration code or serial number, depending on the
+                model.
+
+
+                - Ingenico devices: This is the activation code that's displayed
+                on the device screen during setup.
+
+
+                - PAX A920 device: This code is the serial number on the back of
+                the device.
+              type: optional<string>
+        content-type: application/json
+        headers:
+          idempotencyKey: optional<root.IdempotencyKey>
+        name: DeviceEntry
+      response:
+        docs: Success
+        status-code: 200
+        type: AddDeviceResponse
+      
+    HistoryDevice:
+      auth: true
+      display-name: Get registration history for device
+      docs: 'Retrieve the registration history for a device. '
+      examples:
+        - name: Example response for GET requests for devices.
+          path-parameters:
+            deviceId: WXGDWB
+            entry: 8cfec329267
+          response:
+            body:
+              isSuccess: true
+              responseList:
+                - connected: true
+                  dateRegistered: '2024-03-05T15:56:04Z'
+                  deviceId: 36103e24-41d8-47c9-b5f7-119f0000000
+                  deviceNickName: Front Desk POS
+                  make: ingenico
+                  model: LK2500
+                  registered: true
+                  serialNumber: '312345692080000000'
+              responseText: Success
+      method: GET
+      path: /Cloud/history/{entry}/{deviceId}
+      path-parameters:
+        deviceId:
+          docs: 'ID of the cloud device. '
+          type: string
+        entry:
+          docs: >-
+            The paypoint's entrypoint identifier. [Learn
+            more](/api-reference/api-overview#entrypoint-vs-entry)
+          type: string
+      response:
+        docs: Success
+        status-code: 200
+        type: root.CloudQueryApiResponse
+      
+    ListDevice:
+      auth: true
+      display-name: List registered devices in cloud
+      docs: Get a list of cloud devices registered to an entrypoint.
+      examples:
+        - name: ListDevices
+          path-parameters:
+            entry: 8cfec329267
+          response:
+            body:
+              isSuccess: true
+              responseList:
+                - connected: true
+                  dateRegistered: '2024-03-05T15:56:04Z'
+                  deviceId: 36103e24-41d8-47c9-b5f7-119f0000000
+                  deviceNickName: Front Desk POS
+                  make: ingenico
+                  model: LK2500
+                  registered: true
+                  serialNumber: '312345692080000000'
+              responseText: Success
+      method: GET
+      path: /Cloud/list/{entry}
+      path-parameters:
+        entry:
+          docs: >-
+            The paypoint's entrypoint identifier. [Learn
+            more](/api-reference/api-overview#entrypoint-vs-entry)
+          type: string
+      request:
+        name: ListDeviceRequest
+        query-parameters:
+          forceRefresh:
+            docs: >-
+              When `true`, the request retrieves an updated list of devices from
+              the processor instead of returning a cached list of devices.
+            type: optional<boolean>
+      response:
+        docs: Success
+        status-code: 200
+        type: root.CloudQueryApiResponse
+      
+    RemoveDevice:
+      auth: true
+      display-name: Unregister cloud device
+      docs: Remove a cloud device from an entrypoint.
+      examples:
+        - path-parameters:
+            deviceId: 6c361c7d-674c-44cc-b790-382b75d1xxx
+            entry: 8cfec329267
+          name: Unregister
+          response:
+            body:
+              isSuccess: true
+              responseData: "6c361c7d-674c-44cc-b790-382b75d1xxx"
+              responseText: Success
+      method: DELETE
+      path: /Cloud/register/{entry}/{deviceId}
+      path-parameters:
+        deviceId:
+          docs: 'ID of the cloud device. '
+          type: string
+        entry:
+          docs: >-
+            The paypoint's entrypoint identifier. [Learn
+            more](/api-reference/api-overview#entrypoint-vs-entry)
+          type: string
+      response:
+        docs: Success
+        status-code: 200
+        type: RemoveDeviceResponse
+      
+

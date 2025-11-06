@@ -1,0 +1,517 @@
+imports:
+  root: __package__.yml
+types:
+  AddPaymentMethodDomainRequestApplePay:
+    docs: Apple Pay configuration information.
+    inline: true
+    properties:
+      isEnabled: 
+        type: optional<root.IsEnabled>
+  
+  AddPaymentMethodDomainRequestGooglePay:
+    docs: Google Pay configuration information.
+    inline: true
+    properties:
+      isEnabled: 
+        type: optional<root.IsEnabled>
+
+  DeletePaymentMethodDomainResponse:
+    properties:
+      isSuccess: 
+        type: root.IsSuccess
+      pageIdentifier: 
+        type: root.PageIdentifier
+      responseData:
+        docs: The deleted domain's domain ID.
+        type: root.Responsedatanonobject
+      responseText: 
+        type: root.ResponseText
+
+  ListPaymentMethodDomainsResponse:
+    properties:
+      records: 
+        type: list<root.PaymentMethodDomainApiResponse>
+      summary: 
+        type: root.QuerySummaryNoAmt
+
+  UpdatePaymentMethodDomainRequestWallet:
+    inline: true
+    properties:
+      isEnabled: 
+        type: optional<root.IsEnabled>
+
+service:
+  auth: false
+  base-path: ""
+  endpoints:
+    AddPaymentMethodDomain:
+      auth: true
+      display-name: Add a payment method domain
+      docs: Add a payment method domain to an organization or paypoint.
+      examples:
+        - name: Paypoint
+          request:
+            domainName: "checkout.example.com"
+            entityId: 109
+            entityType: "paypoint"
+            applePay:
+              isEnabled: true
+            googlePay:
+              isEnabled: true
+          response:
+            body:
+              isSuccess: true
+              pageidentifier: pageidentifier
+              responseData:
+                id: pmd_a4c7e39d15f24b8c8d6259f174e3d081
+                type: PaymentMethodDomains
+                entityId: 109
+                entityType: paypoint
+                domainName: checkout.example.com
+                applePay:
+                  isEnabled: true
+                  data: null
+                googlePay:
+                  isEnabled: true
+                  data: null
+                ownerEntityId: 109
+                ownerEntityType: paypoint
+                cascades:
+                  - jobId: "1030398"
+                    jobStatus: "completed"
+                    jobErrorMessage: null
+                    createdAt: "2025-04-25T15:37:28.685Z"
+                    updatedAt: "2025-04-25T15:37:33.228Z"
+                  - jobId: "611502"
+                    jobStatus: "completed"
+                    jobErrorMessage: null
+                    createdAt: "2026-09-26T22:25:45.095Z"
+                    updatedAt: "2026-09-26T22:25:46.187Z"
+                  - jobId: "611172"
+                    jobStatus: "completed"
+                    jobErrorMessage: null
+                    createdAt: "2026-09-26T19:46:40.075Z"
+                    updatedAt: "2026-09-26T19:47:13.548Z"
+                createdAt: "2025-04-25T15:44:17.016Z"
+                updatedAt: "2025-04-25T15:44:17.016Z"
+              responseText: Success
+      method: POST
+      path: /PaymentMethodDomain
+      request:
+        body:
+          properties:
+            applePay:
+              docs: Apple Pay configuration information.
+              type: optional<AddPaymentMethodDomainRequestApplePay>
+            googlePay:
+              docs: Google Pay configuration information.
+              type: optional<AddPaymentMethodDomainRequestGooglePay>
+            domainName: 
+              type: optional<root.DomainName>
+            entityId: 
+              type: optional<root.EntityId>
+            entityType: 
+              type: optional<root.EntityType>
+        content-type: application/json
+        name: AddPaymentMethodDomainRequest
+      response:
+        docs: Success
+        status-code: 200
+        type: root.AddPaymentMethodDomainApiResponse
+      
+    CascadePaymentMethodDomain:
+      auth: true
+      display-name: Cascade a payment method domain to the child entities
+      docs: >-
+        Cascades a payment method domain to all child entities. All paypoints
+        and suborganization under this parent will inherit this domain and its
+        settings.
+      examples:
+        - name: CascadeDomains
+          path-parameters:
+            domainId: pmd_b8237fa45c964d8a9ef27160cd42b8c5
+          response:
+            body:
+              isSuccess: true
+              pageidentifier: "null"
+              responseData:
+                id: pmd_b8237fa45c964d8a9ef27160cd42b8c5
+                type: PaymentMethodDomains
+                entityId: 78
+                entityType: organization
+                domainName: checkout.example.com
+                applePay:
+                  isEnabled: true
+                  data: null
+                googlePay:
+                  isEnabled: true
+                  data: null
+                ownerEntityId: 78
+                ownerEntityType: organization
+                cascades:
+                  - jobId: "1245697"
+                    jobStatus: completed
+                    jobErrorMessage: null
+                    createdAt: "2025-04-25T15:37:28.685Z"
+                    updatedAt: "2025-04-25T15:37:33.228Z"
+                createdAt: "2025-03-15T10:24:36.207Z"
+                updatedAt: "2025-04-25T15:38:46.804Z"
+              responseText: Success
+      method: POST
+      path: /PaymentMethodDomain/{domainId}/cascade
+      path-parameters:
+        domainId:
+          docs: The payment method domain's ID in Payabli.
+          type: string
+      response:
+        docs: Success
+        status-code: 200
+        type: root.PaymentMethodDomainGeneralResponse
+      
+    DeletePaymentMethodDomain:
+      auth: true
+      display-name: Delete a payment method domain
+      docs: >-
+        Delete a payment method domain. You can't delete an inherited domain,
+        you must delete a domain at the organization level.
+      examples:
+        - name: Delete
+          path-parameters:
+            domainId: pmd_b8237fa45c964d8a9ef27160cd42b8c5
+          response:
+            body:
+              isSuccess: true
+              pageIdentifier: "null"
+              responseData: pmd_b8237fa45c964d8a9ef27160cd42b8c5
+              responseText: Success
+      method: DELETE
+      path: /PaymentMethodDomain/{domainId}
+      path-parameters:
+        domainId:
+          docs: The payment method domain's ID in Payabli.
+          type: string
+      response:
+        docs: Success response for a deleted payment method domain.
+        status-code: 200
+        type: DeletePaymentMethodDomainResponse
+      
+    GetPaymentMethodDomain:
+      auth: true
+      display-name: Get payment method domain details
+      docs: Get the details for a payment method domain.
+      examples:
+        - name: GetDomain
+          path-parameters:
+            domainId: pmd_b8237fa45c964d8a9ef27160cd42b8c5
+          response:
+            body:
+              id: pmd_b8237fa45c964d8a9ef27160cd42b8c5
+              type: PaymentMethodDomains
+              entityId: 78
+              entityType: organization
+              domainName: checkout.example.com
+              applePay:
+                isEnabled: true
+                data: null
+              googlePay:
+                isEnabled: true
+                data: null
+              ownerEntityId: 78
+              ownerEntityType: organization
+              cascades:
+                - jobId: "1245697"
+                  jobStatus: completed
+                  createdAt: "2025-04-25T15:37:28.685Z"
+                  updatedAt: "2025-04-25T15:37:33.228Z"
+              createdAt: "2025-03-15T10:24:36.207Z"
+              updatedAt: "2025-04-25T15:38:46.804Z"
+      method: GET
+      path: /PaymentMethodDomain/{domainId}
+      path-parameters:
+        domainId:
+          docs: The payment method domain's ID in Payabli.
+          type: string
+      response:
+        docs: Success response that includes a payment method domain's details.
+        status-code: 200
+        type: root.PaymentMethodDomainApiResponse
+      
+    ListPaymentMethodDomains:
+      auth: true
+      display-name: List payment method domains for an entity
+      docs: >
+        Get a list of payment method domains that belong to a PSP, organization,
+        or paypoint.
+      examples:
+        - name: PaypointDomains
+          docs: >
+            Get a list of payment method domains that belong to a paypoint.
+          query-parameters:
+            entityId: 1147
+            entityType: paypoint
+          response:
+            body:
+              records:
+                - id: pmd_7b4b3ca0f6b74f02853dfcee5ec090a3
+                  type: PaymentMethodDomains
+                  entityId: 1147
+                  entityType: paypoint
+                  domainName: payment.example.com
+                  applePay:
+                    isEnabled: true
+                  googlePay:
+                    isEnabled: true
+                  ownerEntityId: 1147
+                  ownerEntityType: paypoint
+                  createdAt: "2025-02-13T18:31:07.023Z"
+                  updatedAt: "2025-03-18T13:48:39.056Z"
+                - id: pmd_1f799c8ab7dd432dbc2052ce332c101c
+                  type: PaymentMethodDomains
+                  entityId: 1147
+                  entityType: paypoint
+                  domainName: checkout.example.com
+                  applePay:
+                    isEnabled: true
+                  googlePay:
+                    isEnabled: true
+                  ownerEntityId: 1147
+                  ownerEntityType: paypoint
+                  createdAt: "2025-02-13T18:04:50.207Z"
+                  updatedAt: "2025-02-13T18:04:50.207Z"
+                - id: pmd_135ac1be6fab4a97850aadbbba77ce1b
+                  type: PaymentMethodDomains
+                  entityId: 1147
+                  entityType: paypoint
+                  domainName: pay.example.com
+                  applePay:
+                    isEnabled: true
+                  googlePay:
+                    isEnabled: false
+                  ownerEntityId: 1147
+                  ownerEntityType: paypoint
+                  createdAt: "2026-09-06T03:55:32.213Z"
+                  updatedAt: "2026-09-06T03:55:47.586Z"
+              summary:
+                pageIdentifier: "t.wlbQ4YZ3/JJkaP2/muAxibhlwdVz1Ve89QtI40H9KPhf..."
+                pageSize: 20
+                totalPages: 1
+                totalRecords: 17
+        - name: OrgDomains
+          query-parameters:
+            entityId: 39
+            entityType: organization
+          response:
+            body:
+              records:
+                - id: pmd_1bed085c821e432fa71ae0817c571dd6
+                  type: PaymentMethodDomains
+                  entityId: 39
+                  entityType: organization
+                  domainName: checkout.example.com
+                  applePay:
+                    isEnabled: true
+                  googlePay:
+                    isEnabled: false
+                  ownerEntityId: 39
+                  ownerEntityType: organization
+                  createdAt: "2026-09-27T01:20:17.486Z"
+                  updatedAt: "2025-03-26T23:55:36.876Z"
+                - id: pmd_dab1e3d2a3774216920bdc2afd62c307
+                  type: PaymentMethodDomains
+                  entityId: 39
+                  entityType: organization
+                  domainName: checkout.example.com
+                  applePay:
+                    isEnabled: true
+                  googlePay:
+                    isEnabled: false
+                  ownerEntityId: 39
+                  ownerEntityType: organization
+                  createdAt: "2026-08-23T03:42:06.673Z"
+                  updatedAt: "2025-03-26T23:56:15.708Z"
+              summary:
+                pageIdentifier: "pageIdentifier"
+                pageSize: 20
+                totalPages: 1
+                totalRecords: 2
+      method: GET
+      path: /PaymentMethodDomain/list
+      request:
+        name: ListPaymentMethodDomainsRequest
+        query-parameters:
+          entityId:
+            docs: >
+              Identifier for the organization or paypoint. 
+
+              - For organization, provide the organization ID
+              - For paypoint, provide the paypoint ID
+            type: optional<long>
+          entityType:
+            docs: >
+              The type of entity. Valid values: 
+                - organization
+                - paypoint
+                - psp
+            type: optional<string>
+          fromRecord:
+            default: 0
+            docs: Number of records to skip. Defaults to `0`.
+            type: optional<integer>
+          limitRecord:
+            default: 20
+            docs: Max number of records for query response. Defaults to `20`.
+            type: optional<integer>
+      response:
+        docs: Success
+        status-code: 200
+        type: ListPaymentMethodDomainsResponse
+      
+    UpdatePaymentMethodDomain:
+      auth: true
+      display-name: Update payment method domain configuration
+      docs: Update a payment method domain's configuration values.
+      examples:
+        - name: UpdatePaymentMethodDomain
+          path-parameters:
+            domainId: pmd_b8237fa45c964d8a9ef27160cd42b8c5
+          request:
+            applePay:
+              isEnabled: false
+            googlePay:
+              isEnabled: false
+          response:
+            body:
+              isSuccess: true
+              pageidentifier: "null"
+              responseData:
+                id: pmd_b8237fa45c964d8a9ef27160cd42b8c5
+                type: PaymentMethodDomains
+                entityId: 78
+                entityType: organization
+                domainName: checkout.example.com
+                applePay:
+                  isEnabled: false
+                  data: null
+                googlePay:
+                  isEnabled: false
+                  data: null
+                ownerEntityId: 78
+                ownerEntityType: organization
+                cascades:
+                  - jobId: "1245697"
+                    jobStatus: completed
+                    jobErrorMessage: null
+                    createdAt: "2025-04-25T15:37:28.685Z"
+                    updatedAt: "2025-04-25T15:37:33.228Z"
+                createdAt: "2025-03-15T10:24:36.207Z"
+                updatedAt: "2025-04-25T16:05:12.345Z"
+              responseText: Success
+      method: PATCH
+      path: /PaymentMethodDomain/{domainId}
+      path-parameters:
+        domainId:
+          docs: The payment method domain's ID in Payabli.
+          type: string
+      request:
+        body:
+          properties:
+            applePay: 
+              type: optional<UpdatePaymentMethodDomainRequestWallet>
+            googlePay: 
+              type: optional<UpdatePaymentMethodDomainRequestWallet>
+        content-type: application/json
+        name: UpdatePaymentMethodDomainRequest
+      response:
+        docs: Success response for configuration update.
+        status-code: 200
+        type: root.PaymentMethodDomainGeneralResponse
+      
+    VerifyPaymentMethodDomain:
+      auth: true
+      display-name: Verify a payment method domain
+      docs: >
+        Verify a new payment method domain. If verification is successful, Apple
+        Pay is automatically activated for the domain.
+      examples:
+        - name: VerifySuccess
+          path-parameters:
+            domainId: pmd_b8237fa45c964d8a9ef27160cd42b8c5
+          response:
+            body:
+              isSuccess: true
+              pageidentifier: "null"
+              responseData:
+                id: pmd_b8237fa45c964d8a9ef27160cd42b8c5
+                type: PaymentMethodDomains
+                entityId: 78
+                entityType: organization
+                domainName: checkout.example.com
+                applePay:
+                  isEnabled: true
+                  data: null
+                googlePay:
+                  isEnabled: true
+                  data: null
+                ownerEntityId: 78
+                ownerEntityType: organization
+                cascades:
+                  - jobId: "1245697"
+                    jobStatus: completed
+                    jobErrorMessage: null
+                    createdAt: "2025-04-25T15:37:28.685Z"
+                    updatedAt: "2025-04-25T15:37:33.228Z"
+                createdAt: "2025-03-15T10:24:36.207Z"
+                updatedAt: "2025-04-25T15:45:21.517Z"
+              responseText: Success
+        - name: VerifyFailure
+          path-parameters:
+            domainId: pmd_b8237fa45c964d8a9ef27160cd42b8c5
+          response:
+            body:
+              isSuccess: true
+              pageidentifier: "null"
+              responseData:
+                id: pmd_b8237fa45c964d8a9ef27160cd42b8c5
+                type: PaymentMethodDomains
+                entityId: 78
+                entityType: organization
+                domainName: checkout.example.com
+                applePay:
+                  isEnabled: true
+                  data:
+                    errorMessage: "Unable to validate the domain. Verification file not found at https://checkout.example.com/.well-known/apple-developer-merchantid-domain-association"
+                    metadata:
+                      isFileAvailable: false
+                      isFileContentValid: false
+                      statusCode: 404
+                      redirectUrl: null
+                      redirectDomainName: null
+                googlePay:
+                  isEnabled: true
+                  data:
+                    errorMessage: "Unable to validate the domain. Domain not found."
+                    metadata:
+                      statusCode: 404
+                      redirectUrl: null
+                      redirectDomainName: null
+                ownerEntityId: 78
+                ownerEntityType: organization
+                cascades:
+                  - jobId: "1245697"
+                    jobStatus: completed
+                    jobErrorMessage: null
+                    createdAt: "2025-04-25T15:37:28.685Z"
+                    updatedAt: "2025-04-25T15:37:33.228Z"
+                createdAt: "2025-03-15T10:24:36.207Z"
+                updatedAt: "2025-04-25T15:45:21.517Z"
+              responseText: Success
+      method: POST
+      path: /PaymentMethodDomain/{domainId}/verify
+      path-parameters:
+        domainId:
+          docs: The payment method domain's ID in Payabli.
+          type: string
+      response:
+        docs: Success
+        status-code: 200
+        type: root.PaymentMethodDomainGeneralResponse

@@ -1,0 +1,164 @@
+imports:
+  root: __package__.yml
+
+types:
+
+  typeResult:
+    type: string
+    docs:  The type of object to create in Payabli. Accepted values are `bill` and `invoice`.
+
+  PayabliApiResponseOCR:
+    properties:
+      isSuccess: root.IsSuccess
+      responseText: root.ResponseText
+      responseCode: root.Responsecode
+      responseData:
+        docs: Details of the OCR processing result
+        type: optional<OcrResponseData>
+
+  OcrResponseData:
+    properties:
+      resultData: optional<OcrResultData>
+
+  FileContentImageOnly:
+    properties:
+      ftype: optional<root.FileContentFtype>
+      filename: 
+        docs: The name of the file to be uploaded
+        type: optional<string>
+      furl: 
+        docs: Optional URL link to the file
+        type: optional<string>
+      fContent:
+        docs: Base64-encoded file content 
+        type: optional<string>
+
+  OcrVendorBillingData:
+    properties:
+      id: optional<integer>
+      bankName: optional<string>
+      routingAccount: optional<string>
+      accountNumber: optional<string>
+      typeAccount: optional<string>
+      bankAccountHolderName: optional<string>
+      bankAccountHolderType: optional<string>
+      bankAccountFunction: optional<integer>
+
+  OcrVendorAdditionalData:
+    properties:
+      web: optional<string>
+
+  OcrVendor:
+    properties:
+      vendorNumber: optional<string>
+      name1: optional<string>
+      name2: optional<string>
+      ein: optional<string>
+      phone: optional<string>
+      email: optional<string>
+      address1: optional<string>
+      address2: optional<string>
+      city: optional<string>
+      state: optional<string>
+      zip: optional<string>
+      country: optional<string>
+      mcc: optional<string>
+      locationCode: optional<string>
+      contacts: optional<list<root.Contacts>>
+      billingData: optional<OcrVendorBillingData>
+      paymentMethod: optional<string>
+      vendorStatus: optional<integer>
+      remitAddress1: optional<string>
+      remitAddress2: optional<string>
+      remitCity: optional<string>
+      remitState: optional<string>
+      remitZip: optional<string>
+      remitCountry: optional<string>
+      payeeName1: optional<string>
+      payeeName2: optional<string>
+      customerVendorAccount: optional<string>
+      internalReferenceId: optional<long>
+      customField1: optional<string>
+      customField2: optional<string>
+      additionalData: optional<OcrVendorAdditionalData>
+
+  OcrBillItemAdditionalData:
+    properties:
+      category: optional<string>
+      currency_code: optional<string>
+      type: optional<string>
+      reference_number: optional<string>
+
+  OcrBillItem:
+    properties:
+      itemTotalAmount: optional<double>
+      itemTaxAmount: optional<double>
+      itemTaxRate: optional<double>
+      itemProductCode: optional<string>
+      itemProductName: optional<string>
+      itemDescription: optional<string>
+      itemCommodityCode: optional<string>
+      itemUnitOfMeasure: optional<string>
+      itemCost: optional<double>
+      itemQty: optional<integer>
+      itemMode: optional<integer>
+      itemCategories: optional<list<string>>
+
+  OcrAttachment:
+    properties:
+      ftype: optional<string>
+      filename: optional<string>
+      fileDescriptor: optional<string>
+      furl: optional<string>
+      fContent: optional<string>
+
+  OcrResultData:
+    properties:
+      billNumber: optional<string>
+      netAmount: optional<double>
+      billDate: optional<datetime>
+      dueDate: optional<datetime>
+      comments: optional<string>
+      billItems: optional<list<OcrBillItem>>
+      mode: optional<integer>
+      accountingField1: optional<string>
+      accountingField2: optional<string>
+      additionalData: optional<OcrBillItemAdditionalData>
+      vendor: optional<OcrVendor>
+      endDate: optional<datetime>
+      frequency: optional<string>
+      terms: optional<string>
+      status: optional<integer>
+      lotNumber: optional<string>
+      attachments: optional<list<OcrAttachment>>
+
+service:
+  auth: true
+  base-path: /Import
+  endpoints:
+    OcrDocumentForm:
+      method: POST
+      path: /ocrDocumentForm/{typeResult}
+      path-parameters:
+        typeResult: typeResult
+      request:
+        body: 
+          type: FileContentImageOnly
+          docs: The image file to OCR. Accepted formats include PDF, JPG, JPEG, PNG, GIF.
+      response:
+        docs: OCR document processing result
+        type: PayabliApiResponseOCR
+
+    OcrDocumentJson:
+      method: POST
+      path: /ocrDocumentJson/{typeResult}
+      path-parameters:
+        typeResult: typeResult
+      request:
+        name: OcrDocumentJsonRequest
+        body: 
+          type: FileContentImageOnly
+          docs: Base64-encoded file content for OCR processing
+      response:
+        docs: OCR document processing result
+        type: PayabliApiResponseOCR
